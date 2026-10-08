@@ -1,0 +1,52 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import { SuggestionEdit } from '../../suggestions.a';
+import { description } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    word(value: string): boolean { return /^[a-zA-Z0-9_$]$/.test(value); }
+    visit(node: ParseNode, index: number): void {
+        let name = -1;
+        let staticMember = false;
+        for(const child of node.children) {
+            const kind = this.context.node(child).kind;
+            if(kind === 'AbstractKeyword' || kind === 'AccessorKeyword') { return; }
+            if(kind === 'StaticKeyword') { staticMember = true; }
+            if(kind === 'ComputedPropertyName' && name < 0) { name = child; }
+        }
+        if(name < 0) { return; }
+        const parent = this.context.parents[index] ?? -1;
+        const classMember = node.kind === 'PropertyDeclaration' ||
+            (parent >= 0 && ['ClassDeclaration', 'ClassExpression'].includes(this.context.node(parent).kind));
+        if(classMember && this.context.settings.read('enforceforclassmembers', 'true') === 'false') { return; }
+        const expression = this.context.node(name).children[0] ?? -1;
+        if(expression < 0) { return; }
+        const key = this.context.unwrap(expression);
+        const literal = this.context.node(key);
+        if(literal.kind !== 'StringLiteral' && literal.kind !== 'NumericLiteral') { return; }
+        const value = literal.text;
+        if(node.kind !== 'BindingElement') {
+            if(!classMember && value === '__proto__') { return; }
+            if(classMember) {
+                if(node.kind === 'PropertyDeclaration' && value === 'constructor') { return; }
+                if(!staticMember && value === 'constructor') { return; }
+                if(staticMember && value === 'prototype') { return; }
+            }
+        }
+        const raw = this.context.source.slice(this.context.start(key), literal.end);
+        const message = 'Unnecessarily computed property [' + raw + '] found. ' + description;
+        const opening = this.context.start(name);
+        const end = this.context.node(name).end;
+        const source = this.context.source;
+        if(source.slice(opening, opening + 1) !== '[' || source.slice(end - 1, end) !== ']') { this.context.report(index, 'no-useless-computed-key', 'unnecessarilyComputedProperty', message, '', '', ''); return; }
+        const before = source.slice(opening + 1, this.context.start(key));
+        const after = source.slice(literal.end, end - 1);
+        if(/[^ \t\r\n\v\f()]/.test(before) || /[^ \t\r\n\v\f()]/.test(after)) { this.context.report(index, 'no-useless-computed-key', 'unnecessarilyComputedProperty', message, '', '', ''); return; }
+        const prefix = opening > 0 && this.word(source.slice(opening - 1, opening)) &&
+            literal.kind === 'NumericLiteral' && this.word(raw.slice(0, 1)) ? ' ' : '';
+        const replacement = prefix + raw;
+        this.context.reportNode(index, 'no-useless-computed-key', 'unnecessarilyComputedProperty', message, [new SuggestionEdit(opening, end, replacement)]);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

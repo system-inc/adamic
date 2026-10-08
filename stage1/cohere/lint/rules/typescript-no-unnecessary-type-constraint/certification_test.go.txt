@@ -1,0 +1,129 @@
+package lint
+
+import (
+	"bytes"
+	"encoding/json"
+	"io/fs"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+var wave08Rules = map[string]bool{
+	"no-useless-computed-key":                           true,
+	"react-hooks/gating":                                true,
+	"react/forbid-foreign-prop-types":                   true,
+	"@typescript-eslint/no-unnecessary-type-constraint": true,
+	"@typescript-eslint/prefer-as-const":                true,
+	"@typescript-eslint/prefer-enum-initializers":       true,
+	"default-param-last":                                true,
+}
+
+// Not parallel: the seven rules are certified together against one captured corpus.
+func TestWave08Complete(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	binary := buildPort(t, directory, true)
+	module := emittedJavaScript(t, directory)
+	upstreamRows := upstream(t)
+	for _, descriptor := range prepareRegistry(t, directory) {
+		if !wave08Rules[descriptor.Name] {
+			continue
+		}
+		t.Run(descriptor.Slug, func(t *testing.T) {
+			var rows []string
+			for _, row := range upstreamRows {
+				fields := strings.Split(row, "\t")
+				if len(fields) > 1 && fields[1] == descriptor.Name {
+					rows = append(rows, row)
+				}
+			}
+			t.Logf("upstream cases: %d", len(rows))
+			if len(rows) == 0 {
+				t.Fatal("rule has no upstream cases")
+			}
+			witnesses := ownedWitnessRows(t, directory, descriptor)
+			rows = append(rows, witnesses...)
+			for _, row := range witnesses {
+				path := strings.SplitN(row, "\t", 2)[0]
+				rows = append(rows, path+"\tall")
+			}
+			rows = recoveryRows(t, oracle, rows)
+			compareWithJavaScript(t, oracle, binary, directory, manifest(t, rows), module)
+			var change struct{ Name, File, From, To string }
+			data, err := os.ReadFile(filepath.Join("rules", descriptor.Slug, "mutant.json"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if err := json.Unmarshal(data, &change); err != nil {
+				t.Fatal(err)
+			}
+			if change.File == "" {
+				change.File = descriptor.Module
+			}
+			changed := mutant(t, change.From, change.To, filepath.Join("rules", descriptor.Slug, change.File))
+			path := manifest(t, recoveryRows(t, oracle, witnesses))
+			want := execute(t, "", oracle, "--manifest", path).output
+			for _, side := range []struct {
+				name string
+				run  execution
+			}{
+				{"Node", node(t, changed, path, false)},
+				{"emitted JavaScript", emittedNode(t, changed, path, false)},
+				{"sanitized native", execute(t, "", buildMutantPort(t, changed), "--manifest", path)},
+			} {
+				if bytes.Equal(side.run.output, want) {
+					t.Fatalf("%s survived on %s", change.Name, side.name)
+				}
+				t.Logf("%s caught on %s: %s", change.Name, side.name, difference(side.run.output, want))
+			}
+		})
+	}
+}
+
+// Not parallel: all seven listeners run over the exact pinned compiler and stage 1 sources.
+func TestWave08CompleteCorpus(t *testing.T) {
+	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+	if source == "" {
+		t.Fatal("set ADAMIC_TYPESCRIPT_SOURCE")
+	}
+	pin := execute(t, "", "git", "-C", source, "rev-parse", "HEAD")
+	if strings.TrimSpace(string(pin.output)) != compilerCommit {
+		t.Fatal("wrong TypeScript pin")
+	}
+	var rows []string
+	files := 0
+	for _, root := range []string{filepath.Join(source, "src/compiler"), filepath.Join(repository, "stage1")} {
+		err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			if entry.IsDir() || (!strings.HasSuffix(path, ".ts") && !strings.HasSuffix(path, ".a")) {
+				return nil
+			}
+			absolute, err := filepath.Abs(path)
+			if err != nil {
+				return err
+			}
+			files++
+			for rule := range wave08Rules {
+				rows = append(rows, absolute+"\t"+rule)
+			}
+			return nil
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	t.Logf("compiler and stage1: %d files, %d selected rule rows", files, len(rows))
+	compare(t, oracle, buildPort(t, directory, true), directory, manifest(t, recoveryRows(t, oracle, rows)))
+}

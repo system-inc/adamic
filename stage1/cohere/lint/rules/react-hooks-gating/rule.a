@@ -1,0 +1,43 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import { isIdentifierStart, isIdentifierPart } from '../../../../typescript/scanner/characters.ts';
+import { invalidDescription, multipleDescription } from './messages.a';
+const reserved = ['break','case','catch','continue','debugger','default','do','else','finally','for','function','if','return','switch','throw','try','var','const','while','with','new','this','super','class','extends','export','import','null','true','false','in','instanceof','typeof','void','delete','implements','interface','let','package','private','protected','public','static','yield','await','enum'];
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    valid(condition: string): boolean {
+        if(condition === '' || reserved.includes(condition)) { return false; }
+        let first = true;
+        for(const character of condition) {
+            const code = character.codePointAt(0) ?? -1;
+            if(first ? !isIdentifierStart(code) : !isIdentifierPart(code)) { return false; }
+            first = false;
+        }
+        return true;
+    }
+    visit(node: ParseNode, index: number): void {
+        if(this.context.settings.read('requiredynamicgatingoption', 'false') === 'true') { return; }
+        const matched: number[] = [];
+        let invalid = false;
+        for(const statement of node.children) {
+            if(this.context.node(statement).kind !== 'ExpressionStatement') { break; }
+            const expression = this.context.node(statement).children[0] ?? -1;
+            if(expression < 0 || this.context.node(expression).kind !== 'StringLiteral') { break; }
+            const text = this.context.node(expression).text;
+            if(!text.startsWith('use memo if(') || !text.endsWith(')')) { continue; }
+            const condition = text.slice(12, -1);
+            if(condition.includes(')')) { continue; }
+            if(!this.valid(condition)) {
+                this.context.report(statement, 'react-hooks/gating', 'invalidGatingDirective', invalidDescription, '', '', '');
+                invalid = true;
+            }
+            else { matched.push(statement); }
+        }
+        const first = matched[0] ?? -1;
+        if(!invalid && matched.length > 1 && first >= 0) {
+            this.context.report(first, 'react-hooks/gating', 'multipleGatingDirectives', multipleDescription, '', '', '');
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

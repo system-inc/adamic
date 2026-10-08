@@ -1,0 +1,16 @@
+{
+  "name": "react/forbid-foreign-prop-types",
+  "kinds": [
+    "PropertyAccessExpression",
+    "ElementAccessExpression",
+    "ObjectBindingPattern"
+  ],
+  "visit": "visit",
+  "parent": false,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleForeignPropTypes",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestForbidForeignPropTypes",
+  "node": true
+}

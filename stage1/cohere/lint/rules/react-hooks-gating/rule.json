@@ -1,0 +1,15 @@
+{
+  "name": "react-hooks/gating",
+  "kinds": [
+    "SourceFile",
+    "Block"
+  ],
+  "visit": "visit",
+  "parent": false,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleGating",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestGating",
+  "node": true
+}

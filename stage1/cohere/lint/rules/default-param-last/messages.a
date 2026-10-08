@@ -1,0 +1,1 @@
+export const description = "A parameter carrying a default or an optional marker sits before a parameter without one, so the default can never be taken: reaching the later parameter obliges every caller to pass something here. Move it after the required parameters, where omitting it is what selects the default.";

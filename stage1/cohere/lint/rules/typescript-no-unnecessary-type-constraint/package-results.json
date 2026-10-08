@@ -1,0 +1,31 @@
+{
+  "command": "go test ./stage1/cohere/lint -count=1 -json -timeout=70m -parallel=2",
+  "environment": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/lint-wave1-08-typescript",
+    "ADAMIC_GATE_UNCACHED": "1",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_LINT_PROFILE_DIR": "/tmp/wave08-unpark-profile",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/tmp/wave08-unpark-profile",
+    "GOPROXY": "https://proxy.golang.org|direct"
+  },
+  "package_result": {
+    "Time": "2026-10-08T14:14:15.875406775Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "Elapsed": 3344.992
+  },
+  "test_counts_including_subtests": {
+    "pass": 153,
+    "fail": 0,
+    "skip": 1
+  },
+  "issues": [
+    {
+      "action": "skip",
+      "test": "TestCheckerBridgeRefusalPending"
+    }
+  ],
+  "skip_reason": "checker_pending_test.go:51: awaits codex/tsgo-errors-as-values: tsgoInspect must return TSGoError from the C error buffer",
+  "log_sha256": "d88e79630f30a3d1f23667cd6c8c2c360023cc2f573b3c7c9fc13150fa2369b2",
+  "certification_log_sha256": "2ed8ebe4d75f800d1be6340f91bc2408feb1089314f48e717da2076ef5184193"
+}

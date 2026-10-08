@@ -1,0 +1,6 @@
+{
+  "name": "core_default_suppressed",
+  "file": "rule.a",
+  "from": "defaulted || optional || rest",
+  "to": "optional || rest"
+}

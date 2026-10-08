@@ -1,0 +1,19 @@
+{
+  "name": "no-useless-computed-key",
+  "kinds": [
+    "PropertyAssignment",
+    "BindingElement",
+    "PropertyDeclaration",
+    "MethodDeclaration",
+    "GetAccessor",
+    "SetAccessor"
+  ],
+  "visit": "visit",
+  "parent": false,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleComputedKey",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoUselessComputedKey",
+  "node": true
+}

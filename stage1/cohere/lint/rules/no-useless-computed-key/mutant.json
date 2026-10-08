@@ -1,0 +1,6 @@
+{
+  "name": "computed_replacement_wrong",
+  "from": "new SuggestionEdit(opening, end, replacement)",
+  "to": "new SuggestionEdit(opening, end, \"'different'\")",
+  "file": "rule.a"
+}
