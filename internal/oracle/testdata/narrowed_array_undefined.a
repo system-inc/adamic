@@ -1,0 +1,15 @@
+function describe(value: string | readonly string[] | undefined): string {
+    if (typeof value === "object") return value.join(",");
+    return value ?? "missing";
+}
+console.log(describe(["owned:" + "one", "owned:" + "two"]));
+console.log(describe("text"));
+console.log(describe(undefined));
+interface Box { word: string }
+function word(value: string | Box | undefined): string {
+    if (typeof value === "object") return value.word;
+    return value ?? "missing";
+}
+console.log(word({word: "owned:" + "box"}));
+console.log(word("text"));
+console.log(word(undefined));

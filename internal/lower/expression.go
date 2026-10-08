@@ -651,6 +651,10 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 						members = declared.Types()
 					}
 					for _, member := range members {
+						member = l.concrete(member)
+						if member.Flags()&checker.TypeFlagsUndefined != 0 {
+							continue
+						}
 						if held, known := l.representation(member); known && held != narrowed && (held == ir.Object || held == ir.Array || held == ir.Map) {
 							return nil, l.notYet(node, "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables")
 						}

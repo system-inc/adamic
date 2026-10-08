@@ -1,0 +1,10 @@
+function initial(): string | readonly string[] | undefined { return ["owned:" + "one"]; }
+let shared: string | readonly string[] | undefined = initial();
+function change(): void { shared = "changed".repeat(2); }
+function check(): void {
+    if (typeof shared === "object") {
+        change();
+        console.log(shared.length.toString());
+    }
+}
+check();
