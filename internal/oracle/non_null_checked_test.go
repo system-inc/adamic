@@ -154,8 +154,7 @@ func TestCheckedNonNullAdamicRefusal(t *testing.T) {
 	}
 }
 
-// Measure this unit's new rows independently while the refusal-table worker retires
-// historical .a rows that the new source-mode policy no longer admits.
+// Measure the new rows independently without rewriting the area's existing counts.
 func TestCheckedNonNullCounts(t *testing.T) {
 	t.Parallel()
 	recorded, err := os.ReadFile(countsPath)
@@ -164,6 +163,14 @@ func TestCheckedNonNullCounts(t *testing.T) {
 	}
 	for _, name := range []string{"narrowed", "present", "undefined", "null", "let_initializer"} {
 		path := "internal/oracle/testdata/non_null_checked_" + name + ".ts"
+		row := counted(t, path, false, nil, false, false)
+		t.Log(row)
+		if !strings.Contains(string(recorded), row+"\n") {
+			t.Errorf("missing recorded row: %s", row)
+		}
+	}
+	for _, operand := range []string{"undefined", "null"} {
+		path := "internal/oracle/testdata/non_null_refuse_" + operand + ".ts"
 		row := counted(t, path, false, nil, false, false)
 		t.Log(row)
 		if !strings.Contains(string(recorded), row+"\n") {

@@ -19,10 +19,17 @@ func TestNonNullExplainChecks(t *testing.T) {
 		{"undefined", "3:24", "checked", "proven 0 checked 1"},
 		{"null", "3:24", "checked", "proven 0 checked 1"},
 		{"let_initializer", "3:26", "checked", "proven 0 checked 1"},
+		{"refuse_undefined", "1:13", "checked", "proven 0 checked 1"},
+		{"refuse_null", "1:13", "checked", "proven 0 checked 1"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			path := "internal/oracle/testdata/non_null_checked_" + probe.name + ".ts"
-			want := path + ":" + probe.position + ": non-null assertion value!: " + probe.status + "\nadamic: non-null checks: " + probe.counts + "\nadamic: checks: " + probe.counts + " unobservable 0\n"
+			expression := "value!"
+			if probe.name == "refuse_undefined" || probe.name == "refuse_null" {
+				path = "internal/oracle/testdata/non_null_" + probe.name + ".ts"
+				expression = probe.name[len("refuse_"):] + "!"
+			}
+			want := path + ":" + probe.position + ": non-null assertion " + expression + ": " + probe.status + "\nadamic: non-null checks: " + probe.counts + "\nadamic: checks: " + probe.counts + " unobservable 0\n"
 			for _, backend := range []string{"c", "js", "build"} {
 				args := []string{backend, path, "--explain-checks"}
 				if backend == "build" {
