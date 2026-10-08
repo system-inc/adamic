@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"errors"
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -60,28 +61,51 @@ func TestWASI(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	var objects []string
-	for _, file := range files {
-		if !strings.HasSuffix(file.name, ".c") {
-			continue
+	// Keep strict runtime warnings, and cache one object set for each program's features.
+	// A shared featureless set used to let closures_throw link with a different layout.
+	objectSets := map[string][]string{}
+	compileRuntime := func(features string, count bool) []string {
+		selected := featureFlags(features)
+		if count {
+			selected = append(selected, "-DADAMIC_COUNT")
 		}
-		object := filepath.Join(directory, file.name+".o")
-		wasiCommand(t, repository, "clang", append(append([]string{}, flags...), "-c", filepath.Join(directory, file.name), "-o", object)...)
-		objects = append(objects, object)
+		key := strings.Join(selected, " ")
+		if objects, ok := objectSets[key]; ok {
+			return objects
+		}
+		storage := filepath.Join(directory, fmt.Sprintf("runtime-%d", len(objectSets)))
+		if err := os.Mkdir(storage, 0755); err != nil {
+			t.Fatal(err)
+		}
+		var objects []string
+		for _, file := range files {
+			if !strings.HasSuffix(file.name, ".c") {
+				continue
+			}
+			object := filepath.Join(storage, file.name+".o")
+			arguments := append(append([]string{}, flags...), selected...)
+			arguments = append(arguments, "-c", filepath.Join(directory, file.name), "-o", object)
+			wasiCommand(t, repository, "clang", arguments...)
+			objects = append(objects, object)
+		}
+		objectSets[key] = objects
+		return objects
 	}
+	objects := compileRuntime("", false)
 	t.Logf("strict C11 runtime: %d translation units compiled", len(objects))
+
 	compiler := filepath.Join(directory, "adamic")
 	wasiCommand(t, repository, "go", "build", "-o", compiler, "./cmd/adamic")
 	generate := func(t *testing.T, fixture string) string {
 		t.Helper()
 		return string(wasiCommand(t, repository, compiler, "c", fixture))
 	}
-	link := func(t *testing.T, source, output string, extra ...string) {
+	link := func(t *testing.T, source, output, features string, count bool, extra ...string) {
 		t.Helper()
 		arguments := append(append([]string{}, flags...), "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function", "-Wno-unused-parameter", "-Wno-self-assign",
 			"-I", directory, "-Wl,-z,stack-size=131072", "-Wl,--export=__stack_low", "-o", output, source)
 		arguments = append(arguments, extra...)
-		arguments = append(arguments, objects...)
+		arguments = append(arguments, compileRuntime(features, count)...)
 		arguments = append(arguments, "-lm")
 		wasiCommand(t, repository, "clang", arguments...)
 	}
@@ -108,6 +132,9 @@ func TestWASI(t *testing.T) {
 		"internal/oracle/testdata/library_object_keys.a", "internal/oracle/testdata/library_array_flat.a",
 		"internal/oracle/testdata/read_files.a", "internal/native/wasm/io.a",
 		"internal/oracle/testdata/closures_throw.a",
+		"internal/oracle/testdata/arguments_length_extended.a",
+		"internal/oracle/testdata/closure_convention_regexp_count.a",
+		"internal/oracle/testdata/closure_convention_nested.a",
 		"internal/oracle/testdata/write_stdout_order.a",
 		"internal/oracle/testdata/write_stderr_order.a",
 	}
@@ -116,9 +143,10 @@ func TestWASI(t *testing.T) {
 		t.Run(fixture, func(t *testing.T) {
 			scratch := t.TempDir()
 			source := filepath.Join(scratch, "main.c")
-			writeWASIFile(t, source, generate(t, fixture))
+			code := generate(t, fixture)
+			writeWASIFile(t, source, code)
 			module := filepath.Join(scratch, "main.wasm")
-			link(t, source, module)
+			link(t, source, module, code, false)
 			working := repository
 			if strings.HasSuffix(fixture, "read_files.a") {
 				working = filepath.Join(repository, "internal/oracle/testdata")
@@ -141,11 +169,6 @@ func TestWASI(t *testing.T) {
 	t.Logf("WASI oracle: %d/%d equivalent", passed, len(fixtures))
 	t.Run("requests", func(t *testing.T) {
 		// Counters are for the memory probe only; oracle command stderr stays untouched.
-		for _, file := range files {
-			if strings.HasSuffix(file.name, ".c") {
-				wasiCommand(t, repository, "clang", append(append([]string{}, flags...), "-DADAMIC_COUNT", "-c", filepath.Join(directory, file.name), "-o", filepath.Join(directory, file.name+".o"))...)
-			}
-		}
 		scratch := t.TempDir()
 		code := generate(t, "internal/native/wasm/request.a")
 		if !strings.Contains(code, "adamic_region_end(") {
@@ -157,7 +180,7 @@ func TestWASI(t *testing.T) {
 		}
 		writeWASIFile(t, filepath.Join(scratch, "program.c"), code)
 		module := filepath.Join(scratch, "request.wasm")
-		link(t, filepath.Join(repository, "internal/native/wasm/request-abi.c"), module, "-I", scratch,
+		link(t, filepath.Join(repository, "internal/native/wasm/request-abi.c"), module, code, true, "-I", scratch,
 			"-DADAMIC_HANDLER="+handler[1], "-mexec-model=reactor", "-Wl,--export=malloc", "-Wl,--export=free", "-Wl,--export=adamic_release")
 		output := wasiCommand(t, repository, "node", "--disable-warning=ExperimentalWarning", "internal/native/wasm/request-host.mjs", module, "internal/native/wasm/request.a")
 		t.Logf("request benchmark: %s", output)
