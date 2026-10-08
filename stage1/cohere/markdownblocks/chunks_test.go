@@ -88,7 +88,7 @@ func TestMicromarkInputChunks(t *testing.T) {
 	goBinary := filepath.Join(dir, "go-chunks")
 	build := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
 	build.Dir = cohere
-	if output, err := build.CombinedOutput(); err != nil {
+	if output, err := combinedOutput(build); err != nil {
 		t.Fatalf("Go chunks %v %s", err, output)
 	}
 	fullWant := execute(t, nil, goBinary, fullCases)

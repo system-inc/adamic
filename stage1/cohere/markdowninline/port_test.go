@@ -12,10 +12,10 @@ import (
 	"runtime"
 	"sort"
 	"strings"
-	"syscall"
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
@@ -47,19 +47,17 @@ func lowered(t *testing.T, path string) *ir.Program {
 	return result
 }
 
-// bounded is a command that can't outlive its test: it has a deadline, it runs in a process group of
-// its own, and when the deadline passes or the test ends, the whole group is killed.
+// bounded prepares a child for the shared output-based hang guard.
+// Silent builds and buffered children use its 30-minute first-output window.
+// With ten CPU burners, the longest output gap was 26.3s; the default
+// two-minute Stall leaves more than three times that gap as headroom.
 func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
-	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-	}
-	command.WaitDelay = 5 * time.Second
-	return command
+	return exec.Command(name, arguments...)
+}
+
+func combinedOutput(command *exec.Cmd) ([]byte, error) {
+	return childguard.CombinedOutput(command, childguard.Options{})
 }
 
 func execute(t *testing.T, environment []string, name string, arguments ...string) run {
@@ -71,7 +69,7 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := command.Run()
+	err := childguard.Run(command, childguard.Options{})
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
@@ -227,7 +225,7 @@ func TestMarkdownInline(t *testing.T) {
 	goBinary := filepath.Join(dir, "go-printer")
 	command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, filepath.Join(cohere, "cmd/adamic_stage_one/main.go"))
 	command.Dir = cohere
-	if output, err := command.CombinedOutput(); err != nil {
+	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("Go bridge: %v\n%s", err, output)
 	}
 	want := execute(t, nil, goBinary, cases)

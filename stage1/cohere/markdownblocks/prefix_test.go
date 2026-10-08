@@ -81,7 +81,7 @@ func TestMarkdownParserPrefixes(t *testing.T) {
 	goBinary := filepath.Join(dir, "go-prefix")
 	command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
 	command.Dir = cohere
-	if output, err := command.CombinedOutput(); err != nil {
+	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("Go prefix bridge: %v\n%s", err, output)
 	}
 	want := execute(t, nil, goBinary, cases)
