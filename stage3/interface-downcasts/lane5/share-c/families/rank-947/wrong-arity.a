@@ -1,0 +1,8 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface TemplateHead {readonly value:number;readonly kind:16;}
+interface TemplateLiteralTypeSpan {readonly value:number;readonly kind:205;}
+interface TemplateLiteralTypeNode {readonly value:number;readonly kind:204;}
+interface Base {readonly createTemplateLiteralType:unknown;}
+interface Target {createTemplateLiteralType(head: TemplateHead, templateSpans: readonly TemplateLiteralTypeSpan[]): TemplateLiteralTypeNode;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createTemplateLiteralType({value:3,kind:16},[{value:3,kind:205}]);console.log("completed");}
+probe({createTemplateLiteralType:(): TemplateLiteralTypeNode=>({value:3,kind:204})});

@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface NotEmittedTypeElement {readonly value:number;readonly kind:355;}
+interface Base {readonly createNotEmittedTypeElement:unknown;}
+interface Target {createNotEmittedTypeElement(): NotEmittedTypeElement;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createNotEmittedTypeElement();console.log("completed");}
+probe({createNotEmittedTypeElement:(extra:number): NotEmittedTypeElement=>({value:3,kind:355})});

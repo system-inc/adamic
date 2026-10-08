@@ -1,0 +1,18 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface JsxOpeningElement {readonly value:number;readonly kind:287;}
+type JsxChild =
+    | JsxText
+    | JsxExpression
+    | JsxElement
+    | JsxSelfClosingElement
+    | JsxFragment;
+interface JsxText {readonly value:number;readonly kind:12;}
+interface JsxExpression {readonly value:number;readonly kind:295;}
+interface JsxElement {readonly value:number;readonly kind:285;}
+interface JsxSelfClosingElement {readonly value:number;readonly kind:286;}
+interface JsxFragment {readonly value:number;readonly kind:289;}
+interface JsxClosingElement {readonly value:number;readonly kind:288;}
+interface Base {readonly createJsxElement:unknown;}
+interface Target {createJsxElement(openingElement: JsxOpeningElement, children: readonly JsxChild[], closingElement: JsxClosingElement): JsxElement;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createJsxElement({value:3,kind:287},[{value:3,kind:12}],{value:3,kind:288});console.log("completed");}
+probe({createJsxElement:(openingElement: JsxOpeningElement,children: readonly JsxChild[],closingElement: JsxClosingElement):JsxElement=>({value:3,kind:285})});

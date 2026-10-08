@@ -1,0 +1,8 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface TemplateHead {readonly value:number;readonly kind:16;}
+interface TemplateSpan {readonly value:number;readonly kind:240;}
+interface TemplateExpression {readonly value:number;readonly kind:229;}
+interface Base {readonly createTemplateExpression:unknown;}
+interface Target {createTemplateExpression(head: TemplateHead, templateSpans: readonly TemplateSpan[]): TemplateExpression;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createTemplateExpression({value:3,kind:16},[{value:3,kind:240}]);console.log("completed");}
+probe({createTemplateExpression:(head: TemplateHead,templateSpans: readonly TemplateSpan[]):TemplateExpression=>({value:3,kind:229})});

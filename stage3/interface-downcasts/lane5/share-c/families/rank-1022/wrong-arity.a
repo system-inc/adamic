@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly getAutomaticTypeDirectiveNames:unknown;}
+interface Target {getAutomaticTypeDirectiveNames(): string[];}
+function probe(value:Base):void {const oldProgram=value as Target;const result=oldProgram.getAutomaticTypeDirectiveNames();console.log("completed");}
+probe({getAutomaticTypeDirectiveNames:(extra:number): string[]=>(["abc"])});

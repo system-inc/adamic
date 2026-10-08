@@ -1,0 +1,10 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface ConstructSignatureDeclaration {readonly value:number;readonly kind:181;}
+interface NodeArray<T0> {readonly value:number;}
+interface TypeParameterDeclaration {readonly value:number;readonly kind:169;}
+interface ParameterDeclaration {readonly value:number;readonly kind:170;}
+interface TypeNode {readonly value:number;}
+interface Base {readonly updateConstructSignature:unknown;}
+interface Target {updateConstructSignature(node: ConstructSignatureDeclaration, typeParameters: NodeArray<TypeParameterDeclaration> | undefined, parameters: NodeArray<ParameterDeclaration>, type: TypeNode | undefined): ConstructSignatureDeclaration;}
+function probe(value:Base):void {const context={factory:value as Target};const result=context.factory.updateConstructSignature({value:3,kind:181},{value:3},{value:3},{value:3});console.log("completed");}
+probe({updateConstructSignature:(): ConstructSignatureDeclaration=>({value:3,kind:181})});

@@ -1,0 +1,10 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface FunctionTypeNode {readonly value:number;readonly kind:185;}
+interface NodeArray<T0> {readonly value:number;}
+interface TypeParameterDeclaration {readonly value:number;readonly kind:169;}
+interface ParameterDeclaration {readonly value:number;readonly kind:170;}
+interface TypeNode {readonly value:number;}
+interface Base {readonly updateFunctionTypeNode:unknown;}
+interface Target {updateFunctionTypeNode(node: FunctionTypeNode, typeParameters: NodeArray<TypeParameterDeclaration> | undefined, parameters: NodeArray<ParameterDeclaration>, type: TypeNode): FunctionTypeNode;}
+function probe(value:Base):void {const context={factory:value as Target};const result=context.factory.updateFunctionTypeNode({value:3,kind:185},{value:3},{value:3},{value:3});console.log("completed");}
+probe({updateFunctionTypeNode:(): FunctionTypeNode=>({value:3,kind:185})});

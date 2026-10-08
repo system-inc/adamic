@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface ObjectBindingPattern {readonly value:number;readonly kind:207;}
+interface BindingElement {readonly value:number;readonly kind:209;}
+interface Base {readonly updateObjectBindingPattern:unknown;}
+interface Target {updateObjectBindingPattern(node: ObjectBindingPattern, elements: readonly BindingElement[]): ObjectBindingPattern;}
+function probe(value:Base):void {const context={factory:value as Target};const result=context.factory.updateObjectBindingPattern({value:3,kind:207},[{value:3,kind:209}]);console.log("completed");}
+probe({updateObjectBindingPattern:(node: ObjectBindingPattern,elements: readonly BindingElement[]):ObjectBindingPattern=>({value:3,kind:207})});

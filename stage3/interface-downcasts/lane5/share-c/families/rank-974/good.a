@@ -1,0 +1,17 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface JsxSelfClosingElement {readonly value:number;readonly kind:286;}
+type JsxTagNameExpression =
+    | Identifier
+    | ThisExpression
+    | JsxTagNamePropertyAccess
+    | JsxNamespacedName;
+interface Identifier {readonly value:number;readonly kind:80;}
+interface ThisExpression {readonly value:number;readonly kind:110;}
+interface JsxTagNamePropertyAccess {readonly value:number;readonly kind:212;}
+interface JsxNamespacedName {readonly value:number;readonly kind:296;}
+interface TypeNode {readonly value:number;}
+interface JsxAttributes {readonly value:number;readonly kind:293;}
+interface Base {readonly updateJsxSelfClosingElement:unknown;}
+interface Target {updateJsxSelfClosingElement(node: JsxSelfClosingElement, tagName: JsxTagNameExpression, typeArguments: readonly TypeNode[] | undefined, attributes: JsxAttributes): JsxSelfClosingElement;}
+function probe(value:Base):void {const context={factory:value as Target};const result=context.factory.updateJsxSelfClosingElement({value:3,kind:286},{value:3,kind:80},[{value:3}],{value:3,kind:293});console.log("completed");}
+probe({updateJsxSelfClosingElement:(node: JsxSelfClosingElement,tagName: JsxTagNameExpression,typeArguments: readonly TypeNode[] | undefined,attributes: JsxAttributes):JsxSelfClosingElement=>({value:3,kind:286})});

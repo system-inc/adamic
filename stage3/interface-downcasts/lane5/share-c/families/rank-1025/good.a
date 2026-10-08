@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface CancellationToken {readonly value:number;}
+interface Diagnostic {readonly value:number;}
+interface Base {readonly getGlobalDiagnostics:unknown;}
+interface Target {getGlobalDiagnostics(cancellationToken?: CancellationToken): readonly Diagnostic[];}
+function probe(value:Base):void {const state={program:value as Target};const result=state.program.getGlobalDiagnostics({value:3});console.log("completed");}
+probe({getGlobalDiagnostics:(cancellationToken?: CancellationToken):readonly Diagnostic[]=>([{value:3}])});

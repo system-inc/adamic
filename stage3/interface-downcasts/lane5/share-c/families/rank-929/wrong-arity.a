@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface TypeNode {readonly value:number;}
+interface JSDocTypeExpression {readonly value:number;readonly kind:310;}
+interface Base {readonly createJSDocTypeExpression:unknown;}
+interface Target {createJSDocTypeExpression(type: TypeNode): JSDocTypeExpression;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createJSDocTypeExpression({value:3});console.log("completed");}
+probe({createJSDocTypeExpression:(): JSDocTypeExpression=>({value:3,kind:310})});

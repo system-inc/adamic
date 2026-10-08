@@ -1,0 +1,8 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+type PackageJsonInfoCacheEntry = PackageJsonInfo | MissingPackageJsonInfo;
+interface PackageJsonInfo {readonly value:number;}
+interface MissingPackageJsonInfo {readonly value:number;}
+interface Base {readonly setPackageJsonInfo:unknown;}
+interface Target {setPackageJsonInfo(packageJsonPath: string, info: PackageJsonInfoCacheEntry): void;}
+function probe(value:Base):void {const state={packageJsonInfoCache:value as Target};state.packageJsonInfoCache.setPackageJsonInfo("abc",{value:3});console.log("completed");}
+probe({setPackageJsonInfo:(packageJsonPath: string,info: PackageJsonInfoCacheEntry):void=>{}});

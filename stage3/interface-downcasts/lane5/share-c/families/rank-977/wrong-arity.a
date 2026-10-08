@@ -1,0 +1,9 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface NamespaceExport {readonly value:number;readonly kind:281;}
+type ModuleExportName = Identifier | StringLiteral;
+interface Identifier {readonly value:number;readonly kind:80;}
+interface StringLiteral {readonly value:number;readonly kind:11;}
+interface Base {readonly updateNamespaceExport:unknown;}
+interface Target {updateNamespaceExport(node: NamespaceExport, name: ModuleExportName): NamespaceExport;}
+function probe(value:Base):void {const context={factory:value as Target};const result=context.factory.updateNamespaceExport({value:3,kind:281},{value:3,kind:80});console.log("completed");}
+probe({updateNamespaceExport:(): NamespaceExport=>({value:3,kind:281})});

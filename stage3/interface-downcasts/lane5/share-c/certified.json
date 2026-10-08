@@ -1438,5 +1438,485 @@
       }
     ],
     "diagnostic": "adamic: panic: field read failed: factory.createDeleteExpression expected (expression: Expression) => DeleteExpression, found function with arity 0\n"
+  },
+  {
+    "rank": 926,
+    "reads": 2,
+    "type": "NodeFactory",
+    "field": "createJSDocMemberName",
+    "read": "factory.createJSDocMemberName",
+    "status": "ready for oracle",
+    "arity": 2,
+    "foundArity": 0,
+    "declaration": "createJSDocMemberName(left: EntityName | JSDocMemberName, right: Identifier): JSDocMemberName;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/926-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/926-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createJSDocMemberName expected (left: JSDocMemberName | EntityName, right: Identifier) => JSDocMemberName, found function with arity 0\n"
+  },
+  {
+    "rank": 929,
+    "reads": 2,
+    "type": "NodeFactory",
+    "field": "createJSDocTypeExpression",
+    "read": "factory.createJSDocTypeExpression",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "createJSDocTypeExpression(type: TypeNode): JSDocTypeExpression;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/929-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/929-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createJSDocTypeExpression expected (type: TypeNode) => JSDocTypeExpression, found function with arity 0\n"
+  },
+  {
+    "rank": 932,
+    "reads": 2,
+    "type": "NodeFactory",
+    "field": "createJsxElement",
+    "read": "factory.createJsxElement",
+    "status": "ready for oracle",
+    "arity": 3,
+    "foundArity": 0,
+    "declaration": "createJsxElement(openingElement: JsxOpeningElement, children: readonly JsxChild[], closingElement: JsxClosingElement): JsxElement;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/932-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/932-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createJsxElement expected (openingElement: JsxOpeningElement, children: readonly JsxChild[], closingElement: JsxClosingElement) => JsxElement, found function with arity 0\n"
+  },
+  {
+    "rank": 938,
+    "reads": 2,
+    "type": "NodeFactory",
+    "field": "createNotEmittedTypeElement",
+    "read": "factory.createNotEmittedTypeElement",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "createNotEmittedTypeElement(): NotEmittedTypeElement;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/938-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/938-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createNotEmittedTypeElement expected () => NotEmittedTypeElement, found function with arity 1\n"
+  },
+  {
+    "rank": 944,
+    "reads": 2,
+    "type": "NodeFactory",
+    "field": "createTemplateExpression",
+    "read": "factory.createTemplateExpression",
+    "status": "ready for oracle",
+    "arity": 2,
+    "foundArity": 0,
+    "declaration": "createTemplateExpression(head: TemplateHead, templateSpans: readonly TemplateSpan[]): TemplateExpression;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/944-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/944-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createTemplateExpression expected (head: TemplateHead, templateSpans: readonly TemplateSpan[]) => TemplateExpression, found function with arity 0\n"
+  },
+  {
+    "rank": 947,
+    "reads": 2,
+    "type": "NodeFactory",
+    "field": "createTemplateLiteralType",
+    "read": "factory.createTemplateLiteralType",
+    "status": "ready for oracle",
+    "arity": 2,
+    "foundArity": 0,
+    "declaration": "createTemplateLiteralType(head: TemplateHead, templateSpans: readonly TemplateLiteralTypeSpan[]): TemplateLiteralTypeNode;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/947-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/947-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createTemplateLiteralType expected (head: TemplateHead, templateSpans: readonly TemplateLiteralTypeSpan[]) => TemplateLiteralTypeNode, found function with arity 0\n"
+  },
+  {
+    "rank": 953,
+    "reads": 2,
+    "type": "NodeFactory",
+    "field": "createWithStatement",
+    "read": "factory.createWithStatement",
+    "status": "ready for oracle",
+    "arity": 2,
+    "foundArity": 0,
+    "declaration": "createWithStatement(expression: Expression, statement: Statement): WithStatement;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/953-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/953-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createWithStatement expected (expression: Expression, statement: Statement) => WithStatement, found function with arity 0\n"
+  },
+  {
+    "rank": 962,
+    "reads": 2,
+    "type": "NodeFactory",
+    "field": "updateConstructSignature",
+    "read": "context.factory.updateConstructSignature",
+    "status": "ready for oracle",
+    "arity": 4,
+    "foundArity": 0,
+    "declaration": "updateConstructSignature(node: ConstructSignatureDeclaration, typeParameters: NodeArray<TypeParameterDeclaration> | undefined, parameters: NodeArray<ParameterDeclaration>, type: TypeNode | undefined): ConstructSignatureDeclaration;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/962-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/962-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: context.factory.updateConstructSignature expected (node: ConstructSignatureDeclaration, typeParameters: NodeArray<TypeParameterDeclaration> | undefined, parameters: NodeArray<...>, type: TypeNode | undefined) => ConstructSignatureDeclaration, found function with arity 0\n"
+  },
+  {
+    "rank": 968,
+    "reads": 2,
+    "type": "NodeFactory",
+    "field": "updateFunctionTypeNode",
+    "read": "context.factory.updateFunctionTypeNode",
+    "status": "ready for oracle",
+    "arity": 4,
+    "foundArity": 0,
+    "declaration": "updateFunctionTypeNode(node: FunctionTypeNode, typeParameters: NodeArray<TypeParameterDeclaration> | undefined, parameters: NodeArray<ParameterDeclaration>, type: TypeNode): FunctionTypeNode;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/968-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/968-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: context.factory.updateFunctionTypeNode expected (node: FunctionTypeNode, typeParameters: NodeArray<TypeParameterDeclaration> | undefined, parameters: NodeArray<ParameterDeclaration>, type: TypeNode) => FunctionTypeNode, found function with arity 0\n"
+  },
+  {
+    "rank": 971,
+    "reads": 2,
+    "type": "NodeFactory",
+    "field": "updateIndexedAccessTypeNode",
+    "read": "context.factory.updateIndexedAccessTypeNode",
+    "status": "ready for oracle",
+    "arity": 3,
+    "foundArity": 0,
+    "declaration": "updateIndexedAccessTypeNode(node: IndexedAccessTypeNode, objectType: TypeNode, indexType: TypeNode): IndexedAccessTypeNode;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/971-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/971-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: context.factory.updateIndexedAccessTypeNode expected (node: IndexedAccessTypeNode, objectType: TypeNode, indexType: TypeNode) => IndexedAccessTypeNode, found function with arity 0\n"
+  },
+  {
+    "rank": 974,
+    "reads": 2,
+    "type": "NodeFactory",
+    "field": "updateJsxSelfClosingElement",
+    "read": "context.factory.updateJsxSelfClosingElement",
+    "status": "ready for oracle",
+    "arity": 4,
+    "foundArity": 0,
+    "declaration": "updateJsxSelfClosingElement(node: JsxSelfClosingElement, tagName: JsxTagNameExpression, typeArguments: readonly TypeNode[] | undefined, attributes: JsxAttributes): JsxSelfClosingElement;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/974-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/974-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: context.factory.updateJsxSelfClosingElement expected (node: JsxSelfClosingElement, tagName: JsxTagNameExpression, typeArguments: readonly TypeNode[] | undefined, attributes: JsxAttributes) => JsxSelfClosingElement, found function with arity 0\n"
+  },
+  {
+    "rank": 977,
+    "reads": 2,
+    "type": "NodeFactory",
+    "field": "updateNamespaceExport",
+    "read": "context.factory.updateNamespaceExport",
+    "status": "ready for oracle",
+    "arity": 2,
+    "foundArity": 0,
+    "declaration": "updateNamespaceExport(node: NamespaceExport, name: ModuleExportName): NamespaceExport;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/977-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/977-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: context.factory.updateNamespaceExport expected (node: NamespaceExport, name: ModuleExportName) => NamespaceExport, found function with arity 0\n"
+  },
+  {
+    "rank": 980,
+    "reads": 2,
+    "type": "NodeFactory",
+    "field": "updateObjectBindingPattern",
+    "read": "context.factory.updateObjectBindingPattern",
+    "status": "ready for oracle",
+    "arity": 2,
+    "foundArity": 0,
+    "declaration": "updateObjectBindingPattern(node: ObjectBindingPattern, elements: readonly BindingElement[]): ObjectBindingPattern;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/980-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/980-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: context.factory.updateObjectBindingPattern expected (node: ObjectBindingPattern, elements: readonly BindingElement[]) => ObjectBindingPattern, found function with arity 0\n"
+  },
+  {
+    "rank": 983,
+    "reads": 2,
+    "type": "NodeFactory",
+    "field": "updateSatisfiesExpression",
+    "read": "context.factory.updateSatisfiesExpression",
+    "status": "ready for oracle",
+    "arity": 3,
+    "foundArity": 0,
+    "declaration": "updateSatisfiesExpression(node: SatisfiesExpression, expression: Expression, type: TypeNode): SatisfiesExpression;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/983-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/983-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: context.factory.updateSatisfiesExpression expected (node: SatisfiesExpression, expression: Expression, type: TypeNode) => SatisfiesExpression, found function with arity 0\n"
+  },
+  {
+    "rank": 986,
+    "reads": 2,
+    "type": "NodeFactory",
+    "field": "updateTypeOperatorNode",
+    "read": "context.factory.updateTypeOperatorNode",
+    "status": "ready for oracle",
+    "arity": 2,
+    "foundArity": 0,
+    "declaration": "updateTypeOperatorNode(node: TypeOperatorNode, type: TypeNode): TypeOperatorNode;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/986-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/986-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: context.factory.updateTypeOperatorNode expected (node: TypeOperatorNode, type: TypeNode) => TypeOperatorNode, found function with arity 0\n"
+  },
+  {
+    "rank": 995,
+    "reads": 2,
+    "type": "PackageJsonInfoCache",
+    "field": "setPackageJsonInfo",
+    "read": "state.packageJsonInfoCache.setPackageJsonInfo",
+    "status": "ready for oracle",
+    "arity": 2,
+    "foundArity": 0,
+    "declaration": "setPackageJsonInfo(packageJsonPath: string, info: PackageJsonInfoCacheEntry): void;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/995-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/995-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: state.packageJsonInfoCache.setPackageJsonInfo expected (packageJsonPath: string, info: PackageJsonInfoCacheEntry) => void, found function with arity 0\n"
+  },
+  {
+    "rank": 1013,
+    "reads": 2,
+    "type": "ParseConfigFileHost",
+    "field": "onUnRecoverableConfigFileDiagnostic",
+    "read": "host.onUnRecoverableConfigFileDiagnostic",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "onUnRecoverableConfigFileDiagnostic: DiagnosticReporter;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1013-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1013-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: host.onUnRecoverableConfigFileDiagnostic expected DiagnosticReporter, found function with arity 0\n"
+  },
+  {
+    "rank": 1019,
+    "reads": 2,
+    "type": "Pick<ReadBuildProgramHost, \"getCurrentDirectory\" | \"useCaseSensitiveFileNames\">",
+    "field": "useCaseSensitiveFileNames",
+    "read": "host.useCaseSensitiveFileNames",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "useCaseSensitiveFileNames(): boolean;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1019-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1019-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: host.useCaseSensitiveFileNames expected () => boolean, found function with arity 1\n"
+  },
+  {
+    "rank": 1022,
+    "reads": 2,
+    "type": "Program",
+    "field": "getAutomaticTypeDirectiveNames",
+    "read": "oldProgram.getAutomaticTypeDirectiveNames",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "getAutomaticTypeDirectiveNames(): string[];",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1022-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1022-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: oldProgram.getAutomaticTypeDirectiveNames expected () => string[], found function with arity 1\n"
+  },
+  {
+    "rank": 1025,
+    "reads": 2,
+    "type": "Program",
+    "field": "getGlobalDiagnostics",
+    "read": "state.program.getGlobalDiagnostics",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "getGlobalDiagnostics(cancellationToken?: CancellationToken): readonly Diagnostic[];",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1025-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/1025-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: state.program.getGlobalDiagnostics expected (cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[], found function with arity 0\n"
   }
 ]
