@@ -1,0 +1,2 @@
+function make(): string { let text: string = undefined!; text = "ok"; return text; }
+console.log(make());

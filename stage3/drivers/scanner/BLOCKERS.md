@@ -1,3 +1,18 @@
+## October 8: clean records rebase still conflicts with library
+
+Fresh scratch af708e4e merges current main ffe6efc1 and library b05a9306.
+The requested clean records/named-index rebase fcddeb29 conflicted in six files
+against that combination and was aborted and skipped without hand resolutions.
+The previous hand-resolved checkout is excluded from this measurement.
+
+Compiler build passed in 141.791s. Scanner split 0 and 1 still stop at
+corePublic.ts:9:5. Both full-tree Node diffs pass, both exactly-one-byte Node
+output mutants are caught, and fifteen fresh Node-success/build-refusal
+witnesses reproduce the preceding fifteen ordered stops. No native scanner
+comparison, native timing or records feature integration is claimed.
+
+[Fresh integration and ordered-stop evidence](evidence/clean-records-rebase/REPORT.md).
+
 ## October 8: scratch records resolution stopped at verification
 
 A scratch-merge measurement resolved the six conflicts from records-lowering
