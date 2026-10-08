@@ -585,7 +585,7 @@ func (l *lowering) readonlyRecordIndex(node *ast.Node) (ir.Expression, bool, err
 	access := node.AsElementAccessExpression()
 	t := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))
 	rep, _ := l.representation(t)
-	if rep != ir.Record {
+	if rep != ir.Record || l.recordElement(t) != nil {
 		return nil, false, nil
 	}
 	info, ok := l.recordInfo(t)
@@ -629,4 +629,9 @@ func (l *lowering) hasStringRecordIndex(t *checker.Type) bool {
 		}
 	}
 	return false
+}
+
+func (l *lowering) readonlyRecordSupported(proven *checker.Type) bool {
+	_, supported := l.recordInfo(proven)
+	return supported
 }

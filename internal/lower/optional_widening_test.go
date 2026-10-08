@@ -77,10 +77,14 @@ func TestOptionalWideningRefused(t *testing.T) {
 
 func TestOptionalWideningAllowed(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"class", "fresh", "declared"} {
+	for _, name := range []string{"class", "fresh", "declared", "field_access_paths"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			source, err := os.ReadFile("../oracle/testdata/optional_widening_" + name + ".a")
+			path := "../oracle/testdata/optional_widening_" + name + ".a"
+			if name == "field_access_paths" {
+				path = "../oracle/testdata/field_access_paths.a"
+			}
+			source, err := os.ReadFile(path)
 			if err != nil {
 				t.Fatal(err)
 			}

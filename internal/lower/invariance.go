@@ -343,7 +343,20 @@ func (l *lowering) exactObjectAlias(node *ast.Node) bool {
 		return false
 	}
 	variable := declaration.AsVariableDeclaration()
-	return variable.Type == nil && variable.Initializer != nil && ast.SkipParentheses(variable.Initializer).Kind == ast.KindObjectLiteralExpression
+	if variable.Type != nil || variable.Initializer == nil {
+		return false
+	}
+	literal := ast.SkipParentheses(variable.Initializer)
+	if literal.Kind != ast.KindObjectLiteralExpression {
+		return false
+	}
+	for _, property := range literal.AsObjectLiteralExpression().Properties.Nodes {
+		if property.Kind == ast.KindSpreadAssignment || property.Name() == nil || property.Name().Kind == ast.KindComputedPropertyName {
+			// A hidden spread field or dynamic key is not proof of absence.
+			return false
+		}
+	}
+	return true
 }
 
 func (l *lowering) optionalRefusal(node *ast.Node, found *widening) error {

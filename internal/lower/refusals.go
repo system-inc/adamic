@@ -373,7 +373,7 @@ func (l *lowering) recordOperationNotYet(node *ast.Node) error {
 		if callee.Kind == ast.KindPropertyAccessExpression && call.Arguments != nil && len(call.Arguments.Nodes) > 0 {
 			access := callee.AsPropertyAccessExpression()
 			name := access.Name().Text()
-			if l.isLibraryGlobal(access.Expression, "Object") && (name == "values" || name == "entries") && l.checker.GetStringIndexType(l.checker.GetTypeAtLocation(call.Arguments.Nodes[0])) != nil && l.recordElement(l.checker.GetTypeAtLocation(call.Arguments.Nodes[0])) == nil {
+			if l.isLibraryGlobal(access.Expression, "Object") && (name == "values" || name == "entries") && l.checker.GetStringIndexType(l.checker.GetTypeAtLocation(call.Arguments.Nodes[0])) != nil && l.recordElement(l.checker.GetTypeAtLocation(call.Arguments.Nodes[0])) == nil && !l.readonlyRecordSupported(l.checker.GetTypeAtLocation(call.Arguments.Nodes[0])) {
 				return l.notYet(node, "Object."+name+" on a record (own-key record enumeration is not implemented; use Map."+name+")")
 			}
 		}

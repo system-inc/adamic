@@ -219,7 +219,7 @@ func loadInput(paths []string, overlay map[string]string, requestedProject strin
 		fs.projectConsole = true
 		roots = append(roots, currentDirectory.ResolveFile(index))
 		nodeRoots := append(append([]tspath.RootedFilePath{}, roots...), preludePath, setPreludePath)
-		config = tsoptions.NewParsedCommandLine(options, nodeRoots, nil, currentDirectory, fs.CaseSensitivity())
+		config = tsoptions.NewParsedCommandLine(options, nodeRoots, nil, currentDirectory, fileSystem.CaseSensitivity())
 		if projectConfig != nil {
 			config = projectConfig.WithFileNames(roots)
 		}

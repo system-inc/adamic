@@ -9,6 +9,8 @@ import (
 func TestRecordForms(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
+		`interface R { readonly [key:string]:number } const r:R={};`,
+		`type R=Readonly<Record<string,number>>; const r:R={}; console.log(String(r['x']));`,
 		`interface R { [key:string]: number } const r:R={}; r['x']=1; console.log(String(r['x']));`,
 		`type R=Record<string,string>; const r:R={x:'one'}; console.log(Object.keys(r).join(','));`,
 		`function show(r:Record<string,number>|undefined):void {console.log(String(JSON.stringify(r)));} show(undefined); show({x:1});`,

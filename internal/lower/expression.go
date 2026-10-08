@@ -278,7 +278,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 			if err := l.unknownView(node, l.checker.GetTypeAtLocation(node), contextual); err != nil {
 				return nil, err
 			}
-			if value.Type().IsReference() && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) {
+			if viewSite(node) && value.Type().IsReference() && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) {
 				if member := l.libraryPrototypeView(l.checker.GetTypeAtLocation(node), contextual, map[[2]*checker.Type]bool{}); member != "" {
 					return nil, l.notYet(node, "a structural view of library prototype member "+member+" as an own field or method; use a wrapper object with an arrow that calls the member on its library receiver")
 				}

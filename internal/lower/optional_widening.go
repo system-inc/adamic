@@ -134,13 +134,24 @@ func (l *lowering) optionalValue(node *ast.Node, target *checker.Type) *optional
 		}
 		return nil
 	}
+	return l.optionalKnownValue(node, target, nil)
+}
+
+// A plain const literal alias proves only its surface keys. Nested field types
+// still undergo the optional view check, as on the incoming presence path.
+func (l *lowering) optionalKnownValue(node *ast.Node, target *checker.Type, skip map[string]bool) *optionalWidening {
+	source := l.checker.GetTypeAtLocation(node)
 	if l.exactObjectAlias(node) {
-		if found := l.optionalView(l.checker.GetTypeAtLocation(node), target, true, map[[2]*checker.Type]bool{}); found != nil {
-			return &optionalWidening{property: found.optionalField, source: found.source, target: found.target}
+		if skip == nil {
+			skip = map[string]bool{}
 		}
-		return nil
+		for _, property := range l.checker.GetPropertiesOfType(target) {
+			if property.Flags&ast.SymbolFlagsOptional != 0 && l.checker.GetPropertyOfType(source, property.Name) == nil {
+				skip[property.Name] = true
+			}
+		}
 	}
-	return l.optionalWidened(l.checker.GetTypeAtLocation(node), target, nil, map[[2]*checker.Type]bool{})
+	return l.optionalWidened(source, target, skip, map[[2]*checker.Type]bool{})
 }
 
 // optionalAtSite uses the same relation sites as the other view rules, before lowering.
@@ -178,8 +189,8 @@ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
 			}
 		}
 		expression := ast.SkipParentheses(node.AsSpreadAssignment().Expression)
-		if expression.Kind != ast.KindObjectLiteralExpression && !l.exactObjectAlias(expression) {
-			found = l.optionalWidened(l.checker.GetTypeAtLocation(expression), target, skip, map[[2]*checker.Type]bool{})
+		if expression.Kind != ast.KindObjectLiteralExpression {
+			found = l.optionalKnownValue(expression, target, skip)
 		}
 	default:
 		if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) || l.genericFunction(node) {

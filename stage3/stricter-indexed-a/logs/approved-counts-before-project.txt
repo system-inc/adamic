@@ -1,0 +1,10 @@
+--- FAIL: TestCountsAreRecorded (170.51s)
+    --- FAIL: TestCountsAreRecorded/fixtures (0.02s)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/fresh/testdata/regexp_tree.ts (0.06s)
+            counts_test.go:149: Load: load: /workspace/adamic/internal/fresh/testdata/regexp_tree.ts is outside its project's root files; option attribution for explicit extra roots is not implemented yet
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	170.610s
+FAIL

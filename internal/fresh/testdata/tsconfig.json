@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "module": "esnext",
+    "moduleDetection": "force",
+    "moduleResolution": "bundler",
+    "target": "es2024",
+    "lib": ["es2024"],
+    "types": [],
+    "noEmit": true
+  },
+  "files": ["regexp_tree.ts"]
+}
