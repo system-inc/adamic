@@ -1,3 +1,4 @@
+// a-check: refused changing prototypes after creation; outside the .a sound subset; use a .ts program with proven heap lifetimes
 // debug.ts:601. Array-to-prototype edge needs the array ownership and graph-region path.
 const array = [1, 2];
 const nodeArrayProto = {};
