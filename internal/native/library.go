@@ -19,8 +19,14 @@ type runtimeFile struct {
 }
 
 // runtimeBuilds serializes builders of the same disk entry within this process. Different flag
-// sets can build concurrently. Across processes, only a complete directory is published by rename.
+// sets can build concurrently. Failures live only here, never on disk, so a fresh process retries.
+// Across processes, only a complete directory is published by rename.
 var runtimeBuilds sync.Map
+
+type runtimeBuild struct {
+	lock sync.Mutex
+	err  error
+}
 
 // RuntimeLibrary returns a cached static library compiled with Flags(options). An empty directory
 // uses the embedded runtime; the fuzzer supplies another checkout's runtime directory instead.
@@ -140,13 +146,18 @@ func runtimeKey(files []runtimeFile, flags []string, compiler string, version st
 	return fmt.Sprintf("%x", hash.Sum(nil))
 }
 
-func cachedRuntime(files []runtimeFile, flags []string, compiler string, version string, cache string) (string, error) {
+func cachedRuntime(files []runtimeFile, flags []string, compiler string, version string, cache string) (result string, failure error) {
 	directory := filepath.Join(cache, runtimeKey(files, flags, compiler, version))
 	library := filepath.Join(directory, "runtime.a")
-	value, _ := runtimeBuilds.LoadOrStore(directory, &sync.Mutex{})
-	lock := value.(*sync.Mutex)
-	lock.Lock()
-	defer lock.Unlock()
+	value, _ := runtimeBuilds.LoadOrStore(directory, &runtimeBuild{})
+	build := value.(*runtimeBuild)
+	build.lock.Lock()
+	defer build.lock.Unlock()
+	if build.err != nil {
+		return "", build.err
+	}
+	// Remember every failure after the key is known, including temporary-directory failures.
+	defer func() { build.err = failure }()
 	if info, err := os.Stat(library); err == nil && info.Mode().IsRegular() {
 		return library, nil
 	}

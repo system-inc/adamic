@@ -90,9 +90,10 @@ func TestRuntimeStaticsSignalAndExit(t *testing.T) {
 		}
 	}
 	// Repeat the unsafe access to expose overlap before forwarding terminates the process.
-	// No extra synchronization is added: every iteration is the same unlocked flush.
+	// Pause between accesses so writers can run; this adds no synchronization. Every
+	// iteration remains the same unlocked flush.
 	t.Run("handler_buffer_mutant", func(t *testing.T) {
-		library, root := staticsRaceLibrary(t, "adamic.c", "int saved_errno = errno;", "int saved_errno = errno;\n for (size_t attempt = 0; attempt < 16384; attempt++) { flush(); }")
+		library, root := staticsRaceLibrary(t, "adamic.c", "int saved_errno = errno;", "int saved_errno = errno;\n struct timespec delay = {0, 100000};\n for (size_t attempt = 0; attempt < 16384; attempt++) { flush(); nanosleep(&delay, NULL); }")
 		binary := staticsRaceFixture(t, root, library, "signal_output")
 		staticsSignalRun(t, binary, true, syscall.SIGTERM, true)
 	})
@@ -290,7 +291,9 @@ func staticsRaceRun(t *testing.T, binary string, mutant bool) {
 		output, err := command.CombinedOutput()
 		timedOut := ctx.Err() != nil
 		cancel()
-		race := strings.Contains(string(output), "WARNING: ThreadSanitizer: data race")
+		// Removing a lock can also let another worker free the raced storage.
+		race := strings.Contains(string(output), "WARNING: ThreadSanitizer: data race") ||
+			strings.Contains(string(output), "WARNING: ThreadSanitizer: heap-use-after-free")
 		if mutant {
 			if err == nil || timedOut || !race {
 				t.Fatalf("race mutant was not caught (attempt %d): %v\n%s", attempt+1, err, output)

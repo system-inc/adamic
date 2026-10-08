@@ -99,6 +99,9 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 		return castProof{}, nil
 	}
+	if !l.sameKeeping(l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node), map[[2]*checker.Type]bool{}) {
+		return castProof{}, l.notYet(node, "a cast that changes the runtime representation or ownership of a reference")
+	}
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
 	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: castRepair}

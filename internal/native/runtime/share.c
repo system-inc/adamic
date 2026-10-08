@@ -60,6 +60,11 @@ void adamic_share(void *value) {
 	append(&pending, value);
 	while (pending.count != 0) {
 		adamic_heap *heap = pending.values[--pending.count];
+		// A graph region's counts are plain and single-threaded (graph_regions.c); the compiler
+		// refuses a graph value reaching a task, and this is the backstop.
+		if ((heap->slab & ADAMIC_GRAPH_FLAG) != 0) {
+			adamic_panic("a graph region can't cross into parallel work yet", sizeof "a graph region can't cross into parallel work yet" - 1);
+		}
 		bool shared = adamic_is_shared(heap);
 		// Immutable shared leaves cannot gain children. Containers can have gained fresh descendants
 		// through unique reuse before the caller retained them again, so always revisit containers.
