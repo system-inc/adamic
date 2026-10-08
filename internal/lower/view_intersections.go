@@ -86,7 +86,7 @@ func (l *lowering) internStructuralViewIntersection(node *ast.Node, target *chec
 		return id, nil
 	}
 	id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
-	contract := ir.ViewContract{Kind: ir.ViewObject, Of: ir.Object, Name: l.checker.TypeToString(target)}
+	contract := ir.ViewContract{Intersection: true, Kind: ir.ViewObject, Of: ir.Object, Name: l.checker.TypeToString(target)}
 	l.result.ViewContracts = append(l.result.ViewContracts, contract)
 	l.result.ViewContractTypes[int(target.Id())] = id
 	runtimeFields := map[string]bool{}

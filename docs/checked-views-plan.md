@@ -1051,3 +1051,27 @@ the conjunctive descriptor and call lane-owned all-member snapshot matchers.
 Do not certify a shape with only the heap tag or flattened field registration.
 Until this dispatch exists, the original unsupported intersection refusal stays
 active in the production tree. The overlay is experimental evidence only.
+
+
+Lane 7 production hook group, October 8, authorized by the shared-hook rule:
+shared lower/expression.go, view_lazy.go, view_contracts.go and view_objects.go
+now call structuralViewIntersection and internStructuralViewIntersection.
+IR views.go adds the named Intersection discriminator; union selection is kept
+separate. Native/view_unions.go and javascript/view_unions.go dispatch this flag
+to lane-owned viewObjectIntersection methods. These use checker-combined Fields
+to check all nonphantom member obligations, including duplicate-name child
+intersections, and preserve one snapshot per projected field. The existing
+presence/readiness and expected-type diagnostics are reused. Deferred unsupported
+descendants retain lazy read obligations; a recursive backedge retains checks on
+subsequent projected reads. Native and JavaScript code generation lives in the
+lane's owned view_intersections files. These seven named hooks supersede the
+incomplete overlay handoff. Production tests no longer skip or need an overlay.
+
+Candidate queue remains the lazy inventory, labeled candidate, across all owners.
+No exact counts are inferred. First production group verifies GeneratedIdentifier
+emitNode shape fragments, root-only reads, helper reads, optional absence,
+object phantom brands and duplicate-field nested intersections. Full upstream
+pair certification remains distinct from reduced fragments. Revised whole-family
+working date: October 11, 2026, 23:00 UTC. This estimate now has no shared-hook
+handoff dependency; compound union, recursive, array and callable intersections
+still require additional implementation and validation.

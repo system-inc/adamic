@@ -66,7 +66,7 @@ func TestViewIntersectionContracts(t *testing.T) {
 				t.Fatal(err)
 			}
 			contract := l.result.ViewContracts[id-1]
-			if contract.Kind != ir.ViewObject || len(contract.Members) != test.members {
+			if !contract.Intersection || contract.Kind != ir.ViewObject || len(contract.Members) != test.members {
 				t.Fatalf("lost conjunction: %#v", contract)
 			}
 			if test.name == "brand" || test.name == "optional brand" {

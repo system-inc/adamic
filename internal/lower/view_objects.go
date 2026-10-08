@@ -59,6 +59,9 @@ func (l *lowering) viewObjectFields(node *ast.Node, target *checker.Type, fields
 }
 
 func (l *lowering) viewDataType(target *checker.Type) bool {
+	if l.structuralViewIntersection(target) {
+		return true
+	}
 	if base := l.phantomBase(target); base != nil {
 		return interfaceScalar(base)
 	}

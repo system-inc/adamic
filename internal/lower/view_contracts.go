@@ -28,6 +28,9 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 		l.result.ViewContractTypes[int(target.Id())] = id
 		return id, nil
 	}
+	if l.structuralViewIntersection(target) {
+		return l.internStructuralViewIntersection(node, target)
+	}
 	build := func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) }
 	if target.Flags()&checker.TypeFlagsObject != 0 && (l.checker.IsArrayType(target) || checker.IsTupleType(target)) {
 		if viewArrayContractHook == nil {

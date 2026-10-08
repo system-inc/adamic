@@ -51,6 +51,9 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 	case flags&checker.TypeFlagsTypeParameter != 0:
 		return "generic"
 	case flags&checker.TypeFlagsIntersection != 0:
+		if l.structuralViewIntersection(target) {
+			return ""
+		}
 		return "intersection"
 	case flags&checker.TypeFlagsNull != 0:
 		return "nullish"

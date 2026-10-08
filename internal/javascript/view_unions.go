@@ -13,6 +13,9 @@ func (e *emitter) viewObjectUnion(property ir.Property, value string) string {
 		return value
 	}
 	contract := e.program.ViewContracts[int(property.ViewContract)-1]
+	if contract.Intersection {
+		return e.viewObjectIntersection(property, value)
+	}
 	if contract.Kind != ir.ViewUnion {
 		return value
 	}

@@ -56,6 +56,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 			}
 			return l.representation(primitive)
 		}
+		if l.structuralViewIntersection(proven) {
+			return ir.Object, true
+		}
 		return l.objectIntersection(proven)
 	}
 	switch {
