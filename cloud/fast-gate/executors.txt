@@ -65,3 +65,1400 @@ inert          verify/coverage/*
 # (// a-check: refused <rule> | // a-check: type error <code>). This line covers .a files no other
 # line does; a-check runs for the others too.
 a-check        *.a
+
+# Additive file readers inventoried on origin/main. These never cover a path.
+# reads <package dir> <glob>: run its tests for every matching changed path,
+# including paths owned by another package. All matching reads rules fire.
+# A map change runs all reader packages. fast.json reads records line/package/glob,
+# matching paths, and whether the map changed. Globs use fnmatch, as above: * spans
+# directories; *.ts covers root and nested TS files. Extension brackets preserve
+# the case-insensitive corpus walks. cohere is a gitlink, so use its exact path.
+# TestBridge — bridge/tsgo/bridge_test.go:219
+reads bridge/tsgo internal/lower/tsgo.go
+# TestBridge — bridge/tsgo/bridge_test.go:274
+reads bridge/tsgo internal/native/runtime/tsgo.c
+# TestTypeAwareChildrenAndParentCost — cmd/adamic-gate/resume_test.go:137
+reads cmd/adamic-gate stage1/cohere/typeaware/volume_test.go
+# TestParallelCachedMatchesSerial — cmd/adamic-test262/cache_test.go:138
+# TestOrderedProgress — cmd/adamic-test262/cache_test.go:219
+# TestUnavailableCacheStillRuns — cmd/adamic-test262/cache_test.go:239
+# TestImportedInputsRunFresh — cmd/adamic-test262/cache_test.go:260
+# TestCompilerCacheAcrossScratchDirectories — cmd/adamic-test262/cache_test.go:329
+# TestCompilerWorkerMatchesSubprocess — cmd/adamic-test262/compiler_test.go:14
+# TestMiniRunner — cmd/adamic-test262/corpus_test.go:186
+# TestLargeCompilerOutputIsComplete — cmd/adamic-test262/corpus_test.go:226
+# TestEditCacheSeparation — cmd/adamic-test262/edit_test.go:16
+# TestWorkerLazyFallback — cmd/adamic-test262/edit_test.go:68
+# TestLoweringSourceEdit — cmd/adamic-test262/edit_test.go:99
+# TestLoweringSourceEdit — cmd/adamic-test262/edit_test.go:120
+reads cmd/adamic-test262 internal/native/runtime/*.c
+# TestParallelCachedMatchesSerial — cmd/adamic-test262/cache_test.go:138
+# TestOrderedProgress — cmd/adamic-test262/cache_test.go:219
+# TestUnavailableCacheStillRuns — cmd/adamic-test262/cache_test.go:239
+# TestImportedInputsRunFresh — cmd/adamic-test262/cache_test.go:260
+# TestCompilerCacheAcrossScratchDirectories — cmd/adamic-test262/cache_test.go:329
+# TestCompilerWorkerMatchesSubprocess — cmd/adamic-test262/compiler_test.go:14
+# TestMiniRunner — cmd/adamic-test262/corpus_test.go:186
+# TestLargeCompilerOutputIsComplete — cmd/adamic-test262/corpus_test.go:226
+# TestEditCacheSeparation — cmd/adamic-test262/edit_test.go:16
+# TestWorkerLazyFallback — cmd/adamic-test262/edit_test.go:68
+# TestLoweringSourceEdit — cmd/adamic-test262/edit_test.go:99
+# TestLoweringSourceEdit — cmd/adamic-test262/edit_test.go:120
+reads cmd/adamic-test262 internal/native/runtime/*.h
+# TestEveryFunctionIsInSingleAssignment via programs — internal/flow/flow_test.go:27
+reads internal/flow dedication/dedication.a
+# TestEveryFunctionIsInSingleAssignment via programs — internal/flow/flow_test.go:28
+reads internal/flow internal/load/testdata/0.1/compile/*.ts
+# TestEveryFunctionIsInSingleAssignment via programs — internal/flow/flow_test.go:29 (imported input)
+reads internal/flow internal/load/testdata/0.1/compile/07_modules/geometry.ts
+# TestEveryFunctionIsInSingleAssignment via programs — internal/flow/flow_test.go:29
+reads internal/flow internal/load/testdata/0.1/compile/07_modules/main.ts
+# TestEveryFunctionIsInSingleAssignment via programs — internal/flow/flow_test.go:30
+reads internal/flow internal/oracle/testdata/*.a
+# TestEveryFunctionIsInSingleAssignment via programs — internal/flow/flow_test.go:31 (imported input)
+reads internal/flow internal/oracle/testdata/modules/counter.a
+# TestEveryFunctionIsInSingleAssignment via programs — internal/flow/flow_test.go:31 (imported input)
+reads internal/flow internal/oracle/testdata/modules/format.a
+# TestEveryFunctionIsInSingleAssignment via programs — internal/flow/flow_test.go:31
+reads internal/flow internal/oracle/testdata/modules/main.a
+# TestEveryPathNodeTakesIsInTheGraph, TestLivenessHoldsOnEveryPath via traced — internal/flow/trace_test.go:136
+reads internal/flow internal/oracle/testdata/reading/*
+# TestEveryPathNodeTakesIsInTheGraph, TestLivenessHoldsOnEveryPath via traced — internal/flow/trace_test.go:136
+reads internal/flow oracle/adamic.mjs
+# TestEveryPathNodeTakesIsInTheGraph, TestLivenessHoldsOnEveryPath via traced — internal/flow/trace_test.go:136
+reads internal/flow oracle/node.mjs
+# TestEveryWriteIsRecordedAndKnown — internal/fresh/fresh_test.go:21
+reads internal/fresh dedication/dedication.a
+# TestEveryWriteIsRecordedAndKnown — internal/fresh/fresh_test.go:26
+reads internal/fresh internal/flow/testdata/*.a
+# TestEveryWriteIsRecordedAndKnown — internal/fresh/fresh_test.go:22
+reads internal/fresh internal/load/testdata/0.1/compile/*.ts
+# TestEveryWriteIsRecordedAndKnown — internal/fresh/fresh_test.go:23 (imported input)
+reads internal/fresh internal/load/testdata/0.1/compile/07_modules/geometry.ts
+# TestEveryWriteIsRecordedAndKnown — internal/fresh/fresh_test.go:23
+reads internal/fresh internal/load/testdata/0.1/compile/07_modules/main.ts
+# TestEveryWriteIsRecordedAndKnown — internal/fresh/fresh_test.go:24
+reads internal/fresh internal/oracle/testdata/*.a
+# TestEveryWriteIsRecordedAndKnown — internal/fresh/fresh_test.go:25 (imported input)
+reads internal/fresh internal/oracle/testdata/modules/counter.a
+# TestEveryWriteIsRecordedAndKnown — internal/fresh/fresh_test.go:25 (imported input)
+reads internal/fresh internal/oracle/testdata/modules/format.a
+# TestEveryWriteIsRecordedAndKnown — internal/fresh/fresh_test.go:25
+reads internal/fresh internal/oracle/testdata/modules/main.a
+# TestReduceKeepsTheSignature — internal/fuzz/reduce_test.go:72
+# TestFuzzerSharesRuntimeLibrary — internal/fuzz/runtime_test.go:13
+reads internal/fuzz internal/native/runtime/*.c
+# TestReduceKeepsTheSignature — internal/fuzz/reduce_test.go:72
+# TestFuzzerSharesRuntimeLibrary — internal/fuzz/runtime_test.go:13
+reads internal/fuzz internal/native/runtime/*.h
+# TestReduceKeepsTheSignature — internal/fuzz/reduce_test.go:72
+# TestFuzzerSharesRuntimeLibrary — internal/fuzz/runtime_test.go:13
+reads internal/fuzz oracle/adamic.mjs
+# TestReduceKeepsTheSignature — internal/fuzz/reduce_test.go:72
+# TestFuzzerSharesRuntimeLibrary — internal/fuzz/runtime_test.go:13
+reads internal/fuzz oracle/node.mjs
+# TestCallTargetReaders — internal/ir/call_targets_guard_test.go:114
+reads internal/ir internal/flow/*.go
+# TestCallTargetReaders — internal/ir/call_targets_guard_test.go:114
+reads internal/ir internal/fresh/*.go
+# TestCallTargetReaders — internal/ir/call_targets_guard_test.go:114
+reads internal/ir internal/lower/*.go
+# TestCallTargetReaders — internal/ir/call_targets_guard_test.go:114
+reads internal/ir internal/native/*.go
+# TestTypeScriptIsThePinnedCommit — internal/load/pin_test.go:19
+reads internal/load cohere
+# TestClassFeaturesPrivateStorage — internal/lower/class_features_test.go:52
+reads internal/lower internal/oracle/testdata/class_features_private.a
+# TestGenericUnionFixtureHasSeparateInstances — internal/lower/generic_instance_key_test.go:28
+reads internal/lower internal/oracle/testdata/generic_instance_key_typeof.a
+# TestClassWrongOutputIteratorReceiver — internal/lower/class_wrong_output_test.go:10
+reads internal/lower internal/oracle/testdata/iterators_override_this.a
+# TestClassWrongOutputKeysRepair — internal/lower/class_wrong_output_test.go:37
+reads internal/lower internal/oracle/testdata/iterators_sym_keys_view.a
+# TestOptionalWideningAllowed — internal/lower/optional_widening_test.go:76
+reads internal/lower internal/oracle/testdata/optional_widening_*.a
+# TestGenericJSONUnionArrayIsNotYet — internal/lower/generic_instance_key_test.go:49
+reads internal/lower internal/oracle/testdata/reland_refused/generic_instance_key_json.a
+# TestUndecidedCycleReadsUseReadyChecks — internal/lower/import_cycle_ready_test.go:92
+reads internal/lower oracle/adamic.mjs
+# TestUndecidedCycleReadsUseReadyChecks — internal/lower/import_cycle_ready_test.go:92
+reads internal/lower oracle/node.mjs
+# TestOriginalCycleLedger — internal/lower/import_cycle_ledger_test.go:113
+reads internal/lower stage3/fixtures/cycles/ledger.json
+# TestOriginalCycleLedger — internal/lower/import_cycle_ledger_test.go:113
+reads internal/lower stage3/fixtures/cycles/order.json
+# TestOriginalCycleLedger — internal/lower/import_cycle_ledger_test.go:113
+reads internal/lower stage3/fixtures/cycles/trace.json.gz
+# TestNbodyIndexedElementsBorrow — internal/native/element_borrow_test.go:18
+# TestNbodyBorrowedLoopC — internal/native/loop_borrow_test.go:64
+# TestLoopArrayHoldC — internal/native/loop_borrow_test.go:120
+reads internal/native bench/nbody.ts
+# TestRegExpLintPatternsNode — internal/native/regexp_search_test.go:56
+reads internal/native bench/regex/cases.json
+# TestWASI — internal/native/wasm_test.go:89
+reads internal/native internal/load/testdata/0.1/compile/01_hello.ts
+# TestWASI — internal/native/wasm_test.go:90
+reads internal/native internal/load/testdata/0.1/compile/02_fizzbuzz.ts
+# TestWASI — internal/native/wasm_test.go:91
+reads internal/native internal/load/testdata/0.1/compile/03_shapes.ts
+# TestWASI — internal/native/wasm_test.go:92
+reads internal/native internal/load/testdata/0.1/compile/04_closures.ts
+# TestWASI — internal/native/wasm_test.go:93
+reads internal/native internal/load/testdata/0.1/compile/05_wordcount.ts
+# TestWASI — internal/native/wasm_test.go:94
+reads internal/native internal/load/testdata/0.1/compile/06_stack.ts
+# TestWASI — internal/native/wasm_test.go:95 (imported input)
+reads internal/native internal/load/testdata/0.1/compile/07_modules/geometry.ts
+# TestWASI — internal/native/wasm_test.go:95
+reads internal/native internal/load/testdata/0.1/compile/07_modules/main.ts
+# TestWASI — internal/native/wasm_test.go:96
+reads internal/native internal/load/testdata/0.1/compile/08_results.ts
+# TestWASI — internal/native/wasm_test.go:97
+reads internal/native internal/load/testdata/0.1/compile/09_tree.ts
+# TestWASI — internal/native/wasm_test.go:98
+reads internal/native internal/load/testdata/0.1/compile/10_unicode.ts
+# TestWASI — internal/native/wasm_test.go:100
+reads internal/native internal/oracle/testdata/bitwise_sweep.a
+# TestBorrowChainDeclarations — internal/native/borrow_chain_test.go:15
+reads internal/native internal/oracle/testdata/borrow_chain_*.a
+# TestThrowElementBorrowPlan — internal/native/element_borrow_test.go:60
+reads internal/native internal/oracle/testdata/borrow_element_throw.a
+# TestGlobalArgumentLending — internal/native/loop_borrow_test.go:88
+reads internal/native internal/oracle/testdata/borrow_global_call.a
+# TestLoopBorrowPlan — internal/native/loop_borrow_test.go:28
+# TestLoopArrayHoldC — internal/native/loop_borrow_test.go:120
+reads internal/native internal/oracle/testdata/borrow_loop.a
+# TestLoopCallCoverage — internal/native/loop_borrow_test.go:175
+reads internal/native internal/oracle/testdata/borrow_loop_calls.a
+# TestCallTargetsElementBorrowPlan — internal/native/element_borrow_test.go:98
+reads internal/native internal/oracle/testdata/call_targets_element.a
+# TestInheritanceMemoryPlans via inheritanceMemoryProgram — internal/native/class_inheritance_test.go:14
+reads internal/native internal/oracle/testdata/class_inheritance_memory.a
+# TestWASI — internal/native/wasm_test.go:110
+reads internal/native internal/oracle/testdata/closures_throw.a
+# TestDevirtualizedCalls — internal/native/devirtualize_test.go:16
+reads internal/native internal/oracle/testdata/devirtualize.a
+# TestWASI — internal/native/wasm_test.go:100
+reads internal/native internal/oracle/testdata/functions.a
+# TestWASI — internal/native/wasm_test.go:107
+reads internal/native internal/oracle/testdata/json_stringify_numbers.a
+# TestWASI — internal/native/wasm_test.go:108
+reads internal/native internal/oracle/testdata/library_array_flat.a
+# TestWASI — internal/native/wasm_test.go:108
+reads internal/native internal/oracle/testdata/library_object_keys.a
+# TestWASI — internal/native/wasm_test.go:104
+reads internal/native internal/oracle/testdata/maps_and_text.a
+# TestWASI — internal/native/wasm_test.go:104
+reads internal/native internal/oracle/testdata/normalize.a
+# TestWASI — internal/native/wasm_test.go:99
+reads internal/native internal/oracle/testdata/numbers.a
+# TestWASI — internal/native/wasm_test.go:106
+reads internal/native internal/oracle/testdata/panic.a
+# TestWASI — internal/native/wasm_test.go:109
+reads internal/native internal/oracle/testdata/read_files.a
+# TestWASI — internal/native/wasm_test.go:108
+reads internal/native internal/oracle/testdata/reading/*
+# TestWASI — internal/native/wasm_test.go:107
+reads internal/native internal/oracle/testdata/regexp_cycle_collections.a
+# TestWASI — internal/native/wasm_test.go:101
+reads internal/native internal/oracle/testdata/regions.a
+# TestWASI — internal/native/wasm_test.go:101
+reads internal/native internal/oracle/testdata/regions_throw.a
+# TestWASI — internal/native/wasm_test.go:103
+reads internal/native internal/oracle/testdata/reuse_weak_after_reuse.a
+# TestWASI — internal/native/wasm_test.go:103
+reads internal/native internal/oracle/testdata/reuse_weak_during_spread.a
+# TestWASI — internal/native/wasm_test.go:105
+reads internal/native internal/oracle/testdata/stack_forever.a
+# TestWASI — internal/native/wasm_test.go:105
+reads internal/native internal/oracle/testdata/stack_overflow.a
+# TestWASI — internal/native/wasm_test.go:106
+reads internal/native internal/oracle/testdata/stack_tail_call.a
+# TestWASI — internal/native/wasm_test.go:99
+reads internal/native internal/oracle/testdata/strings.a
+# TestWASI — internal/native/wasm_test.go:102
+reads internal/native internal/oracle/testdata/weak_narrowed.a
+# TestWASI — internal/native/wasm_test.go:102
+reads internal/native internal/oracle/testdata/weak_parent.a
+# TestWASI — internal/native/wasm_test.go:112
+reads internal/native internal/oracle/testdata/write_stderr_order.a
+# TestWASI — internal/native/wasm_test.go:111
+reads internal/native internal/oracle/testdata/write_stdout_order.a
+# TestRegExpBytecodeTest262 — internal/native/regexp_test.go:38
+reads internal/native internal/regexp/testdata/matches.json.gz
+# TestWASI — internal/native/wasm_test.go:133
+reads internal/native oracle/adamic.mjs
+# TestWASI — internal/native/wasm_test.go:133
+reads internal/native oracle/node.mjs
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21 (imported input)
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21
+reads internal/native stage1/cohere/lint/finding.ts
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21 (imported input)
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21
+reads internal/native stage1/cohere/lint/suggestions.a
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21
+reads internal/native stage1/cohere/typeaware/main.ts
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21 (imported input)
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21
+reads internal/native stage1/cohere/typeaware/unary_minus.ts
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21 (imported input)
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21
+reads internal/native stage1/typescript/parser/grammar.ts
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21 (imported input)
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21
+reads internal/native stage1/typescript/parser/jsx.ts
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21 (imported input)
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21
+reads internal/native stage1/typescript/parser/lookahead.ts
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21 (imported input)
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21
+reads internal/native stage1/typescript/parser/nodes.ts
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21 (imported input)
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21
+reads internal/native stage1/typescript/parser/parser.ts
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21 (imported input)
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21
+reads internal/native stage1/typescript/parser/statements.ts
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21 (imported input)
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21
+reads internal/native stage1/typescript/scanner/characters.ts
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21 (imported input)
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21
+reads internal/native stage1/typescript/scanner/scanner.ts
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21 (imported input)
+# TestSplitTSGoAgrees — internal/native/units_tsgo_test.go:21
+reads internal/native stage1/typescript/scanner/tokens.ts
+# TestMain, TestGateCacheGeneratedC, TestGateCacheToolchains, TestGateCacheNodeInputs, TestGateCacheAtomicEvidence, TestGateCacheUncached via identity — internal/oracle/cache_test.go:202
+# TestImportCycleRuntimeCalls — internal/oracle/import_cycles_test.go:45
+# TestInputAgreesWithNode via onNodeWith — internal/oracle/input_test.go:84
+# TestNativeAgreesWithNode, TestTheOracleCatchesOneByte via onNode — internal/oracle/oracle_test.go:526
+# TestOneFileHoldsNodesOrder — internal/oracle/output_test.go:89
+# TestClosedStdoutEndsAsOnNode — internal/oracle/output_test.go:137
+# TestFileWritesLandInNodesOrder — internal/oracle/output_test.go:214
+# TestAPromptComesBeforeTheRead — internal/oracle/output_test.go:239
+# TestASignalLeavesWhatWasPrinted — internal/oracle/output_test.go:314
+# TestLongArgumentsLeaveTheStackItsLimit — internal/oracle/stack_test.go:67
+# TestSmallStacksStillPanic — internal/oracle/stack_test.go:121
+reads internal/oracle oracle/adamic.mjs
+# TestMain, TestGateCacheGeneratedC, TestGateCacheToolchains, TestGateCacheNodeInputs, TestGateCacheAtomicEvidence, TestGateCacheUncached via identity — internal/oracle/cache_test.go:202
+# TestImportCycleRuntimeCalls — internal/oracle/import_cycles_test.go:45
+# TestInputAgreesWithNode via onNodeWith — internal/oracle/input_test.go:84
+# TestNativeAgreesWithNode, TestTheOracleCatchesOneByte via onNode — internal/oracle/oracle_test.go:526
+# TestOneFileHoldsNodesOrder — internal/oracle/output_test.go:89
+# TestClosedStdoutEndsAsOnNode — internal/oracle/output_test.go:137
+# TestFileWritesLandInNodesOrder — internal/oracle/output_test.go:214
+# TestAPromptComesBeforeTheRead — internal/oracle/output_test.go:239
+# TestASignalLeavesWhatWasPrinted — internal/oracle/output_test.go:314
+# TestLongArgumentsLeaveTheStackItsLimit — internal/oracle/stack_test.go:67
+# TestSmallStacksStillPanic — internal/oracle/stack_test.go:121
+reads internal/oracle oracle/node.mjs
+# TestWASIAgreesWithNode, TestWASIOracleCatchesMutants, TestWASIRunnerCatchesMutants, TestWASIEmission via onWASI — internal/oracle/wasi_test.go:59
+# TestWASIRunnerCatchesMutants — internal/oracle/wasi_test.go:101
+reads internal/oracle oracle/wasi.mjs
+# TestCSS and printer/profile tests via askedCases — stage1/cohere/css/testdata/cohere_side_test.go:119
+reads stage1/cohere/css *.[cC][sS][sS]
+# TestCSS and printer/profile tests via askedCases — stage1/cohere/css/testdata/cohere_side_test.go:119
+reads stage1/cohere/css *.[lL][eE][sS][sS]
+# TestCSS and printer/profile tests via askedCases — stage1/cohere/css/testdata/cohere_side_test.go:119
+reads stage1/cohere/css *.[sS][cC][sS][sS]
+# TestThePortParsesAsGoCohereDoes, TestCompositionMatchesGo, TestCSSThroughput, TestTheCanonicalRangeChecksCanFail via askedCases — stage1/cohere/css/css_test.go:79
+# TestThePortParsesAsGoCohereDoes, TestCompositionMatchesGo, TestCSSThroughput, TestTheCanonicalRangeChecksCanFail via askedCases — stage1/cohere/css/css_test.go:80
+# TestThePortParsesAsGoCohereDoes, TestCompositionMatchesGo, TestCSSThroughput, TestTheCanonicalRangeChecksCanFail via askedCases — stage1/cohere/css/css_test.go:93
+# TestCompositionMatchesGo — stage1/cohere/css/css_test.go:363
+# TestCompositionMatchesGo — stage1/cohere/css/css_test.go:369
+# TestCSSPrinterAgreesWithGo, TestClosedPrinterRegexGap, TestCSSPrinterThroughput, TestCSSPrinterBoundaryProofs via printerAnswers — stage1/cohere/css/print_test.go:33
+# TestCSSPrinterAgreesWithGo, TestClosedPrinterRegexGap, TestCSSPrinterThroughput, TestCSSPrinterBoundaryProofs via printerAnswers — stage1/cohere/css/print_test.go:39
+# TestCSSPrinterAgreesWithGo — stage1/cohere/css/print_test.go:106
+# TestCSSPrinterThroughput — stage1/cohere/css/print_test.go:214
+# TestCSSPrinterThroughput — stage1/cohere/css/print_test.go:280
+# TestCSSPrinterThroughput — stage1/cohere/css/print_test.go:286
+# TestCSSProfileArtifacts — stage1/cohere/css/profile_test.go:29
+# TestCSSProfileArtifacts — stage1/cohere/css/profile_test.go:118
+# TestCSSProfileArtifacts — stage1/cohere/css/profile_test.go:124
+reads stage1/cohere/css cohere
+# TestCSS via askedCases/adamicCohereTexts — stage1/cohere/css/testdata/cohere_side_test.go:24
+reads stage1/cohere/css cohere/internal/format/css/*_test.go
+# TestCSSProfileArtifacts — stage1/cohere/css/profile_test.go:104
+reads stage1/cohere/css internal/native/runtime/*.c
+# TestCSSProfileArtifacts — stage1/cohere/css/profile_test.go:104
+reads stage1/cohere/css internal/native/runtime/*.h
+# TestThePortParsesAsGoCohereDoes, TestCompositionMatchesGo, TestCSSThroughput, TestTheCanonicalRangeChecksCanFail via onNode — stage1/cohere/css/css_test.go:284
+# TestCSSThroughput — stage1/cohere/css/css_test.go:434
+# TestCSSPrinterThroughput — stage1/cohere/css/print_test.go:246
+reads stage1/cohere/css oracle/adamic.mjs
+# TestThePortParsesAsGoCohereDoes, TestCompositionMatchesGo, TestCSSThroughput, TestTheCanonicalRangeChecksCanFail via onNode — stage1/cohere/css/css_test.go:284
+# TestCSSThroughput — stage1/cohere/css/css_test.go:434
+# TestCSSPrinterThroughput — stage1/cohere/css/print_test.go:246
+reads stage1/cohere/css oracle/node.mjs
+# TestThePortParsesAsGoCohereDoes, TestCompositionMatchesGo, TestCSSThroughput, TestTheCanonicalRangeChecksCanFail via portDirectory — stage1/cohere/css/css_test.go:43
+reads stage1/cohere/css stage1/cohere/cssnumbers/*.ts
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123
+reads stage1/cohere/css stage1/cohere/cssnumbers/numbers.ts
+# TestThePortParsesAsGoCohereDoes, TestCompositionMatchesGo, TestCSSThroughput, TestTheCanonicalRangeChecksCanFail via portDirectory — stage1/cohere/css/css_test.go:43
+reads stage1/cohere/css stage1/cohere/cssstrings/*.ts
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123
+# TestThePortParsesAsGoCohereDoes, TestCompositionMatchesGo, TestCSSThroughput, TestTheCanonicalRangeChecksCanFail via portDirectory — stage1/cohere/css/css_test.go:43 (imported input)
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123 (imported input)
+reads stage1/cohere/css stage1/cohere/cssstrings/strings.ts
+# TestThePortParsesAsGoCohereDoes, TestCompositionMatchesGo, TestCSSThroughput, TestTheCanonicalRangeChecksCanFail via portDirectory — stage1/cohere/css/css_test.go:43
+reads stage1/cohere/css stage1/cohere/mediaquery/*.ts
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123
+reads stage1/cohere/css stage1/cohere/mediaquery/index.ts
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123 (imported input)
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123 (imported input) (imported input)
+reads stage1/cohere/css stage1/cohere/mediaquery/nodes.ts
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123 (imported input)
+reads stage1/cohere/css stage1/cohere/mediaquery/parsers.ts
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123 (imported input)
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123 (imported input) (imported input)
+reads stage1/cohere/css stage1/cohere/mediaquery/whitespace.ts
+# TestThePortParsesAsGoCohereDoes, TestCompositionMatchesGo, TestCSSThroughput, TestTheCanonicalRangeChecksCanFail via portDirectory — stage1/cohere/css/css_test.go:43
+reads stage1/cohere/css stage1/cohere/selector/*.ts
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123 (imported input)
+reads stage1/cohere/css stage1/cohere/selector/nodes.ts
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123
+reads stage1/cohere/css stage1/cohere/selector/parser.ts
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123 (imported input)
+reads stage1/cohere/css stage1/cohere/selector/source.ts
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123 (imported input)
+reads stage1/cohere/css stage1/cohere/selector/tokenize.ts
+# TestThePortParsesAsGoCohereDoes, TestCompositionMatchesGo, TestCSSThroughput, TestTheCanonicalRangeChecksCanFail via portDirectory — stage1/cohere/css/css_test.go:43
+reads stage1/cohere/css stage1/cohere/values/*.ts
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123 (imported input)
+reads stage1/cohere/css stage1/cohere/values/nodes.ts
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123 (imported input)
+reads stage1/cohere/css stage1/cohere/values/parser.ts
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123 (imported input)
+reads stage1/cohere/css stage1/cohere/values/tokenize.ts
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/css/css_test.go:123
+reads stage1/cohere/css stage1/cohere/values/values.ts
+# TestCSSNumbers — stage1/cohere/cssnumbers/port_test.go:159
+reads stage1/cohere/cssnumbers *.[cC][sS][sS]
+# TestCSSNumbers — stage1/cohere/cssnumbers/port_test.go:159
+reads stage1/cohere/cssnumbers *.[lL][eE][sS][sS]
+# TestCSSNumbers — stage1/cohere/cssnumbers/port_test.go:159
+reads stage1/cohere/cssnumbers *.[sS][cC][sS][sS]
+# TestCSSNumbers — stage1/cohere/cssnumbers/port_test.go:225
+# TestCSSNumbers — stage1/cohere/cssnumbers/port_test.go:227
+# TestCSSNumbers — stage1/cohere/cssnumbers/port_test.go:228
+# TestCSSNumbers — stage1/cohere/cssnumbers/port_test.go:233
+reads stage1/cohere/cssnumbers cohere
+# TestCSSNumbers via onNode — stage1/cohere/cssnumbers/port_test.go:83
+# TestCSSNumbers — stage1/cohere/cssnumbers/port_test.go:350
+reads stage1/cohere/cssnumbers oracle/adamic.mjs
+# TestCSSNumbers via onNode — stage1/cohere/cssnumbers/port_test.go:83
+# TestCSSNumbers — stage1/cohere/cssnumbers/port_test.go:350
+reads stage1/cohere/cssnumbers oracle/node.mjs
+# TestCSSNumbers — stage1/cohere/cssnumbers/port_test.go:301
+# TestCSSNumbers via lowered — stage1/cohere/cssnumbers/port_test.go:35
+reads stage1/cohere/cssnumbers stage1/cohere/cssstrings/strings.ts
+# TestCSSStrings — stage1/cohere/cssstrings/port_test.go:159
+reads stage1/cohere/cssstrings *.[cC][sS][sS]
+# TestCSSStrings — stage1/cohere/cssstrings/port_test.go:159
+reads stage1/cohere/cssstrings *.[lL][eE][sS][sS]
+# TestCSSStrings — stage1/cohere/cssstrings/port_test.go:159
+reads stage1/cohere/cssstrings *.[sS][cC][sS][sS]
+# TestCSSStrings — stage1/cohere/cssstrings/port_test.go:212
+# TestCSSStrings — stage1/cohere/cssstrings/port_test.go:214
+# TestCSSStrings — stage1/cohere/cssstrings/port_test.go:215
+# TestCSSStrings — stage1/cohere/cssstrings/port_test.go:220
+reads stage1/cohere/cssstrings cohere
+# TestCSSStrings via onNode — stage1/cohere/cssstrings/port_test.go:83
+# TestCSSStrings — stage1/cohere/cssstrings/port_test.go:325
+reads stage1/cohere/cssstrings oracle/adamic.mjs
+# TestCSSStrings via onNode — stage1/cohere/cssstrings/port_test.go:83
+# TestCSSStrings — stage1/cohere/cssstrings/port_test.go:325
+reads stage1/cohere/cssstrings oracle/node.mjs
+# TestGeneratedAgreement, TestThreePortMutants, TestOriginalLibraries via goOracle — stage1/cohere/estree/estree_test.go:55
+# TestGeneratedAgreement, TestThreePortMutants, TestOriginalLibraries via goOracle — stage1/cohere/estree/estree_test.go:66
+reads stage1/cohere/estree cohere
+# TestAcceptanceDiagnostics — stage1/cohere/estree/acceptance_test.go:61
+# TestGeneratedAgreement, TestThreePortMutants, TestOriginalLibraries via onNode — stage1/cohere/estree/estree_test.go:92
+# TestUnattachedDecorator — stage1/cohere/estree/expressions_test.go:45
+# TestParserRecoveryGap — stage1/cohere/estree/gaps_test.go:96
+# TestBoundedPortParser — stage1/cohere/estree/stalls_test.go:40
+# TestBoundedPortParser — stage1/cohere/estree/stalls_test.go:69
+# TestPortStallControl — stage1/cohere/estree/stalls_test.go:82
+# TestSyntaxRefusals — stage1/cohere/estree/syntax_test.go:84
+# TestThroughput — stage1/cohere/estree/throughput_test.go:33
+# TestLossyInputRefusal — stage1/cohere/estree/utf8_test.go:61
+reads stage1/cohere/estree oracle/adamic.mjs
+# TestAcceptanceDiagnostics — stage1/cohere/estree/acceptance_test.go:61
+# TestGeneratedAgreement, TestThreePortMutants, TestOriginalLibraries via onNode — stage1/cohere/estree/estree_test.go:92
+# TestUnattachedDecorator — stage1/cohere/estree/expressions_test.go:45
+# TestParserRecoveryGap — stage1/cohere/estree/gaps_test.go:96
+# TestBoundedPortParser — stage1/cohere/estree/stalls_test.go:40
+# TestBoundedPortParser — stage1/cohere/estree/stalls_test.go:69
+# TestPortStallControl — stage1/cohere/estree/stalls_test.go:82
+# TestSyntaxRefusals — stage1/cohere/estree/syntax_test.go:84
+# TestThroughput — stage1/cohere/estree/throughput_test.go:33
+# TestLossyInputRefusal — stage1/cohere/estree/utf8_test.go:61
+reads stage1/cohere/estree oracle/node.mjs
+# TestGeneratedAgreement, TestThreePortMutants, TestOriginalLibraries via build — stage1/cohere/estree/estree_test.go:71
+reads stage1/cohere/estree stage1/typescript/parser/nodes.ts
+# TestGeneratedAgreement, TestThreePortMutants, TestOriginalLibraries via build — stage1/cohere/estree/estree_test.go:71
+# TestGeneratedAgreement, TestThreePortMutants, TestOriginalLibraries via build — stage1/cohere/estree/estree_test.go:71 (imported input)
+reads stage1/cohere/estree stage1/typescript/scanner/characters.ts
+# TestGeneratedAgreement, TestThreePortMutants, TestOriginalLibraries via build — stage1/cohere/estree/estree_test.go:71
+reads stage1/cohere/estree stage1/typescript/scanner/scanner.ts
+# TestGeneratedAgreement, TestThreePortMutants, TestOriginalLibraries via build — stage1/cohere/estree/estree_test.go:71
+# TestGeneratedAgreement, TestThreePortMutants, TestOriginalLibraries via build — stage1/cohere/estree/estree_test.go:71 (imported input)
+reads stage1/cohere/estree stage1/typescript/scanner/tokens.ts
+# TestThePortParsesAsGoCohereDoes via cohereSide — stage1/cohere/formatfiles/formatfiles_test.go:274
+# TestThePortParsesAsGoCohereDoes via cohereSide — stage1/cohere/formatfiles/formatfiles_test.go:278
+# TestThePortParsesAsGoCohereDoes via cohereSide — stage1/cohere/formatfiles/formatfiles_test.go:282
+reads stage1/cohere/formatfiles cohere
+# TestThePortParsesAsGoCohereDoes via onNode — stage1/cohere/formatfiles/formatfiles_test.go:410
+reads stage1/cohere/formatfiles oracle/adamic.mjs
+# TestThePortParsesAsGoCohereDoes via onNode — stage1/cohere/formatfiles/formatfiles_test.go:410
+reads stage1/cohere/formatfiles oracle/node.mjs
+# TestThePortParsesAsGoCohereDoes via portDirectory — stage1/cohere/formatfiles/formatfiles_test.go:313
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/formatfiles/formatfiles_test.go:58
+reads stage1/cohere/formatfiles stage1/cohere/gitignore/gitignore.ts
+# TestThePortParsesAsGoCohereDoes via portDirectory — stage1/cohere/formatfiles/formatfiles_test.go:313
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/formatfiles/formatfiles_test.go:58
+# TestThePortParsesAsGoCohereDoes via portDirectory — stage1/cohere/formatfiles/formatfiles_test.go:313 (imported input)
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/formatfiles/formatfiles_test.go:58 (imported input)
+reads stage1/cohere/formatfiles stage1/cohere/gitignore/glob.ts
+# TestThePortParsesAsGoCohereDoes via portDirectory — stage1/cohere/formatfiles/formatfiles_test.go:313
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/formatfiles/formatfiles_test.go:58
+# TestThePortParsesAsGoCohereDoes via portDirectory — stage1/cohere/formatfiles/formatfiles_test.go:313 (imported input)
+# TestThePortParsesAsGoCohereDoes — stage1/cohere/formatfiles/formatfiles_test.go:58 (imported input)
+reads stage1/cohere/formatfiles stage1/cohere/gitignore/path.ts
+# TestThePortAnswersAsGoCohereAndGitDo via askedCases — stage1/cohere/gitignore/gitignore_test.go:379
+reads stage1/cohere/gitignore *
+# TestThePortAnswersAsGoCohereAndGitDo via askedCases — stage1/cohere/gitignore/gitignore_test.go:379
+# TestThePortAnswersAsGoCohereAndGitDo via cohereSide — stage1/cohere/gitignore/gitignore_test.go:431
+# TestThePortAnswersAsGoCohereAndGitDo via cohereSide — stage1/cohere/gitignore/gitignore_test.go:435
+# TestThePortAnswersAsGoCohereAndGitDo via cohereSide — stage1/cohere/gitignore/gitignore_test.go:440
+reads stage1/cohere/gitignore cohere
+# TestThePortAnswersAsGoCohereAndGitDo via onNode — stage1/cohere/gitignore/gitignore_test.go:688
+reads stage1/cohere/gitignore oracle/adamic.mjs
+# TestThePortAnswersAsGoCohereAndGitDo via onNode — stage1/cohere/gitignore/gitignore_test.go:688
+reads stage1/cohere/gitignore oracle/node.mjs
+# TestThePortParsesAsGoCohereDoes via cohereSide — stage1/cohere/graphql/graphql_test.go:329
+# TestThePortParsesAsGoCohereDoes via cohereSide — stage1/cohere/graphql/graphql_test.go:333
+# TestThePortParsesAsGoCohereDoes via cohereSide — stage1/cohere/graphql/graphql_test.go:337
+reads stage1/cohere/graphql cohere
+# TestThePortParsesAsGoCohereDoes via onNode — stage1/cohere/graphql/graphql_test.go:448
+reads stage1/cohere/graphql oracle/adamic.mjs
+# TestThePortParsesAsGoCohereDoes via onNode — stage1/cohere/graphql/graphql_test.go:448
+reads stage1/cohere/graphql oracle/node.mjs
+# TestPrinterUpstreamPreflight, TestPrinterAsGoCohere, TestPrinterMutants, TestPrinterFileDriver via printerCases — stage1/cohere/graphql/printer/printer_test.go:19
+reads stage1/cohere/graphql/printer *.graphql
+# TestPrinterWhitespaceGap — stage1/cohere/graphql/printer/gaps_test.go:93
+# TestPrinterThroughput — stage1/cohere/graphql/printer/performance_test.go:48
+# TestPrinterThroughput — stage1/cohere/graphql/printer/performance_test.go:49
+# TestPrinterThroughput — stage1/cohere/graphql/printer/performance_test.go:50
+# TestPrinterThroughput — stage1/cohere/graphql/printer/performance_test.go:56
+# TestPrinterUpstreamPreflight, TestPrinterAsGoCohere, TestPrinterMutants, TestPrinterFileDriver via printerCases — stage1/cohere/graphql/printer/printer_test.go:48
+# TestPrinterUpstreamPreflight, TestPrinterAsGoCohere, TestPrinterMutants, TestPrinterFileDriver via printerCases — stage1/cohere/graphql/printer/printer_test.go:49
+# TestPrinterUpstreamPreflight, TestPrinterAsGoCohere, TestPrinterMutants, TestPrinterFileDriver via printerCases — stage1/cohere/graphql/printer/printer_test.go:50
+# TestPrinterUpstreamPreflight, TestPrinterAsGoCohere, TestPrinterMutants, TestPrinterFileDriver via printerCases — stage1/cohere/graphql/printer/printer_test.go:51
+# TestPrinterUpstreamPreflight — stage1/cohere/graphql/printer/printer_test.go:90
+reads stage1/cohere/graphql/printer cohere
+# TestPrinterAsGoCohere, TestPrinterConstructorGap, TestPrinterFileDriver, TestPrinterMutants, TestPrinterThroughput, TestPrinterUpstreamPreflight, TestPrinterWhitespaceGap via onNode — stage1/cohere/graphql/printer/helpers_test.go:96
+# TestPrinterThroughput — stage1/cohere/graphql/printer/performance_test.go:62
+reads stage1/cohere/graphql/printer oracle/adamic.mjs
+# TestPrinterAsGoCohere, TestPrinterConstructorGap, TestPrinterFileDriver, TestPrinterMutants, TestPrinterThroughput, TestPrinterUpstreamPreflight, TestPrinterWhitespaceGap via onNode — stage1/cohere/graphql/printer/helpers_test.go:96
+# TestPrinterThroughput — stage1/cohere/graphql/printer/performance_test.go:62
+reads stage1/cohere/graphql/printer oracle/node.mjs
+# TestPrinterUpstreamPreflight, TestPrinterAsGoCohere, TestPrinterMutants, TestPrinterFileDriver via printerDirectory — stage1/cohere/graphql/printer/printer_test.go:167
+# TestPrinterConstructorGap — stage1/cohere/graphql/printer/gaps_test.go:23
+# TestPrinterUpstreamPreflight, TestPrinterAsGoCohere, TestPrinterMutants, TestPrinterFileDriver via printerDirectory — stage1/cohere/graphql/printer/printer_test.go:167 (imported input)
+# TestPrinterConstructorGap — stage1/cohere/graphql/printer/gaps_test.go:23 (imported input)
+reads stage1/cohere/graphql/printer stage1/cohere/graphql/blockString.ts
+# TestPrinterUpstreamPreflight, TestPrinterAsGoCohere, TestPrinterMutants, TestPrinterFileDriver via printerDirectory — stage1/cohere/graphql/printer/printer_test.go:167
+# TestPrinterConstructorGap — stage1/cohere/graphql/printer/gaps_test.go:23
+# TestPrinterUpstreamPreflight, TestPrinterAsGoCohere, TestPrinterMutants, TestPrinterFileDriver via printerDirectory — stage1/cohere/graphql/printer/printer_test.go:167 (imported input)
+# TestPrinterConstructorGap — stage1/cohere/graphql/printer/gaps_test.go:23 (imported input)
+reads stage1/cohere/graphql/printer stage1/cohere/graphql/characterClasses.ts
+# TestPrinterUpstreamPreflight, TestPrinterAsGoCohere, TestPrinterMutants, TestPrinterFileDriver via printerDirectory — stage1/cohere/graphql/printer/printer_test.go:167
+# TestPrinterConstructorGap — stage1/cohere/graphql/printer/gaps_test.go:23
+# TestPrinterUpstreamPreflight, TestPrinterAsGoCohere, TestPrinterMutants, TestPrinterFileDriver via printerDirectory — stage1/cohere/graphql/printer/printer_test.go:167 (imported input)
+# TestPrinterConstructorGap — stage1/cohere/graphql/printer/gaps_test.go:23 (imported input)
+reads stage1/cohere/graphql/printer stage1/cohere/graphql/lexer.ts
+# TestPrinterUpstreamPreflight, TestPrinterAsGoCohere, TestPrinterMutants, TestPrinterFileDriver via printerDirectory — stage1/cohere/graphql/printer/printer_test.go:167
+# TestPrinterConstructorGap — stage1/cohere/graphql/printer/gaps_test.go:23
+reads stage1/cohere/graphql/printer stage1/cohere/graphql/parser.ts
+# TestPrinterUpstreamPreflight, TestPrinterAsGoCohere, TestPrinterMutants, TestPrinterFileDriver via printerCases — stage1/cohere/graphql/printer/printer_test.go:49
+reads stage1/cohere/graphql/printer stage1/cohere/graphql/testdata/cohere_side_test.go
+# TestPrinterUpstreamPreflight, TestPrinterAsGoCohere, TestPrinterMutants, TestPrinterFileDriver via printerDirectory — stage1/cohere/graphql/printer/printer_test.go:167
+# TestPrinterConstructorGap — stage1/cohere/graphql/printer/gaps_test.go:23
+# TestPrinterUpstreamPreflight, TestPrinterAsGoCohere, TestPrinterMutants, TestPrinterFileDriver via printerDirectory — stage1/cohere/graphql/printer/printer_test.go:167 (imported input)
+# TestPrinterConstructorGap — stage1/cohere/graphql/printer/gaps_test.go:23 (imported input)
+reads stage1/cohere/graphql/printer stage1/cohere/graphql/token.ts
+# TestPrinterUpstreamPreflight, TestPrinterAsGoCohere, TestPrinterMutants, TestPrinterFileDriver via printerDirectory — stage1/cohere/graphql/printer/printer_test.go:167
+# TestPrinterConstructorGap — stage1/cohere/graphql/printer/gaps_test.go:23
+reads stage1/cohere/graphql/printer stage1/cohere/json/width.ts
+# TestPrinterUpstreamPreflight, TestPrinterAsGoCohere, TestPrinterMutants, TestPrinterFileDriver via printerDirectory — stage1/cohere/graphql/printer/printer_test.go:167
+# TestPrinterConstructorGap — stage1/cohere/graphql/printer/gaps_test.go:23
+# TestPrinterUpstreamPreflight, TestPrinterAsGoCohere, TestPrinterMutants, TestPrinterFileDriver via printerDirectory — stage1/cohere/graphql/printer/printer_test.go:167 (imported input)
+# TestPrinterConstructorGap — stage1/cohere/graphql/printer/gaps_test.go:23 (imported input)
+reads stage1/cohere/graphql/printer stage1/cohere/json/widthTables.ts
+# TestUpstreamNumericSeparatorGap, TestUpstreamRepositoryCorpusParity, TestExternalComparisonCatchesThreePrinterMutants via corpusCases — stage1/cohere/json/audit_test.go:74
+reads stage1/cohere/json *.json
+# TestUpstreamNumericSeparatorGap, TestUpstreamRepositoryCorpusParity, TestExternalComparisonCatchesThreePrinterMutants via corpusCases — stage1/cohere/json/audit_test.go:100
+# TestUpstreamNumericSeparatorGap, TestUpstreamRepositoryCorpusParity, TestExternalComparisonCatchesThreePrinterMutants via cohereAnswers — stage1/cohere/json/audit_test.go:187
+# TestUpstreamNumericSeparatorGap, TestUpstreamRepositoryCorpusParity, TestExternalComparisonCatchesThreePrinterMutants via cohereAnswers — stage1/cohere/json/audit_test.go:191
+# TestUpstreamNumericSeparatorGap, TestUpstreamRepositoryCorpusParity, TestExternalComparisonCatchesThreePrinterMutants via cohereAnswers — stage1/cohere/json/audit_test.go:197
+# TestUpstreamNumericSeparatorGap, TestUpstreamRepositoryCorpusParity, TestExternalComparisonCatchesThreePrinterMutants via cohereAnswers — stage1/cohere/json/audit_test.go:200
+# TestPortMatchesGoCohere, TestThreePortMutantsAreCaught, TestAdditionalJSONBoundaries, TestSingleFileStdoutDriver via buildGoDriver — stage1/cohere/json/port_test.go:368
+# TestPortMatchesGoCohere, TestThreePortMutantsAreCaught, TestAdditionalJSONBoundaries, TestSingleFileStdoutDriver via buildGoDriver — stage1/cohere/json/port_test.go:372
+# TestPortMatchesGoCohere, TestThreePortMutantsAreCaught, TestAdditionalJSONBoundaries, TestSingleFileStdoutDriver via buildGoDriver — stage1/cohere/json/port_test.go:377
+# TestPortMatchesGoCohere, TestThreePortMutantsAreCaught, TestAdditionalJSONBoundaries, TestSingleFileStdoutDriver via buildGoDriver — stage1/cohere/json/port_test.go:378
+reads stage1/cohere/json cohere
+# TestPortMatchesGoCohere, TestThreePortMutantsAreCaught, TestAdditionalJSONBoundaries, TestSingleFileStdoutDriver via onNode — stage1/cohere/json/port_test.go:64
+reads stage1/cohere/json oracle/adamic.mjs
+# TestPortMatchesGoCohere, TestThreePortMutantsAreCaught, TestAdditionalJSONBoundaries, TestSingleFileStdoutDriver via onNode — stage1/cohere/json/port_test.go:64
+reads stage1/cohere/json oracle/node.mjs
+# TestJsxLintReleaseAndThroughput, TestJsxLintTrees via jsxSpansOracle — stage1/cohere/lint/jsx_integration_test.go:23
+# TestJsxLintTrees — stage1/cohere/lint/jsx_integration_test.go:139
+# TestCommandDiagnosticsDropOnlyModuleDownloads, TestCommentFoldMutant, TestCompilerAndStage1Agree, TestCompleteSuggestionSerialization, TestCountGuardMutant, TestDecodedOptionsAndMutant, TestDecorationOptionMutant, TestDotARename, TestEmittedJavaScriptMismatch, TestExecuteFailsOnStderrOtherThanModuleDownloads, TestFactoryHooks, TestJsxLintReleaseAndThroughput, TestJsxLintTrees, TestLegacyMutants, TestMain, TestMutants, TestNestedConstructorGap, TestNestedOutsideModuleCopy, TestNodeTableIsLinkOnly, TestOptionAndComparatorGaps, TestOwnedWitnesses, TestPositionIndexMutant, TestProfileArtifacts, TestProfileCompilation, TestProfileSnapshotsAgree, TestRegistrationMutant, TestRulesAgree, TestShardsAgree, TestSuggestionAlongsideAutomaticFix, TestThroughput, TestWitnessScriptKind via goOracleIn — stage1/cohere/lint/shared_test.go:137
+# TestCommandDiagnosticsDropOnlyModuleDownloads, TestCommentFoldMutant, TestCompilerAndStage1Agree, TestCompleteSuggestionSerialization, TestCountGuardMutant, TestDecodedOptionsAndMutant, TestDecorationOptionMutant, TestDotARename, TestEmittedJavaScriptMismatch, TestExecuteFailsOnStderrOtherThanModuleDownloads, TestFactoryHooks, TestJsxLintReleaseAndThroughput, TestJsxLintTrees, TestLegacyMutants, TestMain, TestMutants, TestNestedConstructorGap, TestNestedOutsideModuleCopy, TestNodeTableIsLinkOnly, TestOptionAndComparatorGaps, TestOwnedWitnesses, TestPositionIndexMutant, TestProfileArtifacts, TestProfileCompilation, TestProfileSnapshotsAgree, TestRegistrationMutant, TestRulesAgree, TestShardsAgree, TestSuggestionAlongsideAutomaticFix, TestThroughput, TestWitnessScriptKind via captureUpstream — stage1/cohere/lint/shared_test.go:191
+reads stage1/cohere/lint cohere
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:18
+# TestOptionAndComparatorGaps — stage1/cohere/lint/gaps_test.go:50
+# TestJsxLintTrees — stage1/cohere/lint/jsx_integration_test.go:152
+# TestRulesAgree, TestCompilerAndStage1Agree, TestLegacyMutants, TestDecorationOptionMutant, TestCountGuardMutant, TestThroughput, TestNodeTableIsLinkOnly, TestShardsAgree, TestMutants via node — stage1/cohere/lint/lint_test.go:150
+# TestRulesAgree, TestCompilerAndStage1Agree, TestLegacyMutants, TestDecorationOptionMutant, TestCountGuardMutant, TestThroughput, TestNodeTableIsLinkOnly, TestShardsAgree, TestMutants via checkRecoveryRefusal — stage1/cohere/lint/lint_test.go:353
+# TestRulesAgree, TestCompilerAndStage1Agree, TestLegacyMutants, TestDecorationOptionMutant, TestCountGuardMutant, TestThroughput, TestNodeTableIsLinkOnly, TestShardsAgree, TestMutants via runJavaScript — stage1/cohere/lint/lint_test.go:829
+# TestNestedOutsideModuleCopy — stage1/cohere/lint/registration_test.go:260
+reads stage1/cohere/lint oracle/adamic.mjs
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:18
+# TestOptionAndComparatorGaps — stage1/cohere/lint/gaps_test.go:50
+# TestJsxLintTrees — stage1/cohere/lint/jsx_integration_test.go:152
+# TestRulesAgree, TestCompilerAndStage1Agree, TestLegacyMutants, TestDecorationOptionMutant, TestCountGuardMutant, TestThroughput, TestNodeTableIsLinkOnly, TestShardsAgree, TestMutants via node — stage1/cohere/lint/lint_test.go:150
+# TestRulesAgree, TestCompilerAndStage1Agree, TestLegacyMutants, TestDecorationOptionMutant, TestCountGuardMutant, TestThroughput, TestNodeTableIsLinkOnly, TestShardsAgree, TestMutants via checkRecoveryRefusal — stage1/cohere/lint/lint_test.go:353
+# TestRulesAgree, TestCompilerAndStage1Agree, TestLegacyMutants, TestDecorationOptionMutant, TestCountGuardMutant, TestThroughput, TestNodeTableIsLinkOnly, TestShardsAgree, TestMutants via runJavaScript — stage1/cohere/lint/lint_test.go:829
+# TestNestedOutsideModuleCopy — stage1/cohere/lint/registration_test.go:260
+reads stage1/cohere/lint oracle/node.mjs
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396
+reads stage1/cohere/lint stage1/*.a
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396
+# TestProfileSnapshotsAgree — stage1/cohere/lint/profile_test.go:174
+reads stage1/cohere/lint stage1/*.ts
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input)
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26 (imported input)
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input) (imported input)
+reads stage1/cohere/lint stage1/typescript/parser/grammar.ts
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input)
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26 (imported input)
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input) (imported input)
+reads stage1/cohere/lint stage1/typescript/parser/jsx.ts
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input)
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26 (imported input)
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input) (imported input)
+reads stage1/cohere/lint stage1/typescript/parser/lookahead.ts
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input)
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26 (imported input)
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input) (imported input)
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26 (imported input) (imported input)
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input) (imported input) (imported input)
+reads stage1/cohere/lint stage1/typescript/parser/nodes.ts
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input)
+reads stage1/cohere/lint stage1/typescript/parser/parser.ts
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input)
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26 (imported input)
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input) (imported input)
+reads stage1/cohere/lint stage1/typescript/parser/statements.ts
+# TestJsxLintTrees — stage1/cohere/lint/jsx_integration_test.go:140
+reads stage1/cohere/lint stage1/typescript/parser/testdata/oracle.go
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input)
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26 (imported input)
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input) (imported input)
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26 (imported input) (imported input)
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input) (imported input) (imported input)
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26 (imported input) (imported input) (imported input)
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input) (imported input) (imported input) (imported input)
+reads stage1/cohere/lint stage1/typescript/scanner/characters.ts
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input)
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26 (imported input)
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input) (imported input)
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26 (imported input) (imported input)
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input) (imported input) (imported input)
+reads stage1/cohere/lint stage1/typescript/scanner/scanner.ts
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input)
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26 (imported input)
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input) (imported input)
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26 (imported input) (imported input)
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input) (imported input) (imported input)
+# TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26 (imported input) (imported input) (imported input)
+# TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input) (imported input) (imported input) (imported input)
+reads stage1/cohere/lint stage1/typescript/scanner/tokens.ts
+# TestHelpersMatchCohere, TestHelperMutants, TestMessageRefusalsMatchGo, TestKnownGapsAreExplicit via oracle — stage1/cohere/lint/helpers/helpers_test.go:48
+reads stage1/cohere/lint/helpers cohere
+# TestHelpersMatchCohere — stage1/cohere/lint/helpers/helpers_test.go:96
+# TestMessageRefusalsMatchGo — stage1/cohere/lint/helpers/helpers_test.go:195
+# TestKnownGapsAreExplicit — stage1/cohere/lint/helpers/helpers_test.go:252
+reads stage1/cohere/lint/helpers oracle/adamic.mjs
+# TestHelpersMatchCohere — stage1/cohere/lint/helpers/helpers_test.go:96
+# TestMessageRefusalsMatchGo — stage1/cohere/lint/helpers/helpers_test.go:195
+# TestKnownGapsAreExplicit — stage1/cohere/lint/helpers/helpers_test.go:252
+reads stage1/cohere/lint/helpers oracle/node.mjs
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via oracle — stage1/cohere/lint/helpers/comments/comments_test.go:76
+reads stage1/cohere/lint/helpers/comments cohere
+# TestCommentsMatchCohere — stage1/cohere/lint/helpers/comments/comments_test.go:91
+# TestConsumerCommentHelpers — stage1/cohere/lint/helpers/comments/comments_test.go:158
+# TestJsxParserGapIsExplicit — stage1/cohere/lint/helpers/comments/comments_test.go:176
+reads stage1/cohere/lint/helpers/comments oracle/adamic.mjs
+# TestCommentsMatchCohere — stage1/cohere/lint/helpers/comments/comments_test.go:91
+# TestConsumerCommentHelpers — stage1/cohere/lint/helpers/comments/comments_test.go:158
+# TestJsxParserGapIsExplicit — stage1/cohere/lint/helpers/comments/comments_test.go:176
+reads stage1/cohere/lint/helpers/comments oracle/node.mjs
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46
+reads stage1/cohere/lint/helpers/comments stage1/cohere/lint/helpers/options_json.ts
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46 (imported input)
+reads stage1/cohere/lint/helpers/comments stage1/typescript/parser/grammar.ts
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46 (imported input)
+reads stage1/cohere/lint/helpers/comments stage1/typescript/parser/jsx.ts
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46 (imported input)
+reads stage1/cohere/lint/helpers/comments stage1/typescript/parser/lookahead.ts
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46 (imported input)
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46 (imported input) (imported input)
+reads stage1/cohere/lint/helpers/comments stage1/typescript/parser/nodes.ts
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46
+reads stage1/cohere/lint/helpers/comments stage1/typescript/parser/parser.ts
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46 (imported input)
+reads stage1/cohere/lint/helpers/comments stage1/typescript/parser/statements.ts
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46 (imported input)
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46 (imported input) (imported input)
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46 (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/helpers/comments stage1/typescript/scanner/characters.ts
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46 (imported input)
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46 (imported input) (imported input)
+reads stage1/cohere/lint/helpers/comments stage1/typescript/scanner/scanner.ts
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46 (imported input)
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46 (imported input) (imported input)
+# TestCommentsMatchCohere, TestCommentMutants, TestConsumerCommentHelpers, TestJsxParserGapIsExplicit, TestJsxAdapterGuardMutant via build — stage1/cohere/lint/helpers/comments/comments_test.go:46 (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/helpers/comments stage1/typescript/scanner/tokens.ts
+# TestInventoryEngine — stage1/cohere/lint/inventory/main_test.go:17
+# TestInventoryEngine — stage1/cohere/lint/inventory/main_test.go:18
+# TestInventoryEngine — stage1/cohere/lint/inventory/main_test.go:19
+# TestInventoryEngine — stage1/cohere/lint/inventory/main_test.go:20
+reads stage1/cohere/lint/inventory cohere
+# TestFixedPatterns — stage1/cohere/lint/regex/regex_test.go:68
+# TestFixedPatterns — stage1/cohere/lint/regex/regex_test.go:69
+# TestOptionDialectGap — stage1/cohere/lint/regex/regex_test.go:133
+# TestOptionDialectGap — stage1/cohere/lint/regex/regex_test.go:134
+# TestInventoryMatchesPinnedSource — stage1/cohere/lint/regex/regex_test.go:146
+# TestInventoryMatchesPinnedSource — stage1/cohere/lint/regex/regex_test.go:147
+reads stage1/cohere/lint/regex cohere
+# TestFixedPatterns, TestDynamicPatternGap, TestOptionDialectGap, TestInventoryMatchesPinnedSource via backends — stage1/cohere/lint/regex/regex_test.go:52
+# TestDynamicPatternGap — stage1/cohere/lint/regex/regex_test.go:116
+reads stage1/cohere/lint/regex oracle/adamic.mjs
+# TestFixedPatterns, TestDynamicPatternGap, TestOptionDialectGap, TestInventoryMatchesPinnedSource via backends — stage1/cohere/lint/regex/regex_test.go:52
+# TestDynamicPatternGap — stage1/cohere/lint/regex/regex_test.go:116
+reads stage1/cohere/lint/regex oracle/node.mjs
+# TestDeterministicRegeneration, TestDescriptorRejections, TestDuplicateOracleAdapter, TestAdamicRuleModule via copyRules — stage1/cohere/lint/registry/registry_test.go:15 (imported input)
+reads stage1/cohere/lint/registry stage1/cohere/lint/comment_ranges.a
+# TestDeterministicRegeneration, TestDescriptorRejections, TestDuplicateOracleAdapter, TestAdamicRuleModule via copyRules — stage1/cohere/lint/registry/registry_test.go:15 (imported input)
+reads stage1/cohere/lint/registry stage1/cohere/lint/comments.ts
+# TestDeterministicRegeneration, TestDescriptorRejections, TestDuplicateOracleAdapter, TestAdamicRuleModule via copyRules — stage1/cohere/lint/registry/registry_test.go:15 (imported input)
+reads stage1/cohere/lint/registry stage1/cohere/lint/context.ts
+# TestDeterministicRegeneration, TestDescriptorRejections, TestDuplicateOracleAdapter, TestAdamicRuleModule via copyRules — stage1/cohere/lint/registry/registry_test.go:15 (imported input)
+reads stage1/cohere/lint/registry stage1/cohere/lint/finding.ts
+# TestDeterministicRegeneration, TestDescriptorRejections, TestDuplicateOracleAdapter, TestAdamicRuleModule via copyRules — stage1/cohere/lint/registry/registry_test.go:15
+reads stage1/cohere/lint/registry stage1/cohere/lint/rules/*
+# TestDeterministicRegeneration, TestDescriptorRejections, TestDuplicateOracleAdapter, TestAdamicRuleModule via copyRules — stage1/cohere/lint/registry/registry_test.go:15 (imported input)
+reads stage1/cohere/lint/registry stage1/cohere/lint/settings.ts
+# TestDeterministicRegeneration, TestDescriptorRejections, TestDuplicateOracleAdapter, TestAdamicRuleModule via copyRules — stage1/cohere/lint/registry/registry_test.go:15 (imported input)
+reads stage1/cohere/lint/registry stage1/cohere/lint/suggestions.a
+# TestDeterministicRegeneration, TestDescriptorRejections, TestDuplicateOracleAdapter, TestAdamicRuleModule via copyRules — stage1/cohere/lint/registry/registry_test.go:15 (imported input)
+reads stage1/cohere/lint/registry stage1/cohere/lint/unicode.ts
+# TestDeterministicRegeneration, TestDescriptorRejections, TestDuplicateOracleAdapter, TestAdamicRuleModule via copyRules — stage1/cohere/lint/registry/registry_test.go:15 (imported input)
+reads stage1/cohere/lint/registry stage1/typescript/parser/grammar.ts
+# TestDeterministicRegeneration, TestDescriptorRejections, TestDuplicateOracleAdapter, TestAdamicRuleModule via copyRules — stage1/cohere/lint/registry/registry_test.go:15 (imported input)
+reads stage1/cohere/lint/registry stage1/typescript/parser/jsx.ts
+# TestDeterministicRegeneration, TestDescriptorRejections, TestDuplicateOracleAdapter, TestAdamicRuleModule via copyRules — stage1/cohere/lint/registry/registry_test.go:15 (imported input)
+reads stage1/cohere/lint/registry stage1/typescript/parser/lookahead.ts
+# TestDeterministicRegeneration, TestDescriptorRejections, TestDuplicateOracleAdapter, TestAdamicRuleModule via copyRules — stage1/cohere/lint/registry/registry_test.go:15 (imported input)
+reads stage1/cohere/lint/registry stage1/typescript/parser/nodes.ts
+# TestDeterministicRegeneration, TestDescriptorRejections, TestDuplicateOracleAdapter, TestAdamicRuleModule via copyRules — stage1/cohere/lint/registry/registry_test.go:15 (imported input)
+reads stage1/cohere/lint/registry stage1/typescript/parser/parser.ts
+# TestDeterministicRegeneration, TestDescriptorRejections, TestDuplicateOracleAdapter, TestAdamicRuleModule via copyRules — stage1/cohere/lint/registry/registry_test.go:15 (imported input)
+reads stage1/cohere/lint/registry stage1/typescript/parser/statements.ts
+# TestDeterministicRegeneration, TestDescriptorRejections, TestDuplicateOracleAdapter, TestAdamicRuleModule via copyRules — stage1/cohere/lint/registry/registry_test.go:15 (imported input)
+reads stage1/cohere/lint/registry stage1/typescript/scanner/characters.ts
+# TestDeterministicRegeneration, TestDescriptorRejections, TestDuplicateOracleAdapter, TestAdamicRuleModule via copyRules — stage1/cohere/lint/registry/registry_test.go:15 (imported input)
+reads stage1/cohere/lint/registry stage1/typescript/scanner/scanner.ts
+# TestDeterministicRegeneration, TestDescriptorRejections, TestDuplicateOracleAdapter, TestAdamicRuleModule via copyRules — stage1/cohere/lint/registry/registry_test.go:15 (imported input)
+reads stage1/cohere/lint/registry stage1/typescript/scanner/tokens.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21
+reads stage1/cohere/lint/rules/no-underscore-dangle stage1/cohere/lint/context.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input)
+reads stage1/cohere/lint/rules/no-underscore-dangle stage1/cohere/lint/finding.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input)
+reads stage1/cohere/lint/rules/no-underscore-dangle stage1/cohere/lint/settings.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-underscore-dangle stage1/cohere/lint/suggestions.a
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-underscore-dangle stage1/typescript/parser/grammar.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-underscore-dangle stage1/typescript/parser/jsx.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-underscore-dangle stage1/typescript/parser/lookahead.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-underscore-dangle stage1/typescript/parser/nodes.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-underscore-dangle stage1/typescript/parser/parser.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-underscore-dangle stage1/typescript/parser/statements.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input) (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-underscore-dangle stage1/typescript/scanner/characters.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-underscore-dangle stage1/typescript/scanner/scanner.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-underscore-dangle/build_test.go:21 (imported input) (imported input) (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-underscore-dangle stage1/typescript/scanner/tokens.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21
+reads stage1/cohere/lint/rules/no-unsafe-negation stage1/cohere/lint/context.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-negation stage1/cohere/lint/finding.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-negation stage1/cohere/lint/settings.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-negation stage1/cohere/lint/suggestions.a
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-negation stage1/typescript/parser/grammar.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-negation stage1/typescript/parser/jsx.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-negation stage1/typescript/parser/lookahead.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-negation stage1/typescript/parser/nodes.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-negation stage1/typescript/parser/parser.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-negation stage1/typescript/parser/statements.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input) (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-negation stage1/typescript/scanner/characters.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-negation stage1/typescript/scanner/scanner.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-negation/build_test.go:21 (imported input) (imported input) (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-negation stage1/typescript/scanner/tokens.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21
+reads stage1/cohere/lint/rules/no-unsafe-optional-chaining stage1/cohere/lint/context.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-optional-chaining stage1/cohere/lint/finding.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-optional-chaining stage1/cohere/lint/settings.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-optional-chaining stage1/cohere/lint/suggestions.a
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-optional-chaining stage1/typescript/parser/grammar.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-optional-chaining stage1/typescript/parser/jsx.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-optional-chaining stage1/typescript/parser/lookahead.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-optional-chaining stage1/typescript/parser/nodes.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-optional-chaining stage1/typescript/parser/parser.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-optional-chaining stage1/typescript/parser/statements.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input) (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-optional-chaining stage1/typescript/scanner/characters.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-optional-chaining stage1/typescript/scanner/scanner.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:21 (imported input) (imported input) (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/no-unsafe-optional-chaining stage1/typescript/scanner/tokens.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21
+reads stage1/cohere/lint/rules/typescript-no-this-alias stage1/cohere/lint/context.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input)
+reads stage1/cohere/lint/rules/typescript-no-this-alias stage1/cohere/lint/finding.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input)
+reads stage1/cohere/lint/rules/typescript-no-this-alias stage1/cohere/lint/settings.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input)
+reads stage1/cohere/lint/rules/typescript-no-this-alias stage1/cohere/lint/suggestions.a
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/typescript-no-this-alias stage1/typescript/parser/grammar.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/typescript-no-this-alias stage1/typescript/parser/jsx.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/typescript-no-this-alias stage1/typescript/parser/lookahead.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/typescript-no-this-alias stage1/typescript/parser/nodes.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input)
+reads stage1/cohere/lint/rules/typescript-no-this-alias stage1/typescript/parser/parser.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/typescript-no-this-alias stage1/typescript/parser/statements.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input) (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/typescript-no-this-alias stage1/typescript/scanner/characters.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/typescript-no-this-alias stage1/typescript/scanner/scanner.ts
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input) (imported input) (imported input)
+# TestCompileProfiles — stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go:21 (imported input) (imported input) (imported input) (imported input) (imported input)
+reads stage1/cohere/lint/rules/typescript-no-this-alias stage1/typescript/scanner/tokens.ts
+# TestMarkdownASTPreprocessing — stage1/cohere/markdownblocks/ast_test.go:49
+# TestMarkdownASTPreprocessing — stage1/cohere/markdownblocks/ast_test.go:50
+# TestMarkdownASTPreprocessing — stage1/cohere/markdownblocks/ast_test.go:63
+# TestMarkdownASTPreprocessing — stage1/cohere/markdownblocks/ast_test.go:92
+# TestMarkdownASTPreprocessing — stage1/cohere/markdownblocks/ast_test.go:98
+# TestWholeDocumentOraclePreflight via auditCorpus — stage1/cohere/markdownblocks/audit_test.go:38
+# TestWholeDocumentOraclePreflight — stage1/cohere/markdownblocks/audit_test.go:138
+# TestWholeDocumentOraclePreflight — stage1/cohere/markdownblocks/audit_test.go:139
+# TestWholeDocumentOraclePreflight — stage1/cohere/markdownblocks/audit_test.go:161
+# TestWholeDocumentOraclePreflight — stage1/cohere/markdownblocks/audit_test.go:165
+# TestWholeDocumentOraclePreflight — stage1/cohere/markdownblocks/audit_test.go:185
+# TestWholeDocumentOraclePreflight — stage1/cohere/markdownblocks/audit_test.go:277
+# TestMicromarkInputChunks — stage1/cohere/markdownblocks/chunks_test.go:73
+# TestMicromarkInputChunks — stage1/cohere/markdownblocks/chunks_test.go:74
+# TestMicromarkInputChunks — stage1/cohere/markdownblocks/chunks_test.go:83
+# TestMicromarkInputChunks — stage1/cohere/markdownblocks/chunks_test.go:99
+# TestMicromarkInputChunks — stage1/cohere/markdownblocks/chunks_test.go:105
+# TestMarkdownSourceDecoding — stage1/cohere/markdownblocks/decode_test.go:27
+# TestMarkdownSourceDecoding — stage1/cohere/markdownblocks/decode_test.go:69
+# TestMarkdownSourceDecoding — stage1/cohere/markdownblocks/decode_test.go:70
+# TestMarkdownSourceDecoding — stage1/cohere/markdownblocks/decode_test.go:91
+# TestMarkdownSourceDecoding — stage1/cohere/markdownblocks/decode_test.go:93
+# TestTokenizerEvents — stage1/cohere/markdownblocks/events_test.go:78
+# TestTokenizerEvents — stage1/cohere/markdownblocks/events_test.go:79
+# TestTokenizerEvents — stage1/cohere/markdownblocks/events_test.go:92
+# TestTokenizerEvents — stage1/cohere/markdownblocks/events_test.go:108
+# TestTokenizerEvents — stage1/cohere/markdownblocks/events_test.go:114
+# TestFrontMatterStage — stage1/cohere/markdownblocks/frontmatter_test.go:63
+# TestFrontMatterStage — stage1/cohere/markdownblocks/frontmatter_test.go:64
+# TestFrontMatterStage — stage1/cohere/markdownblocks/frontmatter_test.go:104
+# TestFrontMatterStage — stage1/cohere/markdownblocks/frontmatter_test.go:107
+# TestMdastIdentifierScalars — stage1/cohere/markdownblocks/identifier_test.go:20
+# TestMdastIdentifierScalars — stage1/cohere/markdownblocks/identifier_test.go:21
+# TestMarkdownListLayout, TestMarkdownQuoteLayout, TestMarkdownTableLayout, TestMarkdownCodeBlockLayout, TestMarkdownHTMLBlockLayout, TestMarkdownWhitespaceLayout, TestMarkdownLeafComposition, TestMarkdownRootLayout, TestMarkdownStructureLayout via buildLayoutFixture — stage1/cohere/markdownblocks/lists_test.go:119
+# TestMarkdownListLayout, TestMarkdownQuoteLayout, TestMarkdownTableLayout, TestMarkdownCodeBlockLayout, TestMarkdownHTMLBlockLayout, TestMarkdownWhitespaceLayout, TestMarkdownLeafComposition, TestMarkdownRootLayout, TestMarkdownStructureLayout via buildLayoutFixture — stage1/cohere/markdownblocks/lists_test.go:120
+# TestMarkdownListLayout, TestMarkdownQuoteLayout, TestMarkdownTableLayout, TestMarkdownCodeBlockLayout, TestMarkdownHTMLBlockLayout, TestMarkdownWhitespaceLayout, TestMarkdownLeafComposition, TestMarkdownRootLayout, TestMarkdownStructureLayout via buildLayoutFixture — stage1/cohere/markdownblocks/lists_test.go:121
+# TestMarkdownListLayout, TestMarkdownQuoteLayout, TestMarkdownTableLayout, TestMarkdownCodeBlockLayout, TestMarkdownHTMLBlockLayout, TestMarkdownWhitespaceLayout, TestMarkdownLeafComposition, TestMarkdownRootLayout, TestMarkdownStructureLayout via buildLayoutFixture — stage1/cohere/markdownblocks/lists_test.go:141
+# TestMarkdownListLayout, TestMarkdownQuoteLayout, TestMarkdownTableLayout, TestMarkdownCodeBlockLayout, TestMarkdownHTMLBlockLayout, TestMarkdownWhitespaceLayout, TestMarkdownLeafComposition, TestMarkdownRootLayout, TestMarkdownStructureLayout via buildLayoutFixture — stage1/cohere/markdownblocks/lists_test.go:164
+# TestMdastMalformedEvents — stage1/cohere/markdownblocks/mdast_errors_test.go:19
+# TestMdastMalformedEvents — stage1/cohere/markdownblocks/mdast_errors_test.go:20
+# TestMdastMalformedEvents — stage1/cohere/markdownblocks/mdast_errors_test.go:22
+# TestMdastMalformedEvents — stage1/cohere/markdownblocks/mdast_errors_test.go:43
+# TestMdastIdentifierWitnesses — stage1/cohere/markdownblocks/mdast_gap_test.go:18
+# TestMdastIdentifierWitnesses — stage1/cohere/markdownblocks/mdast_gap_test.go:19
+# TestMdastIdentifierWitnesses — stage1/cohere/markdownblocks/mdast_gap_test.go:21
+# TestMdastIdentifierWitnesses — stage1/cohere/markdownblocks/mdast_gap_test.go:45
+# TestMdastIdentifierWitnesses — stage1/cohere/markdownblocks/mdast_gap_test.go:51
+# TestNativeMdastConstruction — stage1/cohere/markdownblocks/mdast_test.go:51
+# TestNativeMdastConstruction — stage1/cohere/markdownblocks/mdast_test.go:52
+# TestNativeMdastConstruction — stage1/cohere/markdownblocks/mdast_test.go:54
+# TestNativeMdastConstruction — stage1/cohere/markdownblocks/mdast_test.go:90
+# TestNativeMdastConstruction — stage1/cohere/markdownblocks/mdast_test.go:96
+# TestMarkdownAstPath — stage1/cohere/markdownblocks/path_test.go:37
+# TestMarkdownAstPath — stage1/cohere/markdownblocks/path_test.go:38
+# TestMarkdownAstPath — stage1/cohere/markdownblocks/path_test.go:55
+# TestMarkdownAstPath — stage1/cohere/markdownblocks/path_test.go:83
+# TestMarkdownAstPath — stage1/cohere/markdownblocks/path_test.go:89
+# TestMarkdownParserPrefixes — stage1/cohere/markdownblocks/prefix_test.go:59
+# TestMarkdownParserPrefixes — stage1/cohere/markdownblocks/prefix_test.go:60
+# TestMarkdownParserPrefixes — stage1/cohere/markdownblocks/prefix_test.go:69
+# TestMain, TestNativeBuildModesAreDistinct via cohereFormatter — stage1/cohere/markdownblocks/support_test.go:159
+# TestMain, TestNativeBuildModesAreDistinct via cohereFormatter — stage1/cohere/markdownblocks/support_test.go:160
+# TestMarkdownTextSplitting — stage1/cohere/markdownblocks/text_test.go:60
+# TestMarkdownTextSplitting — stage1/cohere/markdownblocks/text_test.go:61
+# TestMarkdownTextSplitting — stage1/cohere/markdownblocks/text_test.go:66
+# TestMarkdownTextSplitting — stage1/cohere/markdownblocks/text_test.go:82
+# TestMarkdownTextSplitting — stage1/cohere/markdownblocks/text_test.go:88
+# TestMarkdownUnicodeWidths — stage1/cohere/markdownblocks/width_test.go:58
+# TestMarkdownUnicodeWidths — stage1/cohere/markdownblocks/width_test.go:59
+# TestMarkdownUnicodeWidths — stage1/cohere/markdownblocks/width_test.go:83
+reads stage1/cohere/markdownblocks cohere
+# TestFrontMatterStage — stage1/cohere/markdownblocks/frontmatter_test.go:167
+# TestMarkdownListLayout, TestMarkdownQuoteLayout, TestMarkdownTableLayout, TestMarkdownCodeBlockLayout, TestMarkdownHTMLBlockLayout, TestMarkdownWhitespaceLayout, TestMarkdownLeafComposition, TestMarkdownRootLayout, TestMarkdownStructureLayout via testBlockLayout — stage1/cohere/markdownblocks/lists_test.go:454
+# TestMarkdownParserPrefixes — stage1/cohere/markdownblocks/prefix_test.go:146
+# TestMain, TestNativeBuildModesAreDistinct via onNodeResult — stage1/cohere/markdownblocks/support_test.go:307
+reads stage1/cohere/markdownblocks oracle/adamic.mjs
+# TestFrontMatterStage — stage1/cohere/markdownblocks/frontmatter_test.go:167
+# TestMarkdownListLayout, TestMarkdownQuoteLayout, TestMarkdownTableLayout, TestMarkdownCodeBlockLayout, TestMarkdownHTMLBlockLayout, TestMarkdownWhitespaceLayout, TestMarkdownLeafComposition, TestMarkdownRootLayout, TestMarkdownStructureLayout via testBlockLayout — stage1/cohere/markdownblocks/lists_test.go:454
+# TestMarkdownParserPrefixes — stage1/cohere/markdownblocks/prefix_test.go:146
+# TestMain, TestNativeBuildModesAreDistinct via onNodeResult — stage1/cohere/markdownblocks/support_test.go:307
+reads stage1/cohere/markdownblocks oracle/node.mjs
+# TestMarkdownListLayout, TestMarkdownQuoteLayout, TestMarkdownTableLayout, TestMarkdownCodeBlockLayout, TestMarkdownHTMLBlockLayout, TestMarkdownWhitespaceLayout, TestMarkdownLeafComposition, TestMarkdownRootLayout, TestMarkdownStructureLayout via testBlockLayout — stage1/cohere/markdownblocks/lists_test.go:406
+# TestArrayGrowthWitness — stage1/cohere/markdownblocks/array_growth_gap_test.go:18
+# TestMarkdownListLayout, TestMarkdownQuoteLayout, TestMarkdownTableLayout, TestMarkdownCodeBlockLayout, TestMarkdownHTMLBlockLayout, TestMarkdownWhitespaceLayout, TestMarkdownLeafComposition, TestMarkdownRootLayout, TestMarkdownStructureLayout via testBlockLayout — stage1/cohere/markdownblocks/lists_test.go:406 (imported input)
+# TestArrayGrowthWitness — stage1/cohere/markdownblocks/array_growth_gap_test.go:18 (imported input)
+reads stage1/cohere/markdownblocks stage1/cohere/markdowninline/classes.ts
+# TestMarkdownListLayout, TestMarkdownQuoteLayout, TestMarkdownTableLayout, TestMarkdownCodeBlockLayout, TestMarkdownHTMLBlockLayout, TestMarkdownWhitespaceLayout, TestMarkdownLeafComposition, TestMarkdownRootLayout, TestMarkdownStructureLayout via testBlockLayout — stage1/cohere/markdownblocks/lists_test.go:406
+# TestArrayGrowthWitness — stage1/cohere/markdownblocks/array_growth_gap_test.go:18
+reads stage1/cohere/markdownblocks stage1/cohere/markdowninline/inline.ts
+# TestMarkdownInline — stage1/cohere/markdowninline/port_test.go:159
+reads stage1/cohere/markdowninline *.[mM][aA][rR][kK][dD][oO][wW][nN]
+# TestMarkdownInline — stage1/cohere/markdowninline/port_test.go:159
+reads stage1/cohere/markdowninline *.[mM][dD]
+# TestMarkdownInline — stage1/cohere/markdowninline/port_test.go:159
+reads stage1/cohere/markdowninline *.[mM][dD][oO][wW][nN]
+# TestMarkdownInline — stage1/cohere/markdowninline/port_test.go:159
+reads stage1/cohere/markdowninline *.[mM][kK][dD]
+# TestMarkdownInline — stage1/cohere/markdowninline/port_test.go:231
+# TestMarkdownInline — stage1/cohere/markdowninline/port_test.go:233
+# TestMarkdownInline — stage1/cohere/markdowninline/port_test.go:234
+# TestMarkdownInline — stage1/cohere/markdowninline/port_test.go:239
+reads stage1/cohere/markdowninline cohere
+# TestMarkdownInline via onNode — stage1/cohere/markdowninline/port_test.go:83
+# TestMarkdownInline — stage1/cohere/markdowninline/port_test.go:344
+reads stage1/cohere/markdowninline oracle/adamic.mjs
+# TestMarkdownInline via onNode — stage1/cohere/markdowninline/port_test.go:83
+# TestMarkdownInline — stage1/cohere/markdowninline/port_test.go:344
+reads stage1/cohere/markdowninline oracle/node.mjs
+# TestThePortParsesAsGoCohereDoes via cohereSide — stage1/cohere/mediaquery/mediaquery_test.go:273
+# TestThePortParsesAsGoCohereDoes via cohereSide — stage1/cohere/mediaquery/mediaquery_test.go:277
+# TestThePortParsesAsGoCohereDoes via cohereSide — stage1/cohere/mediaquery/mediaquery_test.go:281
+reads stage1/cohere/mediaquery cohere
+# TestThePortParsesAsGoCohereDoes via onNode — stage1/cohere/mediaquery/mediaquery_test.go:392
+reads stage1/cohere/mediaquery oracle/adamic.mjs
+# TestThePortParsesAsGoCohereDoes via onNode — stage1/cohere/mediaquery/mediaquery_test.go:392
+reads stage1/cohere/mediaquery oracle/node.mjs
+# TestThePortParsesAsGoCohereDoes, TestSelectorThroughput, TestCorpusKeepsEveryParseableFile, TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars via askedCases — stage1/cohere/selector/selector_test.go:172
+# TestThePortParsesAsGoCohereDoes, TestSelectorThroughput, TestCorpusKeepsEveryParseableFile, TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars via cohereSide — stage1/cohere/selector/selector_test.go:212
+# TestThePortParsesAsGoCohereDoes, TestSelectorThroughput, TestCorpusKeepsEveryParseableFile, TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars via cohereSide — stage1/cohere/selector/selector_test.go:216
+# TestThePortParsesAsGoCohereDoes, TestSelectorThroughput, TestCorpusKeepsEveryParseableFile, TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars via cohereSide — stage1/cohere/selector/selector_test.go:220
+reads stage1/cohere/selector cohere
+# TestSelector via askedCases/adamicCohereTexts — stage1/cohere/selector/testdata/cohere_side_test.go:26
+reads stage1/cohere/selector cohere/internal/format/css/*_test.go
+# TestThePortParsesAsGoCohereDoes, TestSelectorThroughput, TestCorpusKeepsEveryParseableFile, TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars via onNode — stage1/cohere/selector/selector_test.go:339
+# TestSelectorThroughput — stage1/cohere/selector/selector_test.go:431
+reads stage1/cohere/selector oracle/adamic.mjs
+# TestThePortParsesAsGoCohereDoes, TestSelectorThroughput, TestCorpusKeepsEveryParseableFile, TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars via onNode — stage1/cohere/selector/selector_test.go:339
+# TestSelectorThroughput — stage1/cohere/selector/selector_test.go:431
+reads stage1/cohere/selector oracle/node.mjs
+# TestThePortMakesWhatGoCohereMakes via cohereSide — stage1/cohere/static_single_assignment/static_single_assignment_test.go:288
+# TestThePortMakesWhatGoCohereMakes via cohereSide — stage1/cohere/static_single_assignment/static_single_assignment_test.go:292
+reads stage1/cohere/static_single_assignment cohere
+# TestThePortMakesWhatGoCohereMakes via onNode — stage1/cohere/static_single_assignment/static_single_assignment_test.go:406
+reads stage1/cohere/static_single_assignment oracle/adamic.mjs
+# TestThePortMakesWhatGoCohereMakes via onNode — stage1/cohere/static_single_assignment/static_single_assignment_test.go:406
+reads stage1/cohere/static_single_assignment oracle/node.mjs
+# TestThePortParsesAsGoCohereDoes via cohereSide — stage1/cohere/suppression/suppression_test.go:271
+# TestThePortParsesAsGoCohereDoes via cohereSide — stage1/cohere/suppression/suppression_test.go:275
+# TestThePortParsesAsGoCohereDoes via cohereSide — stage1/cohere/suppression/suppression_test.go:279
+reads stage1/cohere/suppression cohere
+# TestThePortParsesAsGoCohereDoes via onNode — stage1/cohere/suppression/suppression_test.go:390
+reads stage1/cohere/suppression oracle/adamic.mjs
+# TestThePortParsesAsGoCohereDoes via onNode — stage1/cohere/suppression/suppression_test.go:390
+reads stage1/cohere/suppression oracle/node.mjs
+# TestExpressionsAgainstGoAndPrettier via expressionCorpus — stage1/cohere/tsprinter/expressions_test.go:27
+# TestStatementsAgainstGoAndPrettier via statementCorpus — stage1/cohere/tsprinter/statements_test.go:27
+reads stage1/cohere/tsprinter *.ts
+# TestDocumentsAgainstGoAndPrettier via documentCorpus — stage1/cohere/tsprinter/doc_test.go:13
+# TestExpressionsAgainstGoAndPrettier via expressionCorpus — stage1/cohere/tsprinter/expressions_test.go:31
+# TestExpressionsAgainstGoAndPrettier — stage1/cohere/tsprinter/expressions_test.go:107
+# TestStatementsAgainstGoAndPrettier via statementCorpus — stage1/cohere/tsprinter/statements_test.go:31
+# TestStatementsAgainstGoAndPrettier — stage1/cohere/tsprinter/statements_test.go:125
+reads stage1/cohere/tsprinter cohere
+# TestClassInterfaceMethodGap, TestCompilerGaps, TestDocumentsAgainstGoAndPrettier, TestExpressionsAgainstGoAndPrettier, TestMutants, TestNumberConstructor, TestOptionalBooleanFunctionGap, TestStatementUpstreamDifferences, TestStatementsAgainstGoAndPrettier via onNode — stage1/cohere/tsprinter/helpers_test.go:96
+reads stage1/cohere/tsprinter oracle/adamic.mjs
+# TestClassInterfaceMethodGap, TestCompilerGaps, TestDocumentsAgainstGoAndPrettier, TestExpressionsAgainstGoAndPrettier, TestMutants, TestNumberConstructor, TestOptionalBooleanFunctionGap, TestStatementUpstreamDifferences, TestStatementsAgainstGoAndPrettier via onNode — stage1/cohere/tsprinter/helpers_test.go:96
+reads stage1/cohere/tsprinter oracle/node.mjs
+# TestExpressionsAgainstGoAndPrettier via expressionCorpus — stage1/cohere/tsprinter/expressions_test.go:27 (imported input)
+# TestStatementsAgainstGoAndPrettier via statementCorpus — stage1/cohere/tsprinter/statements_test.go:27 (imported input)
+reads stage1/cohere/tsprinter stage1/cohere/lint/suggestions.a
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29 (imported input)
+reads stage1/cohere/tsprinter stage1/typescript/parser/grammar.ts
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29 (imported input)
+reads stage1/cohere/tsprinter stage1/typescript/parser/jsx.ts
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29 (imported input)
+reads stage1/cohere/tsprinter stage1/typescript/parser/lookahead.ts
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29 (imported input)
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29 (imported input) (imported input)
+reads stage1/cohere/tsprinter stage1/typescript/parser/nodes.ts
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29
+reads stage1/cohere/tsprinter stage1/typescript/parser/parser.ts
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29 (imported input)
+reads stage1/cohere/tsprinter stage1/typescript/parser/statements.ts
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29 (imported input)
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29 (imported input) (imported input)
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29 (imported input) (imported input) (imported input)
+reads stage1/cohere/tsprinter stage1/typescript/scanner/characters.ts
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29 (imported input)
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29 (imported input) (imported input)
+reads stage1/cohere/tsprinter stage1/typescript/scanner/scanner.ts
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29 (imported input)
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29 (imported input) (imported input)
+# TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29 (imported input) (imported input) (imported input)
+reads stage1/cohere/tsprinter stage1/typescript/scanner/tokens.ts
+# TestSixRuleAgreementAndMutants — stage1/cohere/typeaware/suite_test.go:275
+# TestSixRuleAgreementAndMutants — stage1/cohere/typeaware/suite_test.go:281
+# TestSixRuleAgreementAndMutants — stage1/cohere/typeaware/suite_test.go:295
+# TestTypeAwareAgreementAndMutants — stage1/cohere/typeaware/typeaware_test.go:294
+# TestTypeAwareAgreementAndMutants — stage1/cohere/typeaware/typeaware_test.go:310
+# TestVolumeAgreementAndMutants — stage1/cohere/typeaware/volume_test.go:181
+reads stage1/cohere/typeaware bridge/tsgo/archive/main.go
+# TestVolumeProfileAgreementAndMutants — stage1/cohere/typeaware/profile_test.go:103
+# TestSixRuleAgreementAndMutants — stage1/cohere/typeaware/suite_test.go:193
+# TestSixRuleAgreementAndMutants — stage1/cohere/typeaware/suite_test.go:259
+# TestInspectRequestRefusals — stage1/cohere/typeaware/suite_test.go:531
+# TestVolumeConfigGuardAndMutant — stage1/cohere/typeaware/volume_test.go:253
+reads stage1/cohere/typeaware bridge/tsgo/checker/facts.go
+# TestTypeAwareAgreementAndMutants — stage1/cohere/typeaware/typeaware_test.go:333
+reads stage1/cohere/typeaware bridge/tsgo/checker/program.go
+# TestVolumeProfileAgreementAndMutants, TestShadowIndexMissingBinding via profileSourceMutant — stage1/cohere/typeaware/profile_test.go:19
+# TestVolumeProfileAgreementAndMutants, TestShadowIndexMissingBinding via profileSourceMutant — stage1/cohere/typeaware/profile_test.go:37
+# TestVolumeProfileAgreementAndMutants — stage1/cohere/typeaware/profile_test.go:66
+# TestVolumeProfileAgreementAndMutants — stage1/cohere/typeaware/profile_test.go:69
+# TestShadowIndexMissingBinding — stage1/cohere/typeaware/profile_test.go:147
+# TestSixRuleAgreementAndMutants, TestSixPinnedFlags, TestFactsDecoderGuards, TestInspectRequestRefusals via suiteSources — stage1/cohere/typeaware/suite_test.go:26
+# TestSixRuleAgreementAndMutants, TestSixPinnedFlags, TestFactsDecoderGuards, TestInspectRequestRefusals via suiteTSMutant — stage1/cohere/typeaware/suite_test.go:90
+# TestSixRuleAgreementAndMutants, TestSixPinnedFlags, TestFactsDecoderGuards, TestInspectRequestRefusals via suiteTSMutant — stage1/cohere/typeaware/suite_test.go:108
+# TestSixRuleAgreementAndMutants, TestSixPinnedFlags, TestFactsDecoderGuards, TestInspectRequestRefusals via suiteTSMutant — stage1/cohere/typeaware/suite_test.go:118
+# TestSixRuleAgreementAndMutants — stage1/cohere/typeaware/suite_test.go:144
+# TestSixRuleAgreementAndMutants — stage1/cohere/typeaware/suite_test.go:148
+# TestSixRuleAgreementAndMutants — stage1/cohere/typeaware/suite_test.go:149
+# TestSixRuleAgreementAndMutants — stage1/cohere/typeaware/suite_test.go:154
+# TestSixRuleAgreementAndMutants — stage1/cohere/typeaware/suite_test.go:156
+# TestSixRuleAgreementAndMutants — stage1/cohere/typeaware/suite_test.go:220
+# TestSixRuleAgreementAndMutants — stage1/cohere/typeaware/suite_test.go:230
+# TestSixRuleAgreementAndMutants — stage1/cohere/typeaware/suite_test.go:233
+# TestSixRuleAgreementAndMutants — stage1/cohere/typeaware/suite_test.go:239
+# TestSixRuleAgreementAndMutants — stage1/cohere/typeaware/suite_test.go:242
+# TestSixRuleAgreementAndMutants — stage1/cohere/typeaware/suite_test.go:304
+# TestFactsDecoderGuards — stage1/cohere/typeaware/suite_test.go:435
+# TestInspectRequestRefusals — stage1/cohere/typeaware/suite_test.go:510
+# TestInspectRequestRefusals — stage1/cohere/typeaware/suite_test.go:512
+# TestTypeAwareAgreementAndMutants — stage1/cohere/typeaware/typeaware_test.go:175
+# TestTypeAwareAgreementAndMutants — stage1/cohere/typeaware/typeaware_test.go:179
+# TestTypeAwareAgreementAndMutants — stage1/cohere/typeaware/typeaware_test.go:180
+# TestTypeAwareAgreementAndMutants — stage1/cohere/typeaware/typeaware_test.go:186
+# TestTypeAwareAgreementAndMutants — stage1/cohere/typeaware/typeaware_test.go:188
+# TestTypeAwareAgreementAndMutants — stage1/cohere/typeaware/typeaware_test.go:191
+# TestTypeAwareAgreementAndMutants — stage1/cohere/typeaware/typeaware_test.go:257
+# TestTypeAwareAgreementAndMutants — stage1/cohere/typeaware/typeaware_test.go:270
+# TestTypeAwareAgreementAndMutants — stage1/cohere/typeaware/typeaware_test.go:287
+# TestTypeAwareAgreementAndMutants — stage1/cohere/typeaware/typeaware_test.go:321
+# TestVolumeAgreementAndMutants, TestVolumeConfigGuardAndMutant via volumeOracle — stage1/cohere/typeaware/volume_test.go:19
+# TestVolumeAgreementAndMutants, TestVolumeConfigGuardAndMutant via volumeOracle — stage1/cohere/typeaware/volume_test.go:20
+# TestVolumeAgreementAndMutants, TestVolumeConfigGuardAndMutant via volumeOracle — stage1/cohere/typeaware/volume_test.go:26
+# TestVolumeAgreementAndMutants — stage1/cohere/typeaware/volume_test.go:107
+# TestVolumeAgreementAndMutants — stage1/cohere/typeaware/volume_test.go:110
+# TestVolumeConfigGuardAndMutant — stage1/cohere/typeaware/volume_test.go:243
+reads stage1/cohere/typeaware cohere
+# TestVolumeProfileAgreementAndMutants — stage1/cohere/typeaware/profile_test.go:114
+# TestVolumeAgreementAndMutants — stage1/cohere/typeaware/volume_test.go:191
+# TestVolumeAgreementAndMutants — stage1/cohere/typeaware/volume_test.go:192
+# TestVolumeConfigGuardAndMutant — stage1/cohere/typeaware/volume_test.go:280
+reads stage1/cohere/typeaware tsconfig.json
+# TestThePortParsesAsGoCohereDoes via cohereSide — stage1/cohere/values/values_test.go:332
+# TestThePortParsesAsGoCohereDoes via cohereSide — stage1/cohere/values/values_test.go:336
+# TestThePortParsesAsGoCohereDoes via cohereSide — stage1/cohere/values/values_test.go:340
+reads stage1/cohere/values cohere
+# TestThePortParsesAsGoCohereDoes via onNode — stage1/cohere/values/values_test.go:451
+reads stage1/cohere/values oracle/adamic.mjs
+# TestThePortParsesAsGoCohereDoes via onNode — stage1/cohere/values/values_test.go:451
+reads stage1/cohere/values oracle/node.mjs
+# TestLexerMatchesGo, TestLexerMutants via lexCases — stage1/cohere/yaml/lexer_test.go:52
+reads stage1/cohere/yaml *.[yY][aA][mM][lL]
+# TestLexerMatchesGo, TestLexerMutants via lexCases — stage1/cohere/yaml/lexer_test.go:52
+reads stage1/cohere/yaml *.[yY][mM][lL]
+# TestComposeMatchGo, TestComposeMutants via goCompose — stage1/cohere/yaml/compose_test.go:28
+# TestComposeMatchGo, TestComposeMutants via goCompose — stage1/cohere/yaml/compose_test.go:42
+# TestComposeMatchGo, TestComposeMutants via goCompose — stage1/cohere/yaml/compose_test.go:51
+# TestCSTMatchesGo, TestCSTMutants via goCST — stage1/cohere/yaml/cst_test.go:28
+# TestCSTMatchesGo, TestCSTMutants via goCST — stage1/cohere/yaml/cst_test.go:37
+# TestFormatterMatchesGo, TestBundledParserDifference, TestFileDriver, TestFormatterMutants via goFormat — stage1/cohere/yaml/format_test.go:28
+# TestFormatterMatchesGo, TestBundledParserDifference, TestFileDriver, TestFormatterMutants via goFormat — stage1/cohere/yaml/format_test.go:37
+# TestLexerMatchesGo, TestLexerMutants via goLexer — stage1/cohere/yaml/lexer_test.go:127
+# TestLexerMatchesGo, TestLexerMutants via goLexer — stage1/cohere/yaml/lexer_test.go:136
+# TestPropsMatchGo, TestPropsMutants via goProps — stage1/cohere/yaml/props_test.go:27
+# TestPropsMatchGo, TestPropsMutants via goProps — stage1/cohere/yaml/props_test.go:41
+# TestPropsMatchGo, TestPropsMutants via goProps — stage1/cohere/yaml/props_test.go:50
+# TestScalarsMatchGo, TestScalarMutants via goScalars — stage1/cohere/yaml/scalar_test.go:54
+# TestScalarsMatchGo, TestScalarMutants via goScalars — stage1/cohere/yaml/scalar_test.go:68
+# TestScalarsMatchGo, TestScalarMutants via goScalars — stage1/cohere/yaml/scalar_test.go:77
+# TestSchemaMatchesGo, TestSchemaMutants via goSchema — stage1/cohere/yaml/schema_test.go:52
+# TestSchemaMatchesGo, TestSchemaMutants via goSchema — stage1/cohere/yaml/schema_test.go:61
+# TestUnistMatchesGo, TestUnistMutants via goUnist — stage1/cohere/yaml/unist_test.go:28
+# TestUnistMatchesGo, TestUnistMutants via goUnist — stage1/cohere/yaml/unist_test.go:37
+# TestWidthsMatchGo via goWidth — stage1/cohere/yaml/width_test.go:29
+# TestWidthsMatchGo via goWidth — stage1/cohere/yaml/width_test.go:38
+reads stage1/cohere/yaml cohere
+# TestComposeMatchGo — stage1/cohere/yaml/compose_test.go:128
+# TestComposeMutants — stage1/cohere/yaml/compose_test.go:156
+# TestCSTMatchesGo — stage1/cohere/yaml/cst_test.go:65
+# TestCSTMutants — stage1/cohere/yaml/cst_test.go:94
+# TestFormatterMatchesGo — stage1/cohere/yaml/format_test.go:122
+# TestFileDriver — stage1/cohere/yaml/format_test.go:249
+# TestFormatterMutants — stage1/cohere/yaml/format_test.go:275
+# TestLexerGaps — stage1/cohere/yaml/gaps_test.go:15
+# TestStructuralPositionRefusal — stage1/cohere/yaml/gaps_test.go:55
+# TestLexerMatchesGo, TestLexerMutants via nativeLexer — stage1/cohere/yaml/lexer_test.go:173
+# TestLexerMatchesGo — stage1/cohere/yaml/lexer_test.go:209
+# TestLexerMutants — stage1/cohere/yaml/lexer_test.go:237
+# TestPropsMatchGo — stage1/cohere/yaml/props_test.go:100
+# TestPropsMutants — stage1/cohere/yaml/props_test.go:128
+# TestSharedSliceAppendMatchesNode — stage1/cohere/yaml/scalar_runtime_gap_test.go:19
+# TestScalarsMatchGo — stage1/cohere/yaml/scalar_test.go:127
+# TestScalarMutants — stage1/cohere/yaml/scalar_test.go:155
+# TestSchemaMatchesGo — stage1/cohere/yaml/schema_test.go:89
+# TestSchemaMutants — stage1/cohere/yaml/schema_test.go:118
+# TestSpeedCostProbes — stage1/cohere/yaml/speed_gap_test.go:26
+# TestUnistMatchesGo — stage1/cohere/yaml/unist_test.go:65
+# TestUnistMutants — stage1/cohere/yaml/unist_test.go:96
+# TestWidthsMatchGo — stage1/cohere/yaml/width_test.go:93
+reads stage1/cohere/yaml oracle/adamic.mjs
+# TestComposeMatchGo — stage1/cohere/yaml/compose_test.go:128
+# TestComposeMutants — stage1/cohere/yaml/compose_test.go:156
+# TestCSTMatchesGo — stage1/cohere/yaml/cst_test.go:65
+# TestCSTMutants — stage1/cohere/yaml/cst_test.go:94
+# TestFormatterMatchesGo — stage1/cohere/yaml/format_test.go:122
+# TestFileDriver — stage1/cohere/yaml/format_test.go:249
+# TestFormatterMutants — stage1/cohere/yaml/format_test.go:275
+# TestLexerGaps — stage1/cohere/yaml/gaps_test.go:15
+# TestStructuralPositionRefusal — stage1/cohere/yaml/gaps_test.go:55
+# TestLexerMatchesGo, TestLexerMutants via nativeLexer — stage1/cohere/yaml/lexer_test.go:173
+# TestLexerMatchesGo — stage1/cohere/yaml/lexer_test.go:209
+# TestLexerMutants — stage1/cohere/yaml/lexer_test.go:237
+# TestPropsMatchGo — stage1/cohere/yaml/props_test.go:100
+# TestPropsMutants — stage1/cohere/yaml/props_test.go:128
+# TestSharedSliceAppendMatchesNode — stage1/cohere/yaml/scalar_runtime_gap_test.go:19
+# TestScalarsMatchGo — stage1/cohere/yaml/scalar_test.go:127
+# TestScalarMutants — stage1/cohere/yaml/scalar_test.go:155
+# TestSchemaMatchesGo — stage1/cohere/yaml/schema_test.go:89
+# TestSchemaMutants — stage1/cohere/yaml/schema_test.go:118
+# TestSpeedCostProbes — stage1/cohere/yaml/speed_gap_test.go:26
+# TestUnistMatchesGo — stage1/cohere/yaml/unist_test.go:65
+# TestUnistMutants — stage1/cohere/yaml/unist_test.go:96
+# TestWidthsMatchGo — stage1/cohere/yaml/width_test.go:93
+reads stage1/cohere/yaml oracle/node.mjs
+# TestExpressionsAgree, TestCompilerExpressionsAgree via goOracle — stage1/typescript/parser/parser_test.go:61
+reads stage1/typescript/parser cohere
+# TestStrongAstParentGap — stage1/typescript/parser/gaps_test.go:19
+# TestPushSpreadGap — stage1/typescript/parser/gaps_test.go:43
+# TestClassMethodInterfaceGap — stage1/typescript/parser/gaps_test.go:67
+# TestOptionalFunctionValueGap — stage1/typescript/parser/gaps_test.go:92
+# TestConditionalEmptyArrayGap — stage1/typescript/parser/gaps_test.go:116
+# TestTypeOnlyImportCycleCompiles — stage1/typescript/parser/import_cycles_test.go:21
+# TestJsxMemberNameRejection — stage1/typescript/parser/jsx_rejection_test.go:47
+# TestJsxNameBoundaryRejections — stage1/typescript/parser/jsx_rejection_test.go:80
+# TestExpressionsAgree, TestCompilerExpressionsAgree via node — stage1/typescript/parser/parser_test.go:130
+# TestEveryTypeNodeKindAgrees — stage1/typescript/parser/type_kinds_test.go:20
+# TestWholeCompilerAgrees via wholeNode — stage1/typescript/parser/whole_test.go:13
+reads stage1/typescript/parser oracle/adamic.mjs
+# TestStrongAstParentGap — stage1/typescript/parser/gaps_test.go:19
+# TestPushSpreadGap — stage1/typescript/parser/gaps_test.go:43
+# TestClassMethodInterfaceGap — stage1/typescript/parser/gaps_test.go:67
+# TestOptionalFunctionValueGap — stage1/typescript/parser/gaps_test.go:92
+# TestConditionalEmptyArrayGap — stage1/typescript/parser/gaps_test.go:116
+# TestTypeOnlyImportCycleCompiles — stage1/typescript/parser/import_cycles_test.go:21
+# TestJsxMemberNameRejection — stage1/typescript/parser/jsx_rejection_test.go:47
+# TestJsxNameBoundaryRejections — stage1/typescript/parser/jsx_rejection_test.go:80
+# TestExpressionsAgree, TestCompilerExpressionsAgree via node — stage1/typescript/parser/parser_test.go:130
+# TestEveryTypeNodeKindAgrees — stage1/typescript/parser/type_kinds_test.go:20
+# TestWholeCompilerAgrees via wholeNode — stage1/typescript/parser/whole_test.go:13
+reads stage1/typescript/parser oracle/node.mjs
+# TestJsxScannerMutants — stage1/typescript/parser/jsx_scanner_mutants_test.go:35
+# TestStrongAstParentGap — stage1/typescript/parser/gaps_test.go:27
+# TestJsxScannerMutants — stage1/typescript/parser/jsx_scanner_mutants_test.go:35 (imported input)
+# TestExpressionsAgree, TestCompilerExpressionsAgree via copyPort — stage1/typescript/parser/parser_test.go:110 (imported input)
+# TestStrongAstParentGap — stage1/typescript/parser/gaps_test.go:27 (imported input)
+reads stage1/typescript/parser stage1/typescript/scanner/characters.ts
+# TestJsxScannerMutants — stage1/typescript/parser/jsx_scanner_mutants_test.go:35
+# TestExpressionsAgree, TestCompilerExpressionsAgree via copyPort — stage1/typescript/parser/parser_test.go:110
+# TestStrongAstParentGap — stage1/typescript/parser/gaps_test.go:27
+reads stage1/typescript/parser stage1/typescript/scanner/scanner.ts
+# TestJsxScannerMutants — stage1/typescript/parser/jsx_scanner_mutants_test.go:35
+# TestStrongAstParentGap — stage1/typescript/parser/gaps_test.go:27
+# TestJsxScannerMutants — stage1/typescript/parser/jsx_scanner_mutants_test.go:35 (imported input)
+# TestExpressionsAgree, TestCompilerExpressionsAgree via copyPort — stage1/typescript/parser/parser_test.go:110 (imported input)
+# TestStrongAstParentGap — stage1/typescript/parser/gaps_test.go:27 (imported input)
+reads stage1/typescript/parser stage1/typescript/scanner/tokens.ts
+# TestScannerAgreesWithTypescriptGo, TestPerformance via goOracle — stage1/typescript/scanner/scanner_test.go:63
+# TestScannerAgreesWithTypescriptGo, TestPerformance via askedCorpus — stage1/typescript/scanner/scanner_test.go:231
+# TestScannerAgreesWithTypescriptGo, TestPerformance via askedCorpus — stage1/typescript/scanner/scanner_test.go:286
+reads stage1/typescript/scanner cohere
+# TestProfileArtifacts — stage1/typescript/scanner/profile_test.go:67
+reads stage1/typescript/scanner internal/native/runtime/*.c
+# TestProfileArtifacts — stage1/typescript/scanner/profile_test.go:67
+reads stage1/typescript/scanner internal/native/runtime/*.h
+# TestGapStandsWhereGapsMdSays — stage1/typescript/scanner/gaps_test.go:18
+# TestBigintGapStandsWhereGapsMdSays — stage1/typescript/scanner/gaps_test.go:42
+# TestScannerAgreesWithTypescriptGo, TestPerformance via node — stage1/typescript/scanner/scanner_test.go:127
+reads stage1/typescript/scanner oracle/adamic.mjs
+# TestGapStandsWhereGapsMdSays — stage1/typescript/scanner/gaps_test.go:18
+# TestBigintGapStandsWhereGapsMdSays — stage1/typescript/scanner/gaps_test.go:42
+# TestScannerAgreesWithTypescriptGo, TestPerformance via node — stage1/typescript/scanner/scanner_test.go:127
+reads stage1/typescript/scanner oracle/node.mjs
+# TestScannerAgreesWithTypescriptGo, TestPerformance via askedCorpus — stage1/typescript/scanner/scanner_test.go:218
+reads stage1/typescript/scanner stage1/*.ts
+# TestScannerAgreesWithTypescriptGo, TestPerformance via askedCorpus — stage1/typescript/scanner/scanner_test.go:218 (imported input)
+reads stage1/typescript/scanner stage1/cohere/lint/suggestions.a
+# TestFixtures, TestFixturePaths via transformedNodeRunner — stage3/fixtures/fixtures_test.go:121
+# TestFixtures — stage3/fixtures/fixtures_test.go:264
+# TestTransformedNodeRunnerGuardHook — stage3/fixtures/runner_guard_test.go:21
+reads stage3/fixtures oracle/adamic.mjs
+# TestFixtures, TestFixturePaths via transformedNodeRunner — stage3/fixtures/fixtures_test.go:121
+# TestFixtures — stage3/fixtures/fixtures_test.go:264
+# TestTransformedNodeRunnerGuardHook — stage3/fixtures/runner_guard_test.go:21
+reads stage3/fixtures oracle/node.mjs

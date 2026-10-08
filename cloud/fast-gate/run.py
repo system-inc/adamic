@@ -222,19 +222,33 @@ class Gate:
     def cover(self, unowned, changed=()):
         """Each changed path outside a Go package to its executor (cloud/fast-gate/executors.txt from the
         tools checkout, since what counts as inert is a ruling, not the candidate's to change). Any path
-        with none turns the gate red before anything runs. Returns the set of executors, or None."""
-        rules, enforce = [], True
+        with none turns the gate red before anything runs. Reads rules independently add tests for
+        matching changed paths, including package-owned paths. Returns executors, or None."""
+        rules, readers, enforce = [], [], True
         with open(os.path.join(self.arguments.tools, "cloud/fast-gate/executors.txt")) as handle:
-            for line in handle:
+            for number, line in enumerate(handle, 1):
                 fields = line.split()
                 if fields[:2] == ["mode", "report"]:
                     enforce = False  # record uncovered paths without failing, until the rulings are in
+                elif fields and fields[0] == "reads":
+                    if len(fields) != 3:
+                        raise ValueError("invalid reads line %d: %s" % (number, line.strip()))
+                    readers.append((number, fields[1], fields[2]))
                 elif fields and not fields[0].startswith("#") and fields[0] != "mode":
                     rules.append((fields[0], fields[1]))
         # "a-check-exempt <glob>" lines aren't executors: they name .a files that aren't Adamic programs.
         exempt = [glob for name, glob in rules if name == "a-check-exempt"]
         rules = [rule for rule in rules if rule[0] != "a-check-exempt"]
         executors, covered, uncovered, unchecked = set(), {}, [], []
+        self.result["reads"] = []
+        readerPackages = set()
+        mapChanged = "cloud/fast-gate/executors.txt" in changed
+        for number, package, pattern in readers:
+            paths = [path for path in changed if fnmatch.fnmatchcase(path, pattern)]
+            if paths or mapChanged:
+                readerPackages.add(module + "/" + package)
+                self.result["reads"].append({"line": number, "package": package, "glob": pattern,
+                                             "paths": paths, "map_changed": mapChanged})
         if "cloud/fast-gate/executors.txt" in changed:
             # The map itself changed: every executor it names runs, so it can't quietly lose a path.
             executors.update(name for name, _ in rules if name not in ("inert", "build"))
@@ -265,7 +279,7 @@ class Gate:
         self.result["unchecked_a_files"] = unchecked
         self.result["a_check_exempt"] = [path for path in unowned if path.endswith(".a") and path not in unchecked]
         # "package:<path>" runs that package's tests, for files it reads by path from outside its tree.
-        self.extraPackages = sorted(module + "/" + name.split(":", 1)[1] for name in executors if name.startswith("package:"))
+        self.extraPackages = sorted(readerPackages | {module + "/" + name.split(":", 1)[1] for name in executors if name.startswith("package:")})
         self.result["executors"] = covered
         self.result["uncovered_files"] = uncovered
         self.steps["coverage"] = 0.0

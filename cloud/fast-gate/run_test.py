@@ -76,9 +76,9 @@ class FailClosed(unittest.TestCase):
             realRun(["git", "-C", self.tree] + command, check=True)
         self.sha = run.git(self.tree, "rev-parse", "HEAD")
 
-    def gate(self, full=False, broken=None, silent=None, unowned=()):
+    def gate(self, full=False, broken=None, silent=None, unowned=(), base=None):
         out = tempfile.mkdtemp(dir=self.directory)
-        arguments = mock.Mock(tree=self.tree, sha=self.sha, base=self.sha, tools=self.tree, out=out, parallel=4, full=full,
+        arguments = mock.Mock(tree=self.tree, sha=self.sha, base=base or self.sha, tools=self.tree, out=out, parallel=4, full=full,
                               branch="", branch_source="", session="", session_source="", weights=None)
 
         def popen(command, **options):
@@ -93,7 +93,7 @@ class FailClosed(unittest.TestCase):
 
         listing = mock.Mock(stdout="example.com/p\n")
         with mock.patch.object(run.subprocess, "Popen", side_effect=popen), \
-                mock.patch.object(run.Gate, "touched", lambda gate, changed: (gate.packageDirectories.update({"p": self.tree}) or ["p"], list(unowned))), \
+                mock.patch.object(run.Gate, "touched", lambda gate, changed: (gate.packageDirectories.update({"p": self.tree, run.module + "/stage1/cohere/tsprinter": self.tree}) or ["p"], list(unowned))), \
                 mock.patch.object(run.subprocess, "run", side_effect=lambda command, **options: listing if command[:2] == ["go", "list"] else realRun(command, **options)), \
                 mock.patch.object(run.Gate, silent, lambda *arguments: None) if silent else mock.patch.object(run, "smokeTest", run.smokeTest), \
                 mock.patch.object(run.Gate, "npmCli", lambda gate: "npm-cli.js"), \
@@ -137,6 +137,55 @@ class FailClosed(unittest.TestCase):
 
 
 class Coverage(FailClosed):
+    def test_reads_add_package_for_matching_changed_paths(self):
+        with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
+            handle.write("reads stage1/cohere/tsprinter **/*.ts\ninert *\n")
+        for path, matches, unowned in (("stage3/new.ts", True, True), ("stage3/owned.ts", True, False), ("stage3/new.txt", False, True)):
+            with self.subTest(path=path):
+                # A real diff, including a newly added file, drives the additive selection.
+                os.makedirs(os.path.dirname(os.path.join(self.tree, path)), exist_ok=True)
+                with open(os.path.join(self.tree, path), "w") as handle:
+                    handle.write("const x = 1\n")
+                realRun(["git", "-C", self.tree, "add", path], check=True)
+                realRun(["git", "-C", self.tree, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", path], check=True)
+                base = self.sha
+                self.sha = run.git(self.tree, "rev-parse", "HEAD")
+                gate, status, result = self.gate(unowned=[path] if unowned else [], base=base)
+                self.assertTrue(status.startswith("green:"), status)
+                self.assertEqual(run.module + "/stage1/cohere/tsprinter" in result["packages"], matches)
+                self.assertEqual(result["executors"], {"inert": 1} if unowned else {})
+                self.assertEqual(result["reads"], [{"line": 1, "package": "stage1/cohere/tsprinter", "glob": "**/*.ts", "paths": [path], "map_changed": False}] if matches else [])
+
+    def test_reads_do_not_cover_an_unowned_path(self):
+        with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
+            handle.write("reads stage1/cohere/tsprinter **/*.ts\n")
+        gate, status, result = self.gate(unowned=["stage3/new.ts"])
+        self.assertEqual(gate.failure["step"], "coverage")
+        self.assertEqual(result["uncovered_files"], ["stage3/new.ts"])
+
+    def test_all_matching_reads_fire_and_name_their_paths(self):
+        with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
+            handle.write("inert *\nreads stage1/cohere/tsprinter **/*.ts\nreads internal/flow stage3/*\n")
+        gate = run.Gate.__new__(run.Gate)
+        gate.arguments = mock.Mock(tools=self.tree)
+        gate.result, gate.steps, gate.exits = {}, {}, {}
+        paths = ["stage3/new.ts", "stage3/second.ts", "elsewhere/notes.txt"]
+        self.assertEqual(gate.cover(paths, paths), {"inert"})
+        self.assertEqual(gate.extraPackages, [run.module + "/internal/flow", run.module + "/stage1/cohere/tsprinter"])
+        self.assertEqual([row["line"] for row in gate.result["reads"]], [2, 3])
+        self.assertEqual([row["paths"] for row in gate.result["reads"]], [paths[:2], paths[:2]])
+
+    def test_map_change_runs_every_reader(self):
+        with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
+            handle.write("reads stage1/cohere/tsprinter **/*.ts\nreads internal/flow dedication/*.a\ninert *\n")
+        arguments = mock.Mock(tools=self.tree)
+        gate = run.Gate.__new__(run.Gate)
+        gate.arguments, gate.result, gate.steps, gate.exits = arguments, {}, {}, {}
+        gate.cover([], ["cloud/fast-gate/executors.txt"])
+        self.assertEqual(gate.extraPackages, [run.module + "/internal/flow", run.module + "/stage1/cohere/tsprinter"])
+        self.assertEqual(len(gate.result["reads"]), 2)
+        self.assertTrue(all(row["map_changed"] for row in gate.result["reads"]))
+
     def test_a_path_with_no_executor_is_red_and_named(self):
         for full in (False, True):
             gate, status, result = self.gate(full=full, unowned=["tools/stray.py"])
