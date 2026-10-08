@@ -224,3 +224,36 @@ Final runtime grep includes ->code(), .code(), ->counted_code(),
 All actual indirect closure/method calls in this tree are the typed dispatchers
 in adamic.h. array.c and regexp_replace.c call the closure dispatcher. The
 four external process/parallel sites remain listed individually in runtime-sites.json.
+
+Latest requested diagnosis after b8acd621
+
+Literal cmp of both parser C and release binary against pinned main 48c05d09
+fails; the 10.208/10.854 ms best-five numbers are not measurements of identical
+bytes. parser-function-comparison.json compares balanced emitted C definitions
+after replacing interned string identifiers with their exact literal contents:
+all 295 existing definitions are unchanged; four method thunks are added:
+adamic_method_65 Parser.type, _97 Parser.assignment, _98 Parser.allowInAssignment,
+and _130 Statements.type. Optional/MaybeBoolean method admission uses the
+closed-world function-type candidates and adds those method-table entries.
+An unused admission-probe string "Ok" shifts subsequent interned identifiers.
+Typedef-derived prototypes and numeric nominal virtual-table identities also
+change C outside the definitions. Main's erased function-pointer table casts
+cannot be restored while satisfying the higher-priority no-cast requirement.
+Runtime object allocation reserves and initializes two state bytes per field;
+region allocation likewise differs. Current-main's signal-reset integration
+also changes startup. These are observed merged differences, not count overhead:
+parser C still has no count binding or counted-convention feature definition.
+Literal byte identity remains unsatisfied; no performance parity is claimed.
+
+All six runtime sites, owner areas and exact one-line replacements for the four
+absent sites are recorded in runtime-owner-handoff.md and runtime-sites.json.
+Those external translation units have not been compiled here.
+
+Taste21 Node succeeds; branch refuses recursive checked objectType at 34:25.
+Main refuses its numeric condition at 31:13. Separate unchanged ancestor/label
+loops compile and match Node. The full acceptance failure remains real and
+its source/expectation/counts row were not weakened. Raw diagnosis logs and
+loops-only witness are committed.
+
+Exact scratch 33bf53ac: waiting for the parser worker's published branch as
+requested. No reconstruction substitutes for that exact tree.
