@@ -23,23 +23,24 @@
       "c": {
         "compile_exit": 0,
         "diagnostic": "",
-        "exit": 70,
-        "stdout": "",
-        "stderr": "adamic: panic: field read failed: view.table['item']; expected CompilerOptionsValue, found array\n"
+        "exit": 0,
+        "stdout": "object\n",
+        "stderr": ""
       },
       "js": {
         "compile_exit": 0,
         "diagnostic": "",
-        "exit": 70,
-        "stdout": "",
-        "stderr": "adamic: panic: field read failed: view.table['item']; expected CompilerOptionsValue, found array\n"
+        "exit": 0,
+        "stdout": "object\n",
+        "stderr": ""
       }
     },
     "node": {
       "exit": 0,
       "stdout": "object\n",
       "stderr": ""
-    }
+    },
+    "evidence_test": "TestCheckedViewDictionaryJointRecheck"
   },
   {
     "fixture": "stage3/interface-downcasts/dictionaries/recheck/buildoptions-boolean.a",
@@ -71,23 +72,24 @@
       "c": {
         "compile_exit": 0,
         "diagnostic": "",
-        "exit": 70,
-        "stdout": "",
-        "stderr": "adamic: panic: field read failed: view.table['item']; expected CompilerOptionsValue, found object\n"
+        "exit": 0,
+        "stdout": "object\n",
+        "stderr": ""
       },
       "js": {
         "compile_exit": 0,
         "diagnostic": "",
-        "exit": 70,
-        "stdout": "",
-        "stderr": "adamic: panic: field read failed: view.table['item']; expected CompilerOptionsValue, found object\n"
+        "exit": 0,
+        "stdout": "object\n",
+        "stderr": ""
       }
     },
     "node": {
       "exit": 0,
       "stdout": "object\n",
       "stderr": ""
-    }
+    },
+    "evidence_test": "TestCheckedViewDictionaryJointRecheck"
   },
   {
     "fixture": "stage3/interface-downcasts/dictionaries/recheck/buildoptions-null.a",
@@ -143,23 +145,24 @@
       "c": {
         "compile_exit": 0,
         "diagnostic": "",
-        "exit": 70,
-        "stdout": "",
-        "stderr": "adamic: panic: field read failed: view.table['item']; expected CompilerOptionsValue, found object\n"
+        "exit": 0,
+        "stdout": "object\n",
+        "stderr": ""
       },
       "js": {
         "compile_exit": 0,
         "diagnostic": "",
-        "exit": 70,
-        "stdout": "",
-        "stderr": "adamic: panic: field read failed: view.table['item']; expected CompilerOptionsValue, found object\n"
+        "exit": 0,
+        "stdout": "object\n",
+        "stderr": ""
       }
     },
     "node": {
       "exit": 0,
       "stdout": "object\n",
       "stderr": ""
-    }
+    },
+    "evidence_test": "TestCheckedViewDictionaryJointRecheck"
   },
   {
     "fixture": "stage3/interface-downcasts/dictionaries/recheck/buildoptions-string.a",
@@ -191,23 +194,24 @@
       "c": {
         "compile_exit": 0,
         "diagnostic": "",
-        "exit": 70,
-        "stdout": "",
-        "stderr": "adamic: panic: field read failed: view.table['item']; expected TsConfigSourceFile | CompilerOptionsValue, found array\n"
+        "exit": 0,
+        "stdout": "object\n",
+        "stderr": ""
       },
       "js": {
         "compile_exit": 0,
         "diagnostic": "",
-        "exit": 70,
-        "stdout": "",
-        "stderr": "adamic: panic: field read failed: view.table['item']; expected TsConfigSourceFile | CompilerOptionsValue, found array\n"
+        "exit": 0,
+        "stdout": "object\n",
+        "stderr": ""
       }
     },
     "node": {
       "exit": 0,
       "stdout": "object\n",
       "stderr": ""
-    }
+    },
+    "evidence_test": "TestCheckedViewDictionaryJointRecheck"
   },
   {
     "fixture": "stage3/interface-downcasts/dictionaries/recheck/compileroptions-boolean.a",
@@ -239,23 +243,24 @@
       "c": {
         "compile_exit": 0,
         "diagnostic": "",
-        "exit": 70,
-        "stdout": "",
-        "stderr": "adamic: panic: field read failed: view.table['item']; expected TsConfigSourceFile | CompilerOptionsValue, found object\n"
+        "exit": 0,
+        "stdout": "object\n",
+        "stderr": ""
       },
       "js": {
         "compile_exit": 0,
         "diagnostic": "",
-        "exit": 70,
-        "stdout": "",
-        "stderr": "adamic: panic: field read failed: view.table['item']; expected TsConfigSourceFile | CompilerOptionsValue, found object\n"
+        "exit": 0,
+        "stdout": "object\n",
+        "stderr": ""
       }
     },
     "node": {
       "exit": 0,
       "stdout": "object\n",
       "stderr": ""
-    }
+    },
+    "evidence_test": "TestCheckedViewDictionaryJointRecheck"
   },
   {
     "fixture": "stage3/interface-downcasts/dictionaries/recheck/compileroptions-null.a",
@@ -311,23 +316,24 @@
       "c": {
         "compile_exit": 0,
         "diagnostic": "",
-        "exit": 70,
-        "stdout": "",
-        "stderr": "adamic: panic: field read failed: view.table['item']; expected TsConfigSourceFile | CompilerOptionsValue, found object\n"
+        "exit": 0,
+        "stdout": "object\n",
+        "stderr": ""
       },
       "js": {
         "compile_exit": 0,
         "diagnostic": "",
-        "exit": 70,
-        "stdout": "",
-        "stderr": "adamic: panic: field read failed: view.table['item']; expected TsConfigSourceFile | CompilerOptionsValue, found object\n"
+        "exit": 0,
+        "stdout": "object\n",
+        "stderr": ""
       }
     },
     "node": {
       "exit": 0,
       "stdout": "object\n",
       "stderr": ""
-    }
+    },
+    "evidence_test": "TestCheckedViewDictionaryJointRecheck"
   },
   {
     "fixture": "stage3/interface-downcasts/dictionaries/recheck/compileroptions-string.a",
