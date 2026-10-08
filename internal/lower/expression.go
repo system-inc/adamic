@@ -525,6 +525,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
+		if lowered, handled := l.functionLogical(node, left, right); handled {
+			return lowered, nil
+		}
 		if binary.OperatorToken.Kind == ast.KindPlusToken {
 			left, right = l.spelled(binary.Left, left), l.spelled(binary.Right, right)
 		}
