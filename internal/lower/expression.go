@@ -480,6 +480,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 
 func (l *lowering) uncheckedValue(node *ast.Node) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
+	if value, handled, err := l.scannerStringConstructorRead(node); handled {
+		return value, err
+	}
 	if value, known, err := l.processValue(node); known {
 		return value, err
 	}

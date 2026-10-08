@@ -144,12 +144,16 @@ func (e *emitter) untaggedCallableRecorded(property ir.Property, recorded, expec
 		return recorded
 	}
 	root := e.program.ViewContracts[id-1]
-	if root.Kind != ir.ViewUnion || root.Of != ir.Closure {
+	// A static intrinsic projection can certify a single callable producer too.
+	members := root.Members
+	if root.Kind == ir.ViewCallable && root.ProducerCertified {
+		members = []ir.ViewContractID{id}
+	} else if root.Kind != ir.ViewUnion || root.Of != ir.Closure {
 		return recorded
 	}
 	functions := []int{}
 	certified := false
-	for _, member := range root.Members {
+	for _, member := range members {
 		contract := e.program.ViewContracts[member-1]
 		certified = certified || contract.ProducerCertified
 		functions = append(functions, contract.Functions...)

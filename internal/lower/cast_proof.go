@@ -98,6 +98,9 @@ func castMembers(proven *checker.Type) []*checker.Type {
 
 func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	as := node.AsAsExpression()
+	if l.scannerStringConstructorCast(node) {
+		return castProof{}, nil
+	}
 	if l.viewCallableDiscardedMarker(node) {
 		return castProof{}, nil
 	}
