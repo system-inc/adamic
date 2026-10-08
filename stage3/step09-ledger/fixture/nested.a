@@ -1,1 +1,2 @@
+// a-check: refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
 export const nested = 1 as unknown as number;

@@ -1,0 +1,88 @@
+{
+  "main_sha": "73352e874ddbda5a78c95c5c670860d43275e4d0",
+  "gate_sha": "fbac28c62493f27a788edc02a18bc8edb68de5da",
+  "command": "python3 /tmp/step09-header-check/run.py final /tmp/step09-header-check/paths.json",
+  "a_check_exit": 0,
+  "a_check_output": "final 2 {'checked': 1, 'refused': 1} {'a-check': 0} {'a-check': 0.7}\nPASS\n",
+  "files": {
+    "stage3/step09-ledger/fixture/main.a": {
+      "body_sha256": "541146c6e0004a9cd4021b560884bb805dd0e0f861a5de9d815bd876ce930458",
+      "body_unchanged": true,
+      "header": null,
+      "observation": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": "adamic: /workspace/adamic/stage3/step09-ledger/fixture/main.a:1:12: stage 0 can't lower a value of type any yet",
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/stage3/step09-ledger/fixture/main.a:1:12: stage 0 can't lower a value of type any yet\n",
+        "stdout_bytes": 0
+      }
+    },
+    "stage3/step09-ledger/fixture/nested.a": {
+      "body_sha256": "5cbb8e3e8130b2ba36c5d01959b706cde2ede4c26603cc59b19476236c9a081d",
+      "body_unchanged": true,
+      "header": "// a-check: refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "observation": {
+        "outcome": "refused",
+        "expected": "refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "first": "adamic: /workspace/adamic/stage3/step09-ledger/fixture/nested.a:2:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-ca",
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/stage3/step09-ledger/fixture/nested.a:2:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+        "stdout_bytes": 0
+      }
+    }
+  },
+  "mutants": {
+    "missing_header": {
+      "caught": true,
+      "output": "before 2 {'checked': 1, 'refused': 1} {'a-check': 1} {'a-check': 20.0}\na-check failed for 1 file:\nstage3/step09-ledger/fixture/nested.a: refused, expected checked (adamic: /workspace/adamic/stage3/step09-ledger/fixture/nested.a:1:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or e)\n"
+    },
+    "wrong_reason": {
+      "caught": true,
+      "output": "wrong-reason 2 {'checked': 1, 'refused': 1} {'a-check': 1} {'a-check': 3.7}\na-check failed for 1 file:\nstage3/step09-ledger/fixture/nested.a: refused, expected refused a different cast rule (adamic: /workspace/adamic/stage3/step09-ledger/fixture/nested.a:2:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or e)\n"
+    }
+  },
+  "ledger_fixture": {
+    "stock_sites": 3,
+    "expected_dispositions": {
+      "rewritten": 2,
+      "proven_safe_upcast": 1
+    },
+    "observed": {
+      "rewritten": 2,
+      "proven_safe_upcast": 1
+    },
+    "mutant": {
+      "open": 2,
+      "proven_safe_upcast": 1
+    },
+    "mutant_caught": true,
+    "nested_casts_distinct": true,
+    "nested_dispositions": {
+      "open": 1,
+      "proven_safe_upcast": 1
+    },
+    "node": "value=1 widened=1\n",
+    "logs": "/tmp/adamic-gate/step09-fixture-c7t4zpzd"
+  },
+  "fixture_probe": "existing step09-refresh-output/cast-probe; header-only regression",
+  "setup": {
+    "exit": 1,
+    "failing_command": "go list -deps -export -json ./...",
+    "diagnostic_log_empty": true,
+    "node": "24.19.0",
+    "nproc": 5,
+    "timings": {
+      "go": 0.049,
+      "node": 0.055,
+      "markdown": 0.138,
+      "submodules": 0.14,
+      "clang": 0.278
+    },
+    "workaround": "source /workspace/adamic-tools/env.sh; Gate.aCheck successfully builds ./cmd/adamic"
+  },
+  "not_run": [
+    "complete Go gate",
+    "full ledger remeasurement"
+  ]
+}
