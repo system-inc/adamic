@@ -34,6 +34,12 @@ func (l *lowering) viewArrayLiteralSourceContract(node *ast.Node) ir.ViewContrac
 		source = contextual
 	}
 	element := l.concrete(l.viewArrayElementType(source))
+	if element != nil && interfaceScalar(element) {
+		id, err := l.viewContract(node, element)
+		if err == nil && ir.PrimitiveArrayContract(l.result, id) {
+			return id
+		}
+	}
 	if element != nil && isClassInstance(l.checker.GetNonNullableType(element)) {
 		if of, known := l.representation(element); known && (of == ir.Object || of == ir.Union) {
 			return l.mapNominalEntrySlot(node, element)

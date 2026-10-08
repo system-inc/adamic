@@ -103,6 +103,9 @@ const adamicViewJoin = (array, separator, check) => array.map(value => check(val
 `
 
 func (e *emitter) value(expression ir.Expression) string {
+	if read, ok := expression.(ir.Length); ok && read.Tuple {
+		return e.viewArrayTupleLength(read)
+	}
 	if record, ok := expression.(ir.ArrayRecord); ok {
 		return e.emitViewArrayRecord(record)
 	}

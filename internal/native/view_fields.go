@@ -26,11 +26,16 @@ func (e *emitter) viewField(property ir.Property) string {
 	if property.ViewType != "" && (property.Of != ir.Closure || property.ViewContract != 0 && (e.program.ViewContracts[property.ViewContract-1].Result != 0 || e.program.ViewContracts[property.ViewContract-1].DiscardResult)) {
 		name = property.ViewType
 	}
+	reader, optionalReader := "adamic_object_view", "adamic_object_optional_view_undefined"
+	if ir.ArrayTupleReceiver(e.program, property) != 0 {
+		e.declarations = append(e.declarations, "#include \"view_array_tuples.h\"")
+		reader, optionalReader = "adamic_array_tuple_view", "adamic_array_tuple_optional_view"
+	}
 	undefined := e.viewStringUndefined(property)
 	if property.Absent || property.Optional || undefined || of == ir.MaybeNumber || of == ir.MaybeBoolean {
-		e.line("adamic_value %s = adamic_object_optional_view_undefined(%s, %s, &%s, %d, %s, %s, %t, %t, %t);", slot, object, cString(property.Name), e.cache(), of, cString(name), cString(property.View), property.Absent, property.Optional, undefined)
+		e.line("adamic_value %s = %s(%s, %s, &%s, %d, %s, %s, %t, %t, %t);", slot, optionalReader, object, cString(property.Name), e.cache(), of, cString(name), cString(property.View), property.Absent, property.Optional, undefined)
 	} else {
-		e.line("adamic_value %s = adamic_object_view(%s, %s, &%s, %d, %s, %s);", slot, object, cString(property.Name), e.cache(), of, cString(name), cString(property.View))
+		e.line("adamic_value %s = %s(%s, %s, &%s, %d, %s, %s);", slot, reader, object, cString(property.Name), e.cache(), of, cString(name), cString(property.View))
 	}
 	value := unslotted(of, fmt.Sprintf("%s.%s", slot, member(of)))
 	if of == ir.MaybeBoolean {
