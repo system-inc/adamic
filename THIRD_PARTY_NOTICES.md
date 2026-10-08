@@ -55,6 +55,11 @@ IN THE SOFTWARE.
   - Array and String iterator next (`runtime/map_set.c`, after
     `deps/v8/src/builtins/builtins-array-gen.cc` ArrayIteratorPrototypeNext and
     `deps/v8/src/builtins/string-iterator.tq`, Node.js v24.19.0; dense Array path);
+  - dense Array reduceRight lowering (`internal/lower/library_array_tail.go`, after
+    src/builtins/array-reduce-right.tq), and default-sort dispatch in that file
+    reusing the existing UTF-16 comparator in `internal/lower/library_array.go`
+    (after SortCompareDefault in third_party/v8/builtins/array-sort.tq), from
+    Node v24.19.0's V8 13.6.233.17-node.51;
   - Map and Set number hashing (`runtime/map_set.c`, after Object::GetSimpleHash in
     src/objects/objects-inl.h and ComputeUnseededHash/ComputeLongHash in src/utils/utils.h,
     V8 13.6.233.17);
