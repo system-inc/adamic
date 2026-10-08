@@ -1,0 +1,385 @@
+{"label": "mutant", "test": "^TestParallelCachedMatchesSerial$/^cold$", "wall": 4.939637971000025, "exit": 1}
+=== RUN   TestParallelCachedMatchesSerial
+    cache_test.go:158: 5 cases: [crash/stderr.js fail/uncaught.js pass/pad.js refuse/var.js skip/negative.js]
+=== RUN   TestParallelCachedMatchesSerial/cold
+    cache_test.go:225: cold differs:
+        serial={
+          "test262": "",
+          "adapt": false,
+          "filters": [
+            {
+              "path": "",
+              "pass": 1,
+              "fail": 1,
+              "refused": 1,
+              "crashed": 1,
+              "skipped": 1,
+              "total": 5,
+              "directories": [
+                {
+                  "path": "crash",
+                  "pass": 0,
+                  "fail": 0,
+                  "refused": 0,
+                  "crashed": 1,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "fail",
+                  "pass": 0,
+                  "fail": 1,
+                  "refused": 0,
+                  "crashed": 0,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "pass",
+                  "pass": 1,
+                  "fail": 0,
+                  "refused": 0,
+                  "crashed": 0,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "refuse",
+                  "pass": 0,
+                  "fail": 0,
+                  "refused": 1,
+                  "crashed": 0,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "skip",
+                  "pass": 0,
+                  "fail": 0,
+                  "refused": 0,
+                  "crashed": 0,
+                  "skipped": 1,
+                  "total": 1
+                }
+              ],
+              "refusalReasons": [
+                {
+                  "reason": "refuses var",
+                  "count": 1
+                }
+              ],
+              "skipReasons": [
+                {
+                  "reason": "negative parse or early error",
+                  "count": 1
+                }
+              ],
+              "crashReasons": [
+                {
+                  "reason": "crash/stderr.js: native sanitizer",
+                  "count": 1
+                }
+              ],
+              "failReasons": [
+                {
+                  "reason": "exit 1 vs 70",
+                  "count": 1
+                }
+              ],
+              "passes": [
+                "pass/pad.js"
+              ]
+            }
+          ]
+        }
+        
+        parallel={
+          "test262": "",
+          "adapt": false,
+          "filters": [
+            {
+              "path": "",
+              "pass": 2,
+              "fail": 1,
+              "refused": 1,
+              "crashed": 1,
+              "skipped": 1,
+              "total": 5,
+              "directories": [
+                {
+                  "path": "crash",
+                  "pass": 0,
+                  "fail": 0,
+                  "refused": 0,
+                  "crashed": 1,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "fail",
+                  "pass": 0,
+                  "fail": 1,
+                  "refused": 0,
+                  "crashed": 0,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "pass",
+                  "pass": 1,
+                  "fail": 0,
+                  "refused": 0,
+                  "crashed": 0,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "refuse",
+                  "pass": 0,
+                  "fail": 0,
+                  "refused": 1,
+                  "crashed": 0,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "skip",
+                  "pass": 0,
+                  "fail": 0,
+                  "refused": 0,
+                  "crashed": 0,
+                  "skipped": 1,
+                  "total": 1
+                }
+              ],
+              "refusalReasons": [
+                {
+                  "reason": "refuses var",
+                  "count": 1
+                }
+              ],
+              "skipReasons": [
+                {
+                  "reason": "negative parse or early error",
+                  "count": 1
+                }
+              ],
+              "crashReasons": [
+                {
+                  "reason": "crash/stderr.js: native sanitizer",
+                  "count": 1
+                }
+              ],
+              "failReasons": [
+                {
+                  "reason": "exit 1 vs 70",
+                  "count": 1
+                }
+              ],
+              "passes": [
+                "pass/pad.js"
+              ]
+            }
+          ]
+        }
+--- FAIL: TestParallelCachedMatchesSerial (4.87s)
+    --- FAIL: TestParallelCachedMatchesSerial/cold (0.42s)
+FAIL
+
+{"label": "mutant", "test": "^TestParallelCachedMatchesSerial$/^warm$", "wall": 4.75141573999997, "exit": 1}
+=== RUN   TestParallelCachedMatchesSerial
+    cache_test.go:158: 5 cases: [crash/stderr.js fail/uncaught.js pass/pad.js refuse/var.js skip/negative.js]
+=== RUN   TestParallelCachedMatchesSerial/warm
+    cache_test.go:225: warm differs:
+        serial={
+          "test262": "",
+          "adapt": false,
+          "filters": [
+            {
+              "path": "",
+              "pass": 1,
+              "fail": 1,
+              "refused": 1,
+              "crashed": 1,
+              "skipped": 1,
+              "total": 5,
+              "directories": [
+                {
+                  "path": "crash",
+                  "pass": 0,
+                  "fail": 0,
+                  "refused": 0,
+                  "crashed": 1,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "fail",
+                  "pass": 0,
+                  "fail": 1,
+                  "refused": 0,
+                  "crashed": 0,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "pass",
+                  "pass": 1,
+                  "fail": 0,
+                  "refused": 0,
+                  "crashed": 0,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "refuse",
+                  "pass": 0,
+                  "fail": 0,
+                  "refused": 1,
+                  "crashed": 0,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "skip",
+                  "pass": 0,
+                  "fail": 0,
+                  "refused": 0,
+                  "crashed": 0,
+                  "skipped": 1,
+                  "total": 1
+                }
+              ],
+              "refusalReasons": [
+                {
+                  "reason": "refuses var",
+                  "count": 1
+                }
+              ],
+              "skipReasons": [
+                {
+                  "reason": "negative parse or early error",
+                  "count": 1
+                }
+              ],
+              "crashReasons": [
+                {
+                  "reason": "crash/stderr.js: native sanitizer",
+                  "count": 1
+                }
+              ],
+              "failReasons": [
+                {
+                  "reason": "exit 1 vs 70",
+                  "count": 1
+                }
+              ],
+              "passes": [
+                "pass/pad.js"
+              ]
+            }
+          ]
+        }
+        
+        parallel={
+          "test262": "",
+          "adapt": false,
+          "filters": [
+            {
+              "path": "",
+              "pass": 2,
+              "fail": 1,
+              "refused": 1,
+              "crashed": 1,
+              "skipped": 1,
+              "total": 5,
+              "directories": [
+                {
+                  "path": "crash",
+                  "pass": 0,
+                  "fail": 0,
+                  "refused": 0,
+                  "crashed": 1,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "fail",
+                  "pass": 0,
+                  "fail": 1,
+                  "refused": 0,
+                  "crashed": 0,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "pass",
+                  "pass": 1,
+                  "fail": 0,
+                  "refused": 0,
+                  "crashed": 0,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "refuse",
+                  "pass": 0,
+                  "fail": 0,
+                  "refused": 1,
+                  "crashed": 0,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "skip",
+                  "pass": 0,
+                  "fail": 0,
+                  "refused": 0,
+                  "crashed": 0,
+                  "skipped": 1,
+                  "total": 1
+                }
+              ],
+              "refusalReasons": [
+                {
+                  "reason": "refuses var",
+                  "count": 1
+                }
+              ],
+              "skipReasons": [
+                {
+                  "reason": "negative parse or early error",
+                  "count": 1
+                }
+              ],
+              "crashReasons": [
+                {
+                  "reason": "crash/stderr.js: native sanitizer",
+                  "count": 1
+                }
+              ],
+              "failReasons": [
+                {
+                  "reason": "exit 1 vs 70",
+                  "count": 1
+                }
+              ],
+              "passes": [
+                "pass/pad.js"
+              ]
+            }
+          ]
+        }
+--- FAIL: TestParallelCachedMatchesSerial (4.71s)
+    --- FAIL: TestParallelCachedMatchesSerial/warm (0.32s)
+FAIL
+
+{"label": "mutant", "test": "^TestParallelCachedMatchesSerial$/^limit$", "wall": 4.1435035840000864, "exit": 1}
+=== RUN   TestParallelCachedMatchesSerial
+    cache_test.go:158: 5 cases: [crash/stderr.js fail/uncaught.js pass/pad.js refuse/var.js skip/negative.js]
+=== RUN   TestParallelCachedMatchesSerial/limit
+    cache_test.go:202: parallel limit selected different tests
+--- FAIL: TestParallelCachedMatchesSerial (4.10s)
+    --- FAIL: TestParallelCachedMatchesSerial/limit (0.23s)
+FAIL
+

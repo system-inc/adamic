@@ -126,3 +126,22 @@ func TestRawEvidenceKeepsSkipReasonsAndFailures(t *testing.T) {
 		t.Fatal("corrupt log accepted")
 	}
 }
+
+func TestTest262IndependentChildren(t *testing.T) {
+	t.Chdir("../..")
+	for _, test := range []struct {
+		parent string
+		want   []string
+	}{
+		{"TestLargeCompilerOutputIsComplete", []string{"large.js"}},
+		{"TestParallelCachedMatchesSerial", []string{"cold", "warm", "limit"}},
+	} {
+		got, err := children("github.com/system-inc/adamic/cmd/adamic-test262", test.parent)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !reflect.DeepEqual(got, test.want) {
+			t.Fatalf("%s: gate children %v, want %v", test.parent, got, test.want)
+		}
+	}
+}

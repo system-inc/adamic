@@ -311,6 +311,14 @@ func literalChildren(file, parent string, table ...string) ([]string, error) {
 	return names, nil
 }
 func children(pkg, parent string) ([]string, error) {
+	if strings.HasSuffix(pkg, "/cmd/adamic-test262") {
+		switch parent {
+		case "TestLargeCompilerOutputIsComplete":
+			return literalChildren("cmd/adamic-test262/corpus_test.go", parent)
+		case "TestParallelCachedMatchesSerial":
+			return literalChildren("cmd/adamic-test262/cache_test.go", parent)
+		}
+	}
 	if strings.HasSuffix(pkg, "/stage1/cohere/typeaware") && parent == "TestVolumeAgreementAndMutants" {
 		return literalChildren("stage1/cohere/typeaware/volume_test.go", parent, "changes")
 	}

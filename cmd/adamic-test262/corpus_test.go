@@ -223,23 +223,28 @@ func TestLargeCompilerOutputIsComplete(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(root, "test", "large.js"), []byte(source), 0644); err != nil {
 		t.Fatal(err)
 	}
-	engine, err := prepare("../..", root, t.TempDir())
+	engine, err := prepareSplitTest262(t, root)
 	if err != nil {
 		t.Fatal(err)
 	}
-	report, err := engine.runFilter("large.js", 0, false)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if report.Pass != 1 {
-		t.Fatalf("large program: %+v", report)
-	}
-	generated, err := os.ReadFile(filepath.Join(engine.programDirectory(classify("large.js", source, false)), "program.c"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	if len(generated) <= outputLimit || generated[len(generated)-1] != '\n' {
-		t.Fatalf("fixture must exceed old limit and end with newline: %d bytes", len(generated))
+	engine.cache = &resultCache{directory: t.TempDir()}
+	for _, name := range []string{"large.js"} {
+		t.Run(name, func(t *testing.T) {
+			report, err := engine.runFilter(name, 0, false)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if report.Pass != 1 {
+				t.Fatalf("large program: %+v", report)
+			}
+			generated, err := os.ReadFile(filepath.Join(engine.programDirectory(classify("large.js", source, false)), "program.c"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if len(generated) <= outputLimit || generated[len(generated)-1] != '\n' {
+				t.Fatalf("fixture must exceed old limit and end with newline: %d bytes", len(generated))
+			}
+		})
 	}
 }
 
