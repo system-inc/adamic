@@ -1,3 +1,4 @@
+// a-check: checked
 // Directory members of getNodeSystem. Supply the compiler's own matchFiles and cwd provider.
 import { readdirSync, realpathSync } from 'node:fs';
 import { resolve } from 'node:path';
