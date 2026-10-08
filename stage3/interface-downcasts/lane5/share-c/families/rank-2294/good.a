@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+const enum TokenFlags {None=0,PrecedingLineBreak=1,PrecedingJSDocComment=2,Unterminated=4,ExtendedUnicodeEscape=8,Scientific=16,Octal=32,HexSpecifier=64,BinarySpecifier=128,OctalSpecifier=256,ContainsSeparator=512,UnicodeEscape=1024,ContainsInvalidEscape=2048,HexEscape=4096,ContainsLeadingZero=8192,ContainsInvalidSeparator=16384,PrecedingJSDocLeadingAsterisks=32768,BinaryOrOctalSpecifier=384,WithSpecifier=448,StringLiteralFlags=7176,NumericLiteralFlags=25584,TemplateLiteralLikeFlags=7176,IsInvalid=26656}
+interface Base {readonly getNumericLiteralFlags:unknown;}
+interface Target {getNumericLiteralFlags(): TokenFlags;}
+function probe(value:Base):void {const scanner=value as Target;const witnessResult=scanner.getNumericLiteralFlags();console.log("completed");}
+probe({getNumericLiteralFlags:():TokenFlags=>(0)});

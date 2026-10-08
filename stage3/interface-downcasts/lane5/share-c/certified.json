@@ -5254,5 +5254,245 @@
       }
     ],
     "diagnostic": "adamic: panic: field read failed: context.factory.updateMappedTypeNode expected (node: MappedTypeNode, readonlyToken: MinusToken | PlusToken | ReadonlyKeyword | undefined, typeParameter: TypeParameterDeclaration, nameType: TypeNode | undefined, questionToken: MinusToken | ... 2 more ... | undefined, type: TypeNode | undefined, members: NodeArray<...> | undefined) => MappedTypeNode, found function with arity 0\n"
+  },
+  {
+    "rank": 2150,
+    "reads": 1,
+    "type": "Program",
+    "field": "getResolvedModule",
+    "read": "oldProgram.getResolvedModule",
+    "status": "ready for oracle",
+    "arity": 3,
+    "foundArity": 0,
+    "declaration": "getResolvedModule(f: SourceFile, moduleName: string, mode: ResolutionMode): ResolvedModuleWithFailedLookupLocations | undefined;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2150-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2150-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: oldProgram.getResolvedModule expected (f: SourceFile, moduleName: string, mode: ResolutionMode) => ResolvedModuleWithFailedLookupLocations | undefined, found function with arity 0\n"
+  },
+  {
+    "rank": 2153,
+    "reads": 1,
+    "type": "Program",
+    "field": "getResolvedTypeReferenceDirective",
+    "read": "oldProgram.getResolvedTypeReferenceDirective",
+    "status": "ready for oracle",
+    "arity": 3,
+    "foundArity": 0,
+    "declaration": "getResolvedTypeReferenceDirective(f: SourceFile, typeDirectiveName: string, mode: ResolutionMode): ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2153-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2153-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: oldProgram.getResolvedTypeReferenceDirective expected (f: SourceFile, typeDirectiveName: string, mode: ResolutionMode) => ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined, found function with arity 0\n"
+  },
+  {
+    "rank": 2276,
+    "reads": 1,
+    "type": "ResolutionLoader<Entry, T, SourceFile>",
+    "field": "resolve",
+    "read": "loader.resolve",
+    "status": "ready for oracle",
+    "arity": 2,
+    "foundArity": 0,
+    "declaration": "resolve(name: string, mode: ResolutionMode): Resolution;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2276-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2276-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: loader.resolve expected (name: string, mode: ResolutionMode) => Resolution, found function with arity 0\n"
+  },
+  {
+    "rank": 2279,
+    "reads": 1,
+    "type": "ResolutionNameAndModeGetter<Entry, SourceFileOrUndefined>",
+    "field": "getMode",
+    "read": "nameAndModeGetter.getMode",
+    "status": "ready for oracle",
+    "arity": 3,
+    "foundArity": 0,
+    "declaration": "getMode(entry: Entry, file: SourceFile, compilerOptions: CompilerOptions): ResolutionMode;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2279-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2279-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: nameAndModeGetter.getMode expected (entry: Entry, file: SourceFile, compilerOptions: CompilerOptions) => ResolutionMode, found function with arity 0\n"
+  },
+  {
+    "rank": 2294,
+    "reads": 1,
+    "type": "Scanner",
+    "field": "getNumericLiteralFlags",
+    "read": "scanner.getNumericLiteralFlags",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "getNumericLiteralFlags(): TokenFlags;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2294-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2294-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: scanner.getNumericLiteralFlags expected () => TokenFlags, found function with arity 1\n"
+  },
+  {
+    "rank": 2300,
+    "reads": 1,
+    "type": "Scanner",
+    "field": "reScanAsteriskEqualsToken",
+    "read": "scanner.reScanAsteriskEqualsToken",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "reScanAsteriskEqualsToken(): SyntaxKind;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2300-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2300-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: scanner.reScanAsteriskEqualsToken expected () => SyntaxKind, found function with arity 1\n"
+  },
+  {
+    "rank": 2303,
+    "reads": 1,
+    "type": "Scanner",
+    "field": "reScanInvalidIdentifier",
+    "read": "scanner.reScanInvalidIdentifier",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "reScanInvalidIdentifier(): SyntaxKind;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2303-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2303-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: scanner.reScanInvalidIdentifier expected () => SyntaxKind, found function with arity 1\n"
+  },
+  {
+    "rank": 2306,
+    "reads": 1,
+    "type": "Scanner",
+    "field": "reScanQuestionToken",
+    "read": "scanner.reScanQuestionToken",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "reScanQuestionToken(): SyntaxKind;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2306-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2306-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: scanner.reScanQuestionToken expected () => SyntaxKind, found function with arity 1\n"
+  },
+  {
+    "rank": 2309,
+    "reads": 1,
+    "type": "Scanner",
+    "field": "scanJsxAttributeValue",
+    "read": "scanner.scanJsxAttributeValue",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "scanJsxAttributeValue(): SyntaxKind;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2309-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2309-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: scanner.scanJsxAttributeValue expected () => SyntaxKind, found function with arity 1\n"
+  },
+  {
+    "rank": 2528,
+    "reads": 1,
+    "type": "TransformationContext",
+    "field": "getLexicalEnvironmentFlags",
+    "read": "context.getLexicalEnvironmentFlags",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "getLexicalEnvironmentFlags(): LexicalEnvironmentFlags;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2528-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/2528-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: context.getLexicalEnvironmentFlags expected () => LexicalEnvironmentFlags, found function with arity 1\n"
   }
 ]

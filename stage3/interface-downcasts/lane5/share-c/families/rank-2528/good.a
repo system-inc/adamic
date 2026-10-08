@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+const enum LexicalEnvironmentFlags {None=0,InParameters=1,VariablesHoistedInParameters=2}
+interface Base {readonly getLexicalEnvironmentFlags:unknown;}
+interface Target {getLexicalEnvironmentFlags(): LexicalEnvironmentFlags;}
+function probe(value:Base):void {const context=value as Target;const witnessResult=context.getLexicalEnvironmentFlags();console.log("completed");}
+probe({getLexicalEnvironmentFlags:():LexicalEnvironmentFlags=>(0)});

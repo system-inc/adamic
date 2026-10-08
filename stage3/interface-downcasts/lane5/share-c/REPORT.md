@@ -1,7 +1,7 @@
-Built: 219 original callable member pairs, representing 436 ranked candidate reads, with positive and wrong-arity fixtures.
+Built: 229 original callable member pairs, representing 446 ranked candidate reads, with positive and wrong-arity fixtures.
 Commits: base 926a1d39; this branch carries fixture/test commits only.
 Commands: original-source verifier PASS; TestCheckedViewCallableShareC and Mutants PASS; share counts updater PASS. Required TestCountsAreRecorded updater FAIL on inherited fixtures (see validation below).
-Mutants: every certified rank removes its callable read certificate in lowered IR; native and JavaScript execute exit 0 instead of pinned exit 70, so all 219 mutants are caught.
+Mutants: every certified rank removes its callable read certificate in lowered IR; native and JavaScript execute exit 0 instead of pinned exit 70, so all 229 mutants are caught.
 Uncovered: remaining share ranks, delegated Set/optional-host/binding families, and preparation boundaries are not certified.
 
 Candidate reads are ledger weights, not measured production execution. The fixture preserves the original member signature and read path. Adjacent interface carriers and implementation bodies are deliberately reduced as in the lane harness; original aliases and numeric kind discriminants remain intact.
@@ -38,3 +38,5 @@ Validation: TestCheckedViewCallableShareCArrayIntrinsics and ArrayMutants PASS i
 Batch 12: ranks 302, 305, 317, 428, 449, 509, 545, 887, 923, 935, 959, 965, 989, 1064, 1067, 1139, 1862, 1877, 2039; 19 new pairs / 53 reads. Scoped positive/negative and mutant tests passed: /tmp/lane5-c-batch12.log. Original verifier and scoped counts updater passed.
 
 Batch 14: ranks 302, 305, 317, 428, 449, 509, 545, 887, 923, 935, 959, 965, 989, 1064, 1067, 1139, 1862, 1877, 2039; 19 new pairs / 53 reads. Scoped positive/negative and mutant tests passed: /tmp/lane5-c-batch14.log. Original verifier and scoped counts updater passed.
+
+Batch 15: ranks 2150, 2153, 2276, 2279, 2294, 2300, 2303, 2306, 2309, 2528; 10 new pairs / 10 reads. Scoped positive/negative and mutant tests passed: /tmp/lane5-c-batch15.log. Original verifier and scoped counts updater passed.

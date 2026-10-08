@@ -1,0 +1,10 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Entry {readonly value:number;}
+interface SourceFile {readonly value:number;readonly kind:308;}
+interface CompilerOptions {readonly value:number;}
+type ResolutionMode = ModuleKind.ESNext | ModuleKind.CommonJS | undefined;
+const enum ModuleKind {None=0,CommonJS=1,AMD=2,UMD=3,System=4,ES2015=5,ES2020=6,ES2022=7,ESNext=99,Node16=100,Node18=101,Node20=102,NodeNext=199,Preserve=200}
+interface Base {readonly getMode:unknown;}
+interface Target {getMode(entry: Entry, file: SourceFile, compilerOptions: CompilerOptions): ResolutionMode;}
+function probe(value:Base):void {const nameAndModeGetter=value as Target;const witnessResult=nameAndModeGetter.getMode({value:3},{value:3,kind:308},{value:3});console.log("completed");}
+probe({getMode:(): ResolutionMode=>(99)});
