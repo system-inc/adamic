@@ -152,22 +152,88 @@ def audit(binary, directory):
     return records, coverage
 
 
-def baseline_at(reference):
+def read_baseline(text):
+    document = json.loads(text)
+    if 'schemaVersion' in document:
+        if document['schemaVersion'] != 1:
+            raise ValueError('unsupported baseline schema')
+        findings = collections.Counter(document['findings'])
+        bootstrap = document['bootstrap']
+        if not bootstrap['reason'].strip() or not re.fullmatch(r'[0-9a-f]{40}', bootstrap['commit']):
+            raise ValueError('invalid bootstrap provenance')
+        return findings, bootstrap
+    return collections.Counter(document), None  # Original baseline format.
+
+
+def baseline_document_at(reference):
     subprocess.run(['git', 'rev-parse', '--verify', reference], cwd=ROOT, check=True, stdout=subprocess.DEVNULL)
     name = BASELINE.relative_to(ROOT).as_posix()
     exists = subprocess.check_output(['git', 'ls-tree', '--name-only', reference, '--', name], cwd=ROOT)
     if not exists:
-        return None  # First introduction of this gate.
+        return None, None  # First introduction of this gate.
     text = subprocess.check_output(['git', 'show', f'{reference}:{name}'], cwd=ROOT)
-    return collections.Counter(json.loads(text))
+    return read_baseline(text)
+
+
+def baseline_at(reference):
+    return baseline_document_at(reference)[0]
+
+
+def is_ancestor(older, newer):
+    result = subprocess.run(['git', 'merge-base', '--is-ancestor', older, newer], cwd=ROOT)
+    if result.returncode not in (0, 1):
+        raise ValueError('cannot verify bootstrap ancestry')
+    return result.returncode == 0
+
+
+def bootstrap_ceiling(provenance):
+    taken_at = provenance['commit']
+    if not is_ancestor(taken_at, 'HEAD'):
+        raise ValueError('bootstrap commit is not an ancestor of HEAD')
+    name = BASELINE.relative_to(ROOT).as_posix()
+    commits = subprocess.check_output(
+        ['git', 'rev-list', '--reverse', '--ancestry-path', f'{taken_at}..HEAD', '--', name],
+        cwd=ROOT,
+    ).decode().splitlines()
+    ceiling = None
+    for commit in commits:
+        findings, recorded = baseline_document_at(commit)
+        if recorded == provenance:
+            # Every committed reduction remains a ceiling. A later hand edit cannot
+            # resurrect resolved debt under the original bootstrap's permission.
+            ceiling = findings if ceiling is None else ceiling & findings
+    if ceiling is None:
+        raise ValueError('bootstrap provenance has no committed baseline')
+    return ceiling
+
+
+def counts(findings):
+    directories = collections.Counter()
+    rules = collections.Counter()
+    for key, count in findings.items():
+        finding = json.loads(key)
+        directories[finding['path'].split('/')[0] if '/' in finding['path'] else '.'] += count
+        rules[finding['rule']] += count
+    return {'total': sum(findings.values()), 'byDirectory': dict(sorted(directories.items())),
+            'byRule': dict(sorted(rules.items()))}
+
+
+def write_baseline(findings, bootstrap):
+    entries = dict(sorted(findings.items()))
+    document = {'schemaVersion': 1, 'bootstrap': bootstrap, 'findings': entries} if bootstrap else entries
+    BASELINE.write_text(json.dumps(document, indent=4) + '\n')
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--base-ref', default='origin/main', help='baseline may only shrink relative to this integration ref')
     parser.add_argument('--output', help='save the complete cohere JSON output here')
-    parser.add_argument('--record', action='store_true', help='bootstrap or reduce the baseline; never add entries to an existing list')
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument('--record', action='store_true', help='record initial findings or reduce the baseline; never raise an existing ceiling')
+    modes.add_argument('--bootstrap', metavar='REASON', help='explicitly replace the ceiling and record the reason, HEAD and debt counts')
     arguments = parser.parse_args()
+    if arguments.bootstrap is not None and not arguments.bootstrap.strip():
+        parser.error('--bootstrap requires a nonempty reason')
     with tempfile.TemporaryDirectory(prefix='adamic-cohere-') as scratch:
         binary = os.environ.get('COHERE_BINARY', str(Path(scratch) / 'cohere'))
         if 'COHERE_BINARY' not in os.environ:
@@ -183,15 +249,34 @@ def main():
     if arguments.output:
         Path(arguments.output).write_text(''.join(json.dumps(row) + '\n' for row in records))
     current = collections.Counter(identity(row) for row in records if row['kind'] == 'finding')
-    old = collections.Counter(json.loads(BASELINE.read_text())) if BASELINE.exists() else None
+    old, provenance = read_baseline(BASELINE.read_text()) if BASELINE.exists() else (None, None)
+    integration, integration_provenance = baseline_document_at(arguments.base_ref)
+    committed, committed_provenance = baseline_document_at('HEAD')
+    if arguments.bootstrap is not None:
+        commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT).decode().strip()
+        bootstrap = {'reason': arguments.bootstrap, 'commit': commit, 'counts': counts(current),
+                     'newFindings': counts(current - old) if old is not None else counts(current)}
+        write_baseline(current, bootstrap)
+        print(f'cohere bootstrap at {commit}: {arguments.bootstrap}')
+        print(f'cohere baseline: {sum(current.values())} findings, '
+              f'{sum((current - old).values()) if old is not None else sum(current.values())} newly recorded')
+        return 0
     if old is None and not arguments.record:
         raise ValueError('missing reviewed baseline')
-    integration = baseline_at(arguments.base_ref)
     if integration is None:
         print(f'cohere baseline: {arguments.base_ref} has no baseline; this commit introduces it')
+    # Only a committed explicit bootstrap can supersede an older integration ceiling.
+    # Local metadata cannot excuse growth against HEAD. Once the integration ref includes
+    # this bootstrap, its own shrinking ceiling applies again.
+    if committed_provenance is not None:
+        ceiling = bootstrap_ceiling(committed_provenance)
+        if committed - ceiling:
+            raise ValueError('baseline grew relative to its committed bootstrap')
+        if (committed_provenance != integration_provenance
+                and is_ancestor(arguments.base_ref, committed_provenance['commit'])):
+            integration = committed
     if integration is not None and old is not None and old - integration:
         raise ValueError('baseline grew relative to the integration ref')
-    committed = baseline_at('HEAD')
     if committed is not None and old is not None and old - committed:
         raise ValueError('baseline grew relative to the committed HEAD')
     added = collections.Counter()
@@ -205,7 +290,7 @@ def main():
     if old is not None and old - current and not arguments.record:
         raise ValueError('findings decreased; run --record to remove stale baseline entries')
     if arguments.record:
-        BASELINE.write_text(json.dumps(dict(sorted(current.items())), indent=4) + '\n')
+        write_baseline(current, provenance)
     print(f'cohere baseline: {sum(current.values())} findings, {sum((old - current).values()) if old is not None else 0} removed, 0 new')
     return 0
 
