@@ -51,3 +51,12 @@ remains refused; a wider alias-write isolation attempt is refused as an
 unsupported representation conversion at escapedText. See lane7's
 REMAINING-REPORT.md for commands and the surviving mutant. The other two
 compile-gap rows still pass their original named-refusal pins.
+
+October 11 follow-up: 9477 is now certified by lane 7's fixture-only helper path.
+An ordinary checked Identifier view is a proven subtype of the helper's original
+LeftHandSideExpression & Identifier receiver. No carrier.child read precedes the
+helper. Numeric escapedText stops at value.escapedText; bypassing only the helper
+read prints uncheckedunchecked and exits zero in all three backends, killing the
+previously surviving mutant. Good control and leaks pass. Lane 4's original
+credit increases by one pair / one read; the two never-family gaps remain. See
+lane7/IDENTIFIER-REPORT.md and its own measured counts table.

@@ -1912,7 +1912,7 @@
       "column": 62
     },
     "source_sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
-    "status": "uncredited",
-    "reason": "recursive admission repaired; earlier carrier.child bounded read catches wrong escapedText even after helper read is bypassed; direct cast and wider alias-write isolation paths remain refused"
+    "status": "certified",
+    "proof": "existing checked Identifier view, followed by proven upcast to original LeftHandSideExpression & Identifier helper; only helper rejects numeric escapedText; bypass killed by all three backends"
   }
 }

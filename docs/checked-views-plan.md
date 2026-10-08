@@ -2204,3 +2204,12 @@ Direct intersection casting and a wider alias-write isolation remain refused.
 The obsolete compile-gap row moves to the new runtime/admission gap oracle;
 the two unrelated lane 4 never-family compile gaps remain. Lane 7 counts stay
 twelve pairs / 58 reads, with five rows / eight reads remaining.
+
+### Lane 7 isolated original Identifier member certificate
+
+The fixture enters through the existing checked Identifier interface and passes
+it by proven upcast to the original LeftHandSideExpression & Identifier helper.
+The wrong value reaches value.escapedText without a prior carrier.child read.
+Helper bypass is now killed in all three backends. No compiler admission rule
+changed. Original assigned 9477 is certified separately from lane 7's twelve
+pairs / 58 reads. Own original counts are measured in lane7/counts.md.
