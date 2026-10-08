@@ -23,7 +23,8 @@ func (e *emitter) arrayFrom(from ir.ArrayFrom) string {
 	}
 	e.indent++
 	element := e.temporary()
-	e.line("adamic_value %s = %s->code(%s, (adamic_value[]){%s, {.number = (double)%s}}, 2);", element, callback, callback, undefined, index)
+	call := e.callbackCall(callback, from.Callback, from.CallbackType, undefined, fmt.Sprintf("{.number = (double)%s}", index))
+	e.line("adamic_value %s = %s;", element, call)
 	// What's made so far is the statement's, let go with its temporaries.
 	e.closureThrown()
 	e.line("adamic_array_push(%s, %s);", made, element)

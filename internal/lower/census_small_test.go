@@ -2,6 +2,7 @@ package lower
 
 import (
 	"errors"
+	"os"
 	"strings"
 	"testing"
 )
@@ -71,4 +72,15 @@ console.log(first.pet.bark);
 		t.Fatalf("a rest copy still shares mutable elements; expected refusal, got %v", err)
 	}
 	t.Logf("rest element relation: %v", refused)
+}
+
+// Flow-narrowed never is not an executable arm that fails to return.
+func TestCensusBooleanDeadBranch(t *testing.T) {
+	source, err := os.ReadFile("../oracle/testdata/census_boolean_dead_branch.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := lowerSource(t, string(source)); err != nil {
+		t.Fatal(err)
+	}
 }

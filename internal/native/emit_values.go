@@ -78,3 +78,15 @@ func cNumber(value float64) string {
 	}
 	return "(" + strconv.FormatFloat(value, 'x', -1, 64) + ")"
 }
+
+// absent is an omitted argument, distinct from an uninitialized local's placeholder.
+// References use NULL; scalar optionals carry their explicit absence bit.
+func absent(valueType ir.Type) string {
+	if valueType.IsMaybe() {
+		return zero(valueType)
+	}
+	if valueType.IsReference() {
+		return "NULL"
+	}
+	panic("native: omitted argument has no undefined representation")
+}
