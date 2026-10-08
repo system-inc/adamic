@@ -1,5 +1,7 @@
 # Group 3 ruled delivery
 
+Catalog on 2442285a445a5b553e619ee3f5b3c2ab664305ae: exit 0, 276.825s; all 11 applicable undo patches were caught. The same five historical entries remain nonapplicable. No undo patch drifted. Per-entry controls, mutants and results are retained under evidence/group3-ruled/catalog.
+
 Built boxed callable unions, registered class constructor values and closed lexical constructor caches, and library-small operations through the existing regex callback protocol.
 Commits: own function-values, new-expression and library-small commits replayed individually after 0a167e089; the void-value topic was withdrawn after a base-fixture regression.
 Checks: lower 48.477s, IR 27.634s, flow 164.577s, JavaScript has no tests; required results and refreshed counts are in evidence/group3-ruled; the focused Node oracle passed in both backends (9.263s), and counts refreshed successfully (75.720s).
