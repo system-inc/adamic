@@ -623,6 +623,15 @@ function lowerFunction(parser: Parser, root: number, source: string, symbols: Sy
     else { builder.close({ kind: 'Return', value: fn.returns }); }
     return builder;
 }
+// Construct once; the file entry cache owns the parser and checker facts.
+export function lowerParsedFunction(parser: Parser, root: number, source: string, symbols: SymbolSnapshot | undefined): ConstructedHIR | undefined {
+    if(!['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction'].includes(parser.node(root).kind) || !supportedFunction(parser, root)) { return undefined; }
+    const arena = new HIRArena();
+    const builder = lowerFunction(parser, root, source, symbols, undefined, arena);
+    if(builder === undefined) { return undefined; }
+    constructHIR(arena, builder.functionIndex);
+    return new ConstructedHIR(arena, builder.functionIndex);
+}
 // Corpus positions are UTF-8 offsets; path selects a nested graph constructed with its parent.
 export function lowerSourceAt(source: string, start: number, end: number, symbols: SymbolSnapshot | undefined = undefined, path: string = ''): ConstructedHIR | undefined {
     const parser = new Parser(source, '/test.tsx'); parser.file();
@@ -631,12 +640,11 @@ export function lowerSourceAt(source: string, start: number, end: number, symbol
         const candidate = parser.node(index);
         if(['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction'].includes(candidate.kind) && (start < 0 || (utf8Length(source.slice(0, candidate.pos)) === start && utf8Length(source.slice(0, candidate.end)) === end))) { root = index; break; }
     }
-    if(root < 0 || !supportedFunction(parser, root)) { return undefined; }
-    const arena = new HIRArena();
-    const builder = lowerFunction(parser, root, source, symbols, undefined, arena);
-    if(builder === undefined) { return undefined; }
-    constructHIR(arena, builder.functionIndex);
-    let index = builder.functionIndex;
+    if(root < 0) { return undefined; }
+    const graph = lowerParsedFunction(parser, root, source, symbols);
+    if(graph === undefined) { return undefined; }
+    const arena = graph.arena;
+    let index = graph.root;
     if(path !== '') { for(const part of path.split(',')) { index = arena.read(index).functions[Number.parseInt(part, 10)] ?? panic('missing nested path'); } }
     return new ConstructedHIR(arena, index);
 }

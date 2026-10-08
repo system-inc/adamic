@@ -305,3 +305,50 @@ Adamic 0.1 refuses Instruction[], an array whose elements can reach back to an a
 
 No production operation was declined to make the compile pass. The full admitted
 Node/native census remains byte-identical to Go.
+
+## ForFunction cache foundation certificate (Oct 8)
+
+Go cache.go:68–86 now has a file-owned port in cache.ts. HIRFile owns source, parser,
+checker facts and Map<string, ConstructedHIR | undefined>; keys follow Go's node
+kind/source position. ForFunction declines absent checker facts before cache lookup,
+and cached graph owners retain the arena. lowerParsedFunction constructs exactly
+once. The original lowering entry delegates to the same helper. No graph algorithm
+was copied; construction still imports SSA.
+
+`HIR_CENSUS_EXPORT=/tmp/hir-cache-census go test -v -count=1 -timeout=25m
+./stage1/cohere/high_level_intermediate_representation
+-run 'TestWholeConstructionCensus/catches_jsx_component_tag_loses_value|TestFileFunctionCacheOracle|TestResidentSymbolFacts|TestArenaIndexBrands'`
+passed direct/cached Go/Node/native construction: 380/1,465 original functions and
+50/50 probes. All admitted checker-backed roots are requested three times, with
+identity checked, then their selected nested graph is compared against Go.
+Checker-less raw-Lower fixtures additionally prove the cache entry declines.
+The semantic JSX mutant and off-by-one index mutant remain caught.
+
+`go test -v -count=1 -timeout=10m ./stage1/cohere/high_level_intermediate_representation
+-run '^TestFileFunctionCacheOracle$'` passed after adding the live checker driver.
+The tagged adapter calls ORIGINAL Go ForFunction three times and checks pointer
+identity, unchanged recursive dumps, and refusal when a copy of the same context
+lacks its checker. Three fixtures use branch phis, nested closure JSX, iterator-free
+for loops and different files with identical node positions. Node replay and native
+replay match its dump and identity observations. The native live driver opens the
+resident compiler, asks generic symbol selectors for the entire parsed file, then
+constructs through ForFunction with no Go HIR or replay snapshot supplied. Its output
+also matches byte for byte. A fresh lowering on each cache hit is a successful-but-wrong
+mutant, caught through identity output on Node and native.
+
+The additional symbol bridge method does not contain binding, capture or rule
+classification; it reads only the existing generic resident symbol selector.
+The separate 22-selector checker/live/replay identity-collapse mutant test passes.
+Coverage did not move because this entry seam adds no syntax. Complete grammar,
+compilation-unit/clone/visitor/dominator APIs and static-components remain pending.
+
+Final local package run: `HIR_CENSUS_EXPORT=/tmp/hir-unit2-cache-final
+go test -v -count=1 -timeout=25m
+./stage1/cohere/high_level_intermediate_representation` passed in 604 seconds.
+All 49 retained semantic lowering mutants compile, execute and differ from Go on
+Node/native at the final implementation, plus the executable cache-hit identity
+mutant. The checked off-by-one arena mutant stops on both; the wrong index brand
+is rejected. Direct/cached full-census comparison, three live native cache probes,
+12 small-oracle functions and 22 symbol selectors with their identity-collapse
+mutant all pass. The current certificate is 380/1,465 original corpus functions
+and 50/50 construction probes. No unit-2 completion or green rule is claimed.

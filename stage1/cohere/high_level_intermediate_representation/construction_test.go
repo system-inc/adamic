@@ -109,6 +109,13 @@ func TestWholeConstructionCensus(t *testing.T) {
 	if !bytes.Equal(native, node) {
 		t.Fatal("native and Node census outputs differ: " + firstDifference(native, node))
 	}
+	cachedNode := command(t, root, nil, "node", "--no-warnings", "oracle/node.mjs", filepath.Join(lane, "main.ts"), "--cached-coverage", manifest)
+	cachedNative := command(t, root, nil, binary, "--cached-coverage", manifest)
+	if !bytes.Equal(cachedNode, node) || !bytes.Equal(cachedNative, node) {
+		t.Fatal("ForFunction census differs from constructed Go/Node/native census")
+	}
+	t.Log("ForFunction cache matches every admitted checker-backed row; checker-less cache requests decline")
+
 	t.Logf("%d/%d context-distinct functions match Go on Node and natively; remaining rows are explicit declines", matched, total)
 	t.Logf("%d Go tests skipped; names recorded in go-tests.log", strings.Count(string(output), "--- SKIP:"))
 	if matched == 0 || total == 0 {

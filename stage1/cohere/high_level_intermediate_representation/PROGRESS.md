@@ -1,4 +1,36 @@
-# Unit 2 local checkpoint: JSX
+# Unit 2 local checkpoint: ForFunction cache foundation
+
+Both direct and cached construction match **380/1,465 corpus functions** on Node
+and native, with **50/50 probes** (430/1,515 overall). All 49 semantic lowering mutants, the cache identity mutant, arena bounds mutant,
+brand rejection, live checker/cache probes and retained symbol/small-oracle checks
+pass in the final full package run. The cache seam adds **zero**
+corpus functions: it reuses the admitted lowering grammar and changes file ownership,
+checker gating and repeated-call identity rather than admission. All checker-backed
+admitted census rows run through ForFunction three times and preserve the direct
+constructed dump. Checker-less cache requests decline; checker-less Go Lower
+fixtures still compare through the raw construction entry.
+
+HIRFile owns one parsed source, one checker-fact snapshot and a function cache keyed
+by node kind/source position. Its entries retain complete graph owners (arena/root),
+including declines, and Construct runs only inside the initial lowering. ForFunction
+is a public cache entry. The resident bridge's readSymbols builds only compiler
+symbol facts; a native live-checker driver constructs without a replay snapshot.
+Three independent Go cache probes cover branch phis, nested closures/JSX, loops and
+file isolation at identical node positions. Repeated identity, unchanged dumps and
+checker gating match Go. A fresh-lowering-on-hit mutant executes successfully and
+loses the identity on Node/native.
+
+This is a cache foundation, **not completed unit 2 or a green rule**. HIRFile must
+be wired into rule file ownership; AsCompilationUnit, spelling, full visitors,
+cloning, SSA verification and dominators still need their unit-2 interfaces.
+Construction still declines object/array/pattern variants, optional chains, templates,
+type-erased function/expression forms and other remaining variants. These must reach
+the entire non-Flow construction corpus before static-components is claimed green
+in its own rule directory under docs/lint-registration.md. No partial rule has been
+registered. The next work is those construction/compilation-unit boundaries, then
+static-components. The plan branch stays unpushed until the finished unit.
+
+# Previous checkpoint: JSX
 
 JSX construction matches **380/1,465 corpus functions** on Node and native, up
 **69** from statement flow, plus **50/50 probes** (430/1,515 overall). Active
