@@ -1,0 +1,56 @@
+{
+  "sha": "66e61d5c0eca98baf841824dbfa6abc297fbf322",
+  "branch": "devtools/fast-gate",
+  "branch_source": "given",
+  "session": "",
+  "session_source": "none",
+  "base": "74fb6490a0ba7f608012a13c9842795f15431551",
+  "tools_sha": "ea0eba8005351e8b359f6618ee9818b598cdb281",
+  "machine": {
+    "hostname": "Cloud",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": false,
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "f8ce1054abab2210ddde56d9b4771f399d50f464",
+  "unchecked_a_files": [],
+  "a_check_exempt": [],
+  "executors": {},
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "wall_seconds": 0.7,
+  "steps_seconds": {
+    "coverage": 0.0
+  },
+  "pass": 0,
+  "fail": 0,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "failure": {
+    "step": "darwin",
+    "detail": "needs darwin leg: go test ./internal/apple/... on Kirk's Mac, for the executor map's change",
+    "after_seconds": 0.7
+  },
+  "planned_stages": [
+    "coverage",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census",
+    "darwin"
+  ],
+  "stages_exit": {
+    "coverage": 0,
+    "darwin": 1
+  },
+  "finished": true
+}
