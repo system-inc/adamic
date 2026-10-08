@@ -75,7 +75,7 @@
     "file": "cmd/adamic/request_test.go",
     "test": "TestWASIRequest",
     "id": "TestWASIRequest:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
-    "line": 73,
+    "line": 78,
     "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
     "reads": [
       "os.Getenv(\"ADAMIC_ORACLE_WASI\")"
@@ -94,7 +94,7 @@
     "file": "cmd/adamic/request_test.go",
     "test": "TestWASIRequestThrows",
     "id": "TestWASIRequestThrows:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
-    "line": 144,
+    "line": 153,
     "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
     "reads": [
       "os.Getenv(\"ADAMIC_ORACLE_WASI\")"
@@ -532,7 +532,7 @@
     "file": "internal/oracle/wasi_test.go",
     "test": "TestWASIOracleCatchesMutants",
     "id": "TestWASIOracleCatchesMutants:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
-    "line": 63,
+    "line": 64,
     "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
     "reads": [
       "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
@@ -555,7 +555,7 @@
     "file": "internal/oracle/wasi_test.go",
     "test": "TestWASIRunnerCatchesMutants",
     "id": "TestWASIRunnerCatchesMutants:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
-    "line": 86,
+    "line": 87,
     "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
     "reads": [
       "os.Getenv(\"ADAMIC_ORACLE_WASI\")",
@@ -575,7 +575,7 @@
     "file": "internal/oracle/wasi_test.go",
     "test": "TestWASIEmission",
     "id": "TestWASIEmission:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
-    "line": 117,
+    "line": 118,
     "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
     "reads": [
       "os.Getenv(\"ADAMIC_ORACLE_WASI\")",
@@ -1054,7 +1054,7 @@
     "file": "stage1/cohere/formatfiles/testdata/cohere_side_test.go",
     "test": "TestAdamicPortCases",
     "id": "TestAdamicPortCases:4fd418791213190c8c02147c8709ae05919a7aa60a46f77c98fc6a9fcb512052",
-    "line": 281,
+    "line": 288,
     "condition": "requestPath == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_PORT_REQUEST\")",
@@ -1375,7 +1375,7 @@
     "file": "stage1/cohere/json/port_test.go",
     "test": "TestAdditionalJSONBoundaries",
     "id": "TestAdditionalJSONBoundaries:ee535c3d3183e33fe838ac8ca2e7a2a832dbe40bcd69f212f57435d41212143d",
-    "line": 331,
+    "line": 336,
     "condition": "os.Getenv(\"ADAMIC_JSON_NODE_ONLY\") != \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_JSON_ARTIFACTS\")",
@@ -1416,7 +1416,7 @@
     "file": "stage1/cohere/lint/jsx_integration_test.go",
     "test": "TestJsxLintReleaseAndThroughput",
     "id": "TestJsxLintReleaseAndThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf",
-    "line": 74,
+    "line": 86,
     "condition": "os.Getenv(\"ADAMIC_LINT_BENCH\") != \"1\"",
     "reads": [
       "filepath.WalkDir(filepath.Join(repository, \"internal\"), func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.Type()&os.ModeSymlink != 0 {\n\t\ttarget, err := os.Readlink(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tparts[path] = \"symlink:\" + target\n\t} else if !entry.IsDir() {\n\t\tparts[path] = \"file:\" + lintBytes(t, path)\n\t}\n\treturn nil\n})",
@@ -1443,7 +1443,7 @@
     "file": "stage1/cohere/lint/lint_test.go",
     "test": "TestCompilerAndStage1Agree",
     "id": "TestCompilerAndStage1Agree:1dbf140729f17ef866b29b574189ddf438e2a4dd6762d9bdcd8e5dae68bf6b7e",
-    "line": 499,
+    "line": 402,
     "condition": "source == \"\"",
     "reads": [
       "filepath.WalkDir(filepath.Join(repository, \"internal\"), func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.Type()&os.ModeSymlink != 0 {\n\t\ttarget, err := os.Readlink(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tparts[path] = \"symlink:\" + target\n\t} else if !entry.IsDir() {\n\t\tparts[path] = \"file:\" + lintBytes(t, path)\n\t}\n\treturn nil\n})",
@@ -1471,7 +1471,7 @@
     "file": "stage1/cohere/lint/lint_test.go",
     "test": "TestThroughput",
     "id": "TestThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf",
-    "line": 666,
+    "line": 567,
     "condition": "os.Getenv(\"ADAMIC_LINT_BENCH\") != \"1\"",
     "reads": [
       "filepath.WalkDir(filepath.Join(repository, \"internal\"), func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.Type()&os.ModeSymlink != 0 {\n\t\ttarget, err := os.Readlink(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tparts[path] = \"symlink:\" + target\n\t} else if !entry.IsDir() {\n\t\tparts[path] = \"file:\" + lintBytes(t, path)\n\t}\n\treturn nil\n})",
@@ -1632,7 +1632,7 @@
     "file": "stage1/cohere/selector/selector_test.go",
     "test": "TestThePortParsesAsGoCohereDoes",
     "id": "TestThePortParsesAsGoCohereDoes:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
-    "line": 86,
+    "line": 88,
     "condition": "library == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_SELECTOR_KEEP\")",
@@ -1657,7 +1657,7 @@
     "file": "stage1/cohere/selector/selector_test.go",
     "test": "TestSelectorThroughput",
     "id": "TestSelectorThroughput:bd045f17a47b90e4aa936cce7744f4c65a82b6b0a6aa7320868b549e63b7af2d",
-    "line": 388,
+    "line": 390,
     "condition": "os.Getenv(\"ADAMIC_SELECTOR_BENCH\") == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_SELECTOR_BENCH\")",
@@ -1683,7 +1683,7 @@
     "file": "stage1/cohere/selector/selector_test.go",
     "test": "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars",
     "id": "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
-    "line": 441,
+    "line": 505,
     "condition": "library == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_SELECTOR_LIBRARY\")"
@@ -1767,7 +1767,7 @@
     "file": "stage1/cohere/suppression/testdata/cohere_side_test.go",
     "test": "TestAdamicPortCases",
     "id": "TestAdamicPortCases:071bee04ebc1306585f9ad6a0a4aa5333046920fcb7bc52d74b659e6bbc9199d",
-    "line": 204,
+    "line": 203,
     "condition": "path == \"\"",
     "reads": [
       "os.Getenv(\"ADAMIC_PORT_REQUEST\")",
@@ -1810,7 +1810,8 @@
     "line": 19,
     "condition": "source == \"\"",
     "reads": [
-      "filepath.WalkDir(base, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() && (entry.Name() == \".git\" || path == filepath.Join(root, \"cohere\")) {\n\t\treturn filepath.SkipDir\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tfiles = append(files, path)\n\t}\n\treturn nil\n})",
+      "filepath.WalkDir(base, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() && (entry.Name() == \".git\" || path == filepath.Join(root, \"cohere\") || path == upstream) {\n\t\treturn filepath.SkipDir\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tfiles = append(files, path)\n\t}\n\treturn nil\n})",
+      "filepath.WalkDir(directory, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tcount++\n\t}\n\treturn nil\n})",
       "os.Getenv(\"ADAMIC_TS_PRINTER_KEEP\")",
       "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")",
       "os.ReadFile(directory + \"/\" + name)",
@@ -1831,10 +1832,11 @@
     "file": "stage1/cohere/tsprinter/expressions_test.go",
     "test": "TestExpressionsAgainstGoAndPrettier",
     "id": "TestExpressionsAgainstGoAndPrettier:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
-    "line": 102,
+    "line": 103,
     "condition": "library == \"\"",
     "reads": [
-      "filepath.WalkDir(base, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() && (entry.Name() == \".git\" || path == filepath.Join(root, \"cohere\")) {\n\t\treturn filepath.SkipDir\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tfiles = append(files, path)\n\t}\n\treturn nil\n})",
+      "filepath.WalkDir(base, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() && (entry.Name() == \".git\" || path == filepath.Join(root, \"cohere\") || path == upstream) {\n\t\treturn filepath.SkipDir\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tfiles = append(files, path)\n\t}\n\treturn nil\n})",
+      "filepath.WalkDir(directory, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tcount++\n\t}\n\treturn nil\n})",
       "os.Getenv(\"ADAMIC_TS_PRETTIER\")",
       "os.Getenv(\"ADAMIC_TS_PRINTER_ARTIFACTS\")",
       "os.Getenv(\"ADAMIC_TS_PRINTER_KEEP\")",
@@ -1860,7 +1862,8 @@
     "line": 19,
     "condition": "source == \"\"",
     "reads": [
-      "filepath.WalkDir(base, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() && (entry.Name() == \".git\" || path == filepath.Join(root, \"cohere\")) {\n\t\treturn filepath.SkipDir\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tfiles = append(files, path)\n\t}\n\treturn nil\n})",
+      "filepath.WalkDir(base, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() && (entry.Name() == \".git\" || path == filepath.Join(root, \"cohere\") || path == upstream) {\n\t\treturn filepath.SkipDir\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tfiles = append(files, path)\n\t}\n\treturn nil\n})",
+      "filepath.WalkDir(directory, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tcount++\n\t}\n\treturn nil\n})",
       "os.Getenv(\"ADAMIC_TS_STATEMENT_KEEP\")",
       "os.Getenv(\"ADAMIC_TYPESCRIPT_SOURCE\")",
       "os.ReadFile(directory + \"/\" + name)",
@@ -1881,10 +1884,11 @@
     "file": "stage1/cohere/tsprinter/statements_test.go",
     "test": "TestStatementsAgainstGoAndPrettier",
     "id": "TestStatementsAgainstGoAndPrettier:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",
-    "line": 120,
+    "line": 121,
     "condition": "library == \"\"",
     "reads": [
-      "filepath.WalkDir(base, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() && (entry.Name() == \".git\" || path == filepath.Join(root, \"cohere\")) {\n\t\treturn filepath.SkipDir\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tfiles = append(files, path)\n\t}\n\treturn nil\n})",
+      "filepath.WalkDir(base, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() && (entry.Name() == \".git\" || path == filepath.Join(root, \"cohere\") || path == upstream) {\n\t\treturn filepath.SkipDir\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tfiles = append(files, path)\n\t}\n\treturn nil\n})",
+      "filepath.WalkDir(directory, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tcount++\n\t}\n\treturn nil\n})",
       "os.Getenv(\"ADAMIC_TS_PRETTIER\")",
       "os.Getenv(\"ADAMIC_TS_STATEMENT_ARTIFACTS\")",
       "os.Getenv(\"ADAMIC_TS_STATEMENT_KEEP\")",
@@ -2304,7 +2308,7 @@
     "file": "stage1/typescript/scanner/scanner_test.go",
     "test": "TestPerformance",
     "id": "TestPerformance:fc2cecddef6499ecfc230850eb4569d7b20ef412ad51c601308d2654dfebb2e1",
-    "line": 392,
+    "line": 393,
     "condition": "os.Getenv(\"ADAMIC_SCANNER_BENCH\") == \"\"",
     "reads": [
       "filepath.WalkDir(directory, func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !entry.IsDir() && strings.HasSuffix(path, \".ts\") {\n\t\tabsolute, err := filepath.Abs(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tpaths = append(paths, absolute)\n\t}\n\treturn nil\n})",
@@ -2329,7 +2333,7 @@
     "file": "stage3/fixtures/fixtures_test.go",
     "test": "TestFixtures",
     "id": "TestFixtures:3813651682ea3a338f3659a6f61cfb5202b65b0d7a4a8e5ddc65d39358852121",
-    "line": 257,
+    "line": 261,
     "condition": "entry.Platform != \"\" && entry.Platform != runtime.GOOS",
     "reads": [
       "os.ReadFile(path)",
@@ -2363,5 +2367,19 @@
     "opt_in_off": [
       "ADAMIC_RUNNER_GUARD_REPOSITORY"
     ]
+  },
+  {
+    "file": "cmd/adamic-test262/run_test.go",
+    "test": "TestProgramCPUDeadline",
+    "id": "TestProgramCPUDeadline:00f92f499a564b3de928e70b3e7946b226db10f826ec47b017afe461a3c18513",
+    "line": 16,
+    "condition": "runtime.GOOS != \"linux\" && runtime.GOOS != \"darwin\"",
+    "reads": [],
+    "callers": [
+      "TestProgramCPUDeadline"
+    ],
+    "message": "\"CPU limits require Linux or macOS\"",
+    "class": "not-applicable",
+    "provides": "Not applicable: CPU-time limits (ulimit -t) exist only on Linux and macOS, the platforms the gate runs on; any other GOOS has no CPU limit to test."
   }
 ]
