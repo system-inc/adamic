@@ -3,57 +3,51 @@ package load
 import (
 	"encoding/json"
 	"fmt"
-	"os"
-	"path/filepath"
+	"io/fs"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/compiler"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 )
 
 const NodeTypesVersion = "25.3.3"
-const nodeTypesRelative = "stage3/api/node_modules/@types/node"
+const nodeTypesDirectory = "bundled:///node/node_modules/@types/node"
+const nodeTypesRoot = "bundled:///node/node_modules/@types"
 
-// Resolve exactly the API seat's installed copy. Never synthesize declarations
-// or fall back to a different @types/node in a caller's node_modules.
-func nodeTypesIndex(directory string) (string, error) {
-	for {
-		root := filepath.Join(directory, filepath.FromSlash(nodeTypesRelative))
-		data, err := os.ReadFile(filepath.Join(root, "package.json"))
-		if err == nil {
-			var pin struct {
-				Name    string `json:"name"`
-				Version string `json:"version"`
-			}
-			if err = json.Unmarshal(data, &pin); err != nil {
-				return "", fmt.Errorf("load: invalid Node type package: %w", err)
-			}
-			if pin.Name != "@types/node" || pin.Version != NodeTypesVersion {
-				return "", fmt.Errorf("load: want @types/node %s at %s; found %s %s", NodeTypesVersion, root, pin.Name, pin.Version)
-			}
-			index := filepath.Join(root, "index.d.ts")
-			if _, err = os.Stat(index); err != nil {
-				return "", fmt.Errorf("load: Node declarations: %w", err)
-			}
-			index, err = filepath.EvalSymlinks(index)
-			if err != nil {
-				return "", fmt.Errorf("load: Node declaration path: %w", err)
-			}
-			return filepath.ToSlash(index), nil
-		}
-		if !os.IsNotExist(err) {
-			return "", fmt.Errorf("load: Node type package: %w", err)
-		}
-		parent := filepath.Dir(directory)
-		if parent == directory {
-			break
-		}
-		directory = parent
+// The exact published package travels with the compiler, independent of its
+// working directory. Build-time integrity tests hold every embedded byte.
+func nodeTypesIndex() (tspath.RootedFilePath, error) {
+	return nodeTypesIndexFromFS(embeddedNodeTypes)
+}
+
+func nodeTypesIndexFromFS(files fs.FS) (tspath.RootedFilePath, error) {
+	data, err := fs.ReadFile(files, "node_types/node_modules/@types/node/package.json")
+	if err != nil {
+		return "", fmt.Errorf("load: this compiler is missing its bundled Node declarations; reinstall Adamic")
 	}
-	return "", fmt.Errorf("load: node:* imports require @types/node %s installed in %s", NodeTypesVersion, nodeTypesRelative)
+	var pin struct {
+		Name    string `json:"name"`
+		Version string `json:"version"`
+	}
+	if json.Unmarshal(data, &pin) != nil || pin.Name != "@types/node" || pin.Version != NodeTypesVersion {
+		return "", fmt.Errorf("load: this compiler's bundled Node declarations are not @types/node %s; reinstall Adamic", NodeTypesVersion)
+	}
+	if _, err := fs.ReadFile(files, "node_types/node_modules/@types/node/index.d.ts"); err != nil {
+		return "", fmt.Errorf("load: this compiler's bundled Node declarations are incomplete (missing index.d.ts); reinstall Adamic")
+	}
+	return tspath.RootedDirectoryPathFromNormalized(nodeTypesDirectory).ResolveFile("index.d.ts"), nil
 }
 
 func usesNodeModules(program *compiler.Program) bool {
+	// A project may request Node globals without importing a node: module.
+	// The caller package is hidden in favor of our pinned embedded declarations,
+	// so an explicit type-library request needs the same bundled root setup.
+	for _, name := range program.Options().Types {
+		if name == "node" {
+			return true
+		}
+	}
 	for _, file := range program.GetSourceFiles() {
 		for _, statement := range file.Statements.Nodes {
 			if statement.Kind != ast.KindImportDeclaration && statement.Kind != ast.KindExportDeclaration {
@@ -70,13 +64,16 @@ func usesNodeModules(program *compiler.Program) bool {
 
 // Unit lowerers use declaration identity, not the spelling of an imported name.
 func IsNodeLibrary(file *ast.SourceFile) bool {
-	return file != nil && strings.Contains(file.FileName().AsString(), "/"+nodeTypesRelative+"/") && strings.HasSuffix(file.FileName().AsString(), ".d.ts")
+	return file != nil && strings.HasPrefix(file.FileName().AsString(), nodeTypesDirectory+"/") && strings.HasSuffix(file.FileName().AsString(), ".d.ts")
 }
 
 // Preserve the existing console lowerer's declaration identity while letting
 // the pinned Node global Console interface merge. The package itself is untouched.
 func nodePrelude() string {
-	source := strings.Replace(prelude, "declare const console: {\n\tlog(message: string): void;\n\terror(message: string): void;\n};", "declare var console: Console;", 1)
+	source := strings.Replace(prelude, "declare const console: {\n\tlog(message: string | null | undefined): void;\n\terror(message: string | null | undefined): void;\n};", "declare var console: Console;", 1)
+	// The project overlay names Console; its standalone methods must not
+	// shadow the official Node interface inherited by the global declaration.
+	source = strings.Replace(source, "interface Console {\n\tlog(message: string | null | undefined): void;\n\terror(message: string | null | undefined): void;\n}\n", "", 1)
 	start := strings.Index(source, "declare const process: {")
 	if start >= 0 {
 		end := strings.Index(source[start:], "\n};")

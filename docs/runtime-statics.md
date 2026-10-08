@@ -459,3 +459,15 @@ not the safety of the rows explicitly marked unsafe.
 - `runtime-file:node_process.c`
 - `runtime-file:node_process.h`
 - `runtime-file:process.c`
+
+Runtime compiler/library merge: `regexp.c:regex_regular_mode:1` is a process-wide test/embedding dispatch selector, initialized to 1 before any pool. Setters and matching use C11 atomic storage, so concurrent setters and parallelMap reads cannot race. This keeps the area dispatch choice and the concurrency branch protection.
+
+Library runtime files audited at this merge: `runtime-file:object_integrity.c`, `runtime-file:object_integrity.h`, `runtime-file:object_names.c`, `runtime-file:regexp_regular.c`, `runtime-file:string_wellformed.c`, `runtime-file:string_wellformed.h`. Integrity and well-formedness helpers use only call-local state and supplied heap values. The regular matcher owns its bounded DFA/NFA scratch arrays per call; no lazy global tables or caches are added.
+
+Additional storage inherited from area/library, audited during the runtime compiler merge:
+
+- `adamic.h:adamic_null:1` and `union.c:adamic_null:1`: declaration/definition of the immortal null marker. Static initialization precedes the pool; no writers.
+- `from_codes.c:prefix:1` and `from_codes.c:name:1`: immortal RangeError strings. Static initialization only; the literal-index sentinel prevents cache mutation.
+- `from_codes.c:name_cache:1`: name slot cache. The merged packed cache publishes and reads with atomic operations, including concurrent error construction.
+- `node_fs_directory.c:target_before:1`, `node_fs_directory.c:arrow:1`, and `node_fs_directory.c:quote:2`: immortal error-message strings initialized statically. No literal cache writes or registration.
+- `union.c:shape_types:1`: area/library's process-wide shape-type metadata registry, written by adamic_register_shape_types during generated object construction and read by dynamic_slot. Preserved from the area, not added by the regex compiler. Unsafe today for concurrent registration/dynamic reads: neither this head nor metadata next links are protected. Requires the area's registry owner to arrange registration before the pool or synchronized publication; this merge does not certify that inherited concurrency behavior.

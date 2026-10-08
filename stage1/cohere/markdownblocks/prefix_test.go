@@ -13,12 +13,18 @@ import (
 )
 
 func TestMarkdownParserPrefixes(t *testing.T) {
-	t.Parallel()
+	parallelMarkdown(t)
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
 	}
 	inputs, files := auditCorpus(t, root)
+	// This file sweep is small beside the mandatory generated and fixed checks.
+	selection := selectMarkdownFiles(t, root, inputs, files, 1)
+	if selection.Sample {
+		t.Log(selection.Log(t.Name()))
+	}
+	inputs, files = selectedMarkdownInputs(inputs, files, selection)
 	for _, text := range []string{"", "\ufeff", ">", "> ", ">\t", " > a", "   > a", "    > a", "\t> a", "\t > a", ">> a", "> > a", "\ufeff> a", "\r\na", "\ra", "a\r", "a\r\nb", "😀\t> a"} {
 		inputs = append(inputs, auditInput{Name: fmt.Sprintf("generated/prefix/short/%d", len(inputs)), Text: text})
 	}
@@ -129,14 +135,14 @@ func TestMarkdownParserPrefixes(t *testing.T) {
 			}
 			mutantMain := filepath.Join(scratch, "testdata/prefix_probe.ts")
 			write(t, mutantMain, content)
-			result := nativelyRun(t, lowered(t, mutantMain), cases)
-			clean(t, "native output-only prefix mutant", result)
+			result := onNode(t, mutantMain, cases)
+			clean(t, "source Node output-only prefix mutant", result)
 			if bytes.Equal(result.stdout, want.stdout) {
 				t.Fatal("mutant survived")
 			}
 			offset := firstDifference(string(result.stdout), string(want.stdout))
 			index := bytes.Count(want.stdout[:offset], []byte("\n"))
-			t.Logf("output-only native mutant caught in %q at byte %d", inputs[index].Name, offset)
+			t.Logf("output-only source Node mutant caught in %q at byte %d", inputs[index].Name, offset)
 		})
 	}
 	fast := filepath.Join(dir, "native-fast")

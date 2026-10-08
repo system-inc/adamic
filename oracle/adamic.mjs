@@ -9,6 +9,9 @@ import { lstatSync, readdirSync, readFileSync, realpathSync, statSync, writeFile
 // fails the same way, forever, at full speed: two orphaned processes once ran for half an hour so.
 let panicking = false;
 
+// panicked is a panic already reported, by panic itself, whether or not something caught its throw.
+let panicked = false;
+
 // Explicit exit stops source execution at once, but the host event loop must remain alive
 // until both streams have written everything already queued. Only generated code calls
 // this helper: raw source Node keeps its own process.exit behavior for the oracle.
@@ -30,6 +33,11 @@ export function processExit(code) {
 
 process.on('uncaughtException', (error) => {
 	if (error === exitSignal) { return; }
+	if (panicked) {
+		// Reported when it happened; whatever was thrown after it is unseen.
+		process.exitCode = 70;
+		return;
+	}
 	if (panicking) {
 		process.exit(70);
 	}

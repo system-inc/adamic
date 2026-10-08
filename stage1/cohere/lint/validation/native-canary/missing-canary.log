@@ -1,0 +1,6 @@
+=== RUN   TestMutants
+    lint_test.go:707: native canary rule react/missing-canary is missing
+--- FAIL: TestMutants (6.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	6.107s
+FAIL

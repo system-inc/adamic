@@ -521,7 +521,7 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 	unique := e.temporary()
 	// Checked before any field's value is evaluated, which can't make anything else hold it: the plan
 	// saw that nothing in this instruction but the literal reads the source, and only its fields.
-	held := fmt.Sprintf("(%s && !%s->frozen)", uniquelyHeld(source), source)
+	held := fmt.Sprintf("(%s && !%s->frozen && !%s->nonextensible && !%s->has_captured_stack)", uniquelyHeld(source), source, source, source)
 	if literal.SpreadMaybeUndefined {
 		// Undefined is nothing to take over: the object is made as JavaScript's {} is (spreadCopy).
 		held = fmt.Sprintf("(%s != NULL && %s)", source, held)

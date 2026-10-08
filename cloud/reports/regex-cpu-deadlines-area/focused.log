@@ -1,0 +1,72 @@
+=== RUN   TestRegExpChildWallCap
+    regexp_cpu_test.go:57: nonreturning fixture caught: regexp child wall cap 250ms exceeded: context deadline exceeded
+--- PASS: TestRegExpChildWallCap (6.22s)
+=== RUN   TestRegExpChildCPUBudget
+    regexp_cpu_test.go:74: regexp child CPU=106.567ms budget=10ms wall-cap=5m0s
+    regexp_cpu_test.go:78: CPU overrun caught: regexp child CPU time 106.567ms exceeds budget 10ms
+--- PASS: TestRegExpChildCPUBudget (0.28s)
+=== RUN   TestRegExpNativeStepLimit
+    regexp_test.go:262: regexp child CPU=3.297ms budget=10s wall-cap=5m0s
+--- PASS: TestRegExpNativeStepLimit (0.16s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	6.670s
+=== RUN   TestRegExpOracleWallCap
+    regexp_cpu_test.go:66: nonreturning fixture caught: regexp child wall cap 250ms exceeded: context deadline exceeded
+--- PASS: TestRegExpOracleWallCap (6.22s)
+=== RUN   TestRegExpOracleCPUBudget
+    regexp_cpu_test.go:87: CPU overrun caught: CPU=102.838ms regexp child CPU time 102.838ms exceeds budget 10ms
+--- PASS: TestRegExpOracleCPUBudget (0.28s)
+=== RUN   TestRegExpLongBacktrackNode
+    regexp_long_backtrack_test.go:30: gate cache node miss
+    regexp_long_backtrack_test.go:34: gate cache node miss
+    regexp_long_backtrack_test.go:41: sanitized [ASAN_OPTIONS=detect_leaks=0]: CPU 58.787731s, exit 0
+    regexp_long_backtrack_test.go:49: release []: CPU 13.414238s, exit 0
+    regexp_long_backtrack_test.go:55: sanitized [ASAN_OPTIONS=detect_leaks=1]: CPU 1m3.192231s, exit 0
+--- PASS: TestRegExpLongBacktrackNode (176.77s)
+=== RUN   TestRegExpNativeTiming
+=== RUN   TestRegExpNativeTiming/class_string_duplicates
+    regexp_native_fixes_test.go:48: gate cache node miss
+    regexp_native_fixes_test.go:58: trial 1 native CPU=1.981ms
+    regexp_native_fixes_test.go:58: trial 2 native CPU=1.57ms
+    regexp_native_fixes_test.go:58: trial 3 native CPU=956µs
+    regexp_native_fixes_test.go:58: trial 4 native CPU=1.176ms
+    regexp_native_fixes_test.go:58: trial 5 native CPU=1.1ms
+    regexp_native_fixes_test.go:63: native CPU best of 5=956µs
+    regexp_native_fixes_test.go:78: Node best of 5=423.620951ms (includes process startup and oracle loader)
+=== RUN   TestRegExpNativeTiming/quadratic_exec
+    regexp_native_fixes_test.go:48: gate cache node miss
+    regexp_native_fixes_test.go:58: trial 1 native CPU=468.653ms
+    regexp_native_fixes_test.go:58: trial 2 native CPU=482.456ms
+    regexp_native_fixes_test.go:58: trial 3 native CPU=483.649ms
+    regexp_native_fixes_test.go:58: trial 4 native CPU=475.695ms
+    regexp_native_fixes_test.go:58: trial 5 native CPU=467.691ms
+    regexp_native_fixes_test.go:63: native CPU best of 5=467.691ms
+    regexp_native_fixes_test.go:78: Node best of 5=217.043825ms (includes process startup and oracle loader)
+=== RUN   TestRegExpNativeTiming/quadratic_matchall
+    regexp_native_fixes_test.go:48: gate cache node miss
+    regexp_native_fixes_test.go:58: trial 1 native CPU=445.818ms
+    regexp_native_fixes_test.go:58: trial 2 native CPU=465.163ms
+    regexp_native_fixes_test.go:58: trial 3 native CPU=484.379ms
+    regexp_native_fixes_test.go:58: trial 4 native CPU=480.758ms
+    regexp_native_fixes_test.go:58: trial 5 native CPU=484.41ms
+    regexp_native_fixes_test.go:63: native CPU best of 5=445.818ms
+    regexp_native_fixes_test.go:78: Node best of 5=222.139597ms (includes process startup and oracle loader)
+=== RUN   TestRegExpNativeTiming/quadratic_test
+    regexp_native_fixes_test.go:48: gate cache node miss
+    regexp_native_fixes_test.go:58: trial 1 native CPU=444.946ms
+    regexp_native_fixes_test.go:58: trial 2 native CPU=433.206ms
+    regexp_native_fixes_test.go:58: trial 3 native CPU=458.422ms
+    regexp_native_fixes_test.go:58: trial 4 native CPU=464.761ms
+    regexp_native_fixes_test.go:58: trial 5 native CPU=474.888ms
+    regexp_native_fixes_test.go:63: native CPU best of 5=433.206ms
+    regexp_native_fixes_test.go:78: Node best of 5=242.858555ms (includes process startup and oracle loader)
+--- PASS: TestRegExpNativeTiming (28.44s)
+    --- PASS: TestRegExpNativeTiming/class_string_duplicates (4.27s)
+    --- PASS: TestRegExpNativeTiming/quadratic_exec (8.67s)
+    --- PASS: TestRegExpNativeTiming/quadratic_matchall (7.84s)
+    --- PASS: TestRegExpNativeTiming/quadratic_test (7.66s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	211.726s

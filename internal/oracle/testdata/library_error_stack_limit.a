@@ -1,0 +1,15 @@
+console.log(`default:${Error.stackTraceLimit}`);
+console.log(`type:${typeof Error.stackTraceLimit}`);
+Error.stackTraceLimit = 3;
+console.log(`three:${Error.stackTraceLimit}`);
+function write(): void { Error.stackTraceLimit = 17; }
+write();
+console.log(`seventeen:${Error.stackTraceLimit}`);
+Error.stackTraceLimit = 0;
+console.log(`zero:${Error.stackTraceLimit}`);
+Error.stackTraceLimit = 2.5;
+console.log(`fraction:${Error.stackTraceLimit}`);
+Error.stackTraceLimit = -1;
+console.log(`negative:${Error.stackTraceLimit}`);
+Error.stackTraceLimit = 10;
+console.log(`restored:${Error.stackTraceLimit}`);

@@ -9,16 +9,18 @@ import (
 // Outcome is one test's result. pass is both sides succeeding with the same output, or, for a
 // negative runtime test, both sides failing the way the frontmatter requires. fail is a
 // disagreement, including a native failure where Node succeeded. refused is stage 0 or the checker
-// declining the program. crashed is a signal, a sanitizer, a timeout, or the compiler panicking.
+// declining the program. not-typescript is a checker refusal independently confirmed
+// by stock tsc with the same diagnostic code. crashed is a signal, a sanitizer, a timeout, or the compiler panicking.
 type outcomeKind string
 
 const (
-	outcomePass    outcomeKind = "pass"
-	outcomeFail    outcomeKind = "fail"
-	outcomeRefused outcomeKind = "refused"
-	outcomeCrashed outcomeKind = "crashed"
-	outcomeSkipped outcomeKind = "skipped"
-	outcomeUnrun   outcomeKind = "unrun"
+	outcomeNotTypescript outcomeKind = "not-typescript"
+	outcomePass          outcomeKind = "pass"
+	outcomeFail          outcomeKind = "fail"
+	outcomeRefused       outcomeKind = "refused"
+	outcomeCrashed       outcomeKind = "crashed"
+	outcomeSkipped       outcomeKind = "skipped"
+	outcomeUnrun         outcomeKind = "unrun"
 )
 
 // execution is one run's observable result, the same shape the corpus fixtures record.

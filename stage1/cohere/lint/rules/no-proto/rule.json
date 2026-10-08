@@ -1,0 +1,14 @@
+{
+  "name": "no-proto",
+  "kinds": [
+    "PropertyAccessExpression",
+    "ElementAccessExpression"
+  ],
+  "visit": "visit",
+  "node": true,
+  "oracle": "oracleNoProto",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoProto",
+  "factory": "create",
+  "class": "Rule"
+}

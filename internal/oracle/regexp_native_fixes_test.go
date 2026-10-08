@@ -32,7 +32,7 @@ func init() {
 	}{"internal/oracle/testdata/regexp_native_refused/write_groups_compound_missing.a", false, false})
 }
 
-// Not parallel: these deadlines guard algorithmic complexity, not throughput under contention.
+// Not parallel: five trials per fixture consume substantial CPU; avoid multiplying that load.
 // Compile time is excluded. The unfixed duplicate-alternative probe takes about a minute.
 func TestRegExpNativeTiming(t *testing.T) {
 	for _, name := range []string{"class_string_duplicates", "quadratic_exec", "quadratic_matchall", "quadratic_test"} {
@@ -52,26 +52,22 @@ func TestRegExpNativeTiming(t *testing.T) {
 			want := onNode(t, path)
 			best := 3 * time.Second
 			for trial := 0; trial < 5; trial++ {
-				ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-				start := time.Now()
-				got, err := exec.CommandContext(ctx, binary).Output()
-				elapsed := time.Since(start)
-				cancel()
+				got, cpu, err := regExpCPUCommand(nil, binary, nil, 5*time.Minute, 3*time.Second)
 				if err != nil {
-					t.Fatalf("native execution exceeded 3s or failed: %v (%s)", err, elapsed)
+					t.Fatalf("native execution failed: %v", err)
 				}
-				if want.exitCode != 0 || !bytes.Equal(got, want.stdout) {
-					t.Fatalf("Node=%q native=%q", want.stdout, got)
+				if want.exitCode != 0 || got.exitCode != want.exitCode || !bytes.Equal(got.stdout, want.stdout) {
+					t.Fatalf("Node=%q native=%q", want.stdout, got.stdout)
 				}
-				t.Logf("trial %d native=%s", trial+1, elapsed)
-				if elapsed < best {
-					best = elapsed
+				t.Logf("trial %d native CPU=%s", trial+1, cpu)
+				if trial == 0 || cpu < best {
+					best = cpu
 				}
 			}
-			t.Logf("native best of 5=%s", best)
+			t.Logf("native CPU best of 5=%s", best)
 			best = 3 * time.Second
 			for trial := 0; trial < 5; trial++ {
-				ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+				ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 				start := time.Now()
 				got, err := exec.CommandContext(ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), path).Output()
 				elapsed := time.Since(start)
@@ -79,7 +75,7 @@ func TestRegExpNativeTiming(t *testing.T) {
 				if err != nil || !bytes.Equal(got, want.stdout) {
 					t.Fatalf("Node timing control: %v stdout=%q", err, got)
 				}
-				if elapsed < best {
+				if trial == 0 || elapsed < best {
 					best = elapsed
 				}
 			}

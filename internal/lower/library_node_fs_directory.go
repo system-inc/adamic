@@ -2,9 +2,16 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 	"strings"
 )
+
+func init() {
+	RegisterNodeLibraryMembers("node:fs.symlinkSync", "node:fs.readdirSync", "node:fs.realpathSync", "node:fs.native",
+		"node:fs.Dirent.name", "node:fs.Dirent.isFile", "node:fs.Dirent.isDirectory", "node:fs.Dirent.isSymbolicLink",
+		"node:path.resolve", "node:path.dirname", "node:path.join", "node:path.relative", "node:path.basename")
+}
 
 // nodeHostMember follows @types/node declarations, including aliases and the
 // node:* modules' re-exports of fs/path. The shared fs_file loader owns their source.
@@ -61,7 +68,7 @@ func (l *lowering) nodeHostMember(node *ast.Node) (string, string) {
 					if owner != "realpathSync" {
 						member = owner + "." + member
 					}
-				case "isFile", "isDirectory", "isSymbolicLink", "name":
+				case "isFile", "isDirectory", "isSymbolicLink", "isBlockDevice", "isCharacterDevice", "isFIFO", "isSocket", "name":
 					if owner != "Dirent" {
 						member = owner + "." + member
 					}
@@ -81,7 +88,7 @@ func (l *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, err
 	lowered := ir.NodeHostCall{Module: module, Member: member}
 	if module == "node:path" {
 		switch member {
-		case "resolve", "dirname", "join", "relative":
+		case "resolve", "dirname", "join", "relative", "basename":
 			lowered.Returns = ir.String
 			lowered.Throws = nodePathThrows(member)
 		default:
@@ -89,13 +96,16 @@ func (l *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, err
 		}
 	} else {
 		switch member {
+		case "symlinkSync":
+			lowered.Returns = ir.Number
+			lowered.Throws = true
 		case "readdirSync":
 			lowered.Returns = ir.Array
 			lowered.Throws = true
 		case "realpathSync", "native":
 			lowered.Returns = ir.String
 			lowered.Throws = true
-		case "isFile", "isDirectory", "isSymbolicLink":
+		case "isFile", "isDirectory", "isSymbolicLink", "isBlockDevice", "isCharacterDevice", "isFIFO", "isSocket":
 			if call.Expression.Kind != ast.KindPropertyAccessExpression {
 				return nil, true, l.notYet(node, "a detached Dirent method")
 			}
@@ -109,9 +119,30 @@ func (l *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, err
 			return nil, false, nil
 		}
 	}
+	if member == "symlinkSync" {
+		outer := node
+		for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+			outer = outer.Parent
+		}
+		discarded := outer.Parent != nil && outer.Parent.Kind == ast.KindExpressionStatement
+		returned := outer.Parent != nil && outer.Parent.Kind == ast.KindReturnStatement && l.function != nil && l.function.Returns == 0
+		if !discarded && !returned {
+			return nil, true, l.notYet(node, "node:fs.symlinkSync used as a value")
+		}
+		if len(call.Arguments.Nodes) < 2 || len(call.Arguments.Nodes) > 3 {
+			return nil, true, l.notYet(node, "node:fs.symlinkSync with these arguments")
+		}
+		if len(call.Arguments.Nodes) == 3 {
+			typeArgument := ast.SkipParentheses(call.Arguments.Nodes[2])
+			if typeArgument.Kind != ast.KindNullKeyword && !(ast.IsIdentifier(typeArgument) && typeArgument.Text() == "undefined" && l.checker.GetTypeAtLocation(typeArgument).Flags()&checker.TypeFlagsUndefined != 0) &&
+				!(typeArgument.Kind == ast.KindStringLiteral && (typeArgument.Text() == "file" || typeArgument.Text() == "dir" || typeArgument.Text() == "junction")) {
+				return nil, true, l.notYet(node, "node:fs.symlinkSync type other than constant file, dir, junction, null or undefined")
+			}
+		}
+	}
 	for _, argument := range call.Arguments.Nodes {
 		if argument.Kind == ast.KindSpreadElement {
-			return nil, true, l.notYet(argument, "a spread into a Node host call")
+			return nil, true, l.notYet(argument, module+"."+member+" with a spread")
 		}
 		value, err := l.expression(argument)
 		if err != nil {
@@ -119,7 +150,24 @@ func (l *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, err
 		}
 		lowered.Arguments = append(lowered.Arguments, value)
 	}
+	if member == "symlinkSync" {
+		if lowered.Arguments[0].Type() != ir.String || lowered.Arguments[1].Type() != ir.String {
+			return nil, true, l.notYet(node, "node:fs.symlinkSync with non-string target or path")
+		}
+		// POSIX ignores the validated type. Literal arguments have no effects.
+		lowered.Arguments = lowered.Arguments[:2]
+	}
 	if module == "node:path" {
+		if member == "basename" {
+			if len(lowered.Arguments) < 1 || len(lowered.Arguments) > 2 {
+				return nil, true, l.notYet(node, "node:path.basename with these arguments")
+			}
+			if len(lowered.Arguments) == 2 {
+				if _, missing := lowered.Arguments[1].(ir.Undefined); missing {
+					lowered.Arguments = lowered.Arguments[:1]
+				}
+			}
+		}
 		if (member == "dirname" && len(lowered.Arguments) != 1) || (member == "relative" && len(lowered.Arguments) != 2) {
 			return nil, true, l.notYet(node, module+"."+member+" with these arguments")
 		}
@@ -178,4 +226,44 @@ func (l *lowering) nodeFSDirectoryValue(node *ast.Node) (ir.Expression, bool, er
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: "node_realpath", Parameters: []int{parameter}, Returns: ir.String, Closure: true, MayThrow: true, Body: []ir.Statement{ir.Return{Value: value}}})
 	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node)), function: index, node: node})
 	return ir.MakeClosure{Function: index}, true, nil
+}
+
+// Refuse broader declared overloads before argument invariance tries to view
+// native internal-slot values (Buffer or URL) as general PathLike objects.
+func (l *lowering) nodeFSDirectorySignature(node *ast.Node) error {
+	if node.Kind != ast.KindCallExpression {
+		return nil
+	}
+	call := node.AsCallExpression()
+	module, member := l.nodeHostMember(call.Expression)
+	if module == "node:path" && member == "basename" {
+		if len(call.Arguments.Nodes) < 1 || len(call.Arguments.Nodes) > 2 {
+			return l.notYet(node, "node:path.basename with these arguments")
+		}
+		for _, argument := range call.Arguments.Nodes {
+			if argument.Kind == ast.KindSpreadElement {
+				return l.notYet(node, "node:path.basename with a spread")
+			}
+		}
+		return nil
+	}
+	if module != "node:fs" || member != "symlinkSync" {
+		return nil
+	}
+	outer := node
+	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+		outer = outer.Parent
+	}
+	if outer.Parent == nil || (outer.Parent.Kind != ast.KindExpressionStatement && outer.Parent.Kind != ast.KindReturnStatement) {
+		return l.notYet(node, "node:fs.symlinkSync used as a value")
+	}
+	if len(call.Arguments.Nodes) < 2 || len(call.Arguments.Nodes) > 3 {
+		return l.notYet(node, "node:fs.symlinkSync with these arguments")
+	}
+	for _, argument := range call.Arguments.Nodes[:2] {
+		if l.checker.GetTypeAtLocation(argument).Flags()&checker.TypeFlagsStringLike == 0 {
+			return l.notYet(node, "node:fs.symlinkSync with non-string target or path")
+		}
+	}
+	return nil
 }

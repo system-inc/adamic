@@ -906,7 +906,7 @@ func (c StringCall) Type() Type {
 		return MaybeNumber
 	case "indexOf", "lastIndexOf":
 		return Number
-	case "includes", "startsWith", "endsWith":
+	case "includes", "startsWith", "endsWith", "isWellFormed":
 		return Boolean
 	case "split":
 		return Array

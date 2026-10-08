@@ -161,6 +161,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			if node.Index < 0 {
 				found = true
 			}
+		case ir.StringFromCodes:
+			found = found || node.CodePoints
 		case ir.NodeFSFile:
 			found = found || node.MayThrow()
 		case ir.Throw:

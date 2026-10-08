@@ -1,0 +1,5 @@
+{
+  "name": "comment exemption removed",
+  "from": "!this.context.comment(body)",
+  "to": "true"
+}

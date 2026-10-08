@@ -1,0 +1,13 @@
+--- FAIL: TestNullableReferenceReadsNeedATagInEveryExpression (0.45s)
+    nullable_test.go:83: console.log(`absent: undefined=${seen.get('absent') === undefined} null=${seen.get('absent') === null}`); console.log(`miss: undefined=${seen.get('miss') === undefined} null=${seen.get('miss') === null}`); console.log(`past end: undefined=${found[3] === undefined} null=${found[3] === null}`); console.log(`stored: undefined=${found[0] === undefined} null=${found[0] === null}`);: got <nil>, want the named empty-case tag reason
+    nullable_test.go:83: console.log(`${seen.get('absent') === null}`);: got <nil>, want the named empty-case tag reason
+    nullable_test.go:83: console.log(`${seen.get('miss') === undefined}`);: got <nil>, want the named empty-case tag reason
+    nullable_test.go:83: console.log(`${found[3] === null}`);: got <nil>, want the named empty-case tag reason
+    nullable_test.go:83: console.log(`${found[0] === undefined}`);: got <nil>, want the named empty-case tag reason
+    nullable_test.go:83: console.log(`${seen.get('miss')}`);: got /tmp/adamic-gate/TestNullableReferenceReadsNeedATagInEveryExpression1842185295/006/main.a:1:182: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet, want the named empty-case tag reason
+    nullable_test.go:83: console.log(typeof found[0]);: got <nil>, want the named empty-case tag reason
+    nullable_test.go:83: if (seen.has('miss')) { console.log(`${seen.get('miss') === null}`); }: got <nil>, want the named empty-case tag reason
+    nullable_test.go:83: if (seen.get('miss') !== undefined) { console.log(`${seen.get('miss') === null}`); }: got <nil>, want the named empty-case tag reason
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.459s
+FAIL

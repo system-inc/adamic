@@ -9,6 +9,7 @@ import (
 	"path"
 	"path/filepath"
 	goruntime "runtime"
+	"slices"
 	"strings"
 	"sync"
 )
@@ -54,7 +55,14 @@ func runtimeLibrary(directory string, options Options, extraFlags []string) (str
 	if err != nil {
 		return "", fmt.Errorf("native: cache directory: %w", err)
 	}
-	return cachedRuntime(files, append(Flags(options), extraFlags...), compiler, string(version), filepath.Join(cache, "adamic", "runtime"))
+	flags := Flags(options)
+	if options.FusedRuntime {
+		// As Node's V8 is built on macOS arm64: clang's default contraction, within an expression, with
+		// the runtime's FP_CONTRACT OFF pragmas lifted. The later -ffp-contract wins, and the key holds
+		// every flag, so this is a library of its own.
+		flags = append(slices.Clone(flags), "-ffp-contract=on", "-DADAMIC_FUSED_RUNTIME")
+	}
+	return cachedRuntime(files, append(flags, extraFlags...), compiler, string(version), filepath.Join(cache, "adamic", "runtime"))
 }
 
 func readRuntime(sources fs.FS, root string) ([]runtimeFile, error) {

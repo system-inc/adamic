@@ -14,10 +14,14 @@ import (
 const (
 	preludeDirectory = "/adamic-prelude"
 	preludePath      = preludeDirectory + "/adamic.d.ts"
+	setPreludePath   = preludeDirectory + "/set.d.ts"
 )
 
 //go:embed prelude.d.ts
 var prelude string
+
+//go:embed prelude_set.d.ts
+var setPrelude string
 
 // sourceFS is the disk as the checker sees an Adamic program.
 //
@@ -30,8 +34,9 @@ var prelude string
 // is ever shadowed silently.
 type sourceFS struct {
 	vfs.FS
-	overlay   map[tspath.RootedFilePath]string
-	nodeTypes bool
+	overlay        map[tspath.RootedFilePath]string
+	projectConsole bool
+	nodeTypes      bool
 }
 
 // adamicFile is the .a file behind a path the checker asked for, when there is one and no real .ts
@@ -53,7 +58,7 @@ func (s *sourceFS) displayName(path tspath.RootedFilePath) string {
 }
 
 func (s *sourceFS) FileExists(path tspath.RootedFilePath) bool {
-	if path == preludePath {
+	if path == preludePath || path == setPreludePath {
 		return true
 	}
 	if _, isAdamic := s.adamicFile(path); isAdamic {
@@ -70,7 +75,18 @@ func (s *sourceFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
 		if s.nodeTypes {
 			return nodePrelude(), true
 		}
+		if s.projectConsole {
+			// Project console declarations can accept arbitrary data. This true
+			// runtime signature must not shadow an inherited Node console method
+			// with the narrower standalone Adamic signature.
+			text := strings.ReplaceAll(prelude, "log(message: string | null | undefined): void;", "log(...data: any[]): void;")
+			text = strings.ReplaceAll(text, "error(message: string | null | undefined): void;", "error(...data: any[]): void;")
+			return text, true
+		}
 		return prelude, true
+	}
+	if path == setPreludePath {
+		return setPrelude, true
 	}
 	if source, exists := s.overlay[path]; exists {
 		return source, true
@@ -96,7 +112,7 @@ func (s *sourceFS) Stat(path tspath.RootedPath) vfs.FileInfo {
 }
 
 func (s *sourceFS) Realpath(path tspath.RootedPath) tspath.RootedPath {
-	if path == preludePath {
+	if path == preludePath || path == setPreludePath {
 		return path
 	}
 	if adamicPath, isAdamic := s.adamicFile(tspath.RootedFilePathFromPath(path)); isAdamic {

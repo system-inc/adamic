@@ -1,0 +1,74 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestDynamicRegExpRuntimeRefusals
+--- PASS: TestDynamicRegExpRuntimeRefusals (57.87s)
+=== RUN   TestDynamicRegExpConstructionMutants
+=== RUN   TestDynamicRegExpConstructionMutants/drop_compiled_storage_owner
+    regexp_dynamic_test.go:103: caught drop compiled storage owner: heap-use-after-free
+--- PASS: TestDynamicRegExpConstructionMutants (4.60s)
+    --- PASS: TestDynamicRegExpConstructionMutants/drop_compiled_storage_owner (4.45s)
+=== RUN   TestWASIAgreesWithNode
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/dynamic_gap.a
+=== PAUSE TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/dynamic_gap.a
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/id_length.a
+=== PAUSE TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/id_length.a
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/inline_comments.a
+=== PAUSE TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/inline_comments.a
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/warning_comments.a
+=== PAUSE TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/warning_comments.a
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/flags_errors.a
+=== PAUSE TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/flags_errors.a
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/ownership.a
+=== PAUSE TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/ownership.a
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/order.a
+=== PAUSE TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/order.a
+=== CONT  TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/dynamic_gap.a
+=== CONT  TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/flags_errors.a
+=== CONT  TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/inline_comments.a
+=== CONT  TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/order.a
+=== CONT  TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/warning_comments.a
+=== CONT  TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/ownership.a
+=== CONT  TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/id_length.a
+--- PASS: TestWASIAgreesWithNode (0.06s)
+    --- PASS: TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/warning_comments.a (7.63s)
+    --- PASS: TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/flags_errors.a (7.73s)
+    --- PASS: TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/inline_comments.a (9.25s)
+    --- PASS: TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/order.a (10.96s)
+    --- PASS: TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/dynamic_gap.a (11.35s)
+    --- PASS: TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/ownership.a (5.71s)
+    --- PASS: TestWASIAgreesWithNode/internal/oracle/testdata/regexp_dynamic/id_length.a (7.20s)
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/dynamic_gap.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/dynamic_gap.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/id_length.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/id_length.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/inline_comments.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/inline_comments.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/warning_comments.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/warning_comments.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/flags_errors.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/flags_errors.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/ownership.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/ownership.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/order.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/order.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/dynamic_gap.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/flags_errors.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/order.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/ownership.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/inline_comments.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/warning_comments.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/id_length.a
+--- PASS: TestNativeAgreesWithNode (0.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/order.a (43.38s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/ownership.a (45.15s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/inline_comments.a (45.43s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/dynamic_gap.a (46.47s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/flags_errors.a (47.35s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/warning_comments.a (11.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/id_length.a (10.60s)
+PASS
+gate cache: native hits=0 misses=30
+gate cache: node hits=0 misses=23
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	133.333s

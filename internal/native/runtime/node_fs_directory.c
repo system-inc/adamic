@@ -41,6 +41,10 @@ void adamic_node_fs_raise(const adamic_string *path, int error,
 		code = "ENOENT";
 		reason = "no such file or directory";
 		break;
+	case EEXIST:
+		code = "EEXIST";
+		reason = "file already exists";
+		break;
 	case ENOTDIR:
 		code = "ENOTDIR";
 		reason = "not a directory";
@@ -120,15 +124,19 @@ void adamic_node_fs_raise(const adamic_string *path, int error,
 	thrown->slots[2].reference = before;
 	adamic_release(detail);
 	adamic_release(syscall);
+	adamic_error_tag(thrown);
 	adamic_thrown = thrown;
 }
 // NUL is rejected before any filesystem effect. The supported path contract is
 // a string.
-static bool valid(const adamic_string *path) {
+static bool valid(const adamic_string *path, bool target) {
 	if (memchr(path->bytes, 0, path->length) == NULL) {
 		return true;
 	}
 	static adamic_string code = ADAMIC_STRING("ERR_INVALID_ARG_VALUE");
+	static adamic_string target_before =
+		ADAMIC_STRING("The argument 'target' must be a string, Uint8Array, or "
+					  "URL without null bytes. Received ");
 	static adamic_string before =
 		ADAMIC_STRING("The argument 'path' must be a string, Uint8Array, or "
 					  "URL without null bytes. Received ");
@@ -199,9 +207,10 @@ static bool valid(const adamic_string *path) {
 	adamic_object *thrown = adamic_object_new(&error_shape);
 	thrown->slots[0].reference = &type_error_name;
 	thrown->slots[1].reference =
-		adamic_string_concat(2, (adamic_string *const[]){&before, shown});
+		adamic_string_concat(2, (adamic_string *const[]){target ? &target_before : &before, shown});
 	thrown->slots[2].reference = &code;
 	adamic_release(shown);
+	adamic_error_tag(thrown);
 	adamic_thrown = thrown;
 	return false;
 }
@@ -216,21 +225,37 @@ static int compare(const void *left, const void *right) {
 	return strcmp(((const entry *)left)->name, ((const entry *)right)->name);
 }
 static unsigned kind(mode_t mode) {
-	return S_ISREG(mode) ? 1 : S_ISDIR(mode) ? 2 : S_ISLNK(mode) ? 3 : 0;
+	return S_ISREG(mode) ? 1 : S_ISDIR(mode) ? 2 : S_ISLNK(mode) ? 3
+		: S_ISBLK(mode) ? 5 : S_ISCHR(mode) ? 6 : S_ISFIFO(mode) ? 7
+		: S_ISSOCK(mode) ? 8 : 0;
 }
 bool adamic_node_fs_dirent_is(const adamic_object *entry_value,
 							  const char *method) {
-	unsigned wanted = strcmp(method, "isFile") == 0		   ? 1
-					  : strcmp(method, "isDirectory") == 0 ? 2
-														   : 3;
+	// Shape identity is the host value's runtime kind. Union declarations
+	// can begin with either StatsBase or Dirent.
+	if (adamic_fs_file_is_stats(entry_value)) {
+        return adamic_fs_file_stat_is(entry_value, method);
+    }
+    unsigned wanted = strcmp(method, "isFile") == 0 ? 1
+        : strcmp(method, "isDirectory") == 0 ? 2
+        : strcmp(method, "isSymbolicLink") == 0 ? 3
+        : strcmp(method, "isBlockDevice") == 0 ? 5
+        : strcmp(method, "isCharacterDevice") == 0 ? 6
+        : strcmp(method, "isFIFO") == 0 ? 7 : 8;
 	static adamic_slot_cache cache;
-	return adamic_object_field(entry_value, "type", &cache)->number ==
-		   (double)wanted;
+	double actual = adamic_object_field(entry_value, "type", &cache)->number;
+#ifdef ADAMIC_TARGET_WASI
+    // This type also represents FIFOs in Node's WASI host.
+    if (actual == 8 && (wanted == 7 || wanted == 8)) {
+        adamic_panic("wasm32-wasi: fs.isFIFO/isSocket cannot distinguish FIFOs from sockets", sizeof "wasm32-wasi: fs.isFIFO/isSocket cannot distinguish FIFOs from sockets" - 1);
+    }
+#endif
+    return actual == (double)wanted;
 }
 adamic_array *adamic_node_fs_readdir(const adamic_string *path,
 									 const adamic_object *options) {
 	adamic_output_flush();
-	if (!valid(path)) {
+	if (!valid(path, false)) {
 		return NULL;
 	}
 	bool typed = false;
@@ -287,7 +312,11 @@ adamic_array *adamic_node_fs_readdir(const adamic_string *path,
 		entries[count].type = found->d_type == DT_REG		? 1
 							  : found->d_type == DT_DIR		? 2
 							  : found->d_type == DT_LNK		? 3
-							  : found->d_type == DT_UNKNOWN ? 4
+							  : found->d_type == DT_BLK ? 5
+                              : found->d_type == DT_CHR ? 6
+                              : found->d_type == DT_FIFO ? 7
+                              : found->d_type == DT_SOCK ? 8
+                              : found->d_type == DT_UNKNOWN ? 4
 															: 0;
 #else
 		entries[count].type = 4;
@@ -343,7 +372,7 @@ adamic_array *adamic_node_fs_readdir(const adamic_string *path,
 }
 adamic_string *adamic_node_fs_realpath(const adamic_string *path, bool native) {
 	adamic_output_flush();
-	if (!valid(path)) {
+	if (!valid(path, false)) {
 		return NULL;
 	}
 	if (native) {
@@ -366,4 +395,26 @@ adamic_string *adamic_node_fs_realpath(const adamic_string *path, bool native) {
 	adamic_string *result = adamic_retain(value->slots[1].reference);
 	adamic_release(value);
 	return result;
+}
+
+// Node reports the target before the link path and validates both before effects.
+double adamic_node_fs_symlink(const adamic_string *target,
+                              const adamic_string *path) {
+    adamic_output_flush();
+    if (!valid(target, true) || !valid(path, false)) return 0;
+    char *destination = adamic_path_bytes(target);
+    char *name = adamic_path_bytes(path);
+    int result = symlink(destination, name);
+    int error = errno;
+    free(name);
+    free(destination);
+    if (result != 0) {
+        adamic_node_fs_raise(target, error, "symlink");
+        static adamic_string arrow = ADAMIC_STRING(" -> '"), quote = ADAMIC_STRING("'");
+        adamic_string *before = adamic_thrown->slots[1].reference;
+        adamic_thrown->slots[1].reference = adamic_string_concat(4,
+            (adamic_string *const[]){before, &arrow, (adamic_string *)path, &quote});
+        adamic_release(before);
+    }
+    return 0;
 }

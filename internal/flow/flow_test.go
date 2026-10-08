@@ -53,8 +53,18 @@ func programs(t *testing.T) []string {
 	// the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
 		switch filepath.Base(path) {
+		case "library_object_replaced.a":
+			// The Object branch's negative replaced-binding probe has no accepted IR.
+			// Lowering tests verify refusal, and its Node mutant proves the guard.
+			return true
 		case "regexp_surrogate_limit_refused.a", "regexp_surrogate_nested_limit_refused.a", "regexp_native_write_groups_compound_missing.a",
 			"node_process_errors.a", "node_process_directory_mutation.a", "node_process_environment_mutation.a":
+			return true
+		// TestClassWrongOutput103/106/107/108 check these against Node and pin
+		// their deliberate refusals. They have no accepted IR for flow to trace.
+		case "classfeat_init_super.a", "classfeat_init_super_getter.a", "classfeat_init_super_number.a",
+			"classfeat_static_private_instance.a", "classfeat_static_private_method.a",
+			"iterators_hidden_return.a", "iterators_override_this.a", "iterators_sym_keys_view.a":
 			return true
 		}
 		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "normalize_coverage_long.a"

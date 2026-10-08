@@ -139,6 +139,9 @@ static void host_directory_error(int error, const char *operation, const adamic_
         case EIO: code = "EIO"; description = "i/o error"; break;
         default: { static const char message[] = "unsupported host directory errno"; adamic_panic(message, sizeof message - 1); }
     }
+    if (error == ENOENT && strcmp(operation, "uv_cwd") == 0) {
+        description = "process.cwd failed with error no such file or directory, the current working directory was likely removed without changing the working directory";
+    }
     static const char *const directory_error_names[] = {"name", "message", "code"};
     static const bool references[] = {true, true, true};
     static const adamic_shape shape = {3, directory_error_names, references, NULL};
@@ -162,6 +165,7 @@ static void host_directory_error(int error, const char *operation, const adamic_
     adamic_thrown->slots[0].reference = &error_name;
     adamic_thrown->slots[1].reference = message;
     adamic_thrown->slots[2].reference = prefix;
+    adamic_error_tag(adamic_thrown);
     adamic_release(reason);
     adamic_release(syscall);
 }
@@ -395,10 +399,12 @@ void adamic_node_chdir(const adamic_string *directory) {
         return;
     }
     int error = errno;
+    adamic_string *target = adamic_decode_utf8((const unsigned char *)path, strlen(path));
     free(path);
     adamic_string *from = adamic_node_cwd();
-    if (adamic_thrown != NULL) { return; }
-    host_directory_error(error, "chdir", from, directory);
+    if (adamic_thrown != NULL) { adamic_release(target); return; }
+    host_directory_error(error, "chdir", from, target);
+    adamic_release(target);
     adamic_release(from);
 }
 
@@ -460,4 +466,5 @@ void adamic_node_error(adamic_string *name, adamic_string *message, adamic_strin
     adamic_thrown->slots[0].reference = adamic_retain(name);
     adamic_thrown->slots[1].reference = adamic_retain(message);
     adamic_thrown->slots[2].reference = adamic_retain(code);
+    adamic_error_tag(adamic_thrown);
 }

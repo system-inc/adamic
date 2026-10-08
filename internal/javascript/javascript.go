@@ -60,7 +60,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// object.name(...) through an interface: the object's own function value, or else its class's
 	// method (on the prototype its constructor gave it), called with the object as this.
 	builder.WriteString("const adamicCallee = (object, name) => (object === performance || object === process.stdout._handle) ? { code: (closure, values) => object[name](...values) } : Object.hasOwn(object, name) ? object[name] : { code: (closure, values) => object[name](object, ...values) };\n")
-	builder.WriteString("const adamicOptionalCall = (object, name, values) => object === undefined ? undefined : adamicCall(adamicCallee(object, name), values());\n")
+	builder.WriteString("const adamicOptionalCall = (object, name, values) => object == null ? undefined : adamicCall(adamicCallee(object, name), values());\n")
 	builder.WriteString("const adamicParallelMap = (items, work) => items.map((item, index) => adamicCall(work, [item, index]));\n")
 	// The array and the callback are each evaluated once, in that order, before the first call.
 	builder.WriteString("const adamicVisit = (array, method, callback) => array[method]((element, index, all) => adamicCall(callback, [element, index, all]));\n")
@@ -601,6 +601,10 @@ func (e *emitter) value(expression ir.Expression) string {
 			return e.value(expression.Array) + "?.[" + quote(expression.Name) + "]"
 		}
 		return e.value(expression.Array) + "[" + quote(expression.Name) + "]"
+	case ir.HasProperty:
+		return "(" + quote(expression.Name) + " in " + e.value(expression.Object) + ")"
+	case ir.DynamicProperty:
+		return "(" + e.value(expression.Object) + ")[" + quote(expression.Name) + "]"
 	case ir.Null:
 		return "null"
 	case ir.IsNull:
@@ -624,6 +628,12 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "(" + operator + e.value(expression.Operand) + ")"
 	case ir.Binary:
 		return "(" + e.value(expression.Left) + " " + operators[expression.Operator] + " " + e.value(expression.Right) + ")"
+	case ir.MethodPresence:
+		operator := "["
+		if expression.Optional {
+			operator = "?.["
+		}
+		return "!!(" + e.value(expression.Object) + operator + quote(expression.Name) + "])"
 	case ir.HasAccessor:
 		return "adamicFindAccessor(" + e.value(expression.Object) + ", " + quote(expression.Name) + ") !== undefined"
 	case ir.InstanceOf:
@@ -739,6 +749,12 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.NodeBufferCall:
 		return e.nodeBufferCall(expression)
 	case ir.ObjectCall:
+		if expression.Method == "errorCaptureStack" {
+			return "(Object.defineProperty(" + e.value(expression.Arguments[0]) + ", 'stack', {value: '', writable: true, configurable: true, enumerable: false}), undefined)"
+		}
+		if expression.Method == "errorReadStack" {
+			return "(" + e.value(expression.Arguments[0]) + ")['stack']"
+		}
 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:
 		if expression.Function == "prototypeHasOwnProperty" {
