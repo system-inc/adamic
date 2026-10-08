@@ -893,7 +893,9 @@ bool adamic_weak_held(const void *target);
 // adamic_thrown is the error being thrown, or NULL (exceptions.c): set by a throw, tested after
 // every call that can throw, and taken by the catch that lands it. adamic_error_new is new
 // Error(message), and adamic_uncaught the panic of an error nothing caught.
-extern adamic_object *adamic_thrown;
+extern adamic_heap *adamic_thrown;
+extern bool adamic_exception_pending;
+bool adamic_is_error(const adamic_heap *value);
 adamic_object *adamic_error_new(adamic_string *message);
 _Noreturn void adamic_uncaught(void);
 

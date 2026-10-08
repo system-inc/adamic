@@ -76,6 +76,9 @@ type PredicateDirectionCheck struct {
 	Direction, Status, Reason string
 }
 
+// ErrorClass names the runtime built-in Error identity, outside source class IDs.
+const ErrorClass = -1
+
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
 type Class struct {
 	// Definition is the erased source identity, shared by distinct native layouts.
@@ -1224,7 +1227,7 @@ type (
 	}
 	Continue struct{ Label string }
 
-	// Throw throws Value, an Error: to the innermost Try around it, or out of the function, whose
+	// Throw throws Value, preserving its runtime kind and identity: to the innermost Try around it, or out of the function, whose
 	// caller passes it on the same way, or, out of every function, as a panic of String(Value).
 	Throw struct{ Value Expression }
 
