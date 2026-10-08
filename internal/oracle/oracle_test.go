@@ -118,6 +118,16 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/call_targets_reuse.a", true, false},
 	{"internal/oracle/testdata/call_targets_closure.a", true, false},
 	{"internal/oracle/testdata/call_targets_sort.a", true, false},
+	{"internal/oracle/testdata/library_date_json.a", true, false},
+	{"internal/oracle/testdata/library_date_dynamic_parse.a", true, false},
+	{"internal/oracle/testdata/library_date_format.a", true, false},
+	{"internal/oracle/testdata/library_date_construct.a", true, false},
+	{"internal/oracle/testdata/library_date_utc.a", true, false},
+	{"internal/oracle/testdata/library_date_get.a", true, false},
+	{"internal/oracle/testdata/library_date_set.a", true, false},
+	{"internal/oracle/testdata/library_date_iso.a", true, false},
+	{"internal/oracle/testdata/library_date_parse.a", true, false},
+	{"internal/oracle/testdata/library_date_invalid_iso.a", true, false},
 	{"internal/oracle/testdata/library_object_keys.a", true, false},
 	{"internal/oracle/testdata/library_object_is.a", true, false},
 	{"internal/oracle/testdata/library_object_has_own.a", true, false},
@@ -519,8 +529,9 @@ func executeWith(t *testing.T, environment []string, name string, arguments ...s
 		}
 	}
 	command := bounded(t, name, arguments...)
+	command.Env = append(os.Environ(), "TZ=UTC")
 	if environment != nil {
-		command.Env = append(os.Environ(), environment...)
+		command.Env = append(command.Env, environment...)
 	}
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout

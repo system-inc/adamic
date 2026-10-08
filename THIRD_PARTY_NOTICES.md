@@ -43,6 +43,12 @@ IN THE SOFTWARE.
 - Source: https://github.com/v8/v8
 - License: `BSD-3-Clause`
 - In Adamic, ported so Adamic's answers match Node's to the bit:
+  - Date parsing (`internal/native/runtime/date_parse_impl.h`, after
+    `src/date/dateparser.h`, `src/date/dateparser.cc` and `src/date/dateparser-inl.h`);
+  - Date MakeDay bounds and UTC formatting (`internal/native/runtime/date.c`, after
+    `src/date/date.cc` and `src/builtins/builtins-date.cc`), and Date own-name queries
+    in that file, after the Date installation in `src/init/bootstrapper.cc` as
+    vendored by Node.js v24.19.0;
   - Map and Set number hashing (`runtime/map_set.c`, after Object::GetSimpleHash in
     src/objects/objects-inl.h and ComputeUnseededHash/ComputeLongHash in src/utils/utils.h,
     V8 13.6.233.17);

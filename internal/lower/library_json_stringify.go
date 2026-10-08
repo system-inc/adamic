@@ -64,7 +64,7 @@ func (l *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, bool, e
 	return result, true, nil
 }
 func jsonScalar(s *ir.JSONSchema) bool {
-	return s.Kind == "number" || s.Kind == "boolean" || s.Kind == "string" || s.Kind == "undefined" || s.Kind == "null" || s.Kind == "union" || s.Kind == "maybe_number" || s.Kind == "maybe_boolean"
+	return s.Kind == "number" || s.Kind == "boolean" || s.Kind == "string" || s.Kind == "nullable_string" || s.Kind == "undefined" || s.Kind == "null" || s.Kind == "union" || s.Kind == "maybe_number" || s.Kind == "maybe_boolean"
 }
 
 // Direct literals establish their complete shape, and preserve evaluation order. Anything read
@@ -172,6 +172,12 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 	}
 	if t.Flags()&checker.TypeFlagsNever != 0 {
 		return &ir.JSONSchema{Kind: "undefined"}, nil
+	}
+	if l.isLibraryType(l.checker.GetNonNullableType(t), "Date") {
+		if l.includesUndefined(t) || l.includesNull(t) {
+			return nil, l.notYet(node, "JSON.stringify an optional Date")
+		}
+		return &ir.JSONSchema{Kind: "date"}, nil
 	}
 	of, known := l.representation(t)
 	if !known {
