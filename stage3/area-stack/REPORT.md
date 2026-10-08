@@ -245,3 +245,27 @@ The statements topic's checked-views trial merge and its revert `1ed18fad0` were
 ## Conflict evidence format
 
 Readable `.diff` copies normalize tabs and trailing spaces solely for presentation. Every adjacent `.diff.gz` preserves the original combined diff byte for byte, including both conflict sides and all hunk context. These are review artifacts, not patches applied to the compiler.
+
+## Requested additions and reorder
+
+The first three groups were already pushed before this steering. The following topics remain held as whole topics; therefore no remote history was rewritten. Their requested positions are group 1 immediately after non-null for optional presence, group 1b for stricter options, and group 2 for the new destructuring topic.
+
+### Optional presence, reordered group 1
+
+Own commits, in order: 5bb775ca, 03980678, 86b3fe99, 739d6e10, 83edd7ec, 173164be, 7e7464e6. Trial at non-null tip 93ebcf52 reproduces semantic conflicts. The ruled runtime-drop commit changes unrelated runtime files and cannot supply these missing lowering contracts.
+
+Every conflict hunk and both sides: [optional-presence-reordered.diff](optional-presence-reordered.diff), with original bytes in its adjacent gzip file. The previously listed optional-field-write judgment remains applicable. In object.go the base refuses spread-added fields; the topic admits contextually optional fields. Proposal: admit only represented optional slots after preserving the existing field-kind and readiness checks; keep other spreads refused. In invariance.go/refusals.go the incoming side imports optional-view and record checks absent from this area. Proposal: retain predicate refusals and current structural checks; require the record/view owner prerequisites rather than copying their implementation into this stack. In optional_write.go the base lacks the file and the topic modifies its earlier implementation: name that dependency instead of silently restoring an unlanded lowering. All remaining emitter/runtime layout hunks require preserving field-kind/readiness and ownership while introducing independent presence; the earlier full topic judgment documents the proposed integration. The topic is skipped pending those rulings and prerequisites.
+
+### Stricter options, group 1b
+
+Requested tip 8f32e51e is topic-only on 337aa466, but depends on the held presence topic. It is skipped as a whole dependency, without importing checked views or map-keys code. Its [own handoff](evidence/stricter-source-handoff.md) explicitly reports **106 scheduled / 67 remaining errors**, and says optional guard commits 58e743bf, 9af86993, 59ca7f85, 6db50e57, 4b1922bd, a022b1e1 and 8c81fd11 were omitted, with expression-cleanup dependency a593d04e also requiring reconciliation. Thus importing this ref plus presence alone does not establish the requested 173/0 result. Its historical [census log](evidence/stricter-source-census.log.gz) is source-worker evidence, not a new census on this delivery SHA. This branch has no stricter-options census implementation to rerun while the topic is held; no 173/0 claim is made.
+
+### Namespace initialization, group 1
+
+The exact original stricter-indexed-all base is aee98c837. Namespace-owned non-merge commits after it are f11380454, f8fea8a78, be7c88fc2, 4318e17b2, 5ad36d2cf, 162fd0812, efea3488a, d8387c33f. Main's intervening non-merge commits are excluded. The first implementation excludes ambient declarations from executable initialization. Its fixture registration can be combined by adding only the two new controls; its documentation can preserve the area text and append only its own host-namespace section. However its new lower tests require namespaceGraphForTest and SCC namespaceCallGraph infrastructure absent from this area. Those belong to the earlier held namespace reachability dependency. The topic remains skipped as a whole, rather than importing the stricter/view base. Exact host reductions also retain independent node:fs.native and node:process.Process.cwd NotYet; the source worker does not claim those programs run natively.
+
+### Destructuring topic, group 2
+
+Own commits in order: d2cf13cf3, 1f3c1894b, b988a5900, d516d4e1. Trial at group 2 tip d40016bd applies the computed-name commit cleanly, then conflicts in collections.go and object.go. Entire topic skipped; computed-name-only partial work is not delivered.
+
+Every conflicting hunk and both sides: [destructuring-topic-group2.diff](destructuring-topic-group2.diff). In collections.go the base requires matching field/local representation and supplies View/ViewType/ViewAllowed metadata; the topic uses declaredStatements for nested/default binding initialization. Proposal: transfer all existing view and representation checks into the new initializer, retaining each failure boundary. In object.go the base refuses slotless union fields while the topic boxes unions and fits the declared union slot. Proposal: allow only proven boxed union storage with existing readiness and contextual field guards. Both proposals change lowering/admission and remain pending a ruling.
