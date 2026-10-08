@@ -72,6 +72,7 @@ func (l *lowering) readTupleViewElement(node *ast.Node, object ir.Expression, na
 	}
 	declared := l.concrete(elements[position])
 	property := ir.Property{Object: object, Name: name, Of: of, Readiness: sourceExpression(node), View: sourceExpression(node), ViewWhere: l.program.Where(node), ViewType: l.checker.TypeToString(declared), ViewTypeID: int(declared.Id()), ViewReceiverTypeID: int(l.checker.GetTypeAtLocation(receiver).Id())}
+	property.Absent = l.checker.GetTypeAtLocation(receiver).TargetTupleType().ElementFlags()[position] == checker.ElementFlagsOptional
 	property.ViewAllowed = l.viewLiterals(declared)
 	property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
 	return property

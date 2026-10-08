@@ -1892,14 +1892,12 @@ func (l *lowering) tupleLiteral(node *ast.Node, tuple *checker.Type) (ir.Express
 		return nil, l.notYet(node, "a tuple literal with more values than its tuple has elements")
 	}
 	literal := ir.ObjectLiteral{Tuple: true}
-	// An optional element left out is undefined, a field of its own, as tuple[index] reads it.
-	missing := []ir.Field{}
+	// Missing optional positions stay absent. Shape arity remains actual source length.
 	for index := len(items); index < len(elements); index++ {
 		of, isKnown := l.representation(elements[index])
 		if !isKnown || slotless(of) || !l.includesUndefined(elements[index]) || !(of.IsMaybe() || of.IsReference()) {
 			return nil, l.notYet(node, "a tuple literal leaving out an element of type "+l.checker.TypeToString(elements[index]))
 		}
-		missing = append(missing, ir.Field{Name: strconv.Itoa(index), Value: fit(ir.Undefined{}, of)})
 	}
 	for index, item := range items {
 		if item.Kind == ast.KindSpreadElement || item.Kind == ast.KindOmittedExpression {
@@ -1920,7 +1918,6 @@ func (l *lowering) tupleLiteral(node *ast.Node, tuple *checker.Type) (ir.Express
 		}
 		literal.Fields = append(literal.Fields, ir.Field{Name: strconv.Itoa(index), Value: value})
 	}
-	literal.Fields = append(literal.Fields, missing...)
 	return literal, nil
 }
 

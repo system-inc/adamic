@@ -1,0 +1,72 @@
+{
+  "primary_candidate_pairs": 10,
+  "primary_candidate_reads": 15,
+  "certified_pairs": 5,
+  "certified_reads": 8,
+  "remaining_pairs": 5,
+  "remaining_reads": 7,
+  "certified": [
+    {
+      "type_id": 97934,
+      "reads": 1,
+      "commit": "f753567dd8837e90914e7c229df88d8536a3bf8b"
+    },
+    {
+      "type_id": 70161,
+      "reads": 1,
+      "commit": "6b58eb3c02d57ea341985643ae9528b5597115ac"
+    },
+    {
+      "type_id": 97926,
+      "reads": 1,
+      "commit": "0a6edef2d89f5241f7dbeb392b607fec9fc4acff"
+    },
+    {
+      "type_id": 97913,
+      "reads": 1,
+      "commit": "f1f6355a"
+    },
+    {
+      "type_id": 97898,
+      "reads": 4,
+      "commit": "3c143841114922f672fad316938fa7ac383b9bd5"
+    }
+  ],
+  "remaining": [
+    {
+      "type_id": 97931,
+      "field": "forEach",
+      "reads": 1
+    },
+    {
+      "type_id": 95604,
+      "field": "1",
+      "reads": 2
+    },
+    {
+      "type_id": 68230,
+      "field": "1",
+      "reads": 2
+    },
+    {
+      "type_id": 95604,
+      "field": "0",
+      "reads": 1
+    },
+    {
+      "type_id": 68230,
+      "field": "0",
+      "reads": 1
+    }
+  ],
+  "additional_forms": {
+    "optional_tuple_map": "pending shared optional contracts",
+    "rest_tuple_map": "pending shared rest contracts"
+  },
+  "lane4b_checks": "queued after primary; two overlapping frontier obligations, no added production reads",
+  "exact_reaching_view_coverage": "not measured",
+  "approval_blockers": [
+    "forEach callback ownership transfer",
+    "optional/rest shared range contracts and Map schema semantics"
+  ]
+}

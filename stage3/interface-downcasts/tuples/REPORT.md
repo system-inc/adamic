@@ -1,3 +1,71 @@
+Built: preserve actual optional tuple producer arity without changing object ABI; certified primary total remains 5 pairs / 8 reads.
+Commits: new pairs f1f6355a and 3c143841114922f672fad316938fa7ac383b9bd5; producer checkpoint recorded in git history.
+Checks: six producer oracles PASS 3.315s; certified tuple regressions PASS 35.489s; unchanged 34 tuple count rows PASS 35.157s.
+Mutants: typed padding produces string instead of undefined, exit 0, and fails its native output oracle; earlier pair mutants recorded below.
+Remaining: 5 primary pairs / 7 reads, optional/rest forms, two overlapping lane 4b checks; shared callback transfer and range contracts await approval.
+
+The ABI-changing length proposal was rejected and not applied. The safer
+producer instead omits missing optional fields: existing shape count and native
+tuple identity preserve actual source arity. JavaScript emits the same actual
+array length. Existing optional field lookup handles omission in direct reads,
+optional chains and destructuring. No object layout, tuple copy, or second
+certificate constructor is introduced. A fixed one-position tuple view proves
+the omitted producer has arity one. The shared optional/rest checked-view
+constructor remains unchanged and still refuses these descriptors.
+
+Six inline .a probes run source Node, JavaScript, native release, ASan/UBSan
+and shared leak checks: omitted, explicit undefined (with explicit undefined in
+its exact-optional declared type), present, optional chain, destructuring and
+actual arity. Commands, after source /workspace/adamic-tools/env.sh:
+go test ./internal/oracle -run '^TestCheckedViewTupleAbsentProducerProbe$'
+-count=1 -v (/tmp/views-tuples-optional-producer-final.log): PASS 3.315s.
+ADAMIC_TUPLE_OPTIONAL_PRODUCER_MUTANT=padding on .../omitted:
+FAIL 0.626s (/tmp/views-tuples-optional-producer-padding-mutant.log).
+The mutant adds a correctly typed initialized string position to actual IR;
+valid native execution exits 0 with 7/string rather than 7/undefined. An earlier
+presence mutant removed the missing-position policy and was killed by UBSan;
+that unsafe mutation is not counted as the semantic proof and was replaced.
+ADAMIC_TUPLE_ORIGINAL_DECLS=/tmp/views-tuples-original-declarations
+go test ./internal/oracle -run
+'^(TestCheckedViewTupleAbsentProducerProbe|TestCheckedViewTupleOriginalRootIndex|TestCheckedViewTupleOriginalSignaturePositions|TestCheckedViewTupleOriginalOutSignature|TestCheckedViewTupleOriginalTrackedSymbols|TestCheckedViewTupleOriginalReferencedMap)$'
+-count=1 -timeout 3m (/tmp/views-tuples-optional-producer-regression.log):
+PASS 35.489s. This run precedes adding the optional-chain, destructuring and
+arity controls; the final producer run validates those subsequent additions.
+The two remaining production guard additions are absent-position flags only;
+fixed tuples are unchanged.
+go test ./internal/oracle -run '^TestCheckedViewTupleOriginalCounts$'
+-count=1 -timeout 3m with original declarations
+(/tmp/views-tuples-optional-producer-counts.log): PASS 35.157s. Inline probes
+add no repository fixture rows. New pair rows were refreshed at each pair push.
+
+Automatic approval review rejected (1) forEach callback ownership transfer,
+(2) an ABI-changing tuple-length proposal, and (3) the ABI-preserving shared
+optional-range validators and Map-schema semantics. The stated concerns were
+ownership, ABI/memory errors and silent miscompilation beyond prior index
+approval. Rejected production changes were not applied. The accepted producer
+alternative avoids the ABI change and is fully verified above. Two concrete,
+gofmt-formatted, unapplied patches now live under review/: forEach ownership
+transfer and optional arity contracts. Both pass git apply --check. The rest
+extension is described using the same constructor and rest-child edge; it is
+not implemented. Pending approval questions identify these exact boundaries.
+
+certifications.json records the queue: 97931 forEach (1 read); 95604 position
+1 (2 reads) and position 0 (1); 68230 position 1 (2) and position 0 (1).
+The two lane 4b frontier checks remain queued after these; their primary IDs
+97898 and 97934 overlap the census and are not counted twice. Exact reaching
+coverage is not measured. The unrelated integrator failures below remain
+separate from these approval blockers.
+
+Current-session setup timing, distinct from the inherited prior-worker timing:
+Node ready 0.033s; Go ready 0.043s; submodules ready 0.088s; markdown ready
+0.090s (skip step 0.007s); clang ready 0.258s; Go build ready 795.430s;
+test binaries deferred 795.533s; cache ready 795.535s; done 795.618s.
+The cold build included lazy submodule fetching and a redundant Go build.
+GOPROXY=https://proxy.golang.org|direct; nproc=5, cgroup quota=4.
+No complete package or full gate is claimed.
+
+---
+
 Built: certified original emit-signature tuple positions, pair 97898 / 4 reads; total 5 pairs / 8 reads.
 Commits: Root dispatch f1f6355a; signature pair commit recorded in git history.
 Checks: positional oracle PASS 3.388s; existing outSignature and object-primitive regressions PASS 20.460s; scoped counts PASS 29.443s.

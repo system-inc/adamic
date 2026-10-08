@@ -1692,3 +1692,12 @@ objectPrimitiveViewType recognizes that plan. When a field has multiple fixed
 tuple alternatives, both backends select one with the existing mixed-union
 selector and tuple predicate. Single-tuple field diagnostics are preserved.
 Original signature positions and regressions certify this shared extension.
+
+Optional producer hook: tupleLiteral leaves missing optional positions absent,
+so the existing shape count retains actual arity. readTupleViewElement,
+optionalTupleElement and tuple destructuring set the existing Absent policy for
+optional positions. Node/both-backend/leak probes certify these producer reads.
+Shared optional/rest view ranges and forEach ownership transfer remain blocked
+by automatic approval review; the concrete formatted review patches and exact
+remaining pair ledger are under stage3/interface-downcasts/tuples/. No runtime
+object layout was changed.
