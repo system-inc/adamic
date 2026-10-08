@@ -1,4 +1,3 @@
-// a-check: refused optional property errno in ErrnoException absent from structural source Error, which can hide fields
 import { readFile } from '../../../load/node_fs_file_system.a';
 import { readFileSync, openSync, closeSync } from 'node:fs';
 import { programArguments } from 'adamic';

@@ -1,4 +1,3 @@
-// a-check: refused the non-null assertion !
 interface Scanner {
     setText(text: string, start?: number, length?: number): void;
     getEnd(): number;

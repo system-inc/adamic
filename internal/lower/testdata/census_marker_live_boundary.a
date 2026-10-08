@@ -1,4 +1,3 @@
-// a-check: refused a type predicate whose return is not proven (there is no body proving this parameter)
 // From Adamic, internal/lower/census_predicate_marker_test.go:12
 // Integrated test expects Refused; this merge currently returns union-lowering NotYet.
 function describe(test: (value: string | number) => value is string): boolean {

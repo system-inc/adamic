@@ -1,4 +1,3 @@
-// a-check: refused arguments inside an arrow function
 function take(value: IArguments): void { console.log(`${value.length}`); }
 function rejected() { const read = () => arguments.length; console.log(`${read()}`); }
 rejected();

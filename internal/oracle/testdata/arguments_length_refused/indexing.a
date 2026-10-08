@@ -1,4 +1,3 @@
-// a-check: refused arguments other than a read of arguments.length
 function take(value: IArguments): void { console.log(`${value.length}`); }
 function rejected() { console.log(`${arguments[0]}`); }
 rejected();

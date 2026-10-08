@@ -1,4 +1,3 @@
-// a-check: type error TS2556
 import { writeTextFile } from 'adamic';
 const args: string[] = ['out.txt', 'text'];
 writeTextFile(...args);
