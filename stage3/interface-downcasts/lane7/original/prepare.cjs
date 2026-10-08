@@ -41,7 +41,7 @@ for (const [id,name,field] of [[10236,'SymbolTracker','moduleResolverHost'],[761
   [9476,'BindableStaticPropertyAssignmentExpression','left'],[9474,'BindableStaticAccessExpression','expression'],
   [9485,'BindablePropertyAssignmentExpression','left'],[9475,'BindableAccessExpression','expression'],
   [9454,'BindableStaticElementAccessExpression','argumentExpression'],
-  [8883,'JSDocAugmentsTag','class'],[8882,'JSDocImplementsTag','class'],[7642,'JSDoc','parent'],[36241,'JSDoc','parent'],[7644,'JSDoc | JSDocTypeLiteral','parent']]) {
+  [8883,'JSDocAugmentsTag','class'],[8882,'JSDocImplementsTag','class'],[7642,'JSDoc','parent'],[36241,'JSDoc','parent'],[7644,'JSDoc | JSDocTypeLiteral','parent'],[92175,'JSDocImplementsTag | JSDocAugmentsTag','class']]) {
  const receiver = checker.getUnionType(name.split(' | ').map(part => {
   const symbol = moduleExports.find(symbol=>symbol.name===part);
   if (!symbol) throw Error('missing original receiver '+part);

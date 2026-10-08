@@ -571,3 +571,28 @@ func (l *lowering) viewIntersectionInherits(source, ancestor *checker.Type, seen
 	}
 	return false
 }
+
+// A synthetic union receiver member can have a fresh declared intersection ID.
+// Intern its obligation at the actual read rather than relying on a prior cast
+// to have happened to reserve precisely that synthetic type.
+func (l *lowering) viewIntersectionFieldRead(node *ast.Node, target *checker.Type, property *ir.Property) {
+	if property.Of != ir.Object || property.ViewContract != 0 {
+		return
+	}
+	intersection := target.Flags()&checker.TypeFlagsIntersection != 0
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range target.Types() {
+			intersection = intersection || member.Flags()&checker.TypeFlagsIntersection != 0
+		}
+	}
+	if !intersection {
+		return
+	}
+	id, err := l.viewContract(node, target)
+	if err != nil || id == 0 {
+		id = ir.ViewContractID(len(l.result.ViewContracts) + 1)
+		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewUnknown, Of: ir.Object, Name: l.checker.TypeToString(target), Unsupported: "unavailable intersection field"})
+		l.result.ViewContractTypes[int(target.Id())] = id
+	}
+	property.ViewContract = id
+}

@@ -1792,6 +1792,51 @@
         "transformFlags"
       ],
       "status": "certified"
+    },
+    {
+      "type_id": 92175,
+      "type": "JSDocImplementsTag | JSDocAugmentsTag",
+      "field": "class",
+      "read_count": 1,
+      "sites": [
+        {
+          "type_id": 92175,
+          "receiver": "JSDocImplementsTag | JSDocAugmentsTag",
+          "field": "class",
+          "declared_type": "(ExpressionWithTypeArguments & { readonly expression: Identifier | PropertyAccessEntityNameExpression; }) | (ExpressionWithTypeArguments & { readonly expression: Identifier | PropertyAccessEntityNameExpression; })",
+          "file": "src/compiler/emitter.ts",
+          "line": 4170,
+          "column": 14,
+          "start": 177375,
+          "end": 177384,
+          "text": "tag.class",
+          "source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+          "source_sha256": "910f74394f8f4cbef48fe25387e5da6224742754b9a7699ef77312af6f453d63",
+          "context": "eTag(tag: JSDocImplementsTag | JSDocAugmentsTag) {\r\n        emitJSDocTagName(tag.tagName);\r\n        writeSpace();\r\n        writePunctuation(\"{\");\r\n        emit(tag.class);\r\n        writePunctuation(\"}\");\r\n        emitJSDocComment(tag.comment);\r\n    }\r\n\r\n    function emitJSDocTemplateTag(tag: JSDocTemplateTag) {\r\n        emitJSD"
+        }
+      ],
+      "declared_type": "(ExpressionWithTypeArguments & { readonly expression: Identifier | PropertyAccessEntityNameExpression; }) | (ExpressionWithTypeArguments & { ...; })",
+      "present_fields": [
+        "_expressionBrand",
+        "_leftHandSideExpressionBrand",
+        "_memberExpressionBrand",
+        "_typeNodeBrand",
+        "_unaryExpressionBrand",
+        "_updateExpressionBrand",
+        "emitNode",
+        "end",
+        "expression",
+        "flags",
+        "id",
+        "kind",
+        "modifierFlagsCache",
+        "original",
+        "parent",
+        "pos",
+        "transformFlags",
+        "typeArguments"
+      ],
+      "status": "certified"
     }
   ],
   "scope": "Original field contract certified with representative reads, not compilation of enclosing upstream functions or allocation reachability. Callable bodies and collection element reads retain their own lazy obligations. Bindable reads check every descriptor once per path with tagged arm selection; a descriptor already entered on the path, array elements, mixed scalar unions and refused families keep their own checked reads.",
@@ -1845,7 +1890,6 @@
   ],
   "pending": {
     "9657 class.expression": "contract held by a shared descriptor; no admitted program reaches this read without an earlier read checking the same value, so the read is not separately certified",
-    "92175 (JSDocImplementsTag | JSDocAugmentsTag).class": "the union receiver read resolves no contract, so only its object kind is checked; shared lowering interns none for a field type first seen through a union receiver",
     "68704 SymbolTrackerImpl.moduleResolverHost": "SymbolTrackerImpl is a non-exported checker class, absent from every emitted declaration",
     "97923 and 98493 fileInfos.forEach": "stage 0 NotYet: an array of string | (Omit<FileInfo, \"signature\"> & {...})",
     "9454 argumentExpression": "contract held by a shared descriptor; no admitted program reaches this read without an earlier read checking the same value, so the read is not separately certified"

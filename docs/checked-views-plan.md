@@ -2181,3 +2181,14 @@ recursive reservations, before bounded admission. An unavailable ancestor stays
 a named refusal. Original 7644 parent is now certified, including an open-kind
 Node control, named wrong-pos failure, and a three-backend omission mutant.
 Lane 7 now totals eleven pairs / 57 reads; see ABSORPTION-REPORT.md.
+
+### Lane 7 synthetic intersection field contracts
+
+viewIntersectionFieldRead is called by shared readObjectField when an object
+field's fresh union/intersection type has no interned contract and contains an
+intersection. It interns the complete declaration at that syntactic read; an
+unavailable descriptor remains a named refusal. This closes original 92175.class.
+The oracle compares the actual synthetic contract ID's full field set because
+the stock and shim checkers abbreviate this duplicate union differently. A
+read-check omission now fails independently in all three backends. Lane 7 totals
+twelve pairs / 58 reads; see HERITAGE-UNION-REPORT.md.
