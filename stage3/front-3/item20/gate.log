@@ -1,0 +1,29 @@
+ok  	github.com/system-inc/adamic/internal/lower	163.326s
+ok  	github.com/system-inc/adamic/internal/native	526.548s
+ok  	github.com/system-inc/adamic/internal/ir	46.566s
+--- FAIL: TestEveryFunctionIsInSingleAssignment (139.23s)
+    flow_test.go:85: Lower: /workspace/adamic/internal/oracle/testdata/optional_function_memoize_a.a:2:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph (0.14s)
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/optional_function_memoize_b.a (0.15s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/optional_function_memoize_b.a:4:9: Adamic 0.1 refuses 'pending', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/optional_function_memoize_a.a (0.31s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/optional_function_memoize_a.a:2:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestEveryMutationIsInItsRange (339.33s)
+    --- FAIL: TestEveryMutationIsInItsRange/programs (0.13s)
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/optional_function_memoize_b.a (0.40s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/optional_function_memoize_b.a:4:9: Adamic 0.1 refuses 'pending', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/optional_function_memoize_a.a (0.45s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/optional_function_memoize_a.a:2:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+    ranges_test.go:78: 97207 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+--- FAIL: TestLivenessHoldsOnEveryPath (376.28s)
+    --- FAIL: TestLivenessHoldsOnEveryPath/programs (0.28s)
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/optional_function_memoize_b.a (0.42s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/optional_function_memoize_b.a:4:9: Adamic 0.1 refuses 'pending', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/optional_function_memoize_a.a (0.48s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/optional_function_memoize_a.a:2:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+    trace_test.go:426: 56740318 variable-and-point pairs checked
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	376.447s
+ok  	github.com/system-inc/adamic/internal/oracle	658.086s
+ok  	github.com/system-inc/adamic/stage3/fixtures	84.566s
+FAIL

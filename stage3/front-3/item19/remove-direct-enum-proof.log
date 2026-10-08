@@ -1,0 +1,11 @@
+=== RUN   TestModuleInitOrder
+=== RUN   TestModuleInitOrder/map-before-enum
+    module_init_order_test.go:68: proven enum read retained a readiness check
+--- FAIL: TestModuleInitOrder (1.97s)
+    --- FAIL: TestModuleInitOrder/map-before-enum (1.97s)
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.998s
+FAIL

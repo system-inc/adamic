@@ -1,0 +1,24 @@
+=== RUN   TestMethodPresenceRefusesEscapes
+=== PAUSE TestMethodPresenceRefusesEscapes
+=== CONT  TestMethodPresenceRefusesEscapes
+=== RUN   TestMethodPresenceRefusesEscapes/const_saved_=_value.method;
+    method_presence_test.go:26: got <nil>, want unbound-method
+=== RUN   TestMethodPresenceRefusesEscapes/function_check(undefined:_number_|_undefined):_boolean_{_if_(typeof_undefined_===_'undefined')_{_return_value.method_===_undefined;_}_return_false;_}
+=== RUN   TestMethodPresenceRefusesEscapes/function_take(callback:_()_=>_string):_void_{}_take(value.method);
+=== RUN   TestMethodPresenceRefusesEscapes/function_detach():_()_=>_string_{_return_value.method;_}
+=== RUN   TestMethodPresenceRefusesEscapes/const_saved_=_(value.method_||_(()_=>_'fallback'));
+    method_presence_test.go:26: got /tmp/adamic-gate/TestMethodPresenceRefusesEscapesconst_saved_=_(value.method__1914430305/001/main.a:2:32: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0, want unbound-method
+=== RUN   TestMethodPresenceRefusesEscapes/const_saved_=_(true_&&_value.method);
+    method_presence_test.go:26: got <nil>, want unbound-method
+=== RUN   TestMethodPresenceRefusesEscapes/function_detach():_(()_=>_string)_|_undefined_{_return_value.method_&&_value.method;_}
+--- FAIL: TestMethodPresenceRefusesEscapes (2.07s)
+    --- FAIL: TestMethodPresenceRefusesEscapes/const_saved_=_value.method; (0.26s)
+    --- PASS: TestMethodPresenceRefusesEscapes/function_check(undefined:_number_|_undefined):_boolean_{_if_(typeof_undefined_===_'undefined')_{_return_value.method_===_undefined;_}_return_false;_} (0.23s)
+    --- PASS: TestMethodPresenceRefusesEscapes/function_take(callback:_()_=>_string):_void_{}_take(value.method); (0.31s)
+    --- PASS: TestMethodPresenceRefusesEscapes/function_detach():_()_=>_string_{_return_value.method;_} (0.32s)
+    --- FAIL: TestMethodPresenceRefusesEscapes/const_saved_=_(value.method_||_(()_=>_'fallback')); (0.37s)
+    --- FAIL: TestMethodPresenceRefusesEscapes/const_saved_=_(true_&&_value.method); (0.30s)
+    --- PASS: TestMethodPresenceRefusesEscapes/function_detach():_(()_=>_string)_|_undefined_{_return_value.method_&&_value.method;_} (0.27s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	2.141s
+FAIL

@@ -1,0 +1,8 @@
+=== RUN   TestFront3CaptureFrozenProbe
+    counts_test.go:207: Node stdout="caught\n" stderr="" exit=0
+    counts_test.go:208: Load: /tmp/stage3-front-3-capture-frozen.a:1:28: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+        /tmp/stage3-front-3-capture-frozen.a:4:11: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.
+--- FAIL: TestFront3CaptureFrozenProbe (0.19s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.207s
+FAIL

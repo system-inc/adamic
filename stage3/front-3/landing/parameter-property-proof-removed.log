@@ -1,0 +1,22 @@
+=== RUN   TestParameterPropertiesSoundness
+=== PAUSE TestParameterPropertiesSoundness
+=== CONT  TestParameterPropertiesSoundness
+=== RUN   TestParameterPropertiesSoundness/readonly_view
+=== RUN   TestParameterPropertiesSoundness/mutable_override
+=== RUN   TestParameterPropertiesSoundness/readonly_override
+=== RUN   TestParameterPropertiesSoundness/inherited_initializer
+    parameter_properties_test.go:27: got <nil>, want refusal initialized
+=== RUN   TestParameterPropertiesSoundness/early_default
+    parameter_properties_test.go:27: got <nil>, want refusal initialized
+=== RUN   TestParameterPropertiesSoundness/field_initializer
+    parameter_properties_test.go:27: got <nil>, want refusal initialized
+--- FAIL: TestParameterPropertiesSoundness (0.46s)
+    --- PASS: TestParameterPropertiesSoundness/readonly_view (0.10s)
+    --- PASS: TestParameterPropertiesSoundness/mutable_override (0.05s)
+    --- PASS: TestParameterPropertiesSoundness/readonly_override (0.07s)
+    --- FAIL: TestParameterPropertiesSoundness/inherited_initializer (0.05s)
+    --- FAIL: TestParameterPropertiesSoundness/early_default (0.07s)
+    --- FAIL: TestParameterPropertiesSoundness/field_initializer (0.12s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.522s
+FAIL

@@ -1,0 +1,51 @@
+=== RUN   TestOptionalFunctionValueRelation
+=== RUN   TestOptionalFunctionValueRelation/const_narrow_=_{_run(x:_number):_number_{_return_x_+_1;_}_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run()));
+=== RUN   TestOptionalFunctionValueRelation/const_narrow_=_{_run:_(x:_number):_number_=>_x_+_1_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run()));
+--- PASS: TestOptionalFunctionValueRelation (0.11s)
+    --- PASS: TestOptionalFunctionValueRelation/const_narrow_=_{_run(x:_number):_number_{_return_x_+_1;_}_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run())); (0.07s)
+    --- PASS: TestOptionalFunctionValueRelation/const_narrow_=_{_run:_(x:_number):_number_=>_x_+_1_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run())); (0.04s)
+=== RUN   TestMethodPresenceRefusesEscapes
+=== PAUSE TestMethodPresenceRefusesEscapes
+=== RUN   TestMethodPresenceMakesNoFunctionValue
+=== PAUSE TestMethodPresenceMakesNoFunctionValue
+=== RUN   TestMethodPresenceHostIsNotYet
+=== PAUSE TestMethodPresenceHostIsNotYet
+=== RUN   TestOptionalFunctionKeepsRequiredRefusal
+--- PASS: TestOptionalFunctionKeepsRequiredRefusal (0.04s)
+=== RUN   TestOptionalFunctionMixedAbsenceIsNotYet
+--- PASS: TestOptionalFunctionMixedAbsenceIsNotYet (0.08s)
+=== RUN   TestOptionalFunctionNullableObjectIsNotYet
+--- PASS: TestOptionalFunctionNullableObjectIsNotYet (0.04s)
+=== CONT  TestMethodPresenceRefusesEscapes
+=== RUN   TestMethodPresenceRefusesEscapes/const_saved_=_value.method;
+=== CONT  TestMethodPresenceHostIsNotYet
+=== CONT  TestMethodPresenceMakesNoFunctionValue
+--- PASS: TestMethodPresenceMakesNoFunctionValue (0.10s)
+--- PASS: TestMethodPresenceHostIsNotYet (0.10s)
+=== RUN   TestMethodPresenceRefusesEscapes/function_check(undefined:_number_|_undefined):_boolean_{_if_(typeof_undefined_===_'undefined')_{_return_value.method_===_undefined;_}_return_false;_}
+=== RUN   TestMethodPresenceRefusesEscapes/function_take(callback:_()_=>_string):_void_{}_take(value.method);
+=== RUN   TestMethodPresenceRefusesEscapes/function_detach():_()_=>_string_{_return_value.method;_}
+=== RUN   TestMethodPresenceRefusesEscapes/const_saved_=_(value.method_||_(()_=>_'fallback'));
+=== RUN   TestMethodPresenceRefusesEscapes/const_saved_=_(true_&&_value.method);
+=== RUN   TestMethodPresenceRefusesEscapes/function_detach():_(()_=>_string)_|_undefined_{_return_value.method_&&_value.method;_}
+--- PASS: TestMethodPresenceRefusesEscapes (0.35s)
+    --- PASS: TestMethodPresenceRefusesEscapes/const_saved_=_value.method; (0.10s)
+    --- PASS: TestMethodPresenceRefusesEscapes/function_check(undefined:_number_|_undefined):_boolean_{_if_(typeof_undefined_===_'undefined')_{_return_value.method_===_undefined;_}_return_false;_} (0.06s)
+    --- PASS: TestMethodPresenceRefusesEscapes/function_take(callback:_()_=>_string):_void_{}_take(value.method); (0.04s)
+    --- PASS: TestMethodPresenceRefusesEscapes/function_detach():_()_=>_string_{_return_value.method;_} (0.04s)
+    --- PASS: TestMethodPresenceRefusesEscapes/const_saved_=_(value.method_||_(()_=>_'fallback')); (0.04s)
+    --- PASS: TestMethodPresenceRefusesEscapes/const_saved_=_(true_&&_value.method); (0.04s)
+    --- PASS: TestMethodPresenceRefusesEscapes/function_detach():_(()_=>_string)_|_undefined_{_return_value.method_&&_value.method;_} (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.628s
+=== RUN   TestOptionalFunctionMemoizeBoundary
+=== RUN   TestOptionalFunctionMemoizeBoundary/optional_function_memoize_a.a
+=== RUN   TestOptionalFunctionMemoizeBoundary/optional_function_memoize_b.a
+--- PASS: TestOptionalFunctionMemoizeBoundary (0.54s)
+    --- PASS: TestOptionalFunctionMemoizeBoundary/optional_function_memoize_a.a (0.32s)
+    --- PASS: TestOptionalFunctionMemoizeBoundary/optional_function_memoize_b.a (0.22s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.554s

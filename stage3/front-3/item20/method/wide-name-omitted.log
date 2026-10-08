@@ -1,0 +1,21 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_presence.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_presence.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_presence_wide_union.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_presence_wide_union.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_presence.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_presence_wide_union.a
+    oracle_test.go:759: stdout differs
+        node:   exit 0, stdout "wide union true\n", stderr ""
+        native: exit 0, stdout "wide union false\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.15s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/method_presence_wide_union.a (2.45s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_presence.a (5.59s)
+FAIL
+gate cache: native hits=0 misses=6
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	5.824s
+FAIL

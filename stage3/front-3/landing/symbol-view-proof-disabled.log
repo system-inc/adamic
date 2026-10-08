@@ -1,0 +1,9 @@
+=== RUN   TestClassWrongOutput108
+    class_wrong_output_test.go:70: want pinned symbol-key-view refusal, got <nil>
+--- FAIL: TestClassWrongOutput108 (0.36s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.370s
+FAIL

@@ -1,0 +1,6 @@
+=== RUN   TestOptionalFunctionKeepsRequiredRefusal
+    optional_function_test.go:13: got <nil>, want required function condition refusal
+--- FAIL: TestOptionalFunctionKeepsRequiredRefusal (0.17s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.215s
+FAIL

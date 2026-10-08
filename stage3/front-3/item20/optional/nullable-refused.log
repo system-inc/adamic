@@ -1,0 +1,12 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_function_presence.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_function_presence.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_function_presence.a
+    oracle_test.go:736: Lower: /workspace/adamic/internal/oracle/testdata/optional_function_presence.a:32:24: stage 0 can't lower a value of type (() => number) | null yet
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/optional_function_presence.a (0.06s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.099s
+FAIL

@@ -1,0 +1,20 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_function_presence.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_function_presence.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_function_presence.a
+    oracle_test.go:759: stdout differs
+        node:   exit 0, stdout "true false\ntrue false\ntrue false\ntrue false false\ntrue false\ntrue false\ntrue false\ntrue false false\n", stderr ""
+        native: exit 0, stdout "true false\ntrue false\ntrue false\ntrue false false\nfalse true\nfalse true\nfalse true\nfalse false true\n", stderr ""
+    oracle_test.go:765: JavaScript backend: stdout differs
+        node:    exit 0, stdout "true false\ntrue false\ntrue false\ntrue false false\ntrue false\ntrue false\ntrue false\ntrue false false\n", stderr ""
+        backend: exit 0, stdout "true false\ntrue false\ntrue false\ntrue false false\nfalse true\nfalse true\nfalse true\nfalse false true\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.07s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/optional_function_presence.a (1.18s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.275s
+FAIL

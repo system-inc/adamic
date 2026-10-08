@@ -1,0 +1,22 @@
+=== RUN   TestMethodPresenceRefusesEscapes
+=== PAUSE TestMethodPresenceRefusesEscapes
+=== CONT  TestMethodPresenceRefusesEscapes
+=== RUN   TestMethodPresenceRefusesEscapes/const_saved_=_value.method;
+=== RUN   TestMethodPresenceRefusesEscapes/function_check(undefined:_number_|_undefined):_boolean_{_if_(typeof_undefined_===_'undefined')_{_return_value.method_===_undefined;_}_return_false;_}
+    method_presence_test.go:26: got <nil>, want unbound-method
+=== RUN   TestMethodPresenceRefusesEscapes/function_take(callback:_()_=>_string):_void_{}_take(value.method);
+=== RUN   TestMethodPresenceRefusesEscapes/function_detach():_()_=>_string_{_return_value.method;_}
+=== RUN   TestMethodPresenceRefusesEscapes/const_saved_=_(value.method_||_(()_=>_'fallback'));
+=== RUN   TestMethodPresenceRefusesEscapes/const_saved_=_(true_&&_value.method);
+=== RUN   TestMethodPresenceRefusesEscapes/function_detach():_(()_=>_string)_|_undefined_{_return_value.method_&&_value.method;_}
+--- FAIL: TestMethodPresenceRefusesEscapes (0.70s)
+    --- PASS: TestMethodPresenceRefusesEscapes/const_saved_=_value.method; (0.12s)
+    --- FAIL: TestMethodPresenceRefusesEscapes/function_check(undefined:_number_|_undefined):_boolean_{_if_(typeof_undefined_===_'undefined')_{_return_value.method_===_undefined;_}_return_false;_} (0.07s)
+    --- PASS: TestMethodPresenceRefusesEscapes/function_take(callback:_()_=>_string):_void_{}_take(value.method); (0.05s)
+    --- PASS: TestMethodPresenceRefusesEscapes/function_detach():_()_=>_string_{_return_value.method;_} (0.10s)
+    --- PASS: TestMethodPresenceRefusesEscapes/const_saved_=_(value.method_||_(()_=>_'fallback')); (0.16s)
+    --- PASS: TestMethodPresenceRefusesEscapes/const_saved_=_(true_&&_value.method); (0.13s)
+    --- PASS: TestMethodPresenceRefusesEscapes/function_detach():_(()_=>_string)_|_undefined_{_return_value.method_&&_value.method;_} (0.08s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.794s
+FAIL

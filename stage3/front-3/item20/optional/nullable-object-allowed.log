@@ -1,0 +1,6 @@
+=== RUN   TestOptionalFunctionNullableObjectIsNotYet
+    optional_function_test.go:29: got <nil>, want unchanged nullable object representation refusal
+--- FAIL: TestOptionalFunctionNullableObjectIsNotYet (0.16s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.220s
+FAIL

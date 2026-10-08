@@ -1,0 +1,18 @@
+=== RUN   TestDebuggerNativeEmitsNothing
+=== PAUSE TestDebuggerNativeEmitsNothing
+=== CONT  TestDebuggerNativeEmitsNothing
+=== RUN   TestDebuggerNativeEmitsNothing/.a
+=== PAUSE TestDebuggerNativeEmitsNothing/.a
+=== RUN   TestDebuggerNativeEmitsNothing/.ts
+=== PAUSE TestDebuggerNativeEmitsNothing/.ts
+=== CONT  TestDebuggerNativeEmitsNothing/.a
+=== CONT  TestDebuggerNativeEmitsNothing/.ts
+    debugger_test.go:45: /tmp/adamic-gate/TestDebuggerNativeEmitsNothing.ts1244627316/001/main.ts:4:5: Adamic 0.1 refuses debugger; remove it
+=== NAME  TestDebuggerNativeEmitsNothing/.a
+    debugger_test.go:45: /tmp/adamic-gate/TestDebuggerNativeEmitsNothing.a1009839241/001/main.a:4:5: Adamic 0.1 refuses debugger; remove it
+--- FAIL: TestDebuggerNativeEmitsNothing (0.00s)
+    --- FAIL: TestDebuggerNativeEmitsNothing/.ts (0.09s)
+    --- FAIL: TestDebuggerNativeEmitsNothing/.a (0.09s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.108s
+FAIL

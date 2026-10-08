@@ -1,0 +1,74 @@
+--- FAIL: TestParameterPropertiesSoundness (2.89s)
+    --- FAIL: TestParameterPropertiesSoundness/inherited_initializer (0.54s)
+        parameter_properties_test.go:27: got <nil>, want refusal initialized
+    --- FAIL: TestParameterPropertiesSoundness/early_default (0.42s)
+        parameter_properties_test.go:27: got <nil>, want refusal initialized
+    --- FAIL: TestParameterPropertiesSoundness/field_initializer (0.44s)
+        parameter_properties_test.go:27: got <nil>, want refusal initialized
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	159.916s
+ok  	github.com/system-inc/adamic/internal/native	614.220s
+ok  	github.com/system-inc/adamic/internal/ir	19.312s
+--- FAIL: TestEveryFunctionIsInSingleAssignment (35.28s)
+    flow_test.go:85: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_init_super.a:2:104: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.name -> Derived.label; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph (0.18s)
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/iterators_sym_keys_view.a (0.08s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/iterators_sym_keys_view.a:2:66: Adamic 0.1 refuses a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view); pass a new plain object containing only the desired string-keyed fields to Object.keys
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/iterators_override_this.a (0.10s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/iterators_override_this.a:4:20: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/iterators_hidden_return.a (0.09s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/iterators_hidden_return.a:4:20: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/classfeat_static_private_method.a (0.09s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_static_private_method.a:2:185: Adamic 0.1 refuses instance private storage reached from a static member: Box.#hidden (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/classfeat_init_super_number.a (0.24s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_init_super_number.a:2:99: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/classfeat_static_private_instance.a (0.28s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_static_private_instance.a:1:124: Adamic 0.1 refuses instance private storage reached from a static member: Box.#secret (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/classfeat_init_super_getter.a (0.29s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_init_super_getter.a:2:157: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.summary -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/classfeat_init_super.a (0.36s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_init_super.a:2:104: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.name -> Derived.label; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set
+--- FAIL: TestEveryMutationIsInItsRange (337.99s)
+    --- FAIL: TestEveryMutationIsInItsRange/programs (0.17s)
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/iterators_sym_keys_view.a (0.24s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/iterators_sym_keys_view.a:2:66: Adamic 0.1 refuses a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view); pass a new plain object containing only the desired string-keyed fields to Object.keys
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/iterators_override_this.a (0.33s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/iterators_override_this.a:4:20: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/iterators_hidden_return.a (0.23s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/iterators_hidden_return.a:4:20: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/classfeat_static_private_method.a (0.14s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_static_private_method.a:2:185: Adamic 0.1 refuses instance private storage reached from a static member: Box.#hidden (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/classfeat_static_private_instance.a (0.24s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_static_private_instance.a:1:124: Adamic 0.1 refuses instance private storage reached from a static member: Box.#secret (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/classfeat_init_super_number.a (0.24s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_init_super_number.a:2:99: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/classfeat_init_super.a (0.34s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_init_super.a:2:104: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.name -> Derived.label; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/classfeat_init_super_getter.a (0.41s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_init_super_getter.a:2:157: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.summary -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set
+    ranges_test.go:78: 97207 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+--- FAIL: TestLivenessHoldsOnEveryPath (338.22s)
+    --- FAIL: TestLivenessHoldsOnEveryPath/programs (0.24s)
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/iterators_sym_keys_view.a (0.30s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/iterators_sym_keys_view.a:2:66: Adamic 0.1 refuses a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view); pass a new plain object containing only the desired string-keyed fields to Object.keys
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/iterators_hidden_return.a (0.40s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/iterators_hidden_return.a:4:20: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/iterators_override_this.a (0.45s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/iterators_override_this.a:4:20: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/classfeat_static_private_instance.a (0.10s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_static_private_instance.a:1:124: Adamic 0.1 refuses instance private storage reached from a static member: Box.#secret (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/classfeat_static_private_method.a (0.39s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_static_private_method.a:2:185: Adamic 0.1 refuses instance private storage reached from a static member: Box.#hidden (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/classfeat_init_super_getter.a (0.17s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_init_super_getter.a:2:157: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.summary -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/classfeat_init_super.a (0.16s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_init_super.a:2:104: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.name -> Derived.label; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/classfeat_init_super_number.a (0.42s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/classfeat_init_super_number.a:2:99: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -> Derived.score -> Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set
+    trace_test.go:426: 56740321 variable-and-point pairs checked
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	338.302s
+signal: terminated
+FAIL	github.com/system-inc/adamic/internal/oracle	1091.007s
+ok  	github.com/system-inc/adamic/stage3/fixtures	73.836s
+FAIL

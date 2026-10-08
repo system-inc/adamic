@@ -1,0 +1,21 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_presence.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_presence.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_presence_wide_union.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_presence_wide_union.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_presence_wide_union.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_presence.a
+    oracle_test.go:759: stdout differs
+        node:   exit 0, stdout "class double true\nclass if\nclass and true\nclass or true\nclass ternary yes\nclass undefined false true\nclass null false true\ndouble true\nif true\nand true\nor true\nternary yes\nundefined false true\nnull false true\nnested true\nright operand true true\nshort circuit true false\ndouble false\nif false\nand false\nor true\nternary no\nundefined true false\nnull false true\nnested false\nright operand false false\nshort circuit true false\ndouble true\nif true\nand true\nor true\nternary yes\nundefined false true\nnull false true\nnested true\nright operand true true\nshort circuit true false\ndouble false\nif false\nand false\nor true\nternary no\nundefined true false\nnull false true\nnested false\nright operand false false\nshort circuit true false\noptional true false false\noptional false true false\noptional false true false\neffects 48 5\npresent\nwide true\n", stderr ""
+        native: exit 0, stdout "class double true\nclass if\nclass and true\nclass or true\nclass ternary yes\nclass undefined false true\nclass null false true\ndouble true\nif true\nand true\nor true\nternary yes\nundefined false true\nnull false true\nnested true\nright operand true true\nshort circuit true false\ndouble true\nif true\nand true\nor true\nternary yes\nundefined false true\nnull false true\nnested true\nright operand true true\nshort circuit true false\ndouble true\nif true\nand true\nor true\nternary yes\nundefined false true\nnull false true\nnested true\nright operand true true\nshort circuit true false\ndouble true\nif true\nand true\nor true\nternary yes\nundefined false true\nnull false true\nnested true\nright operand true true\nshort circuit true false\noptional true false false\noptional true false false\noptional true false false\neffects 48 5\npresent\nwide true\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_presence_wide_union.a (2.65s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/method_presence.a (5.49s)
+FAIL
+gate cache: native hits=0 misses=6
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	5.606s
+FAIL

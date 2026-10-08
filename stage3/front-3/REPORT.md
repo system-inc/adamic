@@ -1,8 +1,8 @@
-compiler/stage3-front-3 evidence checkpoint: b7e19a97972a40ed496dab9650c3c78f99d9281d
-Combined stage3 compiler merges from exact main base 48c05d091f0a43c31cbe051b1d6578d99eeedf19.
-Each landed item passed uncached lower/native/ir/flow/oracle/stage3 fixtures, vet, gofmt and whitespace checks before push.
-Mutants are checked by Node output/exit comparisons, pinned refusal/IR assertions and ASan/UBSan/LSan; evidence is listed below.
-Held/skipped items are excluded; full TypeScript compiler acceptance and performance parity are not claimed.
+compiler/stage3-front-3 landed integration: 86d44b345a9a614a7d54e161d518ecb0dea8c24e
+Built the combined stage3 branch; items19,20,22 completed and exact current main b39d8146901f3cab86f4595af07ce95db0e875e4 merged.
+Uncached six-package gates, Linux counts, stage0 regeneration, vet and gofmt pass; item20 required a precise flow refusal-inventory repair.
+This continuation ran 25 valid mutation controls: 3 module initialization, 11 method/optional presence, 6 debugger and 5 main refusal checks, all caught.
+Held/skipped candidates remain excluded; full TypeScript acceptance, performance parity, whole-repository tests, macOS and fresh Test262 coverage are not claimed.
 
 | Item | Branch | Exact pin | Result | Branch SHA after item | Failure / resolution |
 | --- | --- | --- | --- | --- | --- |
@@ -28,12 +28,14 @@ Held/skipped items are excluded; full TypeScript compiler acceptance and perform
 | 15a | codex/enum-init-reach | 2152fc3b5c74cd5455887639184f88608f1f6060 | fixed | 282874ebcf1d11a19daa78f06a53ef2be37095a2 | First full gate: three premature-read fixtures use incompatible inserted-check registration (native70, Node70). Keep dedicated source Node/exact backend stop pins, register seven success fixtures only; corrected full gate passes. |
 | 16 | codex/phantom-brands | d90994daa68bdba300f22acdad849a22ad5192a2 | fixed | 58270ec655f020bc7e3d20e37469fc3b942af56b | Rest overload parameter comparison, stale diagnostics, and guarded call-target read repaired; first gate lower diagnostic and TestCallTargetReaders failures. |
 | 17 | codex/library-array-holes | f05aec3cee91d2ce3bfced6d341865933ec28da1 | held | 7a1fd0a95cee3059533fa7a7f5adbe9a7787c014 | Counts94.129s fail22 carried host fixtures,17 optional-errno refusals and5 namespace-readiness stops. Exact fixtures and incoming recorded counts to unmeasurable outcomes in stage3/front-3/item17/REPORT.md; candidate patch committed as artifact only. |
-| 18 | codex/library-error-value | 6469f37bc02f5ce41b5735a966e68e974377c388 | skipped | b7e19a97972a40ed496dab9650c3c78f99d9281d | STOP: unmodified candidate Error.captureStackTrace(frozen target), Node caught/exit0; native and JavaScript completed/exit0. Candidate patch and exact probe preserved in stage3/front-3/item18. |
-| 19 | codex/module-init-order | 28e366fa9ffa8ad5a44e2ee8a0d97a38faf2c916 | pending | not attempted | Stopped at item18 exit-zero disagreement. |
-| 20 | codex/method-presence-test | 16cb9b105127f28eb5a6d1d0af7757c6083e2d27 | pending | not attempted | Stopped at item18 exit-zero disagreement. |
+| 18 | codex/library-error-value | 6469f37bc02f5ce41b5735a966e68e974377c388 | held | b7e19a97972a40ed496dab9650c3c78f99d9281d | Held by user after wrong-output finding: unmodified candidate Error.captureStackTrace(frozen target), Node caught/exit0; native and JavaScript completed/exit0. Candidate patch and exact probe preserved in stage3/front-3/item18. |
+| 19 | codex/module-init-order | 28e366fa9ffa8ad5a44e2ee8a0d97a38faf2c916 | fixed | 17f0baa31d71a85a6b4b1c63dfea2f6ec3efa007 | Keep memoized reachability and known premature-read NotYet outcomes; compose direct enum proof, original Node observations and checked unknown callbacks. All gates green. |
+| 20 | codex/method-presence-test | 16cb9b105127f28eb5a6d1d0af7757c6083e2d27 | fixed | d0e88eeb2d1939bcbad511dc7c3237f9ae66a4c7 | Compose required-callable refusal with census conversions; preserve cast and detached-method proofs. First flow gate fails because two cycle-capable memoize refusal probes were treated as IR; classify only those two, retain Node/refusal pins, rerun flow uncached green. Eleven mutants caught. |
 | 21 | codex/enum-tag-narrowing | 41231d514cf0090d1a7ec103326858b7eb34b6e3 | held | b7e19a97972a40ed496dab9650c3c78f99d9281d | User hold: carries views-integration e555d67e; optional-boolean storage clearance not received. |
-| 22 | codex/debugger-statement | 7d2cbc895a1e690c18ceefa908da44618370b769 | pending | not attempted | Stopped at item18 exit-zero disagreement. |
-| landing | origin/main | not freshly fetched | pending | not attempted | Stopped before current-main landing. |
+| 22 | codex/debugger-statement | 7d2cbc895a1e690c18ceefa908da44618370b769 | merged | 4b07fc712d1ce39f72b3b9b1f57a2282b849a15e | Keep namespace and overload proofs; six debugger mutants caught; all gates green. |
+| landing | origin/main | b39d8146901f3cab86f4595af07ce95db0e875e4 | fixed | 86d44b345a9a614a7d54e161d518ecb0dea8c24e | Conflict-free current-main merge; Parameter-property early-read refusal and exact flow-inventory repairs; five refusal mutants caught, corrected full uncached gate and vet/gofmt pass. Frozen-target program rejected by checker on this exact main pin. |
+
+Commands: `ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/lower ./internal/native ./internal/ir ./internal/flow ./internal/oracle ./stage3/fixtures`, `go vet ./...`, and `gofmt -l cmd internal stage3`. Linux counts: `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts`. Stage3 regeneration uses the documented test-only overlay to update stage0, followed by strict byte comparison against pre-merge HEAD. Test output is captured directly to log files.
 
 No landed Compiles outcome became Refused or NotYet. Existing status files have all bytes outside stage0 verified against pre-merge HEAD, including Node observations. Counts are generated by the Linux oracle; none are hand-written.
 
@@ -65,12 +67,68 @@ Closure candidate: 22fd701a3a4dee5c11cffec3d6b750cfe28ce399 carries the requeste
 
 Parser-views c898009b was left out after carried filesystem Error to ErrnoException contracts failed the existing optional-field proof. Candidate patch: /tmp/stage3-front-3-13-skipped-resolution.patch. Its candidate-only mutants are not claimed as landed coverage.
 
-The top finding is item18: the unmodified candidate prints completed with exit0 for frozen-target Error.captureStackTrace, while Node prints caught with exit0. Both native and JavaScript IR disagree. The unit was stopped as instructed. Intentional wrong-output mutants are identified separately as proving controls. Build failures, no-test matches, interrupted attempts and survived controls are excluded from successful mutant evidence.
+Item18 remains held: codex/library-error-value 6469f37bc02f5ce41b5735a966e68e974377c388. Its unmodified candidate prints completed with exit0 for frozen-target Error.captureStackTrace while Node prints caught/exit0. Both native and JavaScript IR disagree. Candidate compiler changes are excluded and the reproducer stays committed. The exact current-main landing pin b39d8146901f3cab86f4595af07ce95db0e875e4 was independently checked: Node caught/exit0; main checker rejects TS2591 node:fs and TS2339 captureStackTrace. Main produces no program and does not print completed. Raw log: item18/current-main-capture-frozen-landing.log.
 
-The compiler source at this checkpoint is identical to last green integration 58270ec655f020bc7e3d20e37469fc3b942af56b; preservation and report commits add artifacts only. The final branch SHA, including the documentation commit, is supplied in the final response. The working tree is cleared and only compiler/stage3-front-3 is pushed.
+The user authorized continuation with items19,20,22 and current-main landing while holding18. Each completed item is committed and pushed to compiler/stage3-front-3. Intentional wrong-output mutants are proving controls; build failures, no-test matches, interrupted attempts and survived controls are not successful mutation evidence.
 
 Item17 preservation commit: 7a1fd0a95cee3059533fa7a7f5adbe9a7787c014. Its full saved resolution patch is stage3/front-3/item17/resolution.patch. The exact 22 fixtures, six incoming recorded counts each, and failed candidate outcomes are listed in item17/REPORT.md. These were lowering failures, so no candidate numerical counts were measured; unavailable is not zero. This distinguishes the supplied incoming baseline from an invented before/after count delta.
 
 Item18 evidence commit: b7e19a97972a40ed496dab9650c3c78f99d9281d. item18/REPORT.md explains the wrong-output reproduction, preserved candidate fixes, actual partial gates, disk/cache failure and interrupted rerun. Its compiler changes are excluded. Node stdout was caught\n, native and JavaScript stdout completed\n; all three exits were0, all stderr empty. The Go overlay changed only test code. The direct source is item18/capture-frozen.a; the raw result is item18/capture-frozen.log.
 
-Items19,20,22 and current-main landing remain pending because the explicit exit-zero stopping condition fired. Item21 remains held for views-integration clearance. Full TypeScript parser/scanner/compiler acceptance, performance parity, macOS and a fresh Test262 sweep were not run by this integration unit.
+Items19,20,22 and current-main landing are complete. Item21 remains held for views-integration clearance. Item17 remains held for the exact22 counts failures; its preserved patch is committed. The closure replacement and parser views candidates remain skipped for recorded counts failures.
+
+Continuation evidence is committed under item19/, item20/, item22/ and landing/, including raw gate logs and mutation results. Item19 keeps known premature enum reads NotYet and checks unknown callbacks. Item20 keeps required-callable refusal alongside census conversions; its first gate found two intentionally refused memoize probes misclassified by flow. Only those two filenames were added to the existing refusal inventory, dedicated Node/refusal pins retained, flow rerun uncached green; the other five packages had passed and compiler code was unchanged by that test-only repair. The added wide-union method fixture proves runtime presence when no dispatch slot exists. Item22 keeps namespace/overload rules and admits debugger as a native no-op. Main's initializer, iterator, symbol-view and static-private proofs remain active with their repair probes. The first landing gate lost three parameter-property refusals because the new field walk recognized only ordinary property declarations; parameterProperty(member) is included in the same availability proof, and its removal mutant catches all three regressions. The corrected full six-package gate passes.
+
+Stage3: no landed Compiles becomes Refused or NotYet. Item20 changes the existing assertions/06_memoize_clear.a refusal diagnostic; item22 changes objects/28_debugger.a Refused to NotYet for the remaining Error-throw limitation. Main changes17 host Checker diagnostic line positions, with outcomes unchanged. All existing bytes outside stage0, including Node observations, are preserved.
+
+Gate 19:
+
+```text
+ok  	github.com/system-inc/adamic/internal/lower	144.844s
+ok  	github.com/system-inc/adamic/internal/native	503.668s
+ok  	github.com/system-inc/adamic/internal/ir	23.847s
+ok  	github.com/system-inc/adamic/internal/flow	337.494s
+ok  	github.com/system-inc/adamic/internal/oracle	626.977s
+ok  	github.com/system-inc/adamic/stage3/fixtures	72.484s
+```
+
+Gate 20:
+
+```text
+ok  	github.com/system-inc/adamic/internal/lower	163.326s
+ok  	github.com/system-inc/adamic/internal/native	526.548s
+ok  	github.com/system-inc/adamic/internal/ir	46.566s
+FAIL	github.com/system-inc/adamic/internal/flow	376.447s
+ok  	github.com/system-inc/adamic/internal/oracle	658.086s
+ok  	github.com/system-inc/adamic/stage3/fixtures	84.566s
+```
+
+Gate 22:
+
+```text
+ok  	github.com/system-inc/adamic/internal/lower	154.765s
+ok  	github.com/system-inc/adamic/internal/native	521.707s
+ok  	github.com/system-inc/adamic/internal/ir	39.242s
+ok  	github.com/system-inc/adamic/internal/flow	391.251s
+ok  	github.com/system-inc/adamic/internal/oracle	654.895s
+ok  	github.com/system-inc/adamic/stage3/fixtures	79.588s
+```
+
+Gate landing:
+
+```text
+ok  	github.com/system-inc/adamic/internal/lower	221.167s
+ok  	github.com/system-inc/adamic/internal/native	658.655s
+ok  	github.com/system-inc/adamic/internal/ir	50.299s
+ok  	github.com/system-inc/adamic/internal/flow	477.626s
+ok  	github.com/system-inc/adamic/internal/oracle	785.912s
+ok  	github.com/system-inc/adamic/stage3/fixtures	112.429s
+```
+
+Item20 corrected flow rerun:
+
+```text
+ok  	github.com/system-inc/adamic/internal/flow	130.246s
+```
+
+The landing integration SHA is above; the final report-only commit SHA is supplied in the final response. Only compiler/stage3-front-3 is pushed.

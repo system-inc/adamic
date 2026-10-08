@@ -1,0 +1,6 @@
+=== RUN   TestOptionalFunctionMixedAbsenceIsNotYet
+    optional_function_test.go:21: got <nil>, want mixed null and undefined representation refusal
+--- FAIL: TestOptionalFunctionMixedAbsenceIsNotYet (0.29s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.357s
+FAIL

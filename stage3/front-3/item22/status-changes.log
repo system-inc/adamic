@@ -1,0 +1,2 @@
+stage3/fixtures/objects/status.json 28_debugger.a {"outcome": "Refused", "what": "stage3/fixtures/objects/28_debugger.a:7:9: Adamic 0.1 refuses debugger; remove it"} -> {"outcome": "NotYet", "what": "stage3/fixtures/objects/28_debugger.a:9:15: stage 0 can't lower throwing an Error that isn't made where it's thrown or caught by the catch around it yet"}
+Verified every byte outside stage0 unchanged.

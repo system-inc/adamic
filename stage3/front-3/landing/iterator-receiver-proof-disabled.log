@@ -1,0 +1,14 @@
+=== RUN   TestClassWrongOutput107
+=== RUN   TestClassWrongOutput107/iterators_override_this
+    class_wrong_output_test.go:52: want pinned receiver-origin refusal, got <nil>
+=== RUN   TestClassWrongOutput107/iterators_hidden_return
+    class_wrong_output_test.go:52: want pinned receiver-origin refusal, got <nil>
+--- FAIL: TestClassWrongOutput107 (1.94s)
+    --- FAIL: TestClassWrongOutput107/iterators_override_this (1.01s)
+    --- FAIL: TestClassWrongOutput107/iterators_hidden_return (0.92s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.196s
+FAIL

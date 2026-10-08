@@ -1,0 +1,19 @@
+=== RUN   TestDebuggerNativeEmitsNothing
+=== PAUSE TestDebuggerNativeEmitsNothing
+=== CONT  TestDebuggerNativeEmitsNothing
+=== RUN   TestDebuggerNativeEmitsNothing/.a
+=== PAUSE TestDebuggerNativeEmitsNothing/.a
+=== RUN   TestDebuggerNativeEmitsNothing/.ts
+=== PAUSE TestDebuggerNativeEmitsNothing/.ts
+=== CONT  TestDebuggerNativeEmitsNothing/.a
+=== CONT  TestDebuggerNativeEmitsNothing/.ts
+=== NAME  TestDebuggerNativeEmitsNothing/.a
+    debugger_test.go:64: JavaScript kept 0 debugger statements, want 1
+=== NAME  TestDebuggerNativeEmitsNothing/.ts
+    debugger_test.go:64: JavaScript kept 0 debugger statements, want 1
+--- FAIL: TestDebuggerNativeEmitsNothing (0.00s)
+    --- FAIL: TestDebuggerNativeEmitsNothing/.a (0.15s)
+    --- FAIL: TestDebuggerNativeEmitsNothing/.ts (0.17s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.190s
+FAIL

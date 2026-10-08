@@ -1,0 +1,33 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/census_boolean_operators.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/census_boolean_operators.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/census_never_rest_marker.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/census_never_rest_marker.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/census_unary_truthiness.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/census_unary_truthiness.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_presence.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_presence.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_presence_wide_union.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_presence_wide_union.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_function_presence.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_function_presence.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/census_boolean_operators.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/census_never_rest_marker.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_function_presence.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/census_unary_truthiness.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_presence_wide_union.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_presence.a
+--- PASS: TestNativeAgreesWithNode (0.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/census_never_rest_marker.a (1.63s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/census_unary_truthiness.a (1.64s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_presence_wide_union.a (1.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_function_presence.a (1.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/census_boolean_operators.a (1.81s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_presence.a (2.26s)
+PASS
+gate cache: native hits=0 misses=18
+gate cache: node hits=0 misses=12
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.975s

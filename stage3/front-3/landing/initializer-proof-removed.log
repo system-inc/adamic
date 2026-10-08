@@ -1,0 +1,17 @@
+=== RUN   TestClassWrongOutput103
+=== RUN   TestClassWrongOutput103/init_super_number
+    class_wrong_output_test.go:29: want path and repair, got <nil>
+=== RUN   TestClassWrongOutput103/init_super_getter
+    class_wrong_output_test.go:29: want path and repair, got <nil>
+=== RUN   TestClassWrongOutput103/init_super
+    class_wrong_output_test.go:29: want path and repair, got <nil>
+--- FAIL: TestClassWrongOutput103 (1.35s)
+    --- FAIL: TestClassWrongOutput103/init_super_number (0.53s)
+    --- FAIL: TestClassWrongOutput103/init_super_getter (0.38s)
+    --- FAIL: TestClassWrongOutput103/init_super (0.44s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=3
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.387s
+FAIL
