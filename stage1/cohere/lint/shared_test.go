@@ -327,5 +327,48 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 	if len(rows) < 150 {
 		return nil, fmt.Errorf("capture unexpectedly small: %d cases", len(rows))
 	}
-	return rows, nil
+	// Captured fixtures are replayable inputs, including parser diagnostics that
+	// cohere's own rule tests deliberately run on recovered trees. Carry that
+	// boundary in the manifest rather than requiring every consumer to rediscover it.
+	oracleDirectory := filepath.Join(directory, "recovery-oracle")
+	if err := os.MkdirAll(oracleDirectory, 0755); err != nil {
+		return nil, err
+	}
+	oracle, err := goOracleIn(sourceRoot, oracleDirectory)
+	if err != nil {
+		return nil, err
+	}
+	manifest := filepath.Join(directory, "recovery-inputs.txt")
+	if err := os.WriteFile(manifest, []byte(strings.Join(rows, "\n")+"\n"), 0644); err != nil {
+		return nil, err
+	}
+	flags, err := run("", nil, oracle, "--manifest", manifest, "--diagnostics")
+	if err != nil {
+		return nil, err
+	}
+	return classifyRecoveryRows(rows, strings.Fields(string(flags)))
+}
+
+// A nonempty mode belongs to its caller. In particular, unsupported-recovery
+// stays visible as a port limitation rather than becoming a successful port case.
+func classifyRecoveryRows(rows, flags []string) ([]string, error) {
+	if len(flags) != len(rows) {
+		return nil, fmt.Errorf("diagnostics answered %d rows of %d", len(flags), len(rows))
+	}
+	result := make([]string, len(rows))
+	for index, row := range rows {
+		result[index] = row
+		if flags[index] != "1" {
+			continue
+		}
+		fields := strings.Split(row, "\t")
+		for len(fields) < 7 {
+			fields = append(fields, "")
+		}
+		if fields[6] == "" {
+			fields[6] = "recovery"
+		}
+		result[index] = strings.Join(fields, "\t")
+	}
+	return result, nil
 }

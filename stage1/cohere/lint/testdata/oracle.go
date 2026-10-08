@@ -128,7 +128,7 @@ func run(row string, countOnly bool, out *bufio.Writer, graph *program.Graph) in
 			}
 		}
 	}
-	if fields[6] == "recovery" {
+	if fields[6] == "recovery" || fields[6] == "unsupported-recovery" {
 		fmt.Fprintln(out, "recovery findings only")
 		return len(diagnostics)
 	}
@@ -182,7 +182,7 @@ func collect(path, source string, fields []string, graph *program.Graph) []rule.
 			panic("typed row is not the program's source: " + path)
 		}
 	}
-	if len(file.Diagnostics()) != 0 && fields[6] != "recovery" {
+	if len(file.Diagnostics()) != 0 && fields[6] != "recovery" && fields[6] != "unsupported-recovery" {
 		panic(fmt.Sprintf("invalid corpus %s: %v; source=%q", path, file.Diagnostics(), source))
 	}
 	// The registry's order is the listener order: the five first rules by their pinned order, then the rest

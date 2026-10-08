@@ -1,0 +1,9 @@
+panic: invalid corpus /workspace/scratch/octal-oracle/one-byte.ts: [Unterminated string literal.]; source="'"
+
+goroutine 1 [running]:
+main.collect({0x3dddc50807c0, 0x2b}, {0x1334b58, 0x1}, {0x3dddc512f200, 0x7, 0x8}, 0x0)
+	/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe
+main.run({0x3dddc50807c0?, 0x3dddc503d9c0?}, 0x0, 0x3dddc503d9c0, 0x0)
+	/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171
+main.main()
+	/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595
