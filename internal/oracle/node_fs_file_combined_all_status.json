@@ -1,7 +1,7 @@
 [
   {
     "file": "01_readFile_utf8.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
         "stage": "Checker",
@@ -27,7 +27,7 @@
   },
   {
     "file": "02_readFile_utf16le.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
         "stage": "Checker",
@@ -53,7 +53,7 @@
   },
   {
     "file": "03_readFile_utf16be.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
         "stage": "Checker",
@@ -79,7 +79,7 @@
   },
   {
     "file": "04_readFile_missing.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
         "stage": "Checker",
@@ -105,7 +105,7 @@
   },
   {
     "file": "05_writeFile.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
         "stage": "Refused",
@@ -131,79 +131,89 @@
   },
   {
     "file": "06_fileExists.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/06_fileExists.a:17:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/06_fileExists.a:17:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     },
     "adapted": {
       "native": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/06_fileExists.a:22:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/06_fileExists.a:22:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     }
   },
   {
     "file": "07_directoryExists.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/07_directoryExists.a:17:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/07_directoryExists.a:17:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     },
     "adapted": {
       "native": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/07_directoryExists.a:22:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/07_directoryExists.a:22:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     }
   },
   {
     "file": "08_getDirectories.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/08_getDirectories.a:27:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "NotYet",
+        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/08_getDirectories.a:172:17: stage 0 can't lower a value of type any yet\n"
       },
       "javascript": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/08_getDirectories.a:27:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "NotYet",
+        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/08_getDirectories.a:172:17: stage 0 can't lower a value of type any yet\n"
       }
     },
     "adapted": {
       "native": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:52:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:52:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     }
   },
   {
     "file": "09_realpath.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -231,31 +241,35 @@
   },
   {
     "file": "10_getModifiedTime.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/10_getModifiedTime.a:15:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/10_getModifiedTime.a:15:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     },
     "adapted": {
       "native": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:18:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:18:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     }
   },
   {
     "file": "11_setModifiedTime.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -283,7 +297,7 @@
   },
   {
     "file": "12_deleteFile.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -311,7 +325,7 @@
   },
   {
     "file": "13_createDirectory.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
         "stage": "Checker",
@@ -324,42 +338,66 @@
     },
     "adapted": {
       "native": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/13_createDirectory.a:26:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/13_createDirectory.a:26:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     }
   },
   {
     "file": "14_getCurrentDirectory.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/14_getCurrentDirectory.a:10:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+        "stage": "Disagrees",
+        "diagnostic": "Runtime disagrees with Node: {\"exit\": 70, \"stderr\": \"adamic: panic: read before assignment: variable 'callback' in callback\\n\", \"stdout\": \"true\\n\"}",
+        "observed": {
+          "stdout": "true\n",
+          "stderr": "adamic: panic: read before assignment: variable 'callback' in callback\n",
+          "exit": 70
+        },
+        "expected": {
+          "stdout": "true\ntrue\n",
+          "stderr": "",
+          "exit": 0
+        }
       },
       "javascript": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/14_getCurrentDirectory.a:10:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+        "stage": "Disagrees",
+        "diagnostic": "Runtime disagrees with Node: {\"exit\": 70, \"stderr\": \"adamic: panic: read before assignment: variable 'callback' in callback\\n\", \"stdout\": \"true\\n\"}",
+        "observed": {
+          "stdout": "true\n",
+          "stderr": "adamic: panic: read before assignment: variable 'callback' in callback\n",
+          "exit": 70
+        },
+        "expected": {
+          "stdout": "true\ntrue\n",
+          "stderr": "",
+          "exit": 0
+        }
       }
     },
     "adapted": {
       "native": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:12:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:12:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     }
   },
   {
     "file": "15_getExecutingFilePath.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -387,7 +425,7 @@
   },
   {
     "file": "16_getEnvironmentVariable.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -415,7 +453,7 @@
   },
   {
     "file": "17_write.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -443,7 +481,7 @@
   },
   {
     "file": "18_exit_0.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -471,7 +509,7 @@
   },
   {
     "file": "19_exit_1.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -499,7 +537,7 @@
   },
   {
     "file": "20_exit_2.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -527,7 +565,7 @@
   },
   {
     "file": "21_createHash.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -555,7 +593,7 @@
   },
   {
     "file": "22_createHash_fallback.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -583,7 +621,7 @@
   },
   {
     "file": "23_newLine.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -611,31 +649,35 @@
   },
   {
     "file": "24_useCaseSensitiveFileNames.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/24_useCaseSensitiveFileNames.a:20:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /tmp/fs-combined-pristine-host/24_useCaseSensitiveFileNames.a:20:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     },
     "adapted": {
       "native": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/24_useCaseSensitiveFileNames.a:28:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/24_useCaseSensitiveFileNames.a:28:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     }
   },
   {
     "file": "25_readDirectory.a",
-    "source": "adapted 9eba5d10, Error/storage proof plus Stats/Dirent 70a2a97",
+    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
     "original": {
       "native": {
         "stage": "Checker",

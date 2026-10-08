@@ -73,36 +73,42 @@
     "file": "06_fileExists.a",
     "nodeMatches": true,
     "native": {
-      "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/06_fileExists.a:22:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     },
     "javascript": {
-      "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/06_fileExists.a:22:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     }
   },
   {
     "file": "07_directoryExists.a",
     "nodeMatches": true,
     "native": {
-      "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/07_directoryExists.a:22:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     },
     "javascript": {
-      "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/07_directoryExists.a:22:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     }
   },
   {
     "file": "08_getDirectories.a",
     "nodeMatches": true,
     "native": {
-      "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:52:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     },
     "javascript": {
-      "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:52:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     }
   },
   {
@@ -123,12 +129,14 @@
     "file": "10_getModifiedTime.a",
     "nodeMatches": true,
     "native": {
-      "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:18:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     },
     "javascript": {
-      "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:18:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     }
   },
   {
@@ -163,24 +171,28 @@
     "file": "13_createDirectory.a",
     "nodeMatches": true,
     "native": {
-      "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/13_createDirectory.a:26:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     },
     "javascript": {
-      "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/13_createDirectory.a:26:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     }
   },
   {
     "file": "14_getCurrentDirectory.a",
     "nodeMatches": true,
     "native": {
-      "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:12:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     },
     "javascript": {
-      "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:12:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     }
   },
   {
@@ -313,12 +325,14 @@
     "file": "24_useCaseSensitiveFileNames.a",
     "nodeMatches": true,
     "native": {
-      "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/24_useCaseSensitiveFileNames.a:28:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     },
     "javascript": {
-      "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/24_useCaseSensitiveFileNames.a:28:35: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     }
   },
   {

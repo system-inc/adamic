@@ -1,6 +1,6 @@
 # Combined host proof
 
-17/25 adapted fixtures agree on each backend and jointly. Pristine controls agree on 12/25 on each backend. Every fixture was rerun on each backend after the final merges. This is a proof, not a landing; no main/area push or force push.
+24/25 adapted fixtures agree with Node on each backend and jointly. Pristine controls remain 16/25 on each backend. All 25 sources in both sets were rerun after the final compiler repair. The WASI host suite was run and is not green; its failures are listed in the latest recount below.
 
 Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapted fixtures/status/Node records from 21ef072e via 33e60869; Date conversion 05635aa via merge 0e7a2cc3; scalar concatenation 998fb3eb via merge b78d7ea7. stage3/fixtures/host is identical to the adapted branch at 9eba5d10. The pristine run uses the unchanged pre-adaptation fixture snapshot at 08b5b2c4. Agrees requires exact stdout, stderr and exit against Node, including exit 1 and 2 fixtures.
 
@@ -11,15 +11,15 @@ Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapt
 | 03_readFile_utf16be.a | Checker | Checker | Agrees | Agrees | None | None |
 | 04_readFile_missing.a | Checker | Checker | Agrees | Agrees | None | None |
 | 05_writeFile.a | Refused | Refused | Agrees | Agrees | None | None |
-| 06_fileExists.a | Refused | Refused | Refused | Refused | const-asserted stat options: optional bigint missing | Compiler / library option exemption |
-| 07_directoryExists.a | Refused | Refused | Refused | Refused | const-asserted stat options: optional bigint missing | Compiler / library option exemption |
-| 08_getDirectories.a | Refused | Refused | Refused | Refused | const-asserted stat options: optional bigint missing | Compiler / library option exemption |
+| 06_fileExists.a | Agrees | Agrees | Agrees | Agrees | None | None |
+| 07_directoryExists.a | Agrees | Agrees | Agrees | Agrees | None | None |
+| 08_getDirectories.a | NotYet | NotYet | Agrees | Agrees | None | None |
 | 09_realpath.a | Agrees | Agrees | Agrees | Agrees | None | None |
-| 10_getModifiedTime.a | Refused | Refused | Refused | Refused | const-asserted stat options: optional bigint missing | Compiler / library option exemption |
+| 10_getModifiedTime.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 11_setModifiedTime.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 12_deleteFile.a | Agrees | Agrees | Agrees | Agrees | None | None |
-| 13_createDirectory.a | Checker | Checker | Refused | Refused | const-asserted stat options: optional bigint missing | Compiler / library option exemption |
-| 14_getCurrentDirectory.a | Refused | Refused | Refused | Refused | callback capture cycle at 12:28 | Compiler / runtime graph ownership |
+| 13_createDirectory.a | Checker | Checker | Agrees | Agrees | None | None |
+| 14_getCurrentDirectory.a | Disagrees | Disagrees | Agrees | Agrees | None | None |
 | 15_getExecutingFilePath.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 16_getEnvironmentVariable.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 17_write.a | Agrees | Agrees | Agrees | Agrees | None | None |
@@ -29,7 +29,7 @@ Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapt
 | 21_createHash.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 22_createHash_fallback.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 23_newLine.a | Agrees | Agrees | Agrees | Agrees | None | None |
-| 24_useCaseSensitiveFileNames.a | Refused | Refused | Refused | Refused | const-asserted stat options: optional bigint missing | Compiler / library option exemption |
+| 24_useCaseSensitiveFileNames.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 25_readDirectory.a | Checker | Checker | Refused | Refused | generic identity callback at 1088:12 | Compiler |
 
 Fixture 25 passes checking on both backends. Exact next diagnostic:
@@ -357,3 +357,53 @@ The updated compiler memoize branch 3550dbc4 was merged to supersede the earlier
 Fixture 14 was remeasured against fresh Node execution: native Compiles and Agrees; JavaScript Compiles and Agrees. The dedicated JSON record is fixture-14-regions-status.json. All 25 were not rerun here; the const-options fix is still pending and the preceding all-fixture count remains historical.
 
 ADAMIC_ORACLE_WASI=1 go test ./internal/oracle -run '^TestMemoizeRegions$|^TestMemoizeEnvironmentOmissionLeaks$|^TestWASIHostRuntimeRefusals$' -count=1 -timeout 15m -v PASS, 1.986s. Unchanged positive native/Node observations were served by the oracle cache (native 12 hits, Node 9 hits); the ownership-omission mutant was rerun and caught. The earlier stale TestMemoizeCaptureStopsAtAssertion expectation remains present in 3550dbc4; it was not rerun because its source and relevant compiler behavior are unchanged. No full gate, count regeneration or macOS test claimed. Only codex/host-proof-combined is pushed.
+
+## Full const-options recount
+
+Inputs: const-options 02a997b6 via merge 630702f2; optional-widening parentheses e52e6219 via eb5f02bb. All requested commits 3550dbc4, 6469f37 and 3a6c8231 are verified ancestors. Host fixtures and Node records are still byte-identical to 9eba5d10. Both sets of all 25 were rerun on native and JavaScript after the final declaration repair. Adapted: 24/25 each and jointly. Pristine: 16/25 each; original 14 reaches the loud non-null assertion and disagrees with Node, so it is not counted green.
+
+06,07,08,10,13,24 compile and agree again; 08's runtime union dispatch now also agrees natively. 14's graph-region memoize agrees on both backends. The sole adapted stop is compiler-owned 25 at 1088:12:
+
+```text
+adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:1088:12: Adamic 0.1 refuses a function taking T seen as one taking string (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)
+```
+
+Verified compiler reproducer (Node X, exit 0; Adamic refusal at 1:190), retained from the earlier recount:
+
+```typescript
+function identity<T>(value: T): T { return value; } function lower(value: string): string { return value.toLowerCase(); } function choose(flag: boolean): (value: string) => string { return flag ? identity : lower; } console.log(choose(true)('X'));
+```
+
+Integration repair f43d1b2b1ea94fa143cc668ee836c77f2c808c7a: the runtime area's uninitialized-declaration path had been merged for every local, although it is for captured/preallocated storage. Plain BOM byte-swap temporaries were therefore never declared. Both emitters now use that early path only for Captured or Preallocated locals, preserving ordinary typed storage/readiness and graph preallocation. The self-cycle memoize regression test verifies there is no duplicate result declaration. Three fs input fixtures also had auto-merged byte-identical duplicate errorCode helpers; the duplicates were removed without changing Node behavior. The two parentheses count rows were regenerated on Linux: existing allocation counts unchanged, two zero graph-count columns added. Whole-table regeneration is not claimed.
+
+Validation:
+- Full adapted/pristine host measurement commands return 1 solely for recorded blocked/disagreeing fixtures; all rows are recorded, including exact stdout/stderr/exit for runtime discrepancies.
+- Filtered TestNodeHost and parenthesized-relation lowering tests PASS, 17.476s. The fresh const proof admits consuming uses and refuses hidden/mutable/escaping shapes.
+- Final ADAMIC_ORACLE_WASI=1 selected oracle command exits 1, 24.430s. WASI runtime archive compiles. Runtime host target refusals and empty-symlink comparison PASS. NodeFSDirectoryUnion tests and static-dispatch/lossy-kind mutants PASS. Memoize a/b/host14/self, all four storage-readiness mutants and parentheses Node/sanitizer/release/JS comparisons and refreshed counts PASS.
+- WASI host comparison failures below remain open. Two fixtures refuse Error-to-ErrnoException optional widening; others omit error-printing output. A verified minimal native host identity probe returns false while Node and generated JS return true for `error instanceof Error`, which explains the missing output for such guarded catch paths. This is a library/runtime host error identity contract gap; the adapted tsc errorCode path still passes.
+
+```typescript
+import { readFileSync } from 'node:fs'; try { readFileSync('/adamic-deliberately-missing-file'); } catch (error) { console.log(String(error instanceof Error)); }
+```
+
+Final failing host tests:
+
+```text
+--- FAIL: TestWASIInputAgreesWithNode (9.91s)
+--- FAIL: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_process_performance_core.a (0.67s)
+--- FAIL: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_symlink.a (0.23s)
+--- FAIL: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a (0.62s)
+--- FAIL: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a (0.55s)
+--- FAIL: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_stat_options.a (0.24s)
+--- FAIL: TestWASIInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a (0.72s)
+--- FAIL: TestWASIFileAgreesWithNode (9.51s)
+--- FAIL: TestWASIFileAgreesWithNode/read (0.62s)
+--- FAIL: TestWASIFileAgreesWithNode/write (0.52s)
+--- FAIL: TestWASIFileAgreesWithNode/close (0.49s)
+--- FAIL: TestWASIFileAgreesWithNode/unlink (0.62s)
+--- FAIL: TestWASIFileAgreesWithNode/buffer (0.67s)
+--- FAIL: TestWASIFileAgreesWithNode/read_sync (0.53s)
+--- FAIL: TestWASIFileAgreesWithNode/rm (0.65s)
+```
+
+The Error-to-ErrnoException refusal occurs at node_fs_directory_symlink.a:5:42 and node_fs_directory_stat_options.a:19:46: optional errno absent from Error (adamic/no-optional-widening). Full exact output differences are preserved in the compressed WASI log. No full gate, full flow suite, full counts regeneration or macOS execution. Only codex/host-proof-combined is pushed, without rebase, force, main or area push.
