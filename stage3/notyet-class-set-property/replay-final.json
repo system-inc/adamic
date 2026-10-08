@@ -24,7 +24,7 @@
         "reason": "reading map"
       }
     ],
-    "log": "/tmp/adamic-class-set-property-after-non-null-method.log"
+    "log": "/tmp/adamic-class-set-property-after-landing-method.log"
   },
   {
     "site": "method2",
@@ -36,13 +36,13 @@
         "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
       }
     ],
-    "log": "/tmp/adamic-class-set-property-after-non-null-method2.log"
+    "log": "/tmp/adamic-class-set-property-after-landing-method2.log"
   },
   {
     "site": "node",
     "exit": 1,
     "findings": [],
-    "log": "/tmp/adamic-class-set-property-after-non-null-node.log"
+    "log": "/tmp/adamic-class-set-property-after-landing-node.log"
   },
   {
     "site": "node2",
@@ -59,7 +59,7 @@
         "reason": "a declaration directly in a case (wrap the case in a block)"
       }
     ],
-    "log": "/tmp/adamic-class-set-property-after-non-null-node2.log"
+    "log": "/tmp/adamic-class-set-property-after-landing-node2.log"
   },
   {
     "site": "any",
@@ -76,7 +76,7 @@
         "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
       }
     ],
-    "log": "/tmp/adamic-class-set-property-after-non-null-any.log"
+    "log": "/tmp/adamic-class-set-property-after-landing-any.log"
   },
   {
     "site": "any2",
@@ -298,7 +298,7 @@
         "reason": "a dependency function whose body has checker diagnostics (measurement skipped)"
       }
     ],
-    "log": "/tmp/adamic-class-set-property-after-non-null-any2.log"
+    "log": "/tmp/adamic-class-set-property-after-landing-any2.log"
   },
   {
     "site": "receiver",
@@ -310,7 +310,7 @@
         "reason": "a value of type unknown"
       }
     ],
-    "log": "/tmp/adamic-class-set-property-after-non-null-receiver.log"
+    "log": "/tmp/adamic-class-set-property-after-landing-receiver.log"
   },
   {
     "site": "intersection",
@@ -327,7 +327,7 @@
         "reason": "a cast the runtime can't check"
       }
     ],
-    "log": "/tmp/adamic-class-set-property-after-intersection-packed-intersection.log"
+    "log": "/tmp/adamic-class-set-property-after-landing-intersection.log"
   },
   {
     "site": "false-type",
@@ -344,7 +344,7 @@
         "reason": "a BinaryExpression with a value and a boolean"
       }
     ],
-    "log": "/tmp/adamic-class-set-property-after-non-null-false-type.log"
+    "log": "/tmp/adamic-class-set-property-after-landing-false-type.log"
   },
   {
     "site": "false-paths",
@@ -361,7 +361,7 @@
         "reason": "a BinaryExpression with a union of differently held members and a value"
       }
     ],
-    "log": "/tmp/adamic-class-set-property-after-non-null-false-paths.log"
+    "log": "/tmp/adamic-class-set-property-after-landing-false-paths.log"
   },
   {
     "site": "keyof",
@@ -373,13 +373,13 @@
         "reason": "a value of type Path"
       }
     ],
-    "log": "/tmp/adamic-class-set-property-after-non-null-keyof.log"
+    "log": "/tmp/adamic-class-set-property-after-landing-keyof.log"
   },
   {
     "site": "scalar",
     "exit": 1,
     "findings": [],
-    "log": "/tmp/adamic-class-set-property-after-non-null-scalar.log"
+    "log": "/tmp/adamic-class-set-property-after-landing-scalar.log"
   },
   {
     "site": "big",
@@ -406,7 +406,7 @@
         "reason": "reading type"
       }
     ],
-    "log": "/tmp/adamic-class-set-property-after-non-null-big.log"
+    "log": "/tmp/adamic-class-set-property-after-landing-big.log"
   },
   {
     "site": "undefined",
@@ -423,6 +423,6 @@
         "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace"
       }
     ],
-    "log": "/tmp/adamic-class-set-property-after-non-null-undefined.log"
+    "log": "/tmp/adamic-class-set-property-after-landing-undefined.log"
   }
 ]
