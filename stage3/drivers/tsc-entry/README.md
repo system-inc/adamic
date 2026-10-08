@@ -38,6 +38,32 @@ function body with a throwing placeholder. Use it only in a disposable source
 copy. A stopping site outside a body exits 2 with an explicit explanation.
 This tool is not a source adaptation and cannot be used to claim working tsc.
 
+To reproduce the fifteen-stop experiment after the first build, copy only
+`OUTPUT/adapted/src` to a fresh disposable directory and run:
+
+```sh
+cp -a OUTPUT/adapted/src /tmp/tsc-entry-disposable-src
+python3 stage3/drivers/tsc-entry/continue.py /tmp/tsc-entry-disposable-src OUTPUT/adamic /tmp/tsc-entry-new-stops > continuation.log 2>&1
+```
+
+Each build runs both split modes. The helper replaces a body only after saving
+that stop, stops at fifteen observations, and rejects sources inside this
+repository. An expression-bodied callback gets a throwing block. If a callback
+parameter is the stopping site, the enclosing function whose body contains that
+parameter is replaced. This can change inferred types; the report flags messages
+absent from the pristine build.
+
+`collect.py PROGRESS_DIRECTORY` gathers evidence and compares message text with
+the newest main meter's latent lowering `per_reason` counts. It replays recorded
+UTF-16 replacements to map scratch coordinates to the original adapted source.
+It never commits or copies a modified tree. The checked-in witness outputs are
+validated with these commands:
+
+```sh
+python3 stage3/drivers/tsc-entry/verify.py > verification.log 2>&1
+python3 stage3/drivers/tsc-entry/mutants.py > mutants.log 2>&1
+```
+
 The complete module list and edges are in `evidence/closure.json`; files outside
 `src/compiler` are in `evidence/outside-compiler.json`. `REPORT.md` records the
 stopping sites, reproducers, meter comparison, mutants and coverage limits.

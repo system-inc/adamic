@@ -1,0 +1,4 @@
+interface Symbol { readonly name: string }
+function accept(symbol: Symbol): void { console.log("ok"); }
+const symbols: readonly Symbol[] = [];
+accept(symbols[0]);

@@ -1,0 +1,4 @@
+interface Type { readonly name: string }
+function obtain(): Type | void { return; }
+const type: Type | undefined = obtain();
+console.log("ok");
