@@ -7,7 +7,16 @@ import (
 
 // A function tag certifies kind only. Lowering must prove the signature before
 // emitting a call. Methods use the backend's explicit receiver convention.
-const viewCallablesRuntime = `const adamicViewCallableRead = (object, name, expression, method = false) => {
+const viewCallablesRuntime = `const adamicViewSetElements = new WeakMap();
+const adamicViewSetProducer = (value, element) => { adamicViewSetElements.set(value, element); return value; };
+const adamicViewSetSignature = (object, value) => {
+    const element = adamicViewSetElements.get(object);
+    if (!(object instanceof Set) || ![1, 2, 3].includes(element)) return undefined;
+    if (value === Set.prototype.add) return Object.freeze({parameters: Object.freeze([element]), result: 4, name: "Set.add"});
+    if (value === Set.prototype.has) return Object.freeze({parameters: Object.freeze([element]), result: 2, name: "Set.has"});
+    return undefined;
+};
+const adamicViewCallableRead = (object, name, expression, method = false) => {
     let holder = object;
     if (method && holder !== null && holder !== undefined) {
         while (!Object.hasOwn(holder, name) && Object.getPrototypeOf(holder) !== null) holder = Object.getPrototypeOf(holder);
@@ -41,13 +50,13 @@ func (e *emitter) emitViewCallableProperty(property ir.Property) string {
 			return fmt.Sprintf("adamicViewCallablePreparedRead(%s, %s, %s, %t, %t, %t, %s)", object, quote(property.Name), quote(property.View), property.Method, property.Optional, property.Absent, quote(expected))
 		}
 		if property.Method {
-			value := e.emitViewCallableCertificate(property, raw("object"))
-			return "((object) => { const value = " + value + "; return value instanceof AdamicClosure ? value : {code: (self, values) => value(object, ...values)}; })(" + e.value(property.Object) + ")"
+			value := e.emitViewCallableCertificate(property, raw("object"), "object")
+			return "((object) => { const value = " + value + "; return value instanceof AdamicClosure ? value : {code: (self, values) => (adamicViewSetSignature(object, value) !== undefined ? Reflect.apply(value, object, values) : value(object, ...values))}; })(" + e.value(property.Object) + ")"
 		}
 		return e.emitViewCallableCertificate(property, raw(e.value(property.Object)))
 	}
 	if property.Method {
-		return "((object) => { const value = " + emitViewCallableRead("object", property.Name, property.View, true) + "; return value instanceof AdamicClosure ? value : {code: (self, values) => value(object, ...values)}; })(" + e.value(property.Object) + ")"
+		return "((object) => { const value = " + emitViewCallableRead("object", property.Name, property.View, true) + "; return value instanceof AdamicClosure ? value : {code: (self, values) => (adamicViewSetSignature(object, value) !== undefined ? Reflect.apply(value, object, values) : value(object, ...values))}; })(" + e.value(property.Object) + ")"
 	}
 	value := emitViewCallableRead(e.value(property.Object), property.Name, property.View, false)
 	if property.ViewContract > 0 {

@@ -8,10 +8,10 @@ import (
 // still has to match before call arguments are evaluated. The witness below is
 // only a local input to the shape validator, never an allocated/called closure.
 func (e *emitter) emitViewCallableMethodCertificate(property ir.Property, method string) {
-	e.declarations = append(e.declarations, "#include \"view_callables_contract.h\"")
+	e.declarations = append(e.declarations, "#include \"view_callables_contract.h\"", "#include \"view_set_intrinsics.h\"")
 	expected := e.viewCallableExpected(property)
 	recorded := e.temporary()
-	e.line("const adamic_callable_signature *%s = NULL;", recorded)
+	e.line("const adamic_callable_signature *%s = adamic_view_set_signature(%s);", recorded, method)
 	seen := map[int]bool{}
 	for _, class := range e.program.Classes {
 		for _, index := range class.Methods {

@@ -1,0 +1,4 @@
+interface Base { readonly add: unknown; }
+interface Target { add(value: number): this; has(value: number): boolean; readonly size: number; }
+function probe(value: Base): void { const viewed = value as Target; const result = viewed.add(42); console.log(`${result === viewed}/${result.has(42)}/${result.size}`); }
+probe(new Set<number>());

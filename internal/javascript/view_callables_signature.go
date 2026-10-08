@@ -6,9 +6,12 @@ import (
 	"strings"
 )
 
-func (e *emitter) emitViewCallableCertificate(property ir.Property, value string) string {
+func (e *emitter) emitViewCallableCertificate(property ir.Property, value string, receiver ...string) string {
 	expected := e.viewCallableExpected(property)
 	recorded := e.viewCallableRecorded("value", property)
+	if len(receiver) != 0 {
+		recorded = "(adamicViewSetSignature(" + receiver[0] + ", value) ?? " + recorded + ")"
+	}
 	expected = e.untaggedCallableUnionExpected(property, recorded, expected)
 	recorded = e.untaggedCallableRecorded(property, recorded, expected)
 	return "((value) => " + emitViewCallableShape("value", recorded, expected, property.View, property.Absent || property.Optional || property.UndefinedAllowed) + ")(" + value + ")"
