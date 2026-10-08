@@ -39,3 +39,15 @@ Working targets: October 9, 2026 at 17:00 MDT for the complete branded family,
 conditional on resolving these three blockers; October 13 at 17:00 MDT for mixed
 primitives. The other 32 branded pairs / 549 candidate reads are delivered now.
 Exact production allocation reachability and whole-tsc compilation are unclaimed.
+
+October 11 lane 7 continuation: original intersected Identifier now lowers with
+its complete recursive contract. Its former compile-gap row has moved from
+TestCheckedViewBrandsOriginalBlockedPairs to lane 7's
+TestCheckedViewIntersectionOriginalIdentifierGap. Original valid controls now
+supply complete Node and required Symbol fields and pass all three backends.
+The escapedText pair remains uncredited: bypassing the helper read is still
+caught by the earlier carrier.child bounded read. A direct intersection cast
+remains refused; a wider alias-write isolation attempt is refused as an
+unsupported representation conversion at escapedText. See lane7's
+REMAINING-REPORT.md for commands and the surviving mutant. The other two
+compile-gap rows still pass their original named-refusal pins.

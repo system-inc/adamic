@@ -1893,5 +1893,26 @@
     "68704 SymbolTrackerImpl.moduleResolverHost": "SymbolTrackerImpl is a non-exported checker class, absent from every emitted declaration",
     "97923 and 98493 fileInfos.forEach": "stage 0 NotYet: an array of string | (Omit<FileInfo, \"signature\"> & {...})",
     "9454 argumentExpression": "contract held by a shared descriptor; no admitted program reaches this read without an earlier read checking the same value, so the read is not separately certified"
+  },
+  "assigned_identifier": {
+    "receiver_type_id": 9477,
+    "type": "LeftHandSideExpression & Identifier",
+    "field": "escapedText",
+    "declared_types": [
+      "__String"
+    ],
+    "families": [
+      "intersection field contract",
+      "mixed primitive union"
+    ],
+    "reads": 1,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 38035,
+      "column": 62
+    },
+    "source_sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "status": "uncredited",
+    "reason": "recursive admission repaired; earlier carrier.child bounded read catches wrong escapedText even after helper read is bypassed; direct cast and wider alias-write isolation paths remain refused"
   }
 }

@@ -15,7 +15,7 @@ func TestCheckedViewBrandsOriginalBlockedPairs(t *testing.T) {
 	if declarations == "" {
 		t.Skip("set ADAMIC_BRAND_ORIGINAL_DECLS to complete pinned declarations")
 	}
-	for _, pair := range []struct{ typ, family, field string }{{"ActiveLabel", "never", "name"}, {"RenamedBinding", "never", "name"}, {"LeftHandSideExpression & Identifier", "recursive intersection payload", "child"}} {
+	for _, pair := range []struct{ typ, family, field string }{{"ActiveLabel", "never", "name"}, {"RenamedBinding", "never", "name"}} {
 		for _, variant := range []string{"good", "internal", "undefined", "wrong", "null", "missing"} {
 			t.Run(pair.typ+"/"+variant, func(t *testing.T) {
 				input, err := os.ReadFile("../../stage3/interface-downcasts/lane4/original/" + strings.ToLower(pair.typ) + "-" + variant + ".a")

@@ -55,5 +55,12 @@ for (const [id,name,field] of [[10236,'SymbolTracker','moduleResolverHost'],[761
    declared_type:checker.typeToString(declared),
    present_fields:checker.getPropertiesOfType(checker.getNonNullableType(declared)).map(field=>field.name).sort()});
 }
-fs.writeFileSync(path.join(declarations,'intersection-manifest.json'),JSON.stringify({upstream_commit:pin.commit,declarations:emitted.declarations,fields,pairs},null,2)+'\n');
+const inventory = JSON.parse(require('node:zlib').gunzipSync(fs.readFileSync(path.resolve(__dirname,'../../lane4/read-demand-pairs.json.gz'))));
+const assigned_identifier = inventory.find(pair => pair.receiver_type_id === 9477 && pair.field === 'escapedText');
+if (!assigned_identifier || assigned_identifier.reads !== 1 || assigned_identifier.type !== 'LeftHandSideExpression & Identifier') throw Error('assigned Identifier inventory drift');
+const assignedSource = path.join(root,assigned_identifier.witness.file);
+const assignedLine = fs.readFileSync(assignedSource,'utf8').split('\n')[assigned_identifier.witness.line-1];
+if (!assignedLine.includes('.escapedText')) throw Error('assigned Identifier read drift');
+assigned_identifier.source_sha256 = hash(assignedSource);
+fs.writeFileSync(path.join(declarations,'intersection-manifest.json'),JSON.stringify({upstream_commit:pin.commit,declarations:emitted.declarations,fields,pairs,assigned_identifier},null,2)+'\n');
 console.log(`Complete declaration field sets verified; original spans ${witnesses.length}; pairs ${pairs.map(pair=>pair.read_count).join('+')}`);

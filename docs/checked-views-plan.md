@@ -2192,3 +2192,15 @@ The oracle compares the actual synthetic contract ID's full field set because
 the stock and shim checkers abbreviate this duplicate union differently. A
 read-check omission now fails independently in all three backends. Lane 7 totals
 twelve pairs / 58 reads; see HERITAGE-UNION-REPORT.md.
+
+### Lane 7 remaining original blockers after integration
+
+Original array rows 97923 and 98493 remain before runtime certification: their
+mixed string/object element representation is refused by elementType. New
+original-declaration Node controls pin both exact array-storage refusals.
+Assigned lane 4 Identifier 9477 now has recursive admission but is not counted:
+its helper-bypass mutant survives, caught at the earlier carrier.child read.
+Direct intersection casting and a wider alias-write isolation remain refused.
+The obsolete compile-gap row moves to the new runtime/admission gap oracle;
+the two unrelated lane 4 never-family compile gaps remain. Lane 7 counts stay
+twelve pairs / 58 reads, with five rows / eight reads remaining.

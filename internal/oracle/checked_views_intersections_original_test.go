@@ -14,10 +14,17 @@ import (
 )
 
 type intersectionOriginalManifest struct {
-	Commit       string              `json:"upstream_commit"`
-	Declarations map[string]string   `json:"declarations"`
-	Fields       map[string][]string `json:"fields"`
-	Pairs        []struct {
+	Commit             string              `json:"upstream_commit"`
+	Declarations       map[string]string   `json:"declarations"`
+	Fields             map[string][]string `json:"fields"`
+	AssignedIdentifier struct {
+		ID        int    `json:"receiver_type_id"`
+		Receiver  string `json:"type"`
+		Field     string `json:"field"`
+		Reads     int    `json:"reads"`
+		SourceSHA string `json:"source_sha256"`
+	} `json:"assigned_identifier"`
+	Pairs []struct {
 		ID            int               `json:"type_id"`
 		Declared      string            `json:"declared_type"`
 		Type          string            `json:"type"`
