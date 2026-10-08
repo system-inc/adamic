@@ -3,7 +3,7 @@
 Built project options/lib loading, supported indexed guards and JSON use guards in both backends, with explain counts.
 Commit: recorded in the worker's final report; branch codex/stricter-options-checks only.
 Measured 0 project errors and all 173 exact updated-ledger sites, with no missing, extra or wrongly attributed sites.
-Six audit, four loader, thirteen indexed (including five sparse), three JSON and one inherited iterator mutant were run and caught.
+Six audit, four loader, fifteen indexed (including seven sparse), three JSON and one inherited iterator mutant were run and caught.
 Catch and optional checks and the individual 99-site witnesses belong to other workers. This branch owns indexed representations; typed arrays and records remain unsupported.
 
 ## What is built
@@ -394,3 +394,17 @@ Validation logs:
 
 Current origin/main 855d114e is merged as 736410fc. Main's compiler files did
 not change in that merge. The complete repository gate was not run.
+
+
+## Enum length follow-up
+
+The initial sparse commit refused non-const enum lengths. This was a blocking
+admission gap for SyntaxKind.Count, discovered by a representation probe after
+the first push. Constructor length validation now uses an enum member's proven
+immutable declaration value while emitting the original runtime field read.
+Two Node fixtures prove a direct enum length and an effectful enum receiver,
+including exact once-only receiver effects. Both erased-check mutants build,
+exit 0 and lose the required named exit 70, so both are caught.
+`/tmp/stricter-options-hole-enum.log` contains both passing fixtures.
+Current main 74fb6490 is merged as da11129c; that merge changed no compiler file
+in this unit. Typed-array work remains a separate following batch.

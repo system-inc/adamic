@@ -33,6 +33,8 @@ func TestIndexedPresenceRuntime(t *testing.T) {
 		name, typed, node, want string
 		absent                  bool
 	}{
+		{"hole-enum-effects", `enum Size { Count = 2 } function size(): typeof Size { console.log('size'); return Size; } const values: number[] = new Array<number>(size().Count); const value: number = values[0]; console.log(` + "`${value}`" + `);`, `function size() {console.log('size'); return {Count:2};} const values = new Array(size().Count); console.log(String(values[0]));`, "size\nundefined\n", true},
+		{"hole-enum-length", `enum Size { Count = 2 } const values: number[] = new Array<number>(Size.Count); const value: number = values[0]; console.log(` + "`${value}`" + `);`, `const values = new Array(2); console.log(String(values[0]));`, "undefined\n", true},
 		{"hole-compound", `const values: number[] = new Array<number>(2); values[0] |= 1; console.log('done');`, `const values = new Array(2); console.log(String(values[0]));`, "undefined\n", true},
 		{"hole-integer-loop", `const values: number[] = new Array<number>(2); for (let index = 0; index < values.length; index++) { const value: number = values[index]; console.log(` + "`${value}`" + `); }`, `const values = new Array(2); for (let index = 0; index < values.length; index++) { console.log(String(values[index])); break; }`, "undefined\n", true},
 		{"hole-reference-write", `const values: string[] = new Array<string>(2); const alias = values; alias[1] = 'a'.repeat(2); const value: string = values[1]; console.log(value);`, `const values = new Array(2); const alias = values; alias[1] = 'a'.repeat(2); const value = values[1]; console.log(value);`, "aa\n", false},
