@@ -24,7 +24,18 @@ exact lower.NotYet.What (respectively `a field of type boolean | undefined` and
 `spreading in a program with static constructor objects`) and fail when native
 lowering succeeds, triggering removal of the workaround.
 
-Validation: HIR and arena full packages pass (native = Node counts above);
-all 79 lowering mutants, clone alias, cache, corrupt-index and brand checks
-pass. Both recorded compiler-gap tests pass. Full lint run is in progress;
-the tracked-source agreement requires this local commit before its rerun.
+Validation: full HIR and arena packages pass; 79/79 lowering mutants, clone
+alias, cache, corrupt-index and brand checks pass. Both compiler-gap tests pass.
+Lint ran with every input set and -timeout=3h. Its 97/97 registered mutants,
+static-components 22+3 certificate, 366-file JSX, 77-file throughput, shards
+and profiles pass. The initial full run found a dirty-tree precondition and
+consistent-return scanning detached rows; after committing and restricting that
+rule to attached scopes, all three affected checks pass: 7,223 upstream
+combinations, 950 compiler/stage1 files and detached-row isolation. The CFG
+rule's mutant also passes on Node and sanitized native. Go cohere is unchanged.
+
+Allocations: the byte-identical native/Node 12-function probe allocates and frees
+4,087 objects: +875 from the original 3,212, -77 from the previous 4,164.
+Retains/releases 16,325/14,909; peak live 231; regions 0. Earlier growth includes
+boxed concrete indices, handle arrays, SSA callbacks and pattern arrays; this
+whole-port delta does not isolate any one cause. The brands remain enforced.
