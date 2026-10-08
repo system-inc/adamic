@@ -297,8 +297,13 @@ publishEarlyRed() {
 # The position of the roadmap step whose Branches: globs name this branch (0 for the first ready step that
 # declares any), or 99: the queue is the waterfall, the star's work ahead of scouts and leaves
 # (@system_adamic, Oct 8). Within a step, the kinds keep their order (landings, areas, tools, workers).
+# ${state}/front (a glob per line, # comments) puts a tip ahead of every roadmap step, behind only a reserved
+# landing: a fix the parent ruled lands first, such as Oct 8's cloud/land-gate-speed.
 stepPosition() {
   local branch=$1 position glob
+  while read -r glob _; do
+    [ -n "${glob}" ] && [[ ${glob} != \#* ]] && [[ ${branch} == ${glob} ]] && { echo 0; return; }
+  done < <(cat "${state}/front" 2>/dev/null)
   while read -r position glob; do
     [ -n "${glob}" ] && [[ ${branch} == ${glob} ]] && { echo "${position}"; return; }
   done < "${state}/step-globs.poll"
@@ -599,6 +604,10 @@ while true; do
     grep -qx "${sha}" "${state}/gated" && continue
     # The skip file ("branch sha" per line) takes a tip out by hand: a stale landing candidate, say.
     grep -qxF "${branch} ${sha}" "${state}/skip" 2>/dev/null && { echo "$(date -u +%H:%M:%S) skipped by hand ${branch} ${sha}"; continue; }
+    # ${state}/skip-globs takes a whole family out (a glob per line, then why): codex/views-* while every tip
+    # inherits a known red that only its area's next landing fixes (compiler, Oct 8).
+    skippedBy=$(while read -r glob _; do [ -n "${glob}" ] && [[ ${glob} != \#* ]] && [[ ${branch} == ${glob} ]] && { echo "${glob}"; break; }; done < <(cat "${state}/skip-globs" 2>/dev/null))
+    [ -n "${skippedBy}" ] && { echo "$(date -u +%H:%M:%S) skipped by pattern ${skippedBy} ${branch} ${sha}"; continue; }
     # A tip its branch has already moved past is superseded: gate the branch's newest only.
     grep -qx "${branch} ${sha}" "${state}/seen" || { echo "$(date -u +%H:%M:%S) superseded ${branch} ${sha}"; continue; }
     # A tip already on main has nothing left to prove: integration's landed cloud/land-* branches stay

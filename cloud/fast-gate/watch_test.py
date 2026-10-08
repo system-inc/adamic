@@ -484,6 +484,32 @@ class WatchTests(unittest.TestCase):
         self.assertEqual([x.split()[0] for x in w.read('starts').splitlines() if x.startswith('codex/')],
                          ['codex/step-a-x', 'codex/step-b-x', 'codex/other'])
 
+    def test_front_outranks_every_step_and_skip_globs_take_a_family_out(self):
+        # The steps' globs are known before any slot exists, so the second step's tip would go first without
+        # front. (The first step's own tips are reserved and stay ahead of front.)
+        w = Watcher(0)
+        self.addCleanup(w.close)
+        w.put('ready', ' 9  #aaaaaaa  Running  first\n 3  #bbbbbbb  Running  second\n')
+        w.put('task-aaaaaaa', 'Branches: codex/step-a*\n')
+        w.put('task-bbbbbbb', 'Branches: codex/step-b*\n')
+        (w.state / 'slots').write_text('')
+        w.put('initial', 'pass')
+        w.wait(lambda: 'done canary:' in w.read('output'))
+        w.wait(lambda: (w.state / 'step-globs').exists() and 'codex/step-b*' in (w.state / 'step-globs').read_text())
+        (w.state / 'front').write_text('# ruled to land first\ncloud/land-gate-speed*\n')
+        (w.state / 'skip-globs').write_text('codex/views-* until compiler/area-views-next lands\n')
+        tips = [('codex/step-b-x', '1' * 40), ('cloud/land-gate-speed', '2' * 40), ('codex/views-a', '3' * 40)]
+        (w.state / 'seen').write_text(''.join('%s %s\n' % t for t in tips))
+        w.put('tips', ''.join('%s\trefs/heads/%s\n' % (sha, b) for b, sha in tips))
+        (w.state / 'queue').write_text('S 700 cloud/land-gate-speed %s\nS 900 codex/step-b-x %s\nS 950 codex/views-a %s\n' % ('2' * 40, '1' * 40, '3' * 40))
+        w.put('mode', 'pass')
+        # One slot, so the order is the queue's: the slot opens last.
+        (w.state / 'slots').write_text('box S\n')
+        w.wait(lambda: 'skipped by pattern codex/views-* codex/views-a' in w.read('output'))
+        w.wait(lambda: len([x for x in w.read('starts').splitlines() if not x.startswith('canary/')]) == 2)
+        self.assertEqual([x.split()[0] for x in w.read('starts').splitlines() if not x.startswith('canary/')],
+                         ['cloud/land-gate-speed', 'codex/step-b-x'])
+
     def test_staged_tools_run_on_the_canary_box_until_a_real_green_promotes_them(self):
         # Tips, queue and slots are in place before the watcher starts: with no deploy barrier to hold it,
         # a write after its first poll races the watcher's own rewrite of the queue.
