@@ -19,9 +19,9 @@ func TestInitializerChunksKeepStorageAndOrder(t *testing.T) {
 	var values, objects []string
 	for i := 0; i < 400; i++ {
 		values = append(values, fmt.Sprint(i))
-		objects = append(objects, fmt.Sprintf("{ value: %d }", i))
+		objects = append(objects, fmt.Sprintf("{ value: identity(%d) }", i))
 	}
-	source := `const objects = [` + strings.Join(objects, ",") + `]; console.log(objects.length.toString()); const values = [` + strings.Join(values, ",") + `]; console.log(values.length.toString()); { let label = values.join(','); const read = () => label; console.log(read().length.toString()); }`
+	source := `function identity(value: number): number { return value; } const objects = [` + strings.Join(objects, ",") + `]; console.log(objects.length.toString()); const values = [` + strings.Join(values, ",") + `]; console.log(values.length.toString()); { let label = values.join(','); const read = () => label; console.log(read().length.toString()); }`
 	if err := os.WriteFile(entry, []byte(source), 0644); err != nil {
 		t.Fatal(err)
 	}
@@ -91,9 +91,9 @@ func TestInitializerUnitOwnership(t *testing.T) {
 	entry := filepath.Join(directory, "main.a")
 	var values []string
 	for i := 0; i < 400; i++ {
-		values = append(values, fmt.Sprint(i))
+		values = append(values, fmt.Sprintf("identity(%d)", i))
 	}
-	if err := os.WriteFile(filepath.Join(directory, "table.a"), []byte("export const table = ["+strings.Join(values, ",")+"];"), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(directory, "table.a"), []byte("function identity(value: number): number { return value; } export const table = ["+strings.Join(values, ",")+"];"), 0644); err != nil {
 		t.Fatal(err)
 	}
 	if err := os.WriteFile(entry, []byte("import { table } from './table.a'; console.log(table.length.toString());"), 0644); err != nil {
