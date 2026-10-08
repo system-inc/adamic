@@ -31,3 +31,21 @@
     wasi_engines_test.go:145: set ADAMIC_ORACLE_WASMTIME=1
 --- SKIP: TestWasmtimeOracleCatchesMutants (0.00s)
 
+== github.com/system-inc/adamic/internal/oracle TestWASIShimAgreesWithNode/internal/oracle/testdata/write_stdout_order.a (skipped; no census row matches its name)
+=== RUN   TestWASIShimAgreesWithNode/internal/oracle/testdata/write_stdout_order.a
+    wasi_shim_test.go:49: IMPORTS internal/oracle/testdata/write_stdout_order.a | args_get, args_sizes_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_open, proc_exit
+    wasi_shim_test.go:53: file access import fd_filestat_get
+--- SKIP: TestWASIShimAgreesWithNode/internal/oracle/testdata/write_stdout_order.a (0.51s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIShimAgreesWithNode/internal/oracle/testdata/write_stderr_order.a (skipped; no census row matches its name)
+=== RUN   TestWASIShimAgreesWithNode/internal/oracle/testdata/write_stderr_order.a
+    wasi_shim_test.go:49: IMPORTS internal/oracle/testdata/write_stderr_order.a | args_get, args_sizes_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_open, proc_exit
+    wasi_shim_test.go:53: file access import fd_filestat_get
+--- SKIP: TestWASIShimAgreesWithNode/internal/oracle/testdata/write_stderr_order.a (0.49s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIShimAgreesWithNode/internal/oracle/testdata/prompt_then_read.a (skipped; no census row matches its name)
+=== RUN   TestWASIShimAgreesWithNode/internal/oracle/testdata/prompt_then_read.a
+    wasi_shim_test.go:49: IMPORTS internal/oracle/testdata/prompt_then_read.a | args_get, args_sizes_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_read, fd_seek, fd_write, path_open, proc_exit
+    wasi_shim_test.go:53: file access import fd_filestat_get
+--- SKIP: TestWASIShimAgreesWithNode/internal/oracle/testdata/prompt_then_read.a (0.67s)
+
