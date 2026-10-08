@@ -15,12 +15,21 @@ import (
 
 // Reuse the existing input harness so source, JavaScript, and native see the same directories.
 func init() {
+	inputFixtures = append(inputFixtures, struct {
+		path       string
+		arguments  []string
+		unreadable bool
+		writes     bool
+	}{"internal/oracle/testdata/node_fs_directory_symlink.a", nil, false, true})
 	for _, path := range []string{
 		"internal/oracle/testdata/node_path_posix.a",
+		"internal/oracle/testdata/node_path_basename.a",
+		"internal/oracle/testdata/node_path_relative.a",
 		"internal/oracle/testdata/node_fs_directory_entries.a",
 		"internal/oracle/testdata/node_fs_directory_union.a",
 		"internal/oracle/testdata/node_fs_directory_realpath.a",
 		"internal/oracle/testdata/node_fs_directory_system.a",
+		"internal/oracle/testdata/node_fs_directory_stat_options.a",
 		"internal/oracle/testdata/node_fs_directory_permissions.a",
 	} {
 		inputFixtures = append(inputFixtures, struct {

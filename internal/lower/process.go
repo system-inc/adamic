@@ -4,6 +4,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
+	"strings"
 )
 
 func (l *lowering) processPath(node *ast.Node) string {
@@ -15,6 +16,9 @@ func (l *lowering) processPath(node *ast.Node) string {
 		symbol := l.symbol(node)
 		if symbol != nil && symbol.Name == "process" && len(symbol.Declarations) > 0 && (load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0])) || load.IsNodeLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0]))) {
 			return "process"
+		}
+		if path := l.nodeProcessPath(node); path == "process" || strings.HasPrefix(path, "process.") {
+			return path
 		}
 		return ""
 	}

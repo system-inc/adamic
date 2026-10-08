@@ -99,6 +99,7 @@ func (l *lowering) condition(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	condition = libraryIteratorDoneTruth(condition)
 	if condition.Type() != ir.Boolean {
 		// An optional object is false exactly when absent. A presence test keeps the
 		// checker's narrowing true and evaluates the source once.

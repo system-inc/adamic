@@ -1,10 +1,10 @@
-// The Adamic 0.1 prelude: what a program can use that es2024 does not declare.
-// The full 0.1 library (docs/0.1.md) replaces es2024 with Adamic's own; until then, this.
+// Runtime facts shared with TypeScript projects, without adding newer Set methods.
 
-declare const console: {
+interface Console {
 	log(message: string): void;
 	error(message: string): void;
-};
+}
+declare var console: Console;
 
 // The supported process surface. Environment and stream observations are read-only.
 // Nonterminal streams have no isTTY value, as on Node.
@@ -47,44 +47,6 @@ declare module 'adamic' {
 		readonly adamicWeak?: never;
 	}
 	export type Weak<Target extends object> = (Target & WeakBrand) | undefined;
-}
-
-// ES2025 Set operations. Stage 0 accepts concrete library Sets with matching representations.
-interface Set<T> {
-	union<U>(other: ReadonlySetLike<U>): Set<T | U>;
-	intersection<U>(other: ReadonlySetLike<U>): Set<T & U>;
-	difference<U>(other: ReadonlySetLike<U>): Set<T>;
-	symmetricDifference<U>(other: ReadonlySetLike<U>): Set<T | U>;
-	isSubsetOf<U>(other: ReadonlySetLike<U>): boolean;
-	isSupersetOf<U>(other: ReadonlySetLike<U>): boolean;
-	isDisjointFrom<U>(other: ReadonlySetLike<U>): boolean;
-}
-interface ReadonlySet<T> {
-	union<U>(other: ReadonlySetLike<U>): Set<T | U>;
-	intersection<U>(other: ReadonlySetLike<U>): Set<T & U>;
-	difference<U>(other: ReadonlySetLike<U>): Set<T>;
-	symmetricDifference<U>(other: ReadonlySetLike<U>): Set<T | U>;
-	isSubsetOf<U>(other: ReadonlySetLike<U>): boolean;
-	isSupersetOf<U>(other: ReadonlySetLike<U>): boolean;
-	isDisjointFrom<U>(other: ReadonlySetLike<U>): boolean;
-}
-
-// Built-in collection iterators always provide done, including false on a yielded result.
-// Requiring it here avoids an optional boolean slot while preserving the ECMAScript result union.
-type AdamicCollectionIteratorResult<T> =
-	| { readonly done: false; readonly value: T }
-	| { readonly done: true; readonly value: undefined };
-interface MapIterator<T> {
-	next(): AdamicCollectionIteratorResult<T>;
-}
-interface SetIterator<T> {
-	next(): AdamicCollectionIteratorResult<T>;
-}
-
-interface ReadonlySetLike<T> {
-	readonly size: number;
-	readonly has: (value: T) => boolean;
-	readonly keys: () => Iterator<T>;
 }
 
 // stringify can return undefined. The bundled TypeScript declaration's plain string result

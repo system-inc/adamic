@@ -1,0 +1,65 @@
+ok  	github.com/system-inc/adamic/internal/load	5.075s
+ok  	github.com/system-inc/adamic/internal/lower	105.680s
+ok  	github.com/system-inc/adamic/internal/native	261.920s
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+--- FAIL: TestLivenessHoldsOnEveryPath (208.33s)
+    --- FAIL: TestLivenessHoldsOnEveryPath/programs (0.19s)
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_object_same.a (0.26s)
+            trace_test.go:387: open /tmp/adamic-gate/TestLivenessHoldsOnEveryPathprograms..oracletestdatalibrary846255217/001/trace.txt: no such file or directory
+    trace_test.go:426: 21669792 variable-and-point pairs checked
+--- FAIL: TestEveryMutationIsInItsRange (217.79s)
+    --- FAIL: TestEveryMutationIsInItsRange/programs (0.16s)
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_write_buffer.a (0.00s)
+            ranges_test.go:28: Load: load: no file at /workspace/adamic/internal/oracle/testdata/node_fs_file_write_buffer.a
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_write.a (2.19s)
+            ranges_test.go:28: Load: /workspace/adamic/internal/oracle/testdata/node_fs_file_write.a:4:26: error TS2339: Property 'code' does not exist on type 'Error'.
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_write_file.a (2.47s)
+            ranges_test.go:28: Load: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_file.a:4:26: error TS2339: Property 'code' does not exist on type 'Error'.
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_utimes.a (1.56s)
+            ranges_test.go:28: Load: /workspace/adamic/internal/oracle/testdata/node_fs_file_utimes.a:4:26: error TS2339: Property 'code' does not exist on type 'Error'.
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_read_sync.a (0.00s)
+            ranges_test.go:28: Load: load: no file at /workspace/adamic/internal/oracle/testdata/node_fs_file_read_sync.a
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_unlink.a (1.55s)
+            ranges_test.go:28: Load: /workspace/adamic/internal/oracle/testdata/node_fs_file_unlink.a:4:26: error TS2339: Property 'code' does not exist on type 'Error'.
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_system.a (1.60s)
+            ranges_test.go:28: Load: /workspace/adamic/internal/load/node_fs_file_system.a:36:61: error TS2339: Property 'code' does not exist on type 'Error'.
+                /workspace/adamic/internal/oracle/testdata/node_fs_file_system.a:4:26: error TS2339: Property 'code' does not exist on type 'Error'.
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_stat.a (1.53s)
+            ranges_test.go:28: Load: /workspace/adamic/internal/oracle/testdata/node_fs_file_stat.a:4:26: error TS2339: Property 'code' does not exist on type 'Error'.
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_open.a (1.29s)
+            ranges_test.go:28: Load: /workspace/adamic/internal/oracle/testdata/node_fs_file_open.a:4:26: error TS2339: Property 'code' does not exist on type 'Error'.
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_read.a (1.40s)
+            ranges_test.go:28: Load: /workspace/adamic/internal/oracle/testdata/node_fs_file_read.a:4:26: error TS2339: Property 'code' does not exist on type 'Error'.
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_mkdir.a (1.30s)
+            ranges_test.go:28: Load: /workspace/adamic/internal/oracle/testdata/node_fs_file_mkdir.a:4:26: error TS2339: Property 'code' does not exist on type 'Error'.
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_buffer.a (0.00s)
+            ranges_test.go:28: Load: load: no file at /workspace/adamic/internal/oracle/testdata/node_fs_file_buffer.a
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_date.a (0.11s)
+            ranges_test.go:28: Load: /workspace/adamic/internal/oracle/testdata/node_fs_file_date.a:4:26: error TS2339: Property 'code' does not exist on type 'Error'.
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_exists.a (1.24s)
+            ranges_test.go:28: Load: /workspace/adamic/internal/oracle/testdata/node_fs_file_exists.a:4:26: error TS2339: Property 'code' does not exist on type 'Error'.
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_fs_file_close.a (0.92s)
+            ranges_test.go:28: Load: /workspace/adamic/internal/oracle/testdata/node_fs_file_close.a:4:26: error TS2339: Property 'code' does not exist on type 'Error'.
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_buffer_writes.a (0.00s)
+            ranges_test.go:28: Load: load: no file at /workspace/adamic/internal/oracle/testdata/node_buffer_writes.a
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_buffer_utf8.a (0.00s)
+            ranges_test.go:28: Load: load: no file at /workspace/adamic/internal/oracle/testdata/node_buffer_utf8.a
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_buffer_utf16.a (0.00s)
+            ranges_test.go:28: Load: load: no file at /workspace/adamic/internal/oracle/testdata/node_buffer_utf16.a
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_buffer_random.a (0.00s)
+            ranges_test.go:28: Load: load: no file at /workspace/adamic/internal/oracle/testdata/node_buffer_random.a
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_buffer_input.a (0.00s)
+            ranges_test.go:28: Load: load: no file at /workspace/adamic/internal/oracle/testdata/node_buffer_input.a
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_buffer_finalized.a (0.00s)
+            ranges_test.go:28: Load: load: no file at /workspace/adamic/internal/oracle/testdata/node_buffer_finalized.a
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_buffer_encodings.a (0.00s)
+            ranges_test.go:28: Load: load: no file at /workspace/adamic/internal/oracle/testdata/node_buffer_encodings.a
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_buffer_crypto.a (0.00s)
+            ranges_test.go:28: Load: load: no file at /workspace/adamic/internal/oracle/testdata/node_buffer_crypto.a
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/node_buffer_bom.a (0.00s)
+            ranges_test.go:28: Load: load: no file at /workspace/adamic/internal/oracle/testdata/node_buffer_bom.a
+    ranges_test.go:78: 78701 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	217.948s
+ok  	github.com/system-inc/adamic/internal/fresh	135.090s
+FAIL

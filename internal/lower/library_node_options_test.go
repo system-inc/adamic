@@ -22,6 +22,7 @@ func TestNodeHostConsumesArgument(t *testing.T) {
 	}{
 		{"literal", `import {rmSync as remove} from 'node:fs'; remove('missing',{recursive:true});`, 1, true},
 		{"exact const", `import {rmSync} from 'node:fs'; const options={recursive:true}; rmSync('missing',options);`, 1, true},
+		{"multiple module const reused by stat helper", `import * as fs from 'node:fs'; const options={throwIfNoEntry:false} as const; function stat(path:string){return fs.statSync(path,options);} fs.statSync('x',options);`, 1, true},
 		{"const assertion", `import {statSync} from 'node:fs'; const options=(({throwIfNoEntry:false}) as const); statSync('missing',(options));`, 1, true},
 		{"private module consumer", `import {statSync} from 'node:fs'; const options={throwIfNoEntry:false} as const; function status(path:string):void { statSync(path,options); }`, 1, true},
 		{"captured escape", `import {statSync} from 'node:fs'; const options={throwIfNoEntry:false} as const; const capture=()=>options; function status(path:string):void { statSync(path,options); }`, 1, false},

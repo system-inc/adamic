@@ -1,0 +1,15 @@
+01_readFile_utf8.a: caught only by Node observation comparison
+02_readFile_utf16le.a: caught only by Node observation comparison
+03_readFile_utf16be.a: caught only by Node observation comparison
+04_readFile_missing.a: caught only by Node observation comparison
+05_writeFile.a: caught only by Node observation comparison
+06_fileExists.a: caught only by Node observation comparison
+07_directoryExists.a: caught only by Node observation comparison
+08_getDirectories.a: caught only by Node observation comparison
+09_realpath.a: caught only by Node observation comparison
+10_getModifiedTime.a: caught only by Node observation comparison
+11_setModifiedTime.a: caught only by Node observation comparison
+12_deleteFile.a: caught only by Node observation comparison
+Traceback (most recent call last):
+  File "<stdin>", line 13, in <module>
+AssertionError: 13_createDirectory.a mutant crashed
