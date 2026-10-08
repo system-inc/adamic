@@ -1,0 +1,32 @@
+{
+  "started": 1791462291.7718735,
+  "nproc": 5,
+  "load_before": [
+    0.63134765625,
+    0.50341796875,
+    1.69091796875
+  ],
+  "profile": "/tmp/classmembers-profile.BASvjX",
+  "exit": 0,
+  "wall_seconds": 1322.2047872543335,
+  "load_after": [
+    3.34814453125,
+    4.7109375,
+    4.6005859375
+  ],
+  "counts": {
+    "pass": 130,
+    "fail": 0,
+    "skip": 1
+  },
+  "skips": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "package_elapsed_seconds": 1315.432,
+  "validated_base": "cd56db1dd7ab7eda7a5f492804dcd1849a1494aa",
+  "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "typescript_source_pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "dependency_audit_area": "334509eea8a49b8085187e206c495cc6aa24c5c4",
+  "dependency_audit_property": "a72b9f63e66263ea34419bae20d282968e3261b6",
+  "NameTagged_present": false
+}

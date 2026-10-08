@@ -1,0 +1,10 @@
+// The adapter supplies the node's raw Name() identity; -1 is Go nil.
+export function MemberName(kind: string, name: number): number {
+    switch(kind) {
+        case 'MethodDeclaration':
+        case 'PropertyDeclaration':
+        case 'GetAccessor':
+        case 'SetAccessor': return name;
+    }
+    return -1;
+}

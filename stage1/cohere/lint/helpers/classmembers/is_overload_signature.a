@@ -1,0 +1,9 @@
+// Body presence is an immutable parser fact, including abstract declarations.
+export function IsOverloadSignature(kind: string, hasBody: boolean): boolean {
+    switch(kind) {
+        case 'MethodDeclaration':
+        case 'GetAccessor':
+        case 'SetAccessor': return !hasBody;
+    }
+    return false;
+}

@@ -1,0 +1,28 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { MemberName } from './member_name.a';
+import { IsAccessorKind } from './is_accessor_kind.a';
+import { IsOverloadSignature } from './is_overload_signature.a';
+function field(input: OptionsJson, row: number, name: string): number {
+    const node = input.node(row);
+    const offset = node.keys.indexOf(name);
+    return node.children[offset] ?? panic('missing field');
+}
+const path = programArguments()[0] ?? panic('input path');
+const file = readTextFile(path);
+if(file.kind === 'Error') { panic(file.message); }
+const input = new OptionsJson(file.text);
+const root = input.parse();
+if(root < 0) { panic(input.error); }
+for(const row of input.node(root).children) {
+    const symbol = input.node(field(input, row, 'symbol')).text;
+    const kind = input.node(field(input, row, 'kind')).text;
+    if(symbol === 'MemberName') {
+        console.log(`${MemberName(kind, Number(input.node(field(input, row, 'name')).text))}`);
+    }
+    else if(symbol === 'IsAccessorKind') { console.log(`${IsAccessorKind(kind)}`); }
+    else if(symbol === 'IsOverloadSignature') {
+        console.log(`${IsOverloadSignature(kind, input.node(field(input, row, 'body')).text === 'true')}`);
+    }
+    else { panic('unknown helper'); }
+}

@@ -1,0 +1,3 @@
+export function IsAccessorKind(kind: string): boolean {
+    return kind === 'GetAccessor' || kind === 'SetAccessor';
+}

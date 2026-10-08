@@ -22,3 +22,6 @@ Require Go consumer-capture agreement on Node, emitted JavaScript and sanitized
 native; one compiling, running mutant per helper on Node and native. Prove one
 rule when its shared prerequisite closure is available; full helpers/lint gates
 use every required input before the finished-unit push.
+
+Post-push claim scan: sole classmembers reservation, 2a7d5c0135769fe9bed15cd32edb0c0e42134ca2 at 2026-10-08T12:21:36Z.
+Status: three independent helpers validated; KeyOf and ForEachDuplicate await property.NameTagged. No rule unblocked yet.
