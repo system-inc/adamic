@@ -1274,3 +1274,30 @@ Node controls to the existing read refusal; it adds no new runtime check.
 Evidence is recursive-class-blocker.json, raw candidate red logs, decoded ASan
 stderr, and the green refusal log. Inventory remains 2,018 pairs / 9,101 reads,
 with exact production discharge unmeasured.
+
+
+October 8: nullable nominal aggregate source-link writes
+
+Complete scalar/object graphs with nominal class witnesses now preserve null,
+undefined and combined-nullish links across direct and helper source writes.
+Six Node controls (including fresh links) pass all three execution modes and
+leak checks. Three forged-link payloads exit 70 at the direct write, helper
+write or independent escaped class read; with nominal checks removed the same
+payloads run on in all three modes. The 21 recursive count rows were refreshed.
+
+Graph adoption now rebinds an inline Map entry pointer after moving the Map.
+Removing this repair reproduces ASan use-after-free in adamic_map_set. Checked
+reference writes use the existing graph-aware hold/drop helpers; removing this
+change reproduces use-after-free in adamic_release after an undefined link
+write. This fixes the Map relocation prerequisite observed by the earlier
+recursive class candidate; recursive class admission remains refused.
+
+The unit gate passes in 9.128s and the nominal/optional/refusal regression in
+41.879s. The callback refusal at entry-live-mutation.a:5:69 is preserved. Scoped
+compiler checks and vet are recorded separately. Five standalone graph harness
+failures reproduce on the baseline: four have stale layout byte expectations,
+and one uses the old closure signature. Phantom failures are also inherited.
+Evidence: evidence/nullable-aggregate-link.json and its logs. Inventory remains
+2,018 pairs / 9,101 reads, with production reaching-view discharge unmeasured.
+Required primitive brands retain internal/lower/phantom_brands.go:133,
+(*lowering).phantomRefusal: a primitive brand member brand whose type is not void.

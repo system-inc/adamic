@@ -1,0 +1,53 @@
+=================================================================
+==656370==ERROR: AddressSanitizer: heap-use-after-free on address 0x7c14865e00a8 at pc 0x561b263e1cde bp 0x7ffc5d76d120 sp 0x7ffc5d76d118
+WRITE of size 8 at 0x7c14865e00a8 thread T0
+    #0 0x561b263e1cdd in adamic_map_set /home/agent/.cache/adamic/runtime/.build-903606493/map.c:276:15
+    #1 0x561b263b62b0 in main /tmp/adamic-gate/adamic-build-1056028925/main.c:268:2
+    #2 0x7f04873e7ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+    #3 0x7f04873e7d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+    #4 0x561b262cf510 in _start (/tmp/adamic-gate/TestCheckedViewRecursiveMutableLinkWrite1128155317/001/program+0x68510)
+
+0x7c14865e00a8 is located 104 bytes inside of 200-byte region [0x7c14865e0040,0x7c14865e0108)
+freed by thread T0 here:
+    #0 0x561b26372086 in free /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:51:3
+    #1 0x561b263d0a1e in deallocate /home/agent/.cache/adamic/runtime/.build-903606493/heap.c:218:3
+    #2 0x561b263d0a1e in adamic_heap_graph_storage /home/agent/.cache/adamic/runtime/.build-903606493/heap.c:235:2
+
+previously allocated by thread T0 here:
+    #0 0x561b26372324 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+    #1 0x561b263d080f in allocate_storage /home/agent/.cache/adamic/runtime/.build-903606493/heap.c:198:10
+    #2 0x561b263d080f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-903606493/heap.c:212:9
+
+SUMMARY: AddressSanitizer: heap-use-after-free /home/agent/.cache/adamic/runtime/.build-903606493/map.c:276:15 in adamic_map_set
+Shadow bytes around the buggy address:
+  0x7c14865dfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x7c14865dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x7c14865dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x7c14865dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x7c14865e0000: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+=>0x7c14865e0080: fd fd fd fd fd[fd]fd fd fd fd fd fd fd fd fd fd
+  0x7c14865e0100: fd fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x7c14865e0180: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x7c14865e0200: 00 00 00 00 00 00 00 00 00 00 00 fa fa fa fa fa
+  0x7c14865e0280: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+  0x7c14865e0300: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==656370==ABORTING

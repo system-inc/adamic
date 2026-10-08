@@ -29,7 +29,11 @@ func (e *emitter) checkedWrite(write ir.SetProperty) {
 	e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, object, cString(write.Name), cache)
 	of := write.Value.Type()
 	if _, undefined := write.Value.(ir.Undefined); undefined {
-		e.line("if (adamic_object_field_types(%s)[%s.index] == 7) { %s->number = adamic_maybe_number_pack((adamic_maybe_number){false,0}); } else if (adamic_object_field_types(%s)[%s.index] == 9) { %s->maybe_boolean = adamic_maybe_boolean_pack((adamic_maybe_boolean){false,false}); } else { if (%s->shape->references[%s.index]) adamic_release(%s->reference); %s->reference = NULL; adamic_object_field_types(%s)[%s.index] = 13; }", object, cache, slot, object, cache, slot, object, cache, slot, slot, object, cache)
+		drop := fmt.Sprintf("adamic_release(%s->reference)", slot)
+		if len(e.program.GraphTypes) != 0 {
+			drop = fmt.Sprintf("adamic_graph_drop(%s,%s->reference)", object, slot)
+		}
+		e.line("if (adamic_object_field_types(%s)[%s.index] == 7) { %s->number = adamic_maybe_number_pack((adamic_maybe_number){false,0}); } else if (adamic_object_field_types(%s)[%s.index] == 9) { %s->maybe_boolean = adamic_maybe_boolean_pack((adamic_maybe_boolean){false,false}); } else { if (%s->shape->references[%s.index]) %s; %s->reference = NULL; adamic_object_field_types(%s)[%s.index] = 13; }", object, cache, slot, object, cache, slot, object, cache, drop, slot, object, cache)
 	} else if of == ir.Number || of == ir.MaybeNumber {
 		packed, number := fmt.Sprintf("adamic_maybe_number_pack((adamic_maybe_number){true,%s})", value), value
 		if of == ir.MaybeNumber {
@@ -49,8 +53,8 @@ func (e *emitter) checkedWrite(write ir.SetProperty) {
 	} else if of == ir.String || of == ir.Object || of == ir.Union {
 		old := e.temporary()
 		e.line("void *%s = %s->reference;", old, slot)
-		e.line("%s->reference = %s;", slot, e.kept(value))
-		e.line("adamic_release(%s);", old)
+		e.line("%s->reference = %s;", slot, e.keptIn(object, value))
+		e.dropIn(object, old)
 		e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, of)
 	} else {
 		panic("compiler bug: unsupported scalar checked write")

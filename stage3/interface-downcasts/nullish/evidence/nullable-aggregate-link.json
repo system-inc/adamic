@@ -1,0 +1,40 @@
+{
+  "base": "1cf347565",
+  "controls": 6,
+  "counted_rows": 21,
+  "mutants": [
+    "forged direct aggregate link",
+    "forged helper aggregate link",
+    "forged escaped link read"
+  ],
+  "counterfactuals": {
+    "nominal_checks_omitted": "all three identical payloads run on in native, released native and JavaScript",
+    "inline_map_rebinding_omitted": "ASan heap-use-after-free in adamic_map_set",
+    "graph_aware_checked_write_omitted": "ASan heap-use-after-free in adamic_release after combined-nullish undefined write"
+  },
+  "oracle_seconds": 9.128,
+  "regression_seconds": 41.879,
+  "preserved_refusal": "entry-live-mutation.a:5:69",
+  "inherited_test_failures": [
+    "Phantom (integration baseline)",
+    "TestGraphRegionsMillion: stale 64-byte object size versus 78",
+    "TestGraphRegionsRuntime: stale object size",
+    "TestGraphClosureEnvironment: old two-argument closure signature",
+    "TestGraphLazyRegions: stale object size",
+    "TestGraphContainerBoundary: stale object size"
+  ],
+  "remaining_pairs": 2018,
+  "remaining_reads": 9101,
+  "certified_remaining": "unmeasured",
+  "logs": [
+    "final",
+    "regression",
+    "compiler",
+    "vet",
+    "check-free",
+    "map-relocation-mutant",
+    "owner-mutant",
+    "baseline-graph",
+    "baseline-graph-extra"
+  ]
+}

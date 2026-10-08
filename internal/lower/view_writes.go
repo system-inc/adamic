@@ -12,6 +12,9 @@ func (l *lowering) slotContract(node *ast.Node, target *checker.Type) ir.ViewCon
 	if isClassInstance(l.checker.GetNonNullableType(target)) {
 		return l.mapNominalEntrySlot(node, target)
 	}
+	if l.mapNestedNominalType(target, map[*checker.Type]bool{}) {
+		return l.nominalObjectWriteContract(node, target)
+	}
 	if target.Flags()&checker.TypeFlagsUndefined != 0 {
 		id, err := l.viewContract(node, target)
 		if err != nil {
@@ -101,7 +104,7 @@ func supportedSlotContract(program *ir.Program, id ir.ViewContractID, seen map[i
 	return true
 }
 
-// Only finite class/nullish references use this checked union slot adapter.
+// Complete class-bearing object/nullish references use this union slot adapter.
 func (l *lowering) nominalUnionWriteTarget(target *ast.Node) bool {
 	symbol := l.checker.GetSymbolAtLocation(target)
 	if symbol == nil {
@@ -109,5 +112,78 @@ func (l *lowering) nominalUnionWriteTarget(target *ast.Node) bool {
 	}
 	declared := l.concrete(l.checker.GetTypeOfSymbol(symbol))
 	of, known := l.representation(declared)
-	return known && of == ir.Union && isClassInstance(l.checker.GetNonNullableType(declared)) && l.mapNominalEntrySlot(target, declared) != 0
+	if !known || of != ir.Union {
+		return false
+	}
+	if isClassInstance(l.checker.GetNonNullableType(declared)) {
+		return l.mapNominalEntrySlot(target, declared) != 0
+	}
+	return l.mapNestedNominalType(declared, map[*checker.Type]bool{}) && l.nominalObjectWriteContract(target, declared) != 0
+}
+
+// Only complete scalar/object graphs can use the scalar reference write adapter.
+// Arrays, callables and lazy descriptors keep their separate storage refusals.
+func (l *lowering) nominalObjectWriteContract(node *ast.Node, target *checker.Type) ir.ViewContractID {
+	id := l.mapEntrySlot(node, target)
+	seen := map[ir.ViewContractID]bool{}
+	var proven func(ir.ViewContractID) bool
+	proven = func(id ir.ViewContractID) bool {
+		if id == 0 {
+			return false
+		}
+		if seen[id] {
+			return true
+		}
+		seen[id] = true
+		c := l.result.ViewContracts[id-1]
+		if c.Unsupported != "" {
+			return false
+		}
+		switch c.Kind {
+		case ir.ViewScalar, ir.ViewNull, ir.ViewUndefined:
+			return true
+		case ir.ViewNullable:
+			if c.Of != ir.Object && c.Of != ir.Union {
+				return false
+			}
+			return proven(c.Element)
+		case ir.ViewObject:
+			for _, field := range c.Fields {
+				if !proven(field.Contract) {
+					return false
+				}
+			}
+			return true
+		default:
+			return false
+		}
+	}
+	if !proven(id) {
+		return 0
+	}
+	c := l.result.ViewContracts[id-1]
+	if (c.Of != ir.Object && c.Of != ir.Union) || !ir.HasMapNominalWitness(l.result, id) {
+		return 0
+	}
+	// Helpers can lower before their caller's viewed value is created.
+	// Activate only reference fields whose complete producer graph was proven.
+	seen = map[ir.ViewContractID]bool{}
+	var activate func(ir.ViewContractID)
+	activate = func(id ir.ViewContractID) {
+		if id == 0 || seen[id] {
+			return
+		}
+		seen[id] = true
+		c := l.result.ViewContracts[id-1]
+		for _, field := range c.Fields {
+			child := l.result.ViewContracts[field.Contract-1]
+			if (child.Of == ir.Object || child.Of == ir.Union) && ir.HasMapNominalWitness(l.result, field.Contract) {
+				l.optionalViewWriteField(field.Name)
+			}
+			activate(field.Contract)
+		}
+		activate(c.Element)
+	}
+	activate(id)
+	return id
 }

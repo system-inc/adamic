@@ -647,7 +647,7 @@ func TestCheckedViewRecursiveNominalMutants(t *testing.T) {
 func recursiveNominalCounts(t *testing.T) []string {
 	t.Helper()
 	rows := []string{}
-	for _, name := range []string{"recursive-mutable-control", "recursive-mutable-producer", "recursive-mutable-read", "recursive-mutable-write", "recursive-array-control", "recursive-array-producer", "recursive-array-read", "recursive-undefined", "recursive-both", "recursive-read", "recursive-producer", "recursive-shared-schema", "recursive-control", "gap-recursive-read", "gap-recursive-unread"} {
+	for _, name := range []string{"recursive-link-fresh", "recursive-link-helper", "recursive-link-null", "recursive-link-undefined", "recursive-link-both", "recursive-mutable-link-write", "recursive-mutable-control", "recursive-mutable-producer", "recursive-mutable-read", "recursive-mutable-write", "recursive-array-control", "recursive-array-producer", "recursive-array-read", "recursive-undefined", "recursive-both", "recursive-read", "recursive-producer", "recursive-shared-schema", "recursive-control", "gap-recursive-read", "gap-recursive-unread"} {
 		row := counted(t, "stage3/interface-downcasts/nullish/maps/entry-nominal-"+name+".a", false, nil, false, false)
 		rows = append(rows, row)
 	}
@@ -705,7 +705,7 @@ func TestCheckedViewRecursiveMutableClassWriteMutants(t *testing.T) {
 	}
 }
 
-func TestCheckedViewRecursiveMutableLinkWriteRefusal(t *testing.T) {
+func TestCheckedViewRecursiveMutableLinkWrite(t *testing.T) {
 	path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-mutable-link-write.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -714,11 +714,20 @@ func TestCheckedViewRecursiveMutableLinkWriteRefusal(t *testing.T) {
 	if truth.exitCode != 0 {
 		t.Fatalf("Node=%#v", truth)
 	}
-	_, err = lowered(t, path)
-	if err == nil || !strings.Contains(err.Error(), "storing Entry | null in a field") {
-		t.Fatalf("nullable aggregate write lost its refusal: %v", err)
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
 	}
-	t.Logf("Node=%q; named storage refusal=%v", truth.stdout, err)
+	native, binary := nativelyUncached(t, program)
+	for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if diff := disagreement(truth, got); diff != "" {
+			t.Fatalf("%s: %#v", diff, got)
+		}
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+	t.Logf("Node=%q; nullable aggregate link preserves source certificates", truth.stdout)
 }
 
 func TestCheckedViewRecursiveClassStorageRefusals(t *testing.T) {
@@ -737,6 +746,64 @@ func TestCheckedViewRecursiveClassStorageRefusals(t *testing.T) {
 				t.Fatalf("recursive class storage escaped its refusal: %v", err)
 			}
 			t.Logf("Node=%q; named read refusal=%v", truth.stdout, err)
+		})
+	}
+}
+
+func TestCheckedViewNullableAggregateLinkMutants(t *testing.T) {
+	for _, site := range []string{"write", "helper", "read"} {
+		t.Run(site, func(t *testing.T) {
+			fixture := "null"
+			if site == "helper" {
+				fixture = "helper"
+			}
+			program, path := interfaceFixture(t, "nullish/maps/entry-nominal-recursive-link-"+fixture)
+			truth := onNode(t, path)
+			changed := false
+			mutate := func(body []ir.Statement) {
+				for i, statement := range body {
+					write, ok := statement.(ir.SetProperty)
+					if !ok || write.Name != "next" || write.Define || write.WriteContract == 0 || !ir.HasMapNominalWitness(program, write.WriteContract) {
+						continue
+					}
+					write.Value = ir.Box{Value: ir.ObjectLiteral{Fields: []ir.Field{
+						{Name: "child", Value: ir.ObjectLiteral{Fields: []ir.Field{{Name: "count", Value: ir.NumberConstant{Value: 7}}}}},
+						{Name: "next", Value: ir.Box{Value: ir.Null{}}},
+					}}}
+					if site == "read" {
+						write.WriteContract = 0
+						write.Define = true
+						delete(program.CheckedFields, "next")
+					}
+					body[i] = write
+					changed = true
+					break
+				}
+			}
+			if site == "helper" {
+				for _, function := range program.Functions {
+					if function.Name == "replace" {
+						mutate(function.Body)
+					}
+				}
+			} else {
+				mutate(program.Main)
+			}
+			if !changed {
+				t.Fatal("mutation missed aggregate link")
+			}
+			native, _ := nativelyUncached(t, program)
+			expected := "Map nominal producer failed:"
+			if site == "read" {
+				expected = "field read failed:"
+			}
+			for backend, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				t.Logf("%s exit=%d stdout=%q stderr=%q", []string{"native", "released", "JavaScript"}[backend], got.exitCode, got.stdout, got.stderr)
+				if got.exitCode != 70 || !strings.Contains(string(got.stderr), expected) || !strings.Contains(string(got.stderr), "class identity") {
+					t.Fatalf("forged aggregate link ran on: %#v", got)
+				}
+			}
+			t.Logf("Node=%q; forged aggregate caught at %s", truth.stdout, site)
 		})
 	}
 }

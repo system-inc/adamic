@@ -99,14 +99,14 @@ func ScalarWriteContracts(program *Program, written ViewContractID) []ViewContra
 	return accepted
 }
 
-// Nullable class slots preserve counted references. Keep both nullish flags
-// while comparing complete private class descriptors.
+// Nullable class-bearing object slots preserve counted references. Keep both
+// nullish flags while comparing their complete private object descriptors.
 func nominalReferenceSlot(program *Program, contract ViewContract) ViewContract {
 	if contract.Kind != ViewNullable || (contract.Of != Object && contract.Of != Union) || contract.Element == 0 {
 		return contract
 	}
 	present := program.ViewContracts[contract.Element-1]
-	if present.Kind != ViewObject || present.NominalClass == 0 || present.Unsupported != "" {
+	if present.Kind != ViewObject || !HasMapNominalWitness(program, contract.Element) || present.Unsupported != "" {
 		return contract
 	}
 	present.Null = present.Null || contract.Null

@@ -50,7 +50,9 @@ void *adamic_graph_adopt(void *value, size_t bytes) {
 	if (heap == NULL || heap != value || heap->references != 1 || adamic_graph_is(heap)) {
 		FAIL("compiler bug: graph adoption needs a new allocation");
 	}
+	bool inline_map = heap->kind == adamic_kind_map && ((adamic_map *)heap)->entries == ((adamic_map *)heap)->small;
 	heap = adamic_heap_graph_storage(value, bytes);
+	if (inline_map) { ((adamic_map *)heap)->entries = ((adamic_map *)heap)->small; }
 	// Interior cells must point at the environment's final address.
 	if (heap->kind == adamic_kind_environment) {
 		adamic_environment *environment = (adamic_environment *)heap;

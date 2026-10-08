@@ -2074,3 +2074,9 @@ compiler proof counts, independent of the runtime allocation counts above.
 | stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-control.a | 10 | 10 | 24 | 32 | 9 | 0 | 0 | 0 |
 | stage3/interface-downcasts/nullish/maps/entry-nominal-gap-recursive-read.a | 2 | 2 | 5 | 8 | 2 | 0 | 0 | 0 |
 | stage3/interface-downcasts/nullish/maps/entry-nominal-gap-recursive-unread.a | 2 | 2 | 5 | 8 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-link-fresh.a | 21 | 21 | 55 | 73 | 11 | 0 | 0 | 0 |
+| stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-link-helper.a | 17 | 17 | 53 | 74 | 11 | 0 | 1 | 5 |
+| stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-link-null.a | 17 | 17 | 55 | 76 | 11 | 0 | 1 | 5 |
+| stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-link-undefined.a | 17 | 17 | 55 | 76 | 11 | 0 | 1 | 5 |
+| stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-link-both.a | 20 | 20 | 67 | 92 | 12 | 0 | 1 | 6 |
+| stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-mutable-link-write.a | 10 | 10 | 30 | 42 | 9 | 0 | 1 | 3 |
