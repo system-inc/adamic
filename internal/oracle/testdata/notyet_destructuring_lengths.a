@@ -1,0 +1,11 @@
+let calls = 0;
+function text(): string { calls += 1; return 'A😀'.repeat(2); }
+const { length } = text();
+console.log(`${calls} ${length}`);
+function array(): number[] { calls += 1; return [1, 2, 3]; }
+const { length: size } = array();
+console.log(`${calls} ${size}`);
+let defaults = 0;
+function fallback(): number { defaults += 1; return 99; }
+const { ['length']: empty = fallback() } = '';
+console.log(`${empty} ${defaults}`);

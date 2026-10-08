@@ -62,7 +62,25 @@ func (l *lowering) iterated(node *ast.Node) (ir.Expression, ir.Type, error) {
 		return nil, 0, err
 	}
 	switch value.Type() {
+	case ir.Array:
+		element, err := l.elementType(node)
+		if err != nil {
+			return nil, 0, err
+		}
+		if l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
+			if !l.collectionAllowsAbsent(node) {
+				return nil, 0, l.notYet(node, "iterating an array which may be undefined")
+			}
+			value = ir.Coalesce{Value: value, Fallback: ir.ArrayLiteral{Element: element}, Of: ir.Array}
+		}
+		return value, element, nil
 	case ir.String:
+		if l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
+			if !l.collectionAllowsAbsent(node) {
+				return nil, 0, l.notYet(node, "iterating a string which may be undefined")
+			}
+			value = ir.Coalesce{Value: value, Fallback: ir.StringConstant{Index: l.constant("")}, Of: ir.String}
+		}
 		return ir.CodePoints{Value: value}, ir.String, nil
 	case ir.Map:
 		if l.isSet(node) {
@@ -124,11 +142,22 @@ func (l *lowering) collectionPart(node *ast.Node, receiver *ast.Node, part strin
 // a number would land where number | undefined goes without becoming the pair, so they're checked.
 func (l *lowering) newMapFrom(node *ast.Node, source *ast.Node, key ir.Type, value ir.Type) (ir.Expression, error) {
 	pairKey, pairValue, isKnown := l.pairTypes(source)
+	var plan *iterationPlan
+	if !isKnown {
+		var err error
+		pairKey, pairValue, plan, isKnown, err = l.iterableMapPairs(source)
+		if err != nil {
+			return nil, err
+		}
+	}
 	if !isKnown {
 		return nil, l.notYet(source, "new Map from something that isn't [key, value] pairs")
 	}
 	if pairKey != key || pairValue != value {
 		return nil, l.notYet(source, "new Map from pairs held otherwise than the Map's keys and values")
+	}
+	if plan != nil {
+		return l.mapFromIteration(node, source, plan, key, value)
 	}
 	pairs, element, err := l.iterated(source)
 	if err != nil {
@@ -285,6 +314,9 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			return l.destructureArray(pattern, destructured, held)
 		}
 		return nil, l.notYet(pattern, "destructuring anything but a tuple into [names]")
+	}
+	if !tuple && (heldAs == ir.Array || heldAs == ir.String) {
+		return l.destructureLength(pattern, destructured, heldAs, held)
 	}
 	if heldAs != ir.Object {
 		return nil, l.notYet(pattern, "destructuring a "+typeName(heldAs))

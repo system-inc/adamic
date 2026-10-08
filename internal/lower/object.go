@@ -39,6 +39,14 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if !known {
 				return nil, l.notYet(property, "an unsupported computed method")
 			}
+			if !nativeDataFieldName(name) {
+				return nil, l.notYet(property, "a field name native storage cannot hold")
+			}
+			for _, prior := range literal.Fields {
+				if prior.Name == name {
+					return nil, l.notYet(property, "a repeated object field")
+				}
+			}
 			value, err := l.objectMethod(property)
 			if err != nil {
 				return nil, err
@@ -63,6 +71,14 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			}
 			if property.Kind == ast.KindPropertyAssignment && name.Kind != ast.KindComputedPropertyName && fieldName == "__proto__" {
 				return nil, &Refused{Where: l.program.Where(property), What: "__proto__ in an object literal", Fix: "JavaScript changes the prototype instead of making an own field; Adamic objects have fixed shapes and no prototype mutation"}
+			}
+			if !nativeDataFieldName(fieldName) {
+				return nil, l.notYet(property, "a field name native storage cannot hold")
+			}
+			for _, prior := range literal.Fields {
+				if prior.Name == fieldName {
+					return nil, l.notYet(property, "a repeated object field")
+				}
 			}
 			var value ir.Expression
 			var err error

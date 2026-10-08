@@ -1,0 +1,19 @@
+let events = '';
+const tuple: [number, number] = [1, 2];
+function source(): [number, number] { events += 'v'; return [3, 4]; }
+function target(): [number, number] { events += 'r'; return tuple; }
+[target()[0], target()[1]] = source();
+const [first, second] = tuple;
+console.log(`${events} ${first} ${second}`);
+[tuple[1], tuple[0]] = tuple;
+const [left, right] = tuple;
+console.log(`${left} ${right}`);
+const rhs: [number, number] = [5, 6];
+function mutateTarget(): [number, number] {
+ const changed: [number] = [9];
+ [rhs[0]] = changed;
+ return tuple;
+}
+[mutateTarget()[0]] = rhs;
+const [observed] = tuple;
+console.log(`${observed}`);
