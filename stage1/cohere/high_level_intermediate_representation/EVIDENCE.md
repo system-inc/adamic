@@ -622,3 +622,80 @@ executed. Its stated reason, verbatim:
 No recovery change was applied to the shared parser; no failing row was dropped.
 REPORT.md distinguishes the last passing certificate from the current unverified
 extension. Unit 2/static-components remain unfinished and unpushed.
+
+## Unit 2 after lint-area merge: optional boolean native gap (Oct 8)
+
+The parser blocker above is closed by a merge, not a rebase. `stage1-hir/wip`
+contains merge `c7dab3356acd155c78cf45dd6d7575ee3a2dacf6` with parent lint area
+`ad7bd06632f119abc7680719ad3a7d3b71100f58`, including the parser owner's
+`88f4a83d` error recovery. No HIR-owned patch was applied to the parser.
+
+File-kind verification: the oracle captures `source.ScriptKind`, which Go cohere's
+fixture harness chooses from the case filename. Exported sources keep `.ts`,
+`.tsx`, `.js`, or `.jsx`, and both direct and cached construction pass that path
+to the imported Parser. `rangesFor` at `ranges_test.go:38` uses `fixture.ts` even
+for JSX-looking text. Parsing it as TS is faithful. Upstream TSX cases keep TSX.
+
+The shortest original input is `function F(){return <x>{a}{b}</x>}`, file kind TS.
+The parser now accepts it on Node and native. The independent typescript-go oracle
+and port print byte-identical whole trees and diagnostics, retained in
+`validation/unit2-merge/shortest-{go,node}.tree`. Both print diagnostics 1005 at
+26 of length 1 (`';' expected.`), and 1110 at 30 of length 1 (`Type expected.`).
+
+After correcting the HIR regex splitter's missing-closing-slash case to Go
+`lower_expression.go:1141`, casts/deletes pass on both: **763/1,465** originals,
+59/59 probes. Typed binding, typed/default/rest parameters, async functions,
+generator flags and await then pass on both: **966/1,465**, 63/63 probes.
+Their seven new semantic mutants pass on both; the checked arena off-by-one
+mutant also stops on both. Logs are retained beside the parser comparison.
+
+Structural optional dot chains (including shared alternate blocks and inherited
+continuation kinds), standalone computed optional flags, and method-call child
+roles pass on Node: **1,013/1,465**, 64/64 probes. Direct and cached construction
+match every admitted graph. The entire **69/69** semantic mutant matrix executes
+and disagrees on Node. Native stops during compilation before execution.
+
+Go type and line: `cohere/internal/lint/ecmascript/high_level_intermediate_representation/terminal.go:217`
+defines `type Optional struct`; line **218** is `Optional bool`. Other Go terminal
+variants do not have this field. The port's tagged terminal record at `core.ts:79`
+writes `readonly optional?: boolean;`; the Optional constructor supplies the bool.
+Reading it in `dump.ts:108:145` produces this compiler message verbatim:
+
+```
+adamic: /workspace/adamic/stage1/cohere/high_level_intermediate_representation/dump.ts:108:145: stage 0 can't lower a field of type boolean | undefined yet
+```
+
+Smallest checked Adamic reproducer, `testdata/optional-boolean-gap.a`:
+
+```typescript
+interface Terminal { readonly optional?: boolean; }
+function read(terminal: Terminal): boolean { return terminal.optional ? true : false; }
+console.log(read({ optional: true }) ? 'true' : 'false');
+```
+
+Node prints `true`. Native compilation reports, verbatim:
+
+```
+adamic: /workspace/adamic/stage1/cohere/high_level_intermediate_representation/testdata/optional-boolean-gap.a:2:53: stage 0 can't lower a field of type boolean | undefined yet
+```
+
+No representation change or field-read workaround was applied. This is an Adamic
+native language gap for @system_adamic, distinct from the closed parser blocker.
+Unit 2 and static-components are unfinished; the rule has zero certified cases.
+The user authorizes one stopped-unit WIP push with these certificates and REPORT.
+
+Allocation recertification at the last passing native checkpoint:
+`validation/unit2-merge/native-checkpoint.patch` applies to the isolated detached
+`c7dab335` checkout and reconstructs the pre-Optional typed/function-form lowering.
+A `--count` build independently matches Go on every admitted row of
+`/tmp/hir-function-forms-final/manifest.tsv`: **1,029/1,528** including probes.
+Its 12-function dump also matches the prior counted dump byte for byte.
+Counts: allocations/frees **4,124**, retains **15,849**, releases **14,727**,
+peak **234**, regions **0**. Allocation delta is **+912** versus the original
+3,212 and **+255** versus the concrete-index 3,869 checkpoint. The new increment
+includes the parser-recovery merge and function metadata/body-child processing;
+no per-contributor isolation is claimed. Full native admitted census counts:
+allocations/frees **2,181,808**, retains **8,982,877**, releases **8,859,478**,
+peak **11,956**, regions **0**. The current Optional tip still refuses compilation;
+this historical measurement does not certify it. Counts and exact small dump are
+retained beside the source delta.

@@ -169,10 +169,10 @@ func constructionExpression(n *ast.Node) bool {
 		return constructionExpression(x.Condition) && constructionExpression(x.WhenTrue) && constructionExpression(x.WhenFalse)
 	case ast.KindPropertyAccessExpression:
 		x := n.AsPropertyAccessExpression()
-		return x.QuestionDotToken == nil && constructionExpression(x.Expression)
+		return constructionExpression(x.Expression)
 	case ast.KindElementAccessExpression:
 		x := n.AsElementAccessExpression()
-		return x.QuestionDotToken == nil && constructionExpression(x.Expression) && constructionExpression(x.ArgumentExpression)
+		return constructionExpression(x.Expression) && constructionExpression(x.ArgumentExpression)
 	case ast.KindCallExpression, ast.KindNewExpression:
 		var callee *ast.Node
 		var arguments *ast.NodeList
@@ -222,22 +222,13 @@ func constructionEligible(node *ast.Node) bool {
 		return false
 	}
 	body := functionBody(node)
-	if body == nil || node.Type() != nil {
-		return false
-	}
-	if types := node.TypeParameterList(); types != nil && len(types.Nodes) > 0 {
-		return false
-	}
-	if hasModifier(node, ast.KindAsyncKeyword) || functionIsGenerator(node) {
-		return false
-	}
-	if modifiers := node.Modifiers(); modifiers != nil && len(modifiers.Nodes) > 0 {
+	if body == nil {
 		return false
 	}
 	if parameters := functionParameters(node); parameters != nil {
 		for _, p := range parameters.Nodes {
 			x := p.AsParameterDeclaration()
-			if x.Name().Kind != ast.KindIdentifier || x.Type != nil || x.Initializer != nil || x.DotDotDotToken != nil || x.QuestionToken != nil {
+			if x.Name().Kind != ast.KindIdentifier {
 				return false
 			}
 		}
@@ -253,7 +244,7 @@ func constructionInitializer(node *ast.Node) bool {
 	}
 	for _, decl := range node.AsVariableDeclarationList().Declarations.Nodes {
 		d := decl.AsVariableDeclaration()
-		if d.Name().Kind != ast.KindIdentifier || d.Type != nil || (d.Initializer != nil && !constructionExpression(d.Initializer)) {
+		if d.Name().Kind != ast.KindIdentifier || (d.Initializer != nil && !constructionExpression(d.Initializer)) {
 			return false
 		}
 	}
@@ -532,6 +523,11 @@ func uniqueConstructionCalls(values []string) []string {
 
 func TestStage1ConstructionPathProbes(t *testing.T) {
 	sources := []string{
+		"function Optional(value, key) { value?.x.y; value?.[key]; value?.method(); return value[key]?.(); }",
+		"export async function Typed<T>(value: T, other?: number, ...rest: unknown[]): Promise<T> { return await value; }",
+		"function Defaults(value = make()) { const typed: number = 1; let empty: string; return value; }",
+		"function* Generator(value: number): number { return value; }",
+		"const TypedArrow = async <T,>(value: T): Promise<T> => await value;",
 		"function Casts(value) { return [value as number, value satisfies unknown]; }",
 		"function Deletes(value, key) { return [delete value.x, delete value[key], delete value]; }",
 		"function Templates(value, tag) { const rx = /a\\/b/gi; const plain = `a${value}b${this}c`; return [rx, plain, tag`x${value}y`, tag`empty`, value!]; }",

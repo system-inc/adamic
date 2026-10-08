@@ -1,72 +1,113 @@
-# Unit 2 report — paused at parser recovery
+# Unit 2 report — stopped on native optional-boolean field read
 
-Unit 2 is unfinished and has not been pushed. Static-components is not registered
-or certified: **0 upstream rule cases compared**. No green rule claim is made.
+Unit 2 is unfinished. This stopped checkpoint is on `stage1-hir/wip`, which merges
+lint area `ad7bd06632f119abc7680719ad3a7d3b71100f58` at `c7dab335` without rebasing.
+Static-components remains unregistered: **0 upstream rule cases certified**.
 
-## Last passing construction certificate
+## Parser recovery and file-kind checks
 
-**Native = Node: 752 / 1,465 original corpus functions**, plus **57 / 57 path
-probes**, 809 / 1,522 records overall. This adds four original corpus functions
-and one probe to the shared-index checkpoint. The 23 Flow graphs remain excluded;
-the original denominator and all 45 classified Go skips remain intact.
+The parser owner's `88f4a83d` recovery is imported through the lint-area merge.
+HIR made no parser change. The shortest former blocker is
+`function F(){return <x>{a}{b}</x>}`, parsed as **TS**. It now parses on native and
+Node; typescript-go and Node print byte-identical whole ASTs and diagnostics.
+The retained trees include diagnostic 1005 at 26 (`';' expected.`) and 1110 at 30
+(`Type expected.`). See `validation/unit2-merge/shortest-{go,node}.tree`.
 
-The passing command was:
+The oracle captures Go's `source.ScriptKind`, selected from each case filename.
+Its exported files retain `.ts`, `.tsx`, `.js` and `.jsx`; direct and cached replay
+pass those paths into the imported parser. The JSX-looking `rangesFor` tests use
+`fixture.ts` in Go, so TS recovery is the correct contract for them. Upstream TSX
+cases retain TSX. There is no remaining parser gap on this input.
+
+## Coverage and mutants
+
+| Certificate | Original functions | Probes | Overall |
+| --- | --- | --- | --- |
+| Last native = Node checkpoint, typed/async forms | **966 / 1,465** | **63 / 63** | 1,029 / 1,528 |
+| Current Node, structural optional chains | **1,013 / 1,465** | **64 / 64** | 1,077 / 1,529 |
+| Current native | compilation blocked | compilation blocked | no current-tip execution certificate |
+
+All original functions remain in the census. The 23 Flow graphs, 40 excluded
+Flow upstream fixtures, and 45 classified original Go test skips remain intact.
+No admitted failing graph was dropped. Every admitted graph in each passing
+certificate compares byte for byte with Go's hir-v1 dump through direct and
+cached ForFunction construction.
+
+Casts, satisfies, regex recovery, deletes, typed declarations, typed/default/rest
+parameters, async/await and generator metadata now have native/Node certificates.
+Optional dot chains preserve shared alternate blocks and inherited continuation
+kinds; computed optional loads preserve Go's instruction flag. Method calls keep
+Go's receiver/property evaluation and exact optional-marker child roles.
+
+**69 / 69 semantic mutants pass on current Node**, including both optional-path
+mutants. The seven new cast/delete/function-form mutants passed on native and
+Node before the Optional extension; 67 semantic mutants have native certificates
+across checkpoints, but the combined current native matrix cannot run. Earlier
+native certificates and their scope remain described in EVIDENCE.md. The checked
+FunctionIndex off-by-one mutant stopped on both runtimes at the last native
+checkpoint. Brand, private-mint and owner checks remain unchanged.
+
+The three moved mutant anchors were refreshed. Await and typed-binding mutants
+now preserve nested graph construction, so they reach a semantic disagreement
+rather than aborting with a missing nested path.
+
+Logs are retained under `validation/unit2-merge/`: expressions/native/Node,
+function forms/native/Node, whole Node mutant matrix, and native refusals.
+
+## Language gap for @system_adamic
+
+Go `terminal.go:217` defines `Optional`; line 218 is `Optional bool`. The Adamic
+tagged terminal record in `core.ts:79` contains `readonly optional?: boolean`.
+Native refuses the field read in `dump.ts:108:145`:
 
 ```
-HIR_CENSUS_EXPORT=/tmp/hir-templates go test -count=1 -v -timeout=25m ./stage1/cohere/high_level_intermediate_representation -run 'TestWholeConstructionCensus/catches_(regex_flags_disappear|template_operand_disappears|tagged_template_changes_tag|this_changes_global_name)'
+adamic: /workspace/adamic/stage1/cohere/high_level_intermediate_representation/dump.ts:108:145: stage 0 can't lower a field of type boolean | undefined yet
 ```
 
-`/tmp/hir-templates.log` passed in 95.43 seconds. Both direct and cached
-ForFunction construction match every admitted row. New lowering covers template
-literals, tagged templates, regular expressions, `this`, and non-null erasure.
-Four new semantic mutants compile, execute and disagree on both runtimes: dropped
-regex flags, dropped template operand, changed tag operand, and changed `this`
-global name. The checked FunctionIndex off-by-one mutant stops on both. Combined
-with the 56 previously certified semantic mutants, 60 semantic mutants have
-passing certificates; the entire combined matrix has not yet been rerun.
+[testdata/optional-boolean-gap.a](testdata/optional-boolean-gap.a) is the checked
+three-line reproducer. It prints `true` on Node. Native compilation reports:
 
-## Current unverified extension and first failure
+```
+adamic: /workspace/adamic/stage1/cohere/high_level_intermediate_representation/testdata/optional-boolean-gap.a:2:53: stage 0 can't lower a field of type boolean | undefined yet
+```
 
-Casts and deletes were added with three further mutants; await's instruction
-shape is present, but async function admission remains unfinished. These changes
-are **not certified**: the latest full comparison stops before native coverage
-and before their mutants run. Its 822 admitted records are not a coverage claim.
+No representation or field-read workaround was applied. EVIDENCE.md's latest entry
+records both this gap and closure of the earlier parser blocker.
 
-Carrying Go's source ScriptKind into replay exposes a parser contract difference.
-Five previously declined `ranges_test.go` graphs contain JSX text in a `.ts`
-fixture. Go recovers that text as type assertions, object expressions and a regex;
-replaying it as TSX instead yields JSX and different identifiers. The manifest now
-preserves TS/TSX/JS/JSX mode. Independent TS parsing stops on a missing semicolon.
-No row was excluded or reclassified to hide this failure.
+## Allocation measurement
 
-The shortest reproducer checked on both runtimes is
-[testdata/parser-recovery-gap.a](testdata/parser-recovery-gap.a). Its diagnostic is
-`adamic: panic: parser slice expected semicolon at 26 in input.ts`.
-This is a Stage 1 parser behavior gap, **not an Adamic language/compiler gap**.
-The compiler successfully builds the reproducer.
+The previous shared-index 12-function probe measured **3,212 -> 3,869 allocations
+(+657)**, with frees equal to allocations. Retains rose by 2,168, releases by 1,905,
+and peak live objects by 24 (175 -> 199); regions stayed zero. The current Optional
+tip cannot be measured natively because its build is refused.
 
-Automatic approval review rejected the proposed missing-token recovery change
-before execution because it interpreted that change as conflicting with the
-user's stop-on-gap instruction. The shared parser was not changed. Approval is
-required to extend its recovery contract. The proposed behavior is to preserve
-Go's missing-token AST recovery in HIR parsing, retaining strict parsing by
-default, with exact oracle comparisons and recovery witnesses before landing.
+Known contributors to that earlier delta are boxed concrete indices, canonical
+handle arrays, and per-function SSA adapter closures. The closures bind the owning
+HIRFunction because the imported SSA identifier callback does not receive it.
+The measurement does not isolate each contributor; the brand remains intact.
+The post-merge **last passing native checkpoint (966 originals + 63 probes)** was
+reconstructed in an isolated detached checkout at `c7dab335`; its exact source
+delta is retained in `validation/unit2-merge/native-checkpoint.patch`. This is a
+historical certificate and measurement, not current-tip native certification.
 
-## Allocation delta
+Its counted build matches Go on **1,029 / 1,528** graphs in the checkpoint manifest. The same 12-function
+dump is byte-identical to the previous measured dump. Its metrics are:
 
-The last measured 12-function native probe remains **3,212 -> 3,869 allocations
-(+657)**; frees equal allocations. Retains rise by 2,168, releases by 1,905, and
-peak live objects by 24 (175 -> 199); regions remain zero.
+- Allocations/frees: **4,124 / 4,124**, **+912** from 3,212 and **+255** from 3,869.
+- Retains/releases: **15,849 / 14,727**.
+- Peak live: **234**; regions: **0**.
+- Full admitted census: **2,181,808 allocations and frees**, peak **11,956**.
 
-Known contributors are the boxed concrete index objects, canonical handle arrays,
-and per-function SSA adapter closures. The latter close over each HIRFunction so
-the imported SSA callback, which does not receive a function argument, can recover
-its canonical IdentifierIndex. These are named causes of the conversion's growth;
-the measurement does not isolate each contributor. No new allocation measurement
-is claimed for the unverified cast/delete extension.
+The additional +255 accompanies the parser recovery merge and typed/function-form
+extension, including per-function metadata callbacks and body-child slices. No
+isolated share is claimed for those contributors. Count outputs are retained in
+`native-12-counts.txt` and `native-corpus-counts.txt`.
 
-After approval: finish parser recovery certification, then remaining function,
-method, binding/pattern and optional-chain variants; complete rule ownership and
-compilation-unit integration; register static-components in its own directory
-under docs/lint-registration.md; run the complete construction and rule corpora,
-all mutants and counted native build; push once to stage1-hir/wip.
+## Remaining work
+
+After the language ruling: complete patterns/destructuring and method/function
+variants, remaining construction paths, rule-owned ForFunction and compilation-unit
+integration, then static-components in its own directory under
+`docs/lint-registration.md`. Finish the full construction and upstream rule
+comparisons, native/Node mutant matrix, and allocation measurement before calling
+unit 2 complete. The watched plan branch has not been pushed.

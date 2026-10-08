@@ -1,0 +1,161 @@
+hir-v1
+function declaredValue other entry=1 async=0 generator=0
+params 
+context 
+returns 3:<unknown>:0:0:0
+identifier 0 1 
+identifier 1 2 
+identifier 2 2 
+identifier 3 1 
+block 1 block predecessors=
+instruction 0 1 2:<unknown>:0:33:35 33:35 Primitive string:1
+instruction 1 2 3:<unknown>:0:0:0 26:36 LoadLocal 2:<unknown>:0:33:35
+terminal 3 Return 3:<unknown>:0:0:0
+scopes -
+end
+hir-v1
+function Component component entry=1 async=0 generator=0
+params 
+context 
+returns 0:<unknown>:0:0:0
+identifier 0 1 
+block 1 block predecessors=
+terminal 1 Return 0:<unknown>:0:0:0
+scopes -
+end
+hir-v1
+function useFoo hook entry=1 async=0 generator=0
+params 
+context 
+returns 0:<unknown>:0:0:0
+identifier 0 1 
+block 1 block predecessors=
+terminal 1 Return 0:<unknown>:0:0:0
+scopes -
+end
+hir-v1
+function get2 other entry=1 async=0 generator=0
+params 
+context 
+returns 3:<unknown>:0:0:0
+identifier 0 1 
+identifier 1 2 
+identifier 2 2 
+identifier 3 1 
+block 1 block predecessors=
+instruction 0 1 2:<unknown>:0:28:30 28:30 Primitive string:2
+instruction 1 2 3:<unknown>:0:0:0 17:31 LoadLocal 2:<unknown>:0:28:30
+terminal 3 Return 3:<unknown>:0:0:0
+scopes -
+end
+hir-v1
+function Foo component entry=1 async=0 generator=0
+params 
+context 
+returns 0:<unknown>:0:0:0
+identifier 0 1 
+block 1 block predecessors=
+terminal 1 Return 0:<unknown>:0:0:0
+scopes -
+end
+hir-v1
+function t other entry=1 async=0 generator=0
+params 
+context 
+returns 0:<unknown>:0:0:0
+identifier 0 1 
+block 1 block predecessors=
+terminal 1 Return 0:<unknown>:0:0:0
+scopes -
+end
+hir-v1
+function bar other entry=1 async=0 generator=0
+params 
+context 
+returns 3:<unknown>:0:0:0
+identifier 0 1 
+identifier 1 2 
+identifier 2 2 
+identifier 3 1 
+block 1 block predecessors=
+instruction 0 1 2:<unknown>:0:27:30 27:30 Primitive string:42
+instruction 1 2 3:<unknown>:0:0:0 16:31 LoadLocal 2:<unknown>:0:27:30
+terminal 3 Return 3:<unknown>:0:0:0
+scopes -
+end
+hir-v1
+function Empty component entry=1 async=0 generator=0
+params 
+context 
+returns 0:<unknown>:0:0:0
+identifier 0 1 
+block 1 block predecessors=
+terminal 1 Return 0:<unknown>:0:0:0
+scopes -
+end
+hir-v1
+function NumberValue component entry=1 async=0 generator=0
+params 
+context 
+returns 7:<unknown>:0:0:0
+identifier 0 1 
+identifier 1 2 
+identifier 2 3 
+identifier 3 4 
+identifier 4 2 
+identifier 5 3 
+identifier 6 4 
+identifier 7 1 
+block 1 block predecessors=
+instruction 0 1 4:<unknown>:0:24:26 24:26 Primitive string:1
+instruction 1 2 5:<unknown>:0:27:29 27:29 Primitive string:2
+instruction 2 3 6:<unknown>:0:37:39 37:39 Primitive string:3
+instruction 3 4 7:<unknown>:0:0:0 30:40 LoadLocal 6:<unknown>:0:37:39
+terminal 5 Return 7:<unknown>:0:0:0
+scopes -
+end
+hir-v1
+function useBoolean hook entry=1 async=0 generator=0
+params 
+context 
+returns 5:<unknown>:0:0:0
+identifier 0 1 
+identifier 1 2 
+identifier 2 3 
+identifier 3 2 
+identifier 4 3 
+identifier 5 1 
+block 1 block predecessors=
+instruction 0 1 3:<unknown>:0:23:29 23:29 Primitive bool:false
+instruction 1 2 4:<unknown>:0:37:42 37:42 Primitive bool:true
+instruction 2 3 5:<unknown>:0:0:0 30:43 LoadLocal 4:<unknown>:0:37:42
+terminal 4 Return 5:<unknown>:0:0:0
+scopes -
+end
+hir-v1
+function Nil component entry=1 async=0 generator=0
+params 
+context 
+returns 3:<unknown>:0:0:0
+identifier 0 1 
+identifier 1 2 
+identifier 2 2 
+identifier 3 1 
+block 1 block predecessors=
+instruction 0 1 2:<unknown>:0:23:28 23:28 Primitive nil
+instruction 1 2 3:<unknown>:0:0:0 16:29 LoadLocal 2:<unknown>:0:23:28
+terminal 3 Return 3:<unknown>:0:0:0
+scopes -
+end
+hir-v1
+function Bare component entry=1 async=0 generator=0
+params 
+context 
+returns 1:<unknown>:0:0:0
+identifier 0 1 
+identifier 1 1 
+block 1 block predecessors=
+instruction 0 1 1:<unknown>:0:0:0 17:25 Primitive nil
+terminal 2 Return 1:<unknown>:0:0:0
+scopes -
+end

@@ -1,0 +1,150 @@
+diff --git a/stage1/cohere/high_level_intermediate_representation/core.ts b/stage1/cohere/high_level_intermediate_representation/core.ts
+index a10e3389..b9919b0d 100644
+--- a/stage1/cohere/high_level_intermediate_representation/core.ts
++++ b/stage1/cohere/high_level_intermediate_representation/core.ts
+@@ -98,6 +98,8 @@ export class BasicBlock {
+     constructor(arenaIndices: readonly BlockIndex[], id: BlockIndex, terminal: TerminalType, kind: string = 'block') { this.arenaIndices = arenaIndices; this.id = id; this.terminal = terminal; this.kind = kind; }
+ }
+ export class HIRFunction {
++    isAsync = false;
++    isGenerator = false;
+     readonly name: string;
+     readonly kind: string;
+     readonly blockIndices: BlockIndex[] = [];
+diff --git a/stage1/cohere/high_level_intermediate_representation/dump.ts b/stage1/cohere/high_level_intermediate_representation/dump.ts
+index f549d881..d830b1bc 100644
+--- a/stage1/cohere/high_level_intermediate_representation/dump.ts
++++ b/stage1/cohere/high_level_intermediate_representation/dump.ts
+@@ -7,7 +7,7 @@ export function placeText(place: PlaceInterface): string {
+ export function dump(graph: ConstructedHIR): string { return dumpFunction(graph.arena, graph.root); }
+ function dumpFunction(arena: HIRArena, index: FunctionIndex): string {
+     const fn = arena.read(index);
+-    let out = `hir-v1\nfunction ${fn.name} ${fn.kind} entry=${fn.entry.slot + 1} async=0 generator=0\n`;
++    let out = `hir-v1\nfunction ${fn.name} ${fn.kind} entry=${fn.entry.slot + 1} async=${fn.isAsync ? 1 : 0} generator=${fn.isGenerator ? 1 : 0}\n`;
+     out += `params ${fn.params.map((place) => placeText(place)).join(',')}\ncontext ${fn.context.map((place) => placeText(place)).join(',')}\nreturns ${placeText(fn.returns)}\n`;
+     for(const identifier of fn.identifiers) { out += `identifier ${identifier.id.slot} ${identifier.declaration.slot + 1} ${identifier.name}\n`; }
+     const seen = new Map<number, boolean>();
+diff --git a/stage1/cohere/high_level_intermediate_representation/lower.ts b/stage1/cohere/high_level_intermediate_representation/lower.ts
+index 01c9f780..96cb3d04 100644
+--- a/stage1/cohere/high_level_intermediate_representation/lower.ts
++++ b/stage1/cohere/high_level_intermediate_representation/lower.ts
+@@ -4,6 +4,7 @@ import { HIRFunction, Instruction, BasicBlock, HIRArena, ConstructedHIR } from '
+ import { SymbolSnapshot } from './symbol.ts';
+ import { ExportResolver, emptyOrigin } from './export_origin.ts';
+ import type { OriginInterface } from './export_origin.ts';
++import { Scanner } from '../../typescript/scanner/scanner.ts';
+ import { Parser } from '../../typescript/parser/parser.ts';
+ import { written } from '../../typescript/parser/nodes.ts';
+ import type { PlaceInterface, ValueType, TerminalType, ArgumentInterface, ModuleExportOriginInterface, JsxTagInterface, JsxAttributeInterface, ArrayElementInterface, ObjectPropertyInterface, FunctionIndex, BlockIndex } from './core.ts';
+@@ -93,10 +94,21 @@ function supportedExpression(parser: Parser, id: number): boolean {
+     }
+     return false;
+ }
++function declarationInitializer(parser: Parser, id: number): number | undefined {
++    const node = parser.node(id);
++    if(node.children.length < 2) { return undefined; }
++    const previous = parser.node(node.children[node.children.length - 2] ?? -1);
++    const scanner = new Scanner(parser.scanner.text);
++    scanner.pos = previous.end; scanner.scan();
++    return scanner.kind === 'EqualsToken' ? node.children[node.children.length - 1] : undefined;
++}
++function parameterBinding(parser: Parser, id: number): number {
++    return parser.node(id).children.find((child) => ['Identifier', 'ObjectBindingPattern', 'ArrayBindingPattern'].includes(parser.node(child).kind)) ?? -1;
++}
+ function supportedList(parser: Parser, id: number): boolean {
+     const list = parser.node(id);
+     if(list.kind !== 'VariableDeclarationList') { return false; }
+-    for(const child of list.children) { const declaration = parser.node(child); if(declaration.children.length > 2 || parser.node(declaration.children[0] ?? -1).kind !== 'Identifier' || (declaration.children[1] !== undefined && !supportedExpression(parser, declaration.children[1] ?? -1))) { return false; } }
++    for(const child of list.children) { const declaration = parser.node(child); const initializer = declarationInitializer(parser, child); if(parser.node(declaration.children[0] ?? -1).kind !== 'Identifier' || (initializer !== undefined && !supportedExpression(parser, initializer))) { return false; } }
+     return true;
+ }
+ function supportedStatement(parser: Parser, id: number): boolean {
+@@ -121,32 +133,15 @@ function supportedStatement(parser: Parser, id: number): boolean {
+     if(statement.kind === 'TryStatement') { return statement.children.every((child) => { const part = parser.node(child); if(part.kind !== 'CatchClause') { return supportedStatement(parser, child); } const binding = part.children.length > 1 ? parser.node(part.children[0] ?? -1) : undefined; return (binding === undefined || (binding.children.length === 1 && parser.node(binding.children[0] ?? -1).kind === 'Identifier')) && supportedStatement(parser, part.children[part.children.length - 1] ?? -1); }); }
+     if(statement.kind === 'WhileStatement') { return supportedExpression(parser, statement.children[0] ?? -1) && supportedStatement(parser, statement.children[1] ?? -1); }
+     if(statement.kind === 'BreakStatement' || statement.kind === 'ContinueStatement') { return statement.children.length <= 1; }
+-        if(statement.kind === 'VariableStatement') {
+-            const list = parser.node(statement.children[0] ?? -1);
+-            if(list.kind !== 'VariableDeclarationList') { return false; }
+-            for(const declarationId of list.children) {
+-                const declaration = parser.node(declarationId);
+-                if(declaration.children.length > 2 || parser.node(declaration.children[0] ?? -1).kind !== 'Identifier') { return false; }
+-                if(declaration.children[1] !== undefined && !supportedExpression(parser, declaration.children[1] ?? -1)) { return false; }
+-            }
+-            return true;
+-        }
++    if(statement.kind === 'VariableStatement') { return supportedList(parser, statement.children[0] ?? -1); }
+     if(!['ExpressionStatement', 'ReturnStatement', 'ThrowStatement', 'EmptyStatement'].includes(statement.kind) || statement.children.length > 1) { return false; }
+     return statement.children.every((child) => supportedExpression(parser, child));
+ }
+ function supportedFunction(parser: Parser, root: number): boolean {
+     const node = parser.node(root);
+-    let body = false;
+-    for(const id of node.children) {
+-        const child = parser.node(id);
+-        if(child.kind === 'Identifier' && node.kind !== 'ArrowFunction') { continue; }
+-        if(child.kind === 'EqualsGreaterThanToken' && node.kind === 'ArrowFunction') { continue; }
+-        if(child.kind === 'Parameter' && child.children.length === 1 && parser.node(child.children[0] ?? -1).kind === 'Identifier') { continue; }
+-        if(child.kind === 'Block') { if(!supportedStatement(parser, id)) { return false; } body = true; }
+-        else if(node.kind === 'ArrowFunction' && supportedExpression(parser, id)) { body = true; }
+-        else { return false; }
+-    }
+-    return body;
++    const body = node.children[node.children.length - 1] ?? -1;
++    for(const child of node.children) { if(parser.node(child).kind === 'Parameter' && parser.node(parameterBinding(parser, child)).kind !== 'Identifier') { return false; } }
++    return parser.node(body).kind === 'Block' ? supportedStatement(parser, body) : node.kind === 'ArrowFunction' && supportedExpression(parser, body);
+ }
+ class StraightLineBuilder {
+     readonly parser: Parser;
+@@ -281,11 +276,11 @@ class StraightLineBuilder {
+     }
+     declarationList(id: number): void {
+         const list = this.parser.node(id);
+-        const declarationKind = list.semantic === '2' ? 0 : 1;
++        const declarationKind = (Number.parseInt(list.semantic, 10) & 2) !== 0 ? 0 : 1;
+         for(const declarationId of list.children) {
+             const declaration = this.parser.node(declarationId);
+             const name = declaration.children[0] ?? -1;
+-            const initializer = declaration.children[1];
++            const initializer = declarationInitializer(this.parser, declarationId);
+             if(initializer === undefined) { this.emit({ kind: 'DeclareLocal', lvalue: this.bind(name), declarationKind }, declarationId, undefined); }
+             else {
+                 const value = this.expression(initializer);
+@@ -614,7 +609,7 @@ class StraightLineBuilder {
+         if(node.kind === 'AwaitExpression') { return this.emit({ kind: 'Await', value: this.expression(node.children[0] ?? -1) }, id, undefined); }
+         if(node.kind === 'DeleteExpression') { const targetId = node.children[0] ?? -1; const target = this.parser.node(targetId); if(target.kind === 'PropertyAccessExpression') { return this.emit({ kind: 'PropertyDelete', object: this.expression(target.children[0] ?? -1), property: this.parser.node(target.children[target.children.length - 1] ?? -1).text }, id, undefined); } if(target.kind === 'ElementAccessExpression') { return this.emit({ kind: 'ComputedDelete', object: this.expression(target.children[0] ?? -1), property: this.expression(target.children[target.children.length - 1] ?? -1) }, id, undefined); } this.expression(targetId); return this.emit({ kind: 'Primitive', literal: 'bool:true' }, id, undefined); }
+         if(node.kind === 'ThisKeyword') { return this.emit({ kind: 'LoadGlobal', name: 'this', bindingKind: 0, source: '', imported: '' }, id, undefined); }
+-        if(node.kind === 'RegularExpressionLiteral') { const slash = node.text.lastIndexOf('/'); return this.emit({ kind: 'RegExpLiteral', pattern: node.text.slice(1, slash), flags: node.text.slice(slash + 1) }, id, undefined); }
++        if(node.kind === 'RegularExpressionLiteral') { const slash = node.text.lastIndexOf('/'); return this.emit({ kind: 'RegExpLiteral', pattern: slash <= 0 ? node.text : node.text.slice(1, slash), flags: slash <= 0 ? '' : node.text.slice(slash + 1) }, id, undefined); }
+         if(node.kind === 'TemplateExpression' || node.kind === 'TaggedTemplateExpression') { return this.template(id); }
+         if(node.kind === 'NonNullExpression') { return this.expression(node.children[0] ?? -1); }
+         if(node.kind === 'ArrayLiteralExpression' || node.kind === 'ObjectLiteralExpression') { return this.aggregate(id); }
+@@ -666,14 +661,13 @@ function lowerFunction(parser: Parser, root: number, source: string, symbols: Sy
+     let bodyId = -1;
+     let conciseId = -1;
+     const parameters: number[] = [];
+-    for(const id of node.children) {
++    const body = node.children[node.children.length - 1] ?? -1;
++    if(parser.node(body).kind === 'Block') { bodyId = body; }
++    else if(node.kind === 'ArrowFunction') { conciseId = body; }
++    for(const id of node.children.slice(0, node.children.length - 1)) {
+         const child = parser.node(id);
+         if(child.kind === 'Identifier' && node.kind !== 'ArrowFunction') { name = child.text; }
+-        else if(child.kind === 'Block') { bodyId = id; }
+-        else if(node.kind === 'ArrowFunction' && child.kind === 'EqualsGreaterThanToken') { continue; }
+-        else if(node.kind === 'ArrowFunction' && supportedExpression(parser, id)) { conciseId = id; }
+-        else if(child.kind === 'Parameter' && child.children.length === 1 && parser.node(child.children[0] ?? -1).kind === 'Identifier') { parameters.push(child.children[0] ?? -1); }
+-        else { return undefined; }
++        if(child.kind === 'Parameter') { const binding = parameterBinding(parser, id); if(parser.node(binding).kind !== 'Identifier') { return undefined; } parameters.push(binding); }
+     }
+     if(bodyId < 0 && conciseId < 0) { return undefined; }
+     if(name === '') {
+@@ -687,6 +681,8 @@ function lowerFunction(parser: Parser, root: number, source: string, symbols: Sy
+     for(const id of statements) { if(!supportedStatement(parser, id)) { return undefined; } }
+     const functionIndex = arena.create(name);
+     const fn = arena.read(functionIndex);
++    fn.isAsync = node.children.some((child) => parser.node(child).kind === 'AsyncKeyword');
++    fn.isGenerator = node.children.some((child) => parser.node(child).kind === 'AsteriskToken');
+     const builder = new StraightLineBuilder(parser, source, fn, symbols, enclosing, arena, functionIndex);
+     for(const id of parameters) {
+         const parameter = parser.node(id);

@@ -1,9 +1,9 @@
 {
   "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
   "constructionCorpusFunctions": 1465,
-  "constructionCorpusFunctionsMatched": 752,
-  "pathProbes": 57,
-  "pathProbesMatched": 57,
+  "constructionCorpusFunctionsMatched": 966,
+  "pathProbes": 63,
+  "pathProbesMatched": 63,
   "upstreamFixtures": 395,
   "flowExcludedFixtures": [
     "error.bug-context-variable-catch-in-lambda.js",
@@ -96,6 +96,15 @@
   ],
   "matchedFunctions": [
     {
+      "key": "0006799fb7875c8aef6d75fb6ff61ea18d56bfb431f724264528d4507c8c2648",
+      "start": 0,
+      "end": 122,
+      "checker": true,
+      "calls": [
+        "ssa_test.go:43"
+      ]
+    },
+    {
       "key": "001e942a4a411b593d5221cacb8b969ffd5f97a053340b10a1630aa3bb02e6b6",
       "start": 110,
       "end": 242,
@@ -129,6 +138,15 @@
       "checker": true,
       "calls": [
         "upstream:error.todo-valid-functiondecl-hoisting.tsx"
+      ]
+    },
+    {
+      "key": "039308543615dc4ca67797761e6a4787ff14778e5524e0ba1eb313f365daa4cd",
+      "start": 0,
+      "end": 116,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -168,6 +186,15 @@
       ]
     },
     {
+      "key": "0506dd4a528b41a706fb813d2a4a7a712b77f980f41db4582dc857316903e548",
+      "start": 31,
+      "end": 122,
+      "checker": true,
+      "calls": [
+        "effects_react_state_test.go:55"
+      ]
+    },
+    {
       "key": "052156bdbb7fbe05cc5300270b0e9457e5da3be54de6478ab6a1fe159ac78ace",
       "start": 0,
       "end": 61,
@@ -195,6 +222,15 @@
       ]
     },
     {
+      "key": "05f68ba3db60fbc1592ff1975ebecfc7d403910a3b9ae9415b99a00a7ca809a4",
+      "start": 0,
+      "end": 1849,
+      "checker": true,
+      "calls": [
+        "identifier_slab_test.go:32"
+      ]
+    },
+    {
       "key": "061ddb0c5169f5b1af343cae436f4beb1286ee3550a98832368a894e0e19b1d7",
       "start": 178,
       "end": 204,
@@ -212,6 +248,15 @@
         "memo_block_scope_oracle_test.go:272/nested",
         "prune_non_escaping_scopes_test.go:445/nested",
         "upstream:preserve-memo-validation/error.todo-useCallback-captures-invalidating-value.ts/nested"
+      ]
+    },
+    {
+      "key": "06e3be5f2d80a84c62450a6cd9fb60aa6bf67a9cd75c4287c0dc88172b9c4b9a",
+      "start": 93,
+      "end": 142,
+      "checker": true,
+      "calls": [
+        "reactive_stable_hooks_test.go:85/nested"
       ]
     },
     {
@@ -242,6 +287,15 @@
       "checker": true,
       "calls": [
         "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "07b233dfbf592c3a46958d57061b9d9f13661c44d7f607c3f1c0bd1d8a373a3f",
+      "start": 37,
+      "end": 268,
+      "checker": true,
+      "calls": [
+        "upstream:error.typescript-this-param-in-compiled-function.ts/nested"
       ]
     },
     {
@@ -286,12 +340,30 @@
       ]
     },
     {
+      "key": "096bb5b50d40ac54ef36ce5a27bfbc82615fe1b97645098c37d0b578c849058b",
+      "start": 0,
+      "end": 110,
+      "checker": true,
+      "calls": [
+        "ssa_test.go:43"
+      ]
+    },
+    {
       "key": "0977d18213e193697af245f395c2997bc77b8679f55830b22d98cbd395f5e267",
       "start": 51,
       "end": 130,
       "checker": true,
       "calls": [
         "upstream:new-mutability/error.not-useEffect-external-mutate.js"
+      ]
+    },
+    {
+      "key": "0a6614da9d95d3902ae40e32b8281e34957c00f9f6e842e7b50f1c9321c3ef0a",
+      "start": 0,
+      "end": 191,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35"
       ]
     },
     {
@@ -313,6 +385,15 @@
       ]
     },
     {
+      "key": "0adc34ade7d048b2c114b13825e90be1e9e2f0af3aac16fc70b3c2c317ff5924",
+      "start": 0,
+      "end": 123,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "0b09d4ffc97758cc8e4bcc87268269a9dacef85357878c52c90983dfacf1f83e",
       "start": 0,
       "end": 280,
@@ -331,12 +412,30 @@
       ]
     },
     {
+      "key": "0b78ecc45e4cf13b6c759862a448eb4b5fe3aa434c6ce80b22f0e23a6cc4f092",
+      "start": 0,
+      "end": 678,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
+      ]
+    },
+    {
       "key": "0b7d57224daa4cc051c97d07bc2184fc44d2a8e60dd02dbae1d5528528298618",
       "start": 20,
       "end": 79,
       "checker": true,
       "calls": [
         "upstream:error.mutate-global-increment-op-invalid-react.js"
+      ]
+    },
+    {
+      "key": "0c3547e77f80e125bb1445ffc1044421e8bb172182adffc48e603a4b0874be86",
+      "start": 48,
+      "end": 165,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
       ]
     },
     {
@@ -458,12 +557,30 @@
       ]
     },
     {
+      "key": "10eaba0a4f61a000949c3ab62eeb7c0d69a5995ac8cff4613f6685bb5ade3b4b",
+      "start": 0,
+      "end": 120,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "118b239c0778b14ae406bcc55a9ab3ca45311635e78f925af09b5d0c9c2815c7",
       "start": 0,
       "end": 93,
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "11d96796308f22cd475dead7eb0b1d404c0dbbe7a4bdfd8c1dc2c26f9fe7a169",
+      "start": 90,
+      "end": 239,
+      "checker": true,
+      "calls": [
+        "inline_remap_test.go:310/nested"
       ]
     },
     {
@@ -519,6 +636,15 @@
         "prune_non_escaping_scopes_test.go:445",
         "scope_oracle_test.go:200",
         "upstream:memoize-primitive-function-calls.js"
+      ]
+    },
+    {
+      "key": "1356602bb6637d6968a2e8750fac44c45af068cf401d880c6c2214b60eece799",
+      "start": 0,
+      "end": 76,
+      "checker": true,
+      "calls": [
+        "ssa_test.go:43"
       ]
     },
     {
@@ -620,6 +746,24 @@
       ]
     },
     {
+      "key": "1626a623a5d4e69aa53a12b89fded948f904a36d4c242372499b11980371af39",
+      "start": 0,
+      "end": 101,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-ReactUseMemo-async-callback.js"
+      ]
+    },
+    {
+      "key": "1677a029b441b7d38bfebf3b3440c9abf2dd1a793f5510ac57db25a357d6f136",
+      "start": 0,
+      "end": 51,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
       "key": "16e494ec2848f23875db9e08c5e4f803a5311414e544f039a97eaf7d165f2a6a",
       "start": 0,
       "end": 545,
@@ -658,6 +802,15 @@
         "prune_non_escaping_scopes_test.go:445/nested/nested",
         "scope_oracle_test.go:200/nested/nested",
         "upstream:object-keys.js/nested/nested"
+      ]
+    },
+    {
+      "key": "1814a31adc2c8cc809451254eadc7d14efa8a41611dcb4bee4495626fdb7b146",
+      "start": 74,
+      "end": 141,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35/nested"
       ]
     },
     {
@@ -703,6 +856,15 @@
       "checker": true,
       "calls": [
         "flatten_scopes_with_hooks_test.go:30/nested"
+      ]
+    },
+    {
+      "key": "1949a8dc5a1d43eb98a1c4360a89efd537c9ced916dd0baa8099a19a273d2c23",
+      "start": 52,
+      "end": 169,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
       ]
     },
     {
@@ -758,6 +920,15 @@
       "checker": true,
       "calls": [
         "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "1b87e183c450c4879ded469a6bd95d4712543b0673c91368d9e3472b3ea41590",
+      "start": 0,
+      "end": 114,
+      "checker": true,
+      "calls": [
+        "reactive_test.go:58"
       ]
     },
     {
@@ -833,6 +1004,15 @@
       ]
     },
     {
+      "key": "1db34ee2139fd598db5163a2a567d15b111fca1dfc7f63ae94cd1a5329d4cd9f",
+      "start": 0,
+      "end": 171,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35"
+      ]
+    },
+    {
       "key": "1ddf8f41ff5b7a0e9da7839f8e3f92c89a6be098ea4fbf9a580e96079e0bcb5e",
       "start": 81,
       "end": 277,
@@ -842,6 +1022,24 @@
         "preserve_manual_memoization_score_test.go:552",
         "prune_non_escaping_scopes_test.go:445",
         "upstream:preserve-memo-validation/useMemo-infer-nonallocating.ts"
+      ]
+    },
+    {
+      "key": "1e32823bd79e797d5de9a111003a4ba4bfdea701ad0c7354e5e32ca4bd4f83c6",
+      "start": 31,
+      "end": 174,
+      "checker": true,
+      "calls": [
+        "reactive_namespace_refs_test.go:120"
+      ]
+    },
+    {
+      "key": "1ed8debce04a0c1551e1d6227d771b0d3d618fea84deeefdf733b3cff27cc9ca",
+      "start": 298,
+      "end": 321,
+      "checker": true,
+      "calls": [
+        "upstream:error.bug-infer-mutation-aliasing-effects.js/nested/nested"
       ]
     },
     {
@@ -881,6 +1079,15 @@
       ]
     },
     {
+      "key": "20de30e111892270b53664eb08f57c951a4b6b27ae39989049aa397506a2ff04",
+      "start": 0,
+      "end": 130,
+      "checker": true,
+      "calls": [
+        "reactive_test.go:601"
+      ]
+    },
+    {
       "key": "20f274beb78090f66668fc0222f195c91aabdec8c20d9cedef6fa1227ada9236",
       "start": 141,
       "end": 206,
@@ -890,6 +1097,33 @@
         "preserve_manual_memoization_score_test.go:552",
         "prune_non_escaping_scopes_test.go:445",
         "upstream:error.ref-like-name-not-Ref.js"
+      ]
+    },
+    {
+      "key": "2141a6c52b7eb764897cdc0923b0427e12fd7c637f71c71136678344faa9f9ac",
+      "start": 343,
+      "end": 383,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-local-variable-in-async-callback.js/nested"
+      ]
+    },
+    {
+      "key": "217e5f5e831a45c4c905dcf1b96abe477b5bbb8a6410317e308c3256824e023b",
+      "start": 478,
+      "end": 492,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40/nested"
+      ]
+    },
+    {
+      "key": "21c92b12eb676c4cb9ad275672ab4b17f7353c556fcf23dead83ce09313ca302",
+      "start": 61,
+      "end": 90,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35/nested"
       ]
     },
     {
@@ -950,6 +1184,24 @@
       ]
     },
     {
+      "key": "235835ab9b0628bccbbce47c987f017c4b56fa09429911756a66d38f14d59c5b",
+      "start": 0,
+      "end": 54,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "236496f7855de5349267b91caf2f7325ce565aea5ae0a509228c7af7f0263da2",
+      "start": 0,
+      "end": 81,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
       "key": "236cda9f45c98a34a5bf544b17782221fa0a5eb21b033474a204717fcd5db227",
       "start": 93,
       "end": 101,
@@ -992,6 +1244,15 @@
       "checker": true,
       "calls": [
         "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "24a954722bef2a57a488b355bf14f46761b0b23a04f2b6fe59d8a4aed7ea1245",
+      "start": 0,
+      "end": 169,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35"
       ]
     },
     {
@@ -1057,6 +1318,15 @@
       ]
     },
     {
+      "key": "2688c38210c8d42db828296fde254d8e096cdf6ad12031a90a2c9b768fbcd04b",
+      "start": 51,
+      "end": 81,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-ReactUseMemo-async-callback.js/nested"
+      ]
+    },
+    {
       "key": "269e6dad14a3e1264fb4acf8e3fabcc7c56d3bb981aacb063ff24fac85ba1b2f",
       "start": 48,
       "end": 102,
@@ -1090,6 +1360,24 @@
       "checker": true,
       "calls": [
         "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "273939b60ab153e8509891ca97c5988c86b97d7ae83674486a6753559d427858",
+      "start": 0,
+      "end": 113,
+      "checker": true,
+      "calls": [
+        "ssa_test.go:43"
+      ]
+    },
+    {
+      "key": "27f48bd52286303fa92471e8914f7b40dc04a6532387a6fbb814eed118f18345",
+      "start": 0,
+      "end": 107,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -1138,6 +1426,15 @@
       ]
     },
     {
+      "key": "2af1a93b8ccf9dde41d34551c858153946b351700b000e3e7eadce0dcbc8aedc",
+      "start": 0,
+      "end": 118,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
       "key": "2b53a0d80e854ac1712b0d829af0c49bd7a2cdf37d4dac9039de7ba4fdd5d670",
       "start": 63,
       "end": 871,
@@ -1165,6 +1462,24 @@
       "checker": true,
       "calls": [
         "upstream:error.todo-hoist-function-decls.js/nested"
+      ]
+    },
+    {
+      "key": "2baf6e0c3343866e1bfd8ee9fc06ebadc90e03ecc8a476e74ddd54ef0cbc15c4",
+      "start": 0,
+      "end": 132,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
+      ]
+    },
+    {
+      "key": "2be1ba9916a54b5abc596bc4e5325f9128b605423bafdd120253868e520dd9cf",
+      "start": 366,
+      "end": 396,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-unclosed-eslint-suppression.js/nested"
       ]
     },
     {
@@ -1235,12 +1550,39 @@
       ]
     },
     {
+      "key": "2cff7311814b1a0f8a280f96c3624435f01d4db532a4348b3430652545717f45",
+      "start": 0,
+      "end": 79,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
       "key": "2d2784938cce21b43a401676bef92644e8b0b47feaba95794dced11b01bf4bff",
       "start": 29,
       "end": 203,
       "checker": true,
       "calls": [
         "upstream:error.invalid-access-ref-in-render-mutate-object-with-ref-function.js"
+      ]
+    },
+    {
+      "key": "2d4146d0d83d04a209f3ee8892949f61dc2756d18db8212bfbb36731b9f42795",
+      "start": 10,
+      "end": 102,
+      "checker": true,
+      "calls": [
+        "upstream:error.reassign-global-fn-arg.js"
+      ]
+    },
+    {
+      "key": "2d7859f3bacf1986c0fb1e39b3d0be4b1eeb8e7f8057619baf13eef1240a969c",
+      "start": 0,
+      "end": 76,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
       ]
     },
     {
@@ -1268,6 +1610,15 @@
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "2df44e00c3aec3a6471fb7f5c14cb4e2a3e2b34c71a746728b43335a1d6db9f8",
+      "start": 0,
+      "end": 195,
+      "checker": true,
+      "calls": [
+        "reactive_test.go:58"
       ]
     },
     {
@@ -1345,6 +1696,24 @@
         "clone_test.go:50/nested/nested",
         "clone_test.go:55/nested/nested",
         "clone_test.go:72/nested/nested"
+      ]
+    },
+    {
+      "key": "2fc4c3880f66a8978bb1b564898dd8967957f065794e5f9da81f86e48cacc1c8",
+      "start": 0,
+      "end": 120,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-await-using-declaration.js"
+      ]
+    },
+    {
+      "key": "2fea8661280c93da0f4651b40a87248beefec9e710ad19e7777faa56002c6a76",
+      "start": 112,
+      "end": 161,
+      "checker": true,
+      "calls": [
+        "reactive_namespace_refs_test.go:120/nested"
       ]
     },
     {
@@ -1470,6 +1839,15 @@
       ]
     },
     {
+      "key": "349d7b84a900f71f3c9e81cbcaf8cffc2351461e52d305df53048a187bf90add",
+      "start": 100,
+      "end": 129,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35/nested"
+      ]
+    },
+    {
       "key": "34c958e81c25db6dabd97a5648f3117c27a07cbb5b81ed9162c0dcdeaea19675",
       "start": 52,
       "end": 112,
@@ -1521,6 +1899,15 @@
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.invalid-rules-of-hooks-49d341e5d68f.js"
+      ]
+    },
+    {
+      "key": "3873450381611673d81c372f3c5970c7985075eb8d459ff5674372621066d1a7",
+      "start": 24,
+      "end": 179,
+      "checker": true,
+      "calls": [
+        "upstream:error.bug-invariant-unnamed-temporary.js"
       ]
     },
     {
@@ -1587,6 +1974,15 @@
       ]
     },
     {
+      "key": "3a15aa3e924fcbc95f51211c6c559ae3cb9997221bde9d314bcb71a97e184b14",
+      "start": 0,
+      "end": 271,
+      "checker": true,
+      "calls": [
+        "upstream:error.typescript-this-param-in-compiled-function.ts"
+      ]
+    },
+    {
       "key": "3b03d0bdbf17515ebcff442f168f5111030ae85129af22932e65af5167dbbdb0",
       "start": 0,
       "end": 88,
@@ -1617,12 +2013,48 @@
       ]
     },
     {
+      "key": "3bebc8e573d154e5615adff491c5866f30c43fc2b644f76d636f6bdbbbb8dfc4",
+      "start": 0,
+      "end": 201,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "3c61877c046c180a83823ce2699089a75aaa6d549b908d4d912e896551fc021c",
       "start": 98,
       "end": 116,
       "checker": true,
       "calls": [
         "prune_non_escaping_scopes_test.go:207/nested"
+      ]
+    },
+    {
+      "key": "3cd9a1d7499dfe2971453dfb49679cff5b67c313474594d1ba77da024a52e40f",
+      "start": 0,
+      "end": 50,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "3cecb00ad50a909ca40b4b5726a9cc9f29e93dca6ab3ca419cd23095d259ecf6",
+      "start": 0,
+      "end": 208,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "3d355bda878d23f252e567e53f0ef7ec2401859aba90fef3f6a90d26ed524d43",
+      "start": 0,
+      "end": 168,
+      "checker": true,
+      "calls": [
+        "inline_iife_test.go:43"
       ]
     },
     {
@@ -1646,6 +2078,15 @@
       ]
     },
     {
+      "key": "3dd1d6e0314d2959825402456ed3f96ae748f2fbed94252108e9ace0e99c0882",
+      "start": 0,
+      "end": 69,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
       "key": "3e4bcccf218c48f8ed2eb62a41795149a1a8b4c04a5873cd79364d24028f2a99",
       "start": 0,
       "end": 69,
@@ -1661,6 +2102,15 @@
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-76a74b4666e9.js"
+      ]
+    },
+    {
+      "key": "3eaf3801d892c9b069294e292b8e789628c64110aa587c8a78a42d403204bf1b",
+      "start": 0,
+      "end": 76,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -1709,6 +2159,15 @@
       ]
     },
     {
+      "key": "40b2fc0917f57082a3a934c42d314a3fc7c366d18e07b9f6c5c097b7461fe551",
+      "start": 0,
+      "end": 341,
+      "checker": true,
+      "calls": [
+        "inline_remap_test.go:310"
+      ]
+    },
+    {
       "key": "40bc64d4508f47e9b90efd455b53cbc28b24b11e26ec3d06dfc2560d7cd6cc10",
       "start": 337,
       "end": 350,
@@ -1720,6 +2179,24 @@
         "prune_non_escaping_scopes_test.go:445/nested",
         "scope_oracle_test.go:200/nested",
         "upstream:preserve-memo-validation/useCallback-infer-more-specific.ts/nested"
+      ]
+    },
+    {
+      "key": "40fcd19d3374b47b60c922f310bf88d6b469fe3b756774cdac9593a584033c33",
+      "start": 0,
+      "end": 93,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35"
+      ]
+    },
+    {
+      "key": "410ad04d8efd8b1a1d3d52ddc7df852469cad13ae85d3b5860f190d4a6352496",
+      "start": 0,
+      "end": 184,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -1747,6 +2224,15 @@
       "checker": false,
       "calls": [
         "lower_test.go:53/nested"
+      ]
+    },
+    {
+      "key": "41a1122a42f1f7019e9d3730194dc2a69603458d7e1af92b0819c67ac8efe18b",
+      "start": 31,
+      "end": 169,
+      "checker": true,
+      "calls": [
+        "reactive_namespace_refs_test.go:120"
       ]
     },
     {
@@ -1814,6 +2300,24 @@
       ]
     },
     {
+      "key": "4433cac49063d9f8d3b594fe29da3909391c3e637690c60970f069ca736bad39",
+      "start": 203,
+      "end": 322,
+      "checker": true,
+      "calls": [
+        "inline_remap_test.go:310/nested"
+      ]
+    },
+    {
+      "key": "44c2b8ea36b7272a588c8f33e72ad9d926e759946ebef90cd5f13ea4d63eb8e1",
+      "start": 0,
+      "end": 141,
+      "checker": true,
+      "calls": [
+        "ssa_test.go:43"
+      ]
+    },
+    {
       "key": "4506fe20fdbdc2497f0146899c7a2ae30dea93c7945c4ec11447df484ac62101",
       "start": 0,
       "end": 62,
@@ -1829,6 +2333,15 @@
       "checker": true,
       "calls": [
         "upstream:error.validate-blocklisted-imports.ts"
+      ]
+    },
+    {
+      "key": "45e6b26efa37d152daf43e1f1a6e89ad88d37f969f9e6b80aebd4b9af7abd6d4",
+      "start": 94,
+      "end": 245,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35"
       ]
     },
     {
@@ -1877,6 +2390,15 @@
       "checker": false,
       "calls": [
         "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "4773bee62c62f977329e6bfa613c3f8eb09a9e9dd0c079d29dfbdc95af01d160",
+      "start": 141,
+      "end": 221,
+      "checker": true,
+      "calls": [
+        "inline_iife_test.go:43/nested"
       ]
     },
     {
@@ -2004,6 +2526,15 @@
       ]
     },
     {
+      "key": "4ac46b04d0eb62b6f095dd19c4c87b0c85e31efdf7318739fdcb7ae5f85fd7c2",
+      "start": 89,
+      "end": 212,
+      "checker": true,
+      "calls": [
+        "inline_iife_test.go:43/nested"
+      ]
+    },
+    {
       "key": "4b0f5226b3b82de1faaf64348744c6c6ee99200881a9a492173d81b65a4cdc62",
       "start": 0,
       "end": 104,
@@ -2019,6 +2550,15 @@
       "checker": true,
       "calls": [
         "upstream:error.invalid-nested-function-reassign-local-variable-in-effect.js/nested"
+      ]
+    },
+    {
+      "key": "4b20fde7ae151aa052d37d26c59fabea203bbe73f98a2e50e252aae88fd3f99b",
+      "start": 0,
+      "end": 66,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -2063,6 +2603,15 @@
       ]
     },
     {
+      "key": "4c55ad272eb6511e9c421b24272ce124b542db55da1d788521ff9e4df82b02e5",
+      "start": 80,
+      "end": 141,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35/nested/nested"
+      ]
+    },
+    {
       "key": "4c611b65096576ac05254800b206e20ac2a24a26cd6ff6834122443469456eb1",
       "start": 39,
       "end": 498,
@@ -2078,6 +2627,15 @@
       "checker": true,
       "calls": [
         "effects_test.go:40/nested"
+      ]
+    },
+    {
+      "key": "4c7047eb8dca2dfa7f24ccc293315e6ec3b8dfd09acec356231176b3140d606e",
+      "start": 0,
+      "end": 112,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-delete-computed-property-of-frozen-value.js"
       ]
     },
     {
@@ -2151,12 +2709,39 @@
       ]
     },
     {
+      "key": "507af0e25c2e1da3fa09dc4e3d870d5d49a6f2a48b8d6283292c07bd6aeb5a81",
+      "start": 0,
+      "end": 199,
+      "checker": true,
+      "calls": [
+        "inline_iife_test.go:43"
+      ]
+    },
+    {
+      "key": "50e940fab1d0accae74f20ef3803c62e21a37c580b1ac95e4a640e2dff319729",
+      "start": 0,
+      "end": 136,
+      "checker": true,
+      "calls": [
+        "reactive_test.go:58"
+      ]
+    },
+    {
       "key": "51155fd7d0903121109135252bba4b4f62cbc155c06a3821649c0e353b1729a7",
       "start": 0,
       "end": 153,
       "checker": true,
       "calls": [
         "upstream:error.invalid-mutate-after-freeze.js"
+      ]
+    },
+    {
+      "key": "5130f0e43fbd0f1f85548a5deddf213393d4516e6acf270edb9b710693a53deb",
+      "start": 31,
+      "end": 133,
+      "checker": true,
+      "calls": [
+        "effects_react_state_test.go:55"
       ]
     },
     {
@@ -2211,6 +2796,15 @@
       "checker": true,
       "calls": [
         "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "5397d1ff329cb961d004ed0a7ddcba003af420566f3a3f6e8494c9ed833cf427",
+      "start": 48,
+      "end": 123,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -2296,12 +2890,30 @@
       ]
     },
     {
+      "key": "564b4049de0178bd3578a844e91fd8234eb10ae8f5c68998bca1706650be31fe",
+      "start": 0,
+      "end": 58,
+      "checker": true,
+      "calls": [
+        "ssa_test.go:43"
+      ]
+    },
+    {
       "key": "5682e157c4d5174975e87011b36e7623f015e5e53a4dbaec583adbbd2eba3589",
       "start": 0,
       "end": 110,
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "5726dec907383068dcdc59a95d14888365f2573e0bf83441385eb0a2e228fa6e",
+      "start": 0,
+      "end": 94,
+      "checker": true,
+      "calls": [
+        "ssa_test.go:43"
       ]
     },
     {
@@ -2353,6 +2965,15 @@
       ]
     },
     {
+      "key": "5a4a4b3790c7aafe09f58b21808bc177341ca42bcaaa3ecc5eb7cdb58e57ecd5",
+      "start": 13,
+      "end": 65,
+      "checker": true,
+      "calls": [
+        "upstream:error.mutate-property-from-global.js"
+      ]
+    },
+    {
       "key": "5ac857d06b3d79eaa658693a32410a1ae13e85f7a023a49bc5bc9d46b4a3ee14",
       "start": 0,
       "end": 66,
@@ -2380,6 +3001,15 @@
       ]
     },
     {
+      "key": "5b1bcba2d793dcb29f579c32f40ce512adc0c3ea050fc0d001f7f74e7f4b6471",
+      "start": 67,
+      "end": 100,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-local-variable-in-multiple-async-callbacks.tsx/nested"
+      ]
+    },
+    {
       "key": "5b27aaaa27a827bbdac1fc829ba051582629352784062af4232ebed81136a53f",
       "start": 170,
       "end": 190,
@@ -2395,6 +3025,15 @@
       "checker": false,
       "calls": [
         "postdominator_frontier_test.go:91"
+      ]
+    },
+    {
+      "key": "5bfcab0042c3032bf5b9b4e80997c31826c36c9642a12ad90dc3ed3d6afa9746",
+      "start": 0,
+      "end": 140,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35"
       ]
     },
     {
@@ -2422,6 +3061,15 @@
       "checker": true,
       "calls": [
         "dependency_oracle_test.go:455/nested"
+      ]
+    },
+    {
+      "key": "5db5c322e1c7a3b3a9cb2b0cbd16d3a639cebdeca35f656a34442e3539256878",
+      "start": 126,
+      "end": 216,
+      "checker": true,
+      "calls": [
+        "inline_iife_test.go:43/nested"
       ]
     },
     {
@@ -2562,6 +3210,15 @@
       ]
     },
     {
+      "key": "627e757d30afcf2954cd3c740a2808dbd7d9ac6613ff4960538a93ebbc2363b8",
+      "start": 31,
+      "end": 204,
+      "checker": true,
+      "calls": [
+        "reactive_stable_hooks_test.go:85"
+      ]
+    },
+    {
       "key": "62807e930448f9cf5516d14ede74472d2d1d6076002289d02c7d333c310dc55f",
       "start": 175,
       "end": 264,
@@ -2589,6 +3246,15 @@
       ]
     },
     {
+      "key": "639dbcf13198f1775e1ae0284a4d2c7e3fa4b9d3a55ea780d70e6da05320ef14",
+      "start": 0,
+      "end": 195,
+      "checker": true,
+      "calls": [
+        "upstream:error.mutate-function-property.js"
+      ]
+    },
+    {
       "key": "63e521841b4cc1962c0659651d695552ab47fd969dc5dd24d6742d04e116f10a",
       "start": 88,
       "end": 109,
@@ -2613,6 +3279,15 @@
       "checker": true,
       "calls": [
         "upstream:error.invalid-unclosed-eslint-suppression.js"
+      ]
+    },
+    {
+      "key": "645557cb6d7e43da00863359bddab3087101e122cf61db28568dda5d9198dced",
+      "start": 0,
+      "end": 83,
+      "checker": true,
+      "calls": [
+        "ssa_test.go:43"
       ]
     },
     {
@@ -2712,6 +3387,24 @@
         "memo_block_scope_oracle_test.go:272/nested",
         "prune_non_escaping_scopes_test.go:445/nested",
         "upstream:preserve-memo-validation/error.useMemo-unrelated-mutation-in-depslist.ts/nested"
+      ]
+    },
+    {
+      "key": "665a5b4a1d9633b9298c140316be4fe3a252ea846094448ce542529127a15e14",
+      "start": 0,
+      "end": 265,
+      "checker": true,
+      "calls": [
+        "inline_remap_test.go:310"
+      ]
+    },
+    {
+      "key": "6694fe8a3cc634c05f42f07606968662c08e591ff0e6643ccaa4387863e84f67",
+      "start": 40,
+      "end": 163,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -2822,6 +3515,15 @@
       ]
     },
     {
+      "key": "68d19dc21e52ca748e838e4200b6f11cfbf7b6119edf4ebc4ec54b96d3d9f5b0",
+      "start": 0,
+      "end": 43,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
+      ]
+    },
+    {
       "key": "68e777744be8c25660456a8f6135b95ea9ce0a1885b1452b4429d29eba3e9df6",
       "start": 0,
       "end": 122,
@@ -2846,6 +3548,15 @@
       "checker": true,
       "calls": [
         "upstream:error.todo-function-expression-references-later-variable-declaration.js"
+      ]
+    },
+    {
+      "key": "6905050210a4aed906b204d10ab4f072c6e04a482218d8af12b62e8359ba3144",
+      "start": 64,
+      "end": 75,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35/nested"
       ]
     },
     {
@@ -2888,6 +3599,15 @@
       ]
     },
     {
+      "key": "6c32be8197e8f1e69e61a202a3b106c085911c783b5942ed852b28f746c9d444",
+      "start": 0,
+      "end": 109,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
       "key": "6d3589448a63374eaf66137111698e9610e05d4adcd9b7e61292c1a8c11d5217",
       "start": 0,
       "end": 47,
@@ -2921,6 +3641,15 @@
       "checker": true,
       "calls": [
         "upstream:error.dont-hoist-inline-reference.js"
+      ]
+    },
+    {
+      "key": "6ee20af6032601ee2f687dea014d8ca6795dd4919a3028d9a953f5a0c215aabc",
+      "start": 70,
+      "end": 123,
+      "checker": true,
+      "calls": [
+        "inline_iife_test.go:43/nested"
       ]
     },
     {
@@ -3005,6 +3734,15 @@
       "checker": true,
       "calls": [
         "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "70d5d4117c0217649c95c87e78bcf52a226e2b1e92251ee6d83f501ed3e03d52",
+      "start": 127,
+      "end": 237,
+      "checker": true,
+      "calls": [
+        "inline_iife_test.go:43/nested"
       ]
     },
     {
@@ -3107,12 +3845,35 @@
       ]
     },
     {
+      "key": "73a4a95516631a5f780cc3ae875a1afb901aed503a2a3e7e1938b4b7c43c2768",
+      "start": 111,
+      "end": 160,
+      "checker": true,
+      "calls": [
+        "reactive_namespace_refs_test.go:120/nested"
+      ]
+    },
+    {
       "key": "73ccf4a68bf1c0c4fb548280f7569ba4b9798650a682e6436bd1ed7172db53ef",
       "start": 0,
       "end": 68,
       "checker": false,
       "calls": [
         "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "747df4e9e44503f40e30b8ca8f92895e3bf31fba0f80940572846f443728df3c",
+      "start": 138,
+      "end": 170,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455",
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "scope_oracle_test.go:200",
+        "upstream:preserve-memo-validation/useCallback-dep-scope-pruned.ts"
       ]
     },
     {
@@ -3134,6 +3895,24 @@
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "748a03b6419c8b1a77984e0be2e8a46fb9188646d9b62fcd2de84dbd7994b6a1",
+      "start": 0,
+      "end": 349,
+      "checker": true,
+      "calls": [
+        "inline_iife_test.go:43"
+      ]
+    },
+    {
+      "key": "74b36ec15f17dba2da24bafaee4f4ad290444c1b5a1f37b5dc97dcad71e5824d",
+      "start": 67,
+      "end": 115,
+      "checker": true,
+      "calls": [
+        "inline_iife_test.go:43/nested"
       ]
     },
     {
@@ -3286,12 +4065,39 @@
       ]
     },
     {
+      "key": "799a6524dbd0ca6191d3e4b7b33c75fca83d92da233c2722acf60ba78001be5f",
+      "start": 74,
+      "end": 135,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35/nested"
+      ]
+    },
+    {
+      "key": "79f6f73fc04d90121bb0440e97e50fb296fc2d9701be52e89dc4920a5fab467f",
+      "start": 103,
+      "end": 135,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35/nested"
+      ]
+    },
+    {
       "key": "79fb33bc026c3c8b6ffc5f06ba13063e956dd66ad2a164465b28bfeb3e1d45d6",
       "start": 0,
       "end": 222,
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-d952b82c2597.js"
+      ]
+    },
+    {
+      "key": "7a35207ced3d90e26cfb7746704478f9aee60045afc115b56348434564492086",
+      "start": 0,
+      "end": 72,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -3307,12 +4113,30 @@
       ]
     },
     {
+      "key": "7af5a70fcd5de753f59754a9bd76627f28a4cc258d67f36b5861ce563e88f7ca",
+      "start": 0,
+      "end": 110,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "7b1e40a47185eb92a2ac76c3df5782cfb533472ae8e8729c8536dd48dc392ab5",
       "start": 157,
       "end": 201,
       "checker": true,
       "calls": [
         "upstream:exhaustive-deps/error.sketchy-code-exhaustive-deps.js/nested"
+      ]
+    },
+    {
+      "key": "7b47fa54fd4f81ea79ae5dc912e5f70eb924e5708eb15a945fdc160282bb10c5",
+      "start": 0,
+      "end": 95,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -3357,9 +4181,27 @@
       ]
     },
     {
+      "key": "7c12dbbdd8253fc6a7898ff6714a6969dd57f5d631cd6c684330bf7fae89b28b",
+      "start": 0,
+      "end": 92,
+      "checker": true,
+      "calls": [
+        "ssa_test.go:43"
+      ]
+    },
+    {
       "key": "7c14b99cf4b4b093a609d58f321e62ddfa9ec252214287e4eb0aa7dae2942861",
       "start": 0,
       "end": 97,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
+      ]
+    },
+    {
+      "key": "7c4b7fca9862eb9a5afc167028445c90520f824be78f0290d8a1195d95388be0",
+      "start": 0,
+      "end": 76,
       "checker": true,
       "calls": [
         "effects_test.go:40"
@@ -3411,12 +4253,30 @@
       ]
     },
     {
+      "key": "7d6b38f6d6b36b477adbb69562f80ece6b5de58dc8a1dee564c04c454137ec74",
+      "start": 0,
+      "end": 92,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "7d9bbb5173e8fc5e705521b72471100ad85f121abec4fc8db2827bd580ee5d00",
       "start": 30,
       "end": 81,
       "checker": true,
       "calls": [
         "effects_react_state_test.go:55"
+      ]
+    },
+    {
+      "key": "7da8db378ceebaecb15bb60a870b72b7433590bd2fba7ca6a1698841a3e306e3",
+      "start": 61,
+      "end": 323,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-local-variable-in-async-callback.js/nested"
       ]
     },
     {
@@ -3435,6 +4295,15 @@
       "checker": true,
       "calls": [
         "upstream:error.invalid-props-mutation-in-effect-indirect.js/nested"
+      ]
+    },
+    {
+      "key": "7e4c3e0ea9dfccb45510dbbeb056de6a759270610985e1bf1d6bfa9c5725399b",
+      "start": 29,
+      "end": 278,
+      "checker": true,
+      "calls": [
+        "upstream:ecma/error.reserved-words.ts"
       ]
     },
     {
@@ -3501,6 +4370,15 @@
       ]
     },
     {
+      "key": "7f7debdc62fba90757cbd6868641b27ddf48abaca1e7d2fd8acdab468585928a",
+      "start": 64,
+      "end": 183,
+      "checker": true,
+      "calls": [
+        "reactive_test.go:58"
+      ]
+    },
+    {
       "key": "7fa4baf643450743f5282f935e2af4111a7f60970390807be3a8a6196025db7a",
       "start": 0,
       "end": 107,
@@ -3543,6 +4421,15 @@
       "checker": true,
       "calls": [
         "upstream:error.todo-kitchensink.js/nested/nested"
+      ]
+    },
+    {
+      "key": "809a453b053b61719dccdd0ef6b849a2ac67fdee30f4fe5177bd558fb7440438",
+      "start": 0,
+      "end": 350,
+      "checker": true,
+      "calls": [
+        "reactive_test.go:729"
       ]
     },
     {
@@ -3614,6 +4501,15 @@
       ]
     },
     {
+      "key": "81b2b181bd8fda2fea003cfdd4327c03f85a9043d307bdedfd28b57a62f99e6b",
+      "start": 0,
+      "end": 194,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "81c8fc49129bf40be2a359e4214ff2f2d9048f005a68844481d5fe0c1fb9d6f2",
       "start": 129,
       "end": 265,
@@ -3655,6 +4551,15 @@
       ]
     },
     {
+      "key": "830edb6906ebb1dcde0955c79d27655568a6e7c146da7353f8693eca2eb420ec",
+      "start": 0,
+      "end": 431,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-local-variable-in-async-callback.js"
+      ]
+    },
+    {
       "key": "834a9990168591981bacd0bcf6e6dc95099322d72e4f3bad8b0e9fab966c8a7f",
       "start": 26,
       "end": 324,
@@ -3688,6 +4593,24 @@
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.invalid-rules-of-hooks-f3d6c5e9c83d.js"
+      ]
+    },
+    {
+      "key": "850654ccbb873ef5aef29fc31b415770cb61711cead2eed6bcfda2ffc36478c8",
+      "start": 0,
+      "end": 115,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35"
+      ]
+    },
+    {
+      "key": "850c23a9491d7dfe340d85af9d45b2aacc72f0c05068ffbae964fec3631994ce",
+      "start": 159,
+      "end": 249,
+      "checker": true,
+      "calls": [
+        "upstream:ecma/error.reserved-words.ts/nested"
       ]
     },
     {
@@ -3835,12 +4758,48 @@
       ]
     },
     {
+      "key": "876a9cb64c2dc0d247e100610a359dcc79fe3b0fd32757440719b6f8f1254f11",
+      "start": 0,
+      "end": 179,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-local-variable-in-multiple-async-callbacks.tsx"
+      ]
+    },
+    {
+      "key": "877794a5d47d668b11bffb4ec69456af3974a2a2623889a154628a2b2e3f2251",
+      "start": 86,
+      "end": 164,
+      "checker": true,
+      "calls": [
+        "upstream:error.bug-invariant-unnamed-temporary.js/nested"
+      ]
+    },
+    {
       "key": "877a7e10587d78fe45f094310e3bdc4014f8a7c31f84c0cc1339ecdfeacb1412",
       "start": 199,
       "end": 1097,
       "checker": true,
       "calls": [
         "upstream:error.invalid-reassign-local-variable-in-hook-argument.js/nested"
+      ]
+    },
+    {
+      "key": "87b2a75793a58c3aad4adee771b47f3212f65d78aba26072d0517fcf56fc20b8",
+      "start": 0,
+      "end": 68,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "87bbe1d584bc41e7b136ec85871ebe7970aa072cdacebabac373a94d0d75a41d",
+      "start": 68,
+      "end": 145,
+      "checker": true,
+      "calls": [
+        "inline_remap_test.go:310/nested"
       ]
     },
     {
@@ -3871,6 +4830,15 @@
       ]
     },
     {
+      "key": "889611c841b0fa5e024ecfb593c159dd10d86a233fdff0084799f5f0059b8692",
+      "start": 42,
+      "end": 447,
+      "checker": true,
+      "calls": [
+        "upstream:error.bug-infer-mutation-aliasing-effects.js"
+      ]
+    },
+    {
       "key": "89693a1d022bf453e563b3e0c33774bf0d7bea22195cb143b05967d46bad5c7e",
       "start": 0,
       "end": 133,
@@ -3886,6 +4854,42 @@
       "checker": true,
       "calls": [
         "effects_test.go:40"
+      ]
+    },
+    {
+      "key": "89dfef0f13bc6c611215c8afb1c80086da6a11c13aa9f1a38716b6d2670e7b14",
+      "start": 0,
+      "end": 242,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "8a01c24d5df1083457befc966d66814ac1c741a4116c8b50d6422a2afb60eec9",
+      "start": 0,
+      "end": 205,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "8a05211c306f41659f40380b1c24c71a408dffcecca875b7e205d812bb455d40",
+      "start": 0,
+      "end": 198,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "8a1afa8ac104171e144d573c9099cd29b0ea9aa589c55e6574c5859d23dc853d",
+      "start": 0,
+      "end": 171,
+      "checker": true,
+      "calls": [
+        "inline_remap_test.go:310"
       ]
     },
     {
@@ -3910,6 +4914,15 @@
         "preserve_manual_memoization_score_test.go:552/nested",
         "prune_non_escaping_scopes_test.go:445/nested",
         "upstream:preserve-memo-validation/error.useCallback-aliased-var.ts/nested"
+      ]
+    },
+    {
+      "key": "8abb9a1993b7971d003490d655a0de569b3927b2bc7e479eb7880d2020d600c4",
+      "start": 51,
+      "end": 168,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
       ]
     },
     {
@@ -3972,12 +4985,39 @@
       ]
     },
     {
+      "key": "8c5a5dd199c176f59e8b83113cd84921ef7ec810a09073cd76e46464b63830c5",
+      "start": 53,
+      "end": 70,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38/nested"
+      ]
+    },
+    {
       "key": "8cbb62bf10a26e33add093a58ff3d329f33a5ed0efcf4ab204ab79cd5fdb577f",
       "start": 34,
       "end": 150,
       "checker": true,
       "calls": [
         "dependency_oracle_test.go:455"
+      ]
+    },
+    {
+      "key": "8cf2caed68b646ec3c850ebfbeaadc802f4dcf0b5fa63740ee280bd2211df408",
+      "start": 0,
+      "end": 77,
+      "checker": true,
+      "calls": [
+        "ssa_test.go:43"
+      ]
+    },
+    {
+      "key": "8d4da6239092638b109a5d355baf503491996946d7461e10fa7607aebbe65972",
+      "start": 0,
+      "end": 65,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
       ]
     },
     {
@@ -4008,6 +5048,15 @@
       ]
     },
     {
+      "key": "8f2b4edf7fc68543571787664d7e40191eef4a99038728f6bfeb95733700a652",
+      "start": 0,
+      "end": 144,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35"
+      ]
+    },
+    {
       "key": "8fb30f513c7cd356482af83df6a33e42d1b3321da5b651180615e70ba537728e",
       "start": 220,
       "end": 234,
@@ -4035,12 +5084,30 @@
       ]
     },
     {
+      "key": "90318107713195817c0d11541ca8151a8119f2fa74d0494beb01c30fb389f470",
+      "start": 0,
+      "end": 213,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "90506f7c31b8a495b71a0d7964a29590bb56bfa30624a8610db95ae851070bf8",
       "start": 163,
       "end": 185,
       "checker": true,
       "calls": [
         "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "906f62efd050b896dd1c54b41b3932a9408bd38b2495aad593132137e7c66c10",
+      "start": 86,
+      "end": 97,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35/nested/nested"
       ]
     },
     {
@@ -4059,6 +5126,34 @@
       "checker": true,
       "calls": [
         "upstream:error.function-expression-references-variable-its-assigned-to.js/nested"
+      ]
+    },
+    {
+      "key": "90e7cb151f50114ef427ffd09a370f1004a54bc433739049610f521e9da1cf4b",
+      "start": 0,
+      "end": 79,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35"
+      ]
+    },
+    {
+      "key": "90f4d2e18386395344395c4ed05db1bea9343b18cb9e85728cdb3e8c40e73c16",
+      "start": 0,
+      "end": 119,
+      "checker": true,
+      "calls": [
+        "reactive_test.go:231",
+        "reactive_test.go:58"
+      ]
+    },
+    {
+      "key": "9145034b25744e8f790d31ac5af0919394564518971d7f740c1e71d739017158",
+      "start": 0,
+      "end": 237,
+      "checker": true,
+      "calls": [
+        "inline_iife_test.go:43"
       ]
     },
     {
@@ -4086,12 +5181,30 @@
       ]
     },
     {
+      "key": "928945ac5619868a22dfaf57e32e3a598b2daacbcec89caf73d42bed091e9764",
+      "start": 138,
+      "end": 154,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35/nested"
+      ]
+    },
+    {
       "key": "92add50e7dc920a4e25f8f2c6037ac7d664b285895eccb7931e7f7288f4e1cdc",
       "start": 218,
       "end": 262,
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-0de1224ce64b.js/nested/nested"
+      ]
+    },
+    {
+      "key": "92f5c5a3c2e0a9a60dbef727a3cb098255c19a1885dba48f2e8c65b7b9276424",
+      "start": 96,
+      "end": 658,
+      "checker": true,
+      "calls": [
+        "always_invalidating_test.go:176"
       ]
     },
     {
@@ -4274,6 +5387,15 @@
       ]
     },
     {
+      "key": "97a41130d1c31763d14248e0a3a61465c219c6768ab330e2c9e602c7f54adf62",
+      "start": 108,
+      "end": 127,
+      "checker": true,
+      "calls": [
+        "reactive_namespace_refs_test.go:120/nested"
+      ]
+    },
+    {
       "key": "97cfc4452fda606a1c1d52aaeb386f30df97561056afb3259b4b50ffe33135d0",
       "start": 0,
       "end": 279,
@@ -4294,6 +5416,15 @@
         "prune_non_escaping_scopes_test.go:445",
         "scope_oracle_test.go:200",
         "upstream:preserve-memo-validation/useMemo-inner-decl.ts"
+      ]
+    },
+    {
+      "key": "98ee5b77420830fa335d94c9c44df64bda8888b92b69cf08c5ac19b8c629a37a",
+      "start": 39,
+      "end": 165,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -4330,6 +5461,33 @@
       "checker": true,
       "calls": [
         "prune_non_escaping_scopes_test.go:207"
+      ]
+    },
+    {
+      "key": "99c3a0c99940065d8bf845afb1012be27d444dc45955c99484a8a8d086703c28",
+      "start": 0,
+      "end": 98,
+      "checker": true,
+      "calls": [
+        "reactive_test.go:58"
+      ]
+    },
+    {
+      "key": "9a58879a7633e38fff08bee3932ce8d3fcc7f350719c3db222336dbc9b61a3cc",
+      "start": 0,
+      "end": 95,
+      "checker": false,
+      "calls": [
+        "reactive_test.go:665"
+      ]
+    },
+    {
+      "key": "9a6242f36fb452c4e595ede949d87736035fae96b5a5e7356a8a3e3167523c31",
+      "start": 0,
+      "end": 131,
+      "checker": true,
+      "calls": [
+        "reactive_test.go:58"
       ]
     },
     {
@@ -4399,6 +5557,15 @@
         "preserve_manual_memoization_score_test.go:552/nested",
         "prune_non_escaping_scopes_test.go:445/nested",
         "upstream:preserve-memo-validation/useMemo-infer-nonallocating.ts/nested"
+      ]
+    },
+    {
+      "key": "9b81bd9057ee52e0d2979993df198fa794cafce9f092888d3ef5ca42d4d0a43a",
+      "start": 198,
+      "end": 414,
+      "checker": true,
+      "calls": [
+        "upstream:error.bug-infer-mutation-aliasing-effects.js/nested"
       ]
     },
     {
@@ -4476,6 +5643,15 @@
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "9f6183b118288584f15d2d68a757b0c3c697e6e621fbd180ccb0655ecdaa9728",
+      "start": 0,
+      "end": 83,
+      "checker": true,
+      "calls": [
+        "ssa_test.go:43"
       ]
     },
     {
@@ -4559,6 +5735,15 @@
       ]
     },
     {
+      "key": "a23d4a85ab8ad758bcfb1006ae3111829bdf375db47bee2d67126aa4f5c1b881",
+      "start": 0,
+      "end": 69,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
+      ]
+    },
+    {
       "key": "a27d04a4fe70bbb18eb2ee1961909d6fe29b1c07a3bea9ed289f36a58d03cf31",
       "start": 0,
       "end": 101,
@@ -4577,12 +5762,39 @@
       ]
     },
     {
+      "key": "a398db6f74822157e235a74afece2dbaad57bf537ef98362a87316ea2b756d49",
+      "start": 0,
+      "end": 111,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-delete-property-of-frozen-value.js"
+      ]
+    },
+    {
       "key": "a3a210c987e10a31088ee2f04687cd62e341f34e753c69336acfc9a06d11c6fd",
       "start": 0,
       "end": 74,
       "checker": true,
       "calls": [
         "upstream:error.invalid-reassign-local-in-hook-return-value.js"
+      ]
+    },
+    {
+      "key": "a3ab24347dcbfd48ed6584d6472245a3d60c3432d5b9e4a5069ca7b80ba573d6",
+      "start": 41,
+      "end": 61,
+      "checker": true,
+      "calls": [
+        "ssa_test.go:43/nested"
+      ]
+    },
+    {
+      "key": "a44f82b4203606e5ce86d61e15c038e11df4e3f8fd923fd035ac49455a44c1ec",
+      "start": 0,
+      "end": 78,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
       ]
     },
     {
@@ -4667,6 +5879,15 @@
       ]
     },
     {
+      "key": "a64d9c16bacbaac263c607ebe94f950ad29d124038f0e4e57cbb6208c306ffc8",
+      "start": 0,
+      "end": 229,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
       "key": "a6a201ecd96ae563f453ef922738888ee7e579fc04b934a91f46b34fc3efd765",
       "start": 13,
       "end": 63,
@@ -4700,6 +5921,15 @@
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52"
+      ]
+    },
+    {
+      "key": "a7705d74af40306ac61dfd675ff70ffc59961451c51155c4648a209dba1c2f54",
+      "start": 0,
+      "end": 80,
+      "checker": true,
+      "calls": [
+        "ssa_test.go:43"
       ]
     },
     {
@@ -4739,12 +5969,30 @@
       ]
     },
     {
+      "key": "a8701dd2949e89f581f83ce4891e46446e607a85b03fa2103e825a4fe3aa1afd",
+      "start": 0,
+      "end": 121,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "a87ba049eb362d2513c90c95bc787d9917cb20e5ad74d21ed1372c0226512832",
       "start": 26,
       "end": 232,
       "checker": true,
       "calls": [
         "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "a8c9ba86ed31260e01f30ad33bcf173ac29705c5e761be1f40f51b85d7c580a9",
+      "start": 0,
+      "end": 87,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -4831,6 +6079,15 @@
       "checker": true,
       "calls": [
         "upstream:error.todo-hoisting-simple-var-declaration.js"
+      ]
+    },
+    {
+      "key": "acd4f6c6faaf617e5c6edcbb01d2cdd6342d85e947f9522b83ab8585d33faf67",
+      "start": 0,
+      "end": 106,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -4950,6 +6207,15 @@
       ]
     },
     {
+      "key": "b0b677815962b8edd477f967e82329e8f3d690cb07353af005147bafb979ae07",
+      "start": 184,
+      "end": 208,
+      "checker": true,
+      "calls": [
+        "inline_iife_test.go:43/nested"
+      ]
+    },
+    {
       "key": "b0ef32db238a98dee67e78b8e7d8505947294ac8f1d3a37ecb10e5708edf6231",
       "start": 86,
       "end": 94,
@@ -4986,6 +6252,15 @@
       ]
     },
     {
+      "key": "b214983d07a46bb5f5b9048669b3caf9f707d4ff6a3d501ffa6f5dcff3903d7b",
+      "start": 0,
+      "end": 175,
+      "checker": true,
+      "calls": [
+        "inline_iife_test.go:43"
+      ]
+    },
+    {
       "key": "b224546fb9362c61008ee0fe399af337e16a5b88047fc73f1588e0af48b8b10a",
       "start": 292,
       "end": 395,
@@ -5004,12 +6279,30 @@
       ]
     },
     {
+      "key": "b30caaefc1d26cf14203fd105aa66b2c170106e9c7d8435ff01a25746b02a62e",
+      "start": 0,
+      "end": 110,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35"
+      ]
+    },
+    {
       "key": "b311967263a4e74436f7c4b6ab3790702ab564e815a16fd060fd735a3090538c",
       "start": 145,
       "end": 273,
       "checker": true,
       "calls": [
         "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "b32174b00c1abed0beea51009998b811803d8b270070a8be00ca121f98fc15f8",
+      "start": 0,
+      "end": 35,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -5033,6 +6326,26 @@
         "prune_non_escaping_scopes_test.go:445/nested",
         "scope_oracle_test.go:200/nested",
         "upstream:array-pattern-spread-creates-array.js/nested"
+      ]
+    },
+    {
+      "key": "b438854adf05af697a86bbeeb2935f383a727ac1120e4f970313b10d1c9f3e93",
+      "start": 165,
+      "end": 835,
+      "checker": true,
+      "calls": [
+        "clone_test.go:50",
+        "clone_test.go:55",
+        "clone_test.go:72"
+      ]
+    },
+    {
+      "key": "b482fb9ed02b75f6dcacfa7fff8ee94132697fca2427a8a0e9388f5590e69792",
+      "start": 45,
+      "end": 75,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-useMemo-async-callback.js/nested"
       ]
     },
     {
@@ -5090,6 +6403,15 @@
       ]
     },
     {
+      "key": "b6fae0918504c5d9c34781e06950a628c328e4b1221ff24ff97e980321b5abd1",
+      "start": 0,
+      "end": 97,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
+      ]
+    },
+    {
       "key": "b75cfea8e23e577a3c58c679ee7d136ceb2076907bea7682d3ee0daf7a92fb5d",
       "start": 0,
       "end": 48,
@@ -5105,6 +6427,17 @@
       "checker": true,
       "calls": [
         "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "b7806b6c2a6e84280aafa354d8372412d718f176d1e0193309ca71826b483aca",
+      "start": 489,
+      "end": 535,
+      "checker": true,
+      "calls": [
+        "clone_test.go:50/nested",
+        "clone_test.go:55/nested",
+        "clone_test.go:72/nested"
       ]
     },
     {
@@ -5185,6 +6518,24 @@
       ]
     },
     {
+      "key": "b98339ad9aad7a16563e177f3e65e28266459890e14a0249507c5b624a50d1c1",
+      "start": 0,
+      "end": 113,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "ba6475092cad405bdcb1fff1a49e3bf186200d46890f26d38e3f090afd03f9d5",
+      "start": 87,
+      "end": 207,
+      "checker": true,
+      "calls": [
+        "reactive_test.go:58"
+      ]
+    },
+    {
       "key": "ba79a8257449e3a60e110884d5f726b6f86cabdce092f71dbaf3dcb0b481bd21",
       "start": 529,
       "end": 571,
@@ -5251,6 +6602,33 @@
         "preserve_manual_memoization_score_test.go:552/nested",
         "prune_non_escaping_scopes_test.go:445/nested",
         "upstream:preserve-memo-validation/error.invalid-useCallback-captures-reassigned-context.ts/nested"
+      ]
+    },
+    {
+      "key": "bcfb122dbf2e61799e5510a126e0278315f118b50dac33dae234e4c87b9c35fa",
+      "start": 0,
+      "end": 131,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "bd09cd0047e6c1a8bca44a71e4d21cc36c496b0ad0b0dc6ebf9548485978ef81",
+      "start": 97,
+      "end": 317,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-local-variable-in-async-callback.js/nested/nested"
+      ]
+    },
+    {
+      "key": "be245e606fa9a3890966105c8e66be40162a4f8b3ea2c70395a45baf630cf092",
+      "start": 43,
+      "end": 103,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -5379,9 +6757,27 @@
       ]
     },
     {
+      "key": "c1ff891bd44cec3917ec86e51b181ca181bcc4e300d98dbdfca865de80033304",
+      "start": 110,
+      "end": 362,
+      "checker": true,
+      "calls": [
+        "inline_remap_test.go:310"
+      ]
+    },
+    {
       "key": "c216a8cb7650393028337d77ae7bb158e76483bd75df13f640c51d768940a691",
       "start": 0,
       "end": 117,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "c28feba632f3f9cd3eee59176cb3ec427158815ecaa6d22f202f98a30829e35a",
+      "start": 0,
+      "end": 82,
       "checker": false,
       "calls": [
         "lower_test.go:53"
@@ -5421,6 +6817,15 @@
       "checker": true,
       "calls": [
         "effects_react_state_test.go:55"
+      ]
+    },
+    {
+      "key": "c35ec8301dbde34965b907adaea93cd38f2f0b83d6cb231cfec82ead4fb7694c",
+      "start": 0,
+      "end": 149,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35"
       ]
     },
     {
@@ -5465,12 +6870,30 @@
       ]
     },
     {
+      "key": "c3d79d92cfe85bf142e6a7565d6baa9a34559860b8635de817b7367bd6a29ec4",
+      "start": 0,
+      "end": 78,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "c3e7f05fdeb2e1b0e4b6812daa39e3a01225e8a9362fdf389487b76f88a17565",
       "start": 32,
       "end": 83,
       "checker": true,
       "calls": [
         "effects_custom_hooks_test.go:47"
+      ]
+    },
+    {
+      "key": "c43b84ca4de881f5ec15ef8dff8e4ef2d00a8d2e552790864a2cb846bb2593a3",
+      "start": 0,
+      "end": 128,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -5483,12 +6906,30 @@
       ]
     },
     {
+      "key": "c4a3c96298ccbe6dc482b4ea33384b1aade1fd21cb1488fa5107b8e8bd116bb0",
+      "start": 194,
+      "end": 317,
+      "checker": true,
+      "calls": [
+        "inline_remap_test.go:310/nested"
+      ]
+    },
+    {
       "key": "c4ee8c84a492030638bfcd4cd26a859d1e65a8067f8ba9415c62ad79c570db22",
       "start": 0,
       "end": 62,
       "checker": true,
       "calls": [
         "upstream:error.propertyload-hook.js"
+      ]
+    },
+    {
+      "key": "c55f817d681201e014fdb57e3f22eadf8cb33ea302032c2a491b3c6fabf86927",
+      "start": 18,
+      "end": 75,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40/nested"
       ]
     },
     {
@@ -5528,6 +6969,15 @@
       ]
     },
     {
+      "key": "c62fba93c07ded474a82f643187124c4ea6bda5f7d0d4b4cdb2fc3eae02737d7",
+      "start": 0,
+      "end": 146,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "c64b1e218c70d808ed251bf659607c3c9b1650d7c552b15fc1827cd22a06cd9c",
       "start": 43,
       "end": 57,
@@ -5546,6 +6996,15 @@
       ]
     },
     {
+      "key": "c6786da085a0bdcfe97ae0010d95a94387c70ac5b6cf50dee4dde8c59cb31d97",
+      "start": 0,
+      "end": 160,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "c6957e86ee8aecabc0b1fb90a2b0cf6b1b34e858903639fc096922785f474f9b",
       "start": 0,
       "end": 178,
@@ -5555,12 +7014,39 @@
       ]
     },
     {
+      "key": "c6c8f4b399cd125406ae13de60656296db17854ab3afb2d118d8c516b6e39b61",
+      "start": 43,
+      "end": 190,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "c6e11ec7d65b21d17d84604533bfcac592dcc034268087812227a03468813a1e",
+      "start": 0,
+      "end": 75,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "c70f85612a238c5126946dff19d4c84224178608d6b7b95e9235ece68798a720",
       "start": 221,
       "end": 298,
       "checker": true,
       "calls": [
         "upstream:exhaustive-deps/error.invalid-missing-nonreactive-dep-inner-function.js/nested"
+      ]
+    },
+    {
+      "key": "c7223573e28ec2f922e69a1b5245397d0bbd92381515a871b49679a53a592122",
+      "start": 0,
+      "end": 86,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -5591,6 +7077,15 @@
       ]
     },
     {
+      "key": "c7ed778de1dd9ce5dd53c20ffa404bd36e5d63754346ec7bbda45a0e9f87a310",
+      "start": 53,
+      "end": 70,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35/nested"
+      ]
+    },
+    {
       "key": "c7eeda1fcc9215f0b184471a7dea4c8c832febc54f84131cbeecbf3462b82279",
       "start": 95,
       "end": 140,
@@ -5606,6 +7101,15 @@
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52"
+      ]
+    },
+    {
+      "key": "c8d733f11dc642312e6810a11da653d6f2b9fb0911558f917ec0dfc1b8dae6b5",
+      "start": 0,
+      "end": 154,
+      "checker": true,
+      "calls": [
+        "inline_iife_test.go:43"
       ]
     },
     {
@@ -5668,6 +7172,15 @@
       ]
     },
     {
+      "key": "ca873ab35190caa74c38b77457d355f7f876db504cb05a1dc501d17a05ce0d9e",
+      "start": 0,
+      "end": 102,
+      "checker": true,
+      "calls": [
+        "ssa_test.go:43"
+      ]
+    },
+    {
       "key": "cb31f6eade7ce1551e200fc77494cf89a266b760475e648fa946b71d9b5a2c30",
       "start": 0,
       "end": 88,
@@ -5686,6 +7199,15 @@
       ]
     },
     {
+      "key": "cbbd73d6107c24ff8c63ba60527f105405c9edb48b4889365ca6c22adb55b50f",
+      "start": 0,
+      "end": 69,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "cbd47c2357a22c48d6ce9cae4535150bcc0ae95863fe6ee6ddbe01c6e2c631eb",
       "start": 545,
       "end": 553,
@@ -5695,6 +7217,24 @@
         "preserve_manual_memoization_score_test.go:552/nested/nested",
         "prune_non_escaping_scopes_test.go:445/nested/nested",
         "upstream:preserve-memo-validation/preserve-use-callback-stable-built-ins.ts/nested/nested"
+      ]
+    },
+    {
+      "key": "cbf5c996699af6d5ef1b99b4e98099655a1896742e3af9395d799d984d17741c",
+      "start": 0,
+      "end": 211,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "cc18949f8708e56aa1035a8f9838bb5e53c4f90692f2d035aabaaa41f5961f68",
+      "start": 0,
+      "end": 161,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -5725,6 +7265,15 @@
       ]
     },
     {
+      "key": "cc49b2a82b6cc321d725ede4e8072a74e4a186cfd091604e55b5b60d988434be",
+      "start": 42,
+      "end": 262,
+      "checker": true,
+      "calls": [
+        "inline_iife_test.go:43"
+      ]
+    },
+    {
       "key": "cd9b27325e61fe8c46cb8c00193c9123945ca0b92a644fe612d4a79a46a37550",
       "start": 67,
       "end": 215,
@@ -5745,6 +7294,15 @@
         "prune_non_escaping_scopes_test.go:445",
         "scope_oracle_test.go:200",
         "upstream:preserve-memo-validation/useCallback-infer-more-specific.ts"
+      ]
+    },
+    {
+      "key": "ce6bdf153caf70ff9ace7fe815e5fdcf5f7609fe8bca16be327292502ffdb3ce",
+      "start": 0,
+      "end": 165,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -5817,6 +7375,15 @@
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "d008c1356eea0a2c3f6b7fdbaf9cbb8e88b491fab7ddd1a8098879a9795ee3e1",
+      "start": 0,
+      "end": 138,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35"
       ]
     },
     {
@@ -5934,6 +7501,15 @@
       ]
     },
     {
+      "key": "d58ae7bb1bc5ae79ed955b5246e165fa90c7f935b7b2942e5456bad442fa9108",
+      "start": 0,
+      "end": 259,
+      "checker": true,
+      "calls": [
+        "inline_iife_test.go:43"
+      ]
+    },
+    {
       "key": "d64566331aac8c8fb5b7464f82fe8ef53fe643f29565854cc41403b2a8add726",
       "start": 0,
       "end": 205,
@@ -5949,6 +7525,24 @@
       "checker": true,
       "calls": [
         "effects_custom_hooks_test.go:47"
+      ]
+    },
+    {
+      "key": "d69836a59b8d7c68fa0fa99b191f949bc1b71245982a850bbb1225ffda3732a1",
+      "start": 0,
+      "end": 76,
+      "checker": true,
+      "calls": [
+        "upstream:error.default-param-accesses-local.js"
+      ]
+    },
+    {
+      "key": "d6c010fe405f7c2c487b825b08eb350ef603018e733354181b4d19192ee9582b",
+      "start": 0,
+      "end": 204,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -5970,6 +7564,15 @@
       "checker": true,
       "calls": [
         "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "d75420df0c84f3bbe5b42d57b052cfaedd2eb6fbbe15f73d29d770418413f587",
+      "start": 60,
+      "end": 120,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35/nested"
       ]
     },
     {
@@ -6030,6 +7633,15 @@
       ]
     },
     {
+      "key": "d83cd750ea37f7d4bc0ef63826076ceebf5441a481c442b715d0a71440bac4ee",
+      "start": 0,
+      "end": 63,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "d842b0ed06cf1bb7bb72884e6524466eb206c53edc49add5a1ff0f627d85bba1",
       "start": 0,
       "end": 244,
@@ -6071,12 +7683,30 @@
       ]
     },
     {
+      "key": "d98a43a3941d1f98b35b3edd24d9151a4fd6a72cf5a8ad9485f3264c24d6f7c2",
+      "start": 0,
+      "end": 124,
+      "checker": true,
+      "calls": [
+        "ssa_test.go:43"
+      ]
+    },
+    {
       "key": "d9f97cf4d8975d8c65ee7467195aa6cd78d7c5b36c5d9c2622cb7aaef4036a19",
       "start": 0,
       "end": 55,
       "checker": true,
       "calls": [
         "effects_test.go:40"
+      ]
+    },
+    {
+      "key": "da3653366914cca5128422763c6f0f40421d8ed46be4ef4af9edef18a42b23d8",
+      "start": 75,
+      "end": 155,
+      "checker": true,
+      "calls": [
+        "inline_iife_test.go:43/nested"
       ]
     },
     {
@@ -6095,6 +7725,15 @@
       "checker": true,
       "calls": [
         "effects_test.go:40"
+      ]
+    },
+    {
+      "key": "da797743c3af6901b3457d04fe6466f01b8284e2f5b5278fde3eb9848ef928d8",
+      "start": 0,
+      "end": 211,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -6137,6 +7776,15 @@
       ]
     },
     {
+      "key": "dbf6b4f27083f45acb6492fcf138c9a21e0163ba433787bb1fd7097dfdbc0ece",
+      "start": 0,
+      "end": 95,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35"
+      ]
+    },
+    {
       "key": "dbf99a2b2855cce57c5e0a71a0462604e934d70a7891af9580e02e85b90c8ebe",
       "start": 92,
       "end": 260,
@@ -6160,6 +7808,16 @@
         "prune_non_escaping_scopes_test.go:445",
         "scope_oracle_test.go:200",
         "upstream:preserve-memo-validation/useMemo-constant-prop.ts"
+      ]
+    },
+    {
+      "key": "dc671d4c84de9449448e0e194f2e7902c5ec56e7ba4b14132cc63191e389bc33",
+      "start": 0,
+      "end": 142,
+      "checker": true,
+      "calls": [
+        "reactive_test.go:231",
+        "reactive_test.go:58"
       ]
     },
     {
@@ -6190,12 +7848,30 @@
       ]
     },
     {
+      "key": "dd934bf466fedc3c0a00377a7f1edb1667c59e7e654d68c49994de0a469356e8",
+      "start": 0,
+      "end": 94,
+      "checker": true,
+      "calls": [
+        "align_method_calls_test.go:123"
+      ]
+    },
+    {
       "key": "ddc3c3efe17e36bd0280ed0769ad7ca4a603540f5fd8366f43c04d0bba6e9ec7",
       "start": 0,
       "end": 504,
       "checker": true,
       "calls": [
         "upstream:fault-tolerance/error.try-finally-and-ref-access.js"
+      ]
+    },
+    {
+      "key": "ddcd4ba90d765a5e24d8d9b3714f05f79e3a05be2326111bb1e86da2fdc3ed3a",
+      "start": 0,
+      "end": 214,
+      "checker": true,
+      "calls": [
+        "reactive_test.go:58"
       ]
     },
     {
@@ -6214,6 +7890,15 @@
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52"
+      ]
+    },
+    {
+      "key": "de14a231c8821bd6872118bf57e1efbd36bbe13a38d25df4375817743119ad27",
+      "start": 0,
+      "end": 115,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
       ]
     },
     {
@@ -6241,6 +7926,24 @@
       "checker": true,
       "calls": [
         "upstream:error.hook-property-load-local-hook.js"
+      ]
+    },
+    {
+      "key": "defc52aa3216b4732693100fcc76dae22786bb1ce478bc2a9eb8cf6ccd02a975",
+      "start": 42,
+      "end": 159,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
+      ]
+    },
+    {
+      "key": "df2dd18eff483446a12e27f9d8bad55563a697f29527fa946dff5699e4f31c60",
+      "start": 0,
+      "end": 70,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
       ]
     },
     {
@@ -6328,6 +8031,15 @@
       ]
     },
     {
+      "key": "e14e17ddab642715372904b478041a6d4d822239a26a787adec9967dd3cdefc4",
+      "start": 89,
+      "end": 153,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35/nested"
+      ]
+    },
+    {
       "key": "e187b72bb140bb605f3ea4173f709bafbe7aacb5a9d7d8c86391c564623c95ec",
       "start": 73,
       "end": 81,
@@ -6346,12 +8058,30 @@
       ]
     },
     {
+      "key": "e296e6657ac441eca330b942bbfc65e6612cc5c8f65dba859751fa3c93fc5b96",
+      "start": 0,
+      "end": 169,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
       "key": "e2b60663f5cc19e36257efc2745e24671dc34bcb25781691f9be85b984b1bf26",
       "start": 55,
       "end": 109,
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52"
+      ]
+    },
+    {
+      "key": "e312ae5e356871c2e1410083d1732b1b7721a4050c2272794f8f603ddd0d8fab",
+      "start": 0,
+      "end": 123,
+      "checker": true,
+      "calls": [
+        "ssa_test.go:43"
       ]
     },
     {
@@ -6429,6 +8159,15 @@
       ]
     },
     {
+      "key": "e4e64bb47dcc475f6af6ca44fd09ccae5cf6688b400cd3f7977a6980bd2e8fc4",
+      "start": 0,
+      "end": 118,
+      "checker": true,
+      "calls": [
+        "reactive_test.go:58"
+      ]
+    },
+    {
       "key": "e4f7d4908a874803123ebf7d159891948c7e918fb852f9a65c7189bab9ef696b",
       "start": 30,
       "end": 129,
@@ -6456,6 +8195,15 @@
       ]
     },
     {
+      "key": "e5633fe420da0a849dfa461a9ca3d7ca194c2a529c48746322e0d5a68694421e",
+      "start": 0,
+      "end": 61,
+      "checker": true,
+      "calls": [
+        "ssa_test.go:43"
+      ]
+    },
+    {
       "key": "e5f0cd64355664b0069071492f13916a946153223a0ffacca78bb43164ebbe4e",
       "start": 794,
       "end": 811,
@@ -6474,12 +8222,39 @@
       ]
     },
     {
+      "key": "e63049f9f87ab59576541950f6321b22da0e55e6cbb7cc649fb83ea1342ce993",
+      "start": 0,
+      "end": 95,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-useMemo-async-callback.js"
+      ]
+    },
+    {
       "key": "e6a561d2c47142f1144b49eb97402118140af13cb8b97b739d2f81a5d3c54296",
       "start": 74,
       "end": 204,
       "checker": true,
       "calls": [
         "upstream:error.hoisting-simple-function-declaration.js/nested"
+      ]
+    },
+    {
+      "key": "e6b72d18b0da37ade03fcc66d8bdf6c84176661a63995a3cc7125adce5bff5e3",
+      "start": 0,
+      "end": 248,
+      "checker": true,
+      "calls": [
+        "inline_iife_test.go:43"
+      ]
+    },
+    {
+      "key": "e71244dd006451c56f0a7ca185ecc1fdce8c8591c5dafddd2bca1e298389a0c4",
+      "start": 113,
+      "end": 146,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-local-variable-in-multiple-async-callbacks.tsx/nested"
       ]
     },
     {
@@ -6546,6 +8321,15 @@
       "checker": true,
       "calls": [
         "upstream:error.invalid-reassign-local-variable-in-effect.js/nested"
+      ]
+    },
+    {
+      "key": "e8537b8be0a25c259a1a67a7c4e409df50f7f9c447c90a29a7acf4d596ccd02e",
+      "start": 42,
+      "end": 168,
+      "checker": true,
+      "calls": [
+        "reactive_namespace_refs_test.go:120"
       ]
     },
     {
@@ -6630,6 +8414,15 @@
       ]
     },
     {
+      "key": "eaa14a6ea5f0de08a821c46f46c898277797467ef47b05cdd158a06457dd96a3",
+      "start": 1849,
+      "end": 3700,
+      "checker": true,
+      "calls": [
+        "identifier_slab_test.go:32"
+      ]
+    },
+    {
       "key": "ead1922e546ee4d4d1ca3641bf5f41312d05febd39b1d5d4c417cd4ca4b7d829",
       "start": 0,
       "end": 88,
@@ -6657,6 +8450,15 @@
       ]
     },
     {
+      "key": "ebcde384a5dc1f3b4c8d9c8cb71f7fe244d7d909c01d4a6d0d5fdad171aec616",
+      "start": 0,
+      "end": 213,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "ebfb12e1f9f229f5f2830834ac2a8dd69283869e05e0fb847022f51115bd914a",
       "start": 0,
       "end": 521,
@@ -6681,6 +8483,24 @@
       "checker": true,
       "calls": [
         "drop_manual_memoization_deps_test.go:202"
+      ]
+    },
+    {
+      "key": "eca8ea7a05cf643bb72ada77d48e0201627f96e507759fcb26fdaba634a6565b",
+      "start": 32,
+      "end": 82,
+      "checker": true,
+      "calls": [
+        "lower_global_test.go:39"
+      ]
+    },
+    {
+      "key": "ecb7d150a093988a888a63ad509181cc3c53b2a8439bca386a35718c9b4487f1",
+      "start": 0,
+      "end": 130,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -6716,6 +8536,15 @@
       ]
     },
     {
+      "key": "ed8c0e1c29654184f56530a47c013a8d6dc55ba91a1136af8b06cf3fbce1ac7e",
+      "start": 191,
+      "end": 263,
+      "checker": true,
+      "calls": [
+        "upstream:error.typescript-this-param-in-compiled-function.ts/nested/nested"
+      ]
+    },
+    {
       "key": "ed9777e82579f8d0a5b02815e088543113f86a7f3e33cd9fe24629987ab23034",
       "start": 84,
       "end": 92,
@@ -6734,12 +8563,30 @@
       ]
     },
     {
+      "key": "ee29ac1b02aebab8e6ac83c1bea586a17d0554387d902c1f9c214c63d00bd755",
+      "start": 91,
+      "end": 223,
+      "checker": true,
+      "calls": [
+        "reactive_test.go:58"
+      ]
+    },
+    {
       "key": "ee304fb3baf4308b57e3992a5f6da7211c54a2db236ba84ff7e72489033c00f7",
       "start": 222,
       "end": 249,
       "checker": true,
       "calls": [
         "upstream:error.invalid-mutation-of-possible-props-phi-indirect.js/nested"
+      ]
+    },
+    {
+      "key": "eea45afa6d6b30935f02ca9b1f0e58ae253e26937e71cad1dfe67570c2a9c8d4",
+      "start": 74,
+      "end": 150,
+      "checker": true,
+      "calls": [
+        "inline_iife_test.go:43/nested"
       ]
     },
     {
@@ -6758,6 +8605,15 @@
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "ef61988a969b337f5b7a0f739dfdac45e07d906f4050ed312b2120b6059fdb89",
+      "start": 66,
+      "end": 87,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35/nested"
       ]
     },
     {
@@ -6838,6 +8694,15 @@
       ]
     },
     {
+      "key": "f1d2b5d54116e71e2ab57b0049c757eb2e8946c2fe5f6439e59512a3369b1895",
+      "start": 0,
+      "end": 63,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "f229ab1e8d04999b26398d7940bd030a4aed679e1de764727e2698a3f90dc0db",
       "start": 958,
       "end": 1065,
@@ -6853,6 +8718,15 @@
       "checker": true,
       "calls": [
         "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "f27ba498b3a2b56eb424b91e5a5444b5815d959950ac1d555502c53da643d05a",
+      "start": 0,
+      "end": 86,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
       ]
     },
     {
@@ -6910,6 +8784,15 @@
       ]
     },
     {
+      "key": "f4a83910c49bb5f36ece26d8db192b376db6137e7caf825760dba706f94528a8",
+      "start": 0,
+      "end": 335,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "f4af2d33a57482249d010d8eac5d26f973ec680c3d7ab9cda4f0d480fad49280",
       "start": 199,
       "end": 213,
@@ -6937,6 +8820,15 @@
       ]
     },
     {
+      "key": "f4ffa80ed51aad5ed8b8eaa24f9c4b2a3af0e249447e2fbcd038a24415a2f6a3",
+      "start": 70,
+      "end": 121,
+      "checker": true,
+      "calls": [
+        "inline_iife_test.go:43/nested"
+      ]
+    },
+    {
       "key": "f5bce0d124bc4a2cb287a1b4d449122938e183e0f55cfe5be6cff8e945f2aad6",
       "start": 0,
       "end": 58,
@@ -6946,12 +8838,30 @@
       ]
     },
     {
+      "key": "f66c3ab17b99ede13f98d72c86fdd5f6158ae002562411138526a56af653f78c",
+      "start": 0,
+      "end": 88,
+      "checker": true,
+      "calls": [
+        "ssa_test.go:43"
+      ]
+    },
+    {
       "key": "f68229f88925f7865eb192c371ef4eb8bcd635df5cb52611902509bb67ba8063",
       "start": 154,
       "end": 1052,
       "checker": true,
       "calls": [
         "upstream:error.invalid-reassign-local-variable-in-effect.js/nested"
+      ]
+    },
+    {
+      "key": "f6e1755f60859cf1f416d767722c3435e65d96de4165cfe8aded041a759ede87",
+      "start": 89,
+      "end": 97,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35/nested"
       ]
     },
     {
@@ -7164,6 +9074,17 @@
       ]
     },
     {
+      "key": "fdc0d8065a97f14b8bddc70777a76b2478e7a129e7bd3dda953f0b396984f560",
+      "start": 624,
+      "end": 720,
+      "checker": true,
+      "calls": [
+        "clone_test.go:50/nested",
+        "clone_test.go:55/nested",
+        "clone_test.go:72/nested"
+      ]
+    },
+    {
       "key": "fdf6e2f2762e942f946ce0e23d3257f4145f3ebb03a0d68e314a97dbb3d9e399",
       "start": 795,
       "end": 886,
@@ -7187,6 +9108,15 @@
         "preserve_manual_memoization_score_test.go:552/nested",
         "prune_non_escaping_scopes_test.go:445/nested",
         "upstream:error.ref-like-name-not-a-ref.js/nested"
+      ]
+    },
+    {
+      "key": "fe3a278ec72d08534f2551d2a760c2d1c6b6535909161719e7d836839a4dd54d",
+      "start": 0,
+      "end": 73,
+      "checker": true,
+      "calls": [
+        "ssa_test.go:43"
       ]
     },
     {
@@ -7241,6 +9171,15 @@
       "checker": true,
       "calls": [
         "invoked_functions_test.go:29/nested"
+      ]
+    },
+    {
+      "key": "feffd4a7bb987667ac0f148b0287b029149c643ec7d318f1db2619af22346c13",
+      "start": 0,
+      "end": 67,
+      "checker": true,
+      "calls": [
+        "ssa_test.go:43"
       ]
     },
     {
@@ -7757,5 +9696,10 @@
       ],
       "reason": "Flow"
     }
-  ]
+  ],
+  "nativeConstructionCorpusFunctionsMatched": 966,
+  "nativePathProbesMatched": 63,
+  "nodeConstructionCorpusFunctionsMatched": 1013,
+  "nodePathProbesMatched": 64,
+  "currentNativeBuild": "blocked: boolean | undefined field read"
 }

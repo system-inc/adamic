@@ -39,8 +39,8 @@ export type ValueType = { readonly kind: 'TypeCastExpression'; value: PlaceInter
     | { readonly kind: 'DeclareLocal'; lvalue: PlaceInterface; readonly declarationKind: number }
     | { readonly kind: 'StoreLocal' | 'StoreContext'; lvalue: PlaceInterface; value: PlaceInterface; readonly declarationKind: number }
     | { readonly kind: 'PrefixUpdate' | 'PostfixUpdate'; lvalue: PlaceInterface; readonly operation: string; value: PlaceInterface }
-    | { readonly kind: 'PropertyLoad'; object: PlaceInterface; readonly property: string }
-    | { readonly kind: 'ComputedLoad'; object: PlaceInterface; property: PlaceInterface }
+    | { readonly kind: 'PropertyLoad'; object: PlaceInterface; readonly property: string; readonly optional: boolean }
+    | { readonly kind: 'ComputedLoad'; object: PlaceInterface; property: PlaceInterface; readonly optional: boolean }
     | { readonly kind: 'PropertyStore'; object: PlaceInterface; readonly property: string; value: PlaceInterface }
     | { readonly kind: 'ComputedStore'; object: PlaceInterface; property: PlaceInterface; value: PlaceInterface }
     | { readonly kind: 'CallExpression'; callee: PlaceInterface; readonly args: ArgumentInterface[]; readonly optional: boolean; readonly origin: ModuleExportOriginInterface }
@@ -67,7 +67,7 @@ export class Instruction {
 }
 // A tagged arena record; accessors validate the fields required by each terminal kind.
 export interface TerminalType {
-    readonly kind: 'Return' | 'Throw' | 'Unreachable' | 'Unsupported' | 'Goto' | 'If' | 'Branch' | 'Logical' | 'Ternary' | 'While' | 'DoWhile' | 'For' | 'ForOf' | 'ForIn' | 'Switch' | 'Label' | 'Try';
+    readonly kind: 'Optional' | 'Return' | 'Throw' | 'Unreachable' | 'Unsupported' | 'Goto' | 'If' | 'Branch' | 'Logical' | 'Ternary' | 'While' | 'DoWhile' | 'For' | 'ForOf' | 'ForIn' | 'Switch' | 'Label' | 'Try';
     value?: PlaceInterface;
     readonly block?: BlockIndex;
     readonly variant?: number;
@@ -76,6 +76,7 @@ export interface TerminalType {
     readonly consequent?: BlockIndex;
     readonly alternate?: BlockIndex;
     readonly fallthrough?: BlockIndex;
+    readonly optional?: boolean;
     readonly operator?: string;
     readonly loop?: BlockIndex;
     readonly init?: BlockIndex;
@@ -98,6 +99,8 @@ export class BasicBlock {
     constructor(arenaIndices: readonly BlockIndex[], id: BlockIndex, terminal: TerminalType, kind: string = 'block') { this.arenaIndices = arenaIndices; this.id = id; this.terminal = terminal; this.kind = kind; }
 }
 export class HIRFunction {
+    isAsync = false;
+    isGenerator = false;
     readonly name: string;
     readonly kind: string;
     readonly blockIndices: BlockIndex[] = [];

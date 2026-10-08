@@ -31,7 +31,7 @@ function graphFor(fnOwner: HIRFunction): GraphInterface<HIRFunction, BasicBlock,
     eachEdge: function(block, visit) {
         const terminal = block.terminal;
         const edge = (index: HIRBlockIndex, kind: EdgeType): void => { visit(BlockIndex.read(block.arenaIndices, index) + 1, kind); };
-        if(terminal.kind === 'If' || terminal.kind === 'Branch' || terminal.kind === 'Logical' || terminal.kind === 'Ternary' || terminal.kind === 'While' || terminal.kind === 'DoWhile' || terminal.kind === 'For' || terminal.kind === 'ForOf' || terminal.kind === 'ForIn' || terminal.kind === 'Switch' || terminal.kind === 'Label' || terminal.kind === 'Try') { edge(terminal.fallthrough ?? panic('missing fallthrough'), 'Fallthrough'); }
+        if(terminal.kind === 'If' || terminal.kind === 'Branch' || terminal.kind === 'Optional' || terminal.kind === 'Logical' || terminal.kind === 'Ternary' || terminal.kind === 'While' || terminal.kind === 'DoWhile' || terminal.kind === 'For' || terminal.kind === 'ForOf' || terminal.kind === 'ForIn' || terminal.kind === 'Switch' || terminal.kind === 'Label' || terminal.kind === 'Try') { edge(terminal.fallthrough ?? panic('missing fallthrough'), 'Fallthrough'); }
         if(terminal.kind === 'Goto') { edge(terminal.block ?? panic('missing goto target'), 'Real'); }
         else if(terminal.kind === 'If' || terminal.kind === 'Branch') { edge(terminal.consequent ?? panic('missing consequent'), 'Real'); edge(terminal.alternate ?? panic('missing alternate'), 'Real'); }
         else if(terminal.kind === 'DoWhile') { edge(terminal.loop ?? panic('missing do loop'), 'Real'); }
@@ -39,7 +39,7 @@ function graphFor(fnOwner: HIRFunction): GraphInterface<HIRFunction, BasicBlock,
         else if(terminal.kind === 'Label') { edge(terminal.block ?? panic('missing label block'), 'Real'); }
         else if(terminal.kind === 'Try') { edge(terminal.block ?? panic('missing try block'), 'Real'); edge(terminal.handler ?? panic('missing handler'), 'Real'); }
         else if(terminal.kind === 'Switch') { const cases = terminal.cases ?? panic('missing cases'); for(const clause of cases) { edge(clause.block, 'Real'); } if(!cases.some((clause) => clause.test === undefined)) { edge(terminal.fallthrough ?? panic('missing switch exit'), 'Real'); } }
-        else if(terminal.kind === 'Logical' || terminal.kind === 'Ternary' || terminal.kind === 'While') { edge(testBlock(terminal), 'Real'); }
+        else if(terminal.kind === 'Optional' || terminal.kind === 'Logical' || terminal.kind === 'Ternary' || terminal.kind === 'While') { edge(testBlock(terminal), 'Real'); }
     },
     endsInReturn: (block) => block.terminal.kind === 'Return',
     instructionCount: (_fn, block) => block.instructions.length,

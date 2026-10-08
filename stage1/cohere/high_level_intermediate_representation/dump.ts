@@ -1,4 +1,4 @@
-import { testPlace } from './core.ts';
+import { testPlace, testBlock } from './core.ts';
 import { panic } from 'adamic';
 import type { ConstructedHIR, HIRArena, FunctionIndex, HIRFunction, PlaceInterface, Instruction, TerminalType } from './core.ts';
 export function placeText(place: PlaceInterface): string {
@@ -7,7 +7,7 @@ export function placeText(place: PlaceInterface): string {
 export function dump(graph: ConstructedHIR): string { return dumpFunction(graph.arena, graph.root); }
 function dumpFunction(arena: HIRArena, index: FunctionIndex): string {
     const fn = arena.read(index);
-    let out = `hir-v1\nfunction ${fn.name} ${fn.kind} entry=${fn.entry.slot + 1} async=0 generator=0\n`;
+    let out = `hir-v1\nfunction ${fn.name} ${fn.kind} entry=${fn.entry.slot + 1} async=${fn.isAsync ? 1 : 0} generator=${fn.isGenerator ? 1 : 0}\n`;
     out += `params ${fn.params.map((place) => placeText(place)).join(',')}\ncontext ${fn.context.map((place) => placeText(place)).join(',')}\nreturns ${placeText(fn.returns)}\n`;
     for(const identifier of fn.identifiers) { out += `identifier ${identifier.id.slot} ${identifier.declaration.slot + 1} ${identifier.name}\n`; }
     const seen = new Map<number, boolean>();
@@ -84,8 +84,8 @@ function instructionText(instruction: Instruction, arena: HIRArena, fn: HIRFunct
     else if(value.kind === 'FunctionExpression') { arena.read(value.functionReference.index); if(fn.functions[value.functionReference.ordinal] !== value.functionReference.index) { panic('function reference ordinal disagrees with arena index'); } payload = `{"Captures":[${value.captures.map((place) => quote(placeText(place))).join(',')}],"Function":${value.functionReference.ordinal}}`; }
     else if(value.kind === 'StoreLocal' || value.kind === 'StoreContext') { payload = `{"Kind":${value.declarationKind},"LValue":${quote(placeText(value.lvalue))},"Value":${quote(placeText(value.value))}}`; }
     else if(value.kind === 'PrefixUpdate' || value.kind === 'PostfixUpdate') { payload = `{"LValue":${quote(placeText(value.lvalue))},"Operation":${quote(value.operation)},"Value":${quote(placeText(value.value))}}`; }
-    else if(value.kind === 'PropertyLoad') { payload = `{"Object":${quote(placeText(value.object))},"Optional":false,"Property":${quote(value.property)}}`; }
-    else if(value.kind === 'ComputedLoad') { payload = `{"Object":${quote(placeText(value.object))},"Optional":false,"Property":${quote(placeText(value.property))}}`; }
+    else if(value.kind === 'PropertyLoad') { payload = `{"Object":${quote(placeText(value.object))},"Optional":${value.optional ? 'true' : 'false'},"Property":${quote(value.property)}}`; }
+    else if(value.kind === 'ComputedLoad') { payload = `{"Object":${quote(placeText(value.object))},"Optional":${value.optional ? 'true' : 'false'},"Property":${quote(placeText(value.property))}}`; }
     else if(value.kind === 'PropertyStore') { payload = `{"Object":${quote(placeText(value.object))},"Property":${quote(value.property)},"Value":${quote(placeText(value.value))}}`; }
     else if(value.kind === 'ComputedStore') { payload = `{"Object":${quote(placeText(value.object))},"Property":${quote(placeText(value.property))},"Value":${quote(placeText(value.value))}}`; }
     else if(value.kind === 'CallExpression' || value.kind === 'MethodCall' || value.kind === 'NewExpression') {
@@ -105,6 +105,7 @@ function terminalText(terminal: TerminalType): string {
     if(terminal.kind === 'Throw') { return `{"Value":${quote(placeText(terminal.value ?? panic('missing terminal value')))}}`; }
     if(terminal.kind === 'Goto') { return `{"Block":${(terminal.block ?? panic('missing terminal index')).slot + 1},"Variant":${terminal.variant}}`; }
     if(terminal.kind === 'If' || terminal.kind === 'Branch') { return `{"Alternate":${(terminal.alternate ?? panic('missing terminal index')).slot + 1},"Consequent":${(terminal.consequent ?? panic('missing terminal index')).slot + 1},"Fallthrough":${(terminal.fallthrough ?? panic('missing terminal index')).slot + 1},"Test":${quote(placeText(testPlace(terminal)))}}`; }
+    if(terminal.kind === 'Optional') { return `{"Fallthrough":${(terminal.fallthrough ?? panic('missing optional exit')).slot + 1},"Optional":${terminal.optional ? 'true' : 'false'},"Test":${testBlock(terminal).slot + 1}}`; }
     if(terminal.kind === 'Logical') { return `{"Fallthrough":${(terminal.fallthrough ?? panic('missing terminal index')).slot + 1},"Operator":${quote(terminal.operator ?? panic('missing logical operator'))},"Test":${(terminal.testBlock ?? panic('missing terminal index')).slot + 1}}`; }
     if(terminal.kind === 'Ternary') { return `{"Fallthrough":${(terminal.fallthrough ?? panic('missing terminal index')).slot + 1},"Test":${(terminal.testBlock ?? panic('missing terminal index')).slot + 1}}`; }
     if(terminal.kind === 'While' || terminal.kind === 'DoWhile') { return `{"Fallthrough":${(terminal.fallthrough ?? panic('missing terminal index')).slot + 1},"Loop":${(terminal.loop ?? panic('missing terminal index')).slot + 1},"Test":${(terminal.testBlock ?? panic('missing terminal index')).slot + 1}}`; }
