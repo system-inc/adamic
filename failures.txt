@@ -36,6 +36,10 @@
     wasi_test.go:38: /workspace/adamic/internal/oracle/testdata/json_encode_objects.a:54:23: Adamic 0.1 refuses optional property note in Optional absent from structural source { name: string; count: number; }, which can hide fields; declare note on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
 --- FAIL: TestWASIAgreesWithNode/internal/oracle/testdata/json_encode_objects.a (0.12s)
 
+== github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode
+=== RUN   TestWASIAgreesWithNode
+--- FAIL: TestWASIAgreesWithNode (475.49s)
+
 == github.com/system-inc/adamic/internal/oracle TestWasmtimeAgreesWithNode (skipped; no census row matches its name)
 === RUN   TestWasmtimeAgreesWithNode
     wasi_engines_test.go:66: set ADAMIC_ORACLE_WASMTIME=1
