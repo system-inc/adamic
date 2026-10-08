@@ -95,7 +95,7 @@ func TestWASIRunnerCatchesMutants(t *testing.T) {
 			t.Fatal(err)
 		}
 		command := bounded(t, compiler, "--target=wasm32-wasi", "--sysroot="+sysroot, "-O2", "-mexec-model=command", source, "-o", binary)
-		if output, err := command.CombinedOutput(); err != nil {
+		if output, err := combinedChildOutput(command); err != nil {
 			t.Fatalf("probe build: %v\n%s", err, output)
 		}
 		return execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "wasi.mjs"), binary)
@@ -142,7 +142,7 @@ func TestWASIEmission(t *testing.T) {
 				t.Fatal(err)
 			}
 			flags := append(native.Flags(options), "-I", filepath.Join(repository, "internal", "native", "runtime"), "-c", source, "-o", filepath.Join(directory, "main.o"))
-			if output, err := boundedCompile(t, compiler, flags...).CombinedOutput(); err != nil {
+			if output, err := combinedChildOutput(boundedCompile(t, compiler, flags...)); err != nil {
 				t.Fatalf("emitted C: %v\n%s", err, output)
 			}
 		})

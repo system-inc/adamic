@@ -7,6 +7,9 @@ import pty
 import struct
 import subprocess
 import sys
+sys.dont_write_bytecode = True
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../oracle')))
+from child_progress import progress, watch_files, communicate
 import tempfile
 import threading
 import time
@@ -34,6 +37,7 @@ elif kind == 'backpressure':
             if not piece:
                 break
             pieces.append(piece)
+            progress(piece)
         os.close(reader)
     reading = threading.Thread(target=drain)
     reading.start()
@@ -44,6 +48,7 @@ else:
 environment = os.environ.copy()
 environment['ASAN_OPTIONS'] = 'detect_leaks=0'
 child = subprocess.Popen(sys.argv[2:], stdout=destination, stderr=subprocess.PIPE, env=environment)
+watching = watch_files(child, [destination])
 if kind == 'tty':
     # Read the terminal while the child runs: macOS drops what a terminal holds once its
     # last writer closes, where Linux keeps it readable until EIO.
@@ -58,17 +63,18 @@ if kind == 'tty':
             if not piece:
                 break
             pieces.append(piece)
+            progress(piece)
     reading = threading.Thread(target=drain_terminal)
     reading.start()
-output, error = child.communicate(timeout=15)
+output, error = communicate(child)
 if kind == 'backpressure':
     destination.close()
-    reading.join(timeout=15)
+    reading.join()
     if reading.is_alive():
         raise RuntimeError('pipe reader did not finish')
     output = b''.join(pieces)
 elif kind == 'tty':
-    reading.join(timeout=15)
+    reading.join()
     if reading.is_alive():
         raise RuntimeError('terminal reader did not finish')
     output = b''.join(pieces)

@@ -4,6 +4,9 @@ import json
 import os
 import subprocess
 import sys
+sys.dont_write_bytecode = True
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../oracle')))
+from child_progress import progress, watch_files, communicate
 import tempfile
 import errno
 import threading
@@ -30,6 +33,7 @@ with tempfile.TemporaryDirectory(prefix='node-process-barrier-') as barrier_dire
             if not part:
                 return
             pieces.append(part)
+            progress(part)
             if announce and not ready.is_set():
                 prefix = (prefix + part)[:6]
                 if prefix == b'ready\n':
@@ -43,23 +47,22 @@ with tempfile.TemporaryDirectory(prefix='node-process-barrier-') as barrier_dire
         reader.start()
     writer = None
     try:
-        if not ready.wait(timeout=15):
+        if not ready.wait():
             raise RuntimeError('child did not announce ready')
         os.rmdir(working)
-        deadline = time.monotonic() + 15
         while writer is None:
             try:
                 writer = os.open(barrier, os.O_WRONLY | os.O_NONBLOCK)
             except OSError as failure:
                 if failure.errno != errno.ENXIO:
                     raise
-                if child.poll() is not None or time.monotonic() >= deadline:
+                if child.poll() is not None:
                     raise RuntimeError('child did not open the barrier FIFO') from failure
                 time.sleep(0.001)
         os.write(writer, b'continue')
         os.close(writer)
         writer = None
-        child.wait(timeout=15)
+        child.wait()
     finally:
         if writer is not None:
             os.close(writer)
@@ -67,7 +70,7 @@ with tempfile.TemporaryDirectory(prefix='node-process-barrier-') as barrier_dire
             child.kill()
         child.wait()
         for reader in readers:
-            reader.join(timeout=15)
+            reader.join()
             if reader.is_alive():
                 raise RuntimeError('child output did not reach EOF')
         child.stdout.close()

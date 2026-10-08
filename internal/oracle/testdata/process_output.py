@@ -5,6 +5,9 @@ import json
 import os
 import subprocess
 import sys
+sys.dont_write_bytecode = True
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../oracle')))
+from child_progress import progress, watch_files, communicate
 import tempfile
 import threading
 
@@ -26,6 +29,7 @@ with tempfile.TemporaryFile() as output, tempfile.TemporaryFile() as errors:
                              stderr=subprocess.STDOUT if shared == "true" else
                              writer if destination == "stderr-pipe" else errors,
                              env=environment)
+    watching = watch_files(child, [output, errors])
     pieces = []
     if writer is not None:
         os.close(writer)
@@ -43,18 +47,19 @@ with tempfile.TemporaryFile() as output, tempfile.TemporaryFile() as errors:
                 if not part:
                     break
                 pieces.append(part)
+                progress(part)
             os.close(reader)
 
         thread = threading.Thread(target=drain)
         thread.start()
     try:
-        child.wait(timeout=15)
+        child.wait()
     finally:
         if child.poll() is None:
             child.kill()
             child.wait()
         if reader is not None:
-            thread.join(timeout=15)
+            thread.join()
     output.seek(0)
     errors.seek(0)
     landed = b"".join(pieces) if destination == "pipe" else output.read()

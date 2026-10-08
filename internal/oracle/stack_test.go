@@ -61,9 +61,7 @@ func TestLongArgumentsLeaveTheStackItsLimit(t *testing.T) {
 					command.Env = []string{}
 					var stdout, stderr bytes.Buffer
 					command.Stdout, command.Stderr = &stdout, &stderr
-					if err := command.Run(); err != nil && command.ProcessState == nil {
-						t.Fatalf("running %s: %v", name, err)
-					}
+					checkChild(t, runChild(command))
 					// With no environment there is no PATH, and macOS's AddressSanitizer says as it starts
 					// that it can't find atos to symbolize with: its own lines, not the program's, so
 					// exactly they are dropped.

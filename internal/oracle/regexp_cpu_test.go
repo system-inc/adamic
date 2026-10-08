@@ -2,35 +2,30 @@ package oracle
 
 import (
 	"bytes"
-	"context"
 	"errors"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
-	"syscall"
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// CPU time excludes scheduler delays. The wall cap only kills true hangs;
-// killing the process group also stops an external tool's native child.
-func regExpCPUCommand(environment []string, name string, arguments []string, wallCap, cpuBudget time.Duration) (run, time.Duration, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), wallCap)
-	defer cancel()
-	command := exec.CommandContext(ctx, name, arguments...)
+// CPU time excludes scheduler delays. The shared output guard kills stalled
+// process groups independently of the semantic CPU budget.
+func regExpCPUCommand(environment []string, name string, arguments []string, guard childguard.Options, cpuBudget time.Duration) (run, time.Duration, error) {
+	command := exec.Command(name, arguments...)
 	command.Env = append(os.Environ(), environment...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	command.WaitDelay = 5 * time.Second
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
-	if ctx.Err() != nil {
-		return run{}, 0, fmt.Errorf("regexp child wall cap %s exceeded: %w", wallCap, ctx.Err())
+	err := runChildWith(command, guard)
+	var stopped *childguard.Error
+	if errors.As(err, &stopped) {
+		return run{}, 0, err
 	}
 	if command.ProcessState == nil {
 		return run{}, 0, fmt.Errorf("regexp child has no CPU observation: %w", err)
@@ -47,7 +42,7 @@ func regExpCPUCommand(environment []string, name string, arguments []string, wal
 	return result, cpu, nil
 }
 
-func TestRegExpOracleWallCap(t *testing.T) {
+func TestRegExpOracleStall(t *testing.T) {
 	source := `#include "adamic.h"
 int main(int argc, char **argv) {
  adamic_start(argc, argv);
@@ -59,9 +54,9 @@ int main(int argc, char **argv) {
 	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	_, _, err := regExpCPUCommand([]string{"ASAN_OPTIONS=detect_leaks=0"}, binary, nil, 250*time.Millisecond, 3*time.Second)
-	if err == nil || !strings.Contains(err.Error(), "wall cap") {
-		t.Fatalf("hang escaped cap: %v", err)
+	_, _, err := regExpCPUCommand([]string{"ASAN_OPTIONS=detect_leaks=0"}, binary, nil, childguard.Options{FirstOutput: 250 * time.Millisecond}, 3*time.Second)
+	if err == nil || !strings.Contains(err.Error(), "stalled: no first output") {
+		t.Fatalf("hang escaped guard: %v", err)
 	}
 	t.Logf("nonreturning fixture caught: %v", err)
 }
@@ -80,7 +75,7 @@ int main(int argc, char **argv) {
 	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	_, cpu, err := regExpCPUCommand([]string{"ASAN_OPTIONS=detect_leaks=0"}, binary, nil, 5*time.Minute, 10*time.Millisecond)
+	_, cpu, err := regExpCPUCommand([]string{"ASAN_OPTIONS=detect_leaks=0"}, binary, nil, childguard.Options{}, 10*time.Millisecond)
 	if err == nil || !strings.Contains(err.Error(), "CPU time") {
 		t.Fatalf("CPU overrun escaped budget: %v", err)
 	}

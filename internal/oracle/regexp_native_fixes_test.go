@@ -2,12 +2,12 @@ package oracle
 
 import (
 	"bytes"
-	"context"
 	"os/exec"
 	"path/filepath"
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -52,7 +52,7 @@ func TestRegExpNativeTiming(t *testing.T) {
 			want := onNode(t, path)
 			best := 3 * time.Second
 			for trial := 0; trial < 5; trial++ {
-				got, cpu, err := regExpCPUCommand(nil, binary, nil, 5*time.Minute, 3*time.Second)
+				got, cpu, err := regExpCPUCommand(nil, binary, nil, childguard.Options{}, 3*time.Second)
 				if err != nil {
 					t.Fatalf("native execution failed: %v", err)
 				}
@@ -67,11 +67,13 @@ func TestRegExpNativeTiming(t *testing.T) {
 			t.Logf("native CPU best of 5=%s", best)
 			best = 3 * time.Second
 			for trial := 0; trial < 5; trial++ {
-				ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 				start := time.Now()
-				got, err := exec.CommandContext(ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), path).Output()
+				var output bytes.Buffer
+				command := exec.Command("node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), path)
+				command.Stdout = &output
+				err := runChild(command)
+				got := output.Bytes()
 				elapsed := time.Since(start)
-				cancel()
 				if err != nil || !bytes.Equal(got, want.stdout) {
 					t.Fatalf("Node timing control: %v stdout=%q", err, got)
 				}
