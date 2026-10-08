@@ -268,7 +268,7 @@ func (l *lowering) destructure(pattern *ast.Node, initializer *ast.Node) ([]ir.S
 		return nil, err
 	}
 	held := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: ir.Object, Function: l.functionIndex})
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: value.Type(), Function: l.functionIndex})
 	declared, err := l.destructureFrom(pattern, l.checker.GetTypeAtLocation(initializer), value.Type(), held)
 	if err != nil {
 		return nil, err
@@ -281,6 +281,9 @@ func (l *lowering) destructure(pattern *ast.Node, initializer *ast.Node) ([]ir.S
 func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type, heldAs ir.Type, held int) ([]ir.Statement, error) {
 	tuple := pattern.Kind == ast.KindArrayBindingPattern
 	if tuple && !checker.IsTupleType(destructured) {
+		if heldAs == ir.Array {
+			return l.destructureArray(pattern, destructured, held)
+		}
 		return nil, l.notYet(pattern, "destructuring anything but a tuple into [names]")
 	}
 	if heldAs != ir.Object {
@@ -297,7 +300,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			continue
 		}
 		declared := binding.AsBindingElement()
-		if !ast.IsIdentifier(binding.Name()) || declared.Initializer != nil || declared.DotDotDotToken != nil {
+		if declared.DotDotDotToken != nil {
 			return nil, l.notYet(binding, "a destructured name that isn't plain")
 		}
 		var field string
@@ -310,7 +313,9 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			field, fieldType = strconv.Itoa(index), elementTypes[index]
 		} else {
 			// { x } reads x, and { x: other } reads x into other.
-			field = binding.Name().Text()
+			if ast.IsIdentifier(binding.Name()) {
+				field = binding.Name().Text()
+			}
 			if declared.PropertyName != nil {
 				if declared.PropertyName.Kind == ast.KindComputedPropertyName {
 					var known bool
@@ -347,16 +352,19 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			fieldType = l.checker.GetTypeOfSymbol(property)
 			absent = property.Flags&ast.SymbolFlagsOptional != 0
 		}
-		local, err := l.declareLocal(binding.Name())
+		of, known := l.representation(fieldType)
+		if !known || censusFieldSlotless(of) && of != ir.Union {
+			return nil, l.notYet(binding, "a destructured name held otherwise than its field")
+		}
+		if absent {
+			of = ir.Maybe(of)
+		}
+		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent}
+		declaredStatements, err := l.declareDestructured(binding, fieldType, value)
 		if err != nil {
 			return nil, err
 		}
-		of := l.result.Locals[local].Type
-		if element, isKnown := l.representation(fieldType); !isKnown || element != of || slotless(of) {
-			return nil, l.notYet(binding, "a destructured name held otherwise than its field")
-		}
-		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent}
-		statements = append(statements, ir.Declare{Local: local, Value: value})
+		statements = append(statements, declaredStatements...)
 	}
 	return statements, nil
 }

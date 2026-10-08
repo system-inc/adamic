@@ -72,7 +72,7 @@ func (l *lowering) tupleField(where *ast.Node, held int, elements []*checker.Typ
 		return nil, l.notYet(where, "a name past its tuple's elements")
 	}
 	of, isKnown := l.representation(elements[index])
-	if !isKnown || slotless(of) {
+	if !isKnown || censusFieldSlotless(of) && of != ir.Union {
 		return nil, l.notYet(where, "a tuple element of type "+l.checker.TypeToString(elements[index]))
 	}
 	value := fit(ir.Expression(ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: strconv.Itoa(index), Of: of}), to)

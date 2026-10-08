@@ -1,0 +1,14 @@
+let calls = 0;
+function fallback(): number { calls += 1; return 9; }
+const values: (number | undefined)[] = [0, undefined, 2];
+const [zero = fallback(), missing = fallback(), present = fallback()] = values;
+console.log(`${zero} ${missing} ${present} ${calls}`);
+const short: number[] = [];
+function append(): number { short.push(7); short.push(8); short.push(9); return 4; }
+const [first = append(), second = fallback(), ...rest] = short;
+console.log(`${first} ${second} ${rest.length} ${short.length} ${calls}`);
+const { value = fallback() } = { value: 0 };
+console.log(`${value} ${calls}`);
+const numbers: number[] = [];
+const [earlier = 5, later = earlier + 1] = numbers;
+console.log(`${earlier} ${later}`);
