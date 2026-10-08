@@ -16,6 +16,10 @@ once (landings pause on it) and the rest keeps running for triage only; full.jso
 the run ends.
 """
 
+import fcntl
+import heapq
+import math
+import tempfile
 import argparse
 import base64
 import fnmatch
@@ -47,6 +51,77 @@ toolLiteralSearch = r'exec\.(Command\(|CommandContext\([A-Za-z_.()]+, |LookPath\
 # A test found ranging over the fixtures that isn't listed here makes any oracle change whole.
 oracleLanes = {"TestNativeAgreesWithNode": [], "TestWASIAgreesWithNode": [], "TestWASIEmission": [], "TestCountsAreRecorded": ["fixtures"]}
 fixtureEntry = re.compile(r'^\s*\}?\{?"(internal/oracle/testdata/[^"]+)", (true|false), (true|false)\}?\)?,?\s*$')
+
+
+class TestSeconds:
+    def __init__(self, path=None):
+        self.path = path or os.path.expanduser("~/fast-gate/test-seconds.tsv")
+
+    def read(self):
+        try:
+            rows = {}
+            with open(self.path) as handle:
+                for line in handle:
+                    package, name, seconds, parallel = line.rstrip("\n").split("\t")
+                    seconds = float(seconds)
+                    if not math.isfinite(seconds) or seconds < 0 or parallel not in ("0", "1"):
+                        return {}
+                    rows[package, name] = (seconds, parallel == "1")
+            return rows
+        except (OSError, ValueError):
+            return {}
+
+    def update(self, observations):
+        if not observations:
+            return
+        temporary = None
+        try:
+            os.makedirs(os.path.dirname(self.path), exist_ok=True)
+            # Lock a stable sibling: locking the replaced inode would lose mutual exclusion.
+            with open(self.path + ".lock", "a") as lock:
+                fcntl.flock(lock, fcntl.LOCK_EX)
+                rows = self.read()
+                for key, (seconds, parallel) in observations.items():
+                    rows[key] = (max(rows.get(key, (0, False))[0] * 0.8, seconds), parallel)
+                with tempfile.NamedTemporaryFile(mode="w", dir=os.path.dirname(self.path), delete=False) as handle:
+                    temporary = handle.name
+                    for (package, name), (seconds, parallel) in sorted(rows.items()):
+                        handle.write("%s\t%s\t%.9g\t%d\n" % (package, name, seconds, parallel))
+                    handle.flush()
+                    os.fsync(handle.fileno())
+                os.replace(temporary, self.path)
+                temporary = None
+        except OSError:
+            pass  # History is a hint, never a gate failure.
+        finally:
+            if temporary is not None:
+                os.unlink(temporary)
+
+
+class TestQueue:
+    def __init__(self, slots):
+        self.free = slots
+        self.pending = []
+        self.condition = threading.Condition()
+
+    def add(self, seconds, parallel, package, name, command):
+        heapq.heappush(self.pending, (-seconds, package, name, parallel, command))
+
+    def take(self):
+        with self.condition:
+            while self.pending and not self.free:
+                self.condition.wait()
+            if not self.pending:
+                return None
+            negative, package, name, parallel, command = heapq.heappop(self.pending)
+            permits = 4 if parallel and -negative > 300 and self.free >= 4 else 1
+            self.free -= permits
+            return package, name, -negative, permits, command
+
+    def release(self, permits):
+        with self.condition:
+            self.free += permits
+            self.condition.notify_all()
 
 
 def main():
@@ -792,7 +867,32 @@ class Gate:
         # binary is tens of megabytes. One slot runs one gate at a time, so each run overwrites its own.
         binaries = os.path.realpath(self.arguments.tree) + "-binaries"
         os.makedirs(binaries, exist_ok=True)
+        record = TestSeconds()
+        history = record.read()
+        observations, paused = {}, set()
+
+        def watch(line):
+            try:
+                event = json.loads(line)
+            except ValueError:
+                return
+            name = event.get("Test") or ""
+            if not name:
+                return
+            key = (event.get("Package"), name.split("/", 1)[0])
+            with self.lock:
+                if "=== PAUSE" in event.get("Output", "") or event.get("Action") == "pause":
+                    paused.add(key)
+                if "/" not in name and event.get("Action") in ("pass", "fail", "skip") and "Elapsed" in event:
+                    observations[key] = (event["Elapsed"], key in paused)
+
+        self.watchers.append(watch)
         slots = threading.Semaphore(self.arguments.parallel)
+        queue = TestQueue(self.arguments.parallel)
+        self.result["test_starts"] = []
+        self.testStartDetails = {}
+        self.testsStarted = started
+        self.testLaunchLock = threading.Lock()
         # At most two test binaries build at once: each go test -c runs its own pool of compile processes as
         # wide as the slot, so a big gate building one per test slot ran hundreds of compiles in a 12-CPU
         # slot, and three such gates took Cloud to load 900 and Workshop to 10 GB free (Oct 8 11:2xZ).
@@ -842,38 +942,85 @@ class Gate:
             self.result.setdefault("split_tests", {})[importPath] = len(names)
             with self.lock:
                 tally["planned"] += len(names)
-            tests = []
             for name in names:
                 command = ["go", "tool", "test2json", "-t", "-p", importPath, binary, "-test.v=test2json", "-test.paniconexit0",
                            "-test.count=1"] + ([] if self.complete else ["-test.failfast"]) + ["-test.timeout=30m", "-test.parallel=2", "-test.run", patterns.get(name, "^%s$" % name)]
-                thread = self.guarded("tests", self.slotted, slots, command, log, importPath, name, tally)
-                thread.start()
-                tests.append(thread)
-            for thread in tests:
-                thread.join()
+                seconds, parallel = history.get((importPath, name), (60, False))
+                with self.lock:
+                    queue.add(seconds, parallel, importPath, name, command)
 
-        for importPath in packages:
-            thread = self.guarded("tests", runPackage, importPath)
+        def packageWeight(package):
+            known = [seconds for (path, _), (seconds, _) in history.items() if path == package]
+            if not known:
+                return (60, 1)
+            return (max(known), 0)
+
+        remaining = sorted(packages, key=lambda package: (-packageWeight(package)[0], -packageWeight(package)[1], package))
+
+        def buildWorker():
+            while True:
+                with self.lock:
+                    if not remaining or (self.failure is not None and not self.complete):
+                        return
+                    package = remaining.pop(0)
+                try:
+                    runPackage(package)
+                except BaseException:
+                    self.fail("tests", traceback.format_exc())
+
+        # Build/list first so a short test cannot hide a long test in another binary.
+        for _ in range(min(2, self.arguments.parallel)):
+            thread = self.guarded("tests", buildWorker)
             thread.start()
             threads.append(thread)
         for thread in threads:
             thread.join()
+
+        def testWorker():
+            while True:
+                self.testLaunchLock.acquire()
+                launched = threading.Event()
+                item = queue.take()
+                if item is None:
+                    self.testLaunchLock.release()
+                    return
+                package, name, seconds, permits, command = item
+                try:
+                    if self.failure is not None and not self.complete:
+                        return
+                    if permits == 4:
+                        command = ["-test.parallel=8" if part == "-test.parallel=2" else part for part in command]
+                    with self.lock:
+                        self.testStartDetails[tuple(command)] = {"package": package, "test": name,
+                            "expected_seconds": seconds, "slots": permits, "launched": launched}
+                    self.slotted(command, log, package, name, tally)
+                except BaseException:
+                    self.fail("tests", traceback.format_exc())
+                finally:
+                    if not launched.is_set():
+                        self.testLaunchLock.release()
+                    queue.release(permits)
+
+        threads = [self.guarded("tests", testWorker) for _ in range(self.arguments.parallel)]
+        for thread in threads:
+            thread.start()
+        for thread in threads:
+            thread.join()
+        self.watchers.remove(watch)
+        record.update(observations)
         self.steps["tests"] = round(time.monotonic() - started, 1)
         complete = tally["packages"] == len(packages) and tally["passed"] == tally["planned"]
         self.exits["tests"] = 0 if complete and self.failure is None else 1
         self.result["split_tally"] = dict(tally, touched=len(packages))
 
-    def slotted(self, slots, command, log, importPath, name, tally):
-        with slots:
-            if self.failure is not None:
-                return
-            environment = None
-            if name == "TestWASI" and os.environ.get("WASI_SYSROOT"):
-                # As the whole gate runs it: the WASI SDK's clang first, so wasm-ld finds the wasm32 builtins.
-                environment = {"PATH": os.path.join(os.path.dirname(os.path.dirname(os.environ["WASI_SYSROOT"])), "bin") + os.pathsep + os.environ["PATH"]}
-            if self.stream("tests", command, log, self.packageDirectories[importPath], environment) == 0:
-                with self.lock:
-                    tally["passed"] += 1
+    def slotted(self, command, log, importPath, name, tally):
+        environment = None
+        if name == "TestWASI" and os.environ.get("WASI_SYSROOT"):
+            # As the whole gate runs it: the WASI SDK's clang first, so wasm-ld finds the wasm32 builtins.
+            environment = {"PATH": os.path.join(os.path.dirname(os.path.dirname(os.environ["WASI_SYSROOT"])), "bin") + os.pathsep + os.environ["PATH"]}
+        if self.stream("tests", command, log, self.packageDirectories[importPath], environment) == 0:
+            with self.lock:
+                tally["passed"] += 1
 
     def capture(self, command, directory):
         process = self.spawn(command, subprocess.PIPE, subprocess.PIPE, directory)
@@ -1016,7 +1163,18 @@ class Gate:
             variables.update(environment or {})
             process = subprocess.Popen(command, cwd=directory or self.arguments.tree, stdout=stdout, stderr=stderr, text=True, start_new_session=True, env=variables)
             self.processes.append(process)
+            self.recordTestStart(command)
         return process
+
+    def recordTestStart(self, command):
+        # Called under self.lock immediately after Popen, so the artifact is launch order.
+        details = getattr(self, "testStartDetails", {}).get(tuple(command))
+        if details is not None:
+            row = {key: value for key, value in details.items() if key != "launched"}
+            self.result["test_starts"].append(dict(row,
+                after_seconds=round(time.monotonic() - self.testsStarted, 3)))
+            details["launched"].set()
+            self.testLaunchLock.release()
 
     def fail(self, step, detail):
         with self.lock:

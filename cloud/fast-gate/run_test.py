@@ -440,5 +440,111 @@ func TestGuard(t *testing.T) {
                 self.test_fail_kills_separate_process_group()
 
 
+class LongestFirst(unittest.TestCase):
+    def test_queue_priorities_and_boost_fallback(self):
+        queue = run.TestQueue(4)
+        for seconds, name, parallel in [(10, "short", False), (60, "unknown", False), (400, "long", True)]:
+            queue.add(seconds, parallel, "p", name, [])
+        item = queue.take()
+        self.assertEqual(item[1:4], ("long", 400, 4))
+        queue.release(4)
+        self.assertEqual(queue.take()[1], "unknown")
+        queue.add(500, True, "p", "boost", [])
+        self.assertEqual(queue.take()[3], 1)  # three free: retain parallel=2
+        queue.release(1)
+        queue.release(1)
+        self.assertEqual(queue.free, 4)
+
+    def test_record_decay_corrupt_and_concurrent_writers(self):
+        with tempfile.TemporaryDirectory() as directory:
+            record = run.TestSeconds(os.path.join(directory, "seconds.tsv"))
+            self.assertEqual(record.read(), {})
+            record.update({("p", "TestA"): (100, True)})
+            record.update({("p", "TestA"): (20, False), ("p", "TestB"): (90, True)})
+            self.assertEqual(record.read()[("p", "TestA")], (80, False))
+            writers = [threading.Thread(target=record.update, args=({("q", "Test%d" % i): (i, False)},)) for i in range(20)]
+            for writer in writers:
+                writer.start()
+            for writer in writers:
+                writer.join()
+            self.assertEqual(len(record.read()), 22)
+            with open(record.path, "w") as handle:
+                handle.write("corrupt\n")
+            self.assertEqual(record.read(), {})
+            record.update({("p", "TestC"): (120, True)})
+            self.assertEqual(record.read(), {("p", "TestC"): (120, True)})
+
+    def split(self, parallel=4, broken=None, complete=False):
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        tree = directory.name
+        arguments = types.SimpleNamespace(tree=tree, out=tree, parallel=parallel)
+        gate = object.__new__(run.Gate)
+        gate.arguments = arguments
+        gate.lock = threading.Lock()
+        gate.failure = None
+        gate.complete = complete
+        gate.watchers = []
+        gate.result = {}
+        gate.steps = {}
+        gate.exits = {}
+        gate.packageDirectories = {"p": tree}
+        gate.deferred = {}
+        gate.fail = lambda stage, detail: setattr(gate, "failure", detail)
+        commands = []
+        def stream(stage, command, log, *args):
+            if "-c" in command:
+                if broken == "build":
+                    return 1
+                with open(command[command.index("-o") + 1], "w") as handle:
+                    handle.write("binary")
+                return 0
+            with gate.lock:
+                gate.recordTestStart(command)
+            commands.append(command)
+            if broken == "dead" and len(commands) == 1:
+                raise OSError("dead process")
+            if broken == "fail" and len(commands) == 1:
+                return 1
+            for watch in gate.watchers:
+                watch(json.dumps({"Package": "p", "Test": "TestLong/sub", "Action": "output", "Output": "=== PAUSE"}))
+                watch(json.dumps({"Package": "p", "Test": "TestLong", "Action": "pass", "Elapsed": 350}))
+            return 0
+        gate.stream = stream
+        gate.capture = lambda *args: "TestShort\nTestUnknown\nTestLong\n"
+        record = run.TestSeconds(os.path.join(tree, "record.tsv"))
+        record.update({("p", "TestLong"): (400, True), ("p", "TestShort"): (10, False)})
+        with mock.patch.object(run, "TestSeconds", return_value=record):
+            thread = threading.Thread(target=gate.testSplit, args=(["p"], io.StringIO()))
+            thread.start()
+            thread.join(5)
+            self.assertFalse(thread.is_alive(), "permits leaked")
+        return gate, commands, record
+
+    def test_split_order_boost_and_event_record(self):
+        gate, commands, record = self.split()
+        self.assertEqual([row["test"] for row in gate.result["test_starts"]], ["TestLong", "TestUnknown", "TestShort"])
+        self.assertIn("-test.parallel=8", commands[0])
+        self.assertEqual(gate.result["test_starts"][0]["slots"], 4)
+        self.assertEqual(record.read()[("p", "TestLong")], (350, True))
+        self.assertEqual(gate.result["split_tally"], {"packages": 1, "planned": 3, "passed": 3, "touched": 1})
+
+    def test_boost_requires_four_free_slots(self):
+        gate, commands, _ = self.split(parallel=3)
+        self.assertIn("-test.parallel=2", commands[0])
+        self.assertEqual(gate.result["test_starts"][0]["slots"], 1)
+
+    def test_failfast_stops_new_starts_after_dead_process(self):
+        gate, commands, _ = self.split(parallel=1, broken="dead")
+        self.assertEqual(len(commands), 1)
+        self.assertEqual(gate.exits["tests"], 1)
+
+    def test_permits_after_fail_dead_and_build_failure(self):
+        for broken in ("fail", "dead", "build"):
+            gate, commands, _ = self.split(parallel=1, broken=broken, complete=True)
+            self.assertEqual(len(commands), 0 if broken == "build" else 3)
+            self.assertEqual(gate.exits["tests"], 1)
+
+
 if __name__ == "__main__":
     unittest.main()
