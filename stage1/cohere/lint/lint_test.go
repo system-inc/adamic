@@ -315,14 +315,17 @@ func sharedUpstream() *sharedValue {
 var strictAloneTypedCases = map[string]bool{
 	// TestNoThrowLiteralNeedsTheTypedHarness deliberately uses Run, which captures no program.
 	"no-throw-literal\tthrow 'error';": true,
+	// TestVerifyOptionalParityRequiresTheTypedHarness deliberately uses Run, which captures no program.
+	"base/correctness-require-verify-optional-parity\tdeclare function VerifyIsOptional(): PropertyDecorator & ParameterDecorator;\ndeclare function VerifyIsString(): PropertyDecorator & ParameterDecorator;\ndeclare function VerifyIsNumber(): PropertyDecorator & ParameterDecorator;\ndeclare function VerifyBy(check: unknown): PropertyDecorator & ParameterDecorator;\ndeclare function NotAVerifyDecorator(): PropertyDecorator & ParameterDecorator;\ndeclare const namespaced: { Verify(): PropertyDecorator };\nclass Entity { @VerifyIsOptional() name: string; }": true,
 	"@typescript-eslint/no-unnecessary-boolean-literal-compare\tdeclare const b: boolean;\nconst z = b === true;": true,
 	"@typescript-eslint/prefer-find\tdeclare const arr: string[];\narr.filter(item => item === 'a')[0];":          true,
 }
 
 // capturedTypedCases is how many typed upstream cases replay under their captured programs. A new typed rule
 // changes it on purpose; a drop means the capture lost programs.
-// no-array-delete adds 44 captured programs and no-throw-literal 47 (its plain-harness guard is listed above).
-const capturedTypedCases = 352
+// no-array-delete adds 44 captured programs, no-throw-literal 47 and verify-optional-parity 21 (the two
+// plain-harness guards are listed above).
+const capturedTypedCases = 373
 
 // typedReplayConfig is the tsconfig a typed upstream case is replayed under: upstream's own compiler options
 // when the capture carried them, and strict alone for a typed rule's case upstream ran without a program.
