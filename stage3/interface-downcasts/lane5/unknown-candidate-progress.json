@@ -793,6 +793,73 @@
           "certification_basis": "complete original declaration/read spans and inherited declaration paths; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; executable callable contract mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "declaration-access-source-files",
+      "pairs": 3,
+      "candidateReads": 60,
+      "members": [
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "getDeclarationName",
+          "declared_types": [
+            "(node: Declaration | undefined, allowComments?: boolean | undefined, allowSourceMaps?: boolean | undefined) => Identifier"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 20,
+          "witness": {
+            "file": "src/compiler/checker.ts",
+            "line": 24391,
+            "column": 40
+          },
+          "rank": 81,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; executable callable contract and returned-array element mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11725,
+          "type": "ParenthesizerRules",
+          "field": "parenthesizeLeftSideOfAccess",
+          "declared_types": [
+            "(expression: Expression, optionalChain?: boolean | undefined) => LeftHandSideExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 20,
+          "witness": {
+            "file": "src/compiler/factory/nodeFactory.ts",
+            "line": 1702,
+            "column": 27
+          },
+          "rank": 83,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; executable callable contract and returned-array element mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 9939,
+          "type": "Program",
+          "field": "getSourceFiles",
+          "declared_types": [
+            "() => readonly SourceFile[]"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 20,
+          "witness": {
+            "file": "src/compiler/program.ts",
+            "line": 1252,
+            "column": 9
+          },
+          "rank": 84,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; executable callable contract and returned-array element mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

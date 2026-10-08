@@ -8,6 +8,9 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"declaration-name", "getDeclarationName", "3\n", "0\n0\n3\n4\n6\n", "0", "node.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"left-access", "parenthesizeLeftSideOfAccess", "3\n", "3\n3\n3\n4\n", "0", "expression.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"source-files", "getSourceFiles", "3\n", "", "1", "sourceFile.value", "3\n", "0\n", "good,wrong-value,wrong-arity,wrong-result,wrong-parameter-payload"},
 		{"type-reference", "createTypeReferenceNode", "8\n", "3\n3\n8\n8\n", "0", "typeNode.value", "5\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"program-options", "getCompilerOptions", "3\n", "", "1", "value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-parameter-payload"},
 		{"context-options", "getCompilerOptions", "3\n", "", "1", "value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-parameter-payload"},
@@ -103,5 +106,20 @@ func TestCheckedViewCallableLaterRankedBindingRefusal(t *testing.T) {
 	_, err = lowered(t, path)
 	if err == nil || !strings.Contains(err.Error(), "unsupported destructuring representation conversion contract") {
 		t.Fatalf("binding refusal: %v", err)
+	}
+}
+
+func TestCheckedViewCallableLaterRankedMethodRefusal(t *testing.T) {
+	path, err := filepath.Abs(repository + "/stage3/interface-downcasts/lane5/later-ranked-callables/lift-block/good.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || string(truth.stdout) != "3\n" {
+		t.Fatalf("Node %#v", truth)
+	}
+	_, err = lowered(t, path)
+	if err == nil || !strings.Contains(err.Error(), "unbound-method") {
+		t.Fatalf("method refusal: %v", err)
 	}
 }

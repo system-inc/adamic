@@ -284,6 +284,90 @@
         "TransformationContext",
         "CoreTransformationContext"
       ]
+    },
+    {
+      "rank": 81,
+      "type": "NodeFactory",
+      "field": "getDeclarationName",
+      "candidateReads": 20,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 24391,
+        "column": 40
+      },
+      "read": "factory.getDeclarationName",
+      "readKind": "property",
+      "call": "factory.getDeclarationName(source.symbol.valueDeclaration)",
+      "utf16Start": 1452898,
+      "utf16End": 1452924,
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declaration": "getDeclarationName(node: Declaration | undefined, allowComments?: boolean, allowSourceMaps?: boolean): Identifier;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9449
+    },
+    {
+      "rank": 82,
+      "type": "NodeFactory",
+      "field": "liftToBlock",
+      "candidateReads": 20,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 545,
+        "column": 61
+      },
+      "read": "context.factory.liftToBlock",
+      "readKind": "property",
+      "call": "nodeVisitor(body, visitor, isStatement, context.factory.liftToBlock)",
+      "utf16Start": 23063,
+      "utf16End": 23090,
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "declaration": "liftToBlock(nodes: readonly Node[]): Statement;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9515
+    },
+    {
+      "rank": 83,
+      "type": "ParenthesizerRules",
+      "field": "parenthesizeLeftSideOfAccess",
+      "candidateReads": 20,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 1702,
+        "column": 27
+      },
+      "read": "parenthesizerRules().parenthesizeLeftSideOfAccess",
+      "readKind": "property",
+      "call": "parenthesizerRules().parenthesizeLeftSideOfAccess(expression, /*optionalChain*/ false)",
+      "utf16Start": 65098,
+      "utf16End": 65147,
+      "fileSha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+      "declaration": "parenthesizeLeftSideOfAccess(expression: Expression, optionalChain?: boolean): LeftHandSideExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 8682
+    },
+    {
+      "rank": 84,
+      "type": "Program",
+      "field": "getSourceFiles",
+      "candidateReads": 20,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 1252,
+        "column": 9
+      },
+      "read": "program.getSourceFiles",
+      "readKind": "property",
+      "call": "program.getSourceFiles()",
+      "utf16Start": 51086,
+      "utf16End": 51108,
+      "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+      "declaration": "getSourceFiles(): readonly SourceFile[];",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 4713
     }
   ]
 }
