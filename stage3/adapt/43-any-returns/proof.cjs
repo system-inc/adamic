@@ -52,7 +52,7 @@ function returnTypes(tree) {
     const diagnostics = ts.getPreEmitDiagnostics(program);
     assert.equal(diagnostics.length, 0, 'all compiler consumers type check');
     const checker = program.getTypeChecker(), result = {};
-    const names = new Set(['convertConfigFileToObject', 'convertToObject', 'convertToJson', 'convertObjectLiteralExpressionToJson', 'convertPropertyValueToJson', 'setTimeout', 'tryParseJson']);
+    const names = new Set(['convertConfigFileToObject', 'convertToObject', 'convertToJson', 'convertObjectLiteralExpressionToJson', 'convertPropertyValueToJson', 'tryParseJson']);
     for (const file of ['commandLineParser.ts', 'utilities.ts', 'sys.ts']) {
         const source = program.getSourceFile(path.join(tree, 'src/compiler', file));
         function visit(node) {
@@ -67,7 +67,7 @@ function returnTypes(tree) {
         }
         visit(source);
     }
-    assert.equal(Object.keys(result).length, 8);
+    assert.equal(Object.keys(result).length, 7);
     return result;
 }
 const originalReturns = returnTypes(before), adaptedReturns = returnTypes(after);
@@ -92,7 +92,6 @@ const sites = [
     ['convertToJson', 'src/compiler/commandLineParser.ts', '): any {', 'export function convertToJson('],
     ['convertObjectLiteralExpressionToJson', 'src/compiler/commandLineParser.ts', '): any {', 'function convertObjectLiteralExpressionToJson('],
     ['convertPropertyValueToJson', 'src/compiler/commandLineParser.ts', '): any {', 'function convertPropertyValueToJson('],
-    ['setTimeout', 'src/compiler/sys.ts', ': any;', 'declare function setTimeout('],
     ['tryParseJson', 'src/compiler/utilities.ts', '): any {', 'export function tryParseJson('],
     ['getNodeConstructor', 'src/compiler/utilities.ts', 'Node as any', 'getNodeConstructor:'],
 ];
@@ -112,6 +111,6 @@ assert.throws(() => assert.deepEqual(changed, old));
 const changedAPI = {...current}; const api = Object.keys(changedAPI).find(f => f.endsWith('/typescript.d.ts')); assert(api);
 changedAPI[api] = hash('changed public declaration'); assert.throws(() => assert.deepEqual(changedAPI, old));
 const changedLane = {...newLane.counts, passing: newLane.counts.passing - 1}; assert.throws(() => assert.deepEqual(changedLane, oldLane.counts));
-const report = {base: oldLane.execution.commit, node: process.version, typescript: ts.version, returnTypes: {before: originalReturns, after: adaptedReturns}, adaptedSites: 6, declinedSites: 2, adaptedHiddenBytes: 7036, jsFiles: Object.keys(current).filter(f => /\.(js|mjs|cjs)$/.test(f)).length, publicAPIFiles: Object.keys(current).filter(f => /typescript\.d\.(ts|mts|cts)$/.test(f)), outputs: current, lane: {status: newLane.status, counts: newLane.counts, failed_tests: newLane.failed_tests, baseline_diffs: newLane.baseline_diffs}, fixtures: 'recovery scalars, arrays, objects, invalid values, root recovery, disabled construction, allocator, Node timer, parse primitives', idempotent: true, mutants, comparisonMutants: ['JavaScript hash mutant', 'public declaration hash mutant', 'lane count mutant']};
+const report = {base: oldLane.execution.commit, node: process.version, typescript: ts.version, returnTypes: {before: originalReturns, after: adaptedReturns}, adaptedSites: 5, declinedSites: 2, adaptedHiddenBytes: 6947, jsFiles: Object.keys(current).filter(f => /\.(js|mjs|cjs)$/.test(f)).length, publicAPIFiles: Object.keys(current).filter(f => /typescript\.d\.(ts|mts|cts)$/.test(f)), outputs: current, lane: {status: newLane.status, counts: newLane.counts, failed_tests: newLane.failed_tests, baseline_diffs: newLane.baseline_diffs}, fixtures: 'recovery scalars, arrays, objects, invalid values, root recovery, disabled construction, allocator, Node timer, parse primitives', idempotent: true, mutants, comparisonMutants: ['JavaScript hash mutant', 'public declaration hash mutant', 'lane count mutant']};
 fs.writeFileSync(path.join(output, 'proof.json'), JSON.stringify(report, null, 2) + '\n');
-console.log(JSON.stringify({adaptedSites: 6, declinedSites: 2, jsFiles: report.jsFiles, publicAPIFiles: report.publicAPIFiles, mutants: mutants.length, lane: report.lane}));
+console.log(JSON.stringify({adaptedSites: 5, declinedSites: 2, jsFiles: report.jsFiles, publicAPIFiles: report.publicAPIFiles, mutants: mutants.length, lane: report.lane}));

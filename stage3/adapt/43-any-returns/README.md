@@ -1,11 +1,11 @@
 # Real any returns
 
-Permanent type-only adaptation of six of the eight real-any callees reported in
+Permanent type-only adaptation of five of the eight real-any callees reported in
 `stage3/census/any-returns` at fb2b782a. Base: main
 `3ffb1a835184713998a34874e86326cd21db971f`; upstream: TypeScript 6.0.3,
 `050880ce59e30b356b686bd3144efe24f875ebc8`.
 
-The six sites account for **7,036** credited hidden bytes in the ed6e2975
+The five sites account for **6,947** credited hidden bytes in the ed6e2975
 measurement. This is attribution from that measurement, not a new census or a
 claim that these bytes now lower successfully. Two sites, totaling 254 bytes,
 remain unchanged. No compiler code or public declaration is edited.
@@ -17,7 +17,7 @@ remain unchanged. No compiler code or public declaration is edited.
 | convertToJson | AdamicJsonRecoveryValue or undefined | 4,862 | Adapt |
 | convertToJson.convertObjectLiteralExpressionToJson | AdamicJsonRecoveryObject or undefined | 0 | Adapt |
 | convertToJson.convertPropertyValueToJson | AdamicJsonRecoveryValue or undefined | 0 | Adapt |
-| setTimeout | ReturnType<typeof globalThis.setTimeout> | 89 | Adapt |
+| setTimeout | NodeJS.Timeout | 89 | Covered by adaptation 41 |
 | tryParseJson | Recursive strict JSON value or undefined | 104 | Consumer contracts; decline |
 | objectAllocator.getNodeConstructor | ReturnType<ObjectAllocator["getNodeConstructor"]> | 540 | Adapt |
 
@@ -34,9 +34,13 @@ its non-null view follows the same `returnValue` condition that initialized it.
 The property converter returns scalars even with `returnValue === false`;
 only object/array construction is disabled. The fixtures cover that distinction.
 
-The ambient timer declaration is private to sys.ts. Its implementation is the
-host global timer, so the host declaration supplies its handle type; on this
-Node lane that is `NodeJS.Timeout`. The existing public System API stays unchanged.
+Adaptations apply in number order. Adaptation 41 already gives the private
+setTimeout declaration a truthful `handler: () => void` and `NodeJS.Timeout`
+return. Adaptation 43 reads that composed tree and leaves the timer untouched;
+it is removed from 43's site list and guard. The five remaining adapted sites
+and two declined sites retain their exact source guards. The remaining
+getNodeConstructor mutant still proves an unreviewed site is rejected before
+any output is written. The existing public System API stays unchanged.
 The allocator uses the existing ObjectAllocator constructor contract. The Node
 function initializes the returned node; its preexisting `as any` bridge remains
 because TypeScript does not give an ordinary function a construct signature.
@@ -70,7 +74,7 @@ upstream runners and eight workers. The permanent proof compares all emitted
 JavaScript files and the public typescript declaration artifacts by SHA-256,
 checks identical lane counts/verdict/API comparison and baseline-diff bytes,
 runs recovery/timer/allocator fixtures on both builds, and checks idempotence.
-It changes each of the eight original sites' `any` to `string` in scratch input;
+It changes each of the seven remaining sites' `any` to `string` in scratch input;
 the exact reviewed source contract rejects every mutant before writing output.
 The two declined sites are guarded too. Separate JavaScript-byte, API-byte and
 lane-count mutants prove the comparison checks can fail.
@@ -83,7 +87,7 @@ No native lowering claim, public API repair, JSON-consumer narrowing, or additio
 allocator getter adaptation is covered. These are adapter fixtures, so no
 internal/oracle fixture or counts.md row was added.
 
-## Observed result
+## Historical observed result before batch 5
 
 Both lanes pass: 106,366 passing, one failing, zero pending. The one failure is
 main's existing public API acknowledgment test; both oracle baseline differences
