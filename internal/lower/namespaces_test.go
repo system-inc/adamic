@@ -276,3 +276,15 @@ func TestDebugOverloadContracts(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestDebugNeverParameterBoundary(t *testing.T) {
+	source, err := os.ReadFile("../../stage3/namespaces/debug-groups/never_parameter.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lowerSource(t, string(source))
+	var ny *NotYet
+	if !errors.As(err, &ny) || !strings.Contains(err.Error(), "a value of type never") {
+		t.Fatalf("bottom parameter boundary lost: %v", err)
+	}
+}

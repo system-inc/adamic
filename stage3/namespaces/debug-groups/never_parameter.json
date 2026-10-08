@@ -1,0 +1,13 @@
+{
+  "sites": [
+    "debug.ts:273:33"
+  ],
+  "mutations": [
+    [
+      "case 'no':return 'rejected';",
+      "case 'no':throw new Error('Illegal value');"
+    ]
+  ],
+  "boundary": "never",
+  "judgment": "A never parameter has no machine value. The definition shape remains NotYet rather than inventing a slot. Narrow sound acceptance can omit a helper whose every use is proved unreachable, or add a bottom-argument convention that evaluates diverging arguments first and never invokes a callee with an invented value. The real helper also observes and serializes its impossible parameter."
+}

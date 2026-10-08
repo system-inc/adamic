@@ -1,0 +1,8 @@
+namespace Debug {
+ export function assertNever(member:never):never {throw new Error('Illegal value');}
+}
+function check(value:'yes'|'no'):string {
+ switch(value){case 'yes':return 'accepted';case 'no':return 'rejected';default:return Debug.assertNever(value);}
+}
+console.log(check('yes'));
+console.log(check('no'));

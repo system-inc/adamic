@@ -1,0 +1,42 @@
+{
+  "group": "never_parameter",
+  "sites": [
+    "debug.ts:273:33"
+  ],
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/stage3/namespaces/debug-groups/never_parameter.a"
+    ],
+    "stdout": "accepted\nrejected\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "mutant": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/tmp/debug-groups/never_parameter/mutant.a"
+    ],
+    "stdout": "accepted\n",
+    "stderr": "adamic: panic: Error: Illegal value\n",
+    "exit": 70
+  },
+  "build": {
+    "command": [
+      "/tmp/debug-groups-adamic",
+      "build",
+      "/workspace/adamic/stage3/namespaces/debug-groups/never_parameter.a",
+      "-o",
+      "/tmp/debug-groups/never_parameter/native",
+      "--sanitize"
+    ],
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/stage3/namespaces/debug-groups/never_parameter.a:2:30: stage 0 can't lower a value of type never yet\n",
+    "exit": 1
+  },
+  "judgment": "A never parameter has no machine value. The definition shape remains NotYet rather than inventing a slot. Narrow sound acceptance can omit a helper whose every use is proved unreachable, or add a bottom-argument convention that evaluates diverging arguments first and never invokes a callee with an invented value. The real helper also observes and serializes its impossible parameter."
+}

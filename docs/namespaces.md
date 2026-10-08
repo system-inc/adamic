@@ -422,3 +422,14 @@ and Debug declaration shapes, for nine of ten isolated shapes lowering. This
 normalization does not prove real Debug.assertEachNode's predicates or all
 parser bodies. `debug-groups/OVERLOADS.md` records source, exact limits, Node
 output and two executed compiler/IR mutants.
+
+Debug.assertNever's never parameter (debug.ts:273:33) stays an explicit
+representation NotYet. Its reduced program reaches the helper only in a
+checker-exhaustive default; Node prints accepted then rejected, and a source
+mutant forcing the second path to throw is caught. The blanket declaration
+limit is too strict for a helper proved unreachable at every reference. The
+narrowest sound acceptance can omit that helper after proving every use dead,
+or define a bottom-argument convention that evaluates a diverging argument
+and never fabricates a parameter value. The real helper observes/serializes
+its impossible argument, so zero storage is not a sound fallback. Evidence:
+`debug-groups/NEVER_PARAMETER.md`.
