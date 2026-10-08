@@ -372,8 +372,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/host/21_createHash.a:14:18: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/host/21_createHash.a:27:1: stage 0 can't lower a try around Hash finalization, whose catchable .code contract is not supported yet, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet"
     }
   },
   {
