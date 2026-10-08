@@ -67,5 +67,18 @@
     "c_emitted": false,
     "reason": "an optional chain longer than one step",
     "where": "docs/step-18/fixtures/runtime-cross-chain.a:13:13"
+  },
+  {
+    "file": "runtime-return-descriptor.a",
+    "node": {
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
   }
 ]

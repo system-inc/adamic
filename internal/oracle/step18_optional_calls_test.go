@@ -13,7 +13,7 @@ import (
 
 const step18Directory = "docs/step-18/fixtures/"
 
-var step18Supported = map[string]bool{"function.a": true, "method.a": true, "runtime-values.a": true, "runtime-order.a": true, "runtime-arguments.a": true}
+var step18Supported = map[string]bool{"function.a": true, "method.a": true, "runtime-values.a": true, "runtime-order.a": true, "runtime-arguments.a": true, "runtime-return-descriptor.a": true}
 
 func init() {
 	for _, name := range []string{"function.a", "method.a", "element.a", "call-result.a", "cross-call.a", "receiver-call.a", "two-guards.a", "size.a", "number.a"} {
@@ -23,7 +23,7 @@ func init() {
 			checked bool
 		}{step18Directory + name, step18Supported[name], false})
 	}
-	for _, name := range []string{"runtime-values.a", "runtime-order.a", "runtime-methods.a", "runtime-arguments.a", "runtime-cross-chain.a"} {
+	for _, name := range []string{"runtime-values.a", "runtime-order.a", "runtime-methods.a", "runtime-arguments.a", "runtime-cross-chain.a", "runtime-return-descriptor.a"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool

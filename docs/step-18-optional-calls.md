@@ -358,3 +358,40 @@ python3 stage3/census/latent/make_overlay.py "$PWD" /workspace/scratch/scout-opt
 go build -buildvcs=false -overlay=/workspace/scratch/scout-optional-final-overlay/overlay.json -o /workspace/scratch/scout-optional-final-census ./stage3/census/latent/tool > /tmp/scout-optional-final-build.log 2>&1
 LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1 /workspace/scratch/scout-optional-final-census /workspace/scratch/scout-optional-adapted/src/compiler /workspace/scratch/scout-optional-final.jsonl > /tmp/scout-optional-final-census.log 2>&1
 ```
+
+## Follow-up for step 18 (#vx8qdwg): return descriptor
+
+Rebased the four Scout commits onto `origin/compiler/area-next-fixtures`
+`4885cec5`. Delivery continues on `codex/scout-optional-calls-next`: publishing
+the rebased commits under a new owned branch preserves the no-force-push rule.
+
+[runtime-return-descriptor.a](step-18/fixtures/runtime-return-descriptor.a)
+reduces checker.ts:8066's optional cleanup call through a void callback view.
+TypeScript permits a value-returning function where its result is discarded.
+The selected function returns 41 and 42, while the view requires both results
+to be discarded. Node prints `2\n`, exit 0, and both backends agree, with native
+sanitizer, release and leak checks passing. No language policy changed.
+
+The exact earlier mutant replaces the signature return type with the optional
+expression type in `callClosure`. It interprets a discarded numeric result as
+an owned reference. This fixture catches it at runtime: ASan reports a SEGV in
+`adamic_release`, native exit 1 versus Node exit 0; the release executable also
+fails. JavaScript remains correct. This is a runtime failure, not a C warning.
+Thus the earlier survival was a missing void-view adversary, not evidence that
+the return descriptor is immaterial in general. Scalar packed widening still
+shares its physical slot, which explains the original fixture's blind spot.
+
+Commands and observed results:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestStep18SourceBaselines/runtime-return-descriptor.a|TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-return-descriptor.a' -count=1 > /tmp/scout-18-descriptor-good.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/docs/step-18/fixtures/runtime-return-descriptor.a' -count=1 > /tmp/scout-18-descriptor-mutant.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestStep18|TestNativeAgreesWithNode/docs/step-18/fixtures' -count=1 > /tmp/scout-18-descriptor-restored.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts > /tmp/scout-18-descriptor-counts.log 2>&1
+```
+
+Good run passed (0.675s); mutant failed (0.511s); restored scoped fixtures passed
+(1.827s); required counts refresh passed (43.145s). This fixture-only push retires
+**zero additional census roots**; compiler lowering is unchanged. Setup succeeded,
+with `nproc=5`, submodules ready 0.100s, clang ready 0.258s, build ready 44.692s,
+test binaries deferred 44.816s, cache warm 44.817s, and done 44.847s.
