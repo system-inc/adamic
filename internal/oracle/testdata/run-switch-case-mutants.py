@@ -22,6 +22,8 @@ mutants = [
     ('never-ready', 'internal/lower/switch_declarations.go', 'ir.Assign{Local: ready - 1, Value: ir.BooleanConstant{Value: true}}', 'ir.Assign{Local: ready - 1, Value: ir.BooleanConstant{}}', 'switch_case_scope'),
     ('initializer-twice', 'internal/lower/switch_declarations.go', 'ir.Assign{Local: declared.Local, Value: declared.Value})', 'ir.Assign{Local: declared.Local, Value: declared.Value}, ir.Assign{Local: declared.Local, Value: declared.Value})', 'switch_case_scope'),
     ('oracle-transform', 'oracle/node.mjs', "mode: 'strip'", "mode: 'transform'", 'switch_case_scope'),
+    ('morning-initializer-twice', 'internal/lower/switch_declarations.go', 'ir.Assign{Local: declared.Local, Value: declared.Value})', 'ir.Assign{Local: declared.Local, Value: declared.Value}, ir.Assign{Local: declared.Local, Value: declared.Value})', 'switch_case_morning_declarations'),
+    ('morning-optional-tag', 'internal/lower/object.go', 'test = fit(test, value.Type())', 'test = ir.MaybeOf{Of: value.Type()}', 'switch_case_morning_optional'),
 ]
 for name, relative, before, after, fixture in mutants:
     if len(sys.argv) > 1 and name not in sys.argv[1:]:

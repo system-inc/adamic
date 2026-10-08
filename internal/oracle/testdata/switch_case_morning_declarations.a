@@ -1,0 +1,47 @@
+enum Kind { Property, Signature, Parameter }
+function type(): string {
+    console.log('type');
+    return 'optional';
+}
+function requires(kind: Kind): string {
+    switch (kind) {
+        case Kind.Property:
+        case Kind.Signature:
+            const declared = type();
+            return declared;
+        case Kind.Parameter:
+            return 'parameter';
+    }
+}
+console.log(requires(Kind.Property));
+console.log(requires(Kind.Signature));
+console.log(requires(Kind.Parameter));
+function diagnose(module: number, target: number, awaitExpression: boolean): void {
+    switch (module) {
+        case 1:
+            if (target >= 2017) break;
+        default:
+            const message = awaitExpression ? 'await' : 'using';
+            console.log(message);
+            break;
+    }
+}
+diagnose(1, 2016, true);
+diagnose(1, 2017, true);
+diagnose(0, 2017, false);
+function serialize(kind: number, conditional: boolean): string {
+    switch (kind) {
+        case 0:
+            if (conditional) return 'Object';
+            const serialized = 'X';
+            const temp = serialized.toLowerCase();
+            return temp;
+        case 1:
+            return 'Construct';
+        default:
+            return 'Other';
+    }
+}
+console.log(serialize(0, true));
+console.log(serialize(0, false));
+console.log(serialize(1, false));

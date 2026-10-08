@@ -1,0 +1,44 @@
+enum Code { First, Second }
+function fromNode(node: { kind: Code } | undefined): string {
+    switch (node?.kind) {
+        case Code.First: return 'first';
+        case Code.Second: return 'second';
+        default: return 'missing';
+    }
+}
+function fromOptions(options: { module?: Code }): string {
+    switch (options.module) {
+        case Code.First: return 'first';
+        case Code.Second: return 'second';
+        default: return 'missing';
+    }
+}
+function fromOperation(operations: readonly Code[], index: number): string {
+    switch (operations[index]) {
+        case Code.First: return 'first';
+        case Code.Second: return 'second';
+        default: return 'missing';
+    }
+}
+function implied(value: Code | undefined): Code | undefined {
+    return value;
+}
+function fromCall(value: Code | undefined): string {
+    switch (implied(value)) {
+        case Code.First: return 'first';
+        case Code.Second: return 'second';
+        default: return 'missing';
+    }
+}
+console.log(fromNode({ kind: Code.First }));
+console.log(fromNode({ kind: Code.Second }));
+console.log(fromNode(undefined));
+console.log(fromOptions({ module: Code.First }));
+console.log(fromOptions({ module: Code.Second }));
+console.log(fromOptions({}));
+console.log(fromOperation([Code.First, Code.Second], 0));
+console.log(fromOperation([Code.First, Code.Second], 1));
+console.log(fromOperation([Code.First, Code.Second], 2));
+console.log(fromCall(Code.First));
+console.log(fromCall(Code.Second));
+console.log(fromCall(undefined));
