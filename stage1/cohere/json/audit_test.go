@@ -123,6 +123,7 @@ func corpusCases(t *testing.T) []textCase {
 		}
 	}
 	t.Logf("repository groups: %v; generated %d; total %d", groups, len(generated)*2, len(cases))
+	verifyCorpusPin(t, cases)
 	return cases
 }
 
