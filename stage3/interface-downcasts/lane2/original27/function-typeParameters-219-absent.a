@@ -1,0 +1,9 @@
+import type { FunctionLikeDeclaration } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(base: Base): void {
+ const viewed = base as FunctionLikeDeclaration;
+ const items = viewed.typeParameters;
+ console.log(items === undefined ? 'absent' : 'present');
+}
+const raw = { kind: 219 };
+read(raw);

@@ -1,0 +1,505 @@
+[
+  {
+    "name": "function-typeParameters-263-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-263-lazy",
+    "source": "263\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-263-wrong-array",
+    "source": "number\n",
+    "diagnostic": "field read failed: viewed.typeParameters matches no member of NodeArray<TypeParameterDeclaration> | undefined; expected NodeArray<TypeParameterDeclaration> | undefined, found number",
+    "contracts": [
+      "FunctionDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-263-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "FunctionDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-263-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "FunctionDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-263-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-263-wrong-kind",
+    "source": "number\n",
+    "diagnostic": "element read failed: items[0] expected TypeParameterDeclaration, found number",
+    "contracts": [
+      "FunctionDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-263-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-263-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "FunctionDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-263-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-263-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-175-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "MethodDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-175-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "MethodDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-175-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "MethodDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-178-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "GetAccessorDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-178-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "GetAccessorDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-178-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "GetAccessorDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-179-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "SetAccessorDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-179-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "SetAccessorDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-179-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "SetAccessorDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-177-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructorDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-177-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructorDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-177-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructorDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-219-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionExpression",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-219-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionExpression"
+    ]
+  },
+  {
+    "name": "function-typeParameters-219-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionExpression"
+    ]
+  },
+  {
+    "name": "function-typeParameters-220-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ArrowFunction",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "function-typeParameters-220-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ArrowFunction"
+    ]
+  },
+  {
+    "name": "function-typeParameters-220-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ArrowFunction"
+    ]
+  },
+  {
+    "name": "call-typeArguments-214-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallExpression",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "call-typeArguments-214-lazy",
+    "source": "214\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallExpression"
+    ]
+  },
+  {
+    "name": "call-typeArguments-214-wrong-array",
+    "source": "number\n",
+    "diagnostic": "field read failed: viewed.typeArguments matches no member of NodeArray<TypeNode> | undefined; expected NodeArray<TypeNode> | undefined, found number",
+    "contracts": [
+      "CallExpression"
+    ]
+  },
+  {
+    "name": "call-typeArguments-214-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "CallExpression",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "call-typeArguments-214-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "CallExpression",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "call-typeArguments-214-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallExpression",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "call-typeArguments-214-wrong-kind",
+    "source": "number\n",
+    "diagnostic": "element read failed: items[0] expected TypeNode, found number",
+    "contracts": [
+      "CallExpression",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "call-typeArguments-214-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallExpression",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "call-typeArguments-214-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "CallExpression",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "call-typeArguments-214-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallExpression"
+    ]
+  },
+  {
+    "name": "call-typeArguments-214-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallExpression"
+    ]
+  },
+  {
+    "name": "call-typeArguments-215-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "NewExpression",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "call-typeArguments-215-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "NewExpression"
+    ]
+  },
+  {
+    "name": "call-typeArguments-215-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "NewExpression"
+    ]
+  },
+  {
+    "name": "jsx-children-285-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "JsxElement",
+      "JsxText",
+      "JsxExpression",
+      "JsxElement",
+      "JsxSelfClosingElement",
+      "JsxFragment",
+      "JsxText"
+    ]
+  },
+  {
+    "name": "jsx-children-285-lazy",
+    "source": "285\n",
+    "diagnostic": "",
+    "contracts": [
+      "JsxElement",
+      "JsxText",
+      "JsxExpression",
+      "JsxElement",
+      "JsxSelfClosingElement",
+      "JsxFragment"
+    ]
+  },
+  {
+    "name": "jsx-children-285-wrong-array",
+    "source": "number\n",
+    "diagnostic": "field read failed: viewed.children is not a NodeArray<JsxChild>; expected NodeArray<JsxChild>, found number",
+    "contracts": [
+      "JsxElement",
+      "JsxText",
+      "JsxExpression",
+      "JsxElement",
+      "JsxSelfClosingElement",
+      "JsxFragment"
+    ]
+  },
+  {
+    "name": "jsx-children-285-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "JsxElement",
+      "JsxText",
+      "JsxExpression",
+      "JsxElement",
+      "JsxSelfClosingElement",
+      "JsxFragment",
+      "JsxText"
+    ]
+  },
+  {
+    "name": "jsx-children-285-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "JsxElement",
+      "JsxText",
+      "JsxExpression",
+      "JsxElement",
+      "JsxSelfClosingElement",
+      "JsxFragment",
+      "JsxText"
+    ]
+  },
+  {
+    "name": "jsx-children-285-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "JsxElement",
+      "JsxText",
+      "JsxExpression",
+      "JsxElement",
+      "JsxSelfClosingElement",
+      "JsxFragment",
+      "JsxText"
+    ]
+  },
+  {
+    "name": "jsx-children-285-wrong-kind",
+    "source": "number\n",
+    "diagnostic": "element read failed: items[0] expected JsxChild, found number",
+    "contracts": [
+      "JsxElement",
+      "JsxText",
+      "JsxExpression",
+      "JsxElement",
+      "JsxSelfClosingElement",
+      "JsxFragment",
+      "JsxText"
+    ]
+  },
+  {
+    "name": "jsx-children-285-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "JsxElement",
+      "JsxText",
+      "JsxExpression",
+      "JsxElement",
+      "JsxSelfClosingElement",
+      "JsxFragment",
+      "JsxText"
+    ]
+  },
+  {
+    "name": "jsx-children-285-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "JsxElement",
+      "JsxText",
+      "JsxExpression",
+      "JsxElement",
+      "JsxSelfClosingElement",
+      "JsxFragment",
+      "JsxText"
+    ]
+  },
+  {
+    "name": "jsx-children-289-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "JsxFragment",
+      "JsxText",
+      "JsxExpression",
+      "JsxElement",
+      "JsxSelfClosingElement",
+      "JsxFragment",
+      "JsxText"
+    ]
+  }
+]

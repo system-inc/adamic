@@ -1,0 +1,37 @@
+{
+  "targets": [
+    [
+      "FunctionLikeDeclaration",
+      "typeParameters",
+      3
+    ],
+    [
+      "CallExpression | NewExpression",
+      "typeArguments",
+      3
+    ],
+    [
+      "JsxElement | JsxFragment",
+      "children",
+      3
+    ]
+  ],
+  "fields": [
+    "ArrowFunction",
+    "CallExpression",
+    "ConstructorDeclaration",
+    "FunctionDeclaration",
+    "FunctionExpression",
+    "GetAccessorDeclaration",
+    "JsxElement",
+    "JsxExpression",
+    "JsxFragment",
+    "JsxSelfClosingElement",
+    "JsxText",
+    "MethodDeclaration",
+    "NewExpression",
+    "SetAccessorDeclaration",
+    "TypeNode",
+    "TypeParameterDeclaration"
+  ]
+}

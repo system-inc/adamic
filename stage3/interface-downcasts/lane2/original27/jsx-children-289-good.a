@@ -1,0 +1,9 @@
+import type { JsxElement, JsxFragment } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(base: Base): void {
+ const viewed = base as JsxElement | JsxFragment;
+ const items = viewed.children;
+ console.log(`${items.length}:${items[0]!.pos}`);
+}
+const raw = { kind: 289, children: [{kind: 12, pos: 7}] };
+read(raw);
