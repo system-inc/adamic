@@ -1,9 +1,0 @@
-interface MapLike<T> { [key: string]: T; }
-enum WatchDirectoryFlags { None = 0, Recursive = 1 }
-interface Base { readonly kind: 'Flags'; }
-interface Holder extends Base { readonly table: MapLike<WatchDirectoryFlags>; }
-const table = { item: 'wrong' };
-const payload = {kind: 'Flags' as const, table};
-const base: Base = payload;
-const view = base as Holder;
-console.log(`${view.table['item']}`);

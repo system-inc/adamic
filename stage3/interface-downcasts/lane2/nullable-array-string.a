@@ -1,5 +1,0 @@
-function unchanged<T, U>(array: readonly T[] | undefined): readonly U[] | undefined {
- return array as unknown[] as U[];
-}
-const values = unchanged<string, number>(["wrong"]);
-console.log(`${values}`);

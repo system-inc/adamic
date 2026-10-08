@@ -23,17 +23,10 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 	case "keys":
 		return e.own(ir.Array, fmt.Sprintf("adamic_object_keys(%s)", arguments[0]))
 	case "values", "entries":
-		if call.Readiness != "" {
-			return e.own(ir.Array, fmt.Sprintf("adamic_object_values_checked(%s, %t, %t, %s)", arguments[0], call.Element.IsReference(), call.Method == "entries", cString(call.Readiness)))
-		}
 		return e.own(ir.Array, fmt.Sprintf("adamic_object_values(%s, %t, %t)", arguments[0], call.Element.IsReference(), call.Method == "entries"))
 	case "assign":
 		for _, source := range arguments[1:] {
-			if call.Readiness != "" {
-				e.line("adamic_object_assign_checked(%s, %s, %s);", arguments[0], source, cString(call.Readiness))
-			} else {
-				e.line("adamic_object_assign(%s, %s);", arguments[0], source)
-			}
+			e.line("adamic_object_assign(%s, %s);", arguments[0], source)
 		}
 		return e.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", arguments[0]))
 	}

@@ -1,7 +1,0 @@
-// Original tsc declaration/read; adjacent carriers and helpers reduced.
-interface Expression {readonly value:number;}
-type TypeOfTag = "null" | "undefined" | "number" | "bigint" | "boolean" | "string" | "symbol" | "object" | "function";
-interface Base {readonly createTypeCheck:unknown;}
-interface Target {createTypeCheck(value: Expression, tag: TypeOfTag): Expression;}
-function probe(value:Base):void {const factory=value as Target;const temp:Expression={value:3};console.log(`${factory.createTypeCheck(temp,"null").value}`);console.log(`${factory.createTypeCheck(temp,"undefined").value}`);console.log(`${factory.createTypeCheck(temp,"number").value}`);console.log(`${factory.createTypeCheck(temp,"bigint").value}`);console.log(`${factory.createTypeCheck(temp,"boolean").value}`);console.log(`${factory.createTypeCheck(temp,"string").value}`);console.log(`${factory.createTypeCheck(temp,"symbol").value}`);console.log(`${factory.createTypeCheck(temp,"object").value}`);console.log(`${factory.createTypeCheck(temp,"function").value}`);}
-probe({createTypeCheck:(value:Expression,tag:TypeOfTag):Expression=>({value:value.value+tag.length})});

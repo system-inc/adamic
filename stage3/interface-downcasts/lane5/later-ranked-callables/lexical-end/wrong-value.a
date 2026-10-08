@@ -1,6 +1,0 @@
-// Original tsc declaration/read; adjacent carriers and helpers reduced.
-interface Statement {readonly value:number;}
-interface Base {readonly endLexicalEnvironment:unknown;}
-interface Target {endLexicalEnvironment(): Statement[] | undefined;}
-function probe(value:Base):void {const context=value as Target;const statements=context.endLexicalEnvironment();const statement=statements===undefined?undefined:statements[0];console.log(`${statement===undefined?0:statement.value}`);}
-probe({endLexicalEnvironment:3});

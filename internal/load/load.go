@@ -127,22 +127,6 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		return nil, errors.New("load: the compiler built no program")
 	}
 
-	if usesNodeModules(program) {
-		index, err := nodeTypesIndex(workingDirectory)
-		if err != nil {
-			return nil, err
-		}
-		fs.nodeTypes = true
-		roots = append(roots, tspath.RootedFilePathFromAbsolute(index), tspath.RootedFilePathFromAbsolute(nodeRequirePath))
-		fileSystem = cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
-		config = tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, currentDirectory, fileSystem.CaseSensitivity())
-		host = compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
-		program = compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host, SingleThreaded: core.TSTrue})
-		if program == nil {
-			return nil, errors.New("load: the compiler built no Node program")
-		}
-	}
-
 	loaded := &Program{compiler: program, fs: fs}
 	if diagnostics := loaded.diagnostics(context.Background()); len(diagnostics) > 0 {
 		return nil, &CheckError{Diagnostics: diagnostics}
@@ -153,9 +137,7 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 	for _, sourceFile := range program.GetSourceFiles() {
 		byPath[sourceFile.PathKey()] = sourceFile
 	}
-	// The Node declarations' index follows the prelude when the program imports node:*, so only
-	// the named paths are checked here.
-	for _, root := range roots[:len(paths)] {
+	for _, root := range roots[:len(roots)-1] {
 		sourceFile, isLoaded := byPath[fileSystem.CaseSensitivity().PathKey(root.AsPath())]
 		if !isLoaded {
 			return nil, fmt.Errorf("load: %s was named but the compiler did not load it", fs.displayName(root))

@@ -1,8 +1,0 @@
---- FAIL: TestPhantomRefusals (0.04s)
-    --- FAIL: TestPhantomRefusals/review_exact_message (0.04s)
-        phantom_brands_test.go:47: got /tmp/adamic-gate/TestPhantomRefusalsreview_exact_message722575105/001/main.a:2:7: stage 0 can't lower a value of type Brand yet, want main.a:1:14: Adamic 0.1 refuses a primitive brand member __proto__ that exists on the primitive; use a member name the primitive does not have on its own properties or prototype chain
-    --- FAIL: TestPhantomRefusals/prototype (0.03s)
-        phantom_brands_test.go:32: got <nil>, want Refused
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.074s
-FAIL

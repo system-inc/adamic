@@ -1,4 +1,0 @@
-interface Value { readonly value: string | number; }
-function helper(value: Value): void { console.log(String(value.value)); }
-helper({value: 'word'.concat('-built')});
-helper({value: 42});

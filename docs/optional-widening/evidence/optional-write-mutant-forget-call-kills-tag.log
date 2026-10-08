@@ -1,6 +1,0 @@
---- FAIL: TestOptionalWriteErasure (0.05s)
-    --- FAIL: TestOptionalWriteErasure/tag-call (0.05s)
-        optional_write_erasure_test.go:45: erasure=true, want false
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.064s
-FAIL

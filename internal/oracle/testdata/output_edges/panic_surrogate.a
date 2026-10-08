@@ -1,4 +1,0 @@
-import { panic } from 'adamic';
-const half = String.fromCharCode(0xd800);
-console.log(`printed ${half} first`);
-panic(`lone ${half} here`);

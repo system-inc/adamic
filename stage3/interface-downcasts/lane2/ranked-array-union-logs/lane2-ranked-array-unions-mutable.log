@@ -1,8 +1,0 @@
---- FAIL: TestCheckedViewMutableArrayUnionRefusal (0.20s)
-    checked_views_ranked_array_unions_test.go:67: refusal: /workspace/adamic/stage3/interface-downcasts/lane2/ranked3-mutable-array-read.a:23:18: Adamic 0.1 refuses checked view read of field elements with unsupported mutable array union contract; prove or implement the mutable array union contract before reading this field
-FAIL
-gate cache: native hits=0 misses=0
-gate cache: node hits=0 misses=1
-gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	0.210s
-FAIL

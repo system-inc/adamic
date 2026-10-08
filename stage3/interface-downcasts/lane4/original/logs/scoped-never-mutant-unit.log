@@ -1,8 +1,0 @@
-=== RUN   TestViewFallbackScopesRetainWiderHelperGuard
-=== RUN   TestViewFallbackScopesRetainWiderHelperGuard/viewed_never_in_wider_helper
-    view_demand_scopes_test.go:43: wider/unknown helper lost guard: <nil>
---- FAIL: TestViewFallbackScopesRetainWiderHelperGuard (0.00s)
-    --- FAIL: TestViewFallbackScopesRetainWiderHelperGuard/viewed_never_in_wider_helper (0.00s)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.014s
-FAIL

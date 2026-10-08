@@ -1,1 +1,0 @@
-class Real{x=1;y!:number;} const actual=new Real(); const source:{x:number}=actual; const wider:{x:number;y?:number}=source; wider.y=3; console.log(`${actual.y}`);

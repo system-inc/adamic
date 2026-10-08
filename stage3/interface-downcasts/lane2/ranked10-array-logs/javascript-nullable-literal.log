@@ -1,9 +1,0 @@
---- FAIL: TestCheckedViewRanked10ArrayContracts (0.00s)
-    --- FAIL: TestCheckedViewRanked10ArrayContracts/ranked10-references-wrong-mode (0.52s)
-        checked_views_ranked10_arrays_test.go:67: exit codes differ; stderr ""; stdout "node\n2\n"; exit 0
-FAIL
-gate cache: native hits=0 misses=0
-gate cache: node hits=0 misses=2
-gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	0.536s
-FAIL

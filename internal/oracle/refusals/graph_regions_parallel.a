@@ -1,5 +1,0 @@
-import { parallelMap } from 'adamic';
-interface Link { readonly label: string; next: Link | undefined; }
-const value: Link = { label: `task${1}`, next: undefined };
-value.next = value;
-parallelMap([value], (node: Link): string => node.label);

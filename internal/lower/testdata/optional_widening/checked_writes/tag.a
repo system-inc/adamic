@@ -1,1 +1,0 @@
-class Real {x=1;y=2;} const source:{x:number}=new Real(); const wider:{x:number;y?:number}=source; if(wider instanceof Real){wider.y=3;} console.log(`${wider.y}`);

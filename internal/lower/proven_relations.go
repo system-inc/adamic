@@ -9,10 +9,7 @@ import (
 // proofs as assignments. Contextual typing may build a fresh literal at the target type;
 // values it contains are still checked at their own assignment sites by the refusal walk.
 func (l *lowering) provenRelation(where, expression *ast.Node, target *checker.Type) error {
-	return l.provenTypesRelation(where, expression, l.checker.GetTypeAtLocation(expression), target)
-}
-
-func (l *lowering) provenTypesRelation(where, expression *ast.Node, source, target *checker.Type) error {
+	source := l.checker.GetTypeAtLocation(expression)
 	refuse := func(part, fix string) error {
 		return &Refused{Where: l.program.Where(where), What: "an unproven relation from " + l.checker.TypeToString(source) + " to " + l.checker.TypeToString(target) + ": " + part, Fix: fix}
 	}
@@ -23,11 +20,6 @@ func (l *lowering) provenTypesRelation(where, expression *ast.Node, source, targ
 		return l.wideningRefusal(where, source, target, found)
 	}
 	if field := l.optionalRelationFailure(source, target, expression, map[[2]*checker.Type]bool{}); field != "" {
-		if found := l.optionalWidened(source, target, nil, map[[2]*checker.Type]bool{}); found != nil {
-			_, err := l.view(where, nil, found.target)
-			return err
-		}
-		// Reverse mutable relations still require their invariant source-slot proof.
 		return refuse("optional field "+field+" has no proven compatible presence/type", "keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)")
 	}
 	if mismatch := l.nominalMismatch(source, target, map[[2]*checker.Type]bool{}); mismatch != nil {
@@ -40,10 +32,6 @@ func (l *lowering) provenTypesRelation(where, expression *ast.Node, source, targ
 // Follow containers, callback arguments/results and nested fields, as the other relation walks do.
 func (l *lowering) optionalRelationFailure(from, to *checker.Type, origin *ast.Node, seen map[[2]*checker.Type]bool) string {
 	if from == nil || to == nil || from == to || seen[[2]*checker.Type{from, to}] {
-		return ""
-	}
-	from = reducedOptionalSource(l.checker, from)
-	if from.Flags()&checker.TypeFlagsNever != 0 {
 		return ""
 	}
 	seen[[2]*checker.Type{from, to}] = true
@@ -179,14 +167,13 @@ func (l *lowering) optionalRelationFailure(from, to *checker.Type, origin *ast.N
 }
 
 // An explicitly written field may itself be an exact literal. Shorthands and spread fields
-// remain structural views, whose runtime fields their types may hide. Computed keys
-// do too: syntax alone cannot prove which runtime field they initialize.
+// remain structural views, whose runtime fields their types may hide.
 func relationFieldExpression(origin *ast.Node, name string) *ast.Node {
 	if origin == nil || origin.Kind != ast.KindObjectLiteralExpression {
 		return nil
 	}
 	for _, property := range origin.AsObjectLiteralExpression().Properties.Nodes {
-		if property.Kind == ast.KindPropertyAssignment && property.Name().Kind != ast.KindComputedPropertyName && property.Name().Text() == name {
+		if property.Kind == ast.KindPropertyAssignment && property.Name().Text() == name {
 			return property.AsPropertyAssignment().Initializer
 		}
 	}

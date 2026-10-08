@@ -1,7 +1,0 @@
-// Original tsc declaration/read; adjacent carriers and helpers reduced.
-interface Expression {readonly value:number;}
-interface ParenthesizedExpression {readonly value:number;}
-interface Base {readonly createParenthesizedExpression:unknown;}
-interface Target {createParenthesizedExpression(expression: Expression): ParenthesizedExpression;}
-function probe(value:Base):void {const factory=value as Target;const operand:Expression={value:3};console.log(`${factory.createParenthesizedExpression(operand).value}`);}
-probe({createParenthesizedExpression:(expression:string):ParenthesizedExpression=>({value:3})});

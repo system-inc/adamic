@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "/workspace/adamic/stage3/shape-conformance/latent/audit.py", line 54, in <module>
-    print(json.dumps({'measurement':LABEL,'status':'PASS','counts':audit(result,mapped,root,fixture)},indent=2))
-                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/adamic/stage3/shape-conformance/latent/audit.py", line 44, in audit
-    for owner,outcome in expected.items():assert by_owner[owner]['outcome']==outcome,(owner,by_owner[owner])
-                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError: ('stageRead', {'file': 'src/compiler/main.a', 'line': 0, 'column': 0, 'source_type': '', 'target_type': '', 'start': 413, 'end': 426, 'kind': 'tagged', 'text': 'node as Ready', 'adapted': {'start': 413, 'end': 426, 'owner': 'stageRead'}, 'measurement': 'measured on a checker-rejected program', 'outcome': 'conforms and ready (free)', 'reason': 'declared allocation field certificates', 'detail': [], 'allocation_sites': [-2], 'fields': [], 'host_values': [], 'diagnostic_causes': []})

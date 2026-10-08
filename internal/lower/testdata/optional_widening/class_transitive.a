@@ -1,6 +1,0 @@
-class Base { x = 1; }
-class Middle extends Base {}
-class Derived extends Middle { y = 'wrong'; }
-const view: Base = new Derived();
-const wider: { x: number; y?: number } = view;
-console.log(typeof wider.y);

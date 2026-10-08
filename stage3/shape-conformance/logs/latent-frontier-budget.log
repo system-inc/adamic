@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "/workspace/adamic/stage3/shape-conformance/latent/audit.py", line 54, in <module>
-    print(json.dumps({'measurement':LABEL,'status':'PASS','counts':audit(result,mapped,root,fixture)},indent=2))
-                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/workspace/adamic/stage3/shape-conformance/latent/audit.py", line 44, in audit
-    for owner,outcome in expected.items():assert by_owner[owner]['outcome']==outcome,(owner,by_owner[owner])
-                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError: ('read', {'file': 'src/compiler/main.a', 'line': 0, 'column': 0, 'source_type': '', 'target_type': '', 'start': 249, 'end': 262, 'kind': 'tagged', 'text': 'node as Ready', 'adapted': {'start': 249, 'end': 262, 'owner': 'read'}, 'measurement': 'measured on a checker-rejected program', 'outcome': 'unknown', 'reason': "flow the graph can't see", 'detail': ['projection frontier work budget exceeded', 'projection frontier work budget exceeded'], 'allocation_sites': [-1], 'fields': [], 'host_values': [], 'diagnostic_causes': []})

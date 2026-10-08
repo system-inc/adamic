@@ -1,5 +1,0 @@
-import { programArguments, writeTextFile } from 'adamic';
-const directory = programArguments()[0] ?? 'missing';
-const result = writeTextFile(`${directory}/big.txt`, 'x'.repeat(200000));
-console.log(result.kind === 'Ok' ? 'ok' : result.message.replace(directory, '<dir>'));
-console.error('after');

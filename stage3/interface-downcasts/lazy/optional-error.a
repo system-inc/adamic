@@ -1,4 +1,0 @@
-import type { Stats } from 'node:fs';
-const error = new Error('plain');
-const code = (error as NodeJS.ErrnoException).code;
-console.log(code ?? 'missing');

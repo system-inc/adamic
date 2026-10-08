@@ -1,5 +1,0 @@
-// Original tsc declaration/read; adjacent helpers reduced.
-interface Base {readonly writeLine:unknown;}
-interface Target {writeLine(force?: boolean): void;}
-function probe(value:Base):void {const writer=value as Target;writer.writeLine();}
-probe({writeLine:(force?:boolean):void=>{console.log(force===true?"7":"3");}});

@@ -1,6 +1,0 @@
-import 'node:process';
-import { readTextFile } from 'adamic';
-const first = process.cwd();
-process.stdout.write('ready\n');
-readTextFile('/dev/stdin');
-console.log(`cached ${process.cwd() === first}`);

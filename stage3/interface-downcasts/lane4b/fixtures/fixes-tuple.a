@@ -1,6 +1,0 @@
-interface Base { readonly kind: number; }
-interface Holder extends Base { readonly value: string | readonly [number, number]; }
-function read(node: Holder): void { const value = node.value; console.log(typeof value); }
-const concrete = { kind: 1, value: 'plain' };
-const base: Base = concrete;
-read(base as Holder);

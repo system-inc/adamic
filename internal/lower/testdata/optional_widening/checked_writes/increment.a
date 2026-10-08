@@ -1,1 +1,0 @@
-const actual:{x:number;y:number}={x:1,y:2}; const source:{x:number}=actual; const wider:{x:number;y?:number}=source; if(wider.y!==undefined){wider.y++;} console.log(`${actual.y}`);

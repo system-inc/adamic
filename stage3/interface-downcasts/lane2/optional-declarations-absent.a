@@ -1,6 +1,0 @@
-interface Base { readonly kind: 'symbol' | 'other'; }
-interface Declaration { readonly name: string; }
-interface SymbolView extends Base { readonly kind: 'symbol'; readonly declarations?: Declaration[]; }
-function symbol(node: Base): SymbolView { return node as SymbolView; }
-const raw = {kind: 'symbol' as const};
-console.log(symbol(raw).declarations === undefined ? 'missing' : 'present');

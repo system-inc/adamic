@@ -1,6 +1,0 @@
-import type { JsonSourceFile } from 'original-tsc-types';
-interface Base { readonly kind: number; }
-const raw = { kind: 308, parseDiagnostics: 'bad' };
-const base: Base = raw;
-const viewed = base as JsonSourceFile;
-console.log(`${viewed.kind}`);

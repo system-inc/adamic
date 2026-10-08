@@ -1,8 +1,0 @@
-import * as _os from 'node:os';
-import * as proc from 'node:process';
-import defaultProcess from 'node:process';
-console.log(_os.platform());
-console.log(JSON.stringify(_os.EOL));
-console.log(String(_os.tmpdir().length > 0));
-console.log(String(proc.cwd() === defaultProcess.cwd()));
-console.log(defaultProcess.env.ADAMIC_PROCESS_NAMESPACE_MISSING ?? 'absent');

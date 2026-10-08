@@ -1,5 +1,0 @@
-interface Base { readonly ready: boolean; }
-interface Box extends Base { readonly unread: string | number; }
-function make(): Base { const raw = { ready: true, unread: 42 }; return raw; }
-const view = make() as Box;
-console.log(view.ready ? 'true' : 'false');

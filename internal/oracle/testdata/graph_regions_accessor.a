@@ -1,1 +1,0 @@
-function make(): {readonly value:string} { let source: {readonly value:string}|undefined; const literal={ get value():string { return source===undefined ? 'empty' : source.value; } }; source=literal; return literal; } function run(): void {const held=make(); console.log('made');} run();

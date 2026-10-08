@@ -1,6 +1,0 @@
-interface Expression {readonly value:number;}
-interface ReturnStatement {readonly value:number;}
-interface Base {readonly createReturnStatement:unknown;}
-interface Target {createReturnStatement(expression?: Expression): ReturnStatement;}
-function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createReturnStatement().value}`);console.log(`${factory.createReturnStatement(undefined).value}`);const node:Expression={value:3};console.log(`${factory.createReturnStatement(node).value}`);}
-probe({createReturnStatement:(expression?:Expression):ReturnStatement=>({value:expression===undefined?7:expression.value})});

@@ -1,3 +1,0 @@
-type Brand = void & { __escapedIdentifier: void };
-const value = undefined as Brand;
-console.log(value.__escapedIdentifier);
