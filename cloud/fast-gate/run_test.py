@@ -302,6 +302,22 @@ class CompleteMode(unittest.TestCase):
             gate.fail("tests", "first")
         self.assertEqual(gate.killed, 1)
 
+    def test_a_gate_tool_crash_stops_even_a_complete_run(self):
+        # A complete run on broken tools teaches nothing (@system_adamic, Oct 8): a traceback stops it.
+        for full in (False, True):
+            gate = self.gate(True)
+            gate.arguments.full = full
+            gate.status = lambda line: None
+            with mock.patch("builtins.print"):
+                gate.fail("a-check", "Traceback (most recent call last):\n  File run.py\nFileNotFoundError: x.a")
+            self.assertEqual(gate.killed, 1, "full=%s" % full)
+            self.assertTrue(gate.failure["tool_crash"])
+        gate = self.gate(True)
+        with mock.patch("builtins.print"):
+            gate.fail("tests", "p TestFailed\n")
+        self.assertEqual(gate.killed, 0)
+        self.assertNotIn("tool_crash", gate.failure)
+
 
 class OracleSelection(unittest.TestCase):
     """A fixture-only change to internal/oracle runs its fixtures in the lanes, plus every test over a

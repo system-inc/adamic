@@ -1270,7 +1270,19 @@ class Gate:
             if self.failure is not None or getattr(self, "stopped", None):
                 return
             self.failure = {"step": step, "detail": detail, "after_seconds": round(time.monotonic() - self.started, 1)}
-            print("FIRST FAILURE (%s, at %.1f s):\n%s" % (step, self.failure["after_seconds"], detail), flush=True)
+            # A Python traceback is the gate tool's own exception, not the change's verdict: a complete or
+            # whole run goes no further on broken tools, since it would teach nothing (@system_adamic, Oct 8,
+            # after a-check crashed on views slice 1 and its complete run went on for minutes).
+            crashed = detail.lstrip().startswith("Traceback (most recent call last)")
+            if crashed:
+                self.failure["tool_crash"] = True
+            print("FIRST FAILURE (%s%s, at %.1f s):\n%s" % (step, ", the gate tool crashed" if crashed else "", self.failure["after_seconds"], detail), flush=True)
+            if crashed:
+                if self.arguments.full:
+                    with open(os.path.join(self.arguments.out, "first-failure.txt"), "w") as handle:
+                        handle.write(detail + "\n")
+                self.killSessions()
+                return
             if self.arguments.full:
                 # Landings pause on this line now; the rest of the run goes on for triage only.
                 with open(os.path.join(self.arguments.out, "first-failure.txt"), "w") as handle:
@@ -1375,7 +1387,8 @@ class Gate:
         elif green:
             self.status("green: %s %s gate in %.1f s (%s), %d packages, %d pass, %d skip, smoke %d fixtures" % (self.arguments.sha, self.kind, wall, steps, len(self.result.get("package_list", self.result.get("packages", []))), self.counts["pass"], self.counts["skip"], len(self.result.get("smoke_fixtures", []))))
         else:
-            self.status("red: %s %s gate, first failure at %s after %.1f s (%s), %d fail, %d pass" % (self.arguments.sha, self.kind, self.failure["step"], self.failure["after_seconds"], steps, self.counts["fail"], self.counts["pass"]))
+            crash = " (the gate tool crashed, not the change)" if self.failure.get("tool_crash") else ""
+            self.status("red: %s %s gate, first failure at %s%s after %.1f s (%s), %d fail, %d pass" % (self.arguments.sha, self.kind, self.failure["step"], crash, self.failure["after_seconds"], steps, self.counts["fail"], self.counts["pass"]))
         if getattr(self, "stopped", None) and self.failure is not None:
             with open(os.path.join(self.arguments.out, "status.txt"), "a") as handle:
                 handle.write("stopped: " + self.stopped["reason"] + "\n")
