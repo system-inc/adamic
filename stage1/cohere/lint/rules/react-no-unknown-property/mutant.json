@@ -1,0 +1,5 @@
+{
+  "name": "unknown-property-canonical-inverted",
+  "from": "if (canonical === name) { return; }",
+  "to": "if (canonical !== name) { return; }"
+}

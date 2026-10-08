@@ -1,0 +1,1 @@
+Ports unchanged Go react.NoUnknownProperty. The six name/ARIA/tag tables are extracted mechanically from the pinned Go source. Owns exact name-only fixes, attribute ranges, both options and four messages. Ownership checked across every origin branch; upstream count: 151.

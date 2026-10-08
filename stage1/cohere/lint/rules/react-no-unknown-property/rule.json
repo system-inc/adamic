@@ -1,0 +1,12 @@
+{
+  "name": "react/no-unknown-property",
+  "kinds": [
+    "JsxAttribute"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoUnknownProperty",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestNoUnknownProperty"
+}

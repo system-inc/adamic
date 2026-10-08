@@ -1,0 +1,54 @@
+import type { RuleContext } from '../../context.ts';
+import { matchIgnoringCase } from '../../helpers/jsx/match_ignoring_case.a';
+import { attributeTags, propertiesIgnoreCase, ariaProperties, standardName } from './tables.a';
+import { unknown, standard, invalidTag, dataLowercase } from './messages.a';
+export class Rule {
+ readonly context: RuleContext;
+ constructor(context: RuleContext) { this.context = context; }
+ visit(index: number): void {
+  const ctx = this.context;
+  const attribute = ctx.node(index);
+  const nameIndex = attribute.children[0] ?? -1;
+  if (nameIndex < 0) { return; }
+  const actual = ctx.source.slice(ctx.start(nameIndex),ctx.node(nameIndex).end);
+  if (ctx.settings.list('ignore',[]).includes(actual)) { return; }
+  let name = actual;
+  for (const candidate of propertiesIgnoreCase) { if (matchIgnoringCase(candidate,name)) { name = candidate; break; } }
+  const attrs = ctx.parents[index] ?? -1;
+  if (attrs < 0 || ctx.node(attrs).kind !== 'JsxAttributes') { return; }
+  const element = ctx.parents[attrs] ?? -1;
+  if (element < 0) { return; }
+  const tagIndex = ctx.node(element).children[0] ?? -1;
+  if (tagIndex < 0) { return; }
+  const tag = ctx.node(tagIndex);
+  if (tag.kind === 'PropertyAccessExpression') { return; }
+  const tagName = tag.kind === 'Identifier' ? tag.text : '';
+  if (name.startsWith('data-') && !matchIgnoringCase(name.slice(0,8),'data-xml') && !name.includes(':')) {
+   if (ctx.settings.read('requiredatalowercase','false') === 'true' && name.toLowerCase() !== name) {
+    ctx.report(index,'react/no-unknown-property','dataLowercaseRequired',dataLowercase(actual),'','','');
+   }
+   return;
+  }
+  if (ariaProperties.includes(name) || tagName === 'fbt' || tagName === 'fbs') { return; }
+  if (tagName === '' || tagName.charCodeAt(0) < 97 || tagName.charCodeAt(0) > 122 || tagName.includes('-')) { return; }
+  for (const property of ctx.node(attrs).children) {
+   const prop = ctx.node(property);
+   const ni = prop.children[0] ?? -1;
+   if (prop.kind === 'JsxAttribute' && ni >= 0 && ctx.node(ni).kind === 'Identifier' && ctx.node(ni).text === 'is') { return; }
+  }
+  for (const row of attributeTags) {
+   if (row[0] !== name) { continue; }
+   const allowed = row.slice(1);
+   if (!allowed.includes(tagName)) { ctx.report(index,'react/no-unknown-property','invalidPropOnTag',invalidTag(actual,tagName,allowed),'','',''); }
+   return;
+  }
+  const canonical = standardName(name);
+  if (canonical === name) { return; }
+  if (canonical !== '') {
+   ctx.reportNode(index,'react/no-unknown-property','unknownPropWithStandardName',standard(actual,canonical),[ctx.edit(nameIndex,canonical)]);
+   return;
+  }
+  ctx.report(index,'react/no-unknown-property','unknownProp',unknown(actual),'','','');
+ }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
