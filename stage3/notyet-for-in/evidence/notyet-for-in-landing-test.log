@@ -1,0 +1,45 @@
+=== RUN   TestForInOptionsRuling
+=== PAUSE TestForInOptionsRuling
+=== RUN   TestForInArrayRuling
+=== PAUSE TestForInArrayRuling
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestForInOptionsRuling
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestForInArrayRuling
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_keys.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_keys.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_live.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_live.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/for_in_options_refused.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/for_in_options_refused.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_refused.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_refused.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_refused.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_options_refused.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_refused.a
+    oracle_test.go:734: not yet: /workspace/adamic/internal/oracle/testdata/for_in_array_refused.a:3:20: stage 0 can't lower for...in over an array (holes and own enumerable properties are not represented; use for...of for elements) yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_live.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_options_refused.a
+    oracle_test.go:734: not yet: /workspace/adamic/internal/oracle/testdata/for_in_options_refused.a:3:21: stage 0 can't lower for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly) yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_keys.a
+=== NAME  TestForInOptionsRuling
+    for_in_ruling_test.go:42: Node "stable\nstable|missing\n"; retained /workspace/adamic/internal/oracle/testdata/for_in_options_refused.a:3:21: stage 0 can't lower for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly) yet
+--- PASS: TestForInOptionsRuling (0.27s)
+=== NAME  TestForInArrayRuling
+    for_in_ruling_test.go:62: Node "0|1|2\n0|2\n"; retained /workspace/adamic/internal/oracle/testdata/for_in_array_refused.a:3:20: stage 0 can't lower for...in over an array (holes and own enumerable properties are not represented; use for...of for elements) yet
+--- PASS: TestForInArrayRuling (0.31s)
+--- PASS: TestNativeAgreesWithNode (0.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_refused.a (0.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/for_in_options_refused.a (0.10s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a (0.58s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_keys.a (0.50s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_live.a (0.58s)
+PASS
+gate cache: native hits=0 misses=9
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.686s

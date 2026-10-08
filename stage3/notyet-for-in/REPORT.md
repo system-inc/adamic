@@ -1,5 +1,5 @@
 Preserved both for-in guards and added Node-held property-presence and array-hole witnesses.
-Base b410340dc8f889b5799c3bc519117c63def3aa24; replay merge 1aa37cf4; first kind bb393fb8.
+Base b410340dc8f889b5799c3bc519117c63def3aa24; kind commits bb393fb8 and a730a3bc; main merge bdacb1b8.
 All three examples replay; final focused oracle passes in 0.697s and counts refresh in 22.431s.
 Both guard mutants fail exact-stop assertions: origin bypass accepts; array bypass reaches the origin stop.
 No root site is newly lowered: 10 origin sites and 1 array site retained for a ruling; refused witnesses cannot run through backends.
@@ -122,3 +122,16 @@ git diff --check
 All exit 0. Oracle 0.697s, counts 22.431s, vet and diff check no output.
 counts.md is unchanged. The first-kind push succeeded. Current main advanced
 from d65e2d5e to ef3141e9 during work; landing validation follows its merge.
+
+## Landing
+
+Merged fetched current origin/main ef3141e9 into the worker branch in
+bdacb1b8f27b3c98542e04331401fd2a5a7a6834. Merge is clean and changes no
+lowering, native, JavaScript or oracle input. The second-kind push a730a3bc
+succeeded before this merge.
+
+Repeated the final focused uncached oracle command above after the merge:
+exit 0, 0.686s. Repeated the full required TestCountsAreRecorded update:
+exit 0, 22.591s, counts.md unchanged. gofmt for the new test and git diff --check
+produce no output. Saved landing logs accompany the earlier evidence.
+No PR, full package tests, full gate, or edits to production functions were made.
