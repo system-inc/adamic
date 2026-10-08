@@ -24,6 +24,7 @@ import (
 )
 
 const usage = `usage:
+  adamic --explain-checks <file.a|file.ts>...
   adamic types <file.a|file.ts>...
   adamic c <file.a|file.ts> [--explain-checks]
   adamic js <file.a|file.ts> [--explain-checks]
