@@ -1,0 +1,8 @@
+=== RUN   TestClockChildrenOptionalRepresentation
+=== RUN   TestClockChildrenOptionalRepresentation/array_ancestry
+    representation_clock_children_optional_test.go:53: optional representation = 0, false; want Array admitted true
+--- FAIL: TestClockChildrenOptionalRepresentation (0.11s)
+    --- FAIL: TestClockChildrenOptionalRepresentation/array_ancestry (0.11s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.150s
+FAIL

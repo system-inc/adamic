@@ -1,0 +1,58 @@
+[
+  {
+    "name": "clock-children-missing-constraint-guard",
+    "test": "TestClockChildrenOptionalRepresentation/unconstrained",
+    "exit": 1,
+    "killed": true,
+    "log": "/tmp/clock-children-missing-constraint-guard.log"
+  },
+  {
+    "name": "clock-children-noninterface-is-array",
+    "test": "TestClockChildrenOptionalRepresentation/callable_constraint",
+    "exit": 1,
+    "killed": true,
+    "log": "/tmp/clock-children-noninterface-is-array.log"
+  },
+  {
+    "name": "clock-children-forget-reference-target",
+    "test": "TestClockChildrenOptionalRepresentation/array_ancestry",
+    "exit": 1,
+    "killed": true,
+    "log": "/tmp/clock-children-forget-reference-target.log"
+  },
+  {
+    "name": "clock-children-structural-is-array",
+    "test": "TestClockChildrenOptionalRepresentation/structural_length",
+    "exit": 1,
+    "killed": true,
+    "log": "/tmp/clock-children-structural-is-array.log"
+  },
+  {
+    "name": "clock-children-tuple-is-array",
+    "test": "TestClockChildrenOptionalRepresentation/tuple",
+    "exit": 1,
+    "killed": true,
+    "log": "/tmp/clock-children-tuple-is-array.log"
+  },
+  {
+    "name": "clock-children-forget-array-ancestry",
+    "test": "TestClockChildrenOptionalRepresentation/array_ancestry",
+    "exit": 1,
+    "killed": true,
+    "log": "/tmp/clock-children-forget-array-ancestry.log"
+  },
+  {
+    "name": "clock-children-ignore-substitution",
+    "test": "TestClockChildrenOptionalRepresentation/readonly_array",
+    "exit": 1,
+    "killed": true,
+    "log": "/tmp/clock-children-ignore-substitution.log"
+  },
+  {
+    "name": "clock-children-forget-array-proof",
+    "test": "TestClockChildrenOptionalRepresentation/readonly_array",
+    "exit": 1,
+    "killed": true,
+    "log": "/tmp/clock-children-forget-array-proof.log"
+  }
+]

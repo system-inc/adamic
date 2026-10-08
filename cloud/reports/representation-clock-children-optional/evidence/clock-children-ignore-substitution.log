@@ -1,0 +1,8 @@
+=== RUN   TestClockChildrenOptionalRepresentation
+=== RUN   TestClockChildrenOptionalRepresentation/readonly_array
+    representation_clock_children_optional_test.go:62: substitution lost: 5 true
+--- FAIL: TestClockChildrenOptionalRepresentation (0.09s)
+    --- FAIL: TestClockChildrenOptionalRepresentation/readonly_array (0.09s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.128s
+FAIL

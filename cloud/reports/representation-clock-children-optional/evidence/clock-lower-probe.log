@@ -1,0 +1,22 @@
+=== RUN   TestClockChildrenOptionalRepresentation
+=== RUN   TestClockChildrenOptionalRepresentation/readonly_array
+=== RUN   TestClockChildrenOptionalRepresentation/mutable_array
+=== RUN   TestClockChildrenOptionalRepresentation/array_ancestry
+=== RUN   TestClockChildrenOptionalRepresentation/tuple
+=== RUN   TestClockChildrenOptionalRepresentation/structural_length
+=== RUN   TestClockChildrenOptionalRepresentation/unknown_constraint
+=== RUN   TestClockChildrenOptionalRepresentation/union_constraint
+=== RUN   TestClockChildrenOptionalRepresentation/callable_constraint
+=== RUN   TestClockChildrenOptionalRepresentation/unconstrained
+--- PASS: TestClockChildrenOptionalRepresentation (1.97s)
+    --- PASS: TestClockChildrenOptionalRepresentation/readonly_array (0.20s)
+    --- PASS: TestClockChildrenOptionalRepresentation/mutable_array (0.26s)
+    --- PASS: TestClockChildrenOptionalRepresentation/array_ancestry (0.20s)
+    --- PASS: TestClockChildrenOptionalRepresentation/tuple (0.22s)
+    --- PASS: TestClockChildrenOptionalRepresentation/structural_length (0.18s)
+    --- PASS: TestClockChildrenOptionalRepresentation/unknown_constraint (0.19s)
+    --- PASS: TestClockChildrenOptionalRepresentation/union_constraint (0.36s)
+    --- PASS: TestClockChildrenOptionalRepresentation/callable_constraint (0.23s)
+    --- PASS: TestClockChildrenOptionalRepresentation/unconstrained (0.13s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	2.030s

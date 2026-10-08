@@ -1,0 +1,46 @@
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat
+=== RUN   TestClockChildrenOptionalRepresentation
+=== RUN   TestClockChildrenOptionalRepresentation/readonly_array
+=== RUN   TestClockChildrenOptionalRepresentation/mutable_array
+=== RUN   TestClockChildrenOptionalRepresentation/array_ancestry
+=== RUN   TestClockChildrenOptionalRepresentation/tuple
+=== RUN   TestClockChildrenOptionalRepresentation/structural_length
+=== RUN   TestClockChildrenOptionalRepresentation/unknown_constraint
+=== RUN   TestClockChildrenOptionalRepresentation/union_constraint
+=== RUN   TestClockChildrenOptionalRepresentation/callable_constraint
+=== RUN   TestClockChildrenOptionalRepresentation/unconstrained
+--- PASS: TestClockChildrenOptionalRepresentation (0.97s)
+    --- PASS: TestClockChildrenOptionalRepresentation/readonly_array (0.15s)
+    --- PASS: TestClockChildrenOptionalRepresentation/mutable_array (0.18s)
+    --- PASS: TestClockChildrenOptionalRepresentation/array_ancestry (0.11s)
+    --- PASS: TestClockChildrenOptionalRepresentation/tuple (0.13s)
+    --- PASS: TestClockChildrenOptionalRepresentation/structural_length (0.09s)
+    --- PASS: TestClockChildrenOptionalRepresentation/unknown_constraint (0.06s)
+    --- PASS: TestClockChildrenOptionalRepresentation/union_constraint (0.06s)
+    --- PASS: TestClockChildrenOptionalRepresentation/callable_constraint (0.11s)
+    --- PASS: TestClockChildrenOptionalRepresentation/unconstrained (0.08s)
+=== RUN   TestClockChildrenOptionalHeaderABI
+--- PASS: TestClockChildrenOptionalHeaderABI (0.06s)
+=== RUN   TestClockChildrenOptionalKeepsArrayBoundaries
+=== RUN   TestClockChildrenOptionalKeepsArrayBoundaries/tuple
+=== RUN   TestClockChildrenOptionalKeepsArrayBoundaries/element_keeping
+--- PASS: TestClockChildrenOptionalKeepsArrayBoundaries (0.32s)
+    --- PASS: TestClockChildrenOptionalKeepsArrayBoundaries/tuple (0.13s)
+    --- PASS: TestClockChildrenOptionalKeepsArrayBoundaries/element_keeping (0.19s)
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes
+--- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat (0.00s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak (0.20s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes (0.21s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array (0.68s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	2.090s

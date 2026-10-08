@@ -1,0 +1,168 @@
+{
+  "base": "ca59a31af5d649eedb39d9f060c3498727fa6959",
+  "measurement": "measured on a checker-rejected entry-root program",
+  "baseline_exit": 0,
+  "after_exit": 1,
+  "after_exit_reason": "the requested old signature no longer reproduces",
+  "retired_signature": "a value of type Children | undefined",
+  "next_owned_statement_stop": {
+    "measurement": "measured on a checker-rejected entry-root program",
+    "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4663:5",
+    "phase": "lowering",
+    "kind": "NotYet",
+    "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4665:13",
+    "reason": "a generic function as a value",
+    "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4665:13: stage 0 can't lower a generic function as a value yet"
+  },
+  "remaining_findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4663:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4681:13",
+      "reason": "a BinaryExpression with a boolean and a number",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4681:13: stage 0 can't lower a BinaryExpression with a boolean and a number yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4663:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4686:13",
+      "reason": "a BinaryExpression with a boolean and a number",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4686:13: stage 0 can't lower a BinaryExpression with a boolean and a number yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4663:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4694:17",
+      "reason": "a BinaryExpression with a boolean and a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4694:17: stage 0 can't lower a BinaryExpression with a boolean and a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4663:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4699:9",
+      "reason": "a call through ?. (an optional call)",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4699:9: stage 0 can't lower a call through ?. (an optional call) yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4663:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4703:94",
+      "reason": "a BinaryExpression with a value and a boolean",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4703:94: stage 0 can't lower a BinaryExpression with a value and a boolean yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4663:5",
+      "phase": "lowering",
+      "kind": "panic",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4711:13",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4663:5",
+      "phase": "lowering",
+      "kind": "error",
+      "where": "",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4663:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4714:9",
+      "reason": "a call through ?. (an optional call)",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4714:9: stage 0 can't lower a call through ?. (an optional call) yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4663:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4717:17",
+      "reason": "a BinaryExpression with a boolean and a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4717:17: stage 0 can't lower a BinaryExpression with a boolean and a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4663:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4665:13",
+      "reason": "a generic function as a value",
+      "text": "/tmp/notyet-representations-adapted/src/compiler/emitter.ts:4665:13: stage 0 can't lower a generic function as a value yet"
+    }
+  ],
+  "source_count": 81,
+  "mutants": [
+    {
+      "name": "clock-children-missing-constraint-guard",
+      "test": "TestClockChildrenOptionalRepresentation/unconstrained",
+      "exit": 1,
+      "killed": true,
+      "log": "/tmp/clock-children-missing-constraint-guard.log"
+    },
+    {
+      "name": "clock-children-noninterface-is-array",
+      "test": "TestClockChildrenOptionalRepresentation/callable_constraint",
+      "exit": 1,
+      "killed": true,
+      "log": "/tmp/clock-children-noninterface-is-array.log"
+    },
+    {
+      "name": "clock-children-forget-reference-target",
+      "test": "TestClockChildrenOptionalRepresentation/array_ancestry",
+      "exit": 1,
+      "killed": true,
+      "log": "/tmp/clock-children-forget-reference-target.log"
+    },
+    {
+      "name": "clock-children-structural-is-array",
+      "test": "TestClockChildrenOptionalRepresentation/structural_length",
+      "exit": 1,
+      "killed": true,
+      "log": "/tmp/clock-children-structural-is-array.log"
+    },
+    {
+      "name": "clock-children-tuple-is-array",
+      "test": "TestClockChildrenOptionalRepresentation/tuple",
+      "exit": 1,
+      "killed": true,
+      "log": "/tmp/clock-children-tuple-is-array.log"
+    },
+    {
+      "name": "clock-children-forget-array-ancestry",
+      "test": "TestClockChildrenOptionalRepresentation/array_ancestry",
+      "exit": 1,
+      "killed": true,
+      "log": "/tmp/clock-children-forget-array-ancestry.log"
+    },
+    {
+      "name": "clock-children-ignore-substitution",
+      "test": "TestClockChildrenOptionalRepresentation/readonly_array",
+      "exit": 1,
+      "killed": true,
+      "log": "/tmp/clock-children-ignore-substitution.log"
+    },
+    {
+      "name": "clock-children-forget-array-proof",
+      "test": "TestClockChildrenOptionalRepresentation/readonly_array",
+      "exit": 1,
+      "killed": true,
+      "log": "/tmp/clock-children-forget-array-proof.log"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+=== RUN   TestClockChildrenOptionalRepresentation
+=== RUN   TestClockChildrenOptionalRepresentation/tuple
+    representation_clock_children_optional_test.go:53: optional representation = 5, true; want Array admitted false
+--- FAIL: TestClockChildrenOptionalRepresentation (0.07s)
+    --- FAIL: TestClockChildrenOptionalRepresentation/tuple (0.07s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.088s
+FAIL

@@ -1,0 +1,65 @@
+Children | undefined contribution
+
+Base: origin/area/compiler ca59a31af5d649eedb39d9f060c3498727fa6959.
+Branch: codex/clock-11-12-representations-03. Only this contribution is carried.
+
+Assumption: the missing named representation test examples on the current base
+are illustrative; use the existing fixture registration shape in a dedicated
+file. The reserved unresolved array-constrained case includes declared interface
+ancestry such as NodeArray<T> extends ReadonlyArray<T>. Structural length alone,
+tuples, callable constraints, unions of constraints and unconstrained parameters
+do not prove the array header ABI. Existing substitutions take precedence.
+
+Change: representation's unresolved parameter branch proves ir.Array from the
+base constraint's actual array ancestry. The existing undefined union logic
+then preserves the nullable array header. No IR, backend, metadata storage or
+runtime ABI changes. No new separate runtime helper. The ancestry helper is
+internal/lower/representation_clock_children_optional.go:clockArrayConstraint.
+Existing array property lowering still refuses custom NodeArray metadata.
+The visited set is termination bookkeeping for ancestry traversal, not another
+admission rule. Checker-clean inheritance cannot contain a circular base chain.
+
+Validation (all test output went directly to logs retained under evidence/):
+- TestClockChildrenOptionalRepresentation: all nine checked-type probes pass.
+  Both unresolved Children and Children | undefined prove Array only for arrays
+  and declared array ancestry; every probe retains substitution precedence.
+- TestClockChildrenOptionalHeaderABI: concrete size headers carry ir.Array.
+- TestClockChildrenOptionalKeepsArrayBoundaries and existing tuple/keeping tests
+  pass; tuple-to-array and strong-to-weak element views remain refused.
+- Registered fixture agrees with source Node in JavaScript, sanitized native,
+  release native, and leak checks. Node prints 2 then -1 with empty stderr.
+- clock-children-undefined-is-empty prints 2 then 0. Node stdout kills it in
+  both backends; the native mutant finishes without sanitizer errors or leaks.
+- Eight restored guard mutants fail their targeted checked-type tests, including
+  missing constraint, structural/callable admission, tuple admission, array
+  proof/ancestry, reference target and substitution precedence. See REPLAY.json
+  and evidence/clock-guard-mutants.json for targeted names and exit statuses.
+- Required full TestCountsAreRecorded -args -update-counts passes (60.014s).
+  The only counts change is the new fixture: 7 allocations, 7 frees, 4 retains,
+  7 releases, peak 5, zero region frees. Both touched packages have focused tests.
+
+Exact census proof:
+Reconstructed with git archive 9d534d3a31814f1a192a528e701f6c2ea7c910bc stage3
+and its unmodified apply.sh into /tmp/notyet-representations-adapted. Recorded
+and reverified byte lengths and SHA-256 hashes for all 81 reconstructed sources
+(79 compiler sources and two tsc sources). The manifest is this reconstruction's
+provenance, not a claimed comparison with a separately supplied donor manifest.
+Guarded tooling came from 3cead3fdfeaf8dca6920d748f016a0b0ef1823f2 as scratch and
+was removed after replay; no census tooling is included in this commit.
+
+Baseline used the same guarded worker with only the new admission removed from
+its scratch expression overlay. Exit 0 reproduces the exact NotYet at
+emitter.ts:4663:108: a value of type Children | undefined.
+
+After: the exact requested go run ./stage3/census/latent/replay command exits 1
+because that signature no longer reproduces. No finding retains that reason.
+The next stop in emitList's own statement is emitter.ts:4665:13:
+a generic function as a value. The replay also records dependency-body stops
+and recovered panics; complete raw before/after records are retained compressed.
+This remains measurement on a checker-rejected entry-root program, not proof
+that the full emitter or all three listed census roots compile. The original
+signature was active, not a census echo; no kind cancellation is called for.
+
+Ownership history was inspected before editing internal/lower/expression.go.
+Only its reserved representation branch changes; other workers' functions stay
+untouched. All other clock kinds and parent-worker stops remain outside scope.

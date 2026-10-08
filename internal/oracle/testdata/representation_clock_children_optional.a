@@ -1,0 +1,6 @@
+interface ChildNode { readonly text: string; }
+function size<Children extends readonly ChildNode[]>(children: Children | undefined): number {
+    return children === undefined ? -1 : children.length;
+}
+console.log(`${size([{ text: 'a' }, { text: 'b' }])}`);
+console.log(`${size<readonly ChildNode[]>(undefined)}`);

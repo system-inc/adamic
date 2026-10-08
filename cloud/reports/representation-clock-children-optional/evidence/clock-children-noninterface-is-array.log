@@ -1,0 +1,8 @@
+=== RUN   TestClockChildrenOptionalRepresentation
+=== RUN   TestClockChildrenOptionalRepresentation/callable_constraint
+    representation_clock_children_optional_test.go:53: optional representation = 5, true; want Array admitted false
+--- FAIL: TestClockChildrenOptionalRepresentation (0.07s)
+    --- FAIL: TestClockChildrenOptionalRepresentation/callable_constraint (0.07s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.093s
+FAIL
