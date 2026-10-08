@@ -546,11 +546,11 @@ func (l *lowering) nominalAncestor(source, target *checker.Type, seen map[[2]*ch
 	}
 	if source.Symbol() == target.Symbol() {
 		from, to := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
-		if len(from) != len(to) {
+		if !l.sameClassArguments(from, to) {
 			return false
 		}
 		for index := range from {
-			if !l.checker.IsTypeAssignableTo(from[index], to[index]) || !l.checker.IsTypeAssignableTo(to[index], from[index]) || l.nominalMismatch(from[index], to[index], seen) != nil || l.nominalMismatch(to[index], from[index], seen) != nil {
+			if !l.enumAssignable(from[index], to[index]) || !l.enumAssignable(to[index], from[index]) || l.nominalMismatch(from[index], to[index], seen) != nil || l.nominalMismatch(to[index], from[index], seen) != nil {
 				return false
 			}
 		}
@@ -567,23 +567,59 @@ func (l *lowering) nominalAncestor(source, target *checker.Type, seen map[[2]*ch
 // Initializers may read fields already initialized, including the base's after super. A future
 // field would hold undefined despite its declared type; a method may read future derived fields.
 func (l *lowering) initializerReads(node *ast.Node, available map[string]bool) error {
-	var refused error
-	var visit ast.Visitor
-	visit = func(node *ast.Node) bool {
-		if refused != nil {
-			return true
+	seen := map[*ast.Node]bool{}
+	var examine func(*ast.Node, []string) error
+	examine = func(body *ast.Node, path []string) error {
+		if body == nil || seen[body] {
+			return nil
 		}
-		if node.Kind == ast.KindThisKeyword {
-			parent := node.Parent
-			if parent == nil || parent.Kind != ast.KindPropertyAccessExpression || !available[l.fieldName(parent.Name())] {
-				refused = &Refused{Where: l.program.Where(node), What: "this in a field initializer before the fields it reads are initialized", Fix: "declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set"}
+		seen[body] = true
+		var refused error
+		var visit ast.Visitor
+		visit = func(child *ast.Node) bool {
+			if refused != nil {
 				return true
 			}
+			if ast.IsPartOfTypeNode(child) {
+				return false
+			}
+			if child.Kind == ast.KindPropertyAccessExpression {
+				object := ast.SkipParentheses(child.AsPropertyAccessExpression().Expression)
+				if object.Kind == ast.KindThisKeyword || object.Kind == ast.KindSuperKeyword {
+					symbol := l.checker.GetSymbolAtLocation(child.Name())
+					if object.Kind == ast.KindThisKeyword && child.Name().Kind != ast.KindPrivateIdentifier {
+						symbol = l.checker.GetPropertyOfType(l.classType, child.Name().Text())
+					}
+					if symbol != nil {
+						for _, member := range symbol.Declarations {
+							step := child.Name().Text()
+							if member.Parent != nil && member.Parent.Name() != nil {
+								step = member.Parent.Name().Text() + "." + step
+							}
+							next := append(append([]string{}, path...), step)
+							if member.Kind == ast.KindMethodDeclaration || member.Kind == ast.KindGetAccessor {
+								refused = examine(member.Body(), next)
+							} else if member.Kind == ast.KindPropertyDeclaration && !available[l.fieldName(child.Name())] {
+								refused = &Refused{Where: l.program.Where(child), What: "a field initializer reading an uninitialized field through " + strings.Join(next, " -> "), Fix: "declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set"}
+							}
+							if refused != nil {
+								return true
+							}
+						}
+						return false
+					}
+				}
+			}
+			if child.Kind == ast.KindThisKeyword || child.Kind == ast.KindSuperKeyword {
+				refused = &Refused{Where: l.program.Where(child), What: "this in a field initializer before the fields it reads are initialized", Fix: "declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set"}
+				return true
+			}
+			return child.ForEachChild(visit)
 		}
-		return node.ForEachChild(visit)
+		visit(body)
+		return refused
 	}
-	visit(node)
-	return refused
+	return examine(node, nil)
 }
 
 // Private names with the same spelling in a base and a derived class are separate JavaScript slots.
@@ -603,7 +639,7 @@ func (l *lowering) fieldName(name *ast.Node) string {
 			if l.instance != nil && l.classNode != nil && l.classNode.Parent == class {
 				return name.Text() + "@" + strconv.Itoa(l.instance.class)
 			}
-			if instance := l.instances[l.program.Where(class)+":"+class.Name().Text()]; instance != nil {
+			if instance := l.instances[l.classInstanceKey(class, nil)]; instance != nil {
 				return name.Text() + "@" + strconv.Itoa(instance.class)
 			}
 			return l.program.Where(class) + ":" + name.Text()
@@ -782,9 +818,8 @@ func (l *lowering) cycleFieldMatches(holder *checker.Type, field, written string
 			return written == memberKey(name, lowered.class)
 		}
 	}
-	prefix := l.program.Where(class) + ":" + class.Name().Text()
 	for key, instance := range l.instances {
-		if key != prefix && !strings.HasPrefix(key, prefix+",") {
+		if !l.classKeyMatches(key, class) {
 			continue
 		}
 		if written == name.Text()+"@"+strconv.Itoa(instance.class) {
@@ -806,9 +841,8 @@ func (l *lowering) cycleFieldName(field *ast.Symbol) string {
 // All monomorphizations of a source class have one erased identity. An identity-only
 // descriptor lets instanceof name a generic class before any concrete instance is made.
 func (l *lowering) classDefinition(declaration *ast.Node) int {
-	prefix := l.program.Where(declaration) + ":" + declaration.Name().Text()
 	for key, instance := range l.instances {
-		if key == prefix || strings.HasPrefix(key, prefix+",") {
+		if l.classKeyMatches(key, declaration) {
 			return l.result.Classes[instance.class-1].Definition
 		}
 	}
@@ -827,7 +861,7 @@ func (l *lowering) classIdentity(declaration *ast.Node) int {
 	if l.instances == nil {
 		l.instances = map[string]*instance{}
 	}
-	key := l.program.Where(declaration) + ":" + declaration.Name().Text() + ",identity"
+	key := l.classKeyPrefix(declaration) + ",identity"
 	l.instances[key] = &instance{class: identity, constructor: -1, initializer: -1}
 	return identity
 }

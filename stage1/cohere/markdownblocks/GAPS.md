@@ -6,6 +6,271 @@ other languages compose later from their own slices. Front matter and fenced
 contents are raw under this contract. The prior inline printers are available as
 a dependency. The complete native parser and block formatter are still unfinished.
 
+## Seat compiler reconciliation, October 7, 2026
+
+On seat `1cd00a262ed08e67c51c1bc368e07bc5a4ec0117`, with main
+`71d7e491b3c9724f7a0e2ee754592149e7f9790b` already merged, gap 11 is closed:
+the unchanged function-expression probe now runs byte-identically on source
+Node, native and the JavaScript backend, with leak detection. `AstPath.map`
+now calls `each` with a capturing function expression, removing the duplicated
+traversal loop. Result collection still uses push because gap 13 remains open.
+
+Gap 16 moved from NotYet to the exact Refused diagnostic recorded below. Its
+unchanged program already calls shift on its receiver; that form is still
+refused, so the production task-list removal retains discarded splice(0,1).
+The test holds the complete diagnostic, including source line/column and fix.
+
+Main also closed gap 6: its unchanged probe prints `missing` on all three
+backends with leak detection, as main's positive test already asserts. The source
+decoder retains its explicit initialized match flag: it is how the decoder
+tracks whether a reference matched, independently of optional-field initialization.
+All other representation probes retain their recorded diagnoses or observations,
+including gap 13's fatal array-growth check. Historical unit coverage counts
+below describe their original censuses. Gate corpora now use this unit's files
+and generated cases; the whole-repository census is opt-in through
+`ADAMIC_MARKDOWNBLOCKS_CENSUS=1`. The width oracle has its seat's named skip
+without `ADAMIC_MARKDOWNWIDTH_DEPS`; with dependencies installed it runs unchanged.
+
+## Native tokenizer event primitives and full mdast construction
+
+`tokenArena.ts` and `tokenizerEvents.ts` port token identity, copied points,
+consume/previous/expected-code state, enter/exit events, reused token fields,
+column skips, checkpoints/rollback, token chunk slicing and serialization.
+Numeric token/context/construct IDs keep the graph acyclic. Actual Go private
+createTokenizer and the pinned fork's unchanged private factory run a small
+controlled construct program independently. It exercises successful checks that
+roll back, line skips and reused field objects on every special code. The native
+probe drives those same effects explicitly; it does not implement the construct
+factory or Markdown grammar. The fork's private consumed/stack cells are not
+public: the adapter infers their terminal true/empty values from its completed
+state program; Go reads them directly. Public events, points, source slices,
+previous and currentConstruct come from both actual engines.
+
+All 79,873 cases agree: the 4,943 accumulated documents, all 65,536 UTF-16 units
+including lone surrogates, special-code sequences through length five, empty and
+column/BOM/NUL/CRLF/tab edges. Native serialization follows Go's UTF-16 decoding,
+replacing unmatched surrogates. Original source strings retain them internally,
+but direct UTF-8 stdout replaces them too. This is byte parity of the exposed
+observations, not proof that the two engines store lone surrogates identically.
+Zero-span code-chunk SliceStream is an invalid Go operation; the controlled
+program does not call it. Streaming writes, construct attempts/interrupt views,
+resolver ordering and subtokenization are still unported.
+
+`mdastCompile.ts`, `mdastNode.ts` and `mdastArena.ts` construct the complete non-MDX
+Go mdast from resolved events: list-item insertion and spread inference, all core
+enter/exit handlers, buffers/text merging, references and escapes, autolinks,
+footnotes, strikethrough, tables/task lists, math, wiki links and liquid.
+`parseFrontMatter.ts` recognizes, blanks and inserts front matter, preserving
+all UTF-16 lengths, explicit languages, delimiters and raw values. Embedding is
+absent from this parsing/construction layer; raw contents stay raw.
+
+The Go adapter transports actual PRE-COMPILATION resolved tokens, event ordering,
+all context chunk streams, flags and private chunk indices. It does not supply
+constructed nodes, listItem events, inferred list spreads or token text slices.
+Native computes slices and the tree. Its 5,008-document gate includes all 876
+physical files, all accumulated generated documents, extension cases and 54
+additional front-matter contexts. Expected trees come from actual Go ParseMarkdown
+and the pinned fork's actual full source parser. Independently, the unchanged Go
+and fork event compilers reconstruct trees from the same event transport. Both
+routes agree with native/source/backend, sanitizers and leaks.
+
+The canonical protocol compares every Go construction field, null/absent flags,
+child order and coordinates. Go byte offsets are converted to UTF-16 for the
+comparison. Original HAST data, originalLabelText and open JavaScript object
+properties that Go omits are outside this typed Go projection. In particular the
+fork's frontMatter.start coordinate object is not Go's list-start integer, and
+its raw value belongs in the Go FrontMatter record, not Go's literal Value field.
+No Markdown grammar decisions are native yet: actual Go supplies resolved lexical
+events. The new full node arena has not replaced the existing layout transport or
+been composed with the earlier standalone preprocessing/path arena. This is a
+native constructor and event primitive slice, not a complete native source parser
+or Markdown formatter.
+
+Seven new zero-exit output mutants are caught: event rollback, virtual-space
+serialization, restored construct, text construction, list spread, YAML closing
+fallback and the generated identifier case table. Three additional expected-exit70
+message mutants are caught solely by stderr. Full coverage and exact observations
+are in REPORT.txt. Malformed event messages below are held to Go; fatal panics are
+not Go's recoverable error values or the fork's catchable exceptions. Leak checks
+apply to successful construction, not fatal-panic probes.
+
+### Identifier normalization witnesses
+
+Go normalizes identifiers with simple lower/upper/lower Unicode mappings. The
+fork uses JavaScript full casing and context-sensitive final sigma. The native
+`identifier.ts` uses generated Go Unicode17.0.0 tables. All 1,112,064 Unicode
+scalars agree with actual cohere NormalizeIdentifier followed by Go ToLower on
+native/source/backend, with sanitizers/leaks and a case-table mutant. No mapping
+is accepted solely because its generator produced it. The generator is
+`testdata/identifier_go.go --generate`, built through the test's Go overlay.
+
+`gaps/identifier_case.jsonl` contains three full Markdown proving programs:
+sharp-s, dotted-I and Greek final sigma. The complete canonical Go outputs are
+[identifier_case_go.txt](gaps/identifier_case_go.txt), and the complete pinned
+fork outputs are [identifier_case_fork.txt](gaps/identifier_case_fork.txt).
+The test asserts both complete files and holds native construction to Go on all
+three, with source/backend/sanitizers/leaks. Identifier values differ as follows:
+
+| Label | Go identifier | Fork identifier |
+| --- | --- | --- |
+| straße | straße | strasse |
+| İ | i (U+0069) | i + U+0307 |
+| ΟΣ | οσ (U+03BF U+03C3) | ος (U+03BF U+03C2) |
+
+These witnesses use identical definition/reference labels, so both grammars
+resolve their references; the identifier fields still differ. They do not claim
+that different labels which fold together in only one implementation produce the
+same lexical events or tree.
+
+### Malformed-event diagnostic witnesses
+
+`gaps/event_unclosed.txt`, `event_not-open.txt` and `event_mismatch.txt` are minimal
+native event proving programs. Go's actual compiler is invoked by
+`testdata/mdast_go.go --error <name>` through its overlay bridge. The fork's actual
+compiler is invoked by `testdata/mdast_library.mjs <bundles> --error <name>`.
+Each complete Go/fork output pair is retained and asserted:
+
+Unclosed, Go:
+```text
+Cannot close document, a token (`paragraph`) is still open
+```
+Unclosed, fork:
+```text
+Cannot close document, a token (`paragraph`, 1:1-1:1) is still open
+```
+Not open, Go:
+```text
+Cannot close `paragraph`: it’s not open
+```
+Not open, fork:
+```text
+Cannot close `paragraph` (1:1-1:1): it’s not open
+```
+Mismatch, Go:
+```text
+Cannot close `strong`: a different token (`paragraph`) is open
+```
+Mismatch, fork:
+```text
+Cannot close `strong` (1:1-1:1): a different token (`paragraph`, 1:1-1:1) is open
+```
+
+Native/source/backend emit `adamic: panic: ` followed by the complete Go text,
+with empty stdout and exit70. The test normalizes Go's recovered panic and the
+fork's thrown Error to message values before comparing. It does not claim that
+all three original process-level exception behaviors are equal. Three native
+message mutants retain exit70/empty stdout and are caught only by stderr bytes.
+
+### Additional literal-port compiler gaps
+
+- `gaps/15_string_or.ts`: Node prints `fallback` and `x`; string `||` is NotYet,
+  `a BinaryExpression with a string and a string`. Production uses explicit
+  comparisons/conditionals for truthy-string defaults.
+- `gaps/16_array_shift.ts`: Node prints `1` and `2`. Its direct receiver call
+  now receives this exact Refused diagnostic (relative path shown):
+
+  ```text
+  gaps/16_array_shift.ts:2:16: Adamic 0.1 refuses inherited library member shift read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)
+  ```
+
+  Production task-list removal keeps discarded splice(0,1).
+- `gaps/17_long_optional_chain.ts`: Node prints `1`; lowering is NotYet,
+  `an optional chain longer than one step`. Production checks the chunk then
+  reads its text length. All three exact diagnostics and Node outputs are held.
+
+The context source registry is readonly: a mutable array of chunk-owning source
+objects is refused as potentially cyclic, even after using a nominal wrapper.
+The readonly registry compiles and leaks nothing. This is the existing structural
+array representation issue, not a compiler change. Classes are split into their
+own files and all production code passes cohere's full 276-rule checker.
+
+## Native Markdown printer AstPath
+
+`astPath.ts` ports the alternating node/property/array/index path stack, using
+numeric AST identities and tagged leaf frames. It implements current/root/parent/
+grandparent, siblings and adjacent siblings, names/keys/indexes, array boundaries,
+ancestor lookup, match predicates, scoped call/callParent, each and numeric map.
+The oracle compares full stacks, callback arguments/results and restoration, not
+only the final current node. Negative and out-of-range child indices, missing
+properties and nesting through 32 generated quote levels are included.
+
+The gate covers 4,975 documents: the accumulated 4,943 layout documents plus 32
+path-depth cases, including all 876 physical Markdown files. Go parses and
+preprocesses the input AST. Path decisions are native. Both Go's actual generic
+AstPath methods and the unchanged pinned fork's actual AstPath class decide
+expected observations independently from identical transported ASTs. The fork
+class is exposed by reference inside its actual standalone bundle using a unique
+checked anchor; its body is unchanged and the bundle bytes are checked first.
+Node identity is normalized to numeric preorder IDs. JavaScript's generic getters
+are projected to Go's typed Markdown node API. Children are the traversal field;
+this does not claim arbitrary JavaScript object-property traversal.
+
+The class specializes callbacks to string, number and boolean results; map
+returns numeric results suitable for document IDs. Exception unwinding is not
+claimed: Adamic's fatal panic is not a catchable JavaScript exception. Invalid
+callParent counts beyond the root, arbitrary scalar fields, mutating the child
+array during traversal and attached comment nodes are not covered. The existing
+layout fixture driver still receives its path facts from Go; this independent
+path implementation has not replaced that transport. Tokenizer events, grammar,
+resolvers/subtokenization and full mdast construction remain unfinished.
+
+Three native output-only mutants compile, exit zero with empty stderr and are
+caught by exact path bytes: siblings frame -3 becomes -5 (byte268), the first
+nodeStackIndex step -2 becomes -4 (byte191), and call retains two extra stack
+frames instead of restoring its checkpoint (byte260). Source Node, JavaScript
+backend, sanitized native and leaks pass the unchanged implementation.
+
+### Missing-property key witness
+
+The two actual AstPath oracles differ outside normal Markdown child traversal.
+Starting at an empty root, call through `absent`, `children`, then numeric index
+0. The complete Go output is:
+
+```text
+key="" present=false
+```
+
+The complete pinned fork output is:
+
+```text
+key=0 type=number
+```
+
+The proving programs are `testdata/path_go.go --key-gap` (calling the actual Go
+class through `testdata/path_bridge.go`) and `testdata/path_library.mjs
+<scratch-bundles> --key-gap` (calling the actual fork class). The gate asserts
+both complete outputs. The common-domain path comparison includes a single
+absent property, but does not falsely assert that this deeper witness agrees.
+Native key uses Go's typed optional-string contract. All original seven embedded
+language witnesses and their fourteen complete outputs below remain intact.
+
+### Additional compiler representation witnesses
+
+Each numbered program is executable on source Node and covered by a test:
+
+- `gaps/8_generic_callback_result.ts`: Node prints `value`; lowering a generic
+  callback-result method is NotYet, `a function returning Result`. Production
+  path callbacks use concrete string, number and boolean specializations.
+- `gaps/9_mixed_path_names.ts`: Node prints `children,0`; an array of string or
+  number is NotYet, `an array of string | number`. Production names are tagged
+  property/index frames, with numeric IDs instead of owning graph edges.
+- `gaps/10_multiple_push.ts`: Node prints `1,2`; multiple push arguments are
+  NotYet, `push with other than one value`. Production pushes one frame at a time.
+- `gaps/11_function_expression.ts` is closed: the unchanged direct function
+  expression prints `value` on source Node, native and the JavaScript backend,
+  with sanitizer/leak checks. Production map now supplies a capturing function
+  expression to each, rather than duplicating traversal in an explicit loop.
+- `gaps/12_conditional_empty_array.ts`: Node prints `0`; the inferred empty arm
+  is NotYet, `an array of never`. Production empties have explicit array types.
+- `gaps/13_array_growth.ts`: Node prints `1`. Native AND the JavaScript backend
+  compile but exit70 with empty stdout and the complete stderr below. The
+  separate array-growth test records this discrepancy as a gap observation.
+  Production map appends with push. No compiler-owned files were changed.
+
+```text
+adamic: panic: index 0 is outside an array of length 0
+```
+
 ## Native tokenizer input chunking
 
 `inputChunks.ts` ports micromark's complete single-input preprocessing call with
@@ -325,10 +590,18 @@ line-oriented approximation is the same parser. No compiler files were modified.
 ```sh
 source /workspace/adamic-tools/env.sh
 (cd cohere && go build -o /tmp/cssstrings-cohere ./command/cohere)
-ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork \
+ADAMIC_MARKDOWNBLOCKS_CENSUS=1 \
+  ADAMIC_MARKDOWNWIDTH_DEPS=/tmp/adamic-markdown-width \
+  ADAMIC_MARKDOWNBLOCKS_FORK=/tmp/adamic-markdown-blocks-fork \
   ADAMIC_MARKDOWNBLOCKS_KEEP=/tmp/markdown-blocks-audit \
   go test -count=1 -v -timeout=30m ./stage1/cohere/markdownblocks > /tmp/markdown-blocks-test.log 2>&1
 ```
+
+`ADAMIC_MARKDOWNBLOCKS_CENSUS` widens the corpus from this unit's own Markdown files to every
+Markdown file in the repository and its submodules, which is the census this file reports. It is
+opt-in because that set moves with every commit and cohere bump, so the gate runs without it.
+`ADAMIC_MARKDOWNWIDTH_DEPS` names an npm install of emoji-regex 10.6.0, get-east-asian-width 1.6.0
+and narrow-emojis 0.0.3; without it the width oracle skips, until #xq2ecw6 installs it on the gate.
 
 Install the original fork in that scratch directory by copying the exact
 `cohere/internal/format/prettier/bundles/` tree from the pinned submodule. The

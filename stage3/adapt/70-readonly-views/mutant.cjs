@@ -112,6 +112,12 @@ if (process.argv[3] === 'writer-view') {
     const insertion = fragment.statements.map(n => ts.createPrinter().printNode(ts.EmitHint.Unspecified, n, fragment)).join('\n');
     const at = declaration.body.getStart(source) + 1;
     fs.writeFileSync(name, text.slice(0, at) + '\n' + insertion + '\n' + text.slice(at));
+} else if (mode === 'diagnostic-writer') {
+    const fragment = ts.createSourceFile('mutant-input.a',
+        '/** @internal */ export function diagnosticViewWriterMutant(diagnostic: DiagnosticRelatedInformation): void { diagnostic.file = undefined; }',
+        ts.ScriptTarget.Latest, true);
+    const printed = ts.createPrinter().printNode(ts.EmitHint.Unspecified, fragment.statements[0], fragment);
+    fs.writeFileSync(name, text + '\n' + printed + '\n');
 } else if (mode === 'audit-iteration-writer') {
     const fragment = ts.createSourceFile('mutant-input.a',
         'function readonlyViewIterationMutant(result: EvaluatorResult) { for (result.value of [undefined]) {} }',

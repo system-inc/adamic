@@ -1,0 +1,8 @@
+=== RUN   TestProvisionedPrettierFixtures
+    files_test.go:161: corpus-files: upstream /tmp/corpus-prettier-sparse.FJUIsi/prettier root tests/format/css pin cb4b33fba24a8428d00e54be85fc886288a374ea count 157
+    files_test.go:161: corpus-files: upstream /tmp/corpus-prettier-sparse.FJUIsi/prettier root tests/format/scss pin cb4b33fba24a8428d00e54be85fc886288a374ea count 90
+    files_test.go:161: corpus-files: upstream /tmp/corpus-prettier-sparse.FJUIsi/prettier root tests/format/less pin cb4b33fba24a8428d00e54be85fc886288a374ea count 43
+    files_test.go:168: Prettier fixture counts from Git: map[.css:157 .less:43 .scss:90]
+--- PASS: TestProvisionedPrettierFixtures (0.09s)
+PASS
+ok  	github.com/system-inc/adamic/internal/corpusfiles	0.094s

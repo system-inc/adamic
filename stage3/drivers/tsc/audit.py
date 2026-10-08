@@ -15,7 +15,9 @@ def audit(root=ROOT):
     assert sum(not c['codes'] for c in cases) == 60, 'clean population'
     for row in cases:
         folder = root / 'corpus' / row['id']
-        raw = (folder / 'input.a').read_bytes()
+        expected_path = str(Path('corpus') / row['id'] / Path(row['source']).name)
+        assert row['path'] == expected_path, 'source path: ' + row['id']
+        raw = (root / row['path']).read_bytes()
         assert hashlib.sha256(raw).hexdigest() == row['source_sha256'], 'source hash: ' + row['id']
         assert materialize(raw)[1] == row['options'], 'header options: ' + row['id']
         if row['baseline']:

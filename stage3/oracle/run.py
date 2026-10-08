@@ -15,7 +15,10 @@ parser.add_argument('tree', type=Path)
 parser.add_argument('output', type=Path)
 parser.add_argument('--runners', default='all', help='all, or upstream comma-separated runner names')
 parser.add_argument('--tests', help='upstream test regex, for targeted mutant checks')
-parser.add_argument('--workers', type=int, default=4)
+# As many workers as this process may run on (nproc honors affinity), and at least upstream's 4: the
+# verdicts are identical at 4, 8, 16 and 24 workers (106,366 tests, Oct 7) and the suite drops from
+# 225 s to 135 s on a 24-CPU slot.
+parser.add_argument('--workers', type=int, default=max(4, int(subprocess.check_output(['nproc']))))
 parser.add_argument('--limit-seconds', type=int, default=2400)
 args = parser.parse_args()
 # Upstream's parallel host ignores --tests; one worker uses runtests' Mocha grep.

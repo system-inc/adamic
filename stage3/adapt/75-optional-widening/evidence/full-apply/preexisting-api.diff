@@ -1,0 +1,137 @@
+--- sanctioned-prerequisite-api
++++ full-composed-prerequisite-api
+@@ -5679,7 +5679,7 @@
+     }
+     type CommentKind = SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia;
+     interface CommentRange extends TextRange {
+-        hasTrailingNewLine?: boolean;
++        hasTrailingNewLine?: boolean | undefined;
+         kind: CommentKind;
+     }
+     interface SynthesizedComment extends CommentRange {
+@@ -5904,7 +5904,7 @@
+     }
+     interface AmdDependency {
+         path: string;
+-        name?: string;
++        name?: string | undefined;
+     }
+     /**
+      * Subset of properties from SourceFile that are used in multiple utility functions
+@@ -7260,15 +7260,31 @@
+     interface ModuleResolutionHost {
+         fileExists(fileName: string): boolean;
+         readFile(fileName: string): string | undefined;
+-        trace?(s: string): void;
+-        directoryExists?(directoryName: string): boolean;
++        trace?:
++            | {
++                trace(s: string): void;
++            }["trace"]
++            | undefined;
++        directoryExists?:
++            | {
++                directoryExists(directoryName: string): boolean;
++            }["directoryExists"]
++            | undefined;
+         /**
+          * Resolve a symbolic link.
+          * @see https://nodejs.org/api/fs.html#fs_fs_realpathsync_path_options
+          */
+-        realpath?(path: string): string;
++        realpath?:
++            | {
++                realpath(path: string): string;
++            }["realpath"]
++            | undefined;
+         getCurrentDirectory?(): string;
+-        getDirectories?(path: string): string[];
++        getDirectories?:
++            | {
++                getDirectories(path: string): string[];
++            }["getDirectories"]
++            | undefined;
+         useCaseSensitiveFileNames?: boolean | (() => boolean) | undefined;
+     }
+     /**
+@@ -7361,13 +7377,21 @@
+         getSourceFileByPath?(fileName: string, path: Path, languageVersionOrOptions: ScriptTarget | CreateSourceFileOptions, onError?: (message: string) => void, shouldCreateNewSourceFile?: boolean): SourceFile | undefined;
+         getCancellationToken?(): CancellationToken;
+         getDefaultLibFileName(options: CompilerOptions): string;
+-        getDefaultLibLocation?(): string;
++        getDefaultLibLocation?:
++            | {
++                getDefaultLibLocation(): string;
++            }["getDefaultLibLocation"]
++            | undefined;
+         writeFile: WriteFileCallback;
+         getCurrentDirectory(): string;
+         getCanonicalFileName(fileName: string): string;
+         useCaseSensitiveFileNames(): boolean;
+         getNewLine(): string;
+-        readDirectory?(rootDir: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth?: number): string[];
++        readDirectory?:
++            | {
++                readDirectory(rootDir: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth?: number): string[];
++            }["readDirectory"]
++            | undefined;
+         /** @deprecated supply resolveModuleNameLiterals instead for resolution that can handle newer resolution modes like nodenext */
+         resolveModuleNames?(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile): (ResolvedModule | undefined)[];
+         /**
+@@ -7385,7 +7409,11 @@
+         getEnvironmentVariable?(name: string): string | undefined;
+         /** If provided along with custom resolveModuleNames or resolveTypeReferenceDirectives, used to determine if unchanged file path needs to re-resolve modules/type reference directives */
+         hasInvalidatedResolutions?(filePath: Path): boolean;
+-        createHash?(data: string): string;
++        createHash?:
++            | {
++                createHash(data: string): string;
++            }["createHash"]
++            | undefined;
+         getParsedCommandLine?(fileName: string): ParsedCommandLine | undefined;
+         jsDocParsingMode?: JSDocParsingMode | undefined;
+     }
+@@ -9671,7 +9699,7 @@
+         /**
+          * If provided this would be used this hash instead of actual file shape text for detecting changes
+          */
+-        createHash?: (data: string) => string;
++        createHash?: ((data: string) => string) | undefined;
+         /**
+          * When emit or emitNextAffectedFile are called without writeFile,
+          * this callback if present would be used to write files
+@@ -9826,7 +9854,11 @@
+         getCurrentDirectory(): string;
+         getDefaultLibFileName(options: CompilerOptions): string;
+         getDefaultLibLocation?(): string;
+-        createHash?(data: string): string;
++        createHash?:
++            | {
++                createHash(data: string): string;
++            }["createHash"]
++            | undefined;
+         /**
+          * Use to check file presence for source files and
+          * if resolveModuleNames is not provided (complier is in charge of module resolution) then module files as well
+@@ -9844,11 +9876,19 @@
+         /** If provided, used to cache and handle directory structure modifications */
+         readDirectory?(path: string, extensions?: readonly string[], exclude?: readonly string[], include?: readonly string[], depth?: number): string[];
+         /** Symbol links resolution */
+-        realpath?(path: string): string;
++        realpath?:
++            | {
++                realpath(path: string): string;
++            }["realpath"]
++            | undefined;
+         /** If provided would be used to write log about compilation */
+         trace?(s: string): void;
+         /** If provided is used to get the environment variable */
+-        getEnvironmentVariable?(name: string): string | undefined;
++        getEnvironmentVariable?:
++            | {
++                getEnvironmentVariable(name: string): string | undefined;
++            }["getEnvironmentVariable"]
++            | undefined;
+         /**
+          * @deprecated supply resolveModuleNameLiterals instead for resolution that can handle newer resolution modes like nodenext
+          *

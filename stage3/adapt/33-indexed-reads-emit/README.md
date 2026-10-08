@@ -25,3 +25,169 @@ All three default oracles passed 106,367 tests with zero failures and empty base
 Follow-up review refined 20 declined occurrences to name the existing absence test or intentionally optional result. Addresses, actions, classes and source edits are unchanged; the completed wave censuses and default oracles still describe the same source tree. See [proof/refinement/review.json](proof/refinement/review.json).
 
 Integration rule: push only codex/stage3-indexed-reads-emit, never main and never with force. Merge origin/main if newer main work is needed; do not rebase this pushed branch. Send the branch SHA to the user for merging into area/stage3.
+
+## Whole-file closure after integration 634ef06
+
+The follow-up meter is `origin/codex/stage3-latent-census` at `176a496`,
+`stage3/census/latent/REPORT.json`, run 0's `cheap_wins`. The branch merged
+`origin/area/stage3` at `634ef06` before these edits. Unlike the earlier waves,
+these checks retain **every checker code**, not just the five indexed-read
+codes. `whole-file-census.py` consumes the same full `load.Load` diagnostic
+export as `census.sh`, without a code filter. Per-file before and after reports
+live in `proof/whole-files/`; a file counts as closed only when its total is zero.
+
+The default oracle includes all integrated adaptations. Adaptation 20's original
+`check-baselines.cjs` rejects the composed API because adaptation 40 already
+projects 28 reference lines. `check-integrated-api.cjs` independently reconstructs
+exactly those 28 inherited lines plus adaptation 20's 189 owner lines against a
+separately built pristine pinned compiler; it was run without `--accept-api`.
+Integration 634ef06 has no adaptation 70 directory. The user provisionally
+authorized the mechanically proven 28 adaptation-40 lines along with the 189
+adaptation-20 lines. The accepted projection permits no other API difference.
+
+### visitorPublic.ts
+
+`parameters[i]` in `addDefaultValueAssignmentsIfNeeded` is a U-loop required
+read: `0 <= i < parameters.length`, the readonly NodeArray comes from the
+validated `nodesVisitor` result, and the read precedes the callback. The existing
+ledger decline becomes an assertion at precisely that read. No read is added,
+removed, moved or defaulted. All source CRLF bytes are retained. Proof results
+and reproducible commands are recorded alongside the per-file census.
+
+Visitor closure: census **1 -> 0 across all codes**; source-only latent clean
+files **36 -> 37**, with the full input matching report 176a496 exactly. Stock
+JavaScript and idempotence pass; `! -> ?? 0` mutant caught twice. Default oracle:
+**106367 passing, zero failing**, **empty baseline diff**, 211.991s.
+See [the complete proof](proof/whole-files/visitorPublic/README.md).
+
+### sourcemap.ts: one remaining diagnostic
+
+The all-code latent census is **2 -> 1**. The call result
+`JSON.stringify(toJSON())!` is recorded in `required-values.json` as a
+`required-result` contract, rather than falsely classifying a call as an indexed
+read. `toJSON` returns a fresh ordinary object with `version: 3`; standard JSON
+serialization returns its string representation or throws. The adapter parses
+call/property sites with stock 6.0.3, validates their occurrence counts, and
+plans them together with every indexed site before writing any file.
+
+The remaining TS2345 at `appendSourceMap` line 216 is declined. Its `typeof`
+guard and payload perform different reads of caller-supplied `sourcesContent`.
+A real Node probe supplies a getter returning `['present']` for the first two
+property accesses and `[]` for the third. The guard passes, the payload is
+undefined, and existing code produces `[null]` when that content is serialized.
+An assertion would therefore claim an invariant this API does not guarantee;
+caching would change observable getter calls. The original reads remain intact.
+
+### transformers/declarations.ts: one remaining diagnostic
+
+All-code census **2 -> 1**. The expando Value-export producer proves `props[0]!`
+is present. The mapped `clause.types[0]` remains declined: actual stock Node
+accepts two extends clauses with lengths `[1, 0]` and crashes on the second.
+JavaScript equality and idempotence pass; the required-read mutant is caught
+twice. Default oracle: **106367 passing**, empty baseline diff,
+213.824s. See [proof and counterexample](proof/whole-files/declarations/README.md).
+
+### emitter.ts at zero
+
+All-code census **3 -> 0**; clean files **37 -> 38 of 78**. The two printer hook
+reads are present in transformNodes' own result literal, and build-info JSON
+serialization has a required string result for the compiler's plain-record
+producers. All three assertions retain their original evaluation points. Stock
+JavaScript and idempotence pass; both property and JSON-result mutants are caught
+twice. Default oracle **106367 passing**, empty baseline diff,
+229.955s. [Complete proof](proof/whole-files/emitter/README.md).
+
+### transformers/ts.ts at zero
+
+All-code census **3 -> 0**, clean files **38 -> 39 of 78**. The nonempty super
+path records bounded indices into the corresponding input arrays; successful
+try recursion proves each next component exists. Both U-position reads are
+asserted at their original points. Stock JavaScript and idempotence pass, and
+the path-index mutant is caught twice. Default oracle **106367
+passing**, empty baseline diff, 219.657s. [Proof](proof/whole-files/ts/README.md).
+
+### transformers/utilities.ts: three owner declines
+
+All-code census **3 -> 3**, no source edits. Each returned decorator object
+legitimately owns `parameters: undefined`, confirmed by ordinary Node probes.
+The truthful owner edit is `AllDecorators.parameters | undefined` in `types.ts`,
+outside this partition. All three findings have individual decline entries.
+Idempotence passes; default oracle **106367 passing**, empty
+baseline diff, 218.69s. [Owner handoff](proof/whole-files/utilities/README.md).
+
+### transformers/es2018.ts at zero: 40-file target reached
+
+All-code census **4 -> 0**, clean files **39 -> 40 of 78**. Factory spread flags
+prove a nonempty populated chunk list; both loops are bounded over populated
+arrays and keep replacements separate. Four original-point assertions preserve
+stock JavaScript bytes. Idempotence passes and the endpoint mutant is caught
+twice. Default oracle **106367 passing**, empty baseline diff,
+217.481s. [Complete proof](proof/whole-files/es2018/README.md).
+
+### transformers/module/module.ts: two required reads, two declines
+
+All-code census **4 -> 2**. The callback argument and length-guarded JSON
+endpoint retain their original read points. The remaining optional emission
+cache and arrayFrom overload have exact decline reasons. JavaScript equality
+and idempotence pass; the endpoint mutant is caught twice. Default oracle
+**106367 passing**, empty baseline diff, 219.281s.
+[Full findings](proof/whole-files/module/README.md).
+
+### transformers/module/system.ts: one required group read, three declines
+
+All-code census **4 -> 3**. The private group-index producer proves the
+original-point U-position read. Three legitimately optional emission caches
+have individual declines pending a complete context-owner review. JavaScript
+equality and idempotence pass; the group-index mutant is caught twice. First
+oracle attempt had a worker exit with increased observed OOM kills; its failed
+report is retained. Fresh default oracle **106367 passing**, empty baseline
+diff, 211.299s. [Full proof](proof/whole-files/system/README.md).
+
+### Whole-file closure result
+
+All nine requested files were measured, reviewed and given per-file default
+oracles. Four are at zero: visitorPublic.ts, emitter.ts, transformers/ts.ts and
+transformers/es2018.ts. The pinned latent meter is **40 of 78 files clean**,
+up from 36, and **382 -> 366** total diagnostics. The nine requested files are
+**26 -> 10**. Every remaining finding has a proof or explicit unfinished-review
+decline; no native compiler options or out-of-partition source was changed.
+CRLF preservation across all 30 owned files is checked in the
+[closure summary](proof/whole-files/closure-summary.json).
+
+### Followup: transformers/module/module.ts at zero
+
+Remaining all-code census **2 -> 0**; **41 of 78 files clean**. A truthful
+optional context owner, 22 individually reviewed transformation-context reads
+and one explicit iterable overload type argument preserve Node computation.
+A stock symbol-resolved graph proves the required readers are unreachable from
+emission. Default oracle **106367 passing**, empty baseline diff, 213.165s.
+JavaScript equality, idempotence, required-read, owner, overload and graph
+mutants all pass their respective checks. [Complete proof](proof/whole-files/module-close/README.md).
+
+Revisited sourcemap.ts: the actual undefined payload can reach local storage,
+so truth also requires widening RawSourceMap.sourcesContent's element in
+types.ts:9889, outside this partition. Revisited declarations.ts: an empty
+second extends clause reaches a diagnostic helper that immediately reads kind;
+its endpoint cannot be asserted and an optional owner alone cannot prove the
+helper reads. Their source is unchanged and their prior complete census,
+counterexample and green oracle proofs remain applicable.
+
+### Followup: transformers/module/system.ts at zero
+
+Remaining all-code census **3 -> 0**; **42 of 78 files clean**. Three truthful
+context owners and 25 individually reviewed original-point reads preserve
+Node JavaScript. Twenty-three consumers are exclusive to transformation; two
+have export-name or import.meta emission proofs. Default oracle **106367
+passing**, empty baseline diff, 214.121s. Required-read, three
+owner, graph and two guard mutants are caught. JavaScript equality, idempotence
+and CRLF pass. [Complete proof](proof/whole-files/system-close/README.md).
+
+### Remaining followup work
+
+The five original remainder files are now **10 -> 5**: module.ts and system.ts
+are zero. sourcemap.ts retains 1, declarations.ts retains 1 and utilities.ts
+retains 3. No sources in those three files changed during this followup; fresh
+all-code results and exact owner handoffs are in
+[remaining review](proof/whole-files/remaining-review.json). RawSourceMap and
+AllDecorators owner changes belong to types.ts outside this partition. The
+empty heritage clause still has no truthful presence invariant.

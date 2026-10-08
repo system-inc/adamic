@@ -18,9 +18,9 @@ func writeSymbolOrigin(out *fields, p *Program, symbol *ast.Symbol) {
 		if source == nil {
 			panic("symbol declaration has no source")
 		}
-		out.text(source.FileName())
+		out.text(source.FileName().AsString())
 		out.yes(source.IsDeclarationFile)
-		out.yes(p.Compiler.IsSourceFileDefaultLibrary(source.Path()))
+		out.yes(p.Compiler.IsSourceFileDefaultLibrary(source.PathKey()))
 	}
 }
 func writePropertyInfo(out *fields, symbol *ast.Symbol) {

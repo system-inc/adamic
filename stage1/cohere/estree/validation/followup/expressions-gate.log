@@ -1,0 +1,11 @@
+=== RUN   TestRecoveredExpressions
+    expressions_test.go:22: 7 decorated class / await / yield cases, 8717 bytes match Go
+--- PASS: TestRecoveredExpressions (19.62s)
+=== RUN   TestRecoveredExpressionMutant
+    expressions_test.go:33: Node: line 302: Go "0 .body list 4", port "0 .body list 3"
+    expressions_test.go:33: native: line 302: Go "0 .body list 4", port "0 .body list 3"
+--- PASS: TestRecoveredExpressionMutant (19.75s)
+=== RUN   TestUnattachedDecorator
+--- PASS: TestUnattachedDecorator (19.12s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	58.495s

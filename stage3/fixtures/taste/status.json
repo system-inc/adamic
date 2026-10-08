@@ -43,8 +43,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/03_diagnostic_file.a:5:12: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -219,8 +219,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/14_relative_complement.a:12:5: Adamic 0.1 refuses a label; move the loop into a function and return from it"
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/taste/14_relative_complement.a:28:17: stage 0 can't lower a case that isn't a constant yet"
     }
   },
   {
@@ -235,8 +235,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/15_barrel.a:3:1: Adamic 0.1 refuses an ExportDeclaration; export where you declare: export function, export const (one name for one thing)"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -284,8 +284,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/support/performance.a:4:1: Adamic 0.1 refuses an ExportDeclaration; export where you declare: export function, export const (one name for one thing)"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -317,8 +317,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/20_jsdoc_terminate.a:15:1: Adamic 0.1 refuses a label; move the loop into a function and return from it"
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/taste/20_jsdoc_terminate.a:18:21: stage 0 can't lower a case that isn't a constant yet"
     }
   },
   {
@@ -336,7 +336,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/taste/21_truthy_loops.a:14:12: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      "what": "stage3/fixtures/taste/21_truthy_loops.a:31:13: Adamic 0.1 refuses a number as a condition; compare it explicitly, like name.length > 0 or count !== 0"
     }
   },
   {
@@ -369,8 +369,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/23_labels_finally.a:6:5: Adamic 0.1 refuses a label; move the loop into a function and return from it"
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/taste/23_labels_finally.a:10:53: stage 0 can't lower a labeled continue yet"
     }
   },
   {
