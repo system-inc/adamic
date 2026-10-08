@@ -413,21 +413,9 @@ bool adamic_fs_file_exists(const adamic_string *path) {
     return exists;
 }
 
-static const char *const date_fields[] = {"_fsFileTime"};
-static const bool date_refs[] = {false};
-static const adamic_shape date_shape = {1, date_fields, date_refs, NULL};
-
-adamic_object *adamic_fs_file_date_new(double milliseconds) {
-    adamic_object *date = adamic_object_new(&date_shape);
-    double clipped = isfinite(milliseconds) && fabs(milliseconds) <= 8640000000000000. ? trunc(milliseconds) : NAN;
-    date->slots[0].number = clipped == 0 ? 0. : clipped;
-    return date;
-}
-
-double adamic_fs_file_date_time(const adamic_object *date) {
-    static adamic_slot_cache cache;
-    return adamic_object_field(date, "_fsFileTime", &cache)->number;
-}
+// Explicit Dates and filesystem timestamps share the same scalar internal slot.
+adamic_object *adamic_fs_file_date_new(double milliseconds) { return adamic_date_new(milliseconds); }
+double adamic_fs_file_date_time(const adamic_object *date) { return adamic_date_value(date); }
 
 static const char *const stat_fields[] = {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"};
 static const bool stat_refs[] = {false, false, true, false, true};

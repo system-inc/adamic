@@ -63,6 +63,10 @@ func (l *lowering) libraryNumberSlot(node *ast.Node) (ir.Expression, error) {
 // libraryNumber converts only proven primitives. Objects can run arbitrary valueOf/toString code,
 // so they stay NotYet rather than being guessed at. The runtime handles missing primitive values.
 func (l *lowering) libraryNumber(node *ast.Node) (ir.Expression, error) {
+	if l.isLibraryType(l.checker.GetTypeAtLocation(node), "Date") {
+		value, err := l.expression(node)
+		return ir.NodeFSFile{Operation: "date_time", Arguments: []ir.Expression{value}, Of: ir.Number}, err
+	}
 	if ast.SkipParentheses(node).Kind == ast.KindNullKeyword {
 		return ir.NumberConstant{}, nil
 	}

@@ -177,7 +177,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	}
 	emitter.statements(program.Main)
 	builder.WriteString(emitter.out.String())
-	code := builder.String()
+	code := dateRuntime(builder.String())
 	if strings.Contains(code, "adamicNodeFSFile.") {
 		code = "import * as adamicNodeFSFile from 'node:fs';\n" + code
 	}

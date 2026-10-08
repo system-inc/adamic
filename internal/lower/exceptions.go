@@ -225,6 +225,10 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 			if node.Function == "hash_update" || node.Function == "hash_digest" {
 				failing = "Hash finalization, whose catchable .code contract is not supported yet"
 			}
+		case ir.NodeFSFile:
+			if node.Operation == "date_toISOString" {
+				failing = "Date.toISOString validation (catchable RangeError descriptors are not represented)"
+			}
 		case ir.ObjectCall:
 			if node.Method == "assign" && l.objectCanFreeze() {
 				failing = "Object.assign into a potentially frozen object"

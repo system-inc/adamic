@@ -996,6 +996,7 @@ _Noreturn void adamic_unreachable(void);
 
 #include "regexp.h"
 #include "node_fs_file.h"
+#include "date.h"
 #include "node_buffer.h"
 #include "node_crypto.h"
 // Fixed plain literals can have public # keys; Object reflection refuses those shapes.
