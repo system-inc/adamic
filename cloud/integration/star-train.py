@@ -15,7 +15,7 @@ stays on reds and conflicts. One run per invocation; launchd runs it every minut
 usage: cloud/integration/star-train.py [--dry-run]
 """
 
-import json, os, subprocess, sys, time
+import importlib.util, json, os, subprocess, sys, time
 
 directory = os.path.dirname(os.path.abspath(__file__))
 dryRun = "--dry-run" in sys.argv
@@ -50,8 +50,10 @@ def slices():
     rows = []
     for line in open(os.path.join(directory, "star-train.tsv")):
         if line.strip() and not line.startswith("#"):
-            slug, source, owner = line.rstrip("\n").split("\t")[:3]
-            rows.append((slug, source, owner))
+            fields = line.rstrip("\n").split("\t")
+            # A fourth column names riders: test-only branches merged in below the slice's source, so
+            # they land on the slice's whole gate instead of restarting it (@system_adamic, October 8).
+            rows.append((fields[0], fields[1], fields[2], fields[3].split() if len(fields) > 3 else []))
     return rows
 
 
@@ -80,13 +82,27 @@ def explained(reference):
     return False
 
 
+specification = importlib.util.spec_from_file_location("recordReaders", os.path.join(directory, "record-paths-test.py"))
+recordReaders = importlib.util.module_from_spec(specification)
+specification.loader.exec_module(recordReaders)
+
+
 def recordsOnly(older, newer):
     # True when newer's tree differs from older's only in record paths: the velocity row push-main
     # commits on every landing, meter runs and stage 3's progress record, the same paths push-main
     # lets a landing ride over (@system_adamic, October 7).
     changed = git("diff", "--name-only", older, newer).split()
-    return all(path == "documentation/velocity/landings.csv" or path == "stage3/progress.json"
-               or path.startswith("stage3/meter/runs/") for path in changed)
+    if not all(path == "documentation/velocity/landings.csv" or path == "stage3/progress.json"
+               or path.startswith("stage3/meter/runs/") for path in changed):
+        return False
+    # Honest only while no test or build reads a record (record-paths-test.py, @system_adamic's
+    # condition): a reader means the gate has to see the record change, so the slice rebuilds.
+    unexplained = recordReaders.readers(newer) if changed else []
+    if unexplained:
+        log(f"record reader in {newer[:8]}: {unexplained[0]}")
+        tell(f"record-reader-{newer[:12]}", "system_adamic_integration", f"record-paths-test.py fails on {newer[:8]}, so the train rebuilds over record commits instead of keeping gates: {'; '.join(unexplained[:3])}")
+        return False
+    return True
 
 
 def mainConfirmation(sha):
@@ -109,6 +125,14 @@ def mainConfirmation(sha):
     return newestLog(sha, "full-main")
 
 
+def removeLine(path, line):
+    if os.path.exists(path):
+        existing = open(path).read().split("\n")
+        if line in existing:
+            with open(path, "w") as handle:
+                handle.write("\n".join(kept for kept in existing if kept != line))
+
+
 def appendOnce(path, line):
     existing = open(path).read().split("\n") if os.path.exists(path) else []
     if line not in existing:
@@ -121,7 +145,7 @@ main = git("rev-parse", "origin/main")
 base = main
 chain = []
 trainHeads = remoteHeads("cloud/land-train-*")
-for number, (slug, source, owner) in enumerate(slices(), start=1):
+for number, (slug, source, owner, riderBranches) in enumerate(slices(), start=1):
     # A source is a branch, or branch@trailer: the newest commit on that branch whose message carries
     # "Train-slice: <slug>", so slices built stacked on one rehearsal branch each become their own car.
     if "@" in source:
@@ -133,31 +157,56 @@ for number, (slug, source, owner) in enumerate(slices(), start=1):
         break
     if subprocess.run(["git", "merge-base", "--is-ancestor", sourceSha, base]).returncode == 0:
         continue  # already landed, or carried by the slice below
-    name = f"cloud/land-train-{number}-{slug}-{sourceSha[:8]}-{base[:8]}"
+    # Riders already on main (or carried below) drop out; a rider that moves is a new candidate. A rider
+    # that won't merge drops out too and is integration's to fix: riders never hold the star.
+    riders = []
+    below = base
+    for rider in riderBranches:
+        riderSha = git("rev-parse", "-q", "--verify", f"origin/{rider}", check=False)
+        if not riderSha:
+            log(f"rider missing: {rider} for slice {number} ({slug})")
+            tell(f"rider-missing-{rider}-{number}", "system_adamic_integration", f"Train slice {number} ({slug}) names rider {rider}, which isn't on origin; it builds without it.")
+            continue
+        if subprocess.run(["git", "merge-base", "--is-ancestor", riderSha, base]).returncode == 0:
+            continue
+        merged = subprocess.run(["git", "merge-tree", "--write-tree", "--name-only", below, riderSha], capture_output=True, text=True)
+        if merged.returncode != 0:
+            files = [line for line in merged.stdout.splitlines()[1:] if line and not line.startswith(("Auto-merging", "CONFLICT"))]
+            log(f"rider conflict: {rider} {riderSha[:8]} onto {below[:8]} (slice {number}): {' '.join(files[:6])}; building without it")
+            tell(f"rider-conflict-{riderSha[:12]}-{base[:12]}", "system_adamic_integration", f"Rider {rider} {riderSha[:8]} conflicts with slice {number} ({slug})'s base {base[:8]} in {', '.join(files[:6])}; the slice builds without it.")
+            continue
+        below = git("commit-tree", merged.stdout.splitlines()[0], "-p", below, "-p", riderSha, "-m",
+                    f"Merge {rider} at {riderSha[:8]} onto {below[:8]}, riding below slice {number} ({slug}) of the star's train")
+        riders.append((rider, riderSha))
+    riderTag = "".join(f"-with-{riderSha[:8]}" for _, riderSha in riders)
+    prefix = f"cloud/land-train-{number}-{slug}{riderTag}-{sourceSha[:8]}-"
+    name = f"{prefix}{base[:8]}"
     if name not in trainHeads:
         # When a slice lands, main moves to its velocity commit, a row in a table no test reads. The
         # candidate above, built on the landed slice, keeps its gates: push-main lands it over a main
-        # that moved only by records, so it isn't rebuilt and gated whole again.
+        # that moved only by records, so it isn't rebuilt and gated whole again. Its base is below
+        # its rider merges, one first parent each.
         for other, otherSha in trainHeads.items():
-            if other.startswith(f"cloud/land-train-{number}-{slug}-{sourceSha[:8]}-"):
-                otherBase = git("rev-parse", f"{otherSha}^1")
+            if other.startswith(prefix):
+                otherBase = git("rev-parse", otherSha + "^1" * (len(riders) + 1))
                 if subprocess.run(["git", "merge-base", "--is-ancestor", otherBase, base]).returncode == 0 and recordsOnly(otherBase, base):
                     name = other
                     break
     if name in trainHeads:
         candidate = trainHeads[name]
     else:
-        merged = subprocess.run(["git", "merge-tree", "--write-tree", "--name-only", base, sourceSha], capture_output=True, text=True)
+        merged = subprocess.run(["git", "merge-tree", "--write-tree", "--name-only", below, sourceSha], capture_output=True, text=True)
         if merged.returncode != 0:
             files = [line for line in merged.stdout.splitlines()[1:] if line and not line.startswith(("Auto-merging", "CONFLICT"))]
-            log(f"conflict: {source} {sourceSha[:8]} onto {base[:8]}: {' '.join(files[:6])}")
+            log(f"conflict: {source} {sourceSha[:8]} onto {below[:8]} (slice {number}): {' '.join(files[:6])}")
             tell(f"conflict-{name}", owner, f"The star's train can't stack {source} {sourceSha[:8]} onto {base[:8]} (slice {number}, {slug}): it conflicts in {', '.join(files[:6])}. Please merge {base[:8]} into {source}, both sides kept, and push; the train restacks on its own.")
-            tell(f"conflict-{name}", "system_adamic_integration", f"Train conflict at slice {number} ({slug}): {source} {sourceSha[:8]} onto {base[:8]}, sent to @{owner}.")
+            tell(f"conflict-{name}", "system_adamic_integration", f"Train conflict at slice {number} ({slug}): {source} {sourceSha[:8]} onto {below[:8]} in {', '.join(files[:6])}, sent to @{owner}.")
             break
         tree = merged.stdout.splitlines()[0]
-        message = (f"Merge {source} at {sourceSha[:8]} onto {base[:8]}, slice {number} ({slug}) of the star's train\n\n"
-                   f"Gates as if every slice below had landed; git merge-tree was clean.\n\nGate-runs: deferred")
-        candidate = git("commit-tree", tree, "-p", base, "-p", sourceSha, "-m", message)
+        ridden = f"\nRiders merged below it: {', '.join(f'{rider} {riderSha[:8]}' for rider, riderSha in riders)}." if riders else ""
+        message = (f"Merge {source} at {sourceSha[:8]} onto {below[:8]}, slice {number} ({slug}) of the star's train\n\n"
+                   f"Gates as if every slice below had landed; git merge-tree was clean.{ridden}\n\nGate-runs: deferred")
+        candidate = git("commit-tree", tree, "-p", below, "-p", sourceSha, "-m", message)
         if not dryRun:
             git("push", "-q", "origin", f"{candidate}:refs/heads/{name}")
             appendOnce(os.path.join(watch, "priority"), name)
@@ -165,18 +214,20 @@ for number, (slug, source, owner) in enumerate(slices(), start=1):
         for other, otherSha in trainHeads.items():
             if other.startswith(f"cloud/land-train-{number}-") and other != name and not dryRun:
                 appendOnce(os.path.join(watch, "skip"), f"{other} {otherSha}")
+                # A superseded slice's whole gate would spend Home on a tree that never lands.
+                removeLine(requests, otherSha)
     # Every slice's whole gate runs ahead, in train order (Kirk, October 8): the full-gate loop takes
     # the oldest line of its request file between mains and drops it when the record publishes.
     if not dryRun:
         os.makedirs(os.path.dirname(requests), exist_ok=True)
         appendOnce(requests, candidate)
-    chain.append((number, slug, source, owner, name, candidate, base))
+    chain.append((number, slug, source, owner, name, candidate, base, riders))
     base = candidate
 
 if not chain:
     sys.exit(0)
 
-number, slug, source, owner, name, candidate, candidateBase = chain[0]
+number, slug, source, owner, name, candidate, candidateBase, riders = chain[0]
 # An owner can hold a source commit from landing (it still gates): a file hold-<source8> in the state
 # directory, holding why. A new commit on the source is a new candidate, so the hold lapses with it.
 sourceSha = chain[0][5] and git("rev-parse", f"{candidate}^2")
@@ -205,7 +256,7 @@ if not mainLog or mainStatus.startswith("running") or not (mainStatus.startswith
 log(f"landing {name} on {reference}")
 if dryRun:
     sys.exit(0)
-note = f"the star's train, slice {number} ({slug}): {source} {git('rev-parse', candidate + '^2')[:8]}"
+note = f"the star's train, slice {number} ({slug}): {source} {git('rev-parse', candidate + '^2')[:8]}" + "".join(f", rider {rider} {riderSha[:8]}" for rider, riderSha in riders)
 pushed = subprocess.run(["bash", os.path.join(directory, "push-main.sh"), "--full-gate", reference, candidate, note], capture_output=True, text=True)
 with open(os.path.join(state, f"push-{candidate[:12]}.log"), "w") as handle:
     handle.write(pushed.stdout + pushed.stderr)
