@@ -1,0 +1,20 @@
+// Minimal inputs for the shared terminal schema request, not a reactive pass.
+import { programArguments, panic } from 'adamic';
+import { readTerminal } from '../../replay/index.ts';
+import { HIRFunction } from '../../core.ts';
+const fn = new HIRFunction('scopeProbe');
+fn.newBlock('block');
+fn.newBlock('block');
+const kind = programArguments()[0] ?? panic('missing terminal kind');
+let row = '';
+if (kind === 'Scope') {
+    row = '0 Scope {"Scope":1,"Block":2,"Fallthrough":3}';
+} else if (kind === 'Sequence') {
+    row = '0 Sequence {"Block":2,"Fallthrough":3}';
+} else if (kind === 'MaybeThrow') {
+    row = '0 MaybeThrow {"Continuation":2,"Handler":3}';
+} else {
+    panic('unknown probe');
+}
+readTerminal(fn, row);
+console.log('decoded');
