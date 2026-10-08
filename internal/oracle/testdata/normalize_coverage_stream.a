@@ -1,0 +1,40 @@
+// Print UTF-16 length and a lossless run-length encoding of every code point.
+function show(label: string, text: string): void {
+	let runs = '';
+	let previous = -1;
+	let count = 0;
+	for (const character of text) {
+		const point = character.codePointAt(0) ?? -1;
+		if (point === previous) {
+			count++;
+		} else {
+			if (count > 0) runs = runs + `${previous.toString(16)}:${count},`;
+			previous = point;
+			count = 1;
+		}
+	}
+	if (count > 0) runs = runs + `${previous.toString(16)}:${count},`;
+	console.log(`${label} ${text.length} ${runs}`);
+}
+function check(label: string, text: string): void {
+	for (const form of ['NFC', 'NFD', 'NFKC', 'NFKD']) {
+		const result = text.normalize(form);
+		show(`${label} ${form}`, result);
+		show(`${label} ${form} again`, result.normalize(form));
+	}
+}
+
+// Different equal-class marks prove stable sorting; CGJ ends a canonical run.
+for (const count of [64, 65, 257, 1025]) {
+	const marks = '̴̣́̀̕ͅ'.repeat(count);
+	check(`marks ${count}`, marks + 'A' + marks + '͏' + marks + 'Ạ̊');
+}
+// Keep a final starter at the 64-point batch boundary for Hangul and Bengali joins.
+for (const count of [62, 63, 64, 65, 127, 128]) {
+	let prefix = 'é';
+	for (let index = 0; index < count; index++) prefix = prefix + String.fromCharCode(65 + index % 26);
+	for (const tail of ['각', '각', 'োা', 'Ạ̊', 'Ạ̊', '😀\ud800́\udc00']) {
+		check(`batch ${count}`, prefix + tail);
+	}
+}
+check('mixed slice', ('prefix' + 'ΏӁक़োা각각ﷺ𝅗𝅥😀\ud800̣\udc00'.repeat(9) + 'suffix').slice(6, -6));

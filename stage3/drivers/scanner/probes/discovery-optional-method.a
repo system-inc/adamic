@@ -1,0 +1,14 @@
+interface Scanner {
+    setText(text: string, start?: number, length?: number): void;
+    getEnd(): number;
+}
+function createScanner(): Scanner {
+    let end = 0;
+    function setText(newText: string | undefined, start: number | undefined, length: number | undefined): void {
+        end = length === undefined ? (newText || '').length : start! + length;
+    }
+    return { setText, getEnd: () => end };
+}
+const scanner = createScanner();
+scanner.setText('let x = 1;\n');
+console.log(`${scanner.getEnd()}`);

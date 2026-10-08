@@ -1,0 +1,32 @@
+{
+  "status": "pass",
+  "source_files": 711,
+  "changed_sources": [
+    "compiler/types.ts"
+  ],
+  "javascript_files": 10,
+  "javascript": {
+    "_tsc.js": "dab59db4053464359a4461e8111591f15a1d0d737abe752ff4261c8c87ddf95f",
+    "_tsserver.js": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+    "_typingsInstaller.js": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+    "run.js": "bfa89ce905ad036e9338450b9001ec57bc89dee6611faef2974678c3a7b38412",
+    "tsc.js": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+    "tsserver.js": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+    "tsserverlibrary.js": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+    "typescript.js": "c608261af17bf4b95fc1527c62ba34eb2c44e3f8f0c6944d045ec61b23fc156c",
+    "typingsInstaller.js": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+    "watchGuard.js": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88"
+  },
+  "public_api_additions": [
+    {
+      "owner": "JsonSourceFile",
+      "property": "extendedSourceFiles",
+      "type": "string[]",
+      "line": 5967
+    }
+  ],
+  "idempotence": {
+    "files": 0,
+    "additions": []
+  }
+}

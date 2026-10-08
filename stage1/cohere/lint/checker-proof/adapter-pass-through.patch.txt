@@ -1,0 +1,12 @@
+diff --git a/stage1/cohere/lint/checker.a b/stage1/cohere/lint/checker.a
+index a8ecf3997..815ac0bf8 100644
+--- a/stage1/cohere/lint/checker.a
++++ b/stage1/cohere/lint/checker.a
+@@ -1,6 +1,6 @@
+ // One file view of the run's checker. Facts retain the bridge's exact selector and grammar.
+ import { panic } from 'adamic';
+-import { openBridge as tsgoProgram, inspectBridge as tsgoInspect, releaseBridge as tsgoRelease } from './checker_bridge.a';
++import { tsgoProgram, tsgoInspect, tsgoRelease } from 'adamic';
+ import type { Parser } from '../../typescript/parser/parser.ts';
+ import { Frames } from '../typeaware/frames.ts';
+ 

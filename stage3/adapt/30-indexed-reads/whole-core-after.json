@@ -1,0 +1,10 @@
+{
+  "file": "core.ts",
+  "roots": 78,
+  "code_filter": null,
+  "total": 2,
+  "diagnostics": [
+    "src/compiler/core.ts:1637:11: error TS2740: Type '{ has(element: TElement): boolean; add(element: TElement): Set<TElement>; delete(element: TElement): boolean; clear(): void; ... 6 more ...; [Symbol.toStringTag]: string; }' is missing the following properties from type 'Set<TElement>': union, intersection, difference, symmetricDifference, and 3 more.",
+    "src/compiler/core.ts:992:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+  ]
+}
