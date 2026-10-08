@@ -391,6 +391,53 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers; Node, native release/sanitized and JavaScript; executable callable check mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "hooks",
+      "pairs": 2,
+      "candidateReads": 60,
+      "members": [
+        {
+          "receiver_type_id": 10108,
+          "type": "TransformationContext",
+          "field": "enableEmitNotification",
+          "declared_types": [
+            "(kind: SyntaxKind) => void"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 32,
+          "witness": {
+            "file": "src/compiler/transformers/ts.ts",
+            "line": 2594,
+            "column": 13
+          },
+          "rank": 54,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers; Node, native release/sanitized and JavaScript; executable callable check mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 10108,
+          "type": "TransformationContext",
+          "field": "enableSubstitution",
+          "declared_types": [
+            "(kind: SyntaxKind) => void"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 28,
+          "witness": {
+            "file": "src/compiler/transformers/ts.ts",
+            "line": 261,
+            "column": 5
+          },
+          "rank": 60,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers; Node, native release/sanitized and JavaScript; executable callable check mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

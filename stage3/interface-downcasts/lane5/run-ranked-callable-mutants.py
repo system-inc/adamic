@@ -31,6 +31,8 @@ mutants = [
      'program.CheckedFields[field.Name] = true',
      'continue // mutant: omit aggregate descendant read registration', 'wrong-parameter-payload'),
 ]
+if all(group in ['emit-notification', 'substitution'] for group in groups):
+    mutants = [mutant for mutant in mutants if mutant[4] in ['wrong-arity', 'wrong-members']]
 for name, filename, before, after, variant in mutants:
     path = root / filename
     original = path.read_text()

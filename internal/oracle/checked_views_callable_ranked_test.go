@@ -7,9 +7,14 @@ import (
 
 func TestCheckedViewCallableRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut string }{
+		{"emit-notification", "enableEmitNotification", "5\n", "", "2", "", ""},
+		{"substitution", "enableSubstitution", "5\n", "", "2", "", ""},
 		{"return-statement", "createReturnStatement", "3\n", "7\n7\n3\n", "2", "expression.value", "3\n"},
 	} {
 		for _, variant := range []string{"good", "optional-values", "wrong-value", "wrong-arity", "wrong-result", "wrong-members", "wrong-parameter-payload"} {
+			if variant == "optional-values" && family.optional == "" || (variant == "wrong-result" || variant == "wrong-parameter-payload") && family.payload == "" {
+				continue
+			}
 			t.Run(family.directory+"/"+variant, func(t *testing.T) {
 				program, path := interfaceFixture(t, "lane5/ranked-callables/"+family.directory+"/"+variant)
 				truth := onNode(t, path)
