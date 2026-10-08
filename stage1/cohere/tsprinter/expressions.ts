@@ -590,6 +590,101 @@ export class Expressions {
             ]),
         );
     }
+    importSpecifierDoc(index: number): number {
+        const node = this.node(index);
+        if(node.kind === 'NamespaceImport')
+            return this.docs.concat([this.docs.text('* as '), this.print(this.child(index, 0), index)]);
+        const parts: number[] = [];
+        if(node.semantic === '1') parts.push(this.docs.text('type '));
+        parts.push(this.print(this.child(index, 0), index));
+        // Explicit `x as x` has distinct source locations and retains its alias.
+        if(node.children.length === 2) {
+            parts.push(this.docs.text(' as '));
+            parts.push(this.print(this.child(index, 1), index));
+        }
+        return this.docs.concat(parts);
+    }
+    importClauseDoc(index: number): number {
+        const node = this.node(index);
+        const standalone: number[] = [];
+        const grouped: number[] = [];
+        for(const child of node.children) {
+            const part = this.node(child);
+            if(part.kind === 'NamedImports') {
+                for(const specifier of part.children) grouped.push(this.importSpecifierDoc(specifier));
+            }
+            else if(part.kind === 'NamespaceImport') standalone.push(this.importSpecifierDoc(child));
+            else standalone.push(this.print(child, index));
+        }
+        const parts: number[] = [this.docs.text(' '), this.docs.join(this.docs.text(', '), standalone)];
+        if(grouped.length > 0) {
+            if(standalone.length > 0) parts.push(this.docs.text(', '));
+            if(grouped.length > 1 || standalone.length > 0) {
+                parts.push(this.docs.group(this.docs.concat([
+                    this.docs.text('{'),
+                    this.docs.indent(this.docs.concat([
+                        this.docs.line(),
+                        this.docs.join(this.docs.concat([this.docs.text(','), this.docs.line()]), grouped),
+                    ])),
+                    this.docs.ifBreak(this.docs.text(','), this.docs.text('')),
+                    this.docs.line(),
+                    this.docs.text('}'),
+                ])));
+            }
+            else parts.push(this.docs.concat([this.docs.text('{ '), grouped[0] ?? panic('missing import specifier'), this.docs.text(' }')]));
+        }
+        else if(standalone.length === 0) parts.push(this.docs.text('{}'));
+        return this.docs.concat(parts);
+    }
+    importAttributesDoc(index: number): number {
+        const node = this.node(index);
+        if(node.children.length === 0) return this.docs.text('{}');
+        const properties: number[] = [];
+        for(const child of node.children) properties.push(this.docs.concat([
+            this.propertyKey(child),
+            this.docs.text(': '),
+            this.print(this.child(child, 1), child),
+        ]));
+        const content = this.docs.group(this.docs.concat([
+            this.docs.text('{'),
+            this.docs.indent(this.docs.concat([
+                this.docs.line(),
+                this.docs.join(this.docs.concat([this.docs.text(','), this.docs.line()]), properties),
+            ])),
+            this.docs.ifBreak(this.docs.text(','), this.docs.text('')),
+            this.docs.line(),
+            this.docs.text('}'),
+        ]), '', node.multiLine);
+        const first = this.child(index, 0);
+        const key = this.node(this.child(first, 0));
+        // Go removes lines for exactly one string-valued `type` attribute,
+        // even when the original braces contain newlines or the value is long.
+        return node.children.length === 1 && key.text === 'type'
+            ? this.docs.removeLines(content)
+            : content;
+    }
+    importDoc(index: number): number {
+        const parts: number[] = [this.docs.text('import')];
+        let offset = 0;
+        const first = this.child(index, 0);
+        if(this.node(first).kind === 'ImportClause') {
+            const phase = this.node(first).semantic;
+            if(phase === 'TypeKeyword') parts.push(this.docs.text(' type'));
+            if(phase === 'DeferKeyword') parts.push(this.docs.text(' defer'));
+            parts.push(this.importClauseDoc(first));
+            parts.push(this.docs.text(' from'));
+            offset = 1;
+        }
+        parts.push(this.docs.text(' '));
+        parts.push(this.print(this.child(index, offset), index));
+        if(this.node(index).children.length > offset + 1) {
+            const attributes = this.child(index, offset + 1);
+            parts.push(this.docs.text(this.node(attributes).operator === 'AssertKeyword' ? ' assert ' : ' with '));
+            parts.push(this.importAttributesDoc(attributes));
+        }
+        parts.push(this.docs.text(';'));
+        return this.docs.concat(parts);
+    }
     statementUnsupported(index: number): string {
         return statementUnsupported(this.parser, this.source, index);
     }
@@ -628,6 +723,8 @@ export class Expressions {
                 }
                 return this.docs.concat(parts);
             }
+            case 'ImportDeclaration':
+                return this.importDoc(index);
             case 'FunctionDeclaration':
                 return this.functionDoc(index);
             case 'VariableStatement':

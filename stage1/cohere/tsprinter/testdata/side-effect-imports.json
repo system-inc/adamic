@@ -1,0 +1,407 @@
+[
+  {
+    "Label": "import",
+    "Source": "import 'x'",
+    "Reason": "",
+    "Path": "witness.ts",
+    "Origin": "minimal reduction of formatter family; Go print_module.go:19 and literal/trivia boundaries",
+    "Go": "import 'x';\n",
+    "Prettier": "import 'x';\n"
+  },
+  {
+    "Label": "import-boundary-1",
+    "Source": "import \"x\";",
+    "Path": "witness.ts",
+    "Origin": "Go print_module.go:19 and print_literal.go:13",
+    "Reason": "",
+    "Go": "import 'x';\n",
+    "Prettier": "import 'x';\n"
+  },
+  {
+    "Label": "import-boundary-2",
+    "Source": "import ''",
+    "Path": "witness.ts",
+    "Origin": "Go print_module.go:19 and print_literal.go:13",
+    "Reason": "",
+    "Go": "import '';\n",
+    "Prettier": "import '';\n"
+  },
+  {
+    "Label": "import-boundary-3",
+    "Source": "import \"it\\'s\"",
+    "Path": "witness.ts",
+    "Origin": "Go print_module.go:19 and print_literal.go:13",
+    "Reason": "",
+    "Go": "import \"it\\'s\";\n",
+    "Prettier": "import \"it\\'s\";\n"
+  },
+  {
+    "Label": "import-boundary-4",
+    "Source": "import 'a';import 'b';f();",
+    "Path": "witness.ts",
+    "Origin": "Go print_module.go:19 and print_literal.go:13",
+    "Reason": "",
+    "Go": "import 'a';\nimport 'b';\nf();\n",
+    "Prettier": "import 'a';\nimport 'b';\nf();\n"
+  },
+  {
+    "Label": "import-boundary-5",
+    "Source": "import 'x';'use strict';",
+    "Path": "witness.ts",
+    "Origin": "Go print_module.go:19 and print_literal.go:13",
+    "Reason": "",
+    "Go": "import 'x';\n('use strict');\n",
+    "Prettier": "import 'x';\n('use strict');\n"
+  },
+  {
+    "Label": "import-boundary-6",
+    "Source": "import '\u2603'",
+    "Path": "witness.ts",
+    "Origin": "Go print_module.go:19 and print_literal.go:13",
+    "Reason": "",
+    "Go": "import '\u2603';\n",
+    "Prettier": "import '\u2603';\n"
+  },
+  {
+    "Label": "import-boundary-7",
+    "Source": "import 'x' with {type:'json'}",
+    "Path": "witness.ts",
+    "Origin": "Go print_module.go:19 and print_literal.go:13",
+    "Reason": "",
+    "Go": "import 'x' with { type: 'json' };\n",
+    "Prettier": "import 'x' with { type: 'json' };\n"
+  },
+  {
+    "Label": "import-boundary-8",
+    "Source": "import x from 'x'",
+    "Path": "witness.ts",
+    "Origin": "Go print_module.go:19 and print_literal.go:13",
+    "Reason": "",
+    "Go": "import x from 'x';\n",
+    "Prettier": "import x from 'x';\n"
+  },
+  {
+    "Label": "import-boundary-9",
+    "Source": "import {x} from 'x'",
+    "Path": "witness.ts",
+    "Origin": "Go print_module.go:19 and print_literal.go:13",
+    "Reason": "",
+    "Go": "import { x } from 'x';\n",
+    "Prettier": "import { x } from 'x';\n"
+  },
+  {
+    "Label": "import-boundary-10",
+    "Source": "import type {T} from 'x'",
+    "Path": "witness.ts",
+    "Origin": "Go print_module.go:19 and print_literal.go:13",
+    "Reason": "",
+    "Go": "import type { T } from 'x';\n",
+    "Prettier": "import type { T } from 'x';\n"
+  },
+  {
+    "Label": "import-boundary-11",
+    "Source": "import 'http://x'",
+    "Path": "witness.ts",
+    "Origin": "Go print_module.go:19 and print_literal.go:13",
+    "Reason": "comment-attachment",
+    "Go": "import 'http://x';\n",
+    "Prettier": "import 'http://x';\n"
+  },
+  {
+    "Label": "import-boundary-12",
+    "Source": "import 'x'\n\nf()",
+    "Path": "witness.ts",
+    "Origin": "Go print_module.go:19 and print_literal.go:13",
+    "Reason": "source-trivia",
+    "Go": "import 'x';\n\nf();\n",
+    "Prettier": "import 'x';\n\nf();\n"
+  },
+  {
+    "Label": "real-source-0",
+    "Source": "import '@actual-app/core/typings/window';\n",
+    "Path": "packages/desktop-client/src/globals.ts",
+    "Origin": "actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/desktop-client/src/globals.ts",
+    "Reason": "",
+    "Go": "import '@actual-app/core/typings/window';\n",
+    "Prettier": "import '@actual-app/core/typings/window';\n"
+  },
+  {
+    "Label": "real-source-1",
+    "Source": "import './lib/zone';\nimport './lib/zone.api.extensions';\nimport './lib/zone.configurations.api';\n",
+    "Path": "packages/zone.js/zone.ts",
+    "Origin": "angular/angular@c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5:packages/zone.js/zone.ts",
+    "Reason": "",
+    "Go": "import './lib/zone';\nimport './lib/zone.api.extensions';\nimport './lib/zone.configurations.api';\n",
+    "Prettier": "import './lib/zone';\nimport './lib/zone.api.extensions';\nimport './lib/zone.configurations.api';\n"
+  },
+  {
+    "Label": "real-source-2",
+    "Source": "import \"foo\";\n",
+    "Path": "packages/babel-parser/test/fixtures/typescript/import/import-side-effects/input.ts",
+    "Origin": "babel/babel@f67453d563918a1ea4a1dcb1d7af01d4a528d99b:packages/babel-parser/test/fixtures/typescript/import/import-side-effects/input.ts",
+    "Reason": "",
+    "Go": "import 'foo';\n",
+    "Prettier": "import 'foo';\n"
+  },
+  {
+    "Label": "real-source-3",
+    "Source": "import '@testing-library/jest-dom';\n",
+    "Path": "packages/cli-module-new/templates/frontend-plugin-module/src/setupTests.ts",
+    "Origin": "backstage/backstage@532931240eec03b318efaadb39e24d9ee6d7076c:packages/cli-module-new/templates/frontend-plugin-module/src/setupTests.ts",
+    "Reason": "",
+    "Go": "import '@testing-library/jest-dom';\n",
+    "Prettier": "import '@testing-library/jest-dom';\n"
+  },
+  {
+    "Label": "real-source-4",
+    "Source": "import '@testing-library/jest-dom';\n",
+    "Path": "packages/cli-module-new/templates/frontend-plugin/src/setupTests.ts",
+    "Origin": "backstage/backstage@532931240eec03b318efaadb39e24d9ee6d7076c:packages/cli-module-new/templates/frontend-plugin/src/setupTests.ts",
+    "Reason": "",
+    "Go": "import '@testing-library/jest-dom';\n",
+    "Prettier": "import '@testing-library/jest-dom';\n"
+  },
+  {
+    "Label": "real-source-5",
+    "Source": "import '@testing-library/jest-dom';\n",
+    "Path": "packages/cli-module-new/templates/legacy-frontend-plugin/src/setupTests.ts",
+    "Origin": "backstage/backstage@532931240eec03b318efaadb39e24d9ee6d7076c:packages/cli-module-new/templates/legacy-frontend-plugin/src/setupTests.ts",
+    "Reason": "",
+    "Go": "import '@testing-library/jest-dom';\n",
+    "Prettier": "import '@testing-library/jest-dom';\n"
+  },
+  {
+    "Label": "real-source-6",
+    "Source": "import '@testing-library/jest-dom';\n",
+    "Path": "packages/cli-module-new/templates/plugin-web-library/src/setupTests.ts",
+    "Origin": "backstage/backstage@532931240eec03b318efaadb39e24d9ee6d7076c:packages/cli-module-new/templates/plugin-web-library/src/setupTests.ts",
+    "Reason": "",
+    "Go": "import '@testing-library/jest-dom';\n",
+    "Prettier": "import '@testing-library/jest-dom';\n"
+  },
+  {
+    "Label": "real-source-7",
+    "Source": "import '@testing-library/jest-dom';\n",
+    "Path": "packages/cli-module-new/templates/scaffolder-field-extension-module/src/setupTests.ts",
+    "Origin": "backstage/backstage@532931240eec03b318efaadb39e24d9ee6d7076c:packages/cli-module-new/templates/scaffolder-field-extension-module/src/setupTests.ts",
+    "Reason": "",
+    "Go": "import '@testing-library/jest-dom';\n",
+    "Prettier": "import '@testing-library/jest-dom';\n"
+  },
+  {
+    "Label": "real-source-8",
+    "Source": "import '@testing-library/jest-dom';\n",
+    "Path": "packages/cli-module-new/templates/web-library/src/setupTests.ts",
+    "Origin": "backstage/backstage@532931240eec03b318efaadb39e24d9ee6d7076c:packages/cli-module-new/templates/web-library/src/setupTests.ts",
+    "Reason": "",
+    "Go": "import '@testing-library/jest-dom';\n",
+    "Prettier": "import '@testing-library/jest-dom';\n"
+  },
+  {
+    "Label": "real-source-9",
+    "Source": "import '@testing-library/jest-dom';\n",
+    "Path": "packages/create-app/templates/default-app/packages/app/src/setupTests.ts",
+    "Origin": "backstage/backstage@532931240eec03b318efaadb39e24d9ee6d7076c:packages/create-app/templates/default-app/packages/app/src/setupTests.ts",
+    "Reason": "",
+    "Go": "import '@testing-library/jest-dom';\n",
+    "Prettier": "import '@testing-library/jest-dom';\n"
+  },
+  {
+    "Label": "real-source-10",
+    "Source": "import '@testing-library/jest-dom';\n",
+    "Path": "packages/create-app/templates/legacy-app/packages/app/src/setupTests.ts",
+    "Origin": "backstage/backstage@532931240eec03b318efaadb39e24d9ee6d7076c:packages/create-app/templates/legacy-app/packages/app/src/setupTests.ts",
+    "Reason": "",
+    "Go": "import '@testing-library/jest-dom';\n",
+    "Prettier": "import '@testing-library/jest-dom';\n"
+  },
+  {
+    "Label": "real-source-11",
+    "Source": "import \"./test.ts\";\n",
+    "Path": "pkgs/tz/test/engines/src/javascriptcore.ts",
+    "Origin": "date-fns/date-fns@717ce0a807ea4c6b540d015b5c408723175b2838:pkgs/tz/test/engines/src/javascriptcore.ts",
+    "Reason": "",
+    "Go": "import './test.ts';\n",
+    "Prettier": "import './test.ts';\n"
+  },
+  {
+    "Label": "real-source-12",
+    "Source": "import '@testing-library/jest-dom/vitest';\n",
+    "Path": "packages/@n8n/utils/src/__tests__/setup.ts",
+    "Origin": "n8n-io/n8n@e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073:packages/@n8n/utils/src/__tests__/setup.ts",
+    "Reason": "",
+    "Go": "import '@testing-library/jest-dom/vitest';\n",
+    "Prettier": "import '@testing-library/jest-dom/vitest';\n"
+  },
+  {
+    "Label": "real-source-13",
+    "Source": "import './http-header-extractor';\nimport './bearer-token-extractor';\nimport './slack-signature-extractor';\n",
+    "Path": "packages/cli/src/modules/dynamic-credentials.ee/context-establishment-hooks/index.ts",
+    "Origin": "n8n-io/n8n@e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073:packages/cli/src/modules/dynamic-credentials.ee/context-establishment-hooks/index.ts",
+    "Reason": "",
+    "Go": "import './http-header-extractor';\nimport './bearer-token-extractor';\nimport './slack-signature-extractor';\n",
+    "Prettier": "import './http-header-extractor';\nimport './bearer-token-extractor';\nimport './slack-signature-extractor';\n"
+  },
+  {
+    "Label": "real-source-14",
+    "Source": "import './oauth-credential-resolver';\nimport './n8n-credential-resolver';\nimport './slack-credential-resolver';\n",
+    "Path": "packages/cli/src/modules/dynamic-credentials.ee/credential-resolvers/index.ts",
+    "Origin": "n8n-io/n8n@e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073:packages/cli/src/modules/dynamic-credentials.ee/credential-resolvers/index.ts",
+    "Reason": "",
+    "Go": "import './oauth-credential-resolver';\nimport './n8n-credential-resolver';\nimport './slack-credential-resolver';\n",
+    "Prettier": "import './oauth-credential-resolver';\nimport './n8n-credential-resolver';\nimport './slack-credential-resolver';\n"
+  },
+  {
+    "Label": "real-source-15",
+    "Source": "import './version-mismatch.check';\nimport './hostid-clash.check';\nimport './split-brain.check';\nimport './lifecycle.check';\n",
+    "Path": "packages/cli/src/modules/instance-registry/checks/index.ts",
+    "Origin": "n8n-io/n8n@e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073:packages/cli/src/modules/instance-registry/checks/index.ts",
+    "Reason": "",
+    "Go": "import './version-mismatch.check';\nimport './hostid-clash.check';\nimport './split-brain.check';\nimport './lifecycle.check';\n",
+    "Prettier": "import './version-mismatch.check';\nimport './hostid-clash.check';\nimport './split-brain.check';\nimport './lifecycle.check';\n"
+  },
+  {
+    "Label": "real-source-16",
+    "Source": "import '@n8n/vitest-config/setup/frontend';\n",
+    "Path": "packages/frontend/@n8n/chat/src/__tests__/setup.ts",
+    "Origin": "n8n-io/n8n@e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073:packages/frontend/@n8n/chat/src/__tests__/setup.ts",
+    "Reason": "",
+    "Go": "import '@n8n/vitest-config/setup/frontend';\n",
+    "Prettier": "import '@n8n/vitest-config/setup/frontend';\n"
+  },
+  {
+    "Label": "real-source-17",
+    "Source": "import '@n8n/vitest-config/setup/frontend';\n",
+    "Path": "packages/frontend/@n8n/composables/src/__tests__/setup.ts",
+    "Origin": "n8n-io/n8n@e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073:packages/frontend/@n8n/composables/src/__tests__/setup.ts",
+    "Reason": "",
+    "Go": "import '@n8n/vitest-config/setup/frontend';\n",
+    "Prettier": "import '@n8n/vitest-config/setup/frontend';\n"
+  },
+  {
+    "Label": "real-source-18",
+    "Source": "import '@n8n/vitest-config/setup/frontend';\n",
+    "Path": "packages/frontend/@n8n/frontend-module-sdk/src/__tests__/setup.ts",
+    "Origin": "n8n-io/n8n@e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073:packages/frontend/@n8n/frontend-module-sdk/src/__tests__/setup.ts",
+    "Reason": "",
+    "Go": "import '@n8n/vitest-config/setup/frontend';\n",
+    "Prettier": "import '@n8n/vitest-config/setup/frontend';\n"
+  },
+  {
+    "Label": "real-source-19",
+    "Source": "import '@n8n/vitest-config/setup/frontend';\n",
+    "Path": "packages/frontend/@n8n/frontend-utils/src/__tests__/setup.ts",
+    "Origin": "n8n-io/n8n@e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073:packages/frontend/@n8n/frontend-utils/src/__tests__/setup.ts",
+    "Reason": "",
+    "Go": "import '@n8n/vitest-config/setup/frontend';\n",
+    "Prettier": "import '@n8n/vitest-config/setup/frontend';\n"
+  },
+  {
+    "Label": "real-source-20",
+    "Source": "import '@n8n/vitest-config/setup/frontend';\n",
+    "Path": "packages/frontend/@n8n/i18n/src/__tests__/setup.ts",
+    "Origin": "n8n-io/n8n@e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073:packages/frontend/@n8n/i18n/src/__tests__/setup.ts",
+    "Reason": "",
+    "Go": "import '@n8n/vitest-config/setup/frontend';\n",
+    "Prettier": "import '@n8n/vitest-config/setup/frontend';\n"
+  },
+  {
+    "Label": "real-source-21",
+    "Source": "import '@n8n/vitest-config/setup/frontend';\n",
+    "Path": "packages/frontend/@n8n/rest-api-client/src/__tests__/setup.ts",
+    "Origin": "n8n-io/n8n@e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073:packages/frontend/@n8n/rest-api-client/src/__tests__/setup.ts",
+    "Reason": "",
+    "Go": "import '@n8n/vitest-config/setup/frontend';\n",
+    "Prettier": "import '@n8n/vitest-config/setup/frontend';\n"
+  },
+  {
+    "Label": "real-source-22",
+    "Source": "import '@n8n/vitest-config/setup/frontend';\n",
+    "Path": "packages/frontend/@n8n/stores/src/__tests__/setup.ts",
+    "Origin": "n8n-io/n8n@e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073:packages/frontend/@n8n/stores/src/__tests__/setup.ts",
+    "Reason": "",
+    "Go": "import '@n8n/vitest-config/setup/frontend';\n",
+    "Prettier": "import '@n8n/vitest-config/setup/frontend';\n"
+  },
+  {
+    "Label": "real-source-23",
+    "Source": "import './icons';\nimport './directives';\nimport './components';\nimport './chartjs';\n",
+    "Path": "packages/frontend/editor-ui/src/app/plugins/index.ts",
+    "Origin": "n8n-io/n8n@e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073:packages/frontend/editor-ui/src/app/plugins/index.ts",
+    "Reason": "",
+    "Go": "import './icons';\nimport './directives';\nimport './components';\nimport './chartjs';\n",
+    "Prettier": "import './icons';\nimport './directives';\nimport './components';\nimport './chartjs';\n"
+  },
+  {
+    "Label": "real-source-24",
+    "Source": "import './tasks/clean.js';\nimport './tasks/copy-misc.js';\nimport './tasks/move.js';\nimport './tasks/samples.js';\n",
+    "Path": "tools/gulp/gulpfile.ts",
+    "Origin": "nestjs/nest@35142c3eca8edaaf6abc5984d915da2fbd458aa2:tools/gulp/gulpfile.ts",
+    "Reason": "",
+    "Go": "import './tasks/clean.js';\nimport './tasks/copy-misc.js';\nimport './tasks/move.js';\nimport './tasks/samples.js';\n",
+    "Prettier": "import './tasks/clean.js';\nimport './tasks/copy-misc.js';\nimport './tasks/move.js';\nimport './tasks/samples.js';\n"
+  },
+  {
+    "Label": "real-source-25",
+    "Source": "import 'temporal-polyfill/full/global';\n",
+    "Path": "examples/prisma-8-demo/test/setup-temporal.ts",
+    "Origin": "prisma/prisma@c882b03377e70c090d7bbe05cf85bf04fe9e33b2:examples/prisma-8-demo/test/setup-temporal.ts",
+    "Reason": "",
+    "Go": "import 'temporal-polyfill/full/global';\n",
+    "Prettier": "import 'temporal-polyfill/full/global';\n"
+  },
+  {
+    "Label": "real-source-26",
+    "Source": "import 'temporal-polyfill/full/global';\n",
+    "Path": "examples/react-router-demo/test/setup-temporal.ts",
+    "Origin": "prisma/prisma@c882b03377e70c090d7bbe05cf85bf04fe9e33b2:examples/react-router-demo/test/setup-temporal.ts",
+    "Reason": "",
+    "Go": "import 'temporal-polyfill/full/global';\n",
+    "Prettier": "import 'temporal-polyfill/full/global';\n"
+  },
+  {
+    "Label": "real-source-27",
+    "Source": "import 'temporal-polyfill/full/global';\n",
+    "Path": "packages/3-targets/3-targets/postgres/test/setup-temporal.ts",
+    "Origin": "prisma/prisma@c882b03377e70c090d7bbe05cf85bf04fe9e33b2:packages/3-targets/3-targets/postgres/test/setup-temporal.ts",
+    "Reason": "",
+    "Go": "import 'temporal-polyfill/full/global';\n",
+    "Prettier": "import 'temporal-polyfill/full/global';\n"
+  },
+  {
+    "Label": "real-source-28",
+    "Source": "import 'temporal-polyfill/full/global';\n",
+    "Path": "packages/3-targets/6-adapters/postgres-codec-testkit/test/setup-temporal.ts",
+    "Origin": "prisma/prisma@c882b03377e70c090d7bbe05cf85bf04fe9e33b2:packages/3-targets/6-adapters/postgres-codec-testkit/test/setup-temporal.ts",
+    "Reason": "",
+    "Go": "import 'temporal-polyfill/full/global';\n",
+    "Prettier": "import 'temporal-polyfill/full/global';\n"
+  },
+  {
+    "Label": "real-source-29",
+    "Source": "import 'temporal-polyfill/full/global';\n",
+    "Path": "packages/3-targets/6-adapters/postgres/test/setup-temporal.ts",
+    "Origin": "prisma/prisma@c882b03377e70c090d7bbe05cf85bf04fe9e33b2:packages/3-targets/6-adapters/postgres/test/setup-temporal.ts",
+    "Reason": "",
+    "Go": "import 'temporal-polyfill/full/global';\n",
+    "Prettier": "import 'temporal-polyfill/full/global';\n"
+  },
+  {
+    "Label": "typescript-corpus-imports",
+    "Source": "import \"does-not-exist\";\nimport \"./does-not-exist-either\";\nimport \"./does-not-exist-either.js\";\n",
+    "Path": "witness.ts",
+    "Origin": "microsoft/TypeScript@050880ce59e30b356b686bd3144efe24f875ebc8:tests/cases/compiler/sideEffectImports1.ts:5",
+    "Reason": "",
+    "Go": "import 'does-not-exist';\nimport './does-not-exist-either';\nimport './does-not-exist-either.js';\n",
+    "Prettier": "import 'does-not-exist';\nimport './does-not-exist-either';\nimport './does-not-exist-either.js';\n"
+  },
+  {
+    "Label": "go-cohere-own-module-test",
+    "Source": "import Default, { a, type B, c as d } from './module';\nimport type { E } from \"./types\";\nexport * as namespace from './namespace';\n",
+    "Path": "witness.ts",
+    "Origin": "cohere@7945d102:internal/format/javascript/format_test.go:71 exact source prefix",
+    "Reason": "ExportDeclaration",
+    "Go": "import Default, { a, type B, c as d } from './module';\nimport type { E } from './types';\nexport * as namespace from './namespace';\n",
+    "Prettier": "import Default, { a, type B, c as d } from './module';\nimport type { E } from './types';\nexport * as namespace from './namespace';\n"
+  }
+]
