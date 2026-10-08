@@ -470,3 +470,90 @@ Step 04's closures (compiler/area-next-fixtures 118579fc) merged into area/runti
 - `runtime-file:node_fs_file.h`: declarations only.
 - `runtime-file:node_host.c`: the main-thread directory cache above.
 - `runtime-file:regexp_replace.c`: no mutable static storage.
+## Deterministic normalization and exit mutants (roadmap step 03)
+
+The normalization cache and exit-flush checks now use the cloned-runtime hook approach
+from `codex/signal-mutant-steady`'s "Deterministic signal-handler mutant" section.
+No shipping runtime source changes. The guarded and unsafe snapshots have the same
+fixture and gates; only the original protection-removal mutation differs.
+
+The old `normalization_pairs` failure at 16 workers was the fixture's output assertion,
+not a ThreadSanitizer detection. An instrumented copy of the old fixture, linked against
+the global-pair-cache mutant, exited with SIGABRT and no sanitizer warning on its first
+16-worker observation. Its exact diagnostic was:
+
+```text
+normalization assertion: first=é second=é third=¥́
+```
+
+The first result should have been composed `é`. The fixture deliberately alternated
+`e` and `¥` with U+0301, which collide in the pair cache. Removing thread-local storage
+allows another caller to replace a cached pair between its key checks and result read;
+normalization can then return a wrong result and the fixture aborts. That semantic
+failure cannot be accepted as a race report.
+
+`normalization_race.c` instead selects exactly two callers with relaxed atomic tickets.
+One performs a real cache write and pauses inside the lookup before returning. The
+second waits for that write before accessing the same cache slot, then releases the
+writer. Each variant instruments only its target cache, including the cache-hit return.
+Both callers use the same input so an unrelated wrong-output abort cannot preempt the
+intended report. NFC of decomposed `é` exercises classes and pairs; NFD of `é`
+exercises mappings. Guarded snapshots keep thread-local caches and still check the
+normalization result. Mutants remove the corresponding thread-local declaration.
+
+`exit_race.c` holds one real worker immediately after `buffer` increments `output_used`,
+while that worker owns `output_lock` and before it appends the newline. The caller waits
+for this writer and calls `exit(0)`. The guarded finish hook releases the writer before
+normal pool shutdown and the locked flush. The original exit mutant drops shutdown and
+the lock, flushes while the writer is held, and only then releases it. There are no other
+buffer writers. The guarded control must emit the complete `signal worker line`.
+
+All rendezvous accesses use lock-free relaxed atomics. They force the two actual
+runtime accesses to occur, but create no happens-before edge between them. The normal
+safe runtime retains its own thread-local isolation or shutdown/lock ordering. Hooks
+are injected only into temporary runtime snapshots and linked only with these fixtures.
+An ordinary test invocation runs three fresh guarded and three fresh mutant processes
+at **each** of 4 and 16 workers. Mutants require unsuccessful exit and an explicit TSan
+data-race report identifying the target function; a plain abort, timeout, compiler
+failure or unrelated report does not pass. Safe controls require successful exit,
+expected output and no sanitizer report.
+
+Validation on `runtime/parallel-flakes`, based on `origin/area/runtime` `cdfa2255`, with
+Node v24.19.0, Go 1.27.1 and clang 20.1.8:
+
+| Check | Mutant, 4 workers | Mutant, 16 workers | Guarded, 4 workers | Guarded, 16 workers |
+|---|---:|---:|---:|---:|
+| normalization_classes | 50/50 detected | 50/50 detected | 50/50 clean | 50/50 clean |
+| normalization_mappings | 50/50 detected | 50/50 detected | 50/50 clean | 50/50 clean |
+| normalization_pairs | 50/50 detected | 50/50 detected | 50/50 clean | 50/50 clean |
+| exit_flush | 50/50 detected | 50/50 detected | 50/50 clean | 50/50 clean |
+
+These were 800 fresh fixture processes using the exact test-built binaries, scheduled
+with 16 concurrent processes on the four-CPU-quota box (16-worker processes can occupy
+256 pool threads concurrently). The matrix completed in 10.538s with zero failed
+observations. Every mutant exited 66 and reported its intended race in `combining_class`,
+`mapping_of`, `composite` or `flush`; every guarded process exited 0 without a report.
+Raw stdout/stderr for every run and the matrix launcher are retained in
+`/workspace/parallel-steady/`. Four counter-controls passed the guarded binaries to the
+mutant expectation: all eight worker-count subchecks failed on observation one with
+`mutant not caught ... <nil>` and no race, confirming that merely running the fixture
+cannot satisfy the detector.
+
+The focused gate command is:
+
+```sh
+go test ./internal/native \
+  -run '^TestRuntimeStatics(ProtectionMutants|SignalAndExit)$/^(normalization_|exit_flush)' \
+  -count=1 -v -timeout 15m
+```
+
+Use `-count=50` to repeat the Go gate itself (150 fresh observations per worker count
+and variant). Go's `-parallel` alone does not make these deliberately serial tests
+concurrent; external processes must supply the load.
+
+The complete `TestRuntimeStaticsProtectionMutants`, `TestRuntimeStaticsSignalAndExit`,
+`TestRuntimeStopWholeLines` and `TestRuntimeStaticsAreListed` gate passed in 116.479s.
+All eleven original `TestRuntimeStaticsParallel` positive fixtures passed in 7.368s.
+`go vet ./internal/native`, Go formatting and `git diff --check` passed. Exact matrix
+outputs are archived in `/workspace/parallel-steady/outputs.tar.gz`; the full affected
+gate log is `/workspace/parallel-steady/gate.log`. No unexpected failure was observed.

@@ -57,13 +57,18 @@ func TestRuntimeStaticsProtectionMutants(t *testing.T) {
 	for _, mutant := range mutants {
 		t.Run(mutant.name, func(t *testing.T) {
 			if strings.HasPrefix(mutant.name, "normalization_") {
-				source, err := os.ReadFile(filepath.Join(*runtimeStaticsDirectory, mutant.file))
-				if err != nil {
-					t.Fatal(err)
+				for _, unsafe := range []bool{false, true} {
+					name := "guarded"
+					if unsafe {
+						name = "mutant"
+					}
+					t.Run(name, func(t *testing.T) {
+						library, root := staticsNormalizationRaceLibrary(t, mutant.name, mutant.old, mutant.changed, unsafe)
+						binary := staticsRaceFixture(t, root, library, "normalization_race")
+						staticsSteadyRun(t, binary, mutant.name, unsafe)
+					})
 				}
-				if !strings.Contains(string(source), mutant.old) {
-					t.Skip("this runtime has const Unicode tables without the area branch's thread-local lookup caches")
-				}
+				return
 			}
 			library, root := staticsRaceLibrary(t, mutant.file, mutant.old, mutant.changed)
 			binary := staticsRaceFixture(t, root, library, mutant.fixture)
@@ -97,11 +102,17 @@ func TestRuntimeStaticsSignalAndExit(t *testing.T) {
 		binary := staticsRaceFixture(t, root, library, "signal_output")
 		staticsSignalRun(t, binary, true, syscall.SIGTERM, true)
 	})
-	t.Run("exit_flush_mutant", func(t *testing.T) {
-		library, root := staticsRaceLibrary(t, "adamic.c", "adamic_parallel_shutdown();\n\tpthread_mutex_lock(&output_lock);\n\tflush();\n\tbool failed = broken[adamic_stdout] || broken[adamic_stderr];\n\tpthread_mutex_unlock(&output_lock);", "flush();\n bool failed = broken[adamic_stdout] || broken[adamic_stderr];")
-		binary := staticsRaceFixture(t, root, library, "signal_output")
-		staticsSignalRun(t, binary, false, 0, true)
-	})
+	for _, mutant := range []bool{false, true} {
+		name := "exit_flush_guarded"
+		if mutant {
+			name = "exit_flush_mutant"
+		}
+		t.Run(name, func(t *testing.T) {
+			library, root := staticsExitRaceLibrary(t, mutant)
+			binary := staticsRaceFixture(t, root, library, "exit_race")
+			staticsSteadyRun(t, binary, "exit_flush", mutant)
+		})
+	}
 }
 
 // Not parallel: each build occupies the same runtime/TSan budget as the pool proofs.
