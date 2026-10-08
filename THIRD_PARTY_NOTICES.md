@@ -50,6 +50,9 @@ IN THE SOFTWARE.
     `string_repeat_impl.h`, `normalize.c`, `number.c`, `dtoa.c`, `radix.c`, after
     src/builtins/builtins-number.cc, string-repeat.tq, string-pad.tq and
     src/common/message-template.h, V8 13.6.233);
+  - Proven counted prototype links (`internal/native/runtime/library_prototypes.c`,
+    `library_prototypes.h`, `internal/lower/library_prototype_links.go`, after
+    JSObject::SetPrototype in src/objects/js-objects.cc, V8 13.6.233);
   - Map and Set number hashing (`runtime/map_set.c`, after Object::GetSimpleHash in
     src/objects/objects-inl.h and ComputeUnseededHash/ComputeLongHash in src/utils/utils.h,
     V8 13.6.233.17);

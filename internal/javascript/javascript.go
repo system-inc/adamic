@@ -749,6 +749,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.NodeBufferCall:
 		return e.nodeBufferCall(expression)
 	case ir.ObjectCall:
+		if expression.Method == "intrinsicObjectPrototype" {
+			return "Object.prototype"
+		}
 		if expression.Method == "errorIsType" {
 			return "(" + e.value(expression.Arguments[0]) + " instanceof globalThis[" + e.value(expression.Arguments[1]) + "])"
 		}

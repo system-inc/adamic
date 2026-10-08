@@ -76,6 +76,7 @@ void adamic_share(void *value) {
 		case adamic_kind_string: append(&pending, ((adamic_string *)heap)->owner); break;
 		case adamic_kind_object: {
 			adamic_object *object = (adamic_object *)heap;
+			append(&pending, object->prototype);
 			for (size_t i = 0; i < object->shape->count; i++) {
 				if (object->shape->references[i]) { append(&pending, object->slots[i].reference); }
 			}

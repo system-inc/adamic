@@ -13,7 +13,6 @@ func TestObjectRefusalsExplainSoundness(t *testing.T) {
 		{`Object.defineProperties({value:1}, {value:{value:'wrong'}});`, "property descriptors"},
 		{`Object.getOwnPropertyDescriptor({value:1}, 'value');`, "property descriptors"},
 		{`Object.getOwnPropertyDescriptors({value:1});`, "property descriptors"},
-		{`Object.getPrototypeOf({value:1});`, "prototypes"},
 		{`Object.setPrototypeOf({value:1}, {});`, "prototypes"},
 		{`Object.fromEntries([['key', 1]]);`, "index-signature"},
 		{`Object.assign({value:1}, {value:'wrong'});`, "intersection result"},

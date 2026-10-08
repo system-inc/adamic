@@ -8,7 +8,7 @@ func LibraryMayThrow(node any) bool {
 	case StringCall:
 		return n.Method == "repeat" || n.Method == "padStart" || n.Method == "padEnd" || n.Method == "normalize"
 	case ObjectCall:
-		return n.Method == "assign"
+		return n.Method == "assign" || n.Method == "setPrototypeOf"
 	}
 	return false
 }
