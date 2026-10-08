@@ -1,5 +1,5 @@
 Lowered primitive string substr through existing IR, including its length argument.
-Base refreshed to d577dd0d; merge 694f14d3; implementation is the commit containing this report.
+Base refreshed to d577dd0d; merge 694f14d3; substr implementation 27a14b30fc64c7c2e2ade64ea93462dab9a1fe57.
 Focused lower/oracle tests passed; uncached fixture and seven mutants passed; counts refresh passed in 20.117s.
 All seven mutants are caught by source-Node stdout comparison in native and JavaScript; no compiler/sanitizer failure is counted.
 Five table sites belong to this kind; one example call now passes its statement, another remains behind Path. Other 21 kinds remain unresolved.
@@ -35,7 +35,7 @@ ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestSyntaxSubstrMutants$
 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 10m -args -update-counts > /tmp/adamic-syntax-substr-counts.log 2>&1
 ```
 
-Setup: Go 0.015s, Node 0.015s, submodules 0.060s, markdown 0.063s, clang 0.164s, build 32.710s, warm 32.806s, total 32.833s; nproc=5. Focused lower 0.376s, oracle 3.324s. Uncached fixture/mutants oracle 0.944s. Counts 20.117s. No whole package/full gate ran, following the unit instruction. git diff --check passed.
+Setup: Go 0.020s, Node 0.018s, submodules 0.060s, markdown 0.063s, clang 0.164s, build 32.710s, warm 32.806s, total 32.833s; nproc=5. Focused lower 0.376s, oracle 3.324s. Uncached fixture/mutants oracle 0.944s. Counts 20.117s. No whole package/full gate ran, following the unit instruction. git diff --check passed.
 
 Replayed executeCommandLine.ts:348:30 before and after with the exact table reason. Both commands exit 1 because this base has a different initial reason. Before: the exact call stopped at structural method dispatch in a program with statics. After: that call's stop disappears. The unit still has independent an array of never, an array of any and reading res findings. The second example moduleNameResolver.ts:1266:20 remains behind a parameter of type Path at 1246:34. Neither replay outputs executable IR; the fixture establishes the semantics. Evidence preserves complete selected findings, with only declaration catalogs omitted.
 
