@@ -1,0 +1,13 @@
+declare const console: { log(value: string): void };
+interface SourceFile { readonly name: "input"; }
+interface Diagnostic { file: SourceFile | undefined; }
+interface DiagnosticWithLocation extends Diagnostic { file: SourceFile; }
+const storage: Diagnostic[] = [];
+function add<T extends Diagnostic>(diagnostic: T): void {
+    storage.push(diagnostic);
+}
+const original: DiagnosticWithLocation = { file: { name: "input" } };
+add(original);
+const wide = storage[0]!;
+wide.file = undefined;
+console.log(original.file === undefined ? "1" : "0");

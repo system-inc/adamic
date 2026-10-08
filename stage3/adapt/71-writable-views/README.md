@@ -1,10 +1,14 @@
-Built type-only adaptations for 51 range inputs, five cache declarations, and seven diagnostic consumer bodies.
+Built type-only range, cache, diagnostic, tuple and fresh-array adaptations; no compiler or runtime edits.
 Base: ef3141e9b1152ab51b51497f8ce3a2799449c8a3; refusal-table input: d35a81d36fdafccf827bad0f572d311b2a0d4deb.
 Apply builds; landing lane PASS; oracle results match main: 106366 passing, one sanctioned API-baseline failure.
-Undo mutant restores two census rows; two adaptation guards and two Node witness mutants catch planted changes.
-Diagnostics add 75 proven removals; tuple and empty-array follow-ups are in progress. See DIAGNOSTICS.md.
+Undo mutants restore 2 range, 2 sink, 12 tuple and 1 fresh-array rows; writer and witness mutants fail.
+Census 1174 -> 1047; exact table writable subset 755 -> 637. Full table adaptation is not complete. See FOLLOWUP.md.
 
-The edit changes only type annotations, preserves source bytes elsewhere, and introduces neither any nor unknown. The range inputs become Readonly<TextRange>, including their existing undefined unions. The sibling 70 checker-symbol audit proves no writes or escapes, following local callees. parameters.json is the explicit selection; evidence/range-survey.json records the wider candidate survey. These are internal functions or local closures.
+The 487f0d6c generic diagnostic experiment is withdrawn: captured types still escaped into writable collections. Only its two JSON push sinks remain, removing nine rows. The minimal generic-storage.a witness demonstrates the missed alias.
+
+The final continuation is documented in [FOLLOWUP.md](FOLLOWUP.md), including remaining-family counts, guards, the EvaluatorResult control, and final verification. [DIAGNOSTICS.md](DIAGNOSTICS.md) records the prior diagnostic continuation. The detailed counts below are the historical initial 3bc49948 subset; evidence/reconciliation.json and REMAINING.md now describe the final continuation.
+
+The initial edit changes only type annotations, preserves source bytes elsewhere, and introduces neither any nor unknown. The range inputs become Readonly<TextRange>, including their existing undefined unions. The sibling 70 checker-symbol audit proves no writes or escapes, following local callees. parameters.json is the explicit selection; evidence/range-survey.json records the wider candidate survey. These are internal functions or local closures.
 
 Five lineMap declarations become readonly number[] | undefined. SourceFile is initialized to undefined in nodeFactory; SourceMapSourceObject starts uninitialized. The cache is subsequently populated. SourceFileLike must also admit the actual empty slot: omitting that declaration caused 38 extra checker diagnostics and changed census eligibility. That experiment is preserved under evidence/rejected-cache-contract and is excluded from the final claim. Cache members are internal; the guards reject a changed initialization contract before any edits.
 
@@ -43,4 +47,4 @@ Commands run, with all test output redirected to logs:
 
 Logs, verdicts, guard results, idempotence audit, witness outputs and failed witness assertions are retained under evidence/. No compiler edits, full package confirmation runs, public API expansion or runtime source changes were made. This branch is a reviewable partial result, not completion of all Disposition=adaptation rows.
 
-The diagnostic follow-up removes another 75 sites (1112 -> 1037). See [DIAGNOSTICS.md](DIAGNOSTICS.md) for its source audit, mutations, remaining sites and fresh-apply/oracle/lane evidence. The earlier counts above describe the initial 3bc49948 subset.
+The corrected diagnostic follow-up removes nine sites. The tuple and fresh-allocation follow-ups remove another 26 and 30. See [DIAGNOSTICS.md](DIAGNOSTICS.md) and [FOLLOWUP.md](FOLLOWUP.md) for current proofs, retained sites and evidence; the historical 75-row claim is withdrawn.

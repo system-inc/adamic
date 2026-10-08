@@ -5,8 +5,314 @@
   "table_reasons": 519,
   "table_observations": 1708,
   "current_before": 5073,
-  "current_after": 5020,
+  "current_after": 4952,
   "removed": [
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/binder.ts:509:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/binder.ts:1375:35",
+      "reason": "a value of type never[] seen as FlowNode[], which can write FlowNode where never is read",
+      "text": "src/compiler/binder.ts:1375:35: Adamic 0.1 refuses a value of type never[] seen as FlowNode[], which can write FlowNode where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/binder.ts:509:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/binder.ts:3089:48",
+      "reason": "a value of type never[] seen as (JSDocCallbackTag | JSDocEnumTag | JSDocTypedefTag)[], which can write JSDocCallbackTag | JSDocEnumTag | JSDocTypedefTag where never is read",
+      "text": "src/compiler/binder.ts:3089:48: Adamic 0.1 refuses a value of type never[] seen as (JSDocCallbackTag | JSDocEnumTag | JSDocTypedefTag)[], which can write JSDocCallbackTag | JSDocEnumTag | JSDocTypedefTag where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/binder.ts:509:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/binder.ts:3089:79",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/binder.ts:3089:79: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/binder.ts:509:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/binder.ts:3093:42",
+      "reason": "a value of type never[] seen as JSDocImportTag[], which can write JSDocImportTag where never is read",
+      "text": "src/compiler/binder.ts:3093:42: Adamic 0.1 refuses a value of type never[] seen as JSDocImportTag[], which can write JSDocImportTag where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/binder.ts:509:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/binder.ts:3093:67",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/binder.ts:3093:67: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:12129:36",
+      "reason": "a value of type never[] seen as Type[], which can write Type where never is read",
+      "text": "src/compiler/checker.ts:12129:36: Adamic 0.1 refuses a value of type never[] seen as Type[], which can write Type where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:12143:47",
+      "reason": "a value of type never[] seen as Type[], which can write Type where never is read",
+      "text": "src/compiler/checker.ts:12143:47: Adamic 0.1 refuses a value of type never[] seen as Type[], which can write Type where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:14202:51",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:14202:51: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:14338:37",
+      "reason": "a value of type never[] seen as Signature[], which can write Signature where never is read",
+      "text": "src/compiler/checker.ts:14338:37: Adamic 0.1 refuses a value of type never[] seen as Signature[], which can write Signature where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:18030:48",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:18030:48: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:18032:46",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:18032:46: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:18055:48",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:18055:48: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:18056:45",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:18056:45: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:1925:42",
+      "reason": "a value of type never[] seen as DiagnosticWithLocation[], which can write DiagnosticWithLocation where never is read",
+      "text": "src/compiler/checker.ts:1925:42: Adamic 0.1 refuses a value of type never[] seen as DiagnosticWithLocation[], which can write DiagnosticWithLocation where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:19271:154",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:19271:154: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:19848:41",
+      "reason": "a value of type never[] seen as Type[], which can write Type where never is read",
+      "text": "src/compiler/checker.ts:19848:41: Adamic 0.1 refuses a value of type never[] seen as Type[], which can write Type where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:21771:58",
+      "reason": "a value of type never[] seen as Diagnostic[], which can write Diagnostic where never is read",
+      "text": "src/compiler/checker.ts:21771:58: Adamic 0.1 refuses a value of type never[] seen as Diagnostic[], which can write Diagnostic where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:21802:58",
+      "reason": "a value of type never[] seen as Diagnostic[], which can write Diagnostic where never is read",
+      "text": "src/compiler/checker.ts:21802:58: Adamic 0.1 refuses a value of type never[] seen as Diagnostic[], which can write Diagnostic where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:22424:50",
+      "reason": "a value of type never[] seen as Diagnostic[], which can write Diagnostic where never is read",
+      "text": "src/compiler/checker.ts:22424:50: Adamic 0.1 refuses a value of type never[] seen as Diagnostic[], which can write Diagnostic where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:22454:50",
+      "reason": "a value of type never[] seen as Diagnostic[], which can write Diagnostic where never is read",
+      "text": "src/compiler/checker.ts:22454:50: Adamic 0.1 refuses a value of type never[] seen as Diagnostic[], which can write Diagnostic where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:22454:90",
+      "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+      "text": "src/compiler/checker.ts:22454:90: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:23654:126",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:23654:126: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:23655:203",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:23655:203: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:24444:63",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:24444:63: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:24473:66",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:24473:66: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:25743:46",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:25743:46: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:25745:52",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:25745:52: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:25757:38",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:25757:38: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:25757:68",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:25757:68: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:27381:67",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:27381:67: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:27382:63",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:27382:63: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:27388:65",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:27388:65: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:27437:96",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:27437:96: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:31303:91",
+      "reason": "a value of type never[] seen as Symbol[], which can write Symbol where never is read",
+      "text": "src/compiler/checker.ts:31303:91: Adamic 0.1 refuses a value of type never[] seen as Symbol[], which can write Symbol where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
     {
       "measurement": "measured on a checker-rejected program",
       "unit": "src/compiler/checker.ts:1486:1",
@@ -30,9 +336,207 @@
       "unit": "src/compiler/checker.ts:1486:1",
       "phase": "refusal_scan",
       "kind": "Refused",
+      "where": "src/compiler/checker.ts:32531:63",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:32531:63: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:32540:45",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:32540:45: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:32540:70",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:32540:70: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:36133:54",
+      "reason": "a value of type never[] seen as Diagnostic[], which can write Diagnostic where never is read",
+      "text": "src/compiler/checker.ts:36133:54: Adamic 0.1 refuses a value of type never[] seen as Diagnostic[], which can write Diagnostic where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:36133:94",
+      "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+      "text": "src/compiler/checker.ts:36133:94: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:36844:53",
+      "reason": "a value of type never[] seen as Signature[], which can write Signature where never is read",
+      "text": "src/compiler/checker.ts:36844:53: Adamic 0.1 refuses a value of type never[] seen as Signature[], which can write Signature where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:36864:57",
+      "reason": "a value of type never[] seen as Signature[], which can write Signature where never is read",
+      "text": "src/compiler/checker.ts:36864:57: Adamic 0.1 refuses a value of type never[] seen as Signature[], which can write Signature where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:38426:31",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/checker.ts:38426:31: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:38426:32",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:38426:32: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:38458:38",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/checker.ts:38458:38: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:38458:39",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:38458:39: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:38493:38",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/checker.ts:38493:38: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:38493:39",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:38493:39: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:41421:88",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:41421:88: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:41427:44",
+      "reason": "a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",
+      "text": "src/compiler/checker.ts:41427:44: Adamic 0.1 refuses a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:41700:45",
+      "reason": "a value of type never[] seen as Type[], which can write Type where never is read",
+      "text": "src/compiler/checker.ts:41700:45: Adamic 0.1 refuses a value of type never[] seen as Type[], which can write Type where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
       "where": "src/compiler/checker.ts:49331:52",
       "reason": "a value of type SourceFile seen as SourceFileLike | undefined, which can write readonly number[] | undefined where readonly number[] is read",
       "text": "src/compiler/checker.ts:49331:52: Adamic 0.1 refuses a value of type SourceFile seen as SourceFileLike | undefined, which can write readonly number[] | undefined where readonly number[] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:49673:48",
+      "reason": "a value of type never[] seen as Node[], which can write Node where never is read",
+      "text": "src/compiler/checker.ts:49673:48: Adamic 0.1 refuses a value of type never[] seen as Node[], which can write Node where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:49674:53",
+      "reason": "a value of type never[] seen as Node[], which can write Node where never is read",
+      "text": "src/compiler/checker.ts:49674:53: Adamic 0.1 refuses a value of type never[] seen as Node[], which can write Node where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:49675:54",
+      "reason": "a value of type never[] seen as Node[], which can write Node where never is read",
+      "text": "src/compiler/checker.ts:49675:54: Adamic 0.1 refuses a value of type never[] seen as Node[], which can write Node where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:49676:51",
+      "reason": "a value of type never[] seen as Node[], which can write Node where never is read",
+      "text": "src/compiler/checker.ts:49676:51: Adamic 0.1 refuses a value of type never[] seen as Node[], which can write Node where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:49677:69",
+      "reason": "a value of type never[] seen as BindingElement[], which can write BindingElement where never is read",
+      "text": "src/compiler/checker.ts:49677:69: Adamic 0.1 refuses a value of type never[] seen as BindingElement[], which can write BindingElement where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:51586:36",
+      "reason": "a value of type never[] seen as (readonly (Identifier | StringLiteral)[])[], which can write readonly (Identifier | StringLiteral)[] where never is read",
+      "text": "src/compiler/checker.ts:51586:36: Adamic 0.1 refuses a value of type never[] seen as (readonly (Identifier | StringLiteral)[])[], which can write readonly (Identifier | StringLiteral)[] where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
     },
     {
       "measurement": "measured on a checker-rejected program",
@@ -51,6 +555,87 @@
       "where": "src/compiler/checker.ts:52411:55",
       "reason": "a value of type SourceFile seen as SourceFileLike, which can write readonly number[] | undefined where readonly number[] is read",
       "text": "src/compiler/checker.ts:52411:55: Adamic 0.1 refuses a value of type SourceFile seen as SourceFileLike, which can write readonly number[] | undefined where readonly number[] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:5753:44",
+      "reason": "a value of type never[] seen as SymbolTable[], which can write SymbolTable where never is read",
+      "text": "src/compiler/checker.ts:5753:44: Adamic 0.1 refuses a value of type never[] seen as SymbolTable[], which can write SymbolTable where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/commandLineParser.ts:2277:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/commandLineParser.ts:2280:59",
+      "reason": "a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read",
+      "text": "src/compiler/commandLineParser.ts:2280:59: Adamic 0.1 refuses a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/commandLineParser.ts:2437:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/commandLineParser.ts:2444:21",
+      "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+      "text": "src/compiler/commandLineParser.ts:2444:21: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/commandLineParser.ts:2478:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/commandLineParser.ts:2498:29",
+      "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+      "text": "src/compiler/commandLineParser.ts:2498:29: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/commandLineParser.ts:2478:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/commandLineParser.ts:2503:29",
+      "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+      "text": "src/compiler/commandLineParser.ts:2503:29: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/commandLineParser.ts:2478:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/commandLineParser.ts:2506:29",
+      "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+      "text": "src/compiler/commandLineParser.ts:2506:29: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/commandLineParser.ts:2478:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/commandLineParser.ts:2551:33",
+      "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+      "text": "src/compiler/commandLineParser.ts:2551:33: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/commandLineParser.ts:2478:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/commandLineParser.ts:2584:25",
+      "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+      "text": "src/compiler/commandLineParser.ts:2584:25: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/commandLineParser.ts:2478:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/commandLineParser.ts:2587:25",
+      "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+      "text": "src/compiler/commandLineParser.ts:2587:25: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
     },
     {
       "measurement": "measured on a checker-rejected program",
@@ -216,6 +801,15 @@
     },
     {
       "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/emitter.ts:597:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/emitter.ts:602:26",
+      "reason": "a value of type never[] seen as string[], which can write string where never is read",
+      "text": "src/compiler/emitter.ts:602:26: Adamic 0.1 refuses a value of type never[] seen as string[], which can write string where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
       "unit": "src/compiler/emitter.ts:1211:1",
       "phase": "refusal_scan",
       "kind": "Refused",
@@ -270,12 +864,39 @@
     },
     {
       "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/parser.ts:1437:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/parser.ts:1616:69",
+      "reason": "a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read",
+      "text": "src/compiler/parser.ts:1616:69: Adamic 0.1 refuses a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
       "unit": "src/compiler/program.ts:1515:1",
       "phase": "refusal_scan",
       "kind": "Refused",
       "where": "src/compiler/program.ts:2972:42",
       "reason": "a value of type SourceFile seen as SourceFileLike, which can write readonly number[] | undefined where readonly number[] is read",
       "text": "src/compiler/program.ts:2972:42: Adamic 0.1 refuses a value of type SourceFile seen as SourceFileLike, which can write readonly number[] | undefined where readonly number[] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/program.ts:1515:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/program.ts:3396:50",
+      "reason": "a value of type never[] seen as (Identifier | StringLiteral)[], which can write Identifier | StringLiteral where never is read",
+      "text": "src/compiler/program.ts:3396:50: Adamic 0.1 refuses a value of type never[] seen as (Identifier | StringLiteral)[], which can write Identifier | StringLiteral where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/program.ts:1515:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/program.ts:3401:49",
+      "reason": "a value of type never[] seen as string[], which can write string where never is read",
+      "text": "src/compiler/program.ts:3401:49: Adamic 0.1 refuses a value of type never[] seen as string[], which can write string where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
     },
     {
       "measurement": "measured on a checker-rejected program",
@@ -381,6 +1002,24 @@
       "unit": "src/compiler/transformers/es2015.ts:488:1",
       "phase": "refusal_scan",
       "kind": "Refused",
+      "where": "src/compiler/transformers/es2015.ts:3611:48",
+      "reason": "a value of type never[] seen as VariableDeclaration[], which can write VariableDeclaration where never is read",
+      "text": "src/compiler/transformers/es2015.ts:3611:48: Adamic 0.1 refuses a value of type never[] seen as VariableDeclaration[], which can write VariableDeclaration where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/transformers/es2015.ts:488:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/transformers/es2015.ts:3633:48",
+      "reason": "a value of type never[] seen as VariableDeclaration[], which can write VariableDeclaration where never is read",
+      "text": "src/compiler/transformers/es2015.ts:3633:48: Adamic 0.1 refuses a value of type never[] seen as VariableDeclaration[], which can write VariableDeclaration where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/transformers/es2015.ts:488:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
       "where": "src/compiler/transformers/es2015.ts:4186:68",
       "reason": "a value of type MethodDeclaration seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
       "text": "src/compiler/transformers/es2015.ts:4186:68: Adamic 0.1 refuses a value of type MethodDeclaration seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
@@ -438,6 +1077,15 @@
       "where": "src/compiler/transformers/ts.ts:2479:21",
       "reason": "a value of type ImportEqualsDeclaration seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
       "text": "src/compiler/transformers/ts.ts:2479:21: Adamic 0.1 refuses a value of type ImportEqualsDeclaration seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/tsbuildPublic.ts:608:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/tsbuildPublic.ts:629:42",
+      "reason": "a value of type never[] seen as Diagnostic[], which can write Diagnostic where never is read",
+      "text": "src/compiler/tsbuildPublic.ts:629:42: Adamic 0.1 refuses a value of type never[] seen as Diagnostic[], which can write Diagnostic where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
     },
     {
       "measurement": "measured on a checker-rejected program",
@@ -567,6 +1215,42 @@
     }
   ],
   "added": [
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/binder.ts:509:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/binder.ts:3089:136",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/binder.ts:3089:136: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/binder.ts:509:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/binder.ts:3093:87",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/binder.ts:3093:87: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:22454:106",
+      "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+      "text": "src/compiler/checker.ts:22454:106: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/checker.ts:1486:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/checker.ts:36133:110",
+      "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+      "text": "src/compiler/checker.ts:36133:110: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+    },
     {
       "measurement": "measured on a checker-rejected program",
       "unit": "src/compiler/checker.ts:1486:1",
@@ -903,7 +1587,7 @@
       "why": "Provide a proven upcast or a runtime-checkable discriminated or nominal downcast.",
       "writable_value_view": false,
       "main_before": 3552,
-      "main_after": 3552,
+      "main_after": 3549,
       "status": "outside writable-value-view implementation; type-only feasibility not audited",
       "sites": [
         {
@@ -1727,7 +2411,7 @@
           "phase": "refusal_scan"
         },
         {
-          "where": "src/compiler/binder.ts:3089:79",
+          "where": "src/compiler/binder.ts:3089:136",
           "unit": "src/compiler/binder.ts:509:1",
           "phase": "refusal_scan"
         },
@@ -1737,7 +2421,7 @@
           "phase": "refusal_scan"
         },
         {
-          "where": "src/compiler/binder.ts:3093:67",
+          "where": "src/compiler/binder.ts:3093:87",
           "unit": "src/compiler/binder.ts:509:1",
           "phase": "refusal_scan"
         },
@@ -9463,21 +10147,6 @@
         },
         {
           "where": "src/compiler/checker.ts:38412:17",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:38426:31",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:38458:38",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:38493:38",
           "unit": "src/compiler/checker.ts:1486:1",
           "phase": "refusal_scan"
         },
@@ -18692,8 +19361,8 @@
       "why": "Preserve writable-view invariance: use a compatible readonly contract, an explicit source type, or a proved fresh copy.",
       "writable_value_view": true,
       "main_before": 93,
-      "main_after": 93,
-      "status": "retained; no completed no-write or truthful-source proof",
+      "main_after": 86,
+      "status": "partially adapted; remaining sites retained",
       "sites": [
         {
           "where": "src/compiler/checker.ts:2515:15",
@@ -18781,7 +19450,7 @@
           "phase": "refusal_scan"
         },
         {
-          "where": "src/compiler/checker.ts:22454:90",
+          "where": "src/compiler/checker.ts:22454:106",
           "unit": "src/compiler/checker.ts:1486:1",
           "phase": "refusal_scan"
         },
@@ -18806,7 +19475,7 @@
           "phase": "refusal_scan"
         },
         {
-          "where": "src/compiler/checker.ts:36133:94",
+          "where": "src/compiler/checker.ts:36133:110",
           "unit": "src/compiler/checker.ts:1486:1",
           "phase": "refusal_scan"
         },
@@ -19033,41 +19702,6 @@
         {
           "where": "src/compiler/checker.ts:53573:29",
           "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/commandLineParser.ts:2444:21",
-          "unit": "src/compiler/commandLineParser.ts:2437:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/commandLineParser.ts:2498:29",
-          "unit": "src/compiler/commandLineParser.ts:2478:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/commandLineParser.ts:2503:29",
-          "unit": "src/compiler/commandLineParser.ts:2478:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/commandLineParser.ts:2506:29",
-          "unit": "src/compiler/commandLineParser.ts:2478:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/commandLineParser.ts:2551:33",
-          "unit": "src/compiler/commandLineParser.ts:2478:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/commandLineParser.ts:2584:25",
-          "unit": "src/compiler/commandLineParser.ts:2478:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/commandLineParser.ts:2587:25",
-          "unit": "src/compiler/commandLineParser.ts:2478:1",
           "phase": "refusal_scan"
         },
         {
@@ -19477,140 +20111,9 @@
       "why": "Preserve writable-view invariance: use a compatible readonly contract, an explicit source type, or a proved fresh copy.",
       "writable_value_view": true,
       "main_before": 26,
-      "main_after": 26,
-      "status": "retained; no completed no-write or truthful-source proof",
-      "sites": [
-        {
-          "where": "src/compiler/checker.ts:14202:51",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:18030:48",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:18032:46",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:18055:48",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:18056:45",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:19271:154",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:23654:126",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:23655:203",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:24444:63",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:24473:66",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:25743:46",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:25745:52",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:25757:38",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:25757:68",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:27381:67",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:27382:63",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:27388:65",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:27437:96",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:32531:63",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:32540:45",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:32540:70",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:38426:32",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:38458:39",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:38493:39",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:41421:88",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:41427:44",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        }
-      ]
+      "main_after": 0,
+      "status": "removed on current main",
+      "sites": []
     },
     {
       "reason": "a type predicate whose return is not proven (return expression is not a trusted check on node)",
@@ -22171,8 +22674,8 @@
       "why": "Preserve writable-view invariance: use a compatible readonly contract, an explicit source type, or a proved fresh copy.",
       "writable_value_view": true,
       "main_before": 12,
-      "main_after": 12,
-      "status": "retained; no completed no-write or truthful-source proof",
+      "main_after": 11,
+      "status": "partially adapted; remaining sites retained",
       "sites": [
         {
           "where": "src/compiler/checker.ts:5371:54",
@@ -22211,11 +22714,6 @@
         },
         {
           "where": "src/compiler/checker.ts:24925:64",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:31303:91",
           "unit": "src/compiler/checker.ts:1486:1",
           "phase": "refusal_scan"
         },
@@ -22316,8 +22814,8 @@
       "why": "Preserve writable-view invariance: use a compatible readonly contract, an explicit source type, or a proved fresh copy.",
       "writable_value_view": true,
       "main_before": 15,
-      "main_after": 15,
-      "status": "retained; no completed no-write or truthful-source proof",
+      "main_after": 12,
+      "status": "partially adapted; remaining sites retained",
       "sites": [
         {
           "where": "src/compiler/checker.ts:13759:81",
@@ -22331,11 +22829,6 @@
         },
         {
           "where": "src/compiler/checker.ts:14317:57",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:14338:37",
           "unit": "src/compiler/checker.ts:1486:1",
           "phase": "refusal_scan"
         },
@@ -22381,16 +22874,6 @@
         },
         {
           "where": "src/compiler/checker.ts:17920:44",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:36844:53",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:36864:57",
           "unit": "src/compiler/checker.ts:1486:1",
           "phase": "refusal_scan"
         }
@@ -23538,8 +24021,8 @@
       "why": "Preserve writable-view invariance: use a compatible readonly contract, an explicit source type, or a proved fresh copy.",
       "writable_value_view": true,
       "main_before": 9,
-      "main_after": 9,
-      "status": "retained; no completed no-write or truthful-source proof",
+      "main_after": 7,
+      "status": "partially adapted; remaining sites retained",
       "sites": [
         {
           "where": "src/compiler/checker.ts:49736:24",
@@ -23559,16 +24042,6 @@
         {
           "where": "src/compiler/checker.ts:49751:20",
           "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/commandLineParser.ts:2280:59",
-          "unit": "src/compiler/commandLineParser.ts:2277:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/parser.ts:1616:69",
-          "unit": "src/compiler/parser.ts:1437:1",
           "phase": "refusal_scan"
         },
         {
@@ -23657,8 +24130,8 @@
       "why": "Preserve writable-view invariance: use a compatible readonly contract, an explicit source type, or a proved fresh copy.",
       "writable_value_view": true,
       "main_before": 15,
-      "main_after": 15,
-      "status": "retained; no completed no-write or truthful-source proof",
+      "main_after": 9,
+      "status": "partially adapted; remaining sites retained",
       "sites": [
         {
           "where": "src/compiler/builder.ts:2044:49",
@@ -23673,31 +24146,6 @@
         {
           "where": "src/compiler/builder.ts:2214:31",
           "unit": "src/compiler/builder.ts:1673:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:21771:58",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:21802:58",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:22424:50",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:22454:50",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:36133:54",
-          "unit": "src/compiler/checker.ts:1486:1",
           "phase": "refusal_scan"
         },
         {
@@ -23729,11 +24177,6 @@
           "where": "src/compiler/program.ts:2894:24",
           "unit": "src/compiler/program.ts:1515:1",
           "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/tsbuildPublic.ts:629:42",
-          "unit": "src/compiler/tsbuildPublic.ts:608:1",
-          "phase": "refusal_scan"
         }
       ]
     },
@@ -23747,19 +24190,9 @@
       "why": "Preserve writable-view invariance: use a compatible readonly contract, an explicit source type, or a proved fresh copy.",
       "writable_value_view": true,
       "main_before": 8,
-      "main_after": 8,
-      "status": "retained; no completed no-write or truthful-source proof",
+      "main_after": 4,
+      "status": "partially adapted; remaining sites retained",
       "sites": [
-        {
-          "where": "src/compiler/checker.ts:12129:36",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:12143:47",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
         {
           "where": "src/compiler/checker.ts:13314:61",
           "unit": "src/compiler/checker.ts:1486:1",
@@ -23776,17 +24209,7 @@
           "phase": "refusal_scan"
         },
         {
-          "where": "src/compiler/checker.ts:19848:41",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
           "where": "src/compiler/checker.ts:22977:93",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:41700:45",
           "unit": "src/compiler/checker.ts:1486:1",
           "phase": "refusal_scan"
         }
@@ -24464,30 +24887,9 @@
       "why": "Preserve writable-view invariance: use a compatible readonly contract, an explicit source type, or a proved fresh copy.",
       "writable_value_view": true,
       "main_before": 4,
-      "main_after": 4,
-      "status": "retained; no completed no-write or truthful-source proof",
-      "sites": [
-        {
-          "where": "src/compiler/checker.ts:49673:48",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:49674:53",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:49675:54",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/checker.ts:49676:51",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        }
-      ]
+      "main_after": 0,
+      "status": "removed on current main",
+      "sites": []
     },
     {
       "reason": "an unproven predicate argument for parameter predicate (argument \"isModifier\")",
@@ -24802,14 +25204,9 @@
       "why": "Preserve writable-view invariance: use a compatible readonly contract, an explicit source type, or a proved fresh copy.",
       "writable_value_view": true,
       "main_before": 4,
-      "main_after": 4,
-      "status": "retained; no completed no-write or truthful-source proof",
+      "main_after": 3,
+      "status": "partially adapted; remaining sites retained",
       "sites": [
-        {
-          "where": "src/compiler/checker.ts:1925:42",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        },
         {
           "where": "src/compiler/checker.ts:1929:39",
           "unit": "src/compiler/checker.ts:1486:1",
@@ -26214,20 +26611,9 @@
       "why": "Preserve writable-view invariance: use a compatible readonly contract, an explicit source type, or a proved fresh copy.",
       "writable_value_view": true,
       "main_before": 2,
-      "main_after": 2,
-      "status": "retained; no completed no-write or truthful-source proof",
-      "sites": [
-        {
-          "where": "src/compiler/transformers/es2015.ts:3611:48",
-          "unit": "src/compiler/transformers/es2015.ts:488:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/transformers/es2015.ts:3633:48",
-          "unit": "src/compiler/transformers/es2015.ts:488:1",
-          "phase": "refusal_scan"
-        }
-      ]
+      "main_after": 0,
+      "status": "removed on current main",
+      "sites": []
     },
     {
       "reason": "a value of type never[] seen as string[], which can write string where never is read",
@@ -26239,17 +26625,12 @@
       "why": "Preserve writable-view invariance: use a compatible readonly contract, an explicit source type, or a proved fresh copy.",
       "writable_value_view": true,
       "main_before": 14,
-      "main_after": 14,
-      "status": "retained; no completed no-write or truthful-source proof",
+      "main_after": 12,
+      "status": "partially adapted; remaining sites retained",
       "sites": [
         {
           "where": "src/compiler/builderState.ts:502:63",
           "unit": "src/compiler/builderState.ts:100:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/emitter.ts:602:26",
-          "unit": "src/compiler/emitter.ts:597:1",
           "phase": "refusal_scan"
         },
         {
@@ -26284,11 +26665,6 @@
         },
         {
           "where": "src/compiler/program.ts:3361:53",
-          "unit": "src/compiler/program.ts:1515:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/program.ts:3401:49",
           "unit": "src/compiler/program.ts:1515:1",
           "phase": "refusal_scan"
         },
@@ -31709,16 +32085,11 @@
       "why": "Preserve writable-view invariance: use a compatible readonly contract, an explicit source type, or a proved fresh copy.",
       "writable_value_view": true,
       "main_before": 2,
-      "main_after": 2,
-      "status": "retained; no completed no-write or truthful-source proof",
+      "main_after": 1,
+      "status": "partially adapted; remaining sites retained",
       "sites": [
         {
           "where": "src/compiler/program.ts:3360:59",
-          "unit": "src/compiler/program.ts:1515:1",
-          "phase": "refusal_scan"
-        },
-        {
-          "where": "src/compiler/program.ts:3396:50",
           "unit": "src/compiler/program.ts:1515:1",
           "phase": "refusal_scan"
         }
@@ -31734,15 +32105,9 @@
       "why": "Preserve writable-view invariance: use a compatible readonly contract, an explicit source type, or a proved fresh copy.",
       "writable_value_view": true,
       "main_before": 1,
-      "main_after": 1,
-      "status": "retained; no completed no-write or truthful-source proof",
-      "sites": [
-        {
-          "where": "src/compiler/binder.ts:3089:48",
-          "unit": "src/compiler/binder.ts:509:1",
-          "phase": "refusal_scan"
-        }
-      ]
+      "main_after": 0,
+      "status": "removed on current main",
+      "sites": []
     },
     {
       "reason": "a value of type never[] seen as (readonly (Identifier | StringLiteral)[])[], which can write readonly (Identifier | StringLiteral)[] where never is read",
@@ -31754,15 +32119,9 @@
       "why": "Preserve writable-view invariance: use a compatible readonly contract, an explicit source type, or a proved fresh copy.",
       "writable_value_view": true,
       "main_before": 1,
-      "main_after": 1,
-      "status": "retained; no completed no-write or truthful-source proof",
-      "sites": [
-        {
-          "where": "src/compiler/checker.ts:51586:36",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        }
-      ]
+      "main_after": 0,
+      "status": "removed on current main",
+      "sites": []
     },
     {
       "reason": "a value of type never[] seen as BindingElement[], which can write BindingElement where never is read",
@@ -31774,15 +32133,9 @@
       "why": "Preserve writable-view invariance: use a compatible readonly contract, an explicit source type, or a proved fresh copy.",
       "writable_value_view": true,
       "main_before": 1,
-      "main_after": 1,
-      "status": "retained; no completed no-write or truthful-source proof",
-      "sites": [
-        {
-          "where": "src/compiler/checker.ts:49677:69",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        }
-      ]
+      "main_after": 0,
+      "status": "removed on current main",
+      "sites": []
     },
     {
       "reason": "a value of type never[] seen as ClassElement[], which can write ClassElement where never is read",
@@ -31814,15 +32167,9 @@
       "why": "Preserve writable-view invariance: use a compatible readonly contract, an explicit source type, or a proved fresh copy.",
       "writable_value_view": true,
       "main_before": 1,
-      "main_after": 1,
-      "status": "retained; no completed no-write or truthful-source proof",
-      "sites": [
-        {
-          "where": "src/compiler/binder.ts:1375:35",
-          "unit": "src/compiler/binder.ts:509:1",
-          "phase": "refusal_scan"
-        }
-      ]
+      "main_after": 0,
+      "status": "removed on current main",
+      "sites": []
     },
     {
       "reason": "a value of type never[] seen as JSDocImportTag[], which can write JSDocImportTag where never is read",
@@ -31834,15 +32181,9 @@
       "why": "Preserve writable-view invariance: use a compatible readonly contract, an explicit source type, or a proved fresh copy.",
       "writable_value_view": true,
       "main_before": 1,
-      "main_after": 1,
-      "status": "retained; no completed no-write or truthful-source proof",
-      "sites": [
-        {
-          "where": "src/compiler/binder.ts:3093:42",
-          "unit": "src/compiler/binder.ts:509:1",
-          "phase": "refusal_scan"
-        }
-      ]
+      "main_after": 0,
+      "status": "removed on current main",
+      "sites": []
     },
     {
       "reason": "a value of type never[] seen as SymbolTable[], which can write SymbolTable where never is read",
@@ -31854,15 +32195,9 @@
       "why": "Preserve writable-view invariance: use a compatible readonly contract, an explicit source type, or a proved fresh copy.",
       "writable_value_view": true,
       "main_before": 1,
-      "main_after": 1,
-      "status": "retained; no completed no-write or truthful-source proof",
-      "sites": [
-        {
-          "where": "src/compiler/checker.ts:5753:44",
-          "unit": "src/compiler/checker.ts:1486:1",
-          "phase": "refusal_scan"
-        }
-      ]
+      "main_after": 0,
+      "status": "removed on current main",
+      "sites": []
     },
     {
       "reason": "a value of type never[] seen as Symbol[] | undefined, which can write Symbol where never is read",

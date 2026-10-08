@@ -8,10 +8,11 @@ const assert = require('node:assert/strict');
 const ts = require(process.env.CENSUS_TYPESCRIPT || 'typescript');
 assert.equal(ts.version, '6.0.3');
 const args = process.argv.slice(2);
-const name = args.includes('--node-flags') ? 'node-flags' : 'text-range';
-assert(args.every(a => ['--node-flags', '--mutant'].includes(a)));
+const name = args.includes('--generic-storage') ? 'generic-storage' : args.includes('--node-flags') ? 'node-flags' : 'text-range';
+assert(args.every(a => ['--node-flags', '--generic-storage', '--mutant'].includes(a)));
 let source = fs.readFileSync(path.join(__dirname, `language-questions/${name}.a`), 'utf8');
-if (args.includes('--mutant')) source = name === 'text-range' ?
+if (args.includes('--mutant')) source = name === 'generic-storage' ?
+    source.replace('wide.file = undefined;', 'wide.file = original.file;') : name === 'text-range' ?
     source.replace('(range as TextRange).pos = pos;', '(range as TextRange).pos = 0;') :
     source.replace('(node as Mutable<Node>).flags |= 1;', '(node as Mutable<Node>).flags |= 0;');
 const file = path.resolve('/unit71-witness/main.ts');
@@ -30,4 +31,4 @@ assert.equal(program.emit().emitSkipped, false);
 const output = [];
 vm.runInNewContext(javascript, { console: { log: value => output.push(value) } });
 assert.deepEqual(output, ['1']);
-console.log(JSON.stringify({ diagnostics: 0, promised_type: 0, output, source_write: name === 'text-range' ? 'utilities.ts:10645:5' : 'binder.ts:1113:17' }, null, 2));
+console.log(JSON.stringify({ diagnostics: 0, promised_type: name === 'generic-storage' ? 'SourceFile' : 0, output, source_write: name === 'generic-storage' ? 'generic-storage.a:12' : name === 'text-range' ? 'utilities.ts:10645:5' : 'binder.ts:1113:17' }, null, 2));

@@ -76,15 +76,34 @@ function inspectInitializer(node) {
 }
 inspectInitializer(factory);
 if (initializers !== 1) throw new Error('SourceFile cache initialization changed');
-const families = require('./type-plans.cjs')(program, tree, [require('./diagnostics.json')], edits);
+const families = require('./type-plans.cjs')(program, tree, [require('./diagnostics.json'), require('./tuples.json'), require('./empty-arrays.json')], edits);
 // Complete every audit before changing any source. Preserve all other bytes.
 for (const [file] of edits) if (fs.readFileSync(file.fileName, 'utf8') !== file.text)
     throw new Error(`source changed during audit: ${file.fileName}`);
+const prepared = new Map();
+const runtimeFingerprint = require('./type-plans.cjs').fingerprint;
+function forbiddenCounts(node) {
+    const counts = [0, 0];
+    function visit(n) {
+        if (n.kind === ts.SyntaxKind.AnyKeyword) counts[0]++;
+        if (n.kind === ts.SyntaxKind.UnknownKeyword) counts[1]++;
+        ts.forEachChild(n, visit);
+    }
+    visit(node);
+    return counts;
+}
 for (const [file, positions] of edits) {
     let text = file.text;
     for (const edit of positions.sort((a, b) => b.start - a.start))
         text = text.slice(0, edit.start) + edit.text + text.slice(edit.end);
-    fs.writeFileSync(file.fileName, text);
+    const proposed = ts.createSourceFile(file.fileName, text, ts.ScriptTarget.ES2024, true);
+    if (runtimeFingerprint(file) !== runtimeFingerprint(proposed))
+        throw new Error(`adaptation changes runtime syntax: ${file.fileName}`);
+    const beforeCounts = forbiddenCounts(file), afterCounts = forbiddenCounts(proposed);
+    if (afterCounts.some((n, i) => n > beforeCounts[i]))
+        throw new Error(`adaptation adds any or unknown: ${file.fileName}`);
+    prepared.set(file, text);
 }
+for (const [file, text] of prepared) fs.writeFileSync(file.fileName, text);
 console.log(JSON.stringify({ typescript: ts.version, files: edits.size,
     families, caches: cacheRecords, parameters: records.map(({ node, ...record }) => record) }, null, 2));
