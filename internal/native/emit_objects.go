@@ -223,7 +223,7 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 		references = append(references, strconv.FormatBool(fieldTypes[index].IsReference()))
 	}
 	fields := fieldNames
-	key := strings.Join(names, ",") + "|" + strings.Join(references, ",")
+	key := strings.Join(names, ",") + "|" + fmt.Sprint(fieldTypes)
 	for _, method := range methods {
 		key += fmt.Sprintf("|%s=%d", method.Name, method.Function)
 	}

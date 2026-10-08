@@ -1,0 +1,9 @@
+interface Item { readonly name: string; }
+interface Holder { member: true | Item | undefined; }
+const holder: Holder = { member: { name: 'kept' } };
+function replace(): void { holder.member = true; }
+if (holder.member !== undefined && holder.member !== true) {
+    console.log(holder.member.name);
+    replace();
+    console.log(holder.member.name);
+}

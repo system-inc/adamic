@@ -1,0 +1,15 @@
+interface Item { readonly name: string; }
+interface Holder { member: true | Item | undefined; }
+function put(holder: Holder, member: true | Item | undefined): void {
+    holder.member = member;
+}
+function show(holder: Holder): string {
+    const member = holder.member;
+    return member === undefined ? 'missing' : member === true ? 'true' : member.name;
+}
+const holder: Holder = { member: true };
+console.log(show(holder));
+put(holder, { name: 'node'.repeat(2) });
+console.log(show(holder));
+put(holder, undefined);
+console.log(show(holder));

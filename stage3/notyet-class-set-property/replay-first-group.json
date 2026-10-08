@@ -1,0 +1,64 @@
+[
+  {
+    "site": "method",
+    "exit": 0,
+    "findings": [
+      {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:1543:17",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1544:5",
+        "reason": "replacing a represented method at runtime"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1545:5",
+        "reason": "replacing a represented method at runtime"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1546:12",
+        "reason": "reading map"
+      }
+    ],
+    "log": "/tmp/adamic-class-set-property-after1-method.log"
+  },
+  {
+    "site": "method2",
+    "exit": 0,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/sys.ts:1382:5",
+        "reason": "replacing a represented method at runtime"
+      }
+    ],
+    "log": "/tmp/adamic-class-set-property-after1-method2.log"
+  },
+  {
+    "site": "node",
+    "exit": 1,
+    "findings": [],
+    "log": "/tmp/adamic-class-set-property-after1-node.log"
+  },
+  {
+    "site": "node2",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/utilities.ts:8987:48",
+        "reason": "a BinaryExpression with a value and a boolean"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/utilities.ts:8998:13",
+        "reason": "a declaration directly in a case (wrap the case in a block)"
+      }
+    ],
+    "log": "/tmp/adamic-class-set-property-after1-node2.log"
+  }
+]

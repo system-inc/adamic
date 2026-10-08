@@ -1,0 +1,8 @@
+const first = { count: 1, value(): number { return this.count; } };
+const second = { count: 5, value(): number { return this.count; } };
+console.log(`${first.value()} ${second.value()}`);
+const replacement = 3;
+first.value = () => replacement;
+console.log(`${first.value()} ${second.value()}`);
+first.value = () => 7;
+console.log(`${first.value()} ${second.value()}`);

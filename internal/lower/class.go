@@ -412,7 +412,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		}
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	}
-	if member := l.checker.GetSymbolAtLocation(target); member != nil && member.Flags&ast.SymbolFlagsMethod != 0 {
+	if member := l.checker.GetSymbolAtLocation(target); member != nil && member.Flags&ast.SymbolFlagsMethod != 0 && !l.literalMethodSlot(target) {
 		return nil, l.notYet(target, "replacing a represented method at runtime")
 	}
 	object, err := l.expression(target.AsPropertyAccessExpression().Expression)

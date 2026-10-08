@@ -1,0 +1,52 @@
+[
+  {
+    "mutant": "method-slot",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-method-slot.log"
+  },
+  {
+    "mutant": "method-write-not-read",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-method-write-not-read.log"
+  },
+  {
+    "mutant": "union-storage",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-union-storage.log"
+  },
+  {
+    "mutant": "union-read",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-union-read.log"
+  },
+  {
+    "mutant": "union-narrow-check",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-union-narrow-check.log"
+  },
+  {
+    "mutant": "union-shape-type",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-union-shape-type.log"
+  },
+  {
+    "mutant": "union-own-read",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-union-own-read.log"
+  },
+  {
+    "mutant": "union-object-tag",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-union-object-tag.log"
+  },
+  {
+    "mutant": "union-optional-slot",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-union-optional-slot.log"
+  },
+  {
+    "mutant": "union-optional-receiver",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-union-optional-receiver.log"
+  }
+]
