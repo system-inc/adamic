@@ -21,7 +21,7 @@ stage3/drivers/scanner/run.sh /tmp/scanner-proof > /tmp/scanner-proof.log 2>&1
 ```
 
 The output directory must be new. The runner builds a scratch copy of the apply
-pipeline with adaptations 00, 10, 50 and 51. Adaptation 20 is deliberately excluded
+pipeline with adaptations 00, 10, 42, 50 and 51. Adaptation 20 is deliberately excluded
 per the October 7 instruction. apply.sh still constructs the tree and measures
 the patch set. The runner regenerates diagnostics after adaptation 10 changes
 the generator's type import. `--tree <already-applied-tree>` reuses an existing
@@ -62,7 +62,7 @@ bash stage3/drivers/scanner/run.sh OUTPUT --tree SLICE --inputs FIXED_CORPUS \
   --compiler INTEGRATED_COMPILER > scanner.log 2>&1
 ```
 
-The helper selects 52-57, 59, 81, 82 and 85. Current readiness bc9f5d7 closes
+The helper applies permanent 42, then selects 52-57, 59, 81, 82 and 85. Current readiness bc9f5d7 closes
 58's literal-initializer workaround; numeric enums ec67b02 close 80, 83, 84 and
 the proposed 86. Those legacy plans and results remain historical evidence.
 56 remains selected: eef541e admits proven assertion syntax but the original

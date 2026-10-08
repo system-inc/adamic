@@ -10,7 +10,7 @@ import { panic, programArguments, readTextFile } from 'adamic';
 // Both passes use the same input corpus and a fresh scanner per pass.
 for (const skipTrivia of [true, false]) {
     const scanner = createScanner(ScriptTarget.Latest, skipTrivia);
-    scanner.setOnError((message, length, arg0) => {
+    scanner.setOnError((message, length, arg0: string | number | undefined) => {
         console.log(`error\t${message.code}\t${message.category}\t${scanner.getTextPos()}\t${length}\t${JSON.stringify(message.message)}\t${JSON.stringify(arg0 ?? null)}`);
     });
     for (const path of programArguments()) {

@@ -1,3 +1,21 @@
+## October 8: scanner-owned any sites removed
+
+Permanent adaptation 42 types the private diagnostic payload as string | number
+and keyword storage as Map<string, KeywordSyntaxKind>. The own driver callback
+uses string | number | undefined. The three preceding landing-base observations
+10, 12 and 14 are gone at their respective discovery checkpoints. Restoring
+each original annotation/inference reproduces its exact any diagnostic.
+
+The real native scanner still stops at corePublic.ts:9:5 in split 0 and 1.
+Discovery controls now reach string/number concatenation, untyped entry-pair
+lowering after the MapLike placeholder, and union JSON.stringify in the driver.
+These are compiler work; the map observation remains placeholder-dependent.
+All Node comparisons retain 509,014 skipped-trivia tokens and the full coverage
+dump. No native scanner binary or runtime timing is available.
+
+See [adaptation 42](../../adapt/42-scanner-any/REPORT.md) for main/42 lane and
+public declaration proof, and [native checkpoints](evidence/scanner-any/REPLAY.md).
+
 ## October 8: landing compiler measured alone after 44 combined-merge conflicts
 
 Fresh scratch uses cloud/land-area-next 28285421, containing compiler area-next
