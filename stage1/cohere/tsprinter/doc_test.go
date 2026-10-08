@@ -27,6 +27,7 @@ func documentCorpus(t *testing.T) (string, string, string) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	planCorpus(t, directory+"/docs.txt")
 	return directory + "/docs.txt", string(answers), directory + "/docs.json"
 }
 func TestDocumentsAgainstGoAndPrettier(t *testing.T) {
@@ -35,7 +36,7 @@ func TestDocumentsAgainstGoAndPrettier(t *testing.T) {
 	port, _ := filepath.Abs("docMain.ts")
 	compare := func(name string, result run) {
 		if result.exitCode != 0 || len(result.stderr) > 0 || string(result.stdout) != want {
-			t.Fatalf("%s exit %d stderr %s diff %s", name, result.exitCode, result.stderr, firstDifference(string(result.stdout), want))
+			t.Fatalf("%s exit %d stderr %s diff %s", name, result.exitCode, result.stderr, corpusDifference(t, cases, string(result.stdout), want))
 		}
 	}
 	compare("Node", onNode(t, port, cases))
