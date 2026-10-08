@@ -332,11 +332,14 @@
     "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
     "read": "map.sourcesContent[raw.sourceIndex]",
     "receiver": "array of string or null",
-    "source": "const map: { readonly sourcesContent: (string | null)[] } = { sourcesContent: @VALUES@ }; const raw = { sourceIndex: 0 };\nconst value: string | null = map.sourcesContent[raw.sourceIndex];\nconsole.log(`${value}`);\n",
+    "source": "const map: { readonly sourcesContent: (string | null)[] } = { sourcesContent: @VALUES@ }; const raw = { sourceIndex: 0 };\nconst value: string | null = map.sourcesContent[raw.sourceIndex];\nconsole.log(String(value === null));\nconsole.log(String(value === undefined));\nconsole.log(String(value == null));\nconsole.log(typeof value);\nconsole.log(String(value));\nconsole.log(value);\n",
     "present": "[\"7\"]",
     "absent": "[]",
     "nullPresent": "[null]",
-    "blocked": false
+    "blocked": false,
+    "wantPresent": "false\nfalse\nfalse\nstring\n7\n7\n",
+    "wantAbsent": "false\ntrue\ntrue\nundefined\nundefined\nundefined\n",
+    "wantNull": "true\nfalse\ntrue\nobject\nnull\nnull\n"
   },
   {
     "id": "D170",

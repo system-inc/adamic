@@ -1,8 +1,8 @@
-Built probes for all 27 corrected ledger rows: 22 dense read shapes proven, 5 representation refusals.
-Commits: original series through c019ca20; corrected scope d22099f0; D151 investigation recorded in this commit.
-Commands: corrected census, complete witness suite, filtered oracle and vet pass; outputs below.
-Mutants: 22 erased guards caught, including new D170 exit 0 with undefined stdout; D107 UBSan exit 1.
-Not covered: 4 record rows awaiting representation, nullable D151, 22 hole variants, whole-program compilation and full gate.
+Built witnesses for all 27 assigned rows: 23 dense reads proven, including D151 nullable strings; 4 record rows blocked.
+Commits: representation eff7e8e9, indexed guards 27b06da3; D151 observation and runtime-mutant completion in this commit.
+Commands: touched packages, complete witness suite, 30 filtered Node oracle fixtures, vet, census and diff check pass.
+Mutants: 23 erased site guards caught; actual runtime null-sentinel helper changed to NULL is caught by both nullable controls and D151.
+Not covered: D119/D129/D130/D131 record representation, 23 hole variants, other reference-kind sentinels, whole-program build and full repository gate.
 
 ## Scope and assumptions
 
@@ -354,3 +354,90 @@ Commands: focused guard suite (1.613s), focused D151 witness (7.347s) and
 `go test ./stage3/stricter-options -count=1 -timeout 5m` (5.778s), all pass.
 Logs are committed as nullable-step2*.log. Current totals: 23 dense rows proven,
 4 record rows blocked (D119, D129, D130, D131), 23 hole variants blocked.
+
+
+## Nullable strings, step 3: D151 complete
+
+D151 keeps `(string | null)[]`, the nested sourcesContent receiver and the
+raw.sourceIndex property index. Its witness now explicitly prints === null,
+=== undefined, == null, typeof, String(value) and direct console output.
+Source Node's ["7"] control prints false/false/false/string/7/7; [null] prints
+true/false/true/object/null/null; [] prints
+false/true/true/undefined/undefined/undefined. JS and native release and
+ASan/UBSan match both present controls. For [] all backends stop at the read
+with empty stdout, exit 70 and exact stderr:
+`adamic: panic: indexed read is absent: <witness-path>:2:30` plus newline.
+The existing CLI assertion verifies checked indexed-presence=1, trusted=0,
+and the independently computed read position; IR agrees.
+
+Two real runtime mutants are caught:
+
+* Erase the single indexed panic: D151's native sanitized binary exits 0 and
+  prints Node's undefined observations, failing the required named exit-70
+  stop. The generic presence fixture additionally runs this mutant in both
+  release and sanitized native builds, with the same result.
+* In an isolated copy of the runtime archive, remove nullable.o and recompile
+  nullable.c with `adamic_reference_null(adamic_kind_string)` returning NULL.
+  The generated program is unchanged. Under ASan/UBSan the general three-state
+  control exits 0 with incorrect null/undefined classifications and output,
+  failing its byte-for-byte Node assertion. D151's in-range null control
+  incorrectly stops with exit 70 at its guard, failing its Node exit-0 result.
+  Both mutants compile successfully. Runtime cache and repository files are
+  untouched by the mutant; only temporary archive/object files change.
+
+Extra representation controls cover reverse and negated null comparisons,
+null == null and undefined == null, actual empty and "null" strings,
+a runtime-built string, normal ??, and optional string length. Optional length
+uses the same null helper so null?.length stays undefined, rather than reading
+the sentinel's payload. Nullable-only values pass into a string | null |
+undefined parameter through a function without conversion. All these controls
+match Node in both backends, including native release and sanitizers.
+
+Runtime review location: `internal/native/runtime/nullable.c` contains the
+single private static `adamic_null_string` declaration/definition. Its immortal
+header has reference count zero. No string-producing operation returns that
+address. The common kind-based identity helper is adamic_reference_null;
+shared declarations are in adamic.h. Native null emission and comparisons go
+through internal/native/nullable.go, not a string-only case in the expression
+emitter. Other reference kinds retain their existing representation pending
+z00sxvc's nullable-reference generalization.
+
+The original five blocked rows now stand as follows:
+
+| Row | Current state and dependency |
+|---|---|
+| D119 | Blocked: nested record/index-signature representation and presence checks from stricter-indexed-c, then witness and mutant |
+| D129 | Blocked: record of string arrays representation from stricter-indexed-c, then witness and mutant |
+| D130 | Blocked: same record representation, then individually observed witness and mutant |
+| D131 | Blocked: same record representation, then individually observed witness and mutant |
+| D151 | Resolved: sentinel decision implemented, null and string controls proven, absent read checked, both mutants caught |
+
+Fetched stricter-indexed-c again: FETCH_HEAD is still f5a2212c and its diff from
+390af985 contains only its three witness/report files, no compiler representation.
+There is no record implementation to merge yet. All 27 rows are assessed,
+23 dense shapes proven, 4 record rows blocked, 23 additional hole variants
+explicitly refused, and 0 rows remaining unassessed.
+
+Final validation (all output logged, no test output piped):
+
+```sh
+go test ./internal/lower ./internal/ir ./internal/native ./internal/javascript ./stage3/stricter-indexed-d ./stage3/stricter-options -count=1 -timeout 10m
+go test ./internal/lower ./stage3/stricter-indexed-d -count=1 -timeout 10m -v
+go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(indexing|string_index|narrowed_reads|narrowed_numbers|unions|typeof.*|regexp.*)\.a$' -count=1 -timeout 8m -v
+go test ./stage3/stricter-indexed-d -run '^TestNullableString' -count=1 -timeout 3m -v
+go test ./stage3/stricter-indexed-d -run '^TestLedgerWitnesses/D151$' -count=1 -timeout 3m -v
+go vet ./internal/lower ./internal/ir ./internal/native ./internal/javascript ./stage3/stricter-indexed-d
+python3 stage3/stricter-indexed-d/census.py
+git diff --check
+```
+
+All pass. The broad package run includes native's complete package (135.851s),
+lower (32.366s), IR (25.063s), this unit (95.961s), stricter-options (17.306s)
+and JS (no standalone tests). After comparison edge-case fixes, lower passes
+again in 19.507s and the complete unit in 56.217s, rerunning all 23 site mutants.
+After strengthening the runtime mutant, nullable controls pass in 2.460s and
+D151 passes in 4.650s. The 30 filtered oracle fixtures pass in 0.636s using the
+worker cache; release and sanitized native and backend observations agree.
+Census retains exact metadata for 27 rows with zero missing/extra. Vet and diff
+check are clean. The whole repository gate remains unrun. Final logs are
+preserved under evidence/nullable-final*.log.
