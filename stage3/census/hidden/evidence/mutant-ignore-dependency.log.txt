@@ -1,0 +1,14 @@
+test_dependency_skip_exposes_no_expression_body (__main__.Arithmetic.test_dependency_skip_exposes_no_expression_body) ... FAIL
+
+======================================================================
+FAIL: test_dependency_skip_exposes_no_expression_body (__main__.Arithmetic.test_dependency_skip_exposes_no_expression_body)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/hidden/test_hidden.py", line 83, in test_dependency_skip_exposes_no_expression_body
+    self.assertEqual(total(rows, stock), 17, 'dependency body counted once even without a declaration unit')
+AssertionError: 0 != 17 : dependency body counted once even without a declaration unit
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

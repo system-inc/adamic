@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/hidden/audit.py", line 101, in <module>
+    assert entry['start_line'] == data[:entry['start']].count(b'\n') + 1, 'top ten start line'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: top ten start line

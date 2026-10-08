@@ -1,0 +1,41 @@
+function swapCase(s: string): string {
+ return s.replace(/\w/g, ch => {
+  const up = ch.toUpperCase();
+  return ch === up ? ch.toLowerCase() : up;
+ });
+}
+console.log(swapCase('AbC_09.ts'));
+console.log('!ab-ab'.replace(/(a)(b)/g, (match: string, first: string, second: string, offset: number, input: string) => `${match}:${first}:${second}:${offset}:${input}`));
+console.log('ab'.replace(/(?<first>a)(?<second>b)/, (match: string, first: string, second: string, offset: number, input: string, groups: { readonly first: string; readonly second: string } | undefined) => `${match}:${first}:${second}:${offset}:${input}:${groups?.first ?? 'missing'}:${groups?.second ?? 'missing'}`));
+console.log('b'.replace(/(a)?b/, (match: string, first: string | undefined, offset: number) => `${match}:${first ?? 'absent'}:${offset}`));
+console.log('ab ab'.replaceAll(/ab/g, (match: string) => match.toUpperCase()));
+console.log('ab'.replace(/a/, () => 17));
+console.log('ab'.replace(/a/, () => false));
+console.log('ab'.replace(/a/, () => '$&'));
+console.log('😀a'.replace(/(?:)/gu, (match: string, offset: number) => `${offset}`));
+const global = /a/g;
+global.lastIndex = 99;
+console.log('aa'.replace(global, (match: string, offset: number) => {
+ console.log(`${offset}:${global.lastIndex}`);
+ global.lastIndex = 7;
+ return match.toUpperCase();
+}));
+console.log(`${global.lastIndex}`);
+const sticky = /a/y;
+sticky.lastIndex = 1;
+console.log('ba'.replace(sticky, (match: string) => { console.log(`${sticky.lastIndex}`); return match.toUpperCase(); }));
+console.log(`${sticky.lastIndex}`);
+sticky.lastIndex = 0;
+console.log('ba'.replace(sticky, (match: string) => match.toUpperCase()));
+console.log(`${sticky.lastIndex}`);
+console.log('ab'.replace(/(a)(b)/, (match: string, ...groups: (string | number | undefined)[]) => `${match}:${groups.length}:${String(groups[0])}:${String(groups[1])}:${String(groups[2])}:${String(groups[3])}`));
+console.log('ab'.replace(/a/, () => {}));
+console.log('ab'.replace(/a/, () => undefined));
+console.log('ab'.replace(/a/, () => null));
+const both = /a/gy;
+both.lastIndex = 9;
+console.log('aab'.replace(both, (match: string, offset: number) => `${offset}:${match}`));
+console.log(`${both.lastIndex}`);
+console.log('ab'.replace(/(?<first>a)(b)/, (match: string, ...values: (string | number | { readonly first: string } | undefined)[]) => `${match}:${values.length}`));
+console.log('aa'.replace(/a/g, (match: string, offset: string | number) => `${match}:${String(offset)}`));
+console.log('aa'.replace(/a/g, (match: string, offset: number): string | number | undefined => offset === 0 ? match.toUpperCase() : undefined));

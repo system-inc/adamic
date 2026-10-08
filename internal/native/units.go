@@ -378,7 +378,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	}
 	defer os.RemoveAll(directory)
 	if library == "" {
-		library, err = RuntimeLibrary("", options)
+		library, err = RuntimeLibraryForSource("", source, options)
 		if err != nil {
 			return err
 		}

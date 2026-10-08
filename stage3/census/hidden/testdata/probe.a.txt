@@ -1,0 +1,7 @@
+export function diagnosed(): void {
+    const wrong: number = "checker rejects this";
+    function clean(): number { return 7; }
+    function failed(): void { var old = 1; }
+}
+declare function external(): number;
+export function signature(value: number = external()): void { console.log("body not entered"); }
