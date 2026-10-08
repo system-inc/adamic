@@ -13,7 +13,7 @@ body = original[start:end]
 logs = Path('/tmp/notyet-overloads-mutants')
 logs.mkdir(exist_ok=True)
 mutants = [
-    ('additional-binder-refusal', 'declaredTypes, servedTypes := overload.TypeParameters(), implementation.TypeParameters()', 'declaredTypes, servedTypes := overload.TypeParameters(), implementation.TypeParameters(); if len(servedTypes) > len(declaredTypes) { return l.notYet(overload, label + \" with additional implementation type parameters\") }', 'TestNativeAgreesWithNode/internal/oracle/testdata/(census_overload_binders|overload_(array_to_|ancestor_directory|leading_comment_range|trailing_comment_range|original_node))'),
+    ('additional-binder-refusal', 'declaredTypes, servedTypes := overload.TypeParameters(), implementation.TypeParameters()', 'declaredTypes, servedTypes := overload.TypeParameters(), implementation.TypeParameters(); if len(servedTypes) > len(declaredTypes) { return l.notYet(overload, label + \" with additional implementation type parameters\") }', 'TestNativeAgreesWithNode/internal/oracle/testdata/(census_overload_binders|overload_(array_to_|ancestor_directory|leading_comment_range|trailing_comment_range|original_node|mutate_map|resolve_type_names|sort_deduplicate))'),
     ('parameter-inference', 'l.inferTypes(l.checker.GetTypeAtLocation(parameter), l.checker.GetTypeAtLocation(overload.Parameters()[index]), inferred)', '_ = parameter // missing parameter inference', 'TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_binders'),
     ('bottom-witness', 'l.checker.GetNonNullableType(l.checker.GetUndefinedType())', 'l.checker.GetTypeAtLocation(implementation.Name())', 'TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_binders'),
     ('constraint', 'constraint != nil && !l.censusRelated(targets[index], constraint)', 'false && constraint != nil && !l.censusRelated(targets[index], constraint)', 'TestCensusOverloadBinderGuards/constraint'),
@@ -32,6 +32,12 @@ for name, before, after, test in mutants:
         if result.returncode == 0 or '--- FAIL:' not in output or '[build failed]' in output:
             raise SystemExit(f'{name}: survived or failed outside the intended test: {output}')
         print(f'{name}: caught by {test}; exit {result.returncode}', flush=True)
+        if name == 'additional-binder-refusal':
+            fixtures = ['array_to_map', 'array_to_multimap', 'array_to_numeric_map', 'ancestor_directory', 'leading_comment_range', 'trailing_comment_range', 'original_node', 'mutate_map', 'mutate_map_skipping_new', 'resolve_type_names', 'sort_deduplicate']
+            if any('overload_' + fixture + '.a' not in output for fixture in fixtures):
+                raise SystemExit('additional-binder-refusal: a per-kind fixture survived')
+            print('additional-binder-refusal: all 11 executable per-kind fixtures caught it', flush=True)
+
     finally:
         source.write_text(original)
 
