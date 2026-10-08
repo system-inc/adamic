@@ -40,7 +40,7 @@
 # (--fix-forward <gate-logs ref>). Main never carries two unexplained reds.
 #
 # usage: cloud/integration/push-main.sh [--defer-velocity] [--meter-run <commit>] [--correct-minutes <new_main> <minutes> "<note>"] [--revert | --fix-forward <red log ref>] <full sha> <gate minutes> <pass> <fail> <skip> "<branches landed>"
-#        cloud/integration/push-main.sh [same options] --fast-gate <gate-logs ref> <full sha> "<branches landed>"
+#        cloud/integration/push-main.sh [same options] --fast-gate <gate-logs ref> [--smoke-list-reviewed] <full sha> "<branches landed>"
 set -euo pipefail
 
 defer=no
@@ -49,6 +49,7 @@ correctMain=""
 correctMinutes=""
 correctNote=""
 fastGate=""
+smokeReviewed=no
 pauseException=""
 while [ "$#" -gt 0 ]; do
 	case "$1" in
@@ -56,6 +57,7 @@ while [ "$#" -gt 0 ]; do
 	--meter-run) meterRun=$2; shift 2 ;;
 	--correct-minutes) correctMain=$2; correctMinutes=$3; correctNote=$4; shift 4 ;;
 	--fast-gate) fastGate=${2#origin/}; shift 2 ;;
+	--smoke-list-reviewed) smokeReviewed=yes; shift ;;
 	--revert) pauseException=revert; shift ;;
 	--fix-forward) pauseException="fix-forward ${2#origin/}"; shift 2 ;;
 	*) break ;;
@@ -142,9 +144,9 @@ machine = fast.get("machine") or {}
 print(fast["base"])
 print("%.2f" % (seconds / 60))
 print(fast["pass"], fast["fail"], fast["skip"])
-print("fast gate %s: %.0f s on %s (%s threads), base %s, %d packages (%s), smoke list %s blob %s" % (
-    log, seconds, machine.get("hostname", "?"), machine.get("nproc", "?"), fast["base"][:8], len(packages),
-    " ".join(packages), fast.get("smoke_list", "?"), str(fast.get("smoke_list_blob", "?"))[:8]))
+print("fast gate %s: %.0f s on %s (%s threads), tools %s, base %s, %d packages (%s), smoke list %s blob %s" % (
+    log, seconds, machine.get("hostname", "?"), machine.get("nproc", "?"), str(fast.get("tools_sha", "?"))[:8],
+    fast["base"][:8], len(packages), " ".join(packages), fast.get("smoke_list", "?"), str(fast.get("smoke_list_blob", "?"))[:8]))
 VERDICT
 	); then
 		echo "refused: the fast gate ${fastGate} doesn't pass ${sha:0:8}: ${verdict}" >&2
@@ -157,6 +159,19 @@ VERDICT
 	if ! git merge-base --is-ancestor "$fastBase" "$sha"; then
 		echo "refused: the fast gate diffed against ${fastBase:0:8}, which ${sha:0:8} doesn't hold, so its touched packages aren't this landing's" >&2
 		exit 1
+	fi
+	# The fast gate reads its smoke list from the gated tree when the tree has one, so a landing could
+	# shrink the set that judges it. The list changes only by a reviewed commit: a landing whose list
+	# differs from main's says so (--smoke-list-reviewed), and the note names it.
+	smokeList=cloud/fast-gate/smoke.txt
+	landingList=$(git rev-parse -q --verify "${sha}:${smokeList}" 2>/dev/null || echo none)
+	mainList=$(git rev-parse -q --verify "origin/main:${smokeList}" 2>/dev/null || echo none)
+	if [ "$landingList" != "$mainList" ]; then
+		if [ "$smokeReviewed" != yes ]; then
+			echo "refused: ${sha:0:8} changes the fast gate's smoke list (${smokeList}: main ${mainList:0:8}, here ${landingList:0:8}), which judges this landing; review the change, then pass --smoke-list-reviewed" >&2
+			exit 1
+		fi
+		fastNote="${fastNote}; smoke list changed by this landing (reviewed), ${mainList:0:8} to ${landingList:0:8}"
 	fi
 	branches="${branches}; ${fastNote}"
 fi
