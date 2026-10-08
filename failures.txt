@@ -1,0 +1,12 @@
+== github.com/system-inc/adamic/cmd/adamic TestWASIRequest (skipped; the census table classes it required-input)
+census: Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.
+=== RUN   TestWASIRequest
+    request_test.go:78: set ADAMIC_ORACLE_WASI=1
+--- SKIP: TestWASIRequest (0.00s)
+
+== github.com/system-inc/adamic/cmd/adamic TestWASIRequestThrows (skipped; the census table classes it required-input)
+census: Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.
+=== RUN   TestWASIRequestThrows
+    request_test.go:153: set ADAMIC_ORACLE_WASI=1
+--- SKIP: TestWASIRequestThrows (0.00s)
+
