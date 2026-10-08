@@ -6,7 +6,8 @@
 Who hears it, from integration's own tables on cloud/merge-tree (cloud/integration/areas.tsv and its
 router, area-route.py, the one auto-area-merge trusts):
   area/<name>    the area's owner, and integration
-  cloud/land-*   integration, and the owner of the area the landing's tip commit names
+  cloud/land-*   integration, and the owner of the area the landing merges (its subject's 'Merge <area>/...')
+                 or names (area/<name>)
   codex/*        the owner of the area integration's router sends the branch to; a held branch goes
                  to integration, who decides holds, and to every @name the hold's note names
   devtools/*     developer tools, except devtools/fast-gate: the gate's own tools branch, gated against main
@@ -99,7 +100,8 @@ def recipients(branch, sha):
             elif branch.startswith('cloud/land-'):
                 names.append(integration)
                 message = git('log', '-1', '--format=%B', sha)
-                for area in re.findall(r'\barea/([a-z0-9-]+)', message):
+                # "Merge compiler/area-next-fixtures at ... onto main": the merged branch's area, then any area/<name>.
+                for area in re.findall(r'^Merge (?:area/)?([a-z0-9-]+)/', message) + re.findall(r'\barea/([a-z0-9-]+)', message):
                     if area in areaOwners:
                         names.append(areaOwners[area])
                         break
