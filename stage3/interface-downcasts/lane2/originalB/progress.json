@@ -1,0 +1,871 @@
+{
+  "base": "70522aa1d73a80e295df608dee44b38414301c97",
+  "observed_worker_tip": "908cafeb42ad01dfcfab2250dbb0454de1a791a7",
+  "order": "Reverse candidate_queue, within the one-read array-field tail. Union-target, tuple, mixed-member and dictionary handoffs conservatively retain their owners.",
+  "inventory_sha256": "fe7b6c6271b5b0353db56bd62b2d6011ffc37bee09e01edb404d9f12d2dc450b",
+  "certified_pairs": 19,
+  "certified_static_reads": 19,
+  "runtime_reachability": "unmeasured",
+  "rows": [
+    {
+      "type_id": 97937,
+      "type": "IncrementalBuildInfo",
+      "field": "semanticDiagnosticsPerFile",
+      "declared_type": "IncrementalBuildInfoDiagnostic[] | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "line": 1564,
+          "column": 17,
+          "start": 68147,
+          "end": 68194,
+          "text": "incrementalBuildInfo.semanticDiagnosticsPerFile"
+        }
+      ],
+      "status": "delegated",
+      "reason": "tuple element contracts; RANKED18-ARRAYS-REPORT.md and tuple reassignment in checked-views-plan.md"
+    },
+    {
+      "type_id": 97937,
+      "type": "IncrementalBuildInfo",
+      "field": "resolvedRoot",
+      "declared_type": "readonly IncrementalBuildInfoResolvedRoot[] | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2406,
+          "column": 35,
+          "start": 113289,
+          "end": 113309,
+          "text": "program.resolvedRoot"
+        }
+      ],
+      "status": "delegated",
+      "reason": "tuple element contracts; RANKED18-ARRAYS-REPORT.md and tuple reassignment in checked-views-plan.md"
+    },
+    {
+      "type_id": 97937,
+      "type": "IncrementalBuildInfo",
+      "field": "fileInfos",
+      "declared_type": "readonly IncrementalMultiFileEmitBuildInfoFileInfo[] | readonly IncrementalBundleEmitBuildInfoFileInfo[]",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2407,
+          "column": 5,
+          "start": 113317,
+          "end": 113334,
+          "text": "program.fileInfos"
+        }
+      ],
+      "status": "already certified",
+      "reason": "joints/MIXED-ARRAYS-REPORT.md"
+    },
+    {
+      "type_id": 97937,
+      "type": "IncrementalBuildInfo",
+      "field": "emitDiagnosticsPerFile",
+      "declared_type": "IncrementalBuildInfoDiagnosticOfFile[] | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "line": 1567,
+          "column": 21,
+          "start": 68307,
+          "end": 68350,
+          "text": "incrementalBuildInfo.emitDiagnosticsPerFile"
+        }
+      ],
+      "status": "delegated",
+      "reason": "tuple element contracts; RANKED18-ARRAYS-REPORT.md and tuple reassignment in checked-views-plan.md"
+    },
+    {
+      "type_id": 97934,
+      "type": "IncrementalBundleEmitBuildInfo",
+      "field": "semanticDiagnosticsPerFile",
+      "declared_type": "IncrementalBuildInfoDiagnostic[] | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2276,
+          "column": 70,
+          "start": 106918,
+          "end": 106954,
+          "text": "buildInfo.semanticDiagnosticsPerFile"
+        }
+      ],
+      "status": "delegated",
+      "reason": "tuple element contracts; RANKED18-ARRAYS-REPORT.md and tuple reassignment in checked-views-plan.md"
+    },
+    {
+      "type_id": 97934,
+      "type": "IncrementalBundleEmitBuildInfo",
+      "field": "fileInfos",
+      "declared_type": "readonly IncrementalBundleEmitBuildInfoFileInfo[]",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2269,
+          "column": 9,
+          "start": 106369,
+          "end": 106388,
+          "text": "buildInfo.fileInfos"
+        }
+      ],
+      "status": "already certified",
+      "reason": "joints/MIXED-ARRAYS-REPORT.md"
+    },
+    {
+      "type_id": 97934,
+      "type": "IncrementalBundleEmitBuildInfo",
+      "field": "emitDiagnosticsPerFile",
+      "declared_type": "IncrementalBuildInfoDiagnosticOfFile[] | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2277,
+          "column": 62,
+          "start": 107019,
+          "end": 107051,
+          "text": "buildInfo.emitDiagnosticsPerFile"
+        }
+      ],
+      "status": "delegated",
+      "reason": "tuple element contracts; RANKED18-ARRAYS-REPORT.md and tuple reassignment in checked-views-plan.md"
+    },
+    {
+      "type_id": 97922,
+      "type": "IncrementalMultiFileEmitBuildInfo",
+      "field": "semanticDiagnosticsPerFile",
+      "declared_type": "IncrementalBuildInfoDiagnostic[] | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2314,
+          "column": 70,
+          "start": 109138,
+          "end": 109174,
+          "text": "buildInfo.semanticDiagnosticsPerFile"
+        }
+      ],
+      "status": "delegated",
+      "reason": "tuple element contracts; RANKED18-ARRAYS-REPORT.md and tuple reassignment in checked-views-plan.md"
+    },
+    {
+      "type_id": 97922,
+      "type": "IncrementalMultiFileEmitBuildInfo",
+      "field": "referencedMap",
+      "declared_type": "IncrementalBuildInfoReferencedMap | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2313,
+          "column": 48,
+          "start": 109017,
+          "end": 109040,
+          "text": "buildInfo.referencedMap"
+        }
+      ],
+      "status": "delegated",
+      "reason": "tuple element contracts; RANKED18-ARRAYS-REPORT.md and tuple reassignment in checked-views-plan.md"
+    },
+    {
+      "type_id": 97922,
+      "type": "IncrementalMultiFileEmitBuildInfo",
+      "field": "fileInfos",
+      "declared_type": "readonly IncrementalMultiFileEmitBuildInfoFileInfo[]",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2290,
+          "column": 9,
+          "start": 107730,
+          "end": 107749,
+          "text": "buildInfo.fileInfos"
+        }
+      ],
+      "status": "already certified",
+      "reason": "joints/MIXED-ARRAYS-REPORT.md"
+    },
+    {
+      "type_id": 97922,
+      "type": "IncrementalMultiFileEmitBuildInfo",
+      "field": "fileIdsList",
+      "declared_type": "readonly (readonly IncrementalBuildInfoFileId[])[] | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2288,
+          "column": 28,
+          "start": 107511,
+          "end": 107532,
+          "text": "buildInfo.fileIdsList"
+        }
+      ],
+      "status": "certified",
+      "reason": "originalB full declaration witnesses"
+    },
+    {
+      "type_id": 97922,
+      "type": "IncrementalMultiFileEmitBuildInfo",
+      "field": "emitSignatures",
+      "declared_type": "readonly IncrementalBuildInfoEmitSignature[] | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2296,
+          "column": 9,
+          "start": 108123,
+          "end": 108147,
+          "text": "buildInfo.emitSignatures"
+        }
+      ],
+      "status": "delegated",
+      "reason": "tuple element contracts; RANKED18-ARRAYS-REPORT.md and tuple reassignment in checked-views-plan.md"
+    },
+    {
+      "type_id": 97922,
+      "type": "IncrementalMultiFileEmitBuildInfo",
+      "field": "emitDiagnosticsPerFile",
+      "declared_type": "IncrementalBuildInfoDiagnosticOfFile[] | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2315,
+          "column": 62,
+          "start": 109239,
+          "end": 109271,
+          "text": "buildInfo.emitDiagnosticsPerFile"
+        }
+      ],
+      "status": "delegated",
+      "reason": "tuple element contracts; RANKED18-ARRAYS-REPORT.md and tuple reassignment in checked-views-plan.md"
+    },
+    {
+      "type_id": 94919,
+      "type": "ParsedCommandLine | undefined",
+      "field": "projectReferences",
+      "declared_type": "readonly ProjectReference[] | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/program.ts",
+          "line": 1861,
+          "column": 38,
+          "start": 88795,
+          "end": 88832,
+          "text": "parent?.commandLine.projectReferences"
+        }
+      ],
+      "status": "code needed",
+      "reason": "originalB full declaration witnesses"
+    },
+    {
+      "type_id": 93573,
+      "type": "SortedAndCanonicalizedMutableFileSystemEntries",
+      "field": "directories",
+      "declared_type": "string[]",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/watchUtilities.ts",
+          "line": 245,
+          "column": 17,
+          "start": 9401,
+          "end": 9419,
+          "text": "result.directories"
+        }
+      ],
+      "status": "certified",
+      "reason": "originalB full declaration witnesses"
+    },
+    {
+      "type_id": 92175,
+      "type": "JSDocImplementsTag | JSDocAugmentsTag",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 4172,
+          "column": 26,
+          "start": 177445,
+          "end": 177456,
+          "text": "tag.comment"
+        }
+      ],
+      "status": "delegated",
+      "reason": "mixed string/array member selection belongs to lane 4b"
+    },
+    {
+      "type_id": 78012,
+      "type": "ClassLikeDeclaration | TypeLiteralNode | InterfaceDeclaration",
+      "field": "members",
+      "declared_type": "NodeArray<TypeElement> | NodeArray<ClassElement>",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 53398,
+          "column": 39,
+          "start": 3102825,
+          "end": 3102844,
+          "text": "node.parent.members"
+        }
+      ],
+      "status": "delegated scheduling assumption",
+      "reason": "preserve the recorded union-target admission handoff; no completion credit"
+    },
+    {
+      "type_id": 76415,
+      "type": "MethodSignature | FunctionLikeDeclaration",
+      "field": "typeParameters",
+      "declared_type": "NodeArray<TypeParameterDeclaration> | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 52386,
+          "column": 43,
+          "start": 3047392,
+          "end": 3047411,
+          "text": "node.typeParameters"
+        }
+      ],
+      "status": "delegated scheduling assumption",
+      "reason": "preserve the recorded union-target admission handoff; no completion credit"
+    },
+    {
+      "type_id": 76415,
+      "type": "MethodSignature | FunctionLikeDeclaration",
+      "field": "parameters",
+      "declared_type": "NodeArray<ParameterDeclaration>",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 52387,
+          "column": 39,
+          "start": 3047461,
+          "end": 3047476,
+          "text": "node.parameters"
+        }
+      ],
+      "status": "delegated scheduling assumption",
+      "reason": "preserve the recorded union-target admission handoff; no completion credit"
+    },
+    {
+      "type_id": 75764,
+      "type": "UnionType | IntersectionType",
+      "field": "types",
+      "declared_type": "Type[]",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27216,
+          "column": 36,
+          "start": 1616308,
+          "end": 1616364,
+          "text": "(constraintType as (UnionType | IntersectionType)).types"
+        }
+      ],
+      "status": "delegated scheduling assumption",
+      "reason": "preserve the recorded union-target admission handoff; no completion credit"
+    },
+    {
+      "type_id": 64997,
+      "type": "BuildOptions",
+      "field": "<dynamic-key>",
+      "declared_type": "CompilerOptionsValue",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "line": 334,
+          "column": 75,
+          "start": 12398,
+          "end": 12423,
+          "text": "buildOptions[option.name]"
+        }
+      ],
+      "status": "delegated",
+      "reason": "dictionary storage and rich element selection are assigned elsewhere"
+    },
+    {
+      "type_id": 46373,
+      "type": "FunctionExpression | ArrowFunction",
+      "field": "typeParameters",
+      "declared_type": "NodeArray<TypeParameterDeclaration> | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/expressionToTypeNode.ts",
+          "line": 972,
+          "column": 52,
+          "start": 51624,
+          "end": 51645,
+          "text": "fnNode.typeParameters"
+        }
+      ],
+      "status": "delegated scheduling assumption",
+      "reason": "preserve the recorded union-target admission handoff; no completion credit"
+    },
+    {
+      "type_id": 46373,
+      "type": "FunctionExpression | ArrowFunction",
+      "field": "parameters",
+      "declared_type": "NodeArray<ParameterDeclaration>",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/expressionToTypeNode.ts",
+          "line": 973,
+          "column": 28,
+          "start": 51685,
+          "end": 51702,
+          "text": "fnNode.parameters"
+        }
+      ],
+      "status": "delegated scheduling assumption",
+      "reason": "preserve the recorded union-target admission handoff; no completion credit"
+    },
+    {
+      "type_id": 46333,
+      "type": "CaseOrDefaultClause | Block | ModuleBlock",
+      "field": "statements",
+      "declared_type": "NodeArray<Statement>",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 10866,
+          "column": 20,
+          "start": 433737,
+          "end": 433801,
+          "text": "(parent as Block | CaseOrDefaultClause | ModuleBlock).statements"
+        }
+      ],
+      "status": "delegated scheduling assumption",
+      "reason": "preserve the recorded union-target admission handoff; no completion credit"
+    },
+    {
+      "type_id": 46301,
+      "type": "ObjectLiteralExpressionBase<ObjectLiteralElement>",
+      "field": "properties",
+      "declared_type": "NodeArray<ObjectLiteralElement>",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 10850,
+          "column": 20,
+          "start": 432767,
+          "end": 432839,
+          "text": "(parent as ObjectLiteralExpressionBase<ObjectLiteralElement>).properties"
+        }
+      ],
+      "status": "certified",
+      "reason": "originalB full declaration witnesses"
+    },
+    {
+      "type_id": 46299,
+      "type": "NamedExports | TupleTypeNode | ArrayLiteralExpression | NamedImports | CommaListExpression",
+      "field": "elements",
+      "declared_type": "NodeArray<TypeNode | NamedTupleMember> | NodeArray<Expression> | NodeArray<ImportSpecifier> | NodeArray<ExportSpecifier>",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 10847,
+          "column": 20,
+          "start": 432544,
+          "end": 432655,
+          "text": "(parent as TupleTypeNode | ArrayLiteralExpression | CommaListExpression | NamedImports | NamedExports).elements"
+        }
+      ],
+      "status": "delegated scheduling assumption",
+      "reason": "preserve the recorded union-target admission handoff; no completion credit"
+    },
+    {
+      "type_id": 40723,
+      "type": "HeritageClause | undefined",
+      "field": "types",
+      "declared_type": "NodeArray<ExpressionWithTypeArguments>",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 5220,
+          "column": 16,
+          "start": 203493,
+          "end": 203514,
+          "text": "heritageClause?.types"
+        }
+      ],
+      "status": "certified",
+      "reason": "originalB full declaration witnesses"
+    },
+    {
+      "type_id": 39178,
+      "type": "JsxSelfClosingElement | JsxOpeningElement",
+      "field": "typeArguments",
+      "declared_type": "NodeArray<TypeNode> | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 10861,
+          "column": 39,
+          "start": 433489,
+          "end": 433556,
+          "text": "(parent as JsxOpeningElement | JsxSelfClosingElement).typeArguments"
+        }
+      ],
+      "status": "delegated scheduling assumption",
+      "reason": "preserve the recorded union-target admission handoff; no completion credit"
+    },
+    {
+      "type_id": 38740,
+      "type": "ObjectLiteralExpression | undefined",
+      "field": "properties",
+      "declared_type": "NodeArray<ObjectLiteralElementLike>",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 3096,
+          "column": 20,
+          "start": 112050,
+          "end": 112075,
+          "text": "objectLiteral?.properties"
+        }
+      ],
+      "status": "certified",
+      "reason": "originalB full declaration witnesses"
+    },
+    {
+      "type_id": 38482,
+      "type": "CallExpression | TaggedTemplateExpression",
+      "field": "typeArguments",
+      "declared_type": "NodeArray<TypeNode> | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 2876,
+          "column": 37,
+          "start": 102915,
+          "end": 102982,
+          "text": "(parent as CallExpression | TaggedTemplateExpression).typeArguments"
+        }
+      ],
+      "status": "delegated scheduling assumption",
+      "reason": "preserve the recorded union-target admission handoff; no completion credit"
+    },
+    {
+      "type_id": 36897,
+      "type": "EnumDeclaration | ModuleDeclaration",
+      "field": "modifiers",
+      "declared_type": "NodeArray<ModifierLike> | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/transformers/ts.ts",
+          "line": 2025,
+          "column": 24,
+          "start": 85162,
+          "end": 85176,
+          "text": "node.modifiers"
+        }
+      ],
+      "status": "delegated scheduling assumption",
+      "reason": "preserve the recorded union-target admission handoff; no completion credit"
+    },
+    {
+      "type_id": 36241,
+      "type": "JSDoc | undefined",
+      "field": "tags",
+      "declared_type": "NodeArray<JSDocTag> | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 52171,
+          "column": 119,
+          "start": 3035568,
+          "end": 3035599,
+          "text": "getJSDocRoot(node.parent)?.tags"
+        }
+      ],
+      "status": "certified",
+      "reason": "originalB full declaration witnesses"
+    },
+    {
+      "type_id": 11834,
+      "type": "SyntaxList",
+      "field": "_children",
+      "declared_type": "readonly Node[]",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeChildren.ts",
+          "line": 20,
+          "column": 16,
+          "start": 541,
+          "end": 571,
+          "text": "(node as SyntaxList)._children"
+        }
+      ],
+      "status": "certified",
+      "reason": "originalB full declaration witnesses"
+    },
+    {
+      "type_id": 11560,
+      "type": "ParsedCommandLine | undefined",
+      "field": "fileNames",
+      "declared_type": "string[]",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "line": 2163,
+          "column": 81,
+          "start": 97493,
+          "end": 97550,
+          "text": "getCachedParsedConfigFile(state, resolvedPath)?.fileNames"
+        }
+      ],
+      "status": "certified",
+      "reason": "originalB full declaration witnesses"
+    },
+    {
+      "type_id": 11164,
+      "type": "WatchOptions",
+      "field": "excludeFiles",
+      "declared_type": "string[] | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/sys.ts",
+          "line": 935,
+          "column": 37,
+          "start": 38542,
+          "end": 38563,
+          "text": "options?.excludeFiles"
+        }
+      ],
+      "status": "certified",
+      "reason": "originalB full declaration witnesses"
+    },
+    {
+      "type_id": 11164,
+      "type": "WatchOptions",
+      "field": "excludeDirectories",
+      "declared_type": "string[] | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/sys.ts",
+          "line": 936,
+          "column": 37,
+          "start": 38655,
+          "end": 38682,
+          "text": "options?.excludeDirectories"
+        }
+      ],
+      "status": "certified",
+      "reason": "originalB full declaration witnesses"
+    },
+    {
+      "type_id": 11111,
+      "type": "TsConfigSourceFile | undefined",
+      "field": "extendedSourceFiles",
+      "declared_type": "string[] | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/watchUtilities.ts",
+          "line": 414,
+          "column": 40,
+          "start": 16622,
+          "end": 16662,
+          "text": "options?.configFile?.extendedSourceFiles"
+        }
+      ],
+      "status": "certified",
+      "reason": "originalB full declaration witnesses"
+    },
+    {
+      "type_id": 10862,
+      "type": "SignatureDeclaration | JSDocSignature | undefined",
+      "field": "parameters",
+      "declared_type": "NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[]",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 36469,
+          "column": 31,
+          "start": 2160627,
+          "end": 2160668,
+          "text": "closestSignature?.declaration?.parameters"
+        }
+      ],
+      "status": "certified",
+      "reason": "originalB full declaration witnesses"
+    },
+    {
+      "type_id": 10856,
+      "type": "ConditionalRoot",
+      "field": "aliasTypeArguments",
+      "declared_type": "Type[] | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 19889,
+          "column": 93,
+          "start": 1163308,
+          "end": 1163331,
+          "text": "root.aliasTypeArguments"
+        }
+      ],
+      "status": "certified",
+      "reason": "originalB full declaration witnesses"
+    },
+    {
+      "type_id": 10808,
+      "type": "TupleType",
+      "field": "typeParameters",
+      "declared_type": "TypeParameter[] | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 13313,
+          "column": 38,
+          "start": 773210,
+          "end": 773229,
+          "text": "type.typeParameters"
+        }
+      ],
+      "status": "certified",
+      "reason": "originalB full declaration witnesses"
+    },
+    {
+      "type_id": 10788,
+      "type": "InterfaceTypeWithDeclaredMembers",
+      "field": "typeParameters",
+      "declared_type": "TypeParameter[] | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 14118,
+          "column": 44,
+          "start": 817755,
+          "end": 817776,
+          "text": "source.typeParameters"
+        }
+      ],
+      "status": "certified",
+      "reason": "originalB full declaration witnesses"
+    },
+    {
+      "type_id": 10497,
+      "type": "SetAccessorDeclaration | undefined",
+      "field": "parameters",
+      "declared_type": "NodeArray<ParameterDeclaration>",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 3586,
+          "column": 22,
+          "start": 134508,
+          "end": 134531,
+          "text": "setAccessor?.parameters"
+        }
+      ],
+      "status": "certified",
+      "reason": "originalB full declaration witnesses"
+    },
+    {
+      "type_id": 10371,
+      "type": "Signature | undefined",
+      "field": "typeParameters",
+      "declared_type": "readonly TypeParameter[] | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 16064,
+          "column": 52,
+          "start": 934367,
+          "end": 934417,
+          "text": "getSignatureOfTypeTag(declaration)?.typeParameters"
+        }
+      ],
+      "status": "certified",
+      "reason": "originalB full declaration witnesses"
+    },
+    {
+      "type_id": 9854,
+      "type": "ConfigFileSpecs | undefined",
+      "field": "validatedFilesSpec",
+      "declared_type": "readonly string[] | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/watch.ts",
+          "line": 418,
+          "column": 10,
+          "start": 16482,
+          "end": 16529,
+          "text": "configFile?.configFileSpecs?.validatedFilesSpec"
+        }
+      ],
+      "status": "certified",
+      "reason": "originalB full declaration witnesses"
+    },
+    {
+      "type_id": 9853,
+      "type": "ConfigFileSpecs",
+      "field": "validatedIncludeSpecsBeforeSubstitution",
+      "declared_type": "readonly string[] | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/watch.ts",
+          "line": 442,
+          "column": 27,
+          "start": 18083,
+          "end": 18149,
+          "text": "configFile.configFileSpecs.validatedIncludeSpecsBeforeSubstitution"
+        }
+      ],
+      "status": "certified",
+      "reason": "originalB full declaration witnesses"
+    }
+  ],
+  "next_unselected_owned_pair": [
+    "ConfigFileSpecs",
+    "validatedFilesSpecBeforeSubstitution"
+  ],
+  "worker_next_read_rank": 3
+}
