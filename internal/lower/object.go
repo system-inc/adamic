@@ -295,6 +295,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	if l.regexReplacementRestArray(node) {
 		return ir.Union, nil
 	}
+	if element, proven := l.evolvingArrayElement(node); proven {
+		return element, nil
+	}
 	arrayType := l.checker.GetNonNullableType(l.concrete(l.arrayPredicateType(node)))
 	if l.nodeBufferType(arrayType, "Buffer") {
 		return ir.Number, nil
@@ -309,6 +312,15 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		// A fresh [] has no slots yet. Use the same contextual element path as
 		// generic returns; nested literals also have a best-common destination.
 		if len(literal.AsArrayLiteralExpression().Elements.Nodes) == 0 {
+			parent := literal.Parent
+			for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+				parent = parent.Parent
+			}
+			if parent != nil && parent.Kind == ast.KindVariableDeclaration {
+				if element, proven := l.evolvingArrayElement(parent.Name()); proven {
+					return element, nil
+				}
+			}
 			contexts := []*checker.Type{l.checker.GetContextualType(literal, checker.ContextFlagsNone)}
 			child := literal
 			for child.Parent != nil && child.Parent.Kind == ast.KindParenthesizedExpression {

@@ -1,0 +1,8 @@
+function collect(): (string | number)[] {
+    const result = [];
+    result.push(1);
+    console.log((result[0] ?? 0).toString());
+    result.push("owned" + "!");
+    return result;
+}
+console.log(collect().length.toString());
