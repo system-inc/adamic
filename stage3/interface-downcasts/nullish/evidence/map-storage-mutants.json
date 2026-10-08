@@ -1,0 +1,52 @@
+[
+  {
+    "name": "number-box",
+    "caught_by_behavior": true,
+    "log": "map-storage-mutant-number-box.log.gz"
+  },
+  {
+    "name": "boolean-box",
+    "caught_by_behavior": true,
+    "log": "map-storage-mutant-boolean-box.log.gz"
+  },
+  {
+    "name": "number-presence",
+    "caught_by_behavior": true,
+    "log": "map-storage-mutant-number-presence.log.gz"
+  },
+  {
+    "name": "boolean-presence",
+    "caught_by_behavior": true,
+    "log": "map-storage-mutant-boolean-presence.log.gz"
+  },
+  {
+    "name": "number-undefined",
+    "caught_by_behavior": true,
+    "log": "map-storage-mutant-number-undefined.log.gz"
+  },
+  {
+    "name": "boolean-undefined",
+    "caught_by_behavior": true,
+    "log": "map-storage-mutant-boolean-undefined.log.gz"
+  },
+  {
+    "name": "reference-ownership",
+    "caught_by_behavior": true,
+    "log": "map-storage-mutant-reference-ownership.log.gz"
+  },
+  {
+    "name": "packed-boolean-field",
+    "caught_by_behavior": true,
+    "log": "map-storage-mutant-packed-boolean-field.log.gz"
+  },
+  {
+    "name": "native-undefined-proof",
+    "caught_by_behavior": true,
+    "log": "map-storage-mutant-native-undefined-proof.log.gz"
+  },
+  {
+    "name": "javascript-undefined-proof",
+    "caught_by_behavior": true,
+    "log": "map-storage-mutant-javascript-undefined-proof.log.gz"
+  }
+]

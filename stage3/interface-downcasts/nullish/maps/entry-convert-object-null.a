@@ -1,0 +1,11 @@
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly value:ReadonlyMap<string,({readonly count:number})|null>|null}
+const item:{readonly count:number}={count:7};
+const source=new Map<string,{readonly count:number}>([['key',item]]);
+const raw={kind:'box',value:source};const base:Base=raw;
+function read(node:Target):void{const map=node.value;if(map!==null){console.log(typeof map.get('key'));console.log(typeof map.get('missing'));console.log(String(map.get('key')===item));const current=map.get('key');if(current!==null&&current!==undefined){console.log(String(current.count));}
+for(const value of map.values()){console.log('values:'+typeof value);}
+for(const [key,value] of map){console.log(key+':'+typeof value);}
+const copied=new Map<string,({readonly count:number})|null>(map);console.log('copy:'+typeof copied.get('key'));
+map.forEach(value=>{source.clear();console.log('callback:'+typeof value);});console.log(String(source.size));}}
+read(base as Target);

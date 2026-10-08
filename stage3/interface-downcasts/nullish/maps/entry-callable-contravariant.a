@@ -1,0 +1,6 @@
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly value:ReadonlyMap<string,(value:1)=>number>|null}
+const map=new Map<string,(value:number)=>number>([['key',(value:number)=>value]]);
+const raw={kind:'box',value:map};const base:Base=raw;
+function read(node:Target):void{console.log(typeof node.value);}
+read(base as Target);

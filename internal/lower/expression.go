@@ -581,7 +581,7 @@ func (l *lowering) uncheckedValue(node *ast.Node) (ir.Expression, error) {
 				}
 				message := "union member where the checker narrowed it away: a call since the narrowing put it back"
 				b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
-				read = b.finish("narrowed_union_member", ir.Narrow{Value: held, To: narrowed})
+				read = b.finish("narrowed_union_member", ir.Narrow{Value: held, To: narrowed, Tuple: checker.IsTupleType(l.checker.GetTypeAtLocation(node))})
 			}
 		}
 		if declared := l.result.Locals[local].Type; declared.IsMaybe() {

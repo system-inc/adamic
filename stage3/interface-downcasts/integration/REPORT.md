@@ -1146,3 +1146,16 @@ admission tests run successfully. All 48 new mutants are restored. New queue:
 owner 65d8a138927fe240c4ede0854e9bd00084fd0f16, then newest arrays 257568b0e
 (which carries ranked group four 5c609c010 and fifth through ninth groups).
 Optional-boolean hold remains; no published fix ref was found.
+
+Priority owner retry: fetched newest 706a189c96e21d7fd2115aea268bfa96eef54d43
+(includes requested 65d8a138927fe240c4ede0854e9bd00084fd0f16). Merge is clean,
+but TestMixedUnionCallbackABIIsPending loses both mixed_union_callback and
+mixed_union_callback_variance refusals: got nil (.258s). Restore only the
+ordinary censusCallableSlotless Union guard and the required Map control
+entry-live-mutation.a:5:82 fails with NotYet function value taking
+string | number | null (.047s). The optional-reference conversion follow-up
+still does not scope that callable ABI change. No clean resolution preserves
+both existing refusals and every new Node agreement. Entire owner item is
+left out and merge aborted; no owner code retained. Exact logs are preserved.
+Continue with newest array tip 257568b0eb90669bd0585f04e81f8b1e11039760.
+This is a semantic integration failure, not an automatic approval rejection.
