@@ -1,0 +1,14 @@
+// From TypeScript 6.0.3, src/compiler/factory/nodeTests.ts:322
+// Census reason: a value of type GeneratedIdentifier | GeneratedPrivateIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace
+
+interface EmitNode { autoGenerate?: number | undefined; }
+interface Node { readonly kind: number; emitNode: EmitNode | undefined; }
+interface PrivateIdentifier extends Node { readonly kind: 81; }
+interface GeneratedIdentifier extends Node { readonly emitNode: EmitNode & { autoGenerate: number }; }
+const SyntaxKind = { PrivateIdentifier: 81 } as const;
+export function isPrivateIdentifier(node: Node): node is PrivateIdentifier {
+    return node.kind === SyntaxKind.PrivateIdentifier;
+}
+
+const name: GeneratedIdentifier = { kind: 80, emitNode: { autoGenerate: 7 } };
+console.log(`${isPrivateIdentifier(name)} ${name.emitNode?.autoGenerate}`);

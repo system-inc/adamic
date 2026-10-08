@@ -1,0 +1,18 @@
+// From TypeScript 6.0.3, src/compiler/parser.ts:4286
+// Census reason: a value of type PropertySignature seen as Mutable<PropertySignature>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace
+
+type Mutable<T> = { -readonly [P in keyof T]: T[P] };
+interface Expression { readonly kind: number; }
+interface PropertySignature { readonly pos: number; readonly initializer?: Expression | undefined; }
+const SyntaxKind = { EqualsToken: 64 };
+let currentToken = 64;
+function token(): number { return currentToken; }
+function parseInitializer(): Expression | undefined { return { kind: 9 }; }
+function recover(node: PropertySignature): void {
+            if (token() === SyntaxKind.EqualsToken) (node as Mutable<PropertySignature>).initializer = parseInitializer();
+}
+const node: PropertySignature = { pos: 0 };
+recover(node);
+currentToken = 27;
+recover(node);
+console.log(`${node.pos} ${node.initializer?.kind}`);

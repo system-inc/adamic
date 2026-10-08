@@ -1,0 +1,14 @@
+// From TypeScript 6.0.3, src/compiler/program.ts:3388
+// Census reason: a value of type ModuleName seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace
+
+type Mutable<T> = { -readonly [P in keyof T]: T[P] };
+interface Node { readonly pos: number; parent?: Node | undefined; }
+interface ModuleName extends Node { readonly text: string; }
+interface AmbientModuleDeclaration extends Node { readonly name: ModuleName; }
+function attach(node: AmbientModuleDeclaration): void {
+                    (node.name as Mutable<Node>).parent = node;
+}
+const name: ModuleName = { pos: 0, text: "ambient" };
+const node: AmbientModuleDeclaration = { pos: 0, name };
+attach(node);
+console.log(`${name.parent === node} ${name.pos} ${name.text}`);

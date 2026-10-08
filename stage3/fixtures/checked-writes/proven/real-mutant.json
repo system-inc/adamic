@@ -1,0 +1,122 @@
+{
+  "source_commit": "12fef29628bfda6cf8bec4ba2a326fa4ec4a66d5",
+  "mutation": "add node.emitNode = undefined before the return in isPrivateIdentifier",
+  "observations": [
+    {
+      "mutant": false,
+      "site": 420,
+      "where": "src/compiler/emitter.ts:5461:90",
+      "receiver": "src/compiler/factory/nodeTests.ts:322",
+      "routing": "proven",
+      "member_proofs": [],
+      "diagnostics": [],
+      "classification": "a",
+      "source_expression": "name",
+      "source_expression_where": "src/compiler/emitter.ts:5461:90",
+      "original_type": "GeneratedIdentifier | GeneratedPrivateIdentifier",
+      "receiving_syntax": "CallExpression",
+      "reads": [
+        {
+          "where": "src/compiler/factory/nodeTests.ts:323:12",
+          "operation": "primitive field read",
+          "path": "kind"
+        }
+      ],
+      "writes": [],
+      "aliases": [
+        {
+          "where": "src/compiler/factory/nodeTests.ts:322:37",
+          "name": "node",
+          "path": "",
+          "references": 1
+        }
+      ],
+      "calls": [
+        {
+          "where": "src/compiler/emitter.ts:5461:70",
+          "target": "src/compiler/factory/nodeTests.ts:322:1",
+          "parameter": "src/compiler/factory/nodeTests.ts:322:37",
+          "path": ""
+        }
+      ],
+      "unresolved": [],
+      "steps": 2
+    },
+    {
+      "mutant": true,
+      "site": 420,
+      "where": "src/compiler/emitter.ts:5461:90",
+      "receiver": "src/compiler/factory/nodeTests.ts:322",
+      "routing": "checked",
+      "member_proofs": [
+        {
+          "member": "GeneratedIdentifier",
+          "domain": "EmitNode & { autoGenerate: AutoGenerateInfo; }",
+          "value": "undefined",
+          "compatible": false
+        },
+        {
+          "member": "GeneratedPrivateIdentifier",
+          "domain": "EmitNode & { autoGenerate: AutoGenerateInfo; }",
+          "value": "undefined",
+          "compatible": false
+        }
+      ],
+      "diagnostics": [],
+      "classification": "d",
+      "source_expression": "name",
+      "source_expression_where": "src/compiler/emitter.ts:5461:90",
+      "original_type": "GeneratedIdentifier | GeneratedPrivateIdentifier",
+      "receiving_syntax": "CallExpression",
+      "reads": [
+        {
+          "where": "src/compiler/factory/nodeTests.ts:324:12",
+          "operation": "primitive field read",
+          "path": "kind"
+        }
+      ],
+      "writes": [
+        {
+          "where": "src/compiler/factory/nodeTests.ts:323:5",
+          "path": "emitNode",
+          "operation": "=",
+          "original_domains": [
+            "EmitNode & { autoGenerate: AutoGenerateInfo; }",
+            "EmitNode & { autoGenerate: AutoGenerateInfo; }"
+          ],
+          "written_type": "undefined",
+          "value": "undefined",
+          "compatible": false,
+          "definitely_outside": true,
+          "conditional": false,
+          "original_domain_is_generic_upper_bound": false,
+          "feasible_counterexample": false
+        }
+      ],
+      "aliases": [
+        {
+          "where": "src/compiler/factory/nodeTests.ts:322:37",
+          "name": "node",
+          "path": "",
+          "references": 2
+        }
+      ],
+      "calls": [
+        {
+          "where": "src/compiler/emitter.ts:5461:70",
+          "target": "src/compiler/factory/nodeTests.ts:322:1",
+          "parameter": "src/compiler/factory/nodeTests.ts:322:37",
+          "path": ""
+        }
+      ],
+      "unresolved": [
+        {
+          "where": "src/compiler/factory/nodeTests.ts:323:5",
+          "reason": "incompatible write needs value/branch/union-variant feasibility proof",
+          "expression": "node.emitNode = undefined"
+        }
+      ],
+      "steps": 3
+    }
+  ]
+}

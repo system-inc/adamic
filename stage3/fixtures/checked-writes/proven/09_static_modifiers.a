@@ -1,0 +1,26 @@
+// From TypeScript 6.0.3, src/compiler/parser.ts:7935
+// Census reason: a value of type ClassStaticBlockDeclaration seen as Mutable<ClassStaticBlockDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace
+
+type Mutable<T> = { -readonly [P in keyof T]: T[P] };
+interface ModifierLike { readonly kind: number; }
+type NodeArray<T> = T[];
+interface Block { readonly kind: number; }
+interface ClassStaticBlockDeclaration { readonly pos: number; readonly body: Block; readonly modifiers?: NodeArray<ModifierLike> | undefined; }
+const SyntaxKind = { StaticKeyword: 126 };
+function parseExpectedToken(kind: number): void { }
+function parseClassStaticBlockBody(): Block { return { kind: 242 }; }
+const factory = { createClassStaticBlockDeclaration: (body: Block): ClassStaticBlockDeclaration => ({ pos: -1, body }) };
+function finishNode(node: ClassStaticBlockDeclaration, pos: number): ClassStaticBlockDeclaration { return { ...node, pos }; }
+function withJSDoc(node: ClassStaticBlockDeclaration, hasJSDoc: boolean): ClassStaticBlockDeclaration { return node; }
+    function parseClassStaticBlockDeclaration(pos: number, hasJSDoc: boolean, modifiers: NodeArray<ModifierLike> | undefined): ClassStaticBlockDeclaration {
+        parseExpectedToken(SyntaxKind.StaticKeyword);
+        const body = parseClassStaticBlockBody();
+        const node = withJSDoc(finishNode(factory.createClassStaticBlockDeclaration(body), pos), hasJSDoc);
+        (node as Mutable<ClassStaticBlockDeclaration>).modifiers = modifiers;
+        return node;
+    }
+
+const modifiers: ModifierLike[] = [{ kind: 126 }];
+const node = parseClassStaticBlockDeclaration(0, false, modifiers);
+const absent = parseClassStaticBlockDeclaration(2, false, undefined);
+console.log(`${node.pos} ${node.modifiers === modifiers} ${absent.modifiers?.length}`);

@@ -1,0 +1,162 @@
+[
+  {
+    "file": "01_truthiness.a",
+    "tsc": [
+      "src/compiler/checker.ts:12692"
+    ],
+    "reason": "a value of type TypeNode | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",
+    "node": {
+      "stdout": "8 undefined 0\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/01_truthiness.a:12:16: stage 0 can't lower a BinaryExpression with a value and a value yet\nexit status 1\n"
+    }
+  },
+  {
+    "file": "02_control.a",
+    "tsc": [
+      "src/compiler/checker.ts:11691"
+    ],
+    "reason": "a value of type FlowNode | undefined seen as false | FlowNode | undefined, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read",
+    "node": {
+      "stdout": "1 0 80\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/02_control.a:8:13: stage 0 can't lower a BinaryExpression with a value and a boolean yet\nexit status 1\n"
+    }
+  },
+  {
+    "file": "03_kind_reader.a",
+    "tsc": [
+      "src/compiler/factory/nodeTests.ts:322"
+    ],
+    "reason": "a value of type GeneratedIdentifier | GeneratedPrivateIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",
+    "node": {
+      "stdout": "false 7\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/03_kind_reader.a:10:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on node); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1\n"
+    }
+  },
+  {
+    "file": "04_range_reader.a",
+    "tsc": [
+      "src/compiler/emitter.ts:5110"
+    ],
+    "reason": "a value of type NodeArray<Statement> seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "node": {
+      "stdout": "2 4 7\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/04_range_reader.a:35:33: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\nexit status 1\n"
+    }
+  },
+  {
+    "file": "05_diagnostic_related.a",
+    "tsc": [
+      "src/compiler/utilities.ts:10349"
+    ],
+    "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+    "node": {
+      "stdout": "input.ts 2\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/05_diagnostic_related.a:24:9: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\nexit status 1\n"
+    }
+  },
+  {
+    "file": "06_modifiers_initialize.a",
+    "tsc": [
+      "src/compiler/checker.ts:51498"
+    ],
+    "reason": "a value of type IndexSignatureDeclaration seen as Mutable<IndexSignatureDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "node": {
+      "stdout": "0 2 126\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/06_modifiers_initialize.a:11:72: Adamic 0.1 refuses ||=; write the if\nexit status 1\n"
+    }
+  },
+  {
+    "file": "07_assert_clause.a",
+    "tsc": [
+      "src/compiler/factory/nodeFactory.ts:2645"
+    ],
+    "reason": "a value of type ImportTypeAssertionContainer seen as Mutable<ImportTypeAssertionContainer>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "node": {
+      "stdout": "0 true\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/07_assert_clause.a:11:14: Adamic 0.1 refuses a value of type ImportTypeAssertionContainer seen as Mutable<ImportTypeAssertionContainer>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\nexit status 1\n"
+    }
+  },
+  {
+    "file": "08_property_initializer.a",
+    "tsc": [
+      "src/compiler/parser.ts:4286"
+    ],
+    "reason": "a value of type PropertySignature seen as Mutable<PropertySignature>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "node": {
+      "stdout": "0 9\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/08_property_initializer.a:12:54: Adamic 0.1 refuses a value of type PropertySignature seen as Mutable<PropertySignature>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\nexit status 1\n"
+    }
+  },
+  {
+    "file": "09_static_modifiers.a",
+    "tsc": [
+      "src/compiler/parser.ts:7935"
+    ],
+    "reason": "a value of type ClassStaticBlockDeclaration seen as Mutable<ClassStaticBlockDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "node": {
+      "stdout": "0 true undefined\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/09_static_modifiers.a:19:10: Adamic 0.1 refuses a value of type ClassStaticBlockDeclaration seen as Mutable<ClassStaticBlockDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\nexit status 1\n"
+    }
+  },
+  {
+    "file": "10_module_parent.a",
+    "tsc": [
+      "src/compiler/program.ts:3388"
+    ],
+    "reason": "a value of type ModuleName seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+    "node": {
+      "stdout": "true 0 ambient\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "adamic: /workspace/adamic/stage3/fixtures/checked-writes/proven/10_module_parent.a:9:22: Adamic 0.1 refuses a value of type ModuleName seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\nexit status 1\n"
+    }
+  }
+]

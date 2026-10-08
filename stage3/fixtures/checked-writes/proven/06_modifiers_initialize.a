@@ -1,0 +1,16 @@
+// From TypeScript 6.0.3, src/compiler/checker.ts:51498
+// Census reason: a value of type IndexSignatureDeclaration seen as Mutable<IndexSignatureDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace
+
+type Mutable<T> = { -readonly [P in keyof T]: T[P] };
+interface Modifier { readonly kind: number; }
+type MutableNodeArray<T> = T[];
+interface IndexSignatureDeclaration { readonly pos: number; readonly modifiers?: Modifier[] | undefined; }
+const SyntaxKind = { StaticKeyword: 126 };
+const factory = { createNodeArray: (): Modifier[] => [], createModifier: (kind: number): Modifier => ({ kind }) };
+function initialize(node: IndexSignatureDeclaration): void {
+                            (((node as Mutable<typeof node>).modifiers ||= factory.createNodeArray()) as MutableNodeArray<Modifier>).unshift(factory.createModifier(SyntaxKind.StaticKeyword));
+}
+const node: IndexSignatureDeclaration = { pos: 0 };
+initialize(node);
+initialize(node);
+console.log(`${node.pos} ${node.modifiers?.length} ${node.modifiers?.[0]?.kind}`);
