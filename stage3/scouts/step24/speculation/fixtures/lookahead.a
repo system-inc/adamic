@@ -1,0 +1,66 @@
+// Portions Copyright (c) Microsoft Corporation. MIT license: ../LICENSE.upstream.txt.
+// Trimmed from scanner.ts:3930-3983. These six saved fields are unchanged.
+let pos = 10;
+let fullStartPos = 8;
+let tokenStart = 9;
+let token = 1;
+let tokenValue = "";
+let tokenFlags = 0;
+function speculationHelper<T>(callback: () => T, isLookahead: boolean): T {
+    const savePos = pos;
+    const saveStartPos = fullStartPos;
+    const saveTokenPos = tokenStart;
+    const saveToken = token;
+    const saveTokenValue = tokenValue;
+    const saveTokenFlags = tokenFlags;
+    const result = callback();
+    if (!result || isLookahead) {
+        pos = savePos;
+        fullStartPos = saveStartPos;
+        tokenStart = saveTokenPos;
+        token = saveToken;
+        tokenValue = saveTokenValue;
+        tokenFlags = saveTokenFlags;
+    }
+    return result;
+}
+function lookAhead<T>(callback: () => T): T {
+    return speculationHelper(callback, true);
+}
+function tryParse<T>(callback: () => T): T {
+    return speculationHelper(callback, false);
+}
+function nextToken(): number {
+    pos += 1;
+    fullStartPos = pos;
+    tokenStart = pos;
+    token = 2;
+    tokenValue = "next";
+    tokenFlags = 4;
+    return token;
+}
+function snapshot(): string {
+    return `${pos}:${fullStartPos}:${tokenStart}:${token}:${tokenValue}:${tokenFlags}`;
+}
+// parser.ts:5238, 5254-5280: Tristate is represented by its numeric values.
+// False=0, True=1, Unknown=2. Only lexical token production is trimmed.
+function isParenthesizedArrowFunctionExpressionWorker(): number {
+    const first = token;
+    const second = nextToken();
+    if (first === 1 && second === 2) {
+        const third = nextToken();
+        switch (third) {
+            case 3:
+            case 4:
+            case 5:
+                return 1;
+            default:
+                return 0;
+        }
+    }
+    return 2;
+}
+const triState = lookAhead(isParenthesizedArrowFunctionExpressionWorker);
+console.log(`${triState === 0}:${snapshot()}`);
+const yes = lookAhead(() => { nextToken(); return 1; });
+console.log(`${yes === 1}:${snapshot()}`);

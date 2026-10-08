@@ -1,0 +1,2996 @@
+{
+  "pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "typescript": "6.0.3",
+  "files": [
+    {
+      "file": "src/compiler/parser.ts",
+      "bytes": 539685,
+      "sha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f"
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "bytes": 219162,
+      "sha256": "02f9e8f02e234b0e917e753a7b74f975c9b9b95f7f01ee4bc151081ed43dea49"
+    }
+  ],
+  "semanticDiagnostics": [],
+  "counts": {
+    "src/compiler/parser.ts": {
+      "lookAhead": 60,
+      "speculationHelper": 3,
+      "resetTokenState": 4,
+      "tryScan": 2,
+      "tryParse": 20,
+      "scanRange": 1
+    },
+    "src/compiler/scanner.ts": {
+      "scanRange": 1,
+      "speculationHelper": 2,
+      "resetTokenState": 1
+    }
+  },
+  "classifications": {
+    "one proven runtime family": 67,
+    "rewind, void result": 5,
+    "checked result specialization": 22
+  },
+  "rows": [
+    {
+      "site": "src/compiler/parser.ts:1674",
+      "call": "lookAhead",
+      "expression": "lookAhead(() => nextToken() === SyntaxKind.NumericLiteral && nextToken() !== SyntaxKind.ColonToken)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "() => nextToken() === SyntaxKind.NumericLiteral && nextToken() !== SyntaxKind.ColonToken",
+      "callbackSite": "src/compiler/parser.ts:1674",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (lookAhead(() => nextToken() === SyntaxKind.NumericLiteral && nextToken() !== SyntaxKind.ColonToken)) {\r\n                            expression = parsePrefixUnaryExpression() as JsonMinusNumericLiteral;\r\n                        }\r\n                        else {\r\n                            expression = parseObjectLiteralExpression();\r\n                        }"
+    },
+    {
+      "site": "src/compiler/parser.ts:1683",
+      "call": "lookAhead",
+      "expression": "lookAhead(() => nextToken() !== SyntaxKind.ColonToken)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "() => nextToken() !== SyntaxKind.ColonToken",
+      "callbackSite": "src/compiler/parser.ts:1683",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (lookAhead(() => nextToken() !== SyntaxKind.ColonToken)) {\r\n                            expression = parseLiteralNode() as StringLiteral | NumericLiteral;\r\n                            break;\r\n                        }"
+    },
+    {
+      "site": "src/compiler/parser.ts:1889",
+      "call": "speculationHelper",
+      "expression": "speculationHelper(() => {\r\n                const savedContextFlags = contextFlags;\r\n                contextFlags |= NodeFlags.AwaitContext;\r\n                scanner.resetTokenState(nextStatement.pos);\r\n                nextToken();\r\n\r\n                while (token() !== SyntaxKind.EndOfFileToken) {\r\n                    const startPos = scanner.getTokenFullStart();\r\n                    const statement = parseListElement(ParsingContext.SourceElements, parseStatement);\r\n                    statements.push(statement);\r\n                    if (startPos === scanner.getTokenFullStart()) {\r\n                        nextToken();\r\n                    }\r\n\r\n                    if (pos >= 0) {\r\n                        const nonAwaitStatement = sourceFile.statements[pos];\r\n                        if (statement.end === nonAwaitStatement.pos) {\r\n                            // done reparsing this section\r\n                            break;\r\n                        }\r\n                        if (statement.end > nonAwaitStatement.pos) {\r\n                            // we ate into the next statement, so we must reparse it.\r\n                            pos = findNextStatementWithoutAwait(sourceFile.statements, pos + 1);\r\n                        }\r\n                    }\r\n                }\r\n\r\n                contextFlags = savedContextFlags;\r\n            }, SpeculationKind.Reparse)",
+      "result": "void",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "callback": "() => {\r\n                const savedContextFlags = contextFlags;\r\n                contextFlags |= NodeFlags.AwaitContext;\r\n                scanner.resetTokenState(nextStatement.pos);\r\n                nextToken();\r\n\r\n                while (token() !== SyntaxKind.EndOfFileToken) {\r\n                    const startPos = scanner.getTokenFullStart();\r\n                    const statement = parseListElement(ParsingContext.SourceElements, parseStatement);\r\n                    statements.push(statement);\r\n                    if (startPos === scanner.getTokenFullStart()) {\r\n                        nextToken();\r\n                    }\r\n\r\n                    if (pos >= 0) {\r\n                        const nonAwaitStatement = sourceFile.statements[pos];\r\n                        if (statement.end === nonAwaitStatement.pos) {\r\n                            // done reparsing this section\r\n                            break;\r\n                        }\r\n                        if (statement.end > nonAwaitStatement.pos) {\r\n                            // we ate into the next statement, so we must reparse it.\r\n                            pos = findNextStatementWithoutAwait(sourceFile.statements, pos + 1);\r\n                        }\r\n                    }\r\n                }\r\n\r\n                contextFlags = savedContextFlags;\r\n            }",
+      "callbackSite": "src/compiler/parser.ts:1889",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "void",
+      "families": [
+        "undefined"
+      ],
+      "bodyReturns": [],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "speculationHelper(() => {\r\n                const savedContextFlags = contextFlags;\r\n                contextFlags |= NodeFlags.AwaitContext;\r\n                scanner.resetTokenState(nextStatement.pos);\r\n                nextToken();\r\n\r\n                while (token() !== SyntaxKind.EndOfFileToken) {\r\n                    const startPos = scanner.getTokenFullStart();\r\n                    const statement = parseListElement(ParsingContext.SourceElements, parseStatement);\r\n                    statements.push(statement);\r\n                    if (startPos === scanner.getTokenFullStart()) {\r\n                        nextToken();\r\n                    }\r\n\r\n                    if (pos >= 0) {\r\n                        const nonAwaitStatement = sourceFile.statements[pos];\r\n                        if (statement.end === nonAwaitStatement.pos) {\r\n                            // done reparsing this section\r\n                            break;\r\n                        }\r\n                        if (statement.end > nonAwaitStatement.pos) {\r\n                            // we ate into the next statement, so we must reparse it.\r\n                            pos = findNextStatementWithoutAwait(sourceFile.statements, pos + 1);\r\n                        }\r\n                    }\r\n                }\r\n\r\n                contextFlags = savedContextFlags;\r\n            }, SpeculationKind.Reparse);"
+    },
+    {
+      "site": "src/compiler/parser.ts:1892",
+      "call": "resetTokenState",
+      "expression": "scanner.resetTokenState(nextStatement.pos)",
+      "result": "void",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "inferred": "(no callback)",
+      "declared": "(no callback)",
+      "classification": "rewind, void result",
+      "context": "scanner.resetTokenState(nextStatement.pos);"
+    },
+    {
+      "site": "src/compiler/parser.ts:2273",
+      "call": "lookAhead",
+      "expression": "scanner.lookAhead(callback)",
+      "result": "T",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "callback": "callback",
+      "callbackSite": "src/compiler/parser.ts:2256",
+      "declared": "T",
+      "inferred": "T",
+      "families": [
+        "unresolved"
+      ],
+      "bodyReturns": [],
+      "assertions": [],
+      "classification": "checked result specialization",
+      "reason": "unresolved generic or multiple runtime families; keep truthiness separate from result projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "const result = speculationKind !== SpeculationKind.TryParse\r\n            ? scanner.lookAhead(callback)\r\n            : scanner.tryScan(callback);",
+      "localUses": [
+        {
+          "site": "src/compiler/parser.ts:2280",
+          "tests": [
+            "truthiness (!result)",
+            "truthiness (short circuit)",
+            "truthiness (condition)"
+          ],
+          "context": "!result"
+        },
+        {
+          "site": "src/compiler/parser.ts:2288",
+          "tests": [
+            "returned to caller"
+          ],
+          "context": "return result;"
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:2274",
+      "call": "tryScan",
+      "expression": "scanner.tryScan(callback)",
+      "result": "T",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "callback": "callback",
+      "callbackSite": "src/compiler/parser.ts:2256",
+      "declared": "T",
+      "inferred": "T",
+      "families": [
+        "unresolved"
+      ],
+      "bodyReturns": [],
+      "assertions": [],
+      "classification": "checked result specialization",
+      "reason": "unresolved generic or multiple runtime families; keep truthiness separate from result projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "const result = speculationKind !== SpeculationKind.TryParse\r\n            ? scanner.lookAhead(callback)\r\n            : scanner.tryScan(callback);",
+      "localUses": [
+        {
+          "site": "src/compiler/parser.ts:2280",
+          "tests": [
+            "truthiness (!result)",
+            "truthiness (short circuit)",
+            "truthiness (condition)"
+          ],
+          "context": "!result"
+        },
+        {
+          "site": "src/compiler/parser.ts:2288",
+          "tests": [
+            "returned to caller"
+          ],
+          "context": "return result;"
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:2296",
+      "call": "speculationHelper",
+      "expression": "speculationHelper(callback, SpeculationKind.Lookahead)",
+      "result": "T",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "callback",
+      "callbackSite": "src/compiler/parser.ts:2295",
+      "declared": "T",
+      "inferred": "T",
+      "families": [
+        "unresolved"
+      ],
+      "bodyReturns": [],
+      "assertions": [],
+      "classification": "checked result specialization",
+      "reason": "unresolved generic or multiple runtime families; keep truthiness separate from result projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return speculationHelper(callback, SpeculationKind.Lookahead);"
+    },
+    {
+      "site": "src/compiler/parser.ts:2305",
+      "call": "speculationHelper",
+      "expression": "speculationHelper(callback, SpeculationKind.TryParse)",
+      "result": "T",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "callback",
+      "callbackSite": "src/compiler/parser.ts:2304",
+      "declared": "T",
+      "inferred": "T",
+      "families": [
+        "unresolved"
+      ],
+      "bodyReturns": [],
+      "assertions": [],
+      "classification": "checked result specialization",
+      "reason": "unresolved generic or multiple runtime families; keep truthiness separate from result projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return speculationHelper(callback, SpeculationKind.TryParse);"
+    },
+    {
+      "site": "src/compiler/parser.ts:2665",
+      "call": "tryScan",
+      "expression": "scanner.tryScan(() => scanner.reScanInvalidIdentifier() === SyntaxKind.Identifier)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "() => scanner.reScanInvalidIdentifier() === SyntaxKind.Identifier",
+      "callbackSite": "src/compiler/parser.ts:2665",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (token() === SyntaxKind.Unknown && scanner.tryScan(() => scanner.reScanInvalidIdentifier() === SyntaxKind.Identifier)) {\r\n            // Scanner has already recorded an 'Invalid character' error, so no need to add another from the parser.\r\n            return createIdentifier(/*isIdentifier*/ true);\r\n        }"
+    },
+    {
+      "site": "src/compiler/parser.ts:2755",
+      "call": "tryParse",
+      "expression": "tryParse(nextTokenCanFollowModifier)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "nextTokenCanFollowModifier",
+      "callbackSite": "src/compiler/parser.ts:2766",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean",
+        "boolean",
+        "boolean",
+        "boolean",
+        "boolean",
+        "boolean",
+        "boolean",
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return token() === t && tryParse(nextTokenCanFollowModifier);"
+    },
+    {
+      "site": "src/compiler/parser.ts:2774",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenCanFollowDefaultKeyword)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "nextTokenCanFollowDefaultKeyword",
+      "callbackSite": "src/compiler/parser.ts:2824",
+      "declared": "boolean",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return lookAhead(nextTokenCanFollowDefaultKeyword);"
+    },
+    {
+      "site": "src/compiler/parser.ts:2777",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenCanFollowExportModifier)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "nextTokenCanFollowExportModifier",
+      "callbackSite": "src/compiler/parser.ts:2802",
+      "declared": "boolean",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return lookAhead(nextTokenCanFollowExportModifier);"
+    },
+    {
+      "site": "src/compiler/parser.ts:2808",
+      "call": "tryParse",
+      "expression": "tryParse(nextTokenCanFollowModifier)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "nextTokenCanFollowModifier",
+      "callbackSite": "src/compiler/parser.ts:2766",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean",
+        "boolean",
+        "boolean",
+        "boolean",
+        "boolean",
+        "boolean",
+        "boolean",
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return isModifierKind(token()) && tryParse(nextTokenCanFollowModifier);"
+    },
+    {
+      "site": "src/compiler/parser.ts:2830",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsClassKeywordOnSameLine)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (short circuit)",
+        "returned to caller"
+      ],
+      "callback": "nextTokenIsClassKeywordOnSameLine",
+      "callbackSite": "src/compiler/parser.ts:7153",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return token() === SyntaxKind.ClassKeyword\r\n            || token() === SyntaxKind.FunctionKeyword\r\n            || token() === SyntaxKind.InterfaceKeyword\r\n            || token() === SyntaxKind.AtToken\r\n            || (token() === SyntaxKind.AbstractKeyword && lookAhead(nextTokenIsClassKeywordOnSameLine))\r\n            || (token() === SyntaxKind.AsyncKeyword && lookAhead(nextTokenIsFunctionKeywordOnSameLine));"
+    },
+    {
+      "site": "src/compiler/parser.ts:2831",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsFunctionKeywordOnSameLine)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "nextTokenIsFunctionKeywordOnSameLine",
+      "callbackSite": "src/compiler/parser.ts:7158",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return token() === SyntaxKind.ClassKeyword\r\n            || token() === SyntaxKind.FunctionKeyword\r\n            || token() === SyntaxKind.InterfaceKeyword\r\n            || token() === SyntaxKind.AtToken\r\n            || (token() === SyntaxKind.AbstractKeyword && lookAhead(nextTokenIsClassKeywordOnSameLine))\r\n            || (token() === SyntaxKind.AsyncKeyword && lookAhead(nextTokenIsFunctionKeywordOnSameLine));"
+    },
+    {
+      "site": "src/compiler/parser.ts:2855",
+      "call": "lookAhead",
+      "expression": "lookAhead(isTypeMemberStart)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "isTypeMemberStart",
+      "callbackSite": "src/compiler/parser.ts:4292",
+      "declared": "boolean",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "true",
+        "true",
+        "boolean",
+        "false"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return lookAhead(isTypeMemberStart);"
+    },
+    {
+      "site": "src/compiler/parser.ts:2861",
+      "call": "lookAhead",
+      "expression": "lookAhead(isClassMemberStart)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (short circuit)",
+        "returned to caller"
+      ],
+      "callback": "isClassMemberStart",
+      "callbackSite": "src/compiler/parser.ts:7866",
+      "declared": "boolean",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "true",
+        "true",
+        "true",
+        "true",
+        "true",
+        "true",
+        "boolean",
+        "false"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return lookAhead(isClassMemberStart) || (token() === SyntaxKind.SemicolonToken && !inErrorRecovery);"
+    },
+    {
+      "site": "src/compiler/parser.ts:2886",
+      "call": "lookAhead",
+      "expression": "lookAhead(isValidHeritageClauseObjectLiteral)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "isValidHeritageClauseObjectLiteral",
+      "callbackSite": "src/compiler/parser.ts:2945",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean",
+        "true"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return lookAhead(isValidHeritageClauseObjectLiteral);"
+    },
+    {
+      "site": "src/compiler/parser.ts:2925",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsStringLiteral)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "nextTokenIsStringLiteral",
+      "callbackSite": "src/compiler/parser.ts:7553",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (token() === SyntaxKind.FromKeyword && lookAhead(nextTokenIsStringLiteral)) {\r\n                    return false;\r\n                }"
+    },
+    {
+      "site": "src/compiler/parser.ts:2983",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsStartOfExpression)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "nextTokenIsStartOfExpression",
+      "callbackSite": "src/compiler/parser.ts:2989",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return lookAhead(nextTokenIsStartOfExpression);"
+    },
+    {
+      "site": "src/compiler/parser.ts:3046",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsSlash)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "nextTokenIsSlash",
+      "callbackSite": "src/compiler/parser.ts:8369",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return token() === SyntaxKind.LessThanToken && lookAhead(nextTokenIsSlash);"
+    },
+    {
+      "site": "src/compiler/parser.ts:3181",
+      "call": "resetTokenState",
+      "expression": "scanner.resetTokenState(node.end)",
+      "result": "void",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "inferred": "(no callback)",
+      "declared": "(no callback)",
+      "classification": "rewind, void result",
+      "context": "scanner.resetTokenState(node.end);"
+    },
+    {
+      "site": "src/compiler/parser.ts:3634",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsIdentifierOrKeywordOnSameLine)",
+      "result": "boolean",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "callback": "nextTokenIsIdentifierOrKeywordOnSameLine",
+      "callbackSite": "src/compiler/parser.ts:7148",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "const matchesPattern = lookAhead(nextTokenIsIdentifierOrKeywordOnSameLine);",
+      "localUses": [
+        {
+          "site": "src/compiler/parser.ts:3636",
+          "tests": [
+            "truthiness (condition)"
+          ],
+          "context": "if (matchesPattern) {\r\n                // Report that we need an identifier.  However, report it right after the dot,\r\n                // and not on the next token.  This is because the next token might actually\r\n                // be an identifier and the error would be quite confusing.\r\n                return createMissingNode<Identifier>(SyntaxKind.Identifier, /*reportAtCurrentPosition*/ true, Diagnostics.Identifier_expected);\r\n            }"
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:3881",
+      "call": "tryParse",
+      "expression": "tryParse(nextTokenIsOpenParen)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "nextTokenIsOpenParen",
+      "callbackSite": "src/compiler/parser.ts:8361",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (tryParse(nextTokenIsOpenParen)) {\r\n            const parameters = parseParameters(SignatureFlags.Type | SignatureFlags.JSDoc);\r\n            const type = parseReturnType(SyntaxKind.ColonToken, /*isType*/ false);\r\n            return withJSDoc(finishNode(factory.createJSDocFunctionType(parameters, type), pos), hasJSDoc);\r\n        }"
+    },
+    {
+      "site": "src/compiler/parser.ts:4202",
+      "call": "lookAhead",
+      "expression": "lookAhead(isUnambiguouslyIndexSignature)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "isUnambiguouslyIndexSignature",
+      "callbackSite": "src/compiler/parser.ts:4205",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "true",
+        "true",
+        "false",
+        "true",
+        "false",
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return token() === SyntaxKind.OpenBracketToken && lookAhead(isUnambiguouslyIndexSignature);"
+    },
+    {
+      "site": "src/compiler/parser.ts:4334",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsOpenParenOrLessThan)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "nextTokenIsOpenParenOrLessThan",
+      "callbackSite": "src/compiler/parser.ts:4354",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (token() === SyntaxKind.NewKeyword && lookAhead(nextTokenIsOpenParenOrLessThan)) {\r\n            return parseSignatureMember(SyntaxKind.ConstructSignature);\r\n        }"
+    },
+    {
+      "site": "src/compiler/parser.ts:4465",
+      "call": "lookAhead",
+      "expression": "lookAhead(isTupleElementName)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "isTupleElementName",
+      "callbackSite": "src/compiler/parser.ts:4457",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean",
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (lookAhead(isTupleElementName)) {\r\n            const pos = getNodePos();\r\n            const hasJSDoc = hasPrecedingJSDocComment();\r\n            const dotDotDotToken = parseOptionalToken(SyntaxKind.DotDotDotToken);\r\n            const name = parseIdentifierName();\r\n            const questionToken = parseOptionalToken(SyntaxKind.QuestionToken);\r\n            parseExpected(SyntaxKind.ColonToken);\r\n            const type = parseTupleElementType();\r\n            const node = factory.createNamedTupleMember(dotDotDotToken, name, questionToken, type);\r\n            return withJSDoc(finishNode(node, pos), hasJSDoc);\r\n        }"
+    },
+    {
+      "site": "src/compiler/parser.ts:4602",
+      "call": "tryParse",
+      "expression": "tryParse(parseKeywordAndNoDot)",
+      "result": "TypeNode | undefined",
+      "tests": [
+        "truthiness (short circuit)",
+        "returned to caller"
+      ],
+      "callback": "parseKeywordAndNoDot",
+      "callbackSite": "src/compiler/parser.ts:4523",
+      "declared": "TypeNode | undefined",
+      "inferred": "TypeNode | undefined",
+      "families": [
+        "object",
+        "undefined"
+      ],
+      "bodyReturns": [
+        "TypeNode | undefined"
+      ],
+      "assertions": [],
+      "classification": "checked result specialization",
+      "reason": "unresolved generic or multiple runtime families; keep truthiness separate from result projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return tryParse(parseKeywordAndNoDot) || parseTypeReference();"
+    },
+    {
+      "site": "src/compiler/parser.ts:4628",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsNumericOrBigIntLiteral)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (conditional)",
+        "returned to caller"
+      ],
+      "callback": "nextTokenIsNumericOrBigIntLiteral",
+      "callbackSite": "src/compiler/parser.ts:4584",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return lookAhead(nextTokenIsNumericOrBigIntLiteral) ? parseLiteralTypeNode(/*negative*/ true) : parseTypeReference();"
+    },
+    {
+      "site": "src/compiler/parser.ts:4641",
+      "call": "lookAhead",
+      "expression": "lookAhead(isStartOfTypeOfImportType)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (conditional)",
+        "returned to caller"
+      ],
+      "callback": "isStartOfTypeOfImportType",
+      "callbackSite": "src/compiler/parser.ts:4542",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return lookAhead(isStartOfTypeOfImportType) ? parseImportType() : parseTypeQuery();"
+    },
+    {
+      "site": "src/compiler/parser.ts:4643",
+      "call": "lookAhead",
+      "expression": "lookAhead(isStartOfMappedType)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (conditional)",
+        "returned to caller"
+      ],
+      "callback": "isStartOfMappedType",
+      "callbackSite": "src/compiler/parser.ts:4391",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean",
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return lookAhead(isStartOfMappedType) ? parseMappedType() : parseTypeLiteral();"
+    },
+    {
+      "site": "src/compiler/parser.ts:4651",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsIdentifierOrKeywordOnSameLine)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (conditional)",
+        "returned to caller"
+      ],
+      "callback": "nextTokenIsIdentifierOrKeywordOnSameLine",
+      "callbackSite": "src/compiler/parser.ts:7148",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return lookAhead(nextTokenIsIdentifierOrKeywordOnSameLine) ? parseAssertsTypePredicate() : parseTypeReference();"
+    },
+    {
+      "site": "src/compiler/parser.ts:4701",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsNumericOrBigIntLiteral)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "nextTokenIsNumericOrBigIntLiteral",
+      "callbackSite": "src/compiler/parser.ts:4584",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return !inStartOfParameter && lookAhead(nextTokenIsNumericOrBigIntLiteral);"
+    },
+    {
+      "site": "src/compiler/parser.ts:4705",
+      "call": "lookAhead",
+      "expression": "lookAhead(isStartOfParenthesizedOrFunctionType)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "isStartOfParenthesizedOrFunctionType",
+      "callbackSite": "src/compiler/parser.ts:4711",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return !inStartOfParameter && lookAhead(isStartOfParenthesizedOrFunctionType);"
+    },
+    {
+      "site": "src/compiler/parser.ts:4727",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsStartOfType)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "nextTokenIsStartOfType",
+      "callbackSite": "src/compiler/parser.ts:2994",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (lookAhead(nextTokenIsStartOfType)) {\r\n                        return type;\r\n                    }"
+    },
+    {
+      "site": "src/compiler/parser.ts:4770",
+      "call": "tryParse",
+      "expression": "tryParse(tryParseConstraintOfInferType)",
+      "result": "TypeNode | undefined",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "callback": "tryParseConstraintOfInferType",
+      "callbackSite": "src/compiler/parser.ts:4758",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "TypeNode | undefined",
+      "families": [
+        "object",
+        "undefined"
+      ],
+      "bodyReturns": [
+        "TypeNode"
+      ],
+      "assertions": [],
+      "classification": "checked result specialization",
+      "reason": "unresolved generic or multiple runtime families; keep truthiness separate from result projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "const constraint = tryParse(tryParseConstraintOfInferType);",
+      "localUses": [
+        {
+          "site": "src/compiler/parser.ts:4771",
+          "tests": [
+            "value stored/passed or discarded; see source context"
+          ],
+          "context": "factory.createTypeParameterDeclaration(/*modifiers*/ undefined, name, constraint)"
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:4856",
+      "call": "lookAhead",
+      "expression": "lookAhead(isUnambiguouslyStartOfFunctionType)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "isUnambiguouslyStartOfFunctionType",
+      "callbackSite": "src/compiler/parser.ts:4881",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "true",
+        "true",
+        "true",
+        "false"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (token() === SyntaxKind.OpenParenToken && lookAhead(isUnambiguouslyStartOfFunctionType)) {\r\n            return true;\r\n        }"
+    },
+    {
+      "site": "src/compiler/parser.ts:4860",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsNewKeyword)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "nextTokenIsNewKeyword",
+      "callbackSite": "src/compiler/parser.ts:4847",
+      "declared": "boolean",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return token() === SyntaxKind.NewKeyword ||\r\n            token() === SyntaxKind.AbstractKeyword && lookAhead(nextTokenIsNewKeyword);"
+    },
+    {
+      "site": "src/compiler/parser.ts:4914",
+      "call": "tryParse",
+      "expression": "tryParse(parseTypePredicatePrefix)",
+      "result": "Identifier | undefined",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "callback": "parseTypePredicatePrefix",
+      "callbackSite": "src/compiler/parser.ts:4924",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "Identifier | undefined",
+      "families": [
+        "object",
+        "undefined"
+      ],
+      "bodyReturns": [
+        "Identifier"
+      ],
+      "assertions": [],
+      "classification": "checked result specialization",
+      "reason": "unresolved generic or multiple runtime families; keep truthiness separate from result projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "const typePredicateVariable = isIdentifier() && tryParse(parseTypePredicatePrefix);",
+      "localUses": [
+        {
+          "site": "src/compiler/parser.ts:4916",
+          "tests": [
+            "truthiness (condition)"
+          ],
+          "context": "if (typePredicateVariable) {\r\n            return finishNode(factory.createTypePredicateNode(/*assertsModifier*/ undefined, typePredicateVariable, type), pos);\r\n        }\r\n        else {\r\n            return type;\r\n        }"
+        },
+        {
+          "site": "src/compiler/parser.ts:4917",
+          "tests": [
+            "returned to caller"
+          ],
+          "context": "factory.createTypePredicateNode(/*assertsModifier*/ undefined, typePredicateVariable, type)"
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:4989",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsOpenParenOrLessThanOrDot)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "nextTokenIsOpenParenOrLessThanOrDot",
+      "callbackSite": "src/compiler/parser.ts:4363",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "true",
+        "false"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return lookAhead(nextTokenIsOpenParenOrLessThanOrDot);"
+    },
+    {
+      "site": "src/compiler/parser.ts:5158",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsIdentifierOrKeywordOrLiteralOnSameLine)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "nextTokenIsIdentifierOrKeywordOrLiteralOnSameLine",
+      "callbackSite": "src/compiler/parser.ts:7163",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return lookAhead(nextTokenIsIdentifierOrKeywordOrLiteralOnSameLine);"
+    },
+    {
+      "site": "src/compiler/parser.ts:5229",
+      "call": "tryParse",
+      "expression": "tryParse(() => parsePossibleParenthesizedArrowFunctionExpression(allowReturnTypeInArrowFunction))",
+      "result": "ArrowFunction | undefined",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "() => parsePossibleParenthesizedArrowFunctionExpression(allowReturnTypeInArrowFunction)",
+      "callbackSite": "src/compiler/parser.ts:5229",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "ArrowFunction | undefined",
+      "families": [
+        "object",
+        "undefined"
+      ],
+      "bodyReturns": [
+        "ArrowFunction | undefined"
+      ],
+      "assertions": [],
+      "classification": "checked result specialization",
+      "reason": "unresolved generic or multiple runtime families; keep truthiness separate from result projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return triState === Tristate.True ?\r\n            parseParenthesizedArrowFunctionExpression(/*allowAmbiguity*/ true, /*allowReturnTypeInArrowFunction*/ true) :\r\n            tryParse(() => parsePossibleParenthesizedArrowFunctionExpression(allowReturnTypeInArrowFunction));"
+    },
+    {
+      "site": "src/compiler/parser.ts:5238",
+      "call": "lookAhead",
+      "expression": "lookAhead(isParenthesizedArrowFunctionExpressionWorker)",
+      "result": "Tristate",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "isParenthesizedArrowFunctionExpressionWorker",
+      "callbackSite": "src/compiler/parser.ts:5251",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "Tristate",
+      "families": [
+        "number"
+      ],
+      "bodyReturns": [
+        "Tristate.False",
+        "Tristate.False",
+        "Tristate.True",
+        "Tristate.False",
+        "Tristate.Unknown",
+        "Tristate.True",
+        "Tristate.False",
+        "Tristate.True",
+        "Tristate.False",
+        "Tristate.True",
+        "Tristate.True",
+        "Tristate.False",
+        "Tristate.Unknown",
+        "Tristate.False",
+        "Tristate.False",
+        "Tristate.True",
+        "Tristate.False",
+        "Tristate.Unknown"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return lookAhead(isParenthesizedArrowFunctionExpressionWorker);",
+      "forwardedTests": [
+        "parser.ts:5223 comparison triState === Tristate.False (0)",
+        "parser.ts:5227 comparison triState === Tristate.True (1)"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:5301",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsIdentifier)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "nextTokenIsIdentifier",
+      "callbackSite": "src/compiler/parser.ts:2963",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (isModifierKind(second) && second !== SyntaxKind.AsyncKeyword && lookAhead(nextTokenIsIdentifier)) {\r\n                if (nextToken() === SyntaxKind.AsKeyword) {\r\n                    // https://github.com/microsoft/TypeScript/issues/44466\r\n                    return Tristate.False;\r\n                }\r\n                return Tristate.True;\r\n            }"
+    },
+    {
+      "site": "src/compiler/parser.ts:5349",
+      "call": "lookAhead",
+      "expression": "lookAhead(() => {\r\n                    parseOptional(SyntaxKind.ConstKeyword);\r\n                    const third = nextToken();\r\n                    if (third === SyntaxKind.ExtendsKeyword) {\r\n                        const fourth = nextToken();\r\n                        switch (fourth) {\r\n                            case SyntaxKind.EqualsToken:\r\n                            case SyntaxKind.GreaterThanToken:\r\n                            case SyntaxKind.SlashToken:\r\n                                return false;\r\n                            default:\r\n                                return true;\r\n                        }\r\n                    }\r\n                    else if (third === SyntaxKind.CommaToken || third === SyntaxKind.EqualsToken) {\r\n                        return true;\r\n                    }\r\n                    return false;\r\n                })",
+      "result": "boolean",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "callback": "() => {\r\n                    parseOptional(SyntaxKind.ConstKeyword);\r\n                    const third = nextToken();\r\n                    if (third === SyntaxKind.ExtendsKeyword) {\r\n                        const fourth = nextToken();\r\n                        switch (fourth) {\r\n                            case SyntaxKind.EqualsToken:\r\n                            case SyntaxKind.GreaterThanToken:\r\n                            case SyntaxKind.SlashToken:\r\n                                return false;\r\n                            default:\r\n                                return true;\r\n                        }\r\n                    }\r\n                    else if (third === SyntaxKind.CommaToken || third === SyntaxKind.EqualsToken) {\r\n                        return true;\r\n                    }\r\n                    return false;\r\n                }",
+      "callbackSite": "src/compiler/parser.ts:5349",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "false",
+        "true",
+        "true",
+        "false"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "const isArrowFunctionInJsx = lookAhead(() => {\r\n                    parseOptional(SyntaxKind.ConstKeyword);\r\n                    const third = nextToken();\r\n                    if (third === SyntaxKind.ExtendsKeyword) {\r\n                        const fourth = nextToken();\r\n                        switch (fourth) {\r\n                            case SyntaxKind.EqualsToken:\r\n                            case SyntaxKind.GreaterThanToken:\r\n                            case SyntaxKind.SlashToken:\r\n                                return false;\r\n                            default:\r\n                                return true;\r\n                        }\r\n                    }\r\n                    else if (third === SyntaxKind.CommaToken || third === SyntaxKind.EqualsToken) {\r\n                        return true;\r\n                    }\r\n                    return false;\r\n                });",
+      "localUses": [
+        {
+          "site": "src/compiler/parser.ts:5369",
+          "tests": [
+            "truthiness (condition)"
+          ],
+          "context": "if (isArrowFunctionInJsx) {\r\n                    return Tristate.True;\r\n                }"
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:5398",
+      "call": "lookAhead",
+      "expression": "lookAhead(isUnParenthesizedAsyncArrowFunctionWorker)",
+      "result": "Tristate",
+      "tests": [
+        "comparison: lookAhead(isUnParenthesizedAsyncArrowFunctionWorker) === Tristate.True"
+      ],
+      "callback": "isUnParenthesizedAsyncArrowFunctionWorker",
+      "callbackSite": "src/compiler/parser.ts:5409",
+      "declared": "Tristate",
+      "inferred": "Tristate",
+      "families": [
+        "number"
+      ],
+      "bodyReturns": [
+        "Tristate.False",
+        "Tristate.True",
+        "Tristate.False"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (lookAhead(isUnParenthesizedAsyncArrowFunctionWorker) === Tristate.True) {\r\n                const pos = getNodePos();\r\n                const hasJSDoc = hasPrecedingJSDocComment();\r\n                const asyncModifier = parseModifiersForArrowFunction();\r\n                const expr = parseBinaryExpressionOrHigher(OperatorPrecedence.Lowest);\r\n                return parseSimpleArrowFunctionExpression(pos, expr as Identifier, allowReturnTypeInArrowFunction, hasJSDoc, asyncModifier);\r\n            }"
+    },
+    {
+      "site": "src/compiler/parser.ts:5720",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsIdentifierOrKeywordOrLiteralOnSameLine)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "nextTokenIsIdentifierOrKeywordOrLiteralOnSameLine",
+      "callbackSite": "src/compiler/parser.ts:7163",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return lookAhead(nextTokenIsIdentifierOrKeywordOrLiteralOnSameLine);"
+    },
+    {
+      "site": "src/compiler/parser.ts:5880",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsIdentifierOrKeywordOrGreaterThan)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "nextTokenIsIdentifierOrKeywordOrGreaterThan",
+      "callbackSite": "src/compiler/parser.ts:2973",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (languageVariant === LanguageVariant.JSX && token() === SyntaxKind.LessThanToken && lookAhead(nextTokenIsIdentifierOrKeywordOrGreaterThan)) {\r\n            // JSXElement is part of primaryExpression\r\n            return parseJsxElementOrSelfClosingElementOrFragment(/*inExpressionContext*/ true);\r\n        }"
+    },
+    {
+      "site": "src/compiler/parser.ts:5932",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsOpenParenOrLessThan)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "nextTokenIsOpenParenOrLessThan",
+      "callbackSite": "src/compiler/parser.ts:4354",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (lookAhead(nextTokenIsOpenParenOrLessThan)) {\r\n                // We don't want to eagerly consume all import keyword as import call expression so we look ahead to find \"(\"\r\n                // For example:\r\n                //      var foo3 = require(\"subfolder\r\n                //      import * as foo1 from \"module-from-node\r\n                // We want this import to be a statement rather than import call expression\r\n                sourceFlags |= NodeFlags.PossiblyContainsDynamicImport;\r\n                expression = parseTokenNode<PrimaryExpression>();\r\n            }\r\n            else if (lookAhead(nextTokenIsDot)) {\r\n                // This is an 'import.*' metaproperty (i.e. 'import.meta')\r\n                nextToken(); // advance past the 'import'\r\n                nextToken(); // advance past the dot\r\n                expression = finishNode(factory.createMetaProperty(SyntaxKind.ImportKeyword, parseIdentifierName()), pos);\r\n\r\n                if ((expression as MetaProperty).name.escapedText === \"defer\") {\r\n                    if (token() === SyntaxKind.OpenParenToken || token() === SyntaxKind.LessThanToken) {\r\n                        sourceFlags |= NodeFlags.PossiblyContainsDynamicImport;\r\n                    }\r\n                }\r\n                else {\r\n                    sourceFlags |= NodeFlags.PossiblyContainsImportMeta;\r\n                }\r\n            }\r\n            else {\r\n                expression = parseMemberExpressionOrHigher();\r\n            }"
+    },
+    {
+      "site": "src/compiler/parser.ts:5941",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsDot)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "nextTokenIsDot",
+      "callbackSite": "src/compiler/parser.ts:4359",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (lookAhead(nextTokenIsDot)) {\r\n                // This is an 'import.*' metaproperty (i.e. 'import.meta')\r\n                nextToken(); // advance past the 'import'\r\n                nextToken(); // advance past the dot\r\n                expression = finishNode(factory.createMetaProperty(SyntaxKind.ImportKeyword, parseIdentifierName()), pos);\r\n\r\n                if ((expression as MetaProperty).name.escapedText === \"defer\") {\r\n                    if (token() === SyntaxKind.OpenParenToken || token() === SyntaxKind.LessThanToken) {\r\n                        sourceFlags |= NodeFlags.PossiblyContainsDynamicImport;\r\n                    }\r\n                }\r\n                else {\r\n                    sourceFlags |= NodeFlags.PossiblyContainsImportMeta;\r\n                }\r\n            }\r\n            else {\r\n                expression = parseMemberExpressionOrHigher();\r\n            }"
+    },
+    {
+      "site": "src/compiler/parser.ts:6028",
+      "call": "tryParse",
+      "expression": "tryParse(parseTypeArgumentsInExpression)",
+      "result": "NodeArray<TypeNode> | undefined",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "callback": "parseTypeArgumentsInExpression",
+      "callbackSite": "src/compiler/parser.ts:6562",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "NodeArray<TypeNode> | undefined",
+      "families": [
+        "object",
+        "undefined"
+      ],
+      "bodyReturns": [
+        "undefined",
+        "undefined",
+        "undefined",
+        "NodeArray<TypeNode> | undefined"
+      ],
+      "assertions": [],
+      "classification": "checked result specialization",
+      "reason": "unresolved generic or multiple runtime families; keep truthiness separate from result projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "const typeArguments = tryParse(parseTypeArgumentsInExpression);",
+      "localUses": [
+        {
+          "site": "src/compiler/parser.ts:6029",
+          "tests": [
+            "undefined comparison"
+          ],
+          "context": "typeArguments !== undefined"
+        },
+        {
+          "site": "src/compiler/parser.ts:6032",
+          "tests": [
+            "value stored/passed or discarded; see source context"
+          ],
+          "context": "factory.createExpressionWithTypeArguments(expression, typeArguments)"
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:6114",
+      "call": "tryParse",
+      "expression": "tryParse(() => parseJsxElementOrSelfClosingElementOrFragment(/*inExpressionContext*/ true, topBadPos))",
+      "result": "JsxElement | JsxSelfClosingElement | JsxFragment",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "callback": "() => parseJsxElementOrSelfClosingElementOrFragment(/*inExpressionContext*/ true, topBadPos)",
+      "callbackSite": "src/compiler/parser.ts:6114",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "JsxElement | JsxSelfClosingElement | JsxFragment",
+      "families": [
+        "object"
+      ],
+      "bodyReturns": [
+        "JsxElement | JsxSelfClosingElement | JsxFragment"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "const invalidElement = tryParse(() => parseJsxElementOrSelfClosingElementOrFragment(/*inExpressionContext*/ true, topBadPos));",
+      "localUses": [
+        {
+          "site": "src/compiler/parser.ts:6115",
+          "tests": [
+            "truthiness (condition)"
+          ],
+          "context": "if (invalidElement) {\r\n                const operatorToken = createMissingNode(SyntaxKind.CommaToken, /*reportAtCurrentPosition*/ false);\r\n                setTextRangePosWidth(operatorToken, invalidElement.pos, 0);\r\n                parseErrorAt(skipTrivia(sourceText, topBadPos), invalidElement.end, Diagnostics.JSX_expressions_must_have_one_parent_element);\r\n                return finishNode(factory.createBinaryExpression(result, operatorToken as Token<SyntaxKind.CommaToken>, invalidElement), pos) as Node as JsxElement;\r\n            }"
+        },
+        {
+          "site": "src/compiler/parser.ts:6117",
+          "tests": [
+            "value stored/passed or discarded; see source context"
+          ],
+          "context": "invalidElement.pos"
+        },
+        {
+          "site": "src/compiler/parser.ts:6118",
+          "tests": [
+            "value stored/passed or discarded; see source context"
+          ],
+          "context": "invalidElement.end"
+        },
+        {
+          "site": "src/compiler/parser.ts:6119",
+          "tests": [
+            "returned to caller"
+          ],
+          "context": "factory.createBinaryExpression(result, operatorToken as Token<SyntaxKind.CommaToken>, invalidElement)"
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:6390",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsIdentifierOrKeywordOrOpenBracketOrTemplate)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "nextTokenIsIdentifierOrKeywordOrOpenBracketOrTemplate",
+      "callbackSite": "src/compiler/parser.ts:6381",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return token() === SyntaxKind.QuestionDotToken\r\n            && lookAhead(nextTokenIsIdentifierOrKeywordOrOpenBracketOrTemplate);"
+    },
+    {
+      "site": "src/compiler/parser.ts:6490",
+      "call": "tryParse",
+      "expression": "tryParse(parseTypeArgumentsInExpression)",
+      "result": "NodeArray<TypeNode> | undefined",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "callback": "parseTypeArgumentsInExpression",
+      "callbackSite": "src/compiler/parser.ts:6562",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "NodeArray<TypeNode> | undefined",
+      "families": [
+        "object",
+        "undefined"
+      ],
+      "bodyReturns": [
+        "undefined",
+        "undefined",
+        "undefined",
+        "NodeArray<TypeNode> | undefined"
+      ],
+      "assertions": [],
+      "classification": "checked result specialization",
+      "reason": "unresolved generic or multiple runtime families; keep truthiness separate from result projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "const typeArguments = tryParse(parseTypeArgumentsInExpression);",
+      "localUses": [
+        {
+          "site": "src/compiler/parser.ts:6491",
+          "tests": [
+            "truthiness (condition)"
+          ],
+          "context": "if (typeArguments) {\r\n                    expression = finishNode(factory.createExpressionWithTypeArguments(expression, typeArguments), pos);\r\n                    continue;\r\n                }"
+        },
+        {
+          "site": "src/compiler/parser.ts:6492",
+          "tests": [
+            "value stored/passed or discarded; see source context"
+          ],
+          "context": "factory.createExpressionWithTypeArguments(expression, typeArguments)"
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:6526",
+      "call": "tryParse",
+      "expression": "tryParse(parseTypeArgumentsInExpression)",
+      "result": "NodeArray<TypeNode> | undefined",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "callback": "parseTypeArgumentsInExpression",
+      "callbackSite": "src/compiler/parser.ts:6562",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "NodeArray<TypeNode> | undefined",
+      "families": [
+        "object",
+        "undefined"
+      ],
+      "bodyReturns": [
+        "undefined",
+        "undefined",
+        "undefined",
+        "NodeArray<TypeNode> | undefined"
+      ],
+      "assertions": [],
+      "classification": "checked result specialization",
+      "reason": "unresolved generic or multiple runtime families; keep truthiness separate from result projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "typeArguments = tryParse(parseTypeArgumentsInExpression);",
+      "assignedUses": [
+        {
+          "site": "src/compiler/parser.ts:6528",
+          "tests": [
+            "value stored/passed or discarded; see source context"
+          ],
+          "context": "parseTaggedTemplateRest(pos, expression, questionDotToken, typeArguments)"
+        },
+        {
+          "site": "src/compiler/parser.ts:6532",
+          "tests": [
+            "truthiness (short circuit)",
+            "truthiness (condition)"
+          ],
+          "context": "typeArguments || token() === SyntaxKind.OpenParenToken"
+        },
+        {
+          "site": "src/compiler/parser.ts:6535",
+          "tests": [
+            "value stored/passed or discarded; see source context"
+          ],
+          "context": "typeArguments = (expression as ExpressionWithTypeArguments).typeArguments"
+        },
+        {
+          "site": "src/compiler/parser.ts:6540",
+          "tests": [
+            "value stored/passed or discarded; see source context"
+          ],
+          "context": "factoryCreateCallChain(expression, questionDotToken, typeArguments, argumentList)"
+        },
+        {
+          "site": "src/compiler/parser.ts:6541",
+          "tests": [
+            "value stored/passed or discarded; see source context"
+          ],
+          "context": "factoryCreateCallExpression(expression, typeArguments, argumentList)"
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:6635",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsFunctionKeywordOnSameLine)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (!result)",
+        "truthiness (condition)"
+      ],
+      "callback": "nextTokenIsFunctionKeywordOnSameLine",
+      "callbackSite": "src/compiler/parser.ts:7158",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (!lookAhead(nextTokenIsFunctionKeywordOnSameLine)) {\r\n                    break;\r\n                }"
+    },
+    {
+      "site": "src/compiler/parser.ts:6939",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsBindingIdentifierOrStartOfDestructuringOnSameLineDisallowOf)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (short circuit)",
+        "truthiness (condition)"
+      ],
+      "callback": "nextTokenIsBindingIdentifierOrStartOfDestructuringOnSameLineDisallowOf",
+      "callbackSite": "src/compiler/parser.ts:7342",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (\r\n                token() === SyntaxKind.VarKeyword || token() === SyntaxKind.LetKeyword || token() === SyntaxKind.ConstKeyword ||\r\n                token() === SyntaxKind.UsingKeyword && lookAhead(nextTokenIsBindingIdentifierOrStartOfDestructuringOnSameLineDisallowOf) ||\r\n                // this one is meant to allow of\r\n                token() === SyntaxKind.AwaitKeyword && lookAhead(nextTokenIsUsingKeywordThenBindingIdentifierOrStartOfObjectDestructuringOnSameLine)\r\n            ) {\r\n                initializer = parseVariableDeclarationList(/*inForStatementInitializer*/ true);\r\n            }\r\n            else {\r\n                initializer = disallowInAnd(parseExpression);\r\n            }"
+    },
+    {
+      "site": "src/compiler/parser.ts:6941",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsUsingKeywordThenBindingIdentifierOrStartOfObjectDestructuringOnSameLine)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "nextTokenIsUsingKeywordThenBindingIdentifierOrStartOfObjectDestructuringOnSameLine",
+      "callbackSite": "src/compiler/parser.ts:7366",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean",
+        "false"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (\r\n                token() === SyntaxKind.VarKeyword || token() === SyntaxKind.LetKeyword || token() === SyntaxKind.ConstKeyword ||\r\n                token() === SyntaxKind.UsingKeyword && lookAhead(nextTokenIsBindingIdentifierOrStartOfDestructuringOnSameLineDisallowOf) ||\r\n                // this one is meant to allow of\r\n                token() === SyntaxKind.AwaitKeyword && lookAhead(nextTokenIsUsingKeywordThenBindingIdentifierOrStartOfObjectDestructuringOnSameLine)\r\n            ) {\r\n                initializer = parseVariableDeclarationList(/*inForStatementInitializer*/ true);\r\n            }\r\n            else {\r\n                initializer = disallowInAnd(parseExpression);\r\n            }"
+    },
+    {
+      "site": "src/compiler/parser.ts:7243",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextToken)",
+      "result": "SyntaxKind",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "callback": "nextToken",
+      "callbackSite": "src/compiler/parser.ts:2207",
+      "declared": "SyntaxKind",
+      "inferred": "SyntaxKind",
+      "families": [
+        "number"
+      ],
+      "bodyReturns": [
+        "SyntaxKind"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "currentToken = lookAhead(nextToken);",
+      "assignedUses": [
+        {
+          "site": "src/compiler/parser.ts:7246",
+          "tests": [
+            "comparison: currentToken === SyntaxKind.EqualsToken",
+            "truthiness (short circuit)"
+          ],
+          "context": "currentToken === SyntaxKind.EqualsToken"
+        },
+        {
+          "site": "src/compiler/parser.ts:7246",
+          "tests": [
+            "comparison: currentToken === SyntaxKind.AsteriskToken",
+            "truthiness (short circuit)"
+          ],
+          "context": "currentToken === SyntaxKind.AsteriskToken"
+        },
+        {
+          "site": "src/compiler/parser.ts:7247",
+          "tests": [
+            "comparison: currentToken === SyntaxKind.OpenBraceToken",
+            "truthiness (short circuit)"
+          ],
+          "context": "currentToken === SyntaxKind.OpenBraceToken"
+        },
+        {
+          "site": "src/compiler/parser.ts:7247",
+          "tests": [
+            "comparison: currentToken === SyntaxKind.DefaultKeyword",
+            "truthiness (short circuit)"
+          ],
+          "context": "currentToken === SyntaxKind.DefaultKeyword"
+        },
+        {
+          "site": "src/compiler/parser.ts:7248",
+          "tests": [
+            "comparison: currentToken === SyntaxKind.AsKeyword",
+            "truthiness (short circuit)"
+          ],
+          "context": "currentToken === SyntaxKind.AsKeyword"
+        },
+        {
+          "site": "src/compiler/parser.ts:7248",
+          "tests": [
+            "comparison: currentToken === SyntaxKind.AtToken"
+          ],
+          "context": "currentToken === SyntaxKind.AtToken"
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:7265",
+      "call": "lookAhead",
+      "expression": "lookAhead(isDeclaration)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "isDeclaration",
+      "callbackSite": "src/compiler/parser.ts:7168",
+      "declared": "boolean",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "true",
+        "boolean",
+        "boolean",
+        "boolean",
+        "boolean",
+        "false",
+        "true",
+        "boolean",
+        "boolean",
+        "true",
+        "false"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return lookAhead(isDeclaration);"
+    },
+    {
+      "site": "src/compiler/parser.ts:7299",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsOpenParenOrLessThanOrDot)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "nextTokenIsOpenParenOrLessThanOrDot",
+      "callbackSite": "src/compiler/parser.ts:4363",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "true",
+        "false"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return isStartOfDeclaration() || lookAhead(nextTokenIsOpenParenOrLessThanOrDot);"
+    },
+    {
+      "site": "src/compiler/parser.ts:7324",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsIdentifierOrKeywordOnSameLine)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (!result)",
+        "returned to caller"
+      ],
+      "callback": "nextTokenIsIdentifierOrKeywordOnSameLine",
+      "callbackSite": "src/compiler/parser.ts:7148",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return isStartOfDeclaration() || !lookAhead(nextTokenIsIdentifierOrKeywordOnSameLine);"
+    },
+    {
+      "site": "src/compiler/parser.ts:7339",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsBindingIdentifierOrStartOfDestructuring)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "nextTokenIsBindingIdentifierOrStartOfDestructuring",
+      "callbackSite": "src/compiler/parser.ts:7331",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return lookAhead(nextTokenIsBindingIdentifierOrStartOfDestructuring);"
+    },
+    {
+      "site": "src/compiler/parser.ts:7354",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsEqualsOrSemicolonOrColonToken)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "nextTokenIsEqualsOrSemicolonOrColonToken",
+      "callbackSite": "src/compiler/parser.ts:7346",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return lookAhead(nextTokenIsEqualsOrSemicolonOrColonToken);"
+    },
+    {
+      "site": "src/compiler/parser.ts:7363",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsBindingIdentifierOrStartOfDestructuringOnSameLine)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "nextTokenIsBindingIdentifierOrStartOfDestructuringOnSameLine",
+      "callbackSite": "src/compiler/parser.ts:7351",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean",
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return lookAhead(nextTokenIsBindingIdentifierOrStartOfDestructuringOnSameLine);"
+    },
+    {
+      "site": "src/compiler/parser.ts:7377",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsUsingKeywordThenBindingIdentifierOrStartOfObjectDestructuringOnSameLine)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "nextTokenIsUsingKeywordThenBindingIdentifierOrStartOfObjectDestructuringOnSameLine",
+      "callbackSite": "src/compiler/parser.ts:7366",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean",
+        "false"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return lookAhead(nextTokenIsUsingKeywordThenBindingIdentifierOrStartOfObjectDestructuringOnSameLine);"
+    },
+    {
+      "site": "src/compiler/parser.ts:7705",
+      "call": "lookAhead",
+      "expression": "lookAhead(canFollowContextualOfKeyword)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "canFollowContextualOfKeyword",
+      "callbackSite": "src/compiler/parser.ts:7723",
+      "declared": "boolean",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (token() === SyntaxKind.OfKeyword && lookAhead(canFollowContextualOfKeyword)) {\r\n            declarations = createMissingList<VariableDeclaration>();\r\n        }\r\n        else {\r\n            const savedDisallowIn = inDisallowInContext();\r\n            setDisallowInContext(inForStatementInitializer);\r\n\r\n            declarations = parseDelimitedList(\r\n                ParsingContext.VariableDeclarations,\r\n                inForStatementInitializer ? parseVariableDeclaration : parseVariableDeclarationAllowExclamation,\r\n            );\r\n\r\n            setDisallowInContext(savedDisallowIn);\r\n        }"
+    },
+    {
+      "site": "src/compiler/parser.ts:7757",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextToken)",
+      "result": "SyntaxKind",
+      "tests": [
+        "comparison: lookAhead(nextToken) === SyntaxKind.OpenParenToken"
+      ],
+      "callback": "nextToken",
+      "callbackSite": "src/compiler/parser.ts:2207",
+      "declared": "SyntaxKind",
+      "inferred": "SyntaxKind",
+      "families": [
+        "number"
+      ],
+      "bodyReturns": [
+        "SyntaxKind"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (token() === SyntaxKind.StringLiteral && lookAhead(nextToken) === SyntaxKind.OpenParenToken) {\r\n            return tryParse(() => {\r\n                const literalNode = parseLiteralNode();\r\n                return literalNode.text === \"constructor\" ? literalNode : undefined;\r\n            });\r\n        }"
+    },
+    {
+      "site": "src/compiler/parser.ts:7758",
+      "call": "tryParse",
+      "expression": "tryParse(() => {\r\n                const literalNode = parseLiteralNode();\r\n                return literalNode.text === \"constructor\" ? literalNode : undefined;\r\n            })",
+      "result": "LiteralExpression | undefined",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "() => {\r\n                const literalNode = parseLiteralNode();\r\n                return literalNode.text === \"constructor\" ? literalNode : undefined;\r\n            }",
+      "callbackSite": "src/compiler/parser.ts:7758",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "LiteralExpression | undefined",
+      "families": [
+        "object",
+        "undefined"
+      ],
+      "bodyReturns": [
+        "LiteralExpression | undefined"
+      ],
+      "assertions": [],
+      "classification": "checked result specialization",
+      "reason": "unresolved generic or multiple runtime families; keep truthiness separate from result projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return tryParse(() => {\r\n                const literalNode = parseLiteralNode();\r\n                return literalNode.text === \"constructor\" ? literalNode : undefined;\r\n            });"
+    },
+    {
+      "site": "src/compiler/parser.ts:7766",
+      "call": "tryParse",
+      "expression": "tryParse(() => {\r\n            if (parseConstructorName()) {\r\n                const typeParameters = parseTypeParameters();\r\n                const parameters = parseParameters(SignatureFlags.None);\r\n                const type = parseReturnType(SyntaxKind.ColonToken, /*isType*/ false);\r\n                const body = parseFunctionBlockOrSemicolon(SignatureFlags.None, Diagnostics.or_expected);\r\n                const node = factory.createConstructorDeclaration(modifiers, parameters, body);\r\n\r\n                // Attach invalid nodes if they exist so that we can report them in the grammar checker.\r\n                (node as Mutable<ConstructorDeclaration>).typeParameters = typeParameters;\r\n                (node as Mutable<ConstructorDeclaration>).type = type;\r\n                return withJSDoc(finishNode(node, pos), hasJSDoc);\r\n            }\r\n        })",
+      "result": "ConstructorDeclaration | undefined",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "() => {\r\n            if (parseConstructorName()) {\r\n                const typeParameters = parseTypeParameters();\r\n                const parameters = parseParameters(SignatureFlags.None);\r\n                const type = parseReturnType(SyntaxKind.ColonToken, /*isType*/ false);\r\n                const body = parseFunctionBlockOrSemicolon(SignatureFlags.None, Diagnostics.or_expected);\r\n                const node = factory.createConstructorDeclaration(modifiers, parameters, body);\r\n\r\n                // Attach invalid nodes if they exist so that we can report them in the grammar checker.\r\n                (node as Mutable<ConstructorDeclaration>).typeParameters = typeParameters;\r\n                (node as Mutable<ConstructorDeclaration>).type = type;\r\n                return withJSDoc(finishNode(node, pos), hasJSDoc);\r\n            }\r\n        }",
+      "callbackSite": "src/compiler/parser.ts:7766",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "ConstructorDeclaration | undefined",
+      "families": [
+        "object",
+        "undefined"
+      ],
+      "bodyReturns": [
+        "ConstructorDeclaration"
+      ],
+      "assertions": [
+        {
+          "site": "src/compiler/parser.ts:7775",
+          "before": "ConstructorDeclaration",
+          "after": "Mutable<ConstructorDeclaration>",
+          "beforeFamilies": [
+            "object"
+          ]
+        },
+        {
+          "site": "src/compiler/parser.ts:7776",
+          "before": "ConstructorDeclaration",
+          "after": "Mutable<ConstructorDeclaration>",
+          "beforeFamilies": [
+            "object"
+          ]
+        }
+      ],
+      "classification": "checked result specialization",
+      "reason": "unresolved generic or multiple runtime families; keep truthiness separate from result projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return tryParse(() => {\r\n            if (parseConstructorName()) {\r\n                const typeParameters = parseTypeParameters();\r\n                const parameters = parseParameters(SignatureFlags.None);\r\n                const type = parseReturnType(SyntaxKind.ColonToken, /*isType*/ false);\r\n                const body = parseFunctionBlockOrSemicolon(SignatureFlags.None, Diagnostics.or_expected);\r\n                const node = factory.createConstructorDeclaration(modifiers, parameters, body);\r\n\r\n                // Attach invalid nodes if they exist so that we can report them in the grammar checker.\r\n                (node as Mutable<ConstructorDeclaration>).typeParameters = typeParameters;\r\n                (node as Mutable<ConstructorDeclaration>).type = type;\r\n                return withJSDoc(finishNode(node, pos), hasJSDoc);\r\n            }\r\n        });"
+    },
+    {
+      "site": "src/compiler/parser.ts:7987",
+      "call": "tryParse",
+      "expression": "tryParse(nextTokenIsOnSameLineAndCanFollowModifier)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (!result)",
+        "truthiness (condition)"
+      ],
+      "callback": "nextTokenIsOnSameLineAndCanFollowModifier",
+      "callbackSite": "src/compiler/parser.ts:2758",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "false",
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (!tryParse(nextTokenIsOnSameLineAndCanFollowModifier)) {\r\n                return undefined;\r\n            }"
+    },
+    {
+      "site": "src/compiler/parser.ts:7991",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsOpenBrace)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "nextTokenIsOpenBrace",
+      "callbackSite": "src/compiler/parser.ts:8365",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (stopOnStartOfClassStaticBlock && token() === SyntaxKind.StaticKeyword && lookAhead(nextTokenIsOpenBrace)) {\r\n            return undefined;\r\n        }\r\n        else if (hasSeenStaticModifier && token() === SyntaxKind.StaticKeyword) {\r\n            return undefined;\r\n        }\r\n        else {\r\n            if (!parseAnyContextualModifier()) {\r\n                return undefined;\r\n            }\r\n        }"
+    },
+    {
+      "site": "src/compiler/parser.ts:8077",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsOpenBrace)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "nextTokenIsOpenBrace",
+      "callbackSite": "src/compiler/parser.ts:8365",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (token() === SyntaxKind.StaticKeyword && lookAhead(nextTokenIsOpenBrace)) {\r\n            return parseClassStaticBlockDeclaration(pos, hasJSDoc, modifiers);\r\n        }"
+    },
+    {
+      "site": "src/compiler/parser.ts:8193",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsIdentifierOrKeyword)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "nextTokenIsIdentifierOrKeyword",
+      "callbackSite": "src/compiler/parser.ts:2968",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return token() === SyntaxKind.ImplementsKeyword && lookAhead(nextTokenIsIdentifierOrKeyword);"
+    },
+    {
+      "site": "src/compiler/parser.ts:8257",
+      "call": "tryParse",
+      "expression": "tryParse(parseKeywordAndNoDot)",
+      "result": "TypeNode | undefined",
+      "tests": [
+        "truthiness (short circuit)"
+      ],
+      "callback": "parseKeywordAndNoDot",
+      "callbackSite": "src/compiler/parser.ts:4523",
+      "declared": "TypeNode | undefined",
+      "inferred": "TypeNode | undefined",
+      "families": [
+        "object",
+        "undefined"
+      ],
+      "bodyReturns": [
+        "TypeNode | undefined"
+      ],
+      "assertions": [],
+      "classification": "checked result specialization",
+      "reason": "unresolved generic or multiple runtime families; keep truthiness separate from result projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "const type = token() === SyntaxKind.IntrinsicKeyword && tryParse(parseKeywordAndNoDot) || parseType();",
+      "localUses": [
+        {
+          "site": "src/compiler/parser.ts:8259",
+          "tests": [
+            "value stored/passed or discarded; see source context"
+          ],
+          "context": "factory.createTypeAliasDeclaration(modifiers, name, typeParameters, type)"
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:8358",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsOpenParen)",
+      "result": "boolean",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "nextTokenIsOpenParen",
+      "callbackSite": "src/compiler/parser.ts:8361",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return token() === SyntaxKind.RequireKeyword &&\r\n            lookAhead(nextTokenIsOpenParen);"
+    },
+    {
+      "site": "src/compiler/parser.ts:8398",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsFromKeywordOrEqualsToken)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (short circuit)",
+        "truthiness (condition)"
+      ],
+      "callback": "nextTokenIsFromKeywordOrEqualsToken",
+      "callbackSite": "src/compiler/parser.ts:7557",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (\r\n            identifier?.escapedText === \"type\" &&\r\n            (token() !== SyntaxKind.FromKeyword || isIdentifier() && lookAhead(nextTokenIsFromKeywordOrEqualsToken)) &&\r\n            (isIdentifier() || tokenAfterImportDefinitelyProducesImportDeclaration())\r\n        ) {\r\n            phaseModifier = SyntaxKind.TypeKeyword;\r\n            identifier = isIdentifier() ? parseIdentifier() : undefined;\r\n        }\r\n        else if (\r\n            identifier?.escapedText === \"defer\" &&\r\n            (token() === SyntaxKind.FromKeyword ? !lookAhead(nextTokenIsStringLiteral) : token() !== SyntaxKind.CommaToken && token() !== SyntaxKind.EqualsToken)\r\n        ) {\r\n            phaseModifier = SyntaxKind.DeferKeyword;\r\n            identifier = isIdentifier() ? parseIdentifier() : undefined;\r\n        }"
+    },
+    {
+      "site": "src/compiler/parser.ts:8406",
+      "call": "lookAhead",
+      "expression": "lookAhead(nextTokenIsStringLiteral)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (!result)",
+        "truthiness (condition)"
+      ],
+      "callback": "nextTokenIsStringLiteral",
+      "callbackSite": "src/compiler/parser.ts:7553",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (\r\n            identifier?.escapedText === \"defer\" &&\r\n            (token() === SyntaxKind.FromKeyword ? !lookAhead(nextTokenIsStringLiteral) : token() !== SyntaxKind.CommaToken && token() !== SyntaxKind.EqualsToken)\r\n        ) {\r\n            phaseModifier = SyntaxKind.DeferKeyword;\r\n            identifier = isIdentifier() ? parseIdentifier() : undefined;\r\n        }"
+    },
+    {
+      "site": "src/compiler/parser.ts:8911",
+      "call": "scanRange",
+      "expression": "scanner.scanRange(start + 3, length - 5, doJSDocScan)",
+      "result": "JSDoc",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "callback": "doJSDocScan",
+      "callbackSite": "src/compiler/parser.ts:8915",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "JSDoc",
+      "families": [
+        "object"
+      ],
+      "bodyReturns": [
+        "JSDoc"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "unconditional rewind, no result test",
+      "context": "const result = scanner.scanRange(start + 3, length - 5, doJSDocScan);",
+      "localUses": [
+        {
+          "site": "src/compiler/parser.ts:8913",
+          "tests": [
+            "returned to caller"
+          ],
+          "context": "return result;"
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:9061",
+      "call": "lookAhead",
+      "expression": "lookAhead(isNextNonwhitespaceTokenEndOfFile)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "isNextNonwhitespaceTokenEndOfFile",
+      "callbackSite": "src/compiler/parser.ts:9046",
+      "declared": "boolean",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "true",
+        "false"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (lookAhead(isNextNonwhitespaceTokenEndOfFile)) {\r\n                        return; // Don't skip whitespace prior to EoF (or end of comment) - that shouldn't be included in any node's range\r\n                    }"
+    },
+    {
+      "site": "src/compiler/parser.ts:9072",
+      "call": "lookAhead",
+      "expression": "lookAhead(isNextNonwhitespaceTokenEndOfFile)",
+      "result": "boolean",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "isNextNonwhitespaceTokenEndOfFile",
+      "callbackSite": "src/compiler/parser.ts:9046",
+      "declared": "boolean",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "true",
+        "false"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (lookAhead(isNextNonwhitespaceTokenEndOfFile)) {\r\n                        return \"\"; // Don't skip whitespace prior to EoF (or end of comment) - that shouldn't be included in any node's range\r\n                    }"
+    },
+    {
+      "site": "src/compiler/parser.ts:9227",
+      "call": "resetTokenState",
+      "expression": "scanner.resetTokenState(scanner.getTokenEnd() - 1)",
+      "result": "void",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "inferred": "(no callback)",
+      "declared": "(no callback)",
+      "classification": "rewind, void result",
+      "context": "scanner.resetTokenState(scanner.getTokenEnd() - 1);"
+    },
+    {
+      "site": "src/compiler/parser.ts:9310",
+      "call": "tryParse",
+      "expression": "tryParse(parseJSDocLinkPrefix)",
+      "result": "\"link\" | \"linkcode\" | \"linkplain\" | undefined",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "callback": "parseJSDocLinkPrefix",
+      "callbackSite": "src/compiler/parser.ts:9346",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "\"link\" | \"linkcode\" | \"linkplain\" | undefined",
+      "families": [
+        "string",
+        "undefined"
+      ],
+      "bodyReturns": [
+        "\"link\" | \"linkcode\" | \"linkplain\""
+      ],
+      "assertions": [],
+      "classification": "checked result specialization",
+      "reason": "unresolved generic or multiple runtime families; keep truthiness separate from result projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "const linkType = tryParse(parseJSDocLinkPrefix);",
+      "localUses": [
+        {
+          "site": "src/compiler/parser.ts:9311",
+          "tests": [
+            "truthiness (!result)",
+            "truthiness (condition)"
+          ],
+          "context": "!linkType"
+        },
+        {
+          "site": "src/compiler/parser.ts:9322",
+          "tests": [
+            "comparison: linkType === \"link\"",
+            "truthiness (conditional)"
+          ],
+          "context": "linkType === \"link\""
+        },
+        {
+          "site": "src/compiler/parser.ts:9323",
+          "tests": [
+            "comparison: linkType === \"linkcode\"",
+            "truthiness (conditional)"
+          ],
+          "context": "linkType === \"linkcode\""
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:9429",
+      "call": "lookAhead",
+      "expression": "lookAhead(parseJSDocLinkPrefix)",
+      "result": "\"link\" | \"linkcode\" | \"linkplain\" | undefined",
+      "tests": [
+        "truthiness (!result)",
+        "truthiness (condition)"
+      ],
+      "callback": "parseJSDocLinkPrefix",
+      "callbackSite": "src/compiler/parser.ts:9346",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "\"link\" | \"linkcode\" | \"linkplain\" | undefined",
+      "families": [
+        "string",
+        "undefined"
+      ],
+      "bodyReturns": [
+        "\"link\" | \"linkcode\" | \"linkplain\""
+      ],
+      "assertions": [],
+      "classification": "checked result specialization",
+      "reason": "unresolved generic or multiple runtime families; keep truthiness separate from result projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "if (isNameFirst && !lookAhead(parseJSDocLinkPrefix)) {\r\n                    typeExpression = tryParseTypeExpression();\r\n                }"
+    },
+    {
+      "site": "src/compiler/parser.ts:9451",
+      "call": "tryParse",
+      "expression": "tryParse(() => parseChildParameterOrPropertyTag(target, indent, name))",
+      "result": "false | JSDocTemplateTag | JSDocParameterTag | JSDocPropertyTag | JSDocTypeTag | JSDocThisTag",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "() => parseChildParameterOrPropertyTag(target, indent, name)",
+      "callbackSite": "src/compiler/parser.ts:9451",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "false | JSDocTemplateTag | JSDocParameterTag | JSDocPropertyTag | JSDocTypeTag | JSDocThisTag",
+      "families": [
+        "boolean",
+        "object"
+      ],
+      "bodyReturns": [
+        "false | JSDocTemplateTag | JSDocParameterTag | JSDocPropertyTag | JSDocTypeTag | JSDocThisTag"
+      ],
+      "assertions": [],
+      "classification": "checked result specialization",
+      "reason": "unresolved generic or multiple runtime families; keep truthiness separate from result projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "while (child = tryParse(() => parseChildParameterOrPropertyTag(target, indent, name))) {\r\n                        if (child.kind === SyntaxKind.JSDocParameterTag || child.kind === SyntaxKind.JSDocPropertyTag) {\r\n                            children = append(children, child);\r\n                        }\r\n                        else if (child.kind === SyntaxKind.JSDocTemplateTag) {\r\n                            parseErrorAtRange(child.tagName, Diagnostics.A_JSDoc_template_tag_may_not_follow_a_typedef_callback_or_overload_tag);\r\n                        }\r\n                    }",
+      "assignedUses": [
+        {
+          "site": "src/compiler/parser.ts:9452",
+          "tests": [
+            "comparison: child.kind === SyntaxKind.JSDocParameterTag",
+            "truthiness (short circuit)"
+          ],
+          "context": "child.kind"
+        },
+        {
+          "site": "src/compiler/parser.ts:9452",
+          "tests": [
+            "comparison: child.kind === SyntaxKind.JSDocPropertyTag"
+          ],
+          "context": "child.kind"
+        },
+        {
+          "site": "src/compiler/parser.ts:9453",
+          "tests": [
+            "value stored/passed or discarded; see source context"
+          ],
+          "context": "append(children, child)"
+        },
+        {
+          "site": "src/compiler/parser.ts:9455",
+          "tests": [
+            "comparison: child.kind === SyntaxKind.JSDocTemplateTag"
+          ],
+          "context": "child.kind"
+        },
+        {
+          "site": "src/compiler/parser.ts:9456",
+          "tests": [
+            "value stored/passed or discarded; see source context"
+          ],
+          "context": "child.tagName"
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:9487",
+      "call": "lookAhead",
+      "expression": "lookAhead(() => nextTokenJSDoc() === SyntaxKind.AtToken && tokenIsIdentifierOrKeyword(nextTokenJSDoc()) && isJSDocLinkTag(scanner.getTokenValue()))",
+      "result": "boolean",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "callback": "() => nextTokenJSDoc() === SyntaxKind.AtToken && tokenIsIdentifierOrKeyword(nextTokenJSDoc()) && isJSDocLinkTag(scanner.getTokenValue())",
+      "callbackSite": "src/compiler/parser.ts:9487",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "boolean",
+      "families": [
+        "boolean"
+      ],
+      "bodyReturns": [
+        "boolean"
+      ],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "const isMarkdownOrJSDocLink = token() === SyntaxKind.OpenBracketToken\r\n                    || lookAhead(() => nextTokenJSDoc() === SyntaxKind.AtToken && tokenIsIdentifierOrKeyword(nextTokenJSDoc()) && isJSDocLinkTag(scanner.getTokenValue()));",
+      "localUses": [
+        {
+          "site": "src/compiler/parser.ts:9488",
+          "tests": [
+            "truthiness (conditional)"
+          ],
+          "context": "isMarkdownOrJSDocLink ? undefined : parseJSDocNameReference()"
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:9526",
+      "call": "resetTokenState",
+      "expression": "scanner.resetTokenState(scanner.getTokenEnd())",
+      "result": "void",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "inferred": "(no callback)",
+      "declared": "(no callback)",
+      "classification": "rewind, void result",
+      "context": "scanner.resetTokenState(scanner.getTokenEnd());"
+    },
+    {
+      "site": "src/compiler/parser.ts:9624",
+      "call": "tryParse",
+      "expression": "tryParse(() => parseChildPropertyTag(indent))",
+      "result": "false | JSDocTemplateTag | JSDocPropertyTag | JSDocTypeTag",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "() => parseChildPropertyTag(indent)",
+      "callbackSite": "src/compiler/parser.ts:9624",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "false | JSDocTemplateTag | JSDocPropertyTag | JSDocTypeTag",
+      "families": [
+        "boolean",
+        "object"
+      ],
+      "bodyReturns": [
+        "false | JSDocTemplateTag | JSDocPropertyTag | JSDocTypeTag"
+      ],
+      "assertions": [],
+      "classification": "checked result specialization",
+      "reason": "unresolved generic or multiple runtime families; keep truthiness separate from result projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "while (child = tryParse(() => parseChildPropertyTag(indent))) {\r\n                        if (child.kind === SyntaxKind.JSDocTemplateTag) {\r\n                            break;\r\n                        }\r\n                        hasChildren = true;\r\n                        if (child.kind === SyntaxKind.JSDocTypeTag) {\r\n                            if (childTypeTag) {\r\n                                const lastError = parseErrorAtCurrentToken(Diagnostics.A_JSDoc_typedef_comment_may_not_contain_multiple_type_tags);\r\n                                if (lastError) {\r\n                                    addRelatedInfo(lastError, createDetachedDiagnostic(fileName, sourceText, 0, 0, Diagnostics.The_tag_was_first_specified_here));\r\n                                }\r\n                                break;\r\n                            }\r\n                            else {\r\n                                childTypeTag = child;\r\n                            }\r\n                        }\r\n                        else {\r\n                            jsDocPropertyTags = append(jsDocPropertyTags, child);\r\n                        }\r\n                    }",
+      "assignedUses": [
+        {
+          "site": "src/compiler/parser.ts:9625",
+          "tests": [
+            "comparison: child.kind === SyntaxKind.JSDocTemplateTag"
+          ],
+          "context": "child.kind"
+        },
+        {
+          "site": "src/compiler/parser.ts:9629",
+          "tests": [
+            "comparison: child.kind === SyntaxKind.JSDocTypeTag"
+          ],
+          "context": "child.kind"
+        },
+        {
+          "site": "src/compiler/parser.ts:9638",
+          "tests": [
+            "value stored/passed or discarded; see source context"
+          ],
+          "context": "childTypeTag = child"
+        },
+        {
+          "site": "src/compiler/parser.ts:9642",
+          "tests": [
+            "value stored/passed or discarded; see source context"
+          ],
+          "context": "append(jsDocPropertyTags, child)"
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:9695",
+      "call": "tryParse",
+      "expression": "tryParse(() => parseChildParameterOrPropertyTag(PropertyLikeParse.CallbackParameter, indent) as JSDocParameterTag | JSDocTemplateTag)",
+      "result": "JSDocTemplateTag | JSDocParameterTag",
+      "tests": [
+        "truthiness (condition)"
+      ],
+      "callback": "() => parseChildParameterOrPropertyTag(PropertyLikeParse.CallbackParameter, indent) as JSDocParameterTag | JSDocTemplateTag",
+      "callbackSite": "src/compiler/parser.ts:9695",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "JSDocTemplateTag | JSDocParameterTag",
+      "families": [
+        "object"
+      ],
+      "bodyReturns": [
+        "JSDocTemplateTag | JSDocParameterTag"
+      ],
+      "assertions": [
+        {
+          "site": "src/compiler/parser.ts:9695",
+          "before": "false | JSDocTemplateTag | JSDocParameterTag | JSDocPropertyTag | JSDocTypeTag | JSDocThisTag",
+          "after": "JSDocTemplateTag | JSDocParameterTag",
+          "beforeFamilies": [
+            "boolean",
+            "object"
+          ]
+        }
+      ],
+      "classification": "checked result specialization",
+      "reason": "callback body contains an assertion dropping a runtime family; inspect before projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "while (child = tryParse(() => parseChildParameterOrPropertyTag(PropertyLikeParse.CallbackParameter, indent) as JSDocParameterTag | JSDocTemplateTag)) {\r\n                    if (child.kind === SyntaxKind.JSDocTemplateTag) {\r\n                        parseErrorAtRange(child.tagName, Diagnostics.A_JSDoc_template_tag_may_not_follow_a_typedef_callback_or_overload_tag);\r\n                        break;\r\n                    }\r\n                    parameters = append(parameters, child);\r\n                }",
+      "assignedUses": [
+        {
+          "site": "src/compiler/parser.ts:9696",
+          "tests": [
+            "comparison: child.kind === SyntaxKind.JSDocTemplateTag"
+          ],
+          "context": "child.kind"
+        },
+        {
+          "site": "src/compiler/parser.ts:9697",
+          "tests": [
+            "value stored/passed or discarded; see source context"
+          ],
+          "context": "child.tagName"
+        },
+        {
+          "site": "src/compiler/parser.ts:9700",
+          "tests": [
+            "value stored/passed or discarded; see source context"
+          ],
+          "context": "append(parameters, child)"
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:9707",
+      "call": "tryParse",
+      "expression": "tryParse(() => {\r\n                    if (parseOptionalJsdoc(SyntaxKind.AtToken)) {\r\n                        const tag = parseTag(indent);\r\n                        if (tag && tag.kind === SyntaxKind.JSDocReturnTag) {\r\n                            return tag as JSDocReturnTag;\r\n                        }\r\n                    }\r\n                })",
+      "result": "JSDocReturnTag | undefined",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "callback": "() => {\r\n                    if (parseOptionalJsdoc(SyntaxKind.AtToken)) {\r\n                        const tag = parseTag(indent);\r\n                        if (tag && tag.kind === SyntaxKind.JSDocReturnTag) {\r\n                            return tag as JSDocReturnTag;\r\n                        }\r\n                    }\r\n                }",
+      "callbackSite": "src/compiler/parser.ts:9707",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "JSDocReturnTag | undefined",
+      "families": [
+        "object",
+        "undefined"
+      ],
+      "bodyReturns": [
+        "JSDocReturnTag"
+      ],
+      "assertions": [
+        {
+          "site": "src/compiler/parser.ts:9711",
+          "before": "JSDocTag",
+          "after": "JSDocReturnTag",
+          "beforeFamilies": [
+            "object"
+          ]
+        }
+      ],
+      "classification": "checked result specialization",
+      "reason": "unresolved generic or multiple runtime families; keep truthiness separate from result projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "const returnTag = tryParse(() => {\r\n                    if (parseOptionalJsdoc(SyntaxKind.AtToken)) {\r\n                        const tag = parseTag(indent);\r\n                        if (tag && tag.kind === SyntaxKind.JSDocReturnTag) {\r\n                            return tag as JSDocReturnTag;\r\n                        }\r\n                    }\r\n                });",
+      "localUses": [
+        {
+          "site": "src/compiler/parser.ts:9715",
+          "tests": [
+            "returned to caller"
+          ],
+          "context": "factory.createJSDocSignature(/*typeParameters*/ undefined, parameters, returnTag)"
+        }
+      ]
+    },
+    {
+      "site": "src/compiler/scanner.ts:2602",
+      "call": "scanRange",
+      "expression": "scanRange(startOfRegExpBody, endOfRegExpBody - startOfRegExpBody, () => {\r\n                        scanRegularExpressionWorker(regExpFlags, /*annexB*/ true, namedCaptureGroups);\r\n                    })",
+      "result": "void",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "callback": "() => {\r\n                        scanRegularExpressionWorker(regExpFlags, /*annexB*/ true, namedCaptureGroups);\r\n                    }",
+      "callbackSite": "src/compiler/scanner.ts:2602",
+      "declared": "(inferred, no return annotation)",
+      "inferred": "void",
+      "families": [
+        "undefined"
+      ],
+      "bodyReturns": [],
+      "assertions": [],
+      "classification": "one proven runtime family",
+      "reason": "checker establishes one representation family; literals/enums retain exact values",
+      "helperTest": "unconditional rewind, no result test",
+      "context": "scanRange(startOfRegExpBody, endOfRegExpBody - startOfRegExpBody, () => {\r\n                        scanRegularExpressionWorker(regExpFlags, /*annexB*/ true, namedCaptureGroups);\r\n                    });"
+    },
+    {
+      "site": "src/compiler/scanner.ts:3978",
+      "call": "speculationHelper",
+      "expression": "speculationHelper(callback, /*isLookahead*/ true)",
+      "result": "T",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "callback",
+      "callbackSite": "src/compiler/scanner.ts:3977",
+      "declared": "T",
+      "inferred": "T",
+      "families": [
+        "unresolved"
+      ],
+      "bodyReturns": [],
+      "assertions": [],
+      "classification": "checked result specialization",
+      "reason": "unresolved generic or multiple runtime families; keep truthiness separate from result projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return speculationHelper(callback, /*isLookahead*/ true);"
+    },
+    {
+      "site": "src/compiler/scanner.ts:3982",
+      "call": "speculationHelper",
+      "expression": "speculationHelper(callback, /*isLookahead*/ false)",
+      "result": "T",
+      "tests": [
+        "returned to caller"
+      ],
+      "callback": "callback",
+      "callbackSite": "src/compiler/scanner.ts:3981",
+      "declared": "T",
+      "inferred": "T",
+      "families": [
+        "unresolved"
+      ],
+      "bodyReturns": [],
+      "assertions": [],
+      "classification": "checked result specialization",
+      "reason": "unresolved generic or multiple runtime families; keep truthiness separate from result projection",
+      "helperTest": "scanner !result || isLookahead; parser !result || kind !== TryParse (when used)",
+      "context": "return speculationHelper(callback, /*isLookahead*/ false);"
+    },
+    {
+      "site": "src/compiler/scanner.ts:3996",
+      "call": "resetTokenState",
+      "expression": "resetTokenState(start || 0)",
+      "result": "void",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ],
+      "inferred": "(no callback)",
+      "declared": "(no callback)",
+      "classification": "rewind, void result",
+      "context": "resetTokenState(start || 0);"
+    }
+  ],
+  "rescans": [
+    {
+      "site": "src/compiler/parser.ts:2225",
+      "call": "reScanGreaterToken",
+      "expression": "scanner.reScanGreaterToken()",
+      "result": "SyntaxKind",
+      "tests": [
+        "returned to caller"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:2229",
+      "call": "reScanSlashToken",
+      "expression": "scanner.reScanSlashToken()",
+      "result": "SyntaxKind",
+      "tests": [
+        "returned to caller"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:2233",
+      "call": "reScanTemplateToken",
+      "expression": "scanner.reScanTemplateToken(isTaggedTemplate)",
+      "result": "SyntaxKind",
+      "tests": [
+        "returned to caller"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:2237",
+      "call": "reScanLessThanToken",
+      "expression": "scanner.reScanLessThanToken()",
+      "result": "SyntaxKind",
+      "tests": [
+        "returned to caller"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:2241",
+      "call": "reScanHashToken",
+      "expression": "scanner.reScanHashToken()",
+      "result": "SyntaxKind",
+      "tests": [
+        "returned to caller"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:2665",
+      "call": "reScanInvalidIdentifier",
+      "expression": "scanner.reScanInvalidIdentifier()",
+      "result": "SyntaxKind",
+      "tests": [
+        "comparison: scanner.reScanInvalidIdentifier() === SyntaxKind.Identifier"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:3715",
+      "call": "reScanTemplateToken",
+      "expression": "reScanTemplateToken(isTaggedTemplate)",
+      "result": "SyntaxKind",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:3741",
+      "call": "reScanTemplateToken",
+      "expression": "reScanTemplateToken(/*isTaggedTemplate*/ false)",
+      "result": "SyntaxKind",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:3792",
+      "call": "reScanLessThanToken",
+      "expression": "reScanLessThanToken()",
+      "result": "SyntaxKind",
+      "tests": [
+        "comparison: reScanLessThanToken() === SyntaxKind.LessThanToken"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:4605",
+      "call": "reScanAsteriskEqualsToken",
+      "expression": "scanner.reScanAsteriskEqualsToken()",
+      "result": "SyntaxKind",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:4611",
+      "call": "reScanQuestionToken",
+      "expression": "scanner.reScanQuestionToken()",
+      "result": "SyntaxKind",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:5128",
+      "call": "reScanGreaterToken",
+      "expression": "reScanGreaterToken()",
+      "result": "SyntaxKind",
+      "tests": [
+        "truthiness (condition)"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:5613",
+      "call": "reScanGreaterToken",
+      "expression": "reScanGreaterToken()",
+      "result": "SyntaxKind",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:6171",
+      "call": "reScanJsxToken",
+      "expression": "scanner.reScanJsxToken()",
+      "result": "JsxTokenSyntaxKind",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:6510",
+      "call": "reScanTemplateToken",
+      "expression": "reScanTemplateToken(/*isTaggedTemplate*/ true)",
+      "result": "SyntaxKind",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:6568",
+      "call": "reScanLessThanToken",
+      "expression": "reScanLessThanToken()",
+      "result": "SyntaxKind",
+      "tests": [
+        "comparison: reScanLessThanToken() !== SyntaxKind.LessThanToken"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:6574",
+      "call": "reScanGreaterToken",
+      "expression": "reScanGreaterToken()",
+      "result": "SyntaxKind",
+      "tests": [
+        "comparison: reScanGreaterToken() !== SyntaxKind.GreaterThanToken"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:6612",
+      "call": "reScanTemplateToken",
+      "expression": "reScanTemplateToken(/*isTaggedTemplate*/ false)",
+      "result": "SyntaxKind",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:6650",
+      "call": "reScanSlashToken",
+      "expression": "reScanSlashToken()",
+      "result": "SyntaxKind",
+      "tests": [
+        "comparison: reScanSlashToken() === SyntaxKind.RegularExpressionLiteral"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:8828",
+      "call": "reScanHashToken",
+      "expression": "reScanHashToken()",
+      "result": "SyntaxKind",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:9337",
+      "call": "reScanHashToken",
+      "expression": "reScanHashToken()",
+      "result": "SyntaxKind",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ]
+    }
+  ],
+  "textResets": [
+    {
+      "site": "src/compiler/parser.ts:1772",
+      "call": "setText",
+      "expression": "scanner.setText(sourceText)",
+      "result": "void",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:1783",
+      "call": "setText",
+      "expression": "scanner.setText(\"\")",
+      "result": "void",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ]
+    },
+    {
+      "site": "src/compiler/parser.ts:8793",
+      "call": "setText",
+      "expression": "scanner.setText(content, start, length)",
+      "result": "void",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ]
+    },
+    {
+      "site": "src/compiler/scanner.ts:1058",
+      "call": "setText",
+      "expression": "setText(text, start, length)",
+      "result": "void",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ]
+    },
+    {
+      "site": "src/compiler/scanner.ts:3962",
+      "call": "setText",
+      "expression": "setText(text, start, length)",
+      "result": "void",
+      "tests": [
+        "value stored/passed or discarded; see source context"
+      ]
+    }
+  ]
+}

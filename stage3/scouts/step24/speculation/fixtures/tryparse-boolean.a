@@ -1,0 +1,52 @@
+// Portions Copyright (c) Microsoft Corporation. MIT license: ../LICENSE.upstream.txt.
+// Trimmed from scanner.ts:3930-3983. These six saved fields are unchanged.
+let pos = 10;
+let fullStartPos = 8;
+let tokenStart = 9;
+let token = 1;
+let tokenValue = "";
+let tokenFlags = 0;
+function speculationHelper<T>(callback: () => T, isLookahead: boolean): T {
+    const savePos = pos;
+    const saveStartPos = fullStartPos;
+    const saveTokenPos = tokenStart;
+    const saveToken = token;
+    const saveTokenValue = tokenValue;
+    const saveTokenFlags = tokenFlags;
+    const result = callback();
+    if (!result || isLookahead) {
+        pos = savePos;
+        fullStartPos = saveStartPos;
+        tokenStart = saveTokenPos;
+        token = saveToken;
+        tokenValue = saveTokenValue;
+        tokenFlags = saveTokenFlags;
+    }
+    return result;
+}
+function lookAhead<T>(callback: () => T): T {
+    return speculationHelper(callback, true);
+}
+function tryParse<T>(callback: () => T): T {
+    return speculationHelper(callback, false);
+}
+function nextToken(): number {
+    pos += 1;
+    fullStartPos = pos;
+    tokenStart = pos;
+    token = 2;
+    tokenValue = "next";
+    tokenFlags = 4;
+    return token;
+}
+function snapshot(): string {
+    return `${pos}:${fullStartPos}:${tokenStart}:${token}:${tokenValue}:${tokenFlags}`;
+}
+// parser.ts:2755 and 2777: nextTokenCanFollowModifier's boolean decision.
+function nextTokenCanFollowModifier(): boolean {
+    return nextToken() === 2;
+}
+const accepted = tryParse(nextTokenCanFollowModifier);
+console.log(`${accepted}:${snapshot()}`);
+const rejected = tryParse(() => { nextToken(); return false; });
+console.log(`${rejected}:${snapshot()}`);

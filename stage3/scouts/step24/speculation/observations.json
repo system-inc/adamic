@@ -1,0 +1,180 @@
+{
+  "compilerCommit": "45487a809f89885a3fc651cd590e7dabf31362dc",
+  "node": "v24.19.0",
+  "typescript": "6.0.3",
+  "nproc": "5",
+  "cpuMax": "400000 100000",
+  "wallSeconds": 3.071,
+  "results": [
+    {
+      "fixture": "lookahead",
+      "sourceNode": {
+        "status": 0,
+        "signal": null,
+        "stdout": "true:10:8:9:1::0\ntrue:10:8:9:1::0\n",
+        "stderr": ""
+      },
+      "mutant": "lookahead commits a truthy result",
+      "mutantObservation": {
+        "status": 0,
+        "signal": null,
+        "stdout": "true:10:8:9:1::0\ntrue:11:11:11:2:next:4\n",
+        "stderr": ""
+      },
+      "caughtBy": "stdout comparison to the stock source Node baseline",
+      "native": {
+        "compiled": false,
+        "build": {
+          "status": 1,
+          "signal": null,
+          "stdout": "",
+          "stderr": "adamic: /workspace/adamic/stage3/scouts/step24/speculation/fixtures/lookahead.a:17:9: stage 0 can't lower a PrefixUnaryExpression on a number yet\n"
+        }
+      },
+      "javascript": {
+        "compiled": false,
+        "build": {
+          "status": 1,
+          "signal": null,
+          "stdout": "",
+          "stderr": "adamic: /workspace/adamic/stage3/scouts/step24/speculation/fixtures/lookahead.a:17:9: stage 0 can't lower a PrefixUnaryExpression on a number yet\n"
+        }
+      }
+    },
+    {
+      "fixture": "tryparse-boolean",
+      "sourceNode": {
+        "status": 0,
+        "signal": null,
+        "stdout": "true:11:11:11:2:next:4\nfalse:11:11:11:2:next:4\n",
+        "stderr": ""
+      },
+      "mutant": "false no longer rewinds",
+      "mutantObservation": {
+        "status": 0,
+        "signal": null,
+        "stdout": "true:11:11:11:2:next:4\nfalse:12:12:12:2:next:4\n",
+        "stderr": ""
+      },
+      "caughtBy": "stdout comparison to the stock source Node baseline",
+      "native": {
+        "compiled": true,
+        "observation": {
+          "status": 0,
+          "signal": null,
+          "stdout": "true:11:11:11:2:next:4\nfalse:11:11:11:2:next:4\n",
+          "stderr": "adamic: counts: allocations 16 frees 16 retains 7 releases 25 peak 7 regions 0\n"
+        },
+        "counts": "adamic: counts: allocations 16 frees 16 retains 7 releases 25 peak 7 regions 0\n",
+        "mutantObservation": {
+          "status": 0,
+          "signal": null,
+          "stdout": "true:11:11:11:2:next:4\nfalse:12:12:12:2:next:4\n",
+          "stderr": ""
+        },
+        "mutantCaughtBy": "stdout comparison to source Node"
+      },
+      "javascript": {
+        "compiled": true,
+        "observation": {
+          "status": 0,
+          "signal": null,
+          "stdout": "true:11:11:11:2:next:4\nfalse:11:11:11:2:next:4\n",
+          "stderr": ""
+        },
+        "mutantObservation": {
+          "status": 0,
+          "signal": null,
+          "stdout": "true:11:11:11:2:next:4\nfalse:12:12:12:2:next:4\n",
+          "stderr": ""
+        },
+        "mutantCaughtBy": "stdout comparison to source Node"
+      }
+    },
+    {
+      "fixture": "tryparse-node",
+      "sourceNode": {
+        "status": 0,
+        "signal": null,
+        "stdout": "true:10:8:9:1::0\nconstructor:11:11:11:2:next:4\n",
+        "stderr": ""
+      },
+      "mutant": "accept a non-constructor literal",
+      "mutantObservation": {
+        "status": 0,
+        "signal": null,
+        "stdout": "false:11:11:11:2:next:4\nundefined:11:11:11:2:next:4\n",
+        "stderr": ""
+      },
+      "caughtBy": "stdout comparison to the stock source Node baseline",
+      "native": {
+        "compiled": false,
+        "build": {
+          "status": 1,
+          "signal": null,
+          "stdout": "",
+          "stderr": "adamic: /workspace/adamic/stage3/scouts/step24/speculation/fixtures/tryparse-node.a:17:9: stage 0 can't lower a PrefixUnaryExpression on a value yet\n"
+        }
+      },
+      "javascript": {
+        "compiled": false,
+        "build": {
+          "status": 1,
+          "signal": null,
+          "stdout": "",
+          "stderr": "adamic: /workspace/adamic/stage3/scouts/step24/speculation/fixtures/tryparse-node.a:17:9: stage 0 can't lower a PrefixUnaryExpression on a value yet\n"
+        }
+      }
+    },
+    {
+      "fixture": "scan-range",
+      "sourceNode": {
+        "status": 0,
+        "signal": null,
+        "stdout": "true:30:10:8:9:1::0:7\ntrue:30:10\n",
+        "stderr": ""
+      },
+      "mutant": "omit comment directive restoration",
+      "mutantObservation": {
+        "status": 0,
+        "signal": null,
+        "stdout": "true:30:10:8:9:1::0:99\ntrue:30:10\n",
+        "stderr": ""
+      },
+      "caughtBy": "stdout comparison to the stock source Node baseline",
+      "native": {
+        "compiled": true,
+        "observation": {
+          "status": 0,
+          "signal": null,
+          "stdout": "true:30:10:8:9:1::0:7\ntrue:30:10\n",
+          "stderr": "adamic: counts: allocations 14 frees 14 retains 13 releases 30 peak 10 regions 0\n"
+        },
+        "counts": "adamic: counts: allocations 14 frees 14 retains 13 releases 30 peak 10 regions 0\n",
+        "mutantObservation": {
+          "status": 0,
+          "signal": null,
+          "stdout": "true:30:10:8:9:1::0:99\ntrue:30:10\n",
+          "stderr": ""
+        },
+        "mutantCaughtBy": "stdout comparison to source Node"
+      },
+      "javascript": {
+        "compiled": true,
+        "observation": {
+          "status": 0,
+          "signal": null,
+          "stdout": "true:30:10:8:9:1::0:7\ntrue:30:10\n",
+          "stderr": ""
+        },
+        "mutantObservation": {
+          "status": 0,
+          "signal": null,
+          "stdout": "true:30:10:8:9:1::0:99\ntrue:30:10\n",
+          "stderr": ""
+        },
+        "mutantCaughtBy": "stdout comparison to source Node"
+      }
+    }
+  ]
+}
