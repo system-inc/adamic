@@ -364,6 +364,33 @@
           "certification_basis": "complete original declaration/read spans retained in fixtures; reduced adjacent helpers/data carriers; Node and both backends; directional signature and deferred payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "r44",
+      "pairs": 1,
+      "candidateReads": 38,
+      "members": [
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createReturnStatement",
+          "declared_types": [
+            "(expression?: Expression | undefined) => ReturnStatement"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 38,
+          "witness": {
+            "file": "src/compiler/factory/nodeConverters.ts",
+            "line": 56,
+            "column": 33
+          },
+          "rank": 44,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers; Node, native release/sanitized and JavaScript; executable callable check mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }
