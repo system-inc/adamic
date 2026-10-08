@@ -1,0 +1,5 @@
+{
+  "name": "no-unwanted-polyfillio-gate-inverted",
+  "from": "if (source.startsWith('https://cdn.polyfill.io/v2/') || source.startsWith('https://polyfill.io/v3/'))",
+  "to": "if (!(source.startsWith('https://cdn.polyfill.io/v2/') || source.startsWith('https://polyfill.io/v3/')))"
+}

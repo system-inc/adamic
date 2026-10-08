@@ -1,0 +1,94 @@
+import { bindingsOf } from '../../helpers/imports/bindings_of.a';
+import type { HelperNode as ImportNode } from '../../helpers/imports/nodes.a';
+import { attributeName } from '../../helpers/jsx/attribute_name.a';
+import { unescapeStringLiteralText } from '../../helpers/ecmascript/text/unescape_string_literal_text.a';
+import type { RuleContext } from '../../context.ts';
+import { JsxArena } from '../../helpers/jsx/ast.a';
+import type { HelperNode } from '../../helpers/jsx/ast.a';
+import { elementParts } from '../../helpers/jsx/element_parts.a';
+import { isIntrinsicElementNamed } from '../../helpers/jsx/intrinsic_element_named.a';
+import { messageNoUnwantedPolyfillioSecurity, duplicateMessage, shippedFeatures } from './messages.a';
+
+export class Rule {
+ readonly context: RuleContext;
+ readonly importNodes: ImportNode[] = [];
+ nextScriptLocalName = '';
+ readonly nodes: HelperNode[] = [];
+ readonly arena: JsxArena;
+ constructor(context: RuleContext) { this.context = context; this.arena = new JsxArena(this.nodes); }
+ prepare(root: number): void {
+  this.projectImports();
+  // Project structural parser facts once. Node identities remain the parser's numeric indices.
+  for (const node of this.context.parser.nodes) {
+   let attributes = -1;
+   if (node.kind === 'JsxOpeningElement' || node.kind === 'JsxSelfClosingElement') {
+    for (const child of node.children) {
+     if (this.context.node(child).kind === 'JsxAttributes') { attributes = child; }
+    }
+   }
+   this.nodes.push({kind:node.kind,text:node.text,name:node.kind === 'JsxAttribute' ? node.children[0] ?? -1 : -1,
+    tagName:node.kind === 'JsxOpeningElement' || node.kind === 'JsxSelfClosingElement' ? node.children[0] ?? -1 : -1,
+    attributes:attributes,properties:node.kind === 'JsxAttributes' ? node.children : [],propertiesPresent:node.kind === 'JsxAttributes'});
+  }
+ }
+ projectImports(): void {
+  for (const node of this.context.parser.nodes) {
+   let clause = -1; let namedBindings = -1; let name = -1;
+   for (const child of node.children) {
+    const kind = this.context.kind(child);
+    if (node.kind === 'ImportDeclaration' && kind === 'ImportClause') { clause = child; }
+    if (node.kind === 'ImportClause' && (kind === 'NamedImports' || kind === 'NamespaceImport')) { namedBindings = child; }
+    if ((node.kind === 'ImportClause' || node.kind === 'NamespaceImport' || node.kind === 'ImportSpecifier') && kind === 'Identifier') { name = child; }
+   }
+   this.importNodes.push({kind:node.kind,text:node.text,expression:-1,name:name,importClause:clause,namedBindings:namedBindings,propertyName:-1,elements:node.kind === 'NamedImports' ? node.children : []});
+  }
+ }
+ visit(index: number): void {
+  if (this.context.kind(index) === 'ImportDeclaration') { this.recordImport(index); return; }
+  const parts = elementParts(this.arena,index);
+  const tag = parts.tagName < 0 ? undefined : this.nodes[parts.tagName];
+  if (tag === undefined || tag.kind !== 'Identifier') { return; }
+  if (!isIntrinsicElementNamed(parts.tagName,tag.kind,tag.text,'script') && (this.nextScriptLocalName === '' || tag.text !== this.nextScriptLocalName)) { return; }
+  let source = ''; let sourceNode = -1;
+  for (const property of this.context.node(parts.attributes).children) {
+   const name = attributeName(this.nodes,property);
+   if (!name.named || name.name !== 'src') { continue; }
+   const initializer = this.context.child(property,1);
+   if (this.context.kind(initializer) === 'StringLiteral') { source = unescapeStringLiteralText(this.context.node(initializer).text); sourceNode = property; }
+   break;
+  }
+  if (sourceNode < 0) { return; }
+  if (source.startsWith('https://cdn.polyfill.io/v2/') || source.startsWith('https://polyfill.io/v3/')) {
+   this.context.report(sourceNode,'@next/next/no-unwanted-polyfillio','noUnwantedPolyfillioSecurity',messageNoUnwantedPolyfillioSecurity,'','',''); return;
+  }
+  if (!source.startsWith('https://polyfill-fastly.net/') && !source.startsWith('https://polyfill-fastly.io/') && !source.startsWith('https://cdnjs.cloudflare.com/polyfill/')) { return; }
+  const question = source.indexOf('?'); if (question < 0) { return; }
+  let features = ''; let found = false;
+  for (const pair of source.slice(question+1).split('&')) {
+   const equals = pair.indexOf('=');
+   if (equals >= 0 && pair.slice(0,equals) === 'features') { features = pair.slice(equals+1); found = true; break; }
+  }
+  if (!found) { return; }
+  const unwanted: string[] = [];
+  for (const feature of features.replaceAll('%2C',',').split(',')) {
+   if (shippedFeatures.includes(feature)) { unwanted.push(feature); }
+  }
+  if (unwanted.length === 0) { return; }
+  this.context.report(sourceNode,'@next/next/no-unwanted-polyfillio','noUnwantedPolyfillioDuplicate',duplicateMessage(unwanted),'','','');
+ }
+ recordImport(index: number): void {
+  if (this.nextScriptLocalName !== '') { return; }
+  let matches = false;
+  for (const child of this.context.node(index).children) {
+   const node = this.context.node(child);
+   if ((node.kind === 'StringLiteral' || node.kind === 'NoSubstitutionTemplateLiteral') && node.text === 'next/script') { matches = true; }
+  }
+  if (!matches) { return; }
+  const bindings = bindingsOf(this.importNodes,index);
+  for (const binding of [bindings.default,bindings.namespace].concat(bindings.named)) {
+   const name = this.context.kind(binding) === 'Identifier' ? binding : this.importNodes[binding]?.name ?? -1;
+   if (this.context.kind(name) === 'Identifier') { this.nextScriptLocalName = this.context.node(name).text; return; }
+  }
+ }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
