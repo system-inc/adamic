@@ -16,6 +16,8 @@ type Program struct {
 	// GraphTypes selects ownership by checker identity and negative allocation-site
 	// flow IDs after the cycle proof.
 	GraphTypes map[int]bool
+	// argumentFacts caches PackedCountNeeded's whole-program derivation (argument_slots.go).
+	argumentFacts *argumentFacts
 	// UninitializedFields records the field names whose readiness can be observed.
 	UninitializedFields map[string]bool
 	// PredicateChecks counts overload-result directions, per emitted call site.
