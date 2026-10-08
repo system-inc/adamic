@@ -81,7 +81,6 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 		{"a union a function value takes", "const show = (value: string | number): string => `${value}`;\n", "main.a:1:15: stage 0 can't lower a function value taking string | number yet"},
 		{"a map of a union", "const values = new Map<string, string | number>();\n", "main.a:1:16: stage 0 can't lower a Map of string | number yet"},
 		{"a template of a union with an object", "function pick(flag: boolean): number | { size: number } {\n\treturn flag ? 1 : { size: 2 };\n}\nconsole.log(`${pick(true)}`);\n", "main.a:4:16: stage 0 can't lower a template interpolating a union with an object, an array, a map or a function in it yet"},
-		{"?.[] on a string", "function first(word: string | undefined): string {\n\treturn word?.[0] ?? 'none';\n}\n", "main.a:2:9: stage 0 can't lower ?.[] on a string yet"},
 		{"a destructured parameter beside a default", "function sum([a, b]: readonly [number, number], scale = 1): number {\n\treturn (a + b) * scale;\n}\nconsole.log(`${sum([1, 2])}`);\n", "main.a:1:1: stage 0 can't lower a destructured parameter beside a parameter with a default yet"},
 		{"an array of targets seen as an array of Weak", "import type { Weak } from 'adamic';\ninterface Item {\n\treadonly name: string;\n}\nconst items: readonly Item[] = [{ name: 'a' }];\nconst seen: readonly Weak<Item>[] = items;\n", "main.a:6:37: stage 0 can't lower a readonly Item[] seen as a readonly Weak<Item>[] (one keeps something weakly that the other keeps strongly) yet"},
 		{"a function value capturing what it initializes", "function run(): number {\n\tconst countdown = (from: number): number => (from <= 0 ? 0 : 1 + countdown(from - 1));\n\treturn countdown(3);\n}\nconsole.log(`${run()}`);\n", "main.a:2:8: stage 0 can't lower a function value that captures the variable its own initializer declares yet"},
@@ -664,5 +663,13 @@ func TestAMethodReadAsAValueIsRefused(t *testing.T) {
 				t.Errorf("refused a method that keeps its object: %v", err)
 			}
 		})
+	}
+}
+
+func TestOptionalStringElementLowers(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, "function first(word: string | undefined): string { return word?.[0] ?? 'none'; }\n")
+	if err != nil {
+		t.Fatal(err)
 	}
 }

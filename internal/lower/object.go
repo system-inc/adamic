@@ -1637,17 +1637,37 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		}
 		return ir.RegExpGroup{Object: object, Name: index.Text(), Of: of, Optional: optional}, nil
 	}
-	if optional && object.Type() != ir.Object {
-		// text?.[0] on a string that may be missing: indexing it as a string would read a null one.
+	if optional && object.Type() != ir.Object && object.Type() != ir.String {
+		// Other non-object receivers still need their own optional element lowering.
 		return nil, l.notYet(node, "?.[] on a "+typeName(object.Type()))
 	}
 	if object.Type() == ir.String {
+		// A closure holds the receiver once and evaluates the index only in the present branch.
+		function, outer := -1, l.functionIndex
+		local := len(l.result.Locals)
+		if optional {
+			function = len(l.result.Functions)
+			l.result.Functions = append(l.result.Functions, ir.Function{Name: "optional_string_element", Closure: true, Returns: ir.String, Parameters: []int{local}})
+			l.result.Locals = append(l.result.Locals, ir.Local{Name: "word", Type: ir.String, Function: function})
+			l.functionIndex = function
+			l.closures = append(l.closures, function)
+		}
 		position, err := l.expression(access.ArgumentExpression)
+		if optional {
+			l.functionIndex = outer
+			l.closures = l.closures[:len(l.closures)-1]
+		}
 		if err != nil {
 			return nil, err
 		}
 		if position.Type() != ir.Number {
 			return nil, l.notYet(node, "a string index that isn't a number")
+		}
+		if optional {
+			held := ir.Read{Local: local, Of: ir.String}
+			value := ir.Conditional{Condition: ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: held}, Right: ir.IsNull{Value: held}}, WhenTrue: ir.Undefined{Of: ir.String}, WhenNot: ir.StringIndex{Value: held, Index: position}, Of: ir.String}
+			l.result.Functions[function].Body = []ir.Statement{ir.Return{Value: value}}
+			return ir.CallClosure{Closure: ir.MakeClosure{Function: function}, Arguments: []ir.Expression{object}, Returns: ir.String}, nil
 		}
 		return ir.StringIndex{Value: object, Index: position}, nil
 	}
