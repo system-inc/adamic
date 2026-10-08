@@ -40,6 +40,9 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 			e.value(expression.Value)
 			return "false"
 		}
+		if expression.Value.Type() == ir.Union {
+			return fmt.Sprintf("(%s == &adamic_null)", e.value(expression.Value))
+		}
 		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
 	case ir.NumberConstant:
 		return cNumber(expression.Value)
@@ -222,6 +225,10 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 	case ir.MaybeToString:
 		return e.maybeToString(expression.Value)
 	case ir.Box:
+		if expression.NullReference {
+			value, presentNull := e.typeOfReference(ir.TypeOf{Value: expression.Value, Null: true})
+			return fmt.Sprintf("(%s == NULL && (%s) ? &adamic_null : (adamic_heap *)%s)", value, presentNull, value)
+		}
 		return e.box(expression.Value)
 	case ir.MakeError:
 		return e.makeError(expression)
