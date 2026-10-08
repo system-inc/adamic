@@ -1,0 +1,13 @@
+=== RUN   TestScopeReplayGap
+=== PAUSE TestScopeReplayGap
+=== CONT  TestScopeReplayGap
+    blocked_test.go:48: [go test -overlay /tmp/adamic-gate/TestScopeReplayGap1552994183/001/overlay.json -tags=lintoracle -count=1 -v -run=^TestUnit7ScopeTerminalInput$ ./internal/lint/ecmascript/high_level_intermediate_representation]: successful (354 output bytes)
+    blocked_test.go:58: Go input: 0 Scope {"Block":2,"Fallthrough":3,"Scope":1}
+    blocked_test.go:64: [go run ./cmd/adamic build /workspace/hir-unit-7/stage1/cohere/high_level_intermediate_representation/passes/unit-7/testdata/scope-replay.a -o /tmp/adamic-gate/TestScopeReplayGap1552994183/001/scope-native --sanitize]: successful (0 output bytes)
+    blocked_test.go:66: [go run ./cmd/adamic js /workspace/hir-unit-7/stage1/cohere/high_level_intermediate_representation/passes/unit-7/testdata/scope-replay.a]: successful (891732 output bytes)
+    blocked_test.go:88: Node: Go Scope input refused, exit=70, adamic: panic: unknown terminal Scope
+    blocked_test.go:88: emitted JavaScript: Go Scope input refused, exit=70, adamic: panic: unknown terminal Scope
+    blocked_test.go:88: sanitized native: Go Scope input refused, exit=70, adamic: panic: unknown terminal Scope
+--- PASS: TestScopeReplayGap (28.20s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/high_level_intermediate_representation/passes/unit-7	28.206s
