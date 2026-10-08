@@ -1,0 +1,13 @@
+F...
+======================================================================
+FAIL: test_collected_manifests_invalidate (__main__.WarmingKey.test_collected_manifests_invalidate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_setup.py", line 106, in test_collected_manifests_invalidate
+    self.assertNotEqual(previous, current, str(file))
+AssertionError: 'ac3de6853d7a7692b1b8ea45a1b654dd49efedc3e04786e96c5c652cf57dd97a\n' == 'ac3de6853d7a7692b1b8ea45a1b654dd49efedc3e04786e96c5c652cf57dd97a\n' : /tmp/adamic-gate/setup-collected-brdm0aqo/go.sum
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.004s
+
+FAILED (failures=1)

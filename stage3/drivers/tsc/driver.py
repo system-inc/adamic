@@ -53,9 +53,14 @@ def run(command, results, record=False, tiny_only=False, golden_root=ROOT):
         options = {'types': [], 'skipDefaultLibCheck': True, 'noErrorTruncation': True,
                    'ignoreDeprecations': '6.0', **row['options']}
         files = []
-        for program in sorted(source.glob('*.a')):
-            name = Path(row['source']).name if identifier != 'tiny' else program.with_suffix('.ts').name
-            content, headers = materialize(program.read_bytes())
+        programs = sorted(source.glob('*.a')) if identifier == 'tiny' else [ROOT / row['path']]
+        for program in programs:
+            name = program.name if identifier != 'tiny' else program.with_suffix('.ts').name
+            raw = program.read_bytes()
+            if identifier == 'tiny' and raw.startswith(b'// a-check:'):
+                # Gate metadata is not part of the tiny project's diagnostic positions.
+                raw = raw.split(b'\n', 1)[1]
+            content, headers = materialize(raw)
             if identifier != 'tiny' and headers != row['options']:
                 raise RuntimeError(f'header options changed: {identifier}')
             (folder / name).write_text(content)

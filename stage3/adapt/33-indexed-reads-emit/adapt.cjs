@@ -2,8 +2,9 @@
 "use strict";
 const fs = require("node:fs");
 const path = require("node:path");
-const sites = require("./sites.json");
+const sites = [...require("./sites.json"), ...require("./required-values.json")];
 const files = require("./files.json");
+const typeEdits = require("./type-edits.json");
 
 // Addresses are parsed expressions plus their occurrence in the pinned file.
 // Survey line/column fields are documentation, never edit offsets.
@@ -12,8 +13,8 @@ function plan(ts, file, text, check = false, zeroOnly = false) {
     if (source.parseDiagnostics.length) throw new Error(`cannot parse ${file}`);
     const groups = new Map();
     function visit(node) {
-        if (ts.isElementAccessExpression(node)) {
-            const expression = node.getText(source).replaceAll("!", "");
+        if (ts.isElementAccessExpression(node) || ts.isCallExpression(node) || ts.isPropertyAccessExpression(node) || ts.isIdentifier(node)) {
+            const expression = ts.SyntaxKind[node.kind] + ":" + node.getText(source).replaceAll("!", "");
             const group = groups.get(expression) || [];
             group.push(node);
             groups.set(expression, group);
@@ -24,7 +25,7 @@ function plan(ts, file, text, check = false, zeroOnly = false) {
     const edits = [];
     let assertions = 0, zeros = 0, declined = 0;
     for (const site of sites.filter(site => site.file === file)) {
-        const group = groups.get(site.expression);
+        const group = groups.get((site.kind || "ElementAccessExpression") + ":" + site.expression);
         if (!group || group.length !== site.total) throw new Error(`site drift: ${file}:${site.line} ${site.expression}`);
         const node = group[site.occurrence - 1];
         const parent = node.parent;
@@ -55,6 +56,35 @@ function plan(ts, file, text, check = false, zeroOnly = false) {
             }
         }
         else throw new Error(`unknown action: ${site.action}`);
+    }
+    for (const site of typeEdits.filter(site => site.file === file)) {
+        const matches = [];
+        function find(node) {
+            if (site.kind === "VariableDeclaration" && ts.isVariableDeclaration(node) && node.name.getText(source) === site.name) matches.push(node);
+            if (site.kind === "CallExpression" && ts.isCallExpression(node) && node.expression.getText(source) === site.name &&
+                JSON.stringify(node.arguments.map(arg => arg.getText(source))) === JSON.stringify(site.arguments)) matches.push(node);
+            ts.forEachChild(node, find);
+        }
+        find(source);
+        if (matches.length !== site.total) throw new Error(`type site drift: ${file}:${site.name}`);
+        const node = matches[site.occurrence - 1];
+        if (site.kind === "VariableDeclaration") {
+            if (!node.type) throw new Error(`missing owner type: ${file}:${site.name}`);
+            const actual = node.type.getText(source);
+            if (actual !== site.before && actual !== site.after) throw new Error(`unexpected owner type: ${file}:${site.name}`);
+            if (!zeroOnly && actual !== site.after) {
+                if (check) throw new Error(`optional owner missing: ${file}:${site.name}`);
+                edits.push({at: node.type.end, text: " | undefined"});
+            }
+        }
+        else {
+            const args = node.typeArguments;
+            if (args && (args.length !== 1 || args[0].getText(source) !== site.typeArgument)) throw new Error(`unexpected overload type: ${file}:${site.name}`);
+            if (!zeroOnly && !args) {
+                if (check) throw new Error(`overload type missing: ${file}:${site.name}`);
+                edits.push({at: node.expression.end, text: `<${site.typeArgument}>`});
+            }
+        }
     }
     for (const edit of edits.sort((a, b) => b.at - a.at)) {
         text = text.slice(0, edit.at) + edit.text + text.slice(edit.at);

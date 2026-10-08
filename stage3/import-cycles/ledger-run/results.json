@@ -1,0 +1,171 @@
+[
+  {
+    "file": "01_call_time/main.a",
+    "tsc": [
+      "src/compiler/core.ts:2247",
+      "src/compiler/core.ts:2430",
+      "src/compiler/core.ts:1951",
+      "src/compiler/core.ts:1828",
+      "src/compiler/path.ts:120"
+    ],
+    "reason": "an import cycle",
+    "lower_exit": 1,
+    "lower_diagnostic": "adamic: /workspace/adamic/stage3/fixtures/cycles/01_call_time/main.a:9:29: Adamic 0.1 refuses a conservative refusal of an imported binding read during cyclic module evaluation [nexus/correctness-no-import-cycle-load-time-read]; defer the read until module evaluation finishes or break the import cycle (#xjdce2d)\nexit status 1\n",
+    "observed_node": {
+      "stdout": "tsconfig.json: false\nindex.ts: true\n.ts: false\nindex.TS: false\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "02_reverse_barrel/main.a",
+    "tsc": [
+      "src/compiler/core.ts:2247",
+      "src/compiler/core.ts:2430",
+      "src/compiler/core.ts:1951",
+      "src/compiler/core.ts:1828",
+      "src/compiler/path.ts:120"
+    ],
+    "reason": "an import cycle",
+    "lower_exit": 1,
+    "lower_diagnostic": "adamic: /workspace/adamic/stage3/fixtures/cycles/02_reverse_barrel/main.a:9:29: Adamic 0.1 refuses a conservative refusal of an imported binding read during cyclic module evaluation [nexus/correctness-no-import-cycle-load-time-read]; defer the read until module evaluation finishes or break the import cycle (#xjdce2d)\nexit status 1\n",
+    "observed_node": {
+      "stdout": "tsconfig.json: false\nindex.ts: true\n.ts: false\nindex.TS: false\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "03_extensions/main.a",
+    "tsc": [
+      "src/compiler/core.ts:2247",
+      "src/compiler/core.ts:2430",
+      "src/compiler/core.ts:1951",
+      "src/compiler/core.ts:1828",
+      "src/compiler/path.ts:120",
+      "src/compiler/path.ts:125"
+    ],
+    "reason": "an import cycle",
+    "lower_exit": 1,
+    "lower_diagnostic": "adamic: /workspace/adamic/stage3/fixtures/cycles/03_extensions/main.a:10:29: Adamic 0.1 refuses a conservative refusal of an imported binding read during cyclic module evaluation [nexus/correctness-no-import-cycle-load-time-read]; defer the read until module evaluation finishes or break the import cycle (#xjdce2d)\nexit status 1\n",
+    "observed_node": {
+      "stdout": "index.ts: true\nindex.tsx: true\nindex.js: false\npackage.json: false\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "04_directory_callback/main.a",
+    "tsc": [
+      "src/compiler/core.ts:2247",
+      "src/compiler/core.ts:2430",
+      "src/compiler/core.ts:1951",
+      "src/compiler/core.ts:1828",
+      "src/compiler/path.ts:1002"
+    ],
+    "reason": "an import cycle",
+    "lower_exit": 1,
+    "lower_diagnostic": "adamic: /workspace/adamic/stage3/fixtures/cycles/04_directory_callback/main.a:9:29: Adamic 0.1 refuses a conservative refusal of an imported binding read during cyclic module evaluation [nexus/correctness-no-import-cycle-load-time-read]; defer the read until module evaluation finishes or break the import cycle (#xjdce2d)\nexit status 1\n",
+    "observed_node": {
+      "stdout": "src/compiler/parser.ts: true\nsrc\\compiler\\parser.ts: false\nsrc/compiler2/parser.ts: false\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "05_safe_load_read/main.a",
+    "tsc": [
+      "src/compiler/core.ts:17",
+      "src/compiler/utilities.ts:10312"
+    ],
+    "reason": "an import cycle",
+    "lower_exit": 1,
+    "lower_diagnostic": "adamic: /workspace/adamic/stage3/fixtures/cycles/05_safe_load_read/utilities.a:6:12: Adamic 0.1 refuses a conservative refusal of an imported binding read during cyclic module evaluation [nexus/correctness-no-import-cycle-load-time-read]; defer the read until module evaluation finishes or break the import cycle (#xjdce2d)\nexit status 1\n",
+    "observed_node": {
+      "stdout": "0 0 true\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "06_import_order_mutant/main.a",
+    "tsc": [
+      "src/compiler/core.ts:17",
+      "src/compiler/utilities.ts:10312"
+    ],
+    "reason": "an import cycle",
+    "lower_exit": 1,
+    "lower_diagnostic": "adamic: /workspace/adamic/stage3/fixtures/cycles/06_import_order_mutant/utilities.a:6:12: Adamic 0.1 refuses a conservative refusal of an imported binding read during cyclic module evaluation [nexus/correctness-no-import-cycle-load-time-read]; defer the read until module evaluation finishes or break the import cycle (#xjdce2d)\nexit status 1\n",
+    "observed_node": {
+      "stdout": "",
+      "stderr": "adamic: panic: ReferenceError: Cannot access 'emptyArray' before initialization\n",
+      "exit": 70
+    }
+  },
+  {
+    "file": "07_namespace_barrel/main.a",
+    "tsc": [
+      "src/compiler/core.ts:2247",
+      "src/compiler/core.ts:2430",
+      "src/compiler/core.ts:1951",
+      "src/compiler/core.ts:1828",
+      "src/compiler/path.ts:120"
+    ],
+    "reason": "an import cycle",
+    "lower_exit": 1,
+    "lower_diagnostic": "adamic: /workspace/adamic/stage3/fixtures/cycles/07_namespace_barrel/main.a:8:16: Adamic 0.1 refuses a conservative refusal of an imported binding read during cyclic module evaluation [nexus/correctness-no-import-cycle-load-time-read]; defer the read until module evaluation finishes or break the import cycle (#xjdce2d)\nexit status 1\n",
+    "observed_node": {
+      "stdout": "true false\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "08_named_reexports/main.a",
+    "tsc": [
+      "src/compiler/core.ts:2247",
+      "src/compiler/core.ts:2430",
+      "src/compiler/core.ts:1951",
+      "src/compiler/core.ts:1828",
+      "src/compiler/path.ts:120"
+    ],
+    "reason": "an import cycle",
+    "lower_exit": 1,
+    "lower_diagnostic": "adamic: /workspace/adamic/stage3/fixtures/cycles/08_named_reexports/main.a:9:29: Adamic 0.1 refuses a conservative refusal of an imported binding read during cyclic module evaluation [nexus/correctness-no-import-cycle-load-time-read]; defer the read until module evaluation finishes or break the import cycle (#xjdce2d)\nexit status 1\n",
+    "observed_node": {
+      "stdout": "tsconfig.json: false\nindex.ts: true\n.ts: false\nindex.TS: false\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "09_function_value_load/main.a",
+    "tsc": [
+      "src/compiler/core.ts:1794",
+      "src/compiler/performance.ts:59"
+    ],
+    "reason": "an import cycle",
+    "lower_exit": 1,
+    "lower_diagnostic": "adamic: /workspace/adamic/stage3/fixtures/cycles/09_function_value_load/performance.a:5:42: Adamic 0.1 refuses a conservative refusal of an imported binding read during cyclic module evaluation [nexus/correctness-no-import-cycle-load-time-read]; defer the read until module evaluation finishes or break the import cycle (#xjdce2d)\nexit status 1\n",
+    "observed_node": {
+      "stdout": "true true\n",
+      "stderr": "",
+      "exit": 0
+    }
+  },
+  {
+    "file": "10_hoisted_before_body/main.a",
+    "tsc": [
+      "src/compiler/core.ts:1794",
+      "src/compiler/performance.ts:59"
+    ],
+    "reason": "an import cycle",
+    "lower_exit": 1,
+    "lower_diagnostic": "adamic: /workspace/adamic/stage3/fixtures/cycles/10_hoisted_before_body/performance.a:5:42: Adamic 0.1 refuses a conservative refusal of an imported binding read during cyclic module evaluation [nexus/correctness-no-import-cycle-load-time-read]; defer the read until module evaluation finishes or break the import cycle (#xjdce2d)\nexit status 1\n",
+    "observed_node": {
+      "stdout": "true true\n",
+      "stderr": "",
+      "exit": 0
+    }
+  }
+]

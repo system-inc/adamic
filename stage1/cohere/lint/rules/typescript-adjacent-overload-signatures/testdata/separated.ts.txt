@@ -1,0 +1,3 @@
+function overload(x: string): void;
+function unrelated(): void {}
+function overload(x: number): void;

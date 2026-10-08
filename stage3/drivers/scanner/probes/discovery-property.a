@@ -1,0 +1,3 @@
+const values = { Script: new Set<string>(), Script_Extensions: undefined! as Set<string> };
+values.Script_Extensions = values.Script;
+console.log(`${values.Script_Extensions.size}`);

@@ -2395,9 +2395,9 @@
     "expression": "lineStarts[line + 1]",
     "occurrence": 2,
     "total": 3,
-    "action": "decline",
+    "action": "assert",
     "class": "U-position",
-    "invariant": "The next start is legitimately absent on the last line; the comparison is false and the debugText/return branch handles that case."
+    "invariant": "The explicit nextLineStart !== undefined and res > nextLineStart guard proves this branch has a next-line entry; getLineStarts supplies a dense plain computeLineStarts array and no write intervenes. The second read stays in the true arm."
   },
   {
     "file": "scanner.ts",

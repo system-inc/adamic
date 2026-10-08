@@ -1,1 +1,2 @@
+// a-check: type error TS2488
 const entries = new Map<string, number>(); const [key, value] = entries.entries().next().value;

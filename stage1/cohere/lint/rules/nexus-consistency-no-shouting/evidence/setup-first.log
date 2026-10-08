@@ -1,0 +1,185 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0s)
+v24.19.0
+setup: node ready (0s)
+Cloning into '/workspace/adamic-no-shouting/cohere'...
+From https://github.com/system-inc/cohere
+ * branch            715ba94f3608a6500086b1076ce5cb7e51b836db -> FETCH_HEAD
+Submodule path 'cohere': checked out '715ba94f3608a6500086b1076ce5cb7e51b836db'
+Submodule 'TypeScript' (https://github.com/kirkouimet/TypeScript.git) registered for path 'cohere/TypeScript'
+Cloning into '/workspace/adamic-no-shouting/cohere/TypeScript'...
+From https://github.com/kirkouimet/TypeScript
+ * branch              8d550c837c90bd1805b047b7eeccc2baac2d5e7a -> FETCH_HEAD
+Submodule path 'cohere/TypeScript': checked out '8d550c837c90bd1805b047b7eeccc2baac2d5e7a'
+setup: submodules ready (13s)
+# github.com/system-inc/adamic/bridge/tsgo
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/bridge/tsgo [setup failed]
+# github.com/system-inc/adamic/bridge/tsgo/archive
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+# github.com/system-inc/adamic/bridge/tsgo/archive
+cohere/TypeScript-shim/compiler/shim.go:7:8: open /home/agent/.cache/go-build/5b/5beec524b8fc9a3c4114cec4155ce1a61a095c3e143451f2bab43bbcdfd9e7c7-d: no space left on device
+# github.com/system-inc/adamic/bridge/tsgo/archive
+cohere/TypeScript/tsc/internal/vfs/osvfs/os.go:14:2: open /home/agent/.cache/go-build/8a/8a2e55d456f9544d200d1a7f46b120d1b303d81d810f3cd0e61ac04997dd6ff5-a: no space left on device
+FAIL	github.com/system-inc/adamic/bridge/tsgo/archive [setup failed]
+# github.com/system-inc/adamic/bridge/tsgo/checker
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+# github.com/system-inc/adamic/bridge/tsgo/checker
+cohere/TypeScript-shim/compiler/shim.go:7:8: open /home/agent/.cache/go-build/5b/5beec524b8fc9a3c4114cec4155ce1a61a095c3e143451f2bab43bbcdfd9e7c7-d: no space left on device
+# github.com/system-inc/adamic/bridge/tsgo/checker
+cohere/TypeScript/tsc/internal/vfs/osvfs/os.go:14:2: open /home/agent/.cache/go-build/8a/8a2e55d456f9544d200d1a7f46b120d1b303d81d810f3cd0e61ac04997dd6ff5-a: no space left on device
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker [setup failed]
+# github.com/system-inc/adamic/bridge/tsgo/cost
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+# github.com/system-inc/adamic/bridge/tsgo/cost
+cohere/TypeScript-shim/compiler/shim.go:7:8: open /home/agent/.cache/go-build/5b/5beec524b8fc9a3c4114cec4155ce1a61a095c3e143451f2bab43bbcdfd9e7c7-d: no space left on device
+# github.com/system-inc/adamic/bridge/tsgo/cost
+cohere/TypeScript/tsc/internal/vfs/osvfs/os.go:14:2: open /home/agent/.cache/go-build/8a/8a2e55d456f9544d200d1a7f46b120d1b303d81d810f3cd0e61ac04997dd6ff5-a: no space left on device
+FAIL	github.com/system-inc/adamic/bridge/tsgo/cost [setup failed]
+# github.com/system-inc/adamic/bridge/tsgo/oracle
+cohere/TypeScript-shim/compiler/shim.go:7:8: open /home/agent/.cache/go-build/5b/5beec524b8fc9a3c4114cec4155ce1a61a095c3e143451f2bab43bbcdfd9e7c7-d: no space left on device
+# github.com/system-inc/adamic/bridge/tsgo/oracle
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+# github.com/system-inc/adamic/bridge/tsgo/oracle
+cohere/TypeScript/tsc/internal/vfs/osvfs/os.go:14:2: open /home/agent/.cache/go-build/8a/8a2e55d456f9544d200d1a7f46b120d1b303d81d810f3cd0e61ac04997dd6ff5-a: no space left on device
+FAIL	github.com/system-inc/adamic/bridge/tsgo/oracle [setup failed]
+# github.com/system-inc/adamic/cmd/adamic
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+# github.com/system-inc/adamic/cmd/adamic
+cohere/TypeScript-shim/compiler/shim.go:7:8: open /home/agent/.cache/go-build/5b/5beec524b8fc9a3c4114cec4155ce1a61a095c3e143451f2bab43bbcdfd9e7c7-d: no space left on device
+# github.com/system-inc/adamic/cmd/adamic
+cohere/TypeScript/tsc/internal/vfs/osvfs/os.go:14:2: open /home/agent/.cache/go-build/8a/8a2e55d456f9544d200d1a7f46b120d1b303d81d810f3cd0e61ac04997dd6ff5-a: no space left on device
+FAIL	github.com/system-inc/adamic/cmd/adamic [setup failed]
+# github.com/system-inc/adamic/cmd/adamic-meter
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+# github.com/system-inc/adamic/cmd/adamic-meter
+cohere/TypeScript-shim/compiler/shim.go:7:8: open /home/agent/.cache/go-build/5b/5beec524b8fc9a3c4114cec4155ce1a61a095c3e143451f2bab43bbcdfd9e7c7-d: no space left on device
+# github.com/system-inc/adamic/cmd/adamic-meter
+cohere/TypeScript/tsc/internal/vfs/osvfs/os.go:14:2: open /home/agent/.cache/go-build/8a/8a2e55d456f9544d200d1a7f46b120d1b303d81d810f3cd0e61ac04997dd6ff5-a: no space left on device
+FAIL	github.com/system-inc/adamic/cmd/adamic-meter [setup failed]
+# github.com/system-inc/adamic/internal/flow
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/internal/flow [setup failed]
+# github.com/system-inc/adamic/internal/fresh
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/internal/fresh [setup failed]
+# github.com/system-inc/adamic/internal/fuzz
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/internal/fuzz [setup failed]
+# github.com/system-inc/adamic/internal/ir
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/internal/ir [setup failed]
+# github.com/system-inc/adamic/internal/load
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+# github.com/system-inc/adamic/internal/load
+cohere/TypeScript-shim/compiler/shim.go:7:8: open /home/agent/.cache/go-build/5b/5beec524b8fc9a3c4114cec4155ce1a61a095c3e143451f2bab43bbcdfd9e7c7-d: no space left on device
+# github.com/system-inc/adamic/internal/load
+cohere/TypeScript/tsc/internal/vfs/osvfs/os.go:14:2: open /home/agent/.cache/go-build/8a/8a2e55d456f9544d200d1a7f46b120d1b303d81d810f3cd0e61ac04997dd6ff5-a: no space left on device
+FAIL	github.com/system-inc/adamic/internal/load [setup failed]
+# github.com/system-inc/adamic/internal/lower
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+# github.com/system-inc/adamic/internal/lower
+cohere/TypeScript-shim/compiler/shim.go:7:8: open /home/agent/.cache/go-build/5b/5beec524b8fc9a3c4114cec4155ce1a61a095c3e143451f2bab43bbcdfd9e7c7-d: no space left on device
+# github.com/system-inc/adamic/internal/lower
+cohere/TypeScript/tsc/internal/vfs/osvfs/os.go:14:2: open /home/agent/.cache/go-build/8a/8a2e55d456f9544d200d1a7f46b120d1b303d81d810f3cd0e61ac04997dd6ff5-a: no space left on device
+FAIL	github.com/system-inc/adamic/internal/lower [setup failed]
+# github.com/system-inc/adamic/internal/native
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/internal/native [setup failed]
+# github.com/system-inc/adamic/internal/oracle
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/internal/oracle [setup failed]
+# github.com/system-inc/adamic/stage1/cohere/css
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage1/cohere/css [setup failed]
+# github.com/system-inc/adamic/stage1/cohere/cssnumbers
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage1/cohere/cssnumbers [setup failed]
+# github.com/system-inc/adamic/stage1/cohere/cssstrings
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage1/cohere/cssstrings [setup failed]
+# github.com/system-inc/adamic/stage1/cohere/formatfiles
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage1/cohere/formatfiles [setup failed]
+# github.com/system-inc/adamic/stage1/cohere/gitignore
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage1/cohere/gitignore [setup failed]
+# github.com/system-inc/adamic/stage1/cohere/graphql
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage1/cohere/graphql [setup failed]
+# github.com/system-inc/adamic/stage1/cohere/json
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage1/cohere/json [setup failed]
+# github.com/system-inc/adamic/stage1/cohere/lint
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint [setup failed]
+# github.com/system-inc/adamic/stage1/cohere/lint/helpers
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers [setup failed]
+# github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments [setup failed]
+# github.com/system-inc/adamic/stage1/cohere/markdownblocks
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage1/cohere/markdownblocks [setup failed]
+# github.com/system-inc/adamic/stage1/cohere/markdowninline
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage1/cohere/markdowninline [setup failed]
+# github.com/system-inc/adamic/stage1/cohere/mediaquery
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage1/cohere/mediaquery [setup failed]
+# github.com/system-inc/adamic/stage1/cohere/selector
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage1/cohere/selector [setup failed]
+# github.com/system-inc/adamic/stage1/cohere/suppression
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage1/cohere/suppression [setup failed]
+# github.com/system-inc/adamic/stage1/cohere/typeaware
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware [setup failed]
+# github.com/system-inc/adamic/stage1/cohere/values
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage1/cohere/values [setup failed]
+# github.com/system-inc/adamic/stage1/typescript/parser
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser [setup failed]
+# github.com/system-inc/adamic/stage1/typescript/scanner
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage1/typescript/scanner [setup failed]
+# github.com/system-inc/adamic/stage3/census/tool
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+# github.com/system-inc/adamic/stage3/census/tool
+cohere/TypeScript-shim/compiler/shim.go:7:8: open /home/agent/.cache/go-build/5b/5beec524b8fc9a3c4114cec4155ce1a61a095c3e143451f2bab43bbcdfd9e7c7-d: no space left on device
+# github.com/system-inc/adamic/stage3/census/tool
+cohere/TypeScript/tsc/internal/vfs/osvfs/os.go:14:2: open /home/agent/.cache/go-build/8a/8a2e55d456f9544d200d1a7f46b120d1b303d81d810f3cd0e61ac04997dd6ff5-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage3/census/tool [setup failed]
+# github.com/system-inc/adamic/stage3/drivers/parser/probe
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+# github.com/system-inc/adamic/stage3/drivers/parser/probe
+cohere/TypeScript-shim/compiler/shim.go:7:8: open /home/agent/.cache/go-build/5b/5beec524b8fc9a3c4114cec4155ce1a61a095c3e143451f2bab43bbcdfd9e7c7-d: no space left on device
+# github.com/system-inc/adamic/stage3/drivers/parser/probe
+cohere/TypeScript/tsc/internal/vfs/osvfs/os.go:14:2: open /home/agent/.cache/go-build/8a/8a2e55d456f9544d200d1a7f46b120d1b303d81d810f3cd0e61ac04997dd6ff5-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage3/drivers/parser/probe [setup failed]
+# github.com/system-inc/adamic/stage3/fixtures
+cohere/TypeScript/tsc/internal/checker/checker.go:24:2: open /home/agent/.cache/go-build/64/642df34e6a2f4cda6d5ca5328ff01f2fef995919ab4c93e82414dc72d9c252c7-a: no space left on device
+FAIL	github.com/system-inc/adamic/stage3/fixtures [setup failed]
+?   	github.com/system-inc/adamic/bench	[no test files]
+?   	github.com/system-inc/adamic/bench/regex	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/spec	[no test files]
+ok  	github.com/system-inc/adamic/cloud	0.003s [no tests to run]
+?   	github.com/system-inc/adamic/cmd/adamic-fuzz	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic-stage1-progress	0.016s [no tests to run]
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	0.002s [no tests to run]
+?   	github.com/system-inc/adamic/cmd/lint-registry	[no test files]
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/regexp	0.002s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/unicodeproperties	0.002s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/inventory	0.002s [no tests to run]
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/registry	0.002s [no tests to run]
+?   	github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_classes	[no test files]
+?   	github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_entities	[no test files]
+?   	github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_width	[no test files]
+?   	github.com/system-inc/adamic/stage3/census/latent/tool	[no test files]
+FAIL
