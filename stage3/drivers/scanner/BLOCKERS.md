@@ -1,3 +1,26 @@
+## October 8: landing compiler measured alone after 44 combined-merge conflicts
+
+Fresh scratch uses cloud/land-area-next 28285421, containing compiler area-next
+337aa466. Merging combined records/library 2648ad33 conflicted in exactly 44
+paths, captured before abort, with no hand resolutions. Measurement uses the
+landing branch alone. Compiler build passed in 185.816s; setup took 63.387s,
+nproc=5. Installing its pinned @types/node prerequisite enabled the real runs.
+
+Both native scanner modes stop at corePublic.ts:9:5, MapLike's index signature.
+Past discovery placeholders, Debug's mutable namespace export and Error-as-any
+cast also stop the build. An independent typed capture control finishes on Node
+but refuses node:globals.ErrorConstructor.captureStackTrace on this base.
+Both complete Node dumps match the full-tree reference, and both exactly-one-byte
+Node mutants are caught. No native scanner binary or timing exists.
+
+Fifteen distinct witnessed failures are retained: fourteen lowering stops and
+one clang pointer-return error, discovered after a never-return placeholder.
+The latter also reproduces independently in a three-line Node-success program.
+Repeated signature diagnostics and induced unreachable-code checker errors are
+excluded; placeholder-dependent observations are explicitly qualified.
+
+[Exact conflicts, ordered stops, witnesses and controls](evidence/land-area-next/REPORT.md).
+
 ## October 8: combined records-library merge closes MapLike admission
 
 Fresh scratch dbd7a7c8 cleanly merges current main 6998ebc2 and combined branch

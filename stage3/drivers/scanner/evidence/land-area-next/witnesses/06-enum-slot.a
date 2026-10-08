@@ -1,0 +1,4 @@
+enum SyntaxKind { Identifier = 1, Keyword = 2 }
+function numberValue(): number { return 1; }
+const token: SyntaxKind.Identifier = numberValue();
+console.log(String(token));
