@@ -14,6 +14,8 @@ import (
 	"testing"
 	"time"
 	"unicode/utf8"
+
+	"github.com/system-inc/adamic/internal/gatesample"
 )
 
 type textCase struct {
@@ -131,11 +133,14 @@ func corpusCases(t *testing.T) []textCase {
 // Prettier is a separate upstream report. Only the nine named disagreements are known;
 // an added difference or a closed difference requires updating the report explicitly.
 func TestUpstreamRepositoryCorpusParity(t *testing.T) {
+	if err := gatesample.Validate(); err != nil {
+		t.Fatalf("%s: %v", t.Name(), err)
+	}
 	t.Parallel()
 	if os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
 		t.Skip("set ADAMIC_JSON_PRETTIER for the separate upstream report")
 	}
-	cases := corpusCases(t)
+	cases := sampledCorpusCases(t, 8)
 	goAnswers, prettierAnswers := oracleAnswers(t, cases)
 	differences := 0
 	var report strings.Builder

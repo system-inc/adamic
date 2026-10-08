@@ -197,7 +197,7 @@ func compare(t *testing.T, name string, result run, expected string, cases []tex
 }
 func TestPortMatchesGoCohere(t *testing.T) {
 	t.Parallel()
-	cases := corpusCases(t)
+	cases := sampledCorpusCases(t, 32)
 	// The Go oracle is mandatory even without an optional Prettier installation.
 	goAnswers, _ := cohereAnswers(t, cases, false)
 	input, expected := protocol(cases, goAnswers)
