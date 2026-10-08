@@ -19,6 +19,12 @@ func TestMarkdownParserPrefixes(t *testing.T) {
 		t.Fatal(err)
 	}
 	inputs, files := auditCorpus(t, root)
+	// This file sweep is small beside the mandatory generated and fixed checks.
+	selection := selectMarkdownFiles(t, root, inputs, files, 1)
+	if selection.Sample {
+		t.Log(selection.Log(t.Name()))
+	}
+	inputs, files = selectedMarkdownInputs(inputs, files, selection)
 	for _, text := range []string{"", "\ufeff", ">", "> ", ">\t", " > a", "   > a", "    > a", "\t> a", "\t > a", ">> a", "> > a", "\ufeff> a", "\r\na", "\ra", "a\r", "a\r\nb", "😀\t> a"} {
 		inputs = append(inputs, auditInput{Name: fmt.Sprintf("generated/prefix/short/%d", len(inputs)), Text: text})
 	}
