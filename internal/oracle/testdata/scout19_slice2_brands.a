@@ -1,0 +1,12 @@
+// Compiler-owned expected refusal, ruling 4.
+// types.ts:6196 and utilitiesPublic.ts:842-846, original void arm retained.
+const CharacterCodes = { _: 95 };
+type InternalSymbolName = '__call' | '__constructor';
+type __String = (string & { __escapedIdentifier: void; }) | (void & { __escapedIdentifier: void; }) | InternalSymbolName;
+export function escapeLeadingUnderscores(identifier: string): __String {
+    return (identifier.length >= 2 && identifier.charCodeAt(0) === CharacterCodes._ && identifier.charCodeAt(1) === CharacterCodes._ ? "_" + identifier : identifier) as __String;
+}
+const values = new Map<__String, number>();
+values.set(escapeLeadingUnderscores('__name'), 1);
+values.set(escapeLeadingUnderscores('plain'), 2);
+for (const [key, value] of values) console.log(`${key as string}:${value}`);

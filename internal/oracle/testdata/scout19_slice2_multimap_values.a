@@ -1,0 +1,43 @@
+// a-check: checked
+// Composition retains tsc's strict equality and aliases for non-number buckets too.
+import { createMultiMap, multiMapAdd, multiMapRemove, multiMapForEach } from '../../../stage1/typescript/collections/multimap.a';
+const optional = createMultiMap<string, number | undefined>();
+const held = multiMapAdd(optional, 'x', 1);
+multiMapAdd(optional, 'x', undefined);
+multiMapRemove(optional, 'x', 1);
+console.log(`undefined ${held.length} ${held[0] === undefined} ${optional.map.has('x')}`);
+multiMapRemove(optional, 'x', undefined);
+console.log(`removed ${optional.map.has('x')}`);
+interface Item { readonly name: string; }
+const objects = createMultiMap<Item, Item>();
+const key = { name: 'key' };
+const first = { name: 'first' };
+const last = { name: 'last' };
+const bucket = multiMapAdd(objects, key, first);
+multiMapAdd(objects, key, last);
+multiMapRemove(objects, key, { name: 'first' });
+console.log(`identity ${bucket.length}`);
+multiMapRemove(objects, key, first);
+console.log(`last ${bucket[0] === last} ${objects.map.has({ name: 'key' })}`);
+const strings = createMultiMap<number, string>();
+const words = multiMapAdd(strings, NaN, 'one'.repeat(2));
+multiMapAdd(strings, NaN, 'two'.repeat(2));
+multiMapRemove(strings, NaN, 'one'.repeat(2));
+console.log(`strings ${words.join(',')}`);
+const numbers = createMultiMap<string, number>();
+const values = multiMapAdd(numbers, 'n', NaN);
+multiMapAdd(numbers, 'n', -0);
+multiMapRemove(numbers, 'n', NaN);
+console.log(`nan ${values.length} ${Number.isNaN(values[0] ?? 0)}`);
+multiMapRemove(numbers, 'n', 0);
+console.log(`zero ${values.length}`);
+const live = createMultiMap<string, number>();
+multiMapAdd(live, 'first', 1);
+multiMapAdd(live, 'second', 2);
+multiMapForEach(live, (values, key, owner) => {
+    console.log(`live ${key}:${values.join(',')}:${owner === live}`);
+    if (key === 'first') {
+        multiMapRemove(owner, 'second', 2);
+        multiMapAdd(owner, 'third', 3);
+    }
+});
