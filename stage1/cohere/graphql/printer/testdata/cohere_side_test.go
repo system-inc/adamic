@@ -16,6 +16,7 @@ import (
 func TestAdamicPrinter(t *testing.T) {
 	path := os.Getenv("ADAMIC_PRINTER_REQUEST")
 	if path == "" {
+		// census: not-applicable Overlaid into cohere's internal/format/graphql by the Go oracle build and run only there, with ADAMIC_PRINTER_REQUEST set; under testdata, so the gate's go test never builds it as a package.
 		t.Skip("stage 1 overlay")
 	}
 	data, err := os.ReadFile(path)

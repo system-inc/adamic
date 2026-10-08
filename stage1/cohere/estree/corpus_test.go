@@ -15,6 +15,7 @@ import (
 func TestRepositoryAgreement(t *testing.T) {
 	directory := os.Getenv("ADAMIC_ESTREE_CORPUS")
 	if directory == "" {
+		// census: opt-in-lane Replays a completed whole-repository Go/Node corpus audit (ADAMIC_ESTREE_CORPUS: port-records.jsonl and Go's answers), made by a separate audit run that no setup step provides; the package's own comparison tests are the gate's ESTree coverage.
 		t.Skip("set ADAMIC_ESTREE_CORPUS to a completed Go/Node corpus audit directory")
 	}
 	data, err := os.ReadFile(filepath.Join(directory, "port-records.jsonl"))
@@ -81,6 +82,7 @@ func TestRepositoryAgreement(t *testing.T) {
 func TestCorpusNativeRefusals(t *testing.T) {
 	directory := os.Getenv("ADAMIC_ESTREE_CORPUS")
 	if directory == "" {
+		// census: opt-in-lane Native refusal accounting over the same completed corpus audit as TestRepositoryAgreement (ADAMIC_ESTREE_CORPUS); an audit lane, not a required input of the gate.
 		t.Skip("completed frozen corpus required")
 	}
 	data, err := os.ReadFile(filepath.Join(directory, "port-records.jsonl"))

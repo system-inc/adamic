@@ -14,6 +14,7 @@ import (
 // Not parallel: interleaved throughput measurements share the same CPUs.
 func TestPrinterThroughput(t *testing.T) {
 	if os.Getenv("ADAMIC_GRAPHQL_PRINTER_BENCH") == "" {
+		// census: measurement Opt-in throughput of the verified GraphQL printer (ADAMIC_GRAPHQL_PRINTER_BENCH=1); timing only, never a required input of the gate.
 		t.Skip("set ADAMIC_GRAPHQL_PRINTER_BENCH=1 to measure verified throughput")
 	}
 	library := os.Getenv("ADAMIC_GRAPHQL_PRETTIER")

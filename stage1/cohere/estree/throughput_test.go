@@ -13,6 +13,7 @@ import (
 
 func TestThroughput(t *testing.T) {
 	if os.Getenv("ADAMIC_ESTREE_BENCHMARK") != "1" {
+		// census: measurement Opt-in full-output throughput of the ESTree port (ADAMIC_ESTREE_BENCHMARK=1); timing only, never a required input of the gate.
 		t.Skip("set ADAMIC_ESTREE_BENCHMARK=1 for full-output throughput")
 	}
 	path, err := filepath.Abs("main.ts")
