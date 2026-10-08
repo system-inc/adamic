@@ -187,3 +187,16 @@ initializer. It runs `LATENT_MUTANT_FIRST_ERROR_ONLY=1` and
 `LATENT_MUTANT_KEEP_FAILED_STATE=1`; both must fail those same assertions. The
 existing legacy audits, refusal AST missing-function mutants, and no-output guard
 mutants remain in use. Generated observation headers identify `latent_mode`.
+
+
+Full evidence uses `stock_units.cjs ADAPTED SOURCE_MANIFEST OUTPUT_JSON` with
+stock TypeScript 6.0.3 on NODE_PATH to enumerate declaration names, nesting and
+UTF-8 body spans independently of the Go AST. `full_report.py ADAPTED RUN`
+validates compiler/ and tsc/ observations against those ledgers and source hashes,
+compares the same-input legacy checker diagnostics/spans, and writes complete
+reason/owner, giant-body reason, named exclusion and recovery-boundary CSVs.
+Its real-data mutants change a total, remove a nested declaration, change an
+owner and change the baseline checker observation; all must fail their audits.
+Reason CSVs flag both unowned rows and context-sensitive `reading X` observations.
+Those reads can reflect incomplete isolated bindings after earlier failures;
+they remain observed NotYet sites and require individual interpretation.

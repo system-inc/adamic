@@ -1,4 +1,5 @@
 """Exercise compiler selection with real Git refs and small compiled Go drivers."""
+import gzip
 import json
 import os
 from pathlib import Path
@@ -202,6 +203,29 @@ class CompilerSelectionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'do not match source pins'):
             report_pair(Path(result['trees']['main']['adapted_tree']),
                         Path(result['trees']['area']['adapted_tree']), run, 'stamp', self.main, self.area)
+
+    def test_legacy_latent_mode_and_stale_full_claim(self):
+        self.env['STAGE3_METER_LATENT']='first-error'
+        run,result=self.measure('per-ref')
+        self.assertEqual(result['trees']['main']['latent_lowering']['latent_mode'],'first-error')
+        self.assertIsNone(result['trees']['area']['tsc_entry']['lowering_census'])
+        for path in run.rglob('*.jsonl.gz'):
+            path.with_suffix('').write_bytes(gzip.decompress(path.read_bytes()))
+        metadata=json.loads((run/'compiler-mode.json').read_text())
+        metadata['latent_mode']='full'
+        (run/'compiler-mode.json').write_text(json.dumps(metadata))
+        with self.assertRaisesRegex(ValueError,'latent overlay mode does not match requested mode'):
+            report_pair(Path(result['trees']['main']['adapted_tree']),
+                        Path(result['trees']['area']['adapted_tree']),run,'stamp',self.main,self.area)
+
+    def test_invalid_latent_mode_fails_before_creating_a_run(self):
+        self.env['STAGE3_METER_LATENT']='typo'
+        with (self.root/'invalid-latent.log').open('w') as log:
+            result=subprocess.run(['bash','stage3/meter/twice-daily.sh'],cwd=self.repository,
+                                  env=self.env,stdout=log,stderr=log,timeout=10)
+        self.assertEqual(result.returncode,2)
+        self.assertIn('invalid STAGE3_METER_LATENT',(self.root/'invalid-latent.log').read_text())
+        self.assertFalse((self.repository/'stage3/meter/runs').exists())
 
     def test_invalid_mode_fails_before_creating_a_run(self):
         self.env['STAGE3_METER_COMPILER'] = 'typo'

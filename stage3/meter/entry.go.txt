@@ -84,8 +84,12 @@ func main() {
 		sources = append(sources, program.FileName(source))
 	}
 	sort.Strings(sources)
+	diagnosticSites := program.LatentDiagnosticSites()
+	for i := range diagnosticSites {
+		diagnosticSites[i].Measurement = entryMeasurement
+	}
 	if err := encoder.Encode(map[string]any{"roots": paths, "status": "measurement", "latent_mode": map[bool]string{true: "full", false: "first-error"}[os.Getenv("LATENT_FULL") == "1"], "checker_rejected": len(diagnostics) > 0,
-		"measurement": entryMeasurement, "diagnostics": diagnostics, "sources": sources, "diagnostic_sites": program.LatentDiagnosticSites()}); err != nil {
+		"measurement": entryMeasurement, "diagnostics": diagnostics, "sources": sources, "diagnostic_sites": diagnosticSites}); err != nil {
 		panic(err)
 	}
 	lower.Latent(context.Background(), program, func(record lower.LatentFile) {

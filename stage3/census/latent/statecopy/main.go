@@ -44,6 +44,9 @@ func (g *generator) copy(t ast.Expr, value string) string {
 		if printed(t.X) == "ir" {
 			return "latentCopyIR(" + value + ", seen)"
 		}
+		if printed(t.X) != "ast" && printed(t.X) != "checker" {
+			panic("state copy: foreign state type " + printed(t) + " requires an explicit copier")
+		}
 		return value
 	case *ast.StarExpr:
 		if name, ok := t.X.(*ast.Ident); ok {
@@ -55,7 +58,10 @@ func (g *generator) copy(t ast.Expr, value string) string {
 		if name, ok := t.X.(*ast.SelectorExpr); ok && printed(name.X) == "ir" {
 			return "latentCopyIR(" + value + ", seen)"
 		}
-		return value // Checker, source AST, and loaded-program identity stay shared.
+		if name, ok := t.X.(*ast.SelectorExpr); ok && (printed(name.X) == "ast" || printed(name.X) == "checker" || printed(name) == "load.Program") {
+			return value
+		}
+		panic("state copy: foreign or unrecognized pointer " + printed(t) + " requires an explicit copier")
 	case *ast.ArrayType:
 		if t.Len != nil {
 			panic("state copy: fixed array " + printed(t) + " requires an explicit copier")
@@ -66,7 +72,7 @@ func (g *generator) copy(t ast.Expr, value string) string {
 		ty := printed(t)
 		return "func(value " + ty + ") " + ty + " {if value==nil{return nil}; result:=make(" + ty + ",len(value)); for key,item:=range value {result[key]=" + g.copy(t.Value, "item") + "}; return result}(" + value + ")"
 	case *ast.InterfaceType:
-		return value
+		panic("state copy: anonymous interface requires an explicit copier")
 	default:
 		panic("state copy: unsupported field type " + printed(t))
 	}
