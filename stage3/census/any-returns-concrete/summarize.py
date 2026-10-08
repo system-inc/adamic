@@ -28,9 +28,9 @@ measured = hidden.calculate(rows,stock,corpus)
 entries = ranking.boundaries(rows,stock,corpus)
 result = ranking.partition(entries,measured['files'],{})
 original = json.loads(frozen('fb2b782a','stage3/census/any-returns/RESULT.json'))
-reason = 'a function returning any'
-row = next((row for row in result['ranked_reasons'] if row['kind']=='NotYet' and row['reason']==reason),None)
-remaining = [entry for entry in entries if entry['kind']=='NotYet' and entry['reason']==reason]
+reasons = {'a function returning any', 'a generic function whose resolved return type is any'}
+matching = [row for row in result['ranked_reasons'] if row['kind']=='NotYet' and row['reason'] in reasons]
+remaining = [entry for entry in entries if entry['kind']=='NotYet' and entry['reason'] in reasons]
 callees = {}
 for entry in remaining:
  diagnostic = entry['diagnostic']
@@ -44,6 +44,6 @@ for entry in remaining:
 for stats in callees.values():
  stats['boundaries']=len(stats['boundaries'])
  stats['reason']='source any contract' if stats['stock_return']=='any' else 'checker or measurement state unresolved; non-any stock declaration'
-summary = {'before':{'boundaries':original['boundaries'],'hidden_bytes':original['hidden_bytes']},'after':{'boundaries':row['boundary_count'] if row else 0,'hidden_bytes':row['bytes_revealed_if_fixed_alone'] if row else 0},'remaining_callees':callees,'provenance':{'compiler_base':'ed6e29751ee47d86fad450cd1674139883bc0f70','correction':'checker mapper identity preserved in measurement snapshots','production_branch_is_not_measured':True,'ledger_sha256':hashlib.sha256(ledger.read_bytes()).hexdigest(),'verified_source_files':len(stock)}}
+summary = {'before':{'boundaries':original['boundaries'],'hidden_bytes':original['hidden_bytes']},'after':{'boundaries':len({(entry['file'],entry['start'],entry['end']) for entry in remaining}),'hidden_bytes':sum(row['bytes_revealed_if_fixed_alone'] for row in matching)},'remaining_callees':callees,'provenance':{'compiler_base':'784b577a7488ddd0ce4cb2b82a96fa6535395896' if len(sys.argv)>5 else 'ed6e29751ee47d86fad450cd1674139883bc0f70','correction':'resolved checker returns and preserved mapper identity' if len(sys.argv)>5 else 'checker mapper identity preserved in measurement snapshots','production_branch_is_not_measured':len(sys.argv)<6,'compiler_commit':sys.argv[5] if len(sys.argv)>5 else None,'ledger_sha256':hashlib.sha256(ledger.read_bytes()).hexdigest(),'verified_source_files':len(stock)}}
 output.write_text(json.dumps(summary,indent=2)+'\n')
 print(json.dumps(summary['after']))

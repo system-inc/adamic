@@ -37,9 +37,18 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 	}
 	concreteTypes := map[*checker.Type]*checker.Type{}
 	classContext := l.genericUsesClasses(declaration, map[*ast.Node]bool{})
-	for _, parameter := range declaration.TypeParameters() {
+	signatureParameters := target.TypeParameters()
+	if resolved.Target() != nil {
+		signatureParameters = resolved.Target().TypeParameters()
+	}
+	if len(signatureParameters) < len(declaration.TypeParameters()) {
+		return 0, l.notYet(call, "a generic function whose resolved type parameter correspondence is unknown")
+	}
+	// The overload proof establishes positional alpha-renaming between the
+	// selected declaration and implementation (their binder names may differ).
+	for index, parameter := range declaration.TypeParameters() {
 		declaredType := l.checker.GetTypeAtLocation(parameter.Name())
-		concrete := l.concrete(checker.Checker_instantiateType(l.checker, declaredType, mapper))
+		concrete := l.concrete(checker.Checker_instantiateType(l.checker, signatureParameters[index], mapper))
 		// classGenericCall has already installed this callee's specialization.
 		if classContext {
 			if active := l.concrete(declaredType); active != declaredType && active.Flags()&checker.TypeFlagsTypeParameter == 0 {

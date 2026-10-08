@@ -10,7 +10,7 @@ function forEach<T, U>(array: readonly T[] | undefined, callback: (value: T) => 
     if (array !== undefined) {
         for (const value of array) {
             const result = callback(value);
-            if (result !== undefined) {
+            if (result) {
                 return result;
             }
         }
@@ -59,6 +59,7 @@ console.log(cached());
 console.log(cached());
 console.log(forEach([1, 2, 3], (value) => value === 2 ? 'found' : undefined) ?? 'missing');
 console.log(forEach([1], (value) => value === 2 ? 'found' : undefined) ?? 'missing');
+console.log(forEach([1, 2], (value) => value === 1 ? '' : 'after-empty') ?? 'missing');
 const filtered = filter([1, 2, 3], (value) => value > 1);
 console.log(filtered === undefined ? 'missing' : filtered.join(','));
 const absent = filter<number>(undefined, (value) => value > 1);

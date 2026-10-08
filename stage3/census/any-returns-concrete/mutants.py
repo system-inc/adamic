@@ -16,6 +16,10 @@ cases = [
  ('opaque-mapper', 'internal/lower/instantiate.go',
   'type typeMapper = checker.TypeMapper', 'type typeMapper struct{}',
   'TestGenericMapperKeepsCheckerIdentity', 'generic mapper must retain the checker type identity'),
+ ('copier-loses-alias', 'stage3/census/latent/statecopy/main.go',
+  'if alias, ok := g.types[name.Name].(*ast.SelectorExpr); ok {',
+  'if alias, ok := g.types[name.Name].(*ast.SelectorExpr); ok && false {',
+  'TestCheckerMapperAliasKeepsIdentity', 'foreign or unrecognized pointer'),
 ]
 for name, relative, before, after, test, witness in cases:
  path = root / relative
@@ -24,7 +28,8 @@ for name, relative, before, after, test, witness in cases:
  try:
   path.write_text(original.replace(before, after))
   with (logs / (name + '.log')).open('w') as log:
-   result = subprocess.run(['go','test','./internal/lower','-run','^'+test+'$','-count=1','-v'], cwd=root, stdout=log, stderr=log)
+   package = './stage3/census/latent/statecopy' if name == 'copier-loses-alias' else './internal/lower'
+   result = subprocess.run(['go','test',package,'-run','^'+test+'$','-count=1','-v'], cwd=root, stdout=log, stderr=log)
   output = (logs / (name + '.log')).read_text()
   assert result.returncode != 0 and witness in output and '[build failed]' not in output, (name, output)
   print(name + ': caught by ' + test)
