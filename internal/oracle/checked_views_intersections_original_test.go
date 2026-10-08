@@ -19,6 +19,7 @@ type intersectionOriginalManifest struct {
 	Fields       map[string][]string `json:"fields"`
 	Pairs        []struct {
 		ID            int               `json:"type_id"`
+		Declared      string            `json:"declared_type"`
 		Type          string            `json:"type"`
 		Field         string            `json:"field"`
 		Reads         int               `json:"read_count"`
@@ -41,8 +42,14 @@ func intersectionOriginalInputs(t *testing.T) (string, intersectionOriginalManif
 	if err := json.Unmarshal(data, &manifest); err != nil {
 		t.Fatal(err)
 	}
-	if manifest.Commit != "050880ce59e30b356b686bd3144efe24f875ebc8" || len(manifest.Declarations) != 78 || len(manifest.Pairs) != 2 || manifest.Pairs[0].ID != 10236 || manifest.Pairs[0].Reads != 1 || len(manifest.Pairs[0].Sites) != 1 {
+	reads := map[int]int{10236: 1, 7612: 4, 9476: 9, 9474: 11, 9485: 9, 9475: 4, 9454: 1}
+	if manifest.Commit != "050880ce59e30b356b686bd3144efe24f875ebc8" || len(manifest.Declarations) != 78 || len(manifest.Pairs) != len(reads) || manifest.Pairs[0].ID != 10236 {
 		t.Fatal("original provenance changed")
+	}
+	for _, pair := range manifest.Pairs {
+		if reads[pair.ID] != pair.Reads || len(pair.Sites) != pair.Reads {
+			t.Fatalf("original read sites changed for %d.%s", pair.ID, pair.Field)
+		}
 	}
 	for name, digest := range manifest.Declarations {
 		data, err := os.ReadFile(filepath.Join(declarations, name))
@@ -192,5 +199,125 @@ func intersectionOriginalMutant(t *testing.T, program *ir.Program, kind string) 
 	}
 	if changed == 0 {
 		t.Fatal("original mutant found no obligation")
+	}
+}
+
+// Complete original node declarations require a Node parent and a Symbol on
+// every declaration. Each read checks every descriptor once per path, selecting
+// tagged arms; a descriptor already entered keeps its fields for its own reads.
+func requireIntersectionOriginalBindable(t *testing.T, program *ir.Program, manifest intersectionOriginalManifest, ids ...int) {
+	t.Helper()
+	sorted := func(c ir.ViewContract) []string {
+		fields := []string{}
+		for _, f := range c.Fields {
+			fields = append(fields, f.Name)
+		}
+		slices.Sort(fields)
+		return fields
+	}
+	for _, name := range []string{"Identifier", "Node", "Symbol", "PropertyAccessEntityNameExpression", "ElementAccessExpression"} {
+		complete := false
+		for _, c := range program.ViewContracts {
+			complete = complete || c.Name == name && len(c.Fields) > 0 && slices.Equal(sorted(c), manifest.Fields[name])
+		}
+		if !complete {
+			t.Fatal("original field set was reduced: " + name)
+		}
+	}
+	for _, pair := range manifest.Pairs {
+		if !slices.Contains(ids, pair.ID) {
+			continue
+		}
+		bounded := false
+		for _, c := range program.ViewContracts {
+			bounded = bounded || c.Name == pair.Declared && c.IntersectionBounded && c.Unsupported == "" && slices.Equal(sorted(c), pair.PresentFields)
+		}
+		if !bounded {
+			t.Fatalf("original %d.%s read is not held by its complete bounded contract", pair.ID, pair.Field)
+		}
+	}
+}
+
+func TestCheckedViewIntersectionOriginalBindable(t *testing.T) {
+	declarations, manifest := intersectionOriginalInputs(t)
+	static, access := []int{9476, 9474}, []int{9485, 9475}
+	for _, test := range []struct {
+		name, source, diagnostic string
+		pairs                    []int
+	}{
+		{"bindable-static-good", "true\n", "", static},
+		{"bindable-static-chain-good", "true\n", "", static},
+		{"bindable-static-helpers-good", "true\n", "", static[:1]},
+		{"bindable-element-good", "true\n", "", append(slices.Clone(static), 9454)},
+		{"bindable-static-left-wrong", "true\n", "field read failed: node.left.name.symbol is not initialized; expected Symbol, found missing", static[:1]},
+		{"bindable-static-helpers-wrong", "true\n", "field read failed: node.left.name.symbol is not initialized; expected Symbol, found missing", static[:1]},
+		{"bindable-static-left-kind", "true\n", "field read failed: node.left.kind expected SyntaxKind.PropertyAccessExpression | SyntaxKind.ElementAccessExpression, found number 999", static[:1]},
+		{"bindable-static-expression-wrong", "true\n", "field read failed: node.left.expression.expression.symbol is not initialized; expected Symbol, found missing", static},
+		{"bindable-static-expression-this", "true\n", "field read failed: node.left.expression.expression.kind expected SyntaxKind.Identifier | SyntaxKind.PropertyAccessExpression, found number 110", static},
+		{"bindable-element-argument-wrong", "true\n", "field read failed: node.left.argumentExpression.kind expected SyntaxKind.NumericLiteral | SyntaxKind.StringLiteral | SyntaxKind.NoSubstitutionTemplateLiteral, found number 80", static},
+		{"bindable-access-good", "true\n", "", access},
+		{"bindable-access-chain-good", "true\n", "", access},
+		{"bindable-access-left-wrong", "true\n", "field read failed: node.left.expression.kind expected SyntaxKind.Identifier | SyntaxKind.PropertyAccessExpression | SyntaxKind.ElementAccessExpression, found number 110", access[:1]},
+		{"bindable-access-left-symbol", "true\n", "field read failed: node.left.expression.symbol is not initialized; expected Symbol, found missing", access[:1]},
+		{"bindable-access-left-kind", "true\n", "field read failed: node.left.kind expected SyntaxKind.PropertyAccessExpression | SyntaxKind.ElementAccessExpression, found number 999", access[:1]},
+		{"bindable-access-expression-wrong", "true\n", "field read failed: node.left.expression.expression.symbol is not initialized; expected Symbol, found missing", access},
+		{"bindable-access-expression-this", "true\n", "field read failed: node.left.expression.expression.kind expected SyntaxKind.Identifier | SyntaxKind.PropertyAccessExpression, found number 110", access},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			program, _ := intersectionOriginalProgram(t, declarations, test.name, test.source)
+			requireIntersectionOriginalBindable(t, program, manifest, test.pairs...)
+			if kind := os.Getenv("ADAMIC_INTERSECTION_ORIGINAL_MUTANT"); kind != "" {
+				intersectionOriginalBindableMutant(t, program, kind)
+			}
+			want := run{stdout: []byte(test.source)}
+			if test.diagnostic != "" {
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: " + test.diagnostic + "\n")}
+			}
+			actual, binary := nativelyUncached(t, program)
+			if want.exitCode == 0 {
+				if report := leaks(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+			}
+			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Errorf("%s; got %#v", difference, got)
+				}
+			}
+		})
+	}
+}
+
+// Each mutant removes one obligation from one pair's read: skip falls back to
+// the plain union's discriminant, shape accepts a wrong tag, nested forgets an
+// Identifier's Symbol.
+func intersectionOriginalBindableMutant(t *testing.T, program *ir.Program, kind string) {
+	t.Helper()
+	roots := map[string]string{"left": "BindableStaticAccessExpression", "expression": "EntityNameExpression | (LeftHandSideExpression & BindableStaticNameExpression)", "access": "BindableAccessExpression"}
+	tags := map[string][2]any{"left": {"SyntaxKind.PropertyAccessExpression", 999.0}, "expression": {"SyntaxKind.Identifier", 110.0}, "access": {"SyntaxKind.ElementAccessExpression", 999.0}}
+	pair, change, _ := strings.Cut(kind, "-")
+	changed := 0
+	for i := range program.ViewContracts {
+		c := &program.ViewContracts[i]
+		switch change {
+		case "skip":
+			if c.Name == roots[pair] && c.IntersectionBounded {
+				c.IntersectionBounded, c.IntersectionTag = false, ""
+				changed++
+			}
+		case "shape":
+			if c.Name == tags[pair][0] && c.Kind == ir.ViewScalar {
+				c.Allowed = append(slices.Clone(c.Allowed), ir.ViewLiteral{Of: ir.Number, Number: tags[pair][1].(float64)})
+				changed++
+			}
+		case "nested":
+			if c.Name == "Identifier" || c.Name == "LeftHandSideExpression & Identifier" {
+				c.Fields = slices.DeleteFunc(slices.Clone(c.Fields), func(f ir.ViewFieldContract) bool { return f.Name == "symbol" })
+				changed++
+			}
+		}
+	}
+	if changed == 0 {
+		t.Fatal("original bindable mutant found no obligation: " + kind)
 	}
 }

@@ -394,3 +394,62 @@ func (l *lowering) viewIntersectionReadChecks(id ir.ViewContractID) bool {
 	}
 	return c.Intersection || c.IntersectionTag != ""
 }
+
+// Lane 7's demand refusals were decided while descriptors were still being
+// reserved. Once every descriptor is complete, a refused intersection or tagged
+// union whose whole reachable graph the bounded walk validates is admitted.
+// A refused descriptor it reaches is walked only if it is admitted too, so the
+// emitters, which defer every remaining refusal, walk exactly what was proven.
+func (l *lowering) finishBoundedIntersections() {
+	program := l.result
+	pending := func(family string) bool {
+		switch family {
+		case "union intersection", "recursive intersection payload", "mixed intersection payload", "compound intersection payload":
+			return true
+		}
+		return false
+	}
+	tags := map[ir.ViewContractID]string{}
+	candidates := map[ir.ViewContractID]bool{}
+	for i, c := range program.ViewContracts {
+		id := ir.ViewContractID(i + 1)
+		if !pending(c.Unsupported) || c.ObjectPresent != 0 {
+			continue
+		}
+		switch {
+		case c.Kind == ir.ViewObject && c.Intersection:
+			candidates[id] = true
+		case c.Kind == ir.ViewUnion:
+			if tag, _ := ir.IntersectionUnionArms(program, id); tag != "" {
+				candidates[id] = true
+				tags[id] = tag
+			}
+		}
+	}
+	walkable := func(id ir.ViewContractID) bool {
+		c := program.ViewContracts[id-1]
+		return pending(c.Unsupported) && candidates[ir.RecursiveIntersectionPresent(program, id)]
+	}
+	for changed := true; changed; {
+		changed = false
+		for id := range candidates {
+			if _, valid := ir.BoundedIntersectionContracts(program, id, walkable); !valid {
+				delete(candidates, id)
+				changed = true
+			}
+		}
+	}
+	for i := range program.ViewContracts {
+		id := ir.ViewContractID(i + 1)
+		if !walkable(id) {
+			continue
+		}
+		c := &program.ViewContracts[i]
+		c.Unsupported = ""
+		c.IntersectionBounded = true
+		c.IntersectionRecursive = false
+		if tag := tags[id]; tag != "" {
+			c.IntersectionTag = tag
+		}
+	}
+}

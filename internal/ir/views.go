@@ -25,6 +25,9 @@ type ViewContract struct {
 	// IntersectionTag selects disjoint object arms before validating their fields.
 	IntersectionTag       string
 	IntersectionRecursive bool
+	// IntersectionBounded validates a recursive or compound read to contract-level
+	// recursion; deeper and deferred fields keep their own checked reads.
+	IntersectionBounded bool
 	// ObjectPresent retains the canonical descriptor behind optional copies.
 	ObjectPresent ViewContractID
 

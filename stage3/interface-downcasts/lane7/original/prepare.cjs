@@ -27,17 +27,23 @@ const checker = program.getTypeChecker();
 const source = program.getSourceFile(path.join(root,'src/compiler/types.ts'));
 const moduleExports = checker.getExportsOfModule(checker.getSymbolAtLocation(source));
 const fields = {};
-for (const name of ['SymbolTracker','ModuleSpecifierResolutionHost','GeneratedIdentifier','EmitNode','AutoGenerateInfo','Identifier']) {
+for (const name of ['SymbolTracker','ModuleSpecifierResolutionHost','GeneratedIdentifier','EmitNode','AutoGenerateInfo','Identifier',
+  'Node','Symbol','Declaration','LeftHandSideExpression','PropertyAccessEntityNameExpression','ElementAccessExpression',
+  'StringLiteral','NumericLiteral','NoSubstitutionTemplateLiteral','BinaryExpression']) {
  const symbol = moduleExports.find(symbol=>symbol.name===name);
  if (!symbol) throw Error('missing original type '+name);
  fields[name] = checker.getPropertiesOfType(checker.getDeclaredTypeOfSymbol(symbol)).map(field=>field.name).sort();
 }
 const pairs = [];
-for (const [id,name,field] of [[10236,'SymbolTracker','moduleResolverHost'],[7612,'GeneratedIdentifier','emitNode']]) {
+for (const [id,name,field] of [[10236,'SymbolTracker','moduleResolverHost'],[7612,'GeneratedIdentifier','emitNode'],
+  [9476,'BindableStaticPropertyAssignmentExpression','left'],[9474,'BindableStaticAccessExpression','expression'],
+  [9485,'BindablePropertyAssignmentExpression','left'],[9475,'BindableAccessExpression','expression'],
+  [9454,'BindableStaticElementAccessExpression','argumentExpression']]) {
  const symbol = moduleExports.find(symbol=>symbol.name===name);
  const receiver = checker.getDeclaredTypeOfSymbol(symbol);
  const member = checker.getPropertyOfType(receiver,field);
- const declared = checker.getTypeOfSymbolAtLocation(member,member.valueDeclaration || member.declarations[0]);
+ // Union aliases have synthetic members, whose type the checker combines.
+ const declared = checker.getTypeOfSymbol(member);
  const sites = witnesses.filter(site=>site.type_id===id && site.field===field);
  pairs.push({type_id:id,type:name,field,read_count:sites.length,sites,
    declared_type:checker.typeToString(declared),

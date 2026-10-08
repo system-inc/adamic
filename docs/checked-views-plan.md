@@ -1335,3 +1335,39 @@ field-name fallback. A resolved supported conjunctive read keeps its emitted
 checks instead of inheriting a different wider carrier's unsupported descriptor.
 Unsupported or unresolved reads retain the existing conservative fallback.
 The original missing-optional control caught that fallback collision.
+
+
+Lane 7 bounded intersection group, October 8: complete original declarations
+make every Node need a Node parent and every Declaration a Symbol, so an honest
+acyclic value cannot satisfy a walk to the end of its data, and a Weak parent
+slot is not yet readable through a view. Reads whose contract lane 7 had
+refused (union intersection, recursive, mixed or compound payloads) are now
+admitted when the bounded walk validates their whole reachable graph. It checks
+every descriptor once per path, as the inline field walk does: kinds, presence
+and literals at each level, tagged object unions by their selected arm (plain
+unions by their discriminant), arrays, Maps and callables by kind. A descriptor
+already entered on the path, array elements, mixed scalar unions and refused
+families keep their own checked reads. Nullable, nominal and tuple members still
+refuse the read. The pure object recursive walk is unchanged.
+
+Named minimal hooks for this group: shared IR views.go adds the
+IntersectionBounded flag; shared lower/view_lazy.go calls the lane-owned
+finishBoundedIntersections at the start of checkLazyViewReads, after every
+descriptor is complete. Admission runs to a fixpoint so a refused descriptor is
+walked only when it is admitted too, and the emitters walk exactly what lowering
+proved. Arms coalesce when their obligations are the same to the walk: one
+canonical descriptor behind optional copies, or arrays checked by kind alone.
+The table runtime is lane-owned: ir/view_intersections.go,
+native/view_intersections_recursive.go and runtime/view_intersections_recursive.c/.h,
+javascript/view_intersections_recursive.go.
+
+Certified with complete pinned declarations: BindableStaticPropertyAssignmentExpression.left
+(9 reads), BindableStaticAccessExpression.expression (11), BindablePropertyAssignmentExpression.left
+(9) and BindableAccessExpression.expression (4). BindableStaticElementAccessExpression.argumentExpression
+(1) is held by the shared argument descriptor, but no admitted program reaches its
+read without an earlier read checking the same argument (the direct intersection
+cast and the unproven type predicate both refuse), so it stays pending.
+Merging codex/views-integration 6a7f1bf3 conflicted in code files
+(javascript/readiness.go, javascript/view_nullish.go, native/view_nullish.go,
+where lane 7's nullish intersection hook and callable kind meet integration's
+member selection, Map and callable certificates); the merge was aborted unresolved.

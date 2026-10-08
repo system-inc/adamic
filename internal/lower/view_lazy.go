@@ -80,6 +80,7 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 // Demand uses the same allocations, joined arguments/results and projected
 // stores as shape certification. Unknown is never an empty proof of safety.
 func (l *lowering) checkLazyViewReads() error {
+	l.finishBoundedIntersections()
 	program := l.result
 	if len(program.ViewOrigins) == 0 {
 		return nil
