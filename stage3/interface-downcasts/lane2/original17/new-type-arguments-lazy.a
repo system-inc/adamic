@@ -1,0 +1,6 @@
+import type { NewExpression } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+const raw = { kind: 215, typeArguments: 'bad' };
+const base: Base = raw;
+const viewed = base as NewExpression;
+console.log(`${viewed.kind}`);
