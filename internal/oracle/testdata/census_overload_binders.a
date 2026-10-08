@@ -18,6 +18,11 @@ function extra<R, Unused>(value: R): R { return value; }
 function collapse<T>(value: T): T;
 function collapse<T, U>(value: T): T | U { return value; }
 
+// Neither binder in this union has evidence; the unused callback can accept
+// bottom without claiming it can receive a fabricated number.
+function erased(callback: (value: number) => void): void;
+function erased<T, U>(callback: (value: T | U) => void): void {}
+
 console.log(token('to' + 'ken'));
 console.log(ancestor('parent', (directory) => directory + '/child'));
 console.log(extra('un' + 'used'));

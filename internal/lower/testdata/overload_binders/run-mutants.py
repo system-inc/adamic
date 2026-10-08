@@ -33,3 +33,28 @@ for name, before, after, test in mutants:
         print(f'{name}: caught by {test}; exit {result.returncode}', flush=True)
     finally:
         source.write_text(original)
+
+source = root / 'internal/lower/generic.go'
+original = source.read_text()
+start = original.index('func (l *lowering) inferTypes(')
+end = original.index('\n// JSON descriptors', start)
+body = original[start:end]
+mutants = [
+    ('union-inference', 'if missing != nil {\n\t\t\tinto[missing] = l.concrete(instantiated)', 'if false && missing != nil {\n\t\t\tinto[missing] = l.concrete(instantiated)', 'one_compatible_binder'),
+    ('known-union-member', 'if !l.checker.IsTypeAssignableTo(known, l.concrete(instantiated)) {', 'if false && !l.checker.IsTypeAssignableTo(known, l.concrete(instantiated)) {', 'incompatible_known_member'),
+    ('multiple-union-binders', 'return // More than one unknown binder has no unique witness.', '// accept the last unknown binder', 'multiple_unknown_binders'),
+    ('optional-rigid-binder', 'l.inferTypes(present[0], given, into)', 'l.inferTypes(l.checker.GetNonNullableType(declared), l.checker.GetNonNullableType(instantiated), into)', 'optional_rigid_binder'),
+]
+for name, before, after, subtest in mutants:
+    if body.count(before) != 1:
+        raise SystemExit(f'{name}: mutation anchor is not unique')
+    try:
+        source.write_text(original[:start] + body.replace(before, after) + original[end:])
+        with (logs / f'{name}.log').open('w') as log:
+            result = subprocess.run(['go', 'test', './internal/lower', '-run', f'TestOverloadInferenceWitnesses/{subtest}', '-count=1', '-timeout', '10m'], cwd=root, stdout=log, stderr=subprocess.STDOUT)
+        output = (logs / f'{name}.log').read_text()
+        if result.returncode == 0 or '--- FAIL:' not in output or '[build failed]' in output:
+            raise SystemExit(f'{name}: survived or failed outside the intended test: {output}')
+        print(f'{name}: caught by TestOverloadInferenceWitnesses/{subtest}; exit {result.returncode}', flush=True)
+    finally:
+        source.write_text(original)
