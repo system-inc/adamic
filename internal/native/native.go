@@ -79,7 +79,7 @@ func Flags(options Options) []string {
 	// A program may declare a variable, a function or a parameter it never uses, or assign a variable
 	// to itself, as JavaScript allows; that's the linter's business (cohere's no-unused-vars and
 	// no-self-assign), not a reason the C can't compile.
-	flags := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function", "-Wno-unused-parameter", "-Wno-self-assign"}
+	flags := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-Wcast-function-type-strict", "-pedantic", "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function", "-Wno-unused-parameter", "-Wno-self-assign"}
 	// JavaScript rounds every operation on its own. clang otherwise fuses a * b + c into one
 	// multiply-add wherever the processor has one (every arm64, so every Apple silicon Mac), and
 	// 0.1 * 10 - 1 is then 5.551115123125783e-17 instead of 0. V8 builds itself the same way.
@@ -120,7 +120,7 @@ func Build(source string, output string, options Options) error {
 	}
 	defer os.RemoveAll(directory)
 
-	library, err := RuntimeLibrary("", options)
+	library, err := RuntimeLibraryForSource("", source, options)
 	if err != nil {
 		return err
 	}

@@ -1,0 +1,13 @@
+=== RUN   TestArgumentsLengthWrongSlotMutant
+=== RUN   TestArgumentsLengthWrongSlotMutant/release
+    arguments_length_test.go:104: caught clean wrong-slot miscompile: Node "1\n", native "9\n"
+=== RUN   TestArgumentsLengthWrongSlotMutant/sanitized
+    arguments_length_test.go:104: caught clean wrong-slot miscompile: Node "1\n", native "9\n"
+--- PASS: TestArgumentsLengthWrongSlotMutant (0.97s)
+    --- PASS: TestArgumentsLengthWrongSlotMutant/release (0.10s)
+    --- PASS: TestArgumentsLengthWrongSlotMutant/sanitized (0.24s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.979s

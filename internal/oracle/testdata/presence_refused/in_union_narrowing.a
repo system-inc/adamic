@@ -1,0 +1,20 @@
+// "message" in value narrows Chain | Message to Message, but any Chain that also carries a message
+// key passes, and value.code would be read on trust. Node prints 2, c, then NaN for the liar.
+interface Chain {
+	readonly messageText: string;
+	readonly next: number;
+}
+interface Message {
+	readonly message: string;
+	readonly code: number;
+}
+function describe(value: Chain | Message): string {
+	return "message" in value ? `${value.code + 1}` : value.messageText;
+}
+const real: Message = { message: "m", code: 1 };
+const chain: Chain = { messageText: "c", next: 2 };
+console.log(describe(real));
+console.log(describe(chain));
+const sneaky = { messageText: "s", next: 3, message: "liar" };
+const asChain: Chain = sneaky;
+console.log(describe(asChain));

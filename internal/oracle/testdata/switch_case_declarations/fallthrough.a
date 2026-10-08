@@ -1,0 +1,21 @@
+function describe(input: number): string {
+	let out = '';
+	switch (input) {
+		case 0:
+			out += 'zero ';
+		case 1:
+			const box = { text: `box${input}` };
+			let amount = input;
+			amount++;
+			out += read();
+		default:
+			function read(): string { return `${box.text}:${amount} `; }
+			out += 'default ';
+		case 2:
+			const tail = `tail${input}`;
+			out += tail;
+			break;
+	}
+	return out;
+}
+for (const input of [0, 1, 2, 3, 0]) console.log(describe(input));

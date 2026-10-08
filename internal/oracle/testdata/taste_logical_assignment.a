@@ -1,0 +1,42 @@
+let calls = 0;
+function right(): number { calls += 1; return 8; }
+function numbers(start: number | undefined): void {
+ let value = start;
+ console.log(`${value ||= right()} ${calls} ${value}`);
+ console.log(`${value ||= right()} ${calls} ${value}`);
+ console.log(`${value &&= right()} ${calls} ${value}`);
+ console.log(`${value ??= right()} ${calls} ${value}`);
+}
+numbers(undefined); numbers(0); numbers(NaN); numbers(3);
+function optional(start: number | undefined): void {
+ let value = start;
+ console.log(`${value &&= right()} ${calls}`);
+ console.log(`${value ??= right()} ${calls}`);
+}
+optional(undefined); optional(0);
+class Box { value = ''; count: number | undefined = undefined; }
+const box = new Box();
+let objects = 0; let keys = 0;
+function object(): Box { objects += 1; return box; }
+function key(): 'value' { keys += 1; return 'value'; }
+function word(): string { calls += 1; return `w${calls}`; }
+console.log(`${object()[key()] ||= word()} ${objects} ${keys} ${calls}`);
+console.log(`${object()[key()] ||= word()} ${objects} ${keys} ${calls}`);
+console.log(`${object().value &&= word()} ${objects} ${calls}`);
+console.log(`${object().count ??= right()} ${objects} ${calls}`);
+console.log(`${object().count ??= right()} ${objects} ${calls}`);
+const values: number[] = [0, 2];
+function array(): number[] { objects += 1; return values; }
+function index(): number { keys += 1; return 0; }
+console.log(`${array()[index()] ||= right()} ${objects} ${keys} ${calls}`);
+console.log(`${array()[index()] ||= right()} ${objects} ${keys} ${calls}`);
+console.log(`${array()[index()] &&= right()} ${objects} ${keys} ${calls}`);
+function words(start: string | undefined): void {
+ let value = start;
+ console.log(`${value &&= word()} ${calls}`);
+ console.log(`${value ??= word()} ${calls}`);
+ console.log(`${value ||= word()} ${calls}`);
+}
+words(''); words(undefined); words(`built${calls}`);
+function parameter(value: string): string { value &&= word(); return value; }
+console.log(parameter(`p${calls}`));
