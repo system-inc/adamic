@@ -1376,6 +1376,113 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "tagged-variable-conditional-binary-diagnostic-text",
+      "pairs": 5,
+      "candidateReads": 66,
+      "members": [
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "updateVariableDeclaration",
+          "declared_types": [
+            "(node: VariableDeclaration, name: BindingName, exclamationToken: ExclamationToken | undefined, type: TypeNode | undefined, initializer: Expression | undefined) => VariableDeclaration"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 14,
+          "witness": {
+            "file": "src/compiler/factory/utilities.ts",
+            "line": 312,
+            "column": 36
+          },
+          "rank": 122,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createConditionalExpression",
+          "declared_types": [
+            "(condition: Expression, questionToken: QuestionToken | undefined, whenTrue: Expression, colonToken: ColonToken | undefined, whenFalse: Expression) => ConditionalExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 13,
+          "witness": {
+            "file": "src/compiler/factory/emitHelpers.ts",
+            "line": 474,
+            "column": 25
+          },
+          "rank": 129,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "updateBinaryExpression",
+          "declared_types": [
+            "(node: BinaryExpression, left: Expression, operator: BinaryOperator | BinaryOperatorToken, right: Expression) => BinaryExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 13,
+          "witness": {
+            "file": "src/compiler/visitorPublic.ts",
+            "line": 1169,
+            "column": 16
+          },
+          "rank": 131,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 10094,
+          "type": "ProgramDiagnostics",
+          "field": "addConfigDiagnostic",
+          "declared_types": [
+            "(diag: Diagnostic) => void"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 13,
+          "witness": {
+            "file": "src/compiler/program.ts",
+            "line": 4118,
+            "column": 13
+          },
+          "rank": 132,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 28206,
+          "type": "Scanner",
+          "field": "setText",
+          "declared_types": [
+            "(text: string | undefined, start?: number | undefined, length?: number | undefined) => void"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 13,
+          "witness": {
+            "file": "src/compiler/utilities.ts",
+            "line": 10562,
+            "column": 5
+          },
+          "rank": 133,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

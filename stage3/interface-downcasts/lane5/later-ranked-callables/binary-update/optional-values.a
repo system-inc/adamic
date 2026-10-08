@@ -1,0 +1,9 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Expression {readonly value:number;}
+interface BinaryExpression {readonly value:number;}
+type BinaryOperator=number;
+interface BinaryOperatorToken {readonly value:number;}
+interface Base {readonly updateBinaryExpression:unknown;}
+interface Target {updateBinaryExpression(node: BinaryExpression, left: Expression, operator: BinaryOperator | BinaryOperatorToken, right: Expression): BinaryExpression;}
+function probe(value:Base):void {const context={factory:value as Target};const node:BinaryExpression={value:2};console.log(`${context.factory.updateBinaryExpression(node,{value:3},{value:2},{value:4}).value}`);}
+probe({updateBinaryExpression:(node:BinaryExpression,left:Expression,operator:BinaryOperator|BinaryOperatorToken,right:Expression):BinaryExpression=>({value:node.value+left.value+(typeof operator==="number"?operator:operator.value)+right.value})});

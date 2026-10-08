@@ -8,6 +8,11 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"variable-update-tagged", "updateVariableDeclaration", "7\n", "10\n5\n", "0", "name.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"conditional-expression", "createConditionalExpression", "12\n", "15\n", "0", "condition.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"binary-update", "updateBinaryExpression", "10\n", "11\n", "0", "node.value", "2\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"config-diagnostic", "addConfigDiagnostic", "3\n", "", "0", "diag.value", "3\n", "", "good,wrong-value,wrong-arity,wrong-members,wrong-parameter-payload"},
+		{"scanner-text", "setText", "3\n", "0\n3\n9\n3\n", "0", "", "", "", "good,optional-values,wrong-value,wrong-arity,wrong-members"},
 		{"read-helpers", "readEmitHelpers", "3\n", "0\n", "1", "helper.value", "3\n", "0\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-parameter-payload"},
 		{"case-sensitive", "useCaseSensitiveFileNames", "true\n", "false\n", "1", "", "", "bad\n", "good,optional-values,wrong-value,wrong-arity,wrong-result"},
 		{"diagnostic-newline", "getNewLine", "abc\n", "", "1", "", "", "3\n", "good,wrong-value,wrong-arity,wrong-result"},
