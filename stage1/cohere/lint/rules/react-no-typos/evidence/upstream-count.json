@@ -1,0 +1,12 @@
+{
+  "rule": "react/no-typos",
+  "cohere_pin": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "captured_unique_cases": 202,
+  "witnesses": 3,
+  "backends": [
+    "source Node",
+    "emitted JavaScript",
+    "ASan/UBSan native"
+  ],
+  "selected_package_seconds": 226.319
+}

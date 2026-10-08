@@ -1,0 +1,6 @@
+import 'react';
+import 'prop-types';
+const example = () => ((<div/>));
+example.DefaultProps = {};
+function nested() { function inner() { return <div/>; } return null; }
+nested.PropTypes = {};

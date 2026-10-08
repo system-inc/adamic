@@ -1,0 +1,33 @@
+{
+  "command": "go test -json ./stage1/cohere/lint -count=1 -timeout=60m",
+  "nproc": "5",
+  "load_before": "0.99 2.37 2.81 1/150 147211",
+  "environment": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/react-no-typos-typescript-pin",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_LINT_PROFILE_DIR": "/tmp/react-no-typos-final-profiles.EKZQRV",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/tmp/react-no-typos-final-profiles.EKZQRV",
+    "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot",
+    "GOMAXPROCS": "4",
+    "GOFLAGS": "-buildvcs=false"
+  },
+  "typescript_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "typescript_status": "",
+  "exit_code": 0,
+  "wall_seconds": 1158.61,
+  "load_after": "4.05 4.40 3.77 1/152 284072",
+  "test_counts": {
+    "pass": 152,
+    "fail": 0,
+    "skip": 1
+  },
+  "top_level_test_counts": {
+    "pass": 46,
+    "fail": 0,
+    "skip": 1
+  },
+  "skips": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "failures": []
+}

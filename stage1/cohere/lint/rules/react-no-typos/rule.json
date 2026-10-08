@@ -1,0 +1,11 @@
+{
+  "name": "react/no-typos",
+  "kinds": ["SourceFile"],
+  "visit": "visit",
+  "parent": false,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleReactNoTypos",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestNoTypos"
+}

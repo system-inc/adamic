@@ -1,0 +1,5 @@
+{
+  "name": "react-no-typos-static-casing",
+  "from": "if(matchIgnoringCase(canonical, name) && canonical !== name) {\n                const id = classProperty",
+  "to": "if(matchIgnoringCase(canonical, name) && canonical === name) {\n                const id = classProperty"
+}

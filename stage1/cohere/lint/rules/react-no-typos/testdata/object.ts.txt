@@ -1,0 +1,7 @@
+import {PropTypes as PT} from 'react';
+React.createReactClass({
+    PropTypes: {},
+    propTypes: {a: PT.shape({b: PT.oneOfType([PT.bools])}).isrequired},
+    getderivedstatefromprops() {},
+    Render() {}
+});

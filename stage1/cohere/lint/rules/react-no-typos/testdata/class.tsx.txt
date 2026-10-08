@@ -1,0 +1,9 @@
+import PropTypes from 'prop-types';
+class Example extends React.Component {
+    static PropTypes = {};
+    static propTypes = {a: PropTypes.strng, b: PropTypes.string.isRequird};
+    getderivedstatefromprops() {}
+    ComponentDidMount() {}
+}
+let target = Example.PropTypes;
+Example.PropTypes ||= {};

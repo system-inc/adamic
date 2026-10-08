@@ -1,0 +1,10 @@
+export function message(id: string): string {
+    if(id === 'typoStaticClassProp') { return 'This static property is spelled with the wrong casing, so React never reads it. React matches these names exactly, which means the declaration sits there looking like configuration and does nothing.'; }
+    if(id === 'typoPropDeclaration') { return 'This property is spelled with the wrong casing, so React never reads it. React matches these names exactly, which means the declaration sits there looking like configuration and does nothing.'; }
+    if(id === 'noPropTypesBinding') { return "This imports `prop-types` for its side effects and never names it, so nothing in the file can reference a prop type. The package has no side effects worth importing for; write `import PropTypes from 'prop-types'`."; }
+    return "This imports `react` for its side effects and never names it, so nothing in the file can reference React. Write `import React from 'react'`, or drop the import if it is genuinely unused.";
+}
+export function staticMessage(name: string): string { return '`' + name + '` is a static lifecycle method and this one is not declared `static`, so React never calls it. Add `static`.'; }
+export function lifecycleMessage(name: string, canonical: string): string { return '`' + name + '` is spelled with the wrong casing and React calls `' + canonical + '`, so this method never runs. React matches lifecycle names exactly.'; }
+export function propMessage(name: string): string { return '`' + name + '` is not a prop type the `prop-types` package exports, so this validator is `undefined` and React validates nothing for the prop.'; }
+export function chainMessage(name: string): string { return '`isRequired` is the only qualifier a prop type chain accepts, and `' + name + '` is not it, so this reads as `undefined` and validates nothing.'; }

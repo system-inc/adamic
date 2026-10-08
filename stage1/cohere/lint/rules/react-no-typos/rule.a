@@ -1,0 +1,204 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { HelperNode } from '../../helpers/react/nodes.a';
+import type { HelperNode as ImportNode } from '../../helpers/imports/nodes.a';
+import type { JsxNode } from '../../helpers/slot05/batch32/model.a';
+import { project } from '../../helpers/react/projection.a';
+import { reactEs6ComponentClass } from '../../helpers/react/react_es6_component_class.a';
+import { isComponentBase } from '../../helpers/react/react_component_base.a';
+import { isComponentBaseName } from '../../helpers/react/component_base_name.a';
+import { bindingsOf } from '../../helpers/imports/bindings_of.a';
+import { jsxAfterParentheses } from '../../helpers/slot05/batch32/jsx_after_parentheses.a';
+import { matchIgnoringCase } from '../../helpers/jsx/match_ignoring_case.a';
+import { syntaxAssignment } from '../../../tsprinter/syntax.ts';
+import { message, lifecycleMessage, staticMessage, propMessage, chainMessage } from './messages.a';
+
+const staticProperties: readonly string[] = ['propTypes', 'contextTypes', 'childContextTypes', 'defaultProps'];
+const lifecycleMethods: readonly string[] = ['getDefaultProps', 'getInitialState', 'getChildContext', 'componentWillMount', 'UNSAFE_componentWillMount', 'componentDidMount', 'componentWillReceiveProps', 'UNSAFE_componentWillReceiveProps', 'shouldComponentUpdate', 'componentWillUpdate', 'UNSAFE_componentWillUpdate', 'getSnapshotBeforeUpdate', 'componentDidUpdate', 'componentDidCatch', 'componentWillUnmount', 'render', 'getDerivedStateFromProps'];
+const propNames: readonly string[] = ['array', 'bigint', 'bool', 'func', 'number', 'object', 'string', 'symbol', 'any', 'arrayOf', 'element', 'elementType', 'instanceOf', 'node', 'objectOf', 'oneOf', 'oneOfType', 'shape', 'exact', 'checkPropTypes', 'resetWarningCache', 'PropTypes'];
+
+export class Rule {
+    readonly contextValue: RuleContext | undefined = undefined;
+    nodes: HelperNode[] = [];
+    imports: readonly ImportNode[] = [];
+    jsx: JsxNode[] = [];
+    propBinding = '';
+    reactBinding = '';
+    constructor(context: RuleContext) { this.contextValue = context; }
+    ruleContext(): RuleContext { return this.contextValue ?? panic('rule context not initialized'); }
+    visit(root: number): void {
+        this.nodes = project(this.ruleContext().parser.nodes);
+        const imports: ImportNode[] = [];
+        for(let index = 0; index < this.ruleContext().parser.nodes.length; index++) {
+            const node = this.ruleContext().node(index);
+            const clause = node.kind === 'ImportDeclaration' ? this.ruleContext().children(index, 'ImportClause')[0] ?? -1 : -1;
+            const name = node.kind === 'ImportClause' ? node.children.find(child => this.ruleContext().kind(child) === 'Identifier') ?? -1 : -1;
+            const named = node.kind === 'ImportClause' ? node.children.find(child => this.ruleContext().kind(child) === 'NamedImports' || this.ruleContext().kind(child) === 'NamespaceImport') ?? -1 : -1;
+            imports.push({kind: node.kind, text: node.text, expression: -1, name, propertyName: -1, importClause: clause, namedBindings: named, elements: node.children});
+            this.jsx.push({element: node.kind === 'JsxElement', fragment: node.kind === 'JsxFragment', selfClosing: node.kind === 'JsxSelfClosingElement', parenthesized: node.kind === 'ParenthesizedExpression', conditional: false, expression: node.children[0] ?? -1, whenTrue: -1, whenFalse: -1});
+        }
+        this.imports = imports;
+        this.walk(root);
+    }
+    child(index: number, offset: number): number { return index < 0 ? -1 : this.ruleContext().node(index).children[offset] ?? -1; }
+    last(index: number): number { const children = this.ruleContext().node(index).children; return children[children.length - 1] ?? -1; }
+    identifier(index: number, name: string): boolean { return this.ruleContext().kind(index) === 'Identifier' && this.ruleContext().node(index).text === name; }
+    component(index: number): boolean { return index >= 0 && reactEs6ComponentClass(this.nodes, index, (expression: number): boolean => isComponentBase(this.nodes, expression, isComponentBaseName)); }
+    report(index: number, id: string, description: string): void { this.ruleContext().report(index, 'react/no-typos', id, description, '', '', ''); }
+    key(index: number): string {
+        const kind = this.ruleContext().kind(index);
+        if(['Identifier', 'StringLiteral', 'NumericLiteral'].includes(kind)) { return this.ruleContext().node(index).text; }
+        if(kind === 'ComputedPropertyName' && this.ruleContext().kind(this.child(index, 0)) === 'StringLiteral') { return this.ruleContext().node(this.child(index, 0)).text; }
+        return '';
+    }
+    initializer(index: number): number { return this.ruleContext().initializer(index); }
+    value(index: number): number { return this.ruleContext().kind(index) === 'PropertyAssignment' ? this.last(index) : -1; }
+    walk(index: number): void {
+        const context = this.ruleContext();
+        const kind = context.kind(index);
+        if(kind === 'ImportDeclaration') { this.recordImport(index); }
+        if(kind === 'PropertyDeclaration' && context.has(index, 'StaticKeyword') && this.component(context.parent(index))) {
+            this.casing(this.initializer(index), context.name(index), true);
+        }
+        if(kind === 'MethodDeclaration' && this.component(context.parent(index))) {
+            this.lifecycle(index, context.name(index), context.has(index, 'StaticKeyword'));
+        }
+        if(kind === 'PropertyAccessExpression') { this.member(index); }
+        if(kind === 'ObjectLiteralExpression' && this.specification(index)) {
+            for(const property of context.node(index).children) {
+                if(context.kind(property) === 'SpreadAssignment') { continue; }
+                this.casing(this.value(property), context.name(property), false);
+                this.lifecycle(property, context.name(property), false);
+            }
+        }
+        for(const child of context.node(index).children) { this.walk(child); }
+    }
+    recordImport(index: number): void {
+        const context = this.ruleContext();
+        const module = context.children(index, 'StringLiteral')[0] ?? -1;
+        if(module < 0) { return; }
+        const packageName = context.node(module).text;
+        if(packageName !== 'react' && packageName !== 'prop-types') { return; }
+        const bindings = bindingsOf(this.imports, index);
+        const locals: string[] = [];
+        const imported: string[] = [];
+        if(context.kind(bindings.default) === 'Identifier') { locals.push(context.node(bindings.default).text); imported.push(''); }
+        if(bindings.namespace >= 0 && context.kind(this.child(bindings.namespace, 0)) === 'Identifier') { locals.push(context.node(this.child(bindings.namespace, 0)).text); imported.push(''); }
+        for(const specifier of bindings.named) {
+            if(context.kind(specifier) !== 'ImportSpecifier') { continue; }
+            const local = this.last(specifier);
+            if(context.kind(local) !== 'Identifier') { continue; }
+            const external = this.child(specifier, 0);
+            locals.push(context.node(local).text);
+            imported.push(context.kind(external) === 'Identifier' ? context.node(external).text : context.node(local).text);
+        }
+        if(locals.length === 0) { const id = packageName === 'react' ? 'noReactBinding' : 'noPropTypesBinding'; this.report(index, id, message(id)); return; }
+        if(packageName === 'prop-types') { this.propBinding = locals[0] ?? panic('first binding'); return; }
+        this.reactBinding = locals[0] ?? panic('first binding');
+        for(let i = 0; i < locals.length; i++) { if(imported[i] === 'PropTypes') { this.propBinding = locals[i] ?? panic('named binding'); } }
+    }
+    specification(index: number): boolean {
+        const parent = this.ruleContext().parent(index);
+        if(this.ruleContext().kind(parent) !== 'CallExpression') { return false; }
+        const callee = this.child(parent, 0);
+        return this.identifier(callee, 'createReactClass') || (this.ruleContext().kind(callee) === 'PropertyAccessExpression' && this.identifier(this.child(callee, 0), 'React') && this.identifier(this.last(callee), 'createReactClass'));
+    }
+    member(index: number): void {
+        const property = this.last(index);
+        if(this.ruleContext().kind(property) !== 'Identifier' || !staticProperties.some(name => matchIgnoringCase(name, this.ruleContext().node(property).text))) { return; }
+        const parent = this.ruleContext().parent(index);
+        if(!syntaxAssignment(this.ruleContext().parser, parent) || this.child(parent, 2) < 0) { return; }
+        const receiver = this.child(index, 0);
+        if(this.ruleContext().kind(receiver) !== 'Identifier') { return; }
+        const declaration = this.findDeclaration(this.ruleContext().root, this.ruleContext().node(receiver).text);
+        if(declaration < 0) { return; }
+        const isComponent = this.ruleContext().kind(declaration) === 'ClassDeclaration' ? this.component(declaration) : this.returnsJsx(declaration);
+        // Go also reports a member on the right side of an assignment.
+        if(isComponent) { this.casing(this.child(parent, 2), property, true); }
+    }
+    findDeclaration(index: number, name: string): number {
+        const kind = this.ruleContext().kind(index);
+        if(['ClassDeclaration', 'FunctionDeclaration', 'VariableDeclaration'].includes(kind) && this.identifier(this.ruleContext().name(index), name)) {
+            if(kind !== 'VariableDeclaration') { return index; }
+            const value = this.initializer(index);
+            if(value >= 0) { return value; }
+        }
+        for(const child of this.ruleContext().node(index).children) { const found = this.findDeclaration(child, name); if(found >= 0) { return found; } }
+        return -1;
+    }
+    returnsJsx(index: number): boolean {
+        if(!['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction'].includes(this.ruleContext().kind(index))) { return false; }
+        const body = this.last(index);
+        if(body < 0) { return false; }
+        if(this.ruleContext().kind(body) !== 'Block') { return jsxAfterParentheses(this.jsx, body); }
+        return this.returnInBody(body);
+    }
+    returnInBody(index: number): boolean {
+        const kind = this.ruleContext().kind(index);
+        if(['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction'].includes(kind)) { return false; }
+        if(kind === 'ReturnStatement' && jsxAfterParentheses(this.jsx, this.child(index, 0))) { return true; }
+        for(const child of this.ruleContext().node(index).children) { if(this.returnInBody(child)) { return true; } }
+        return false;
+    }
+    casing(value: number, key: number, classProperty: boolean): void {
+        const name = this.key(key);
+        if(['propTypes', 'contextTypes', 'childContextTypes'].includes(name)) { this.propObject(value); }
+        for(const canonical of staticProperties) {
+            if(matchIgnoringCase(canonical, name) && canonical !== name) {
+                const id = classProperty ? 'typoStaticClassProp' : 'typoPropDeclaration';
+                this.report(key, id, message(id)); return;
+            }
+        }
+    }
+    lifecycle(index: number, key: number, isStatic: boolean): void {
+        const name = this.key(key);
+        if(!isStatic && matchIgnoringCase(name, 'getDerivedStateFromProps')) { this.report(index, 'staticLifecycleMethod', staticMessage(name)); }
+        for(const canonical of lifecycleMethods) {
+            if(matchIgnoringCase(canonical, name) && canonical !== name) { this.report(index, 'typoLifecycleMethod', lifecycleMessage(name, canonical)); }
+        }
+    }
+    propObject(index: number): void {
+        if(this.ruleContext().kind(index) !== 'ObjectLiteralExpression') { return; }
+        for(const property of this.ruleContext().node(index).children) { this.prop(this.value(property)); }
+    }
+    prop(index: number): void {
+        if(this.propBinding === '' && this.reactBinding === '') { return; }
+        const kind = this.ruleContext().kind(index);
+        if(kind === 'PropertyAccessExpression') {
+            const receiver = this.child(index, 0);
+            const property = this.last(index);
+            if(this.ruleContext().kind(receiver) === 'PropertyAccessExpression' && this.package(this.child(receiver, 0))) {
+                this.propName(this.last(receiver)); this.qualifier(property); return;
+            }
+            if(this.package(receiver)) { if(!this.identifier(property, 'isRequired')) { this.propName(property); } return; }
+            if(this.ruleContext().kind(receiver) === 'CallExpression') { this.qualifier(property); this.propCall(receiver); }
+            return;
+        }
+        if(kind === 'CallExpression') { this.propCall(index); }
+    }
+    package(index: number): boolean {
+        if(this.ruleContext().kind(index) === 'Identifier') { return this.propBinding !== '' && this.ruleContext().node(index).text === this.propBinding; }
+        return this.ruleContext().kind(index) === 'PropertyAccessExpression' && this.reactBinding !== '' && this.identifier(this.child(index, 0), this.reactBinding) && this.identifier(this.last(index), 'PropTypes');
+    }
+    propCall(index: number): void {
+        const callee = this.child(index, 0);
+        if(this.ruleContext().kind(callee) !== 'PropertyAccessExpression') { return; }
+        const name = this.last(callee);
+        if(this.ruleContext().kind(name) !== 'Identifier') { return; }
+        const first = this.ruleContext().arguments(index)[0] ?? -1;
+        if(first < 0) { return; }
+        if(this.identifier(name, 'shape')) { this.propObject(first); }
+        if(this.identifier(name, 'oneOfType') && this.ruleContext().kind(first) === 'ArrayLiteralExpression') {
+            for(const element of this.ruleContext().node(first).children) { this.prop(element); }
+        }
+    }
+    propName(index: number): void {
+        if(this.ruleContext().kind(index) !== 'Identifier') { return; }
+        const name = this.ruleContext().node(index).text;
+        if(name !== '' && !propNames.includes(name)) { this.report(index, 'typoPropType', propMessage(name)); }
+    }
+    qualifier(index: number): void {
+        if(this.ruleContext().kind(index) === 'Identifier' && !this.identifier(index, 'isRequired')) { this.report(index, 'typoPropTypeChain', chainMessage(this.ruleContext().node(index).text)); }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
