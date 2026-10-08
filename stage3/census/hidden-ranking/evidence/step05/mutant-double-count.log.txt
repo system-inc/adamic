@@ -1,0 +1,14 @@
+test_overlapping_skipped_span_does_not_double_count (__main__.Arithmetic.test_overlapping_skipped_span_does_not_double_count) ... FAIL
+
+======================================================================
+FAIL: test_overlapping_skipped_span_does_not_double_count (__main__.Arithmetic.test_overlapping_skipped_span_does_not_double_count)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/hidden/test_hidden.py", line 61, in test_overlapping_skipped_span_does_not_double_count
+    self.assertEqual(total(rows, stock), 30, 'overlapping skips counted once')
+AssertionError: 40 != 30 : overlapping skips counted once
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

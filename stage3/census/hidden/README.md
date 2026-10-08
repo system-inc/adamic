@@ -1,3 +1,33 @@
+- Reran hidden source on `69501280` with the corrected census mapper.
+- Hidden: **3,654,880 / 10,615,807 bytes (34.428659%)**.
+- Delta from ed6e2975: **-315,869 bytes**, -2.975459 percentage points.
+- All 82 source hashes are identical; independent coverage is subtracted before attribution.
+- Ranking and complete deltas are in [hidden-ranking](../hidden-ranking/README.md).
+
+## Step 05 current regions
+
+Compiler: `69501280a81259fb512edbb8dd0e52c6eb0d88c8`. Same frozen adapted TypeScript 6.0.3 input as ed6e2975.
+Current [RESULT.json](RESULT.json) and evidence/full.jsonl.gz replace the original artifacts;
+the original remains available at commit 6c4fc1af.
+
+6,735,528 blocked union bytes minus 3,080,648
+independently examined bytes = 3,654,880 hidden bytes.
+
+| File:lines | Hidden bytes | Stopping reasons (full diagnostics in JSON) |
+|---|---:|---|
+| `visitorPublic.ts:619-1798` | 60,674 | can't lower a computed field name yet |
+| `parser.ts:504-1136` | 49,243 | can't lower a computed field name yet |
+| `factory/nodeFactory.ts:492-1166` | 27,831 | can't lower a value of type __String yet |
+| `checker.ts:51813-52186` | 26,623 | Checker-rejected body: TS2322<br>can't lower checked view field modifiers of type NodeArray<Modifier> &#124; NodeArray<ModifierLike> &#124; undefined yet |
+| `program.ts:1515-1968` | 25,095 | Checker-rejected body: TS2375 |
+| `checker.ts:1486-1956` | 24,907 | Checker-rejected body: TS2322 |
+| `utilities.ts:11518-11904` | 24,676 | can't lower a destructured name that isn't plain yet<br>can't lower a value of type Identifier &#124; __String yet |
+| `transformers/esDecorators.ts:670-1047` | 22,342 | can't lower a function returning ImmediatelyInvokedArrowFunction yet |
+| `checker.ts:2046-2412` | 22,159 | Checker-rejected body: TS2322 |
+| `program.ts:4073-4401` | 21,031 | Checker-rejected body: TS2345<br>Checker-rejected body: TS2375 |
+
+## Historical ed6e2975 report
+
 - Built a hidden-source census with per-file ranges and the ten largest residual regions.
 - Measured compiler commit `ed6e29751ee47d86fad450cd1674139883bc0f70`, TypeScript 6.0.3.
 - Observed **3,970,749 / 10,615,807 bytes hidden (37.404118%)**.

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/hidden/audit.py", line 92, in <module>
+    assert result['hidden_bytes'] == hidden_total, 'headline hidden total'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: headline hidden total

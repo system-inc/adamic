@@ -1,0 +1,3 @@
+first-error-only mutant caught by all-three-refusal-sites assertion: {('/workspace/hidden-step05-tmp/full-audit/source/probe.a:5:5', 'var')}
+failed-state-retention mutant caught by poison binding rollback assertion
+PASS: three distinct lowering refusal sites; accepted string and number conditions; named checker-diagnosed nested exclusion; eligible sibling; failed declaration rolled back; explicit byte-span boundaries; no-output guards

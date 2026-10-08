@@ -1,0 +1,5 @@
+hidden 3,654,880 / 10,615,807 bytes (34.428659%); subtracted 3,080,648
+PASS: 20872 boundary/skip records; 3654880 bytes partitioned exactly once
+reason bytes: 1949534
+other bytes: 1705346
+PASS step05: {"before": 3970749, "after": 3654880, "delta": -315869} any-return: 15 7290
