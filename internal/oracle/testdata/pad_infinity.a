@@ -1,0 +1,4 @@
+// padStart to Infinity is RangeError: Invalid string length before anything is built. The length is
+// checked first (string_repeat_impl.h); without that check the pad would be built until memory ran out.
+console.log('before');
+console.log('a'.padStart(Infinity, 'xy'));

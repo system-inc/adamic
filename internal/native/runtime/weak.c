@@ -13,6 +13,7 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include <pthread.h>
 
 // HIDDEN is the mask: its low bits are clear, so a hidden heap address keeps its alignment, and 0
 // (empty) and 1 (a tombstone) are never one.
@@ -36,7 +37,8 @@ static void *reveal(uintptr_t hidden) {
 // left as a tombstone so a probe goes past it.
 static uintptr_t *table;
 static size_t table_capacity;
-static size_t table_count;
+static _Atomic size_t table_count;
+static pthread_mutex_t table_lock = PTHREAD_MUTEX_INITIALIZER;
 static size_t table_used;
 #define EMPTY ((uintptr_t)0)
 #define TOMBSTONE ((uintptr_t)1)
@@ -121,18 +123,25 @@ adamic_weak *adamic_weak_of(void *target) {
 	if (target == NULL) {
 		return NULL;
 	}
+	pthread_mutex_lock(&table_lock);
 	uintptr_t *entry = find(target);
 	if (entry != NULL) {
-		return adamic_retain(reveal(*entry));
+		adamic_weak *handle = adamic_retain(reveal(*entry));
+		pthread_mutex_unlock(&table_lock);
+		return handle;
 	}
 	adamic_weak *handle = adamic_allocate(sizeof *handle, adamic_kind_weak);
 	handle->target = hide(target);
 	insert(handle);
+	pthread_mutex_unlock(&table_lock);
 	return handle;
 }
 
 void *adamic_weak_target(const adamic_weak *handle) {
-	return handle == NULL || handle->target == 0 ? NULL : reveal(handle->target);
+	pthread_mutex_lock(&table_lock);
+	void *target = handle == NULL || handle->target == 0 ? NULL : reveal(handle->target);
+	pthread_mutex_unlock(&table_lock);
+	return target;
 }
 
 void *adamic_weak_target_present(const adamic_weak *handle) {
@@ -148,20 +157,46 @@ void adamic_weak_forget(void *target) {
 	if (table_count == 0) {
 		return;
 	}
+	pthread_mutex_lock(&table_lock);
 	uintptr_t *entry = find(target);
 	if (entry != NULL) {
 		((adamic_weak *)reveal(*entry))->target = 0;
 		remove_entry(entry);
 	}
+	pthread_mutex_unlock(&table_lock);
+}
+
+void adamic_weak_forget_region(const adamic_region *region) {
+	if (table_count == 0) {
+		return;
+	}
+	for (size_t slot = 0; slot < table_capacity; slot++) {
+		uintptr_t entry = table[slot];
+		if (entry == EMPTY || entry == TOMBSTONE) {
+			continue;
+		}
+		adamic_weak *handle = reveal(entry);
+		if (adamic_region_contains(region, reveal(handle->target))) {
+			handle->target = 0;
+			remove_entry(&table[slot]);
+			// Removing the last entry frees the table and resets capacity to zero; the loop stops.
+		}
+	}
 }
 
 void adamic_weak_dropped(adamic_weak *handle) {
+	pthread_mutex_lock(&table_lock);
 	if (handle->target != 0) {
 		remove_entry(find(reveal(handle->target)));
 	}
+	pthread_mutex_unlock(&table_lock);
 }
 
 bool adamic_weak_held(const void *target) {
 	// A program with no Weak has no table, and pays one comparison.
-	return table_count > 0 && find(target) != NULL;
+	if (atomic_load_explicit(&table_count, memory_order_relaxed) == 0) { return false; }
+	pthread_mutex_lock(&table_lock);
+	bool held = find(target) != NULL;
+	pthread_mutex_unlock(&table_lock);
+	return held;
 }

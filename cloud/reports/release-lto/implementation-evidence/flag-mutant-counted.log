@@ -1,0 +1,6 @@
+--- FAIL: TestNonShippingFlagsStayIdentical (0.00s)
+    release_test.go:32: counted release=true: got ["-std=c11" "-Wall" "-Wextra" "-Werror" "-pedantic" "-Wno-unused-variable" "-Wno-unused-but-set-variable" "-Wno-unused-function" "-Wno-unused-parameter" "-Wno-self-assign" "-ffp-contract=off" "-fno-optimize-sibling-calls" "-DADAMIC_COUNT" "-O2" "-flto=thin"], want "-std=c11\x00-Wall\x00-Wextra\x00-Werror\x00-pedantic\x00-Wno-unused-variable\x00-Wno-unused-but-set-variable\x00-Wno-unused-function\x00-Wno-unused-parameter\x00-Wno-self-assign\x00-ffp-contract=off\x00-fno-optimize-sibling-calls\x00-DADAMIC_COUNT\x00-O2"
+    release_test.go:32: counted release=true: got ["-std=c11" "-Wall" "-Wextra" "-Werror" "-pedantic" "-Wno-unused-variable" "-Wno-unused-but-set-variable" "-Wno-unused-function" "-Wno-unused-parameter" "-Wno-self-assign" "-ffp-contract=off" "-fno-optimize-sibling-calls" "-DADAMIC_COUNT" "-O2" "-flto=thin" "-fuse-ld=lld"], want "-std=c11\x00-Wall\x00-Wextra\x00-Werror\x00-pedantic\x00-Wno-unused-variable\x00-Wno-unused-but-set-variable\x00-Wno-unused-function\x00-Wno-unused-parameter\x00-Wno-self-assign\x00-ffp-contract=off\x00-fno-optimize-sibling-calls\x00-DADAMIC_COUNT\x00-O2"
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.004s
+FAIL

@@ -1,0 +1,3 @@
+// a-check: refused throw an Error
+async function f(): Promise<void> { throw 'message'; }
+await f();

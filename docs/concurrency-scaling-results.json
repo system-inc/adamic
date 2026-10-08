@@ -1,0 +1,1319 @@
+{
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "affinity": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "cpu_max": "400000 100000",
+  "load_start": [
+    0.1103515625,
+    3.306640625,
+    6.10009765625
+  ],
+  "rounds": 5,
+  "samples": [
+    {
+      "round": 1,
+      "program": "trees",
+      "threads": 1,
+      "version": "before",
+      "wall": 1.7911641239988967,
+      "stdout_sha256": "a30935fe7dfa41e5b51d1774c123b9a242a0dea7c96291c41f8539d5c3d03b75"
+    },
+    {
+      "round": 1,
+      "program": "trees",
+      "threads": 1,
+      "version": "after",
+      "wall": 1.679410081000242,
+      "stdout_sha256": "a30935fe7dfa41e5b51d1774c123b9a242a0dea7c96291c41f8539d5c3d03b75"
+    },
+    {
+      "round": 1,
+      "program": "files",
+      "threads": 1,
+      "version": "before",
+      "wall": 0.7323780989991064,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 1,
+      "program": "files",
+      "threads": 1,
+      "version": "after",
+      "wall": 0.7709399159994064,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 1,
+      "program": "files",
+      "threads": 2,
+      "version": "before",
+      "wall": 0.4621765769988997,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 1,
+      "program": "files",
+      "threads": 2,
+      "version": "after",
+      "wall": 0.4408796350016928,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 1,
+      "program": "files",
+      "threads": 4,
+      "version": "before",
+      "wall": 0.35299437399953604,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 1,
+      "program": "files",
+      "threads": 4,
+      "version": "after",
+      "wall": 0.2560965309985477,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 1,
+      "program": "files",
+      "threads": 5,
+      "version": "before",
+      "wall": 0.2932382039998629,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 1,
+      "program": "files",
+      "threads": 5,
+      "version": "after",
+      "wall": 0.2535473179996188,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 1,
+      "program": "share",
+      "threads": 1,
+      "version": "before",
+      "wall": 0.1927528770011122,
+      "share": 0.057301646,
+      "map": 0.115186732,
+      "total": 0.172488378
+    },
+    {
+      "round": 1,
+      "program": "share",
+      "threads": 1,
+      "version": "after",
+      "wall": 0.1461042240007373,
+      "share": 0.000340061,
+      "map": 0.12460853,
+      "total": 0.124948591
+    },
+    {
+      "round": 1,
+      "program": "share",
+      "threads": 2,
+      "version": "before",
+      "wall": 0.13812658300048497,
+      "share": 0.056264949,
+      "map": 0.060143272,
+      "total": 0.116408221
+    },
+    {
+      "round": 1,
+      "program": "share",
+      "threads": 2,
+      "version": "after",
+      "wall": 0.08838852799999586,
+      "share": 0.000351478,
+      "map": 0.06654386,
+      "total": 0.066895338
+    },
+    {
+      "round": 1,
+      "program": "share",
+      "threads": 4,
+      "version": "before",
+      "wall": 0.1076286989991786,
+      "share": 0.054562702,
+      "map": 0.032602323,
+      "total": 0.087165025
+    },
+    {
+      "round": 1,
+      "program": "share",
+      "threads": 4,
+      "version": "after",
+      "wall": 0.06566879099955258,
+      "share": 0.000504363,
+      "map": 0.041946818,
+      "total": 0.042451181
+    },
+    {
+      "round": 1,
+      "program": "share",
+      "threads": 5,
+      "version": "before",
+      "wall": 0.1107864099994913,
+      "share": 0.053353852,
+      "map": 0.035550606,
+      "total": 0.088904458
+    },
+    {
+      "round": 1,
+      "program": "share",
+      "threads": 5,
+      "version": "after",
+      "wall": 0.0642147800008388,
+      "share": 0.00033281,
+      "map": 0.039794508,
+      "total": 0.040127318
+    },
+    {
+      "round": 1,
+      "program": "map",
+      "threads": 1,
+      "version": "before",
+      "wall": 0.0156011099988973,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.008278755
+    },
+    {
+      "round": 1,
+      "program": "map",
+      "threads": 1,
+      "version": "after",
+      "wall": 0.014871404999212245,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.007509581
+    },
+    {
+      "round": 1,
+      "program": "map",
+      "threads": 2,
+      "version": "before",
+      "wall": 0.011970513000051142,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.005105851
+    },
+    {
+      "round": 1,
+      "program": "map",
+      "threads": 2,
+      "version": "after",
+      "wall": 0.014312543000414735,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.007058497
+    },
+    {
+      "round": 1,
+      "program": "map",
+      "threads": 4,
+      "version": "before",
+      "wall": 0.011717609999323031,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.004483324
+    },
+    {
+      "round": 1,
+      "program": "map",
+      "threads": 4,
+      "version": "after",
+      "wall": 0.011693744998410693,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.004520579
+    },
+    {
+      "round": 1,
+      "program": "map",
+      "threads": 5,
+      "version": "before",
+      "wall": 0.012316541999098263,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.005047656
+    },
+    {
+      "round": 1,
+      "program": "map",
+      "threads": 5,
+      "version": "after",
+      "wall": 0.012494645001424942,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.004591553
+    },
+    {
+      "round": 2,
+      "program": "files",
+      "threads": 1,
+      "version": "after",
+      "wall": 0.7403786380000383,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 2,
+      "program": "files",
+      "threads": 1,
+      "version": "before",
+      "wall": 0.735286568000447,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 2,
+      "program": "files",
+      "threads": 2,
+      "version": "after",
+      "wall": 0.475450258998535,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 2,
+      "program": "files",
+      "threads": 2,
+      "version": "before",
+      "wall": 0.44672407699908945,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 2,
+      "program": "files",
+      "threads": 4,
+      "version": "after",
+      "wall": 0.3250893879994692,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 2,
+      "program": "files",
+      "threads": 4,
+      "version": "before",
+      "wall": 0.3711341750004067,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 2,
+      "program": "files",
+      "threads": 5,
+      "version": "after",
+      "wall": 0.2945730840001488,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 2,
+      "program": "files",
+      "threads": 5,
+      "version": "before",
+      "wall": 0.38271947800058115,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 2,
+      "program": "share",
+      "threads": 1,
+      "version": "after",
+      "wall": 0.15151934700043057,
+      "share": 0.000341513,
+      "map": 0.125472056,
+      "total": 0.125813569
+    },
+    {
+      "round": 2,
+      "program": "share",
+      "threads": 1,
+      "version": "before",
+      "wall": 0.2087114969999675,
+      "share": 0.060842777,
+      "map": 0.124618995,
+      "total": 0.185461772
+    },
+    {
+      "round": 2,
+      "program": "share",
+      "threads": 2,
+      "version": "after",
+      "wall": 0.08449637699959567,
+      "share": 0.000337357,
+      "map": 0.063461074,
+      "total": 0.063798431
+    },
+    {
+      "round": 2,
+      "program": "share",
+      "threads": 2,
+      "version": "before",
+      "wall": 0.1405918410000595,
+      "share": 0.058164873,
+      "map": 0.058750365,
+      "total": 0.116915238
+    },
+    {
+      "round": 2,
+      "program": "share",
+      "threads": 4,
+      "version": "after",
+      "wall": 0.06784422400050971,
+      "share": 0.000355965,
+      "map": 0.04400111,
+      "total": 0.044357075
+    },
+    {
+      "round": 2,
+      "program": "share",
+      "threads": 4,
+      "version": "before",
+      "wall": 0.11328976300137583,
+      "share": 0.053121735,
+      "map": 0.039630362,
+      "total": 0.092752097
+    },
+    {
+      "round": 2,
+      "program": "share",
+      "threads": 5,
+      "version": "after",
+      "wall": 0.049374145000911085,
+      "share": 0.000346761,
+      "map": 0.027246983,
+      "total": 0.027593744
+    },
+    {
+      "round": 2,
+      "program": "share",
+      "threads": 5,
+      "version": "before",
+      "wall": 0.10029705599845329,
+      "share": 0.053204998,
+      "map": 0.026117459,
+      "total": 0.079322457
+    },
+    {
+      "round": 2,
+      "program": "map",
+      "threads": 1,
+      "version": "after",
+      "wall": 0.01471582499834767,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.007155119
+    },
+    {
+      "round": 2,
+      "program": "map",
+      "threads": 1,
+      "version": "before",
+      "wall": 0.014746811999430065,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.007538194
+    },
+    {
+      "round": 2,
+      "program": "map",
+      "threads": 2,
+      "version": "after",
+      "wall": 0.015359102999354945,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.006562816
+    },
+    {
+      "round": 2,
+      "program": "map",
+      "threads": 2,
+      "version": "before",
+      "wall": 0.01263367899991863,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.005314158
+    },
+    {
+      "round": 2,
+      "program": "map",
+      "threads": 4,
+      "version": "after",
+      "wall": 0.01825110199933988,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.007308154
+    },
+    {
+      "round": 2,
+      "program": "map",
+      "threads": 4,
+      "version": "before",
+      "wall": 0.013604388999738148,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.006220822
+    },
+    {
+      "round": 2,
+      "program": "map",
+      "threads": 5,
+      "version": "after",
+      "wall": 0.0141726749989175,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.00635459
+    },
+    {
+      "round": 2,
+      "program": "map",
+      "threads": 5,
+      "version": "before",
+      "wall": 0.013657154999236809,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.005800704
+    },
+    {
+      "round": 2,
+      "program": "trees",
+      "threads": 1,
+      "version": "after",
+      "wall": 1.6730012860007264,
+      "stdout_sha256": "a30935fe7dfa41e5b51d1774c123b9a242a0dea7c96291c41f8539d5c3d03b75"
+    },
+    {
+      "round": 2,
+      "program": "trees",
+      "threads": 1,
+      "version": "before",
+      "wall": 1.6542292469985114,
+      "stdout_sha256": "a30935fe7dfa41e5b51d1774c123b9a242a0dea7c96291c41f8539d5c3d03b75"
+    },
+    {
+      "round": 3,
+      "program": "files",
+      "threads": 2,
+      "version": "before",
+      "wall": 0.49667406499975186,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 3,
+      "program": "files",
+      "threads": 2,
+      "version": "after",
+      "wall": 0.4604198910001287,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 3,
+      "program": "files",
+      "threads": 4,
+      "version": "before",
+      "wall": 0.3306459729992639,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 3,
+      "program": "files",
+      "threads": 4,
+      "version": "after",
+      "wall": 0.29067565799959993,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 3,
+      "program": "files",
+      "threads": 5,
+      "version": "before",
+      "wall": 0.3194206620009936,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 3,
+      "program": "files",
+      "threads": 5,
+      "version": "after",
+      "wall": 0.2733668780001608,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 3,
+      "program": "share",
+      "threads": 1,
+      "version": "before",
+      "wall": 0.18754396800068207,
+      "share": 0.054122058,
+      "map": 0.113907707,
+      "total": 0.168029765
+    },
+    {
+      "round": 3,
+      "program": "share",
+      "threads": 1,
+      "version": "after",
+      "wall": 0.15647773000091547,
+      "share": 0.000322024,
+      "map": 0.132065743,
+      "total": 0.132387767
+    },
+    {
+      "round": 3,
+      "program": "share",
+      "threads": 2,
+      "version": "before",
+      "wall": 0.1287538750002568,
+      "share": 0.050317373,
+      "map": 0.058102471,
+      "total": 0.108419844
+    },
+    {
+      "round": 3,
+      "program": "share",
+      "threads": 2,
+      "version": "after",
+      "wall": 0.08525346599890327,
+      "share": 0.000340992,
+      "map": 0.06384543,
+      "total": 0.064186422
+    },
+    {
+      "round": 3,
+      "program": "share",
+      "threads": 4,
+      "version": "before",
+      "wall": 0.10490776000006008,
+      "share": 0.051071133,
+      "map": 0.033190037,
+      "total": 0.08426117
+    },
+    {
+      "round": 3,
+      "program": "share",
+      "threads": 4,
+      "version": "after",
+      "wall": 0.18624549000014667,
+      "share": 0.000322014,
+      "map": 0.163757722,
+      "total": 0.164079736
+    },
+    {
+      "round": 3,
+      "program": "share",
+      "threads": 5,
+      "version": "before",
+      "wall": 0.10008257399931608,
+      "share": 0.051408331,
+      "map": 0.028479288,
+      "total": 0.079887619
+    },
+    {
+      "round": 3,
+      "program": "share",
+      "threads": 5,
+      "version": "after",
+      "wall": 0.04907526899842196,
+      "share": 0.000312169,
+      "map": 0.027904522,
+      "total": 0.028216691
+    },
+    {
+      "round": 3,
+      "program": "map",
+      "threads": 1,
+      "version": "before",
+      "wall": 0.016188463001526543,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.008440382
+    },
+    {
+      "round": 3,
+      "program": "map",
+      "threads": 1,
+      "version": "after",
+      "wall": 0.014448632000494399,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.00712881
+    },
+    {
+      "round": 3,
+      "program": "map",
+      "threads": 2,
+      "version": "before",
+      "wall": 0.012023600000247825,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.005285285
+    },
+    {
+      "round": 3,
+      "program": "map",
+      "threads": 2,
+      "version": "after",
+      "wall": 0.013913352999225026,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.006237617
+    },
+    {
+      "round": 3,
+      "program": "map",
+      "threads": 4,
+      "version": "before",
+      "wall": 0.013059124999927008,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.005518388
+    },
+    {
+      "round": 3,
+      "program": "map",
+      "threads": 4,
+      "version": "after",
+      "wall": 0.012822316000892897,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.005312045
+    },
+    {
+      "round": 3,
+      "program": "map",
+      "threads": 5,
+      "version": "before",
+      "wall": 0.013586883000243688,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.006141827
+    },
+    {
+      "round": 3,
+      "program": "map",
+      "threads": 5,
+      "version": "after",
+      "wall": 0.014317539000330726,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.007001493
+    },
+    {
+      "round": 3,
+      "program": "trees",
+      "threads": 1,
+      "version": "before",
+      "wall": 1.706641472001138,
+      "stdout_sha256": "a30935fe7dfa41e5b51d1774c123b9a242a0dea7c96291c41f8539d5c3d03b75"
+    },
+    {
+      "round": 3,
+      "program": "trees",
+      "threads": 1,
+      "version": "after",
+      "wall": 1.5859964060000493,
+      "stdout_sha256": "a30935fe7dfa41e5b51d1774c123b9a242a0dea7c96291c41f8539d5c3d03b75"
+    },
+    {
+      "round": 3,
+      "program": "files",
+      "threads": 1,
+      "version": "before",
+      "wall": 0.7889746399996511,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 3,
+      "program": "files",
+      "threads": 1,
+      "version": "after",
+      "wall": 0.7382342719993176,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 4,
+      "program": "files",
+      "threads": 4,
+      "version": "after",
+      "wall": 0.268740503999652,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 4,
+      "program": "files",
+      "threads": 4,
+      "version": "before",
+      "wall": 0.34181432699915604,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 4,
+      "program": "files",
+      "threads": 5,
+      "version": "after",
+      "wall": 0.27825673000006645,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 4,
+      "program": "files",
+      "threads": 5,
+      "version": "before",
+      "wall": 0.31134167199888907,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 4,
+      "program": "share",
+      "threads": 1,
+      "version": "after",
+      "wall": 0.14596444700146094,
+      "share": 0.000318258,
+      "map": 0.12503982,
+      "total": 0.125358078
+    },
+    {
+      "round": 4,
+      "program": "share",
+      "threads": 1,
+      "version": "before",
+      "wall": 0.18897435199869506,
+      "share": 0.050907619,
+      "map": 0.117524677,
+      "total": 0.168432296
+    },
+    {
+      "round": 4,
+      "program": "share",
+      "threads": 2,
+      "version": "after",
+      "wall": 0.12995961799970246,
+      "share": 0.000326541,
+      "map": 0.105174583,
+      "total": 0.105501124
+    },
+    {
+      "round": 4,
+      "program": "share",
+      "threads": 2,
+      "version": "before",
+      "wall": 0.14779637999890838,
+      "share": 0.056419414,
+      "map": 0.070694804,
+      "total": 0.127114218
+    },
+    {
+      "round": 4,
+      "program": "share",
+      "threads": 4,
+      "version": "after",
+      "wall": 0.05899789000068267,
+      "share": 0.000357176,
+      "map": 0.034510704,
+      "total": 0.03486788
+    },
+    {
+      "round": 4,
+      "program": "share",
+      "threads": 4,
+      "version": "before",
+      "wall": 0.11389625999981945,
+      "share": 0.056989163,
+      "map": 0.032612093,
+      "total": 0.089601256
+    },
+    {
+      "round": 4,
+      "program": "share",
+      "threads": 5,
+      "version": "after",
+      "wall": 0.06269810300000245,
+      "share": 0.000332409,
+      "map": 0.034493991,
+      "total": 0.0348264
+    },
+    {
+      "round": 4,
+      "program": "share",
+      "threads": 5,
+      "version": "before",
+      "wall": 0.12600249000024633,
+      "share": 0.06340512,
+      "map": 0.038820782,
+      "total": 0.102225902
+    },
+    {
+      "round": 4,
+      "program": "map",
+      "threads": 1,
+      "version": "after",
+      "wall": 0.01617984400036221,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.008451308
+    },
+    {
+      "round": 4,
+      "program": "map",
+      "threads": 1,
+      "version": "before",
+      "wall": 0.016323996000210172,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.008281554
+    },
+    {
+      "round": 4,
+      "program": "map",
+      "threads": 2,
+      "version": "after",
+      "wall": 0.012678158000198891,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.005206096
+    },
+    {
+      "round": 4,
+      "program": "map",
+      "threads": 2,
+      "version": "before",
+      "wall": 0.015244717000314267,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.006957855
+    },
+    {
+      "round": 4,
+      "program": "map",
+      "threads": 4,
+      "version": "after",
+      "wall": 0.020382661999974516,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.012324707
+    },
+    {
+      "round": 4,
+      "program": "map",
+      "threads": 4,
+      "version": "before",
+      "wall": 0.014103356001214706,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.005996821
+    },
+    {
+      "round": 4,
+      "program": "map",
+      "threads": 5,
+      "version": "after",
+      "wall": 0.013550551999287563,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.005709677
+    },
+    {
+      "round": 4,
+      "program": "map",
+      "threads": 5,
+      "version": "before",
+      "wall": 0.012023864001093898,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.004689826
+    },
+    {
+      "round": 4,
+      "program": "trees",
+      "threads": 1,
+      "version": "after",
+      "wall": 1.7571644649997324,
+      "stdout_sha256": "a30935fe7dfa41e5b51d1774c123b9a242a0dea7c96291c41f8539d5c3d03b75"
+    },
+    {
+      "round": 4,
+      "program": "trees",
+      "threads": 1,
+      "version": "before",
+      "wall": 1.6251119260014093,
+      "stdout_sha256": "a30935fe7dfa41e5b51d1774c123b9a242a0dea7c96291c41f8539d5c3d03b75"
+    },
+    {
+      "round": 4,
+      "program": "files",
+      "threads": 1,
+      "version": "after",
+      "wall": 0.6854016670004057,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 4,
+      "program": "files",
+      "threads": 1,
+      "version": "before",
+      "wall": 0.7474318259992287,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 4,
+      "program": "files",
+      "threads": 2,
+      "version": "after",
+      "wall": 0.46559646999958204,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 4,
+      "program": "files",
+      "threads": 2,
+      "version": "before",
+      "wall": 0.4758868459994119,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 5,
+      "program": "files",
+      "threads": 5,
+      "version": "before",
+      "wall": 0.3836157599998842,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 5,
+      "program": "files",
+      "threads": 5,
+      "version": "after",
+      "wall": 0.25727334399925894,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 5,
+      "program": "share",
+      "threads": 1,
+      "version": "before",
+      "wall": 0.2106764669988479,
+      "share": 0.05380543,
+      "map": 0.128700364,
+      "total": 0.182505794
+    },
+    {
+      "round": 5,
+      "program": "share",
+      "threads": 1,
+      "version": "after",
+      "wall": 0.20220867500029271,
+      "share": 0.000345338,
+      "map": 0.166068904,
+      "total": 0.166414242
+    },
+    {
+      "round": 5,
+      "program": "share",
+      "threads": 2,
+      "version": "before",
+      "wall": 0.15587152899934154,
+      "share": 0.06651818,
+      "map": 0.067106497,
+      "total": 0.133624677
+    },
+    {
+      "round": 5,
+      "program": "share",
+      "threads": 2,
+      "version": "after",
+      "wall": 0.09104018799916958,
+      "share": 0.000443233,
+      "map": 0.068608088,
+      "total": 0.069051321
+    },
+    {
+      "round": 5,
+      "program": "share",
+      "threads": 4,
+      "version": "before",
+      "wall": 0.11835647299994889,
+      "share": 0.056539882,
+      "map": 0.039002752,
+      "total": 0.095542634
+    },
+    {
+      "round": 5,
+      "program": "share",
+      "threads": 4,
+      "version": "after",
+      "wall": 0.08079714700033946,
+      "share": 0.000467128,
+      "map": 0.056775358,
+      "total": 0.057242486
+    },
+    {
+      "round": 5,
+      "program": "share",
+      "threads": 5,
+      "version": "before",
+      "wall": 0.11282456499975524,
+      "share": 0.054204391,
+      "map": 0.036382764,
+      "total": 0.090587155
+    },
+    {
+      "round": 5,
+      "program": "share",
+      "threads": 5,
+      "version": "after",
+      "wall": 0.06624795900097524,
+      "share": 0.000375833,
+      "map": 0.041578646,
+      "total": 0.041954479
+    },
+    {
+      "round": 5,
+      "program": "map",
+      "threads": 1,
+      "version": "before",
+      "wall": 0.014692238000861835,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.007485775
+    },
+    {
+      "round": 5,
+      "program": "map",
+      "threads": 1,
+      "version": "after",
+      "wall": 0.014227389001462143,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.00719777
+    },
+    {
+      "round": 5,
+      "program": "map",
+      "threads": 2,
+      "version": "before",
+      "wall": 0.012140425000325195,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.005073142
+    },
+    {
+      "round": 5,
+      "program": "map",
+      "threads": 2,
+      "version": "after",
+      "wall": 0.013246459000583855,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.005410789
+    },
+    {
+      "round": 5,
+      "program": "map",
+      "threads": 4,
+      "version": "before",
+      "wall": 0.015399556001284509,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.00463071
+    },
+    {
+      "round": 5,
+      "program": "map",
+      "threads": 4,
+      "version": "after",
+      "wall": 0.01427562999924703,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.004763085
+    },
+    {
+      "round": 5,
+      "program": "map",
+      "threads": 5,
+      "version": "before",
+      "wall": 0.012492267998823081,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.004801251
+    },
+    {
+      "round": 5,
+      "program": "map",
+      "threads": 5,
+      "version": "after",
+      "wall": 0.012439291000191588,
+      "stdout_sha256": "0a964db7bebca41c48fa2a300fb1143d6a02f0fdac5884d4dbc40d43a095b712",
+      "map": 0.004364438
+    },
+    {
+      "round": 5,
+      "program": "trees",
+      "threads": 1,
+      "version": "before",
+      "wall": 1.6183427129999473,
+      "stdout_sha256": "a30935fe7dfa41e5b51d1774c123b9a242a0dea7c96291c41f8539d5c3d03b75"
+    },
+    {
+      "round": 5,
+      "program": "trees",
+      "threads": 1,
+      "version": "after",
+      "wall": 1.6921757430009166,
+      "stdout_sha256": "a30935fe7dfa41e5b51d1774c123b9a242a0dea7c96291c41f8539d5c3d03b75"
+    },
+    {
+      "round": 5,
+      "program": "files",
+      "threads": 1,
+      "version": "before",
+      "wall": 0.7787447449991305,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 5,
+      "program": "files",
+      "threads": 1,
+      "version": "after",
+      "wall": 0.6975466289986798,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 5,
+      "program": "files",
+      "threads": 2,
+      "version": "before",
+      "wall": 0.46498679400065157,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 5,
+      "program": "files",
+      "threads": 2,
+      "version": "after",
+      "wall": 0.39492054599941184,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 5,
+      "program": "files",
+      "threads": 4,
+      "version": "before",
+      "wall": 0.32960115499918174,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    },
+    {
+      "round": 5,
+      "program": "files",
+      "threads": 4,
+      "version": "after",
+      "wall": 0.26884412899926247,
+      "stdout_sha256": "67fb64eaa03f665939a30dc53a0e6f699a7389e0c73938f1cf2f96a84193a2c8"
+    }
+  ],
+  "load_end": [
+    1.0107421875,
+    3.140625,
+    5.92529296875
+  ],
+  "best": [
+    {
+      "program": "trees",
+      "threads": 1,
+      "before": 1.6183427129999473,
+      "before_spread_percent": 10.678913039289917,
+      "after": 1.5859964060000493,
+      "after_spread_percent": 10.792461972305233,
+      "change_percent": -1.9987303517397192
+    },
+    {
+      "program": "files",
+      "threads": 1,
+      "before": 0.7323780989991064,
+      "before_spread_percent": 7.727776278112564,
+      "after": 0.6854016670004057,
+      "after_spread_percent": 12.480017647659158,
+      "change_percent": -6.414232220065063
+    },
+    {
+      "program": "files",
+      "threads": 2,
+      "before": 0.44672407699908945,
+      "before_spread_percent": 11.1813959829983,
+      "after": 0.39492054599941184,
+      "after_spread_percent": 20.391370825067966,
+      "change_percent": -11.596314966426846
+    },
+    {
+      "program": "files",
+      "threads": 4,
+      "before": 0.32960115499918174,
+      "before_spread_percent": 12.600993464761379,
+      "after": 0.2560965309985477,
+      "after_spread_percent": 26.940176320198873,
+      "change_percent": -22.30108204590987
+    },
+    {
+      "program": "files",
+      "threads": 5,
+      "before": 0.2932382039998629,
+      "before_spread_percent": 30.820525691142066,
+      "after": 0.2535473179996188,
+      "after_spread_percent": 16.180713850261142,
+      "change_percent": -13.535373446859133
+    },
+    {
+      "program": "share",
+      "threads": 1,
+      "before": 0.168029765,
+      "before_spread_percent": 10.374356590929,
+      "before_serial_share": 0.050907619,
+      "before_parallel_section": 0.113907707,
+      "after": 0.124948591,
+      "after_spread_percent": 33.186169342237726,
+      "after_serial_share": 0.000318258,
+      "after_parallel_section": 0.12460853,
+      "change_percent": -25.63901342122332
+    },
+    {
+      "program": "share",
+      "threads": 2,
+      "before": 0.108419844,
+      "before_spread_percent": 23.247435220438064,
+      "before_serial_share": 0.050317373,
+      "before_parallel_section": 0.058102471,
+      "after": 0.063798431,
+      "after_spread_percent": 65.36633009046884,
+      "after_serial_share": 0.000326541,
+      "after_parallel_section": 0.063461074,
+      "change_percent": -41.15613097543287
+    },
+    {
+      "program": "share",
+      "threads": 4,
+      "before": 0.08426117,
+      "before_spread_percent": 13.38868662754149,
+      "before_serial_share": 0.051071133,
+      "before_parallel_section": 0.032602323,
+      "after": 0.03486788,
+      "after_spread_percent": 370.5756013844261,
+      "after_serial_share": 0.000322014,
+      "after_parallel_section": 0.034510704,
+      "change_percent": -58.61927860721612
+    },
+    {
+      "program": "share",
+      "threads": 5,
+      "before": 0.079322457,
+      "before_spread_percent": 28.87384716285326,
+      "before_serial_share": 0.051408331,
+      "before_parallel_section": 0.026117459,
+      "after": 0.027593744,
+      "after_spread_percent": 52.04344506493936,
+      "after_serial_share": 0.000312169,
+      "after_parallel_section": 0.027246983,
+      "change_percent": -65.21320059463109
+    },
+    {
+      "program": "map",
+      "threads": 1,
+      "before": 0.007485775,
+      "before_spread_percent": 12.75228015803307,
+      "after": 0.00712881,
+      "after_spread_percent": 18.55145529197719,
+      "change_percent": -4.768577735772183
+    },
+    {
+      "program": "map",
+      "threads": 2,
+      "before": 0.005073142,
+      "before_spread_percent": 37.15080319060653,
+      "after": 0.005206096,
+      "after_spread_percent": 35.58138382388645,
+      "change_percent": 2.62074272709103
+    },
+    {
+      "program": "map",
+      "threads": 4,
+      "before": 0.004483324,
+      "before_spread_percent": 38.754682909377046,
+      "after": 0.004520579,
+      "after_spread_percent": 172.6355849549361,
+      "change_percent": 0.830968272647703
+    },
+    {
+      "program": "map",
+      "threads": 5,
+      "before": 0.004689826,
+      "before_spread_percent": 30.960658241904902,
+      "after": 0.004364438,
+      "after_spread_percent": 60.42141050004606,
+      "change_percent": -6.938167855267984
+    }
+  ]
+}

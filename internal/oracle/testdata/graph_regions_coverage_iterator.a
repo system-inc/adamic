@@ -1,0 +1,14 @@
+interface Node { readonly id: number; next: Node | undefined; }
+function make(): Map<Node, Node> {
+ const a: Node = { id: 1, next: undefined }; const b: Node = { id: 2, next: a }; a.next = b;
+ return new Map<Node, Node>([[a, b]]);
+}
+function run(): void {
+ let map: Map<Node, Node> | undefined = make();
+ const keys = map.keys(); const values = map.values(); const entries = map.entries();
+ map = undefined;
+ const key = keys.next(); const value = values.next(); const entry = entries.next();
+ if (!key.done && !value.done && !entry.done) { console.log(`${key.value.id} ${value.value.next === key.value} ${entry.value[1].id}`); }
+ console.log(`${keys.next().done} ${values.next().done} ${entries.next().done}`);
+}
+run();

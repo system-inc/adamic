@@ -1,0 +1,22 @@
+{
+  "baseline": {
+    "parse": {
+      "bytes": 972040,
+      "sha256": "6eef4c54a332279e22c67517ff5bd307f3aaf1fa845bd32a042ddf4e5e2f5c49"
+    },
+    "service": {
+      "bytes": 406904,
+      "sha256": "f888a58e77aa5f32a1eb0cf8014352082cc53e6083a4db41d56d36dd3822a814"
+    }
+  },
+  "thin": {
+    "parse": {
+      "bytes": 1339880,
+      "sha256": "eeceb005259118bf8b6334608e88f6a9a21aa329356fdde954f53607d69f7d41"
+    },
+    "service": {
+      "bytes": 163936,
+      "sha256": "150dfc0ba381540c9878df2e37cacc7fa7c65bbe3b3fa07e88d99d94d3c285a0"
+    }
+  }
+}

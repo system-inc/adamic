@@ -1,0 +1,186 @@
+{
+  "parse": {
+    "baseline": {
+      "cold": {
+        "wall": 5.208996526000192,
+        "user": 4.495587,
+        "system": 0.7599279999999999,
+        "bytes": 972040,
+        "load_before": [
+          1.0,
+          1.05224609375,
+          2.4404296875
+        ],
+        "load_after": [
+          1.0732421875,
+          1.06689453125,
+          2.43017578125
+        ],
+        "command": [
+          "/workspace/scratch/release-lto/implementation/build-shipped",
+          "/workspace/scratch/release-lto/implementation/parse.c",
+          "/workspace/scratch/release-lto/implementation/build-parse-baseline-cold.bin"
+        ]
+      },
+      "cached": {
+        "wall": 2.4408170509996125,
+        "user": 2.381931,
+        "system": 0.06806200000000007,
+        "bytes": 972040,
+        "load_before": [
+          1.0732421875,
+          1.06689453125,
+          2.43017578125
+        ],
+        "load_after": [
+          1.0732421875,
+          1.06689453125,
+          2.43017578125
+        ],
+        "command": [
+          "/workspace/scratch/release-lto/implementation/build-shipped",
+          "/workspace/scratch/release-lto/implementation/parse.c",
+          "/workspace/scratch/release-lto/implementation/build-parse-baseline-cached.bin"
+        ]
+      }
+    },
+    "thin": {
+      "cold": {
+        "wall": 17.55938551500003,
+        "user": 17.44393,
+        "system": 0.81416,
+        "bytes": 1339872,
+        "load_before": [
+          1.0732421875,
+          1.06689453125,
+          2.43017578125
+        ],
+        "load_after": [
+          1.05126953125,
+          1.06103515625,
+          2.39892578125
+        ],
+        "command": [
+          "/workspace/scratch/release-lto/implementation/build-shipped",
+          "-release",
+          "/workspace/scratch/release-lto/implementation/parse.c",
+          "/workspace/scratch/release-lto/implementation/build-parse-thin-cold.bin"
+        ]
+      },
+      "cached": {
+        "wall": 17.70842773500044,
+        "user": 18.030285000000003,
+        "system": 0.34650099999999995,
+        "bytes": 1339872,
+        "load_before": [
+          1.05126953125,
+          1.06103515625,
+          2.39892578125
+        ],
+        "load_after": [
+          1.0390625,
+          1.05712890625,
+          2.37548828125
+        ],
+        "command": [
+          "/workspace/scratch/release-lto/implementation/build-shipped",
+          "-release",
+          "/workspace/scratch/release-lto/implementation/parse.c",
+          "/workspace/scratch/release-lto/implementation/build-parse-thin-cached.bin"
+        ]
+      }
+    }
+  },
+  "service": {
+    "baseline": {
+      "cold": {
+        "wall": 2.753511304999847,
+        "user": 2.1754449999999963,
+        "system": 0.6147999999999998,
+        "bytes": 406904,
+        "load_before": [
+          1.0390625,
+          1.05712890625,
+          2.37548828125
+        ],
+        "load_after": [
+          1.03564453125,
+          1.05615234375,
+          2.36767578125
+        ],
+        "command": [
+          "/workspace/scratch/release-lto/implementation/build-shipped",
+          "/workspace/scratch/release-lto/implementation/service.c",
+          "/workspace/scratch/release-lto/implementation/build-service-baseline-cold.bin"
+        ]
+      },
+      "cached": {
+        "wall": 0.2193383610001547,
+        "user": 0.18510500000000008,
+        "system": 0.035965000000000025,
+        "bytes": 406904,
+        "load_before": [
+          1.03564453125,
+          1.05615234375,
+          2.36767578125
+        ],
+        "load_after": [
+          1.03564453125,
+          1.05615234375,
+          2.36767578125
+        ],
+        "command": [
+          "/workspace/scratch/release-lto/implementation/build-shipped",
+          "/workspace/scratch/release-lto/implementation/service.c",
+          "/workspace/scratch/release-lto/implementation/build-service-baseline-cached.bin"
+        ]
+      }
+    },
+    "thin": {
+      "cold": {
+        "wall": 2.2407650049999575,
+        "user": 2.4027639999999977,
+        "system": 0.6179760000000001,
+        "bytes": 163912,
+        "load_before": [
+          1.03564453125,
+          1.05615234375,
+          2.36767578125
+        ],
+        "load_after": [
+          1.03564453125,
+          1.05615234375,
+          2.36767578125
+        ],
+        "command": [
+          "/workspace/scratch/release-lto/implementation/build-shipped",
+          "-release",
+          "/workspace/scratch/release-lto/implementation/service.c",
+          "/workspace/scratch/release-lto/implementation/build-service-thin-cold.bin"
+        ]
+      },
+      "cached": {
+        "wall": 0.5142244339995159,
+        "user": 1.1447770000000048,
+        "system": 0.04273300000000013,
+        "bytes": 163912,
+        "load_before": [
+          1.03564453125,
+          1.05615234375,
+          2.36767578125
+        ],
+        "load_after": [
+          1.03564453125,
+          1.05615234375,
+          2.36767578125
+        ],
+        "command": [
+          "/workspace/scratch/release-lto/implementation/build-shipped",
+          "-release",
+          "/workspace/scratch/release-lto/implementation/service.c",
+          "/workspace/scratch/release-lto/implementation/build-service-thin-cached.bin"
+        ]
+      }
+    }
+  }
+}

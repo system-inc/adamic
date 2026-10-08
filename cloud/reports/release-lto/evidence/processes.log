@@ -1,0 +1,19 @@
+    PID COMMAND         %CPU COMMAND
+  23222 callgrind-amd64 99.9 /workspace/scratch/release-lto/valgrind/usr/bin/valgrind.bin --tool=callgrind --cache-sim=yes --branch-sim=yes --callgrind-out-file=/workspace/scratch/release-lto/native-instrument.callgrind /workspace/scratch/release-lto/cache-debug/parse --manifest /workspace/scratch/release-lto/compiler.txt --count
+  23167 python3          0.1 python3 cloud/reports/release-lto/cache-profile.py /workspace/scratch/release-lto
+    257 containerd       0.0 containerd --config /run/codex-docker/exec-8rbk80uv/containerd/containerd.toml
+    206 dockerd          0.0 /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --pidfile=/run/codex-docker/dockerd.pid --exec-root=/run/codex-docker/exec-8rbk80uv --storage-driver=vfs --group=agent
+    523 codex            0.0 /opt/codex/bin/codex exec-server --remote https://codex-cloud-environments.chatgpt.com/api --environment-id ccarenv_b64_Y2NhcmVudl8xMTI2MzNmNDVlMDA4MTkxODE4ZmJkNjk2ZDg2ZDE1NA --linux-sandbox-pid-namespace=inherit
+   4852 llvm-symbolizer  0.0 [llvm-symbolizer] <defunct>
+      1 tail             0.0 tail -f /dev/null
+      2 caas-prefix-tra  0.0 /usr/local/bin/caas-prefix-transfer-server --host 0.0.0.0 --port 1040
+    673 git              0.0 [git] <defunct>
+    700 git              0.0 [git] <defunct>
+   3560 git              0.0 [git] <defunct>
+   9200 llvm-symbolizer  0.0 [llvm-symbolizer] <defunct>
+   9209 llvm-symbolizer  0.0 [llvm-symbolizer] <defunct>
+  10853 llvm-symbolizer  0.0 [llvm-symbolizer] <defunct>
+  10862 llvm-symbolizer  0.0 [llvm-symbolizer] <defunct>
+  23164 bash             0.0 /bin/bash -lc source /workspace/adamic-tools/env.sh python3 cloud/reports/release-lto/cache-profile.py /workspace/scratch/release-lto > /workspace/scratch/release-lto/cache-profile.log 2>&1 python3 cloud/reports/release-lto/rerank.py /workspace/scratch/release-lto > /workspace/scratch/release-lto/rerank.log 2>&1 python3 cloud/reports/release-lto/cold-build.py /workspace/scratch/release-lto isolated > /workspace/scratch/release-lto/isolated-build.log 2>&1
+  23232 bash             0.0 /bin/bash -lc python3 - <<'PY' import re,json from pathlib import Path s=Path('/workspace/scratch/release-lto'); files=list(s.glob('pinned-*.log')) for p in files:  expected='7394547' if 'lto-service' in p.name else '0'  hits=re.findall(r'^'+expected+r'$',p.read_text(),re.M)  if len(hits)!=1:raise RuntimeError('MISCOMPILE: '+str(p)) (s/'pinned-output-check.log').write_text(f'{len(files)} pinned benchmark logs have exactly one expected output line; PASS\n') print((s/'pinned-output-check.log').read_text()) PY cat /workspace/scratch/release-lto/cache-profile.log cat /proc/sys/kernel/perf_event_paranoid > /workspace/scratch/release-lto/perf-event-paranoid.log ps -eo pid,comm,pcpu,args --sort=-pcpu > /workspace/scratch/release-lto/processes.log
+  23238 ps               0.0 ps -eo pid,comm,pcpu,args --sort=-pcpu

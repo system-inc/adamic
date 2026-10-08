@@ -10,6 +10,12 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	Generated  []*GeneratedType
+	AsyncEntry int // one-based ordinary function for module suspension, zero when synchronous
+
+	// GraphTypes selects ownership by checker identity and negative allocation-site
+	// flow IDs after the cycle proof.
+	GraphTypes map[int]bool
 	// UninitializedFields records the field names whose readiness can be observed.
 	UninitializedFields map[string]bool
 	// PredicateChecks counts overload-result directions, per emitted call site.
@@ -78,6 +84,8 @@ type PredicateDirectionCheck struct {
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
 type Class struct {
+	Graph bool
+
 	// Definition is the erased source identity, shared by distinct native layouts.
 	Definition   int
 	Name         string
@@ -101,6 +109,8 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
+	// GraphClosure joins its environment instead of counting captured graph cells.
+	GraphClosure bool
 	// CheckedUnionNarrow marks a synthetic checked load so non-null assertions can use its stored input.
 	CheckedUnionNarrow bool
 	Name               string
@@ -122,7 +132,9 @@ type Function struct {
 	RestElement Type
 
 	// Returns is the result's type, or 0 for void.
-	Returns Type
+	Returns      Type
+	Async        bool
+	AsyncReturns Type // body payload; Returns is Promise for an async function
 
 	Body []Statement
 
@@ -193,6 +205,9 @@ const (
 	Uint8Array
 	Int32Array
 	Float64Array
+	Uint16Array
+
+	Promise
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -225,11 +240,13 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak || t.IsTypedArray()
+	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak || t.IsTypedArray() || t == Promise
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
 type Local struct {
+	// GraphCell selects graph ownership for its capture cell or shared environment.
+	GraphCell bool
 	// Uninitialized uses the temporal-dead-zone readiness state until the first assignment.
 	Uninitialized         bool
 	InitializerExpression string
@@ -366,6 +383,7 @@ type (
 	// {}: the object made is Empty, each of the source type's fields the literal doesn't give, as
 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
+		GraphTypes      []int
 		SpreadReadiness string
 		// Class is the nominal class ID, or zero for a plain object.
 		Class                int
@@ -416,9 +434,10 @@ type (
 	// ArrayLiteral makes an array. Where Spread is set, the element at that position is an array of the
 	// same elements, spread into this one at that point in the evaluation, as JavaScript does.
 	ArrayLiteral struct {
-		Element  Type
-		Elements []Expression
-		Spread   []bool
+		GraphTypes []int
+		Element    Type
+		Elements   []Expression
+		Spread     []bool
 	}
 
 	// Length is array.length.
@@ -618,6 +637,7 @@ type (
 	// ArraySplice is array.splice(Start, Count, ...Items): Count perhaps left out (everything after
 	// Start), and what's removed, a new array.
 	ArraySplice struct {
+		GraphTypes          []int
 		Array, Start, Count Expression
 		Items               []Expression
 		Element             Type
@@ -629,6 +649,7 @@ type (
 	// ArrayFill is array.fill(Value, Start, End), Start and End perhaps nil (left out); in place, and
 	// the array. With Array nil, it's new Array(Length).fill(Value): a new array, every element Value.
 	ArrayFill struct {
+		GraphTypes                       []int
 		Array, Length, Value, Start, End Expression
 		Element                          Type
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
@@ -641,6 +662,7 @@ type (
 	// undefined and its index, in order. First is the type of the callback's first parameter, which
 	// undefined is passed as (0 when it has none).
 	ArrayFrom struct {
+		GraphTypes       []int
 		CallbackType     int
 		Length, Callback Expression
 		Element, First   Type
@@ -652,8 +674,9 @@ type (
 	// ArrayConcat is array.concat(Others...): a new array of every one's elements, in order. Each of
 	// Others is an array of the same elements.
 	ArrayConcat struct {
-		Array  Expression
-		Others []Expression
+		GraphTypes []int
+		Array      Expression
+		Others     []Expression
 	}
 
 	// ArrayReduce is array.reduce(Callback, Initial): the callback called per element with what it
@@ -693,6 +716,7 @@ type (
 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the
 	// element, its index and the array.
 	ArrayMap struct {
+		GraphTypes   []int
 		CallbackType int
 		Array        Expression
 		Callback     Expression
@@ -706,6 +730,7 @@ type (
 	// is skipped, both as JavaScript does. Returns is what the callback returns, 0 for nothing; every
 	// method but forEach requires a boolean.
 	ArrayVisit struct {
+		GraphTypes   []int
 		CallbackType int
 		Method       string
 		Array        Expression
@@ -717,14 +742,16 @@ type (
 	// MapEntries is [...map]: an array of [key, value] pairs, each a tuple, an object whose fields
 	// are named "0" and "1".
 	MapEntries struct {
+		GraphTypes         []int
 		Map                Expression
 		KeyType, ValueType Type
 	}
 
 	// ArraySlice is array.slice(start, end), either argument perhaps left out.
 	ArraySlice struct {
-		Array     Expression
-		Arguments []Expression
+		GraphTypes []int
+		Array      Expression
+		Arguments  []Expression
 	}
 
 	// ArraySort is array.sort(comparator): one of the module's functions (Comparator), or a function
@@ -739,6 +766,7 @@ type (
 
 	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.
 	MapNew struct {
+		GraphTypes []int
 		Key, Value Type
 		Entries    [][2]Expression
 
@@ -749,12 +777,14 @@ type (
 
 	// MapKeys and MapValues are [...map.keys()] and [...map.values()]: new arrays, in insertion order.
 	MapKeys struct {
-		Map Expression
-		Key Type
+		GraphTypes []int
+		Map        Expression
+		Key        Type
 	}
 	MapValues struct {
-		Map   Expression
-		Value Type
+		GraphTypes []int
+		Map        Expression
+		Value      Type
 	}
 
 	// MapClear is map.clear() and set.clear(), which is void.
@@ -800,8 +830,9 @@ type (
 
 	// SetNew is new Set(), or new Set(Values), an array of the elements, each added in order.
 	SetNew struct {
-		Element Type
-		Values  Expression
+		GraphTypes []int
+		Element    Type
+		Values     Expression
 	}
 
 	// SetAdd is set.add(Value), which is the set. An element it already has keeps its place. has,
@@ -816,8 +847,9 @@ type (
 
 	// SetValues is [...set]: a new array of its elements, in order.
 	SetValues struct {
-		Set     Expression
-		Element Type
+		GraphTypes []int
+		Set        Expression
+		Element    Type
 	}
 
 	// MapSize is map.size.
@@ -837,6 +869,19 @@ type (
 		Separator Expression
 		Element   Type
 		Depth     int
+	}
+
+	// ParallelMap is structured fork-join; the callback takes item then index.
+	// Its proof belongs to lowering and its native scheduling belongs to the runtime.
+	ParallelMap struct {
+		// Moved is set by lowering only after proving exclusive, disjoint item
+		// graphs and consuming the source binding. Native skips item/result sharing.
+		Moved       bool
+		Items, Work Expression
+		// Shared includes immutable reference globals read by the task's call graph.
+		// They are marking roots, not extra evaluations in the sequential witness.
+		Shared []Expression
+		Result Type
 	}
 
 	// ReadTextFile is readTextFile(Path) from 'adamic': the file's bytes decoded as UTF-8 the way
@@ -1172,6 +1217,7 @@ type (
 	Loop struct {
 		Labels     []string
 		Condition  Expression
+		Test       []Statement // normalization before every loop condition
 		Body       []Statement
 		Update     []Statement
 		CheckAfter bool
@@ -1277,3 +1323,5 @@ func (p *Program) HasInheritance() bool {
 	}
 	return false
 }
+
+func (ParallelMap) Type() Type { return Array }
