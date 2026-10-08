@@ -1,0 +1,11 @@
+// Source shape: parser.ts mutually nested parse calls with live per-frame state.
+// This is a native frame calibration, not a claim about parser C frame sizes.
+import { programArguments } from 'adamic';
+function descend(depth: number): string {
+    const here = `(${depth})`;
+    if (depth <= 0) { return here; }
+    const child = descend(depth - 1);
+    return here + child.slice(0, 1);
+}
+const depth = Number(programArguments()[0] ?? '1');
+console.log(`${descend(depth).length}`);

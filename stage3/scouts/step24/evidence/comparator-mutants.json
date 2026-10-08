@@ -1,0 +1,43 @@
+[
+  {
+    "mutant": "ignore-record",
+    "exit": 1,
+    "caught_by": [
+      "--- FAIL: TestExactRecords (0.00s)",
+      "--- FAIL: TestExactRecords/nodeEnd (0.00s)",
+      "--- FAIL: TestExactRecords/flags (0.00s)",
+      "--- FAIL: TestExactRecords/text (0.00s)",
+      "--- FAIL: TestExactRecords/header (0.00s)",
+      "--- FAIL: TestExactRecords/diagnostic (0.00s)",
+      "--- FAIL: TestExactRecords/jsdoc (0.00s)",
+      "--- FAIL: TestExactRecords/newline (0.00s)",
+      "--- FAIL: TestExactRecords/truncated (0.00s)",
+      "--- FAIL: TestExactRecords/extra (0.00s)",
+      "--- FAIL: TestLongRecordAndReset (0.00s)"
+    ]
+  },
+  {
+    "mutant": "ignore-eof",
+    "exit": 1,
+    "caught_by": [
+      "--- FAIL: TestExactRecords (0.00s)",
+      "--- FAIL: TestExactRecords/truncated (0.00s)",
+      "--- FAIL: TestExactRecords/extra (0.00s)"
+    ]
+  },
+  {
+    "mutant": "ignore-final-newline",
+    "exit": 1,
+    "caught_by": [
+      "--- FAIL: TestExactRecords (0.00s)",
+      "--- FAIL: TestExactRecords/newline (0.00s)"
+    ]
+  },
+  {
+    "mutant": "do-not-reset-preorder",
+    "exit": 1,
+    "caught_by": [
+      "--- FAIL: TestLongRecordAndReset (0.00s)"
+    ]
+  }
+]

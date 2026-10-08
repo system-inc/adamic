@@ -1,0 +1,34 @@
+// Source: TypeScript v6.0.3 parser.ts doOutsideOfContext/doInsideOfContext.
+// Boolean tests replace upstream numeric truthiness; flags and restore algebra retained.
+let contextFlags = 5;
+function setContextFlag(value: boolean, flag: number): void {
+    if (value) { contextFlags |= flag; }
+    else { contextFlags &= ~flag; }
+}
+function doOutsideOfContext(context: number, func: () => number): number {
+    const contextFlagsToClear = context & contextFlags;
+    if (contextFlagsToClear !== 0) {
+        setContextFlag(false, contextFlagsToClear);
+        const result = func();
+        setContextFlag(true, contextFlagsToClear);
+        return result;
+    }
+    return func();
+}
+function doInsideOfContext(context: number, func: () => number): number {
+    const contextFlagsToSet = context & ~contextFlags;
+    if (contextFlagsToSet !== 0) {
+        setContextFlag(true, contextFlagsToSet);
+        const result = func();
+        setContextFlag(false, contextFlagsToSet);
+        return result;
+    }
+    return func();
+}
+console.log(`${doOutsideOfContext(1, () => doInsideOfContext(2, () => {
+    contextFlags |= 8;
+    return contextFlags;
+}))}`);
+console.log(`${contextFlags}`);
+console.log(`${doInsideOfContext(1, () => contextFlags)}`);
+console.log(`${doOutsideOfContext(2, () => contextFlags)}`);

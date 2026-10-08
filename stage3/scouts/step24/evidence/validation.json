@@ -1,0 +1,28 @@
+{
+  "base": "45487a809f89885a3fc651cd590e7dabf31362dc",
+  "scope": "stage3/scouts/step24 only",
+  "native_full_driver": {
+    "exit": 1,
+    "checker_diagnostics": 320,
+    "first": "builder.ts:1246:69 TS2345"
+  },
+  "depth_instrumentation_mutants": {
+    "node_end": {
+      "exit": 1,
+      "catcher": "projection differs from uninstrumented Node"
+    },
+    "empty_counter": {
+      "exit": 1,
+      "catcher": "no observed parser frame"
+    },
+    "control": {
+      "exit": 0,
+      "maximum": 58
+    }
+  },
+  "prior_evidence": {
+    "files": 2585,
+    "expanded_bytes": 59388023
+  },
+  "reference_status": "unresolved 13-byte reconstructed-corpus difference; committed reference unchanged"
+}

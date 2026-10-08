@@ -1,0 +1,45 @@
+// Source: TypeScript v6.0.3 parser.ts speculationHelper, boolean specialization.
+// Scanner callback boundary reduced to one position; parser save/restore retained.
+let currentToken = 1;
+let scannerPosition = 0;
+const parseDiagnostics: number[] = [];
+let parseErrorBeforeNextFinishedNode = false;
+let contextFlags = 0;
+function scannerSpeculate(callback: () => boolean, lookahead: boolean): boolean {
+    const savePosition = scannerPosition;
+    const result = callback();
+    if (!result || lookahead) { scannerPosition = savePosition; }
+    return result;
+}
+function speculationHelper(callback: () => boolean, speculationKind: number): boolean {
+    const saveToken = currentToken;
+    const saveParseDiagnosticsLength = parseDiagnostics.length;
+    const saveParseErrorBeforeNextFinishedNode = parseErrorBeforeNextFinishedNode;
+    const saveContextFlags = contextFlags;
+    const result = scannerSpeculate(callback, speculationKind !== 1);
+    console.log(`${saveContextFlags === contextFlags}`);
+    if (!result || speculationKind !== 1) {
+        currentToken = saveToken;
+        if (speculationKind !== 2) { parseDiagnostics.length = saveParseDiagnosticsLength; }
+        parseErrorBeforeNextFinishedNode = saveParseErrorBeforeNextFinishedNode;
+    }
+    return result;
+}
+function advance(result: boolean): boolean {
+    currentToken += 1;
+    scannerPosition += 1;
+    parseDiagnostics.push(currentToken);
+    parseErrorBeforeNextFinishedNode = true;
+    return result;
+}
+function show(): void {
+    console.log(`${currentToken}:${scannerPosition}:${parseDiagnostics.length}:${parseErrorBeforeNextFinishedNode}`);
+}
+console.log(`${speculationHelper(() => advance(true), 0)}`); show();
+console.log(`${speculationHelper(() => advance(false), 1)}`); show();
+console.log(`${speculationHelper(() => advance(true), 1)}`); show();
+console.log(`${speculationHelper(() => advance(false), 2)}`); show();
+console.log(`${speculationHelper(() => {
+    speculationHelper(() => advance(true), 0);
+    return advance(false);
+}, 1)}`); show();
