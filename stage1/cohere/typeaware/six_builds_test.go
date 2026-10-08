@@ -80,10 +80,10 @@ func (h *harness) sixSourceInputs() []string {
 		dir      string
 		packages []string
 	}{
-		{h.repository, []string{"./cmd/adamic", "./bridge/tsgo/archive", "./bridge/tsgo/cost"}},
+		{h.repository, []string{"./cmd/adamic", "./bridge/tsgo/archive", "./bridge/tsgo/cost", "./bridge/tsgo/checker"}},
 		{filepath.Join(h.repository, "cohere"), []string{"./internal/lint/rules/typescript"}},
 	} {
-		cmd := exec.Command("go", append([]string{"list", "-deps", "-json"}, request.packages...)...)
+		cmd := exec.Command("go", append([]string{"list", "-test", "-deps", "-json"}, request.packages...)...)
 		cmd.Dir = request.dir
 		data, err := cmd.Output()
 		if err != nil {
@@ -92,9 +92,9 @@ func (h *harness) sixSourceInputs() []string {
 		decoder := json.NewDecoder(bytes.NewReader(data))
 		for {
 			var pkg struct {
-				Dir                                                                                              string
-				GoFiles, CgoFiles, CFiles, CXXFiles, MFiles, HFiles, SFiles, SwigFiles, SwigCXXFiles, EmbedFiles []string
-				Module                                                                                           *struct{ GoMod string }
+				Dir                                                                                                                         string
+				GoFiles, TestGoFiles, XTestGoFiles, CgoFiles, CFiles, CXXFiles, MFiles, HFiles, SFiles, SwigFiles, SwigCXXFiles, EmbedFiles []string
+				Module                                                                                                                      *struct{ GoMod string }
 			}
 			err := decoder.Decode(&pkg)
 			if err == io.EOF {
@@ -103,9 +103,15 @@ func (h *harness) sixSourceInputs() []string {
 			if err != nil {
 				h.t.Fatal(err)
 			}
-			for _, list := range [][]string{pkg.GoFiles, pkg.CgoFiles, pkg.CFiles, pkg.CXXFiles, pkg.MFiles, pkg.HFiles, pkg.SFiles, pkg.SwigFiles, pkg.SwigCXXFiles, pkg.EmbedFiles} {
+			for _, list := range [][]string{pkg.GoFiles, pkg.TestGoFiles, pkg.XTestGoFiles, pkg.CgoFiles, pkg.CFiles, pkg.CXXFiles, pkg.MFiles, pkg.HFiles, pkg.SFiles, pkg.SwigFiles, pkg.SwigCXXFiles, pkg.EmbedFiles} {
 				for _, file := range list {
-					add(filepath.Join(pkg.Dir, file))
+					path := file
+					if !filepath.IsAbs(path) {
+						path = filepath.Join(pkg.Dir, path)
+					}
+					// go list -test's absolute generated main lives in GOCACHE.
+					// Its contents derive from the declared tests and Go version.
+					add(path)
 				}
 			}
 			if pkg.Module != nil && pkg.Module.GoMod != "" {

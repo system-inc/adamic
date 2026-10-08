@@ -32,6 +32,7 @@ type harness struct {
 	repository, directory string
 	next                  int
 	sixBuilds             bool
+	setupStarted          time.Time
 	sixFiles              []string
 	sixVersions           []string
 	sixProducts           map[string]sixBuildInputs
@@ -43,7 +44,7 @@ func (h *harness) run(name string, command *exec.Cmd) result {
 	if command.Dir == "" {
 		command.Dir = h.repository
 	}
-	stem := filepath.Join(h.directory, fmt.Sprintf("%03d-%s", h.next, name))
+	stem := filepath.Join(h.directory, fmt.Sprintf("%03d-%s", h.next, strings.ReplaceAll(name, "/", "-")))
 	out, err := os.Create(stem + ".stdout")
 	if err != nil {
 		h.t.Fatal(err)

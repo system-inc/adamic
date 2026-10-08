@@ -14,6 +14,7 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/corpusfiles"
@@ -124,7 +125,10 @@ func suiteTSMutant(h *harness, stage0, normal, entry, name, relative, from, to s
 // Each six-build log is an input-build unit for the developer-tools cache helper.
 // ADAMIC_TEST_SHARD=i/n (zero based) selects unit indices modulo n; unset runs
 // every unit. Full program roots and each mutant's original corpus are retained.
+const testSixRuleAgreementAndMutantsShards = 95
+
 func TestSixRuleAgreementAndMutants(t *testing.T) {
+	started := time.Now()
 	if _, _, err := sixSelection(os.Getenv("ADAMIC_TEST_SHARD")); err != nil {
 		t.Fatal(err)
 	}
@@ -146,7 +150,7 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	h := &harness{t: t, repository: repository, directory: directory, sixBuilds: true}
+	h := &harness{t: t, repository: repository, directory: directory, sixBuilds: true, setupStarted: started}
 	stage0 := filepath.Join(directory, "adamic")
 	stage0 = h.sixBuildProduct("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
 	normal := h.archive("checker", "", false)
@@ -393,8 +397,15 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 		rounds = 3
 	}
 	for _, probe := range cases {
-		for round := 1; round <= rounds; round++ {
-			add(fmt.Sprintf("cost/%s-%d", probe.name, round), []string{fmt.Sprintf("cost/%s-%d", probe.name, round)}, func(h *harness) {
+		for round := 1; round <= 3; round++ {
+			ids := []string{fmt.Sprintf("cost/%s-%d", probe.name, round)}
+			if round > rounds {
+				ids = nil
+			}
+			add(fmt.Sprintf("cost/%s-%d", probe.name, round), ids, func(h *harness) {
+				if round > rounds {
+					h.t.Skip("set ADAMIC_TYPEAWARE_BENCH=1")
+				}
 				t := h.t
 				args := []string{config, costProbe, strconv.Itoa(probe.start), strconv.Itoa(probe.end), probe.kind, probe.question, "10000"}
 				cmd := exec.Command(nativeCost, args...)
@@ -415,40 +426,52 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 	} else {
 		compilerPaths = corpusfiles.Upstream(t, corpus, compilerCommit, []string{"src/compiler"}, []string{"*.ts"})
 		sort.Strings(compilerPaths)
-		compilerManifest := h.write("compiler.manifest", strings.Join(compilerPaths, "\n")+"\n")
-		compilerConfig := filepath.Join(corpus, "src/compiler/tsconfig.json")
-		for i, group := range sixCompilerRanges(t, compilerPaths, 8) {
-			add(fmt.Sprintf("agreement/compiler-%02d", i), sixIDs("agreement/compiler", group), func(h *harness) {
-				h.sixCompare("compiler", oracle, binary, compilerConfig, compilerManifest, group)
-			})
-			if os.Getenv("ADAMIC_TYPEAWARE_BENCH") == "1" {
-				for round := 1; round <= 3; round++ {
-					add(fmt.Sprintf("bench/compiler-%02d-%d", i, round), sixIDs(fmt.Sprintf("bench/compiler-%d", round), group), func(h *harness) {
-						t := h.t
-						selected := h.write("selected.manifest", strings.Join(group, "\n")+"\n")
-						binaries := []string{optimized, oracle}
-						if round%2 == 0 {
-							binaries[0], binaries[1] = binaries[1], binaries[0]
-						}
-						var expected []byte
-						for _, binary := range binaries {
-							cmd := exec.Command(binary, compilerConfig, compilerManifest, "--files", selected, "--count")
-							cmd.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
-							r := h.must(fmt.Sprintf("six-bench-%d-%s", round, filepath.Base(binary)), cmd)
-							if expected != nil && !bytes.Equal(r.stdout, expected) {
-								t.Fatal("timed counts differ")
-							}
-							expected = r.stdout
-							t.Logf("six-rule round %d %s: process_s=%.6f %s; %s", round, filepath.Base(binary), r.elapsed.Seconds(), summary(r.stdout), strings.TrimSpace(string(r.stderr)))
-						}
-					})
-				}
+	}
+	compilerManifest := h.write("compiler.manifest", strings.Join(compilerPaths, "\n")+"\n")
+	compilerConfig := filepath.Join(corpus, "src/compiler/tsconfig.json")
+	groups := make([][]string, 8)
+	if len(compilerPaths) != 0 {
+		groups = sixCompilerRanges(t, compilerPaths, 8)
+	}
+	for i, group := range groups {
+		add(fmt.Sprintf("agreement/compiler-%02d", i), sixIDs("agreement/compiler", group), func(h *harness) {
+			if len(group) == 0 {
+				h.t.Skip("set ADAMIC_TYPESCRIPT_SOURCE")
 			}
+			h.sixCompare("compiler", oracle, binary, compilerConfig, compilerManifest, group)
+		})
+		for round := 1; round <= 3; round++ {
+			ids := sixIDs(fmt.Sprintf("bench/compiler-%d", round), group)
+			if rounds != 3 {
+				ids = nil
+			}
+			add(fmt.Sprintf("bench/compiler-%02d-%d", i, round), ids, func(h *harness) {
+				if len(group) == 0 || rounds != 3 {
+					h.t.Skip("set ADAMIC_TYPESCRIPT_SOURCE and ADAMIC_TYPEAWARE_BENCH=1")
+				}
+				t := h.t
+				selected := h.write("selected.manifest", strings.Join(group, "\n")+"\n")
+				binaries := []string{optimized, oracle}
+				if round%2 == 0 {
+					binaries[0], binaries[1] = binaries[1], binaries[0]
+				}
+				var expected []byte
+				for _, binary := range binaries {
+					cmd := exec.Command(binary, compilerConfig, compilerManifest, "--files", selected, "--count")
+					cmd.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
+					r := h.must(fmt.Sprintf("six-bench-%d-%s", round, filepath.Base(binary)), cmd)
+					if expected != nil && !bytes.Equal(r.stdout, expected) {
+						t.Fatal("timed counts differ")
+					}
+					expected = r.stdout
+					t.Logf("six-rule round %d %s: process_s=%.6f %s; %s", round, filepath.Base(binary), r.elapsed.Seconds(), summary(r.stdout), strings.TrimSpace(string(r.stderr)))
+				}
+			})
 		}
 	}
 	// Independent unsplit enumeration: membership is not derived from assignments.
 	expected := sixUnsplitIDs(paths, globalPaths, compilerPaths, rounds, os.Getenv("ADAMIC_TYPEAWARE_BENCH") == "1")
-	sixRunShards(t, h, expected, shards, os.Getenv("ADAMIC_TEST_SHARD"))
+	sixRunShards(t, h, expected, shards, os.Getenv("ADAMIC_TEST_SHARD"), testSixRuleAgreementAndMutantsShards)
 }
 
 func TestSixPinnedFlags(t *testing.T) {

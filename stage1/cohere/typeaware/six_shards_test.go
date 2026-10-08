@@ -85,6 +85,11 @@ func sixIDs(prefix string, paths []string) []string {
 		// corpus-relative identity, independent of the checkout's location.
 		if _, relative, ok := strings.Cut(filepath.ToSlash(path), "/src/compiler/"); ok {
 			name = relative
+		} else if repository, err := filepath.Abs("../../.."); err == nil {
+			// Repository corpora also repeat basenames across directories.
+			if relative, err := filepath.Rel(repository, path); err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+				name = filepath.ToSlash(relative)
+			}
 		}
 		ids[i] = prefix + "/" + name
 	}
@@ -101,8 +106,11 @@ func sixRanges(paths []string, width int) [][]string {
 	return result
 }
 
-func sixRunShards(t *testing.T, h *harness, expected []string, shards []sixShard, value string) {
+func sixRunShards(t *testing.T, h *harness, expected []string, shards []sixShard, value string, required int) {
 	t.Helper()
+	if len(shards) != required {
+		t.Fatalf("enumerated shard count %d differs from declared %d", len(shards), required)
+	}
 	if err := sixUnion(expected, shards); err != nil {
 		t.Fatal(err)
 	}
@@ -111,37 +119,47 @@ func sixRunShards(t *testing.T, h *harness, expected []string, shards []sixShard
 		t.Fatal(err)
 	}
 	t.Logf("six-union count=%d unique=%d shards=%d", len(expected), len(expected), len(shards))
-	var selected []sixShard
-	var selectedIDs []string
-	for i, shard := range shards {
-		if i%count == index {
-			selected = append(selected, shard)
-			selectedIDs = append(selectedIDs, shard.ids...)
-		}
+	started := h.setupStarted
+	if started.IsZero() {
+		started = time.Now()
 	}
 	var mu sync.Mutex
+	var admittedIDs []string
 	var completed []sixShard
+	var admitted int
+	var setupBefore time.Duration
 	t.Cleanup(func() {
-		if err := sixUnion(selectedIDs, completed); err != nil {
+		cleanupStarted := time.Now()
+		if err := sixUnion(admittedIDs, completed); err != nil {
 			t.Errorf("executed shard union: %v", err)
 		}
-		t.Logf("six-executed-union count=%d selected_shards=%d selector=%d/%d", len(selectedIDs), len(selected), index, count)
+		t.Logf("six-executed-union count=%d admitted_shards=%d selector=%d/%d", len(admittedIDs), admitted, index, count)
+		t.Logf("split-setup elapsed_s=%.6f builds=shared-once", (setupBefore + time.Since(cleanupStarted)).Seconds())
 	})
-	for _, shard := range selected {
-		t.Run(shard.name, func(t *testing.T) {
+	width := max(3, len(strconv.Itoa(required-1)))
+	for i, shard := range shards {
+		if i%count != index {
+			continue
+		}
+		unit := fmt.Sprintf("shard-%0*d", width, i)
+		t.Run(unit, func(t *testing.T) {
+			// Only matching Go -run subtests enter here. Validate their executed union,
+			// while the independent complete-plan union above always covers every case.
+			admittedIDs = append(admittedIDs, shard.ids...)
+			admitted++
 			t.Parallel()
 			started := time.Now()
 			defer func() {
 				elapsed := time.Since(started)
-				t.Logf("six-shard name=%s cases=%d elapsed_s=%.6f", shard.name, len(shard.ids), elapsed.Seconds())
+				t.Logf("six-shard name=%s content=%s cases=%d elapsed_s=%.6f", unit, shard.name, len(shard.ids), elapsed.Seconds())
 				if elapsed > 30*time.Second {
-					t.Errorf("shard %s exceeded 30 s: %s", shard.name, elapsed)
+					t.Errorf("shard %s (%s) exceeded 30 s: %s", unit, shard.name, elapsed)
 				}
 				mu.Lock()
 				completed = append(completed, shard)
 				mu.Unlock()
 			}()
-			directory := filepath.Join(h.directory, "shards", filepath.FromSlash(shard.name))
+			directory := filepath.Join(h.directory, "shards", unit)
 			if err := os.MkdirAll(directory, 0755); err != nil {
 				t.Fatal(err)
 			}
@@ -149,6 +167,7 @@ func sixRunShards(t *testing.T, h *harness, expected []string, shards []sixShard
 			shard.run(local)
 		})
 	}
+	setupBefore = time.Since(started)
 }
 
 func sixOutputError(name string, want, got, stderr []byte) error {
@@ -216,6 +235,14 @@ func TestSixShardUnionRejectsLossAndDuplication(t *testing.T) {
 	if err := sixUnion([]string{"compiler/utilities.ts", "compiler/_namespaces/utilities.ts"}, []sixShard{{name: "namespaces", ids: ids}}); err != nil {
 		t.Fatal(err)
 	}
+	repository, err := filepath.Abs("../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	repositoryIDs := sixIDs("repository", []string{filepath.Join(repository, "fixtures/main.ts"), filepath.Join(repository, "stage1/main.ts")})
+	if err := sixUnion([]string{"repository/fixtures/main.ts", "repository/stage1/main.ts"}, []sixShard{{name: "repository", ids: repositoryIDs}}); err != nil {
+		t.Fatal(err)
+	}
 	expected := []string{"a", "b", "c"}
 	for _, shards := range [][]sixShard{
 		{{name: "left", ids: []string{"a"}}, {name: "right", ids: []string{"c"}}},
@@ -234,12 +261,14 @@ func TestSixShardUnionRejectsLossAndDuplication(t *testing.T) {
 }
 
 // The child executes the real scheduler and production output comparison. Only
-// planted/case-5 is corrupted; exactly selection 2/4 must fail with shard s-02.
+// planted/case-5 is corrupted; exactly selection 2/4 must fail in shard-002.
+const testSixShardPlantedDisagreementShards = 4
+
 func TestSixShardPlantedDisagreement(t *testing.T) {
 	if os.Getenv("ADAMIC_SIX_PLANTED_CHILD") == "1" {
 		var shards []sixShard
 		var expected []string
-		for i := 0; i < 4; i++ {
+		for i := 0; i < testSixShardPlantedDisagreementShards; i++ {
 			ids := []string{fmt.Sprintf("planted/case-%d", i*2), fmt.Sprintf("planted/case-%d", i*2+1)}
 			expected = append(expected, ids...)
 			shards = append(shards, sixShard{name: fmt.Sprintf("s-%02d", i), ids: ids, run: func(h *harness) {
@@ -255,26 +284,34 @@ func TestSixShardPlantedDisagreement(t *testing.T) {
 				}
 			}})
 		}
-		sixRunShards(t, &harness{directory: t.TempDir()}, expected, shards, os.Getenv("ADAMIC_TEST_SHARD"))
+		sixRunShards(t, &harness{directory: t.TempDir()}, expected, shards, os.Getenv("ADAMIC_TEST_SHARD"), testSixShardPlantedDisagreementShards)
 		return
 	}
 	t.Parallel()
-	for i := 0; i < 4; i++ {
-		t.Run(fmt.Sprintf("selection-%d", i), func(t *testing.T) {
+	for i := 0; i < testSixShardPlantedDisagreementShards; i++ {
+		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
 			t.Parallel()
-			cmd := exec.Command(os.Args[0], "-test.run=^TestSixShardPlantedDisagreement$", "-test.v")
-			cmd.Env = append(os.Environ(), "ADAMIC_SIX_PLANTED_CHILD=1", fmt.Sprintf("ADAMIC_TEST_SHARD=%d/4", i))
-			text, err := cmd.CombinedOutput()
-			if i == 2 {
-				if err == nil || !bytes.Contains(text, []byte("shard TestSixShardPlantedDisagreement/s-02 mismatch")) {
-					t.Fatalf("holding shard failed to catch planted case: %v\n%s", err, text)
+			for _, gate := range []bool{false, true} {
+				pattern := "^TestSixShardPlantedDisagreement$"
+				selector := fmt.Sprintf("%d/4", i)
+				if gate {
+					pattern += fmt.Sprintf("/^shard-%03d$", i)
+					selector = ""
 				}
-				if bytes.Count(text, []byte("--- FAIL: TestSixShardPlantedDisagreement/s-")) != 1 {
-					t.Fatalf("expected exactly one failing shard:\n%s", text)
+				cmd := exec.Command(os.Args[0], "-test.run="+pattern, "-test.v")
+				cmd.Env = append(os.Environ(), "ADAMIC_SIX_PLANTED_CHILD=1", "ADAMIC_TEST_SHARD="+selector)
+				text, err := cmd.CombinedOutput()
+				if i == 2 {
+					if err == nil || !bytes.Contains(text, []byte("shard TestSixShardPlantedDisagreement/shard-002 mismatch")) {
+						t.Fatalf("holding shard failed to catch planted case: %v\n%s", err, text)
+					}
+					if bytes.Count(text, []byte("--- FAIL: TestSixShardPlantedDisagreement/shard-")) != 1 {
+						t.Fatalf("expected exactly one failing shard:\n%s", text)
+					}
+					t.Log("planted/case-5 caught exactly by shard-002 (selection 2/4)")
+				} else if err != nil {
+					t.Fatalf("nonholding shard caught planted disagreement: %v\n%s", err, text)
 				}
-				t.Log("planted/case-5 caught exactly by s-02 (selection 2/4)")
-			} else if err != nil {
-				t.Fatalf("nonholding shard caught planted disagreement: %v\n%s", err, text)
 			}
 		})
 	}
