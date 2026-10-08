@@ -1,0 +1,265 @@
+resolution
+ok  	github.com/system-inc/adamic/internal/lower	0.499s
+
+
+mutants
+=== RUN   TestLogicalAssignmentMutants
+=== RUN   TestLogicalAssignmentMutants/or/target_twice
+    logical_assignment_test.go:118: gate cache node miss
+    oracle_test.go:644: gate cache native miss
+    oracle_test.go:651: gate cache native hit
+    logical_assignment_test.go:129: gate cache node miss
+    logical_assignment_test.go:136: 47 mutations caught by Node stdout in native and JavaScript
+=== RUN   TestLogicalAssignmentMutants/or/array_twice
+    logical_assignment_test.go:118: gate cache node hit
+    oracle_test.go:644: gate cache native miss
+    oracle_test.go:651: gate cache native hit
+    logical_assignment_test.go:129: gate cache node miss
+    logical_assignment_test.go:136: 23 mutations caught by Node stdout in native and JavaScript
+=== RUN   TestLogicalAssignmentMutants/or/read_twice
+    logical_assignment_test.go:118: gate cache node hit
+    oracle_test.go:644: gate cache native miss
+    oracle_test.go:651: gate cache native hit
+    logical_assignment_test.go:129: gate cache node miss
+    logical_assignment_test.go:136: 61 mutations caught by Node stdout in native and JavaScript
+=== RUN   TestLogicalAssignmentMutants/or/right_always
+    logical_assignment_test.go:118: gate cache node hit
+    oracle_test.go:644: gate cache native miss
+    oracle_test.go:651: gate cache native hit
+    logical_assignment_test.go:129: gate cache node miss
+    logical_assignment_test.go:136: 61 mutations caught by Node stdout in native and JavaScript
+=== RUN   TestLogicalAssignmentMutants/and/target_twice
+    logical_assignment_test.go:118: gate cache node miss
+    oracle_test.go:644: gate cache native miss
+    oracle_test.go:651: gate cache native hit
+    logical_assignment_test.go:129: gate cache node miss
+    logical_assignment_test.go:136: 55 mutations caught by Node stdout in native and JavaScript
+=== RUN   TestLogicalAssignmentMutants/and/array_twice
+    logical_assignment_test.go:118: gate cache node hit
+    oracle_test.go:644: gate cache native miss
+    oracle_test.go:651: gate cache native hit
+    logical_assignment_test.go:129: gate cache node miss
+    logical_assignment_test.go:136: 27 mutations caught by Node stdout in native and JavaScript
+=== RUN   TestLogicalAssignmentMutants/and/read_twice
+    logical_assignment_test.go:118: gate cache node hit
+    oracle_test.go:644: gate cache native miss
+    oracle_test.go:651: gate cache native hit
+    logical_assignment_test.go:129: gate cache node miss
+    logical_assignment_test.go:136: 69 mutations caught by Node stdout in native and JavaScript
+=== RUN   TestLogicalAssignmentMutants/and/right_always
+    logical_assignment_test.go:118: gate cache node hit
+    oracle_test.go:644: gate cache native miss
+    oracle_test.go:651: gate cache native hit
+    logical_assignment_test.go:129: gate cache node miss
+    logical_assignment_test.go:136: 69 mutations caught by Node stdout in native and JavaScript
+=== RUN   TestLogicalAssignmentMutants/nullish/target_twice
+    logical_assignment_test.go:118: gate cache node miss
+    oracle_test.go:644: gate cache native miss
+    oracle_test.go:651: gate cache native hit
+    logical_assignment_test.go:129: gate cache node miss
+    logical_assignment_test.go:136: 51 mutations caught by Node stdout in native and JavaScript
+=== RUN   TestLogicalAssignmentMutants/nullish/array_twice
+    logical_assignment_test.go:118: gate cache node hit
+    oracle_test.go:644: gate cache native miss
+    oracle_test.go:651: gate cache native hit
+    logical_assignment_test.go:129: gate cache node miss
+    logical_assignment_test.go:136: 25 mutations caught by Node stdout in native and JavaScript
+=== RUN   TestLogicalAssignmentMutants/nullish/read_twice
+    logical_assignment_test.go:118: gate cache node hit
+    oracle_test.go:644: gate cache native miss
+    oracle_test.go:651: gate cache native hit
+    logical_assignment_test.go:129: gate cache node miss
+    logical_assignment_test.go:136: 66 mutations caught by Node stdout in native and JavaScript
+=== RUN   TestLogicalAssignmentMutants/nullish/right_always
+    logical_assignment_test.go:118: gate cache node hit
+    oracle_test.go:644: gate cache native miss
+    oracle_test.go:651: gate cache native hit
+    logical_assignment_test.go:129: gate cache node miss
+    logical_assignment_test.go:136: 66 mutations caught by Node stdout in native and JavaScript
+=== RUN   TestLogicalAssignmentMutants/nullish/zero_nullish
+    logical_assignment_test.go:118: gate cache node hit
+    oracle_test.go:644: gate cache native miss
+    oracle_test.go:651: gate cache native hit
+    logical_assignment_test.go:129: gate cache node miss
+    logical_assignment_test.go:136: 20 mutations caught by Node stdout in native and JavaScript
+=== RUN   TestLogicalAssignmentMutants/nullish/empty_nullish
+    logical_assignment_test.go:118: gate cache node hit
+    oracle_test.go:644: gate cache native miss
+    oracle_test.go:651: gate cache native hit
+    logical_assignment_test.go:129: gate cache node miss
+    logical_assignment_test.go:136: 7 mutations caught by Node stdout in native and JavaScript
+--- PASS: TestLogicalAssignmentMutants (38.34s)
+    --- PASS: TestLogicalAssignmentMutants/or/target_twice (15.57s)
+    --- PASS: TestLogicalAssignmentMutants/or/array_twice (1.56s)
+    --- PASS: TestLogicalAssignmentMutants/or/read_twice (1.72s)
+    --- PASS: TestLogicalAssignmentMutants/or/right_always (2.26s)
+    --- PASS: TestLogicalAssignmentMutants/and/target_twice (2.19s)
+    --- PASS: TestLogicalAssignmentMutants/and/array_twice (1.81s)
+    --- PASS: TestLogicalAssignmentMutants/and/read_twice (1.88s)
+    --- PASS: TestLogicalAssignmentMutants/and/right_always (1.77s)
+    --- PASS: TestLogicalAssignmentMutants/nullish/target_twice (1.67s)
+    --- PASS: TestLogicalAssignmentMutants/nullish/array_twice (1.55s)
+    --- PASS: TestLogicalAssignmentMutants/nullish/read_twice (1.62s)
+    --- PASS: TestLogicalAssignmentMutants/nullish/right_always (1.58s)
+    --- PASS: TestLogicalAssignmentMutants/nullish/zero_nullish (1.56s)
+    --- PASS: TestLogicalAssignmentMutants/nullish/empty_nullish (1.59s)
+=== RUN   TestCommaMutants
+=== RUN   TestCommaMutants/drop_left
+    logical_assignment_test.go:181: gate cache node miss
+    oracle_test.go:644: gate cache native miss
+    oracle_test.go:651: gate cache native hit
+    logical_assignment_test.go:192: gate cache node miss
+    logical_assignment_test.go:199: 11 mutations caught by Node stdout in both backends
+=== RUN   TestCommaMutants/reverse_order
+    logical_assignment_test.go:181: gate cache node hit
+    oracle_test.go:644: gate cache native miss
+    oracle_test.go:651: gate cache native hit
+    logical_assignment_test.go:192: gate cache node miss
+    logical_assignment_test.go:199: 11 mutations caught by Node stdout in both backends
+=== RUN   TestCommaMutants/return_left
+    logical_assignment_test.go:181: gate cache node hit
+    oracle_test.go:644: gate cache native miss
+    oracle_test.go:651: gate cache native hit
+    logical_assignment_test.go:192: gate cache node miss
+    logical_assignment_test.go:199: 11 mutations caught by Node stdout in both backends
+--- PASS: TestCommaMutants (1.26s)
+    --- PASS: TestCommaMutants/drop_left (0.48s)
+    --- PASS: TestCommaMutants/reverse_order (0.39s)
+    --- PASS: TestCommaMutants/return_left (0.38s)
+PASS
+gate cache: native hits=17 misses=17
+gate cache: node hits=13 misses=21
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	39.608s
+
+
+fixtures
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/comma_operator.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/comma_operator.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/logical_nullish_assignment.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/logical_nullish_assignment.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/logical_and_assignment.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/logical_and_assignment.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/logical_or_assignment.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/logical_or_assignment.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/comma_operator.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/logical_or_assignment.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/logical_and_assignment.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/logical_nullish_assignment.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/comma_operator.a
+    oracle_test.go:740: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/logical_or_assignment.a
+    oracle_test.go:740: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/logical_and_assignment.a
+    oracle_test.go:740: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/comma_operator.a
+    oracle_test.go:740: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/logical_nullish_assignment.a
+    oracle_test.go:740: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/logical_or_assignment.a
+    oracle_test.go:740: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/logical_and_assignment.a
+    oracle_test.go:740: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/logical_nullish_assignment.a
+    oracle_test.go:740: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/comma_operator.a
+    oracle_test.go:644: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/logical_or_assignment.a
+    oracle_test.go:644: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/logical_nullish_assignment.a
+    oracle_test.go:644: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/logical_and_assignment.a
+    oracle_test.go:644: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/comma_operator.a
+    oracle_test.go:637: gate cache native miss
+    oracle_test.go:651: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/logical_nullish_assignment.a
+    oracle_test.go:637: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/logical_or_assignment.a
+    oracle_test.go:637: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/logical_and_assignment.a
+    oracle_test.go:637: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/logical_nullish_assignment.a
+    oracle_test.go:651: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/logical_or_assignment.a
+    oracle_test.go:651: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/logical_and_assignment.a
+    oracle_test.go:651: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/comma_operator.a (0.80s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/logical_nullish_assignment.a (2.50s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/logical_or_assignment.a (2.54s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/logical_and_assignment.a (2.63s)
+PASS
+gate cache: native hits=4 misses=8
+gate cache: node hits=4 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.706s
+
+
+rewrite
+=== RUN   TestCompiler41231d51Shape
+--- PASS: TestCompiler41231d51Shape (0.01s)
+=== RUN   TestMissingFunctionMutantFailsLoudly
+--- PASS: TestMissingFunctionMutantFailsLoudly (0.00s)
+=== RUN   TestChangedVisitorMutantFailsLoudly
+--- PASS: TestChangedVisitorMutantFailsLoudly (0.00s)
+=== RUN   TestVisitorsCollectContinueAndSkipDiagnosedBodies
+--- PASS: TestVisitorsCollectContinueAndSkipDiagnosedBodies (0.22s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/latent/refusalrewrite	0.234s
+
+
+audit
+signature/body range mutant caught
+{
+  "continuation": "pass",
+  "all_refusal_sites": "pass",
+  "no_IR_output": "pass",
+  "production_loader_disabled": "pass",
+  "body_skip": "pass",
+  "signature_eligible": "pass",
+  "same_line_ranges": "pass",
+  "measurement": "measured on a checker-rejected program",
+  "mutant": {
+    "one.a_delta": 1,
+    "two.a_delta": 0,
+    "location": "one.a:3:1"
+  },
+  "misattribution_mutant": "caught"
+}
+
+
+accounting
+drop-site caught: raw observations or attribution differ
+duplicate-site caught: duplicate
+file-attribution caught: raw observations or attribution differ
+reason-count caught: count/rank
+coverage caught: coverage
+tail caught: tail
+disposition caught: 
+baseline-delta caught: baseline/delta
+PASS: raw sites, deduplication, eight source hashes/body spans, exact rankings, file counts, examples, dispositions, coverage and tail
+Raw body diagnostic counts: {'createTypeChecker': 86, 'createNodeFactory': 0, 'createPrinter': 0, 'transformES2015': 5, 'createProgram': 5, 'createBinder': 0, 'transformClassFields': 9, 'createScanner': 0}
+
+
+reasons-audit
+missing-zero-reason caught
+remaining-count caught
+previous-delta caught
+unrelated-reason-change caught
+PASS: every reason/zero, baseline and prior-run deltas; only three ruled reasons changed
+
+
+run
+createTypeChecker 1082
+createNodeFactory 122
+createPrinter 109
+transformES2015 138
+createProgram 92
+createBinder 91
+transformClassFields 97
+createScanner 3
