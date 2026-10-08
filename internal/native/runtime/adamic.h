@@ -404,6 +404,7 @@ typedef struct adamic_map {
 	// from the canonical present NaN, while present numbers use SameValueZero (map.c).
 	bool maybe_number_keys;
 	bool reference_values;
+	_Atomic bool nonextensible;
 	// iterating counts the iterations open over the map; while there are any, its entries keep their
 	// places (map.c).
 	_Atomic size_t iterating;

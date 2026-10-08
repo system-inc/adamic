@@ -61,7 +61,7 @@ func TestObjectIntegrityRefusesUnrepresentedDescriptors(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
 		`Object.seal([1]);`,
-		`Object.preventExtensions(new Map<string, number>());`,
+		`function seal(value: Map<string, number>): void { Object.seal(value); }`,
 		`function seal(value: { n?: number }): void { Object.seal(value); }`,
 		`function compare(left: number | null | undefined): boolean { return Object.is(left, undefined); }`,
 		`const tuple: [number] = [1]; Object.isSealed(tuple);`,
