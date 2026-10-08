@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/latent/audit_output_guards.py", line 20, in <module>
+    assert result.returncode!=0 and guard.returncode!=0 and expected in (folder/'guard.log').read_text(), name
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: IR

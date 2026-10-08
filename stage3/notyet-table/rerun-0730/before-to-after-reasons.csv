@@ -1,0 +1,504 @@
+reason,retired,newly_exposed,surviving,net_retirement
+passing union of differently held members to a function value,0,154,2,-154
+an ElementAccessExpression,4,65,24,-61
+assigning to an Identifier,23,30,142,-7
+"a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",0,21,184,-21
+a call through ?. (an optional call),0,20,125,-20
+a function value returning union of differently held members,0,20,25,-20
+an array of T,0,20,23,-20
+an array of never,0,18,72,-18
+a value of type __String,0,17,170,-17
+for...of over an object,0,16,108,-16
+a boolean | undefined variable a function value captures,0,13,14,-13
+a value of type Path,0,13,118,-13
+a void call used as a value,0,10,82,-10
+a union of differently held members variable a function value captures,0,9,3,-9
+a call returning void | undefined,0,6,43,-6
+a call to a PropertyAccessExpression,0,6,20,-6
+a value of type any,0,6,90,-6
+assigning an element of a value,0,6,4,-6
+reading currentLexicalScope,0,6,0,-6
+a BinaryExpression as a statement,0,5,71,-5
+a BinaryExpression with a number and a string,0,5,8,-5
+a SpreadElement,0,5,9,-5
+a field of type string | number | undefined,0,5,2,-5
+an optional chain longer than one step,0,5,9,-5
+a declaration directly in a case (wrap the case in a block),0,4,58,-4
+a field of type false | Symbol | undefined,0,4,0,-4
+a BinaryExpression with a string and a number,2,3,13,-1
+"a Set of Path (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",0,3,12,-3
+a value of type NamedDeclaration & { name: DeclarationName; },0,3,1,-3
+an array of any,0,3,18,-3
+"a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",0,2,17,-2
+a VoidExpression as a statement,0,2,5,-2
+a call returning any,0,2,1,-2
+a destructured name held otherwise than its field,0,2,1,-2
+a field of type true | Node | undefined,0,2,9,-2
+a value of type T,0,2,50,-2
+a value of type __String | undefined,0,2,23,-2
+assigning a field of a value,0,2,9,-2
+optional chaining to .size on a value,0,2,15,-2
+push with other than one value,0,2,0,-2
+reading builderProgram,0,2,1,-2
+a BinaryExpression with a value and a value,476,1,15,475
+a BinaryExpression with a number and a boolean,116,1,0,115
+.length on a union of differently held members,0,1,0,-1
+"?. to a number, which would be number | undefined",0,1,1,-1
+JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata),0,1,2,-1
+a call returning Path,0,1,0,-1
+a case whose type differs from the switch's,0,1,5,-1
+a comparator that doesn't take two elements and return a number,0,1,2,-1
+a field holding union of differently held members,0,1,3,-1
+a field of type NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[],0,1,3,-1
+a field of type string | NodeArray<JSDocComment> | undefined,0,1,23,-1
+a field of type string | true | undefined,0,1,0,-1
+a function inside a function (a closure),0,1,3238,-1
+a function returning NodeArray<T> | undefined,0,1,0,-1
+a function returning NonNullable<T>,0,1,1,-1
+a function returning T[],0,1,7,-1
+a function returning T[] | undefined,0,1,3,-1
+a function returning undefined,0,1,11,-1
+a function value taking string | number | undefined,0,1,0,-1
+a function value taking union of differently held members,0,1,0,-1
+a generic function as a value,0,1,20,-1
+a number | undefined argument to slice,0,1,1,-1
+a number | undefined argument to substring,0,1,1,-1
+a spread that adds a field the source doesn't have,0,1,0,-1
+a value of type ClassNamedEvaluationHelperBlock | undefined,0,1,0,-1
+a value of type ClassThisAssignmentBlock | undefined,0,1,0,-1
+a value of type Declaration & Expression,0,1,0,-1
+a value of type ExpressionWithTypeArguments & { readonly expression: Identifier | PropertyAccessEntityNameExpression; },0,1,5,-1
+a value of type HasJSDoc | undefined,0,1,6,-1
+a value of type LeftHandSideExpression & Identifier,0,1,1,-1
+a value of type NamedEvaluation,0,1,0,-1
+a value of type NamedTupleMember | (ParameterDeclaration & { name: Identifier; }),0,1,0,-1
+"a value of type NodeArray<Expression> & readonly [BindableStaticNameExpression, NumericLiteral | StringLiteralLike, ObjectLiteralExpression] & Readonly<...>",0,1,1,-1
+a value of type NonNullable<T>,0,1,7,-1
+a value of type Path | undefined,0,1,2,-1
+a value of type PragmaPseudoMap[TKey][] | PragmaPseudoMap[TKey],0,1,0,-1
+a value of type T[],0,1,2,-1
+a value of type TypeOnlyAliasDeclaration | undefined,0,1,0,-1
+a value of type never,0,1,2,-1
+a value of type object | undefined,0,1,4,-1
+an array of U,0,1,5,-1
+destructuring anything but a tuple into [names],0,1,2,-1
+iterating a value,0,1,1,-1
+new an Identifier,0,1,21,-1
+reading Debug,0,1,0,-1
+reading console,0,1,0,-1
+reading errorFallbackNode,0,1,0,-1
+reading getCurrentDirectory,0,1,0,-1
+reading host,0,1,4,-1
+reading moduleSpecifiers,0,1,0,-1
+reading performance,0,1,56,-1
+reading program,0,1,0,-1
+regex replacement other than a string,0,1,7,-1
+storing false | Symbol in a field,0,1,0,-1
+storing false | Type in a field,0,1,1,-1
+storing false | string[] | undefined in a field,0,1,0,-1
+storing true | Node | undefined in a field,0,1,2,-1
+this outside a method,0,1,34,-1
+a method call through a structural signature in a program with statics; use typeof the declaring class,1792,0,0,1792
+a NonNullExpression,632,0,0,632
+a BinaryExpression with a value and a boolean,305,0,0,305
+a BinaryExpression with a number and a number,178,0,32,178
+a BinaryExpression with a boolean and a value,136,0,0,136
+a BinaryExpression with a boolean and a number,96,0,0,96
+a BinaryExpression with a value and a number,45,0,0,45
+a BinaryExpression with a number | undefined and a number,23,0,2,23
+a BinaryExpression with a string and a string,20,0,0,20
+a BinaryExpression with a number and a value,17,0,0,17
+a BinaryExpression with a boolean | undefined and a number,10,0,0,10
+a BinaryExpression with a string and a boolean,9,0,0,9
+a BinaryExpression with a number and a boolean | undefined,7,0,0,7
+a BinaryExpression with a value and a boolean | undefined,7,0,0,7
+a BinaryExpression with a boolean and a string,6,0,0,6
+a BinaryExpression with a union of differently held members and a boolean,6,0,0,6
+a BinaryExpression with a value and a string,6,0,0,6
+assigning to a NonNullExpression,6,0,0,6
+a BinaryExpression with a boolean | undefined and a value,4,0,0,4
+a BinaryExpression with a number | undefined and a boolean,4,0,0,4
+assigning to an ObjectLiteralExpression,4,0,0,4
+a BinaryExpression with a boolean and a union of differently held members,3,0,0,3
+a BinaryExpression with a string and a value,3,0,2,3
+a BinaryExpression with a union of differently held members and a value,3,0,0,3
+a BinaryExpression with a boolean and a boolean,2,0,1,2
+a BinaryExpression with a boolean | undefined and a boolean,2,0,0,2
+a BinaryExpression with a number | undefined and a number | undefined,2,0,0,2
+a BinaryExpression with a union of differently held members and a string,2,0,0,2
+a BinaryExpression with a value and a number | undefined,2,0,0,2
+a BinaryExpression with a boolean and a number | undefined,1,0,0,1
+a BinaryExpression with a number and a union of differently held members,1,0,0,1
+a BinaryExpression with a number | undefined and a boolean | undefined,1,0,0,1
+a BinaryExpression with a number | undefined and a string,1,0,0,1
+a BinaryExpression with a string and a boolean | undefined,1,0,0,1
+a BinaryExpression with a union of differently held members and a boolean | undefined,1,0,0,1
+a field of type AnyBuildOrder | undefined,1,0,1,1
+a field of type false | string[] | undefined,1,0,1,1
+.hasTrailingComma on a value,0,0,1,0
+.length on a value,0,0,1,0
+?.[] on a value,0,0,6,0
+Array as a value outside equality or typeof (overloaded calls and static properties need their own representation),0,0,1,0
+JSON.stringify a union containing containers without runtime element metadata,0,0,1,0
+Object.assign on a shape not proven by a plain literal or its const binding,0,0,1,0
+Object.entries on a shape not proven by a plain literal or its const binding,0,0,3,0
+Object.keys on a shape not proven by a plain literal or its const binding,0,0,1,0
+RegExp with a nonconstant pattern,0,0,3,0
+a BinaryExpression with a union of differently held members and a union of differently held members,0,0,1,0
+a ClassExpression,0,0,1,0
+a ConditionalExpression as a statement,0,0,3,0
+a DeleteExpression as a statement,0,0,1,0
+a Map of CompilerOptionsValue,0,0,1,0
+a Map of HostFileInfo,0,0,2,0
+a Map of RedirectsCacheKey,0,0,1,0
+a Map of ResolvedConfigFilePath,0,0,1,0
+a Map of T,0,0,1,0
+a Map of VisitResult<ExportAssignment | LateVisibilityPaintedStatement | undefined>,0,0,2,0
+a Map of false | MutableFileSystemEntries,0,0,3,0
+a Map of string | number,0,0,1,0
+a Map whose key and value types aren't known,0,0,1,0
+a PostfixUnaryExpression,0,0,1,0
+a PrefixUnaryExpression on a number,0,0,3,0
+"a Set of ResolvedConfigFilePath (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",0,0,1,0
+a YieldExpression as a statement,0,0,1,0
+a base that isn't a declared class,0,0,1,0
+a call returning T,0,0,1,0
+a call to an Identifier,0,0,1,0
+a case that isn't a constant,0,0,1,0
+a computed field name,0,0,4,0
+a destructured name that isn't plain,0,0,3,0
+a destructured parameter beside a parameter with a default,0,0,1,0
+"a field of type ""boolean"" | ""list"" | ""listOrElement"" | ""number"" | ""object"" | ""string"" | Map<string, string | number>",0,0,4,0
+"a field of type ""boolean"" | ""list"" | ""number"" | ""object"" | ""string"" | Map<string, string | number>",0,0,1,0
+"a field of type ""boolean"" | ""number"" | ""object"" | ""string"" | Map<string, string | number>",0,0,1,0
+"a field of type ""circularity"" | boolean",0,0,1,0
+a field of type 0 | boolean | undefined,0,0,1,0
+a field of type EmitSignature | undefined,0,0,1,0
+a field of type boolean | (() => boolean),0,0,1,0
+a field of type boolean | (() => boolean) | undefined,0,0,2,0
+a field of type false | Type | undefined,0,0,1,0
+a field of type false | VersionPaths,0,0,1,0
+a field of type false | VersionPaths | undefined,0,0,1,0
+a field of type string | DiagnosticMessageChain,0,0,10,0
+a field of type string | false,0,0,1,0
+a field of type string | false | undefined,0,0,1,0
+a field of type string | number | boolean | DiagnosticMessage | undefined,0,0,2,0
+a for...of destructuring an object,0,0,4,0
+a function returning ((...args: A) => R) | undefined,0,0,1,0
+a function returning () => T,0,0,1,0
+a function returning (AssignmentExpression<EqualsToken> & { readonly left: GeneratedIdentifier; }) | undefined,0,0,1,0
+a function returning (ConstructorDeclaration & { body: Block; }) | undefined,0,0,1,0
+a function returning (arg: A) => T,0,0,1,0
+a function returning (arg: T) => boolean,0,0,1,0
+a function returning A,0,0,1,0
+a function returning AnyValidImportOrReExport,0,0,1,0
+a function returning AnyValidImportOrReExport | undefined,0,0,1,0
+a function returning BuildInvalidedProject<T>,0,0,1,0
+a function returning BuildInvalidedProject<T> | UpdateOutputFileStampsProject,0,0,1,0
+"a function returning CacheWithRedirects<K, V>",0,0,1,0
+a function returning CanonicalKey,0,0,1,0
+a function returning CapturedThis,0,0,1,0
+a function returning ClassExpression | ImmediatelyInvokedArrowFunction,0,0,1,0
+a function returning ClassNamedEvaluationHelperBlock,0,0,1,0
+a function returning ClassStaticBlockDeclaration | Decorator | PrivateIdentifierGetAccessorDeclaration | ... 5 more ... | undefined,0,0,1,0
+a function returning ClassThisAssignmentBlock,0,0,1,0
+a function returning CompilerOptionsValue,0,0,4,0
+a function returning Declaration & HasModifiers,0,0,1,0
+a function returning EvaluatorResult<T>,0,0,1,0
+a function returning ExpressionWithTypeArguments & { expression: Identifier | PropertyAccessEntityNameExpression; },0,0,1,0
+a function returning ExpressionWithTypeArguments & { readonly expression: Identifier | PropertyAccessEntityNameExpression; },0,0,1,0
+a function returning HasJSDoc | undefined,0,0,1,0
+a function returning ImmediatelyInvokedArrowFunction,0,0,1,0
+a function returning IncrementalBuildInfoFileId,0,0,1,0
+a function returning IncrementalBuildInfoFileIdListId,0,0,1,0
+a function returning InferenceContext | (T & undefined),0,0,1,0
+a function returning InvalidatedProject<T> | undefined,0,0,1,0
+a function returning MemberName | (Expression & (NumericLiteral | StringLiteralLike)),0,0,1,0
+a function returning MissingList<T>,0,0,1,0
+a function returning ModeAwareCache<T>,0,0,1,0
+a function returning ModeAwareCacheKey,0,0,2,0
+a function returning ModuleOrTypeReferenceResolutionCache<T>,0,0,1,0
+"a function returning MultiMap<K, V>",0,0,1,0
+a function returning NodeArray<NonNullable<T>> | undefined,0,0,1,0
+a function returning NodeArray<T>,0,0,3,0
+a function returning NonRelativeNameResolutionCache<T>,0,0,1,0
+a function returning PackageJson[K] | undefined,0,0,2,0
+a function returning Path,0,0,11,0
+a function returning Path | undefined,0,0,2,0
+a function returning PerDirectoryResolutionCache<T>,0,0,1,0
+a function returning Queue<T>,0,0,1,0
+a function returning R,0,0,1,0
+a function returning RedirectsCacheKey,0,0,1,0
+a function returning ResolvedConfigFileName,0,0,3,0
+a function returning ResolvedConfigFilePath,0,0,1,0
+a function returning ReusableDiagnosticMessageChain,0,0,1,0
+a function returning SolutionBuilder<T>,0,0,1,0
+a function returning SortedReadonlyArray<T>,0,0,2,0
+a function returning SyntheticSuper,0,0,1,0
+a function returning T,0,0,100,0
+a function returning T | EmptyStatement | undefined,0,0,1,0
+a function returning T | Identifier,0,0,1,0
+a function returning T | NumericLiteral | StringLiteral | BooleanLiteral,0,0,1,0
+a function returning T | StringLiteral,0,0,1,0
+a function returning T | readonly T[] | undefined,0,0,1,0
+a function returning T | undefined,0,0,75,0
+a function returning T1 & T2,0,0,1,0
+a function returning TEntry | undefined,0,0,1,0
+a function returning TOut,0,0,1,0
+a function returning TOut | undefined,0,0,1,0
+a function returning TPrivateEntry | undefined,0,0,1,0
+a function returning TResult,0,0,1,0
+a function returning T[][],0,0,1,0
+a function returning TransformationResult<T>,0,0,1,0
+a function returning TypeMapper | (T & undefined),0,0,1,0
+a function returning TypeOnlyAliasDeclaration | undefined,0,0,1,0
+a function returning U,0,0,4,0
+a function returning U | undefined,0,0,10,0
+a function returning U[],0,0,1,0
+a function returning U[] | undefined,0,0,1,0
+a function returning V,0,0,2,0
+a function returning V | undefined,0,0,1,0
+a function returning V[],0,0,1,0
+a function returning VisitResult<T>,0,0,1,0
+a function returning WatchCompilerHostOfConfigFile<T>,0,0,1,0
+a function returning WatchCompilerHostOfFilesAndCompilerOptions<T>,0,0,1,0
+"a function returning WatchFactory<X, Y>[T]",0,0,2,0
+a function returning __String,0,0,15,0
+a function returning __String | undefined,0,0,16,0
+a function returning any,0,0,14,0
+a function returning never,0,0,1,0
+a function returning object,0,0,3,0
+a function returning object | undefined,0,0,1,0
+a function returning readonly Resolution[],0,0,1,0
+a function returning readonly T[],0,0,2,0
+a function returning readonly T[] | undefined,0,0,4,0
+a function returning readonly U[],0,0,1,0
+a function returning readonly U[] | undefined,0,0,1,0
+a function returning string | object,0,0,1,0
+a function returning unknown,0,0,1,0
+"a function returning void | ""skip""",0,0,2,0
+a function returning void | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>,0,0,1,0
+a function returning void | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram> | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>,0,0,1,0
+a function returning void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>,0,0,1,0
+a function returning void | number | Symbol,0,0,1,0
+a function returning { [P in K as `${P}`]?: T[]; },0,0,1,0
+a function returning { modifiers: NodeArray<Modifier> | undefined; referencedName: Expression | undefined; name: PropertyName; initializersName: Identifier | undefined; descriptorName: Identifier | undefined; thisArg: Identifier | undefined; extraInitializersName?: never; } | ...,0,0,1,0
+a function returning { readonly min: number; readonly max: number; },0,0,1,0
+a function value taking CreateSourceFileOptions | ScriptTarget,0,0,1,0
+"a library method value outside a const alias, typed call/apply, or supported map callback (its receiver and callable ABI are not proven); wrap the call in an arrow",0,0,2,0
+a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables,0,0,5,0
+a non-accessor method in an accessor literal,0,0,1,0
+a parameter that isn't a plain name,0,0,1,0
+a rest array of (string | number | boolean | readonly string[] | SourceFile | undefined)[],0,0,2,0
+a rest array of DiagnosticArguments,0,0,46,0
+a rest array of T[],0,0,1,0
+a rest parameter other than an array,0,0,2,0
+a rest parameter outside a nongeneric named function,0,0,7,0
+a tagged template other than the intrinsic String.raw,0,0,2,0
+"a template interpolating an object, an array, a map, a function or undefined",0,0,2,0
+a tuple element of type string | number | boolean | readonly string[] | SourceFile | undefined,0,0,2,0
+a tuple literal leaving out an element of type ModuleSpecifierEnding,0,0,1,0
+"a value of type """" | ResolvedConfigFileName | undefined",0,0,1,0
+a value of type ((node: Node) => boolean) | undefined,0,0,8,0
+a value of type (AmbientModuleDeclaration & { name: StringLiteral; }) | undefined,0,0,1,0
+a value of type (AssignmentExpression<EqualsToken> & { readonly left: GeneratedIdentifier; }) | undefined,0,0,2,0
+a value of type (AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } & BinaryExpression) | (... & ... 1 more ... & BinaryExpression),0,0,1,0
+a value of type (ConstructorDeclaration & { body: Block; }) | undefined,0,0,4,0
+a value of type (EmitNode & { autoGenerate: AutoGenerateInfo; }) | (EmitNode & { autoGenerate: AutoGenerateInfo; }),0,0,4,0
+a value of type (ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }) | undefined,0,0,1,0
+a value of type (ModuleDeclaration & { name: StringLiteral; }) | undefined,0,0,1,0
+a value of type (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined,0,0,2,0
+a value of type (VariableDeclaration & { name: Identifier; }) | undefined,0,0,1,0
+"a value of type (element: Node) => ""quit"" | boolean",0,0,1,0
+a value of type (s: string) => void,0,0,1,0
+a value of type (value: T) => void,0,0,1,0
+a value of type A,0,0,1,0
+a value of type AccessExpression | RequireOrImportCall,0,0,1,0
+a value of type AccessorDeclaration & { readonly name: BigIntLiteral | ComputedPropertyName | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | StringLiteral; },0,0,1,0
+a value of type AliasDeclarationNode,0,0,1,0
+a value of type AnonymousFunctionDefinition,0,0,2,0
+a value of type ArrowFunction | BinaryExpression | BindingElement | Block | BreakStatement | CallSignatureDeclaration | ... 64 more ... | EndOfFileToken,0,0,1,0
+a value of type BindableAccessExpression,0,0,3,0
+a value of type BindableObjectDefinePropertyCall,0,0,3,0
+a value of type BindablePropertyAssignmentExpression | PropertyAccessExpression | LiteralLikeElementAccessExpression,0,0,1,0
+a value of type BindableStaticAccessExpression,0,0,1,0
+a value of type BindableStaticNameExpression,0,0,7,0
+a value of type BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; },0,0,1,0
+a value of type CallExpression | BindableStaticAccessExpression,0,0,1,0
+a value of type CanonicalKey,0,0,1,0
+a value of type Canonicalized,0,0,2,0
+a value of type Child,0,0,1,0
+a value of type Children | undefined,0,0,3,0
+a value of type ClassElement | ParameterPropertyDeclaration,0,0,1,0
+a value of type ClassNamedEvaluationHelperBlock,0,0,1,0
+a value of type ClassStaticBlockDeclaration | Decorator | PrivateIdentifierGetAccessorDeclaration | ... 5 more ... | undefined,0,0,1,0
+a value of type CompilerHost & ReadBuildProgramHost,0,0,2,0
+a value of type CompilerOptionsValue,0,0,4,0
+a value of type CustomTransformerFactory | TransformerFactory<T>,0,0,1,0
+a value of type EmitNode & { autoGenerate: AutoGenerateInfo; },0,0,2,0
+a value of type EndOfFileToken,0,0,3,0
+a value of type EntityNameExpression | (LeftHandSideExpression & BindableStaticNameExpression),0,0,1,0
+a value of type ExportAssignment & { readonly expression: WrappedExpression<AnonymousFunctionDefinition>; },0,0,1,0
+a value of type ExpressionWithTypeArguments & { expression: Identifier | PropertyAccessEntityNameExpression; },0,0,2,0
+a value of type HasJSDoc,0,0,5,0
+a value of type Identifier | PrivateIdentifier | __String,0,0,1,0
+a value of type Identifier | __String,0,0,3,0
+a value of type ImmediatelyInvokedArrowFunction,0,0,4,0
+a value of type IncludeTypeSpaceImports,0,0,1,0
+a value of type IncrementalBuildInfoFileId,0,0,2,0
+a value of type IncrementalBuildInfoFileIdListId,0,0,1,0
+a value of type IncrementalBuildInfoFilePendingEmit,0,0,1,0
+a value of type IncrementalMultiFileEmitBuildInfoFileInfo,0,0,1,0
+a value of type InitializedVariableDeclaration,0,0,3,0
+a value of type JSDocImportTag | CanHaveModuleSpecifier,0,0,1,0
+a value of type K,0,0,8,0
+a value of type K | undefined,0,0,2,0
+"a value of type Map<Path, ModeAwareCache<T>> | undefined",0,0,1,0
+"a value of type Map<string, WildcardDirectoryWatcher<T>>",0,0,1,0
+"a value of type Map<string, [K, V[]]>",0,0,1,0
+a value of type MapLike<T>,0,0,1,0
+a value of type ModeAwareCacheKey,0,0,1,0
+a value of type NodeArray<T>,0,0,1,0
+a value of type NonNullable<K>,0,0,1,0
+a value of type NonNullable<U>,0,0,1,0
+a value of type ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; },0,0,1,0
+a value of type ParameterPropertyDeclaration,0,0,2,0
+a value of type PathPathComponents,0,0,1,0
+a value of type PrimitiveLiteral,0,0,1,0
+"a value of type PrivateEnvironment<TData, TEntry>",0,0,1,0
+a value of type PrivateIdentifierInExpression,0,0,1,0
+a value of type PropertyAccessExpression | LiteralLikeElementAccessExpression,0,0,1,0
+a value of type PropertyAccessExpression | SyntheticSuper,0,0,1,0
+a value of type PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; },0,0,1,0
+a value of type PropertyDeclaration & { readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; },0,0,1,0
+a value of type PropertyDeclaration | ParameterPropertyDeclaration,0,0,1,0
+a value of type RedirectsCacheKey,0,0,2,0
+a value of type RedirectsCacheKey | undefined,0,0,1,0
+a value of type ReferencedFile & { kind: FileIncludeKind.LibReferenceDirective; },0,0,1,0
+a value of type ReplaceableIndexedAccessType,0,0,1,0
+a value of type RequireOrImportCall,0,0,1,0
+a value of type ResolvedConfigFileName,0,0,12,0
+a value of type ResolvedConfigFileName | undefined,0,0,1,0
+a value of type ResolvedConfigFilePath,0,0,18,0
+a value of type ResolvedModuleWithFailedLookupLocations & ResolvedTypeReferenceDirectiveWithFailedLookupLocations,0,0,1,0
+a value of type Set<K>,0,0,1,0
+a value of type ShorthandPropertyAssignment & { readonly objectAssignmentInitializer: WrappedExpression<AnonymousFunctionDefinition>; },0,0,1,0
+a value of type SolutionBuilderState<T>,0,0,21,0
+a value of type SortedArray<T>,0,0,1,0
+a value of type Source,0,0,1,0
+a value of type SourceFile,0,0,2,0
+a value of type SourceFileOrString,0,0,1,0
+a value of type T | Program,0,0,4,0
+a value of type T | T[] | readonly T[] | undefined,0,0,1,0
+a value of type T | null | undefined,0,0,1,0
+a value of type T | undefined,0,0,12,0
+a value of type T1,0,0,1,0
+a value of type TData,0,0,1,0
+a value of type TEntry,0,0,1,0
+a value of type TKind,0,0,1,0
+a value of type TKind | Token<TKind>,0,0,1,0
+a value of type TNode,0,0,1,0
+a value of type TOuterState,0,0,6,0
+"a value of type T[""kind""]",0,0,18,0
+a value of type ThisCapturingVariableDeclaration,0,0,2,0
+a value of type TransformedSuperCall,0,0,1,0
+a value of type TypeNode & LiteralTypeNode & { readonly literal: StringLiteral; },0,0,3,0
+a value of type TypeParameterDeclaration & { parent: JSDocTemplateTag; },0,0,1,0
+a value of type U,0,0,2,0
+a value of type U | readonly U[] | undefined,0,0,2,0
+a value of type U | undefined,0,0,2,0
+a value of type UnaryExpression & (BigIntLiteral | NumericLiteral),0,0,1,0
+a value of type UnaryExpression & NumericLiteral,0,0,1,0
+a value of type V,0,0,1,0
+a value of type V | undefined,0,0,2,0
+a value of type VariableDeclaration & { name: Identifier; },0,0,1,0
+a value of type VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; },0,0,1,0
+a value of type VariableDeclarationList & { _usingBrand: void; },0,0,1,0
+a value of type WatchCompilerHostOfFilesAndCompilerOptionsOrConfigFile<T>,0,0,1,0
+a value of type WatchFactoryHost & { trace?(s: string): void; },0,0,1,0
+a value of type WrappedExpression<AnonymousFunctionDefinition>,0,0,3,0
+a value of type X,0,0,3,0
+a value of type __String & string,0,0,1,0
+a value of type boolean | V | undefined,0,0,1,0
+a value of type false | RegExpExecArray | null,0,0,2,0
+a value of type false | TypeOnlyAliasDeclaration | undefined,0,0,3,0
+a value of type object,0,0,16,0
+a value of type readonly Child[],0,0,1,0
+a value of type readonly IncrementalBundleEmitBuildInfoFileInfo[] | readonly IncrementalMultiFileEmitBuildInfoFileInfo[] where an array goes,0,0,1,0
+a value of type readonly K[],0,0,1,0
+a value of type readonly T[],0,0,5,0
+a value of type readonly T[] | undefined,0,0,8,0
+a value of type string | (void & { __escapedIdentifier: void; }) | (string & { __escapedIdentifier: void; }),0,0,4,0
+a value of type string | null,0,0,1,0
+a value of type string | null | undefined,0,0,5,0
+a value of type string | object | undefined,0,0,1,0
+a value of type undefined,0,0,1,0
+a value of type unknown,0,0,20,0
+"a value of type { forEach: (callbackfn: (value: T, key: K, map: Map<K, T>) => void, thisArg?: any) => void; clear: () => void; }",0,0,1,0
+an array of CanonicalKey,0,0,1,0
+an array of Child,0,0,2,0
+an array of NonNullable<T>,0,0,3,0
+an array of Path,0,0,2,0
+an array of ResolvedConfigFileName,0,0,5,0
+an array of TState,0,0,1,0
+an array of V,0,0,2,0
+an array of boolean | undefined,0,0,6,0
+an array of object,0,0,1,0
+an array of undefined,0,0,3,0
+an array of unknown,0,0,1,0
+an overloaded function as a value,0,0,5,0
+"apply without a dense argument literal (length, presence and argument representations must be proven)",0,0,1,0
+destructuring a string,0,0,1,0
+destructuring a value,0,0,2,0
+for...in over an array (holes and own enumerable properties are not represented; use for...of for elements),0,0,1,0
+"for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly)",0,0,10,0
+incrementing a NonNullExpression,0,0,1,0
+incrementing an Identifier,0,0,2,0
+"indexOf on a tuple (a tuple is held as an object, not an array, so far; write it as an array where it's made)",0,0,2,0
+lastIndexOf with these arguments,0,0,3,0
+"new Map from something that isn't [key, value] pairs",0,0,1,0
+new a ParenthesizedExpression,0,0,8,0
+overload 1 of arrayToMap with additional implementation type parameters,0,0,1,0
+overload 1 of arrayToMultiMap with additional implementation type parameters,0,0,1,0
+overload 1 of arrayToNumericMap with additional implementation type parameters,0,0,1,0
+overload 1 of createBinaryExpressionTrampoline with additional implementation type parameters,0,0,1,0
+overload 1 of createToken with additional implementation type parameters,0,0,1,0
+overload 1 of forEachAncestorDirectory with additional implementation type parameters,0,0,1,0
+overload 1 of forEachLeadingCommentRange with additional implementation type parameters,0,0,1,0
+overload 1 of forEachTrailingCommentRange with additional implementation type parameters,0,0,1,0
+overload 1 of getOriginalNode with additional implementation type parameters,0,0,1,0
+overload 1 of mutateMap with additional implementation type parameters,0,0,1,0
+overload 1 of mutateMapSkippingNewValues with additional implementation type parameters,0,0,1,0
+overload 1 of resolveTypeReferenceDirectiveNamesReusingOldState with additional implementation type parameters,0,0,1,0
+overload 1 of setSerializerContextAnd with additional implementation type parameters,0,0,1,0
+overload 1 of sortAndDeduplicate with additional implementation type parameters,0,0,1,0
+overload 2 of arrayFrom with additional implementation type parameters,0,0,1,0
+overload 3 of group with additional implementation type parameters,0,0,1,0
+"push on a tuple (a tuple is held as an object, not an array, so far; write it as an array where it's made)",0,0,1,0
+reading add,0,0,1,0
+reading byteOrderMarkIndicator,0,0,1,0
+reading compilerHost,0,0,1,0
+reading createNodeArray,0,0,1,0
+reading diagnostics,0,0,1,0
+reading encodeURI,0,0,3,0
+reading errorInfo,0,0,1,0
+reading factory,0,0,2,0
+reading file,0,0,1,0
+reading fileSystemEntryExists,0,0,1,0
+reading getModifiedTime,0,0,2,0
+reading isFinite,0,0,2,0
+reading pollScheduled,0,0,1,0
+reading printList,0,0,1,0
+reading setReadFileCache,0,0,1,0
+reading timerToInvalidateFailedLookupResolutions,0,0,1,0
+reading timerToUpdateChildWatches,0,0,2,0
+reading timerToUpdateProgram,0,0,1,0
+reading tracker,0,0,1,0
+reading ts,0,0,6,0
+replacing a represented method at runtime,0,0,17,0
+slice with an index that isn't a number,0,0,1,0
+spreading an array of other elements,0,0,2,0
+storing Path | undefined in a field,0,0,1,0
+storing any in a field,0,0,1,0
+storing string | number in a field,0,0,1,0
+typed array element type Uint16Array,0,0,1,0

@@ -1,0 +1,5 @@
+panic: measurement loader exposed an output program
+
+goroutine 1 [running]:
+main.main()
+	/tmp/stage3-0730-before/stage3/census/latent/tool/main.go:59 +0xc2e

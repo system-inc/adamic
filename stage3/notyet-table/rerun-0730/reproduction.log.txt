@@ -1,0 +1,87 @@
+{
+  "before-to-after": {
+    "totals": {
+      "before": 10083,
+      "after": 6703,
+      "retired": 3961,
+      "newly_exposed": 581,
+      "surviving": 6122,
+      "net_retirement": 3380,
+      "newly_exposed_at_sites_with_retired_signature": 207,
+      "unit_eligibility_changes": 0
+    },
+    "top_newly_exposed": [
+      {
+        "reason": "passing union of differently held members to a function value",
+        "retired": 0,
+        "newly_exposed": 154,
+        "surviving": 2,
+        "net_retirement": -154
+      },
+      {
+        "reason": "an ElementAccessExpression",
+        "retired": 4,
+        "newly_exposed": 65,
+        "surviving": 24,
+        "net_retirement": -61
+      },
+      {
+        "reason": "assigning to an Identifier",
+        "retired": 23,
+        "newly_exposed": 30,
+        "surviving": 142,
+        "net_retirement": -7
+      },
+      {
+        "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+        "retired": 0,
+        "newly_exposed": 21,
+        "surviving": 184,
+        "net_retirement": -21
+      },
+      {
+        "reason": "a call through ?. (an optional call)",
+        "retired": 0,
+        "newly_exposed": 20,
+        "surviving": 125,
+        "net_retirement": -20
+      },
+      {
+        "reason": "a function value returning union of differently held members",
+        "retired": 0,
+        "newly_exposed": 20,
+        "surviving": 25,
+        "net_retirement": -20
+      },
+      {
+        "reason": "an array of T",
+        "retired": 0,
+        "newly_exposed": 20,
+        "surviving": 23,
+        "net_retirement": -20
+      },
+      {
+        "reason": "an array of never",
+        "retired": 0,
+        "newly_exposed": 18,
+        "surviving": 72,
+        "net_retirement": -18
+      },
+      {
+        "reason": "a value of type __String",
+        "retired": 0,
+        "newly_exposed": 17,
+        "surviving": 170,
+        "net_retirement": -17
+      },
+      {
+        "reason": "for...of over an object",
+        "retired": 0,
+        "newly_exposed": 16,
+        "surviving": 108,
+        "net_retirement": -16
+      }
+    ]
+  }
+}
+PASS: every CSV, root summary, unit-change ledger and comparison JSON reproduced byte-for-byte from saved gzip outputs

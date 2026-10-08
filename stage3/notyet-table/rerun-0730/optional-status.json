@@ -1,0 +1,33 @@
+{
+  "status": "not measured; optional merge attempt aborted",
+  "failed_branch": "codex/notyet-predicates",
+  "failed_sha": "0ac2a1f5afdf11fc688eebace83cf39857271e8f",
+  "conflicts": [
+    "internal/flow/flow_test.go",
+    "internal/fresh/fresh.go",
+    "internal/fresh/library_language.go",
+    "internal/ir/ir.go",
+    "internal/javascript/javascript.go",
+    "internal/lower/cast_proof.go",
+    "internal/lower/census_small.go",
+    "internal/lower/class.go",
+    "internal/lower/collections.go",
+    "internal/lower/expression.go",
+    "internal/lower/library_for_in.go",
+    "internal/lower/locals.go",
+    "internal/lower/lower_test.go",
+    "internal/lower/object.go",
+    "internal/lower/refusals.go",
+    "internal/lower/regexp.go",
+    "internal/native/emit_expressions.go",
+    "internal/native/emit_functions.go",
+    "internal/native/emit_locals.go",
+    "internal/native/emit_objects.go",
+    "internal/native/emit_statements.go",
+    "internal/native/library_array.go",
+    "internal/native/reuse.go",
+    "internal/oracle/counts.md"
+  ],
+  "completed_partial_head": "990fbf173e957d8cf0eff04fe410f80f4a8e6aeb",
+  "reason": "Predicates tip brings overlapping view-contract, closure, field-layout and backend changes into 24 files. No all-tip result claimed; production integration and its semantics require separate work."
+}

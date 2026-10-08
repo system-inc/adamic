@@ -1,0 +1,12 @@
+PASS: exact 81-file manifest, identical checker metadata, unchanged unit eligibility; independent SQL validates every root signature, root/echo totals, reason group, and net retirement
+swap retired and exposed mutant caught: SQL membership flags
+drop surviving signature mutant caught: complete union of observed SQL roots
+count rollback echo as root mutant caught: SQL membership flags
+inflate net retirement mutant caught: net difference
+change frozen hash mutant caught: ('source hash', 'src/compiler/_namespaces/ts.moduleSpecifiers.ts')
+drop source result mutant caught: exact frozen source set
+remove governing root mutant caught: actual root exists in the same attempt
+remove declaration symbol mutant caught: declaration symbol provenance
+change checker diagnostics mutant caught: identical checker metadata
+change unit eligibility mutant caught: unchanged unit eligibility
+PASS: both saved compressed outputs reproduce their raw SHA-256 and byte counts; all ten accounting and provenance-structure mutants caught

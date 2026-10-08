@@ -1,0 +1,3 @@
+PASS: baseline full entry census accepts the witness for measurement with both guards enabled
+IR guard mutant caught: measurement returned usable IR
+loader guard mutant caught: measurement loader exposed an output program

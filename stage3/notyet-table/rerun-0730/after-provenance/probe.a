@@ -1,0 +1,10 @@
+declare function external(): number;
+export function rollback(): void {
+    const poison: number = external();
+    const secondary: number = poison;
+    const holder = { poison };
+    if (poison) { }
+    if (secondary) { }
+    { const poison: number = 7; if (poison) { } }
+}
+export function clean(poison: number): void { if (poison) { } }

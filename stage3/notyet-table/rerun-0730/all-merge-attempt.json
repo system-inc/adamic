@@ -1,0 +1,124 @@
+[
+  {
+    "branch": "codex/notyet-case-declaration",
+    "sha": "94c137835daf9c15361091089e77b322018428eb",
+    "exit": 1,
+    "resolution": [
+      "internal/ir/ir.go: retain ExpressionAssigned and Ready",
+      "internal/oracle/counts.md: retain both distinct fixture row sets"
+    ]
+  },
+  {
+    "branch": "codex/notyet-class-construction",
+    "sha": "6353ee98cc9a6f9ffb39b8fdea1bf4d67e0455f0",
+    "exit": 0
+  },
+  {
+    "branch": "codex/notyet-class-set-property",
+    "sha": "863babede22a20e709025517e8d29b08fcd399e6",
+    "exit": 1,
+    "resolution": [
+      "internal/oracle/counts.md: retain both distinct fixture row sets"
+    ]
+  },
+  {
+    "branch": "codex/notyet-destructuring",
+    "sha": "2fc6f0ee87f6c4e87d571bb7d49398c7ded7eefc",
+    "exit": 0
+  },
+  {
+    "branch": "codex/notyet-element-access",
+    "sha": "1bd1de3b8d74ded8a2730703bacc09b2ea6d49dc",
+    "exit": 0
+  },
+  {
+    "branch": "codex/notyet-element-type",
+    "sha": "abd8fd746e8f1f3701da3e3f56ca52e157f7f0c0",
+    "exit": 1,
+    "resolution": [
+      "internal/oracle/counts.md: retain both disjoint fixture row sets"
+    ]
+  },
+  {
+    "branch": "codex/notyet-for-in",
+    "sha": "115302f2e5fdbc2d966d9cd00e0eecbf1b4f3254",
+    "exit": 0
+  },
+  {
+    "branch": "codex/notyet-for-of-object",
+    "sha": "c59c040b8416d393a0f3638fa356403fba717c73",
+    "exit": 1,
+    "resolution": [
+      "internal/oracle/counts.md: retain both disjoint fixture row sets"
+    ]
+  },
+  {
+    "branch": "codex/notyet-function-values",
+    "sha": "463f60c4d496425fba09a61b96a9082065a33f8c",
+    "exit": 1,
+    "resolution": [
+      "internal/oracle/counts.md: retain both disjoint fixture row sets"
+    ]
+  },
+  {
+    "branch": "codex/notyet-generic-returns-t",
+    "sha": "d61b40d3cb24022a72b6730d3d02052d7adeca37",
+    "exit": 1,
+    "resolution": [
+      "internal/oracle/counts.md: retain both disjoint fixture row sets"
+    ]
+  },
+  {
+    "branch": "codex/notyet-library-small",
+    "sha": "58b6bc730ac83cb3211fdf27fd3ed181e16fcd26",
+    "exit": 1,
+    "resolution": [
+      "internal/oracle/counts.md: retain both disjoint fixture row sets"
+    ]
+  },
+  {
+    "branch": "codex/notyet-new-expression",
+    "sha": "6b0d705e91d13e99135883f07a3379089a794270",
+    "exit": 0
+  },
+  {
+    "branch": "codex/notyet-object-property",
+    "sha": "fbf3dcef194f04511a309f7485a7ffb09723dd47",
+    "exit": 1,
+    "resolution": [
+      "internal/lower/expression.go: retain classInterfaceValue first; when unhandled retain optionalPropertyChain before value",
+      "internal/oracle/counts.md: retain disjoint fixture rows"
+    ]
+  },
+  {
+    "branch": "codex/notyet-object-small",
+    "sha": "b33cb978103c3e333b09d9691036be3cb817cad5",
+    "exit": 1,
+    "resolution": [
+      "internal/oracle/counts.md: retain both disjoint fixture row sets",
+      "internal/javascript/javascript.go: retain separate unionFieldKind and unionHasRepresentation cases",
+      "internal/lower/census_small.go: incoming comment",
+      "internal/native/emit_expressions.go: generalized objectUnionProperty handles scalar and reference literal field layouts",
+      "internal/native/emit_objects.go: incoming key includes ownership bits and scalar field types"
+    ]
+  },
+  {
+    "branch": "codex/notyet-optional-call",
+    "sha": "8b69eda98c6d3474c9c3131a8eab34bc40bfd2fb",
+    "exit": 1,
+    "resolution": [
+      "internal/oracle/counts.md: retain both disjoint fixture row sets",
+      "internal/javascript/javascript.go: static method map lookup retained with both optional null guards"
+    ]
+  },
+  {
+    "branch": "codex/notyet-overloads",
+    "sha": "46ac7bc77ea33c5ff48899402c846e2ea3c2990b",
+    "exit": 0
+  },
+  {
+    "branch": "codex/notyet-predicates",
+    "sha": "0ac2a1f5afdf11fc688eebace83cf39857271e8f",
+    "exit": 1
+  }
+]

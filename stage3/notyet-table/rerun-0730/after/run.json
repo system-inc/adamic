@@ -1,0 +1,30 @@
+{
+  "compiler_sha": "0e5661e4243af95ae3247d066de14ccb2b582a94",
+  "cohere_sha": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "typescript_sha": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "census_exit": 0,
+  "build_exit": 0,
+  "raw_jsonl_sha256": "8c251bab65ddd5f44d6af90d44e690f2e58c528b5feec7e63cdf5fff672af650",
+  "raw_jsonl_bytes": 44200986,
+  "output_last_modified_utc": "2026-10-08T10:52:13.383902+00:00",
+  "overlay_sha256": {
+    "overlay.json": "660b2e9804293a891192126ce845527092da8117d57ade64eaa1fb029ff3aaf3",
+    "stage3_census_latent_replay_worker_main.go": "d86ce314147e65c3fd081a3509974b8d4056b39b86c244fe47579d7ab7e03b34",
+    "stage3_census_latent_tool_main.go": "15f76e221a44287a392e47ca3791aff8b10aeb3b9861878e84e83b4f73c936b3",
+    "internal_lower_latent_hook.go": "0ad2e111d06d393eec82531c66c7bb0d7987167bcff73d2756843852f7042391",
+    "internal_lower_locals.go": "cf3decba1289a758d9ff1ca10110a8e932419a418412a74334774e31b1077d5b",
+    "internal_lower_functions.go": "72b3fd63acd90dd72a0d698ffa98a004d0cb7be7d7b46744b2d17580b3f3b4e8",
+    "internal_lower_object.go": "5a16b67ce33d6c2d7fa808f95a070ebbaa8ad571bd80eb49286f465a5d9ad945",
+    "internal_lower_expression.go": "708b51f2c1d84607cb5d08fdb85074ebecaab747eaf675e9ab3a076be9ceb691",
+    "internal_load_latent_hook.go": "34747889ceef90621e27315daef974795840ff5a22cd17b33fe72d5caa50fbd6",
+    "internal_load_load.go": "dbdfdef6a94370e29afc3374ffce1099fa5b2b332c4a35b646407fb07f1f5160",
+    "internal_lower_refusals.go": "dd855d38f27e965bdef1023e723ad2507bc238e3b01718f47bf8cc9310bbad8c",
+    "internal_lower_latent_provenance.go": "845793fcbcf46911a405112904e9d8ac9ac456944662460c9287fbeb1726610b",
+    "internal_lower_latent_replay.go": "95bed77aa80a1938670d50bf2165ed632fe714b70217546a19462d09424bde9a",
+    "internal_lower_latent_units.go": "fc2bf2d6ebfe1bd5ffcd41a4d026185799f7fed4c759a1b5ddd1a71c319acea5",
+    "internal_lower_latent_full.go": "7b4c732cdc1b5b263d0cc2b281b2cb51ee10457b9b449914ac78cba36cd1fbde",
+    "internal_lower_statements.go": "fbf6427f87d795d730d06b97bf81cae41f96b120fe121f041fd75f344d15f179",
+    "internal_lower_latent_state.go": "d67f323be379e79a00449f89bb8835b0a9fe68be220adc7913519b90eccb0667",
+    "internal_lower_lower.go": "dc8315465a6f5d75d0f43171d1915beb6b8294993ea1538f539473e40e3b7bff"
+  }
+}

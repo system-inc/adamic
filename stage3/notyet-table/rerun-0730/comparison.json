@@ -1,0 +1,86 @@
+{
+  "before-to-after": {
+    "top_newly_exposed": [
+      {
+        "net_retirement": -154,
+        "newly_exposed": 154,
+        "reason": "passing union of differently held members to a function value",
+        "retired": 0,
+        "surviving": 2
+      },
+      {
+        "net_retirement": -61,
+        "newly_exposed": 65,
+        "reason": "an ElementAccessExpression",
+        "retired": 4,
+        "surviving": 24
+      },
+      {
+        "net_retirement": -7,
+        "newly_exposed": 30,
+        "reason": "assigning to an Identifier",
+        "retired": 23,
+        "surviving": 142
+      },
+      {
+        "net_retirement": -21,
+        "newly_exposed": 21,
+        "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+        "retired": 0,
+        "surviving": 184
+      },
+      {
+        "net_retirement": -20,
+        "newly_exposed": 20,
+        "reason": "a call through ?. (an optional call)",
+        "retired": 0,
+        "surviving": 125
+      },
+      {
+        "net_retirement": -20,
+        "newly_exposed": 20,
+        "reason": "a function value returning union of differently held members",
+        "retired": 0,
+        "surviving": 25
+      },
+      {
+        "net_retirement": -20,
+        "newly_exposed": 20,
+        "reason": "an array of T",
+        "retired": 0,
+        "surviving": 23
+      },
+      {
+        "net_retirement": -18,
+        "newly_exposed": 18,
+        "reason": "an array of never",
+        "retired": 0,
+        "surviving": 72
+      },
+      {
+        "net_retirement": -17,
+        "newly_exposed": 17,
+        "reason": "a value of type __String",
+        "retired": 0,
+        "surviving": 170
+      },
+      {
+        "net_retirement": -16,
+        "newly_exposed": 16,
+        "reason": "for...of over an object",
+        "retired": 0,
+        "surviving": 108
+      }
+    ],
+    "totals": {
+      "after": 6703,
+      "before": 10083,
+      "net_retirement": 3380,
+      "newly_exposed": 581,
+      "newly_exposed_at_sites_with_retired_signature": 207,
+      "retired": 3961,
+      "surviving": 6122,
+      "unit_eligibility_changes": 0
+    }
+  }
+}
