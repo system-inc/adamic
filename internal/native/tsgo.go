@@ -3,7 +3,6 @@ package native
 import (
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 
@@ -123,7 +122,7 @@ func BuildTSGo(source, output, archive string, options Options) error {
 	arguments := append(LinkFlags(options), "-DADAMIC_TSGO", "-o", output)
 	arguments = append(arguments, units...)
 	arguments = append(arguments, archive, "-lm", "-lpthread", "-ldl")
-	combined, err := exec.Command("clang", arguments...).CombinedOutput()
+	combined, err := clangCommand("clang", arguments...).CombinedOutput()
 	if err != nil {
 		return fmt.Errorf("native: clang with checker archive failed: %w\n%s", err, combined)
 	}

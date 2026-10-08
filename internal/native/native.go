@@ -10,7 +10,6 @@ import (
 	"embed"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	goruntime "runtime"
 	"strings"
@@ -267,7 +266,7 @@ func Build(source string, output string, options Options) error {
 	if options.Target == "wasm32-wasi" {
 		arguments = append(arguments, WASILinkFlags(options)...)
 	}
-	command := exec.Command(compilerName(options), arguments...)
+	command := clangCommand(compilerName(options), arguments...)
 	if shippedRelease(options) && (options.Profile != "" || options.ProfileGenerate) {
 		// Keep ThinLTO source identities stable across cold caches and temp directories.
 		command.Dir = directory

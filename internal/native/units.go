@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"testing"
 )
 
 // A split is a post-processing prototype of C's output. It deliberately understands only the
@@ -170,21 +171,13 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 		if declaration.name == ";" && limit >= 3 {
 			declaration.name = declaration.tokens[limit-2].text
 		}
-		// Parallel runtime entry points are external ABI declarations, not generated
-		// definitions. Keep their names and linkage in the common header.
-		if declaration.body < 0 && declaration.initializer < 0 && declaration.tokens[0].text != "static" &&
-			(declaration.name == "adamic_parallel_map" || declaration.name == "adamic_parallel_map_move") {
-			for _, token := range declaration.tokens {
-				if token.text == "(" {
-					declaration.name = ""
-					declarations = append(declarations, declaration)
-					begin = end
-					break
-				}
-			}
-			if declaration.name == "" {
-				continue
-			}
+		// Non-static prototypes without a body or initializer are external declarations.
+		// Preserve their ABI names and linkage in the common header.
+		if declaration.externalPrototype() {
+			declaration.name = ""
+			declarations = append(declarations, declaration)
+			begin = end
+			continue
 		}
 		if declaration.name != "main" && (!cName.MatchString(declaration.name) || declaration.tokens[0].text != "static") {
 			return nil, fmt.Errorf("native: split: unsupported declaration near %q", declaration.tokens[0].text)
@@ -193,6 +186,26 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 		begin = end
 	}
 	return declarations, nil
+}
+
+// externalPrototype recognizes direct function declarations, excluding storage and definitions.
+func (declaration cDeclaration) externalPrototype() bool {
+	if declaration.body >= 0 || declaration.initializer >= 0 {
+		return false
+	}
+	tokens := declaration.tokens
+	if len(tokens) < 4 || tokens[len(tokens)-2].text != ")" {
+		return false
+	}
+	for index, token := range tokens {
+		if token.text == "static" {
+			return false
+		}
+		if token.text == "(" {
+			return index > 0 && index+1 < len(tokens) && cName.MatchString(tokens[index-1].text) && tokens[index+1].text != "*"
+		}
+	}
+	return false
 }
 
 // splitC keeps module ownership and declaration dependencies independent of encounter order.
@@ -224,7 +237,7 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 			return "", err
 		}
 	}
-	preprocess := exec.Command(compiler, append(append([]string{}, flags...), "-E", unit.name)...)
+	preprocess := clangCommand(compiler, append(append([]string{}, flags...), "-E", unit.name)...)
 	preprocess.Dir = temporary
 	var diagnostic strings.Builder
 	preprocess.Stderr = &diagnostic
@@ -258,7 +271,7 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 	// Clang emits GNU line-marker syntax even for C11. Accept only that generated syntax;
 	// keep all other pedantic diagnostics, including extensions outside system headers.
 	arguments := append(append([]string{}, compileFlags...), "-Wno-gnu-line-marker", "-fdebug-prefix-map="+temporary+"=/adamic-units", "-x", "cpp-output", "-c", unit.name, "-o", "unit.o")
-	command := exec.Command(compiler, arguments...)
+	command := clangCommand(compiler, arguments...)
 	command.Dir = temporary
 	if output, err := command.CombinedOutput(); err != nil {
 		return "", fmt.Errorf("native: compiling unit %s: %w\n%s", unit.name, err, output)
@@ -314,7 +327,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	if err != nil {
 		return err
 	}
-	version, err := exec.Command(compiler, "--version").CombinedOutput()
+	version, err := clangCommand(compiler, "--version").CombinedOutput()
 	if err != nil {
 		return err
 	}
@@ -370,7 +383,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	arguments = append(arguments, RuntimeLinkFlags(library)...)
 	arguments = append(arguments, extraLinkFlags...)
 	arguments = append(arguments, "-lm")
-	if output, err := exec.Command(compiler, arguments...).CombinedOutput(); err != nil {
+	if output, err := clangCommand(compiler, arguments...).CombinedOutput(); err != nil {
 		return fmt.Errorf("native: linking units: %w\n%s", err, output)
 	}
 	return nil
@@ -388,7 +401,11 @@ func splitJobs(options Options) (int, error) {
 		}
 	}
 	if jobs == 0 {
-		jobs = goruntime.NumCPU()
+		if testing.Testing() {
+			jobs = 1
+		} else {
+			jobs = goruntime.NumCPU()
+		}
 	}
 	if jobs < 1 {
 		return 0, fmt.Errorf("native: split jobs must be positive")
