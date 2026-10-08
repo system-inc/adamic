@@ -27,13 +27,15 @@
   {
     "key": "printWidth",
     "value": "9007199254740991",
-    "checkedRefusal": false
+    "checkedRefusal": false,
+    "name": "positive safe boundary accepted"
   },
   {
     "key": "printWidth",
     "value": "9007199254740992",
     "checkedRefusal": true,
-    "goDivergenceTask": "#hnm8t56"
+    "goDivergenceTask": "#hnm8t56",
+    "name": "positive 2^53 refused"
   },
   {
     "key": "printWidth",
@@ -44,13 +46,15 @@
   {
     "key": "printWidth",
     "value": "-9007199254740991",
-    "checkedRefusal": false
+    "checkedRefusal": false,
+    "name": "negative safe boundary accepted"
   },
   {
     "key": "printWidth",
     "value": "-9007199254740992",
     "checkedRefusal": true,
-    "goDivergenceTask": "#hnm8t56"
+    "goDivergenceTask": "#hnm8t56",
+    "name": "negative 2^53 refused"
   },
   {
     "key": "printWidth",
@@ -123,13 +127,15 @@
   {
     "key": "tabWidth",
     "value": "9007199254740991",
-    "checkedRefusal": false
+    "checkedRefusal": false,
+    "name": "positive safe boundary accepted"
   },
   {
     "key": "tabWidth",
     "value": "9007199254740992",
     "checkedRefusal": true,
-    "goDivergenceTask": "#hnm8t56"
+    "goDivergenceTask": "#hnm8t56",
+    "name": "positive 2^53 refused"
   },
   {
     "key": "tabWidth",
@@ -140,13 +146,15 @@
   {
     "key": "tabWidth",
     "value": "-9007199254740991",
-    "checkedRefusal": false
+    "checkedRefusal": false,
+    "name": "negative safe boundary accepted"
   },
   {
     "key": "tabWidth",
     "value": "-9007199254740992",
     "checkedRefusal": true,
-    "goDivergenceTask": "#hnm8t56"
+    "goDivergenceTask": "#hnm8t56",
+    "name": "negative 2^53 refused"
   },
   {
     "key": "tabWidth",

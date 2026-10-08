@@ -440,7 +440,10 @@ No duplicate message or issue was sent.
 `settings/resolve.a` checks the raw integer spelling after Go's integer/type
 validation and **before** Number conversion. The implemented safe-integer range
 is **[-9007199254740991, 9007199254740991]**, following the ruling's explicit
-JavaScript safe-integer wording: exactly ±2^53 is also refused. The source token
+JavaScript safe-integer wording: exactly ±2^53 is also refused. The user explicitly
+confirmed this boundary: ±(2^53 - 1) accepted, ±2^53 refused, with the same
+boundary communicated to @system_cohere for **#hnm8t56**. The four signed
+boundary cases are named fixtures for each of printWidth and tabWidth. The source token
 is retained only by the JSON reader and diagnostic, not carried as an option.
 An error has this form:
 
