@@ -1,0 +1,41 @@
+[
+  {
+    "package": "stage1/cohere/markdowninline",
+    "exit": 0,
+    "seconds": 611.361,
+    "counts": {
+      "pass": 5,
+      "fail": 0,
+      "skip": 0
+    },
+    "skips": [],
+    "load_before": "0.00 0.68 1.34 1/415 128347",
+    "load_after": "1.18 1.07 1.21 1/416 138453"
+  },
+  {
+    "package": "stage1/cohere/markdownblocks",
+    "exit": 1,
+    "seconds": 1959.117,
+    "counts": {
+      "pass": 104,
+      "fail": 1,
+      "skip": 0
+    },
+    "skips": [],
+    "load_before": "1.18 1.07 1.21 1/416 138453",
+    "load_after": "2.00 1.84 1.98 2/504 151007"
+  },
+  {
+    "package": "stage1/cohere/typeaware",
+    "exit": 0,
+    "seconds": 601.317,
+    "counts": {
+      "pass": 18,
+      "fail": 0,
+      "skip": 0
+    },
+    "skips": [],
+    "load_before": "2.00 1.84 1.98 2/504 151007",
+    "load_after": "1.06 1.27 1.63 1/471 158787"
+  }
+]
