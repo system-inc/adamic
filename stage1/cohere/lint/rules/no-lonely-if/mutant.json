@@ -1,0 +1,6 @@
+{
+  "file": "rule.a",
+  "name": "BOM_is_not_whitespace",
+  "from": "this.context.source.slice(blockStart + 1, start).trim()",
+  "to": "this.context.source.slice(blockStart + 1, start).replaceAll('\\ufeff', 'x').trim()"
+}

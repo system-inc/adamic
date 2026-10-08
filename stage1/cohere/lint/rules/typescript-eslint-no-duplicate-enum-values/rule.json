@@ -1,0 +1,13 @@
+{
+  "name": "@typescript-eslint/no-duplicate-enum-values",
+  "kinds": [
+    "EnumDeclaration"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoDuplicateEnumValues",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoDuplicateEnumValues",
+  "node": true
+}

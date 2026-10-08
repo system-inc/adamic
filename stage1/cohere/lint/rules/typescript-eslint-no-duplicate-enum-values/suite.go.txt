@@ -1,0 +1,139 @@
+package lint
+
+import (
+ "bytes"
+ "encoding/json"
+ "fmt"
+ "os"
+ "os/exec"
+ "path/filepath"
+ "strings"
+ "testing"
+ "time"
+)
+
+var nextRules = []struct { name, slug string }{
+ {"@typescript-eslint/no-duplicate-enum-values", "typescript-eslint-no-duplicate-enum-values"},
+ {"@typescript-eslint/no-dynamic-delete", "typescript-eslint-no-dynamic-delete"},
+}
+
+func nextCorpus(t *testing.T, name string) []string {
+ rows := wave14Corpus(t)
+ for i, row := range rows { rows[i] = strings.Split(row,"\t")[0]+"\t"+name }
+ return rows
+}
+
+func TestWave14NextRules(t *testing.T) {
+ directory, err := filepath.Abs("."); if err != nil { t.Fatal(err) }
+ captured := upstream(t)
+ oracle := goOracle(t)
+ binary := buildPort(t,directory,true)
+ for _, subject := range nextRules {
+  t.Run(subject.slug,func(t *testing.T) {
+   var rows []string
+   for _, row := range captured { if strings.Split(row,"\t")[1]==subject.name { rows=append(rows,row) } }
+   if len(rows)<40 { t.Fatalf("too few captured cases: %d",len(rows)) }
+   t.Logf("captured upstream cases: %d",len(rows))
+   for _, witness := range ownedWitnesses(t,directory,subject.slug) { rows=append(rows,witness+"\t"+subject.name) }
+   path:=manifest(t,rows)
+   count:=execute(t,"",oracle,"--manifest",path,"--count")
+   t.Logf("findings: %s",strings.TrimSpace(string(count.output)))
+   if string(count.output)=="0\n" { t.Fatal("no positive fixtures") }
+   wave14Compare(t,directory,path,oracle,binary)
+  })
+ }
+}
+
+func TestWave14NextCorpus(t *testing.T) {
+ directory,err:=filepath.Abs("."); if err!=nil { t.Fatal(err) }
+ oracle:=goOracle(t); binary:=buildPort(t,directory,true)
+ for _,subject:=range nextRules {
+  t.Run(subject.slug,func(t *testing.T) {
+   wave14Compare(t,directory,manifest(t,nextCorpus(t,subject.name)),oracle,binary)
+  })
+ }
+}
+
+func TestWave14NextMutants(t *testing.T) {
+ oracle:=goOracle(t)
+ for _,subject:=range nextRules {
+  t.Run(subject.slug,func(t *testing.T) {
+   data,err:=os.ReadFile("rules/"+subject.slug+"/mutant.json"); if err!=nil { t.Fatal(err) }
+   var mutation struct { Name,File,From,To string }; if err:=json.Unmarshal(data,&mutation); err!=nil { t.Fatal(err) }
+   directory:=mutant(t,mutation.From,mutation.To,"rules/"+subject.slug+"/"+mutation.File)
+   witness:=ownedWitnesses(t,".",subject.slug)[0]
+   path:=manifest(t,[]string{witness+"\t"+subject.name})
+   want:=execute(t,"",oracle,"--manifest",path).output
+   for _,side:=range []struct { name string; result execution }{
+    {"Node source",node(t,directory,path,false)},
+    {"sanitized native",execute(t,"",buildPort(t,directory,true),"--manifest",path)},
+    {"emitted JavaScript",wave14JS(t,directory,path)},
+   } {
+    if bytes.Equal(side.result.output,want) { t.Fatal("mutant survived: "+side.name) }
+    t.Logf("%s: %s caught only by comparison: %s",mutation.Name,side.name,difference(side.result.output,want))
+   }
+  })
+ }
+}
+
+func TestWave14NextThroughput(t *testing.T) {
+ directory,err:=filepath.Abs("."); if err!=nil { t.Fatal(err) }
+ oracle:=goOracle(t); binary:=buildPort(t,directory,false)
+ for _,subject:=range nextRules {
+  t.Run(subject.slug,func(t *testing.T) {
+   rows:=nextCorpus(t,subject.name); path:=manifest(t,rows)
+   natural:=execute(t,"",oracle,"--manifest",path,"--count")
+   t.Logf("natural findings: %s",strings.TrimSpace(string(natural.output)))
+   if string(natural.output)=="0\n" {
+    data,err:=os.ReadFile("rules/"+subject.slug+"/testdata/witness.ts.txt"); if err!=nil { t.Fatal(err) }
+    probe:=filepath.Join(t.TempDir(),"positive.ts"); if err:=os.WriteFile(probe,[]byte(strings.Repeat(string(data),500)),0644);err!=nil {t.Fatal(err)}
+    rows=append(rows,probe+"\t"+subject.name);path=manifest(t,rows)
+    t.Log("added 500 witness copies for positive throughput; this is a synthetic supplement")
+   }
+   best:=map[string]time.Duration{};var want []byte
+   for round:=0;round<5;round++ {
+    for _,name:=range []string{"Go","native","Node"} {
+     var got execution
+     switch name { case "Go":got=execute(t,"",oracle,"--manifest",path,"--count");case "native":got=execute(t,"",binary,"--manifest",path,"--count");case "Node":got=node(t,directory,path,true) }
+     if want==nil { want=got.output };if !bytes.Equal(want,got.output) {t.Fatalf("%s counts differ: %s vs %s",name,got.output,want)}
+     if best[name]==0||got.duration<best[name] { best[name]=got.duration }
+     t.Logf("round %d %s %s count=%s",round+1,name,got.duration,strings.TrimSpace(string(got.output)))
+    }
+   }
+   var count int;if _,err:=fmt.Sscan(string(want),&count);err!=nil||count==0 {t.Fatal("no positive timing control")}
+   for _,name:=range []string{"native","Node","Go"} {t.Logf("%s %.6fs %.2f findings/s count=%d files=%d",name,best[name].Seconds(),float64(count)/best[name].Seconds(),count,len(rows))}
+  })
+ }
+}
+
+func TestWave14NextSuggestionBlocker(t *testing.T) {
+ // Build the existing independent oracle with a virtual selection for the
+ // unmodified upstream rule. Its serializer must refuse the unsupported shape.
+ root,err:=filepath.Abs(filepath.Join(repository,"cohere"));if err!=nil {t.Fatal(err)}
+ source,err:=filepath.Abs("testdata/oracle.go");if err!=nil {t.Fatal(err)}
+ directory:=t.TempDir(); selection:=filepath.Join(directory,"selection.go")
+ text:=`package main
+import (
+ "github.com/system-inc/cohere/internal/lint/rule"
+ rules "github.com/system-inc/cohere/internal/lint/rules/typescript"
+)
+type registeredRule struct { subject rule.Rule; options func([]string) any }
+func registeredRules() []registeredRule { return []registeredRule{{rules.NoConfusingNonNullAssertion, func(fields []string) any { return nil }}} }
+`
+ if err:=os.WriteFile(selection,[]byte(text),0644);err!=nil {t.Fatal(err)}
+ virtualSource:=filepath.Join(root,"wave14_next_oracle.go");virtualSelection:=filepath.Join(root,"wave14_next_selection.go")
+ overlay,_:=json.Marshal(map[string]any{"Replace":map[string]string{virtualSource:source,virtualSelection:selection}})
+ overlayPath:=filepath.Join(directory,"overlay.json");if err:=os.WriteFile(overlayPath,overlay,0644);err!=nil {t.Fatal(err)}
+ binary:=filepath.Join(directory,"oracle");execute(t,root,"go","build","-overlay="+overlayPath,"-o",binary,virtualSource,virtualSelection)
+ for i,input:=range []string{"a! == b;","a + b! == c;","a! in b;"} {
+  probe:=filepath.Join(directory,fmt.Sprintf("probe-%d.ts",i));if err:=os.WriteFile(probe,[]byte(input),0644);err!=nil {t.Fatal(err)}
+  path:=manifest(t,[]string{probe+"\t@typescript-eslint/no-confusing-non-null-assertion"})
+  command:=exec.Command(binary,"--manifest",path)
+  output,err:=os.Create(filepath.Join(directory,fmt.Sprintf("probe-%d.log",i)));if err!=nil {t.Fatal(err)}
+  command.Stdout,command.Stderr=output,output;runErr:=command.Run();output.Close()
+  data,err:=os.ReadFile(output.Name());if err!=nil {t.Fatal(err)}
+  exit,ok:=runErr.(*exec.ExitError)
+  if !ok||exit.ExitCode()!=2||!bytes.Contains(data,[]byte("panic: unexpected suggestion shape")) {t.Fatalf("blocker changed: %v %s",runErr,data)}
+  t.Logf("%q: independently built upstream oracle exits 2: unexpected suggestion shape",input)
+ }
+}

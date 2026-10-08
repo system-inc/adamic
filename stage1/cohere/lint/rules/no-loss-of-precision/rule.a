@@ -1,0 +1,90 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import { Diagnostic, report } from '../typescript-eslint-no-extra-non-null-assertion/repairs.a';
+import { messageNoLossOfPrecision } from './messages.a';
+class Scientific {
+    readonly digits: string;
+    readonly exponent: number;
+    readonly valid: boolean;
+    constructor(digits: string, exponent: number, valid: boolean) { this.digits = digits; this.exponent = exponent; this.valid = valid; }
+}
+function exponentFits(raw: string): boolean {
+    const negative = raw.startsWith('-');
+    let text = raw.startsWith('-') || raw.startsWith('+') ? raw.slice(1) : raw;
+    if(text === '') { return false; }
+    for(const character of text) { if(character < '0' || character > '9') { return false; } }
+    while(text.length > 1 && text.startsWith('0')) { text = text.slice(1); }
+    return text.length < 19 || (text.length === 19 && text <= (negative ? '9223372036854775808' : '9223372036854775807'));
+}
+function scientific(raw: string, keep: boolean): Scientific {
+    let significand = raw; let exponent = 0;
+    const e = significand.toLowerCase().indexOf('e');
+    if(e >= 0) {
+        const written = significand.slice(e + 1);
+        if(!exponentFits(written)) { return new Scientific('', 0, false); }
+        exponent = Number.parseInt(written, 10); significand = significand.slice(0, e);
+    }
+    let integer = significand; let fraction = '';
+    const point = significand.indexOf('.');
+    if(point >= 0) { integer = significand.slice(0, point); fraction = significand.slice(point + 1); keep = true; }
+    let digits = integer + fraction; let leading = 0;
+    while(leading < digits.length && digits.charCodeAt(leading) === 48) { leading++; }
+    if(leading === digits.length) { return new Scientific('0', 0, true); }
+    exponent += integer.length - leading - 1; digits = digits.slice(leading);
+    if(!keep) { while(digits.endsWith('0')) { digits = digits.slice(0, -1); } }
+    return new Scientific(digits, exponent, true);
+}
+function decimal(raw: string): boolean {
+    if(raw.length < 2 || !raw.startsWith('0')) { return true; }
+    if(['x', 'X', 'b', 'B', 'o', 'O'].includes(raw.slice(1, 2))) { return false; }
+    for(let index = 1; index < raw.length; index++) {
+        const character = raw.slice(index, index + 1);
+        if(character !== '_' && (character < '0' || character > '7')) { return true; }
+    }
+    return false;
+}
+function nonDecimal(raw: string): boolean {
+    const prefix = raw.slice(0, 2).toLowerCase();
+    const radix = prefix === '0x' ? 16 : prefix === '0b' ? 2 : 8;
+    const digits = prefix === '0x' || prefix === '0b' || prefix === '0o' ? raw.slice(2) : raw;
+    let bits = 0;
+    for(const character of digits) {
+        const digit = Number.parseInt(character, 16);
+        if(bits === 0) {
+            if(digit === 0) { continue; }
+            bits = digit === 1 ? 1 : digit <= 3 ? 2 : digit <= 7 ? 3 : 4;
+        }
+        else { bits += radix === 2 ? 1 : radix === 8 ? 3 : 4; }
+    }
+    if(bits <= 53) { return false; }
+    // Go ParseUint refuses values wider than 64 bits, even exact powers of two.
+    if(bits > 64) { return true; }
+    const value = Number.parseInt(digits, radix);
+    return !raw.toUpperCase().endsWith(value.toString(radix).toUpperCase());
+}
+function loses(raw: string): boolean {
+    const text = raw.split('_').join('');
+    if(!decimal(raw)) { return nonDecimal(text); }
+    const value = Number.parseFloat(text);
+    if(Number.isNaN(value)) { return false; }
+    if(!Number.isFinite(value)) { return true; }
+    const written = scientific(text, false);
+    if(!written.valid) { return true; }
+    if(written.digits === '0') { return value !== 0; }
+    if(written.digits.length > 100) { return true; }
+    const stored = scientific(value.toExponential(written.digits.length - 1), true);
+    return !stored.valid || stored.digits !== written.digits || stored.exponent !== written.exponent;
+}
+export class Rule {
+    readonly context: RuleContext;
+    readonly diagnostics: Diagnostic[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    visit(node: ParseNode, index: number): void {
+        const raw = this.context.source.slice(this.context.start(index), node.end);
+        if(loses(raw)) {
+            this.diagnostics.push(report(this.context, node, 'noLossOfPrecision', messageNoLossOfPrecision, [], [], 'no-loss-of-precision'));
+
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

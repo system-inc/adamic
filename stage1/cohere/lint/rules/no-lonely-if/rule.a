@@ -1,0 +1,67 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import { Diagnostic, Edit, report } from '../typescript-eslint-no-extra-non-null-assertion/repairs.a';
+import { messageUnexpectedLonelyIf } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    readonly diagnostics: Diagnostic[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    unsafe(index: number): boolean {
+        const node = this.context.node(index);
+        if(node.kind === 'IfStatement') {
+            const alternate = node.children[2];
+            return alternate === undefined || this.unsafe(alternate);
+        }
+        if(['ForStatement', 'ForInStatement', 'ForOfStatement', 'WhileStatement', 'LabeledStatement'].includes(node.kind)) {
+            const body = node.children[node.children.length - 1];
+            return body !== undefined && this.unsafe(body);
+        }
+        return false;
+    }
+    after(position: number): number {
+        this.context.scanner.pos = position; this.context.scanner.scan(); return this.context.scanner.start;
+    }
+    followedByElse(block: number): boolean {
+        const start = this.after(this.context.node(block).end);
+        const source = this.context.source;
+        if(source.slice(start, start + 4) !== 'else') { return false; }
+        const code = source.charCodeAt(start + 4);
+        return !((code >= 65 && code <= 90) || (code >= 97 && code <= 122) || (code >= 48 && code <= 57) || code === 95 || code === 36);
+    }
+    changesMeaning(index: number, block: number): boolean {
+        const consequent = this.context.node(index).children[1];
+        if(consequent === undefined || this.context.node(consequent).kind === 'Block') { return false; }
+        const node = this.context.node(consequent);
+        const last = this.context.source.slice(this.context.start(consequent), node.end).trim();
+        if(last.endsWith(';')) { return false; }
+        const next = this.after(this.context.node(block).end);
+        if(next >= this.context.source.length) { return false; }
+        const gap = this.context.source.slice(node.end, next);
+        if(!gap.includes('\n') && !gap.includes('\r')) { return true; }
+        return ['(', '[', '/', '+', '`', '-'].includes(this.context.source.slice(next, next + 1)) || last.endsWith('++') || last.endsWith('--');
+    }
+    visit(node: ParseNode, index: number): void {
+        const parent = this.context.parents[index] ?? -1;
+        if(parent < 0 || this.context.node(parent).kind !== 'Block' || this.context.node(parent).children.length !== 1) { return; }
+        const outer = this.context.parents[parent] ?? -1;
+        if(outer < 0 || this.context.node(outer).kind !== 'IfStatement' || this.context.node(outer).children[2] !== parent) { return; }
+        const followed = this.followedByElse(parent); const unsafe = this.unsafe(index);
+        if(followed && unsafe) { return; }
+        const start = this.context.start(index); const blockStart = this.context.start(parent); const blockEnd = this.context.node(parent).end;
+        const fixes: Edit[] = [];
+        if(this.context.source.slice(blockStart + 1, start).trim() === '' && this.context.source.slice(node.end, blockEnd - 1).trim() === '' && !this.changesMeaning(index, parent)) {
+            const consequent = this.context.node(outer).children[1];
+            if(consequent !== undefined) {
+                const end = this.context.node(consequent).end;
+                const keyword = this.context.source.slice(end, blockStart).lastIndexOf('else');
+                const separator = keyword >= 0 && end + keyword + 4 === blockStart ? ' ' : '';
+                const fix = new Edit(blockStart, blockEnd, separator + this.context.source.slice(start, node.end));
+                fixes.push(fix);
+            }
+        }
+        this.diagnostics.push(report(this.context, node, 'unexpectedLonelyIf', messageUnexpectedLonelyIf, fixes, [], 'no-lonely-if'));
+    }
+}
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

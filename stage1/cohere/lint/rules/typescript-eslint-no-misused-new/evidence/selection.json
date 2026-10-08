@@ -1,0 +1,735 @@
+{
+  "main": "ef3d907ecdc4c771b016f7d9c52372def057a340",
+  "inventory": "73ac2eb0963e1a4166eaa0fbd160203f11dcdbdf",
+  "origin_refs_scanned": 310,
+  "own_claim_before_update": "18449284",
+  "selected": [
+    "@typescript-eslint/no-extra-non-null-assertion",
+    "@typescript-eslint/no-misused-new",
+    "@typescript-eslint/no-unnecessary-parameter-property-assignment"
+  ],
+  "rules": [
+    {
+      "group": "helpers",
+      "name": "@typescript-eslint/consistent-type-assertions",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "@typescript-eslint/consistent-type-definitions",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "@typescript-eslint/init-declarations",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "@typescript-eslint/no-explicit-any",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "@typescript-eslint/no-inferrable-types",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "@typescript-eslint/no-restricted-types",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "@typescript-eslint/no-unused-expressions",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "@typescript-eslint/unified-signatures",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "class-methods-use-this",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "consistent-this",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "func-name-matching",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "max-classes-per-file",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "max-depth",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "max-nested-callbacks",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "no-cond-assign",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "no-inner-declarations",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "no-restricted-properties",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "no-self-assign",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "no-underscore-dangle",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "no-unsafe-negation",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "no-unsafe-optional-chaining",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "no-useless-computed-key",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "react-hooks/gating",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "react/forbid-foreign-prop-types",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "react/jsx-no-useless-fragment",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "react/no-invalid-html-attribute",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "react/no-unescaped-entities",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "react/no-unsafe",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-10:stage1/cohere/lint/claims/wave1-10.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "react/self-closing-comp",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-10:stage1/cohere/lint/claims/wave1-10.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "sort-vars",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-10:stage1/cohere/lint/claims/wave1-10.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "adamic/no-definite-assignment",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-11:stage1/cohere/lint/claims/wave1-11.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "base/boundary-no-global-container",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-11:stage1/cohere/lint/claims/wave1-11.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "base/consistency-no-hand-built-declared-error",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-11:stage1/cohere/lint/claims/wave1-11.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "base/consistency-require-pagination-argument-name",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "base/correctness-require-orm-column-declare",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "nexus/consistency-no-boolean-outcome",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-12:stage1/cohere/lint/claims/wave1-12.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "nexus/consistency-no-for-in",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "nexus/consistency-no-hand-rolled-delay",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "nexus/consistency-no-return-void",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "nexus/consistency-no-stuttering-name",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "nexus/consistency-no-utils-folder",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "nexus/import-require-module-alias",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "nexus/import-require-node-namespace",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "structure/network-no-invalidate-cache-literal-key",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "structure/network-no-string-literal-query",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15.md"
+      ]
+    },
+    {
+      "group": "helpers",
+      "name": "structure/tailwind-no-physical-direction",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01.md",
+        "origin/codex/lint-wave1-02:stage1/cohere/lint/claims/wave1-02.md",
+        "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03.md",
+        "origin/codex/lint-wave1-04:stage1/cohere/lint/claims/wave1-04.md",
+        "origin/codex/lint-wave1-05:stage1/cohere/lint/claims/wave1-05.md",
+        "origin/codex/lint-wave1-06:stage1/cohere/lint/claims/wave1-06.md",
+        "origin/codex/lint-wave1-07:stage1/cohere/lint/claims/wave1-07.md",
+        "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md",
+        "origin/codex/lint-wave1-09:stage1/cohere/lint/claims/wave1-09.md",
+        "origin/codex/lint-wave1-10:stage1/cohere/lint/claims/wave1-10.md",
+        "origin/codex/lint-wave1-11:stage1/cohere/lint/claims/wave1-11.md",
+        "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md",
+        "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15.md"
+      ]
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "@next/next/no-assign-module-variable",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03.md",
+        "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md",
+        "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md",
+        "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15.md"
+      ]
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "@typescript-eslint/default-param-last",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03.md",
+        "origin/codex/lint-wave1-08:stage1/cohere/lint/claims/wave1-08.md",
+        "origin/codex/lint-wave1-13:stage1/cohere/lint/claims/wave1-13.md",
+        "origin/codex/lint-wave1-15:stage1/cohere/lint/claims/wave1-15.md"
+      ]
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "@typescript-eslint/no-confusing-non-null-assertion",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14.md"
+      ]
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "@typescript-eslint/no-duplicate-enum-values",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14.md"
+      ]
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "@typescript-eslint/no-dynamic-delete",
+      "ported_on_main": false,
+      "claim_records": [
+        "origin/codex/lint-wave1-14:stage1/cohere/lint/claims/wave1-14.md"
+      ]
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "@typescript-eslint/no-extra-non-null-assertion",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "@typescript-eslint/no-misused-new",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "@typescript-eslint/no-unnecessary-parameter-property-assignment",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "@typescript-eslint/no-unnecessary-type-constraint",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "@typescript-eslint/prefer-as-const",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "@typescript-eslint/prefer-enum-initializers",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "@typescript-eslint/prefer-namespace-keyword",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "default-case-last",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "default-param-last",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "for-direction",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "guard-for-in",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-async-promise-executor",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-await-in-loop",
+      "ported_on_main": true,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-case-declarations",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-compare-neg-zero",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-constructor-return",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-continue",
+      "ported_on_main": true,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-debugger",
+      "ported_on_main": true,
+      "claim_records": [
+        "origin/codex/lint-wave1-03:stage1/cohere/lint/claims/wave1-03.md"
+      ]
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-delete-var",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-div-regex",
+      "ported_on_main": true,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-eq-null",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-lone-blocks",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-lonely-if",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-loss-of-precision",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-multi-str",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-negated-condition",
+      "ported_on_main": true,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-new",
+      "ported_on_main": true,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-nonoctal-decimal-escape",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-octal",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-octal-escape",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-script-url",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-sparse-arrays",
+      "ported_on_main": true,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-template-curly-in-string",
+      "ported_on_main": true,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-unexpected-multiline",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-unsafe-finally",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-unused-private-class-members",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-useless-catch",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-useless-concat",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-useless-constructor",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-var",
+      "ported_on_main": true,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "no-with",
+      "ported_on_main": true,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "prefer-template",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "react/forward-ref-uses-ref",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "react/jsx-no-comment-textnodes",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "react/no-find-dom-node",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "react/no-is-mounted",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "react/no-redundant-should-component-update",
+      "ported_on_main": false,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "require-yield",
+      "ported_on_main": true,
+      "claim_records": []
+    },
+    {
+      "group": "syntax ready for AST/API adaptation",
+      "name": "vars-on-top",
+      "ported_on_main": true,
+      "claim_records": []
+    }
+  ]
+}

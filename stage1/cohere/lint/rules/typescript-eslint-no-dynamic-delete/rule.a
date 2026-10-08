@@ -1,0 +1,46 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    visit(deleteNode: ParseNode, index: number): void {
+        const operand = deleteNode.children[0];
+        if(operand === undefined) {
+            return;
+        }
+        const access = this.context.node(this.context.unwrap(operand));
+        if(access.kind !== 'ElementAccessExpression') {
+            return;
+        }
+        // Go checks the access's own question-dot token, not inherited chain flags.
+        for(const child of access.children) {
+            if(this.context.node(child).kind === 'QuestionDotToken') {
+                return;
+            }
+        }
+        const argument = access.children[access.children.length - 1];
+        if(argument === undefined) {
+            return;
+        }
+        const key = this.context.unwrap(argument);
+        const node = this.context.node(key);
+        if(node.kind === 'NumericLiteral' || node.kind === 'StringLiteral') {
+            return;
+        }
+        if(node.kind === 'PrefixUnaryExpression' && node.operator === 'MinusToken') {
+            const inner = node.children[0];
+            if(inner !== undefined && this.context.node(this.context.unwrap(inner)).kind === 'NumericLiteral') {
+                return;
+            }
+        }
+        this.context.report(key, '@typescript-eslint/no-dynamic-delete', 'dynamicDelete', message, '', '', '');
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

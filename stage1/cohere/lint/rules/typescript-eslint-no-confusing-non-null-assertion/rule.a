@@ -1,0 +1,34 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import { Diagnostic, Edit, Suggestion, report } from '../typescript-eslint-no-extra-non-null-assertion/repairs.a';
+export class Rule {
+    readonly context: RuleContext;
+    readonly diagnostics: Diagnostic[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    visit(node: ParseNode, index: number): void {
+        const token = node.children[1];
+        if(token === undefined) { return; }
+        const kind = this.context.node(token).kind;
+        const operator = kind === 'EqualsToken' ? '=' : kind === 'EqualsEqualsToken' ? '==' : kind === 'EqualsEqualsEqualsToken' ? '===' : kind === 'InKeyword' ? 'in' : kind === 'InstanceOfKeyword' ? 'instanceof' : '';
+        const left = node.children[0];
+        if(operator === '' || left === undefined) { return; }
+        const start = this.context.start(left); const end = this.context.node(left).end;
+        if(!this.context.source.slice(start, end).endsWith('!')) { return; }
+        const wrap = new Suggestion('wrapUpLeft', `Wrap the left-hand side in parentheses to avoid confusion with "${operator}" operator.`, [new Edit(start, start, '('), new Edit(end, end, ')')]);
+        const suggestions: Suggestion[] = [];
+        const equal = operator === '==' || operator === '===';
+        const id = operator === '=' ? 'confusingAssign' : equal ? 'confusingEqual' : 'confusingOperator';
+        const message = operator === '=' ? 'Confusing combination of non-null assertion and assignment like `a! = b`, which looks very similar to `a != b`.' : equal ? 'Confusing combination of non-null assertion and equality test like `a! == b`, which looks very similar to `a !== b`.' : `Confusing combination of non-null assertion and \`${operator}\` operator like \`a! ${operator} b\`, which might be misinterpreted as \`!(a ${operator} b)\`.`;
+        if(this.context.node(left).kind !== 'NonNullExpression') { suggestions.push(wrap); }
+        else {
+            const removeId = operator === '=' ? 'notNeedInAssign' : equal ? 'notNeedInEqualTest' : 'notNeedInOperator';
+            const removeMessage = operator === '=' ? 'Remove unnecessary non-null assertion (!) in assignment left-hand side.' : equal ? 'Remove unnecessary non-null assertion (!) in equality test.' : `Remove possibly unnecessary non-null assertion (!) in the left operand of the \`${operator}\` operator.`;
+            suggestions.push(new Suggestion(removeId, removeMessage, [new Edit(end - 1, end, '')]));
+            if(operator !== '=' && !equal) { suggestions.push(wrap); }
+        }
+        this.diagnostics.push(report(this.context, node, id, message, [], suggestions, '@typescript-eslint/no-confusing-non-null-assertion'));
+    }
+}
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

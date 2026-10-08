@@ -1,0 +1,85 @@
+// An owned landing probe. The shared oracle, compiler and comparison stay unchanged.
+package lint
+
+import (
+	"encoding/json"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+func TestWave14IntegratedUpstream(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	binary := buildPort(t, directory, true)
+	module := emittedJavaScript(t, directory)
+	names := []string{
+		"nexus/import-require-module-alias",
+		"@typescript-eslint/no-duplicate-enum-values",
+		"@typescript-eslint/no-dynamic-delete",
+		"@typescript-eslint/no-misused-new",
+		"@typescript-eslint/no-extra-non-null-assertion",
+		"@typescript-eslint/no-confusing-non-null-assertion",
+		"@typescript-eslint/no-unnecessary-parameter-property-assignment",
+		"no-lone-blocks", "no-lonely-if", "no-loss-of-precision",
+	}
+	captured := upstream(t)
+	for _, name := range names {
+		t.Run(name, func(t *testing.T) {
+			var rows []string
+			for _, row := range captured {
+				fields := strings.Split(row, "\t")
+				if len(fields) > 1 && fields[1] == name {
+					rows = append(rows, row)
+				}
+			}
+			if len(rows) == 0 {
+				t.Fatal("no original upstream cases captured")
+			}
+			t.Logf("original upstream cases: %d", len(rows))
+			compareWithJavaScript(t, oracle, binary, directory, manifest(t, recoveryRows(t, oracle, rows)), module)
+		})
+	}
+}
+
+func TestWave14LonelyIfMutant(t *testing.T) {
+	oracle := goOracle(t)
+	var rows []string
+	for _, row := range upstream(t) {
+		fields := strings.Split(row, "\t")
+		if len(fields) > 1 && fields[1] == "no-lonely-if" {
+			rows = append(rows, row)
+		}
+	}
+	if len(rows) == 0 {
+		t.Fatal("no original no-lonely-if cases captured")
+	}
+	var change struct{ Name, File, From, To string }
+	data, err := os.ReadFile("rules/no-lonely-if/mutant.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(data, &change); err != nil {
+		t.Fatal(err)
+	}
+	directory := mutant(t, change.From, change.To, filepath.Join("rules/no-lonely-if", change.File))
+	path := manifest(t, recoveryRows(t, oracle, rows))
+	want := execute(t, "", oracle, "--manifest", path).output
+	for _, side := range []struct {
+		name string
+		run  execution
+	}{
+		{"Node", node(t, directory, path, false)},
+		{"emitted JavaScript", emittedNode(t, directory, path, false)},
+		{"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)},
+	} {
+		if difference(side.run.output, want) == "" {
+			t.Fatalf("%s survived on %s", change.Name, side.name)
+		}
+		t.Logf("%s caught only by Go comparison on %s over %d original cases", change.Name, side.name, len(rows))
+	}
+}

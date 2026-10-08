@@ -1,0 +1,13 @@
+{
+  "name": "@typescript-eslint/no-confusing-non-null-assertion",
+  "kinds": [
+    "BinaryExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoConfusingNonNullAssertion",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoConfusingNonNullAssertion",
+  "node": true
+}
