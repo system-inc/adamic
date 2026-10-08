@@ -1,8 +1,8 @@
-Built witnesses for all 27 assigned rows: 23 dense reads proven, including D151 nullable strings; 4 record rows blocked.
-Commits: representation eff7e8e9, indexed guards 27b06da3; D151 observation and runtime-mutant completion in this commit.
-Commands: touched packages, complete witness suite, 30 filtered Node oracle fixtures, vet, census and diff check pass.
-Mutants: 23 erased site guards caught; actual runtime null-sentinel helper changed to NULL is caught by both nullable controls and D151.
-Not covered: D119/D129/D130/D131 record representation, 23 hole variants, other reference-kind sentinels, whole-program build and full repository gate.
+Built witnesses for all 27 assigned rows: 26 proven, including all 26 supported hole variants; D119 nested records blocked.
+Commits: sentinel eff7e8e9, nullable guards 27b06da3, D151 927e13e9; dependency merges 09180ec8 and f7c17f3b; witness groups ac206b80 through 0b9a22d6.
+Commands: grouped Node-held witnesses, merged nullable controls and record guards pass; combined regression results follow below.
+Mutants: every supported absent and hole guard erased independently and caught; record outer guard and null-sentinel-to-NULL mutants caught.
+Not covered: D119 needs nested record payload support; full repository gate and whole TypeScript build not run.
 
 ## Scope and assumptions
 
@@ -479,3 +479,59 @@ Third hole group D191, D192, D193, D194 and D225 passes (holes-group3.log,
 
 Fourth hole group D226, D227, D228, D229 and D230 passes (holes-group4.log,
 9.376s). 20 standalone holes proven; each guard mutant caught.
+
+
+## Final hole group and per-row state
+
+D231, D151 and D170 hole variants pass (holes-group5.log, 4.729s).
+The user's original 21 holes are all proven; the added D170 and newly supported
+D151 bring standalone array holes to 23. Record-chain D129/D130/D131 contribute
+three additional hole controls, for 26 supported hole variants. No assigned row
+needs a typed-array witness; its implementation arrived through the requested
+merge and is checked in the dependency suite.
+
+All proven rows below have present and absent Node controls, exact named
+exit-70 site stderr in JS and native release and ASan/UBSan, independently
+computed IR/CLI checked locations and erased-guard mutants caught. Hole controls
+use new Array<T>(1), with the same receiver and index form as the dense source.
+
+| Row | State | Checks and additional controls |
+|---|---|---|
+| D107 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D129 | Proven | Two chained checks; inner absent and hole mutants, separate outer-key present/absent control and outer mutant |
+| D130 | Proven | Two chained checks; inner absent and hole mutants, separate outer-key present/absent control and outer mutant |
+| D131 | Proven | Two chained checks; inner absent and hole mutants, separate outer-key present/absent control and outer mutant |
+| D171 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D172 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D173 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D174 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D175 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D184 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D185 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D186 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D189 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D191 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D192 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D193 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D194 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D225 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D226 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D227 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D228 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D229 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D230 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D231 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D119 | Blocked | Nested record payload unsupported; waits on records implementation expansion; refusal pinned at D119.ts:1:24 |
+| D151 | Proven | One presence check; string/null/absent/hole; equality, typeof, String and console; both guard and sentinel-conflation mutants |
+| D170 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+
+D119 is the sole unresolved row. Its receiver is a readonly string-key record
+whose payload is another record of string arrays. The published recordInfo in
+internal/lower/records.go admits scalars and arrays of scalars, but does not
+admit that nested payload. Both source Node controls are observed and the exact
+compiler refusal is pinned. No native result, checked classification or guard
+mutant is claimed for D119.
+
+The private string sentinel remains declared once in
+internal/native/runtime/nullable.c for runtime review; both dependency merges
+preserve its undefined-only indexed guards and separate null observations.
