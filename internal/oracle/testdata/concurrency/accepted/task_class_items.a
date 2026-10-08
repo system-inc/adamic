@@ -1,0 +1,10 @@
+import { parallelMap } from 'adamic';
+class Position {
+ readonly start: number;
+ readonly path: string;
+ constructor(start: number, path: string) { this.start = start; this.path = path; }
+ read(): string { return this.path + ':' + String(this.start); }
+}
+const position = new Position(4, 'file' + String(2));
+const items: readonly Position[] = Array.from({ length: 128 }, () => position);
+console.log(parallelMap(items, item => item.read()).join('|'));

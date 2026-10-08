@@ -1,0 +1,14 @@
+import { parallelMap } from 'adamic';
+class Scanner {
+ readonly text: string;
+ pos = 0;
+ constructor(text: string) { this.text = text; }
+}
+class Parser {
+ readonly scanner: Scanner;
+ constructor(text: string) { this.scanner = new Scanner(text); }
+ kind(): string { return this.scanner.text; }
+}
+const parser = new Parser('source');
+const items: readonly number[] = [1, 2];
+console.log(parallelMap(items, () => parser.kind()).join('|'));

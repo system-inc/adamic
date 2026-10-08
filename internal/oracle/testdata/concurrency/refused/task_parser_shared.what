@@ -1,0 +1,1 @@
+task capture 'parser' is not shareable: parser.scanner.pos is a mutable field

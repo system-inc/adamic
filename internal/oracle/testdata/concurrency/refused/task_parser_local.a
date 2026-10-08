@@ -1,0 +1,9 @@
+import { parallelMap } from 'adamic';
+class Parser {
+ readonly path: string;
+ pos = 0;
+ constructor(path: string) { this.path = path; }
+ parse(): string { this.pos++; return this.path + ':' + String(this.pos); }
+}
+const items: readonly string[] = ['first', 'second'];
+console.log(parallelMap(items, text => { const parser = new Parser(text); return parser.parse(); }).join('|'));

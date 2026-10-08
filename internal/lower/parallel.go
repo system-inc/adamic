@@ -129,6 +129,7 @@ type parallelProof struct {
 	active, checked    map[*ast.Node]bool
 	shareableFunctions map[*ast.Node]bool
 	globals            []*ast.Node
+	readonlyMethods    map[*ast.Node]bool
 }
 
 func (p *parallelProof) effect(where *ast.Node, chain []string, what string) error {
@@ -293,7 +294,7 @@ func (p *parallelProof) function(node *ast.Node, chain []string) error {
 				return false
 			}
 		}
-		if child.Kind == ast.KindThisKeyword {
+		if child.Kind == ast.KindThisKeyword && !p.readonlyThis(child, node) {
 			found = p.effect(child, chain, "reaches this, whose task ownership isn't proven")
 			return false
 		}
@@ -464,6 +465,9 @@ func (p *parallelProof) call(node, owner *ast.Node, chain []string) error {
 				}
 			}
 		}
+		if admitted, err := p.readonlyMethod(callee, chain); admitted {
+			return err
+		}
 		return p.effect(node, chain, "calls a method whose complete dispatch hierarchy isn't proven")
 	}
 	for _, name := range []string{"String", "Number", "Boolean", "Error", "Map", "Set"} {
@@ -486,6 +490,9 @@ func (p *parallelProof) call(node, owner *ast.Node, chain []string) error {
 
 // Analyze an argument with the same rules as a body, retaining its lexical owner.
 func (p *parallelProof) expression(node, owner *ast.Node, chain []string) error {
+	if node.Kind == ast.KindThisKeyword && !p.readonlyThis(node, owner) {
+		return p.effect(node, chain, "reaches this, whose task ownership isn't proven")
+	}
 	if ast.IsPartOfTypeNode(node) {
 		return nil
 	}

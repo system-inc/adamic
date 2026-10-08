@@ -1,0 +1,10 @@
+import { parallelMap } from 'adamic';
+class Header {
+ readonly name: string;
+ readonly offsets: readonly number[];
+ constructor(name: string, offsets: readonly number[]) { this.name = name; this.offsets = offsets; }
+ render(index: number): string { return this.name + ':' + String(index) + ':' + this.offsets.join(','); }
+}
+const header = new Header('source' + String(7), [1, 4]);
+const items: readonly number[] = Array.from({ length: 128 }, (_, index) => index);
+console.log(parallelMap(items, index => header.render(index)).join('|'));
