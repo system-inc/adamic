@@ -22,7 +22,7 @@ import (
 type site struct {
 	ID, File, Expression, Cause, Read, Receiver, Source, Present, Absent string
 	Refusal, NullPresent                                                 string
-	Line                                                                 int
+	Line, Guards                                                         int
 	Blocked                                                              bool
 }
 
@@ -96,6 +96,9 @@ func TestLedgerWitnesses(t *testing.T) {
 						element = "number"
 					}
 					values = "new Array<" + element + ">(1)"
+					if s.Guards == 2 {
+						values = "{ entry: " + values + " }"
+					}
 				}
 				t.Run(name, func(t *testing.T) {
 					directory := t.TempDir()
@@ -128,8 +131,12 @@ func TestLedgerWitnesses(t *testing.T) {
 						t.Fatal(err)
 					}
 					checks := ir.InsertedChecks(program)
-					if len(checks) != 1 || checks[0].Kind != "indexed-presence" {
-						t.Fatalf("want one individually observable indexed guard: %+v", checks)
+					count := s.Guards
+					if count == 0 {
+						count = 1
+					}
+					if len(checks) != count {
+						t.Fatalf("want %d individually observable indexed guards: %+v", count, checks)
 					}
 					// Compute the source position independently of the compiler's check inventory.
 					offset := strings.Index(source, s.Read)
@@ -140,11 +147,13 @@ func TestLedgerWitnesses(t *testing.T) {
 					line := strings.Count(before, "\n") + 1
 					column := len(before) - strings.LastIndex(before, "\n")
 					where := fmt.Sprintf("%s:%d:%d", path, line, column)
-					if checks[0].Where != where {
-						t.Fatalf("site: %q, want %q", checks[0].Where, where)
+					for _, check := range checks {
+						if check.Kind != "indexed-presence" || check.Where != where {
+							t.Fatalf("site: %+v, want indexed-presence at %q", check, where)
+						}
 					}
 					explain := run(cli, "--explain-checks", path)
-					if explain.code != 0 || !strings.Contains(explain.stdout+explain.stderr, fmt.Sprintf("%s:%d:%d: checked indexed-presence\n", filepath.Base(path), line, column)) || !strings.Contains(explain.stdout+explain.stderr, "checked: indexed-presence=1") || !strings.Contains(explain.stdout+explain.stderr, "trusted: 0") {
+					if explain.code != 0 || !strings.Contains(explain.stdout+explain.stderr, fmt.Sprintf("%s:%d:%d: checked indexed-presence\n", filepath.Base(path), line, column)) || !strings.Contains(explain.stdout+explain.stderr, fmt.Sprintf("checked: indexed-presence=%d", count)) || !strings.Contains(explain.stdout+explain.stderr, "trusted: 0") {
 						t.Fatalf("explain: %+v", explain)
 					}
 					expected := node
@@ -175,11 +184,14 @@ func TestLedgerWitnesses(t *testing.T) {
 					if absent {
 						// Erase only this site's panic, preserving its lookup and all other code.
 						panicCall := regexp.MustCompile(`adamic_panic\([^;\n]*->bytes[^;\n]*\);`)
-						if len(panicCall.FindAllString(c, -1)) != 1 {
-							t.Fatal("mutant must erase exactly one guard")
+						matches := panicCall.FindAllStringIndex(c, -1)
+						if len(matches) != count {
+							t.Fatal("mutant must identify every guard and erase only the inner read guard")
 						}
+						last := matches[len(matches)-1]
+						mutatedC := c[:last[0]] + "(void)0;" + c[last[1]:]
 						binary := filepath.Join(directory, "mutant")
-						if err := native.Build(panicCall.ReplaceAllString(c, "(void)0;"), binary, native.Options{Sanitize: true}); err != nil {
+						if err := native.Build(mutatedC, binary, native.Options{Sanitize: true}); err != nil {
 							t.Fatalf("mutant build is not a kill: %v", err)
 						}
 						got := run(binary)

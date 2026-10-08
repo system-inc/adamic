@@ -1,0 +1,18 @@
+{
+  "mode": "production-project-options, exact 72 ledger diagnostic exclusions",
+  "roots": 79,
+  "excluded_optional_rows": 67,
+  "excluded_catch_rows": 5,
+  "checker_diagnostics": 0,
+  "indexed_audit_rows": 99,
+  "entry_attempts": 16,
+  "compiles_as_check": 0,
+  "still_refuses": 99,
+  "still_errors": 0,
+  "refusal_scope": "all entry dependency graphs refuse before indexed-site lowering",
+  "native_artifacts": 0,
+  "read_local_outcomes_unmeasured": 99,
+  "blockers": {
+    "/tmp/stricter-indexed-all-typescript/src/compiler/core.ts:19:52: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet": 16
+  }
+}

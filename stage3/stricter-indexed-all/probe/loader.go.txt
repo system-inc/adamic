@@ -1,0 +1,59 @@
+// This helper exists only in the probe's Go overlay. Ordinary Load has no
+// diagnostic exclusions. Only audited optional/catch rows can be excluded.
+func LoadIndexedLedgerProbe(paths []string, exclusions []OptionSite) (*Program, error) {
+	return loadIndexedLedgerProbe(paths, nil, exclusions)
+}
+
+func filterIndexedLedgerDiagnostics(diagnostics []string, sites, exclusions []OptionSite) ([]string, error) {
+	if len(exclusions) != 72 {
+		return nil, fmt.Errorf("indexed ledger probe: want exactly 72 exclusions, got %d", len(exclusions))
+	}
+	key := func(site OptionSite) string { return fmt.Sprintf("%s:%d:%d:TS%d", filepath.Clean(site.File), site.Line, site.Column, site.Code) }
+	wanted := map[string]OptionSite{}
+	counts := map[string]int{}
+	for _, site := range exclusions {
+		if len(site.Options) != 1 || (site.Options[0] != "exactOptionalPropertyTypes" && site.Options[0] != "useUnknownInCatchVariables") {
+			return nil, fmt.Errorf("indexed ledger probe: exclusion is not solely optional/catch: %s", key(site))
+		}
+		if _, duplicate := wanted[key(site)]; duplicate { return nil, fmt.Errorf("indexed ledger probe: duplicate exclusion: %s", key(site)) }
+		wanted[key(site)] = site
+		counts[site.Options[0]]++
+	}
+	if counts["exactOptionalPropertyTypes"] != 67 || counts["useUnknownInCatchVariables"] != 5 {
+		return nil, fmt.Errorf("indexed ledger probe: expected 67 optional and 5 catch exclusions")
+	}
+	messages := map[string]bool{}
+	for _, site := range sites {
+		if expected, match := wanted[key(site)]; match {
+			if len(site.Options) != 1 || site.Options[0] != expected.Options[0] {
+				return nil, fmt.Errorf("indexed ledger probe: exclusion attribution changed: %s", key(site))
+			}
+			messages[site.Message] = true
+			delete(wanted, key(site))
+		}
+	}
+	if len(wanted) != 0 { return nil, fmt.Errorf("indexed ledger probe: %d exclusions lack exact option audit evidence", len(wanted)) }
+	remaining := []string{}
+	removed := map[string]bool{}
+	for _, message := range diagnostics {
+		if messages[message] {
+			if removed[message] { return nil, fmt.Errorf("indexed ledger probe: duplicate excluded diagnostic") }
+			removed[message] = true
+		} else { remaining = append(remaining, message) }
+	}
+	if len(removed) != 72 { return nil, fmt.Errorf("indexed ledger probe: expected to remove exactly 72 diagnostics, removed %d", len(removed)) }
+	return remaining, nil
+}
+
+// Keep every checker source/root and its actual per-file options. Only select
+// one already checked file as the lowering entry, as production Lower requires.
+func (p *Program) IndexedLedgerEntry(path string) (*Program, error) {
+	absolute, err := filepath.Abs(path)
+	if err != nil { return nil, err }
+	for _, source := range p.files {
+		if p.FileName(source) == absolute {
+			return &Program{compiler: p.compiler, fs: p.fs, projectOptions: p.projectOptions, optionSites: p.optionSites, files: []*ast.SourceFile{source}}, nil
+		}
+	}
+	return nil, fmt.Errorf("indexed ledger probe: entry was not an original checked root: %s", path)
+}
