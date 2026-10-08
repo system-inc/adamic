@@ -215,6 +215,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.own(ir.String, fmt.Sprintf("adamic_union_to_string(%s)", e.value(expression.Value)))
 	case ir.Coalesce:
 		return e.coalesce(expression)
+	case ir.ClosureLength:
+		return e.closureLength(expression)
 	case ir.StringLength:
 		if expression.Optional {
 			text := e.value(expression.Value)

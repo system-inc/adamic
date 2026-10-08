@@ -110,6 +110,8 @@ func (l *lowering) optionalPropertyChain(node *ast.Node) (ir.Expression, error) 
 
 		case read.Type() == ir.Array && part == "length":
 			next = ir.Length{Array: read}
+		case read.Type() == ir.Closure && part == "length":
+			next = ir.ClosureLength{Value: read}
 		case read.Type() == ir.String && part == "length":
 			next = ir.StringLength{Value: read}
 		case read.Type() == ir.Map && part == "size":

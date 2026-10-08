@@ -1161,6 +1161,9 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.UnionToString:
 		a.value(expression.Value)
 		return value{}
+	case ir.ClosureLength:
+		a.value(expression.Value)
+		return value{}
 	case ir.StringLength:
 		a.value(expression.Value)
 		return value{}

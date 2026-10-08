@@ -1,0 +1,31 @@
+function arity(callback: (value: number, extra?: number) => number): number {
+    return callback.length;
+}
+function one(value: number): number { return value; }
+function two(value: number, extra?: number): number { return value + (extra ?? 0); }
+function defaulted(value: number, extra: number = 0): number { return value + extra; }
+function rest(...values: (number | undefined)[]): number { return values.length; }
+console.log(`${arity(one)}/${arity(two)}/${arity(defaulted)}/${rest.length}`);
+let factories = 0;
+function make(which: number): (value: number, extra?: number) => number {
+    factories++;
+    if (which === 1) return one;
+    return two;
+}
+console.log(`${make(1).length}/${make(2).length}/${factories}`);
+const arrow = (value: number, extra: number = 5): number => value + extra;
+const named = function named(value: number, extra?: number): number { return value + (extra ?? 0); };
+console.log(`${arrow.length}/${named.length}`);
+function zero(): number { return 0; }
+function firstDefault(value: number = 1, extra: number): number { return value + extra; }
+function erasedThis(this: { value: number }, value: number): number { return value; }
+console.log(`${zero.length}/${firstDefault.length}/${erasedThis.length}`);
+function maybeLength(callback: ((value: number) => number) | undefined): number {
+    return callback?.length ?? -1;
+}
+console.log(`${maybeLength(undefined)}/${maybeLength(one)}`);
+interface Box { callback: (value: number) => number; }
+function chainLength(box: Box | undefined): number { return box?.callback.length ?? -1; }
+console.log(`${chainLength(undefined)}/${chainLength({callback: one})}`);
+function destructured({value}: {value: number}, extra: number): number { return value + extra; }
+console.log(`${destructured.length}`);

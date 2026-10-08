@@ -70,6 +70,9 @@ type Function struct {
 	// Parameters are locals, in order.
 	Parameters []int
 
+	// SourceLength is ECMAScript ExpectedArgumentCount, before ABI parameters are added.
+	SourceLength int
+
 	// Returns is the result's type, or 0 for void.
 	Returns Type
 

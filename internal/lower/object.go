@@ -350,6 +350,19 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		// read below (tupleLength).
 		return nil, l.notYet(node, "."+name+" on a tuple")
 	}
+	// A declared function identifier has no receiver effects. Read its source arity
+	// without constructing a callable rest-parameter wrapper that Adamic refuses.
+	if name == "length" && ast.IsIdentifier(access.Expression) {
+		if symbol := l.symbol(access.Expression); symbol != nil {
+			if _, known := l.functions[symbol]; known {
+				for _, declaration := range symbol.Declarations {
+					if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() != nil {
+						return ir.NumberConstant{Value: float64(sourceFunctionLength(declaration))}, nil
+					}
+				}
+			}
+		}
+	}
 	object, err := l.expression(access.Expression)
 	if err != nil {
 		return nil, err
@@ -387,6 +400,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 	object = l.privateStaticReceiver(node.Name(), object, false)
+	if object.Type() == ir.Closure && name == "length" {
+		return ir.ClosureLength{Value: object, Optional: access.QuestionDotToken != nil}, nil
+	}
 	if access.QuestionDotToken != nil && (object.Type() == ir.Array || object.Type() == ir.String) && name == "length" {
 		// words?.length and text?.length: undefined where the array or string is, a number | undefined.
 		if object.Type() == ir.Array {
