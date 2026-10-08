@@ -9,8 +9,9 @@ import (
 	"testing"
 )
 
-// Not parallel: the upstream capture and oracle are shared for this run.
+// The upstream capture and oracle are the run's shared ones, made once whichever test asks first.
 func TestCapturedOracleRecovery(t *testing.T) {
+	t.Parallel()
 	oracle := goOracle(t)
 	rows := upstream(t)
 	found := false
@@ -51,6 +52,7 @@ func TestCapturedOracleRecovery(t *testing.T) {
 }
 
 func TestUnmarkedMalformedOracleInputStillFails(t *testing.T) {
+	t.Parallel()
 	source := filepath.Join(t.TempDir(), "unmarked.ts")
 	if err := os.WriteFile(source, []byte("'\\1'"), 0644); err != nil {
 		t.Fatal(err)
@@ -77,6 +79,7 @@ func TestUnmarkedMalformedOracleInputStillFails(t *testing.T) {
 }
 
 func TestRecoveryClassificationPreservesModes(t *testing.T) {
+	t.Parallel()
 	rows := []string{"clean.ts\trule", "octal.ts\trule", "unsupported.ts\trule\t\t\t\t\tunsupported-recovery"}
 	got, err := classifyRecoveryRows(rows, []string{"0", "1", "1"})
 	if err != nil {
