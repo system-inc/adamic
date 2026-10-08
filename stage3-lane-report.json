@@ -1,0 +1,48 @@
+{
+  "status": "fail",
+  "errors": [
+    "test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106363, 'failing': 4, 'pending': 0}",
+    "reporter counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106363, 'failing': 4, 'pending': 0}",
+    "failed test names: expected ['unittests:: Public APIs for typescript.d.ts should be acknowledged when they change'], observed ['compiler tests compiler tests for tests/cases/compiler/jsFileCompilationWithoutJsExtensions.ts Correct errors for tests/cases/compiler/jsFileCompilationWithoutJsExtensions.ts', 'compiler tests compiler tests for tests/cases/compiler/genericConstraint1.ts Correct JS output for tests/cases/compiler/genericConstraint1.ts', 'fourslash tests tests/cases/fourslash/getOccurrencesIsDefinitionOfBindingPattern.ts fourslash test getOccurrencesIsDefinitionOfBindingPattern.ts runs correctly', 'unittests:: Public APIs for typescript.d.ts should be acknowledged when they change']",
+    "number of reported failure titles: expected 1, observed 4"
+  ],
+  "counts": {
+    "passing": 106363,
+    "failing": 4,
+    "pending": 0
+  },
+  "failed_tests": [
+    "compiler tests compiler tests for tests/cases/compiler/jsFileCompilationWithoutJsExtensions.ts Correct errors for tests/cases/compiler/jsFileCompilationWithoutJsExtensions.ts",
+    "compiler tests compiler tests for tests/cases/compiler/genericConstraint1.ts Correct JS output for tests/cases/compiler/genericConstraint1.ts",
+    "fourslash tests tests/cases/fourslash/getOccurrencesIsDefinitionOfBindingPattern.ts fourslash test getOccurrencesIsDefinitionOfBindingPattern.ts runs correctly",
+    "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+  ],
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "api": {
+    "reference_declarations": 28,
+    "composed_declarations": 222,
+    "sanctioned_declarations": 222,
+    "added_lines": 194,
+    "removed_lines": 193
+  },
+  "platform": {
+    "os": "linux",
+    "arch": "x64",
+    "node": "v24.19.0"
+  },
+  "execution": {
+    "commit": "ea1b23595482f0ed13fdd00670e9cf31afb11d96",
+    "apply_exit": 0,
+    "oracle_exit": 1,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "wall_seconds": 1523.123
+  },
+  "results": "/home/ahra/fast-gate/tree-2-stage3-lane",
+  "verdict": "FAIL stage3 landing lane: test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106363, 'failing': 4, 'pending': 0}"
+}
