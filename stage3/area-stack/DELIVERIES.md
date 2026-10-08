@@ -17,3 +17,5 @@ Pending namespace rulings are in PARSER-REVIEW.md. METHOD-VALUES-PROPOSAL.md, RE
 The additional generic-return clock follow-up replays only 210f6ead2. Its finite optional object/refinement proof and four mutants pass; reports distinguish its narrow admission from the earlier held generic-returns-t topic.
 
 The additional clock follow-up passed its full catalog at a472d0fe1e0c6a61baf2a6adf787dd6bcc889917; the final report-only commit is its push SHA.
+
+The namespace ruling follow-up replays namespaces-tsc, enum-init-reach and namespace-init-sys, merges fixture base 547551cb, and implements primitive tag checks and shared repeated-var slots. The debug.ts:8:5 live binding and core.ts:11:52 enum reductions pass against Node. Original checked .ts assertions and all readiness/ownership refusals remain. Group 1b and checked-view topics remain skipped. Its final push SHA is recorded in the delivery response.

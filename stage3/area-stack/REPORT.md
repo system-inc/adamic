@@ -1,3 +1,31 @@
+# Namespace and enum delivery after the compiler rulings
+
+The stack now includes namespaces-tsc's 19 own commits through 47a6fabe, enum-init-reach's e0a9d025 and 2152fc3b, and namespace-init-sys's eight own commits. Existing namespace-read and checked TypeScript assertion changes remain. The allowed fixture-base merge is 57e04692d, from origin/compiler/area-next-fixtures 547551cb80f165b1d039585e3a13dfa51d6a2653. The implementation and count commit is 44852eca1f506c21964153819149f54562ef9097.
+
+Qualified reads use the same primitive union checks as local reads. Namespace readiness, differently held object-tag refusals, counted calls, argument slots and ownership checks remain. Repeated direct namespace var declarations use one hoisted slot. A declaration without an initializer does nothing; each initializer assigns in source order. The repeated-var refusal outside a direct namespace body remains. The debug.ts:8:5 reduction observes false:false, true:true, false:false after outside writes in Node and both backends. The core.ts:11:52 enum-map reduction lowers and agrees with Node. Calls and construction reaching a pending enum or namespace still refuse; unknown calls retain loud checks at reads.
+
+Eight preserved TypeScript controls had acquired an Adamic-only refusal comment in an earlier base merge. Only that comment was removed, restoring every recorded migration hash. The checked unwrap still applies to .ts; .a still refuses postfix !. Both the original nested-functions .ts control and the base's adapted .a control are kept. Three premature-enum-read negative programs use their existing exact failure assertions, rather than generic checked-fixture mode, which incorrectly assumes source Node continues. Their failure text and checks were not weakened.
+
+Validation commands and observations:
+
+* go test ./internal/lower ./internal/ir ./internal/flow ./internal/javascript: lower 48.421s, IR 31.067s, flow 204.299s; JavaScript has no package tests.
+* go test ./internal/oracle -run 'Namespace|EnumInitialization|NonNull' -count=1 -v: 23.646s, passed. This includes each topic's positive controls in both backends and native sanitizers, exact negative readiness controls and checked-unwrap tests.
+* go test ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/(namespace|non_null)' -count=1 -v: 24.774s, passed.
+* go test ./internal/oracle -run '^TestNativeAgreesWithNode$/stage3/(namespaces|namespace|fixtures)/(enum-init-reach|namespaces|shapes|live|realpath-control|cwd-control)' -count=1 -v: 6.081s, passed.
+* go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts: 68.383s, passed.
+* The 24-level namespace graph expands exactly 25 bodies, even after every function is queried again; its subtest took 0.03s. The native/release/JavaScript 24-level enum fixture also agrees with Node.
+
+Mutants:
+
+* New live-write, repeated-initializer and primitive-tag mutations each fail Node's differential in JavaScript and sanitized native execution.
+* Namespace reaching-call removal, completed-function memo removal, partial cycle reach, enum reaching-read removal, enum memo removal, enum readiness removal, wrong literal callable branch, namespace readiness removal, ambient-host exclusion removal and transitive parameter-property recognition removal each fail their intended assertions. The reproducible overlay runner is namespace-guard-mutants.py. Logs name each catch.
+* Existing eight namespace binding/order mutations and three namespace state/readiness mutations are caught. The focused log also records callable-namespace identity, class-registration, module readiness/live-binding and non-null mutants, with their individual observations.
+* An exploratory mutation in unchanged class.go/useOfThis survived because other proofs still reject its probes. It was not a mutation of this topic's change and is not counted as a catch. The actual prerequisite mutation in class_inheritance.go/initializerReads fails TestParameterPropertiesSoundness. Neither production guard nor its tests was weakened.
+
+Catalog result: bash verify/catalog/check.sh 44852eca1f506c21964153819149f54562ef9097 --jobs 1 passed in 425.048s. All 11 applicable undo mutants fail as recorded; five historically inapplicable entries remain skipped. No undo patch drifted.
+
+Skipped: enum-tag-narrowing, optional-field-write presence and group 1b stricter options require checked views, as ruled. No views code was imported and no 173 scheduled / 0 errors census result is claimed. Full TypeScript native parser and scanner completion is not claimed; the reported boundaries are the reductions above. The separately approved method-values, binary, case-declaration, void-or-undefined and for-in resolutions are being checked in isolated reviews.
+
 # Group 4 generic-return clock follow-up
 
 Catalog on a472d0fe1e0c6a61baf2a6adf787dd6bcc889917: exit 0, 225.115s; all 11 applicable undo patches were caught, the same five historical entries stayed nonapplicable, and no undo patch drifted. Per-entry controls and mutant catches are retained in evidence/clock-generic/catalog.
