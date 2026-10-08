@@ -10,6 +10,24 @@ import (
 // that presence until typeof has classified it, while sharing the ordinary value read's lookup.
 func (e *emitter) arrayIndexSlot(expression ir.ArrayIndex) string {
 	array := e.value(expression.Array)
+	if expression.Optional {
+		// Snapshot the receiver before the key can replace its binding. The key's
+		// work and temporary cleanup belong only to the present branch.
+		array = e.snapshot(ir.Array, array)
+		slot := e.temporary()
+		e.line("adamic_value *%s = NULL;", slot)
+		text, index, owned := e.aside(expression.Index)
+		e.line("if (%s != NULL) {", array)
+		e.out.WriteString(text)
+		e.indent++
+		e.line("%s = adamic_array_at(%s, %s);", slot, array, index)
+		for index := len(owned) - 1; index >= 0; index-- {
+			e.line("adamic_release(%s);", owned[index])
+		}
+		e.indent--
+		e.line("}")
+		return slot
+	}
 	index := e.value(expression.Index)
 	slot := e.temporary()
 	lookup := "adamic_array_at"

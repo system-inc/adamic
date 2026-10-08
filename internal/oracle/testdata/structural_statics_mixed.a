@@ -1,0 +1,18 @@
+interface Reader { read(value: string): string; }
+class Both {
+    static prefix = 'static'; readonly prefix = 'instance';
+    static read(value: string): string { return this.prefix + value + '-static'; }
+    read(value: string): string { return this.prefix + value + '-instance'; }
+}
+class Other {
+    static prefix = 'other static'; readonly prefix = 'other instance';
+    static before(): string { return 'before'; }
+    static read(value: string): string { return this.prefix + value + '-static'; }
+    before(): string { return 'before'; }
+    read(value: string): string { return this.prefix + value + '-instance'; }
+}
+function report(reader: Reader): string { return reader.read('-argument'); }
+function select(staticSide: boolean): Reader { return staticSide ? Both : new Both(); }
+console.log(report(select(true))); console.log(report(select(false)));
+console.log(report(Other)); console.log(report(new Other()));
+console.log(report({ read: (value: string): string => 'own closure' + value }));

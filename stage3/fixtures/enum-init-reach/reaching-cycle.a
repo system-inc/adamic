@@ -1,0 +1,5 @@
+const key: 'Zero' = 'Zero'; // Every member of a recursive component keeps its full reach set.
+function first(stop:boolean):number{if(stop){return Pending[key];}return second();}
+function second():number{return first(true);}
+console.log(String(second()));
+enum Pending {Zero}
