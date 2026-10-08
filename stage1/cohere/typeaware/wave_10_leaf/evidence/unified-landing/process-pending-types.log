@@ -1,0 +1,20 @@
+stage1/cohere/typeaware/wave_10_next/unified_pending/no-process-exit-after-output/rule.a:5:14: class Rule: Rule
+stage1/cohere/typeaware/wave_10_next/unified_pending/no-process-exit-after-output/rule.a:6:14: property context: Rules
+stage1/cohere/typeaware/wave_10_next/unified_pending/no-process-exit-after-output/rule.a:7:14: property port: NoProcessExitAfterOutput
+stage1/cohere/typeaware/wave_10_next/unified_pending/no-process-exit-after-output/rule.a:8:17: parameter shared: RuleContext
+stage1/cohere/typeaware/wave_10_next/unified_pending/no-process-exit-after-output/rule.a:9:5: method visit: (node: ParseNode, index: number) => void
+stage1/cohere/typeaware/wave_10_next/unified_pending/no-process-exit-after-output/rule.a:9:11: parameter node: ParseNode
+stage1/cohere/typeaware/wave_10_next/unified_pending/no-process-exit-after-output/rule.a:9:28: parameter index: number
+stage1/cohere/typeaware/wave_10_next/unified_pending/no-process-exit-after-output/rule.a:11:17: function create: (context: RuleContext) => Rule
+stage1/cohere/typeaware/wave_10_next/unified_pending/no-process-exit-after-output/rule.a:11:24: parameter context: RuleContext
+stage1/cohere/typeaware/wave_10_next/unified_pending/require-blocking-standard-streams/rule.a:8:86: error TS2554: Expected 2 arguments, but got 1.
+exit status 1
+stage1/cohere/typeaware/wave_10_next/unified_pending/require-blocking-standard-streams/rule.a:6:14: class Rule: Rule
+stage1/cohere/typeaware/wave_10_next/unified_pending/require-blocking-standard-streams/rule.a:7:14: property context: Rules
+stage1/cohere/typeaware/wave_10_next/unified_pending/require-blocking-standard-streams/rule.a:8:14: property port: RequireBlockingStandardStreams
+stage1/cohere/typeaware/wave_10_next/unified_pending/require-blocking-standard-streams/rule.a:9:17: parameter shared: RuleContext
+stage1/cohere/typeaware/wave_10_next/unified_pending/require-blocking-standard-streams/rule.a:10:5: method visit: (node: ParseNode, index: number) => void
+stage1/cohere/typeaware/wave_10_next/unified_pending/require-blocking-standard-streams/rule.a:10:11: parameter node: ParseNode
+stage1/cohere/typeaware/wave_10_next/unified_pending/require-blocking-standard-streams/rule.a:10:28: parameter index: number
+stage1/cohere/typeaware/wave_10_next/unified_pending/require-blocking-standard-streams/rule.a:12:17: function create: (context: RuleContext) => Rule
+stage1/cohere/typeaware/wave_10_next/unified_pending/require-blocking-standard-streams/rule.a:12:24: parameter context: RuleContext

@@ -1,0 +1,44 @@
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:4:18: interface HookCallFactsInterface: HookCallFactsInterface
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:5:14: property start: number
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:6:14: property end: number
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:7:14: property hasChecker: boolean
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:8:14: property hasExpression: boolean
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:9:14: property calleeKind: string
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:10:14: property calleeName: string
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:11:14: property receiverKind: string
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:12:14: property receiverName: string
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:13:14: property propertyKind: string
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:14:14: property propertyName: string
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:15:14: property resultPresent: boolean
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:16:14: property resultFlags: number
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:17:14: property blindedRules: readonly string[]
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:19:17: function isHookName: (name: string) => boolean
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:19:28: parameter name: string
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:22:17: function namedRules: (names: readonly string[]) => string
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:22:28: parameter names: readonly string[]
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:32:9: variable result: string
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:33:13: variable index: number
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:34:15: variable name: string
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:39:17: function description: (hook: string, blinded: readonly string[]) => string
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:39:29: parameter hook: string
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:39:43: parameter blinded: readonly string[]
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:40:11: variable cost: string
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:46:17: function visit: (node: HookCallFactsInterface) => Diagnostic | undefined
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:46:23: parameter node: HookCallFactsInterface
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:50:9: variable hook: string
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:79:14: class Rule: Rule
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:80:14: property context: RuleContext
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:81:14: property catalog: readonly string[]
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:82:17: parameter context: RuleContext
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:82:39: parameter catalog: readonly string[]
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:83:5: method visit: (node: ParseNode, index: number) => void
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:83:11: parameter node: ParseNode
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:83:28: parameter index: number
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:84:15: variable callee: ParseNode
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:85:13: variable hook: string
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:88:19: variable receiver: ParseNode
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:89:19: variable property: ParseNode
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:93:15: variable answer: Answer | undefined
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:95:15: variable facts: Types
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:101:17: function create: (context: RuleContext) => Rule
+stage1/cohere/typeaware/wave_10_leaf/react_hook_no_any_type/unified_pending/rule.a:101:24: parameter context: RuleContext

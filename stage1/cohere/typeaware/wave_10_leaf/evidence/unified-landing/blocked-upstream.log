@@ -1,0 +1,136 @@
+=== RUN   TestReactHookAnyTypeNamesTheBlindedRulesFromTheCatalog
+=== PAUSE TestReactHookAnyTypeNamesTheBlindedRulesFromTheCatalog
+=== CONT  TestReactHookAnyTypeNamesTheBlindedRulesFromTheCatalog
+--- PASS: TestReactHookAnyTypeNamesTheBlindedRulesFromTheCatalog (0.01s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/structure	0.017s
+=== RUN   TestCorrectnessNoProcessExitAfterOutputFires
+=== PAUSE TestCorrectnessNoProcessExitAfterOutputFires
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires
+=== CONT  TestCorrectnessNoProcessExitAfterOutputFires
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/a_callback_the_module_hands_on_at_load_(FigmaMcpLauncher.ts)
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/a_callback_the_module_hands_on_at_load_(FigmaMcpLauncher.ts)
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/a_named_const_arrow_handed_on
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/a_named_const_arrow_handed_on
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/an_immediately_invoked_function
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/an_immediately_invoked_function
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/a_function_called_by_a_function_called_at_load
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/a_function_called_by_a_function_called_at_load
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/a_main_that_writes_and_exits_before_its_own_block
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/a_main_that_writes_and_exits_before_its_own_block
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/a_shebang_file_that_other_files_import
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/a_shebang_file_that_other_files_import
+=== RUN   TestCorrectnessNoProcessExitAfterOutputFires/an_error_printed_in_a_catch,_then_the_exit
+=== PAUSE TestCorrectnessNoProcessExitAfterOutputFires/an_error_printed_in_a_catch,_then_the_exit
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/a_local_blockStandardStreams_in_a_file_that_also_imports_Nexus's
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/a_local_blockStandardStreams_in_a_file_that_also_imports_Nexus's
+=== RUN   TestCorrectnessNoProcessExitAfterOutputFires/a_write_before_the_try,_an_exit_in_its_catch
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/another_file's_blockStandardStreams_that_is_not_Nexus's
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/another_file's_blockStandardStreams_that_is_not_Nexus's
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/a_helper_from_a_file_that_imports_Nexus_but_never_blocks
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/a_helper_from_a_file_that_imports_Nexus_but_never_blocks
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/an_exit_after_an_await,_in_a_file_that_never_blocks
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/an_exit_after_an_await,_in_a_file_that_never_blocks
+=== PAUSE TestCorrectnessNoProcessExitAfterOutputFires/a_write_before_the_try,_an_exit_in_its_catch
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/a_callback,_in_a_file_that_never_blocks
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/a_callback,_in_a_file_that_never_blocks
+=== RUN   TestCorrectnessNoProcessExitAfterOutputFires/an_exit_at_the_top_of_a_loop_whose_last_turn_printed
+=== PAUSE TestCorrectnessNoProcessExitAfterOutputFires/an_exit_at_the_top_of_a_loop_whose_last_turn_printed
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/an_imported_module_whose_function_blocks,_never_called
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/an_imported_module_whose_function_blocks,_never_called
+=== RUN   TestCorrectnessRequireBlockingStandardStreamsFires/a_write_through_process.stdout_at_the_top_level
+=== PAUSE TestCorrectnessRequireBlockingStandardStreamsFires/a_write_through_process.stdout_at_the_top_level
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/a_callback_the_module_hands_on_at_load_(FigmaMcpLauncher.ts)
+=== RUN   TestCorrectnessNoProcessExitAfterOutputFires/stdout_written_directly
+=== PAUSE TestCorrectnessNoProcessExitAfterOutputFires/stdout_written_directly
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/another_file's_blockStandardStreams_that_is_not_Nexus's
+=== RUN   TestCorrectnessNoProcessExitAfterOutputFires/stderr_written_directly
+=== PAUSE TestCorrectnessNoProcessExitAfterOutputFires/stderr_written_directly
+=== RUN   TestCorrectnessNoProcessExitAfterOutputFires/stdout_written_through_the_namespace_import,_then_the_exit_(GodwordEntropy.ts:146)
+=== PAUSE TestCorrectnessNoProcessExitAfterOutputFires/stdout_written_through_the_namespace_import,_then_the_exit_(GodwordEntropy.ts:146)
+=== RUN   TestCorrectnessNoProcessExitAfterOutputFires/members_imported_by_name
+=== PAUSE TestCorrectnessNoProcessExitAfterOutputFires/members_imported_by_name
+=== RUN   TestCorrectnessNoProcessExitAfterOutputFires/members_of_the_bare_process_module
+=== PAUSE TestCorrectnessNoProcessExitAfterOutputFires/members_of_the_bare_process_module
+=== RUN   TestCorrectnessNoProcessExitAfterOutputFires/every_console_method_that_writes
+=== PAUSE TestCorrectnessNoProcessExitAfterOutputFires/every_console_method_that_writes
+=== RUN   TestCorrectnessNoProcessExitAfterOutputFires/console_reached_by_a_quoted_member
+=== PAUSE TestCorrectnessNoProcessExitAfterOutputFires/console_reached_by_a_quoted_member
+=== RUN   TestCorrectnessNoProcessExitAfterOutputFires/module_top_level
+=== PAUSE TestCorrectnessNoProcessExitAfterOutputFires/module_top_level
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/a_main_that_writes_and_exits_before_its_own_block
+=== RUN   TestCorrectnessNoProcessExitAfterOutputFires/a_write_in_a_try,_the_exit_in_its_finally
+=== PAUSE TestCorrectnessNoProcessExitAfterOutputFires/a_write_in_a_try,_the_exit_in_its_finally
+=== RUN   TestCorrectnessNoProcessExitAfterOutputFires/a_case_that_prints_and_falls_through_to_the_exit
+=== PAUSE TestCorrectnessNoProcessExitAfterOutputFires/a_case_that_prints_and_falls_through_to_the_exit
+=== RUN   TestCorrectnessNoProcessExitAfterOutputFires/the_last-resort_catch_on_a_promise
+=== PAUSE TestCorrectnessNoProcessExitAfterOutputFires/the_last-resort_catch_on_a_promise
+=== RUN   TestCorrectnessNoProcessExitAfterOutputFires/a_write_before_the_try_survives_the_catch_that_forgets_the_one_inside_it
+=== PAUSE TestCorrectnessNoProcessExitAfterOutputFires/a_write_before_the_try_survives_the_catch_that_forgets_the_one_inside_it
+=== RUN   TestCorrectnessNoProcessExitAfterOutputFires/a_write_in_an_earlier_try_survives_the_catch_of_a_later_one
+=== PAUSE TestCorrectnessNoProcessExitAfterOutputFires/a_write_in_an_earlier_try_survives_the_catch_of_a_later_one
+=== RUN   TestCorrectnessNoProcessExitAfterOutputFires/a_write_in_an_inner_catch_reaches_the_exit_after_the_outer_try
+=== PAUSE TestCorrectnessNoProcessExitAfterOutputFires/a_write_in_an_inner_catch_reaches_the_exit_after_the_outer_try
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/a_local_blockStandardStreams_in_a_file_that_also_imports_Nexus's
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/a_shebang_file_that_other_files_import
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/an_immediately_invoked_function
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/a_function_called_by_a_function_called_at_load
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/a_callback,_in_a_file_that_never_blocks
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/a_write_through_process.stdout_at_the_top_level
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/an_imported_module_whose_function_blocks,_never_called
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/a_named_const_arrow_handed_on
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/an_exit_after_an_await,_in_a_file_that_never_blocks
+=== CONT  TestCorrectnessRequireBlockingStandardStreamsFires/a_helper_from_a_file_that_imports_Nexus_but_never_blocks
+=== CONT  TestCorrectnessNoProcessExitAfterOutputFires/an_error_printed_in_a_catch,_then_the_exit
+=== CONT  TestCorrectnessNoProcessExitAfterOutputFires/console_reached_by_a_quoted_member
+=== CONT  TestCorrectnessNoProcessExitAfterOutputFires/a_write_in_an_inner_catch_reaches_the_exit_after_the_outer_try
+--- PASS: TestCorrectnessRequireBlockingStandardStreamsFires (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/a_callback_the_module_hands_on_at_load_(FigmaMcpLauncher.ts) (0.01s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/a_main_that_writes_and_exits_before_its_own_block (0.01s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/a_local_blockStandardStreams_in_a_file_that_also_imports_Nexus's (0.01s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/another_file's_blockStandardStreams_that_is_not_Nexus's (0.01s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/a_function_called_by_a_function_called_at_load (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/an_immediately_invoked_function (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/a_callback,_in_a_file_that_never_blocks (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/a_write_through_process.stdout_at_the_top_level (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/an_imported_module_whose_function_blocks,_never_called (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/a_named_const_arrow_handed_on (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/a_shebang_file_that_other_files_import (0.01s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/an_exit_after_an_await,_in_a_file_that_never_blocks (0.00s)
+    --- PASS: TestCorrectnessRequireBlockingStandardStreamsFires/a_helper_from_a_file_that_imports_Nexus_but_never_blocks (0.01s)
+=== CONT  TestCorrectnessNoProcessExitAfterOutputFires/a_write_in_an_earlier_try_survives_the_catch_of_a_later_one
+=== CONT  TestCorrectnessNoProcessExitAfterOutputFires/a_write_before_the_try_survives_the_catch_that_forgets_the_one_inside_it
+=== CONT  TestCorrectnessNoProcessExitAfterOutputFires/a_case_that_prints_and_falls_through_to_the_exit
+=== CONT  TestCorrectnessNoProcessExitAfterOutputFires/a_write_in_a_try,_the_exit_in_its_finally
+=== CONT  TestCorrectnessNoProcessExitAfterOutputFires/the_last-resort_catch_on_a_promise
+=== CONT  TestCorrectnessNoProcessExitAfterOutputFires/module_top_level
+=== CONT  TestCorrectnessNoProcessExitAfterOutputFires/stdout_written_through_the_namespace_import,_then_the_exit_(GodwordEntropy.ts:146)
+=== CONT  TestCorrectnessNoProcessExitAfterOutputFires/every_console_method_that_writes
+=== CONT  TestCorrectnessNoProcessExitAfterOutputFires/members_of_the_bare_process_module
+=== CONT  TestCorrectnessNoProcessExitAfterOutputFires/members_imported_by_name
+=== CONT  TestCorrectnessNoProcessExitAfterOutputFires/stdout_written_directly
+=== CONT  TestCorrectnessNoProcessExitAfterOutputFires/stderr_written_directly
+=== CONT  TestCorrectnessNoProcessExitAfterOutputFires/an_exit_at_the_top_of_a_loop_whose_last_turn_printed
+=== CONT  TestCorrectnessNoProcessExitAfterOutputFires/a_write_before_the_try,_an_exit_in_its_catch
+--- PASS: TestCorrectnessNoProcessExitAfterOutputFires (0.00s)
+    --- PASS: TestCorrectnessNoProcessExitAfterOutputFires/console_reached_by_a_quoted_member (0.04s)
+    --- PASS: TestCorrectnessNoProcessExitAfterOutputFires/a_write_in_an_inner_catch_reaches_the_exit_after_the_outer_try (0.04s)
+    --- PASS: TestCorrectnessNoProcessExitAfterOutputFires/an_error_printed_in_a_catch,_then_the_exit (0.04s)
+    --- PASS: TestCorrectnessNoProcessExitAfterOutputFires/a_write_in_an_earlier_try_survives_the_catch_of_a_later_one (0.03s)
+    --- PASS: TestCorrectnessNoProcessExitAfterOutputFires/a_write_before_the_try_survives_the_catch_that_forgets_the_one_inside_it (0.00s)
+    --- PASS: TestCorrectnessNoProcessExitAfterOutputFires/the_last-resort_catch_on_a_promise (0.00s)
+    --- PASS: TestCorrectnessNoProcessExitAfterOutputFires/a_case_that_prints_and_falls_through_to_the_exit (0.00s)
+    --- PASS: TestCorrectnessNoProcessExitAfterOutputFires/a_write_in_a_try,_the_exit_in_its_finally (0.00s)
+    --- PASS: TestCorrectnessNoProcessExitAfterOutputFires/module_top_level (0.00s)
+    --- PASS: TestCorrectnessNoProcessExitAfterOutputFires/stdout_written_through_the_namespace_import,_then_the_exit_(GodwordEntropy.ts:146) (0.00s)
+    --- PASS: TestCorrectnessNoProcessExitAfterOutputFires/members_of_the_bare_process_module (0.00s)
+    --- PASS: TestCorrectnessNoProcessExitAfterOutputFires/every_console_method_that_writes (0.00s)
+    --- PASS: TestCorrectnessNoProcessExitAfterOutputFires/members_imported_by_name (0.00s)
+    --- PASS: TestCorrectnessNoProcessExitAfterOutputFires/stdout_written_directly (0.00s)
+    --- PASS: TestCorrectnessNoProcessExitAfterOutputFires/a_write_before_the_try,_an_exit_in_its_catch (0.00s)
+    --- PASS: TestCorrectnessNoProcessExitAfterOutputFires/stderr_written_directly (0.00s)
+    --- PASS: TestCorrectnessNoProcessExitAfterOutputFires/an_exit_at_the_top_of_a_loop_whose_last_turn_printed (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/nexus	0.080s
