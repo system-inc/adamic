@@ -24,6 +24,7 @@ type predicateProof struct {
 	assertion  bool
 	trueTypes  []*checker.Type
 	lastReturn *ast.Node
+	active     map[*ast.Node]bool
 }
 
 type predicatePath struct {
@@ -36,6 +37,20 @@ func (p *predicateProof) refused(node *ast.Node, reason string) error {
 }
 
 func (l *lowering) provePredicate(node *ast.Node) error {
+	return l.provePredicateSeen(node, map[*ast.Node]bool{})
+}
+
+func (l *lowering) provePredicateSeen(node *ast.Node, active map[*ast.Node]bool) error {
+	if active[node] {
+		return (&predicateProof{l: l}).refused(node, "recursive helper has no independent proof")
+	}
+	active[node] = true
+	defer delete(active, node)
+	if node.Parent.Kind == ast.KindFunctionType {
+		if accepted, err := l.predicateCallbackContract(node); accepted {
+			return err
+		}
+	}
 	annotation := node.AsTypePredicateNode()
 	function := node.Parent
 	if !ast.IsFunctionLike(function) || function.Body() == nil || annotation.ParameterName.Kind != ast.KindIdentifier {
@@ -48,7 +63,7 @@ func (l *lowering) provePredicate(node *ast.Node) error {
 			break
 		}
 	}
-	p := &predicateProof{l: l, function: function, parameter: parameter, assertion: annotation.AssertsModifier != nil}
+	p := &predicateProof{l: l, function: function, parameter: parameter, assertion: annotation.AssertsModifier != nil, active: active}
 	if parameter == nil || parameter.AsParameterDeclaration().Initializer != nil || parameter.AsParameterDeclaration().DotDotDotToken != nil {
 		return p.refused(node, "the predicate must name an unchanged plain parameter")
 	}
@@ -230,10 +245,26 @@ func (p *predicateProof) statement(node *ast.Node, paths []predicatePath) ([]pre
 	}
 }
 
-// check recognizes only independently trusted narrowing expressions, with no calls, aliases,
+// check recognizes trusted narrowing expressions and independently proven named guards, without aliases,
 // casts or computed property accesses. The checker still decides what each branch proves.
 func (p *predicateProof) check(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindCallExpression {
+		call := node.AsCallExpression()
+		if call.Expression.Kind != ast.KindIdentifier || len(call.Arguments.Nodes) != 1 || !p.reference(ast.SkipParentheses(call.Arguments.Nodes[0])) {
+			return false
+		}
+		symbol := p.l.symbol(call.Expression)
+		if symbol == nil {
+			return false
+		}
+		for _, declaration := range symbol.Declarations {
+			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() != nil && declaration.Type() != nil && declaration.Type().Kind == ast.KindTypePredicate {
+				return p.l.provePredicateSeen(declaration.Type(), p.active) == nil
+			}
+		}
+		return false
+	}
 	if node.Kind == ast.KindPrefixUnaryExpression && node.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken {
 		return p.check(node.AsPrefixUnaryExpression().Operand)
 	}

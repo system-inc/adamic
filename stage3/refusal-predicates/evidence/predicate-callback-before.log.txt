@@ -1,0 +1,2 @@
+adamic: /workspace/adamic/internal/oracle/testdata/predicate_callback_contract.a:7:49: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)
+exit status 1

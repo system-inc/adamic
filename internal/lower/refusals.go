@@ -77,7 +77,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return true
 		}
 		if node.Kind == ast.KindTypePredicate {
-			if err := l.provePredicate(node); err != nil {
+			if err := l.predicateRefusal(node); err != nil {
 				found = err
 				return true
 			}

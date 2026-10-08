@@ -1,0 +1,15 @@
+--- FAIL: TestPredicateCheckedNarrowing (0.74s)
+    --- FAIL: TestPredicateCheckedNarrowing/false (0.74s)
+        predicate_contracts_test.go:47: gate cache node miss
+        predicate_contracts_test.go:51: gate cache node miss
+        oracle_test.go:587: gate cache native miss
+        oracle_test.go:580: gate cache native miss
+        predicate_contracts_test.go:56: javascript must fire the narrowing check: exit 0 stderr ""
+        predicate_contracts_test.go:56: sanitized must fire the narrowing check: exit 0 stderr ""
+        predicate_contracts_test.go:56: release must fire the narrowing check: exit 0 stderr ""
+FAIL
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.757s
+FAIL

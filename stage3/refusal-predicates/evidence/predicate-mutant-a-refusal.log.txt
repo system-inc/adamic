@@ -1,0 +1,11 @@
+--- FAIL: TestPredicateCheckedNarrowing (0.61s)
+    --- FAIL: TestPredicateCheckedNarrowing/true (0.04s)
+        predicate_contracts_test.go:33: .a must refuse its unproven predicate: <nil>
+    --- FAIL: TestPredicateCheckedNarrowing/false (0.03s)
+        predicate_contracts_test.go:33: .a must refuse its unproven predicate: <nil>
+FAIL
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.627s
+FAIL
