@@ -1,0 +1,2 @@
+// Reduced from commandLineParser.ts:2301's unproven e.message access.
+try { throw new Error('unknown'); } catch (error: unknown) { console.log(error.message); }
