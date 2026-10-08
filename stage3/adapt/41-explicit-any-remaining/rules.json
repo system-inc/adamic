@@ -374,5 +374,45 @@
     "before": "const parsed = JSON.parse(text);",
     "after": "const parsed = (JSON.parse as (text: string) => JsonValue)(text);",
     "reason": "Without a reviver the builtin returns the recursive JSON domain, not a known map shape; the existing validator still decides the shape."
+  },
+  {
+    "id": 50,
+    "kind": "untyped locals",
+    "file": "src/compiler/emitter.ts",
+    "before": "let commonSourceDirectory;",
+    "after": "let commonSourceDirectory: string | undefined;",
+    "reason": "Initially absent; every branch assigns a normalized directory string before the return."
+  },
+  {
+    "id": 51,
+    "kind": "untyped locals",
+    "file": "src/compiler/moduleNameResolver.ts",
+    "before": "let extensions;",
+    "after": "let extensions: Extensions | undefined;",
+    "reason": "Initially absent; every config/resolution branch selects numeric Extensions flags before calling the worker."
+  },
+  {
+    "id": 52,
+    "kind": "untyped locals",
+    "file": "src/compiler/moduleSpecifiers.ts",
+    "before": "function getAllRuntimeDependencies(packageJson: PackageJsonPathFields) {\n    let result;",
+    "after": "function getAllRuntimeDependencies(packageJson: PackageJsonPathFields) {\n    let result: string[] | undefined;",
+    "reason": "Initially absent; concatenate adds only Object.keys string arrays from the three dependency maps."
+  },
+  {
+    "id": 53,
+    "kind": "untyped locals",
+    "file": "src/compiler/resolutionCache.ts",
+    "before": "let packageDirLength;",
+    "after": "let packageDirLength: number | undefined;",
+    "reason": "Only the guarded node_modules cases assign index lengths. Missing lengths remain undefined in the returned optional paths."
+  },
+  {
+    "id": 54,
+    "kind": "untyped locals",
+    "file": "src/compiler/utilities.ts",
+    "before": "function compareMessageChainContent(\n    c1: DiagnosticMessageChain[],\n    c2: DiagnosticMessageChain[],\n): Comparison {\n    let res;",
+    "after": "function compareMessageChainContent(\n    c1: DiagnosticMessageChain[],\n    c2: DiagnosticMessageChain[],\n): Comparison {\n    let res: Comparison | undefined;",
+    "reason": "Only string comparison and recursive Comparison results are assigned. The initially absent variable is tested/read only after assignment."
   }
 ]

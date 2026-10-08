@@ -1,0 +1,25 @@
+{
+  "any_before": 26,
+  "any_after": 21,
+  "any_mutant": 22,
+  "totals_before": {
+    "Refused": 5159,
+    "NotYet": 1470
+  },
+  "totals_after": {
+    "Refused": 5161,
+    "NotYet": 1468
+  },
+  "totals_mutant": {
+    "Refused": 5160,
+    "NotYet": 1469
+  },
+  "latent_mutant_extra": [
+    [
+      "NotYet",
+      "a value of type any",
+      "src/compiler/emitter.ts:643:9"
+    ]
+  ],
+  "tokens_removed": 0
+}

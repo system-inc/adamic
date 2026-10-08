@@ -1,0 +1,69 @@
+{
+  "family": "untyped locals",
+  "typescript": "6.0.3",
+  "files": {
+    "src/compiler/emitter.ts": {
+      "before": "59401938eda9af4ffc71d0e31a8e5b559475d85155a01163fa8b8f08811d8a19",
+      "after": "2f9559e3f9b482566ebe94d2ec4537d09d43b5d2562b94a30ff3275985ae504c",
+      "tokensRemoved": 0,
+      "javascriptByteIdentical": true,
+      "javascriptASTIdentical": true
+    },
+    "src/compiler/moduleNameResolver.ts": {
+      "before": "3bf0e00267e0c17c6cf04383628328c5c87dcf159d0782b9daf73eec6dcd68f9",
+      "after": "ceea3d5f2e154f93d35b4781abc3e114beaefa24ba4a0225eb4e4564e19008c1",
+      "tokensRemoved": 0,
+      "javascriptByteIdentical": true,
+      "javascriptASTIdentical": true
+    },
+    "src/compiler/moduleSpecifiers.ts": {
+      "before": "c47362305fba2170d24acf89f8e4ab97949639510fe4f4e9849a7a27ddeefccd",
+      "after": "c440fe9acac3db65b63b3f3cb49b1fcd2a980a74362b4b5933492a240ec8319b",
+      "tokensRemoved": 0,
+      "javascriptByteIdentical": true,
+      "javascriptASTIdentical": true
+    },
+    "src/compiler/resolutionCache.ts": {
+      "before": "03a1f222e852db26faf0564e8a2ff66f764b3c5c001771f59d94339868d90673",
+      "after": "54ff70ab3543a56d551a1bafe451d4de8076a08818c34fd431555bae77064ea6",
+      "tokensRemoved": 0,
+      "javascriptByteIdentical": true,
+      "javascriptASTIdentical": true
+    },
+    "src/compiler/utilities.ts": {
+      "before": "115d6b3601ac93fc1283c492b3e2b8e5d8dd48998698d7d9a4a29f3b88add507",
+      "after": "7e7b3702a07f6d348229fc2e5eeae668d5d756058324d5d6ae421ebe4b7b818e",
+      "tokensRemoved": 0,
+      "javascriptByteIdentical": true,
+      "javascriptASTIdentical": true
+    }
+  },
+  "tokensRemoved": 0,
+  "mutants": [
+    {
+      "file": "src/compiler/emitter.ts",
+      "mutation": "add throw to actual emitted source",
+      "caughtBy": "whole-file JavaScript AST equality"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "mutation": "add throw to actual emitted source",
+      "caughtBy": "whole-file JavaScript AST equality"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "mutation": "add throw to actual emitted source",
+      "caughtBy": "whole-file JavaScript AST equality"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "mutation": "add throw to actual emitted source",
+      "caughtBy": "whole-file JavaScript AST equality"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "mutation": "add throw to actual emitted source",
+      "caughtBy": "whole-file JavaScript AST equality"
+    }
+  ]
+}
