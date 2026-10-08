@@ -13,6 +13,7 @@ var libraryArrayMethods = map[string]bool{
 	"join": true, "indexOf": true, "includes": true, "lastIndexOf": true,
 	"with": true, "flatMap": true, "copyWithin": true, "toSpliced": true, "flat": true,
 	"findLast": true, "findLastIndex": true, "toReversed": true, "toSorted": true,
+	"sort": true, "reduceRight": true,
 }
 
 // libraryArrayMethod keeps this slice's additions out of the shared method dispatch.
@@ -83,6 +84,10 @@ func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir
 			return nil, true, l.notYet(node, "toSorted with an effectful comparator expression")
 		}
 		return l.arraySort(node, copy, element)
+	case "reduceRight":
+		return l.libraryArrayReduceRight(node, array, element)
+	case "sort":
+		return l.libraryArrayDefaultSort(node, receiver, array, element)
 	}
 	if len(written) < 1 || len(written) > 2 {
 		return nil, true, l.notYet(node, name+" with these arguments")
