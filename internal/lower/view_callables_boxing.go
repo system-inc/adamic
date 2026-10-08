@@ -85,3 +85,20 @@ func (l *lowering) viewCallableBoxedRepresentation(proven *checker.Type) bool {
 	}
 	return true
 }
+
+// A contextual scalar/object union field must hold its boxed representation even
+// when its initializer is a scalar. Otherwise reading it to pass as a callback
+// argument interprets the scalar word as a pointer before invocation can adapt.
+func (l *lowering) viewCallableBoxedRecordField(literal *ast.Node, name string) bool {
+	target := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
+	if target == nil {
+		return false
+	}
+	field := l.checker.GetPropertyOfType(target, name)
+	if field == nil {
+		return false
+	}
+	declared := l.checker.GetTypeOfSymbol(field)
+	of, known := l.representation(declared)
+	return known && of == ir.Union && l.viewCallableAggregateType(declared) && l.viewCallableBoxedRepresentation(declared)
+}

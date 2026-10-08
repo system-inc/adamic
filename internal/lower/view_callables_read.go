@@ -78,7 +78,7 @@ func (l *lowering) runtimeViewCallableShape(target *checker.Type) bool {
 		return false
 	}
 	s := signatures[0]
-	if len(s.TypeParameters()) != 0 || s.HasRestParameter() || s.MinArgumentCount() != len(s.Parameters()) {
+	if len(s.TypeParameters()) != 0 || s.HasRestParameter() {
 		return false
 	}
 	for _, p := range s.Parameters() {

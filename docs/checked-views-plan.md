@@ -1317,3 +1317,20 @@ their thunk invocation uses an adapter. Native view_callables_methods.go and
 JavaScript view_callables_signature.go preserve the same read refusal. Aggregate
 return demand reads evaluation operands via ir.ClosureOperands, and result targets
 remain resolved by the shared graph and ir.Program.ClosureTargets.
+
+Lane 5 optional callable hook: view_callables_contract.go and
+view_callables_read.go admit represented optional parameters while preserving
+exact recorded parameter count. Missing numeric optional arguments use the
+existing closure argument count and MaybeNumber representation. A producer
+requiring the omitted parameter still fails its representation/member check.
+
+Lane 5 long-signature refusal hook: native/runtime/object.c allocates space for
+both copies of the declared type in adamic_object_view's failure message. Rank 53's
+wrong-value fixture pins its complete long signature on sanitized and release
+native, preventing truncated diagnostics and reads beyond the message buffer.
+
+Lane 5 boxed argument field-production hook: lower/object.go calls the named
+viewCallableBoxedRecordField in view_callables_boxing.go. A supported contextual
+scalar/object union field stores the initializer in the declared boxed form.
+This fixes rank 50's scalar argument field being retained as a pointer before
+callable dispatch. Unknown, nominal and dictionary members remain unsupported.

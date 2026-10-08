@@ -84,11 +84,12 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
 				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
 			}
-			if declared := l.declaredField(node, fieldName); declared != 0 && !censusFieldSlotless(declared) {
+			boxedCallableField := l.viewCallableBoxedRecordField(node, fieldName)
+			if declared := l.declaredField(node, fieldName); declared != 0 && (!censusFieldSlotless(declared) || boxedCallableField) {
 				// Store the value as the member's slot holds it, rather than the initializer's type.
 				value = fit(value, declared)
 			}
-			if censusFieldSlotless(value.Type()) && !(value.Type() == ir.Union && l.objectPrimitiveBoxedField(property)) {
+			if censusFieldSlotless(value.Type()) && !(value.Type() == ir.Union && (l.objectPrimitiveBoxedField(property) || boxedCallableField)) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
 			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
