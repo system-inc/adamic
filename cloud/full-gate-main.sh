@@ -51,14 +51,19 @@ heartbeat() {
 # A no-lend file beside the slot table keeps the box out of the watcher's hands between runs, so it can be given
 # to other work (Loom's pilot, @system_adamic, Oct 8 21:47Z).
 slots=${ADAMIC_FAST_GATE_WATCH_STATE:-${HOME}/.adamic-fast-gate-watch}/slots
+# The box's lines are all of them, small slots too (a box shared with the fast gate, like the Threadripper, has
+# both): reclaim keeps them in ${state}/lent-lines and takes them out, lend puts them back ("<box> B" if none kept).
 lend() {
   [ -f "${slots}" ] || return 0
   [ -f "$(dirname "${slots}")/no-lend" ] && return 0
-  grep -qx "${box} B" "${slots}" || echo "${box} B" >> "${slots}"
+  grep -q "^${box} " "${slots}" && return 0
+  if [ -s "${state}/lent-lines" ]; then cat "${state}/lent-lines" >> "${slots}"; else echo "${box} B" >> "${slots}"; fi
 }
 reclaim() {
   [ -f "${slots}" ] || return 0
-  grep -vx "${box} B" "${slots}" > "${slots}.tmp"; mv "${slots}.tmp" "${slots}"
+  grep "^${box} " "${slots}" > "${state}/lent-lines.tmp" && mv "${state}/lent-lines.tmp" "${state}/lent-lines"
+  rm -f "${state}/lent-lines.tmp"
+  grep -v "^${box} " "${slots}" > "${slots}.tmp"; mv "${slots}.tmp" "${slots}"
   ssh "${box}" 'pkill -f "[f]ast-gate/run.py --tree" || true; mkdir -p ~/fast-gate; flock ~/fast-gate/lock true' || true
 }
 

@@ -110,6 +110,19 @@ class FullGateLoopTests(unittest.TestCase):
         self.call('release %s' % second)
         self.assertFalse((self.state / 'claims' / second).exists())
 
+    def test_a_whole_gate_takes_every_line_of_its_box_and_gives_them_back(self):
+        bin = Path(self.tmp.name) / 'bin'
+        bin.mkdir()
+        (bin / 'ssh').write_text('#!/bin/bash\nexit 0\n')
+        (bin / 'ssh').chmod(0o755)
+        (self.state / 'slots').write_text('threadripper B\nthreadripper S\nthreadripper S\nworkshop B\n')
+        command = 'set +e; ADAMIC_FULL_GATE_LIBRARY=1 source %s; box=threadripper; %s'
+        environment = dict(os.environ, PATH=str(bin) + ':' + os.environ['PATH'], ADAMIC_FULL_GATE_STATE=str(self.state), ADAMIC_FAST_GATE_WATCH_STATE=str(self.state))
+        subprocess.run(['bash', '-c', command % (self.work / 'cloud' / 'full-gate-main.sh', 'reclaim')], env=environment, check=True)
+        self.assertEqual((self.state / 'slots').read_text(), 'workshop B\n')
+        subprocess.run(['bash', '-c', command % (self.work / 'cloud' / 'full-gate-main.sh', 'lend; lend')], env=environment, check=True)
+        self.assertEqual((self.state / 'slots').read_text(), 'workshop B\nthreadripper B\nthreadripper S\nthreadripper S\n')
+
     def test_record_paths_are_push_main_s_three(self):
         self.assertEqual(self.call('recordOnly %s %s' % (self.code, self.records))[0], 0)
         self.assertEqual(self.call('recordOnly %s %s' % (self.records, self.changed))[0], 1)
