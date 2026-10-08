@@ -76,3 +76,10 @@ exit-0 erase-panic mutants and five observed hole-constructor refusals.
 Total: 17 dense reads proven, 3 record rows blocked, 4 remaining.
 Command filter: `-run 'TestLedgerWitnesses/(D193|D194|D225|D226|D227)$'`;
 exit 0, package 13.280s, log `/tmp/stricter-indexed-d-group4.log`.
+
+Group 4 commit: 3c5c85b4, pushed to codex/stricter-indexed-d.
+Group 5 proves D228, D229, D230 and D231. Four more erase-panic mutants build
+and exit 0, caught by exact named-stop assertions. All four hole variants refuse.
+Total: 21 dense reads proven, 3 record rows blocked, 0 known matching rows
+remaining. Command filter: `-run 'TestLedgerWitnesses/(D228|D229|D230|D231)$'`;
+exit 0, package 11.659s, log `/tmp/stricter-indexed-d-group5.log`.
