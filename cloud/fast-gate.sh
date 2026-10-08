@@ -85,7 +85,9 @@ while [ -z "${slot}" ]; do
 done
 # How long stopping idle work took, and how many marked processes it found, for the measurement that
 # decides whether idle work may share a gate box (@system_adamic, Oct 8 07:01).
-idleFound=$(for p in /proc/[0-9]*; do [ -O "${p}" ] && { tr '\0' '\n' < "${p}/environ"; } 2>/dev/null | grep -qx 'ADAMIC_IDLE_JOB=1' && echo x; done | wc -l)
+# Under the box script's set -e and pipefail a loop whose last test is false fails the pipeline, so the
+# count can never be allowed to end the gate: from 13:04Z on Oct 8 it voided every fast gate (248 voids).
+idleFound=$(for p in /proc/[0-9]*; do if [ -O "${p}" ] && { tr '\0' '\n' < "${p}/environ"; } 2>/dev/null | grep -qx 'ADAMIC_IDLE_JOB=1'; then echo x; fi; done | wc -l) || idleFound=unknown
 preemptStarted=$(date +%s%N)
 # BEGIN idle preemption (keep identical to cloud/idle-preempt.sh)
 python3 - <<'IDLE_PREEMPT'
