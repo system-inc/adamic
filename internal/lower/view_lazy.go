@@ -248,10 +248,13 @@ func (l *lowering) checkLazyViewReads() error {
 				family = unsupported
 			}
 		}
+		sharedArrayRead := ir.SharedUntaggedArrayRead(program, program.ViewContractTypes[receiverTypeID], field, contract)
 		if receiverContract := program.ViewContractTypes[receiverTypeID]; family == "" && receiverContract != 0 {
-			family = program.ViewContracts[receiverContract-1].Unsupported
+			if !sharedArrayRead {
+				family = program.ViewContracts[receiverContract-1].Unsupported
+			}
 		}
-		if family == "" && !certifiedUntaggedCallableRead(program, contract) && !l.viewIntersectionReadChecks(contract) && !l.viewTuplePositionChecks(program.ViewContractTypes[receiverTypeID], field, contract) && !(contract != 0 && program.ViewContracts[contract-1].Kind == ir.ViewCallable && viewCallableConcreteReadContract(program, contract)) {
+		if family == "" && !sharedArrayRead && !certifiedUntaggedCallableRead(program, contract) && !l.viewIntersectionReadChecks(contract) && !l.viewTuplePositionChecks(program.ViewContractTypes[receiverTypeID], field, contract) && !(contract != 0 && program.ViewContracts[contract-1].Kind == ir.ViewCallable && viewCallableConcreteReadContract(program, contract)) {
 			reaches := graph.ReachingAllocations(receiver)
 			if untrackedScope || unknown || reaches.Unknown {
 				family = unsupportedFields[field]
