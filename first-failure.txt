@@ -1,0 +1,2 @@
+FIRST FAILURE (catalog-apply, at 3.6 s):
+this change stops the bug catalog's undo patch from applying: 12-refuse-suppression-directives.patch. Refresh it in this landing (verify/catalog/check.sh --entry NN <sha> must say applies-and-fails-as-recorded)
