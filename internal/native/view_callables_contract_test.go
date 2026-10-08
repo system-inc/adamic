@@ -36,7 +36,7 @@ static adamic_value add(adamic_closure *self, adamic_value *arguments, size_t co
 int main(void) {
     unsigned char parameters[] = {1}, boolean_parameters[] = {2}, unknown_parameters[] = {0};
     (void)boolean_parameters; (void)unknown_parameters;
-    adamic_callable_signature expected = {1, parameters, 1, "function(number) -> number"};
+    adamic_callable_signature expected = {1, parameters, 1, "function(number) -> number", NULL, 0};
     adamic_callable_signature recorded = expected;
     const adamic_callable_signature *metadata = &recorded;
     adamic_closure *closure = adamic_closure_new(add, 0);

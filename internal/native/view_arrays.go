@@ -135,7 +135,7 @@ func (e *emitter) emitViewOptionalArraySort(sort ir.ArraySort) string {
 	}
 	e.line("if (%s != NULL) {", callback)
 	e.indent++
-	e.line("%s(%s, adamic_compare_closure, %s);", sortFunction, array, callback)
+	e.line("%s(%s, %s, %s);", sortFunction, array, e.viewCallableBoxedComparator(sort.Element), callback)
 	e.closureThrown()
 	e.indent--
 	e.line("} else {")

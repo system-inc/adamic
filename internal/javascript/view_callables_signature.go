@@ -27,7 +27,7 @@ func (e *emitter) emitViewCallableCertificate(property ir.Property, value string
 		for i, local := range locals {
 			parameters[i] = e.program.Locals[local].Type
 		}
-		choices = append(choices, fmt.Sprintf("code === %s ? %s : ", functionName(e.program, index), viewCallableSignature(parameters, viewCallableProducerResult(function.Returns), function.Name)))
+		choices = append(choices, fmt.Sprintf("code === %s ? %s : ", functionName(e.program, index), viewCallableSignature(parameters, viewCallableProducerResult(function.Returns), function.Name, function.CallableMasks)))
 	}
 	recorded := "((code) => " + strings.Join(choices, "") + "undefined)(value instanceof AdamicClosure ? value.code : value)"
 	return "((value) => " + emitViewCallableShape("value", recorded, expected, property.View, property.Absent || property.Optional) + ")(" + value + ")"
@@ -46,18 +46,29 @@ func (e *emitter) viewCallableExpected(property ir.Property) string {
 		return viewCallableSignature(nil, ir.Type(255), contract.Name)
 	}
 	parameters := make([]ir.Type, len(contract.Parameters))
+	masks := make([]uint16, len(contract.Parameters)+1)
 	for i, child := range contract.Parameters {
 		parameters[i] = e.program.ViewContracts[child-1].Of
+		masks[i] = e.program.ViewContracts[child-1].RepresentationMask
 	}
-	return viewCallableSignature(parameters, e.program.ViewContracts[contract.Result-1].Of, contract.Name)
+	masks[len(masks)-1] = e.program.ViewContracts[contract.Result-1].RepresentationMask
+	return viewCallableSignature(parameters, e.program.ViewContracts[contract.Result-1].Of, contract.Name, masks)
 }
 
-func viewCallableSignature(parameters []ir.Type, result ir.Type, name string) string {
+func viewCallableSignature(parameters []ir.Type, result ir.Type, name string, members ...[]uint16) string {
 	values := make([]string, len(parameters))
 	for i, of := range parameters {
 		values[i] = fmt.Sprint(of)
 	}
-	return fmt.Sprintf("{parameters: [%s], result: %d, name: %s}", strings.Join(values, ", "), result, quote(name))
+	maskValues := []string{}
+	resultMask := uint16(0)
+	if len(members) != 0 && len(members[0]) == len(parameters)+1 {
+		resultMask = members[0][len(parameters)]
+		for _, mask := range members[0][:len(parameters)] {
+			maskValues = append(maskValues, fmt.Sprint(mask))
+		}
+	}
+	return fmt.Sprintf("{parameters: [%s], result: %d, name: %s, parameterMasks: [%s], resultMask: %d}", strings.Join(values, ", "), result, quote(name), strings.Join(maskValues, ", "), resultMask)
 }
 
 func viewCallableProducerResult(result ir.Type) ir.Type {

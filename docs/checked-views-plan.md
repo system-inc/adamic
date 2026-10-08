@@ -1262,3 +1262,35 @@ Lane 5 also pins gaps/mixed-scalar-boxed-result.a against Node. It reproduces
 the predicates worker ABI boundary: a number-returning producer needs a boxed
 union result adapter. This adds no blanket callable admission. Aggregate callable
 results also need field-demand propagation before their shapes can be admitted.
+
+## Lane 5 scalar and boxed callable adapters (October 8)
+
+Lane 5 owns new native/view_callables_boxing.go and lower/view_callables_boxing.go,
+plus oracle/checked_views_callable_boxing_test.go and lane5/boxing fixtures.
+Minimal shared hooks: censusCallableSlotless admits Union's single reference word;
+native/emit_functions.go routes closure invocation through the named boxed adapter.
+The adapter selects actual producer code, converts borrowed parameters, releases
+new parameter boxes on normal and exceptional returns, and converts owned results.
+No closure calling convention or callable identity is replaced. Read certification
+will use independently recorded representation member masks for union variance.
+
+Callable union metadata hooks: ir.Function.CallableMasks is recorded by the
+function signature producer; ir.ViewContract.RepresentationMask records requested
+members. Native and JavaScript helpers compare result subsets and reversed
+parameter subsets before admitting a read. Scalars retain their previous checks.
+
+Callback adapter hooks use the same named helper in native emit_expressions.go,
+emit_arrays.go, emit_maps.go, from.go, library_array_holes.go, and reuse.go. Both
+normal and reused array maps, visits, reduce, from, Map/Set visits carry explicit
+runtime input and result representations. Sort's existing direct-function
+comparator is distinct and remains outside this closure adapter.
+
+Sort callback hooks: native/view_arrays.go and emit_expressions.go use the
+owned boxed comparator adapter; direct named-function comparators retain their
+existing exact-element admission. lower/expression.go copies producer masks into
+named function forwarders. The former mixed-result boundary is now an oracle
+positive in its existing lane-owned test; counts adds the boxing directory.
+
+JavaScript adds view_callables_boxing.go and a named call-dispatch hook in
+javascript.go. It shares native unknown-producer refusal when union conversion
+would require metadata; JavaScript otherwise preserves its normal values.

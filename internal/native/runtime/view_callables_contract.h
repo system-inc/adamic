@@ -12,7 +12,24 @@ typedef struct adamic_callable_signature {
     const unsigned char *parameters;
     unsigned char result;
     const char *name;
+    const uint16_t *parameter_masks;
+    uint16_t result_mask;
 } adamic_callable_signature;
+
+static inline uint16_t adamic_callable_members(unsigned char representation, uint16_t members) {
+    if (representation == 0 || representation == 254 || representation == 255) return 0;
+    if (members != 0 || representation == 10) return members;
+    return (uint16_t)(1u << representation);
+}
+
+static inline bool adamic_callable_representation_compatible(unsigned char from, unsigned char to, uint16_t from_members, uint16_t to_members) {
+    if (from == 0 || to == 0) return false;
+    if (from != 10 && to != 10 && from != to) return false;
+    if (from != 10 && to != 10 && (from_members == 0 || to_members == 0)) return from == to;
+    uint16_t given = adamic_callable_members(from, from_members);
+    uint16_t wanted = adamic_callable_members(to, to_members);
+    return given != 0 && wanted != 0 && (given & wanted) == given;
+}
 
 static inline const adamic_heap *adamic_view_callable_shape(
     const adamic_heap *value, const adamic_callable_signature *recorded,
@@ -31,12 +48,12 @@ static inline const adamic_heap *adamic_view_callable_shape(
             found = arity;
         } else if (recorded->result == 0 || expected->result == 0) {
             found = "function with unknown signature";
-        } else if (expected->result != 255 && recorded->result != expected->result) {
+        } else if (expected->result != 255 && !adamic_callable_representation_compatible(recorded->result, expected->result, recorded->result_mask, expected->result_mask)) {
             found = "function with incompatible result representation";
         } else {
             bool compatible = recorded->arity == 0 || (recorded->parameters != NULL && expected->parameters != NULL);
             for (size_t index = 0; compatible && index < recorded->arity; index++) {
-                compatible = recorded->parameters[index] != 0 && expected->parameters[index] != 0 && recorded->parameters[index] == expected->parameters[index];
+                compatible = adamic_callable_representation_compatible(expected->parameters[index], recorded->parameters[index], expected->parameter_masks == NULL ? 0 : expected->parameter_masks[index], recorded->parameter_masks == NULL ? 0 : recorded->parameter_masks[index]);
             }
             if (compatible) { return value; }
             found = "function with incompatible parameter representations";
