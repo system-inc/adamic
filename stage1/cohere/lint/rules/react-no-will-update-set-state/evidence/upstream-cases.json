@@ -1,0 +1,991 @@
+[
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() { on(function() { this.setState({}); }); }\n}\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() { on(function() { this.setState({}); }); }\n}\n",
+    "options": {
+      "DisallowInFunc": true
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 43,
+        "endLine": 2,
+        "endColumn": 56,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() { this.setState({}); this.setState({}); }\n}\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 27,
+        "endLine": 2,
+        "endColumn": 40,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      },
+      {
+        "line": 2,
+        "column": 46,
+        "endLine": 2,
+        "endColumn": 59,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() { this[\"setState\"]({ data: 1 }); }\n}\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 27,
+        "endLine": 2,
+        "endColumn": 43,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() { this.setState({ data: 1 }); }\n}\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 27,
+        "endLine": 2,
+        "endColumn": 40,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "\n                    class Hello extends React.Component {\n                      UNSAFE_componentWillUpdate() {\n                        this.setState({\n                          data: data\n                        });\n                      }\n                    }\n                  ",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 4,
+        "column": 25,
+        "endLine": 4,
+        "endColumn": 38,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "\n                    var Hello = createReactClass({\n                      componentWillUpdate: function() {\n                        this.setState({\n                          data: data\n                        });\n                      }\n                    });\n                  ",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 4,
+        "column": 25,
+        "endLine": 4,
+        "endColumn": 38,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "var Hello = createReactClass({\n  componentWillUpdate: function() { on(() => { this.setState({}); }); }\n});\n",
+    "options": {
+      "DisallowInFunc": true
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 48,
+        "endLine": 2,
+        "endColumn": 61,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() {\n    var o = { get g() { this.setState({}); return 1; } };\n  }\n}\n",
+    "options": {
+      "DisallowInFunc": true
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 3,
+        "column": 25,
+        "endLine": 3,
+        "endColumn": 38,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() { on(() => { this.setState({}); }); }\n}\n",
+    "options": {
+      "DisallowInFunc": true
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 38,
+        "endLine": 2,
+        "endColumn": 51,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() {\n    var o = { inner() { this.setState({}); } };\n  }\n}\n",
+    "options": {
+      "DisallowInFunc": true
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 3,
+        "column": 25,
+        "endLine": 3,
+        "endColumn": 38,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() { this[`setState`]({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 27,
+        "endLine": 2,
+        "endColumn": 43,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() {\n    const o = { componentWillUpdate() { this.setState({}); } };\n  }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 3,
+        "column": 41,
+        "endLine": 3,
+        "endColumn": 54,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() {\n    class Inner { m() { this.setState({}); } }\n  }\n}\n",
+    "options": {
+      "DisallowInFunc": true
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 3,
+        "column": 25,
+        "endLine": 3,
+        "endColumn": 38,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "var Hello = (createReactClass)({\n  componentWillUpdate: function() { this.setState({}); }\n});\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 37,
+        "endLine": 2,
+        "endColumn": 50,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() { this.setState?.({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 27,
+        "endLine": 2,
+        "endColumn": 40,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  \"componentWillUpdate\"() { this.setState({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 29,
+        "endLine": 2,
+        "endColumn": 42,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  [\"componentWillUpdate\"]() { this.setState({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 31,
+        "endLine": 2,
+        "endColumn": 44,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  set componentWillUpdate(v) { this.setState({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 32,
+        "endLine": 2,
+        "endColumn": 45,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  get componentWillUpdate() { this.setState({}); return 1; }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 31,
+        "endLine": 2,
+        "endColumn": 44,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "var Hello = createReactClass({\n  componentWillUpdate: function() {\n    var o = { inner() { this.setState({}); } };\n  }\n});\n",
+    "options": {
+      "DisallowInFunc": true
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 3,
+        "column": 25,
+        "endLine": 3,
+        "endColumn": 38,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "\n                    class Hello extends React.Component {\n                      componentWillUpdate() {\n                        someClass.onSomeEvent((data) => this.setState({data: data}));\n                      }\n                    }\n                  ",
+    "options": {
+      "DisallowInFunc": true
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 4,
+        "column": 57,
+        "endLine": 4,
+        "endColumn": 70,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() { this[\"setState\"]({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 27,
+        "endLine": 2,
+        "endColumn": 43,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends PureComponent {\n  componentWillUpdate() { this.setState({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 27,
+        "endLine": 2,
+        "endColumn": 40,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.PureComponent {\n  componentWillUpdate() { this.setState({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 27,
+        "endLine": 2,
+        "endColumn": 40,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "var Hello = React.createReactClass({\n  componentWillUpdate: function() { this.setState({}); }\n});\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 37,
+        "endLine": 2,
+        "endColumn": 50,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  render() {\n    var notMine = {\n      componentWillUpdate: function() { this.setState({}); }\n    };\n    return null;\n  }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 4,
+        "column": 41,
+        "endLine": 4,
+        "endColumn": 54,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() { this?.setState({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 27,
+        "endLine": 2,
+        "endColumn": 41,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends Component {\n  componentWillUpdate() { this.setState({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 27,
+        "endLine": 2,
+        "endColumn": 40,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "\n                    class Hello extends React.Component {\n                      componentWillUpdate() {\n                        someClass.onSomeEvent(function(data) {\n                          this.setState({\n                            data: data\n                          });\n                        })\n                      }\n                    }\n                  ",
+    "options": {
+      "DisallowInFunc": true
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 5,
+        "column": 27,
+        "endLine": 5,
+        "endColumn": 40,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "\n                    class Hello extends React.Component {\n                      componentWillUpdate() {\n                        if (true) {\n                          this.setState({\n                            data: data\n                          });\n                        }\n                      }\n                    }\n                  ",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 5,
+        "column": 27,
+        "endLine": 5,
+        "endColumn": 40,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "\n                    var Hello = createReactClass({\n                      componentWillUpdate: function() {\n                        someClass.onSomeEvent((data) => this.setState({data: data}));\n                      }\n                    });\n                  ",
+    "options": {
+      "DisallowInFunc": true
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 4,
+        "column": 57,
+        "endLine": 4,
+        "endColumn": 70,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "\n                    class Hello extends React.Component {\n                      componentWillUpdate() {\n                        this.setState({\n                          data: data\n                        });\n                      }\n                    }\n                  ",
+    "options": {
+      "DisallowInFunc": true
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 4,
+        "column": 25,
+        "endLine": 4,
+        "endColumn": 38,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  static componentWillUpdate() { this.setState({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 34,
+        "endLine": 2,
+        "endColumn": 47,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate = () => { this.setState({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 33,
+        "endLine": 2,
+        "endColumn": 46,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "\n                    var Hello = createReactClass({\n                      componentWillUpdate: function() {\n                        someClass.onSomeEvent(function(data) {\n                          this.setState({\n                            data: data\n                          });\n                        })\n                      }\n                    });\n                  ",
+    "options": {
+      "DisallowInFunc": true
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 5,
+        "column": 27,
+        "endLine": 5,
+        "endColumn": 40,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "\n                    var Hello = createReactClass({\n                      render: function() {\n                        return <div>Hello {this.props.name}</div>;\n                      }\n                    });\n                  ",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "\n                    var Hello = createReactClass({\n                      componentWillUpdate: function() {\n                        this.setState({\n                          data: data\n                        });\n                      }\n                    });\n                  ",
+    "options": {
+      "DisallowInFunc": true
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 4,
+        "column": 25,
+        "endLine": 4,
+        "endColumn": 38,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "var Hello = createReactClass({\n  componentWillUpdate: function() { on(() => { this.setState({}); }); }\n});\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "\n                    var Hello = createReactClass({\n                      componentWillUpdate: function() {\n                        if (true) {\n                          this.setState({\n                            data: data\n                          });\n                        }\n                      }\n                    });\n                  ",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 5,
+        "column": 27,
+        "endLine": 5,
+        "endColumn": 40,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() { on(() => { this.setState({}); }); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() {\n    var o = { get g() { this.setState({}); return 1; } };\n  }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() { this.setState`x`; }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() {\n    class Inner { m() { this.setState({}); } }\n  }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() {\n    var o = { inner() { this.setState({}); } };\n  }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "var Hello = createReactClass({\n  componentWillUpdate: function() {\n    var o = { inner() { this.setState({}); } };\n  }\n});\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() { (this).setState({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  UNSAFE_componentWillUpdate() { on(function(){ this.setState({}); }); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "\n                    class Hello extends React.Component {\n                      componentWillUpdate() {\n                        this.setState({\n                          data: data\n                        });\n                      }\n                    }\n                  ",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 4,
+        "column": 25,
+        "endLine": 4,
+        "endColumn": 38,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() { this[0]({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() { (this.setState)({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "\n                    var Hello = createReactClass({\n                      UNSAFE_componentWillUpdate: function() {\n                        this.setState({\n                          data: data\n                        });\n                      }\n                    });\n                  ",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 4,
+        "column": 25,
+        "endLine": 4,
+        "endColumn": 38,
+        "messageId": "noSetStateInComponentWillUpdate",
+        "message": "Updating state from `componentWillUpdate` runs while React is already partway through committing the update that called it, so the new state can be read by some of the tree and not the rest and the component settles on a value neither render chose. Derive the value in `render`, or move the update into `componentDidUpdate` guarded on a comparison of the previous props so it cannot run on its own output."
+      }
+    ]
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() { this[foo]({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() { that.setState({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() { this.setStates({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentWillUpdate() { helper(); }\n  helper() { this.setState({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentDidUpdate() { this.setState({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello extends React.Component {\n  componentDidMount() { this.setState({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "var Hello = {\n  componentWillUpdate: function() { this.setState({}); }\n};\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "var Hello = createClass({\n  componentWillUpdate: function() { this.setState({}); }\n});\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "class Hello {\n  componentWillUpdate() { this.setState({}); }\n}\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "var Hello = somethingElse({\n  componentWillUpdate: function() { this.setState({}); }\n});\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "\n                    var Hello = createReactClass({\n                      componentWillUpdate: function() {\n                        function handleEvent(data) {\n                          this.setState({\n                            data: data\n                          });\n                        }\n                        someClass.onSomeEvent(handleEvent)\n                      }\n                    });\n                  ",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "var Hello = React.createClass({\n  componentWillUpdate: function() { this.setState({}); }\n});\n",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "\n                    var Hello = createReactClass({\n                      componentWillUpdate: function() {}\n                    });\n                  ",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "\n                    var Hello = createReactClass({\n                      componentWillUpdate: function() {\n                        someClass.onSomeEvent(function(data) {\n                          this.setState({\n                            data: data\n                          });\n                        })\n                      }\n                    });\n                  ",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "react/no-will-update-set-state",
+    "file": "/repository/source/WillUpdate.tsx",
+    "source": "\n                    var Hello = createReactClass({\n                      componentWillUpdate: function() {\n                        someNonMemberFunction(arg);\n                        this.someHandler = this.setState;\n                      }\n                    });\n                  ",
+    "options": {
+      "DisallowInFunc": false
+    },
+    "outcome": "Clean"
+  }
+]

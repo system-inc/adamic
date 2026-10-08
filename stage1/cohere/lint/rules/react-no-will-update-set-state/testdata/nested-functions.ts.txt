@@ -1,0 +1,13 @@
+class Nested extends PureComponent {
+    componentWillUpdate() {
+        on(function() { this.setState({}); });
+        on(() => this.setState({}));
+        function helper() { this.setState({}); }
+        const object = {
+            method() { this.setState({}); },
+            get value() { this.setState({}); return 1; },
+            set value(next) { this.setState({}); }
+        };
+        class Inner { method() { this.setState({}); } }
+    }
+}

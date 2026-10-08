@@ -1,0 +1,42 @@
+v24.19.0
+setup: node ready (0.098s)
+go version go1.27.1 linux/amd64
+setup: go ready (0.110s)
+Submodule path 'cohere': checked out '7945d102a6c18dd36adf9114a758ce646e8b2359'
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.647s)
+
+added 3 packages in 485ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=1.010s
+setup: markdown dependencies ready (1.249s)
+From https://github.com/kirkouimet/TypeScript
+ * branch                d92d9bfee114c80be2c375d72edae966176e3a4f -> FETCH_HEAD
+Submodule path 'cohere/TypeScript': checked out 'd92d9bfee114c80be2c375d72edae966176e3a4f'
+setup: submodules ready (4.186s)
+setup: go build ready (270.353s)
+setup: test binaries deferred (use --warm-tests) (270.509s)
+setup: build cache warm (270.511s)
+setup: build-flags commit=6bf7bcec73a04b85900c5a69a257b3cf34b35a40 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=1.83 0.95 0.38 2/142 734 load-after=7.06 5.75 2.65 1/143 2422
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (270.549s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.GFHP4e
+
+WASI SDK setup:
+v24.19.0
+go version go1.27.1 linux/amd64
+setup: node ready (0.240s)
+setup: go ready (0.242s)
+setup: submodules ready (0.431s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.020s
+setup: markdown dependencies ready (0.442s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.670s)
+clang version 20.1.8-wasi-sdk (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: wasi sdk ready (/workspace/adamic-tools/wasi-sdk) (7.009s)
+setup: go build ready (151.245s)
+setup: test binaries deferred (use --warm-tests) (151.651s)
+setup: build cache warm (151.654s)
+setup: build-flags commit=6bf7bcec73a04b85900c5a69a257b3cf34b35a40 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=4.10 5.14 2.56 4/175 2958 load-after=19.36 11.57 5.40 4/208 4470
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (151.710s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.vvJHXN

@@ -1,0 +1,86 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { HelperNode } from '../../helpers/react/nodes.a';
+import type { HelperNode as PropertyNode } from '../../helpers/slot02_ast.a';
+import { project } from '../../helpers/react/projection.a';
+import { reactEs6ComponentClass } from '../../helpers/react/react_es6_component_class.a';
+import { isComponentBase } from '../../helpers/react/react_component_base.a';
+import { isComponentBaseName } from '../../helpers/react/component_base_name.a';
+import { propertyName, Static } from '../../helpers/property_name.a';
+import { isCreateReactClassCall } from '../../helpers/rules-react/is_create_react_class_call.a';
+import { decodeNoMethodSetStateOptions } from '../../helpers/rules-react/decode_no_method_set_state_options.a';
+import { messageNoSetStateInComponentWillUpdate } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly disallowInFunc: boolean;
+    nodes: HelperNode[] = [];
+    propertyNodes: PropertyNode[] = [];
+    constructor(context: RuleContext) {
+        this.context = context;
+        const raw = context.settings.text.trim();
+        if (context.enabled('react/no-will-update-set-state') && raw.startsWith('"')) {
+            const options = decodeNoMethodSetStateOptions(raw);
+            if (options.error !== '') { panic(options.error); }
+            this.disallowInFunc = options.disallowInFunc;
+        } else {
+            // Captured upstream cases carry the already decoded Go struct.
+            this.disallowInFunc = context.settings.read('disallowinfunc', 'false') === 'true';
+        }
+    }
+    prepare(root: number): void {
+        this.nodes = project(this.context.parser.nodes);
+        for (const node of this.context.parser.nodes) {
+            this.propertyNodes.push({kind: node.kind, text: node.text, expression: node.children[0] ?? -1, name: -1});
+        }
+    }
+    methodLike(index: number): boolean {
+        return ['MethodDeclaration', 'GetAccessor', 'SetAccessor'].includes(this.context.kind(index));
+    }
+    lifecycle(index: number): boolean {
+        if (!['PropertyAssignment', 'MethodDeclaration', 'PropertyDeclaration', 'GetAccessor', 'SetAccessor'].includes(this.context.kind(index))) { return false; }
+        const key = this.context.name(index);
+        // Go TryGetTextOfPropertyName accepts a literal computed key directly;
+        // the shared property helper also unwraps parentheses, so guard that edge.
+        if (this.context.kind(key) === 'ComputedPropertyName') {
+            const expression = this.context.child(key, 0);
+            if (!['StringLiteral', 'NoSubstitutionTemplateLiteral', 'NumericLiteral', 'BigIntLiteral'].includes(this.context.kind(expression))) { return false; }
+        }
+        const name = propertyName(this.propertyNodes, key, Static);
+        return name.named && (name.name === 'componentWillUpdate' || name.name === 'UNSAFE_componentWillUpdate');
+    }
+    component(index: number): boolean {
+        return reactEs6ComponentClass(this.nodes, index, (expression: number): boolean => isComponentBase(this.nodes, expression, isComponentBaseName)) || isCreateReactClassCall(this.context, index);
+    }
+    visit(index: number): void {
+        const context = this.context;
+        const callee = context.child(index, 0);
+        const kind = context.kind(callee);
+        if (kind !== 'PropertyAccessExpression' && kind !== 'ElementAccessExpression') { return; }
+        if (context.kind(context.child(callee, 0)) !== 'ThisKeyword') { return; }
+        const name = context.property(callee);
+        if (context.node(name).text !== 'setState') { return; }
+        if (kind === 'PropertyAccessExpression' && context.kind(name) !== 'Identifier') { return; }
+        if (kind === 'ElementAccessExpression' && !['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(context.kind(name))) { return; }
+        let functionCount = 0;
+        let insideLifecycle = false;
+        let current = context.parent(index);
+        while (current >= 0) {
+            if (!insideLifecycle) {
+                if (this.lifecycle(current)) {
+                    insideLifecycle = true;
+                    if (this.methodLike(current)) { functionCount++; }
+                } else if (['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction'].includes(context.kind(current)) || this.methodLike(current)) {
+                    functionCount++;
+                }
+            }
+            if (insideLifecycle && this.component(current)) {
+                if (functionCount > 1 && !this.disallowInFunc) { return; }
+                context.reportNode(callee, 'react/no-will-update-set-state', 'noSetStateInComponentWillUpdate', messageNoSetStateInComponentWillUpdate);
+                return;
+            }
+            current = context.parent(current);
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

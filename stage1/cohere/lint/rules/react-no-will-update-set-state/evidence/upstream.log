@@ -1,0 +1,286 @@
+=== RUN   TestNoWillUpdateSetStateFires
+=== PAUSE TestNoWillUpdateSetStateFires
+=== RUN   TestNoWillUpdateSetStateStaysSilent
+=== PAUSE TestNoWillUpdateSetStateStaysSilent
+=== RUN   TestNoWillUpdateSetStateReportsAtTheCallee
+=== PAUSE TestNoWillUpdateSetStateReportsAtTheCallee
+=== RUN   TestNoWillUpdateSetStateDefaultsToAllowingNestedFunctions
+=== PAUSE TestNoWillUpdateSetStateDefaultsToAllowingNestedFunctions
+=== RUN   TestNoWillUpdateSetStateReportsEachCallSite
+=== PAUSE TestNoWillUpdateSetStateReportsEachCallSite
+=== CONT  TestNoWillUpdateSetStateFires
+=== RUN   TestNoWillUpdateSetStateFires/a_direct_setState_in_a_createReactClass_componentWillUpdate
+=== PAUSE TestNoWillUpdateSetStateFires/a_direct_setState_in_a_createReactClass_componentWillUpdate
+=== RUN   TestNoWillUpdateSetStateFires/a_direct_setState_in_a_class_componentWillUpdate
+=== PAUSE TestNoWillUpdateSetStateFires/a_direct_setState_in_a_class_componentWillUpdate
+=== RUN   TestNoWillUpdateSetStateFires/a_direct_setState_in_createReactClass_under_disallow-in-func
+=== PAUSE TestNoWillUpdateSetStateFires/a_direct_setState_in_createReactClass_under_disallow-in-func
+=== CONT  TestNoWillUpdateSetStateDefaultsToAllowingNestedFunctions
+=== RUN   TestNoWillUpdateSetStateFires/a_direct_setState_in_a_class_component_under_disallow-in-func
+=== PAUSE TestNoWillUpdateSetStateFires/a_direct_setState_in_a_class_component_under_disallow-in-func
+=== RUN   TestNoWillUpdateSetStateFires/a_function-expression_callback_in_createReactClass_under_disallow-in-func
+=== PAUSE TestNoWillUpdateSetStateFires/a_function-expression_callback_in_createReactClass_under_disallow-in-func
+=== RUN   TestNoWillUpdateSetStateFires/a_function-expression_callback_in_a_class_component_under_disallow-in-func
+=== PAUSE TestNoWillUpdateSetStateFires/a_function-expression_callback_in_a_class_component_under_disallow-in-func
+=== RUN   TestNoWillUpdateSetStateFires/setState_inside_an_if_block_in_createReactClass
+=== PAUSE TestNoWillUpdateSetStateFires/setState_inside_an_if_block_in_createReactClass
+=== RUN   TestNoWillUpdateSetStateFires/setState_inside_an_if_block_in_a_class_component
+=== PAUSE TestNoWillUpdateSetStateFires/setState_inside_an_if_block_in_a_class_component
+=== RUN   TestNoWillUpdateSetStateFires/a_concise-body_arrow_callback_in_createReactClass_under_disallow-in-func
+=== PAUSE TestNoWillUpdateSetStateFires/a_concise-body_arrow_callback_in_createReactClass_under_disallow-in-func
+=== RUN   TestNoWillUpdateSetStateFires/a_concise-body_arrow_callback_in_a_class_component_under_disallow-in-func
+=== PAUSE TestNoWillUpdateSetStateFires/a_concise-body_arrow_callback_in_a_class_component_under_disallow-in-func
+=== RUN   TestNoWillUpdateSetStateFires/an_UNSAFE_prefixed_class_lifecycle_method
+=== PAUSE TestNoWillUpdateSetStateFires/an_UNSAFE_prefixed_class_lifecycle_method
+=== RUN   TestNoWillUpdateSetStateFires/an_UNSAFE_prefixed_createReactClass_lifecycle_property
+=== PAUSE TestNoWillUpdateSetStateFires/an_UNSAFE_prefixed_createReactClass_lifecycle_property
+=== RUN   TestNoWillUpdateSetStateFires/a_lifecycle_property_on_a_plain_object_literal_nested_inside_a_component
+=== PAUSE TestNoWillUpdateSetStateFires/a_lifecycle_property_on_a_plain_object_literal_nested_inside_a_component
+=== RUN   TestNoWillUpdateSetStateFires/the_namespaced_createReactClass_factory
+=== PAUSE TestNoWillUpdateSetStateFires/the_namespaced_createReactClass_factory
+=== RUN   TestNoWillUpdateSetStateFires/a_class_extending_the_bare_Component_identifier
+=== PAUSE TestNoWillUpdateSetStateFires/a_class_extending_the_bare_Component_identifier
+=== RUN   TestNoWillUpdateSetStateFires/a_class_extending_React.PureComponent
+=== PAUSE TestNoWillUpdateSetStateFires/a_class_extending_React.PureComponent
+=== RUN   TestNoWillUpdateSetStateFires/a_class_extending_the_bare_PureComponent_identifier
+=== PAUSE TestNoWillUpdateSetStateFires/a_class_extending_the_bare_PureComponent_identifier
+=== RUN   TestNoWillUpdateSetStateFires/an_arrow-valued_componentWillUpdate_class_property
+=== PAUSE TestNoWillUpdateSetStateFires/an_arrow-valued_componentWillUpdate_class_property
+=== RUN   TestNoWillUpdateSetStateFires/an_object_literal_named_for_the_lifecycle_nested_inside_the_real_lifecycle_method
+=== PAUSE TestNoWillUpdateSetStateFires/an_object_literal_named_for_the_lifecycle_nested_inside_the_real_lifecycle_method
+=== RUN   TestNoWillUpdateSetStateFires/a_static_method_named_for_the_lifecycle
+=== PAUSE TestNoWillUpdateSetStateFires/a_static_method_named_for_the_lifecycle
+=== RUN   TestNoWillUpdateSetStateFires/a_getter_named_for_the_lifecycle
+=== PAUSE TestNoWillUpdateSetStateFires/a_getter_named_for_the_lifecycle
+=== RUN   TestNoWillUpdateSetStateFires/a_setter_named_for_the_lifecycle
+=== PAUSE TestNoWillUpdateSetStateFires/a_setter_named_for_the_lifecycle
+=== RUN   TestNoWillUpdateSetStateFires/a_computed_lifecycle_key_holding_a_string_literal
+=== PAUSE TestNoWillUpdateSetStateFires/a_computed_lifecycle_key_holding_a_string_literal
+=== RUN   TestNoWillUpdateSetStateFires/a_string-literal_lifecycle_key
+=== PAUSE TestNoWillUpdateSetStateFires/a_string-literal_lifecycle_key
+=== RUN   TestNoWillUpdateSetStateFires/an_optional_receiver,_this?.setState
+=== PAUSE TestNoWillUpdateSetStateFires/an_optional_receiver,_this?.setState
+=== RUN   TestNoWillUpdateSetStateFires/an_optional_call,_this.setState?.()
+=== PAUSE TestNoWillUpdateSetStateFires/an_optional_call,_this.setState?.()
+=== RUN   TestNoWillUpdateSetStateFires/a_bracketed_string_setState
+=== PAUSE TestNoWillUpdateSetStateFires/a_bracketed_string_setState
+=== RUN   TestNoWillUpdateSetStateFires/a_bracketed_template-literal_setState
+=== PAUSE TestNoWillUpdateSetStateFires/a_bracketed_template-literal_setState
+=== RUN   TestNoWillUpdateSetStateFires/a_parenthesized_createReactClass_callee
+=== PAUSE TestNoWillUpdateSetStateFires/a_parenthesized_createReactClass_callee
+=== RUN   TestNoWillUpdateSetStateFires/a_nested_object_method_inside_a_createReactClass_lifecycle_under_disallow-in-func
+=== PAUSE TestNoWillUpdateSetStateFires/a_nested_object_method_inside_a_createReactClass_lifecycle_under_disallow-in-func
+=== RUN   TestNoWillUpdateSetStateFires/a_nested_object_method_inside_a_class_lifecycle_under_disallow-in-func
+=== PAUSE TestNoWillUpdateSetStateFires/a_nested_object_method_inside_a_class_lifecycle_under_disallow-in-func
+=== RUN   TestNoWillUpdateSetStateFires/a_method_on_a_class_declared_inside_the_lifecycle_under_disallow-in-func
+=== PAUSE TestNoWillUpdateSetStateFires/a_method_on_a_class_declared_inside_the_lifecycle_under_disallow-in-func
+=== RUN   TestNoWillUpdateSetStateFires/a_nested_object_getter_inside_the_lifecycle_under_disallow-in-func
+=== PAUSE TestNoWillUpdateSetStateFires/a_nested_object_getter_inside_the_lifecycle_under_disallow-in-func
+=== RUN   TestNoWillUpdateSetStateFires/an_arrow_callback_in_a_class_component_under_disallow-in-func
+=== PAUSE TestNoWillUpdateSetStateFires/an_arrow_callback_in_a_class_component_under_disallow-in-func
+=== CONT  TestNoWillUpdateSetStateReportsEachCallSite
+=== CONT  TestNoWillUpdateSetStateReportsAtTheCallee
+=== CONT  TestNoWillUpdateSetStateStaysSilent
+=== RUN   TestNoWillUpdateSetStateStaysSilent/a_render_method_with_no_lifecycle_at_all
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/a_render_method_with_no_lifecycle_at_all
+=== RUN   TestNoWillUpdateSetStateStaysSilent/an_empty_componentWillUpdate
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/an_empty_componentWillUpdate
+=== RUN   TestNoWillUpdateSetStateStaysSilent/setState_referenced_but_never_called
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/setState_referenced_but_never_called
+=== RUN   TestNoWillUpdateSetStateStaysSilent/setState_inside_a_function-expression_callback
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/setState_inside_a_function-expression_callback
+=== RUN   TestNoWillUpdateSetStateStaysSilent/setState_inside_a_function_declared_in_the_lifecycle_and_passed_out
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/setState_inside_a_function_declared_in_the_lifecycle_and_passed_out
+=== RUN   TestNoWillUpdateSetStateStaysSilent/a_function_declared_in_the_lifecycle_under_an_empty_option_array
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/a_function_declared_in_the_lifecycle_under_an_empty_option_array
+=== RUN   TestNoWillUpdateSetStateStaysSilent/a_lifecycle_method_on_a_class_extending_nothing
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/a_lifecycle_method_on_a_class_extending_nothing
+=== RUN   TestNoWillUpdateSetStateStaysSilent/a_lifecycle_property_on_a_bare_object_literal_at_the_top_level
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/a_lifecycle_property_on_a_bare_object_literal_at_the_top_level
+--- PASS: TestNoWillUpdateSetStateDefaultsToAllowingNestedFunctions (0.00s)
+=== RUN   TestNoWillUpdateSetStateReportsAtTheCallee/the_dotted_spelling_underlines_this.setState_and_not_the_call
+=== RUN   TestNoWillUpdateSetStateFires/an_arrow_callback_in_a_createReactClass_component_under_disallow-in-func
+--- PASS: TestNoWillUpdateSetStateReportsEachCallSite (0.00s)
+=== PAUSE TestNoWillUpdateSetStateReportsAtTheCallee/the_dotted_spelling_underlines_this.setState_and_not_the_call
+=== RUN   TestNoWillUpdateSetStateStaysSilent/a_lifecycle_property_in_a_call_that_is_not_createReactClass
+=== RUN   TestNoWillUpdateSetStateReportsAtTheCallee/the_bracketed_spelling_underlines_the_whole_member_expression
+=== PAUSE TestNoWillUpdateSetStateFires/an_arrow_callback_in_a_createReactClass_component_under_disallow-in-func
+=== PAUSE TestNoWillUpdateSetStateReportsAtTheCallee/the_bracketed_spelling_underlines_the_whole_member_expression
+=== RUN   TestNoWillUpdateSetStateFires/an_UNSAFE_prefixed_lifecycle_upstream_silences_with_a_React_version_setting
+=== CONT  TestNoWillUpdateSetStateReportsAtTheCallee/the_dotted_spelling_underlines_this.setState_and_not_the_call
+=== PAUSE TestNoWillUpdateSetStateFires/an_UNSAFE_prefixed_lifecycle_upstream_silences_with_a_React_version_setting
+=== CONT  TestNoWillUpdateSetStateReportsAtTheCallee/the_bracketed_spelling_underlines_the_whole_member_expression
+=== CONT  TestNoWillUpdateSetStateFires/a_direct_setState_in_a_createReactClass_componentWillUpdate
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/a_lifecycle_property_in_a_call_that_is_not_createReactClass
+=== RUN   TestNoWillUpdateSetStateStaysSilent/the_createClass_factory_name,_which_this_rule's_upstream_does_not_accept
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/the_createClass_factory_name,_which_this_rule's_upstream_does_not_accept
+=== RUN   TestNoWillUpdateSetStateStaysSilent/the_React.createClass_factory_name,_which_this_rule's_upstream_does_not_accept
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/the_React.createClass_factory_name,_which_this_rule's_upstream_does_not_accept
+=== RUN   TestNoWillUpdateSetStateStaysSilent/setState_directly_inside_componentDidUpdate
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/setState_directly_inside_componentDidUpdate
+=== RUN   TestNoWillUpdateSetStateStaysSilent/setState_directly_inside_componentDidMount
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/setState_directly_inside_componentDidMount
+=== RUN   TestNoWillUpdateSetStateStaysSilent/a_receiver_that_is_not_this
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/a_receiver_that_is_not_this
+=== RUN   TestNoWillUpdateSetStateStaysSilent/a_method_that_is_not_setState
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/a_method_that_is_not_setState
+--- PASS: TestNoWillUpdateSetStateReportsAtTheCallee (0.00s)
+    --- PASS: TestNoWillUpdateSetStateReportsAtTheCallee/the_bracketed_spelling_underlines_the_whole_member_expression (0.00s)
+    --- PASS: TestNoWillUpdateSetStateReportsAtTheCallee/the_dotted_spelling_underlines_this.setState_and_not_the_call (0.00s)
+=== RUN   TestNoWillUpdateSetStateStaysSilent/a_computed_callee_whose_key_names_nothing_statically
+=== CONT  TestNoWillUpdateSetStateFires/an_UNSAFE_prefixed_lifecycle_upstream_silences_with_a_React_version_setting
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/a_computed_callee_whose_key_names_nothing_statically
+=== RUN   TestNoWillUpdateSetStateStaysSilent/a_numeric_computed_callee
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/a_numeric_computed_callee
+=== RUN   TestNoWillUpdateSetStateStaysSilent/a_helper_method_called_from_the_lifecycle_method
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/a_helper_method_called_from_the_lifecycle_method
+=== RUN   TestNoWillUpdateSetStateStaysSilent/a_parenthesized_this_receiver
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/a_parenthesized_this_receiver
+=== CONT  TestNoWillUpdateSetStateFires/an_arrow_callback_in_a_createReactClass_component_under_disallow-in-func
+=== RUN   TestNoWillUpdateSetStateStaysSilent/a_parenthesized_setState_callee
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/a_parenthesized_setState_callee
+=== RUN   TestNoWillUpdateSetStateStaysSilent/a_callback_inside_an_UNSAFE_prefixed_lifecycle_method
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/a_callback_inside_an_UNSAFE_prefixed_lifecycle_method
+=== RUN   TestNoWillUpdateSetStateStaysSilent/a_nested_object_method_inside_a_createReactClass_lifecycle
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/a_nested_object_method_inside_a_createReactClass_lifecycle
+=== CONT  TestNoWillUpdateSetStateFires/a_nested_object_getter_inside_the_lifecycle_under_disallow-in-func
+=== RUN   TestNoWillUpdateSetStateStaysSilent/a_nested_object_method_inside_a_class_lifecycle
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/a_nested_object_method_inside_a_class_lifecycle
+=== RUN   TestNoWillUpdateSetStateStaysSilent/a_method_on_a_class_declared_inside_the_lifecycle_method
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/a_method_on_a_class_declared_inside_the_lifecycle_method
+=== RUN   TestNoWillUpdateSetStateStaysSilent/a_nested_object_getter_inside_the_lifecycle_method
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/a_nested_object_getter_inside_the_lifecycle_method
+=== RUN   TestNoWillUpdateSetStateStaysSilent/an_arrow_callback_in_a_class_component_in_default_mode
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/an_arrow_callback_in_a_class_component_in_default_mode
+=== RUN   TestNoWillUpdateSetStateStaysSilent/an_arrow_callback_in_a_createReactClass_component_in_default_mode
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/an_arrow_callback_in_a_createReactClass_component_in_default_mode
+=== RUN   TestNoWillUpdateSetStateStaysSilent/a_tagged_template_on_setState,_which_is_no_call_expression
+=== PAUSE TestNoWillUpdateSetStateStaysSilent/a_tagged_template_on_setState,_which_is_no_call_expression
+=== CONT  TestNoWillUpdateSetStateFires/an_arrow_callback_in_a_class_component_under_disallow-in-func
+=== CONT  TestNoWillUpdateSetStateFires/a_nested_object_method_inside_a_class_lifecycle_under_disallow-in-func
+=== CONT  TestNoWillUpdateSetStateFires/a_parenthesized_createReactClass_callee
+=== CONT  TestNoWillUpdateSetStateFires/a_bracketed_template-literal_setState
+=== CONT  TestNoWillUpdateSetStateFires/a_method_on_a_class_declared_inside_the_lifecycle_under_disallow-in-func
+=== CONT  TestNoWillUpdateSetStateFires/an_object_literal_named_for_the_lifecycle_nested_inside_the_real_lifecycle_method
+=== CONT  TestNoWillUpdateSetStateFires/an_optional_call,_this.setState?.()
+=== CONT  TestNoWillUpdateSetStateFires/a_string-literal_lifecycle_key
+=== CONT  TestNoWillUpdateSetStateFires/a_computed_lifecycle_key_holding_a_string_literal
+=== CONT  TestNoWillUpdateSetStateFires/a_setter_named_for_the_lifecycle
+=== CONT  TestNoWillUpdateSetStateFires/a_getter_named_for_the_lifecycle
+=== CONT  TestNoWillUpdateSetStateFires/a_nested_object_method_inside_a_createReactClass_lifecycle_under_disallow-in-func
+=== CONT  TestNoWillUpdateSetStateFires/a_concise-body_arrow_callback_in_a_class_component_under_disallow-in-func
+=== CONT  TestNoWillUpdateSetStateFires/a_bracketed_string_setState
+=== CONT  TestNoWillUpdateSetStateFires/a_class_extending_the_bare_PureComponent_identifier
+=== CONT  TestNoWillUpdateSetStateFires/a_class_extending_React.PureComponent
+=== CONT  TestNoWillUpdateSetStateFires/the_namespaced_createReactClass_factory
+=== CONT  TestNoWillUpdateSetStateFires/a_lifecycle_property_on_a_plain_object_literal_nested_inside_a_component
+=== CONT  TestNoWillUpdateSetStateFires/an_optional_receiver,_this?.setState
+=== CONT  TestNoWillUpdateSetStateFires/an_UNSAFE_prefixed_class_lifecycle_method
+=== CONT  TestNoWillUpdateSetStateFires/a_class_extending_the_bare_Component_identifier
+=== CONT  TestNoWillUpdateSetStateFires/a_function-expression_callback_in_a_class_component_under_disallow-in-func
+=== CONT  TestNoWillUpdateSetStateFires/a_concise-body_arrow_callback_in_createReactClass_under_disallow-in-func
+=== CONT  TestNoWillUpdateSetStateFires/setState_inside_an_if_block_in_a_class_component
+=== CONT  TestNoWillUpdateSetStateFires/an_arrow-valued_componentWillUpdate_class_property
+=== CONT  TestNoWillUpdateSetStateFires/a_direct_setState_in_a_class_component_under_disallow-in-func
+=== CONT  TestNoWillUpdateSetStateFires/a_static_method_named_for_the_lifecycle
+=== CONT  TestNoWillUpdateSetStateFires/a_function-expression_callback_in_createReactClass_under_disallow-in-func
+=== CONT  TestNoWillUpdateSetStateFires/a_direct_setState_in_createReactClass_under_disallow-in-func
+=== CONT  TestNoWillUpdateSetStateStaysSilent/a_render_method_with_no_lifecycle_at_all
+=== CONT  TestNoWillUpdateSetStateFires/setState_inside_an_if_block_in_createReactClass
+=== CONT  TestNoWillUpdateSetStateStaysSilent/an_arrow_callback_in_a_createReactClass_component_in_default_mode
+=== CONT  TestNoWillUpdateSetStateStaysSilent/an_arrow_callback_in_a_class_component_in_default_mode
+=== CONT  TestNoWillUpdateSetStateStaysSilent/a_nested_object_getter_inside_the_lifecycle_method
+=== CONT  TestNoWillUpdateSetStateStaysSilent/a_tagged_template_on_setState,_which_is_no_call_expression
+=== CONT  TestNoWillUpdateSetStateFires/an_UNSAFE_prefixed_createReactClass_lifecycle_property
+=== CONT  TestNoWillUpdateSetStateStaysSilent/a_nested_object_method_inside_a_class_lifecycle
+=== CONT  TestNoWillUpdateSetStateStaysSilent/a_method_on_a_class_declared_inside_the_lifecycle_method
+=== CONT  TestNoWillUpdateSetStateStaysSilent/a_nested_object_method_inside_a_createReactClass_lifecycle
+=== CONT  TestNoWillUpdateSetStateStaysSilent/a_callback_inside_an_UNSAFE_prefixed_lifecycle_method
+=== CONT  TestNoWillUpdateSetStateFires/a_direct_setState_in_a_class_componentWillUpdate
+=== CONT  TestNoWillUpdateSetStateStaysSilent/a_parenthesized_this_receiver
+=== CONT  TestNoWillUpdateSetStateStaysSilent/a_helper_method_called_from_the_lifecycle_method
+=== CONT  TestNoWillUpdateSetStateStaysSilent/a_numeric_computed_callee
+=== CONT  TestNoWillUpdateSetStateStaysSilent/a_parenthesized_setState_callee
+=== CONT  TestNoWillUpdateSetStateStaysSilent/a_computed_callee_whose_key_names_nothing_statically
+=== CONT  TestNoWillUpdateSetStateStaysSilent/a_receiver_that_is_not_this
+=== CONT  TestNoWillUpdateSetStateStaysSilent/a_method_that_is_not_setState
+--- PASS: TestNoWillUpdateSetStateFires (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/an_UNSAFE_prefixed_lifecycle_upstream_silences_with_a_React_version_setting (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_direct_setState_in_a_createReactClass_componentWillUpdate (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/an_arrow_callback_in_a_createReactClass_component_under_disallow-in-func (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_nested_object_getter_inside_the_lifecycle_under_disallow-in-func (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/an_arrow_callback_in_a_class_component_under_disallow-in-func (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_nested_object_method_inside_a_class_lifecycle_under_disallow-in-func (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_bracketed_template-literal_setState (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/an_object_literal_named_for_the_lifecycle_nested_inside_the_real_lifecycle_method (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_method_on_a_class_declared_inside_the_lifecycle_under_disallow-in-func (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_parenthesized_createReactClass_callee (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/an_optional_call,_this.setState?.() (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_string-literal_lifecycle_key (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_computed_lifecycle_key_holding_a_string_literal (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_setter_named_for_the_lifecycle (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_getter_named_for_the_lifecycle (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_concise-body_arrow_callback_in_a_class_component_under_disallow-in-func (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_nested_object_method_inside_a_createReactClass_lifecycle_under_disallow-in-func (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_bracketed_string_setState (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_class_extending_the_bare_PureComponent_identifier (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_class_extending_React.PureComponent (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/the_namespaced_createReactClass_factory (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_lifecycle_property_on_a_plain_object_literal_nested_inside_a_component (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/an_optional_receiver,_this?.setState (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/an_UNSAFE_prefixed_class_lifecycle_method (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_class_extending_the_bare_Component_identifier (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_function-expression_callback_in_a_class_component_under_disallow-in-func (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/setState_inside_an_if_block_in_a_class_component (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_concise-body_arrow_callback_in_createReactClass_under_disallow-in-func (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_direct_setState_in_a_class_component_under_disallow-in-func (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_static_method_named_for_the_lifecycle (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/an_arrow-valued_componentWillUpdate_class_property (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_function-expression_callback_in_createReactClass_under_disallow-in-func (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_direct_setState_in_createReactClass_under_disallow-in-func (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/setState_inside_an_if_block_in_createReactClass (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/a_direct_setState_in_a_class_componentWillUpdate (0.00s)
+    --- PASS: TestNoWillUpdateSetStateFires/an_UNSAFE_prefixed_createReactClass_lifecycle_property (0.00s)
+=== CONT  TestNoWillUpdateSetStateStaysSilent/the_React.createClass_factory_name,_which_this_rule's_upstream_does_not_accept
+=== CONT  TestNoWillUpdateSetStateStaysSilent/setState_directly_inside_componentDidUpdate
+=== CONT  TestNoWillUpdateSetStateStaysSilent/setState_directly_inside_componentDidMount
+=== CONT  TestNoWillUpdateSetStateStaysSilent/a_lifecycle_property_in_a_call_that_is_not_createReactClass
+=== CONT  TestNoWillUpdateSetStateStaysSilent/the_createClass_factory_name,_which_this_rule's_upstream_does_not_accept
+=== CONT  TestNoWillUpdateSetStateStaysSilent/a_lifecycle_property_on_a_bare_object_literal_at_the_top_level
+=== CONT  TestNoWillUpdateSetStateStaysSilent/a_lifecycle_method_on_a_class_extending_nothing
+=== CONT  TestNoWillUpdateSetStateStaysSilent/a_function_declared_in_the_lifecycle_under_an_empty_option_array
+=== CONT  TestNoWillUpdateSetStateStaysSilent/setState_inside_a_function_declared_in_the_lifecycle_and_passed_out
+=== CONT  TestNoWillUpdateSetStateStaysSilent/setState_inside_a_function-expression_callback
+=== CONT  TestNoWillUpdateSetStateStaysSilent/setState_referenced_but_never_called
+=== CONT  TestNoWillUpdateSetStateStaysSilent/an_empty_componentWillUpdate
+--- PASS: TestNoWillUpdateSetStateStaysSilent (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/a_render_method_with_no_lifecycle_at_all (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/an_arrow_callback_in_a_createReactClass_component_in_default_mode (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/an_arrow_callback_in_a_class_component_in_default_mode (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/a_nested_object_getter_inside_the_lifecycle_method (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/a_tagged_template_on_setState,_which_is_no_call_expression (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/a_method_on_a_class_declared_inside_the_lifecycle_method (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/a_nested_object_method_inside_a_class_lifecycle (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/a_nested_object_method_inside_a_createReactClass_lifecycle (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/a_parenthesized_this_receiver (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/a_callback_inside_an_UNSAFE_prefixed_lifecycle_method (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/a_parenthesized_setState_callee (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/a_numeric_computed_callee (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/a_computed_callee_whose_key_names_nothing_statically (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/a_receiver_that_is_not_this (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/a_helper_method_called_from_the_lifecycle_method (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/setState_directly_inside_componentDidUpdate (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/setState_directly_inside_componentDidMount (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/a_method_that_is_not_setState (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/a_lifecycle_property_on_a_bare_object_literal_at_the_top_level (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/the_createClass_factory_name,_which_this_rule's_upstream_does_not_accept (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/a_lifecycle_method_on_a_class_extending_nothing (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/a_lifecycle_property_in_a_call_that_is_not_createReactClass (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/a_function_declared_in_the_lifecycle_under_an_empty_option_array (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/the_React.createClass_factory_name,_which_this_rule's_upstream_does_not_accept (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/an_empty_componentWillUpdate (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/setState_inside_a_function-expression_callback (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/setState_inside_a_function_declared_in_the_lifecycle_and_passed_out (0.00s)
+    --- PASS: TestNoWillUpdateSetStateStaysSilent/setState_referenced_but_never_called (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/react	0.014s

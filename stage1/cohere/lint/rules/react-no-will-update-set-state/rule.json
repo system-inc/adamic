@@ -1,0 +1,13 @@
+{
+  "name": "react/no-will-update-set-state",
+  "kinds": [
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "oracle": "oracleReactNoWillUpdateSetState",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestNoWillUpdateSetState",
+  "factory": "create",
+  "class": "Rule"
+}

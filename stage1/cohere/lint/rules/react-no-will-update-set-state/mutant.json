@@ -1,0 +1,5 @@
+{
+  "name": "react-no-will-update-set-state lifecycle omitted",
+  "from": "name.name === 'componentWillUpdate'",
+  "to": "name.name === 'componentDidUpdate'"
+}

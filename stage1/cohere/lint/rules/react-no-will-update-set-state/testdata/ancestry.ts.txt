@@ -1,0 +1,11 @@
+class Ancestry implements Component {
+    render() {
+        const unrelated = { UNSAFE_componentWillUpdate: () => this.setState({}) };
+        return unrelated;
+    }
+    componentDidUpdate() { this.setState({}); }
+    helper() { this.setState({}); }
+}
+const Expression = class extends React.PureComponent {
+    "componentWillUpdate"() { this.setState({}); }
+};

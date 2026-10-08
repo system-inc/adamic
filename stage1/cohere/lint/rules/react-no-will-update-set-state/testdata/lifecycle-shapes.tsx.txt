@@ -1,0 +1,27 @@
+class Lifecycle extends React.Component {
+    componentWillUpdate() {
+        this.setState({value: 1});
+        this["setState"]({value: 2});
+        this[`setState`]({value: 3});
+        this?.setState({value: 4});
+        this.setState?.({value: 5});
+        (this).setState({});
+        (this.setState)({});
+        on(() => this.setState({}));
+        const object = { componentWillUpdate() { this.setState({}); } };
+    }
+    static UNSAFE_componentWillUpdate() { this.setState({}); }
+    get componentWillUpdate() { this.setState({}); return 1; }
+    set componentWillUpdate(value) { this.setState({}); }
+    ["UNSAFE_componentWillUpdate"] = () => this.setState({});
+    render() { return <div />; }
+}
+const Factory = ((React).createReactClass)({
+    "componentWillUpdate": function() { this.setState({}); }
+});
+const OldFactory = React.createClass({componentWillUpdate() { this.setState({}); }});
+class Plain { componentWillUpdate() { this.setState({}); } }
+class ParenthesizedKey extends React.Component {
+    [("componentWillUpdate")]() { this.setState({}); }
+    [`UNSAFE_componentWillUpdate`]() { this.setState({}); }
+}
