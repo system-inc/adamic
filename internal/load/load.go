@@ -14,6 +14,7 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+	"sync"
 	"unicode/utf16"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -40,6 +41,8 @@ type Program struct {
 	projectOptions bool
 	optionSites    []OptionSite
 	fs             *sourceFS
+	sparseOnce     sync.Once
+	sparseArrays   bool
 
 	// files is the program's own source, in the order Load was given it: no prelude, no lib.
 	files []*ast.SourceFile

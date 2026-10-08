@@ -277,3 +277,18 @@ and the exact tail summary; the full JSON list remains intact. A scratch
 >=9 threshold mutant fails only that test's row-exclusion assertion, with
 trace in threshold-mutant.log. No census rerun or compiler change was needed
 for this presentation and ownership refinement.
+
+
+Final owner-family addition: enum reads now map to compiler/stage3-front using
+the enum declarations in both pinned measured compiler trees, including
+ModifierFlags, Extension, NodeFlags, Comparison and ModuleKind. Ordinary
+function reads and Error remain unassigned. The supplied taste, namespace,
+index-signature, any, cast and unknown families are seeded. Every reason
+containing " seen as " maps to adaptation 70, stage 3, before other prefixes.
+The rerendered run has 13 unowned rows with at least ten sites on either
+tree; the complete unowned list remains in JSON. Checker fields/table, latent
+totals, reason counts and recorded compiler provenance are unchanged.
+Twenty tests pass with both real binaries enabled in final-owners-tests.log.
+A scratch mutant gives prefix matches precedence over variance; the ownership
+test catches it through the generic-return-versus-variance assertion, log
+variance-owner-mutant.log. No measurement or compiler rerun was needed.

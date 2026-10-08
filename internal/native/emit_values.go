@@ -16,6 +16,8 @@ func cType(valueType ir.Type) string {
 		return "adamic_object *"
 	case ir.Array:
 		return "adamic_array *"
+	case ir.Record:
+		return "adamic_record *"
 	case ir.Map:
 		return "adamic_map *"
 	case ir.Closure:
