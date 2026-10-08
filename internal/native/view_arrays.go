@@ -11,6 +11,13 @@ import (
 func (e *emitter) evaluate(expression ir.Expression) string {
 	value := e.evaluateWithoutViewArrays(expression)
 	if !ir.HasArrayViews(e.program) {
+		if literal, ok := expression.(ir.ArrayLiteral); ok {
+			kind := literal.Element
+			if kind.IsReference() {
+				kind = ir.Union
+			}
+			e.line("%s->element_kind = %d;", value, kind)
+		}
 		return value
 	}
 	storage := ir.Type(0)

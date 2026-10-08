@@ -407,10 +407,11 @@ static inline void adamic_object_check_data_write(const adamic_object *object, c
 #include "view_arrays.h"
 typedef struct adamic_array {
 	adamic_heap heap;
-	adamic_array_view_metadata view;
 	size_t length;
 	size_t capacity;
 	bool references;
+	// Physical storage only; zero carries no scalar evidence. Heap pointers are 10.
+	uint8_t element_kind;
 	adamic_value *elements;
 	// Extra fields of RegExp result arrays, owned and released with the array.
 	adamic_object *properties;

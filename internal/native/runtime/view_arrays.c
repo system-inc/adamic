@@ -16,18 +16,18 @@ static const char *array_storage_name(unsigned char storage) {
 }
 
 void adamic_array_view_storage(adamic_array *array, unsigned char storage) {
-    array->view.storage = storage;
+    array->element_kind = array->references ? 10 : storage;
 }
 
 void adamic_view_array_storage_check(const adamic_array *array, unsigned char storage, const char *expression) {
-    if (array->view.storage != storage) { array_view_failure(expression, array_storage_name(storage), array_storage_name(array->view.storage)); }
+    if (array->element_kind != (array->references ? 10 : storage)) { array_view_failure(expression, array_storage_name(storage), array_storage_name(array->element_kind)); }
 }
 
 adamic_value *adamic_view_array_at(const adamic_array *array, double index, bool relative, bool undefined_allowed, unsigned char wanted, const char *expected, const char *expression, adamic_value *snapshot) {
     if (array == NULL) array_view_failure(expression, expected, "undefined");
     adamic_value *slot = relative ? adamic_array_at_relative(array, index) : adamic_array_at(array, index);
     if (slot == NULL) { return NULL; }
-    unsigned char actual = array->view.storage;
+    unsigned char actual = array->element_kind;
     *snapshot = *slot;
     if (actual == 7) {
         adamic_maybe_number number = adamic_maybe_number_unpack(slot->number);
