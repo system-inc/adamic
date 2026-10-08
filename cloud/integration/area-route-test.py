@@ -27,7 +27,7 @@ fixed = [
     ("codex/stricter-indexed-b", "compiler"),
     ("codex/enum-tag-narrowing-2", "compiler"),
     ("codex/host-promises", "runtime"),
-    ("codex/host-anything", "platforms"),
+    ("codex/host-anything", "library"),
     ("codex/stage3-anything", "stage3"),
     ("codex/views-anything", "hold"),
     ("codex/no-such-family-ever-2f3a", "hold"),

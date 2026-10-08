@@ -38,7 +38,7 @@ codex/concurrency	runtime
 codex/typed-array	runtime
 codex/async-	runtime	native async and host promises
 codex/string-views	runtime	native string views
-codex/host-	platforms
+codex/host-	library	Node host APIs (fs, process, buffer, crypto): library's, not platforms' (platforms, Oct 8)
 codex/host-promises	runtime	census-owners.tsv
 # Library
 codex/library-	library
