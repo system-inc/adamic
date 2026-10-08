@@ -27,21 +27,43 @@ const checker = program.getTypeChecker();
 const source = program.getSourceFile(path.join(root,'src/compiler/types.ts'));
 const moduleExports = checker.getExportsOfModule(checker.getSymbolAtLocation(source));
 const fields = {};
-for (const name of ['SymbolTracker','ModuleSpecifierResolutionHost','GeneratedIdentifier','EmitNode','AutoGenerateInfo','Identifier']) {
+for (const name of ['SymbolTracker','ModuleSpecifierResolutionHost','GeneratedIdentifier','EmitNode','AutoGenerateInfo','Identifier',
+  'Node','Symbol','Declaration','LeftHandSideExpression','PropertyAccessEntityNameExpression','ElementAccessExpression',
+  'StringLiteral','NumericLiteral','NoSubstitutionTemplateLiteral','BinaryExpression',
+  'ExpressionWithTypeArguments','JSDocAugmentsTag','JSDocImplementsTag','SourceMapRange',
+  'JSDoc','JSDocTypeLiteral','FunctionDeclaration','EmptyStatement']) {
  const symbol = moduleExports.find(symbol=>symbol.name===name);
  if (!symbol) throw Error('missing original type '+name);
  fields[name] = checker.getPropertiesOfType(checker.getDeclaredTypeOfSymbol(symbol)).map(field=>field.name).sort();
 }
 const pairs = [];
-for (const [id,name,field] of [[10236,'SymbolTracker','moduleResolverHost'],[7612,'GeneratedIdentifier','emitNode']]) {
- const symbol = moduleExports.find(symbol=>symbol.name===name);
- const receiver = checker.getDeclaredTypeOfSymbol(symbol);
+for (const [id,name,field] of [[10236,'SymbolTracker','moduleResolverHost'],[7612,'GeneratedIdentifier','emitNode'],
+  [9476,'BindableStaticPropertyAssignmentExpression','left'],[9474,'BindableStaticAccessExpression','expression'],
+  [9485,'BindablePropertyAssignmentExpression','left'],[9475,'BindableAccessExpression','expression'],
+  [9454,'BindableStaticElementAccessExpression','argumentExpression'],
+  [8883,'JSDocAugmentsTag','class'],[8882,'JSDocImplementsTag','class'],[7642,'JSDoc','parent'],[36241,'JSDoc','parent'],[7644,'JSDoc | JSDocTypeLiteral','parent'],[92175,'JSDocImplementsTag | JSDocAugmentsTag','class'],[9657,'JSDocAugmentsTag.class','expression']]) {
+ const receiver = checker.getUnionType(name.split(' | ').map(part => {
+  const [exportName,memberName] = part.split('.');
+  const symbol = moduleExports.find(symbol=>symbol.name===exportName);
+  if (!symbol) throw Error('missing original receiver '+part);
+  const receiver = checker.getDeclaredTypeOfSymbol(symbol);
+  return memberName ? checker.getTypeOfSymbol(checker.getPropertyOfType(receiver,memberName)) : receiver;
+ }));
  const member = checker.getPropertyOfType(receiver,field);
- const declared = checker.getTypeOfSymbolAtLocation(member,member.valueDeclaration || member.declarations[0]);
+ // Union aliases have synthetic members, whose type the checker combines.
+ const declared = checker.getTypeOfSymbol(member);
  const sites = witnesses.filter(site=>site.type_id===id && site.field===field);
  pairs.push({type_id:id,type:name,field,read_count:sites.length,sites,
    declared_type:checker.typeToString(declared),
+   receiver_fields:checker.getPropertiesOfType(receiver).map(field=>field.name).sort(),
    present_fields:checker.getPropertiesOfType(checker.getNonNullableType(declared)).map(field=>field.name).sort()});
 }
-fs.writeFileSync(path.join(declarations,'intersection-manifest.json'),JSON.stringify({upstream_commit:pin.commit,declarations:emitted.declarations,fields,pairs},null,2)+'\n');
+const inventory = JSON.parse(require('node:zlib').gunzipSync(fs.readFileSync(path.resolve(__dirname,'../../lane4/read-demand-pairs.json.gz'))));
+const assigned_identifier = inventory.find(pair => pair.receiver_type_id === 9477 && pair.field === 'escapedText');
+if (!assigned_identifier || assigned_identifier.reads !== 1 || assigned_identifier.type !== 'LeftHandSideExpression & Identifier') throw Error('assigned Identifier inventory drift');
+const assignedSource = path.join(root,assigned_identifier.witness.file);
+const assignedLine = fs.readFileSync(assignedSource,'utf8').split('\n')[assigned_identifier.witness.line-1];
+if (!assignedLine.includes('.escapedText')) throw Error('assigned Identifier read drift');
+assigned_identifier.source_sha256 = hash(assignedSource);
+fs.writeFileSync(path.join(declarations,'intersection-manifest.json'),JSON.stringify({upstream_commit:pin.commit,declarations:emitted.declarations,fields,pairs,assigned_identifier},null,2)+'\n');
 console.log(`Complete declaration field sets verified; original spans ${witnesses.length}; pairs ${pairs.map(pair=>pair.read_count).join('+')}`);

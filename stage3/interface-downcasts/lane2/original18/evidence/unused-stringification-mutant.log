@@ -1,0 +1,9 @@
+=== RUN   TestCheckedViewRanked18OriginalArrays
+=== RUN   TestCheckedViewRanked18OriginalArrays/config-files-join-bad
+--- PASS: TestCheckedViewRanked18OriginalArrays (24.25s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/config-files-join-bad (24.25s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	24.274s

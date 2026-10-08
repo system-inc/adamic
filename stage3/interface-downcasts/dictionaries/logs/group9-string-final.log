@@ -1,0 +1,41 @@
+=== RUN   TestCheckedViewDictionaryStringIndexing
+=== RUN   TestCheckedViewDictionaryStringIndexing/string-index-good
+=== RUN   TestCheckedViewDictionaryStringIndexing/string-index-surrogate
+=== RUN   TestCheckedViewDictionaryStringIndexing/string-index-missing
+=== RUN   TestCheckedViewDictionaryStringIndexing/string-index-negative
+=== RUN   TestCheckedViewDictionaryStringIndexing/string-index-wrong
+=== RUN   TestCheckedViewDictionaryStringIndexing/path-index-good
+=== RUN   TestCheckedViewDictionaryStringIndexing/path-index-surrogate
+=== RUN   TestCheckedViewDictionaryStringIndexing/path-index-missing
+=== RUN   TestCheckedViewDictionaryStringIndexing/path-index-negative
+=== RUN   TestCheckedViewDictionaryStringIndexing/path-index-wrong
+--- PASS: TestCheckedViewDictionaryStringIndexing (4.03s)
+    --- PASS: TestCheckedViewDictionaryStringIndexing/string-index-good (0.48s)
+    --- PASS: TestCheckedViewDictionaryStringIndexing/string-index-surrogate (0.39s)
+    --- PASS: TestCheckedViewDictionaryStringIndexing/string-index-missing (0.40s)
+    --- PASS: TestCheckedViewDictionaryStringIndexing/string-index-negative (0.39s)
+    --- PASS: TestCheckedViewDictionaryStringIndexing/string-index-wrong (0.40s)
+    --- PASS: TestCheckedViewDictionaryStringIndexing/path-index-good (0.39s)
+    --- PASS: TestCheckedViewDictionaryStringIndexing/path-index-surrogate (0.39s)
+    --- PASS: TestCheckedViewDictionaryStringIndexing/path-index-missing (0.39s)
+    --- PASS: TestCheckedViewDictionaryStringIndexing/path-index-negative (0.40s)
+    --- PASS: TestCheckedViewDictionaryStringIndexing/path-index-wrong (0.40s)
+=== RUN   TestCheckedViewDictionarySourceMutants
+=== RUN   TestCheckedViewDictionarySourceMutants/skip-check
+    checked_view_dictionary_source_test.go:84: pinned source read catches skip-check: exit=0 stdout="object\n" stderr=""
+    checked_view_dictionary_source_test.go:84: pinned source read catches skip-check: exit=0 stdout="object\n" stderr=""
+=== RUN   TestCheckedViewDictionarySourceMutants/accept-wrong-shape
+    checked_view_dictionary_source_test.go:84: pinned source read catches accept-wrong-shape: exit=0 stdout="object\n" stderr=""
+    checked_view_dictionary_source_test.go:84: pinned source read catches accept-wrong-shape: exit=0 stdout="object\n" stderr=""
+=== RUN   TestCheckedViewDictionarySourceMutants/drop-transitive-check
+    checked_view_dictionary_source_test.go:84: pinned source read catches drop-transitive-check: exit=0 stdout="42\n" stderr=""
+    checked_view_dictionary_source_test.go:84: pinned source read catches drop-transitive-check: exit=0 stdout="42\n" stderr=""
+--- PASS: TestCheckedViewDictionarySourceMutants (0.65s)
+    --- PASS: TestCheckedViewDictionarySourceMutants/skip-check (0.21s)
+    --- PASS: TestCheckedViewDictionarySourceMutants/accept-wrong-shape (0.21s)
+    --- PASS: TestCheckedViewDictionarySourceMutants/drop-transitive-check (0.22s)
+PASS
+gate cache: native hits=0 misses=8
+gate cache: node hits=0 misses=26
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.708s

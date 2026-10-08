@@ -1,0 +1,37 @@
+[
+  {
+    "name": "boxed-key-equality",
+    "caught_by_behavior": true,
+    "log": "map-boxed-key-equality.log.gz"
+  },
+  {
+    "name": "boxed-key-nan",
+    "caught_by_behavior": true,
+    "log": "map-boxed-key-nan.log.gz"
+  },
+  {
+    "name": "boxed-key-payload",
+    "caught_by_behavior": true,
+    "log": "map-boxed-key-payload.log.gz"
+  },
+  {
+    "name": "boxed-key-ownership",
+    "caught_by_behavior": true,
+    "log": "map-boxed-key-ownership.log.gz"
+  },
+  {
+    "name": "boxed-key-hash",
+    "caught_by_behavior": true,
+    "log": "map-boxed-key-hash.log.gz"
+  },
+  {
+    "name": "boxed-key-zero",
+    "caught_by_behavior": true,
+    "log": "map-boxed-key-zero.log.gz"
+  },
+  {
+    "name": "boxed-key-undefined-query",
+    "caught_by_behavior": true,
+    "log": "map-boxed-key-undefined-query.log.gz"
+  }
+]

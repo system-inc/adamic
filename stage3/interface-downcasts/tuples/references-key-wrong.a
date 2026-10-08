@@ -1,0 +1,9 @@
+import type { IncrementalBuildInfoReferencedMap } from 'original-tsc-builder';
+interface Base { readonly kind: string; }
+interface Target extends Base { readonly references: IncrementalBuildInfoReferencedMap; }
+const entry: readonly [boolean, number] = [false, 9];
+const raw = {kind: 'probe', references: [entry]};
+const base: Base = raw;
+const viewed = base as Target;
+const references = viewed.references;
+references.forEach((entry) => { console.log(String(entry[0])); console.log(String(entry[1])); });

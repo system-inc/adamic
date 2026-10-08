@@ -136,3 +136,11 @@ adamic_heap *adamic_view_dictionary_box(adamic_view_union_value value) {
     if (value.kind == adamic_view_union_boolean) return value.payload.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
     return adamic_retain(value.payload.reference);
 }
+
+// Share producers and key ordering; a key-only operation demands no elements.
+adamic_array *adamic_view_dictionary_source_keys(const adamic_object *object) {
+    if (object == NULL) dictionary_failure("Object.keys", "dictionary", adamic_view_union_undefined);
+    if (object->heap.kind != adamic_kind_object) dictionary_failure("Object.keys", "dictionary", dictionary_boxed_value(&object->heap).kind);
+    if (adamic_record_is(object)) return adamic_record_keys(object);
+    return adamic_object_keys(object);
+}

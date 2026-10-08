@@ -1,0 +1,15 @@
+=== RUN   TestDictionaryEntryDerivedOriginMutant
+--- PASS: TestDictionaryEntryDerivedOriginMutant (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.028s
+=== RUN   TestCheckedViewDictionaryEnumerationRecheck
+=== RUN   TestCheckedViewDictionaryEnumerationRecheck/values
+=== RUN   TestCheckedViewDictionaryEnumerationRecheck/entries
+--- PASS: TestCheckedViewDictionaryEnumerationRecheck (0.91s)
+    --- PASS: TestCheckedViewDictionaryEnumerationRecheck/values (0.45s)
+    --- PASS: TestCheckedViewDictionaryEnumerationRecheck/entries (0.46s)
+PASS
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.933s

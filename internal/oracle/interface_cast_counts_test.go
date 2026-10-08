@@ -42,22 +42,26 @@ func interfaceCastCounts(t *testing.T) []string {
 		rows = append(rows, fmt.Sprintf("| %s | %s | %s | %s | %s | %s | %s |", path, match[1], match[2], match[3], match[4], match[5], match[6]))
 	}
 	for _, name := range []string{"default-staged", "default-wrong-type", "default-wrong-boolean", "default-literal", "default-boxed-string", "default-boxed-write", "default-destructure", "default-read-before-set"} {
-		rows = append(rows, counted(t, "stage3/interface-downcasts/"+name+".a", false, nil, false, false))
+		rows = append(rows, counted(t, checkedViewFixturePath("stage3/interface-downcasts/"+name+".a"), false, nil, false, false))
 	}
 	for _, name := range []string{"objects-good", "objects-untagged-good", "objects-untagged-wrong", "objects-wrong-nested", "objects-missing-nested", "objects-uninitialized-nested"} {
-		rows = append(rows, counted(t, "stage3/interface-downcasts/lane1/"+name+".a", false, nil, false, false))
+		rows = append(rows, counted(t, checkedViewFixturePath("stage3/interface-downcasts/lane1/"+name+".a"), false, nil, false, false))
 	}
 	for _, name := range []string{"interfaces-good", "interfaces-missing-inherited", "interfaces-wrong-inherited", "interfaces-uninitialized-object"} {
-		rows = append(rows, counted(t, "stage3/interface-downcasts/lane1/"+name+".a", false, nil, false, false))
+		rows = append(rows, counted(t, checkedViewFixturePath("stage3/interface-downcasts/lane1/"+name+".a"), false, nil, false, false))
 	}
 	for _, name := range []string{"unions-objects-good", "unions-objects-wrong-payload", "unions-objects-wrong-tag", "unions-objects-missing-tag"} {
-		rows = append(rows, counted(t, "stage3/interface-downcasts/lane1/"+name+".a", false, nil, false, false))
+		rows = append(rows, counted(t, checkedViewFixturePath("stage3/interface-downcasts/lane1/"+name+".a"), false, nil, false, false))
 	}
 	// These rows count the source lowering and shared readiness helpers. The checked
 	// view substitution in TestNarrowedFieldUsesSharedReadiness is a separate IR probe.
 	for _, name := range []string{"identifier", "identifier-uninitialized", "number", "number-uninitialized"} {
-		rows = append(rows, counted(t, "stage3/interface-downcasts/readiness-"+name+".a", false, nil, false, false))
+		rows = append(rows, counted(t, checkedViewFixturePath("stage3/interface-downcasts/readiness-"+name+".a"), false, nil, false, false))
 	}
+	rows = append(rows, counted(t, checkedViewFixturePath("stage3/interface-downcasts/lane4b/fixtures/fixes-graph.a"), false, nil, false, false))
+	rows = append(rows, counted(t, checkedViewFixturePath("stage3/interface-downcasts/lane4b/fixtures/fixes-tuple-unread.a"), false, nil, false, false))
 	rows = append(rows, viewCallableCounts(t)...)
-	return append(rows, viewRankedArrayCounts(t)...)
+	rows = append(rows, tupleOriginalCounts(t)...)
+	rows = append(rows, viewRankedArrayCounts(t)...)
+	return append(rows, viewIntersectionDeferredCounts(t)...)
 }

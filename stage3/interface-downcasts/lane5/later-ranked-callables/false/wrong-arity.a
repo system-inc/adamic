@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface FalseLiteral {readonly value:number;}
+interface Base {readonly createFalse:unknown;}
+interface Target {createFalse(): FalseLiteral;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createFalse().value}`);}
+probe({createFalse:(unused:number):FalseLiteral=>({value:9})});

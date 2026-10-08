@@ -166,14 +166,16 @@ static bool write_value(json_writer *w, adamic_value value, const adamic_json_sc
 		const adamic_array *array = value.reference;
 		const adamic_object *object = value.reference;
 		size_t count = tuple ? schema->count : array->length;
+		adamic_array *owner = !tuple && schema->array_read != NULL ? adamic_array_new(0,true) : NULL;
 		ascii(w, "[");
 		for (size_t index = 0; index < count; index++) {
 			if (index != 0) { ascii(w, ","); }
 			indent(w, depth + 1);
 			const adamic_json_schema *element = tuple ? schema->fields[index].schema : schema->element;
-			adamic_value item = tuple ? object->slots[schema->fields[index].slot] : array->elements[index];
+			adamic_value item = tuple ? object->slots[schema->fields[index].slot] : schema->array_read != NULL ? schema->array_read(array,index,owner) : array->elements[index];
 			if (!write_value(w, item, element, depth + 1)) { ascii(w, "null"); }
 		}
+		adamic_release(owner); /* JSON element snapshots. */
 		if (count != 0) { indent(w, depth); }
 		ascii(w, "]");
 		return true;
@@ -228,10 +230,11 @@ static void keys(json_writer *w, adamic_value value, const adamic_json_schema *s
 	const adamic_array *array = value.reference;
 	const adamic_object *object = value.reference;
 	size_t count = tuple ? schema->count : array->length;
+	adamic_array *owner = !tuple && schema->array_read != NULL ? adamic_array_new(0,true) : NULL;
 	if (count != 0) { w->keys = json_memory(count * sizeof *w->keys); }
 	for (size_t index = 0; index < count; index++) {
 		const adamic_json_schema *element = tuple ? schema->fields[index].schema : schema->element;
-		adamic_value item = tuple ? object->slots[schema->fields[index].slot] : array->elements[index];
+		adamic_value item = tuple ? object->slots[schema->fields[index].slot] : schema->array_read != NULL ? schema->array_read(array,index,owner) : array->elements[index];
 		json_scalar s = scalar(item, element->kind);
 		adamic_string *key;
 		if (s.kind == adamic_json_string) { key = adamic_retain(s.value.reference); }
@@ -243,6 +246,7 @@ static void keys(json_writer *w, adamic_value value, const adamic_json_schema *s
 		}
 		if (duplicate) { adamic_release(key); } else { w->keys[w->key_count++] = key; }
 	}
+	adamic_release(owner);
 }
 adamic_string *adamic_json_stringify(adamic_value value, const adamic_json_schema *schema,
 	adamic_value replacer, const adamic_json_schema *replacer_schema,

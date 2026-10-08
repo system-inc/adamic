@@ -37,13 +37,14 @@ func (e *emitter) arrayHolesMap(expression ir.ArrayMap) string {
 	count := e.temporary()
 	e.line("size_t %s = %s->length;", count, source)
 	result := e.own(ir.Array, fmt.Sprintf("adamic_array_holes((double)%s, %t)", count, expression.Result.IsReference()))
+	owner := e.viewArrayReadOwner(expression.Element)
 	index, slot, element, answer := e.temporary(), e.temporary(), e.temporary(), e.temporary()
 	e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
 	e.indent++
 	e.line("adamic_value *%s = adamic_array_holes_at(%s, (double)%s);", slot, source, index)
 	e.line("if (%s == NULL) continue;", slot)
 	if expression.ViewRead.View != "" {
-		checked := e.viewArrayElementSlot(expression.ViewRead, source, index)
+		checked := e.viewArrayElementSlot(expression.ViewRead, source, index, owner)
 		e.line("adamic_value %s = %s;", element, checked)
 	} else {
 		e.line("adamic_value %s = *%s;", element, slot)

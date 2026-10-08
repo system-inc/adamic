@@ -1,0 +1,5 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Base {readonly getTokenFullStart:unknown;}
+interface Target {getTokenFullStart(): number;}
+function probe(value:Base):void {const scanner=value as Target;console.log(`${scanner.getTokenFullStart()}`);}
+probe({getTokenFullStart:():number=>3});

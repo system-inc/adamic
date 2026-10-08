@@ -1,0 +1,58 @@
+[
+  {
+    "name": "nullable-slot-native-producer",
+    "test": "^TestCheckedViewNullableNominalSlotMutants$/^producer$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "stage3/interface-downcasts/nullish/evidence/nullable-slots-nullable-slot-native-producer.log.gz"
+  },
+  {
+    "name": "nullable-slot-js-producer",
+    "test": "^TestCheckedViewNullableNominalSlotMutants$/^producer$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "stage3/interface-downcasts/nullish/evidence/nullable-slots-nullable-slot-js-producer.log.gz"
+  },
+  {
+    "name": "nullable-slot-native-write",
+    "test": "^TestCheckedViewNullableNominalSlotMutants$/^write$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "stage3/interface-downcasts/nullish/evidence/nullable-slots-nullable-slot-native-write.log.gz"
+  },
+  {
+    "name": "nullable-slot-js-write",
+    "test": "^TestCheckedViewNullableNominalSlotMutants$/^write$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "stage3/interface-downcasts/nullish/evidence/nullable-slots-nullable-slot-js-write.log.gz"
+  },
+  {
+    "name": "nullable-slot-native-read",
+    "test": "^TestCheckedViewNullableNominalSlotMutants$/^read$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "stage3/interface-downcasts/nullish/evidence/nullable-slots-nullable-slot-native-read.log.gz"
+  },
+  {
+    "name": "nullable-slot-js-read",
+    "test": "^TestCheckedViewNullableNominalSlotMutants$/^read$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "stage3/interface-downcasts/nullish/evidence/nullable-slots-nullable-slot-js-read.log.gz"
+  },
+  {
+    "name": "nullable-slot-null-containment",
+    "test": "^TestCheckedViewNullableNominalSlotMutants$/^narrow-slot$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "stage3/interface-downcasts/nullish/evidence/nullable-slots-nullable-slot-null-containment.log.gz"
+  },
+  {
+    "name": "nullable-slot-unboxed-boundary",
+    "test": "^TestCheckedViewNullableNominalSlotBoundaryRefusals$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "stage3/interface-downcasts/nullish/evidence/nullable-slots-nullable-slot-unboxed-boundary.log.gz"
+  }
+]

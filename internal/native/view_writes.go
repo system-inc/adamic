@@ -10,6 +10,7 @@ import (
 // converts to the actual slot's storage. Readiness changes only after success.
 func (e *emitter) checkedWrite(write ir.SetProperty) {
 	object, value := e.value(write.Object), e.value(write.Value)
+	e.mapEntryNominalCertificate(write.WriteContract, value, write.WriteWhere)
 	allowed := ir.ScalarWriteContracts(e.program, write.WriteContract)
 	ids := []string{}
 	for _, id := range allowed {
@@ -45,7 +46,7 @@ func (e *emitter) checkedWrite(write ir.SetProperty) {
 			boolean, tag = "("+value+").boolean", "("+value+").present ? 2 : 13"
 		}
 		e.line("if (adamic_object_field_types(%s)[%s.index] == 9) { %s->maybe_boolean = %s; } else { %s->boolean = %s; adamic_object_field_types(%s)[%s.index] = %s; }", object, cache, slot, packed, slot, boolean, object, cache, tag)
-	} else if of == ir.String || of == ir.Object {
+	} else if of == ir.String || of == ir.Object || of == ir.Union {
 		old := e.temporary()
 		e.line("void *%s = %s->reference;", old, slot)
 		e.line("%s->reference = %s;", slot, e.kept(value))

@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Declaration {readonly value:number;}
+interface Identifier {readonly value:number;}
+interface Base {readonly getDeclarationName:unknown;}
+interface Target {getDeclarationName(node: Declaration | undefined, allowComments?: boolean, allowSourceMaps?: boolean): Identifier;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.getDeclarationName(undefined).value}`);console.log(`${factory.getDeclarationName(undefined,undefined,undefined).value}`);console.log(`${factory.getDeclarationName({value:3},false,false).value}`);console.log(`${factory.getDeclarationName({value:3},true,false).value}`);console.log(`${factory.getDeclarationName({value:3},true,true).value}`);}
+probe({getDeclarationName:(node:Declaration|undefined,allowComments?:boolean,allowSourceMaps?:boolean):Identifier=>({value:(node===undefined?0:node.value)+(allowComments===true?1:0)+(allowSourceMaps===true?2:0)})});

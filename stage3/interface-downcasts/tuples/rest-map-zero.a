@@ -1,0 +1,4 @@
+type Pair=readonly [number,...string[]];
+interface Base {readonly kind:string;}
+interface Target extends Base {readonly values:ReadonlyMap<number,Pair>;} const pair:Pair=[7]; const values=new Map<number,Pair>(); values.set(1,pair); const raw={kind:'probe',values}; const base:Base=raw; const target=base as Target; const selected=target.values.get(1);if(selected===undefined){throw new Error('missing tuple');}
+console.log(String(selected[0])); console.log(typeof selected[1]); console.log(typeof selected[3]);

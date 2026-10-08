@@ -66,7 +66,7 @@ func TestCheckedViewCallableScalarWitnesses(t *testing.T) {
 }
 
 func TestCheckedViewCallableMixedResultBoundary(t *testing.T) {
-	path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/lane5/gaps/mixed-scalar-boxed-result.a"))
+	path, err := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "stage3/interface-downcasts/lane5/gaps/mixed-scalar-boxed-result.a")))
 	if err != nil {
 		t.Fatal(err)
 	}

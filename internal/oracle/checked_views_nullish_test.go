@@ -91,7 +91,7 @@ func TestCheckedViewNullishRegexIdentity(t *testing.T) {
 
 func TestCheckedViewNullishCallableSignatureMutant(t *testing.T) {
 	path := filepath.Join(repository, "stage3/interface-downcasts/nullish/fixtures/callable-signature-mutant.a")
-	path, pathErr := filepath.Abs(path)
+	path, pathErr := filepath.Abs(checkedViewFixturePath(path))
 	if pathErr != nil {
 		t.Fatal(pathErr)
 	}

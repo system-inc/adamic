@@ -1,0 +1,67 @@
+{
+  "integration": "ffe428ab26eefb73154adbf570ad99e9c1b4f872",
+  "owner_parent": "08b3612ba",
+  "callback_refusal_sites": 47,
+  "storage_iteration_companions": 46,
+  "boxed_callable_implementations": "unchanged from integration",
+  "retention_mutant": {
+    "file": "internal/native/runtime/map_view_storage.c",
+    "function": "map_read_slot",
+    "change": "skip adamic_retain for reference key snapshots, preserving value snapshot retention",
+    "command": "ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/(map_foreach_keys|map_foreach_named_keys)' -v -count=1 -timeout 10m",
+    "caught_by": [
+      "map_foreach_keys.a",
+      "map_foreach_named_keys.a"
+    ],
+    "outcome": "AddressSanitizer heap-use-after-free, actual compiled native executions",
+    "restored": "same controls pass in 0.662s"
+  },
+  "inherited_phantom_failures": [
+    "TestPhantomCastsAreErased",
+    "TestPhantomArrayCastsAreErased",
+    "TestPhantomArrayRequiredCastsAreErased",
+    "TestPhantomArrayProofs/cycle"
+  ],
+  "inherited_failure_baseline": "isolated unmodified integration ffe428ab; same failures",
+  "required_oracle": {
+    "command": "ADAMIC_GATE_UNCACHED=0 go test ./internal/oracle -run 'Map|Nullish|NullableSelection|CheckedView' -v -count=1 -timeout 45m",
+    "result": "PASS",
+    "seconds": 1066.495,
+    "native_cache_hits": 0,
+    "native_cache_misses": 1375,
+    "node_cache_hits": 88,
+    "node_cache_misses": 4449,
+    "probe_cache_hits": 0,
+    "probe_cache_misses": 0
+  },
+  "full_repository_gate": "not run",
+  "production_remaining_pairs_and_reads": "unmeasured",
+  "restored_nonconflicting_dependencies": [
+    "native packed MaybeBoolean read decoding",
+    "lower tuple-narrowing marker for JavaScript array representation"
+  ],
+  "primitive_array_pair_storage": {
+    "controls": [
+      "string",
+      "number",
+      "plain-number",
+      "plain-string"
+    ],
+    "mutants": [
+      "wrong: checked value read stops with exit 70",
+      "bounds: checked presence read stops with exit 70"
+    ],
+    "outcome": "all three execution modes pass, held to Node for controls; 2.658s"
+  },
+  "compiler_gate": {
+    "command": "go test ./internal/ir ./internal/lower ./internal/native ./internal/javascript -run 'View|Map|Contract|Callable|Tuple|Nullish|Nullable' -skip Phantom -failfast -count=1 -timeout 15m",
+    "result": "PASS",
+    "package_seconds": {
+      "ir": 0.016,
+      "lower": 7.156,
+      "native": 38.225,
+      "javascript": 1.065
+    },
+    "vet": "PASS"
+  }
+}

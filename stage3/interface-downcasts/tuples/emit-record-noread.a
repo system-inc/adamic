@@ -1,0 +1,6 @@
+import type { IncrementalBundleEmitBuildInfo, EmitSignature } from 'original-tsc-builder';
+interface Base { readonly version: string; }
+const raw = {version:'probe',outSignature:{'0':'signature'}};
+const base: Base = raw;
+const viewed = base as IncrementalBundleEmitBuildInfo;
+console.log(typeof viewed.outSignature);

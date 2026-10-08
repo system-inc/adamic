@@ -1,0 +1,8 @@
+class Named{readonly count:number=7;}
+interface Entry{child:Named|null}
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';child:Named|null}
+const witness=new Map<string,Entry>();
+const item={kind:'box',child:new Named()};const base:Base=item;
+const incoming=null as Named|null;
+console.log(typeof witness);(base as Target).child=incoming;console.log('ran');

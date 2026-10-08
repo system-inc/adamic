@@ -12,7 +12,22 @@ func init() { viewArrayContractHook = internArrayViewContract }
 // the id first: arrays and interfaces can contain each other recursively.
 func internArrayViewContract(l *lowering, node *ast.Node, target *checker.Type, build viewContractBuilder) (ir.ViewContractID, error) {
 	if checker.IsTupleType(target) {
-		return 0, l.notYet(node, "a checked tuple view with per-position optional and rest contracts")
+		var childError error
+		id := l.tupleViewSlot(node, target, func(element *checker.Type) ir.ViewContractID {
+			id, err := build(element)
+			if err != nil {
+				childError = err
+				return 0
+			}
+			return id
+		})
+		if childError != nil {
+			return 0, childError
+		}
+		if id == 0 {
+			return 0, l.notYet(node, "a checked tuple view with optional or rest positions")
+		}
+		return id, nil
 	}
 	id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
 	contract := ir.ViewContract{Kind: ir.ViewArray, Of: ir.Array, Name: l.checker.TypeToString(target), ArrayReadonly: l.isLibraryType(l.viewArrayBase(target), "ReadonlyArray")}

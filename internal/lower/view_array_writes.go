@@ -33,7 +33,13 @@ func (l *lowering) viewArrayLiteralSourceContract(node *ast.Node) ir.ViewContrac
 	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && l.viewArrayBase(contextual) != nil {
 		source = contextual
 	}
-	return l.viewArrayRecordSourceContract(node, l.viewArrayElementType(source))
+	element := l.concrete(l.viewArrayElementType(source))
+	if element != nil && isClassInstance(l.checker.GetNonNullableType(element)) {
+		if of, known := l.representation(element); known && (of == ir.Object || of == ir.Union) {
+			return l.mapNominalEntrySlot(node, element)
+		}
+	}
+	return l.viewArrayRecordSourceContract(node, element)
 }
 
 func (l *lowering) viewArrayObjectSourceContract(node *ast.Node, literal ir.ObjectLiteral) ir.ViewContractID {

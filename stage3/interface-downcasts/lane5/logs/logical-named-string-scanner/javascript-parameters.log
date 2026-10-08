@@ -1,0 +1,15 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (0.77s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/logical-and/wrong-members (0.40s)
+        checked_views_callable_later_ranked_test.go:49: gate cache node hit
+        checked_views_callable_later_ranked_test.go:69: gate cache node miss
+        checked_views_callable_later_ranked_test.go:89: backend2 exit 0 stdout "7\n" stderr "" want "createLogicalAnd" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createLogicalAnd expected (left: Expression, right: Expression) => BinaryExpression, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/named-exports/wrong-members (0.36s)
+        checked_views_callable_later_ranked_test.go:49: gate cache node hit
+        checked_views_callable_later_ranked_test.go:69: gate cache node miss
+        checked_views_callable_later_ranked_test.go:89: backend2 exit 0 stdout "0\n" stderr "" want "createNamedExports" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createNamedExports expected (elements: readonly ExportSpecifier[]) => NamedExports, found function with incompatible parameter representations\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.774s
+FAIL

@@ -49,3 +49,29 @@ retain the original conservative refusal. Explicit nullish constants cannot be
 aggregate producers and do not manufacture uncertainty. Remaining: only
 9477:escapedText, one pair / one read, handed to lane 7. Lane 4 has no remaining
 owned branded pair. The original table is 29 / 542 plus 5 / 9 nullable fields.
+
+October 11 lane 7 continuation: original intersected Identifier now lowers with
+its complete recursive contract. Its former compile-gap row has moved from
+TestCheckedViewBrandsOriginalBlockedPairs to lane 7's
+TestCheckedViewIntersectionOriginalIdentifierGap. Original valid controls now
+supply complete Node and required Symbol fields and pass all three backends.
+The escapedText pair remains uncredited: bypassing the helper read is still
+caught by the earlier carrier.child bounded read. A direct intersection cast
+remains refused; a wider alias-write isolation attempt is refused as an
+unsupported representation conversion at escapedText. See lane7's
+REMAINING-REPORT.md for commands and the surviving mutant. The other two
+compile-gap rows still pass their original named-refusal pins.
+
+October 11 follow-up: 9477 is now certified by lane 7's fixture-only helper path.
+An ordinary checked Identifier view is a proven subtype of the helper's original
+LeftHandSideExpression & Identifier receiver. No carrier.child read precedes the
+helper. Numeric escapedText stops at value.escapedText; bypassing only the helper
+read prints uncheckedunchecked and exits zero in all three backends, killing the
+previously surviving mutant. Good control and leaks pass. Lane 4's original
+credit increases by one pair / one read; the two never-family gaps remain. See
+lane7/IDENTIFIER-REPORT.md and its own measured counts table.
+
+Integration continuation: both the scoped name fallback and the lane 7 Identifier
+certificate are present. All three former gaps have moved to original runtime
+controls with exact wrong-value checks and executable mutants. The historical
+two-never-gap wording above is superseded by this combined checkpoint.

@@ -1,0 +1,7 @@
+type Brand=number&{readonly __brand:void};
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly value:ReadonlyMap<string,Brand>|null}
+const item=7 as Brand;
+const raw={kind:'box',value:new Map<string,Brand>([['key',item]])};const base:Base=raw;
+function read(node:Target):void{const map=node.value;if(map!==null){const item=map.get('key');if(item!==undefined){console.log(typeof item);console.log(typeof item.__brand);}}}
+read(base as Target);

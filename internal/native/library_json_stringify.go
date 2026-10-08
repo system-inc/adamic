@@ -10,7 +10,14 @@ func (e *emitter) jsonSchema(schema *ir.JSONSchema) string {
 	if schema == nil {
 		return "NULL"
 	}
-	element := e.jsonSchema(schema.Element)
+	elementSchema := schema.Element
+	reader := e.jsonArrayReader(schema)
+	if reader != "NULL" && ir.PrimitiveArrayContract(e.program, schema.ArrayRead.ViewContract) {
+		converted := *schema.Element
+		converted.Kind = "union"
+		elementSchema = &converted
+	}
+	element := e.jsonSchema(elementSchema)
 	fields := []string{}
 	for _, f := range schema.Fields {
 		child := e.jsonSchema(f.Schema)
@@ -22,7 +29,7 @@ func (e *emitter) jsonSchema(schema *ir.JSONSchema) string {
 		list = name + "_fields"
 		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_json_field %s[] = {%s};", list, strings.Join(fields, ", ")))
 	}
-	e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_json_schema %s = {adamic_json_%s, %s, %d, %s};", name, schema.Kind, element, len(fields), list))
+	e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_json_schema %s = {adamic_json_%s, %s, %d, %s, %s};", name, schema.Kind, element, len(fields), list, reader))
 	return "&" + name
 }
 func (e *emitter) jsonSlot(expression ir.Expression) string {

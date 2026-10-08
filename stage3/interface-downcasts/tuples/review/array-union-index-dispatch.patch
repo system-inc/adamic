@@ -1,0 +1,107 @@
+--- a/internal/lower/view_tuples.go
++++ b/internal/lower/view_tuples.go
+@@ -39,3 +39,16 @@
+ 	}
+ 	return false
+ }
++
++// Only scalar carriers and existing fixed tuple certificates are planned here.
++func (l *lowering) tupleScalarUnionType(target *checker.Type) bool {
++ if target == nil || target.Flags()&checker.TypeFlagsUnion == 0 { return false }
++ tuples := 0
++ for _, member := range target.Types() {
++  if member.Flags()&checker.TypeFlagsUndefined != 0 { continue }
++  if fixedViewTuple(member) { tuples++; continue }
++  if base := l.phantomBase(member); base != nil { member = base }
++  if !interfaceScalar(member) { return false }
++ }
++ return tuples > 0
++}
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -321,7 +321,7 @@
+ 		return of, nil
+ 	}
+ 	valueType, isKnown := l.kept(element)
+-	if !isKnown || slotless(valueType) {
++	if !isKnown || slotless(valueType) && !(valueType == ir.Union && l.tupleScalarUnionType(element)) {
+ 		// An element is one adamic_value, and number | undefined needs two words.
+ 		return 0, l.notYet(node, "an array of "+l.checker.TypeToString(element))
+ 	}
+--- a/internal/lower/view_arrays.go
++++ b/internal/lower/view_arrays.go
+@@ -100,7 +100,11 @@
+ 		if part.Kind == ast.KindCallExpression {
+ 			callee := ast.SkipParentheses(part.AsCallExpression().Expression)
+ 			if callee.Kind == ast.KindPropertyAccessExpression && l.viewArrayBase(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))) != nil {
+-				switch callee.Name().Text() {
++                if l.tupleScalarUnionType(l.viewArrayElementType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))) {
++                    found = l.notYet(part, "tuple union array consumer requiring a certified ownership transfer")
++                    return true
++                }
++                switch callee.Name().Text() {
+ 				case "map", "forEach", "filter", "some", "every", "find", "findIndex", "reduce", "slice", "at", "pop", "push", "indexOf", "includes", "lastIndexOf":
+ 				case "join":
+ 					element := l.viewArrayElementType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))
+@@ -112,7 +116,12 @@
+ 				}
+ 			}
+ 		}
+-		if part.Kind == ast.KindSpreadElement && l.checker.IsArrayType(l.checker.GetTypeAtLocation(part.AsSpreadElement().Expression)) {
++        if part.Kind == ast.KindForOfStatement {
++            if element := l.viewArrayElementType(l.checker.GetTypeAtLocation(part.AsForInOrOfStatement().Expression)); l.tupleScalarUnionType(element) {
++                found = l.notYet(part, "tuple union array iteration requiring a certified ownership transfer")
++            }
++        }
++        if part.Kind == ast.KindSpreadElement && l.checker.IsArrayType(l.checker.GetTypeAtLocation(part.AsSpreadElement().Expression)) {
+ 			found = l.notYet(part, "spreading a checked array requiring storage conversion")
+ 		}
+ 		part.ForEachChild(visit)
+--- a/internal/native/view_arrays.go
++++ b/internal/native/view_arrays.go
+@@ -61,6 +61,7 @@
+ }
+ 
+ func (e *emitter) emitViewArrayRead(read ir.ArrayIndex, array, index string) string {
++ if read.Element == ir.Union { return e.emitTupleArrayUnionIndex(read, array, index) }
+ 	snapshot, slot := e.temporary(), e.temporary()
+ 	e.line("adamic_value %s;", snapshot)
+ 	e.line("adamic_value *%s = adamic_view_array_at(%s, %s, %t, %t, %d, %s, %s, &%s);", slot, array, index, read.Relative, read.UndefinedAllowed, read.Element, cString(read.ViewType), cString(read.View), snapshot)
+--- a/internal/native/view_tuples_array_union.go
++++ b/internal/native/view_tuples_array_union.go
+@@ -50,3 +50,21 @@
+ 	e.line("(void)adamic_view_mixed_union_select(&%s, (const adamic_view_union_member[]){%s}, %d, %s, NULL, %s, %s);", snapshot, strings.Join(members, ","), len(members), callback, cString(expression), cString(e.program.ViewContracts[id-1].Name))
+ 	return true
+ }
++
++// Index reads own normalization until the existing statement cleanup. Callback
++// and loop consumers remain refused until their distinct transfer is certified.
++func (e *emitter) emitTupleArrayUnionIndex(read ir.ArrayIndex, array, index string) string {
++ e.declarations = append(e.declarations, "#include \"view_tuples.h\"")
++ snapshot, present, slot := e.temporary(), e.temporary(), e.temporary()
++ e.line("adamic_value %s;", snapshot)
++ e.line("bool %s = adamic_tuple_array_union_at(%s, %s, %t, %t, %s, %s, &%s);", present, array, index, read.Relative, read.UndefinedAllowed, cString(read.ViewType), cString(read.View), snapshot)
++ value := e.own(ir.Union, snapshot+".reference")
++ if read.Required { e.line("if (!%s) adamic_view_array_missing(%s, %s);", present, cString(read.View), cString(read.ViewType)) }
++ e.line("if (%s) {", present)
++ e.indent++
++ if !e.viewTupleHeapUnion(read.ViewContract, value, read.View) { panic("compiler bug: missing tuple union plan") }
++ e.indent--
++ e.line("}")
++ e.line("adamic_value *%s = %s ? &%s : NULL;", slot, present, snapshot)
++ return slot
++}
+--- a/internal/javascript/view_arrays.go
++++ b/internal/javascript/view_arrays.go
+@@ -48,7 +48,10 @@
+ `
+ 
+ func (e *emitter) emitViewArrayRead(read ir.ArrayIndex) string {
+-	array, index := e.value(read.Array), e.value(read.Index)
++    array, index := e.value(read.Array), e.value(read.Index)
++    if read.Element == ir.Union {
++        return fmt.Sprintf("adamicViewArrayIndex(%s, %s, %t, (value) => %s)", array, index, read.Relative, e.tupleArrayUnionCheck(read.ViewContract, read.View, "value"))
++    }
+ 	allowed := []string{}
+ 	for _, literal := range read.ViewAllowed {
+ 		switch literal.Of {

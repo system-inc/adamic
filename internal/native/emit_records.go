@@ -13,6 +13,10 @@ func (e *emitter) recordCall(call ir.RecordCall) string {
 	for i, a := range call.Arguments {
 		args[i] = e.value(a)
 	}
+	if call.Method == "keys" && (call.DictionaryKeys || len(e.program.ViewOrigins) != 0) {
+		e.declarations = append(e.declarations, "#include \"view_dictionaries.h\"")
+		return e.own(ir.Array, fmt.Sprintf("adamic_view_dictionary_source_keys(%s)", args[0]))
+	}
 	receiver := args[0]
 	if call.Method == "has" {
 		receiver = args[1]
