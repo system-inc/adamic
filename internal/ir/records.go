@@ -10,6 +10,8 @@ type RecordCall struct {
 	Site      int
 	// OwnOnly changes prototype handling, never the value provenance or ownership.
 	OwnOnly bool
+	// DictionaryKeys enumerates actual source keys without reading element values.
+	DictionaryKeys bool
 	// Demand metadata for operations not yet covered by the dictionary read adapter.
 	ViewTypeID     int
 	ViewWhere      string

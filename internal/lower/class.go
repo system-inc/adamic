@@ -407,6 +407,10 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 
 // setProperty lowers object.name = value, as a statement.
 func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+	nominalUnion := l.nominalUnionWriteTarget(target)
+	if nominalUnion {
+		l.optionalViewWriteField(l.fieldName(target.Name()))
+	}
 	if symbol := l.checker.GetSymbolAtLocation(target); symbol != nil && symbol.Flags&ast.SymbolFlagsOptional != 0 && (l.result.OptionalViewFields[l.fieldName(target.Name())] || freshOptionalReceiver(target.AsPropertyAccessExpression().Expression) || l.neverOptionalReceiver(target.AsPropertyAccessExpression().Expression)) {
 		if l.result.CheckedFields == nil {
 			l.result.CheckedFields = map[string]bool{}
@@ -440,7 +444,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		// What the field is declared to keep, not what the checker narrowed this write to.
 		of, err = l.typeOfSymbol(target, field)
 	}
-	if err != nil || censusFieldSlotless(of) && !(of == ir.MaybeBoolean && l.result.OptionalViewFields[l.fieldName(target.Name())]) {
+	if err != nil || censusFieldSlotless(of) && !(of == ir.MaybeBoolean && l.result.OptionalViewFields[l.fieldName(target.Name())]) && !nominalUnion {
 		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
 	}
 	value := uninitializedValue(of)
@@ -450,11 +454,25 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 			return nil, err
 		}
 	}
-	if censusFieldSlotless(value.Type()) && !(value.Type() == ir.MaybeBoolean && l.result.OptionalViewFields[l.fieldName(target.Name())]) {
+	if censusFieldSlotless(value.Type()) && !(value.Type() == ir.MaybeBoolean && l.result.OptionalViewFields[l.fieldName(target.Name())]) && !nominalUnion {
 		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
 	}
 	writeContract := l.slotContract(valueNode, l.concrete(l.checker.GetTypeAtLocation(valueNode)))
+	// A null literal receives a certificate only with this nominal union adapter,
+	// which boxes the null sentinel before storage. Other families keep their
+	// existing conversion refusals.
+	if nominalUnion && l.concrete(l.checker.GetTypeAtLocation(valueNode)).Flags()&checker.TypeFlagsNull != 0 {
+		writeContract, err = l.viewContract(valueNode, l.concrete(l.checker.GetTypeAtLocation(valueNode)))
+		if err != nil {
+			return nil, err
+		}
+	}
 	rawValue := value
+	if nominalUnion && rawValue.Type() == ir.Object && l.includesNull(l.concrete(l.checker.GetTypeAtLocation(valueNode))) {
+		if _, literalNull := rawValue.(ir.Null); !literalNull {
+			return nil, l.notYet(valueNode, "writing a nullable nominal value from an unboxed reference; preserve null and undefined through the callable boundary")
+		}
+	}
 	// A field of number | undefined is given a packed word, whatever it's assigned.
 	value = fit(value, of)
 	if call, handled := l.privateStaticStore(target, object, value, uninitialized); handled {
@@ -462,11 +480,21 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	}
 	// A #private field is stored under its name, # and all, which nothing else can spell.
 	write := ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Uninitialized: uninitialized, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}
+	// Helpers can lower before a later view activates this field name. Keep the
+	// complete class source certificate so backend write checks cannot fall back
+	// to a physical object tag when that helper receives a viewed allocation.
+	if writeContract != 0 && rawValue.Type() == ir.Object && isClassInstance(l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(valueNode)))) {
+		write.WriteContract = writeContract
+		write.WriteWhere = strings.Join(strings.Split(filepath.Base(l.program.Where(target)), ":")[:2], ":")
+	}
 	if l.result.OptionalViewFields[write.Name] {
 		if writeContract == 0 {
 			return nil, l.notYet(target, "a checked write without a reifiable source-slot type certificate")
 		}
 		write.Value, write.WriteContract = rawValue, writeContract
+		if nominalUnion {
+			write.Value = fit(rawValue, ir.Union)
+		}
 		write.TargetContract = l.slotContract(target, l.concrete(l.checker.GetTypeOfSymbol(l.checker.GetSymbolAtLocation(target))))
 		write.WriteWhere = strings.Join(strings.Split(filepath.Base(l.program.Where(target)), ":")[:2], ":")
 	}

@@ -1,0 +1,9 @@
+class Named{readonly count:number=7;}
+interface Entry{child:Named|null}
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly value:ReadonlyMap<string,Entry>}
+function assign(entry:Entry,value:Named|null):void{entry.child=value;}
+function assignGeneric<T extends Named|null>(entry:Entry,value:T):void{entry.child=value;}
+const item={child:new Named() as Named|null};const source=new Map<string,Entry>([['key',item]]);const raw={kind:'box',value:source};const base:Base=raw;
+function read(node:Target):void{node.value.forEach(entry=>{const child=entry.child;console.log(child===null?'null':child===undefined?'undefined':String(child.count));});}
+read(base as Target);assign(item,null);read(base as Target);assignGeneric(item,new Named());read(base as Target);

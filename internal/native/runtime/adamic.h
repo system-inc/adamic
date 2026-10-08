@@ -204,6 +204,7 @@ typedef struct adamic_object {
 	const adamic_shape *shape;
 	const adamic_class *class;
 	bool frozen;
+	bool tuple;
 	// Original complete scalar-record declaration for array element writes.
 	unsigned int array_write_contract;
 	const char *real_type;
@@ -390,6 +391,8 @@ typedef struct adamic_map_entry {
 typedef struct adamic_map {
 	adamic_heap heap;
 	unsigned int key_contract, value_contract;
+	unsigned char key_type;
+	unsigned char value_type; // Constructor-owned physical storage; views never rewrite it.
 	const char *contract_name;
 	size_t count;
 	size_t used;
@@ -456,6 +459,13 @@ void adamic_map_clear(adamic_map *map);
 // adamic_map_keys and adamic_map_values are [...map.keys()] and [...map.values()]: new arrays the
 // caller owns, in insertion order.
 adamic_array *adamic_map_keys(const adamic_map *map);
+// Read adapters return owned references and preserve the original entry storage.
+adamic_value adamic_map_read_value(const adamic_map *map, adamic_value value, unsigned char wanted);
+adamic_value adamic_map_read_key(const adamic_map *map, adamic_value key, unsigned char wanted);
+adamic_value *adamic_map_get_as(const adamic_map *map, adamic_value key, unsigned char supplied);
+adamic_array *adamic_map_keys_as(const adamic_map *map, unsigned char wanted);
+adamic_array *adamic_map_values_as(const adamic_map *map, unsigned char wanted);
+adamic_array *adamic_map_entries_as(const adamic_map *map, const adamic_shape *shape, unsigned char key, unsigned char wanted);
 
 // adamic_map_add_pairs sets each [key, value] tuple of an array in a map, in order: new Map(pairs).
 // The map takes its own references.

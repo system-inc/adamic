@@ -3,9 +3,10 @@ package ir
 // JSONSchema describes only values whose complete JSON behavior lowering proved. A literal's
 // fields are complete; an ordinary structural object type does not establish that fact.
 type JSONSchema struct {
-	Kind    string
-	Element *JSONSchema
-	Fields  []JSONField
+	Kind      string
+	Element   *JSONSchema
+	Fields    []JSONField
+	ArrayRead ArrayViewRead
 }
 type JSONField struct {
 	Name   int

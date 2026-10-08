@@ -1,0 +1,7 @@
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly value:ReadonlyMap<string,readonly (number|null|undefined)[]>|null}
+const item:boolean[]=[true,false];const source=new Map<string,readonly boolean[]>([['key',item]]);
+const raw={kind:'box',value:source};const base:Base=raw;
+function inspect(values:readonly (number|null|undefined)[]):void{console.log(values.join(','));for(const value of values){console.log(typeof value+':'+String(value));}console.log(String(values[0]));console.log(values.map(value=>typeof value).join(','));console.log(values.filter(value=>value!==undefined).join(','));values.forEach(value=>{console.log('each:'+typeof value);});console.log(String(values.includes(7)));console.log(values.slice(0,2).join(','));}
+function read(node:Target):void{const map=node.value;if(map!==null){const values=map.get('key');if(values!==undefined){inspect(values);item.push(false);inspect(values);}}}
+read(base as Target);

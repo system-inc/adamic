@@ -18,7 +18,7 @@ func TestCheckedViewPrimitiveArrayPairs(t *testing.T) {
 	for _, group := range []string{"array-zero", "array-one", "array-two", "diagnostic-arguments"} {
 		for _, variant := range []string{"number", "string", "wrong", "missing"} {
 			t.Run(group+"/"+variant, func(t *testing.T) {
-				input, err := os.ReadFile("../../stage3/interface-downcasts/lane4/primitive-original/" + group + "-" + variant + ".a")
+				input, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane4/primitive-original/" + group + "-" + variant + ".a"))
 				if err != nil {
 					t.Fatal(err)
 				}

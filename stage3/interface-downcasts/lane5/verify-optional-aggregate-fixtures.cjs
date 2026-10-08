@@ -7,7 +7,7 @@ const normalized = text => text.replace(/\s+/g, '');
 let count = 0;
 for (const member of evidence.members) {
     const directory = path.join(__dirname, 'optional-aggregates', directories.get(member.rank));
-    for (const file of fs.readdirSync(directory).filter(file => file.endsWith('.a'))) {
+    for (const file of fs.readdirSync(directory).filter(file => (file.endsWith('.a') || file.endsWith('.ts')))) {
         const source = ts.createSourceFile(file, fs.readFileSync(path.join(directory, file), 'utf8'), ts.ScriptTarget.Latest, true);
         let declaration, binding;
         function visit(node) {

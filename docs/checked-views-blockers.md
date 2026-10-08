@@ -328,3 +328,10 @@ Existing storage and callable refusals were kept. Exact logs and the attempted
 patch are in stage3/interface-downcasts/integration/logs/continued; the complete
 ledger and command outcomes are in CONTINUED-REPORT.md. The tuple item remains
 out of the branch; latest green compiler merge is 03aea1cbede84da46e84c78d599f287bc8585c1b.
+
+
+## Priority integration resolution, October 8, 2026
+
+The earlier owner and tuple attempt blockers above are historical and superseded. Owner 0f55d664 and tuples 0804dec5 both include ffe428ab and are integrated with dictionaries 48d166cf7. Boxed callable dispatch and owned Map snapshots coexist. All 47 Map callback refusal sites remain, including entry-live-mutation.a at 5:69; the general callable lane remains intact. No broad primitive-array selector admission is added.
+
+The tuple lane retains its direct array-to-tuple cast frontier. Dictionary array-entry consumers retain six named [element] tuple refusals until their producer-specific ownership proof is supplied; scalar enumeration and independent certified tuples remain supported. Recursive nominal witnesses and required non-void primitive brands retain existing refusals. Non-null assertions stay outside .a fixtures: four new owner/tuple fixtures use explicit narrowing, and the previous .ts migration remains. Final scoped controls and mutants pass; the global count refresh has 39 inherited failures, no new failures. Detailed hunk decisions and exact logs are in stage3/interface-downcasts/integration/CONTINUED-REPORT.md.

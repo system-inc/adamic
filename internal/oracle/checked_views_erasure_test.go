@@ -91,6 +91,6 @@ func eraseShapeChecksMutant(program *ir.Program) {
 
 func TestShapeErasureCountRows(t *testing.T) {
 	for _, name := range []string{"proven", "nonconforming", "uninitialized", "host"} {
-		t.Log(counted(t, "stage3/interface-downcasts/lane3/"+name+".a", false, nil, false, false))
+		t.Log(counted(t, checkedViewFixturePath("stage3/interface-downcasts/lane3/"+name+".a"), false, nil, false, false))
 	}
 }

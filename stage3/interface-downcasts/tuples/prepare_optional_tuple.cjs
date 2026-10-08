@@ -1,0 +1,27 @@
+// Extract the entire private upstream return declaration, without reducing fields.
+const fs=require('node:fs');
+const path=require('node:path');
+const crypto=require('node:crypto');
+const cp=require('node:child_process');
+const ts=require('../../api/node_modules/typescript');
+const [root,out]=process.argv.slice(2).map(p=>path.resolve(p));
+if(!root||!out) throw Error('usage: prepare_optional_tuple.cjs <pinned-root> <prepared-declarations>');
+const pin='050880ce59e30b356b686bd3144efe24f875ebc8';
+if(cp.execFileSync('git',['-C',root,'rev-parse','HEAD'],{encoding:'utf8'}).trim()!==pin) throw Error('pin drift');
+cp.execFileSync('git',['-C',root,'diff','--exit-code','HEAD','--','src/compiler/moduleSpecifiers.ts']);
+const originalFile='src/compiler/moduleSpecifiers.ts';
+const sourceText=fs.readFileSync(path.join(root,originalFile),'utf8');
+const source=ts.createSourceFile(originalFile,sourceText,ts.ScriptTarget.ESNext,true);
+const worker=source.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='tryGetModuleSpecifiersFromCacheWorker');
+if(!worker?.type||!ts.isTypeOperatorNode(worker.type)||!ts.isTupleTypeNode(worker.type.type)||worker.type.type.elements.length!==5) throw Error('original optional tuple return drift');
+const returnDeclaration=worker.type.getText(source);
+const declaration='compiler/tupleModuleSpecifierWorker.d.ts';
+const text="import type {ModuleSpecifierResult} from './moduleSpecifiers.js';\nimport type {SourceFile,ModulePath,ModuleSpecifierCache} from './types.js';\nexport type OriginalModuleSpecifierTuple = "+returnDeclaration+";\n";
+fs.writeFileSync(path.join(out,declaration),text);
+const hash=text=>crypto.createHash('sha256').update(text).digest('hex');
+const manifestPath=path.join(out,'tuple-manifest.json');
+const manifest=JSON.parse(fs.readFileSync(manifestPath));
+manifest.fields.SourceFile=JSON.parse(fs.readFileSync(path.join(out,'original-manifest.json'))).fields.SourceFile;
+manifest.private_module_worker={original_file:originalFile,original_sha256:hash(sourceText),original_return_declaration:returnDeclaration,declaration,sha256:hash(text)};
+fs.writeFileSync(manifestPath,JSON.stringify(manifest,null,2)+'\n');
+console.log('Private original worker: five optional positions; source '+manifest.private_module_worker.original_sha256+'; declaration '+manifest.private_module_worker.sha256);

@@ -1,0 +1,6 @@
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly values:readonly ('keep'|undefined)[]}
+const fake='other';const values:string[]=['keep'];
+const raw={kind:'box',values:values};const base:Base=raw;
+function read(node:Target):void{console.log(JSON.stringify({keep:1,drop:2},node.values)??'missing');}
+read(base as Target);

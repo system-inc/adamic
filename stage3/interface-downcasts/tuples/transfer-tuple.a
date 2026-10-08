@@ -1,0 +1,6 @@
+type Item = number | readonly [number,string];
+interface Base {readonly kind:string;}
+interface Target extends Base {readonly values:readonly Item[];}
+const suffix=String(9); const pair:readonly [number,string]=[7,'sig'+suffix]; const source=[pair];
+const raw={kind:'probe',values:source}; const base:Base=raw; const viewed=base as Target; const values=viewed.values;
+values.forEach((item)=>{console.log(typeof item);});
