@@ -1,0 +1,4 @@
+target ef471f5fd54cf556d1cfabfc18d07e10af73a09c
+logs /tmp/adamic-gate/adamic-catalog-logs-jcgoxd0w
+build flags: commit=ef471f5fd54cf556d1cfabfc18d07e10af73a09c; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 64; Go -trimpath shares only content-keyed build artifacts; test results uncached
