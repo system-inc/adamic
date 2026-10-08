@@ -1,0 +1,4 @@
+interface Base { readonly has: unknown; }
+interface Target { has(value: string): number; }
+function probe(value: Base): void { const viewed = value as Target; console.log(`${viewed.has("x")}`); }
+probe(new Set<string>(["x"]));

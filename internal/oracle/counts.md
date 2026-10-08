@@ -2615,3 +2615,10 @@ compiler proof counts, independent of the runtime allocation counts above.
 | internal/lower/testdata/predicates/overload_some_false_valid.a | 1 | 1 | 1 | 1 |
 | internal/lower/testdata/predicates/overload_some_objects.a | 1 | 1 | 1 | 1 |
 | internal/lower/testdata/predicates/overload_some_true_only.a | 1 | 1 | 1 | 1 |
+| stage3/interface-downcasts/lane5/later-ranked-callables/set-intrinsic/add.a | 3 | 3 | 5 | 7 | 3 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/later-ranked-callables/set-intrinsic/boolean.a | 3 | 3 | 4 | 7 | 3 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/later-ranked-callables/set-intrinsic/has.a | 4 | 4 | 7 | 8 | 4 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/later-ranked-callables/set-intrinsic/identity.a | 6 | 6 | 8 | 13 | 4 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/later-ranked-callables/set-intrinsic/number.a | 3 | 3 | 4 | 7 | 3 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/later-ranked-callables/set-intrinsic/wrong-parameter.a | 2 | 0 | 4 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/later-ranked-callables/set-intrinsic/wrong-result.a | 2 | 0 | 4 | 0 | 2 | 0 | 0 | 0 |

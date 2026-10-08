@@ -241,28 +241,6 @@ func TestCheckedViewCallableLaterRankedMethodRefusal(t *testing.T) {
 	}
 }
 
-func TestCheckedViewCallableLaterRankedIntrinsicSetRefusal(t *testing.T) {
-	for _, variant := range []string{"add", "has"} {
-		t.Run(variant, func(t *testing.T) {
-			program, path := interfaceFixture(t, "lane5/later-ranked-callables/set-intrinsic/"+variant)
-			truth := onNode(t, path)
-			want := "1\n"
-			if variant == "has" {
-				want = "true\n"
-			}
-			if truth.exitCode != 0 || string(truth.stdout) != want {
-				t.Fatalf("Node %#v", truth)
-			}
-			got := onJavaScriptBackend(t, program)
-			if got.exitCode != 70 || len(got.stdout) != 0 || !strings.Contains(string(got.stderr), "found function with unknown signature") {
-				t.Fatalf("intrinsic signature refusal: %#v", got)
-			}
-			// Native compilation is the separately logged representation-conversion
-			// frontier. This test pins the existing JavaScript refusal only.
-		})
-	}
-}
-
 // variable-update is the earlier untagged reduction. The original BindingName
 // tags are certified separately by variable-update-tagged.
 func TestCheckedViewCallableLaterRankedOriginalReadRefusals(t *testing.T) {
