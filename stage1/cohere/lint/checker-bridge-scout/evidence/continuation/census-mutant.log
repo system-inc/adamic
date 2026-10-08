@@ -1,0 +1,5 @@
+Deleted one real source row; exact-tree coverage refused it.
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/lint/checker-bridge-scout/summarize_census.py", line 16, in <module>
+    raise RuntimeError('missing, extra or duplicate source: '+pin['repo'])
+RuntimeError: missing, extra or duplicate source: actualbudget/actual

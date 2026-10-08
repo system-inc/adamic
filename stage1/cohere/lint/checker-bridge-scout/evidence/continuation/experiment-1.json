@@ -1,0 +1,42 @@
+{
+  "GoVersion": "go1.27.1",
+  "Cores": 4,
+  "Repetitions": 1000,
+  "Questions": 38,
+  "AnswerBytes": 1967,
+  "Files": 23,
+  "RecomputeNS": 132067971,
+  "CacheNS": 62698769,
+  "Pools": [
+    {
+      "Requested": 1,
+      "Observed": 1,
+      "TypeIDs": 3,
+      "SymbolIDs": 23,
+      "ForeignMutants": 0,
+      "BuildNS": 36144270,
+      "PerQuestionNS": 48303883,
+      "PerFileNS": 37437563
+    },
+    {
+      "Requested": 4,
+      "Observed": 4,
+      "TypeIDs": 6,
+      "SymbolIDs": 23,
+      "ForeignMutants": 24,
+      "BuildNS": 36030839,
+      "PerQuestionNS": 41679739,
+      "PerFileNS": 12571524
+    },
+    {
+      "Requested": 12,
+      "Observed": 11,
+      "TypeIDs": 13,
+      "SymbolIDs": 23,
+      "ForeignMutants": 220,
+      "BuildNS": 50658302,
+      "PerQuestionNS": 27568335,
+      "PerFileNS": 11344931
+    }
+  ]
+}

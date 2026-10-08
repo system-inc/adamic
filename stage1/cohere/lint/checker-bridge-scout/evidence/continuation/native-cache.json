@@ -1,0 +1,38 @@
+[
+  {
+    "round": 0,
+    "cache": false,
+    "process_ns": 195812120,
+    "stderr": "tsgo: load_ns=65910539 query_ns=94201436 queries=38000 first_query_ns=16565 run_ns=123660065\n"
+  },
+  {
+    "round": 0,
+    "cache": true,
+    "process_ns": 131961800,
+    "stderr": "tsgo: load_ns=93304456 query_ns=3476068 queries=38 first_query_ns=20671 run_ns=31056437\n"
+  },
+  {
+    "round": 1,
+    "cache": true,
+    "process_ns": 98600923,
+    "stderr": "tsgo: load_ns=69056680 query_ns=3589040 queries=38 first_query_ns=37607 run_ns=24248968\n"
+  },
+  {
+    "round": 1,
+    "cache": false,
+    "process_ns": 178165852,
+    "stderr": "tsgo: load_ns=62041617 query_ns=87400802 queries=38000 first_query_ns=20852 run_ns=110862749\n"
+  },
+  {
+    "round": 2,
+    "cache": false,
+    "process_ns": 201282435,
+    "stderr": "tsgo: load_ns=83332783 query_ns=85459809 queries=38000 first_query_ns=19980 run_ns=111576789\n"
+  },
+  {
+    "round": 2,
+    "cache": true,
+    "process_ns": 90281080,
+    "stderr": "tsgo: load_ns=68622424 query_ns=2384252 queries=38 first_query_ns=16355 run_ns=17312864\n"
+  }
+]

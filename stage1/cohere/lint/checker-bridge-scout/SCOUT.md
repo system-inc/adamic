@@ -7,11 +7,11 @@ Branch: `scout/27-checker-bridge`. Base: area/stage1-lint
 
 ## Five findings
 
-1. All 23 supplied public pins were shallow-fetched. Their trees contain 124,348 non-declaration `.ts` paths; the measured sample is 23 files / 316,107 bytes, not Kirk's complete Mac corpus.
-2. The package gate holds 84 isolated cases and 23 shared-project rows to unchanged Go rules, native Adamic and source Node: 39 findings with exact proposed fixes and 194 logical pilot asks. Eight additional short reductions also agree.
-3. The production path is an in-process C archive. Cold, repeated, per-file and single-program measurements are below; profiling is separate from throughput.
-4. The bridge forces one checker and serializes all handles. AST selectors and semantic checker work are cached; `Checker.ask` and serialized fact answers are not memoized.
-5. `askFile` refuses an undeclared supplied read kind, but raw `ask` has no corresponding permission check. Question classification, batch errors, ownership and N-checker identities need explicit contracts.
+1. All 23 pins are materialized: 152,660 tracked `.ts`/`.tsx` files, including 2,940 declarations; every path and source hash is recorded. Kirk's full quiet hundred remains unavailable.
+2. The boolean-comparison pilot plans 150,403 options asks plus 5,043 type-shape asks in 2,707 files; 2,257 parse-diagnostic files are explicit rows. These are planned counts, not a full typed-rule suite or full-repo finding run.
+3. Native repeated serialization costs 111.577 ms after load versus 24.249 ms with first-pass answers cached: 38,000 versus 38 physical calls, identical output, 23 files, 1,000 passes, four cores.
+4. One program with 12 requested checkers uses 11 root-file owners here. Exclusive per-question leases take 25.463 ms versus 11.188 ms per-file leases for 23,000 warmed type/name probes; this is a Go ownership sketch, not a native batch implementation.
+5. Checker-local type and symbol IDs must retain their issuer. The unchanged production bridge forces one checker and a global lock; 244 foreign-owner mutants fail in the 4/12 pool sketches, and all existing Go/native/Node finding and fix gates remain green.
 
 ## Scope and evidence
 
@@ -35,10 +35,12 @@ same-file suffixes, declares default-library consumers separately and promises
 no foreign-file parsing in the harness. This scout neither adopts that branch's
 facts nor creates a second writer or question registry.
 
-The task records #45rq89s and #mpg3abq are not in these trees. Repository text
-search and GitHub issue searches returned no matching notes. The mapping below
-is evidence from code, not an assertion about the unavailable notes. Their
-location and any additional requirements remain open to @system_adamic.
+The user supplied the tracker contracts in the continuation: #45rq89s requires
+one program serving N checkers, checker-local type/symbol IDs, and routing every
+ID-taking question to its issuing checker. Agreement across checkers is supported
+at d92d9bfee; cohere settled on 12 checkers. #mpg3abq requires rule program reads
+exactly matching cohere, including ReadsOtherFiles and ReadsDefaultLibrary, and
+file-local facts without foreign reads. These are requirements, not open questions.
 
 ### Where the step bites
 
@@ -50,7 +52,7 @@ location and any additional requirements remain open to @system_adamic.
 | `stage1/cohere/lint/checker_bridge.a:5`, `:8`, `:11` | Actual production scalar ABI adapter, imported unchanged by pilot.ts. A C error panics before the envelope wrapper returns. |
 | `internal/native/runtime/tsgo.c:127` | Three input views are allocated; the C call returns an owned buffer; the adapter copies/decodes into an Adamic string and frees temporary views and the C output. |
 | `bridge/tsgo/archive/boundary.c:13`, `:63`; `bridge/tsgo/archive/main.go:110` | C copies three views again, cgo copies their text into Go, the global program mutex serializes every inspect and the output is a C allocation. Successful nonempty answers incur seven C malloc/free pairs before counting Adamic string/object allocation: 3 adapter views, 3 boundary copies, 1 output. |
-| `bridge/tsgo/checker/facts.go:61`, `:194`, `:199` | Validate exact file/span/kind; acquire the file's checker for each question; compute and frame facts. Even options acquires a checker. |
+| `bridge/tsgo/checker/facts.go:61`, `:194`, `:199` | Validate exact file/span/kind; select the file's checker nonexclusively for each question; compute and frame facts. Even options acquires a checker. |
 | Non-test Go rule-source census | 198 `NeedsTypeChecker: true` sites in 198 files. This is a declaration-site census, not 198 verified ports. |
 | Integrated lint rule-source census | 7 textual `.ask`/`.askFile` sites in 4 files, spanning 3 typed rules. One site is a wrapper call in no-redundant-type-constituents. The separate sixteen-rule typeaware suite is not counted as this harness's coverage. |
 
@@ -69,12 +71,12 @@ this pilot proposes edits. No full CLI formatting claim is made.
 
 * `cohere/internal/lint/linter/linter.go:48` creates one FileCache shared by the file's rules; `rule/rule.go:177` caches derived work by a typed key. This is distinct from compiler semantic caches and persistent findings caches.
 * `bridge/tsgo/checker/facts.go:55` indexes immutable AST ranges by source-file identity, both byte bounds and kind. SourceFile metadata bypasses the descendant index at `:75`. `facts.go:121` interns type pointers into program-scoped safe integer IDs, retaining the reverse table. These tables do not cache serialized answers.
-* `cohere/TypeScript/tsc/internal/checker/checker.go:687`, `:5616`, `:7728`, `:32717` show node-link/value-symbol resolved-type caches behind GetTypeAtLocation. Repeated bridge calls still perform input copies, lookup, lease, graph serialization, output allocation and decode.
+* `cohere/TypeScript/tsc/internal/checker/checker.go:687`, `:5616`, `:7728`, `:32717` show node-link/value-symbol resolved-type caches behind GetTypeAtLocation. Repeated bridge calls still perform input copies, lookup, checker selection, graph serialization, output allocation and decode.
 * `bridge/tsgo/checker/program.go:51`, `:101`, `:112` creates a program with cached FS/bundled libraries, forces SingleThreaded and initializes its pool. Types stay lazy. Changing tsconfig's checker count or GOMAXPROCS does not make this bridge allocate N checkers.
 * The compiler pool at `cohere/TypeScript/tsc/internal/compiler/checkerpool.go:309` normally defaults to four, honors Checkers when not single-threaded, and clamps to `[1,min(fileCount,256)]`. `:351` associates each file with its owning checker and locks it exclusively. The same checker must be passed into nested operations: acquisitions are not reentrant.
-* Go cohere `internal/types/program/program.go:547`, `:701`, `:770`, `:828` sets its worker count, leases the file's owner, and reports the actual single-threaded/clamped worker count. Production defaults track GOMAXPROCS up to the ceiling; the scout Go oracle deliberately requests one checker to compare the bridge's policy. Full cohere's N-worker throughput is not simulated here.
+* Go cohere `internal/types/program/program.go:547`, `:701`, `:770`, `:828` sets its worker count, leases the file's owner, and reports the actual single-threaded/clamped worker count. Production defaults track GOMAXPROCS up to the ceiling; the scout Go oracle deliberately requests one checker to compare the bridge's policy. The continuation below measures a fresh N-checker pool separately; it does not measure full cohere throughput.
 * The normal harness `stage1/cohere/lint/main.ts:199`, `:221`, `:238` creates one program per manifest, creates file views per row, and releases once. `pilot.ts` supports the same single-program lifetime with --manifest. The per-file experiment deliberately recreates that complete program to isolate first-file costs; its loads must not be summed as the production lifecycle.
-* Creating N bridge handles duplicates program/checker/cache state and still hits the global mutex at `bridge/tsgo/archive/main.go:21`. It does not provide parallel checker throughput. N checkers in one future program also require type identities to retain their owning checker: Go cohere's `program.go:692` explicitly forbids mixing types from different checkers.
+* Creating N bridge handles duplicates program/checker/cache state and still hits the global mutex at `bridge/tsgo/archive/main.go:21`. It does not provide parallel checker throughput. N checkers in one future program also require type identities to retain their owning checker: Go cohere's `cohere/TypeScript/tsc/internal/compiler/program.go:624` explicitly forbids mixing types from different checkers.
 
 A denser historical production suite is documented in
 `stage1/cohere/typeaware/VOLUME_PROFILE_REPORT.md:65`: sixteen default rules on
@@ -298,7 +300,7 @@ The batching candidate remains a design, not a promised API:
 
 1. Keep one program for the manifest. For the pilot, collect independent exact selectors in preorder: options first, then the same operand selectors the live rule asks. Retain right-literal priority and trivia/UTF-8 spans. Existing transcript equality proves that set and order before a batch implementation is considered.
 2. Represent requests and responses as ordinary readonly TypeScript records/arrays, with a file-level outer request and per-entry selector, question, originating rule and declared read requirements. Use discriminated Value/Error responses only if the owner approves that contract. No async, promises, lazy syntax, exceptions, any, expando objects or collector is proposed.
-3. Preserve logical request order and per-file checker association. A future C batch could copy the path once, validate every exact selector, lease that file's checker once, and serialize ordered owned responses. It must not hold a checker lease and call today's Inspect inside it: checkerpool.go:351 is not reentrant and Inspect acquires the same lease. Factoring a borrowed-checker helper belongs to the sole facts writer.
+3. Preserve logical request order and per-file checker association. A future C batch could copy the path once, validate every exact selector, lease that file's checker once, and serialize ordered owned responses. The batch must call a borrowed-checker helper under an exclusive lease, rather than acquire a second exclusive lease: checkerpool.go:351 is nonreentrant. Today's Inspect uses the nonexclusive accessor at program.go:628, safe under the archive's global lock but unsuitable as the N-checker ownership API. Factoring the helper belongs to the sole facts writer.
 4. Make existing synchronous asks consume validated prefetched answers at their original logical call sites. Recording/replay must describe those logical asks, not silently consume a different eager physical sequence. Repeated/dynamic questions and dependent name/assignability questions need later explicit waves; no request may be invented merely to pad a benchmark.
 5. Copy returned buffers into owned Adamic values before freeing the batch's C storage. Preserve ordered duplicates, owned answer survival after program release, and borrowed ID invalidation. No Go pointer or external arena view becomes an Adamic reference. Each output/error buffer must have one explicit freeing owner.
 6. Start with within-run file batching; do not introduce a persistent answer cache. Persistent findings and fact reuse would require the existing config/library/type-closure/program-fingerprint contracts, not just source path/span. The sample has no duplicate selector keys, and sixteen files have only one ask, so benefits must be demonstrated on broader typed rules rather than inferred from those files.
@@ -309,12 +311,12 @@ The batching candidate remains a design, not a promised API:
 2. **Existing synchronous interface:** May rules gain a planning/prefetch phase with readonly answer tables, or must batching be an explicit new library call? How should logical replay preserve missing/extra-ask checks when physical requests are eager? This is an interface/ordering question, not a proposal for new syntax.
 3. **Error contract:** Must a batch preserve the current first-error native panic, or return per-entry Errors? If values are approved, what happens to successful entries after a failure, and which layer reports it? Existing scalar Ok wrappers do not return C errors as values.
 4. **Ownership/library surface:** Is an owned array of ordinary readonly responses the intended builtin result, and may the ABI use one temporary C arena copied before return? Who frees partial outputs and error buffers? No borrowed Go pointer or collector in Adamic is proposed.
-5. **N checkers (#45rq89s):** Does this stage keep the bridge's forced one checker, or expose N? If N is intended, how are files and type/symbol IDs bound to their owner, and how should the global all-handle lock be replaced without mixing checker caches?
+5. **N-checker ABI (#45rq89s):** Given the required checker-local identities, what opaque owner/generation/ID encoding and owner-exclusive routing surface should the bridge expose? How should its global lock be split while preventing release during an active batch? The one-program/N-checker requirement and cohere's 12-checker choice are settled.
 6. **IDs, order and dependencies:** Is deterministic first-seen ID numbering/replay framing part of the observable contract? May a batch deduplicate identical requests or reorder independent ones? How are questions requiring a prior type ID grouped without inventing symbolic-ID semantics?
 7. **Reuse/invalidation:** Is reuse restricted to one immutable program lifetime initially? If persistent answers are desired, which approved fingerprint covers each question's library, config, imported/global and other-file reads, including ProgramFingerprint exceptions?
-8. **Missing records:** Where are the authoritative #45rq89s and #mpg3abq notes, and do they add constraints beyond the code cited here? Their contents have not been guessed.
+8. **Cross-owner operands:** What is the approved response when an assignability question supplies two IDs from different issuing checkers? No cross-owner pointer comparison, silent ID migration, or foreign-file requery is proposed.
 
-No question is answered by this scout. Proposed representations do not authorize
+The tracker requirements above were supplied by the user; the remaining interface questions are not answered by this scout. Proposed representations do not authorize
 new compiler/builtin semantics; the measurement clients need none of them.
 
 ### Owner boundaries and stopping point
@@ -352,3 +354,167 @@ a file batch with lease/permission/error/ownership mutants; this scout package
 is the independent scalar and production baseline for that comparison. Do not
 land a batching rewrite or change shared files on the strength of this small
 pilot's numbers.
+
+## Continuation: full source census, answer caching, checker-local IDs
+
+`evidence/continuation/census.jsonl.gz` contains one row per tracked physical
+`.ts`/`.tsx` file, including `.d.ts`; each row has repo, exact pin, path, SHA-256,
+bytes, declaration flag, parse diagnostics, and planned options/type-shape counts.
+A set comparison against `git ls-tree -rz FETCH_HEAD` passes for every pin.
+Deleting one real row makes summarize_census.py refuse the corpus; the coverage mutant log is retained. No downloaded installs, hooks, or repository scripts ran. TypeScript corpus
+`@filename` directives are not expanded: these are physical sources, not the
+compiler harness's virtual-project case counts. Parse-error rows carry zero
+planned asks and are explicitly outside the valid-source planner total.
+
+The census entry is continuation.go:32; the planner is main.go:71. Its ask sites correspond to rule.a:15/:41 and Go cohere's no_unnecessary_boolean_literal_compare.go:143/:305/:322. The census calls the pinned Go parser and the same pilot planner already checked
+against actual native and Node transcripts in 84 isolated cases and the 23-file
+project. It does **not** execute Node/native lint over all 152,660 files, resolve
+all repos' real tsconfigs/dependencies, or count the entire typed-rule suite.
+No findings or byte parity for the full corpus are claimed. Obtaining those
+observed counts needs the harness/facts owners' complete rule-run instrumentation;
+this package stops before their files.
+
+| Public repo (TypeScript pins shown separately) | Files | Parse-error files | Options | Type-shape | Files asking type-shape |
+|---|---:|---:|---:|---:|---:|
+| actualbudget/actual | 2,023 | 0 | 2,023 | 57 | 32 |
+| angular/angular | 6,073 | 0 | 6,073 | 203 | 121 |
+| babel/babel | 1,664 | 108 | 1,556 | 100 | 50 |
+| backstage/backstage | 7,409 | 0 | 7,409 | 110 | 62 |
+| calcom/cal.diy | 5,025 | 0 | 5,025 | 88 | 62 |
+| date-fns/date-fns | 1,738 | 0 | 1,738 | 4 | 3 |
+| excalidraw/excalidraw | 674 | 0 | 674 | 78 | 31 |
+| grafana/grafana | 9,522 | 0 | 9,522 | 332 | 213 |
+| microsoft/playwright | 1,390 | 0 | 1,390 | 57 | 31 |
+| n8n-io/n8n | 21,895 | 0 | 21,895 | 1,355 | 691 |
+| nestjs/nest | 1,966 | 0 | 1,966 | 28 | 14 |
+| outline/outline | 2,224 | 0 | 2,224 | 110 | 72 |
+| prisma/prisma | 5,198 | 0 | 5,198 | 242 | 126 |
+| shadcn-ui/ui | 3,881 | 0 | 3,881 | 62 | 32 |
+| supabase/supabase | 8,257 | 0 | 8,257 | 244 | 145 |
+| TanStack/query | 995 | 0 | 995 | 23 | 16 |
+| tldraw/tldraw | 2,844 | 0 | 2,844 | 71 | 40 |
+| trpc/trpc | 1,022 | 0 | 1,022 | 23 | 13 |
+| twentyhq/twenty | 30,263 | 0 | 30,263 | 1,341 | 766 |
+| typeorm/typeorm | 3,607 | 0 | 3,607 | 207 | 68 |
+| microsoft/TypeScript 50d70a3f | 13,260 | 1,084 | 12,176 | 143 | 42 |
+| microsoft/TypeScript 050880ce | 21,241 | 1,065 | 20,176 | 117 | 45 |
+| vuejs/core | 489 | 0 | 489 | 48 | 32 |
+
+The densest pilot file has 25 type-shape asks: n8n
+`packages/@n8n/typeorm/src/query-builder/SelectQueryBuilder.ts`, pinned above.
+These sparse pilot numbers must not stand in for the historical dense 16-rule
+854,525-question run described earlier.
+
+### Cache measurement and its limits
+
+Three rounds alternate native scalar/cache order, with one program per process,
+23 roots, 38 distinct questions, 1,967 serialized UTF-8 answer bytes, and 1,000
+identical passes. `driver.ts`'s optional `cache` argument stores first-pass owned
+answers by stable request index; every later value still matches the fixture's
+expected bytes. This is a measurement-only immutable request list, not a general
+production cache. The unmodified production Checker and rule remain separately
+validated. The 84 isolated fixtures now also test the native cached path.
+
+Linux amd64, AMD EPYC 9V74, Go 1.27.1, clang 20.1.8, Node 24.19.0;
+GOMAXPROCS=4, five visible CPUs, cgroup CPU quota four; no CPU affinity pinning.
+Native builds use the existing default release compiler/C archive (no sanitizer,
+no profiling), with ADAMIC_TSGO_TIMING=1. Sanitizer fixtures are separate.
+All following numbers are medians of three rounds.
+
+| Native scalar client | Recompute | Cache first-pass answers |
+|---|---:|---:|
+| Physical questions | 38,000 | 38 |
+| Program load | 65.911 ms | 69.057 ms |
+| C query time, including cold semantic answers | 87.401 ms | 3.476 ms |
+| Post-load client time | 111.577 ms | 24.249 ms |
+
+Caching cuts post-load time by 4.60x in this deliberately repetitive client;
+a one-pass run has no identical pilot keys and therefore no demonstrated cache
+hit benefit. The difference also avoids C allocation/copying, Go serialization
+and crossing; it is not an isolated serializer-only estimate. Go's direct
+Inspect comparison includes key framing, lookup, and byte verification on both
+paths: 135.456 ms recompute versus 75.858 ms cache.
+Question counts, serialized bytes and raw timings are retained in
+`experiment-*.json` and `native-cache.json`; process/load time is never subtracted
+from two different processes to manufacture a crossing cost.
+
+### Measured one-program pool sketch
+
+`continuation.go` creates a fresh compiler.Program for each requested N=1/4/12
+using the existing config and compiler host, then initializes the pool. It does
+not create N bridge handles. The 23 roots are assigned to 1/4/11 distinct owners
+respectively; 12 is requested but one checker's assigned files are outside the
+root probe set. Every root's first identifier (fallback: middle-position node)
+is checked. Type strings must agree across all three pools. Each checker has
+its own pointer-to-ID and reverse tables for types and symbols. The symbol
+round-trip and all type/name ID reads route to the issuing checker; owner
+mismatch and stale IDs refuse before indexing. Go pointers stay inside Go.
+
+| Requested N / observed root owners | Type IDs / symbol IDs | Build + first probes | 23,000 per-question exclusive leases | 23 per-file exclusive leases, 1,000 probes each |
+|---|---:|---:|---:|---:|
+| 1 / 1 | 3 / 23 | 40.491 ms | 48.865 ms | 37.438 ms |
+| 4 / 4 | 6 / 23 | 36.031 ms | 41.680 ms | 12.572 ms |
+| 12 / 11 | 13 / 23 | 42.936 ms | 25.463 ms | 11.188 ms |
+
+This is a warmed narrow type/name/ID probe, with one goroutine per file and
+exclusive compiler leases. It excludes native crossing, full fact-graph
+serialization, production lint traversal and complete project dependency setup.
+Batch acquisition reduces mutex traffic but can hurt fairness; these measurements
+do not settle scheduling policy. 244 foreign type/symbol owner mutants fail per
+round across N=4/12. Unit fixtures also force equal numeric IDs in two owners and
+reject foreign and stale handles.
+
+A failed preliminary concurrent run used GetTypeCheckerForFile and hit a checker
+map race. Corrected source uses GetTypeCheckerForFileExclusive. At the pin,
+compiler/program.go:628 selects the nonexclusive path; :637 selects exclusive,
+checkerpool.go:34 has per-checker locks, :351 takes the owner lock, :367 creates
+checkers, :386 onward associates files. This corrects the earlier assumption
+that every bridge Inspect performed an exclusive lease. The current archive's
+global lock serializes Inspect; dropping it requires explicit owner leases.
+
+### Batching design under the supplied contracts
+
+Keep one immutable program, a checker-local typed ID namespace, and file affinity.
+Every response containing an ID must retain its issuing owner and program
+generation. Every ID-taking follow-up must acquire that owner's exclusive lease;
+selecting a checker only from the new query's file is insufficient. A local
+measurement handle is not an approved C/Adamic wire representation.
+
+For a file batch, validate selectors and declarations first; classify the
+question's required reads through the facts owner's authority, then lease the
+file's checker once and evaluate ordered independent requests with an explicitly
+borrowed checker. Authorize before cache lookup. Keep logical duplicate/replay
+entries even if physical requests are deduplicated under a future ruling.
+Dependent ID questions require a second phase or an approved dependency encoding.
+Questions mixing owners must not silently mix checker types.
+
+Each rule must declare exactly cohere's ReadsOtherFiles/ReadsDefaultLibrary
+requirements. A file-local question must never fetch a foreign declaration
+to produce its facts, including on a cache miss. Program provenance and any
+foreign/library expansion need their declared guarded route. Answer caching
+must include program generation, issuing owner, exact selector, question and
+required-read contract; answers are scoped to an unchanged program unless a
+stronger invalidation contract is approved. The measurement cache deliberately
+contains neither permission bypasses nor persistent reuse.
+
+All language/interface changes remain the numbered open questions above.
+Readonly TypeScript records/arrays are a design candidate, not permission to
+add syntax, mutation exceptions or a GC. Shared implementation work would need
+checker.a/harness planning, bridge registry locks/ABI ownership and the sole
+facts writer's borrowed-checker/read classification helpers. None was edited.
+
+### Reproduce the continuation
+
+After the original verify.sh build/gate, materialize with `materialize_public.py
+<public/pins.json>`, build this package, then run `measure census <pins.json>
+<census.jsonl>` and `measure_continuation.py <measure> <native-driver> <config>
+<manifest> <new-output-directory>`. The updated verify.sh runs these too.
+The full gate supplies every native/pilot/public/compiler-corpus input, has no
+skips, builds the cache client natively, checks exact Go/native/Node facts and
+findings/fixes, and runs ASan/UBSan/LSan separately. gofmt and vet are clean. The exclusive N-checker experiment also passes a separate Go race-detector build/run (race.log); instrumented timings are not used above.
+
+The next scout should take the per-file census to the harness/facts owners for
+observed counts across all typed rules and real project configs, then propose
+an owner-routed file batch and immutable-program cache using the measurements
+here. Resolve the remaining read classification, cross-owner operands, error,
+replay ordering, lifetime and invalidation questions before touching shared code.

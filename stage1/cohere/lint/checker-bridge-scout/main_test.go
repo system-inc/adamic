@@ -188,6 +188,10 @@ func TestAgreementAndMutants(t *testing.T) {
 		if !bytes.Equal(got, expectedOutput(asks, 2)) {
 			t.Fatalf("case %d native facts differ", index)
 		}
+		cached := command(t, root, native, config, requests, "2", "cache")
+		if !bytes.Equal(cached, expectedOutput(asks, 2)) {
+			t.Fatalf("case %d cached facts differ", index)
+		}
 		want := command(t, root, goOracle, config, path)
 		pilot := os.Getenv("ADAMIC_SCOUT_PILOT")
 		if pilot == "" {

@@ -47,3 +47,9 @@ GOMAXPROCS=1 "$task_dir/measure" -config "$config" -manifest "$manifest" -native
  -pilot "$task_dir/pilot" -oracle "$task_dir/oracle" -out "$task_dir/profile" -repetitions 100 -rounds 1 -profile > "$task_dir/profile.log" 2>&1
 GOMAXPROCS=1 python3 "$package/measure_whole.py" "$task_dir/pilot" "$task_dir/oracle" "$config" "$manifest" \
  "$task_dir/whole-profile" --repetitions 100 --rounds 1 --profile > "$task_dir/whole-profile.log" 2>&1
+# Full physical typed-source census and owner/cache continuation; no repo code runs.
+python3 "$package/materialize_public.py" "$task_dir/public/pins.json" > "$task_dir/materialize.log" 2>&1
+GOMAXPROCS=4 "$task_dir/measure" census "$task_dir/public/pins.json" "$task_dir/census.jsonl"
+python3 "$package/summarize_census.py" "$task_dir/public/pins.json" "$task_dir/census.jsonl" "$task_dir/census-summary.json"
+python3 "$package/measure_continuation.py" "$task_dir/measure" "$task_dir/driver" \
+ "$config" "$manifest" "$task_dir/continuation"

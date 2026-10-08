@@ -12,6 +12,8 @@ const requests = read(args[1] ?? panic('missing requests'));
 const repetitions = parseInt(args[2] ?? '1', 10);
 if(!Number.isSafeInteger(repetitions) || repetitions < 1) { panic('invalid repetitions'); }
 const program = tsgoProgram(config, []);
+const useCache = args[3] === 'cache';
+const cached: string[] = [];
 let queries = 0;
 for(let pass = 0; pass < repetitions; pass++) {
     const input = new Frames(requests);
@@ -23,7 +25,8 @@ for(let pass = 0; pass < repetitions; pass++) {
         const kind = input.field();
         const question = input.field();
         const expected = input.field();
-        const value = tsgoInspect(program, file, start, end, kind, question);
+        const value = useCache && pass > 0 ? cached[index] ?? panic('cache miss') : tsgoInspect(program, file, start, end, kind, question);
+        if(useCache && pass === 0) { cached.push(value); }
         if(value !== expected) { panic('scout fact mismatch'); }
         if(pass === 0) { console.log(`${value.length}\n${value}`); }
         queries++;

@@ -1,0 +1,22 @@
+{
+  "source_and_binary_sha256": {
+    "/workspace/adamic/stage1/cohere/lint/checker-bridge-scout/main.go": "a2eefcb310ee58d738ffa73c94e996f87899718d9cabf7a0ffe0cdf68fdc2924",
+    "/workspace/adamic/stage1/cohere/lint/checker-bridge-scout/continuation.go": "26be30c2052d914e82f97763bc5780a24c84067c1e16329e78d3c7414aae4567",
+    "/workspace/adamic/stage1/cohere/lint/checker-bridge-scout/driver.ts": "fc947297e45c627cb87dc48566ad5ad96a3bb16393d0e60d644e56fb071706aa",
+    "/workspace/adamic/stage1/cohere/lint/checker-bridge-scout/main_test.go": "8139d22be43e8c8800b4b8f0d630150242fbc7983b7de19b2855437a7ebbc2f8",
+    "/workspace/adamic/stage1/cohere/lint/checker-bridge-scout/continuation_test.go": "0fdf39c154507a41fb99abab11a579654aa04d9bf3fb3ecaf8407c94841c353b",
+    "/workspace/adamic/stage1/cohere/lint/checker-bridge-scout/materialize_public.py": "3a4a643f5c6674a05b541d1edbf56a49c41de892a9c5349cbeea4da106f1705b",
+    "/workspace/adamic/stage1/cohere/lint/checker-bridge-scout/measure_continuation.py": "c61bd6c43363cabd1afe04ff466250bdcb841305aaab7bf9f5d33a9c9c3912c0",
+    "/workspace/adamic/stage1/cohere/lint/checker-bridge-scout/summarize_census.py": "dc9ada1d2a0d9e81f37c4c5787838fe2ba4901ac262cd0d0681ceaf1902012d8",
+    "/workspace/adamic/stage1/cohere/lint/checker-bridge-scout/verify.sh": "c5566baabcab07cda9d06e48f3ad9c6e925ab8ef695a904efa287b55c4c67aa9",
+    "/workspace/scratch/checker-bridge-scout-current/measure-next": "c7bcdafe084c52ee52448166db34a56c42e313e3e47536f8fc9c9e5e8e73b9c8",
+    "/workspace/scratch/checker-bridge-scout-current/driver-next": "d373d9fb8daa03b8eab91d86193a8edeadc303a298a0c08fa2afbe3ccbc2165e",
+    "/workspace/scratch/checker-bridge-scout-current/driver-next-asan": "4590c5391d8e773fcb5b8366ecb124e2abf5aaa5ab3ecd5dc7eb70765a8ca520",
+    "/workspace/scratch/checker-bridge-scout-current/pilot-asan": "cb5f7a4d25fa40b99db445195855b52e347adf1796bf98d0b3441c440d2c447f"
+  },
+  "config_sha256": "882ba68c3fdc6dcea21b7bf764aa00d5ef5a1b828fc992288735ab564e4f99b1",
+  "release": "default adamic build; default go c-archive; timing enabled, profile disabled",
+  "cores": "GOMAXPROCS=4; 5 visible logical CPUs; cgroup quota=4; no affinity",
+  "rounds": 3,
+  "source_tree_coverage": "exact typed path sets at all 23 pins; checked by summarize_census.py"
+}

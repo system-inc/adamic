@@ -65,6 +65,10 @@ func plan(p *bridge.Program, path string) ([]request, error) {
 	if len(file.Diagnostics()) != 0 {
 		return nil, fmt.Errorf("parse diagnostics in %s", path)
 	}
+	return planSource(file, path), nil
+}
+
+func planSource(file *ast.SourceFile, path string) []request {
 	asks := []request{}
 	add := func(node *ast.Node, question string) {
 		asks = append(asks, request{File: path, Start: uint64(node.Pos()), End: uint64(node.End()), Kind: strings.TrimPrefix(node.Kind.String(), "Kind"), Question: question})
@@ -88,7 +92,7 @@ func plan(p *bridge.Program, path string) ([]request, error) {
 		node.ForEachChild(func(child *ast.Node) bool { walk(child); return false })
 	}
 	walk(file.AsNode())
-	return asks, nil
+	return asks
 }
 func answers(p *bridge.Program, asks []request, repetitions int) (int64, int64, error) {
 	var total, first int64
@@ -243,6 +247,9 @@ func run(config, path, native, pilot, oracle, directory string, repetitions, rou
 	return result, nil
 }
 func main() {
+	if continuation(os.Args[1:]) {
+		return
+	}
 	config := flag.String("config", "", "existing tsconfig; its roots are retained")
 	manifest := flag.String("manifest", "", "one absolute source path per line")
 	native := flag.String("native", "", "native driver binary built from driver.ts")
