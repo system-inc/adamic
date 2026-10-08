@@ -1,0 +1,16 @@
+internal/lower/assignments.go
+internal/lower/comma.go
+internal/lower/expression.go
+internal/lower/locals.go
+internal/lower/logical_assignment.go
+internal/lower/lower_test.go
+internal/lower/refusals.go
+internal/lower/statements.go
+internal/native/emit_values.go
+internal/native/slots.go
+internal/oracle/counts.md
+internal/oracle/logical_assignment_test.go
+internal/oracle/testdata/comma_operator.a
+internal/oracle/testdata/logical_and_assignment.a
+internal/oracle/testdata/logical_nullish_assignment.a
+internal/oracle/testdata/logical_or_assignment.a

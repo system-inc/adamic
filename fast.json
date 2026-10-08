@@ -1,0 +1,268 @@
+{
+  "sha": "fc608350e41bbb6007d75a1422494328a74327af",
+  "branch": "codex/logical-assignment-comma",
+  "branch_source": "given",
+  "session": "01a11a2f-eeb5-74c3-abda-7720d3611037",
+  "session_source": "ai.db reply naming the branch",
+  "base": "749a69adbfae2a7bf22c1f0436d9ef73345c3070",
+  "tools_sha": "f5b72fa475837d77f5de1df5f7dd63a10b0ca228",
+  "machine": {
+    "hostname": "Workshop",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": true,
+  "vet_ok": true,
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "f8ce1054abab2210ddde56d9b4771f399d50f464",
+  "oracle_selection": {
+    "whole": true,
+    "reason": "TestCheckedCastFailureContract ranges over checkedCastFixtures, a fixture table the selection doesn't know"
+  },
+  "reads": [
+    {
+      "line": 117,
+      "package": "internal/flow",
+      "glob": "internal/oracle/testdata/*.a",
+      "paths": [
+        "internal/oracle/testdata/comma_operator.a",
+        "internal/oracle/testdata/logical_and_assignment.a",
+        "internal/oracle/testdata/logical_nullish_assignment.a",
+        "internal/oracle/testdata/logical_or_assignment.a"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 141,
+      "package": "internal/fresh",
+      "glob": "internal/oracle/testdata/*.a",
+      "paths": [
+        "internal/oracle/testdata/comma_operator.a",
+        "internal/oracle/testdata/logical_and_assignment.a",
+        "internal/oracle/testdata/logical_nullish_assignment.a",
+        "internal/oracle/testdata/logical_or_assignment.a"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 165,
+      "package": "internal/ir",
+      "glob": "internal/lower/*.go",
+      "paths": [
+        "internal/lower/assignments.go",
+        "internal/lower/comma.go",
+        "internal/lower/expression.go",
+        "internal/lower/locals.go",
+        "internal/lower/logical_assignment.go",
+        "internal/lower/lower_test.go",
+        "internal/lower/refusals.go",
+        "internal/lower/statements.go"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 167,
+      "package": "internal/ir",
+      "glob": "internal/native/*.go",
+      "paths": [
+        "internal/native/emit_values.go",
+        "internal/native/slots.go"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 540,
+      "package": "stage1/cohere/gitignore",
+      "glob": "*",
+      "paths": [
+        "internal/lower/comma.go",
+        "internal/lower/logical_assignment.go",
+        "internal/oracle/logical_assignment_test.go",
+        "internal/oracle/testdata/comma_operator.a",
+        "internal/oracle/testdata/logical_and_assignment.a",
+        "internal/oracle/testdata/logical_nullish_assignment.a",
+        "internal/oracle/testdata/logical_or_assignment.a"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1156,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "*.[mM][dD]",
+      "paths": [
+        "internal/oracle/counts.md"
+      ],
+      "map_changed": false
+    }
+  ],
+  "unchecked_a_files": [],
+  "a_check_exempt": [],
+  "executors": {},
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "changed_files": [
+    "internal/lower/assignments.go",
+    "internal/lower/comma.go",
+    "internal/lower/expression.go",
+    "internal/lower/locals.go",
+    "internal/lower/logical_assignment.go",
+    "internal/lower/lower_test.go",
+    "internal/lower/refusals.go",
+    "internal/lower/statements.go",
+    "internal/native/emit_values.go",
+    "internal/native/slots.go",
+    "internal/oracle/counts.md",
+    "internal/oracle/logical_assignment_test.go",
+    "internal/oracle/testdata/comma_operator.a",
+    "internal/oracle/testdata/logical_and_assignment.a",
+    "internal/oracle/testdata/logical_nullish_assignment.a",
+    "internal/oracle/testdata/logical_or_assignment.a"
+  ],
+  "packages": [
+    "github.com/system-inc/adamic/internal/flow",
+    "github.com/system-inc/adamic/internal/fresh",
+    "github.com/system-inc/adamic/internal/ir",
+    "github.com/system-inc/adamic/internal/lower",
+    "github.com/system-inc/adamic/internal/native",
+    "github.com/system-inc/adamic/internal/oracle",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore",
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline"
+  ],
+  "unowned_files": [],
+  "smoke_list": "cloud/fast-gate/smoke.txt",
+  "smoke_list_source": {
+    "root": "/home/ahra/fast-gate/tools-2",
+    "from": "tools checkout"
+  },
+  "smoke_list_blob": "eb1bc6ebef73bbea46cfbe96f12512edcc7a19b7",
+  "smoke_fixtures": [
+    "TestNativeAgreesWithNode internal/oracle/testdata/array_from_length.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/bitwise.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/borrow_chain_reassigned.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/call_targets_sort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/casts.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/class_oct6_parameters.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/classes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/closures_throw_uncaught.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_abstract.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/enums_names.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/exceptions_empty.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/finally_leaves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/fresh_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/generic_method_return.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/inherited_static_field_read.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/json_stringify_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/library_object_freeze_write.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/lint_runtime_search_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/map_zero_keys.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/maybe_boolean_panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/narrowed_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/nbody_runtime_fields.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/normalize_form.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/number_parsing.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/optional_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/override_same_representation.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regions_constructor_capture.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/reuse_global_sibling.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/route_targets_accessor.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/search_halves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/set_foreach_fnexpr.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/spread_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/stack_forever.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/string_too_long.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/throw_in_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/timsort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/typeof_string_literal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/undefined_elements.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/utf8_view_fails.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/weak_narrowed.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_modules/main.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/modules/main.a",
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "catalog_apply": {
+    "checked": [
+      "11-refuse-definite-assignment.patch",
+      "12-refuse-suppression-directives.patch"
+    ],
+    "staled_by_this_change": [],
+    "already_stale": [
+      "11-refuse-definite-assignment.patch",
+      "12-refuse-suppression-directives.patch"
+    ]
+  },
+  "split_tests": {
+    "github.com/system-inc/adamic/internal/lower": 109,
+    "github.com/system-inc/adamic/internal/flow": 4,
+    "github.com/system-inc/adamic/internal/fresh": 4,
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline": 2,
+    "github.com/system-inc/adamic/internal/ir": 3,
+    "github.com/system-inc/adamic/stage1/cohere/gitignore": 3,
+    "github.com/system-inc/adamic/internal/native": 64,
+    "github.com/system-inc/adamic/internal/oracle": 68
+  },
+  "deferred_to_full_gate": [
+    "github.com/system-inc/adamic/internal/native TestCaseMappingMatchesNode",
+    "github.com/system-inc/adamic/internal/native TestMapHashProbeCatchesMutants",
+    "github.com/system-inc/adamic/internal/native TestNormalizeMatchesNode",
+    "github.com/system-inc/adamic/internal/native TestNormalizeRandomMatchesNode",
+    "github.com/system-inc/adamic/internal/native TestRecordMutants",
+    "github.com/system-inc/adamic/internal/native TestRecordReadMutants",
+    "github.com/system-inc/adamic/internal/native TestRegExpBytecodeRandomNode",
+    "github.com/system-inc/adamic/internal/native TestRegExpBytecodeTest262",
+    "github.com/system-inc/adamic/internal/native TestSplitTSGoAgrees",
+    "github.com/system-inc/adamic/internal/native TestWASI"
+  ],
+  "smoke_absent_lanes": [
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "split_tally": {
+    "packages": 8,
+    "planned": 257,
+    "passed": 257,
+    "touched": 8
+  },
+  "wall_seconds": 714.6,
+  "steps_seconds": {
+    "coverage": 0.0,
+    "catalog-apply": 0.1,
+    "vet": 21.0,
+    "build": 39.5,
+    "smoke": 40.7,
+    "tests": 713.7,
+    "census": 0.4
+  },
+  "pass": 4843,
+  "fail": 0,
+  "skip": 6,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "failure": null,
+  "planned_stages": [
+    "coverage",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census",
+    "catalog-apply"
+  ],
+  "stages_exit": {
+    "coverage": 0,
+    "catalog-apply": 0,
+    "vet": 0,
+    "build": 0,
+    "smoke": 0,
+    "tests": 0,
+    "census": 0
+  },
+  "finished": true
+}
