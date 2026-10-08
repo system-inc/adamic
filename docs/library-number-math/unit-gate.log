@@ -1,0 +1,142 @@
+=== RUN   TestMathNumberOracleCatchesMutants
+=== PAUSE TestMathNumberOracleCatchesMutants
+=== RUN   TestLibraryNumberMathOracleCatchesMutants
+=== PAUSE TestLibraryNumberMathOracleCatchesMutants
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestMathNumberOracleCatchesMutants
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestMathNumberOracleCatchesMutants/clz32
+=== PAUSE TestMathNumberOracleCatchesMutants/clz32
+=== RUN   TestMathNumberOracleCatchesMutants/fround
+=== PAUSE TestMathNumberOracleCatchesMutants/fround
+=== RUN   TestMathNumberOracleCatchesMutants/imul
+=== PAUSE TestMathNumberOracleCatchesMutants/imul
+=== RUN   TestMathNumberOracleCatchesMutants/constants
+=== PAUSE TestMathNumberOracleCatchesMutants/constants
+=== RUN   TestMathNumberOracleCatchesMutants/conversion
+=== PAUSE TestMathNumberOracleCatchesMutants/conversion
+=== RUN   TestMathNumberOracleCatchesMutants/own_property
+=== PAUSE TestMathNumberOracleCatchesMutants/own_property
+=== RUN   TestMathNumberOracleCatchesMutants/prototype
+=== PAUSE TestMathNumberOracleCatchesMutants/prototype
+=== CONT  TestLibraryNumberMathOracleCatchesMutants
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_math.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_math.a
+=== RUN   TestLibraryNumberMathOracleCatchesMutants/function_own
+=== PAUSE TestLibraryNumberMathOracleCatchesMutants/function_own
+=== RUN   TestLibraryNumberMathOracleCatchesMutants/boxed_slot
+=== PAUSE TestLibraryNumberMathOracleCatchesMutants/boxed_slot
+=== RUN   TestLibraryNumberMathOracleCatchesMutants/undefined_digits
+=== PAUSE TestLibraryNumberMathOracleCatchesMutants/undefined_digits
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_convert.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_convert.a
+=== RUN   TestLibraryNumberMathOracleCatchesMutants/global_predicate
+=== PAUSE TestLibraryNumberMathOracleCatchesMutants/global_predicate
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_prototype.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_prototype.a
+=== RUN   TestLibraryNumberMathOracleCatchesMutants/metadata_arity
+=== PAUSE TestLibraryNumberMathOracleCatchesMutants/metadata_arity
+=== RUN   TestLibraryNumberMathOracleCatchesMutants/metadata_type
+=== PAUSE TestLibraryNumberMathOracleCatchesMutants/metadata_type
+=== RUN   TestLibraryNumberMathOracleCatchesMutants/metadata_name
+=== PAUSE TestLibraryNumberMathOracleCatchesMutants/metadata_name
+=== CONT  TestMathNumberOracleCatchesMutants/clz32
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_math_metadata.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_math_metadata.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_math_function_own.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_math_function_own.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_number_immediate.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_number_immediate.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_number_math_edges.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_number_math_edges.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_number_own_names.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_number_own_names.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_number_convert_sources.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_number_convert_sources.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_number_optional_formats.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_number_optional_formats.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_number_global_predicates.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_number_global_predicates.a
+=== CONT  TestMathNumberOracleCatchesMutants/conversion
+    library_math_number_test.go:51: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestMathNumberOracleCatchesMutants/prototype
+=== NAME  TestMathNumberOracleCatchesMutants/clz32
+    library_math_number_test.go:51: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestMathNumberOracleCatchesMutants/own_property
+=== NAME  TestMathNumberOracleCatchesMutants/prototype
+    library_math_number_test.go:51: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestMathNumberOracleCatchesMutants/imul
+=== NAME  TestMathNumberOracleCatchesMutants/own_property
+    library_math_number_test.go:51: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestMathNumberOracleCatchesMutants/constants
+=== NAME  TestMathNumberOracleCatchesMutants/imul
+    library_math_number_test.go:51: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestMathNumberOracleCatchesMutants/fround
+=== NAME  TestMathNumberOracleCatchesMutants/constants
+    library_math_number_test.go:51: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestLibraryNumberMathOracleCatchesMutants/function_own
+    library_number_math_test.go:88: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestLibraryNumberMathOracleCatchesMutants/metadata_arity
+=== NAME  TestMathNumberOracleCatchesMutants/fround
+    library_math_number_test.go:51: Node caught the mutant: stdout differs; sanitizer clean
+--- PASS: TestMathNumberOracleCatchesMutants (0.00s)
+    --- PASS: TestMathNumberOracleCatchesMutants/conversion (0.31s)
+    --- PASS: TestMathNumberOracleCatchesMutants/clz32 (0.35s)
+    --- PASS: TestMathNumberOracleCatchesMutants/prototype (0.32s)
+    --- PASS: TestMathNumberOracleCatchesMutants/own_property (0.33s)
+    --- PASS: TestMathNumberOracleCatchesMutants/imul (0.26s)
+    --- PASS: TestMathNumberOracleCatchesMutants/constants (0.27s)
+    --- PASS: TestMathNumberOracleCatchesMutants/fround (0.31s)
+=== CONT  TestLibraryNumberMathOracleCatchesMutants/metadata_name
+=== NAME  TestLibraryNumberMathOracleCatchesMutants/metadata_arity
+    library_number_math_test.go:88: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestLibraryNumberMathOracleCatchesMutants/metadata_type
+=== NAME  TestLibraryNumberMathOracleCatchesMutants/metadata_name
+    library_number_math_test.go:88: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestLibraryNumberMathOracleCatchesMutants/undefined_digits
+=== NAME  TestLibraryNumberMathOracleCatchesMutants/metadata_type
+    library_number_math_test.go:88: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestLibraryNumberMathOracleCatchesMutants/global_predicate
+=== NAME  TestLibraryNumberMathOracleCatchesMutants/undefined_digits
+    library_number_math_test.go:88: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestLibraryNumberMathOracleCatchesMutants/boxed_slot
+    library_number_math_test.go:88: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_math.a
+=== NAME  TestLibraryNumberMathOracleCatchesMutants/global_predicate
+    library_number_math_test.go:88: Node caught the mutant: stdout differs; sanitizer clean
+--- PASS: TestLibraryNumberMathOracleCatchesMutants (0.00s)
+    --- PASS: TestLibraryNumberMathOracleCatchesMutants/function_own (0.26s)
+    --- PASS: TestLibraryNumberMathOracleCatchesMutants/metadata_arity (0.30s)
+    --- PASS: TestLibraryNumberMathOracleCatchesMutants/metadata_name (0.33s)
+    --- PASS: TestLibraryNumberMathOracleCatchesMutants/metadata_type (0.27s)
+    --- PASS: TestLibraryNumberMathOracleCatchesMutants/undefined_digits (0.25s)
+    --- PASS: TestLibraryNumberMathOracleCatchesMutants/boxed_slot (0.27s)
+    --- PASS: TestLibraryNumberMathOracleCatchesMutants/global_predicate (0.28s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_number_convert_sources.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_number_global_predicates.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_number_optional_formats.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_number_own_names.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_number_math_edges.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_number_immediate.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_math_function_own.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_math_metadata.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_prototype.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_convert.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_math.a (0.42s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_number_convert_sources.a (0.47s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_number_global_predicates.a (0.46s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_number_optional_formats.a (0.44s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_number_own_names.a (0.40s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_number_math_edges.a (0.43s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_number_immediate.a (0.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_math_function_own.a (0.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_math_metadata.a (0.44s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_prototype.a (0.41s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_convert.a (0.39s)
+PASS
+gate cache: native hits=0 misses=33
+gate cache: node hits=0 misses=36
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.576s

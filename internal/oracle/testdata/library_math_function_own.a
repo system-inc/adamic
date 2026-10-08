@@ -1,0 +1,7 @@
+for (const key of ['length', 'name', 'prototype', 'constructor', 'arguments', 'caller', 'call', 'apply', 'bind', 'toString', 'hasOwnProperty', '', 'Length', 'lengthx', 'length\u0000']) {
+ console.log(`${key} ${Math.max.hasOwnProperty(key)} ${Math.min.hasOwnProperty(key)} ${Math.random.hasOwnProperty(key)} ${Math.imul.hasOwnProperty(key)} ${Number.parseInt.hasOwnProperty(key)} ${Number.prototype.toFixed.hasOwnProperty(key)} ${Number.prototype.valueOf.hasOwnProperty(key)}`);
+}
+console.log(`${Math.max.hasOwnProperty(0)} ${Number.prototype.toFixed.hasOwnProperty(1)}`);
+let calls = 0;
+function key(): string { calls += 1; return calls === 1 ? 'length' : 'missing'; }
+console.log(`${Math.max.hasOwnProperty(key())} ${Number.prototype.toFixed.hasOwnProperty(key())} ${calls}`);

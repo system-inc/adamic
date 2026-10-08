@@ -1,0 +1,7 @@
+const values: readonly number[] = [0, -0, 123.456, 1.1e-32, 1e20, 1e21, Number.MAX_VALUE, Number.MIN_VALUE, NaN, Infinity, -Infinity];
+for (const value of values) {
+ console.log(`${value.toString(undefined)} ${value.toFixed(undefined)} ${value.toExponential(undefined)} ${value.toPrecision(undefined)}`);
+ console.log(`${(new Number(value)).toString(undefined)} ${(new Number(value)).toFixed(undefined)} ${(new Number(value)).toExponential(undefined)} ${(new Number(value)).toPrecision(undefined)}`);
+ console.log(`${Number.prototype.toString.call(value, undefined)} ${Number.prototype.toFixed.call(value, undefined)} ${Number.prototype.toExponential.call(value, undefined)} ${Number.prototype.toPrecision.call(value, undefined)}`);
+}
+console.log(`${Number(new Number('0x10'))} ${Number(Number.prototype)} ${Math.fround(Number(new Number(1.337)))}`);

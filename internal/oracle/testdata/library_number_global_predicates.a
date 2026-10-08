@@ -1,0 +1,16 @@
+function predicates(value: number | boolean | string | undefined): string {
+ const numeric = Number(value);
+ return `${isFinite(numeric)} ${isNaN(numeric)} ${Number.isFinite(numeric)} ${Number.isNaN(numeric)}`;
+}
+for (const value of [0, -0, 1, NaN, Infinity, -Infinity]) console.log(predicates(value));
+for (const value of ['', ' ', '0x10', '1e999', 'Infinity', 'NaN', 'x']) console.log(predicates(value));
+console.log(`${predicates(true)} ${predicates(false)} ${predicates(undefined)}`);
+console.log(`${isFinite(Number(null))} ${isNaN(Number(null))} ${isFinite(Number(Number.prototype))} ${isNaN(Number(new Number('x')))}`);
+let calls = 0;
+function input(): string { calls += 1; return calls === 1 ? '42' : 'x'; }
+console.log(`${isFinite(Number(input()))} ${isNaN(Number(input()))} ${calls}`);
+{
+ const isFinite = (value: number): boolean => value === 123;
+ const isNaN = (value: number): boolean => value === 456;
+ console.log(`${isFinite(123)} ${isFinite(0)} ${isNaN(456)} ${isNaN(0)}`);
+}
