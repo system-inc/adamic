@@ -16,4 +16,6 @@ clang	all	command -v clang
 tsc	all	tsc --version | grep -qx 'Version 6.0.3' && test -f "$(dirname "$(readlink -f "$(command -v tsc)")")/../lib/typescript.js"
 wasi-sdk	linux	test -d "${WASI_SYSROOT:-/nonexistent}"
 sysctl	darwin	command -v sysctl
+leaks	darwin	command -v leaks
+nm	all	command -v nm
 bun	optional	true
