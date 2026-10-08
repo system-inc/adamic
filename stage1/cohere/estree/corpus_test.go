@@ -2,10 +2,8 @@ package estree
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -115,13 +113,7 @@ func TestCorpusNativeRefusals(t *testing.T) {
 		stdout.Seek(0, 0)
 		stderr.Truncate(0)
 		stderr.Seek(0, 0)
-		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-		command := exec.CommandContext(ctx, binary, item.Path)
-		command.Stdout = stdout
-		command.Stderr = stderr
-		runErr := command.Run()
-		timedOut := ctx.Err() != nil
-		cancel()
+		runErr, timedOut := runWithCPUBudget(t, []string{binary, item.Path}, stdout, stderr, 2*time.Second)
 		outInfo, _ := stdout.Stat()
 		message, readErr := os.ReadFile(stderr.Name())
 		if readErr != nil {
@@ -132,5 +124,5 @@ func TestCorpusNativeRefusals(t *testing.T) {
 		}
 		count++
 	}
-	t.Logf("all %d frozen Go refusals explicitly refused with empty stdout on sanitized native before the per-file 2s deadline", count)
+	t.Logf("all %d frozen Go refusals explicitly refused with empty stdout on sanitized native before the per-file 2s child CPU-time deadline", count)
 }

@@ -1,0 +1,45 @@
+{
+  "main": "679af4dfe11f7495ae5e17596deeb743851117dd",
+  "merge_commit": "de3fbba16c7bf8d474cf43191eaf71eb765fa8ff",
+  "parser_recovery_tip": "42caf641578b6c2c0a3e0b33a1918526d51c64db",
+  "parser_recovery_merge_clean": true,
+  "parser_recovery_merge_tree": "093a554e87a83f9ec4d1c0598054d87e4a10c2eb",
+  "roots": {
+    "bench": 6,
+    "bridge": 1,
+    "cmd": 5,
+    "internal": 18,
+    "stage1": 476,
+    "stage3/drivers/tsc/corpus": 300,
+    "src/compiler": 77
+  },
+  "files": 883,
+  "tsprinter": {
+    "pass": 45,
+    "fail": 0,
+    "skip": 0,
+    "skip_names": [],
+    "package_seconds": 918.209
+  },
+  "parser": {
+    "pass": 3,
+    "fail": 0,
+    "skip": 0,
+    "skip_names": [],
+    "package_seconds": 40.621
+  },
+  "command_wall_seconds": 920.283,
+  "nproc": 5,
+  "cpu_quota": 4,
+  "load_before": [
+    3.67,
+    2.45,
+    2.25
+  ],
+  "load_after": [
+    2.75,
+    3.38,
+    2.75
+  ],
+  "existing_mutants_caught": 29
+}
