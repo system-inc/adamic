@@ -599,7 +599,22 @@
         "trace",
         "useCaseSensitiveFileNames"
       ],
-      "status": "certified"
+      "status": "certified",
+      "receiver_fields": [
+        "moduleResolverHost",
+        "popErrorFallbackNode",
+        "pushErrorFallbackNode",
+        "reportCyclicStructureError",
+        "reportInaccessibleThisError",
+        "reportInaccessibleUniqueSymbolError",
+        "reportInferenceFallback",
+        "reportLikelyUnsafeImportRequiredError",
+        "reportNonSerializableProperty",
+        "reportNonlocalAugmentation",
+        "reportPrivateInBaseOfClassExpression",
+        "reportTruncationError",
+        "trackSymbol"
+      ]
     },
     {
       "type_id": 7612,
@@ -691,7 +706,33 @@
         "trailingComments",
         "typeNode"
       ],
-      "status": "certified"
+      "status": "certified",
+      "receiver_fields": [
+        "_declarationBrand",
+        "_expressionBrand",
+        "_flowContainerBrand",
+        "_jsdocContainerBrand",
+        "_leftHandSideExpressionBrand",
+        "_memberExpressionBrand",
+        "_primaryExpressionBrand",
+        "_unaryExpressionBrand",
+        "_updateExpressionBrand",
+        "emitNode",
+        "end",
+        "escapedText",
+        "flags",
+        "flowNode",
+        "id",
+        "jsDoc",
+        "kind",
+        "localSymbol",
+        "modifierFlagsCache",
+        "original",
+        "parent",
+        "pos",
+        "symbol",
+        "transformFlags"
+      ]
     },
     {
       "type_id": 9476,
@@ -862,7 +903,28 @@
         "symbol",
         "transformFlags"
       ],
-      "status": "certified"
+      "status": "certified",
+      "receiver_fields": [
+        "_declarationBrand",
+        "_expressionBrand",
+        "_jsdocContainerBrand",
+        "emitNode",
+        "end",
+        "flags",
+        "id",
+        "jsDoc",
+        "kind",
+        "left",
+        "localSymbol",
+        "modifierFlagsCache",
+        "operatorToken",
+        "original",
+        "parent",
+        "pos",
+        "right",
+        "symbol",
+        "transformFlags"
+      ]
     },
     {
       "type_id": 9474,
@@ -1061,7 +1123,33 @@
         "symbol",
         "transformFlags"
       ],
-      "status": "certified"
+      "status": "certified",
+      "receiver_fields": [
+        "_declarationBrand",
+        "_expressionBrand",
+        "_flowContainerBrand",
+        "_jsdocContainerBrand",
+        "_leftHandSideExpressionBrand",
+        "_memberExpressionBrand",
+        "_unaryExpressionBrand",
+        "_updateExpressionBrand",
+        "emitNode",
+        "end",
+        "expression",
+        "flags",
+        "flowNode",
+        "id",
+        "jsDoc",
+        "kind",
+        "localSymbol",
+        "modifierFlagsCache",
+        "original",
+        "parent",
+        "pos",
+        "questionDotToken",
+        "symbol",
+        "transformFlags"
+      ]
     },
     {
       "type_id": 9485,
@@ -1232,7 +1320,28 @@
         "symbol",
         "transformFlags"
       ],
-      "status": "certified"
+      "status": "certified",
+      "receiver_fields": [
+        "_declarationBrand",
+        "_expressionBrand",
+        "_jsdocContainerBrand",
+        "emitNode",
+        "end",
+        "flags",
+        "id",
+        "jsDoc",
+        "kind",
+        "left",
+        "localSymbol",
+        "modifierFlagsCache",
+        "operatorToken",
+        "original",
+        "parent",
+        "pos",
+        "right",
+        "symbol",
+        "transformFlags"
+      ]
     },
     {
       "type_id": 9475,
@@ -1326,7 +1435,33 @@
         "symbol",
         "transformFlags"
       ],
-      "status": "certified"
+      "status": "certified",
+      "receiver_fields": [
+        "_declarationBrand",
+        "_expressionBrand",
+        "_flowContainerBrand",
+        "_jsdocContainerBrand",
+        "_leftHandSideExpressionBrand",
+        "_memberExpressionBrand",
+        "_unaryExpressionBrand",
+        "_updateExpressionBrand",
+        "emitNode",
+        "end",
+        "expression",
+        "flags",
+        "flowNode",
+        "id",
+        "jsDoc",
+        "kind",
+        "localSymbol",
+        "modifierFlagsCache",
+        "original",
+        "parent",
+        "pos",
+        "questionDotToken",
+        "symbol",
+        "transformFlags"
+      ]
     },
     {
       "type_id": 9454,
@@ -1376,7 +1511,34 @@
         "text",
         "transformFlags"
       ],
-      "status": "contract held by a shared descriptor; no admitted program reaches this read without an earlier read checking the same value, so the read is not separately certified"
+      "status": "certified",
+      "receiver_fields": [
+        "_declarationBrand",
+        "_expressionBrand",
+        "_flowContainerBrand",
+        "_jsdocContainerBrand",
+        "_leftHandSideExpressionBrand",
+        "_memberExpressionBrand",
+        "_unaryExpressionBrand",
+        "_updateExpressionBrand",
+        "argumentExpression",
+        "emitNode",
+        "end",
+        "expression",
+        "flags",
+        "flowNode",
+        "id",
+        "jsDoc",
+        "kind",
+        "localSymbol",
+        "modifierFlagsCache",
+        "original",
+        "parent",
+        "pos",
+        "questionDotToken",
+        "symbol",
+        "transformFlags"
+      ]
     },
     {
       "type_id": 8883,
@@ -1466,7 +1628,22 @@
         "transformFlags",
         "typeArguments"
       ],
-      "status": "certified"
+      "status": "certified",
+      "receiver_fields": [
+        "class",
+        "comment",
+        "emitNode",
+        "end",
+        "flags",
+        "id",
+        "kind",
+        "modifierFlagsCache",
+        "original",
+        "parent",
+        "pos",
+        "tagName",
+        "transformFlags"
+      ]
     },
     {
       "type_id": 8882,
@@ -1541,7 +1718,22 @@
         "transformFlags",
         "typeArguments"
       ],
-      "status": "certified"
+      "status": "certified",
+      "receiver_fields": [
+        "class",
+        "comment",
+        "emitNode",
+        "end",
+        "flags",
+        "id",
+        "kind",
+        "modifierFlagsCache",
+        "original",
+        "parent",
+        "pos",
+        "tagName",
+        "transformFlags"
+      ]
     },
     {
       "type_id": 7642,
@@ -1715,7 +1907,21 @@
         "pos",
         "transformFlags"
       ],
-      "status": "certified"
+      "status": "certified",
+      "receiver_fields": [
+        "comment",
+        "emitNode",
+        "end",
+        "flags",
+        "id",
+        "kind",
+        "modifierFlagsCache",
+        "original",
+        "parent",
+        "pos",
+        "tags",
+        "transformFlags"
+      ]
     },
     {
       "type_id": 36241,
@@ -1754,7 +1960,21 @@
         "pos",
         "transformFlags"
       ],
-      "status": "certified"
+      "status": "certified",
+      "receiver_fields": [
+        "comment",
+        "emitNode",
+        "end",
+        "flags",
+        "id",
+        "kind",
+        "modifierFlagsCache",
+        "original",
+        "parent",
+        "pos",
+        "tags",
+        "transformFlags"
+      ]
     },
     {
       "type_id": 7644,
@@ -1791,7 +2011,19 @@
         "pos",
         "transformFlags"
       ],
-      "status": "certified"
+      "status": "certified",
+      "receiver_fields": [
+        "emitNode",
+        "end",
+        "flags",
+        "id",
+        "kind",
+        "modifierFlagsCache",
+        "original",
+        "parent",
+        "pos",
+        "transformFlags"
+      ]
     },
     {
       "type_id": 92175,
@@ -1835,6 +2067,90 @@
         "pos",
         "transformFlags",
         "typeArguments"
+      ],
+      "status": "certified",
+      "receiver_fields": [
+        "class",
+        "comment",
+        "emitNode",
+        "end",
+        "flags",
+        "id",
+        "kind",
+        "modifierFlagsCache",
+        "original",
+        "parent",
+        "pos",
+        "tagName",
+        "transformFlags"
+      ]
+    },
+    {
+      "type_id": 9657,
+      "type": "JSDocAugmentsTag.class",
+      "field": "expression",
+      "read_count": 1,
+      "sites": [
+        {
+          "type_id": 9657,
+          "receiver": "ExpressionWithTypeArguments & { readonly expression: Identifier | PropertyAccessEntityNameExpression; }",
+          "field": "expression",
+          "declared_type": "LeftHandSideExpression & (Identifier | PropertyAccessEntityNameExpression)",
+          "file": "src/compiler/checker.ts",
+          "line": 44317,
+          "column": 60,
+          "start": 2598552,
+          "end": 2598573,
+          "text": "node.class.expression",
+          "source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+          "source_sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+          "context": "1], Diagnostics.Class_declarations_cannot_have_more_than_one_augments_or_extends_tag);\r\n        }\r\n\r\n        const name = getIdentifierFromEntityNameExpression(node.class.expression);\r\n        const extend = getClassExtendsHeritageElement(classLike);\r\n        if (extend) {\r\n            const className = getIdentifierFromEntityNameExpressio"
+        }
+      ],
+      "declared_type": "LeftHandSideExpression & (Identifier | PropertyAccessEntityNameExpression)",
+      "receiver_fields": [
+        "_expressionBrand",
+        "_leftHandSideExpressionBrand",
+        "_memberExpressionBrand",
+        "_typeNodeBrand",
+        "_unaryExpressionBrand",
+        "_updateExpressionBrand",
+        "emitNode",
+        "end",
+        "expression",
+        "flags",
+        "id",
+        "kind",
+        "modifierFlagsCache",
+        "original",
+        "parent",
+        "pos",
+        "transformFlags",
+        "typeArguments"
+      ],
+      "present_fields": [
+        "_declarationBrand",
+        "_expressionBrand",
+        "_flowContainerBrand",
+        "_jsdocContainerBrand",
+        "_leftHandSideExpressionBrand",
+        "_memberExpressionBrand",
+        "_unaryExpressionBrand",
+        "_updateExpressionBrand",
+        "emitNode",
+        "end",
+        "flags",
+        "flowNode",
+        "id",
+        "jsDoc",
+        "kind",
+        "localSymbol",
+        "modifierFlagsCache",
+        "original",
+        "parent",
+        "pos",
+        "symbol",
+        "transformFlags"
       ],
       "status": "certified"
     }
@@ -1889,10 +2205,8 @@
     "tracker-wrong.a"
   ],
   "pending": {
-    "9657 class.expression": "contract held by a shared descriptor; no admitted program reaches this read without an earlier read checking the same value, so the read is not separately certified",
     "68704 SymbolTrackerImpl.moduleResolverHost": "SymbolTrackerImpl is a non-exported checker class, absent from every emitted declaration",
-    "97923 and 98493 fileInfos.forEach": "stage 0 NotYet: an array of string | (Omit<FileInfo, \"signature\"> & {...})",
-    "9454 argumentExpression": "contract held by a shared descriptor; no admitted program reaches this read without an earlier read checking the same value, so the read is not separately certified"
+    "97923 and 98493 fileInfos.forEach": "stage 0 NotYet: an array of string | (Omit<FileInfo, \"signature\"> & {...})"
   },
   "assigned_identifier": {
     "receiver_type_id": 9477,

@@ -25,13 +25,14 @@ type intersectionOriginalManifest struct {
 		SourceSHA string `json:"source_sha256"`
 	} `json:"assigned_identifier"`
 	Pairs []struct {
-		ID            int               `json:"type_id"`
-		Declared      string            `json:"declared_type"`
-		Type          string            `json:"type"`
-		Field         string            `json:"field"`
-		Reads         int               `json:"read_count"`
-		Sites         []json.RawMessage `json:"sites"`
-		PresentFields []string          `json:"present_fields"`
+		ID             int               `json:"type_id"`
+		Declared       string            `json:"declared_type"`
+		Type           string            `json:"type"`
+		Field          string            `json:"field"`
+		Reads          int               `json:"read_count"`
+		Sites          []json.RawMessage `json:"sites"`
+		ReceiverFields []string          `json:"receiver_fields"`
+		PresentFields  []string          `json:"present_fields"`
 	} `json:"pairs"`
 }
 
@@ -49,7 +50,7 @@ func intersectionOriginalInputs(t *testing.T) (string, intersectionOriginalManif
 	if err := json.Unmarshal(data, &manifest); err != nil {
 		t.Fatal(err)
 	}
-	reads := map[int]int{10236: 1, 7612: 4, 9476: 9, 9474: 11, 9485: 9, 9475: 4, 9454: 1, 8883: 4, 8882: 3, 7642: 10, 36241: 1, 7644: 1, 92175: 1}
+	reads := map[int]int{10236: 1, 7612: 4, 9476: 9, 9474: 11, 9485: 9, 9475: 4, 9454: 1, 8883: 4, 8882: 3, 7642: 10, 36241: 1, 7644: 1, 92175: 1, 9657: 1}
 	if manifest.Commit != "050880ce59e30b356b686bd3144efe24f875ebc8" || len(manifest.Declarations) != 78 || len(manifest.Pairs) != len(reads) || manifest.Pairs[0].ID != 10236 {
 		t.Fatal("original provenance changed")
 	}

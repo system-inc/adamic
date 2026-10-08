@@ -41,11 +41,13 @@ for (const [id,name,field] of [[10236,'SymbolTracker','moduleResolverHost'],[761
   [9476,'BindableStaticPropertyAssignmentExpression','left'],[9474,'BindableStaticAccessExpression','expression'],
   [9485,'BindablePropertyAssignmentExpression','left'],[9475,'BindableAccessExpression','expression'],
   [9454,'BindableStaticElementAccessExpression','argumentExpression'],
-  [8883,'JSDocAugmentsTag','class'],[8882,'JSDocImplementsTag','class'],[7642,'JSDoc','parent'],[36241,'JSDoc','parent'],[7644,'JSDoc | JSDocTypeLiteral','parent'],[92175,'JSDocImplementsTag | JSDocAugmentsTag','class']]) {
+  [8883,'JSDocAugmentsTag','class'],[8882,'JSDocImplementsTag','class'],[7642,'JSDoc','parent'],[36241,'JSDoc','parent'],[7644,'JSDoc | JSDocTypeLiteral','parent'],[92175,'JSDocImplementsTag | JSDocAugmentsTag','class'],[9657,'JSDocAugmentsTag.class','expression']]) {
  const receiver = checker.getUnionType(name.split(' | ').map(part => {
-  const symbol = moduleExports.find(symbol=>symbol.name===part);
+  const [exportName,memberName] = part.split('.');
+  const symbol = moduleExports.find(symbol=>symbol.name===exportName);
   if (!symbol) throw Error('missing original receiver '+part);
-  return checker.getDeclaredTypeOfSymbol(symbol);
+  const receiver = checker.getDeclaredTypeOfSymbol(symbol);
+  return memberName ? checker.getTypeOfSymbol(checker.getPropertyOfType(receiver,memberName)) : receiver;
  }));
  const member = checker.getPropertyOfType(receiver,field);
  // Union aliases have synthetic members, whose type the checker combines.
@@ -53,6 +55,7 @@ for (const [id,name,field] of [[10236,'SymbolTracker','moduleResolverHost'],[761
  const sites = witnesses.filter(site=>site.type_id===id && site.field===field);
  pairs.push({type_id:id,type:name,field,read_count:sites.length,sites,
    declared_type:checker.typeToString(declared),
+   receiver_fields:checker.getPropertiesOfType(receiver).map(field=>field.name).sort(),
    present_fields:checker.getPropertiesOfType(checker.getNonNullableType(declared)).map(field=>field.name).sort()});
 }
 const inventory = JSON.parse(require('node:zlib').gunzipSync(fs.readFileSync(path.resolve(__dirname,'../../lane4/read-demand-pairs.json.gz'))));

@@ -2213,3 +2213,11 @@ The wrong value reaches value.escapedText without a prior carrier.child read.
 Helper bypass is now killed in all three backends. No compiler admission rule
 changed. Original assigned 9477 is certified separately from lane 7's twelve
 pairs / 58 reads. Own original counts are measured in lane7/counts.md.
+
+October 11, lane 7 isolated helper certificates: 9454.argumentExpression and
+9657.class.expression now have independent wrong-member witnesses, using an
+ordinary interface inheriting the complete original intersection. Both member
+check omission mutants execute true successfully in all three modes and are
+caught by the named exit-70 pins. No compiler admission changes. Lane 7 is now
+14 pairs / 60 reads; remaining 97923 and 98493 array reads plus private 68704
+(four reads). Assigned Identifier 9477 is separately certified, one read.
