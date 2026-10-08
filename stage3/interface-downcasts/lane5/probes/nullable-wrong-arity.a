@@ -1,0 +1,10 @@
+interface Base { readonly kind: string; }
+interface Target extends Base { readonly kind: 'box'; readonly value: (() => string) | null | undefined; }
+function read(node: Target): void {
+ const callback = node.value;
+ console.log(typeof callback);
+ if (callback !== null && callback !== undefined) { console.log(callback()); }
+}
+const raw = {kind:'box',value:(unused:number):string=>'/bad'};
+function viewed(value: Base): Target {return value as Target;}
+read(viewed(raw));

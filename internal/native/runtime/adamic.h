@@ -204,6 +204,8 @@ typedef struct adamic_object {
 	const adamic_shape *shape;
 	const adamic_class *class;
 	bool frozen;
+	// Original complete scalar-record declaration for array element writes.
+	unsigned int array_write_contract;
 	const char *real_type;
 	adamic_value slots[];
 } adamic_object;
@@ -245,7 +247,9 @@ void adamic_object_checked_write(adamic_object *object, const char *name, adamic
 
 adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression);
 adamic_value adamic_object_optional_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression, bool absent, bool optional);
+adamic_value adamic_object_optional_view_undefined(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression, bool absent, bool optional, bool undefined_member);
 adamic_value adamic_object_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);
+#include "view_intersections_recursive.h"
 void adamic_view_literal_failure(const char *expression, const char *expected, unsigned char type, adamic_value value);
 void adamic_object_view_write(adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);
 
@@ -352,6 +356,8 @@ typedef struct adamic_array {
 	// Physical storage only: 0 unknown, 1 number, 2 boolean, 7 packed maybe-number,
 	// 10 heap pointers. This never certifies an element shape or initialization.
 	uint8_t element_kind;
+	// Original logical element declaration, independent of the current values.
+	unsigned int element_contract;
 	adamic_value *elements;
 	// Extra fields of RegExp result arrays, owned and released with the array.
 	adamic_object *properties;
@@ -383,6 +389,8 @@ typedef struct adamic_map_entry {
 
 typedef struct adamic_map {
 	adamic_heap heap;
+	unsigned int key_contract, value_contract;
+	const char *contract_name;
 	size_t count;
 	size_t used;
 	size_t capacity;
@@ -467,7 +475,11 @@ bool adamic_map_delete(adamic_map *map, adamic_value key);
 typedef adamic_object adamic_record;
 typedef adamic_object adamic_record_iterator;
 
+bool adamic_record_is(const adamic_object *object);
+void adamic_record_check_missing_member(const adamic_string *key);
 adamic_record *adamic_record_new(bool reference_values);
+adamic_record *adamic_record_new_typed(bool reference_values, unsigned char element);
+void adamic_record_storage_check(const adamic_record *record, unsigned char element);
 // Own lookup returns a borrowed slot, NULL for absence (including an inherited name).
 adamic_value *adamic_record_get_own(const adamic_record *record, const adamic_string *key);
 bool adamic_record_has_own(const adamic_record *record, const adamic_string *key);

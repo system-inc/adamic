@@ -1,0 +1,28 @@
+// Witness: utilitiesPublic.ts:1759 node.expression, commit 050880ce.
+// Declaration fragment isolates the finite discriminated intersection family.
+enum SyntaxKind { Identifier = 80, PropertyAccessExpression = 212, ElementAccessExpression = 213 }
+interface LeftHandSideExpression { readonly kind: SyntaxKind }
+interface Identifier extends LeftHandSideExpression { readonly kind: SyntaxKind.Identifier; readonly escapedText: string }
+interface PropertyAccessEntityNameExpression extends LeftHandSideExpression {
+ readonly kind: SyntaxKind.PropertyAccessExpression;
+ readonly expression: Identifier;
+ readonly name: Identifier;
+}
+interface BindableStaticElementAccessExpression extends LeftHandSideExpression {
+ readonly kind: SyntaxKind.ElementAccessExpression;
+ readonly expression: Identifier;
+ readonly argumentExpression: { readonly text: string };
+}
+type EntityNameExpression = Identifier | PropertyAccessEntityNameExpression;
+type BindableStaticNameExpression = EntityNameExpression | BindableStaticElementAccessExpression;
+interface BaseAccess { readonly expression: object }
+interface BindableStaticAccessExpression extends BaseAccess {
+ readonly expression: EntityNameExpression | (LeftHandSideExpression & BindableStaticNameExpression);
+}
+function originalRead(node: BindableStaticAccessExpression): boolean {
+ const expression = node.expression;
+ return expression !== node;
+}
+const actual = { expression: { kind: SyntaxKind.ElementAccessExpression, expression: { kind: SyntaxKind.Identifier, escapedText: 'x' }, argumentExpression: { text: true } } };
+const source: BaseAccess = actual;
+console.log(`${originalRead(source as BindableStaticAccessExpression)}`);

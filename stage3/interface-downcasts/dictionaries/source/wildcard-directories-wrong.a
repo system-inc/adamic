@@ -1,0 +1,8 @@
+interface MapLike<T> { [key: string]: T; }
+enum WatchDirectoryFlags { Recursive = 1 }
+interface Base { readonly kind: 'Dictionary'; }
+interface ParsedCommandLine extends Base { readonly wildcardDirectories?: MapLike<WatchDirectoryFlags>; }
+const payload = { kind: 'Dictionary' as const, wildcardDirectories: 42 };
+const base: Base = payload;
+const view = base as ParsedCommandLine;
+console.log(typeof view.wildcardDirectories);

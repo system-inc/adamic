@@ -1,0 +1,15 @@
+=== RUN   TestCheckedViewIntersectionSelectedArms
+=== RUN   TestCheckedViewIntersectionSelectedArms/leading-access-wrong
+    checked_views_intersections_test.go:315: gate cache node miss
+    checked_views_intersections_test.go:331: gate cache node miss
+    checked_views_intersections_test.go:333: exit codes differ; got oracle.run{stdout:[]uint8{0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+    checked_views_intersections_test.go:333: exit codes differ; got oracle.run{stdout:[]uint8{0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+    checked_views_intersections_test.go:333: exit codes differ; got oracle.run{stdout:[]uint8{0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+--- FAIL: TestCheckedViewIntersectionSelectedArms (0.75s)
+    --- FAIL: TestCheckedViewIntersectionSelectedArms/leading-access-wrong (0.75s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.759s
+FAIL

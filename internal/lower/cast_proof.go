@@ -98,6 +98,9 @@ func castMembers(proven *checker.Type) []*checker.Type {
 
 func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	as := node.AsAsExpression()
+	if l.viewCallableDiscardedMarker(node) {
+		return castProof{}, nil
+	}
 	// A qualified name (NodeJS.ErrnoException) has no Text; only a bare `const` is as const.
 	if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 		return castProof{}, nil
@@ -119,6 +122,15 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	allClasses := true
 	for _, member := range append(append([]*checker.Type{}, members...), targets...) {
 		allClasses = allClasses && isClassInstance(member)
+	}
+	if l.dictionaryCastNeedsView(source, target) {
+		if l.widened(target, source, map[[2]*checker.Type]bool{}) != nil {
+			return castProof{}, l.notYet(node, "a writable-slot checked dictionary view requiring source contract certification")
+		}
+		if _, err := l.viewSchema(node, target); err != nil {
+			return castProof{}, err
+		}
+		return castProof{view: true}, nil
 	}
 	var upcastFailure error
 	// A structural assignability result is only an upcast candidate. Nominal

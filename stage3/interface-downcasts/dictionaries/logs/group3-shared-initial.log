@@ -1,0 +1,27 @@
+# github.com/system-inc/adamic/internal/oracle [github.com/system-inc/adamic/internal/oracle.test]
+internal/oracle/records_test.go:151:12: undefined: leakSanitizer
+--- FAIL: TestRecordRefusals (0.92s)
+    --- FAIL: TestRecordRefusals/interface_R_{_[key:string]:number;_named:number_}_const_r:R={named:1}; (0.12s)
+        records_test.go:56: got <nil>, want "named" (NotYet=true)
+    --- FAIL: TestRecordRefusals/interface_R_{_readonly_[key:string]:number_}_const_r:R={}; (0.10s)
+        records_test.go:56: got <nil>, want "signature" (NotYet=true)
+    --- FAIL: TestRecordRefusals/interface_R_{_[key:number]:number_}_const_r:R={}; (0.06s)
+        records_test.go:56: got /tmp/adamic-gate/TestRecordRefusalsinterface_R_{_keynumbernumber_}_const_rR1984701819/001/main.a:1:43: stage 0 can't lower a value of type R yet, want "signature" (NotYet=true)
+    --- FAIL: TestRecordRefusals/type_R=Readonly<Record<string,number>>;_const_r:R={};_console.log(String(r['x'])); (0.03s)
+        records_test.go:56: got <nil>, want "value of type" (NotYet=true)
+    --- FAIL: TestRecordRefusals/interface_R_{[key:string]:R}_const_r:R={};_r['self']=r; (0.04s)
+        records_test.go:56: got <nil>, want "cycle" (NotYet=false)
+    --- FAIL: TestRecordRefusals/interface_Node_{links:Record<string,Node>}_const_a:Node={links:{}};_a.links['self']=a; (0.04s)
+        records_test.go:56: got <nil>, want "cycle" (NotYet=false)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	1.186s
+--- FAIL: TestRecordReadMutants (6.78s)
+    --- FAIL: TestRecordReadMutants/missing-read-silent (0.00s)
+        record_test.go:237: mutant input missing in record.c
+    --- FAIL: TestRecordReadMutants/own-read-checked-as-missing (0.00s)
+        record_test.go:237: mutant input missing in record.c
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	39.646s
+ok  	github.com/system-inc/adamic/internal/javascript	0.002s [no tests to run]
+FAIL	github.com/system-inc/adamic/internal/oracle [build failed]
+FAIL

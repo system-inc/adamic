@@ -155,6 +155,7 @@ adamic_array *adamic_view_array_slice(const adamic_array *array, double start, d
     adamic_array *result = adamic_array_holes(end - start, array->references);
     if (result == NULL) return NULL;
     result->element_kind = array->element_kind;
+    result->element_contract = array->element_contract;
     for (size_t at = 0; at < array->sparse->used; at++) {
         const adamic_map_entry *entry = &array->sparse->entries[at];
         double index = entry->key.number;

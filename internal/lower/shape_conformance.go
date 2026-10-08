@@ -116,7 +116,7 @@ func eraseProvenViewChecks(program *ir.Program) {
 	rewrite := func(node any) any {
 		switch value := node.(type) {
 		case ir.Property:
-			if value.View != "" && value.Readiness == "" && !value.Optional && !value.Absent && !value.Method && fieldProof(flow.ReachingAllocations(value.Object), value.Name, value.ViewContract) {
+			if value.DictionaryKey == nil && value.View != "" && value.Readiness == "" && !value.Optional && !value.Absent && !value.Method && fieldProof(flow.ReachingAllocations(value.Object), value.Name, value.ViewContract) {
 				value.View = ""
 				value.ViewType = ""
 				value.ViewAllowed = nil

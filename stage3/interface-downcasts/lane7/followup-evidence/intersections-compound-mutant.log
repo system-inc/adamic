@@ -1,0 +1,11 @@
+=== RUN   TestCheckedViewIntersectionCompoundDemand
+    checked_views_intersections_test.go:235: gate cache node hit
+    checked_views_intersections_test.go:235: gate cache node hit
+    checked_views_intersections_test.go:246: compound demand must refuse, got <nil>
+--- FAIL: TestCheckedViewIntersectionCompoundDemand (0.18s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.187s
+FAIL

@@ -1,0 +1,8 @@
+// Original tsc member signature and read; receiver and implementation reduced.
+interface Base { readonly mark: unknown; }
+interface Target { mark(markName: string): void; }
+function probe(value:Base):void {
+    const performance = value as Target;
+    performance.mark('beginTracing');
+}
+probe({mark: 7});

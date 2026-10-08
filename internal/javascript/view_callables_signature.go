@@ -9,18 +9,28 @@ import (
 func (e *emitter) emitViewCallableCertificate(property ir.Property, value string) string {
 	expected := e.viewCallableExpected(property)
 	choices := []string{}
+	methods := map[int]bool{}
+	for _, class := range e.program.Classes {
+		for _, method := range class.Methods {
+			methods[method] = true
+		}
+	}
 	for index, function := range e.program.Functions {
-		if !function.Closure || function.Receiver {
+		if !function.Closure && !methods[index] || function.Receiver {
 			continue
 		}
-		parameters := make([]ir.Type, len(function.Parameters))
-		for i, local := range function.Parameters {
+		locals := function.Parameters
+		if !function.Closure {
+			locals = locals[1:]
+		}
+		parameters := make([]ir.Type, len(locals))
+		for i, local := range locals {
 			parameters[i] = e.program.Locals[local].Type
 		}
-		choices = append(choices, fmt.Sprintf("code === %s ? %s : ", functionName(e.program, index), viewCallableSignature(parameters, function.Returns, function.Name)))
+		choices = append(choices, fmt.Sprintf("code === %s ? %s : ", functionName(e.program, index), viewCallableSignature(parameters, viewCallableProducerResult(function.Returns), function.Name)))
 	}
-	recorded := "((code) => " + strings.Join(choices, "") + "undefined)(value instanceof AdamicClosure ? value.code : undefined)"
-	return "((value) => " + emitViewCallableShape("value", recorded, expected, property.View, property.Absent) + ")(" + value + ")"
+	recorded := "((code) => " + strings.Join(choices, "") + "undefined)(value instanceof AdamicClosure ? value.code : value)"
+	return "((value) => " + emitViewCallableShape("value", recorded, expected, property.View, property.Absent || property.Optional || property.UndefinedAllowed) + ")(" + value + ")"
 }
 
 func (e *emitter) viewCallableExpected(property ir.Property) string {
@@ -29,8 +39,11 @@ func (e *emitter) viewCallableExpected(property ir.Property) string {
 		return "undefined"
 	}
 	contract := e.program.ViewContracts[id-1]
-	if contract.Kind != ir.ViewCallable || contract.Result == 0 {
+	if contract.Kind != ir.ViewCallable || (contract.Result == 0 && !contract.DiscardResult) {
 		return "undefined"
+	}
+	if contract.DiscardResult {
+		return viewCallableSignature(nil, ir.Type(255), contract.Name)
 	}
 	parameters := make([]ir.Type, len(contract.Parameters))
 	for i, child := range contract.Parameters {
@@ -45,4 +58,11 @@ func viewCallableSignature(parameters []ir.Type, result ir.Type, name string) st
 		values[i] = fmt.Sprint(of)
 	}
 	return fmt.Sprintf("{parameters: [%s], result: %d, name: %s}", strings.Join(values, ", "), result, quote(name))
+}
+
+func viewCallableProducerResult(result ir.Type) ir.Type {
+	if result == 0 {
+		return ir.Type(254)
+	}
+	return result
 }

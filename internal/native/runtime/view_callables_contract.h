@@ -31,7 +31,7 @@ static inline const adamic_heap *adamic_view_callable_shape(
             found = arity;
         } else if (recorded->result == 0 || expected->result == 0) {
             found = "function with unknown signature";
-        } else if (recorded->result != expected->result) {
+        } else if (expected->result != 255 && recorded->result != expected->result) {
             found = "function with incompatible result representation";
         } else {
             bool compatible = recorded->arity == 0 || (recorded->parameters != NULL && expected->parameters != NULL);

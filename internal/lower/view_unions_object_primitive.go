@@ -61,3 +61,17 @@ func (l *lowering) objectPrimitiveBoxedField(property *ast.Node) bool {
 	}
 	return true
 }
+
+// A structural conjunction still has an object reference slot even when its
+// fields contain aggregates. This proves storage only, never its conjunction.
+func (l *lowering) objectPrimitiveIntersectionStorage(target *checker.Type) bool {
+	if target.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range target.Types() {
+			if !l.objectPrimitiveIntersectionStorage(member) {
+				return false
+			}
+		}
+		return len(target.Types()) != 0
+	}
+	return target.Flags()&checker.TypeFlagsObject != 0 && !l.checker.IsArrayType(target) && !checker.IsTupleType(target) && !isClassInstance(target) && !l.isLibraryType(target, "Map", "ReadonlyMap", "Set", "ReadonlySet") && len(l.checker.GetIndexInfosOfType(target)) == 0 && len(l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)) == 0
+}

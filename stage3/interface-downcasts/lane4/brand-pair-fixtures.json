@@ -1,0 +1,98 @@
+[
+  {
+    "id": "7618:escapedText",
+    "fixture": "7618-escapedText",
+    "type": "PrivateIdentifier",
+    "field": "escapedText",
+    "optional": false,
+    "reads": 15
+  },
+  {
+    "id": "7619:escapedText",
+    "fixture": "7619-escapedText",
+    "type": "Identifier | PrivateIdentifier",
+    "field": "escapedText",
+    "optional": false,
+    "reads": 14
+  },
+  {
+    "id": "10393:escapedName",
+    "fixture": "10393-escapedName",
+    "type": "TransientSymbol",
+    "field": "escapedName",
+    "optional": false,
+    "reads": 10
+  },
+  {
+    "id": "9170:escapedText",
+    "fixture": "9170-escapedText",
+    "type": "MemberName",
+    "field": "escapedText",
+    "optional": false,
+    "reads": 9
+  },
+  {
+    "id": "9228:escapedText",
+    "fixture": "9228-escapedText",
+    "type": "Identifier | undefined",
+    "field": "escapedText",
+    "optional": false,
+    "reads": 4
+  },
+  {
+    "id": "8654:keyPropertyName",
+    "fixture": "8654-keyPropertyName",
+    "type": "UnionType",
+    "field": "keyPropertyName",
+    "optional": true,
+    "reads": 3
+  },
+  {
+    "id": "10782:escapedName",
+    "fixture": "10782-escapedName",
+    "type": "UniqueESSymbolType",
+    "field": "escapedName",
+    "optional": false,
+    "reads": 2
+  },
+  {
+    "id": "6998:localJsxFragmentNamespace",
+    "fixture": "6998-localJsxFragmentNamespace",
+    "type": "SourceFile",
+    "field": "localJsxFragmentNamespace",
+    "optional": true,
+    "reads": 2
+  },
+  {
+    "id": "6998:localJsxNamespace",
+    "fixture": "6998-localJsxNamespace",
+    "type": "SourceFile",
+    "field": "localJsxNamespace",
+    "optional": true,
+    "reads": 2
+  },
+  {
+    "id": "7612:escapedText",
+    "fixture": "7612-escapedText",
+    "type": "GeneratedIdentifier",
+    "field": "escapedText",
+    "optional": false,
+    "reads": 1
+  },
+  {
+    "id": "9477:escapedText",
+    "fixture": "9477-escapedText",
+    "type": "LeftHandSideExpression & Identifier",
+    "field": "escapedText",
+    "optional": false,
+    "reads": 1
+  },
+  {
+    "id": "8588:escapedName",
+    "fixture": "8588-escapedName",
+    "type": "Symbol | undefined",
+    "field": "escapedName",
+    "optional": false,
+    "reads": 1
+  }
+]

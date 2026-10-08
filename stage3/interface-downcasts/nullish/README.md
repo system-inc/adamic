@@ -151,3 +151,155 @@ number-both control catches nullable dispatch after the integration merge.
 passes in 12.188s. Production inventory remains 2,018 pairs/9,101 reads awaiting
 lowering and reaching-view proof; fixture support is not subtracted. Ledger
 inserted checks belong to stricter-checks worker 01a118d0 and are outside this unit.
+
+## Map certificates, October 8
+
+This supersedes the collection-certificate gap above. Map constructors now carry
+complete scalar key/value contract identities, including finite literal sets.
+Native headers and the JavaScript private WeakMap preserve producer evidence;
+casts never manufacture it. Viewed reads compare that evidence with the target:
+readonly schemas permit covariance, mutable schemas require invariance and the
+same physical storage. Existing mutable-alias checks preserve certificates across
+writes. Cloned maps receive the declared constructor schema. Unknown producers
+stop at the read with exit 70 and name the field, expected type and source schema.
+Nullable Map/primitive unions select the Map member and verify its certificate.
+
+Number, boolean, string and finite scalar schemas have Node/backend evidence.
+Structural, array, callable, branded and mixed-union entry schemas retain named
+Map key/value read refusals. Multiple indistinguishable reference alternatives
+remain refused. These are explicit boundaries, not fabricated certificates.
+
+The combined nullable, selection, lazy-flow and Map oracle plus selected legacy
+Map/Set regressions passed in 98.340s (sanitized/release native, JavaScript and
+positive leak checks). Additional mixed-union controls passed in 2.554s; boolean
+and phantom-brand controls passed in 0.600s. The brand fixture initially used an
+unsupported unique-symbol brand declaration; it was corrected to a valid void
+brand so the test demonstrates refusal at the Map field read. Scoped lower,
+native and JavaScript packages passed in 4.109s/30.203s/0.932s; full IR and
+JavaScript packages and go vet also passed. The full repository gate was not run.
+
+Wrong key/value schemas, wrong present kinds, excluded nullish alternatives,
+mutable widening and uncertified producers are caught by read checks or the
+existing invariant-mutable diagnostic. Temporarily disabling the native Map
+certificate guard made the oracle fail: a boolean-valued producer ran on through
+a number-valued view. Restoring it passed the Map and selection suite in 17.953s.
+Compressed command/output logs are in evidence/; the implementation mutation is
+recorded in implementation-mutants.json.
+
+After this push the exact production inventory remains **2,018 pairs/9,101
+reads awaiting lowering and reaching-view proof**. No production site counts
+are subtracted from fixture coverage. Ledger-driven option checks remain owned
+by stricter-checks worker 01a118d0.
+
+## Structural Map entries, October 8 follow-up
+
+Complete structural key/value schemas now reuse the existing recursive slot
+certificate and structural subtype relation. Readonly covariance and mutable
+invariance retain their original rules; incomplete member descriptors cannot
+stamp a Map constructor. Object keys keep identity semantics. Four new positives
+match Node (structural values, finite covariance, object keys, and packed optional
+number values). Five new source mutants stop at the demanded Map read or at a
+transitive payload read: wrong structural value schema, mutable widening, wrong
+object-key schema, wrong schema with an unread payload, and a viewed bad payload
+passed through Map.get to a helper that also accepts ordinary entries.
+
+The last mutant prints 1 then wrong on Node; both native modes and JavaScript
+print 1 then stop at entry.count. Wrong entry schemas stop at node.value even
+when the program never reads an entry. Temporarily replacing structural schema
+comparison with physical object-kind equality made the unread-payload mutant run
+on and print object (exit 0); the oracle failed. Restoring the relation passed
+all Map controls in 15.309s. The optional-number entry control prints true, 9, 7
+and passes in 0.479s. Scoped IR/lower/native/JavaScript checks passed in
+0.009s/5.876s/47.990s/1.110s. Evidence is compressed under evidence/.
+
+Arrays, callables, branded types, null-containing and mixed entry unions remain
+outside the Map certificate adapter. Some nullable Map entry representations
+also remain blocked by mapTypes/slotless, independently of view admission.
+Production inventory is unchanged: 2,018 pairs/9,101 reads remain unverified by
+whole-program lowering and reaching-view proof. Ledger checks are outside scope.
+
+## Array Map entries and boundaries, October 8 follow-up
+
+Map key/value certificates now include complete array contracts, retaining the
+shared adapter's readonly bit. Readonly arrays permit element covariance;
+writable arrays require element invariance and reject readonly sources. Every
+comparison preserves the physical element representation. Recursive array schema
+comparison terminates through active contract pairs. Producer descriptors with
+unsupported descendants still cannot stamp a constructor.
+
+Array values, readonly finite-element covariance, mutable same-schema writes
+and a recursive empty array match Node in both native modes and JavaScript,
+with leak checks. Wrong array schemas stop at node.value. A bad viewed array
+payload passed through Map.get to a helper prints 1 then stops at values[0];
+Node prints 1 then wrong. Mutable element widening is rejected by the Map read
+certificate. An additional wrong-schema fixture leaves entries unread: only
+reading node.value is enough to catch the incompatible schema. Temporarily
+accepting all array pointer schemas makes it print object and exit 0; the oracle
+fails. Restoring comparison passes the Map and nullable-selection suite in
+30.336s, and the recursive-array control in 0.479s. Scoped IR/lower/native/JS
+checks pass in 0.018s/4.106s/34.052s/0.867s.
+
+Four demanded family controls (null-containing entry union, mixed scalar entry
+union, callable entry, tuple entry) each refuse at node.value with the Map
+key/value certificate family. Their four unread twins all compile and match
+Node/backend/leak checks. This boundary suite passes in 9.691s. The remaining
+entry gaps require storage and producer adapters: mapTypes explicitly refuses
+Union and MaybeBoolean slot storage; callable contracts need implementation/body
+proof from producers rather than asserted signatures; tuples need position/rest
+contracts; nominal/phantom entries still lack authorized identity certificates.
+These controls measure refusals, not implementation of those families.
+
+After this push the exact production table remains 2,018 pairs/9,101 reads
+awaiting whole-program lowering and reaching-view proof. No site is removed from
+that table on fixture evidence. The complete repository gate remains unrun.
+
+## NodeArray and undefined entry completion, October 8
+
+Integration 267fd75b is merged in fc55836a. Array certificates now retain the
+readonly bit from the inherited array base, not just the interface's own name,
+and compare every target own-field schema with producer evidence. Missing own
+fields are refused even when optional: an erased producer schema cannot prove
+an unknown extra property's type. Own writable fields retain invariance.
+NodeArray values and finite element covariance match Node. Wrong own schemas
+and a readonly source viewed as a writable array stop at node.value. Their
+unread-payload controls prove this is the Map certificate check, not a later
+property or element guard.
+
+Undefined-containing array and structural entries now use their pointer ABI and
+complete optional descriptor. Both controls print true, undefined, 7 on Node and
+all compiled runs. A Map containing undefined-valued arrays cannot certify a
+nonoptional array-entry target. This was proved independently by disabling the
+undefined source-schema guard: the wrong-schema control ran on (exit 0).
+
+Phantom intersections are refused recursively inside Map entry arrays and object
+fields, as well as directly. Finite primitive kind evidence cannot manufacture
+a brand. Two demanded nested-brand controls refuse at node.value; their unread
+twins compile and match Node. Disabling the recursive brand exclusion makes both
+named-refusal assertions fail because lowering admits the read. This mutation
+is an admission failure, not an observed runtime crash.
+
+Four new implementation mutations were independently caught: skip array own-field
+comparison, forget readonly producer restrictions, allow undefined schemas for
+nonoptional entries, and omit nested phantom exclusions. The first three run on
+and print object with exit 0; the fourth admits two forbidden reads. All guards
+were restored before the final checks.
+
+Final commands (outputs retained under evidence/):
+
+```
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewMap|^TestCheckedViewNullableSelection|^TestCheckedViewNodeArray|^TestCheckedViewOptionalArray' -v -count=1 -timeout 10m
+PASS, 34.060s
+go test ./internal/ir ./internal/lower ./internal/native ./internal/javascript -run 'View|Map|Contract' -count=1 -timeout 10m
+PASS, 0.010s / 4.044s / 31.999s / 0.809s
+go vet ./internal/ir ./internal/lower ./internal/native ./internal/javascript
+PASS, no output
+```
+
+Remaining Map entry blockers: null-containing and mixed unions need the Map
+storage ABI beyond slotless Union/MaybeBoolean; callable entries need producer
+implementation/body evidence; tuples need per-position/rest contracts; nominal
+and phantom entries need authorized identity witnesses. Repeated reference-kind
+nullable union alternatives retain their named selector refusal. Production
+inventory stays 2,018 pairs/9,101 reads awaiting whole-program lowering and shared
+reaching-view proof. Ledger checks remain with worker 01a118d0. The whole
+repository gate was not run.

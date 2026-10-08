@@ -15,13 +15,22 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	if id := l.result.ViewContractTypes[int(target.Id())]; id != 0 {
 		return id, nil
 	}
-	if target.Flags()&checker.TypeFlagsUnion != 0 && l.includesNull(target) {
+	if target.Flags()&checker.TypeFlagsUnion != 0 && (l.includesNull(target) || l.includesUndefined(target) && l.isLibraryType(l.checker.GetNonNullableType(target), "Map", "ReadonlyMap")) {
 		return l.nullishViewContract(node, target)
+	}
+	if l.isLibraryType(target, "Map", "ReadonlyMap") {
+		return l.mapViewContract(node, target)
+	}
+	if l.stringDictionary(target) || l.finitePartialRecordElement(target) != nil {
+		return viewDictionaryContractHook(l, node, target, func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) })
 	}
 	family := l.unsupportedViewFamily(target)
 	if family == "" {
 		id, err := l.strictViewContract(node, target)
 		if err == nil {
+			if family := l.viewIntersectionReadFamily(id, target); family != "" {
+				l.result.ViewContracts[id-1].Unsupported = family
+			}
 			return id, nil
 		}
 		family = "representation conversion"
@@ -40,8 +49,14 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 }
 
 func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
+	if l.phantomUndefined(target) {
+		return ""
+	}
 	if base := l.phantomBase(target); base != nil && interfaceScalar(base) {
 		return ""
+	}
+	if l.viewMutableArrayUnion(target) {
+		return "mutable array union"
 	}
 	if l.viewArrayBase(target) != nil {
 		return ""
@@ -57,6 +72,9 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 	case flags&checker.TypeFlagsTypeParameter != 0:
 		return "generic"
 	case flags&checker.TypeFlagsIntersection != 0:
+		if l.structuralViewIntersection(target) {
+			return ""
+		}
 		return "intersection"
 	case isClassInstance(target):
 		return "nominal class"
@@ -143,10 +161,25 @@ func (l *lowering) checkLazyViewReads() error {
 		var receiver ir.Expression
 		var typeID, receiverTypeID int
 		var field, where string
+		operationFamily := ""
 		arrayRead := func(array ir.Expression, read ir.ArrayViewRead) {
 			receiver, typeID, field, where = array, read.ViewTypeID, "[element]", read.View
 		}
 		switch read := node.(type) {
+		case ir.RecordCall:
+			if read.Method != "get" && read.Method != "values" && read.Method != "entries" {
+				return true
+			}
+			receiver, typeID, field, where = read.Arguments[0], read.ViewTypeID, "[dictionary element]", read.ViewWhere
+			if read.Method == "values" || read.Method == "entries" {
+				operationFamily = "dictionary enumeration"
+			} else if read.DictionaryRead == nil {
+				operationFamily = "dictionary read without a supported contract"
+			} else if id := program.ViewContractTypes[typeID]; id != 0 {
+				if _, ok := ir.DictionaryReadKinds(program, id); !ok {
+					operationFamily = "dictionary element"
+				}
+			}
 		case ir.Property:
 			if !program.CheckedFields[read.Name] {
 				return true
@@ -173,14 +206,16 @@ func (l *lowering) checkLazyViewReads() error {
 			return true
 		}
 		contract := program.ViewContractTypes[typeID]
-		family := ""
+		family := operationFamily
 		if contract != 0 {
-			family = program.ViewContracts[contract-1].Unsupported
+			if unsupported := program.ViewContracts[contract-1].Unsupported; unsupported != "" {
+				family = unsupported
+			}
 		}
 		if receiverContract := program.ViewContractTypes[receiverTypeID]; family == "" && receiverContract != 0 {
 			family = program.ViewContracts[receiverContract-1].Unsupported
 		}
-		if family == "" {
+		if family == "" && !l.viewIntersectionReadChecks(contract) {
 			family = unsupportedFields[field]
 		}
 		if family == "" {
@@ -208,7 +243,7 @@ func viewAggregate(value ir.Expression) bool {
 		return false
 	}
 	switch value.Type() {
-	case ir.Object, ir.Array, ir.Map, ir.Union, ir.Closure:
+	case ir.Object, ir.Record, ir.Array, ir.Map, ir.Union, ir.Closure:
 		return true
 	}
 	return false

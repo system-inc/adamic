@@ -9,6 +9,9 @@ import (
 )
 
 func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+	if value, handled, err := l.recordObjectCall(node, name); handled {
+		return value, true, err
+	}
 	if value, handled, err := l.viewArrayRecordProduction(node, name); handled {
 		return value, true, err
 	}
@@ -228,9 +231,12 @@ func (l *lowering) objectCanFreeze() bool {
 	return found
 }
 
-// objectIntersection represents tsc's intersection of plain object views. Every constituent must
-// be a plain, noncallable shape, and every resulting field must have a proven scalar type.
+// objectIntersection assigns plain structural intersections an object reference
+// slot. Checked views retain separate lazy obligations for the resulting fields.
 func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool) {
+	if l.objectPrimitiveIntersectionStorage(proven) {
+		return ir.Object, true
+	}
 	for _, part := range proven.Types() {
 		if part.Flags()&checker.TypeFlagsObject == 0 || l.checker.IsArrayType(part) || checker.IsTupleType(part) || isClassInstance(part) || len(l.checker.GetSignaturesOfType(part, checker.SignatureKindCall)) != 0 {
 			return 0, false

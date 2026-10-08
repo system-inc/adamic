@@ -2,7 +2,7 @@
 #include "view_callables.h"
 #include <string.h>
 
-adamic_closure *adamic_view_callable(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method *method, const char *expression) {
+adamic_closure *adamic_view_callable_typed(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method *method, const char *expression, const char *expected, bool absent, bool optional) {
     if (object != NULL) {
         adamic_value *own = adamic_object_optional_field(object, name, cache);
         if (own == NULL && object->shape->methods != NULL) {
@@ -12,5 +12,9 @@ adamic_closure *adamic_view_callable(const adamic_object *object, const char *na
             }
         }
     }
-    return adamic_object_view(object, name, cache, 8, "function", expression).reference;
+    return adamic_object_optional_view(object, name, cache, 8, expected, expression, absent, optional).reference;
+}
+
+adamic_closure *adamic_view_callable(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method *method, const char *expression) {
+ return adamic_view_callable_typed(object,name,cache,method,expression,"function",false,false);
 }

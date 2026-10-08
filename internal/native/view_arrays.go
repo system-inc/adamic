@@ -25,6 +25,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	if !ir.HasArrayViews(e.program) {
 		return value
 	}
+	e.viewArraySourceCertificate(expression, value)
 	storage := ir.Type(0)
 	switch expression := expression.(type) {
 	case ir.ArrayHoles:
@@ -100,7 +101,11 @@ func (e *emitter) viewArrayElementSlot(read ir.ArrayViewRead, array, index strin
 	return value
 }
 
-func (e *emitter) viewArrayMutation(array string, element ir.Type) {
+func (e *emitter) viewArrayMutation(array string, element ir.Type, value string) {
+	if ir.HasArrayViews(e.program) && element == ir.Object {
+		e.viewArrayReferenceWrite(array, value)
+		return
+	}
 	if ir.HasArrayViews(e.program) {
 		e.line("adamic_view_array_storage_check(%s, %d, %s);", array, element, cString("<array write>"))
 	}

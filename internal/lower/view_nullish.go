@@ -50,6 +50,10 @@ func (l *lowering) nullishViewKinds(target *checker.Type) uint32 {
 	if !known || of == 0 || of == ir.Union {
 		return 0
 	}
+	// Records and fixed objects have the same logical heap kind; storage stays certified separately.
+	if of == ir.Record {
+		of = ir.Object
+	}
 	return 1 << of
 }
 
@@ -67,7 +71,7 @@ func nullableUnionUnsupported(program *ir.Program, contract ir.ViewContract) str
 			return member.Unsupported
 		}
 		switch member.Kind {
-		case ir.ViewScalar, ir.ViewObject, ir.ViewArray:
+		case ir.ViewScalar, ir.ViewObject, ir.ViewArray, ir.ViewMap:
 		default:
 			return "nullable union member selection"
 		}
