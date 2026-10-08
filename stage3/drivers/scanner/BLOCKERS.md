@@ -1,5 +1,53 @@
 # Scanner blockers
 
+## October 8: reconciled closure restart stops at checked narrowing integration
+
+Fresh scratch `/workspace/scratch/scanner-proof-restart-20261008` starts directly
+at front-3 0059e65c1a3674692fe905c03abf9c2159c5c017. The requested closure tip
+22fd701a3a4dee5c11cffec3d6b750cfe28ce399 is not its ancestor. Merging that exact
+tip leaves 28 conflicted files. No conflict was resolved and scratch is never
+pushed. Fetched area/stage3 is 6a8eebf41710e9bb696da9a7872d19765b1e7476,
+which contains the required 116036f5. Its merge exits 128 because the closure
+merge remains unresolved; no area changes are applied.
+
+Exact compiler decision: `internal/lower/non_null.go`, in `nonNullValue`.
+Front-3 retains the result representation of a checked union narrowing and
+returns a plain Number/Boolean without a nullish pointer test. Incoming closure
+adds cases that unwrap `ir.Narrow` and a single-target `ir.Call` marked
+`CheckedUnionNarrow` to the original operand. Front-3 includes narrowed-number
+ed6e30e2; implementation commit 2b6b0404 deliberately removed the `ir.Narrow`
+unwrapping and added the scalar return. Restoring these incoming cases changes
+that newer fix's treatment of checked results. Compiler must reconcile which
+checked results may be unwrapped while preserving their checks and scalar
+representation. This is a source integration conflict, not an observed runtime
+failure or a claim that either branch independently fails.
+
+The user-selected closure convention determines the ABI choice. The count-last,
+typed plain/count-bearing code pointers in 22fd701a are not an undecided ABI
+order in this handoff. Other conflicts and all automatically merged changes
+remain preserved in scratch for compiler review. Complete combined diff and
+exact ancestry checks: [closure-restart-conflicts.json](evidence/closure-restart-conflicts.json)
+and [closure-restart-stop.json](evidence/closure-restart-stop.json).
+
+Per the explicit stop instruction, no scanner compilation in either split mode,
+C emission, binary, clang/warm timing, fresh Node corpus run, native comparison,
+native user timing or native-output mutant was run. No minimal program is claimed:
+a source program cannot reproduce a Git conflict, and no new compiler diagnostic
+was observed. The 1,369,432-token / 466-error Node reference and its SHA-256 remain
+historical evidence. No compiler test or full gate ran.
+
+Required setup ran on the clean deliverable checkout, with GOPROXY exported
+beforehand, and exited 0. Timing lines: Node 0.017s, Go 0.021s, submodules 0.049s,
+markdown 0.050s, clang 0.118s, Go build 21.943s, deferred test binaries 22.006s,
+build cache 22.008s, done 22.028s. These are the setup script's elapsed lines.
+Sourced `/workspace/adamic-tools/env.sh`; nproc 5. Setup's overflow probe is
+caught by AddressSanitizer. The setup log is retained alongside the evidence.
+
+Evidence SHA-256 control passes. XOR of the conflict diff's first byte fails
+its recorded SHA-256; this checks evidence integrity only. Staged whitespace
+and scanner-only territory audits pass. No native-output sensitivity or scanner
+correctness is inferred from those checks.
+
 ## October 7: front-3 integration stops at host compiler contracts
 
 This retry stops in step 1, before building the validated scanner slice.

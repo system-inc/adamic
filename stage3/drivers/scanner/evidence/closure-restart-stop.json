@@ -1,0 +1,99 @@
+{
+  "date": "2026-10-08",
+  "scratch": "/workspace/scratch/scanner-proof-restart-20261008",
+  "pins": {
+    "front3": "0059e65c1a3674692fe905c03abf9c2159c5c017",
+    "closure": "22fd701a3a4dee5c11cffec3d6b750cfe28ce399",
+    "stage3": "6a8eebf41710e9bb696da9a7872d19765b1e7476"
+  },
+  "ancestry": {
+    "closure": {
+      "ancestor": "22fd701a",
+      "target": "HEAD",
+      "exit": 1
+    },
+    "narrowed_number": {
+      "ancestor": "ed6e30e2",
+      "target": "HEAD",
+      "exit": 0
+    },
+    "front_minimum": {
+      "ancestor": "0059e65c",
+      "target": "HEAD",
+      "exit": 0
+    },
+    "stage3_minimum": {
+      "ancestor": "116036f5",
+      "target": "origin/area/stage3",
+      "exit": 0
+    }
+  },
+  "conflicted_files": [
+    "docs/0.1.md",
+    "internal/fresh/library_language.go",
+    "internal/ir/ir.go",
+    "internal/javascript/javascript.go",
+    "internal/lower/expression.go",
+    "internal/lower/functions.go",
+    "internal/lower/locals.go",
+    "internal/lower/nested_functions_test.go",
+    "internal/lower/non_null.go",
+    "internal/lower/object.go",
+    "internal/lower/refusals.go",
+    "internal/native/class_accessors.go",
+    "internal/native/emit_arrays.go",
+    "internal/native/emit_expressions.go",
+    "internal/native/emit_functions.go",
+    "internal/native/emit_locals.go",
+    "internal/native/emit_maps.go",
+    "internal/native/emit_objects.go",
+    "internal/native/emit_statements.go",
+    "internal/native/from.go",
+    "internal/native/reuse.go",
+    "internal/native/runtime/adamic.h",
+    "internal/native/runtime/array.c",
+    "internal/native/runtime/closure.c",
+    "internal/native/runtime/map_set.c",
+    "internal/native/slots.go",
+    "internal/oracle/counts.md",
+    "internal/oracle/omitted_arguments_test.go"
+  ],
+  "resolutions": [],
+  "stop": "internal/lower/non_null.go: nonNullValue preserves checked narrowed result on front3 but closure branch unwraps ir.Narrow and CheckedUnionNarrow calls to operands",
+  "related_front3_fix": "2b6b0404ac2d2938105b8dee8134c1b2fc3e3a09",
+  "closure_abi_choice": "User selected closure convention; this is not an unresolved ABI-order decision.",
+  "stage3_merge_exit": 128,
+  "stage3_merge_status": "not applied: prior merge has unmerged files",
+  "scanner_builds": "not run in either split mode: compiler decision required in step 1",
+  "node_reference": "historical only; no fresh corpus run",
+  "minimal_program": "not applicable to a Git conflict; no source-level compiler stop observed",
+  "metrics": null,
+  "compiler_tests": "not run",
+  "diff_sha256": "f2f27079576ec0fbab5310c95f1e6ebd6960444ebd98a8568b998fb59993b40a",
+  "setup": {
+    "checkout": "8afef6003aca87b99251e710253d66cb457bf00e",
+    "exit": 0,
+    "nproc": 5,
+    "env": "/workspace/adamic-tools/env.sh",
+    "timing_lines": [
+      "v24.19.0",
+      "setup: node ready (0.017s)",
+      "go version go1.27.1 linux/amd64",
+      "setup: go ready (0.021s)",
+      "setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.006s",
+      "setup: submodules ready (0.049s)",
+      "setup: markdown dependencies ready (0.050s)",
+      "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.118s)",
+      "setup: go build ready (21.943s)",
+      "setup: test binaries deferred (use --warm-tests) (22.006s)",
+      "setup: build cache warm (22.008s)",
+      "setup: build-flags commit=8afef6003aca87b99251e710253d66cb457bf00e nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=0.06 0.03 0.00 1/159 4119 load-after=4.86 1.14 0.37 1/159 4899",
+      "setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (22.028s)",
+      "setup: source /workspace/adamic-tools/env.sh",
+      "setup: logs /tmp/adamic-gate/setup.HfH9Z9",
+      "5"
+    ],
+    "sanitizer_probe": "setup accepted clang only after heap-buffer-overflow reported"
+  }
+}
