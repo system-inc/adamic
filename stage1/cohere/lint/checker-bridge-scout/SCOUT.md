@@ -7,11 +7,11 @@ Branch: `scout/27-checker-bridge`. Base: area/stage1-lint
 
 ## Five findings
 
-1. All 23 pins are materialized: 152,660 tracked `.ts`/`.tsx` files, including 2,940 declarations; every path and source hash is recorded. Kirk's full quiet hundred remains unavailable.
-2. The boolean-comparison pilot plans 150,403 options asks plus 5,043 type-shape asks in 2,707 files; 2,257 parse-diagnostic files are explicit rows. These are planned counts, not a full typed-rule suite or full-repo finding run.
-3. Native repeated serialization costs 111.577 ms after load versus 24.249 ms with first-pass answers cached: 38,000 versus 38 physical calls, identical output, 23 files, 1,000 passes, four cores.
-4. One program with 12 requested checkers uses 11 root-file owners here. Exclusive per-question leases take 25.463 ms versus 11.188 ms per-file leases for 23,000 warmed type/name probes; this is a Go ownership sketch, not a native batch implementation.
-5. Checker-local type and symbol IDs must retain their issuer. The unchanged production bridge forces one checker and a global lock; 244 foreign-owner mutants fail in the 4/12 pool sketches, and all existing Go/native/Node finding and fix gates remain green.
+1. The rulings for steps 27 and 26 are recorded; there are no remaining language questions. The 152,660-file pinned census remains available.
+2. A readonly TypeScript planning API builds natively and declares the real pilot's questions before execution; native and Node verify all selectors/order across 107 fixture/project cases, with omission and wrong-question mutants.
+3. The Go owner-worker batch runs 46,046 questions on 23 files at N=1/2/12, including 23 individual errors followed by successful answers. Canonical replay is byte-identical, including under forced reverse completion.
+4. On four cores, median batch execution is 70.334 / 52.169 / 51.875 ms at N=1/2/12 (1/2/11 root owners). The real Go rule's 39 findings and fixes agree at every N and with native/Node; the native bridge still runs N=1.
+5. Actual observed-read recording and native per-entry C error delivery require prohibited shared checker/bridge/runtime edits. Those components are explicitly blocked; no filesystem proxy, caller label or guessed dependency is substituted.
 
 ## Scope and evidence
 
@@ -288,7 +288,7 @@ output allocation. CPU-profile startup/shutdown also affects process timing;
 profiled process time must not be used as ordinary throughput. No measured
 improvement from batching is claimed because no batch ABI has been implemented.
 
-## Proposed design, pending the questions below
+## Historical candidate design (superseded by the rulings below)
 
 The first implementation here needs no new language or ABI ruling: driver.ts
 calls the existing scalar ABI, pilot.ts calls the existing production Checker
@@ -305,23 +305,33 @@ The batching candidate remains a design, not a promised API:
 5. Copy returned buffers into owned Adamic values before freeing the batch's C storage. Preserve ordered duplicates, owned answer survival after program release, and borrowed ID invalidation. No Go pointer or external arena view becomes an Adamic reference. Each output/error buffer must have one explicit freeing owner.
 6. Start with within-run file batching; do not introduce a persistent answer cache. Persistent findings and fact reuse would require the existing config/library/type-closure/program-fingerprint contracts, not just source path/span. The sample has no duplicate selector keys, and sixteen files have only one ask, so benefits must be demonstrated on broader typed rules rather than inferred from those files.
 
-### Open questions for @system_adamic
+### Rulings from @system_adamic (recorded verbatim in substance)
 
-1. **Read authority (#mpg3abq):** Should every raw and batched question have an owner-registered required read mask, including default-library provenance, with all required bits enforced independently of the caller's label? May raw ask continue to request program metadata? The current guard checks only the supplied kind.
-2. **Existing synchronous interface:** May rules gain a planning/prefetch phase with readonly answer tables, or must batching be an explicit new library call? How should logical replay preserve missing/extra-ask checks when physical requests are eager? This is an interface/ordering question, not a proposal for new syntax.
-3. **Error contract:** Must a batch preserve the current first-error native panic, or return per-entry Errors? If values are approved, what happens to successful entries after a failure, and which layer reports it? Existing scalar Ok wrappers do not return C errors as values.
-4. **Ownership/library surface:** Is an owned array of ordinary readonly responses the intended builtin result, and may the ABI use one temporary C arena copied before return? Who frees partial outputs and error buffers? No borrowed Go pointer or collector in Adamic is proposed.
-5. **N-checker ABI (#45rq89s):** Given the required checker-local identities, what opaque owner/generation/ID encoding and owner-exclusive routing surface should the bridge expose? How should its global lock be split while preventing release during an active batch? The one-program/N-checker requirement and cohere's 12-checker choice are settled.
-6. **IDs, order and dependencies:** Is deterministic first-seen ID numbering/replay framing part of the observable contract? May a batch deduplicate identical requests or reorder independent ones? How are questions requiring a prior type ID grouped without inventing symbolic-ID semantics?
-7. **Reuse/invalidation:** Is reuse restricted to one immutable program lifetime initially? If persistent answers are desired, which approved fingerprint covers each question's library, config, imported/global and other-file reads, including ProgramFingerprint exceptions?
-8. **Cross-owner operands:** What is the approved response when an assignability question supplies two IDs from different issuing checkers? No cross-owner pointer comparison, silent ID migration, or foreign-file requery is proposed.
+The former eight questions are closed; the remaining implementation choices are
+cohere engineering, subject to these trust and ownership requirements.
 
-The tracker requirements above were supplied by the user; the remaining interface questions are not answered by this scout. Proposed representations do not authorize
-new compiler/builtin semantics; the measurement clients need none of them.
+1. **Observed reads:** Classification is observed, never trusted from a caller's label. The bridge records which files each checker actually read. A declared ReadsOtherFiles or ReadsDefaultLibrary that disagrees with observed reads fails the rule loudly.
+2. **Planning:** Rules declare their questions up front. This shape is approved; implementation details are cohere engineering.
+3. **Errors:** One question's error is reported without failing its batch. This shape is approved.
+4. **Answer ownership:** The answer buffer belongs to the Adamic side the moment it crosses: counted there, released by its last reader. Go keeps nothing that points into it.
+5. **IDs and workers:** IDs carry owner plus generation. Each checker is single-threaded; nothing locks across checkers. This shape is approved.
+6. **Deterministic replay:** File order, then question order, never checker completion order. Findings remain byte-identical whatever N is.
+7. **Cache:** Key each answer by the content hash of every file its question observed reading. An edit invalidates exactly the answers depending on that file.
+8. **Operands:** Each operand belongs to exactly one checker. Cross-owner operands are refused and re-asked on the owner, never answered by a checker that does not own them.
+
+**Step 26 ruling, recorded without changing the printer:** A method passed
+through a readonly callback interface follows #bw3xg7c (October 8 early).
+A method not reading this is a plain value. A this-reading method retains its
+receiver only when bound. An unbound this-reading method is refused in .a and
+follows Node, including TypeError, in .ts. Prototype origin is preserved because
+the value is the same method, never a copy.
+
+The historical candidate designs above are superseded wherever these rulings
+settle them. No further language ruling is requested by this scout.
 
 ### Owner boundaries and stopping point
 
-No shared source was changed. If batching is approved, the required owner work
+No shared source was changed. Batching is approved; the required owner work
 would be `stage1/cohere/lint/checker.a` and the shared harness for planning,
 permissions, answer consumption and replay; `bridge/tsgo/tsgo.h` and
 `archive/boundary.c`/`archive/main.go` for batch ownership/status/locking; the
@@ -497,7 +507,7 @@ required-read contract; answers are scoped to an unchanged program unless a
 stronger invalidation contract is approved. The measurement cache deliberately
 contains neither permission bypasses nor persistent reuse.
 
-All language/interface changes remain the numbered open questions above.
+The subsequently supplied rulings above close the numbered questions; the next section records the independent implementation and the observed-read stopping point.
 Readonly TypeScript records/arrays are a design candidate, not permission to
 add syntax, mutation exceptions or a GC. Shared implementation work would need
 checker.a/harness planning, bridge registry locks/ABI ownership and the sole
@@ -516,5 +526,161 @@ findings/fixes, and runs ASan/UBSan/LSan separately. gofmt and vet are clean. Th
 The next scout should take the per-file census to the harness/facts owners for
 observed counts across all typed rules and real project configs, then propose
 an owner-routed file batch and immutable-program cache using the measurements
-here. Resolve the remaining read classification, cross-owner operands, error,
-replay ordering, lifetime and invalidation questions before touching shared code.
+here. Apply the supplied rulings, and obtain the required shared owner instrumentation before claiming observed-read enforcement or exact dependency invalidation.
+
+## Ruling implementation: planning and owner workers; observed-read boundary
+
+`planning.ts` is a readonly TypeScript planning API, compiled natively with the
+unchanged pilot. PilotPlanner declares all options/type-shape selectors before
+Rule.prepare/visit runs. QuestionPlan owns the ordered request list; validatePlan
+compares every key (path, UTF-8 span, AST kind, question) to the actual recorded
+Checker calls. The same source executes on Node. Judgment and repairs remain in
+the existing rule. The planner is currently a declaration/validation phase;
+it does not prefetch a new batch through an unapproved substitute bridge.
+
+`batch_shapes.go` is an executable Go scheduler over the pinned checker, not a
+new production facts writer. Its up-front plans support type-name questions and
+ID-name questions referring to earlier responses. Each session creates one
+compiler program, mints a generation internally, and retains checker-local ID
+and reverse tables throughout that session. Frozen plans copy mutable Go slices.
+One worker owns each checker; no checker-query global mutex is introduced. The
+nonexclusive compiler accessor is used only during sequential affinity setup;
+worker calls use their assigned checker directly. Sessions execute sequential
+plans; workers finish before a subsequent plan starts. A concrete ID submitted
+via a different file owner is refused first, then re-asked on its issuer after
+workers drain and exclusive execution transfers to the coordinator. This narrow
+unary operation never converts a foreign type pointer or implements cross-owner
+binary assignability. Multi-operand production questions still need owner work.
+
+Every response has an individual Value/Error slot. Missing selectors, unsupported
+operations, wrong generations and invalid IDs return errors without abandoning
+other questions. The measured control inserts an error followed by a successful
+query in every file. Logical results are written into original file/question
+slots. Canonical replay includes selectors, semantic values and error messages;
+opaque owner/generation handles are separate metadata, not finding text. A separate untimed validation pass delays owners in reverse order. All nine measured runs and their reverse-order validation passes must
+produce the same canonical replay hash; this is not a new C wire-format promise.
+
+The independent Go rule oracle now accepts ADAMIC_SCOUT_CHECKERS=1/2/12 and
+uses one real program/pool. The full gate holds all 84 isolated cases and the
+23-file shared project to its findings and fix bytes at all three N values,
+then holds those bytes to native Adamic and Node. The native C bridge remains
+N=1: these results do not claim that a native N=12 production batch exists.
+
+### Observed-read recorder: stop at the shared owner boundary
+
+Ruling 1 is **not implemented** by this scout. Correct recording cannot be
+obtained from this package's filesystem wrapper or a caller-supplied read mask:
+
+* `cohere/TypeScript/tsc/internal/checker/checker.go:930` binds sources; :936/:938
+  retains the program and all AST sources. Checker questions can traverse these
+  already-loaded objects without any filesystem call.
+* `checker.go:1261` iterates symbol declarations directly; :1516 likewise follows
+  target declarations. AST/declaration access need not call a Program wrapper.
+* `checker.go:7550` can return a warm flow-type cache value without the cold
+  traversal. Node-link and symbol caches cited earlier create the same issue.
+* `cohere/TypeScript/tsc/internal/ast/ast.go:2540` exposes source text directly.
+  Counting `Host.ReadFile`, source enumeration, or loaded files would record
+  different things from the files a particular question actually observed.
+
+Required owner work is a semantic read/provenance hook in the pinned checker
+(`cohere/TypeScript/tsc/internal/checker/checker.go` and its cache/read helpers),
+carried across warm cache hits, then question-scoped collection and rule-read
+agreement enforcement in `bridge/tsgo/checker/facts.go`. `compiler/checkerpool.go`
+would connect per-checker sinks to creation/ownership if the checker exposes no
+per-question sink API. This touches the shared checker/compiler and bridge;
+the initial instruction expressly forbids these changes and says to stop there.
+No loaded-file set, selector path, declaration label, or symbol-origin guess
+is passed off as observed reads. No rule-read enforcement success is claimed.
+
+Consequently ruling 7's exact observed-file content-hash cache also remains
+blocked. The earlier index cache is only a fixed-program measurement cache and
+must not be promoted into a production invalidation policy. The next owner must
+carry observed dependencies through cold resolution and warm semantic-cache
+hits, distinguish default-library files using compiler provenance, and fail the
+rule when declarations disagree with observations. Existing forbidden-askFile
+fixtures check the legacy caller-label guard, not this new observed contract.
+
+The shortest dependency controls to add once hooks exist are two files:
+`a.ts: export const x = true;` and
+`b.ts: import {x} from "./a"; x === true;`.
+Hold b fixed while changing a to `export const x = 0;`; prove the observing
+answer invalidates while an unrelated local question remains reusable. Repeat
+cold and warm. A default-library control is `Promise.resolve(1);`; undeclared
+observed reads must fail loudly. These are specified next-owner controls, not
+fixtures falsely described as already observed by this package.
+
+Native per-question C failures also remain a shared boundary:
+`internal/native/runtime/tsgo.c:26/:139` calls checked(), which panics on a
+non-OK status. The Go prototype's individual errors are real, but delivering
+those error slots to native Adamic needs the bridge/native-adapter owner. No
+catch-all exception or swallowed C error was used as a language workaround.
+Ruling 4 governs that integration: copy/count each answer on the Adamic side,
+release it with the last reader, and retain no Go pointer into its storage.
+
+### Validation and next owner
+
+All new top-level Go tests call t.Parallel. Mutants prove rejection of missing
+and wrong declared questions on both native and Node, caller-mutated Go plans,
+wrong owner, stale generation, invalid local ID and completion-order replay.
+The valid/error/valid batch test checks that an error does not suppress a later
+answer. The ownership reroute test uses real checker handles, including an issuing checker with no file job in a later plan. Active jobs, rather than retained session owners, determine the worker join count. Go race-detector
+runs are separate from release numbers; native fixtures use ASan/UBSan/LSan.
+No tests skip and every public/native/compiler corpus input is supplied.
+
+There are no remaining language questions. The next shared owner must implement
+actual read/provenance instrumentation and its declaration-mismatch controls,
+then connect the tested planning and owner-routing shapes to the real facts/C
+batch path. This scout stops before those edits, as originally instructed.
+
+### Numbers for the ruled shapes
+
+Release, Linux amd64 / AMD EPYC 9V74 / Go 1.27.1 / clang 20.1.8 /
+Node 24.19.0, GOMAXPROCS=4, five visible CPUs, CPU quota four, no affinity.
+Default Go release build; native pilot uses the default Adamic/C-archive release
+build. No sanitizer/profile instrumentation in the numbers. Three rounds per N;
+reverse-completion delays run in separate untimed validation passes. No build/test jobs ran concurrently with the final release measurement. This remains the existing
+23-file public sample, not Kirk's full quiet hundred or 23 complete projects.
+
+| Requested N | Root owners used | Program parsing/load | Batch execution | Logical questions / errors |
+|---|---:|---:|---:|---:|
+| 1 | 1 | 25.800 ms | 70.334 ms | 46,046 / 23 |
+| 2 | 2 | 23.551 ms | 52.169 ms | 46,046 / 23 |
+| 12 | 11 | 25.592 ms | 51.875 ms | 46,046 / 23 |
+
+Load ends at compiler.NewProgram; batch time includes lazy checker-pool creation,
+affinity setup, exact selection, semantic resolution, type serialization, ID
+routing and result storage. It excludes canonical transcript rendering and the
+separate reverse-order validation. This is a Go type/name/ID experiment, not the
+native boundary toll or complete rule-run throughput. Each file plans 1,000
+(type-name, dependent id-name) pairs, then one error and one successful query.
+
+All nine measured runs and nine perturbation validations share canonical SHA-256
+`7055fb273f3d4b2e427c4a9119bbb437c75803dc3c74427becd3753382076f07`.
+The root-owner count is distinct from requested pool size: one of the twelve
+checkers has no root-file jobs in this sample. Raw owner/generation IDs are
+session-specific metadata; they are not normalized into finding text or hidden
+inside a purported byte-identical C facts stream.
+
+The oracle visits manifest files sequentially even at N>1; these are pool-configuration controls, not parallel linter throughput. N=1 requests SingleThreaded; N=2/12 request the parallel-capable pool. The Go scheduler separately uses N checkers with SingleThreaded=false.
+
+The real pilot rule's whole-process medians, including startup, program creation
+and output, are:
+
+| Path | Median process time |
+|---|---:|
+| Go, N=1 | 72.426 ms |
+| Go, N=2 | 71.032 ms |
+| Go, N=12 | 71.071 ms |
+| native, N=1 | 123.848 ms |
+
+The native row includes the new up-front plan and selector validation. All rows
+emit the same findings/fix bytes for the 23-file manifest. These sparse pilot
+numbers provide no evidence of a full-project N-checker scaling factor.
+
+Reproduce with the updated verify.sh, or build this package and run
+`measure batches <config> <manifest> <output.json>` with GOMAXPROCS=4.
+Use ADAMIC_SCOUT_CHECKERS=1/2/12 for the overlay-built real rule oracle.
+`evidence/rulings/` retains all raw timings, the full no-skip sanitizer/oracle/Node
+gate, final scheduler checks, native build logs and separate Go race logs.
+The race build covers the final session/worker implementation; its timings are
+excluded. gofmt, vet and shell syntax checks are clean.

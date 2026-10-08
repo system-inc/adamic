@@ -1,0 +1,86 @@
+[
+  {
+    "round": 0,
+    "kind": "Go",
+    "N": 1,
+    "process_ns": 72822889,
+    "stderr": ""
+  },
+  {
+    "round": 0,
+    "kind": "Go",
+    "N": 2,
+    "process_ns": 71031996,
+    "stderr": ""
+  },
+  {
+    "round": 0,
+    "kind": "Go",
+    "N": 12,
+    "process_ns": 67618979,
+    "stderr": ""
+  },
+  {
+    "round": 0,
+    "kind": "native",
+    "N": 1,
+    "process_ns": 133449625,
+    "stderr": "tsgo: load_ns=68714542 query_ns=3739398 queries=38 first_query_ns=81012 run_ns=59041664\n"
+  },
+  {
+    "round": 1,
+    "kind": "native",
+    "N": 1,
+    "process_ns": 123614949,
+    "stderr": "tsgo: load_ns=62883494 query_ns=3059088 queries=38 first_query_ns=16335 run_ns=55944498\n"
+  },
+  {
+    "round": 1,
+    "kind": "Go",
+    "N": 12,
+    "process_ns": 71070674,
+    "stderr": ""
+  },
+  {
+    "round": 1,
+    "kind": "Go",
+    "N": 2,
+    "process_ns": 64093721,
+    "stderr": ""
+  },
+  {
+    "round": 1,
+    "kind": "Go",
+    "N": 1,
+    "process_ns": 72425734,
+    "stderr": ""
+  },
+  {
+    "round": 2,
+    "kind": "Go",
+    "N": 1,
+    "process_ns": 70958094,
+    "stderr": ""
+  },
+  {
+    "round": 2,
+    "kind": "Go",
+    "N": 2,
+    "process_ns": 72132802,
+    "stderr": ""
+  },
+  {
+    "round": 2,
+    "kind": "Go",
+    "N": 12,
+    "process_ns": 80216788,
+    "stderr": ""
+  },
+  {
+    "round": 2,
+    "kind": "native",
+    "N": 1,
+    "process_ns": 123848431,
+    "stderr": "tsgo: load_ns=60587858 query_ns=3402675 queries=38 first_query_ns=13220 run_ns=57552025\n"
+  }
+]

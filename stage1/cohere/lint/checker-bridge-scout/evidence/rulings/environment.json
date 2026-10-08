@@ -1,0 +1,25 @@
+{
+  "source_sha256": {
+    "batch_shapes.go": "4f08f9b88750eb806f4eb242cbac0d7b16c4224f470fab758b09890f6ded5372",
+    "batch_shapes_test.go": "07c03c4fea0a3f93431755b9e5a24175504295a066619c33338531d66a5ce058",
+    "planning.ts": "864bf25eb9f697587ca6a99cd933a70c2a89ed609bc63ec396b0a7e026545614",
+    "pilot.ts": "451d729e5ac43603b4533bc552fbe87bca0cbeba93d4851cc3e8b9e6471622ec",
+    "main_test.go": "099748b7bdaac6c226c5b771368d997438ba631b8064f76804cadf4c8087df1d",
+    "testdata/oracle.go": "3edd18fd20e1a9b49b72a8c2cc5c28693f653ae92593742c61c1aebdbed06877",
+    "testdata/pilot.mjs": "dc24e47af12fdeeb233f9cf64837ec4faa95c64078d34cbe456bd250863e7562",
+    "continuation.go": "a4177f49048b6012c0847d69d84bd52ec2073b0699746c00ffada1bac4e91bda",
+    "verify.sh": "f37822a6c0b60bfe11f56de89446c1a788d59020bc17d48aad4a0c71e5649e0d"
+  },
+  "binary_sha256": {
+    "measure-shapes": "8ab8deab9bee4570bd8be2b19513570aedea9372da7b17254ac27c250a74df89",
+    "measure-shapes-race": "8844641e73a5c5cd004d0d3c307e23d000149acdb06a56cde516dcbddb9a6ed0",
+    "pilot-shapes": "5a3a53c0dc054a8aacdb711397d158ab3804432db90bd79d4bb8b55dcc097e3c",
+    "pilot-shapes-asan": "0612b5350f587de4312c4c3838ac5434f982c00b29d6f4f4734bc8216fb83c75",
+    "oracle-shapes": "e046e124e8a8e1c6c05379e2d6de186c1f994f755c9487fc69a56c4321e1e083"
+  },
+  "cores": "GOMAXPROCS=4, five visible, CPU quota four, no affinity",
+  "release": "default go build and default Adamic/C archive; no sanitizer/profile; native ADAMIC_TSGO_TIMING=1",
+  "observed_read_recorder": "blocked: shared semantic-read and cache-provenance instrumentation required; no inferred read set used",
+  "native_batch": "blocked: checked C errors panic in shared adapter; Go prototype errors do not claim native batch errors",
+  "corpus": "same 23 pinned public sample files; hashes/manifests retained in prior evidence"
+}

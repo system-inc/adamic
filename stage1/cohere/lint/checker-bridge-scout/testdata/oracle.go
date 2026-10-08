@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"unicode/utf16"
 
@@ -23,7 +24,14 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	graph, err := program.Build(program.Options{ConfigFileName: config, CurrentDirectory: filepath.Dir(config), SingleThreaded: true})
+	n := 1
+	if text := os.Getenv("ADAMIC_SCOUT_CHECKERS"); text != "" {
+		n, err = strconv.Atoi(text)
+		if err != nil || n < 1 {
+			panic("invalid checker count")
+		}
+	}
+	graph, err := program.Build(program.Options{ConfigFileName: config, CurrentDirectory: filepath.Dir(config), SingleThreaded: n == 1, Checkers: n})
 	if err != nil {
 		panic(err)
 	}

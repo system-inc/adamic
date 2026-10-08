@@ -193,6 +193,15 @@ func TestAgreementAndMutants(t *testing.T) {
 			t.Fatalf("case %d cached facts differ", index)
 		}
 		want := command(t, root, goOracle, config, path)
+		for _, n := range []int{2, 12} {
+			cmd := exec.Command(goOracle, config, path)
+			cmd.Dir = root
+			cmd.Env = append(os.Environ(), fmt.Sprintf("ADAMIC_SCOUT_CHECKERS=%d", n))
+			got, e := cmd.Output()
+			if e != nil || !bytes.Equal(got, want) {
+				t.Fatalf("case %d Go findings/fixes differ at N=%d: %v", index, n, e)
+			}
+		}
 		pilot := os.Getenv("ADAMIC_SCOUT_PILOT")
 		if pilot == "" {
 			t.Fatal("set ADAMIC_SCOUT_PILOT to pilot.ts's native binary")
@@ -256,6 +265,16 @@ func TestAgreementAndMutants(t *testing.T) {
 				}
 				t.Logf("%s repair-output mutant compiles/runs, caught by full fix-byte comparison", name)
 			}
+			for _, kind := range []string{"omit", "wrong"} {
+				for _, cmd := range []*exec.Cmd{exec.Command(pilot, config, path, "1", "", "", "", kind), exec.Command("node", append(append([]string(nil), nodeArgs...), "", "", kind)...)} {
+					cmd.Dir = root
+					output, e := cmd.CombinedOutput()
+					if e == nil || !bytes.Contains(output, []byte("declared question")) {
+						t.Fatalf("%s planning mutant survived or failed elsewhere: %v %s", kind, e, output)
+					}
+				}
+				t.Logf("native and Node %s up-front planning mutant caught", kind)
+			}
 			for name, text := range map[string]string{"missing": "", "extra": transcript(asks) + transcript(asks[:1]), "wrong-question": strings.Replace(transcript(asks), "options", "optioNs", 1)} {
 				if err = os.WriteFile(replay, []byte(text), 0600); err != nil {
 					t.Fatal(err)
@@ -301,6 +320,15 @@ func TestAgreementAndMutants(t *testing.T) {
 	if !bytes.Equal(nativeWhole, oracleWhole) {
 		t.Fatal("single-program public run finding/fix bytes differ")
 	}
-	t.Log("single-program 23-file native production walk agrees with Go")
+	for _, n := range []int{2, 12} {
+		cmd := exec.Command(goOracle, publicConfig, "--manifest", public)
+		cmd.Dir = root
+		cmd.Env = append(os.Environ(), fmt.Sprintf("ADAMIC_SCOUT_CHECKERS=%d", n))
+		got, e := cmd.Output()
+		if e != nil || !bytes.Equal(got, nativeWhole) {
+			t.Fatalf("single-program findings/fixes differ at N=%d: %v", n, e)
+		}
+	}
+	t.Log("single-program Go N=1,2,12 findings/fixes agree with native and Node fixture results")
 
 }

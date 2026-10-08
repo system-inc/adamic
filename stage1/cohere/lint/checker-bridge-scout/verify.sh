@@ -53,3 +53,5 @@ GOMAXPROCS=4 "$task_dir/measure" census "$task_dir/public/pins.json" "$task_dir/
 python3 "$package/summarize_census.py" "$task_dir/public/pins.json" "$task_dir/census.jsonl" "$task_dir/census-summary.json"
 python3 "$package/measure_continuation.py" "$task_dir/measure" "$task_dir/driver" \
  "$config" "$manifest" "$task_dir/continuation"
+
+GOMAXPROCS=4 "$task_dir/measure" batches "$config" "$manifest" "$task_dir/batches.json"

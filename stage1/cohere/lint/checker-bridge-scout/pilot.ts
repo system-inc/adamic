@@ -5,6 +5,7 @@ import { Scanner } from '../../../typescript/scanner/scanner.ts';
 import { Checker, FileQuestion, openProgram, releaseProgram } from '../checker.a';
 import { RuleContext } from '../context.ts';
 import { Settings } from '../settings.ts';
+import { PilotPlanner, validatePlan, planMutant } from './planning.ts';
 import { Rule } from '../rules/no-unnecessary-boolean-literal-compare/rule.a';
 function read(path: string): string {
     const value = readTextFile(path);
@@ -42,7 +43,7 @@ const parents: number[] = [];
 for(let index = 0; index < parser.nodes.length; index++) { parents.push(-1); }
 ancestry(parser, parents, root);
 for(let pass = 0; pass < repetitions; pass++) {
-    const checker = new Checker(program, path, parser, source, undefined, recordPath !== '' && pass === 0);
+    const checker = new Checker(program, path, parser, source, undefined, pass === 0);
     checker.root = root;
     checker.enter('@typescript-eslint/no-unnecessary-boolean-literal-compare', ['ReadsCompilerOptions']);
     if(forbiddenRead !== '') {
@@ -51,11 +52,13 @@ for(let pass = 0; pass < repetitions; pass++) {
         panic(refusal.reason);
     }
     const context = new RuleContext(source, parser, new Scanner(source), '@typescript-eslint/no-unnecessary-boolean-literal-compare', '', '', false, parents, new Settings(), root, checker);
+    const plan = planMutant(new PilotPlanner(context).plan(root), isManifest ? '' : args[6] ?? '');
     const rule = new Rule(context);
     rule.prepare(root);
     walk(rule, parser, root);
     checker.finish();
     if(checker.refusals.length !== 0) { panic('pilot checker refusal'); }
+    if(pass === 0) { validatePlan(plan, checker); }
     if(pass === 0) {
         if(recordPath !== '') {
             const saved = writeTextFile(isManifest ? `${recordPath}.${pathList.indexOf(path)}` : recordPath, checker.transcript());

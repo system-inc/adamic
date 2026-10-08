@@ -33,6 +33,13 @@ func continuation(args []string) bool {
 	if len(args) == 0 {
 		return false
 	}
+	if args[0] == "batches" {
+		if len(args) != 4 {
+			panic("batches config manifest output.json")
+		}
+		measureBatches(args[1], args[2], args[3])
+		return true
+	}
 	if args[0] == "census" {
 		if len(args) != 3 {
 			panic("census pins.json output.jsonl")

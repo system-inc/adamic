@@ -1,4 +1,5 @@
 // Node exercises the unchanged production port's Checker and rule, not the ABI client.
+import { PilotPlanner, validatePlan, planMutant } from '../planning.ts';
 import { readFileSync } from 'node:fs';
 import { panic } from 'adamic';
 import { Parser } from '../../../../typescript/parser/parser.ts';
@@ -21,6 +22,7 @@ checker.root = root;
 checker.enter('@typescript-eslint/no-unnecessary-boolean-literal-compare', ['ReadsCompilerOptions']);
 if(process.argv[4]) { panic(checker.askFile(new FileQuestion(process.argv[4], 'options')).reason); }
 const context = new RuleContext(text, parser, new Scanner(text), '@typescript-eslint/no-unnecessary-boolean-literal-compare', '', '', false, parents, new Settings(), root, checker);
+const plan = planMutant(new PilotPlanner(context).plan(root), process.argv[6] ?? '');
 const rule = new Rule(context);
 rule.prepare(root);
 function walk(index) {
@@ -31,6 +33,7 @@ function walk(index) {
 walk(root);
 checker.finish();
 if(checker.refusals.length !== 0) { throw new Error(JSON.stringify(checker.refusals)); }
+validatePlan(plan, checker);
 if(readFileSync(process.argv[3], 'utf8') !== checker.transcript()) { throw new Error('ask plan differs from port'); }
 function byte(position) { return Buffer.byteLength(text.slice(0, position)); }
 function frame(value) { return `${value.length}\n${value}`; }

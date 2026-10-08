@@ -1,0 +1,32 @@
+=== RUN   TestBatchPlanAndGeneration
+=== PAUSE TestBatchPlanAndGeneration
+=== RUN   TestBatchExecutionAndReplay
+=== PAUSE TestBatchExecutionAndReplay
+=== RUN   TestCheckerOwnedHandles
+=== PAUSE TestCheckerOwnedHandles
+=== RUN   TestAgreementAndMutants
+=== PAUSE TestAgreementAndMutants
+=== CONT  TestBatchPlanAndGeneration
+=== CONT  TestCheckerOwnedHandles
+--- PASS: TestBatchPlanAndGeneration (0.00s)
+=== CONT  TestAgreementAndMutants
+--- PASS: TestCheckerOwnedHandles (0.00s)
+=== CONT  TestBatchExecutionAndReplay
+--- PASS: TestBatchExecutionAndReplay (0.00s)
+=== NAME  TestAgreementAndMutants
+    main_test.go:245: native answer mutant caught by byte comparison
+    main_test.go:257: native and Node ReadsOtherFiles contract guard caught forbidden ask
+    main_test.go:257: native and Node ReadsDefaultLibrary contract guard caught forbidden ask
+    main_test.go:266: native repair-output mutant compiles/runs, caught by full fix-byte comparison
+    main_test.go:266: Node repair-output mutant compiles/runs, caught by full fix-byte comparison
+    main_test.go:276: native and Node omit up-front planning mutant caught
+    main_test.go:276: native and Node wrong up-front planning mutant caught
+    main_test.go:291: Node missing mutant caught by replay contract
+    main_test.go:291: Node extra mutant caught by replay contract
+    main_test.go:291: Node wrong-question mutant caught by replay contract
+    main_test.go:295: 84 cases, 37 findings including exact repair bytes, 156 actual pilot questions; native facts and Node ask plans agree
+    main_test.go:317: shared 23-file public project: 2 findings, 38 real pilot questions; Go/native/Node and timing counts agree
+    main_test.go:332: single-program Go N=1,2,12 findings/fixes agree with native and Node fixture results
+--- PASS: TestAgreementAndMutants (63.94s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/checker-bridge-scout	63.947s

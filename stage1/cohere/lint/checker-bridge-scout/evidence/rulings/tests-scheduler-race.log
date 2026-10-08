@@ -1,0 +1,14 @@
+=== RUN   TestBatchPlanAndGeneration
+=== PAUSE TestBatchPlanAndGeneration
+=== RUN   TestBatchExecutionAndReplay
+=== PAUSE TestBatchExecutionAndReplay
+=== RUN   TestCheckerOwnedHandles
+=== PAUSE TestCheckerOwnedHandles
+=== CONT  TestBatchExecutionAndReplay
+=== CONT  TestCheckerOwnedHandles
+--- PASS: TestCheckerOwnedHandles (0.00s)
+=== CONT  TestBatchPlanAndGeneration
+--- PASS: TestBatchPlanAndGeneration (0.00s)
+--- PASS: TestBatchExecutionAndReplay (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/checker-bridge-scout	1.024s
