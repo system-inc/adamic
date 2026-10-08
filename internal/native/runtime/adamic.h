@@ -431,6 +431,9 @@ adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int 
 bool adamic_map_iterator_next(adamic_map_iterator *iterator, union adamic_value *key, union adamic_value *value);
 
 adamic_map *adamic_map_new(bool string_keys, bool reference_values);
+// adamic_map_relocated repairs a map whose bytes were copied from `from` to `to` (graph region
+// storage moves values this way): entries kept inline must point at the copy's own small slots.
+void adamic_map_relocated(const adamic_map *from, adamic_map *to);
 
 // adamic_map_new_identity is a map whose keys are objects, arrays, maps or functions, each its own
 // key, found by identity (map.c).

@@ -39,6 +39,10 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
 	return map;
 }
 
+void adamic_map_relocated(const adamic_map *from, adamic_map *to) {
+	if (from->entries == from->small) { to->entries = to->small; }
+}
+
 adamic_map *adamic_map_new_booleans(bool reference_values) {
 	adamic_map *map = adamic_map_new(false, reference_values);
 	map->boolean_keys = true;
