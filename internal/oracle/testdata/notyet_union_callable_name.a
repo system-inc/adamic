@@ -1,0 +1,16 @@
+type Name = string | { readonly escapedText: string };
+interface Resolve {
+    readonly resolve: (name: Name) => string;
+}
+class Resolver {
+    resolve(name: Name): string {
+        return typeof name === 'string' ? name : name.escapedText;
+    }
+}
+function lookup(resolve: Resolve, name: Name): string {
+    return resolve.resolve(name);
+}
+const resolver = new Resolver();
+const text = `name${1}`;
+console.log(lookup(resolver, text));
+console.log(lookup(resolver, { escapedText: `node${2}` }));
