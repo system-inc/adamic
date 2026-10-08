@@ -1,0 +1,7 @@
+// Original declaration/read with an actual array receiver.
+
+interface Base {readonly join:unknown;}
+interface Target<T> {join(separator?: string): string;}
+class Witness {readonly prerelease:Target<string>;constructor(value:Base){this.prerelease=value as Target<string>;}check():void {this.prerelease.join("|");console.log("called");}}
+function probe(value:Base):void {new Witness(value).check();}
+probe(["first","second"]);

@@ -1,0 +1,109 @@
+=== RUN   TestCheckedViewCallableShareBArityMutants
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-268
+    checked_views_callable_share_b_test.go:122: gate cache node miss
+    checked_views_callable_share_b_test.go:127: gate cache node miss
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "answer3\n"
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "answer3\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-508
+    checked_views_callable_share_b_test.go:122: gate cache node miss
+    checked_views_callable_share_b_test.go:127: gate cache node miss
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "3\n"
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "3\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-529
+    checked_views_callable_share_b_test.go:122: gate cache node miss
+    checked_views_callable_share_b_test.go:127: gate cache node miss
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "3\n"
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "3\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-625
+    checked_views_callable_share_b_test.go:122: gate cache node miss
+    checked_views_callable_share_b_test.go:127: gate cache node miss
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "3\n"
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "3\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-658
+    checked_views_callable_share_b_test.go:122: gate cache node miss
+    checked_views_callable_share_b_test.go:127: gate cache node miss
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "99\n"
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "99\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-664
+    checked_views_callable_share_b_test.go:122: gate cache node miss
+    checked_views_callable_share_b_test.go:127: gate cache node miss
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "-1\n"
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "-1\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-754
+    checked_views_callable_share_b_test.go:122: gate cache node miss
+    checked_views_callable_share_b_test.go:127: gate cache node miss
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "3\n"
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "3\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-757
+    checked_views_callable_share_b_test.go:122: gate cache node miss
+    checked_views_callable_share_b_test.go:127: gate cache node miss
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "3\n"
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "3\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-760
+    checked_views_callable_share_b_test.go:122: gate cache node miss
+    checked_views_callable_share_b_test.go:127: gate cache node miss
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "3\n"
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "3\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-763
+    checked_views_callable_share_b_test.go:122: gate cache node miss
+    checked_views_callable_share_b_test.go:127: gate cache node miss
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "3\n"
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "3\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-766
+    checked_views_callable_share_b_test.go:122: gate cache node miss
+    checked_views_callable_share_b_test.go:127: gate cache node miss
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "0\n"
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "0\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-769
+    checked_views_callable_share_b_test.go:122: gate cache node miss
+    checked_views_callable_share_b_test.go:127: gate cache node miss
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "true\n"
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "true\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-772
+    checked_views_callable_share_b_test.go:122: gate cache node miss
+    checked_views_callable_share_b_test.go:127: gate cache node miss
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "true\n"
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "true\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-775
+    checked_views_callable_share_b_test.go:122: gate cache node miss
+    checked_views_callable_share_b_test.go:127: gate cache node miss
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout ""
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout ""
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-781
+    checked_views_callable_share_b_test.go:122: gate cache node miss
+    checked_views_callable_share_b_test.go:127: gate cache node miss
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout ""
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout ""
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-787
+    checked_views_callable_share_b_test.go:122: gate cache node miss
+    checked_views_callable_share_b_test.go:127: gate cache node miss
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "answer3\n"
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "answer3\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-790
+    checked_views_callable_share_b_test.go:122: gate cache node miss
+    checked_views_callable_share_b_test.go:127: gate cache node miss
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "answer3\n"
+    checked_views_callable_share_b_test.go:131: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "answer3\n"
+--- PASS: TestCheckedViewCallableShareBArityMutants (4.65s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-268 (0.31s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-508 (0.53s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-529 (0.25s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-625 (0.25s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-658 (0.23s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-664 (0.28s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-754 (0.25s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-757 (0.24s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-760 (0.27s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-763 (0.29s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-766 (0.25s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-769 (0.26s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-772 (0.23s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-775 (0.25s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-781 (0.25s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-787 (0.25s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-790 (0.27s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=34
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.657s

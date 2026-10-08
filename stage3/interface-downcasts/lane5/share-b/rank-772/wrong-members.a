@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Node { readonly value: number; }
+interface Base {readonly isValueAliasDeclaration:unknown;}
+interface Target {isValueAliasDeclaration(node: Node): boolean;}
+function probe(value:Base):void {const resolver=value as Target;console.log(`${resolver.isValueAliasDeclaration({value:3})}`);}
+probe({isValueAliasDeclaration:(node:number):boolean=>{return true;}});

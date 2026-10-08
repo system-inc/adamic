@@ -1,0 +1,8 @@
+// Original declaration, read, key aliases, and collection result carrier.
+type Path = string & { __pathBrand: any; };
+type ResolvedConfigFileName = string & { _isResolvedConfigFileName: never; };
+type ResolvedConfigFilePath = ResolvedConfigFileName & Path;
+interface Base {readonly set:unknown;}
+interface Target<K,V> {set(key: K, value: V): this;}
+function probe(value:Base):void {const temporaryMarks=value as Target<ResolvedConfigFilePath,true>;temporaryMarks.set("key" as ResolvedConfigFilePath,true);console.log("called");}
+probe(new Map<ResolvedConfigFilePath,true>());

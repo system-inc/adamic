@@ -1,0 +1,8 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly __debugTypeToString:unknown;}
+interface Target {__debugTypeToString(): string;}
+interface DebugType extends Target {}
+class Witness {readonly source:Base;constructor(value:Base){this.source=value;}check():void {console.log((this.source as DebugType).__debugTypeToString());}}
+function probe(value:Base):void {new Witness(value).check();}
+probe({__debugTypeToString:():string=>{return "answer3";}});

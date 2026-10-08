@@ -1,0 +1,8 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly __debugToString:unknown;}
+interface Target {__debugToString(): string;}
+interface DebugTypeMapper extends Target {}
+class Witness {readonly mapper1:Base;constructor(value:Base){this.mapper1=value;}check():void {console.log((this.mapper1 as unknown as DebugTypeMapper).__debugToString());}}
+function probe(value:Base):void {new Witness(value).check();}
+probe({__debugToString:():string=>{return "answer3";}});

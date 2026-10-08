@@ -1,0 +1,100 @@
+[
+  {
+    "rank": 577,
+    "receiver_type_id": 9428,
+    "type": "NodeArray<Expression>",
+    "field": "slice",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 635,
+      "column": 28
+    },
+    "read": "node.elements.slice",
+    "call": "node.elements.slice(0, i)",
+    "utf16Start": 26111,
+    "utf16End": 26130,
+    "fileSha256": "846876b89a5be66536d351c7c89769acc7b8ed45577411f361107963caa09c2d",
+    "declaration": "slice(start?: number, end?: number): T[];",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "NodeArray",
+      "ReadonlyArray"
+    ],
+    "filename": "rank-577/actual-array.a",
+    "carrierDeclarations": [],
+    "carrierEvidence": [],
+    "output": "called\n",
+    "refusal": "",
+    "expected": "adamic: panic: field read failed: node.elements.slice expected (start?: number | undefined, end?: number | undefined) => Expression[], found function with unknown signature\n"
+  },
+  {
+    "rank": 619,
+    "receiver_type_id": 15322,
+    "type": "Path[]",
+    "field": "pop",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/builderState.ts",
+      "line": 481,
+      "column": 26
+    },
+    "read": "queue.pop",
+    "call": "queue.pop()",
+    "utf16Start": 19287,
+    "utf16End": 19296,
+    "fileSha256": "51ef79dcaebb2e9b09c5270d07ca8f4abf3eb04e4849eb9014bf2d55f2c570a5",
+    "declaration": "pop(): T | undefined;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-619/actual-array.a",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type Path = string & { __pathBrand: any; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ],
+    "output": "called\n",
+    "refusal": "a primitive brand member __pathBrand whose type is not void"
+  },
+  {
+    "rank": 679,
+    "receiver_type_id": 1823,
+    "type": "readonly string[]",
+    "field": "join",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/semver.ts",
+      "line": 135,
+      "column": 50
+    },
+    "read": "this.prerelease.join",
+    "call": "this.prerelease.join(\".\")",
+    "utf16Start": 5992,
+    "utf16End": 6012,
+    "fileSha256": "1b5cbc707e9a7e1dd413b3dd69e2e5cb2c816a6675ce6ae6f3a3cc2d6fc0eabe",
+    "declaration": "join(separator?: string): string;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "ReadonlyArray"
+    ],
+    "filename": "rank-679/actual-array.a",
+    "carrierDeclarations": [],
+    "carrierEvidence": [],
+    "output": "called\n",
+    "refusal": "",
+    "expected": "adamic: panic: field read failed: this.prerelease.join expected (separator?: string | undefined) => string, found function with unknown signature\n"
+  }
+]

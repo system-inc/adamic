@@ -398,6 +398,26 @@
     "basis": "observed refusal with original member/read and reduced adjacent carriers"
   },
   {
+    "rank": 337,
+    "pair": "Map<Path, BuilderFileEmit> | undefined.get",
+    "reads": 5,
+    "read": "state.seenEmittedFiles?.get",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-337/actual-map.a",
+    "basis": "original primitive key aliases and collection types; admission refusal"
+  },
+  {
+    "rank": 340,
+    "pair": "Map<Path, string>.set",
+    "reads": 5,
+    "read": "sourceFileToPackageName.set",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-340/actual-map.a",
+    "basis": "original primitive key aliases and collection types; admission refusal"
+  },
+  {
     "rank": 343,
     "pair": "Map<number, Type>.set",
     "reads": 5,
@@ -460,6 +480,48 @@
     "basis": "observed original signature refusal; namespace default sugar made explicit where required"
   },
   {
+    "rank": 415,
+    "pair": "Map<Path, FileInfo>.has",
+    "reads": 4,
+    "read": "builderProgram.state.fileInfos.has",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-415/actual-map.a",
+    "basis": "original primitive key aliases and collection types; admission refusal"
+  },
+  {
+    "rank": 418,
+    "pair": "Map<ResolvedConfigFilePath, true>.set",
+    "reads": 4,
+    "read": "temporaryMarks.set",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-418/actual-map.a",
+    "basis": "original primitive key aliases and collection types; admission refusal"
+  },
+  {
+    "rank": 421,
+    "pair": "Map<number, Symbol>.set",
+    "reads": 4,
+    "read": "context.remappedSymbolReferences.set",
+    "stop": "native collection-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "collection receiver conversion, immutable intrinsic callable metadata and receiver-preserving checked calls",
+    "fixture": "rank-421/actual-map.a",
+    "basis": "actual collection receiver; complete original declaration/read",
+    "expectedJavaScript": "adamic: panic: field read failed: context.remappedSymbolReferences.set expected (key: number, value: Symbol) => Target<number, Symbol>, found function with unknown signature\n"
+  },
+  {
+    "rank": 424,
+    "pair": "Map<string, SortedArray<DiagnosticWithLocation>>.get",
+    "reads": 4,
+    "read": "fileDiagnostics.get",
+    "stop": "native collection-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "collection receiver conversion, immutable intrinsic callable metadata and receiver-preserving checked calls",
+    "fixture": "rank-424/actual-map.a",
+    "basis": "actual collection receiver; complete original declaration/read",
+    "expectedJavaScript": "adamic: panic: field read failed: fileDiagnostics.get expected (key: string) => SortedArray<DiagnosticWithLocation> | undefined, found function with unknown signature\n"
+  },
+  {
     "rank": 439,
     "pair": "NodeFactory.createImportAttributes",
     "reads": 4,
@@ -488,6 +550,26 @@
     "needed": "checked representation for the original any-returning overloaded callable",
     "fixture": "rank-463/contract-probe.a",
     "basis": "observed original signature refusal; namespace default sugar made explicit where required"
+  },
+  {
+    "rank": 472,
+    "pair": "ProgramDiagnostics.getFileReasons",
+    "reads": 4,
+    "read": "programDiagnostics.getFileReasons",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-472/contract-probe.a",
+    "basis": "original primitive key aliases and collection types; admission refusal"
+  },
+  {
+    "rank": 475,
+    "pair": "ReadonlyManyToManyPathMap.getValues",
+    "reads": 4,
+    "read": "state.referencedMap.getValues",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-475/contract-probe.a",
+    "basis": "original primitive key aliases and collection types; admission refusal"
   },
   {
     "rank": 496,
@@ -542,6 +624,48 @@
     "basis": "observed original signature refusal; namespace default sugar made explicit where required"
   },
   {
+    "rank": 544,
+    "pair": "FileReference[].push",
+    "reads": 3,
+    "read": "typeReferenceDirectives.push",
+    "stop": "checked view read of field push with unsupported callable contract",
+    "needed": "original rest parameter or generic callback callable contracts",
+    "fixture": "rank-544/contract-probe.a",
+    "basis": "complete original callable declaration/read; admission refusal"
+  },
+  {
+    "rank": 577,
+    "pair": "NodeArray<Expression>.slice",
+    "reads": 3,
+    "read": "node.elements.slice",
+    "stop": "native collection-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "collection receiver conversion, immutable intrinsic callable metadata and receiver-preserving checked calls",
+    "fixture": "rank-577/actual-array.a",
+    "basis": "actual collection receiver; complete original declaration/read",
+    "expectedJavaScript": "adamic: panic: field read failed: node.elements.slice expected (start?: number | undefined, end?: number | undefined) => Expression[], found function with unknown signature\n"
+  },
+  {
+    "rank": 592,
+    "pair": "NodeFactory.createMethodSignature",
+    "reads": 3,
+    "read": "factory.createMethodSignature",
+    "stop": "(modifiers: readonly Modifier[] | undefined, name: string | PropertyName, questionToken: QuestionToken | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: ..., type: TypeNode | undefined) => MethodSignature",
+    "needed": "complete expected callable type display without parameters: ...",
+    "fixture": "rank-592/good.a",
+    "basis": "Node, native release, ASan/UBSan, JavaScript and leaks pass; original complete type display fails",
+    "expectedJavaScript": "(modifiers: readonly Modifier[] | undefined, name: string | PropertyName, questionToken: QuestionToken | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined) => MethodSignature"
+  },
+  {
+    "rank": 619,
+    "pair": "Path[].pop",
+    "reads": 3,
+    "read": "queue.pop",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-619/actual-array.a",
+    "basis": "original primitive key aliases and collection types; admission refusal"
+  },
+  {
     "rank": 637,
     "pair": "Set<Path>.delete",
     "reads": 3,
@@ -556,6 +680,79 @@
     "dependencyBranch": "codex/views-set-receiver",
     "dependencySha": "058635b9",
     "basis": "user-provided dependency; no branch merge or certification claimed"
+  },
+  {
+    "rank": 646,
+    "pair": "Symbol[].map",
+    "reads": 3,
+    "read": "parents!.map",
+    "stop": "checked view read of field map with unsupported callable contract",
+    "needed": "original rest parameter or generic callback callable contracts",
+    "fixture": "rank-646/contract-probe.a",
+    "basis": "complete original callable declaration/read; admission refusal"
+  },
+  {
+    "rank": 670,
+    "pair": "[message: DiagnosticMessage, ...args: (string | number)[]][].unshift",
+    "reads": 3,
+    "read": "secondaryRootErrors.unshift",
+    "stop": "stage 0 can't lower a tuple element of type string | number yet",
+    "needed": "original tuple rest element string | number lowering before callable certification",
+    "fixture": "rank-670/contract-probe.a",
+    "basis": "original tuple element type and generic unshift declaration; admission refusal"
+  },
+  {
+    "rank": 673,
+    "pair": "readonly Diagnostic[].forEach",
+    "reads": 3,
+    "read": "diagnostic.diagnostics.forEach",
+    "stop": "checked view read of field forEach with unsupported callable contract",
+    "needed": "original rest parameter or generic callback callable contracts",
+    "fixture": "rank-673/contract-probe.a",
+    "basis": "complete original callable declaration/read; admission refusal"
+  },
+  {
+    "rank": 676,
+    "pair": "readonly SourceFile[].map",
+    "reads": 3,
+    "read": "host.getSourceFiles().map",
+    "stop": "checked view read of field map with unsupported callable contract",
+    "needed": "original rest parameter or generic callback callable contracts",
+    "fixture": "rank-676/contract-probe.a",
+    "basis": "complete original callable declaration/read; admission refusal"
+  },
+  {
+    "rank": 679,
+    "pair": "readonly string[].join",
+    "reads": 3,
+    "read": "this.prerelease.join",
+    "stop": "native collection-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "collection receiver conversion, immutable intrinsic callable metadata and receiver-preserving checked calls",
+    "fixture": "rank-679/actual-array.a",
+    "basis": "actual collection receiver; complete original declaration/read",
+    "expectedJavaScript": "adamic: panic: field read failed: this.prerelease.join expected (separator?: string | undefined) => string, found function with unknown signature\n"
+  },
+  {
+    "rank": 739,
+    "pair": "DebugTypeMapper.__debugToString",
+    "reads": 2,
+    "read": "(this.mapper1 as unknown as DebugTypeMapper).__debugToString",
+    "stop": "adamic/no-unchecked-cast at (this.mapper1 as unknown as DebugTypeMapper)",
+    "needed": "checked admission for the original cast through unknown before the callable read",
+    "fixture": "rank-739/good.a",
+    "basis": "original class method header and read; admission refusal",
+    "expectedJavaScript": "() => string"
+  },
+  {
+    "rank": 751,
+    "pair": "EmitHelperFactory.createAwaiterHelper",
+    "reads": 2,
+    "read": "emitHelpers().createAwaiterHelper",
+    "stop": "(hasLexicalThis: boolean, argumentsExpression: Expression | undefined, promiseConstructor: EntityName | Expression | undefined, parameters: ... | undefined, body: Block) => Expression",
+    "needed": "complete expected callable type display without parameters: ...",
+    "fixture": "rank-751/good.a",
+    "basis": "Node, native release, ASan/UBSan, JavaScript and leaks pass; original complete type display fails",
+    "expectedJavaScript": "(hasLexicalThis: boolean, argumentsExpression: Expression | undefined, promiseConstructor: Expression | EntityName | undefined, parameters: readonly ParameterDeclaration[] | undefined, body: Block) => Expression"
   },
   {
     "rank": 1075,

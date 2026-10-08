@@ -110,6 +110,43 @@
     ]
   },
   {
+    "rank": 268,
+    "receiver_type_id": 7056,
+    "type": "DebugType",
+    "field": "__debugTypeToString",
+    "candidateReads": 6,
+    "witness": {
+      "file": "src/compiler/debug.ts",
+      "line": 834,
+      "column": 31
+    },
+    "read": "(this.source as DebugType).__debugTypeToString",
+    "call": "(this.source as DebugType).__debugTypeToString()",
+    "utf16Start": 39812,
+    "utf16End": 39858,
+    "fileSha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b",
+    "declaration": "__debugTypeToString(): string;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/debug.ts",
+    "declarationSha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b",
+    "inheritancePath": [
+      "DebugType"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "() => string",
+    "directory": "rank-268",
+    "resultType": "string",
+    "arity": "1",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result"
+    ]
+  },
+  {
     "rank": 277,
     "receiver_type_id": 83084,
     "type": "FlattenContext",
@@ -1387,6 +1424,51 @@
     ]
   },
   {
+    "rank": 508,
+    "receiver_type_id": 11740,
+    "type": "BaseNodeFactory",
+    "field": "createBaseNode",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 1210,
+      "column": 16
+    },
+    "read": "baseFactory.createBaseNode",
+    "call": "baseFactory.createBaseNode(kind)",
+    "utf16Start": 41746,
+    "utf16End": 41772,
+    "fileSha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+    "declaration": "createBaseNode(kind: SyntaxKind): Node;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/factory/baseNodeFactory.ts",
+    "declarationSha256": "86826be85abc6406cec8915574950ab349ba829167a4d3f28332c38dd8b90e0a",
+    "inheritancePath": [
+      "BaseNodeFactory"
+    ],
+    "carrierEnums": [
+      {
+        "name": "SyntaxKind",
+        "declaration": "enum SyntaxKind {\n    Unknown,\n    EndOfFileToken,\n    SingleLineCommentTrivia,\n    MultiLineCommentTrivia,\n    NewLineTrivia,\n    WhitespaceTrivia,\n    // We detect and preserve #! on the first line\n    ShebangTrivia,\n    // We detect and provide better error recovery when we encounter a git merge marker.  This\n    // allows us to edit files with git-conflict markers in them in a much more pleasant manner.\n    ConflictMarkerTrivia,\n    // If a file is actually binary, with any luck, we'll get U+FFFD REPLACEMENT CHARACTER\n    // in position zero and can just skip what is surely a doomed parse.\n    NonTextFileMarkerTrivia,\n    // Literals\n    NumericLiteral,\n    BigIntLiteral,\n    StringLiteral,\n    JsxText,\n    JsxTextAllWhiteSpaces,\n    RegularExpressionLiteral,\n    NoSubstitutionTemplateLiteral,\n    // Pseudo-literals\n    TemplateHead,\n    TemplateMiddle,\n    TemplateTail,\n    // Punctuation\n    OpenBraceToken,\n    CloseBraceToken,\n    OpenParenToken,\n    CloseParenToken,\n    OpenBracketToken,\n    CloseBracketToken,\n    DotToken,\n    DotDotDotToken,\n    SemicolonToken,\n    CommaToken,\n    QuestionDotToken,\n    LessThanToken,\n    LessThanSlashToken,\n    GreaterThanToken,\n    LessThanEqualsToken,\n    GreaterThanEqualsToken,\n    EqualsEqualsToken,\n    ExclamationEqualsToken,\n    EqualsEqualsEqualsToken,\n    ExclamationEqualsEqualsToken,\n    EqualsGreaterThanToken,\n    PlusToken,\n    MinusToken,\n    AsteriskToken,\n    AsteriskAsteriskToken,\n    SlashToken,\n    PercentToken,\n    PlusPlusToken,\n    MinusMinusToken,\n    LessThanLessThanToken,\n    GreaterThanGreaterThanToken,\n    GreaterThanGreaterThanGreaterThanToken,\n    AmpersandToken,\n    BarToken,\n    CaretToken,\n    ExclamationToken,\n    TildeToken,\n    AmpersandAmpersandToken,\n    BarBarToken,\n    QuestionToken,\n    ColonToken,\n    AtToken,\n    QuestionQuestionToken,\n    /** Only the JSDoc scanner produces BacktickToken. The normal scanner produces NoSubstitutionTemplateLiteral and related kinds. */\n    BacktickToken,\n    /** Only the JSDoc scanner produces HashToken. The normal scanner produces PrivateIdentifier. */\n    HashToken,\n    // Assignments\n    EqualsToken,\n    PlusEqualsToken,\n    MinusEqualsToken,\n    AsteriskEqualsToken,\n    AsteriskAsteriskEqualsToken,\n    SlashEqualsToken,\n    PercentEqualsToken,\n    LessThanLessThanEqualsToken,\n    GreaterThanGreaterThanEqualsToken,\n    GreaterThanGreaterThanGreaterThanEqualsToken,\n    AmpersandEqualsToken,\n    BarEqualsToken,\n    BarBarEqualsToken,\n    AmpersandAmpersandEqualsToken,\n    QuestionQuestionEqualsToken,\n    CaretEqualsToken,\n    // Identifiers and PrivateIdentifiers\n    Identifier,\n    PrivateIdentifier,\n    /**\n     * Only the special JSDoc comment text scanner produces JSDocCommentTextTokes. One of these tokens spans all text after a tag comment's start and before the next @\n     * @internal\n     */\n    JSDocCommentTextToken,\n    // Reserved words\n    BreakKeyword,\n    CaseKeyword,\n    CatchKeyword,\n    ClassKeyword,\n    ConstKeyword,\n    ContinueKeyword,\n    DebuggerKeyword,\n    DefaultKeyword,\n    DeleteKeyword,\n    DoKeyword,\n    ElseKeyword,\n    EnumKeyword,\n    ExportKeyword,\n    ExtendsKeyword,\n    FalseKeyword,\n    FinallyKeyword,\n    ForKeyword,\n    FunctionKeyword,\n    IfKeyword,\n    ImportKeyword,\n    InKeyword,\n    InstanceOfKeyword,\n    NewKeyword,\n    NullKeyword,\n    ReturnKeyword,\n    SuperKeyword,\n    SwitchKeyword,\n    ThisKeyword,\n    ThrowKeyword,\n    TrueKeyword,\n    TryKeyword,\n    TypeOfKeyword,\n    VarKeyword,\n    VoidKeyword,\n    WhileKeyword,\n    WithKeyword,\n    // Strict mode reserved words\n    ImplementsKeyword,\n    InterfaceKeyword,\n    LetKeyword,\n    PackageKeyword,\n    PrivateKeyword,\n    ProtectedKeyword,\n    PublicKeyword,\n    StaticKeyword,\n    YieldKeyword,\n    // Contextual keywords\n    AbstractKeyword,\n    AccessorKeyword,\n    AsKeyword,\n    AssertsKeyword,\n    AssertKeyword,\n    AnyKeyword,\n    AsyncKeyword,\n    AwaitKeyword,\n    BooleanKeyword,\n    ConstructorKeyword,\n    DeclareKeyword,\n    GetKeyword,\n    InferKeyword,\n    IntrinsicKeyword,\n    IsKeyword,\n    KeyOfKeyword,\n    ModuleKeyword,\n    NamespaceKeyword,\n    NeverKeyword,\n    OutKeyword,\n    ReadonlyKeyword,\n    RequireKeyword,\n    NumberKeyword,\n    ObjectKeyword,\n    SatisfiesKeyword,\n    SetKeyword,\n    StringKeyword,\n    SymbolKeyword,\n    TypeKeyword,\n    UndefinedKeyword,\n    UniqueKeyword,\n    UnknownKeyword,\n    UsingKeyword,\n    FromKeyword,\n    GlobalKeyword,\n    BigIntKeyword,\n    OverrideKeyword,\n    OfKeyword,\n    DeferKeyword, // LastKeyword and LastToken and LastContextualKeyword\n\n    // Parse tree nodes\n\n    // Names\n    QualifiedName,\n    ComputedPropertyName,\n    // Signature elements\n    TypeParameter,\n    Parameter,\n    Decorator,\n    // TypeMember\n    PropertySignature,\n    PropertyDeclaration,\n    MethodSignature,\n    MethodDeclaration,\n    ClassStaticBlockDeclaration,\n    Constructor,\n    GetAccessor,\n    SetAccessor,\n    CallSignature,\n    ConstructSignature,\n    IndexSignature,\n    // Type\n    TypePredicate,\n    TypeReference,\n    FunctionType,\n    ConstructorType,\n    TypeQuery,\n    TypeLiteral,\n    ArrayType,\n    TupleType,\n    OptionalType,\n    RestType,\n    UnionType,\n    IntersectionType,\n    ConditionalType,\n    InferType,\n    ParenthesizedType,\n    ThisType,\n    TypeOperator,\n    IndexedAccessType,\n    MappedType,\n    LiteralType,\n    NamedTupleMember,\n    TemplateLiteralType,\n    TemplateLiteralTypeSpan,\n    ImportType,\n    // Binding patterns\n    ObjectBindingPattern,\n    ArrayBindingPattern,\n    BindingElement,\n    // Expression\n    ArrayLiteralExpression,\n    ObjectLiteralExpression,\n    PropertyAccessExpression,\n    ElementAccessExpression,\n    CallExpression,\n    NewExpression,\n    TaggedTemplateExpression,\n    TypeAssertionExpression,\n    ParenthesizedExpression,\n    FunctionExpression,\n    ArrowFunction,\n    DeleteExpression,\n    TypeOfExpression,\n    VoidExpression,\n    AwaitExpression,\n    PrefixUnaryExpression,\n    PostfixUnaryExpression,\n    BinaryExpression,\n    ConditionalExpression,\n    TemplateExpression,\n    YieldExpression,\n    SpreadElement,\n    ClassExpression,\n    OmittedExpression,\n    ExpressionWithTypeArguments,\n    AsExpression,\n    NonNullExpression,\n    MetaProperty,\n    SyntheticExpression,\n    SatisfiesExpression,\n\n    // Misc\n    TemplateSpan,\n    SemicolonClassElement,\n    // Element\n    Block,\n    EmptyStatement,\n    VariableStatement,\n    ExpressionStatement,\n    IfStatement,\n    DoStatement,\n    WhileStatement,\n    ForStatement,\n    ForInStatement,\n    ForOfStatement,\n    ContinueStatement,\n    BreakStatement,\n    ReturnStatement,\n    WithStatement,\n    SwitchStatement,\n    LabeledStatement,\n    ThrowStatement,\n    TryStatement,\n    DebuggerStatement,\n    VariableDeclaration,\n    VariableDeclarationList,\n    FunctionDeclaration,\n    ClassDeclaration,\n    InterfaceDeclaration,\n    TypeAliasDeclaration,\n    EnumDeclaration,\n    ModuleDeclaration,\n    ModuleBlock,\n    CaseBlock,\n    NamespaceExportDeclaration,\n    ImportEqualsDeclaration,\n    ImportDeclaration,\n    ImportClause,\n    NamespaceImport,\n    NamedImports,\n    ImportSpecifier,\n    ExportAssignment,\n    ExportDeclaration,\n    NamedExports,\n    NamespaceExport,\n    ExportSpecifier,\n    MissingDeclaration,\n\n    // Module references\n    ExternalModuleReference,\n\n    // JSX\n    JsxElement,\n    JsxSelfClosingElement,\n    JsxOpeningElement,\n    JsxClosingElement,\n    JsxFragment,\n    JsxOpeningFragment,\n    JsxClosingFragment,\n    JsxAttribute,\n    JsxAttributes,\n    JsxSpreadAttribute,\n    JsxExpression,\n    JsxNamespacedName,\n\n    // Clauses\n    CaseClause,\n    DefaultClause,\n    HeritageClause,\n    CatchClause,\n\n    ImportAttributes,\n    ImportAttribute,\n    /** @deprecated */ AssertClause = ImportAttributes,\n    /** @deprecated */ AssertEntry = ImportAttribute,\n    /** @deprecated */ ImportTypeAssertionContainer,\n\n    // Property assignments\n    PropertyAssignment,\n    ShorthandPropertyAssignment,\n    SpreadAssignment,\n\n    // Enum\n    EnumMember,\n\n    // Top-level nodes\n    SourceFile,\n    Bundle,\n\n    // JSDoc nodes\n    JSDocTypeExpression,\n    JSDocNameReference,\n    JSDocMemberName, // C#p\n    JSDocAllType, // The * type\n    JSDocUnknownType, // The ? type\n    JSDocNullableType,\n    JSDocNonNullableType,\n    JSDocOptionalType,\n    JSDocFunctionType,\n    JSDocVariadicType,\n    JSDocNamepathType, // https://jsdoc.app/about-namepaths.html\n    JSDoc,\n    /** @deprecated Use SyntaxKind.JSDoc */\n    JSDocComment = JSDoc,\n    JSDocText,\n    JSDocTypeLiteral,\n    JSDocSignature,\n    JSDocLink,\n    JSDocLinkCode,\n    JSDocLinkPlain,\n    JSDocTag,\n    JSDocAugmentsTag,\n    JSDocImplementsTag,\n    JSDocAuthorTag,\n    JSDocDeprecatedTag,\n    JSDocClassTag,\n    JSDocPublicTag,\n    JSDocPrivateTag,\n    JSDocProtectedTag,\n    JSDocReadonlyTag,\n    JSDocOverrideTag,\n    JSDocCallbackTag,\n    JSDocOverloadTag,\n    JSDocEnumTag,\n    JSDocParameterTag,\n    JSDocReturnTag,\n    JSDocThisTag,\n    JSDocTypeTag,\n    JSDocTemplateTag,\n    JSDocTypedefTag,\n    JSDocSeeTag,\n    JSDocPropertyTag,\n    JSDocThrowsTag,\n    JSDocSatisfiesTag,\n    JSDocImportTag,\n\n    // Synthesized list\n    SyntaxList,\n\n    // Transformation nodes\n    NotEmittedStatement,\n    NotEmittedTypeElement,\n    PartiallyEmittedExpression,\n    CommaListExpression,\n    SyntheticReferenceExpression,\n\n    // Enum value count\n    Count,\n\n    // Markers\n    FirstAssignment = EqualsToken,\n    LastAssignment = CaretEqualsToken,\n    FirstCompoundAssignment = PlusEqualsToken,\n    LastCompoundAssignment = CaretEqualsToken,\n    FirstReservedWord = BreakKeyword,\n    LastReservedWord = WithKeyword,\n    FirstKeyword = BreakKeyword,\n    LastKeyword = DeferKeyword,\n    FirstFutureReservedWord = ImplementsKeyword,\n    LastFutureReservedWord = YieldKeyword,\n    FirstTypeNode = TypePredicate,\n    LastTypeNode = ImportType,\n    FirstPunctuation = OpenBraceToken,\n    LastPunctuation = CaretEqualsToken,\n    FirstToken = Unknown,\n    LastToken = LastKeyword,\n    FirstTriviaToken = SingleLineCommentTrivia,\n    LastTriviaToken = ConflictMarkerTrivia,\n    FirstLiteralToken = NumericLiteral,\n    LastLiteralToken = NoSubstitutionTemplateLiteral,\n    FirstTemplateToken = NoSubstitutionTemplateLiteral,\n    LastTemplateToken = TemplateTail,\n    FirstBinaryOperator = LessThanToken,\n    LastBinaryOperator = CaretEqualsToken,\n    FirstStatement = VariableStatement,\n    LastStatement = DebuggerStatement,\n    FirstNode = QualifiedName,\n    FirstJSDocNode = JSDocTypeExpression,\n    LastJSDocNode = JSDocImportTag,\n    FirstJSDocTagNode = JSDocTag,\n    LastJSDocTagNode = JSDocImportTag,\n    /** @internal */ FirstContextualKeyword = AbstractKeyword,\n    /** @internal */ LastContextualKeyword = LastKeyword,\n}",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(kind: SyntaxKind) => Node",
+    "directory": "rank-508",
+    "resultType": "Node",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
     "rank": 526,
     "receiver_type_id": 12054,
     "type": "EmitHelperFactory",
@@ -1410,6 +1492,51 @@
     ],
     "expected": "(attributesSegments: readonly Expression[]) => Expression",
     "directory": "rank-526",
+    "resultType": "Expression",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 529,
+    "receiver_type_id": 12054,
+    "type": "EmitHelperFactory",
+    "field": "createClassPrivateFieldSetHelper",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1676,
+      "column": 24
+    },
+    "read": "emitHelpers().createClassPrivateFieldSetHelper",
+    "call": "emitHelpers().createClassPrivateFieldSetHelper(\r\n                    receiver,\r\n                    info.brandCheckIdentifier,\r\n                    right,\r\n                    info.kind,\r\n                    info.setterName,\r\n                )",
+    "utf16Start": 73783,
+    "utf16End": 73829,
+    "fileSha256": "d3a0359fad8430943ca68282cc32b12bc61a6631fa93901f6c480f411c4542f4",
+    "declaration": "createClassPrivateFieldSetHelper(receiver: Expression, state: Identifier, value: Expression, kind: PrivateIdentifierKind, f: Identifier | undefined): Expression;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/factory/emitHelpers.ts",
+    "declarationSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+    "inheritancePath": [
+      "EmitHelperFactory"
+    ],
+    "carrierEnums": [
+      {
+        "name": "PrivateIdentifierKind",
+        "declaration": "enum PrivateIdentifierKind {\n    Field = \"f\",\n    Method = \"m\",\n    Accessor = \"a\",\n}",
+        "sourceFile": "src/compiler/factory/emitHelpers.ts",
+        "sha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8"
+      }
+    ],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(receiver: Expression, state: Identifier, value: Expression, kind: PrivateIdentifierKind, f: Identifier | undefined) => Expression",
+    "directory": "rank-529",
     "resultType": "Expression",
     "arity": "0",
     "variants": [
@@ -2008,6 +2135,45 @@
     "expected": "() => string"
   },
   {
+    "rank": 625,
+    "receiver_type_id": 9939,
+    "type": "Program",
+    "field": "getSourceFile",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/program.ts",
+      "line": 2604,
+      "column": 28
+    },
+    "read": "program.getSourceFile",
+    "call": "getSourceFile: program.getSourceFile",
+    "utf16Start": 128666,
+    "utf16End": 128687,
+    "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+    "declaration": "getSourceFile(fileName: string): SourceFile | undefined;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "Program",
+      "ScriptReferenceHost"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(fileName: string) => SourceFile | undefined",
+    "directory": "rank-625",
+    "resultType": "SourceFile | undefined",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
     "rank": 634,
     "receiver_type_id": 28206,
     "type": "Scanner",
@@ -2076,6 +2242,57 @@
     ]
   },
   {
+    "rank": 658,
+    "receiver_type_id": 9940,
+    "type": "TypeCheckerHost",
+    "field": "getDefaultResolutionModeForFile",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 4752,
+      "column": 15
+    },
+    "read": "host.getDefaultResolutionModeForFile",
+    "call": "host.getDefaultResolutionModeForFile(currentSourceFile)",
+    "utf16Start": 233347,
+    "utf16End": 233383,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declaration": "getDefaultResolutionModeForFile(sourceFile: SourceFile): ResolutionMode;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "TypeCheckerHost"
+    ],
+    "carrierEnums": [
+      {
+        "name": "ModuleKind",
+        "declaration": "enum ModuleKind {\n    /** @deprecated */\n    None = 0,\n    CommonJS = 1,\n    /** @deprecated */\n    AMD = 2,\n    /** @deprecated */\n    UMD = 3,\n    /** @deprecated */\n    System = 4,\n\n    // NOTE: ES module kinds should be contiguous to more easily check whether a module kind is *any* ES module kind.\n    //       Non-ES module kinds should not come between ES2015 (the earliest ES module kind) and ESNext (the last ES\n    //       module kind).\n    ES2015 = 5,\n    ES2020 = 6,\n    ES2022 = 7,\n    ESNext = 99,\n\n    // Node16+ is an amalgam of commonjs (albeit updated) and es2022+, and represents a distinct module system from es2020/esnext\n    Node16 = 100,\n    Node18 = 101,\n    Node20 = 102,\n    NodeNext = 199,\n\n    // Emit as written\n    Preserve = 200,\n}",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ],
+    "nodeErrors": [],
+    "carrierSource": {
+      "filename": "src/compiler/types.ts",
+      "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+    },
+    "carrierDeclarations": [
+      "type ResolutionMode = ModuleKind.ESNext | ModuleKind.CommonJS | undefined;"
+    ],
+    "expected": "(sourceFile: SourceFile) => ResolutionMode",
+    "directory": "rank-658",
+    "resultType": "ResolutionMode",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
     "rank": 661,
     "receiver_type_id": 9940,
     "type": "TypeCheckerHost",
@@ -2101,6 +2318,53 @@
     "expected": "(file: SourceFile) => boolean",
     "directory": "rank-661",
     "resultType": "boolean",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 664,
+    "receiver_type_id": 7804,
+    "type": "Version",
+    "field": "compareTo",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/semver.ts",
+      "line": 424,
+      "column": 17
+    },
+    "read": "version.compareTo",
+    "call": "version.compareTo(operand)",
+    "utf16Start": 17155,
+    "utf16End": 17172,
+    "fileSha256": "1b5cbc707e9a7e1dd413b3dd69e2e5cb2c816a6675ce6ae6f3a3cc2d6fc0eabe",
+    "declaration": "compareTo(other: Version | undefined): Comparison;",
+    "originalFunctionHeaders": [
+      "compareTo(other: Version | undefined): Comparison"
+    ],
+    "declarationFile": "src/compiler/semver.ts",
+    "declarationSha256": "1b5cbc707e9a7e1dd413b3dd69e2e5cb2c816a6675ce6ae6f3a3cc2d6fc0eabe",
+    "inheritancePath": [
+      "Version"
+    ],
+    "carrierEnums": [
+      {
+        "name": "Comparison",
+        "declaration": "enum Comparison {\n    LessThan = -1,\n    EqualTo = 0,\n    GreaterThan = 1,\n}",
+        "sourceFile": "src/compiler/corePublic.ts",
+        "sha256": "899b3d3421836d6345090bce67d16d6c73c944762bfb0b5483a1e2ae192c9b09"
+      }
+    ],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(other: Version | undefined) => Comparison",
+    "directory": "rank-664",
+    "resultType": "Comparison",
     "arity": "0",
     "variants": [
       "good",
@@ -2144,6 +2408,329 @@
     "expected": "(text: string) => void"
   },
   {
+    "rank": 754,
+    "receiver_type_id": 12054,
+    "type": "EmitHelperFactory",
+    "field": "createImportDefaultHelper",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 1427,
+      "column": 20
+    },
+    "read": "emitHelpers().createImportDefaultHelper",
+    "call": "emitHelpers().createImportDefaultHelper(innerExpr)",
+    "utf16Start": 63871,
+    "utf16End": 63910,
+    "fileSha256": "69802404b3e40beec0a1707813bf556841b81728a31af29ac554e95bc87f9c36",
+    "declaration": "createImportDefaultHelper(expression: Expression): Expression;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/factory/emitHelpers.ts",
+    "declarationSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+    "inheritancePath": [
+      "EmitHelperFactory"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(expression: Expression) => Expression",
+    "directory": "rank-754",
+    "resultType": "Expression",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 757,
+    "receiver_type_id": 12054,
+    "type": "EmitHelperFactory",
+    "field": "createValuesHelper",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/transformers/es2015.ts",
+      "line": 3200,
+      "column": 37
+    },
+    "read": "emitHelpers().createValuesHelper",
+    "call": "emitHelpers().createValuesHelper(expression)",
+    "utf16Start": 144458,
+    "utf16End": 144490,
+    "fileSha256": "79d70178e4923796212e8900090695875e51c9df60a6c604fbe9e43cd0ffbdf4",
+    "declaration": "createValuesHelper(expression: Expression): Expression;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/factory/emitHelpers.ts",
+    "declarationSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+    "inheritancePath": [
+      "EmitHelperFactory"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(expression: Expression) => Expression",
+    "directory": "rank-757",
+    "resultType": "Expression",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 760,
+    "receiver_type_id": 10401,
+    "type": "EmitResolver",
+    "field": "createTypeOfDeclaration",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/transformers/declarations.ts",
+      "line": 706,
+      "column": 24
+    },
+    "read": "resolver.createTypeOfDeclaration",
+    "call": "resolver.createTypeOfDeclaration(node, enclosingDeclaration, declarationEmitNodeBuilderFlags, declarationEmitInternalNodeBuilderFlags, symbolTracker)",
+    "utf16Start": 31934,
+    "utf16End": 31966,
+    "fileSha256": "ad431e7fd5bfc1e0c60b4925ff6e4a6d1c56e038733a60d07794477063b1268e",
+    "declaration": "createTypeOfDeclaration(declaration: HasInferredType, enclosingDeclaration: Node, flags: NodeBuilderFlags, internalFlags: InternalNodeBuilderFlags, tracker: SymbolTracker): TypeNode | undefined;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "EmitResolver"
+    ],
+    "carrierEnums": [
+      {
+        "name": "NodeBuilderFlags",
+        "declaration": "enum NodeBuilderFlags {\n    None                                    = 0,\n    // Options\n    NoTruncation                            = 1 << 0,   // Don't truncate result\n    WriteArrayAsGenericType                 = 1 << 1,   // Write Array<T> instead T[]\n    GenerateNamesForShadowedTypeParams      = 1 << 2,   // When a type parameter T is shadowing another T, generate a name for it so it can still be referenced\n    UseStructuralFallback                   = 1 << 3,   // When an alias cannot be named by its symbol, rather than report an error, fallback to a structural printout if possible\n    ForbidIndexedAccessSymbolReferences     = 1 << 4,   // Forbid references like `I[\"a\"][\"b\"]` - print `typeof I.a<x>.b<y>` instead\n    WriteTypeArgumentsOfSignature           = 1 << 5,   // Write the type arguments instead of type parameters of the signature\n    UseFullyQualifiedType                   = 1 << 6,   // Write out the fully qualified type name (eg. Module.Type, instead of Type)\n    UseOnlyExternalAliasing                 = 1 << 7,   // Only use external aliases for a symbol\n    SuppressAnyReturnType                   = 1 << 8,   // If the return type is any-like and can be elided, don't offer a return type.\n    WriteTypeParametersInQualifiedName      = 1 << 9,\n    MultilineObjectLiterals                 = 1 << 10,  // Always write object literals across multiple lines\n    WriteClassExpressionAsTypeLiteral       = 1 << 11,  // Write class {} as { new(): {} } - used for mixin declaration emit\n    UseTypeOfFunction                       = 1 << 12,  // Build using typeof instead of function type literal\n    OmitParameterModifiers                  = 1 << 13,  // Omit modifiers on parameters\n    UseAliasDefinedOutsideCurrentScope      = 1 << 14,  // Allow non-visible aliases\n    UseSingleQuotesForStringLiteralType     = 1 << 28,  // Use single quotes for string literal type\n    NoTypeReduction                         = 1 << 29,  // Don't call getReducedType\n    OmitThisParameter                       = 1 << 25,\n\n    // Error handling\n    AllowThisInObjectLiteral                = 1 << 15,\n    AllowQualifiedNameInPlaceOfIdentifier   = 1 << 16,\n    AllowAnonymousIdentifier                = 1 << 17,\n    AllowEmptyUnionOrIntersection           = 1 << 18,\n    AllowEmptyTuple                         = 1 << 19,\n    AllowUniqueESSymbolType                 = 1 << 20,\n    AllowEmptyIndexInfoType                 = 1 << 21,\n    // Errors (cont.)\n    AllowNodeModulesRelativePaths           = 1 << 26,\n\n\n    IgnoreErrors = AllowThisInObjectLiteral | AllowQualifiedNameInPlaceOfIdentifier | AllowAnonymousIdentifier | AllowEmptyUnionOrIntersection | AllowEmptyTuple | AllowEmptyIndexInfoType | AllowNodeModulesRelativePaths,\n\n    // State\n    InObjectTypeLiteral                     = 1 << 22,\n    InTypeAlias                             = 1 << 23,    // Writing type in type alias declaration\n    InInitialEntityName                     = 1 << 24,    // Set when writing the LHS of an entity name or entity name expression\n}",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      },
+      {
+        "name": "InternalNodeBuilderFlags",
+        "declaration": "enum InternalNodeBuilderFlags {\n    None                                    = 0,\n    WriteComputedProps                      = 1 << 0, // { [E.A]: 1 }\n    NoSyntacticPrinter                      = 1 << 1,\n    DoNotIncludeSymbolChain                 = 1 << 2,    // Skip looking up and printing an accessible symbol chain\n    AllowUnresolvedNames                    = 1 << 3,\n}",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(declaration: HasInferredType, enclosingDeclaration: Node, flags: NodeBuilderFlags, internalFlags: InternalNodeBuilderFlags, tracker: SymbolTracker) => TypeNode | undefined",
+    "directory": "rank-760",
+    "resultType": "TypeNode | undefined",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 763,
+    "receiver_type_id": 10401,
+    "type": "EmitResolver",
+    "field": "getJsxFactoryEntity",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/transformers/jsx.ts",
+      "line": 391,
+      "column": 17
+    },
+    "read": "context.getEmitResolver().getJsxFactoryEntity",
+    "call": "context.getEmitResolver().getJsxFactoryEntity(currentSourceFile)",
+    "utf16Start": 17422,
+    "utf16End": 17467,
+    "fileSha256": "2d9f268e5764a96ef52c2fd4d8b889bf248914917c6152358666a3effb041e6b",
+    "declaration": "getJsxFactoryEntity(location?: Node): EntityName | undefined;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "EmitResolver"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(location?: Node | undefined) => EntityName | undefined",
+    "directory": "rank-763",
+    "resultType": "EntityName | undefined",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 766,
+    "receiver_type_id": 10401,
+    "type": "EmitResolver",
+    "field": "getTypeReferenceSerializationKind",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/transformers/typeSerializer.ts",
+      "line": 491,
+      "column": 22
+    },
+    "read": "resolver.getTypeReferenceSerializationKind",
+    "call": "resolver.getTypeReferenceSerializationKind(node.typeName, currentNameScope ?? currentLexicalScope)",
+    "utf16Start": 22148,
+    "utf16End": 22190,
+    "fileSha256": "8219081416c67c9ea7f1f8da6125775652eb7d065e8897fd430f50d83dbac5d6",
+    "declaration": "getTypeReferenceSerializationKind(typeName: EntityName, location?: Node): TypeReferenceSerializationKind;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "EmitResolver"
+    ],
+    "carrierEnums": [
+      {
+        "name": "TypeReferenceSerializationKind",
+        "declaration": "enum TypeReferenceSerializationKind {\n    // The TypeReferenceNode could not be resolved.\n    // The type name should be emitted using a safe fallback.\n    Unknown,\n\n    // The TypeReferenceNode resolves to a type with a constructor\n    // function that can be reached at runtime (e.g. a `class`\n    // declaration or a `var` declaration for the static side\n    // of a type, such as the global `Promise` type in lib.d.ts).\n    TypeWithConstructSignatureAndValue,\n\n    // The TypeReferenceNode resolves to a Void-like, Nullable, or Never type.\n    VoidNullableOrNeverType,\n\n    // The TypeReferenceNode resolves to a Number-like type.\n    NumberLikeType,\n\n    // The TypeReferenceNode resolves to a BigInt-like type.\n    BigIntLikeType,\n\n    // The TypeReferenceNode resolves to a String-like type.\n    StringLikeType,\n\n    // The TypeReferenceNode resolves to a Boolean-like type.\n    BooleanType,\n\n    // The TypeReferenceNode resolves to an Array-like type.\n    ArrayLikeType,\n\n    // The TypeReferenceNode resolves to the ESSymbol type.\n    ESSymbolType,\n\n    // The TypeReferenceNode resolved to the global Promise constructor symbol.\n    Promise,\n\n    // The TypeReferenceNode resolves to a Function type or a type with call signatures.\n    TypeWithCallSignature,\n\n    // The TypeReferenceNode resolves to any other type.\n    ObjectType,\n}",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(typeName: EntityName, location?: Node | undefined) => TypeReferenceSerializationKind",
+    "directory": "rank-766",
+    "resultType": "TypeReferenceSerializationKind",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 769,
+    "receiver_type_id": 10401,
+    "type": "EmitResolver",
+    "field": "isDeclarationWithCollidingName",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/transformers/es2015.ts",
+      "line": 2880,
+      "column": 18
+    },
+    "read": "resolver.isDeclarationWithCollidingName",
+    "call": "resolver.isDeclarationWithCollidingName(node)",
+    "utf16Start": 128415,
+    "utf16End": 128454,
+    "fileSha256": "79d70178e4923796212e8900090695875e51c9df60a6c604fbe9e43cd0ffbdf4",
+    "declaration": "isDeclarationWithCollidingName(node: Declaration): boolean;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "EmitResolver"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(node: Declaration) => boolean",
+    "directory": "rank-769",
+    "resultType": "boolean",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 772,
+    "receiver_type_id": 10401,
+    "type": "EmitResolver",
+    "field": "isValueAliasDeclaration",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/transformers/ts.ts",
+      "line": 2331,
+      "column": 56
+    },
+    "read": "resolver.isValueAliasDeclaration",
+    "call": "resolver.isValueAliasDeclaration(node)",
+    "utf16Start": 98423,
+    "utf16End": 98455,
+    "fileSha256": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2",
+    "declaration": "isValueAliasDeclaration(node: Node): boolean;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "EmitResolver"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(node: Node) => boolean",
+    "directory": "rank-772",
+    "resultType": "boolean",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 775,
+    "receiver_type_id": 10351,
+    "type": "EmitTextWriter",
+    "field": "write",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/emitter.ts",
+      "line": 4870,
+      "column": 9
+    },
+    "read": "writer.write",
+    "call": "writer.write(s)",
+    "utf16Start": 206647,
+    "utf16End": 206659,
+    "fileSha256": "910f74394f8f4cbef48fe25387e5da6224742754b9a7699ef77312af6f453d63",
+    "declaration": "write(s: string): void;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "EmitTextWriter"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(s: string) => void",
+    "directory": "rank-775",
+    "resultType": "void",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-members"
+    ]
+  },
+  {
     "rank": 778,
     "receiver_type_id": 10351,
     "type": "EmitTextWriter",
@@ -2176,5 +2763,118 @@
       "wrong-members"
     ],
     "expected": "(text: string) => void"
+  },
+  {
+    "rank": 781,
+    "receiver_type_id": 10351,
+    "type": "EmitTextWriter",
+    "field": "writeSymbol",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/utilities.ts",
+      "line": 6437,
+      "column": 13
+    },
+    "read": "writer.writeSymbol",
+    "call": "writer.writeSymbol(s, sym)",
+    "utf16Start": 250618,
+    "utf16End": 250636,
+    "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+    "declaration": "writeSymbol(text: string, symbol: Symbol): void;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "EmitTextWriter",
+      "SymbolWriter"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(text: string, symbol: Symbol) => void",
+    "directory": "rank-781",
+    "resultType": "void",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 787,
+    "receiver_type_id": 94791,
+    "type": "FormatDiagnosticsHost",
+    "field": "getCanonicalFileName",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/program.ts",
+      "line": 672,
+      "column": 106
+    },
+    "read": "host.getCanonicalFileName",
+    "call": "host.getCanonicalFileName(fileName)",
+    "utf16Start": 23959,
+    "utf16End": 23984,
+    "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+    "declaration": "getCanonicalFileName(fileName: string): string;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/program.ts",
+    "declarationSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+    "inheritancePath": [
+      "FormatDiagnosticsHost"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(fileName: string) => string",
+    "directory": "rank-787",
+    "resultType": "string",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 790,
+    "receiver_type_id": 12284,
+    "type": "HasCurrentDirectory",
+    "field": "getCurrentDirectory",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/watch.ts",
+      "line": 287,
+      "column": 89
+    },
+    "read": "host.getCurrentDirectory",
+    "call": "host.getCurrentDirectory()",
+    "utf16Start": 10038,
+    "utf16End": 10062,
+    "fileSha256": "c9d074948345a04d85e87d3c4b3e1a2c8328422c20e0b36b3ee9ae1c7a7ad24e",
+    "declaration": "getCurrentDirectory(): string;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "HasCurrentDirectory"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "() => string",
+    "directory": "rank-790",
+    "resultType": "string",
+    "arity": "1",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result"
+    ]
   }
 ]

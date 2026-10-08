@@ -1,0 +1,7 @@
+// Original callable declaration/read; collection and primitive carriers retained.
+
+interface SourceFile {readonly value:number;}
+interface Base {readonly map:unknown;}
+interface Target<T> {map<U>(callbackfn: (value: T, index: number, array: readonly T[]) => U, thisArg?: any): U[];}
+function probe(value:Base):void {const host={getSourceFiles:():Target<SourceFile>=>value as Target<SourceFile>};host.getSourceFiles().map((value:SourceFile,index:number,array:readonly SourceFile[]):number=>3);}
+probe({map:7});

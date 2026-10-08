@@ -1,0 +1,6 @@
+// Original callable declaration/read; collection and primitive carriers retained.
+type Path = string & { __pathBrand: any; };
+interface Base {readonly getValues:unknown;}
+interface Target {getValues(k: Path): ReadonlySet<Path> | undefined;}
+function probe(value:Base):void {const state={referencedMap:value as Target};state.referencedMap.getValues("key" as Path);}
+probe({getValues:7});

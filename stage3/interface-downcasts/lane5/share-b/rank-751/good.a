@@ -1,0 +1,9 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Expression { readonly value: number; }
+interface EntityName { readonly value: number; }
+interface ParameterDeclaration { readonly value: number; }
+interface Block { readonly value: number; }
+interface Base {readonly createAwaiterHelper:unknown;}
+interface Target {createAwaiterHelper(hasLexicalThis: boolean, argumentsExpression: Expression | undefined, promiseConstructor: EntityName | Expression | undefined, parameters: readonly ParameterDeclaration[] | undefined, body: Block): Expression;}
+function probe(value:Base):void {function emitHelpers():Target {return value as Target;}console.log(`${emitHelpers().createAwaiterHelper(true,{value:3},{value:3},[{value:3}],{value:3}).value}`);}
+probe({createAwaiterHelper:(hasLexicalThis: boolean, argumentsExpression: Expression | undefined, promiseConstructor: EntityName | Expression | undefined, parameters: readonly ParameterDeclaration[] | undefined, body: Block):Expression=>{console.log(`${hasLexicalThis}`);if (argumentsExpression !== undefined) {console.log(`${argumentsExpression.value}`);}if (promiseConstructor !== undefined) {console.log(`${promiseConstructor.value}`);}if (parameters !== undefined) {for (const element of parameters) {console.log(`${element.value}`);}}console.log(`${body.value}`);return {value:3};}});

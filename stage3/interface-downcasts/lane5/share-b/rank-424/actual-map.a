@@ -1,0 +1,9 @@
+// Original declaration, read, key aliases, and collection result carrier.
+interface SortedArray<T> extends Array<T> {
+    " __sortedArrayBrand": any;
+}
+interface DiagnosticWithLocation {readonly value:number;}
+interface Base {readonly get:unknown;}
+interface Target<K,V> {get(key: K): V | undefined;}
+function probe(value:Base):void {const fileDiagnostics=value as Target<string,SortedArray<DiagnosticWithLocation>>;fileDiagnostics.get("key");console.log("called");}
+probe(new Map<string,SortedArray<DiagnosticWithLocation>>());

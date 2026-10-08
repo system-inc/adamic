@@ -1,0 +1,35 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface SourceFile { readonly value: number; }
+type ResolutionMode = ModuleKind.ESNext | ModuleKind.CommonJS | undefined;
+enum ModuleKind {
+    /** @deprecated */
+    None = 0,
+    CommonJS = 1,
+    /** @deprecated */
+    AMD = 2,
+    /** @deprecated */
+    UMD = 3,
+    /** @deprecated */
+    System = 4,
+
+    // NOTE: ES module kinds should be contiguous to more easily check whether a module kind is *any* ES module kind.
+    //       Non-ES module kinds should not come between ES2015 (the earliest ES module kind) and ESNext (the last ES
+    //       module kind).
+    ES2015 = 5,
+    ES2020 = 6,
+    ES2022 = 7,
+    ESNext = 99,
+
+    // Node16+ is an amalgam of commonjs (albeit updated) and es2022+, and represents a distinct module system from es2020/esnext
+    Node16 = 100,
+    Node18 = 101,
+    Node20 = 102,
+    NodeNext = 199,
+
+    // Emit as written
+    Preserve = 200,
+}
+interface Base {readonly getDefaultResolutionModeForFile:unknown;}
+interface Target {getDefaultResolutionModeForFile(sourceFile: SourceFile): ResolutionMode;}
+function probe(value:Base):void {const host=value as Target;console.log(`${host.getDefaultResolutionModeForFile({value:3})}`);}
+probe({getDefaultResolutionModeForFile:7});

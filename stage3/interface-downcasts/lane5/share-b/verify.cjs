@@ -10,7 +10,7 @@ const carrierText = text => normalized(text.replace(/^export\s+/, '').replace(/^
 function verifyCarriers(source, member, filename) {
  for (const declaration of member.carrierDeclarations || []) {
   if (!source.statements.some(node => carrierText(node.getText(source)) === carrierText(declaration))) throw Error(filename + ': carrier declaration changed');
-  if (member.carrierSource || member.originalFunctionHeaders && member.declarationRoot !== 'repository') {
+  if (member.carrierSource || member.originalFunctionHeaders?.length && member.declarationRoot !== 'repository') {
    const evidence = member.carrierSource || {filename: member.declarationFile, sha256: member.declarationSha256};
    const bytes = fs.readFileSync(path.join(process.argv[2], evidence.filename));
    if (crypto.createHash('sha256').update(bytes).digest('hex') !== evidence.sha256) throw Error('carrier source changed');
@@ -20,6 +20,15 @@ function verifyCarriers(source, member, filename) {
    visit(original);
    if (!found) throw Error(filename + ': carrier provenance changed');
   }
+ }
+}
+function verifyCarrierEvidence(member, filename) {
+ for (const item of member.carrierEvidence || []) {
+  const bytes=fs.readFileSync(path.join(process.argv[2],item.sourceFile));
+  if (crypto.createHash('sha256').update(bytes).digest('hex')!==item.sha256) throw Error('carrier source changed');
+  const original=ts.createSourceFile(item.sourceFile,bytes.toString('utf8'),ts.ScriptTarget.Latest,true);let found=false;
+  function visit(node) {if(carrierText(node.getText(original))===carrierText(item.declaration))found=true;ts.forEachChild(node,visit);}visit(original);
+  if(!found)throw Error(filename+': carrier provenance changed');
  }
 }
 let count = 0;
@@ -39,6 +48,9 @@ for (const family of families) {
   if (process.env.ADAMIC_CALLABLE_SHARE_B_DECLARATION_MUTANT === '469' && family.rank === 469 && variant === 'good') fixtureText = fixtureText.replace('hint: EmitHint', 'hint: number');
   if (process.env.ADAMIC_CALLABLE_SHARE_B_ENUM_MUTANT === '469' && family.rank === 469 && variant === 'good') fixtureText = fixtureText.replace('SourceFile,', 'SourceFile = 1,');
   if (process.env.ADAMIC_CALLABLE_SHARE_B_ARRAY_MUTANT === '466' && family.rank === 466 && variant === 'good') fixtureText = fixtureText.replace('interface NodeArray<T> extends ReadonlyArray<T> {}', 'interface NodeArray<T> { readonly value: number; }');
+  if (process.env.ADAMIC_CALLABLE_SHARE_B_DECLARATION_MUTANT === '508' && family.rank === 508 && variant === 'good') fixtureText = fixtureText.replace('kind: SyntaxKind', 'kind: number');
+  if (process.env.ADAMIC_CALLABLE_SHARE_B_ENUM_MUTANT === '529' && family.rank === 529 && variant === 'good') fixtureText = fixtureText.replace('Field = "f"', 'Field = "x"');
+  if (process.env.ADAMIC_CALLABLE_SHARE_B_ALIAS_MUTANT === '658' && family.rank === 658 && variant === 'good') fixtureText = fixtureText.replace('type ResolutionMode = ModuleKind.ESNext |', 'type ResolutionMode = ModuleKind.CommonJS |');
   const source = ts.createSourceFile(file,fixtureText,ts.ScriptTarget.Latest,true);
   let declaration, read;
   function visit(node) {
@@ -59,6 +71,7 @@ for (const family of families) {
    if (!originalEnum || normalized(originalEnum.getText(original).replace(/^export\s+/,'').replace(/^const\s+enum/,'enum'))!==normalized(carrier.declaration)) throw Error('enum provenance changed');
   }
   verifyCarriers(source, family, file);
+  for (const header of family.originalFunctionHeaders || []) if (!declarationBytes.toString('utf8').includes(header)) throw Error('original method header changed');
   count++;
  }
 }
@@ -76,7 +89,7 @@ for (const member of blocked) {
  if (normalized(declarations.join('\n')) !== normalized(member.declaration) || !read) throw Error(files[member.rank] + ': original blocker declaration/read changed');
 }
 
-const probes = ['batch-02-probes.json','batch-03-debug-probes.json','batch-03-signature-probes.json','batch-03-map-probes.json','batch-03-array-probes.json','batch-03-diagnostic-probes.json','batch-04-tracing-probes.json','batch-04-map-probes.json','batch-04-fs-probes.json'].flatMap(f=>JSON.parse(fs.readFileSync(path.join(__dirname,f))));
+const probes = ['batch-02-probes.json','batch-03-debug-probes.json','batch-03-signature-probes.json','batch-03-map-probes.json','batch-03-array-probes.json','batch-03-diagnostic-probes.json','batch-04-tracing-probes.json','batch-04-map-probes.json','batch-04-fs-probes.json','batch-05-map-probes.json','batch-05-array-probes.json','batch-05-signature-probes.json','batch-05-cast-probes.json','batch-05-diagnostic-probes.json'].flatMap(f=>JSON.parse(fs.readFileSync(path.join(__dirname,f))));
 const optional = JSON.parse(fs.readFileSync(path.join(__dirname,'batch-02-original.json'))).members.find(m=>m.rank===205);
 for (const member of [...probes,{...optional,filename:'rank-205/good.a'}]) {
  const source = ts.createSourceFile(member.filename,fs.readFileSync(path.join(__dirname,member.filename),'utf8'),ts.ScriptTarget.Latest,true);
@@ -93,6 +106,7 @@ for (const member of [...probes,{...optional,filename:'rank-205/good.a'}]) {
  }
  if (member.utf16Start !== undefined && fs.readFileSync(path.join(process.argv[2],member.witness.file),'utf8').slice(member.utf16Start,member.utf16End) !== member.read) throw Error('original probe read span changed');
  verifyCarriers(source, member, member.filename);
+ verifyCarrierEvidence(member, member.filename);
  for (const header of member.originalFunctionHeaders || []) {if(!fs.readFileSync(path.join(declarationRoot,member.declarationFile),'utf8').includes(header)) throw Error('namespace function header changed');}
  if (normalized(declarations.join('\n'))!==normalized(member.declaration)||!read) throw Error(member.filename+': original declaration/read changed');
 }

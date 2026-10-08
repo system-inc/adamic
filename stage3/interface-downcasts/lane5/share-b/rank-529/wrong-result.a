@@ -1,0 +1,12 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Expression { readonly value: number; }
+interface Identifier { readonly value: number; }
+enum PrivateIdentifierKind {
+    Field = "f",
+    Method = "m",
+    Accessor = "a",
+}
+interface Base {readonly createClassPrivateFieldSetHelper:unknown;}
+interface Target {createClassPrivateFieldSetHelper(receiver: Expression, state: Identifier, value: Expression, kind: PrivateIdentifierKind, f: Identifier | undefined): Expression;}
+function probe(value:Base):void {function emitHelpers():Target {return value as Target;}console.log(`${emitHelpers().createClassPrivateFieldSetHelper({value:3},{value:3},{value:3},PrivateIdentifierKind.Field,{value:3}).value}`);}
+probe({createClassPrivateFieldSetHelper:(receiver: Expression, state: Identifier, value: Expression, kind: PrivateIdentifierKind, f: Identifier | undefined):number=>9});

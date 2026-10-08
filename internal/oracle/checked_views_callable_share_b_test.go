@@ -144,7 +144,7 @@ func TestCheckedViewCallableShareBCounts(t *testing.T) {
 		}
 	}
 	// Receiver-gap fixtures cannot produce counts until their native conversion errors are fixed.
-	for _, filename := range []string{"batch-03-diagnostic-probes.json"} {
+	for _, filename := range []string{"batch-03-diagnostic-probes.json", "batch-05-diagnostic-probes.json"} {
 		contents, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-b", filename))
 		if err != nil {
 			t.Fatal(err)
@@ -265,7 +265,7 @@ func callableShareBArityMutant(t *testing.T, program *ir.Program, family callabl
 // Not parallel: ordered admission evidence is collected for this share's ledger.
 func TestCheckedViewCallableShareBAdmissionProbes(t *testing.T) {
 	var data []byte
-	for _, filename := range []string{"batch-02-probes.json", "batch-03-debug-probes.json", "batch-03-signature-probes.json", "batch-04-tracing-probes.json", "batch-04-fs-probes.json"} {
+	for _, filename := range []string{"batch-02-probes.json", "batch-03-debug-probes.json", "batch-03-signature-probes.json", "batch-04-tracing-probes.json", "batch-04-fs-probes.json", "batch-05-cast-probes.json", "batch-05-signature-probes.json"} {
 		contents, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-b", filename))
 		if err != nil {
 			t.Fatal(err)
@@ -310,7 +310,7 @@ func TestCheckedViewCallableShareBAdmissionProbes(t *testing.T) {
 
 // Not parallel: ordered original-receiver gap observations share their ledger.
 func TestCheckedViewCallableShareBCollectionReceivers(t *testing.T) {
-	for _, group := range []struct{ Filename, NativeType string }{{"batch-03-map-probes.json", "map"}, {"batch-03-array-probes.json", "array"}, {"batch-04-map-probes.json", "map"}} {
+	for _, group := range []struct{ Filename, NativeType string }{{"batch-03-map-probes.json", "map"}, {"batch-03-array-probes.json", "array"}, {"batch-04-map-probes.json", "map"}, {"batch-05-map-probes.json", "map"}, {"batch-05-array-probes.json", "array"}} {
 		data, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-b", group.Filename))
 		if err != nil {
 			t.Fatal(err)
@@ -376,5 +376,39 @@ func TestCheckedViewCallableShareBByteViewModule(t *testing.T) {
 	}
 	if report := leaksUncached(t, program, binary); report != "" {
 		t.Fatal(report)
+	}
+}
+
+func TestCheckedViewCallableShareBDiagnosticNames(t *testing.T) {
+	contents, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-b/batch-05-diagnostic-probes.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var probes []struct{ Field, Directory, Expected, ObservedExpected string }
+	if err := json.Unmarshal(contents, &probes); err != nil {
+		t.Fatal(err)
+	}
+	for _, probe := range probes {
+		t.Run(probe.Directory, func(t *testing.T) {
+			program, path := interfaceFixture(t, "lane5/share-b/"+probe.Directory+"/good")
+			truth := onNode(t, path)
+			if truth.exitCode != 0 {
+				t.Fatalf("Node: %#v", truth)
+			}
+			contract := program.ViewContracts[callableShareBContract(t, program, probe.Field)-1]
+			if contract.Name != probe.ObservedExpected || contract.Name == probe.Expected {
+				t.Fatalf("callable diagnostic: %q", contract.Name)
+			}
+			sanitized, binary := nativelyUncached(t, program)
+			for _, got := range []run{releasedUncached(t, program), sanitized, onJavaScriptBackend(t, program)} {
+				if difference := disagreement(truth, got); difference != "" {
+					t.Fatal(difference)
+				}
+			}
+			if report := leaksUncached(t, program, binary); report != "" {
+				t.Fatal(report)
+			}
+			t.Logf("original type: %s; observed type: %s", probe.Expected, contract.Name)
+		})
 	}
 }

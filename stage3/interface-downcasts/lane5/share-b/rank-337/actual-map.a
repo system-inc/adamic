@@ -1,0 +1,7 @@
+// Original declaration, read, key aliases, and collection result carrier.
+type Path = string & { __pathBrand: any; };
+interface BuilderFileEmit {readonly value:number;}
+interface Base {readonly get:unknown;}
+interface Target<K,V> {get(key: K): V | undefined;}
+function probe(value:Base):void {const state={seenEmittedFiles:value as Target<Path,BuilderFileEmit>};state.seenEmittedFiles?.get("key" as Path);console.log("called");}
+probe(new Map<Path,BuilderFileEmit>());

@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Node { readonly value: number; }
+interface EntityName { readonly value: number; }
+interface Base {readonly getJsxFactoryEntity:unknown;}
+interface Target {getJsxFactoryEntity(location?: Node): EntityName | undefined;}
+function probe(value:Base):void {const context={getEmitResolver:():Target=>value as Target};const result=context.getEmitResolver().getJsxFactoryEntity({value:3});if (result !== undefined) {console.log(`${result.value}`);}}
+probe({getJsxFactoryEntity:7});

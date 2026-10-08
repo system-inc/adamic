@@ -1,0 +1,41 @@
+[
+  {
+    "rank": 739,
+    "receiver_type_id": 6073,
+    "type": "DebugTypeMapper",
+    "field": "__debugToString",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/debug.ts",
+      "line": 849,
+      "column": 35
+    },
+    "read": "(this.mapper1 as unknown as DebugTypeMapper).__debugToString",
+    "call": "(this.mapper1 as unknown as DebugTypeMapper).__debugToString()",
+    "utf16Start": 40798,
+    "utf16End": 40858,
+    "fileSha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b",
+    "declaration": "__debugToString(): string;",
+    "originalFunctionHeaders": [
+      "__debugToString(): string"
+    ],
+    "declarationFile": "src/compiler/debug.ts",
+    "declarationSha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b",
+    "inheritancePath": [
+      "DebugTypeMapper"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "() => string",
+    "directory": "rank-739",
+    "resultType": "string",
+    "arity": "1",
+    "variants": [
+      "good"
+    ],
+    "filename": "rank-739/good.a",
+    "output": "answer3\n",
+    "refusal": "adamic/no-unchecked-cast"
+  }
+]

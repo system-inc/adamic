@@ -1,0 +1,227 @@
+[
+  {
+    "rank": 472,
+    "receiver_type_id": 10094,
+    "type": "ProgramDiagnostics",
+    "field": "getFileReasons",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/program.ts",
+      "line": 1953,
+      "column": 38
+    },
+    "read": "programDiagnostics.getFileReasons",
+    "call": "programDiagnostics.getFileReasons()",
+    "utf16Start": 92765,
+    "utf16End": 92798,
+    "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+    "declaration": "getFileReasons(): MultiMap<Path, FileIncludeReason>;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/programDiagnostics.ts",
+    "declarationSha256": "1def95bb98fb69151be4295c58ccc4599cdb38b4cb710b807f19b7e8433fa8a5",
+    "inheritancePath": [
+      "ProgramDiagnostics"
+    ],
+    "filename": "rank-472/contract-probe.a",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };",
+      "interface MultiMap<K, V> extends Map<K, V[]> {\n    /**\n     * Adds the value to an array of values associated with the key, and returns the array.\n     * Creates the array if it does not already exist.\n     */\n    add(key: K, value: V): V[];\n    /**\n     * Removes a value from an array of values associated with the key.\n     * Does not preserve the order of those values.\n     * Does nothing if `key` is not in `map`, or `value` is not in `map[key]`.\n     */\n    remove(key: K, value: V): void;\n}"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type Path = string & { __pathBrand: any; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      },
+      {
+        "declaration": "interface MultiMap<K, V> extends Map<K, V[]> {\n    /**\n     * Adds the value to an array of values associated with the key, and returns the array.\n     * Creates the array if it does not already exist.\n     */\n    add(key: K, value: V): V[];\n    /**\n     * Removes a value from an array of values associated with the key.\n     * Does not preserve the order of those values.\n     * Does nothing if `key` is not in `map`, or `value` is not in `map[key]`.\n     */\n    remove(key: K, value: V): void;\n}",
+        "sourceFile": "src/compiler/core.ts",
+        "sha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b"
+      }
+    ],
+    "output": "",
+    "refusal": "a primitive brand member __pathBrand whose type is not void"
+  },
+  {
+    "rank": 475,
+    "receiver_type_id": 96890,
+    "type": "ReadonlyManyToManyPathMap",
+    "field": "getValues",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/builderState.ts",
+      "line": 484,
+      "column": 36
+    },
+    "read": "state.referencedMap.getValues",
+    "call": "state.referencedMap.getValues(path)",
+    "utf16Start": 19412,
+    "utf16End": 19441,
+    "fileSha256": "51ef79dcaebb2e9b09c5270d07ca8f4abf3eb04e4849eb9014bf2d55f2c570a5",
+    "declaration": "getValues(k: Path): ReadonlySet<Path> | undefined;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/builderState.ts",
+    "declarationSha256": "51ef79dcaebb2e9b09c5270d07ca8f4abf3eb04e4849eb9014bf2d55f2c570a5",
+    "inheritancePath": [
+      "ReadonlyManyToManyPathMap"
+    ],
+    "filename": "rank-475/contract-probe.a",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type Path = string & { __pathBrand: any; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ],
+    "output": "",
+    "refusal": "a primitive brand member __pathBrand whose type is not void"
+  },
+  {
+    "rank": 544,
+    "receiver_type_id": 9837,
+    "type": "FileReference[]",
+    "field": "push",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/parser.ts",
+      "line": 10641,
+      "column": 25
+    },
+    "read": "typeReferenceDirectives.push",
+    "call": "typeReferenceDirectives.push({ pos: types.pos, end: types.end, fileName: types.value, ...(parsed ? { resolutionMode: parsed } : {}), ...(preserve ? { preserve } : {}) })",
+    "utf16Start": 530818,
+    "utf16End": 530846,
+    "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+    "declaration": "push(...items: T[]): number;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-544/contract-probe.a",
+    "carrierDeclarations": [],
+    "carrierEvidence": [],
+    "output": "",
+    "refusal": "checked view read of field push with unsupported callable contract"
+  },
+  {
+    "rank": 646,
+    "receiver_type_id": 10136,
+    "type": "Symbol[]",
+    "field": "map",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 8484,
+      "column": 44
+    },
+    "read": "parents!.map",
+    "call": "parents!.map(symbol =>\r\n                            some(symbol.declarations, hasNonGlobalAugmentationExternalModuleSymbol)\r\n                                ? getSpecifierForModuleSymbol(symbol, context)\r\n                                : undefined\r\n                        )",
+    "utf16Start": 470365,
+    "utf16End": 470377,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declaration": "map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-646/contract-probe.a",
+    "carrierDeclarations": [],
+    "carrierEvidence": [],
+    "output": "",
+    "refusal": "checked view read of field map with unsupported callable contract"
+  },
+  {
+    "rank": 670,
+    "receiver_type_id": 75081,
+    "type": "[message: DiagnosticMessage, ...args: (string | number)[]][]",
+    "field": "unshift",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 22550,
+      "column": 29
+    },
+    "read": "secondaryRootErrors.unshift",
+    "call": "secondaryRootErrors.unshift([mappedMsg, args[0], args[1]])",
+    "utf16Start": 1325193,
+    "utf16End": 1325220,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declaration": "unshift(...items: T[]): number;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-670/contract-probe.a",
+    "carrierDeclarations": [],
+    "carrierEvidence": [],
+    "output": "",
+    "refusal": "stage 0 can't lower a tuple element of type string | number yet"
+  },
+  {
+    "rank": 673,
+    "receiver_type_id": 9932,
+    "type": "readonly Diagnostic[]",
+    "field": "forEach",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/programDiagnostics.ts",
+      "line": 174,
+      "column": 32
+    },
+    "read": "diagnostic.diagnostics.forEach",
+    "call": "diagnostic.diagnostics.forEach(d => computedDiagnostics!.add(d))",
+    "utf16Start": 7269,
+    "utf16End": 7299,
+    "fileSha256": "1def95bb98fb69151be4295c58ccc4599cdb38b4cb710b807f19b7e8433fa8a5",
+    "declaration": "forEach(callbackfn: (value: T, index: number, array: readonly T[]) => void, thisArg?: any): void;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "ReadonlyArray"
+    ],
+    "filename": "rank-673/contract-probe.a",
+    "carrierDeclarations": [],
+    "carrierEvidence": [],
+    "output": "",
+    "refusal": "checked view read of field forEach with unsupported callable contract"
+  },
+  {
+    "rank": 676,
+    "receiver_type_id": 9845,
+    "type": "readonly SourceFile[]",
+    "field": "map",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 1547,
+      "column": 53
+    },
+    "read": "host.getSourceFiles().map",
+    "call": "host.getSourceFiles().map((file, i) => [file, i])",
+    "utf16Start": 48028,
+    "utf16End": 48053,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declaration": "map<U>(callbackfn: (value: T, index: number, array: readonly T[]) => U, thisArg?: any): U[];",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "ReadonlyArray"
+    ],
+    "filename": "rank-676/contract-probe.a",
+    "carrierDeclarations": [],
+    "carrierEvidence": [],
+    "output": "",
+    "refusal": "checked view read of field map with unsupported callable contract"
+  }
+]

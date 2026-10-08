@@ -1,0 +1,6 @@
+// Original declaration, read, key aliases, and collection result carrier.
+type Path = string & { __pathBrand: any; };
+interface Base {readonly set:unknown;}
+interface Target<K,V> {set(key: K, value: V): this;}
+function probe(value:Base):void {const sourceFileToPackageName=value as Target<Path,string>;sourceFileToPackageName.set("key" as Path,"value");console.log("called");}
+probe(new Map<Path,string>());

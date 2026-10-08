@@ -1,0 +1,136 @@
+--- FAIL: TestCountsAreRecorded (55.23s)
+    --- FAIL: TestCountsAreRecorded/fixtures (0.01s)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_finalized.a (0.04s)
+            counts_test.go:169: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_random.a (0.04s)
+            counts_test.go:169: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_crypto.a (0.02s)
+            counts_test.go:169: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/require_node_perf_hooks.a (0.03s)
+            counts_test.go:210: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_writes.a (0.01s)
+            counts_test.go:169: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_bom.a (0.06s)
+            counts_test.go:169: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_utf16.a (0.01s)
+            counts_test.go:169: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_encodings.a (0.01s)
+            counts_test.go:169: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_utf8.a (0.04s)
+            counts_test.go:169: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/require_perf_hooks.a (0.05s)
+            counts_test.go:210: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/census_overload_contracts.a (0.11s)
+            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/census_overload_contracts.a:13:16: stage 0 can't lower an overloaded call with more arguments than its implementation yet
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/census_small_boolean.a (0.10s)
+            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/census_small_boolean.a:19:16: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_field_values.a (0.08s)
+            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/nbody_field_values.a:18:47: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_number_slots.a (0.16s)
+            counts_test.go:118: native: clang failed: exit status 1
+                /tmp/adamic-gate/adamic-build-264653510/main.c:654:68: error: passing 'adamic_object *' (aka 'struct adamic_object *') to parameter of incompatible type 'adamic_maybe_number' (aka 'struct adamic_maybe_number')
+                  654 |                                         adamic_string * adamic_temporary_179 = adamic_function_1_show(adamic_temporary_178);
+                      |                                                                                                       ^~~~~~~~~~~~~~~~~~~~
+                /tmp/adamic-gate/adamic-build-264653510/main.c:125:67: note: passing argument to parameter 'adamic_local_11_value' here
+                  125 | static adamic_string * adamic_function_1_show(adamic_maybe_number adamic_local_11_value) {
+                      |                                                                   ^
+                1 error generated.
+
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_symbols.a (0.25s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 4 bytes 528 reachable 4 bytes 528 unreachable 0 bytes 0 metadata 128\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_literals.a (0.29s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 3 bytes 452 reachable 2 bytes 374 unreachable 1 bytes 78 metadata 112\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_cache.a (0.30s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 364 reachable 1 bytes 68 unreachable 1 bytes 296 metadata 96\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_regression_09.a (0.23s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 3 bytes 660 reachable 2 bytes 592 unreachable 1 bytes 68 metadata 112\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_regression_08.a (0.24s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 364 reachable 2 bytes 364 unreachable 0 bytes 0 metadata 96\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_regression_07.a (0.19s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 364 reachable 2 bytes 364 unreachable 0 bytes 0 metadata 96\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_regression_06.a (0.19s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 354 reachable 2 bytes 354 unreachable 0 bytes 0 metadata 96\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_process_host.a (0.06s)
+            counts_test.go:191: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/require_node_path.a (0.02s)
+            counts_test.go:210: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/require_path.a (0.04s)
+            counts_test.go:210: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/require_fs.a (0.04s)
+            counts_test.go:210: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_rm.a (0.02s)
+            counts_test.go:201: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_mkdtemp.a (0.01s)
+            counts_test.go:201: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write_buffer.a (0.02s)
+            counts_test.go:201: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_read_sync.a (0.03s)
+            counts_test.go:201: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_buffer.a (0.02s)
+            counts_test.go:201: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_system.a (0.02s)
+            counts_test.go:201: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_utimes.a (0.04s)
+            counts_test.go:201: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_unlink.a (0.03s)
+            counts_test.go:201: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_mkdir.a (0.01s)
+            counts_test.go:201: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_stat.a (0.01s)
+            counts_test.go:201: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_exists.a (0.01s)
+            counts_test.go:201: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/process_bad_code.a (0.06s)
+            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/process_bad_code.a:2:44: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write_file.a (0.01s)
+            counts_test.go:201: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_close.a (0.03s)
+            counts_test.go:201: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write.a (0.01s)
+            counts_test.go:201: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_open.a (0.01s)
+            counts_test.go:201: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_read.a (0.01s)
+            counts_test.go:201: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_permissions.a (0.02s)
+            counts_test.go:191: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_realpath.a (0.01s)
+            counts_test.go:191: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_system.a (0.02s)
+            counts_test.go:191: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_entries.a (0.01s)
+            counts_test.go:191: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_input.a (0.01s)
+            counts_test.go:191: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_path_posix.a (0.04s)
+            counts_test.go:191: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/process_exit_default.a (0.03s)
+            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/process_exit_default.a:3:26: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/process_exit.a (0.07s)
+            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/process_exit.a:2:44: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_process_system.a (0.01s)
+            counts_test.go:191: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_process_performance_core.a (0.01s)
+            counts_test.go:191: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_refused/set_iterator.a (0.27s)
+            counts_test.go:182: no counts at the end of stderr (exit -1): "adamic: graph region: live 7 bytes 638 reachable 7 bytes 638 unreachable 0 bytes 0 metadata 176\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_process_performance.a (0.02s)
+            counts_test.go:191: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_refused/set_add.a (0.28s)
+            counts_test.go:182: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 364 reachable 2 bytes 364 unreachable 0 bytes 0 metadata 96\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_refused/map_iterator.a (0.20s)
+            counts_test.go:182: no counts at the end of stderr (exit -1): "adamic: graph region: live 6 bytes 580 reachable 6 bytes 580 unreachable 0 bytes 0 metadata 160\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_refused/map_iterator_parenthesized.a (0.23s)
+            counts_test.go:182: no counts at the end of stderr (exit -1): "adamic: graph region: live 6 bytes 580 reachable 6 bytes 580 unreachable 0 bytes 0 metadata 160\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_refused/map_key.a (0.21s)
+            counts_test.go:182: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 364 reachable 2 bytes 364 unreachable 0 bytes 0 metadata 96\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_refused/map_set.a (0.24s)
+            counts_test.go:182: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 364 reachable 2 bytes 364 unreachable 0 bytes 0 metadata 96\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_refused/ctor_set.a (0.20s)
+            counts_test.go:182: no counts at the end of stderr (exit -1): "adamic: graph region: live 4 bytes 728 reachable 4 bytes 728 unreachable 0 bytes 0 metadata 192\nfree(): invalid pointer\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	55.247s
+FAIL

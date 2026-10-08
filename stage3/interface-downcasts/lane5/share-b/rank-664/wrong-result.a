@@ -1,0 +1,11 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Version { readonly value: number; }
+enum Comparison {
+    LessThan = -1,
+    EqualTo = 0,
+    GreaterThan = 1,
+}
+interface Base {readonly compareTo:unknown;}
+interface Target {compareTo(other: Version | undefined): Comparison;}
+function probe(value:Base):void {const version=value as Target;console.log(`${version.compareTo({value:3})}`);}
+probe({compareTo:(other: Version | undefined):string=>"wrong"});

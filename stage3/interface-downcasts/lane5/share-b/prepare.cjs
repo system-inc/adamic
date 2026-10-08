@@ -22,6 +22,11 @@ function scan(directory) {
      const name = node.name.text;
      interfaces.set(name, [...(interfaces.get(name) || []), {node, source}]);
     }
+    if (ts.isTypeAliasDeclaration(node)) {
+     function literals(n) { if (ts.isTypeLiteralNode(n)) interfaces.set(node.name.text, [...(interfaces.get(node.name.text) || []), {node:n, source}]); ts.forEachChild(n, literals); }
+     literals(node.type);
+    }
+    if (ts.isClassDeclaration(node) && node.name) interfaces.set(node.name.text, [...(interfaces.get(node.name.text) || []), {node, source}]);
     if (ts.isFunctionDeclaration(node) && node.name && node.body) functions.set(node.name.text, {node, source});
     ts.forEachChild(node, visit);
    }
@@ -60,7 +65,7 @@ for (const pair of pairs) {
  const found = member(name === 'SymbolTable' ? 'Map' : name, pair.field);
  if (!read || !found) throw Error('missing original ' + pair.rank + ' ' + pair.type + '.' + pair.field);
  const declarationFile = path.relative(original, found.source.fileName);
- members.push({rank:pair.rank, receiver_type_id:pair.receiver_type_id, type:pair.type, field:pair.field, candidateReads:pair.reads, witness:pair.witness, read:read.getText(source), call:read.parent.getText(source), utf16Start:read.getStart(source), utf16End:read.end, fileSha256:hash(source.text), declaration:found.declarations.map(d => d.getText(found.source)).join('\n'), declarationFile, declarationSha256:hash(found.source.text), inheritancePath:found.inheritancePath});
+ members.push({rank:pair.rank, receiver_type_id:pair.receiver_type_id, type:pair.type, field:pair.field, candidateReads:pair.reads, witness:pair.witness, read:read.getText(source), call:read.parent.getText(source), utf16Start:read.getStart(source), utf16End:read.end, fileSha256:hash(source.text), declaration:found.declarations.map(d => ts.isMethodDeclaration(d) ? found.source.text.slice(d.getStart(found.source),d.body.getStart(found.source)).trim()+';' : d.getText(found.source)).join('\n'), originalFunctionHeaders:found.declarations.filter(d=>ts.isMethodDeclaration(d)).map(d=>found.source.text.slice(d.getStart(found.source),d.body.getStart(found.source)).trim()), declarationFile, declarationSha256:hash(found.source.text), inheritancePath:found.inheritancePath});
 }
 if (members.length !== ranks.size) throw Error('missing rank');
 fs.writeFileSync(path.join(__dirname, process.argv[4] || 'original-witnesses.json'), JSON.stringify({sourceSha:pin, basis:'complete original member declarations and reads; adjacent data carriers reduced', members}, null, 2) + '\n');

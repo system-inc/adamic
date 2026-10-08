@@ -1,0 +1,7 @@
+// Original callable declaration/read; collection and primitive carriers retained.
+
+interface FileReference {readonly value:number;}
+interface Base {readonly push:unknown;}
+interface Target<T> {push(...items: T[]): number;}
+function probe(value:Base):void {const typeReferenceDirectives=value as Target<FileReference>;typeReferenceDirectives.push({value:3});}
+probe({push:7});

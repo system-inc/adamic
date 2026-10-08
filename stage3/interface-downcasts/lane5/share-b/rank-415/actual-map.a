@@ -1,0 +1,7 @@
+// Original declaration, read, key aliases, and collection result carrier.
+type Path = string & { __pathBrand: any; };
+interface FileInfo {readonly value:number;}
+interface Base {readonly has:unknown;}
+interface Target<K,V> {has(key: K): boolean;}
+function probe(value:Base):void {const builderProgram={state:{fileInfos:value as Target<Path,FileInfo>}};builderProgram.state.fileInfos.has("key" as Path);console.log("called");}
+probe(new Map<Path,FileInfo>());

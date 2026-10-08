@@ -1,0 +1,74 @@
+[
+  {
+    "rank": 592,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createMethodSignature",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/parser.ts",
+      "line": 4278,
+      "column": 20
+    },
+    "read": "factory.createMethodSignature",
+    "call": "factory.createMethodSignature(modifiers, name, questionToken, typeParameters, parameters, type)",
+    "utf16Start": 211840,
+    "utf16End": 211869,
+    "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+    "declaration": "createMethodSignature(modifiers: readonly Modifier[] | undefined, name: string | PropertyName, questionToken: QuestionToken | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined): MethodSignature;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(modifiers: readonly Modifier[] | undefined, name: string | PropertyName, questionToken: QuestionToken | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined) => MethodSignature",
+    "directory": "rank-592",
+    "resultType": "MethodSignature",
+    "arity": "0",
+    "variants": [
+      "good"
+    ],
+    "filename": "rank-592/good.a",
+    "observedExpected": "(modifiers: readonly Modifier[] | undefined, name: string | PropertyName, questionToken: QuestionToken | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: ..., type: TypeNode | undefined) => MethodSignature"
+  },
+  {
+    "rank": 751,
+    "receiver_type_id": 12054,
+    "type": "EmitHelperFactory",
+    "field": "createAwaiterHelper",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/transformers/es2017.ts",
+      "line": 808,
+      "column": 21
+    },
+    "read": "emitHelpers().createAwaiterHelper",
+    "call": "emitHelpers().createAwaiterHelper(\r\n                        hasLexicalThis,\r\n                        argumentsExpression,\r\n                        promiseConstructor,\r\n                        innerParameters,\r\n                        asyncBody,\r\n                    )",
+    "utf16Start": 34261,
+    "utf16End": 34294,
+    "fileSha256": "b18e65782e3ff096fb09a4609db90dddcb0cbdd8a2f1e72caeea19426dbd92b5",
+    "declaration": "createAwaiterHelper(hasLexicalThis: boolean, argumentsExpression: Expression | undefined, promiseConstructor: EntityName | Expression | undefined, parameters: readonly ParameterDeclaration[] | undefined, body: Block): Expression;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/factory/emitHelpers.ts",
+    "declarationSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+    "inheritancePath": [
+      "EmitHelperFactory"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(hasLexicalThis: boolean, argumentsExpression: Expression | undefined, promiseConstructor: Expression | EntityName | undefined, parameters: readonly ParameterDeclaration[] | undefined, body: Block) => Expression",
+    "directory": "rank-751",
+    "resultType": "Expression",
+    "arity": "0",
+    "variants": [
+      "good"
+    ],
+    "filename": "rank-751/good.a",
+    "observedExpected": "(hasLexicalThis: boolean, argumentsExpression: Expression | undefined, promiseConstructor: EntityName | Expression | undefined, parameters: ... | undefined, body: Block) => Expression"
+  }
+]

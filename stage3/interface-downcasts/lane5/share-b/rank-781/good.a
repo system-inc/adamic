@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Symbol { readonly value: number; }
+interface Base {readonly writeSymbol:unknown;}
+interface Target {writeSymbol(text: string, symbol: Symbol): void;}
+function probe(value:Base):void {const writer=value as Target;writer.writeSymbol("value3",{value:3});}
+probe({writeSymbol:(text: string, symbol: Symbol):void=>{console.log(text);console.log(`${symbol.value}`);}});

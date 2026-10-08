@@ -1,0 +1,6 @@
+// Original declaration/read with an actual array receiver.
+type Path = string & { __pathBrand: any; };
+interface Base {readonly pop:unknown;}
+interface Target<T> {pop(): T | undefined;}
+function probe(value:Base):void {const queue=value as Target<Path>;queue.pop();console.log("called");}
+probe(["key" as Path]);

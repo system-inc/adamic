@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface SourceFile { readonly value: number; }
+interface Base {readonly getSourceFile:unknown;}
+interface Target {getSourceFile(fileName: string): SourceFile | undefined;}
+function probe(value:Base):void {const program=value as Target;const result=program.getSourceFile("value3");if (result !== undefined) {console.log(`${result.value}`);}}
+probe({getSourceFile:(fileName:number):SourceFile | undefined=>{return {value:3};}});

@@ -1,0 +1,6 @@
+// Original declaration/read with an actual array receiver.
+interface Expression {readonly value:number;}
+interface Base {readonly slice:unknown;}
+interface Target<T> {slice(start?: number, end?: number): T[];}
+function probe(value:Base):void {const node={elements:value as Target<Expression>};node.elements.slice(0,1);console.log("called");}
+probe([{value:3},{value:4}]);

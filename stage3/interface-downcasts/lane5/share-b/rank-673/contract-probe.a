@@ -1,0 +1,7 @@
+// Original callable declaration/read; collection and primitive carriers retained.
+
+interface Diagnostic {readonly value:number;}
+interface Base {readonly forEach:unknown;}
+interface Target<T> {forEach(callbackfn: (value: T, index: number, array: readonly T[]) => void, thisArg?: any): void;}
+function probe(value:Base):void {const diagnostic={diagnostics:value as Target<Diagnostic>};diagnostic.diagnostics.forEach((value:Diagnostic,index:number,array:readonly Diagnostic[]):void=>{});}
+probe({forEach:7});

@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly getCanonicalFileName:unknown;}
+interface Target {getCanonicalFileName(fileName: string): string;}
+function probe(value:Base):void {const host=value as Target;console.log(host.getCanonicalFileName("value3"));}
+probe({getCanonicalFileName:(fileName:number):string=>{return "answer3";}});

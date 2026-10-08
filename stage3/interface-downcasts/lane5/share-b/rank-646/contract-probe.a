@@ -1,0 +1,7 @@
+// Original callable declaration/read; collection and primitive carriers retained.
+
+interface Symbol {readonly value:number;}
+interface Base {readonly map:unknown;}
+interface Target<T> {map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];}
+function probe(value:Base):void {const parents=value as Target<Symbol>;parents!.map((value:Symbol,index:number,array:Symbol[]):number=>3);}
+probe({map:7});

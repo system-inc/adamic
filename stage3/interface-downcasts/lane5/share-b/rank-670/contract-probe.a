@@ -1,0 +1,7 @@
+// Original callable declaration/read; collection and primitive carriers retained.
+
+interface DiagnosticMessage {readonly value:number;}
+interface Base {readonly unshift:unknown;}
+interface Target<T> {unshift(...items: T[]): number;}
+function probe(value:Base):void {const secondaryRootErrors=value as Target<[message: DiagnosticMessage, ...args: (string | number)[]]>;secondaryRootErrors.unshift([{value:3},"arg"]);}
+probe({unshift:7});

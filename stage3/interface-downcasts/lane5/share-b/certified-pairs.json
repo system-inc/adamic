@@ -30,6 +30,16 @@
     "basis": "complete original member/read; original enum representation retained; adjacent object carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
   },
   {
+    "rank": 268,
+    "receiver_type_id": 7056,
+    "type": "DebugType",
+    "field": "__debugTypeToString",
+    "candidateReads": 6,
+    "directory": "rank-268",
+    "certified": true,
+    "basis": "original declaration/read; original enums and ResolutionMode retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
     "rank": 277,
     "receiver_type_id": 83084,
     "type": "FlattenContext",
@@ -400,6 +410,16 @@
     "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
   },
   {
+    "rank": 508,
+    "receiver_type_id": 11740,
+    "type": "BaseNodeFactory",
+    "field": "createBaseNode",
+    "candidateReads": 3,
+    "directory": "rank-508",
+    "certified": true,
+    "basis": "original declaration/read; original enums and ResolutionMode retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
     "rank": 526,
     "receiver_type_id": 12054,
     "type": "EmitHelperFactory",
@@ -408,6 +428,16 @@
     "directory": "rank-526",
     "certified": true,
     "basis": "complete original member/read; original enum representation retained; adjacent object carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
+    "rank": 529,
+    "receiver_type_id": 12054,
+    "type": "EmitHelperFactory",
+    "field": "createClassPrivateFieldSetHelper",
+    "candidateReads": 3,
+    "directory": "rank-529",
+    "certified": true,
+    "basis": "original declaration/read; original enums and ResolutionMode retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
   },
   {
     "rank": 532,
@@ -580,6 +610,16 @@
     "basis": "complete original member declaration/read; reduced adjacent carriers; Node, release/sanitized native, JavaScript, finishing leak checks and per-pair arity mutant"
   },
   {
+    "rank": 625,
+    "receiver_type_id": 9939,
+    "type": "Program",
+    "field": "getSourceFile",
+    "candidateReads": 3,
+    "directory": "rank-625",
+    "certified": true,
+    "basis": "original declaration/read; original enums and ResolutionMode retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
     "rank": 634,
     "receiver_type_id": 28206,
     "type": "Scanner",
@@ -600,6 +640,16 @@
     "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
   },
   {
+    "rank": 658,
+    "receiver_type_id": 9940,
+    "type": "TypeCheckerHost",
+    "field": "getDefaultResolutionModeForFile",
+    "candidateReads": 3,
+    "directory": "rank-658",
+    "certified": true,
+    "basis": "original declaration/read; original enums and ResolutionMode retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
     "rank": 661,
     "receiver_type_id": 9940,
     "type": "TypeCheckerHost",
@@ -608,6 +658,16 @@
     "directory": "rank-661",
     "certified": true,
     "basis": "original member/read; original enums and array return representations retained; adjacent object carriers reduced; Node/native/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 664,
+    "receiver_type_id": 7804,
+    "type": "Version",
+    "field": "compareTo",
+    "candidateReads": 3,
+    "directory": "rank-664",
+    "certified": true,
+    "basis": "original declaration/read; original enums and ResolutionMode retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
   },
   {
     "rank": 748,
@@ -620,6 +680,86 @@
     "basis": "complete original member declaration/read; reduced adjacent carriers; Node, release/sanitized native, JavaScript, finishing leak checks and per-pair arity mutant"
   },
   {
+    "rank": 754,
+    "receiver_type_id": 12054,
+    "type": "EmitHelperFactory",
+    "field": "createImportDefaultHelper",
+    "candidateReads": 2,
+    "directory": "rank-754",
+    "certified": true,
+    "basis": "original declaration/read; original enums and ResolutionMode retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 757,
+    "receiver_type_id": 12054,
+    "type": "EmitHelperFactory",
+    "field": "createValuesHelper",
+    "candidateReads": 2,
+    "directory": "rank-757",
+    "certified": true,
+    "basis": "original declaration/read; original enums and ResolutionMode retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 760,
+    "receiver_type_id": 10401,
+    "type": "EmitResolver",
+    "field": "createTypeOfDeclaration",
+    "candidateReads": 2,
+    "directory": "rank-760",
+    "certified": true,
+    "basis": "original declaration/read; original enums and ResolutionMode retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 763,
+    "receiver_type_id": 10401,
+    "type": "EmitResolver",
+    "field": "getJsxFactoryEntity",
+    "candidateReads": 2,
+    "directory": "rank-763",
+    "certified": true,
+    "basis": "original declaration/read; original enums and ResolutionMode retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 766,
+    "receiver_type_id": 10401,
+    "type": "EmitResolver",
+    "field": "getTypeReferenceSerializationKind",
+    "candidateReads": 2,
+    "directory": "rank-766",
+    "certified": true,
+    "basis": "original declaration/read; original enums and ResolutionMode retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 769,
+    "receiver_type_id": 10401,
+    "type": "EmitResolver",
+    "field": "isDeclarationWithCollidingName",
+    "candidateReads": 2,
+    "directory": "rank-769",
+    "certified": true,
+    "basis": "original declaration/read; original enums and ResolutionMode retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 772,
+    "receiver_type_id": 10401,
+    "type": "EmitResolver",
+    "field": "isValueAliasDeclaration",
+    "candidateReads": 2,
+    "directory": "rank-772",
+    "certified": true,
+    "basis": "original declaration/read; original enums and ResolutionMode retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 775,
+    "receiver_type_id": 10351,
+    "type": "EmitTextWriter",
+    "field": "write",
+    "candidateReads": 2,
+    "directory": "rank-775",
+    "certified": true,
+    "basis": "original declaration/read; original enums and ResolutionMode retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
     "rank": 778,
     "receiver_type_id": 10351,
     "type": "EmitTextWriter",
@@ -628,5 +768,35 @@
     "directory": "rank-778",
     "certified": true,
     "basis": "complete original member declaration/read; reduced adjacent carriers; Node, release/sanitized native, JavaScript, finishing leak checks and per-pair arity mutant"
+  },
+  {
+    "rank": 781,
+    "receiver_type_id": 10351,
+    "type": "EmitTextWriter",
+    "field": "writeSymbol",
+    "candidateReads": 2,
+    "directory": "rank-781",
+    "certified": true,
+    "basis": "original declaration/read; original enums and ResolutionMode retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 787,
+    "receiver_type_id": 94791,
+    "type": "FormatDiagnosticsHost",
+    "field": "getCanonicalFileName",
+    "candidateReads": 2,
+    "directory": "rank-787",
+    "certified": true,
+    "basis": "original declaration/read; original enums and ResolutionMode retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 790,
+    "receiver_type_id": 12284,
+    "type": "HasCurrentDirectory",
+    "field": "getCurrentDirectory",
+    "candidateReads": 2,
+    "directory": "rank-790",
+    "certified": true,
+    "basis": "original declaration/read; original enums and ResolutionMode retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
   }
 ]
