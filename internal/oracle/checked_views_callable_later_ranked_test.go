@@ -8,6 +8,8 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"token-end", "getTokenEnd", "3\n", "", "1", "", "", "bad\n", "good,wrong-value,wrong-arity,wrong-result"},
+		{"token-full-start", "getTokenFullStart", "3\n", "", "1", "", "", "bad\n", "good,wrong-value,wrong-arity,wrong-result"},
 		{"helper-factory", "getEmitHelperFactory", "3\n", "", "1", "value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-parameter-payload"},
 		{"hoist-variable", "hoistVariableDeclaration", "3\n", "", "0", "node.value", "3\n", "", "good,wrong-value,wrong-arity,wrong-members,wrong-parameter-payload"},
 		{"modifier-flags", "createModifiersFromModifierFlags", "3\n", "", "0", "modifier.value", "3\n", "", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},

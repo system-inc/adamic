@@ -994,6 +994,53 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node and both backends, release/sanitized native, leaks and callable/payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "scanner-end-full-start",
+      "pairs": 2,
+      "candidateReads": 36,
+      "members": [
+        {
+          "receiver_type_id": 28206,
+          "type": "Scanner",
+          "field": "getTokenEnd",
+          "declared_types": [
+            "() => number"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 18,
+          "witness": {
+            "file": "src/compiler/utilities.ts",
+            "line": 2515,
+            "column": 44
+          },
+          "rank": 95,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; Node, release/sanitized native and JavaScript; leaks and arity/result mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 28206,
+          "type": "Scanner",
+          "field": "getTokenFullStart",
+          "declared_types": [
+            "() => number"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 18,
+          "witness": {
+            "file": "src/compiler/scanner.ts",
+            "line": 1119,
+            "column": 38
+          },
+          "rank": 96,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; Node, release/sanitized native and JavaScript; leaks and arity/result mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

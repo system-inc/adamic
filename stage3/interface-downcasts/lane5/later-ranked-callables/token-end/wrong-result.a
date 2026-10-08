@@ -1,0 +1,5 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Base {readonly getTokenEnd:unknown;}
+interface Target {getTokenEnd(): number;}
+function probe(value:Base):void {const scanner=value as Target;console.log(`${scanner.getTokenEnd()}`);}
+probe({getTokenEnd:():string=>"bad"});

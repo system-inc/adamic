@@ -1849,7 +1849,8 @@
       "column": 44
     },
     "rank": 95,
-    "certified": false
+    "certified": true,
+    "certification_basis": "complete original declaration/read spans; Node, release/sanitized native and JavaScript; leaks and arity/result mutants; production reachability unmeasured"
   },
   {
     "receiver_type_id": 28206,
@@ -1868,7 +1869,8 @@
       "column": 38
     },
     "rank": 96,
-    "certified": false
+    "certified": true,
+    "certification_basis": "complete original declaration/read spans; Node, release/sanitized native and JavaScript; leaks and arity/result mutants; production reachability unmeasured"
   },
   {
     "receiver_type_id": 8812,

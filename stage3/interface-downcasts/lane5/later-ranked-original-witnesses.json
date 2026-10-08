@@ -627,6 +627,95 @@
       "declarationFile": "src/compiler/types.ts",
       "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
       "declarationLine": 9646
+    },
+    {
+      "rank": 102,
+      "type": "NodeFactory",
+      "field": "createLiteralTypeNode",
+      "candidateReads": 16,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 4539,
+        "column": 27
+      },
+      "read": "factory.createLiteralTypeNode",
+      "readKind": "property",
+      "call": "factory.createLiteralTypeNode(expression)",
+      "utf16Start": 223581,
+      "utf16End": 223610,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "createLiteralTypeNode(literal: LiteralTypeNode[\"literal\"]): LiteralTypeNode;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 8921
+    },
+    {
+      "rank": 103,
+      "type": "Program",
+      "field": "getSourceFileByPath",
+      "candidateReads": 16,
+      "witness": {
+        "file": "src/compiler/watchUtilities.ts",
+        "line": 641,
+        "column": 15
+      },
+      "read": "realProgram.getSourceFileByPath",
+      "readKind": "property",
+      "call": "realProgram.getSourceFileByPath(file)",
+      "utf16Start": 25593,
+      "utf16End": 25624,
+      "fileSha256": "0a4919e1976ea0683ea06137ec02c97fe5ad44ca8d0bc709f69eb0230b7a5487",
+      "declaration": "getSourceFileByPath(path: Path): SourceFile | undefined;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 4533,
+      "declarationOwner": "ScriptReferenceHost",
+      "inheritancePath": [
+        "Program",
+        "ScriptReferenceHost"
+      ]
+    },
+    {
+      "rank": 106,
+      "type": "System",
+      "field": "getEnvironmentVariable",
+      "candidateReads": 16,
+      "witness": {
+        "file": "src/compiler/sys.ts",
+        "line": 134,
+        "column": 10
+      },
+      "read": "system.getEnvironmentVariable",
+      "readKind": "property",
+      "call": "!system.getEnvironmentVariable",
+      "utf16Start": 3815,
+      "utf16End": 3844,
+      "fileSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+      "declaration": "getEnvironmentVariable(name: string): string;",
+      "declarationFile": "src/compiler/sys.ts",
+      "declarationSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+      "declarationLine": 1436
+    },
+    {
+      "rank": 107,
+      "type": "TransformationContext",
+      "field": "getEmitResolver",
+      "candidateReads": 16,
+      "witness": {
+        "file": "src/compiler/transformers/utilities.ts",
+        "line": 180,
+        "column": 22
+      },
+      "read": "context.getEmitResolver",
+      "readKind": "property",
+      "call": "context.getEmitResolver()",
+      "utf16Start": 6271,
+      "utf16End": 6294,
+      "fileSha256": "cbddbf83ed9af717b94398ab8b2617f0098406d26712ae816130f40d3ce9c2e5",
+      "declaration": "getEmitResolver(): EmitResolver;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9600
     }
   ]
 }
