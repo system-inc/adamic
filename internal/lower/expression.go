@@ -553,8 +553,8 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if function, isFunction := l.functions[l.symbol(node)]; !isLocal && isFunction {
 			return l.functionValue(node, function)
 		}
-		if _, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
-			return nil, l.notYet(node, "a generic function as a value")
+		if declaration, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
+			return l.genericFunctionValue(node, declaration)
 		}
 		if !isLocal && l.isLibraryGlobal(node, "String") {
 			return nil, l.notYet(node, "reading String as a first-class constructor (its any-typed call signature, construction and static members need an intrinsic value representation)")
@@ -709,6 +709,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if l.isLibraryGlobal(node.AsNewExpression().Expression, "Promise") {
 			return nil, l.notYet(node, "Promise executors and pending-I/O cancellation")
 		}
+		if err := l.genericFunctionIdentityNew(node); err != nil {
+			return nil, err
+		}
 		return l.newExpression(node)
 	case ast.KindThisKeyword:
 		if l.this < 0 {
@@ -739,6 +742,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		}
 		if value, known, err := l.optionalIntrinsic(node); known {
 			return value, err
+		}
+		if err := l.genericFunctionIdentityCall(node); err != nil {
+			return nil, err
 		}
 		if err := l.optionalCall(node); err != nil {
 			return nil, err
@@ -949,6 +955,13 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 		}
 	}
 	if (operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken) && left.Type() == right.Type() {
+		if l.functionIdentityType(l.checker.GetTypeAtLocation(node.AsBinaryExpression().Left)) || l.functionIdentityType(l.checker.GetTypeAtLocation(node.AsBinaryExpression().Right)) {
+			// Specialized forwarders have different pointers although JavaScript has
+			// one generic function identity. Do not silently compare those pointers.
+			if l.hasGenericFunctionValues() {
+				return nil, l.notYet(node, "function identity comparison in a program with specialized generic function values")
+			}
+		}
 		lowered := ir.Equal
 		if operator == ast.KindExclamationEqualsEqualsToken {
 			lowered = ir.NotEqual

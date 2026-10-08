@@ -26,5 +26,19 @@
     "code": "TS2591",
     "action": "decline",
     "reason": "process.pid is a Node host binding. This needs the compiler require-builtins/Node host declaration work; adding guessed source declarations or suppressing the diagnostic would not prove the contract. Reconfirmed on the merged 79-root input; adaptation 47 fixes the catch, not these host bindings."
+  },
+  {
+    "file": "watch.ts",
+    "line": 756,
+    "code": "TS2375",
+    "action": "decline",
+    "reason": "createCompilerHostFromProgramHost creates present undefined optional method slots. The object escapes to a public caller or injected createProgram callback, which can observe key presence using in, hasOwnProperty, Object.keys, spread, for...in and Object.assign. Stock Node witnesses prove omission changes all six observations. Original public method form restored per 06:35 ruling."
+  },
+  {
+    "file": "watch.ts",
+    "line": 845,
+    "code": "TS2375",
+    "action": "decline",
+    "reason": "createProgramHost creates present undefined optional method slots. The object escapes to a public caller or injected createProgram callback, which can observe key presence using in, hasOwnProperty, Object.keys, spread, for...in and Object.assign. Stock Node witnesses prove omission changes all six observations. Original public method form restored per 06:35 ruling."
   }
 ]

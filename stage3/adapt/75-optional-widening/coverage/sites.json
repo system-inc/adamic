@@ -1,0 +1,2725 @@
+[
+  {
+    "File": "utilities.ts",
+    "Line": 4416,
+    "Column": 20,
+    "Kind": "KindConditionalExpression",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Expression",
+    "Text": "isLiteralImportTypeNode(node) ? node.argument.literal : undefined",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "(LiteralExpression & StringLiteral) | undefined",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "(LiteralExpression & StringLiteral) | undefined",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "utilities.ts:4416:20",
+    "signature": {
+      "kind": "KindConditionalExpression",
+      "text": "isLiteralImportTypeNode(node) ? node.argument.literal : undefined",
+      "offset": 7,
+      "contexts": [
+        "d2784671cbe5319d71136cee89ffcaf4385872d47f50b5d16b94b1310171dee5",
+        "3b6ac15e35f7a863bea4faa7f3aaedb09ef4597e7f0e653003d36b8db6de9394",
+        "2ac39dfe11bfa8e0c278ba03de84d7147ca63ed29c7720fd44e58f0ec9942359",
+        "e2f8916fdd29eb31f965123ec49ad8346c6f9f2b7f118905f384b2f9f447cf19"
+      ],
+      "scope": [
+        "getExternalModuleName"
+      ]
+    }
+  },
+  {
+    "File": "utilities.ts",
+    "Line": 4416,
+    "Column": 52,
+    "Kind": "KindPropertyAccessExpression",
+    "Property": "id",
+    "Source": "never",
+    "Target": "LiteralExpression & StringLiteral",
+    "Text": "node.argument.literal",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "LiteralExpression & StringLiteral",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "LiteralExpression & StringLiteral",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "utilities.ts:4416:52",
+    "signature": {
+      "kind": "KindPropertyAccessExpression",
+      "text": "node.argument.literal",
+      "offset": 32,
+      "contexts": [
+        "085ca1db46f1c4751bc032fd0cad9cfd7fec7fe2f58cbe67fdbd6506e87005eb",
+        "d2784671cbe5319d71136cee89ffcaf4385872d47f50b5d16b94b1310171dee5",
+        "3b6ac15e35f7a863bea4faa7f3aaedb09ef4597e7f0e653003d36b8db6de9394",
+        "2ac39dfe11bfa8e0c278ba03de84d7147ca63ed29c7720fd44e58f0ec9942359"
+      ],
+      "scope": [
+        "getExternalModuleName"
+      ]
+    }
+  },
+  {
+    "File": "factory/nodeFactory.ts",
+    "Line": 7105,
+    "Column": 63,
+    "Kind": "KindIdentifier",
+    "Property": "modifiers",
+    "Source": "never",
+    "Target": "ParameterDeclaration",
+    "Text": "node",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "ParameterDeclaration",
+    "target_property_declarations": [
+      "src/compiler/types.ts:1897:5"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "modifiers"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "modifiers",
+        "where": "src/compiler/expressionToTypeNode.ts:469:21",
+        "access": "(visited as Mutable<ParameterDeclaration>).modifiers",
+        "operation": "=",
+        "written": "undefined",
+        "written_type": "undefined",
+        "receiver_type": "Mutable<ParameterDeclaration>",
+        "property_declarations": [
+          "src/compiler/types.ts:1897:5"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "ParameterDeclaration",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "factory/nodeFactory.ts:7105:63",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "node",
+      "offset": 27,
+      "contexts": [
+        "8110329aefe16ab3d73b8817a23aea159bc137a762537a23a6550e430f5b8dfc",
+        "457a028779936710442f4b28fa8544b6626c50d3e5648783357938d113b5f3b3",
+        "7dab798fe5e36486f67ca2fa35ee0f17ac751b747956c396fd5fe6bda1188b0a",
+        "1b66534a7b50b0ba8cc4f10142f0baf4d8fbf7c02abb098afc1893c15e217e08"
+      ],
+      "scope": [
+        "replaceDecoratorsAndModifiers",
+        "createNodeFactory"
+      ]
+    }
+  },
+  {
+    "File": "factory/utilities.ts",
+    "Line": 363,
+    "Column": 96,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "BigIntLiteral",
+    "Text": "property",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "AccessorDeclaration & { readonly name: Identifier | StringLiteral | NumericLiteral | BigIntLiteral | ComputedPropertyName | NoSubstitutionTemplateLiteral; }",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "AccessorDeclaration & { readonly name: StringLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | ComputedPropertyName | BigIntLiteral; }",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "factory/utilities.ts:363:96",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "property",
+      "offset": 39,
+      "contexts": [
+        "5f2b353ac657610e6de1aeb74592b05e64c51cd25865dea87ea0cb6a7a0485f1",
+        "5223b5ab8a8efcdba26c0a9643d73affe4a549bd01c17f5c0931980808e41e5d",
+        "ccd875ed5f53995fbe61a65dcf22a122e801cf65562e4530d1789affab05899a",
+        "2d66af2aede98e44e0b395671e82c09465ab38c837a79c6936ca40f715757f8a"
+      ],
+      "scope": [
+        "createExpressionForAccessorDeclaration"
+      ]
+    }
+  },
+  {
+    "File": "checker.ts",
+    "Line": 13970,
+    "Column": 83,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "LateBoundName",
+    "Text": "member",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "(TypeElement | ClassElement | ObjectLiteralElement) & (LateBoundDeclaration | LateBoundBinaryExpressionDeclaration)",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "(TypeElement | ClassElement | ObjectLiteralElement) & (LateBoundDeclaration | LateBoundBinaryExpressionDeclaration)",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "checker.ts:13970:83",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "member",
+      "offset": 50,
+      "contexts": [
+        "e224f8f092a3ffdf59447c7fb9eff6b85c1575786d67e7406a91607adaaa42a3",
+        "b38312220a8c0bc8ed3b88be612f55e8cef252b2e2233dd8c4ef2afa2bca43ef",
+        "9b5e06c3eaae19821b3a90a8b0fa037168d2694d0bdde3712286692ee1950bdf",
+        "0f1bedb004e20f3f08b187cf9c27f44d0df6068f588c10b380ef894fa8bcd024"
+      ],
+      "scope": [
+        "getResolvedMembersOrExportsOfSymbol",
+        "createTypeChecker"
+      ]
+    }
+  },
+  {
+    "File": "checker.ts",
+    "Line": 20007,
+    "Column": 71,
+    "Kind": "KindPropertyAccessExpression",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Expression",
+    "Text": "node.argument.literal",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "LiteralExpression & StringLiteral",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "LiteralExpression & StringLiteral",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "checker.ts:20007:71",
+    "signature": {
+      "kind": "KindPropertyAccessExpression",
+      "text": "node.argument.literal",
+      "offset": 32,
+      "contexts": [
+        "a195d250a766718e49806ab1d0710c3d7729b223a3e46154c8f39fb463a201c5",
+        "91569c59d5174264f9f8f18a4e25b35b2e93683c995f1df9f6a24b36ea60c5cb",
+        "9fa2cfcb60d3822dc9e878a08a642ea05a88bef6d90a7717574336f74d65d1c9",
+        "bf24d68a1009edc1b6b9c18398839969ea12ab501db8c2ba2b70e9ec2501282f"
+      ],
+      "scope": [
+        "getTypeFromImportTypeNode",
+        "createTypeChecker"
+      ]
+    }
+  },
+  {
+    "File": "checker.ts",
+    "Line": 32496,
+    "Column": 51,
+    "Kind": "KindIdentifier",
+    "Property": "localSymbol",
+    "Source": "never",
+    "Target": "Declaration",
+    "Text": "element",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "(GetAccessorDeclaration & DynamicNamedDeclaration) | (SetAccessorDeclaration & DynamicNamedDeclaration) | (MethodDeclaration & DynamicNamedDeclaration) | (PropertyAssignment & DynamicNamedDeclaration) | (ShorthandPropertyAssignment & DynamicNamedDeclaration) | (SpreadAssignment & DynamicNamedDeclaration)",
+    "target_property_declarations": [
+      "src/compiler/types.ts:1759:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "localSymbol"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "localSymbol",
+        "where": "src/compiler/binder.ts:922:17",
+        "access": "node.localSymbol",
+        "operation": "=",
+        "written": "local",
+        "written_type": "Symbol",
+        "receiver_type": "Declaration",
+        "property_declarations": [
+          "src/compiler/types.ts:1759:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "(MethodDeclaration & DynamicNamedDeclaration) | (GetAccessorDeclaration & DynamicNamedDeclaration) | (SetAccessorDeclaration & DynamicNamedDeclaration) | (PropertyAssignment & DynamicNamedDeclaration) | (ShorthandPropertyAssignment & DynamicNamedDeclaration) | (SpreadAssignment & DynamicNamedDeclaration)",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "checker.ts:32496:51",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "element",
+      "offset": 21,
+      "contexts": [
+        "7f6cf88baf67219426ad20c6ddfaa4bca8ab5e7b54111f2777a2903b0859ac75",
+        "0facdb8087486238ab604ce37e6e93dabf8facd64dd7798b0bb200c0921664da",
+        "0a290e5ed42d89c3b961aa7577c21111b3172ab42e4ef27e749583055f0da8e4",
+        "2555fed95637995c268f7dbb0166d6638eda8f17037dfbe2bd7a53af931ba4bc"
+      ],
+      "scope": [
+        "getContextualTypeForObjectLiteralElement",
+        "createTypeChecker"
+      ]
+    }
+  },
+  {
+    "File": "checker.ts",
+    "Line": 33480,
+    "Column": 121,
+    "Kind": "KindPropertyAccessExpression",
+    "Property": "id",
+    "Source": "never",
+    "Target": "ArrayBindingPattern",
+    "Text": "firstDecl.name",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "Identifier | PrivateIdentifier | StringLiteral | NumericLiteral | BigIntLiteral | ElementAccessExpression | ... 5 more ... | PropertyAccessEntityNameExpression",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "StringLiteral | Identifier | ObjectBindingPattern | ArrayBindingPattern | NoSubstitutionTemplateLiteral | ... 6 more ... | JsxNamespacedName",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "checker.ts:33480:121",
+    "signature": {
+      "kind": "KindPropertyAccessExpression",
+      "text": "firstDecl.name",
+      "offset": 14,
+      "contexts": [
+        "5cdd0e90ebcf25958737dde255f147babdfd767bba651390bd2ee502601fb25e",
+        "0f052aa5fd71986502ca8c691b17876a60512915c2baeb6ab5980701394ad85d",
+        "2437dea24f1425f615ffc580647363a7d041757081347ca6e192557997c3ebb4",
+        "84c4cca32c5fbd7ef32776faaa983900530fba511903b8b2a2544fcc2f9312d7"
+      ],
+      "scope": [
+        "isSymbolWithNumericName",
+        "createTypeChecker"
+      ]
+    }
+  },
+  {
+    "File": "checker.ts",
+    "Line": 33486,
+    "Column": 62,
+    "Kind": "KindPropertyAccessExpression",
+    "Property": "id",
+    "Source": "never",
+    "Target": "ComputedPropertyName",
+    "Text": "firstDecl.name",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "ComputedPropertyName",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "ComputedPropertyName",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "checker.ts:33486:62",
+    "signature": {
+      "kind": "KindPropertyAccessExpression",
+      "text": "firstDecl.name",
+      "offset": 26,
+      "contexts": [
+        "dc7f248d32f79e8cadcd0c74fe614f571aa890aa584ecb36b2395b4690dbafa5",
+        "ef5359626e7a39eafa2ddd940a4ce8973c1f46bfb1e80b29b01b9fcc8b910492",
+        "53ec9672622be06cfe1685d534f71d9e08b0790ac36f9c8705a2daf76768b8be",
+        "36e466b36bc5b4810b0579b9c9501eb1d7c5d7b113e401464c1b08709b3dc83b"
+      ],
+      "scope": [
+        "isSymbolWithSymbolName",
+        "createTypeChecker"
+      ]
+    }
+  },
+  {
+    "File": "checker.ts",
+    "Line": 44963,
+    "Column": 183,
+    "Kind": "KindPropertyAccessExpression",
+    "Property": "id",
+    "Source": "never",
+    "Target": "ArrayBindingPattern",
+    "Text": "node.name",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "Identifier",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "Identifier",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "checker.ts:44963:183",
+    "signature": {
+      "kind": "KindPropertyAccessExpression",
+      "text": "node.name",
+      "offset": 24,
+      "contexts": [
+        "c617c4b881bd74bd1d5e87f714d3614ca838b10efbf9f6b9b2bfdf49cae5fe85",
+        "2c4299e4159a6eb56cec2925f5fa6ba961c69942f1be102c80949a2cdf4b7697",
+        "dc611f8187d4482d76be3f58f716afdd8ac936450e042fc3476a8ec03ba0661e",
+        "198c031519433686ab6cf6013d6ab57e9920eccc64961a0b3c462dcbc847c522"
+      ],
+      "scope": [
+        "checkReflectCollision",
+        "createTypeChecker"
+      ]
+    }
+  },
+  {
+    "File": "checker.ts",
+    "Line": 47283,
+    "Column": 40,
+    "Kind": "KindPropertyAccessExpression",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Node",
+    "Text": "member.name",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "Identifier | PrivateIdentifier | StringLiteral | NumericLiteral | BigIntLiteral | ComputedPropertyName | NoSubstitutionTemplateLiteral",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "StringLiteral | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | ComputedPropertyName | PrivateIdentifier | BigIntLiteral",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "checker.ts:47283:40",
+    "signature": {
+      "kind": "KindPropertyAccessExpression",
+      "text": "member.name",
+      "offset": 20,
+      "contexts": [
+        "aace88bb56beee131b6dea049f6e24d0f22b8556beab1d0a4dd29945fc6e1930",
+        "475145f77616ad2bd989fe39d3aa98d76c4bcdf233bd4167e8bdb6522cff6eab",
+        "703402aaa9d871a67fe8b7af9769a3bc7cfb20f1604bd6e3ad6b23e43a3e662b",
+        "a34f7f22490583529deac1f883f4206b411473773dd885448e31c4298235443b"
+      ],
+      "scope": [
+        "checkExistingMemberForOverrideModifier",
+        "createTypeChecker"
+      ]
+    }
+  },
+  {
+    "File": "checker.ts",
+    "Line": 47284,
+    "Column": 36,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Node",
+    "Text": "member",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "ClassElement | ParameterPropertyDeclaration",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "ClassElement | ParameterPropertyDeclaration",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "checker.ts:47284:36",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "member",
+      "offset": 20,
+      "contexts": [
+        "c55cb102bf8c6d3139ab120f908a31b00ccf480572b2290f36be5e0adce4d8f5",
+        "703402aaa9d871a67fe8b7af9769a3bc7cfb20f1604bd6e3ad6b23e43a3e662b",
+        "a34f7f22490583529deac1f883f4206b411473773dd885448e31c4298235443b",
+        "6d06d61e8502a7556b4fb67e4fc1903a4b8702bcc462d749872d3f72fbced8ba"
+      ],
+      "scope": [
+        "checkExistingMemberForOverrideModifier",
+        "createTypeChecker"
+      ]
+    }
+  },
+  {
+    "File": "checker.ts",
+    "Line": 47301,
+    "Column": 13,
+    "Kind": "KindConditionalExpression",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Node",
+    "Text": "reportErrors ? member : undefined",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "ClassElement | ParameterPropertyDeclaration | undefined",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "ClassElement | ParameterPropertyDeclaration | undefined",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "checker.ts:47301:13",
+    "signature": {
+      "kind": "KindConditionalExpression",
+      "text": "reportErrors ? member : undefined",
+      "offset": 373,
+      "contexts": [
+        "6e8f7352a28cd8047470f8ce3b8e8637c5e9dbfe1ed38098b46ad632b63d867c",
+        "1797632db1695e3970b228feafdf1eb838292640a3abc5ea752bc2a8180d0f56",
+        "3a195794526c3bf758d133b5d439f6d4ee338c62b61da60a499e609e5bc6e4af",
+        "31a1fa9db85fbee23450c323e1757e2f7420b8a4d71d5a92bcad2c5573c1ff62"
+      ],
+      "scope": [
+        "checkExistingMemberForOverrideModifier",
+        "createTypeChecker"
+      ]
+    }
+  },
+  {
+    "File": "checker.ts",
+    "Line": 48433,
+    "Column": 60,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Node",
+    "Text": "node",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "ImportEqualsDeclaration | ImportClause | NamespaceImport | ImportSpecifier | BindingElementOfBareOrAccessedRequire",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "ImportEqualsDeclaration | ImportClause | NamespaceImport | ImportSpecifier | BindingElementOfBareOrAccessedRequire",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "checker.ts:48433:60",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "node",
+      "offset": 13,
+      "contexts": [
+        "29655d6f3b2b2788c25268e31c464ae10a113d40cdb059f6a675334723408db6",
+        "f14f28328447c0477ba715adea5246a7a88c9dae00fa048adab521e8f12bcde0",
+        "da573f8b0e9b4a7a743f3aa2aa9f206f65dbb34b37ff408fa7b21a516adc5a2d",
+        "c0316faadf97a9ca6c8f3227aebb7798c87eceb4a331f27987ee8bd4f103d9f6"
+      ],
+      "scope": [
+        "checkAliasSymbol",
+        "createTypeChecker"
+      ]
+    }
+  },
+  {
+    "File": "checker.ts",
+    "Line": 48454,
+    "Column": 23,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Node",
+    "Text": "node",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "AliasDeclarationNode",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "AliasDeclarationNode",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "checker.ts:48454:23",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "node",
+      "offset": 6,
+      "contexts": [
+        "d409ef017104ca0323707eac1203c5884a299c4629d3cbbd9ef38217b5276328",
+        "2a086287fcb4e0ae0cf42553dd245748672e60577b8392aeb5e02331c9722238",
+        "576f9bfe2c2c912c960576addc279632bd64d3eaad6e15e656e10208ef85e148",
+        "cb4c9ae28bbb1db77f702f4e78b6aead743640c89f90dccbd5f0dcccbac2ce0a"
+      ],
+      "scope": [
+        "checkAliasSymbol",
+        "createTypeChecker"
+      ]
+    }
+  },
+  {
+    "File": "checker.ts",
+    "Line": 48459,
+    "Column": 100,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Node",
+    "Text": "node",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "ImportEqualsDeclaration | ImportClause | NamespaceImport | NamespaceExport | ImportSpecifier | VariableDeclarationInitializedTo<...> | BindingElementOfBareOrAccessedRequire",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "ImportEqualsDeclaration | VariableDeclarationInitializedTo<RequireOrImportCall | AccessExpression> | ... 4 more ... | BindingElementOfBareOrAccessedRequire",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "checker.ts:48459:100",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "node",
+      "offset": 13,
+      "contexts": [
+        "c1b9768a082eb9a389b922f3397ac3a8b72dea900cf291931a194343db8fc3d9",
+        "6379b7d34b22ca9c2a9db386a81774a72bd6543c18236548e8f1c641a1b6bb26",
+        "a007cada9ec743616f7d31205ec468e14719813358ec67bcaf3f23904c9eb3b6",
+        "fa5e6600d59dc6e7711619657c7823b3be3d4d9937c034f8848b0fb64d7f955e"
+      ],
+      "scope": [
+        "checkAliasSymbol",
+        "createTypeChecker"
+      ]
+    }
+  },
+  {
+    "File": "checker.ts",
+    "Line": 48462,
+    "Column": 25,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Node",
+    "Text": "node",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "ImportEqualsDeclaration | ImportClause | NamespaceImport | NamespaceExport | ImportSpecifier | VariableDeclarationInitializedTo<...> | BindingElementOfBareOrAccessedRequire",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "ImportEqualsDeclaration | VariableDeclarationInitializedTo<RequireOrImportCall | AccessExpression> | ... 4 more ... | BindingElementOfBareOrAccessedRequire",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "checker.ts:48462:25",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "node",
+      "offset": 32,
+      "contexts": [
+        "eb5104933fc3c2c827a73a4d27dae22e6a75149cb770530b4d5df9b3cba4cd8a",
+        "d1262a87e6a8bd50dcf3e87c61d0cc0a5e1b976d652ca73f7a316ffa80e633aa",
+        "baab7364d3d2f4d3e891219370b55248fbafec81fb220d8c3a50a7a0a6ba83b4",
+        "97836231316a231e4fa1408b733a3ad334fce1275467f5a711f88bd848bfa61e"
+      ],
+      "scope": [
+        "checkAliasSymbol",
+        "createTypeChecker"
+      ]
+    }
+  },
+  {
+    "File": "checker.ts",
+    "Line": 48521,
+    "Column": 72,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Node",
+    "Text": "node",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "ExportSpecifier | ImportClause | NamespaceImport | NamespaceExport | ImportSpecifier | VariableDeclarationInitializedTo<...> | BindingElementOfBareOrAccessedRequire",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "ExportSpecifier | VariableDeclarationInitializedTo<RequireOrImportCall | AccessExpression> | ... 4 more ... | BindingElementOfBareOrAccessedRequire",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "checker.ts:48521:72",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "node",
+      "offset": 20,
+      "contexts": [
+        "f63552f87c9bd97ca2d80569d6d9bc6d40f52c79040d0c90f15b90771e789d07",
+        "7cfe75ff32b09554ba316f3628c6a4706c5497781ae2c2a9ddbf8f212f2bfe6c",
+        "b53e5481d30bb22a5b93f952d3d686dc23a519130074c84f1822540b99cccfee",
+        "244590cbeab879c15f0238bf91d0495b283521141df092eb119d313baa072cef"
+      ],
+      "scope": [
+        "checkAliasSymbol",
+        "createTypeChecker"
+      ]
+    }
+  },
+  {
+    "File": "checker.ts",
+    "Line": 48523,
+    "Column": 27,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Node",
+    "Text": "node",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "ExportSpecifier | ImportClause | NamespaceImport | NamespaceExport | ImportSpecifier | VariableDeclarationInitializedTo<...> | BindingElementOfBareOrAccessedRequire",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "ExportSpecifier | VariableDeclarationInitializedTo<RequireOrImportCall | AccessExpression> | ... 4 more ... | BindingElementOfBareOrAccessedRequire",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "checker.ts:48523:27",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "node",
+      "offset": 6,
+      "contexts": [
+        "e6cae6d031ef948cf6688d38519f07b07e3e0b818cbf5ccbffe15790025251ee",
+        "f234934f53a9b0be16d197908a1211051db7d49859f1434b97b6743f6512b258",
+        "d633b35061da5a924866649644d78e1d78557a42f212a0b43de833a882c132fe",
+        "5ef82c876695e4d14320ac701b3174002e51995d504827d530efdcc8b3df3ef8"
+      ],
+      "scope": [
+        "checkAliasSymbol",
+        "createTypeChecker"
+      ]
+    }
+  },
+  {
+    "File": "checker.ts",
+    "Line": 48523,
+    "Column": 69,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Node",
+    "Text": "node",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "ExportSpecifier | ImportClause | NamespaceImport | NamespaceExport | ImportSpecifier | VariableDeclarationInitializedTo<...> | BindingElementOfBareOrAccessedRequire",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "ExportSpecifier | VariableDeclarationInitializedTo<RequireOrImportCall | AccessExpression> | ... 4 more ... | BindingElementOfBareOrAccessedRequire",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "checker.ts:48523:69",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "node",
+      "offset": 36,
+      "contexts": [
+        "69e562c0f72d8ad40a05f5772e9329c332d4829b4d32410a5d62be8789ccbc67",
+        "e6cae6d031ef948cf6688d38519f07b07e3e0b818cbf5ccbffe15790025251ee",
+        "f234934f53a9b0be16d197908a1211051db7d49859f1434b97b6743f6512b258",
+        "d633b35061da5a924866649644d78e1d78557a42f212a0b43de833a882c132fe"
+      ],
+      "scope": [
+        "checkAliasSymbol",
+        "createTypeChecker"
+      ]
+    }
+  },
+  {
+    "File": "checker.ts",
+    "Line": 48529,
+    "Column": 72,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Node",
+    "Text": "node",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "ExportSpecifier | ImportClause | NamespaceImport | NamespaceExport | ImportSpecifier | BindingElementOfBareOrAccessedRequire",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "ExportSpecifier | ImportClause | NamespaceImport | ImportSpecifier | NamespaceExport | BindingElementOfBareOrAccessedRequire",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "checker.ts:48529:72",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "node",
+      "offset": 20,
+      "contexts": [
+        "f63552f87c9bd97ca2d80569d6d9bc6d40f52c79040d0c90f15b90771e789d07",
+        "7cfe75ff32b09554ba316f3628c6a4706c5497781ae2c2a9ddbf8f212f2bfe6c",
+        "b53e5481d30bb22a5b93f952d3d686dc23a519130074c84f1822540b99cccfee",
+        "7727586e450db523cf694fd0dd57e8fec3ca02295d3193636407f9f3030084ce"
+      ],
+      "scope": [
+        "checkAliasSymbol",
+        "createTypeChecker"
+      ]
+    }
+  },
+  {
+    "File": "checker.ts",
+    "Line": 48535,
+    "Column": 27,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Node",
+    "Text": "node",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "ExportSpecifier | ImportClause | NamespaceImport | NamespaceExport | ImportSpecifier | BindingElementOfBareOrAccessedRequire",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "ExportSpecifier | ImportClause | NamespaceImport | ImportSpecifier | NamespaceExport | BindingElementOfBareOrAccessedRequire",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "checker.ts:48535:27",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "node",
+      "offset": 6,
+      "contexts": [
+        "8dac40d40ab78fa68eb456c3ffd0b83d08e4d3b5daca9b3ecced54ab01481e9d",
+        "ce47eaad4716075a63831061cfa91fc3f7d5fbcc61c155cc07303e315a7ad573",
+        "e09c652c39a8c5ae8447edd2f1defda589722f2498c434bbc92873e8310d0e84",
+        "c652075ba478e8ec8ff1f8c663073c84ffb952f44f06aecd800c9e85bc8d3319"
+      ],
+      "scope": [
+        "checkAliasSymbol",
+        "createTypeChecker"
+      ]
+    }
+  },
+  {
+    "File": "checker.ts",
+    "Line": 48547,
+    "Column": 31,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Node",
+    "Text": "node",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "AliasDeclarationNode",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "AliasDeclarationNode",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "checker.ts:48547:31",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "node",
+      "offset": 6,
+      "contexts": [
+        "813ed7f9259aac5f75a30942bfb2075edfbb5e59f3a9da6a14ec57b9b296e717",
+        "6e0c761ef92150943487276d4ddd7dcffc85b89e8a9c06ef6afd70ebacc0170c",
+        "a801976a8bb93eae82879d94acb06fe8204cf46942ae61bfc33305a96a7c0474",
+        "2fbea61e682a6d44d074d8176fe76b13c6b0f5bc5223d9e5b7b3bfaa33579d54"
+      ],
+      "scope": [
+        "checkAliasSymbol",
+        "createTypeChecker"
+      ]
+    }
+  },
+  {
+    "File": "checker.ts",
+    "Line": 50318,
+    "Column": 76,
+    "Kind": "KindPropertyAccessExpression",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Node",
+    "Text": "node.argument.literal",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "LiteralExpression & StringLiteral",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "LiteralExpression & StringLiteral",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "checker.ts:50318:76",
+    "signature": {
+      "kind": "KindPropertyAccessExpression",
+      "text": "node.argument.literal",
+      "offset": 20,
+      "contexts": [
+        "dc2f1e1cacd913d809c578066ca7c981aa61833dcf6fa320fb892f204b8c3d53",
+        "637b8c354c985f776e8706383a547e6218dba257ad54ada365a2d11e30c82125",
+        "91aca8fed2fa2a8fddc688e140cc412545fe1d182247d65df1ada3ec37468463",
+        "7d42ad716b5a55b81c023e99f414e8f3092d03441b4691f025348d00d18b9201"
+      ],
+      "scope": [
+        "getSymbolAtLocation",
+        "createTypeChecker"
+      ]
+    }
+  },
+  {
+    "File": "checker.ts",
+    "Line": 52739,
+    "Column": 39,
+    "Kind": "KindPropertyAccessExpression",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Node",
+    "Text": "node.expression",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "never",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": false,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "never",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "checker.ts:52739:39",
+    "signature": {
+      "kind": "KindPropertyAccessExpression",
+      "text": "node.expression",
+      "offset": 19,
+      "contexts": [
+        "46316475fa532dd9c539620b2ccf52ac1b7a4e3e3983228596d177a0a2ee9fef",
+        "6849837f7034ce78f7037e89edf1cdd35aeff644856a4723730db3a1554f6e9e",
+        "a5f102ff2e2d0cbd6b5ff3d230866b9f83caca37e388f750ece1e63a0bf5260a",
+        "6ed963241427086c6f94301645f88672f620bf123f3a293a2d5b3c2dfeea6837"
+      ],
+      "scope": [
+        "checkGrammarJsxName",
+        "createTypeChecker"
+      ]
+    }
+  },
+  {
+    "File": "transformers/ts.ts",
+    "Line": 1069,
+    "Column": 52,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Node",
+    "Text": "parameter",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "ParameterPropertyDeclaration",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "ParameterPropertyDeclaration",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "transformers/ts.ts:1069:52",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "parameter",
+      "offset": 35,
+      "contexts": [
+        "be34f0583493617c3946ac8ff44e0f13bc8b2e69e1e2c9a79392b84604b3f565",
+        "6f0bce380b5c0b7e96ba458433cd5e7f3411945f4d9b45af25fbae8c47ab8618",
+        "48235f15ed7db454404139c12023dd4c451b1a92b3b8508cc640b4c6c26dae53",
+        "620e405fbff7348a88cc3694a06c1d3b942288bcc3b8ca1c8153f75b1d0f66b4"
+      ],
+      "scope": [
+        "transformClassMembers",
+        "transformTypeScript"
+      ]
+    }
+  },
+  {
+    "File": "transformers/ts.ts",
+    "Line": 1453,
+    "Column": 41,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Identifier",
+    "Text": "propertyName",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "Identifier",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "Identifier",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "transformers/ts.ts:1453:41",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "propertyName",
+      "offset": 144,
+      "contexts": [
+        "5a7baa796ac000ea072110d3908b67c97a1b6b74c3ba33930875e14baa19b25d",
+        "4c80c7bd1f8867160f72f8bf94119a9339f227928ebe7e4e59defb493ab50030",
+        "1fa90f16ecae08a222513ea34bee69ed3f3bd292e7d7b98bb234582e1b5ea671",
+        "e8e590d2eb977f8f5314458898cc371309386694e4bfd7ab9c01e4d332f9f7d6"
+      ],
+      "scope": [
+        "transformParameterWithPropertyAssignment",
+        "transformTypeScript"
+      ]
+    }
+  },
+  {
+    "File": "transformers/ts.ts",
+    "Line": 1460,
+    "Column": 25,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Node",
+    "Text": "node",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "ParameterPropertyDeclaration",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "ParameterPropertyDeclaration",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "transformers/ts.ts:1460:25",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "node",
+      "offset": 627,
+      "contexts": [
+        "8b45281ade021b772154e3f065efb3cd0170d35e96e295cc1c0204243b13f29a",
+        "341350f0977a91d2a5e8d35e991300e5e9664111edce473057f024dd86efda0a",
+        "6daf5a419d0913caf69b9a4019498be8960ed59a7dfefebdf29fa292b8085493",
+        "6783c9013cc2189fddcaef697c845d067eda1559ca1b05edaa50ffb7231abef6"
+      ],
+      "scope": [
+        "transformParameterWithPropertyAssignment",
+        "transformTypeScript"
+      ]
+    }
+  },
+  {
+    "File": "transformers/classFields.ts",
+    "Line": 694,
+    "Column": 20,
+    "Kind": "KindCallExpression",
+    "Property": "id",
+    "Source": "never",
+    "Target": "BigIntLiteral",
+    "Text": "transformNamedEvaluation(context, node)",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "transformers/classFields.ts:694:20",
+    "signature": {
+      "kind": "KindCallExpression",
+      "text": "transformNamedEvaluation(context, node)",
+      "offset": 7,
+      "contexts": [
+        "210bad5632ce077c1f73c2776cd3c47699bcd950b1ba12f44f1e199f59cde2d7",
+        "ff9a5f0131f9e27708bf0cfec9b774ec71eba88475320de4baf75dc47427e524",
+        "42d6ce9c13857dbe8a291a2368435fb4b91353a20e89f3695c17754c06960bf1",
+        "2ecc1e37796184d74f8e1dc3ca9ba1432059675e8474fcb4fcefc1bf361b8a0d"
+      ],
+      "scope": [
+        "visitPropertyAssignment",
+        "transformClassFields"
+      ]
+    }
+  },
+  {
+    "File": "transformers/classFields.ts",
+    "Line": 729,
+    "Column": 20,
+    "Kind": "KindCallExpression",
+    "Property": "id",
+    "Source": "never",
+    "Target": "ArrayBindingPattern",
+    "Text": "transformNamedEvaluation(context, node)",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "transformers/classFields.ts:729:20",
+    "signature": {
+      "kind": "KindCallExpression",
+      "text": "transformNamedEvaluation(context, node)",
+      "offset": 7,
+      "contexts": [
+        "210bad5632ce077c1f73c2776cd3c47699bcd950b1ba12f44f1e199f59cde2d7",
+        "ff9a5f0131f9e27708bf0cfec9b774ec71eba88475320de4baf75dc47427e524",
+        "42d6ce9c13857dbe8a291a2368435fb4b91353a20e89f3695c17754c06960bf1",
+        "2ecc1e37796184d74f8e1dc3ca9ba1432059675e8474fcb4fcefc1bf361b8a0d"
+      ],
+      "scope": [
+        "visitVariableDeclaration",
+        "transformClassFields"
+      ]
+    }
+  },
+  {
+    "File": "transformers/classFields.ts",
+    "Line": 753,
+    "Column": 20,
+    "Kind": "KindCallExpression",
+    "Property": "id",
+    "Source": "never",
+    "Target": "ArrayBindingPattern",
+    "Text": "transformNamedEvaluation(context, node)",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "transformers/classFields.ts:753:20",
+    "signature": {
+      "kind": "KindCallExpression",
+      "text": "transformNamedEvaluation(context, node)",
+      "offset": 7,
+      "contexts": [
+        "210bad5632ce077c1f73c2776cd3c47699bcd950b1ba12f44f1e199f59cde2d7",
+        "ff9a5f0131f9e27708bf0cfec9b774ec71eba88475320de4baf75dc47427e524",
+        "42d6ce9c13857dbe8a291a2368435fb4b91353a20e89f3695c17754c06960bf1",
+        "2ecc1e37796184d74f8e1dc3ca9ba1432059675e8474fcb4fcefc1bf361b8a0d"
+      ],
+      "scope": [
+        "visitParameterDeclaration",
+        "transformClassFields"
+      ]
+    }
+  },
+  {
+    "File": "transformers/classFields.ts",
+    "Line": 777,
+    "Column": 20,
+    "Kind": "KindCallExpression",
+    "Property": "id",
+    "Source": "never",
+    "Target": "ArrayBindingPattern",
+    "Text": "transformNamedEvaluation(context, node)",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "transformers/classFields.ts:777:20",
+    "signature": {
+      "kind": "KindCallExpression",
+      "text": "transformNamedEvaluation(context, node)",
+      "offset": 7,
+      "contexts": [
+        "210bad5632ce077c1f73c2776cd3c47699bcd950b1ba12f44f1e199f59cde2d7",
+        "ff9a5f0131f9e27708bf0cfec9b774ec71eba88475320de4baf75dc47427e524",
+        "42d6ce9c13857dbe8a291a2368435fb4b91353a20e89f3695c17754c06960bf1",
+        "2ecc1e37796184d74f8e1dc3ca9ba1432059675e8474fcb4fcefc1bf361b8a0d"
+      ],
+      "scope": [
+        "visitBindingElement",
+        "transformClassFields"
+      ]
+    }
+  },
+  {
+    "File": "transformers/esDecorators.ts",
+    "Line": 1412,
+    "Column": 99,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "PrivateIdentifier",
+    "Text": "createMethodDescriptorObject",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "(node: PrivateIdentifierMethodDeclaration, modifiers: ModifiersArray | undefined) => ObjectLiteralExpression",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "(node: PrivateIdentifierMethodDeclaration, modifiers: ModifiersArray | undefined) => ObjectLiteralExpression",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "transformers/esDecorators.ts:1412:99",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "createMethodDescriptorObject",
+      "offset": 46,
+      "contexts": [
+        "9e2cf0db67d5314491f5fd4117ef130df846961c4d88b6c4a7d9ebe1d8d24641",
+        "6e3d7d24a722ae85460613748732d105897dddd2753fc3d7c0dadd611b30495b",
+        "8595ccca012526aa0e4049111447bffc157dd7882fe0913ffa39d4b46ec6e9d0",
+        "c30f9bcf8e5cca786956b08e6c6444d3fed62efd6d50db691beb2b342837aa03"
+      ],
+      "scope": [
+        "visitMethodDeclaration",
+        "transformESDecorators"
+      ]
+    }
+  },
+  {
+    "File": "transformers/esDecorators.ts",
+    "Line": 1427,
+    "Column": 99,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "PrivateIdentifier",
+    "Text": "createGetAccessorDescriptorObject",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "(node: PrivateIdentifierGetAccessorDeclaration, modifiers: ModifiersArray | undefined) => ObjectLiteralExpression",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "(node: PrivateIdentifierGetAccessorDeclaration, modifiers: ModifiersArray | undefined) => ObjectLiteralExpression",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "transformers/esDecorators.ts:1427:99",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "createGetAccessorDescriptorObject",
+      "offset": 46,
+      "contexts": [
+        "8f35c3744d888de0df8c79a18b9bc915ab211f0c862ececdafa26faeaf047dd9",
+        "3399218c8072afb294ea4a294c72e1e39d7fecf3ef2a0ca8043a81174cf4b38a",
+        "ba8590547154dc1f54ae4292695c91e79dda0471bd911002558b95a492c749b9",
+        "f2e4df6239842ecf8a70e8ea75256b7d9c1c30a47251e068dcaa50e1b3233ff1"
+      ],
+      "scope": [
+        "visitGetAccessorDeclaration",
+        "transformESDecorators"
+      ]
+    }
+  },
+  {
+    "File": "transformers/esDecorators.ts",
+    "Line": 1442,
+    "Column": 99,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "PrivateIdentifier",
+    "Text": "createSetAccessorDescriptorObject",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "(node: PrivateIdentifierSetAccessorDeclaration, modifiers: ModifiersArray | undefined) => ObjectLiteralExpression",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "(node: PrivateIdentifierSetAccessorDeclaration, modifiers: ModifiersArray | undefined) => ObjectLiteralExpression",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "transformers/esDecorators.ts:1442:99",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "createSetAccessorDescriptorObject",
+      "offset": 46,
+      "contexts": [
+        "125d6a73baffd5387b7afaac3b9a38851d88998b1ef7d823fa6d1fdfaf4b84bb",
+        "9c831375020d3e1f74f90f184920e03a9e6b83b34700a8b40a3ca9a1fe81e392",
+        "426bc02910e5fb54a5779c8f8373447536bdc8f68e4924f1f14727cfa7fa4275",
+        "4e277f5607f6aa169d50c938a718eebab1274dd3b9dce20361ed0b2d31842e78"
+      ],
+      "scope": [
+        "visitSetAccessorDeclaration",
+        "transformESDecorators"
+      ]
+    }
+  },
+  {
+    "File": "transformers/esDecorators.ts",
+    "Line": 1974,
+    "Column": 20,
+    "Kind": "KindCallExpression",
+    "Property": "id",
+    "Source": "never",
+    "Target": "BigIntLiteral",
+    "Text": "transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.initializer))",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "transformers/esDecorators.ts:1974:20",
+    "signature": {
+      "kind": "KindCallExpression",
+      "text": "transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.initializer))",
+      "offset": 7,
+      "contexts": [
+        "1d9144266f3c7338519b3ba95fb68bd2f3a8f35e9d42c56ac25670f577cb4292",
+        "74e855df968a4d1b27b6561c467b36c214d923e8c0a11110f55fedeada58ea2d",
+        "208c24434c972a7f4052421086b9d35fd57457354bf6b43934c93d5b1154fa57",
+        "ac6a8a79efcf955e7812f70167443a23737db528d04e515a0b9714b1edb7c921"
+      ],
+      "scope": [
+        "visitPropertyAssignment",
+        "transformESDecorators"
+      ]
+    }
+  },
+  {
+    "File": "transformers/esDecorators.ts",
+    "Line": 1996,
+    "Column": 20,
+    "Kind": "KindCallExpression",
+    "Property": "id",
+    "Source": "never",
+    "Target": "ArrayBindingPattern",
+    "Text": "transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.initializer))",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "transformers/esDecorators.ts:1996:20",
+    "signature": {
+      "kind": "KindCallExpression",
+      "text": "transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.initializer))",
+      "offset": 7,
+      "contexts": [
+        "1d9144266f3c7338519b3ba95fb68bd2f3a8f35e9d42c56ac25670f577cb4292",
+        "74e855df968a4d1b27b6561c467b36c214d923e8c0a11110f55fedeada58ea2d",
+        "208c24434c972a7f4052421086b9d35fd57457354bf6b43934c93d5b1154fa57",
+        "ac6a8a79efcf955e7812f70167443a23737db528d04e515a0b9714b1edb7c921"
+      ],
+      "scope": [
+        "visitVariableDeclaration",
+        "transformESDecorators"
+      ]
+    }
+  },
+  {
+    "File": "transformers/esDecorators.ts",
+    "Line": 2020,
+    "Column": 20,
+    "Kind": "KindCallExpression",
+    "Property": "id",
+    "Source": "never",
+    "Target": "ArrayBindingPattern",
+    "Text": "transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.initializer))",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "transformers/esDecorators.ts:2020:20",
+    "signature": {
+      "kind": "KindCallExpression",
+      "text": "transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.initializer))",
+      "offset": 7,
+      "contexts": [
+        "1d9144266f3c7338519b3ba95fb68bd2f3a8f35e9d42c56ac25670f577cb4292",
+        "74e855df968a4d1b27b6561c467b36c214d923e8c0a11110f55fedeada58ea2d",
+        "208c24434c972a7f4052421086b9d35fd57457354bf6b43934c93d5b1154fa57",
+        "ac6a8a79efcf955e7812f70167443a23737db528d04e515a0b9714b1edb7c921"
+      ],
+      "scope": [
+        "visitBindingElement",
+        "transformESDecorators"
+      ]
+    }
+  },
+  {
+    "File": "transformers/module/module.ts",
+    "Line": 1566,
+    "Column": 55,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "ExternalModuleReference",
+    "Text": "node",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "ImportEqualsDeclaration & { moduleReference: ExternalModuleReference; }",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "ImportEqualsDeclaration & { moduleReference: ExternalModuleReference; }",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "transformers/module/module.ts:1566:55",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "node",
+      "offset": 18,
+      "contexts": [
+        "017647811e31b4312b22e758361c3666e488fff7f335938545f60dad23d8490d",
+        "948187c692247d4e3270d92f703ecb3bad925a7f43270b958fe3330bbd99eda9",
+        "c7e345332e4d4d89688cd2a2cc81512d4a3e89a4d0282fd4c0ce3acc9895dba6",
+        "b84bad3065767cc4a4c97a8df5ef6c9ccfd2c1b060237d25f03175c35d0918bb"
+      ],
+      "scope": [
+        "visitTopLevelImportEqualsDeclaration",
+        "transformModule"
+      ]
+    }
+  },
+  {
+    "File": "transformers/module/module.ts",
+    "Line": 1588,
+    "Column": 63,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "ExternalModuleReference",
+    "Text": "node",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "ImportEqualsDeclaration & { moduleReference: ExternalModuleReference; }",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "ImportEqualsDeclaration & { moduleReference: ExternalModuleReference; }",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "transformers/module/module.ts:1588:63",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "node",
+      "offset": 18,
+      "contexts": [
+        "017647811e31b4312b22e758361c3666e488fff7f335938545f60dad23d8490d",
+        "3d0cb94e9188645859978916632e9b2bacf39949f788f45862c851bf31c9d548",
+        "95517d0a848f9a0ef804e3565a79e5a25d819ea5f0c29514d2451495b2ff30ab",
+        "c1a9686fd4aaf63086debbd1ac740a9febc5049dc00ec9f2533fb7cdf63a6642"
+      ],
+      "scope": [
+        "visitTopLevelImportEqualsDeclaration",
+        "transformModule"
+      ]
+    }
+  },
+  {
+    "File": "transformers/module/system.ts",
+    "Line": 775,
+    "Column": 73,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "ExternalModuleReference",
+    "Text": "node",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "ImportEqualsDeclaration & { moduleReference: ExternalModuleReference; }",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "ImportEqualsDeclaration & { moduleReference: ExternalModuleReference; }",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "transformers/module/system.ts:775:73",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "node",
+      "offset": 39,
+      "contexts": [
+        "57b7f4a394165421e8431ca006c752b82531b2710ffcd24d7acad631ee06e505",
+        "21cbc4d5f0573f0e0a17d502439512d02b36878018c7e31564da2f73826ae3d3",
+        "007852399db5d42b1195dd6f86f9adfc8f7d304e4296e1a21d2d42e3a4db0b33",
+        "e359e446f86662a5d640519e316629020dc993823d9a16ce6e891c63b4476669"
+      ],
+      "scope": [
+        "visitImportEqualsDeclaration",
+        "transformSystemModule"
+      ]
+    }
+  },
+  {
+    "File": "transformers/module/esnextAnd2015.ts",
+    "Line": 277,
+    "Column": 55,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "ExternalModuleReference",
+    "Text": "node",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "ImportEqualsDeclaration & { moduleReference: ExternalModuleReference; }",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "ImportEqualsDeclaration & { moduleReference: ExternalModuleReference; }",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "transformers/module/esnextAnd2015.ts:277:55",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "node",
+      "offset": 18,
+      "contexts": [
+        "017647811e31b4312b22e758361c3666e488fff7f335938545f60dad23d8490d",
+        "c614eaa99148e3893731dc9e0e1803172364d54b013747181b27bbad93fe617f",
+        "856c8a20bb8463c6cf2c24991b8c1bed2bff6daa4b9489b6351f9891c4459599",
+        "1576fb511c0afc913ab0445a63446115d57da73b3195d1926a1a4ea2c1043536"
+      ],
+      "scope": [
+        "visitImportEqualsDeclaration",
+        "transformECMAScriptModule"
+      ]
+    }
+  },
+  {
+    "File": "binder.ts",
+    "Line": 738,
+    "Column": 67,
+    "Kind": "KindPropertyAccessExpression",
+    "Property": "id",
+    "Source": "never",
+    "Target": "ArrayBindingPattern",
+    "Text": "node.name",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "Identifier | PrivateIdentifier | StringLiteral | NumericLiteral | BigIntLiteral | ElementAccessExpression | ... 5 more ... | PropertyAccessEntityNameExpression",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "StringLiteral | Identifier | ObjectBindingPattern | ArrayBindingPattern | NoSubstitutionTemplateLiteral | ... 6 more ... | JsxNamespacedName",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "binder.ts:738:67",
+    "signature": {
+      "kind": "KindPropertyAccessExpression",
+      "text": "node.name",
+      "offset": 24,
+      "contexts": [
+        "c617c4b881bd74bd1d5e87f714d3614ca838b10efbf9f6b9b2bfdf49cae5fe85",
+        "26e3317fa05ff9c1a72fd2583c46a34a4536845168b3047a72993e2b81f0e9d6",
+        "8cb1dc539821f65beab3e71414f547d8facb22265acd73312457abbe6a49109b",
+        "32631cd0d7ab400e087c3ebed598745bc84a429e81bf2bc2fba2ee7d9ea9f84a"
+      ],
+      "scope": [
+        "getDisplayName",
+        "createBinder"
+      ]
+    }
+  },
+  {
+    "File": "binder.ts",
+    "Line": 3293,
+    "Column": 68,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Expression",
+    "Text": "node",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "(BindablePropertyAssignmentExpression & DynamicNamedDeclaration) | (BindablePropertyAssignmentExpression & DynamicNamedBinaryExpression) | (PropertyAccessExpression & DynamicNamedDeclaration) | (ElementAccessExpression & ... 2 more ... & DynamicNamedDeclaration)",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "(PropertyAccessExpression & DynamicNamedDeclaration) | (BindablePropertyAssignmentExpression & DynamicNamedDeclaration) | (BindablePropertyAssignmentExpression & DynamicNamedBinaryExpression) | (ElementAccessExpression & ... 2 more ... & DynamicNamedDeclaration)",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "binder.ts:3293:68",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "node",
+      "offset": 43,
+      "contexts": [
+        "1e282ce29ff6a36a02b563b4ee3ed5cab4bbd885bd127d6a0ea1e691e1960ffe",
+        "cb4977f68117b4f69d54b01b9a8f4a690b19143622e46114ca022dac36331986",
+        "7b4de7b012d79f71123c3f5739bae62c97de41147048863d4bc832c00b9ae89e",
+        "562f297e870e9d61d289968e3d4edc530827db7cbb5119e852a139926e64896d"
+      ],
+      "scope": [
+        "bindThisPropertyAssignment",
+        "createBinder"
+      ]
+    }
+  },
+  {
+    "File": "binder.ts",
+    "Line": 3313,
+    "Column": 64,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Expression",
+    "Text": "node",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "(BindablePropertyAssignmentExpression & DynamicNamedDeclaration) | (BindablePropertyAssignmentExpression & DynamicNamedBinaryExpression) | (PropertyAccessExpression & DynamicNamedDeclaration) | (ElementAccessExpression & ... 2 more ... & DynamicNamedDeclaration)",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "(PropertyAccessExpression & DynamicNamedDeclaration) | (BindablePropertyAssignmentExpression & DynamicNamedDeclaration) | (BindablePropertyAssignmentExpression & DynamicNamedBinaryExpression) | (ElementAccessExpression & ... 2 more ... & DynamicNamedDeclaration)",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "binder.ts:3313:64",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "node",
+      "offset": 43,
+      "contexts": [
+        "4fd84e6f85c05e38c23687dc2681bcad0e714571acfc10ab1a159d59ebe21e1d",
+        "bb389bf75c58ceeff9293f32c97ffd67b7f01c5221a935217420c51bcd392c28",
+        "0857056a431fa88604099d0abfe381c9db21399799babcdb2495fd91727aa6ab",
+        "4a7b3e73df245a0e473d4189aadc0e5b82edc6bf1bf1da13ea26fbffb14a34b3"
+      ],
+      "scope": [
+        "bindThisPropertyAssignment",
+        "createBinder"
+      ]
+    }
+  },
+  {
+    "File": "binder.ts",
+    "Line": 3427,
+    "Column": 55,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Expression",
+    "Text": "node",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "BindablePropertyAssignmentExpression & (DynamicNamedDeclaration | DynamicNamedBinaryExpression)",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "BindablePropertyAssignmentExpression & (DynamicNamedDeclaration | DynamicNamedBinaryExpression)",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "binder.ts:3427:55",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "node",
+      "offset": 42,
+      "contexts": [
+        "5669c9a219ed9d678ae2d145ba0322d7ec31ae22952d2dbaf7a71d1a04f8e410",
+        "e28749faac55a2667b09b30c3cf0f21fa0971036bcbef5ead9bd7f258d406a90",
+        "bdd0e581f79c8e1f42ccb0692854069f94112ebf407e48c0b64301ba14442aad",
+        "6cedd28033fd354d1af298b2bdb65b1a2ac7738d811b653f6cf6ba6ad8d6d6de"
+      ],
+      "scope": [
+        "bindSpecialPropertyAssignment",
+        "createBinder"
+      ]
+    }
+  },
+  {
+    "File": "binder.ts",
+    "Line": 3705,
+    "Column": 86,
+    "Kind": "KindIdentifier",
+    "Property": "id",
+    "Source": "never",
+    "Target": "Node",
+    "Text": "node",
+    "reason": "Uninhabited narrowed source has no owning object declaration. Compiler-side relation review required; no source edit.",
+    "stock_source": "ParameterPropertyDeclaration",
+    "target_property_declarations": [
+      "src/compiler/types.ts:947:22"
+    ],
+    "checker_source_declares_first_property": true,
+    "missing_optional_properties": [
+      "id"
+    ],
+    "classification": "write",
+    "writes": [
+      {
+        "untyped_receiver": false,
+        "property": "id",
+        "where": "src/compiler/checker.ts:1462:9",
+        "access": "node.id",
+        "operation": "=",
+        "written": "nextNodeId",
+        "written_type": "number",
+        "receiver_type": "Node",
+        "property_declarations": [
+          "src/compiler/types.ts:947:22"
+        ]
+      }
+    ],
+    "bucket": "b",
+    "proof": {
+      "adamic_source": "never",
+      "stock_source": "ParameterPropertyDeclaration",
+      "stock_never": false,
+      "reason": "The refusal census records the source of this relation as never. Case (b) applies to that Adamic static relation. This is not independent evidence that the original stock-TypeScript expression is unreachable; inhabited stock sources are flagged for compiler reconciliation."
+    },
+    "id": "binder.ts:3705:86",
+    "signature": {
+      "kind": "KindIdentifier",
+      "text": "node",
+      "offset": 73,
+      "contexts": [
+        "0f6703058bd10eec1e8acae9076869200d010554064cd4c865ceb4eef417cd51",
+        "b08f0362aaeea22b15a76450076366cffcec3bef1d35f07226442962d627260a",
+        "a3d70a7d2f8cd2e269ebb5fd6818bb4c7e2f93ab63bb0f6cabf8be6601874e14",
+        "65fffaa4ee09e04060f8680182306287c64b32cd772eb307705db08696c5e13f"
+      ],
+      "scope": [
+        "bindParameter",
+        "createBinder"
+      ]
+    }
+  }
+]

@@ -1,0 +1,8 @@
+=== RUN   TestThroughput
+    throughput_test.go:54: Go: 1560 texts, 2407100 checked bytes/run; five samples texts/s [11345.031025132712 11221.97341812311 11088.253986522283 11566.144575101924 11618.238101639476]; median 11345 texts/s
+    throughput_test.go:54: source Node: 1560 texts, 2407100 checked bytes/run; five samples texts/s [4577.618101329251 4600.631153510056 4637.568492873359 4521.453230428342 4872.02200699836]; median 4601 texts/s
+    throughput_test.go:54: native: 1560 texts, 2407100 checked bytes/run; five samples texts/s [5004.3996211348685 5649.8429843444155 5735.760548851397 5709.458461268664 5873.15306325009]; median 5709 texts/s
+    throughput_test.go:56: Includes startup, file reading, complete canonical serialization, file-backed stdout and verification read; release native, one warm-up and five rotated runs
+--- PASS: TestThroughput (10.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	10.015s

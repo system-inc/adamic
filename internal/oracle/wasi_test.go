@@ -22,6 +22,7 @@ func TestWASIAgreesWithNode(t *testing.T) {
 	}
 	for _, fixture := range fixtures {
 		t.Run(fixture.path, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
 			if err != nil {
 				t.Fatal(err)
@@ -123,6 +124,7 @@ func TestWASIEmission(t *testing.T) {
 	compiler := filepath.Join(filepath.Dir(filepath.Dir(os.Getenv("WASI_SYSROOT"))), "bin", "clang")
 	for _, fixture := range fixtures {
 		t.Run(fixture.path, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
 			if err != nil {
 				t.Fatal(err)
