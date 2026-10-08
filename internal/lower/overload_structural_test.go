@@ -9,7 +9,7 @@ import (
 )
 
 func TestOverloadStructuralResults(t *testing.T) {
-	for _, name := range []string{"block", "evaluator"} {
+	for _, name := range []string{"block", "evaluator", "fields"} {
 		source, err := os.ReadFile("../oracle/testdata/overload_structural_" + name + ".a")
 		if err != nil {
 			t.Fatal(err)
@@ -21,6 +21,7 @@ func TestOverloadStructuralResults(t *testing.T) {
 }
 func TestOverloadStructuralRefuses(t *testing.T) {
 	for _, probe := range []struct{ name, file, path, nodeOutput string }{
+		{"mixed field storage", "fields-mixed", "result.value without a single storage representation", "7\n"},
 		{"missing Block field", "block-liar", "result.statements", "undefined\n"},
 		{"shared wider result", "evaluator-shared-liar", "result.value", "1\n"},
 		{"reverse readonly variance", "evaluator-reverse-liar", "result.value", "1\n"},

@@ -30,6 +30,15 @@ func hiddenTNodeConstraint(t *testing.T, constraint string, want ir.Type, wantKn
 	if held, known := l.representation(parameter); held != want || known != wantKnown {
 		t.Fatalf("constraint representation = (%v, %v), want (%v, %v)", held, known, want, wantKnown)
 	}
+	// Parameters and their binders must use the same constraint storage rule.
+	parameterNode := file.Statements.Nodes[0].Parameters()[0].Name()
+	held, parameterErr := l.typeOf(parameterNode)
+	if wantKnown && (parameterErr != nil || held != want) {
+		t.Fatalf("parameter storage = %v, %v; want %v", held, parameterErr, want)
+	}
+	if !wantKnown && parameterErr == nil {
+		t.Fatalf("unsupported parameter constraint accepted: %v", held)
+	}
 	// A concrete substitution must win even when its storage differs from the constraint.
 	l.substitution = map[*checker.Type]ir.Type{parameter: ir.Array}
 	if held, known := l.representation(parameter); !known || held != ir.Array {

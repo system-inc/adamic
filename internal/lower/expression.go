@@ -60,29 +60,11 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Array, true
 	}
 	if flags&checker.TypeFlagsTypeParameter != 0 {
-		// Concrete instantiations take precedence over the declaration's constraint.
-		if substituted, isKnown := l.substitution[proven]; isKnown {
+		// Instantiations and class substitutions precede constraint-backed storage.
+		if substituted, known := l.substitution[proven]; known {
 			return substituted, true
 		}
-		constraint := l.checker.GetBaseConstraintOfType(proven)
-		if constraint == nil || constraint == proven || constraint.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive|checker.TypeFlagsTypeParameter) != 0 {
-			return 0, false
-		}
-		// A scalar constraint proves its storage even for a narrower literal. An
-		// object constraint does not: structural subtypes can be arrays or callable.
-		// Keep their runtime brand in the existing tagged representation instead
-		// of inventing an object layout. Unconstrained binders remain unsupported.
-		held, known := l.representation(constraint)
-		if !known {
-			return 0, false
-		}
-		switch held {
-		case ir.Number, ir.String, ir.Boolean:
-			return held, true
-		case ir.Object:
-			return ir.Union, true
-		}
-		return 0, false
+		return l.constraintStorage(proven)
 	}
 	if flags&checker.TypeFlagsIntersection != 0 {
 		// Target & WeakBrand is what a Weak<Target> reads as where it's present: the target.
