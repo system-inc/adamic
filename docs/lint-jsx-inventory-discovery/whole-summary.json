@@ -1,0 +1,29 @@
+{
+  "tested_commit": "a03bf84a979beb83a6a1737db49b6e6b091db00c",
+  "fix_commit": "d997c3a9257c9823b3b0a5f7871fe95a2e58e518",
+  "rule_commit": "55a2730268fbefaf19385ff38f5d6f65291bef46",
+  "inputs": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/adamic-gate/jsx-curly-typescript",
+    "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_LINT_PROFILE_DIR": "/tmp/adamic-gate/jsx-discovery-whole-profile-oje1zeob",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/tmp/adamic-gate/jsx-discovery-whole-profile-oje1zeob"
+  },
+  "nproc": "5",
+  "load_before": "0.35 0.28 0.71 1/144 124051",
+  "typescript_pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "typescript_status": "",
+  "command": "go test ./stage1/cohere/lint -count=1 -json -timeout=60m",
+  "wall_seconds": 892.7148655740002,
+  "exit_code": 0,
+  "load_after": "1.96 2.31 1.66 1/150 184270",
+  "counts": {
+    "pass": 120,
+    "fail": 0,
+    "skip": 1
+  },
+  "failures": [],
+  "skips": [
+    "TestCheckerBridgeRefusalPending"
+  ]
+}

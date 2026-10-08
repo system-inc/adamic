@@ -1,0 +1,3 @@
+// Exact upstream descriptions at cohere 7945d102.
+export const unnecessary = "These curly braces wrap a plain string and do nothing. A JSX expression container exists to let a value cross from JavaScript into the markup; around a literal that the markup could hold directly it is a pair of braces the reader has to look past. Write the literal on its own.";
+export const missing = "This literal is written as bare markup where the surrounding code wraps its literals in an expression container. Written both ways in one file, the reader has to decide each time whether the difference means something. Wrap it.";
