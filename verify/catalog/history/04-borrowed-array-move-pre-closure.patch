@@ -1,7 +1,7 @@
 --- a/internal/native/reuse.go
 +++ b/internal/native/reuse.go
-@@ -255,11 +255,6 @@
- 	if local.Captured || local.ExpressionAssigned || read.Checked || readsOf(evaluated(instruction), read.Local) != 1 {
+@@ -248,11 +248,6 @@
+ 	if local.Captured || read.Checked || readsOf(evaluated(instruction), read.Local) != 1 {
  		return false
  	}
 -	if plan.lending[read.Local] {

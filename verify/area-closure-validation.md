@@ -65,3 +65,21 @@ rejected by clang's strict function-pointer signature checks.
 The fs mutation table keeps all source cases but does not claim runtime evidence
 for sources stopped by optional widening. Only the supported fs cases reach the
 runtime mutants. No new source was copied from cohere.
+
+## Updated area and catalog
+
+The area merge changed no lower, native, flow or oracle source or fixtures.
+The explicitly required `go test ./internal/lower ./internal/flow` rerun passed:
+lower 79.725s, flow 289.231s. There was no additional oracle fixture selection
+for that clean area merge.
+
+```sh
+bash verify/catalog/check.sh d772b5c990de4304de990e723835f19ebb613641 -jobs 1
+```
+
+The network run passed entries 01 and 02, then failed submodule setup after
+GitHub rejected authentication. The repeat with pinned local Git submodule URL
+rewrites completed in 239.488s: entries 01-03, 05-07 and 12 detect their faults;
+04, 08, 09 and 11 report no-longer-applies. All five historical skipped entries
+retain their reasons. The four patches are refreshed without changing compiler
+production code; entry 11 targets the replacement readiness contract explicitly.
