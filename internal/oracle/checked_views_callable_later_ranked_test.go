@@ -8,6 +8,10 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"prefix-operand", "parenthesizeOperandOfPrefixUnary", "3\n", "", "0", "operand.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"syntax-kind", "formatSyntaxKind", "Identifier\n", "undefined\nIdentifier\nUnknown\n", "0", "", "", "3\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members"},
+		{"static-block", "createClassStaticBlockDeclaration", "3\n", "", "0", "body.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"prefix-unary", "createPrefixUnaryExpression", "43\n", "44\n", "0", "operand.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"export-specifier", "createExportSpecifier", "7\n", "4\n8\n7\n", "0", "propertyName.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"property-signature", "createPropertySignature", "4\n", "3\n10\n10\n10\n10\n10\n10\n10\n", "0", "modifier.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"type-check", "createTypeCheck", "9\n", "7\n12\n9\n9\n10\n9\n9\n9\n11\n", "0", "value.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
@@ -183,6 +187,7 @@ func TestCheckedViewCallableLaterRankedIntrinsicSetRefusal(t *testing.T) {
 
 func TestCheckedViewCallableLaterRankedOriginalReadRefusals(t *testing.T) {
 	for _, witness := range []struct{ directory, output, refusal string }{
+		{"for-update", "15\n", "unsupported untagged object union contract"},
 		{"comma-reducer", "7\n", "unbound-method"},
 		{"variable-update", "7\n", "unsupported untagged object union contract"},
 		{"arrow-function", "3\n", "unsupported untagged object union contract"},

@@ -1637,6 +1637,93 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "prefix-syntax-static-unary",
+      "pairs": 4,
+      "candidateReads": 46,
+      "members": [
+        {
+          "receiver_type_id": 11725,
+          "type": "ParenthesizerRules",
+          "field": "parenthesizeOperandOfPrefixUnary",
+          "declared_types": [
+            "(operand: Expression) => UnaryExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 12,
+          "witness": {
+            "file": "src/compiler/factory/nodeFactory.ts",
+            "line": 3143,
+            "column": 27
+          },
+          "rank": 148,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 420,
+          "type": "typeof Debug",
+          "field": "formatSyntaxKind",
+          "declared_types": [
+            "(kind: SyntaxKind | undefined) => string"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 12,
+          "witness": {
+            "file": "src/compiler/factory/nodeFactory.ts",
+            "line": 7231,
+            "column": 52
+          },
+          "rank": 151,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createClassStaticBlockDeclaration",
+          "declared_types": [
+            "(body: Block) => ClassStaticBlockDeclaration"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 11,
+          "witness": {
+            "file": "src/compiler/parser.ts",
+            "line": 7938,
+            "column": 43
+          },
+          "rank": 154,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createPrefixUnaryExpression",
+          "declared_types": [
+            "(operator: PrefixUnaryOperator, operand: Expression) => PrefixUnaryExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 11,
+          "witness": {
+            "file": "src/compiler/factory/utilities.ts",
+            "line": 531,
+            "column": 9
+          },
+          "rank": 155,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

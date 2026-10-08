@@ -44,7 +44,7 @@ for (const pair of pairs) {
   if(chain.includes(name))return undefined;
   const declarations=interfaces.get(name)||[];
   for(const declaration of declarations) {
-   const found=declaration.members.find(node=>ts.isMethodSignature(node)&&node.name.getText(types)===pair.field);
+   const found=declaration.members.find(node=>(ts.isMethodSignature(node)||ts.isPropertySignature(node))&&node.name.getText(types)===pair.field);
    if(found)return {declaration:found,path:[...chain,name]};
   }
   for(const declaration of declarations)for(const clause of declaration.heritageClauses||[])for(const base of clause.types) {
@@ -56,7 +56,7 @@ for (const pair of pairs) {
  const resolved=member(pair.type);
  if(resolved){decl=resolved.declaration;inheritancePath=resolved.path;}
  if (!read || !decl) throw Error('missing original witness '+pair.type+'.'+pair.field);
- rows.push({rank:pair.rank,type:pair.type,field:pair.field,candidateReads:pair.reads,witness:w,read:read.getText(source),readKind:ts.isBindingElement(read)?"binding":"property",call:ts.isBindingElement(read)?read.getText(source):read.parent.getText(source),utf16Start:read.getStart(source),utf16End:read.end,fileSha256:crypto.createHash('sha256').update(bytes).digest('hex'),declaration:originalHeader?originalHeader.replace(/^export function /,"")+";":decl.getText(types),declarationFile,declarationSha256:crypto.createHash('sha256').update(declarationBytes).digest('hex'),declarationLine:types.getLineAndCharacterOfPosition(decl.getStart(types)).line+1,...(inheritancePath.length>1?{declarationOwner:inheritancePath.at(-1),inheritancePath}:{}),...(originalHeader?{declarationHeader:originalHeader,declarationKind:"exported-function"}:{})});
+ rows.push({rank:pair.rank,type:pair.type,field:pair.field,candidateReads:pair.reads,witness:w,read:read.getText(source),readKind:ts.isBindingElement(read)?"binding":"property",call:ts.isBindingElement(read)?read.getText(source):read.parent.getText(source),utf16Start:read.getStart(source),utf16End:read.end,fileSha256:crypto.createHash('sha256').update(bytes).digest('hex'),declaration:originalHeader?originalHeader.replace(/^export function /,"")+";":decl.getText(types),declarationFile,declarationSha256:crypto.createHash('sha256').update(declarationBytes).digest('hex'),declarationLine:types.getLineAndCharacterOfPosition(decl.getStart(types)).line+1,...(inheritancePath.length>1?{declarationOwner:inheritancePath.at(-1),inheritancePath}:{}),...(originalHeader?{declarationHeader:originalHeader,declarationKind:"exported-function"}:ts.isPropertySignature(decl)?{declarationKind:"property-function"}:{})});
 }
 fs.writeFileSync(path.join(__dirname,process.argv[4] || 'aggregate-original-witnesses.json'),JSON.stringify({sourceSha:sha,basis:'original declarations and read spans; reduced adjacent helpers and data carriers',members:rows},null,2)+'\n');
 console.log('Verified '+rows.length+' original declarations/read spans, '+rows.reduce((n,p)=>n+p.candidateReads,0)+' conservative candidate reads.');

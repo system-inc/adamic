@@ -1085,6 +1085,28 @@
       ]
     },
     {
+      "rank": 136,
+      "type": "TransformationContext",
+      "field": "onSubstituteNode",
+      "candidateReads": 13,
+      "witness": {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 254,
+        "column": 38
+      },
+      "read": "context.onSubstituteNode",
+      "readKind": "property",
+      "call": "previousOnSubstituteNode = context.onSubstituteNode",
+      "utf16Start": 6721,
+      "utf16End": 6745,
+      "fileSha256": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2",
+      "declaration": "onSubstituteNode: (hint: EmitHint, node: Node) => Node;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9623,
+      "declarationKind": "property-function"
+    },
+    {
       "rank": 137,
       "type": "TypeCheckerHost",
       "field": "getEmitModuleFormatOfFile",
