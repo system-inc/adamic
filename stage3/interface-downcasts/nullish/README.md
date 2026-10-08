@@ -132,3 +132,22 @@ This proves nullable logical-kind admission cannot skip finite value membership.
 passes in 0.876s. Its first attempted source mutation changed no bytes; that test
 failed its expected-trap assertion. The corrected real-input mutant is committed.
 Production pairs/reads remain 2,018/9,101 unverified; the exact inventory is unchanged.
+
+## Nullable union selection, October 8
+
+Integration e555d67e is merged in c5f19418, preserving both union and nullable
+admission. Nullable reads select scalar members by kind and their individual
+literal sets, tagged object members by the existing finite tag check, and a
+single structural object member beside primitive alternatives by kind. Member
+payload reads remain checked through the shared allocation flow. Ambiguous
+array alternatives and untagged structural unions retain named read refusals.
+No target type creates a producer certificate.
+
+Nine valid fixtures (three shapes by three nullish forms) match Node, sanitized
+and release native, JavaScript and leak checks. Nine wrong-member mutants and
+three tagged-member bad-payload mutants stop with exit 70 at the read. The
+number-both control catches nullable dispatch after the integration merge.
+`ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewNullableSelection|^TestCheckedViewNullish$/^number-both$' -v -count=1`
+passes in 12.188s. Production inventory remains 2,018 pairs/9,101 reads awaiting
+lowering and reaching-view proof; fixture support is not subtracted. Ledger
+inserted checks belong to stricter-checks worker 01a118d0 and are outside this unit.

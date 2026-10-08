@@ -821,7 +821,7 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		}
 		return "(" + e.value(expression.Value) + ")" + operator + quote(expression.Name) + "]"
 	case ir.Property:
-		if expression.View != "" && expression.Of == ir.Union {
+		if expression.View != "" && expression.Of == ir.Union && !expression.Nullish {
 			return e.viewObjectPrimitive(expression)
 		}
 		if expression.View != "" {
