@@ -239,3 +239,59 @@ Logs: /tmp/for-of-c41-focus.log, /tmp/for-of-c41-recorded.log,
 /tmp/for-of-night-replays/recorded.json, /tmp/for-of-tuple-final.log,
 /tmp/for-of-tuple-mutants.log, /tmp/adamic-for-of-tuple-mutants/*.log,
 /tmp/for-of-tuple-counts.log and /tmp/for-of-tuple-after-800.log.
+
+## Full root audit and preserved generator refusal
+
+The finished tuple unit is 46659743. All 118 deduplicated original object sites
+were replayed at that commit with the same official command and immutable
+adapted sources. [Compact per-site evidence](root-replay.csv) records the SHA,
+source checker type, result and first remaining stop. **109 exact original
+signatures reproduce, one tuple gate is covered, and eight sites are masked.**
+All 118 yielded a latent measurement; none was a replay infrastructure error.
+Masked sites are binder.ts:1823:29 and 1833:29; checker.ts:13449:40,
+13551:46, 29248:47 and 48275:36; core.ts:2173:29; emitter.ts:2062:38.
+The source type table alone does not count a masked site as lowered. Total
+object coverage stays 1/118. Complete logs: /tmp/for-of-root-audit.log and
+/tmp/for-of-root-audit/recorded.json, plus each site's log in that directory.
+
+Three .a reductions correspond to the generator loops at core.ts:333:21,
+438:21 and 510:21. They are registered by their dedicated oracle test, outside
+the shared runnable-fixture list, whose stopped cases require NotYet rather
+than Refused. Source Node prints 2/3 for map, 1/2/2/3 for flat map, and 2 for
+filtering. Ordinary lowering returns nil IR with `a generator function` in all
+three cases. The reductions remain under a separate testdata directory because
+the flow tests discover runnable .a fixtures at the testdata root.
+
+No production generator change is made. Omitting the existing generator refusal
+is a temporary, restored mutant; all three fixtures catch it with
+`want generator ownership refusal and no IR`. It fails semantically, not through
+Go compilation or clang warnings. The ruling needed to build these units is the
+owned suspended-frame, resume, cancellation and completion design described in
+docs/user-iterators.md. Eagerly materializing the yields would change laziness
+and early-exit behavior. Native/JavaScript certification cannot run while the
+required refusal holds, and is not claimed.
+
+Commands for this unit, redirected to logs:
+
+```
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run TestForOfGeneratorRootsRemainRefused -count=1 -timeout 10m
+python3 internal/lower/testdata/run-for-of-generator-mutant.py
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/oracle -run 'TestGeneratorsAreRefusedEvenWithoutYield|TestIteratorViewsCannotHideReturn|TestIteratorViewsCannotEraseReceivers|TestForOfGeneratorRootsRemainRefused|TestForOfTupleStorageChecks|TestNativeAgreesWithNode/internal/oracle/testdata/for_of_tuple' -count=1 -timeout 10m
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 10m -args -update-counts
+```
+
+Logs: /tmp/for-of-generator-focus.log, /tmp/for-of-generator-mutant-run.log,
+/tmp/for-of-generator-mutant.log, /tmp/for-of-generator-final.log and
+/tmp/for-of-generator-counts.log. Refused fixtures have no allocation rows.
+Final focused results: lower 0.365s, oracle 0.809s. Counts refresh passes in
+25.008s with no row change for the refused fixtures.
+No runtime C files or backends were changed.
+
+Remaining dependencies: NodeArray, JSDocArray, MutableNodeArray and the branded
+SortedReadonlyArray need the array storage work to land through area/compiler.
+The unlanded codex/views-integration branch is named as that dependency and will
+not be merged again. General structural Iterable/ElaborationIterator dispatch
+still needs preserved receiver conventions, optional return presence and a
+represented protocol result; these remain NotYet, rather than design refusals.
+The three generator units remain Refused by design. The standing push rule is
+one push per completed locally verified unit, with another only to fix a red.

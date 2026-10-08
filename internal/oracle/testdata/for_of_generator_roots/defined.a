@@ -1,0 +1,7 @@
+function* defined(values: Iterable<number>) {
+    for (const value of values) {
+        const kept = value > 1 ? value : undefined;
+        if (kept !== undefined) { yield kept; }
+    }
+}
+for (const value of defined([1, 2])) { console.log(value.toFixed(0)); }

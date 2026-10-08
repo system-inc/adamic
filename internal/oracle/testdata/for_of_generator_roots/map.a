@@ -1,0 +1,4 @@
+function* map(values: Iterable<number>) {
+    for (const value of values) { yield value + 1; }
+}
+for (const value of map([1, 2])) { console.log(value.toFixed(0)); }
