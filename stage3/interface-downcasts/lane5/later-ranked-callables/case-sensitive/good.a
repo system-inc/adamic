@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+
+interface Base {readonly useCaseSensitiveFileNames:unknown;}
+interface Target {useCaseSensitiveFileNames(): boolean;}
+function probe(value:Base):void {const host=value as Target;console.log(`${host.useCaseSensitiveFileNames()}`);}
+probe({useCaseSensitiveFileNames:():boolean=>true});

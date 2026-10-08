@@ -1309,6 +1309,73 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "helpers-case-newline",
+      "pairs": 3,
+      "candidateReads": 40,
+      "members": [
+        {
+          "receiver_type_id": 10108,
+          "type": "TransformationContext",
+          "field": "readEmitHelpers",
+          "declared_types": [
+            "() => EmitHelper[] | undefined"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 14,
+          "witness": {
+            "file": "src/compiler/transformers/ts.ts",
+            "line": 311,
+            "column": 33
+          },
+          "rank": 124,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11233,
+          "type": "CompilerHost",
+          "field": "useCaseSensitiveFileNames",
+          "declared_types": [
+            "() => boolean"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 13,
+          "witness": {
+            "file": "src/compiler/program.ts",
+            "line": 1714,
+            "column": 35
+          },
+          "rank": 127,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 94791,
+          "type": "FormatDiagnosticsHost",
+          "field": "getNewLine",
+          "declared_types": [
+            "() => string"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 13,
+          "witness": {
+            "file": "src/compiler/program.ts",
+            "line": 667,
+            "column": 142
+          },
+          "rank": 128,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }
