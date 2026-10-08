@@ -1,3 +1,4 @@
+// a-check: type error TS2345
 const texts: (string | undefined)[] = [undefined, '', '12', ' 3.5x', undefined];
 console.log(texts.map(parseInt).join('|'));
 console.log(texts.map(parseFloat).join('|'));

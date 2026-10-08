@@ -1,1 +1,2 @@
+// a-check: type error TS2345
 console.log([1, 2.5].map(parseFloat).join('|'));
