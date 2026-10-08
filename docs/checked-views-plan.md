@@ -1640,3 +1640,23 @@ union-target oracle and original FunctionLikeDeclaration/ClassDeclaration union
 fixtures. The integrator reconciles this small cast-proof dispatch hook.
 The existing certifiedCheckedCast hook also retains the union target contract
 on cast.go's multi-tag IR node. The tag proof remains distinct from payload proof.
+
+### Lane 4 fallback collision cause and scoped demand
+
+Original ArrowFunction declares name: never. Interning the complete Node graph
+therefore creates that descriptor even for ActiveLabel and renamed bindings.
+The global field-name fallback previously applied that obligation to every
+viewed allocation named name; similarly a Map members descriptor blocked class
+array members. New lower/view_demand_scopes.go and tests attach existing
+CheckedCast.ViewContract targets to the actual origins, then query lane 3's
+allocation graph and projection index to carry target contracts over actual
+field/element producers and stores. No second allocation solver is introduced.
+The named scopedViewFieldFamilies hook in view_lazy.go scopes only the fallback;
+direct unsupported reads, wider helpers receiving a viewed unsupported member,
+unknown callbacks, untracked origins, opaque projections and mutations retain
+refusals. Cast.go uses existing certifiedCheckedCast for union target metadata.
+Primitive nullish payloads do not invent aggregate allocations. Original name
+oracles assert ArrowFunction.name: never is still in the complete descriptor
+graph and run field-check mutants. The wider-helper forged-string mutant must
+be caught by the never obligation despite passing the helper's primitive check.
+The intersected Identifier pair remains lane 7's work.

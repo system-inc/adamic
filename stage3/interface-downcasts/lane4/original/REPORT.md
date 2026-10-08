@@ -1,8 +1,8 @@
-Certified: 27 original __String pairs / 540 reads and all 5 nullable-field pairs / 9 reads, with full upstream declarations.
-Commits: seven green groups, 434e9667 through 4e031600, pushed only to codex/views-mixed-unions-2 from integration 4e67894a.
-Checks: per-group uncached Node, release C, JavaScript and sanitized/leak-checked C passed; final combined regression is recorded below.
-Mutants: 34 member-read bypass cases, each caught in C and JavaScript by a named refusal pin, including both union receiver alternatives.
-Uncovered: 3 original pairs / 3 reads are named admission gaps; original mixed column remains 31 / 141, with shared dictionary selection tracked separately.
+Certified: 29 original __String pairs / 542 reads plus all 5 nullable-field pairs / 9 reads; the one intersection pair belongs to lane 7.
+Commits: original groups through 6858d196; union admission d5738b8e; scoped fallback fix in this checkpoint.
+Checks: original name group PASS 42.650s, scoped lower tests PASS 0.020s; complete regression recorded below.
+Mutants: both new name read-check bypasses caught in C and JavaScript; wider-helper never guard bypass runs on and fails its refusal assertion.
+Uncovered: lane 7 intersection 1 pair / 1 read; original mixed column 29 / 139 remaining, shared dictionary selection tracked separately.
 
 The first group certifies two candidate pairs / 448 reads against all 78 emitted
 declaration files from pristine official tsc 050880ce. Receiver fields are compared
@@ -143,3 +143,41 @@ combined-interrupted.log; no pass was inferred from it. The complete rerun exits
 formatting and whitespace checks are clean. No full repository gate or native
 graph-regions package gate is claimed. Working tree changes are documentation
 and tests only; integration supplies the previously built branded read hooks.
+
+Eighth group supersedes the two never gaps above. ArrowFunction.name: never is
+still present in each full original descriptor graph. Its global field-name key
+formerly poisoned unrelated ActiveLabel and renamed-binding allocations. The
+scoped fallback now carries actual target contracts through the shared lane 3
+allocation graph. It never discards unknown-origin, unknown-receiver or opaque
+projection obligations. The global unknown guard remains in place. Explicit
+null and undefined constants no longer invent aggregate allocations: this fixes
+the false unknown producer at its cause, with actual/unknown aggregates tested.
+
+Twelve original Node controls, both backend refusal pins, positive sanitized
+native/leak checks and two additional C/JS read mutants passed in 42.650s.
+The full ArrowFunction never wider-helper fixture uses a forged string, so it
+passes the wider helper's primitive contract. The real compiler refuses at that
+helper read. A test-only scoped-family bypass prints ordinary then forged in
+both backends and fails TestViewFallbackScopesRetainWiderHelperGuard.
+The first proposed removal of the global unknown condition was rejected by
+automatic approval review and was not applied; this cause-level fix retains it.
+
+Our __String work is delivered now, earlier than October 9. The original 30 /
+543 table has 29 / 542 certified; the remaining 1 / 1 intersection belongs to
+lane 7 and is not credited here. All five optional branded fields remain done.
+Original mixed primitive column: 34 / 551 certified brand entries, 29 / 139
+remaining including that lane 7 entry. Mixed primitive target remains October
+13, 2026 at 17:00 MDT. Exact whole-tsc reachability remains unmeasured.
+
+Scoped checkpoint regression: ADAMIC_BRAND_ORIGINAL_DECLS=/tmp/views-brand2-original-declarations
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'^TestCheckedView(BrandsOriginal(Pairs|BlockedPairs)|BrandArrayOriginalPair|OriginalUnionTarget(Tags|s)|ScopedNeverWiderHelper|Lazy.*)$'
+-count=1 -v -timeout 15m passed in 654.560s, exit 0. It covers the entire
+original brand suite, retained lane 7 gap, union targets and lazy helpers.
+go vet ./internal/lower ./internal/oracle passed. Full go test ./internal/lower
+-count=1 -timeout 10m fails nine pre-existing parent tests, in 184.249s.
+Each failing test and subtest also fails with all three changed lower files
+restored to 6858d196 through a Go overlay (1.851s). Both raw failure logs are
+retained. These census, nested-function and phantom-array failures are reported,
+not called a green package gate or modified outside this lane. Scoped admission,
+refusal, shared flow and aggregate-kind tests pass. No full repository gate claim.
