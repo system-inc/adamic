@@ -1,0 +1,550 @@
+{
+  "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "basis": "original member declarations/read spans; reduced adjacent carriers and implementations; candidate counts",
+  "members": [
+    {
+      "receiver_type_id": 9941,
+      "type": "ModuleSpecifierResolutionHost",
+      "field": "fileExists",
+      "declared_types": [
+        "(path: string) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 6,
+      "witness": {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 706,
+        "column": 13
+      },
+      "rank": 285,
+      "certified": false,
+      "directory": "rank-285",
+      "expected": "(path: string) => boolean",
+      "read": "host.fileExists",
+      "declaration": "fileExists(path: string): boolean;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "9a7623ef273cfe670f11132590583b7628dec59c2d85e36e897ca5deed8f168a",
+      "utf16Start": 32912,
+      "utf16End": 32927,
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "true\n",
+      "carriers": ""
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "updatePropertyAssignment",
+      "declared_types": [
+        "(node: PropertyAssignment, name: PropertyName, initializer: Expression) => PropertyAssignment"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 6,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 1745,
+        "column": 16
+      },
+      "rank": 306,
+      "certified": false,
+      "directory": "rank-306",
+      "expected": "(node: PropertyAssignment, name: PropertyName, initializer: Expression) => PropertyAssignment",
+      "read": "context.factory.updatePropertyAssignment",
+      "declaration": "updatePropertyAssignment(node: PropertyAssignment, name: PropertyName, initializer: Expression): PropertyAssignment;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "utf16Start": 85321,
+      "utf16End": 85361,
+      "arity": 3,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface PropertyAssignment {readonly value:number;}\ninterface Expression {readonly value:number;}\ninterface Identifier {readonly kind:80;readonly value:number;}\ninterface PrivateIdentifier {readonly kind:81;readonly value:number;}\ninterface StringLiteral {readonly kind:11;readonly value:number;}\ninterface NoSubstitutionTemplateLiteral {readonly kind:15;readonly value:number;}\ninterface NumericLiteral {readonly kind:9;readonly value:number;}\ninterface ComputedPropertyName {readonly kind:168;readonly value:number;}\ninterface BigIntLiteral {readonly kind:10;readonly value:number;}\ntype PropertyName =\r\n    | Identifier\r\n    | StringLiteral\r\n    | NoSubstitutionTemplateLiteral\r\n    | NumericLiteral\r\n    | ComputedPropertyName\r\n    | PrivateIdentifier\r\n    | BigIntLiteral;"
+    },
+    {
+      "receiver_type_id": 10351,
+      "type": "EmitTextWriter",
+      "field": "rawWrite",
+      "declared_types": [
+        "(s: string) => void"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 5,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 7121,
+        "column": 21
+      },
+      "rank": 333,
+      "certified": false,
+      "directory": "rank-333",
+      "expected": "(s: string) => void",
+      "read": "writer.rawWrite",
+      "declaration": "rawWrite(s: string): void;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "utf16Start": 280500,
+      "utf16End": 280515,
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "done\n",
+      "carriers": ""
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createJSDocText",
+      "declared_types": [
+        "(text: string) => JSDocText"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 5,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 8993,
+        "column": 55
+      },
+      "rank": 354,
+      "certified": false,
+      "directory": "rank-354",
+      "expected": "(text: string) => JSDocText",
+      "read": "factory.createJSDocText",
+      "declaration": "createJSDocText(text: string): JSDocText;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "utf16Start": 444501,
+      "utf16End": 444524,
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface JSDocText {readonly value:number;}"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "updateCommaListExpression",
+      "declared_types": [
+        "(node: CommaListExpression, elements: readonly Expression[]) => CommaListExpression"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 5,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 1793,
+        "column": 16
+      },
+      "rank": 360,
+      "certified": false,
+      "directory": "rank-360",
+      "expected": "(node: CommaListExpression, elements: readonly Expression[]) => CommaListExpression",
+      "read": "context.factory.updateCommaListExpression",
+      "declaration": "updateCommaListExpression(node: CommaListExpression, elements: readonly Expression[]): CommaListExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "utf16Start": 87613,
+      "utf16End": 87654,
+      "arity": 2,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface CommaListExpression {readonly value:number;}\ninterface Expression {readonly value:number;}"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "updatePropertyAccessExpression",
+      "declared_types": [
+        "(node: PropertyAccessExpression, expression: Expression, name: MemberName) => PropertyAccessExpression"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 5,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 1029,
+        "column": 13
+      },
+      "rank": 366,
+      "certified": false,
+      "directory": "rank-366",
+      "expected": "(node: PropertyAccessExpression, expression: Expression, name: MemberName) => PropertyAccessExpression",
+      "read": "context.factory.updatePropertyAccessExpression",
+      "declaration": "updatePropertyAccessExpression(node: PropertyAccessExpression, expression: Expression, name: MemberName): PropertyAccessExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "utf16Start": 48649,
+      "utf16End": 48695,
+      "arity": 3,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface PropertyAccessExpression {readonly value:number;}\ninterface Expression {readonly value:number;}\ninterface Identifier {readonly kind:80;readonly value:number;}\ninterface PrivateIdentifier {readonly kind:81;readonly value:number;}\ntype MemberName = Identifier | PrivateIdentifier;"
+    },
+    {
+      "receiver_type_id": 11725,
+      "type": "ParenthesizerRules",
+      "field": "parenthesizeNonArrayTypeOfPostfixType",
+      "declared_types": [
+        "(type: TypeNode) => TypeNode"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 5,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 2465,
+        "column": 28
+      },
+      "rank": 369,
+      "certified": false,
+      "directory": "rank-369",
+      "expected": "(type: TypeNode) => TypeNode",
+      "read": "parenthesizerRules().parenthesizeNonArrayTypeOfPostfixType",
+      "declaration": "parenthesizeNonArrayTypeOfPostfixType(type: TypeNode): TypeNode;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+      "utf16Start": 98994,
+      "utf16End": 99052,
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface TypeNode {readonly value:number;}"
+    },
+    {
+      "receiver_type_id": 9939,
+      "type": "Program",
+      "field": "getProjectReferences",
+      "declared_types": [
+        "() => readonly ProjectReference[] | undefined"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 5,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 1249,
+        "column": 25
+      },
+      "rank": 372,
+      "certified": false,
+      "directory": "rank-372",
+      "expected": "() => readonly ProjectReference[] | undefined",
+      "read": "program.getProjectReferences",
+      "declaration": "getProjectReferences(): readonly ProjectReference[] | undefined;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+      "utf16Start": 50903,
+      "utf16End": 50931,
+      "arity": 0,
+      "mutantArity": 1,
+      "stdout": "1\n",
+      "carriers": "interface ProjectReference {readonly value:number;}"
+    },
+    {
+      "receiver_type_id": 9939,
+      "type": "Program",
+      "field": "getTypeChecker",
+      "declared_types": [
+        "() => TypeChecker"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 5,
+      "witness": {
+        "file": "src/compiler/builderState.ts",
+        "line": 222,
+        "column": 42
+      },
+      "rank": 375,
+      "certified": false,
+      "directory": "rank-375",
+      "expected": "() => TypeChecker",
+      "read": "program.getTypeChecker",
+      "declaration": "getTypeChecker(): TypeChecker;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "51ef79dcaebb2e9b09c5270d07ca8f4abf3eb04e4849eb9014bf2d55f2c570a5",
+      "utf16Start": 7752,
+      "utf16End": 7774,
+      "arity": 0,
+      "mutantArity": 1,
+      "stdout": "7\n",
+      "carriers": "interface TypeChecker {readonly value:number;}"
+    },
+    {
+      "receiver_type_id": 11233,
+      "type": "CompilerHost",
+      "field": "readFile",
+      "declared_types": [
+        "(fileName: string) => string | undefined"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 473,
+        "column": 56
+      },
+      "rank": 396,
+      "certified": false,
+      "directory": "rank-396",
+      "expected": "(fileName: string) => string | undefined",
+      "read": "compilerHost.readFile",
+      "declaration": "readFile(fileName: string): string | undefined;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+      "utf16Start": 14278,
+      "utf16End": 14299,
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "ok\n",
+      "carriers": ""
+    },
+    {
+      "receiver_type_id": 93558,
+      "type": "DirectoryStructureHost",
+      "field": "fileExists",
+      "declared_types": [
+        "(path: string) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/watchUtilities.ts",
+        "line": 228,
+        "column": 13
+      },
+      "rank": 399,
+      "certified": false,
+      "directory": "rank-399",
+      "expected": "(path: string) => boolean",
+      "read": "host.fileExists",
+      "declaration": "fileExists(path: string): boolean;",
+      "declarationFile": "src/compiler/watchUtilities.ts",
+      "declarationSha256": "0a4919e1976ea0683ea06137ec02c97fe5ad44ca8d0bc709f69eb0230b7a5487",
+      "fileSha256": "0a4919e1976ea0683ea06137ec02c97fe5ad44ca8d0bc709f69eb0230b7a5487",
+      "utf16Start": 8536,
+      "utf16End": 8551,
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "true\n",
+      "carriers": ""
+    },
+    {
+      "receiver_type_id": 11678,
+      "type": "EmitHost",
+      "field": "getCommonSourceDirectory",
+      "declared_types": [
+        "() => string"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 6692,
+        "column": 94
+      },
+      "rank": 402,
+      "certified": false,
+      "directory": "rank-402",
+      "expected": "() => string",
+      "read": "host.getCommonSourceDirectory",
+      "declaration": "getCommonSourceDirectory(): string;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "utf16Start": 262247,
+      "utf16End": 262276,
+      "arity": 0,
+      "mutantArity": 1,
+      "stdout": "ok\n",
+      "carriers": ""
+    },
+    {
+      "receiver_type_id": 9860,
+      "type": "ModuleResolutionHost",
+      "field": "fileExists",
+      "declared_types": [
+        "(fileName: string) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 831,
+        "column": 52
+      },
+      "rank": 426,
+      "certified": false,
+      "directory": "rank-426",
+      "expected": "(fileName: string) => boolean",
+      "read": "host.fileExists",
+      "declaration": "fileExists(fileName: string): boolean;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f",
+      "utf16Start": 36942,
+      "utf16End": 36957,
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "true\n",
+      "carriers": ""
+    },
+    {
+      "receiver_type_id": 28206,
+      "type": "Scanner",
+      "field": "getTokenFlags",
+      "declared_types": [
+        "() => TokenFlags"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 10568,
+        "column": 19
+      },
+      "rank": 477,
+      "certified": false,
+      "directory": "rank-477",
+      "expected": "() => number",
+      "read": "scanner.getTokenFlags",
+      "declaration": "getTokenFlags(): TokenFlags;",
+      "declarationFile": "src/compiler/scanner.ts",
+      "declarationSha256": "02f9e8f02e234b0e917e753a7b74f975c9b9b95f7f01ee4bc151081ed43dea49",
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "utf16Start": 421495,
+      "utf16End": 421516,
+      "arity": 0,
+      "mutantArity": 1,
+      "stdout": "7\n",
+      "carriers": "type TokenFlags = number;"
+    },
+    {
+      "receiver_type_id": 8229,
+      "type": "System",
+      "field": "createDirectory",
+      "declared_types": [
+        "(path: string) => void"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/sys.ts",
+        "line": 1387,
+        "column": 21
+      },
+      "rank": 486,
+      "certified": false,
+      "directory": "rank-486",
+      "expected": "(path: string) => void",
+      "read": "sys.createDirectory",
+      "declaration": "createDirectory(path: string): void;",
+      "declarationFile": "src/compiler/sys.ts",
+      "declarationSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+      "fileSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+      "utf16Start": 60935,
+      "utf16End": 60954,
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "done\n",
+      "carriers": ""
+    },
+    {
+      "receiver_type_id": 8229,
+      "type": "System",
+      "field": "readFile",
+      "declared_types": [
+        "(path: string, encoding?: string | undefined) => string | undefined"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2007,
+        "column": 69
+      },
+      "rank": 489,
+      "certified": false,
+      "directory": "rank-489",
+      "expected": "(path: string, encoding?: string | undefined) => string | undefined",
+      "read": "sys.readFile",
+      "declaration": "readFile(path: string, encoding?: string): string | undefined;",
+      "declarationFile": "src/compiler/sys.ts",
+      "declarationSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+      "fileSha256": "e48e42605eef2b1880947b658187cf455b3c91aa4bcf32007ab7296b088009ab",
+      "utf16Start": 77396,
+      "utf16End": 77408,
+      "arity": 2,
+      "mutantArity": 0,
+      "stdout": "ok\n",
+      "carriers": ""
+    },
+    {
+      "receiver_type_id": 11233,
+      "type": "CompilerHost",
+      "field": "fileExists",
+      "declared_types": [
+        "(fileName: string) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 2379,
+        "column": 79
+      },
+      "rank": 513,
+      "certified": false,
+      "directory": "rank-513",
+      "expected": "(fileName: string) => boolean",
+      "read": "host.fileExists",
+      "declaration": "fileExists(fileName: string): boolean;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+      "utf16Start": 116324,
+      "utf16End": 116339,
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "true\n",
+      "carriers": ""
+    }
+  ]
+}

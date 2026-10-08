@@ -1,0 +1,10 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface PropertyAccessExpression {readonly value:number;}
+interface Expression {readonly value:number;}
+interface Identifier {readonly kind:80;readonly value:number;}
+interface PrivateIdentifier {readonly kind:81;readonly value:number;}
+type MemberName = Identifier | PrivateIdentifier;
+interface Base {readonly updatePropertyAccessExpression:unknown;}
+interface Target {updatePropertyAccessExpression(node: PropertyAccessExpression, expression: Expression, name: MemberName): PropertyAccessExpression;}
+function probe(value:Base):void {const context={factory:value as Target};console.log(`${context.factory.updatePropertyAccessExpression({value:3},{value:4},{kind:80,value:5}).value}`);}
+probe({updatePropertyAccessExpression:7});

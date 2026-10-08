@@ -1,0 +1,6 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+
+interface Base {readonly rawWrite:unknown;}
+interface Target {rawWrite(s: string): void;}
+function probe(value:Base):void {const writer=value as Target;writer.rawWrite("ok");console.log("done");}
+probe({rawWrite:(s: string):void=>{}});

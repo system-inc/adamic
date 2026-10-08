@@ -1,0 +1,6 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface TypeChecker {readonly value:number;}
+interface Base {readonly getTypeChecker:unknown;}
+interface Target {getTypeChecker(): TypeChecker;}
+function probe(value:Base):void {const program=value as Target;console.log(`${program.getTypeChecker().value}`);}
+probe({getTypeChecker:7});

@@ -39,6 +39,18 @@ func viewCallableCounts(t *testing.T) []string {
 	} {
 		rows = append(rows, counted(t, checkedViewFixturePath(path), false, nil, false, false))
 	}
+	// Certification shares own separate family directories and count rows.
+	shares, err := filepath.Glob(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-*/rank-*/*.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, path := range shares {
+		relative, err := filepath.Rel(repository, path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		rows = append(rows, counted(t, checkedViewFixturePath(relative), false, nil, false, false))
+	}
 	return rows
 }
 

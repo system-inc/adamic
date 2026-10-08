@@ -1,0 +1,6 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+
+interface Base {readonly createDirectory:unknown;}
+interface Target {createDirectory(path: string): void;}
+function probe(value:Base):void {const sys=value as Target;sys.createDirectory("ok");console.log("done");}
+probe({createDirectory:(path: string):void=>{}});

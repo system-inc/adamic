@@ -1,0 +1,6 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface TypeNode {readonly value:number;}
+interface Base {readonly parenthesizeNonArrayTypeOfPostfixType:unknown;}
+interface Target {parenthesizeNonArrayTypeOfPostfixType(type: TypeNode): TypeNode;}
+function probe(value:Base):void {const parenthesizerRules=()=>value as Target;console.log(`${parenthesizerRules().parenthesizeNonArrayTypeOfPostfixType({value:3}).value}`);}
+probe({parenthesizeNonArrayTypeOfPostfixType:7});

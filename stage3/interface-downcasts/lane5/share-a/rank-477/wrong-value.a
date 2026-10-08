@@ -1,0 +1,6 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+type TokenFlags = number;
+interface Base {readonly getTokenFlags:unknown;}
+interface Target {getTokenFlags(): TokenFlags;}
+function probe(value:Base):void {const scanner=value as Target;console.log(`${scanner.getTokenFlags()}`);}
+probe({getTokenFlags:7});

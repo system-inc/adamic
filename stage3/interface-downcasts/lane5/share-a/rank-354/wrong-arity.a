@@ -1,0 +1,6 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface JSDocText {readonly value:number;}
+interface Base {readonly createJSDocText:unknown;}
+interface Target {createJSDocText(text: string): JSDocText;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createJSDocText("ok").value}`);}
+probe({createJSDocText:():JSDocText=>({value:7})});

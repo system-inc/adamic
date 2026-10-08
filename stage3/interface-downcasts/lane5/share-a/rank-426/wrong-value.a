@@ -1,0 +1,6 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+
+interface Base {readonly fileExists:unknown;}
+interface Target {fileExists(fileName: string): boolean;}
+function probe(value:Base):void {const host=value as Target;console.log(`${host.fileExists("ok")}`);}
+probe({fileExists:7});

@@ -1,0 +1,227 @@
+{
+  "members": [
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createIdentifier",
+      "declared_types": [
+        "{ (text: string): Identifier; (text: string, originalKeywordKind?: SyntaxKind | undefined, hasExtendedUnicodeEscape?: boolean | undefined): Identifier; }"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 206,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 10948,
+        "column": 66
+      },
+      "rank": 3,
+      "certified": false,
+      "directory": "gap-3",
+      "read": "factory.createIdentifier",
+      "declarations": [
+        "createIdentifier(text: string): Identifier;",
+        "createIdentifier(text: string, originalKeywordKind?: SyntaxKind, hasExtendedUnicodeEscape?: boolean): Identifier;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/compiler/types.ts",
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "utf16Start": 438195,
+      "utf16End": 438219,
+      "stdout": "7\n"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createStringLiteral",
+      "declared_types": [
+        "{ (text: string, isSingleQuote?: boolean | undefined): StringLiteral; (text: string, isSingleQuote?: boolean | undefined, hasExtendedUnicodeEscape?: boolean | undefined): StringLiteral; }"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 104,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 10950,
+        "column": 9
+      },
+      "rank": 9,
+      "certified": false,
+      "directory": "gap-9",
+      "read": "factory.createStringLiteral",
+      "declarations": [
+        "createStringLiteral(text: string, isSingleQuote?: boolean): StringLiteral;",
+        "createStringLiteral(text: string, isSingleQuote?: boolean, hasExtendedUnicodeEscape?: boolean): StringLiteral;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/compiler/types.ts",
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "utf16Start": 438364,
+      "utf16End": 438391,
+      "stdout": "7\n"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "cloneNode",
+      "declared_types": [
+        "<T extends Node | undefined>(node: T) => T"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 91,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 12358,
+        "column": 13
+      },
+      "rank": 12,
+      "certified": false,
+      "directory": "gap-12",
+      "read": "factory.cloneNode",
+      "declarations": [
+        "cloneNode<T extends Node | undefined>(node: T): T;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/compiler/types.ts",
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "utf16Start": 509609,
+      "utf16End": 509626,
+      "stdout": "7\n"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createUniqueName",
+      "declared_types": [
+        "{ (text: string, flags?: GeneratedIdentifierFlags | undefined): Identifier; (text: string, flags?: GeneratedIdentifierFlags | undefined, prefix?: string | ... 1 more ... | undefined, suffix?: string | undefined): Identifier; }"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 58,
+      "witness": {
+        "file": "src/compiler/factory/emitHelpers.ts",
+        "line": 538,
+        "column": 20
+      },
+      "rank": 24,
+      "certified": false,
+      "directory": "gap-24",
+      "read": "factory.createUniqueName",
+      "declarations": [
+        "createUniqueName(text: string, flags?: GeneratedIdentifierFlags): Identifier;",
+        "createUniqueName(text: string, flags?: GeneratedIdentifierFlags, prefix?: string | GeneratedNamePart, suffix?: string): Identifier;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/compiler/types.ts",
+      "fileSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "utf16Start": 22748,
+      "utf16End": 22772,
+      "stdout": "7\n"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createModifier",
+      "declared_types": [
+        "<T extends ModifierSyntaxKind>(kind: T) => ModifierToken<T>"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 10,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 7634,
+        "column": 61
+      },
+      "rank": 174,
+      "certified": false,
+      "directory": "gap-174",
+      "read": "factory.createModifier",
+      "declarations": [
+        "createModifier<T extends ModifierSyntaxKind>(kind: T): ModifierToken<T>;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/compiler/types.ts",
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "utf16Start": 415823,
+      "utf16End": 415845,
+      "stdout": "7\n"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createImportClause",
+      "declared_types": [
+        "{ (phaseModifier: ImportPhaseModifierSyntaxKind | undefined, name: Identifier | undefined, namedBindings: NamedImportBindings | undefined): ImportClause; (isTypeOnly: boolean, name: Identifier | undefined, namedBindings: NamedImportBindings | undefined): ImportClause; }"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 9,
+      "witness": {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 734,
+        "column": 25
+      },
+      "rank": 186,
+      "certified": false,
+      "directory": "gap-186",
+      "read": "nodeFactory.createImportClause",
+      "declarations": [
+        "createImportClause(phaseModifier: ImportPhaseModifierSyntaxKind | undefined, name: Identifier | undefined, namedBindings: NamedImportBindings | undefined): ImportClause;",
+        "createImportClause(isTypeOnly: boolean, name: Identifier | undefined, namedBindings: NamedImportBindings | undefined): ImportClause;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/compiler/types.ts",
+      "fileSha256": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "utf16Start": 28440,
+      "utf16End": 28470,
+      "stdout": "7\n"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createYieldExpression",
+      "declared_types": [
+        "{ (asteriskToken: AsteriskToken, expression: Expression): YieldExpression; (asteriskToken: undefined, expression: Expression | undefined): YieldExpression; (asteriskToken: AsteriskToken | undefined, expression: Expression | undefined): YieldExpression; }"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 9,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 5183,
+        "column": 17
+      },
+      "rank": 189,
+      "certified": false,
+      "directory": "gap-189",
+      "read": "factory.createYieldExpression",
+      "declarations": [
+        "createYieldExpression(asteriskToken: AsteriskToken, expression: Expression): YieldExpression;",
+        "createYieldExpression(asteriskToken: undefined, expression: Expression | undefined): YieldExpression;",
+        "createYieldExpression(asteriskToken: AsteriskToken | undefined, expression: Expression | undefined): YieldExpression;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/compiler/types.ts",
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "utf16Start": 253844,
+      "utf16End": 253873,
+      "stdout": "7\n"
+    }
+  ]
+}

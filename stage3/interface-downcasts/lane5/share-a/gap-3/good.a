@@ -1,0 +1,8 @@
+// Original overloaded/generic declarations and read; adjacent carriers reduced.
+interface Identifier {readonly value:number;}
+type SyntaxKind=number;
+interface Base {readonly createIdentifier:unknown;}
+interface Target {createIdentifier(text: string): Identifier;
+createIdentifier(text: string, originalKeywordKind?: SyntaxKind, hasExtendedUnicodeEscape?: boolean): Identifier;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createIdentifier("ok").value}`);}
+probe({createIdentifier:(text:string):Identifier=>({value:7})});

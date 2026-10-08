@@ -1,0 +1,6 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface ProjectReference {readonly value:number;}
+interface Base {readonly getProjectReferences:unknown;}
+interface Target {getProjectReferences(): readonly ProjectReference[] | undefined;}
+function probe(value:Base):void {const program=value as Target;const result=program.getProjectReferences();console.log(`${result===undefined?"missing":result.length}`);}
+probe({getProjectReferences:(ignored:number):readonly ProjectReference[] | undefined=>([{value:7}])});

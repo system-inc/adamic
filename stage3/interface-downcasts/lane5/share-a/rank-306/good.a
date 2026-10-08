@@ -1,0 +1,22 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface PropertyAssignment {readonly value:number;}
+interface Expression {readonly value:number;}
+interface Identifier {readonly kind:80;readonly value:number;}
+interface PrivateIdentifier {readonly kind:81;readonly value:number;}
+interface StringLiteral {readonly kind:11;readonly value:number;}
+interface NoSubstitutionTemplateLiteral {readonly kind:15;readonly value:number;}
+interface NumericLiteral {readonly kind:9;readonly value:number;}
+interface ComputedPropertyName {readonly kind:168;readonly value:number;}
+interface BigIntLiteral {readonly kind:10;readonly value:number;}
+type PropertyName =
+    | Identifier
+    | StringLiteral
+    | NoSubstitutionTemplateLiteral
+    | NumericLiteral
+    | ComputedPropertyName
+    | PrivateIdentifier
+    | BigIntLiteral;
+interface Base {readonly updatePropertyAssignment:unknown;}
+interface Target {updatePropertyAssignment(node: PropertyAssignment, name: PropertyName, initializer: Expression): PropertyAssignment;}
+function probe(value:Base):void {const context={factory:value as Target};console.log(`${context.factory.updatePropertyAssignment({value:3},{kind:80,value:4},{value:5}).value}`);}
+probe({updatePropertyAssignment:(node: PropertyAssignment, name: PropertyName, initializer: Expression):PropertyAssignment=>({value:7})});
