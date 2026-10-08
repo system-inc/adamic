@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-// The fallback must reject metadata-free scalars and foreign slots instead of
+// The fallback must reject invalid storage kinds and foreign slots instead of
 // interpreting their bits as a heap pointer. Ordinary represented fields pass.
 func TestUnionRuntimeFieldGuards(t *testing.T) {
 	const harness = `#include "adamic.h"
@@ -18,7 +18,8 @@ int main(int argc, char **argv) {
  (void)argc;
  static const char *const names[] = {"unrepresented"};
  static const bool references[] = {false};
- static const adamic_shape shape = {1, names, references, NULL};
+ static const adamic_field_kind kinds[] = {255};
+ static const adamic_shape shape = {1, names, references, NULL, kinds};
  adamic_object *object = adamic_object_new(&shape);
  object->slots[0].number = 42;
  if (strcmp(argv[1], "scalar") == 0) adamic_union_runtime_field(object, &object->slots[0]);
@@ -32,7 +33,7 @@ int main(int argc, char **argv) {
 		t.Fatal(err)
 	}
 	for _, probe := range []struct{ name, message string }{
-		{"scalar", "union field view of a runtime scalar without representation metadata"},
+		{"scalar", "union field has an invalid storage kind"},
 		{"foreign", "union field slot has no owning layout"},
 		{"valid", ""},
 	} {

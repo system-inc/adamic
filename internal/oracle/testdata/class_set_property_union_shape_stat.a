@@ -1,0 +1,12 @@
+import { fileStatus } from 'adamic';
+interface Holder { value: number | string | boolean; }
+interface StatusView { readonly size: number | string; readonly symbolicLink: boolean | string; readonly type: string | boolean; }
+function store(holder: Holder, view: StatusView): void {
+ holder.value = view.size; console.log(`${typeof holder.value}`);
+ holder.value = view.symbolicLink; console.log(`${holder.value}`);
+ holder.value = view.type; console.log(`${holder.value}`);
+}
+const holder: Holder = { value: 'initial' };
+const status = fileStatus('.');
+if (status.kind === 'Ok') store(holder, status);
+else console.log(status.message);
