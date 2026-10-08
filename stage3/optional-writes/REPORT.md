@@ -113,3 +113,9 @@ f4efdd23 and 8b388310. The full repository gate remains unrun.
 The explicit remaining 17-site inventory is in remaining.json. No incomplete
 contract is reported as trusted or emitted. The private branch is synchronized;
 whole-program delivery remains blocked, with 50 scheduled and zero emitted.
+
+Synchronization merge 00e6f367 is pushed. Its merge-wide diff --check reports
+whitespace in main-imported CRLF proving input and retained validation logs.
+Those upstream evidence bytes were preserved. The optional unit and the manually
+reconciled markdownblocks files pass the scoped whitespace check. Full raw
+merge-wide whitespace output is retained in evidence/main-whitespace.log.gz.
