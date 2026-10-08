@@ -115,7 +115,7 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 
 	// bundled.WrapFS lays the embedded lib.*.d.ts files over the source view, and cachedvfs memoizes
 	// the stats module resolution repeats.
-	fileSystem := cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
+	fileSystem := cachedvfs.From(&regexpLibraryFS{FS: &nodeLibraryFS{FS: bundled.WrapFS(fs)}})
 	config, project, err := projectConfig(fs, currentDirectory, paths)
 	if err != nil {
 		return nil, err
@@ -130,7 +130,7 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 				// The repository project lists the same embedded prelude on disk.
 				// Deduplicate identical facts, retaining every other project declaration.
 				text, _ := fs.ReadFile(name)
-				if text != prelude {
+				if text != prelude && !callerNodeTypes(name.AsString()) {
 					roots = append(roots, name)
 				}
 			}
@@ -152,13 +152,32 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 	}
 
 	if usesNodeModules(program) {
-		index, err := nodeTypesIndex(workingDirectory)
+		index, err := nodeTypesIndex()
 		if err != nil {
 			return nil, err
 		}
 		fs.nodeTypes = true
-		roots = append(roots, tspath.RootedFilePathFromAbsolute(index))
-		fileSystem = cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
+		roots = append(roots, index)
+		options := *config.CompilerOptions()
+		// Preserve the project's other type roots, including the checker's
+		// default ancestor search when no explicit typeRoots was supplied.
+		if options.TypeRoots == nil {
+			directory := workingDirectory
+			if options.ConfigFilePath != "" {
+				directory = filepath.Dir(options.ConfigFilePath.AsString())
+			}
+			for {
+				options.TypeRoots = append(options.TypeRoots, tspath.RootedDirectoryPathFromAbsolute(filepath.Join(directory, "node_modules", "@types")))
+				parent := filepath.Dir(directory)
+				if parent == directory {
+					break
+				}
+				directory = parent
+			}
+		}
+		options.TypeRoots = append([]tspath.RootedDirectoryPath{tspath.RootedDirectoryPathFromNormalized(nodeTypesRoot)}, options.TypeRoots...)
+		config.SetCompilerOptions(&options)
+		fileSystem = cachedvfs.From(&regexpLibraryFS{FS: &nodeLibraryFS{FS: bundled.WrapFS(fs)}})
 		config = config.WithFileNames(roots)
 		host = compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
 		program = compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host, SingleThreaded: core.TSTrue})
