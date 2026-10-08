@@ -1,0 +1,8 @@
+// a-check: refused a namespace; use a module: a file of its own, with named exports
+// From TypeScript 6.0.3 src/compiler/debug.ts:117
+// Reduced witness; retained expressions, scaffolding and driver are explicit.
+export namespace Debug {
+    export let isDebugging = false;
+}
+Debug.isDebugging = true;
+console.log(`${Debug.isDebugging}`);

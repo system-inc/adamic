@@ -1,0 +1,12 @@
+// a-check: NotYet a function returning U | undefined yet
+// From TypeScript 6.0.3 src/compiler/utilities.ts:746-756
+// Reduced witness; retained expressions, scaffolding and driver are explicit.
+export function forEachEntry<K, V, U>(map: ReadonlyMap<K, V>, callback: (value: V, key: K) => U | undefined): U | undefined {
+    const iterator = map.entries();
+    for (const [key, value] of iterator) {
+        const result = callback(value, key);
+        if (result) { return result; }
+    }
+    return undefined;
+}
+console.log(`${forEachEntry(new Map<string, number>([["x", 1]]), (value, key) => value)}`);

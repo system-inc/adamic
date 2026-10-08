@@ -1,0 +1,74 @@
+[
+  {
+    "name": "namespace",
+    "source": "debug.ts:113,223",
+    "old": "Debug.assertEqual(1, 1)",
+    "new": "Debug.assertEqual(1, 2)"
+  },
+  {
+    "name": "mutable-namespace",
+    "source": "debug.ts:117",
+    "old": "Debug.isDebugging = true",
+    "new": "Debug.isDebugging = false"
+  },
+  {
+    "name": "diagnostic-cast",
+    "source": "diagnosticInformationMap.generated.ts:6,13",
+    "old": "diag(1002)",
+    "new": "diag(1003)"
+  },
+  {
+    "name": "string-cast",
+    "source": "scanner.ts:4063",
+    "old": "Worker(0x10000)",
+    "new": "Worker(0xffff)"
+  },
+  {
+    "name": "set-cast",
+    "source": "scanner.ts:4097,4101",
+    "old": "new Set([\"Latin\"])",
+    "new": "new Set([\"Greek\"])"
+  },
+  {
+    "name": "enum-slot",
+    "source": "scanner.ts:427-432 (candidate, requested stop location unavailable)",
+    "old": "Math.trunc(99)",
+    "new": "Math.trunc(100)"
+  },
+  {
+    "name": "array-holes",
+    "source": "core.ts:2198-2207",
+    "old": "i <= s2.length",
+    "new": "i < s2.length"
+  },
+  {
+    "name": "entries",
+    "source": "scanner.ts:222",
+    "old": "extra: 1",
+    "new": "extra: \"lie\""
+  },
+  {
+    "name": "computed-field",
+    "source": "scanner.ts:153",
+    "old": "\"\" + \"constructor\"",
+    "new": "\"\" + \"constructoX\""
+  },
+  {
+    "name": "uint16",
+    "source": "utilities.ts:10491-10507",
+    "old": "shiftedDigit = 0x10000",
+    "new": "shiftedDigit = 0xffff"
+  },
+  {
+    "name": "generic-return",
+    "source": "utilities.ts:746-756",
+    "old": "[[\"x\", 1]]",
+    "new": "[[\"x\", 0]]"
+  },
+  {
+    "name": "error-cast",
+    "source": "debug.ts:200-201",
+    "old": "(Error as any)",
+    "new": "(String as any)"
+  }
+]

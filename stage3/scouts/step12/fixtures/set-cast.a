@@ -1,0 +1,7 @@
+// a-check: refused the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case
+// From TypeScript 6.0.3 src/compiler/scanner.ts:4097,4101
+// Reduced witness; retained expressions, scaffolding and driver are explicit.
+const valuesOfNonBinaryUnicodeProperties = { Script: new Set(["Latin"]), Script_Extensions: undefined! as Set<string> };
+console.log(`${valuesOfNonBinaryUnicodeProperties.Script_Extensions === undefined}`);
+valuesOfNonBinaryUnicodeProperties.Script_Extensions = valuesOfNonBinaryUnicodeProperties.Script;
+console.log(`${valuesOfNonBinaryUnicodeProperties.Script_Extensions.has("Latin")}`);

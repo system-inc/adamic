@@ -1,0 +1,6 @@
+// a-check: refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+// From TypeScript 6.0.3 src/compiler/scanner.ts:4063
+// Reduced witness; retained expressions, scaffolding and driver are explicit.
+const utf16EncodeAsStringWorker: (codePoint: number) => string = (String as any).fromCodePoint ? codePoint => (String as any).fromCodePoint(codePoint) : codePoint => String.fromCharCode(codePoint);
+const value = utf16EncodeAsStringWorker(0x10000);
+console.log(`${value.length} ${value.charCodeAt(0)}`);

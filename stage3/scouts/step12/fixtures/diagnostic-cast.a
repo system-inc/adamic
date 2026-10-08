@@ -1,0 +1,7 @@
+// a-check: pass
+// From TypeScript 6.0.3 src/compiler/diagnosticInformationMap.generated.ts:6,13
+// Reduced witness; retained expressions, scaffolding and driver are explicit.
+interface DiagnosticMessage { readonly code: number; }
+function diag(code: number): DiagnosticMessage { return { code }; }
+const Diagnostics = { Unterminated_string_literal: diag(1002) as DiagnosticMessage };
+console.log(`${Diagnostics.Unterminated_string_literal.code}`);

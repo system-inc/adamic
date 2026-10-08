@@ -1,0 +1,5 @@
+--- FAIL: TestCompare (0.00s)
+    main_test.go:30: equal: {Equal:true Left:{Bytes:1 Lines:0 SHA256:ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb} Right:{Bytes:2 Lines:0 SHA256:fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603} First:<nil>}
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/scouts/step12/compare	0.002s
+FAIL
