@@ -1,4 +1,4 @@
-dispatched_utc,pushed_utc,verdict_utc,brief,branch,sha,session,verdict,dispatch_to_push_seconds,push_to_verdict_seconds,total_seconds,first_verdict,rounds,t0_source
+dispatched_utc,pushed_utc,verdict_utc,brief,branch,sha,session,verdict,dispatch_to_push_seconds,push_to_verdict_seconds,total_seconds,first_verdict,rounds,t0_source,packages
 2026-10-08T04:01:50Z,2026-10-08T04:18:22Z,2026-10-08T04:22:22Z,01-self-comparison-c,codex/clock-1-01-self-comparison-c,c68cf24799b9de054e00e098a5d750a47c86f7f5,01a119ac-bf57-71e8-80b4-dcf7eadd4037,red,992,240,1232
 2026-10-08T05:01:58Z,2026-10-08T05:16:34Z,2026-10-08T05:24:40Z,02-super-in-arrow,codex/clock-2-02-super-in-arrow,d76128b24c6ff1f14b3c1c2e5855cf5861a5d64b,01a119e3-cb84-72f0-8cc9-c5b466efa034,green,876,486,1362,green,1,dispatch: fresh session via ahra ai start
 2026-10-08T06:01:58Z,2026-10-08T06:12:46Z,2026-10-08T06:39:30Z,03-global-isnan-isfinite,codex/clock-5-03-global-isnan-isfinite,8787772dd40cb376caf321487fc6829424736de4,01a11a1a-bb58-74cc-bebe-9045a34d7000,green,648,1604,2252,red,2,dispatch: fresh session via ahra ai start
@@ -6,3 +6,4 @@ dispatched_utc,pushed_utc,verdict_utc,brief,branch,sha,session,verdict,dispatch_
 2026-10-08T08:02:07Z,2026-10-08T08:16:22Z,,05-starts-ends-with-position,codex/clock-7-05-starts-ends-with-position,812a76550e15c1e1e169750f4e48ae0c5c0cbfdb,01a11a88-9581-737e-a2e8-fe66aee1b029,no verdict in 90 minutes,855,,,,0,dispatch: fresh session via ahra ai start
 2026-10-08T09:02:07Z,,,,,,,not dispatched: the 08:02 attempt still waiting,,,,,0,dispatch: fresh session via ahra ai start
 2026-10-08T09:37:38Z,,,06-lastindexof-position,codex/clock-8-06-lastindexof-position,,,dispatch failed,,,,,0,dispatch: fresh session via ahra ai start
+2026-10-08T09:44:20Z,2026-10-08T09:58:57Z,2026-10-08T10:52:35Z,06-lastindexof-position,codex/clock-8-06-lastindexof-position,1595e2d9773331023731fd9fb45062408272445c,01a11ae6-527c-72cd-8fb8-011ae244d021,green,877,3218,4095,green,1,dispatch: fresh session via ahra ai start,internal/flow internal/fresh internal/ir internal/lower internal/oracle stage1/cohere/gitignore stage1/cohere/markdowninline
