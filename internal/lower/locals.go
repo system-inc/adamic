@@ -77,7 +77,7 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 		} else if l.includesUndefined(l.checker.GetTypeAtLocation(name)) || l.evolvingObject(name) != nil {
 			// An optional declaration can be read before assignment. Its first value
 			// is undefined, not the backend's unobservable storage placeholder.
-			value = ir.Undefined{Of: ir.Object}
+			value = ir.Undefined{Of: l.result.Locals[local].Type}
 		}
 		if closure, literal := value.(ir.MakeClosure); literal && list.Flags&ast.NodeFlagsConst != 0 {
 			l.result.Locals[local].ConstantClosure = closure.Function + 1
@@ -107,7 +107,7 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 			if inferred == nil {
 				return 0, err
 			}
-			valueType = ir.Object
+			valueType, _ = l.representation(inferred)
 		}
 	}
 	if l.locals == nil {

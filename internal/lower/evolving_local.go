@@ -7,10 +7,10 @@ import (
 )
 
 // evolvingObject finds a storage type for an unannotated, uninitialized local
-// whose assignments all have proven object types. Explicit any and any-valued
+// whose assignments all have one proven reference representation. Explicit any and any-valued
 // reads remain unsupported; the checker's flow types still decide every use.
 func (l *lowering) evolvingObject(name *ast.Node) *checker.Type {
-	if name.Parent == nil || name.Parent.Kind != ast.KindVariableDeclaration {
+	if name == nil || name.Parent == nil || name.Parent.Kind != ast.KindVariableDeclaration {
 		return nil
 	}
 	declaration := name.Parent.AsVariableDeclaration()
@@ -23,6 +23,7 @@ func (l *lowering) evolvingObject(name *ast.Node) *checker.Type {
 	}
 	symbol := l.symbol(name)
 	var inferred *checker.Type
+	var storage ir.Type
 	valid := true
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -34,11 +35,12 @@ func (l *lowering) evolvingObject(name *ast.Node) *checker.Type {
 				if binary.OperatorToken.Kind == ast.KindEqualsToken || compound || logicalAssignment(binary.OperatorToken.Kind) {
 					proven := l.checker.GetTypeAtLocation(binary.Right)
 					of, known := l.representation(proven)
-					if binary.OperatorToken.Kind != ast.KindEqualsToken || !known || of != ir.Object {
+					allowed := binary.OperatorToken.Kind == ast.KindEqualsToken || of == ir.String && (binary.OperatorToken.Kind == ast.KindQuestionQuestionEqualsToken || binary.OperatorToken.Kind == ast.KindPlusEqualsToken)
+					if !allowed || !known || (of != ir.Object && of != ir.String) {
 						valid = false
 					} else if inferred == nil {
-						inferred = proven
-					} else if inferred != proven {
+						inferred, storage = proven, of
+					} else if storage != of || storage == ir.Object && inferred != proven {
 						valid = false
 					}
 				}
@@ -46,7 +48,7 @@ func (l *lowering) evolvingObject(name *ast.Node) *checker.Type {
 		}
 		if node.Kind == ast.KindIdentifier && node != name && l.symbol(node) == symbol && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsAny != 0 {
 			// A write target can still have auto/any before its first assignment.
-			if node.Parent == nil || node.Parent.Kind != ast.KindBinaryExpression || node.Parent.AsBinaryExpression().Left != node || node.Parent.AsBinaryExpression().OperatorToken.Kind != ast.KindEqualsToken {
+			if node.Parent == nil || node.Parent.Kind != ast.KindBinaryExpression || node.Parent.AsBinaryExpression().Left != node || (node.Parent.AsBinaryExpression().OperatorToken.Kind != ast.KindEqualsToken && node.Parent.AsBinaryExpression().OperatorToken.Kind != ast.KindQuestionQuestionEqualsToken) {
 				valid = false
 			}
 		}

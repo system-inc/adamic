@@ -1,0 +1,16 @@
+function normalize(present: boolean): string {
+    let value;
+    if (present) value = "owned:" + present.toString();
+    value ??= "fallback:" + present.toString();
+    value += ":tail";
+    return value;
+}
+console.log(normalize(true));
+console.log(normalize(false));
+function observe(present: boolean): string {
+    let value;
+    if (present) value = "seen:" + present.toString();
+    return value === undefined ? "absent" : value;
+}
+console.log(observe(true));
+console.log(observe(false));

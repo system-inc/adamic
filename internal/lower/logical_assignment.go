@@ -15,6 +15,11 @@ func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
 	target := ast.SkipParentheses(binary.Left)
 	var right ir.Expression
 	result, err := l.typeOf(node)
+	if err != nil && binary.OperatorToken.Kind == ast.KindQuestionQuestionEqualsToken && ast.IsIdentifier(target) {
+		if local, known := l.local(target); known && l.evolvingObject(l.localNodes[local]) != nil {
+			result, err = l.result.Locals[local].Type, nil
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
