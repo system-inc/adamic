@@ -16,7 +16,8 @@ nonnegative, runs positive, timeout positive, load threshold finite/nonnegative.
 JSON is newline-delimited, one record per warmup/timed invocation. The short table
 goes to stdout. Exit 0 means the harness completed, **not** the native finish line
 passed; exit 1 is mismatch or execution/measurement failure; exit 2 is invalid
-configuration or load refusal. Partial runs never receive a summary.
+configuration or load refusal. Partial programs never receive a summary; completed invocations in an interrupted
+program are recorded as errors with null measurements.
 
 ## Declaration
 
@@ -53,7 +54,7 @@ sum of concurrent process RSS. Commands must wait for their children and must no
 daemonize. Timeout kills the process group and invalidates the run.
 
 Oracle's first output is the baseline; every oracle repetition and every other
-invocation (including warmups) must match its exit code, stdout, stderr, and sorted
+invocation (including warmups) must match its input fingerprint, exit code, stdout, stderr, and sorted
 relative emitted-file SHA-256 hashes. Only the fresh working directory's absolute
 path is replaced with `<program>` in diagnostics; no whitespace, ordering, or
 message normalization. Nonzero diagnostic exit codes are valid baselines. Spawn,
@@ -64,6 +65,7 @@ A mismatch invalidates **all** timings for that contestant/program: status
 `differs`, wall/RSS null in every record and no time in the table. Pending identical
 results can show instrument measurements but remain `pending`. Results compare to
 the oracle as `win`, `loss`, or `tie` by median wall; both wins and losses appear.
+Pending rows also name the measured win/loss while retaining pending status.
 No result here proves the finish line. Quantiles use linear interpolation at
 `(N-1)*p`, timed runs only. Report median, p10, p90 for wall milliseconds and RSS
 KiB. Run serially, rotating contestant order between repetitions.
@@ -87,3 +89,5 @@ Tests must plant diagnostic and emitted-file differences and verify null times;
 a planted high load must refuse before executing any contestant. Real run evidence
 must include the manifest, programs, JSONL, table, versions and machine metadata.
 Small programs measure startup heavily and do not establish checker throughput.
+
+Observed run and validation: [step 38 evidence](../cmd/adamic-bench/evidence/README.md).

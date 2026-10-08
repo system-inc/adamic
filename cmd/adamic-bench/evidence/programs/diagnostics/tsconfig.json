@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "noLib": true,
+    "types": [],
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "declaration": true,
+    "noEmitOnError": true,
+    "outDir": "out"
+  },
+  "files": [
+    "globals.d.ts",
+    "index.ts"
+  ]
+}
