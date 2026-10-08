@@ -377,3 +377,11 @@ from its recorded diagnostic chain or ledger cause; no routed fix is claimed.
 | src/compiler/tsbuildPublic.ts:1065:62 | TS18048 / D233 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
 | src/compiler/tsbuildPublic.ts:1066:42 | TS18048 / D234 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
 | src/compiler/tsbuildPublic.ts:1776:54 | TS2345 / D235 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+
+Final group 8c81fd11 is pushed. All affected packages passed: loader 36.041s,
+lowerer 67.984s, native 172.205s, commands 4.335s, JavaScript no package tests.
+Every optional oracle, all 28 mutants and the entire count gate passed in
+108.711s (789 uncached native count observations). Registering project versions
+of all 13 optional fixtures in the mandatory counts table passed in 43.286s.
+These rows count the inserted guards, not just the .a witness without option
+audit. Every new row balances allocations and frees.
