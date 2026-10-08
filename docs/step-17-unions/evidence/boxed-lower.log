@@ -1,0 +1,164 @@
+=== RUN   TestProvenRelationsRefuse
+=== PAUSE TestProvenRelationsRefuse
+=== RUN   TestScoutClassBooleanKeepsUnsafeViewsRefused
+--- PASS: TestScoutClassBooleanKeepsUnsafeViewsRefused (0.09s)
+=== RUN   TestTasteRepresentationLimitsStayExplicit
+=== PAUSE TestTasteRepresentationLimitsStayExplicit
+=== RUN   TestTasteBoxedScalarFieldNowLowers
+--- PASS: TestTasteBoxedScalarFieldNowLowers (0.03s)
+=== RUN   TestUnknownReflectionRefusals
+=== PAUSE TestUnknownReflectionRefusals
+=== CONT  TestProvenRelationsRefuse
+=== CONT  TestUnknownReflectionRefusals
+=== RUN   TestProvenRelationsRefuse/satisfies_mutable_array
+=== CONT  TestTasteRepresentationLimitsStayExplicit
+=== PAUSE TestProvenRelationsRefuse/satisfies_mutable_array
+=== RUN   TestUnknownReflectionRefusals/nullable_referencefunction_reflect(value:_unknown):_string_{_return_typeof_value;_}_function_test(value:_{code:string}|null):_string_{_return_reflect(value);_}
+=== PAUSE TestUnknownReflectionRefusals/nullable_referencefunction_reflect(value:_unknown):_string_{_return_typeof_value;_}_function_test(value:_{code:string}|null):_string_{_return_reflect(value);_}
+=== RUN   TestTasteRepresentationLimitsStayExplicit/evolving_different_objects
+=== RUN   TestUnknownReflectionRefusals/dynamic_key_coercionfunction_has(key:_string,_value:_object):_boolean_{_return_key_in_value;_}
+=== PAUSE TestUnknownReflectionRefusals/dynamic_key_coercionfunction_has(key:_string,_value:_object):_boolean_{_return_key_in_value;_}
+=== RUN   TestProvenRelationsRefuse/upcast_mutable_array
+=== PAUSE TestProvenRelationsRefuse/upcast_mutable_array
+=== RUN   TestUnknownReflectionRefusals/NUL_keyconsole.log(String('a\0b'_in_{}));
+=== PAUSE TestUnknownReflectionRefusals/NUL_keyconsole.log(String('a\0b'_in_{}));
+=== RUN   TestProvenRelationsRefuse/satisfies_mutable_field
+=== PAUSE TestProvenRelationsRefuse/satisfies_mutable_field
+=== RUN   TestUnknownReflectionRefusals/tuplefunction_has(pair:_readonly_[number]):_boolean_{_return_'length'_in_pair;_}
+=== PAUSE TestUnknownReflectionRefusals/tuplefunction_has(pair:_readonly_[number]):_boolean_{_return_'length'_in_pair;_}
+=== RUN   TestProvenRelationsRefuse/satisfies_nested_mutable_literal
+=== PAUSE TestProvenRelationsRefuse/satisfies_nested_mutable_literal
+=== RUN   TestProvenRelationsRefuse/satisfies_readonly_to_writable
+=== PAUSE TestProvenRelationsRefuse/satisfies_readonly_to_writable
+=== RUN   TestProvenRelationsRefuse/satisfies_function_parameter
+=== PAUSE TestProvenRelationsRefuse/satisfies_function_parameter
+=== RUN   TestUnknownReflectionRefusals/dynamic_prototypefunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'__proto__'_in_value_?_value.__proto___:_undefined;_}
+=== PAUSE TestUnknownReflectionRefusals/dynamic_prototypefunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'__proto__'_in_value_?_value.__proto___:_undefined;_}
+=== RUN   TestProvenRelationsRefuse/upcast_function_parameter
+=== PAUSE TestProvenRelationsRefuse/upcast_function_parameter
+=== RUN   TestProvenRelationsRefuse/upcast_nominal_identity
+=== PAUSE TestProvenRelationsRefuse/upcast_nominal_identity
+=== RUN   TestProvenRelationsRefuse/satisfies_nominal_identity
+=== PAUSE TestProvenRelationsRefuse/satisfies_nominal_identity
+=== RUN   TestProvenRelationsRefuse/satisfies_hidden_optional
+=== PAUSE TestProvenRelationsRefuse/satisfies_hidden_optional
+=== RUN   TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'stack'_in_value;_}
+=== PAUSE TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'stack'_in_value;_}
+=== RUN   TestProvenRelationsRefuse/upcast_hidden_optional
+=== PAUSE TestProvenRelationsRefuse/upcast_hidden_optional
+=== RUN   TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'errno'_in_value;_}
+=== PAUSE TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'errno'_in_value;_}
+=== RUN   TestUnknownReflectionRefusals/opaque_hostfunction_box(value:_unknown):_unknown_{_return_value;_}_box(new_Map<string,_number>());
+=== PAUSE TestUnknownReflectionRefusals/opaque_hostfunction_box(value:_unknown):_unknown_{_return_value;_}_box(new_Map<string,_number>());
+=== RUN   TestProvenRelationsRefuse/upcast_mutable_optional_elements
+=== PAUSE TestProvenRelationsRefuse/upcast_mutable_optional_elements
+=== RUN   TestUnknownReflectionRefusals/nullable_fieldfunction_box(value:_unknown):_unknown_{_return_value;_}_box({code:null});
+=== PAUSE TestUnknownReflectionRefusals/nullable_fieldfunction_box(value:_unknown):_unknown_{_return_value;_}_box({code:null});
+=== RUN   TestProvenRelationsRefuse/satisfies_mutable_optional_field
+=== PAUSE TestProvenRelationsRefuse/satisfies_mutable_optional_field
+=== RUN   TestUnknownReflectionRefusals/dynamic_getterclass_Code_{_get_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== PAUSE TestUnknownReflectionRefusals/dynamic_getterclass_Code_{_get_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== RUN   TestProvenRelationsRefuse/upcast_invariant_optional_class_argument
+=== PAUSE TestProvenRelationsRefuse/upcast_invariant_optional_class_argument
+=== RUN   TestProvenRelationsRefuse/satisfies_nested_optional
+=== PAUSE TestProvenRelationsRefuse/satisfies_nested_optional
+=== CONT  TestProvenRelationsRefuse/satisfies_mutable_array
+=== CONT  TestProvenRelationsRefuse/satisfies_nominal_identity
+=== CONT  TestProvenRelationsRefuse/satisfies_mutable_optional_field
+=== RUN   TestUnknownReflectionRefusals/dynamic_getter_or_methodclass_Code_{_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== PAUSE TestUnknownReflectionRefusals/dynamic_getter_or_methodclass_Code_{_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== RUN   TestUnknownReflectionRefusals/ToPrimitivefunction_text(value:_unknown):_string_{_return_String(value);_}
+=== PAUSE TestUnknownReflectionRefusals/ToPrimitivefunction_text(value:_unknown):_string_{_return_String(value);_}
+=== RUN   TestUnknownReflectionRefusals/nullable_fieldfunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_const_nested_=_{child:{code:null}};_read(nested);
+=== PAUSE TestUnknownReflectionRefusals/nullable_fieldfunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_const_nested_=_{child:{code:null}};_read(nested);
+=== RUN   TestUnknownReflectionRefusals/function_descriptorsfunction_box(value:_unknown):_unknown_{_return_value;_}_box(()_=>_1);
+=== PAUSE TestUnknownReflectionRefusals/function_descriptorsfunction_box(value:_unknown):_unknown_{_return_value;_}_box(()_=>_1);
+=== RUN   TestUnknownReflectionRefusals/JSON_as_a_valuefunction_box(value:_unknown):_unknown_{_return_value;_}_box(JSON);
+=== PAUSE TestUnknownReflectionRefusals/JSON_as_a_valuefunction_box(value:_unknown):_unknown_{_return_value;_}_box(JSON);
+=== RUN   TestUnknownReflectionRefusals/class_constructorclass_Code_{_static_code_=_'x';_}_console.log(String('code'_in_Code));
+=== PAUSE TestUnknownReflectionRefusals/class_constructorclass_Code_{_static_code_=_'x';_}_console.log(String('code'_in_Code));
+=== RUN   TestUnknownReflectionRefusals/dispatch_tableclass_Code_{_inspect(value:_unknown):_void_{}_}_console.log(String('inspect'_in_new_Code()));
+=== PAUSE TestUnknownReflectionRefusals/dispatch_tableclass_Code_{_inspect(value:_unknown):_void_{}_}_console.log(String('inspect'_in_new_Code()));
+=== RUN   TestUnknownReflectionRefusals/presence_descriptorsfunction_has(value:_{code:number}|undefined):_boolean_{_return_'code'_in_{...value};_}
+=== PAUSE TestUnknownReflectionRefusals/presence_descriptorsfunction_has(value:_{code:number}|undefined):_boolean_{_return_'code'_in_{...value};_}
+=== RUN   TestUnknownReflectionRefusals/ambient_class_fieldclass_Code_{_declare_code:_string;_}_function_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value;_}_has(new_Code());
+=== PAUSE TestUnknownReflectionRefusals/ambient_class_fieldclass_Code_{_declare_code:_string;_}_function_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value;_}_has(new_Code());
+=== CONT  TestProvenRelationsRefuse/upcast_hidden_optional
+=== CONT  TestProvenRelationsRefuse/upcast_mutable_optional_elements
+=== RUN   TestTasteRepresentationLimitsStayExplicit/explicit_any
+=== CONT  TestProvenRelationsRefuse/satisfies_readonly_to_writable
+=== CONT  TestProvenRelationsRefuse/upcast_nominal_identity
+=== CONT  TestProvenRelationsRefuse/upcast_function_parameter
+=== CONT  TestProvenRelationsRefuse/satisfies_function_parameter
+=== RUN   TestTasteRepresentationLimitsStayExplicit/computed_enum
+=== CONT  TestProvenRelationsRefuse/satisfies_nested_optional
+=== CONT  TestProvenRelationsRefuse/satisfies_hidden_optional
+=== CONT  TestProvenRelationsRefuse/upcast_invariant_optional_class_argument
+=== CONT  TestProvenRelationsRefuse/satisfies_mutable_field
+=== RUN   TestTasteRepresentationLimitsStayExplicit/enum_prototype
+=== CONT  TestProvenRelationsRefuse/upcast_mutable_array
+=== CONT  TestProvenRelationsRefuse/satisfies_nested_mutable_literal
+=== CONT  TestUnknownReflectionRefusals/nullable_referencefunction_reflect(value:_unknown):_string_{_return_typeof_value;_}_function_test(value:_{code:string}|null):_string_{_return_reflect(value);_}
+=== CONT  TestUnknownReflectionRefusals/ambient_class_fieldclass_Code_{_declare_code:_string;_}_function_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value;_}_has(new_Code());
+=== RUN   TestTasteRepresentationLimitsStayExplicit/merged_enum
+=== CONT  TestUnknownReflectionRefusals/presence_descriptorsfunction_has(value:_{code:number}|undefined):_boolean_{_return_'code'_in_{...value};_}
+--- PASS: TestProvenRelationsRefuse (0.00s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_array (0.07s)
+    --- PASS: TestProvenRelationsRefuse/upcast_hidden_optional (0.08s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_nominal_identity (0.10s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_optional_field (0.10s)
+    --- PASS: TestProvenRelationsRefuse/upcast_nominal_identity (0.07s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_readonly_to_writable (0.08s)
+    --- PASS: TestProvenRelationsRefuse/upcast_mutable_optional_elements (0.12s)
+    --- PASS: TestProvenRelationsRefuse/upcast_function_parameter (0.10s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_function_parameter (0.08s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_nested_optional (0.09s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_hidden_optional (0.07s)
+    --- PASS: TestProvenRelationsRefuse/upcast_invariant_optional_class_argument (0.06s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_field (0.04s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_nested_mutable_literal (0.05s)
+    --- PASS: TestProvenRelationsRefuse/upcast_mutable_array (0.05s)
+=== CONT  TestUnknownReflectionRefusals/dispatch_tableclass_Code_{_inspect(value:_unknown):_void_{}_}_console.log(String('inspect'_in_new_Code()));
+=== CONT  TestUnknownReflectionRefusals/class_constructorclass_Code_{_static_code_=_'x';_}_console.log(String('code'_in_Code));
+--- PASS: TestTasteRepresentationLimitsStayExplicit (0.37s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/evolving_different_objects (0.08s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/explicit_any (0.09s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/computed_enum (0.08s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/enum_prototype (0.04s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/merged_enum (0.07s)
+=== CONT  TestUnknownReflectionRefusals/JSON_as_a_valuefunction_box(value:_unknown):_unknown_{_return_value;_}_box(JSON);
+=== CONT  TestUnknownReflectionRefusals/function_descriptorsfunction_box(value:_unknown):_unknown_{_return_value;_}_box(()_=>_1);
+=== CONT  TestUnknownReflectionRefusals/nullable_fieldfunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_const_nested_=_{child:{code:null}};_read(nested);
+=== CONT  TestUnknownReflectionRefusals/ToPrimitivefunction_text(value:_unknown):_string_{_return_String(value);_}
+=== CONT  TestUnknownReflectionRefusals/dynamic_getter_or_methodclass_Code_{_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== CONT  TestUnknownReflectionRefusals/dynamic_getterclass_Code_{_get_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== CONT  TestUnknownReflectionRefusals/nullable_fieldfunction_box(value:_unknown):_unknown_{_return_value;_}_box({code:null});
+=== CONT  TestUnknownReflectionRefusals/opaque_hostfunction_box(value:_unknown):_unknown_{_return_value;_}_box(new_Map<string,_number>());
+=== CONT  TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'errno'_in_value;_}
+=== CONT  TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'stack'_in_value;_}
+=== CONT  TestUnknownReflectionRefusals/dynamic_prototypefunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'__proto__'_in_value_?_value.__proto___:_undefined;_}
+=== CONT  TestUnknownReflectionRefusals/tuplefunction_has(pair:_readonly_[number]):_boolean_{_return_'length'_in_pair;_}
+=== CONT  TestUnknownReflectionRefusals/NUL_keyconsole.log(String('a\0b'_in_{}));
+=== CONT  TestUnknownReflectionRefusals/dynamic_key_coercionfunction_has(key:_string,_value:_object):_boolean_{_return_key_in_value;_}
+--- PASS: TestUnknownReflectionRefusals (0.01s)
+    --- PASS: TestUnknownReflectionRefusals/nullable_referencefunction_reflect(value:_unknown):_string_{_return_typeof_value;_}_function_test(value:_{code:string}|null):_string_{_return_reflect(value);_} (0.05s)
+    --- PASS: TestUnknownReflectionRefusals/dispatch_tableclass_Code_{_inspect(value:_unknown):_void_{}_}_console.log(String('inspect'_in_new_Code())); (0.07s)
+    --- PASS: TestUnknownReflectionRefusals/presence_descriptorsfunction_has(value:_{code:number}|undefined):_boolean_{_return_'code'_in_{...value};_} (0.07s)
+    --- PASS: TestUnknownReflectionRefusals/ambient_class_fieldclass_Code_{_declare_code:_string;_}_function_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value;_}_has(new_Code()); (0.09s)
+    --- PASS: TestUnknownReflectionRefusals/class_constructorclass_Code_{_static_code_=_'x';_}_console.log(String('code'_in_Code)); (0.07s)
+    --- PASS: TestUnknownReflectionRefusals/nullable_fieldfunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_const_nested_=_{child:{code:null}};_read(nested); (0.04s)
+    --- PASS: TestUnknownReflectionRefusals/function_descriptorsfunction_box(value:_unknown):_unknown_{_return_value;_}_box(()_=>_1); (0.07s)
+    --- PASS: TestUnknownReflectionRefusals/ToPrimitivefunction_text(value:_unknown):_string_{_return_String(value);_} (0.07s)
+    --- PASS: TestUnknownReflectionRefusals/JSON_as_a_valuefunction_box(value:_unknown):_unknown_{_return_value;_}_box(JSON); (0.08s)
+    --- PASS: TestUnknownReflectionRefusals/dynamic_getter_or_methodclass_Code_{_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code()); (0.07s)
+    --- PASS: TestUnknownReflectionRefusals/opaque_hostfunction_box(value:_unknown):_unknown_{_return_value;_}_box(new_Map<string,_number>()); (0.04s)
+    --- PASS: TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'errno'_in_value;_} (0.03s)
+    --- PASS: TestUnknownReflectionRefusals/nullable_fieldfunction_box(value:_unknown):_unknown_{_return_value;_}_box({code:null}); (0.04s)
+    --- PASS: TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'stack'_in_value;_} (0.04s)
+    --- PASS: TestUnknownReflectionRefusals/dynamic_getterclass_Code_{_get_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code()); (0.07s)
+    --- PASS: TestUnknownReflectionRefusals/tuplefunction_has(pair:_readonly_[number]):_boolean_{_return_'length'_in_pair;_} (0.03s)
+    --- PASS: TestUnknownReflectionRefusals/NUL_keyconsole.log(String('a\0b'_in_{})); (0.03s)
+    --- PASS: TestUnknownReflectionRefusals/dynamic_key_coercionfunction_has(key:_string,_value:_object):_boolean_{_return_key_in_value;_} (0.03s)
+    --- PASS: TestUnknownReflectionRefusals/dynamic_prototypefunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'__proto__'_in_value_?_value.__proto___:_undefined;_} (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.676s

@@ -1,0 +1,23 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_fields.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_fields.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_fields.a
+    oracle_test.go:770: exit codes differ
+        node:   exit 0, stdout "text\n42\nyes\nno\nmissing\n1\ntext0\n2\ntext1\n3\ntext2\n4\ntext3\n5\ntext4\n6\ntext5\n7\ntext6\n8\ntext7\ntrue|true|true|false\nfalse|true|false\nfalse|string\n", stderr ""
+        native: exit 70, stdout "text\n42\nyes\nno\nmissing\n1\ntext0\n2\ntext1\n3\ntext2\n4\ntext3\n5\ntext4\n6\ntext5\n7\ntext6\n8\ntext7\ntrue|true|true|false\nfalse|true|false\n", stderr "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+    oracle_test.go:776: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "text\n42\nyes\nno\nmissing\n1\ntext0\n2\ntext1\n3\ntext2\n4\ntext3\n5\ntext4\n6\ntext5\n7\ntext6\n8\ntext7\ntrue|true|true|false\nfalse|true|false\nfalse|string\n", stderr ""
+        backend: exit 70, stdout "text\n42\nyes\nno\nmissing\n1\ntext0\n2\ntext1\n3\ntext2\n4\ntext3\n5\ntext4\n6\ntext5\n7\ntext6\n8\ntext7\ntrue|true|true|false\nfalse|true|false\n", stderr "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+    oracle_test.go:783: leaks:
+        exit 70
+        adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_fields.a (0.51s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.527s
+FAIL

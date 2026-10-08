@@ -1,0 +1,46 @@
+interface Mixed { value: string | number | boolean | undefined; }
+function describe(mixed: Mixed): string {
+    if (typeof mixed.value === 'number') return `${mixed.value + 1}`;
+    if (typeof mixed.value === 'boolean') return mixed.value ? 'yes' : 'no';
+    if (typeof mixed.value === 'string') return mixed.value;
+    return 'missing';
+}
+function exercise(): void {
+    const mixed: Mixed = {value: 'text'};
+    const alias = mixed;
+    console.log(describe(mixed));
+    alias.value = 41;
+    console.log(describe(mixed));
+    alias.value = true;
+    console.log(describe(mixed));
+    alias.value = false;
+    console.log(describe(mixed));
+    alias.value = undefined;
+    console.log(describe(mixed));
+    for (let i = 0; i < 8; i++) {
+        alias.value = i;
+        console.log(describe(mixed));
+        alias.value = `text${i}`;
+        console.log(describe(mixed));
+    }
+}
+exercise();
+interface Host { readonly useCaseSensitiveFileNames: boolean | (() => boolean) | undefined; }
+function useCaseSensitiveFileNames(host: Host): boolean {
+    return !host.useCaseSensitiveFileNames ? true :
+        typeof host.useCaseSensitiveFileNames === 'boolean' ? host.useCaseSensitiveFileNames :
+        host.useCaseSensitiveFileNames();
+}
+console.log(`${useCaseSensitiveFileNames({useCaseSensitiveFileNames: true})}|${useCaseSensitiveFileNames({useCaseSensitiveFileNames: false})}|${useCaseSensitiveFileNames({useCaseSensitiveFileNames: undefined})}|${useCaseSensitiveFileNames({useCaseSensitiveFileNames: () => false})}`);
+interface Links { isExhaustive: boolean | number; }
+function exhaustive(links: Links): boolean {
+    if (links.isExhaustive === 0) links.isExhaustive = false;
+    return typeof links.isExhaustive === 'boolean' ? links.isExhaustive : false;
+}
+console.log(`${exhaustive({isExhaustive: 0})}|${exhaustive({isExhaustive: true})}|${exhaustive({isExhaustive: false})}`);
+function change(mixed: Mixed): void { mixed.value = 'changed'; }
+const observed: Mixed = {value: 7};
+if (typeof observed.value === 'number') {
+    change(observed);
+    console.log(`${observed.value === 7}|${typeof observed.value}`);
+}

@@ -498,7 +498,8 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 				return l.checkedNullableString(node, read), nil
 			}
 			if stored, known := l.representation(l.checker.GetTypeOfSymbol(field)); known && stored == ir.Union && of != ir.Union && !of.IsReference() {
-				return nil, l.notYet(node, "a narrowed scalar in a boxed union field")
+				read := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: ir.Union, Optional: optional, Class: l.classOf(node)})
+				return l.checkedBoxedScalarField(node, read, of), nil
 			}
 			if stored, known := l.representation(l.checker.GetTypeOfSymbol(field)); known && stored.IsMaybe() && of == stored.Present() {
 				// Read the declared representation before trusting the narrowing. A call or an
