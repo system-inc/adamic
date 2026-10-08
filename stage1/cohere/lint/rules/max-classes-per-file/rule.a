@@ -24,7 +24,7 @@ export class Rule {
         this.maximum = maximum;
         this.ignoreExpressions = ignoreExpressions;
     }
-    visit(node: ParseNode, index: number, parent: number): void {
+    countNode(node: ParseNode, index: number, parent: number): void {
         // Both subscribed kinds are relevant. Expressions keep counting inside functions;
         // declarations there are fixtures rather than design units of this file.
         if(node.kind === 'ClassExpression') {
@@ -41,6 +41,18 @@ export class Rule {
             ancestor = this.context.parent(ancestor);
         }
         this.count++;
+    }
+    scan(index: number, parent: number): void {
+        const node = this.context.node(index);
+        if(node.kind === 'ClassDeclaration' || node.kind === 'ClassExpression') {
+            this.countNode(node, index, parent);
+        }
+        for(const child of node.children) { this.scan(child, index); }
+    }
+    // Go counts descendants inside its SourceFile listener, before child listeners report.
+    visit(node: ParseNode, index: number, parent: number): void {
+        this.scan(index, parent);
+        this.finish(index);
     }
     finish(root: number): void {
         if(this.count <= this.maximum) {
