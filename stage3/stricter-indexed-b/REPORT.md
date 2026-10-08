@@ -1,6 +1,6 @@
-Built 27 isolated project-.ts fixture templates and a Node/native/JavaScript witness harness; 10 sites proven.
-Base 390af985; latest preceding commit 4ea89530ea5d0ebed8d5a1da0d7f16ae8b9f0b15; branch codex/stricter-indexed-b only.
-Logged filtered go tests: 10 proven, 0 blocked, 17 remaining; final gate recorded below.
+Built 27 isolated project-.ts fixture templates and a Node/native/JavaScript witness harness; 15 sites proven.
+Base 390af985; latest preceding commit e3b48cfed00b8e4cdfbf409889955968225e5a24; branch codex/stricter-indexed-b only.
+Logged filtered go tests: 15 proven, 0 blocked, 12 remaining; final gate recorded below.
 Every proven site has an emitted-C erase-panic mutant that builds under sanitizers and loses the pinned exit-70 observation.
 Whole-program compilation, sparse holes, typed arrays and records are not covered; refused shapes are never counted as proven.
 
@@ -51,11 +51,11 @@ must list exactly one checked indexed-presence site, count one, and trust zero.
 | D202 | 1881 | `clause.expression` | object union array | proven, erase-panic caught |
 | D203 | 1881 | `clause.expression` | object union array | proven, erase-panic caught |
 | D204 | 1887 | `clause.expression` | object union array | proven, erase-panic caught |
-| D205 | 1887 | `clause.expression` | object union array | remaining |
-| D206 | 1889 | `clauseLabels[i]` | number[] | remaining |
-| D207 | 1889 | `clause.expression` | object union array | remaining |
-| D208 | 1889 | `clause.expression` | object union array | remaining |
-| D209 | 1911 | `clauseLabels[defaultClauseIndex]` | number[] | remaining |
+| D205 | 1887 | `clause.expression` | object union array | proven, erase-panic caught |
+| D206 | 1889 | `clauseLabels[i]` | number[] | proven, erase-panic caught |
+| D207 | 1889 | `clause.expression` | object union array | proven, erase-panic caught |
+| D208 | 1889 | `clause.expression` | object union array | proven, erase-panic caught |
+| D209 | 1911 | `clauseLabels[defaultClauseIndex]` | number[] | proven, erase-panic caught |
 | D210 | 1918 | `clauseLabels[i]` | number[] | remaining |
 | D211 | 1919 | `caseBlock.clauses` | object union array | remaining |
 | D212 | 2446 | `supportsLabeledBreakOrContinue(containingBlock)` | object union array | remaining |
@@ -75,6 +75,7 @@ All test output is written to log files, never piped. Current proof logs:
 
 - `/tmp/stricter-indexed-b-group1-final.log`
 - `/tmp/stricter-indexed-b-group2-final.log`
+- `/tmp/stricter-indexed-b-group3-final.log`
 
 Setup: `export GOPROXY='https://proxy.golang.org|direct'; bash cloud/setup.sh`
 with `/workspace/adamic-tools/env.sh` sourced for builds and tests. nproc=5.
