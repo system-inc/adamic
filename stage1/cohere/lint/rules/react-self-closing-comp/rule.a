@@ -1,0 +1,113 @@
+import type { RuleContext } from '../../context.ts';
+import { SuggestionEdit } from '../../suggestions.a';
+import { messageNotSelfClosing } from './messages.a';
+
+// This is Go cohere's rule-local whitespace set, including NEL and excluding NBSP.
+function emptyText(text: string): boolean {
+    if(!text.includes('\n')) {
+        return false;
+    }
+    for(let position = 0; position < text.length; position++) {
+        switch(text.charCodeAt(position)) {
+            case 9:
+            case 10:
+            case 11:
+            case 12:
+            case 13:
+            case 32:
+            case 133:
+            case 5760:
+            case 8192:
+            case 8193:
+            case 8194:
+            case 8195:
+            case 8196:
+            case 8197:
+            case 8198:
+            case 8199:
+            case 8200:
+            case 8201:
+            case 8202:
+            case 8232:
+            case 8233:
+            case 8239:
+            case 8287:
+            case 12288:
+            case 65279:
+                break;
+            default:
+                return false;
+        }
+    }
+    return true;
+}
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly component: boolean;
+    readonly html: boolean;
+    constructor(context: RuleContext) {
+        this.context = context;
+        this.component = context.settings.read('component', 'true') !== 'false';
+        this.html = context.settings.read('html', 'true') !== 'false';
+    }
+    judges(tag: number): boolean {
+        const context = this.context;
+        const namespaced = context.kind(tag) === 'JsxNamespacedName';
+        let left = tag;
+        if(namespaced) {
+            left = context.child(left, 0);
+        }
+        else {
+            while(context.kind(left) === 'PropertyAccessExpression') {
+                left = context.child(left, 0);
+            }
+        }
+        let name = '';
+        if(context.kind(left) === 'Identifier') {
+            name = context.node(left).text;
+        }
+        // Go's member-name helper accepts only an Identifier at the leftmost segment.
+        // Thus this.Foo belongs to component, despite the upstream comment calling it html.
+        else if(context.kind(left) === 'ThisKeyword' && context.kind(tag) !== 'PropertyAccessExpression') {
+            name = 'this';
+        }
+        const first = name.charCodeAt(0);
+        if(first >= 97 && first <= 122) {
+            return this.html;
+        }
+        return !namespaced && this.component;
+    }
+    visit(index: number): void {
+        const context = this.context;
+        const children = context.node(index).children;
+        if(children.length < 2) {
+            return;
+        }
+        const opening = context.child(index, 0);
+        const closing = context.child(index, children.length - 1);
+        if(!this.judges(context.child(opening, 0))) {
+            return;
+        }
+        if(children.length !== 2) {
+            if(children.length !== 3) {
+                return;
+            }
+            const child = context.child(index, 1);
+            if(context.kind(child) !== 'JsxText' || !emptyText(context.node(child).text)) {
+                return;
+            }
+        }
+        context.reportNode(
+            opening,
+            'react/self-closing-comp',
+            'notSelfClosing',
+            messageNotSelfClosing,
+            [new SuggestionEdit(context.node(opening).end - 1, context.node(closing).end, ' />')],
+        );
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

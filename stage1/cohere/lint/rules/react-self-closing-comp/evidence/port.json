@@ -1,0 +1,83 @@
+{
+  "upstream": {
+    "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+    "typescriptGo": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+    "capturedRecords": 185,
+    "uniqueCases": 81,
+    "capture": "upstream.jsonl"
+  },
+  "witnesses": [
+    "defaults.tsx.txt",
+    "component-only.tsx.txt",
+    "html-only.tsx.txt",
+    "children.tsx.txt",
+    "unicode.jsx.txt",
+    "ranges.js.txt"
+  ],
+  "preservedGoBehavior": [
+    {
+      "case": "<this.Foo></this.Foo> with component=false",
+      "behavior": "Not reported: the leftmost ThisKeyword of a member name is not rendered by the Go helper, so the tag is classified as a component. The Go comment says html."
+    },
+    {
+      "case": "Newline plus U+0085 NEL inside an otherwise empty element",
+      "behavior": "Reported and fixed: the Go whitespace set includes NEL although ECMAScript whitespace does not."
+    }
+  ],
+  "mutant": {
+    "name": "omit-empty-elements",
+    "behavior": "Suppress reports for elements with no children. The mutant compiles and runs; Node and emitted JavaScript disagree with Go on children.tsx.txt."
+  },
+  "typescriptSourcePin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "knownInheritedPendingTest": "TestCheckerBridgeRefusalPending awaits codex/tsgo-errors-as-values; no TSGoError in the prelude on this base.",
+  "gate": {
+    "command": "go test ./stage1/cohere/lint -count=1 -json -parallel 4 -timeout 60m",
+    "inputs": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "clean checkout at typescriptSourcePin",
+      "ADAMIC_LINT_PROFILE_DIR": "one fresh directory",
+      "ADAMIC_LINT_PROFILE_SNAPSHOTS": "the same fresh directory",
+      "ADAMIC_LINT_BENCH": "1",
+      "ADAMIC_NATIVE_JOBS": "4",
+      "WASI_SYSROOT": "wasi-sdk 27 sysroot from cloud/setup.sh --wasi-sdk"
+    },
+    "passIncludingSubtests": 152,
+    "passTopLevel": 46,
+    "fail": 0,
+    "skip": 1,
+    "skipNames": [
+      "TestCheckerBridgeRefusalPending"
+    ],
+    "wallSeconds": 1498.6702647209167,
+    "nproc": 5,
+    "loadBefore": [
+      3.9990234375,
+      6.17822265625,
+      5.5654296875
+    ],
+    "loadAfter": [
+      5.10986328125,
+      5.37548828125,
+      5.28271484375
+    ],
+    "log": "/tmp/s13-react-self-closing-comp-full-green.jsonl",
+    "mutantCaughtLogLines": [
+      4970,
+      4982
+    ],
+    "initialAttempt": {
+      "result": "30-minute capacity timeout, no behavioral failures",
+      "passIncludingSubtests": 68,
+      "skip": 1,
+      "wallSeconds": 1804.0074458122253,
+      "log": "/tmp/s13-react-self-closing-comp-full.jsonl"
+    }
+  },
+  "setup": {
+    "log": "/tmp/s13-react-self-closing-comp-setup.log",
+    "totalSeconds": 639.947,
+    "cacheWarmSeconds": 639.726,
+    "wasiLog": "/tmp/s13-react-self-closing-comp-wasi-setup.log",
+    "wasiTotalSeconds": 352.644,
+    "wasiLockWaitSeconds": 321
+  }
+}

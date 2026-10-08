@@ -1,0 +1,5 @@
+{
+  "name": "omit-empty-elements",
+  "from": "if(children.length !== 2) {",
+  "to": "if(children.length === 2) { return; }\n        if(children.length !== 2) {"
+}
