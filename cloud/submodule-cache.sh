@@ -34,7 +34,9 @@ publish() {
   git -C "${scratch}/repository" config submodule.cohere.url https://github.com/system-inc/cohere.git
   git -C "${scratch}/repository" submodule update -q --init --recursive --depth 1 --filter=blob:none
   tar -C "${scratch}/repository" -cf - cohere .git/modules | gzip -1 > "${scratch}/payload.tgz"
-  split -b 90m -a 2 "${scratch}/payload.tgz" "${scratch}/part."
+  # 16 MB parts: the Worker reads a whole body into memory and hashes it, and past about 30 MB it
+  # dies with error 1102 (resources exceeded) often enough to fail a publish (Oct 7, 503 on a 90 MB part).
+  split -b 16m -a 3 "${scratch}/payload.tgz" "${scratch}/part."
   {
     printf '{"format": "%s", "gitlink": "%s", "commit": "%s", "sha256": "%s", "size": %s, "parts": [' "${format}" "${gitlink}" "${commit}" "$(digest "${scratch}/payload.tgz")" "$(stat -c %s "${scratch}/payload.tgz")"
     separator=""
@@ -44,9 +46,10 @@ publish() {
     done
     printf ']}\n'
   } > "${scratch}/manifest.json"
-  for part in "${scratch}"/part.*; do
-    curl -fsS -X PUT -H "Authorization: Bearer ${token}" --data-binary "@${part}" "${url}/${name}.p${part##*.}" > /dev/null
-  done
+  # Eight at a time, each retried: a part already stored with the same bytes answers 200, so a rerun
+  # after a failure only sends what's missing.
+  export token url name
+  ls "${scratch}"/part.* | xargs -P 8 -I {} sh -c 'part={}; curl -fsS --retry 5 --retry-all-errors --retry-delay 2 -X PUT -H "Authorization: Bearer ${token}" --data-binary "@${part}" "${url}/${name}.p${part##*.}" > /dev/null'
   # The manifest goes last: a payload is only visible once every part is in.
   curl -fsS -X PUT -H "Authorization: Bearer ${token}" --data-binary "@${scratch}/manifest.json" "${url}/${name}.manifest" > /dev/null
   echo "cohere ${gitlink}: cached as ${name}, $(stat -c %s "${scratch}/payload.tgz") bytes in $(ls "${scratch}"/part.* | wc -l) parts"
@@ -64,10 +67,8 @@ restore() {
   curl -fsS --max-time 30 -o "${scratch}/manifest.json" "${url}/${name}.manifest" 2>/dev/null || { echo "submodule cache: none for cohere ${gitlink}"; return 0; }
   manifest=${scratch}/manifest.json
   python3 -c 'import json,sys; m=json.load(open(sys.argv[1])); assert m["format"]==sys.argv[2] and m["gitlink"]==sys.argv[3]; print("\n".join(p["suffix"]+" "+p["sha256"] for p in m["parts"]))' "${manifest}" "${format}" "${gitlink}" > "${scratch}/parts" || { echo "submodule cache: manifest doesn't match"; return 0; }
-  while read -r suffix expected; do
-    curl -fsS --max-time 300 -o "${scratch}/${suffix}" "${url}/${name}.${suffix}" &
-  done < "${scratch}/parts"
-  wait
+  export url name scratch
+  cut -d' ' -f1 "${scratch}/parts" | xargs -P 8 -I {} sh -c 'curl -fsS --retry 3 --max-time 300 -o "${scratch}/{}" "${url}/${name}.{}"' || true
   while read -r suffix expected; do
     [ "$(digest "${scratch}/${suffix}")" = "${expected}" ] || { echo "submodule cache: part ${suffix} doesn't match its hash; cloning instead"; return 0; }
     cat "${scratch}/${suffix}" >> "${scratch}/payload.tgz"
