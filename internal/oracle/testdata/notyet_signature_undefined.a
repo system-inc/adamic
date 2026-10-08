@@ -1,0 +1,17 @@
+// Undefined is an observable result, including explicit and implicit exits.
+let calls = 0;
+function explicit(): undefined {
+    calls += 1;
+    return undefined;
+}
+function bare(): undefined {
+    calls += 2;
+    return;
+}
+function implicit(): undefined {
+    calls += 4;
+}
+console.log(`${typeof explicit()} ${typeof bare()} ${typeof implicit()} ${calls}`);
+function invoke(callback: () => void): void { callback(); }
+invoke(() => { calls += 8; return undefined; });
+console.log(`${calls}`);
