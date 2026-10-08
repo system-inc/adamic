@@ -62,14 +62,14 @@ class VerdictTests(unittest.TestCase):
 
     def test_held_or_unrouted_worker_goes_to_integration_with_why(self):
         sends = self.send('codex/held-views', self.red)
-        self.assertEqual([name for name, _ in sends], ['system_adamic_integration', 'system_adamic_compiler'])
-        self.assertIn('Routed to integration: area-routes.tsv holds codex/held-*', sends[0][1])
+        self.assertEqual([name for name, _ in sends], ['system_adamic_compiler'])
+        self.assertIn('Routed by the hold: area-routes.tsv holds codex/held-*', sends[0][1])
         self.assertEqual([name for name, _ in self.send('codex/other', self.red)], ['system_adamic_integration'])
 
     def test_unrouted_branch_routes_by_its_session_label(self):
         self.assertEqual([name for name, _ in self.send('codex/scout-map-keys', self.red)], ['system_adamic_compiler'])
         self.assertEqual([name for name, _ in self.send('codex/scout-x', self.red)], ['system_adamic_integration'])
-        self.assertEqual([name for name, _ in self.send('codex/held-views', self.red)][0], 'system_adamic_integration')
+        self.assertEqual([name for name, _ in self.send('codex/held-views', self.red)], ['system_adamic_compiler'])
 
     def test_switch_copies_integration_and_void_says_nothing(self):
         self.assertEqual([name for name, _ in self.send('codex/compiler-x', self.red, toIntegration=True)],

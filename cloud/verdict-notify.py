@@ -9,7 +9,7 @@ router, area-route.py, the one auto-area-merge trusts):
   cloud/land-*   integration, and the owner of the area the landing merges (its subject's 'Merge <area>/...')
                  or names (area/<name>)
   codex/*        the owner of the area integration's router sends the branch to; a held branch goes
-                 to integration, who decides holds, and to every @name the hold's note names
+                 to every @name the hold's note names, or to integration when it names nobody
   devtools/*     developer tools, except devtools/fast-gate: the gate's own tools branch, gated against main
                  with the whole tools delta, reads red at darwin on every push and is checked by its canaries
 Integration hears every verdict, not only landings and areas, while the watcher's state directory holds a
@@ -113,10 +113,11 @@ def recipients(branch, sha):
                     if labeled in areaOwners:
                         area, why = labeled, 'its session label'
                 if area == 'hold' or area not in areaOwners:
-                    # Integration keeps the hold; the Circles its note names hear the verdict too.
-                    names.append(integration)
-                    names += re.findall(r'@([a-z0-9_]+)', why)
-                    note = ' Routed to integration: %s.' % why.rstrip('.')
+                    # A hold whose note names Circles goes to them alone: integration can't act on those
+                    # (codex/views-*, codex/scout-*). An unrouted branch, or a hold naming nobody, is integration's.
+                    named = re.findall(r'@([a-z0-9_]+)', why)
+                    names += named or [integration]
+                    note = ' Routed by the hold: %s.' % why.rstrip('.') if named else ' Routed to integration: %s.' % why.rstrip('.')
                 else:
                     names.append(areaOwners[area])
         except Exception as error:
