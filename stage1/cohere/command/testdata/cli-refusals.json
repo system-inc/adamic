@@ -1,0 +1,52 @@
+[
+  {
+    "kind": "finding",
+    "path": "$ROOT/005/package.json",
+    "line": 1,
+    "column": 1,
+    "severity": "error",
+    "rule": "format",
+    "messageId": "unchecked",
+    "message": "the formatter could not check this file: the whole-text transform failed (resolving the format options for $ROOT/005/package.json: $ROOT/005/package.json (its \"prettier\" key): Prettier config remains where cohere no longer reads it; delete it, since cohere reads format options only from a \"format\" block in CohereSettings.json)"
+  },
+  {
+    "kind": "finding",
+    "path": "$ROOT/008/package.json",
+    "line": 1,
+    "column": 1,
+    "severity": "error",
+    "rule": "format",
+    "messageId": "unchecked",
+    "message": "the formatter could not check this file: the whole-text transform failed (resolving the format options for $ROOT/008/package.json: $ROOT/008/package.json (its \"prettier\" key): Prettier config remains where cohere no longer reads it; delete it, since cohere reads format options only from a \"format\" block in CohereSettings.json)"
+  },
+  {
+    "kind": "finding",
+    "path": "$ROOT/024/package.json",
+    "line": 1,
+    "column": 1,
+    "severity": "error",
+    "rule": "format",
+    "messageId": "unchecked",
+    "message": "the formatter could not check this file: the whole-text transform failed (resolving the format options for $ROOT/024/package.json: $ROOT/024/package.json (its \"prettier\" key): Prettier config remains where cohere no longer reads it; delete it, since cohere reads format options only from a \"format\" block in CohereSettings.json)"
+  },
+  {
+    "kind": "finding",
+    "path": "$ROOT/034/package.json",
+    "line": 1,
+    "column": 1,
+    "severity": "error",
+    "rule": "format",
+    "messageId": "unchecked",
+    "message": "the formatter could not check this file: the whole-text transform failed (resolving the format options for $ROOT/034/package.json: $ROOT/034/package.json is not valid JSON: invalid character '\\ufeff' looking for beginning of value)"
+  },
+  {
+    "kind": "finding",
+    "path": "$ROOT/036/package.json",
+    "line": 1,
+    "column": 1,
+    "severity": "error",
+    "rule": "format",
+    "messageId": "unchecked",
+    "message": "the formatter could not check this file: the whole-text transform failed (resolving the format options for $ROOT/036/package.json: $ROOT/036/package.json is not valid JSON: invalid character '\\ufeff' looking for beginning of value)"
+  }
+]

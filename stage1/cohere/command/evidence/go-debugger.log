@@ -1,0 +1,22 @@
+=== RUN   TestNoDebuggerFires
+=== PAUSE TestNoDebuggerFires
+=== CONT  TestNoDebuggerFires
+=== RUN   TestNoDebuggerFires/a_bare_statement
+=== PAUSE TestNoDebuggerFires/a_bare_statement
+=== RUN   TestNoDebuggerFires/inside_a_function
+=== PAUSE TestNoDebuggerFires/inside_a_function
+=== RUN   TestNoDebuggerFires/as_an_unbraced_if_branch
+=== PAUSE TestNoDebuggerFires/as_an_unbraced_if_branch
+=== RUN   TestNoDebuggerFires/inside_a_loop
+=== PAUSE TestNoDebuggerFires/inside_a_loop
+=== CONT  TestNoDebuggerFires/a_bare_statement
+=== CONT  TestNoDebuggerFires/as_an_unbraced_if_branch
+=== CONT  TestNoDebuggerFires/inside_a_function
+=== CONT  TestNoDebuggerFires/inside_a_loop
+--- PASS: TestNoDebuggerFires (0.00s)
+    --- PASS: TestNoDebuggerFires/a_bare_statement (0.00s)
+    --- PASS: TestNoDebuggerFires/as_an_unbraced_if_branch (0.00s)
+    --- PASS: TestNoDebuggerFires/inside_a_function (0.00s)
+    --- PASS: TestNoDebuggerFires/inside_a_loop (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.020s

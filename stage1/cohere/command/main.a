@@ -1,0 +1,25 @@
+// Explicit-file, default-options formatting slice of cohere's command.
+import { panic, programArguments, readTextFile, writeTextFile } from 'adamic';
+import { format } from './format.a';
+const args = programArguments();
+let formatOnly = false;
+let directory = '';
+const files: string[] = [];
+for(let index = 0; index < args.length; index++) {
+    const arg = args[index] ?? panic('missing argument');
+    if(arg === '--format-only') formatOnly = true;
+    else if(arg === '--format-all' || arg === '--format' || arg === '--no-cache') { /* cold explicit-file run */ }
+    else if(arg === '--directory') { index++; directory = args[index] ?? panic('missing directory'); }
+    else if(arg.startsWith('-')) panic(`unsupported flag: ${arg}`);
+    else files.push(arg);
+}
+if(!formatOnly || files.length === 0) panic('usage: cohere --format-only --format-all --no-cache [--directory root] files...');
+for(const file of files) {
+    const path = directory === '' || file.startsWith('/') ? file : `${directory}/${file}`;
+    const read = readTextFile(path);
+    if(read.kind === 'Error') panic(read.message);
+    const result = format(path, read.text);
+    if(result.kind === 'Error') panic(result.message);
+    const written = writeTextFile(path, result.text);
+    if(written.kind === 'Error') panic(written.message);
+}

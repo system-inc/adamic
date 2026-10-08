@@ -1,0 +1,311 @@
+{
+  "CallableSites": 980,
+  "IdenticalDeclarations": {
+    "02c0d9636204e6481c7ecf0c4a41a25b7530465fd97d7044d5d62c7d0186d1af": [
+      {
+        "Name": "get",
+        "Location": "stage1/cohere/graphql/printer/doc.ts:35"
+      },
+      {
+        "Name": "get",
+        "Location": "stage1/cohere/tsprinter/doc.ts:67"
+      }
+    ],
+    "0d7500b288edcdae37b389ae4146fd38f12cabe8a4b3e95f350c924a20da3027": [
+      {
+        "Name": "line",
+        "Location": "stage1/cohere/json/doc.ts:38"
+      },
+      {
+        "Name": "line",
+        "Location": "stage1/cohere/graphql/printer/doc.ts:77"
+      }
+    ],
+    "29a1739495f82143967907e507b8177eb15f769a3d25204b4b7be68eb20d4a99": [
+      {
+        "Name": "make",
+        "Location": "stage1/typescript/parser/statements.ts:65"
+      },
+      {
+        "Name": "make",
+        "Location": "stage1/typescript/parser/jsx.ts:28"
+      }
+    ],
+    "3f469362835b641953ef9109326c9f9326dbb8f0d780d9e719e456ed3612750c": [
+      {
+        "Name": "text",
+        "Location": "stage1/cohere/json/doc.ts:32"
+      },
+      {
+        "Name": "text",
+        "Location": "stage1/cohere/graphql/printer/doc.ts:57"
+      }
+    ],
+    "4c5d8157b002211f1f36661f82e36fcbccc80888bf8c63f111c296be7ac910f2": [
+      {
+        "Name": "wide",
+        "Location": "stage1/cohere/json/width.ts:52"
+      },
+      {
+        "Name": "wide",
+        "Location": "stage1/cohere/yaml/width.ts:52"
+      },
+      {
+        "Name": "wide",
+        "Location": "stage1/cohere/tsprinter/width.ts:52"
+      }
+    ],
+    "5f230deccb0f1eaa313a7e7f24945c5a512b70823f82ec2d6dfc214d1248dfa4": [
+      {
+        "Name": "mapped",
+        "Location": "stage1/cohere/json/width.ts:3"
+      },
+      {
+        "Name": "mapped",
+        "Location": "stage1/cohere/yaml/width.ts:3"
+      },
+      {
+        "Name": "mapped",
+        "Location": "stage1/cohere/tsprinter/width.ts:3"
+      }
+    ],
+    "61ac8c473bee20d3bf924c14bca05341a16b38fb4545cc55861800927ef47691": [
+      {
+        "Name": "stringWidth",
+        "Location": "stage1/cohere/json/width.ts:68"
+      },
+      {
+        "Name": "stringWidth",
+        "Location": "stage1/cohere/tsprinter/width.ts:68"
+      }
+    ],
+    "9415d7220cdd63c7b503fc4a5c29bd0c0adb02201318214bcc6f72006d804b58": [
+      {
+        "Name": "stringEnd",
+        "Location": "stage1/cohere/cssstrings/strings.ts:37"
+      },
+      {
+        "Name": "stringEnd",
+        "Location": "stage1/cohere/cssnumbers/numbers.ts:139"
+      }
+    ],
+    "a1c39c3f2a8968a4053da3807bca793c9bbc3dddb6e8e20d9cc282d3447a68cc": [
+      {
+        "Name": "match",
+        "Location": "stage1/cohere/json/width.ts:6"
+      },
+      {
+        "Name": "match",
+        "Location": "stage1/cohere/yaml/width.ts:6"
+      },
+      {
+        "Name": "match",
+        "Location": "stage1/cohere/tsprinter/width.ts:6"
+      }
+    ],
+    "b1fafa86c5a803a2c3bccf1044d82f958112ea08739c65f6e011be39599640d1": [
+      {
+        "Name": "indent",
+        "Location": "stage1/cohere/json/doc.ts:41"
+      },
+      {
+        "Name": "indent",
+        "Location": "stage1/cohere/graphql/printer/doc.ts:71"
+      }
+    ],
+    "d09019d752f18ec92384903bcf3dc778c7740bedde7f76369385e9ea96d85b2e": [
+      {
+        "Name": "mark",
+        "Location": "stage1/cohere/css/tree.ts:23"
+      },
+      {
+        "Name": "mark",
+        "Location": "stage1/cohere/css/nodes.ts:33"
+      }
+    ]
+  },
+  "IdenticalBodies": {
+    "01e3c252aed86aa45f2ba2454fa0e55f766361f7454fd88b2ba66ec2b85f292e": [
+      {
+        "Name": "mark",
+        "Location": "stage1/cohere/css/tree.ts:23"
+      },
+      {
+        "Name": "mark",
+        "Location": "stage1/cohere/css/nodes.ts:33"
+      }
+    ],
+    "11278e1bb2dcccb2765fc50276936b479928f8add317afb3862bbeb324bb3b02": [
+      {
+        "Name": "indent",
+        "Location": "stage1/cohere/json/doc.ts:41"
+      },
+      {
+        "Name": "indent",
+        "Location": "stage1/cohere/graphql/printer/doc.ts:71"
+      }
+    ],
+    "20f406d0840896754fbec4c12f062fd7528968b7609640b3dde59578666eb5a5": [
+      {
+        "Name": "match",
+        "Location": "stage1/cohere/json/width.ts:6"
+      },
+      {
+        "Name": "match",
+        "Location": "stage1/cohere/yaml/width.ts:6"
+      },
+      {
+        "Name": "match",
+        "Location": "stage1/cohere/tsprinter/width.ts:6"
+      }
+    ],
+    "2674514fd7a19d5d2ce9e3daa9d88a0f2a9b6b87b538fe151667316b27a6a228": [
+      {
+        "Name": "get",
+        "Location": "stage1/cohere/graphql/printer/doc.ts:35"
+      },
+      {
+        "Name": "get",
+        "Location": "stage1/cohere/tsprinter/doc.ts:67"
+      }
+    ],
+    "2e5d294040334b4c423673c665ca3e2136b1ce0d970bbf61c13c0daa4917a20a": [
+      {
+        "Name": "make",
+        "Location": "stage1/typescript/parser/statements.ts:65"
+      },
+      {
+        "Name": "make",
+        "Location": "stage1/typescript/parser/jsx.ts:28"
+      }
+    ],
+    "419374ee8ee6cf8cf2265f540a777744fba8961ed0c387ef913084b2406e8220": [
+      {
+        "Name": "stringEnd",
+        "Location": "stage1/cohere/cssstrings/strings.ts:37"
+      },
+      {
+        "Name": "stringEnd",
+        "Location": "stage1/cohere/cssnumbers/numbers.ts:139"
+      }
+    ],
+    "4f5e6c041caa145c548c7ed73ec8955d47eb6fdcad15840aa2c22e0e063d6878": [
+      {
+        "Name": "node",
+        "Location": "stage1/cohere/selector/parser.ts:31"
+      },
+      {
+        "Name": "node",
+        "Location": "stage1/typescript/parser/parser.ts:242"
+      }
+    ],
+    "578c4d1d42e9fbe02b258b052ce35d99d2f5be4436e782379cad483b15b81087": [
+      {
+        "Name": "numberText",
+        "Location": "stage1/cohere/json/formatter.ts:9"
+      },
+      {
+        "Name": "numberText",
+        "Location": "stage1/cohere/tsprinter/literals.ts:1"
+      }
+    ],
+    "7c2128d3fdde969f6ab2d19d4a250389ace085721e9ee3573d9688b2e62f987a": [
+      {
+        "Name": "text",
+        "Location": "stage1/cohere/json/doc.ts:32"
+      },
+      {
+        "Name": "text",
+        "Location": "stage1/cohere/graphql/printer/doc.ts:57"
+      }
+    ],
+    "8388e9883e0d918ad70776bb90cb694d3fa7e54799c1b9086997c819da428348": [
+      {
+        "Name": "line",
+        "Location": "stage1/cohere/json/doc.ts:38"
+      },
+      {
+        "Name": "line",
+        "Location": "stage1/cohere/graphql/printer/doc.ts:77"
+      }
+    ],
+    "976c4811b6503efbba97bfb00b16a952115a87053332e7ce39446fbd4e048212": [
+      {
+        "Name": "mapped",
+        "Location": "stage1/cohere/json/width.ts:3"
+      },
+      {
+        "Name": "mapped",
+        "Location": "stage1/cohere/yaml/width.ts:3"
+      },
+      {
+        "Name": "mapped",
+        "Location": "stage1/cohere/tsprinter/width.ts:3"
+      }
+    ],
+    "9820cf3ff4dc1f55fdac7f627f9819458facecfe24125c8581002dd3208dfcf9": [
+      {
+        "Name": "isNewline",
+        "Location": "stage1/cohere/graphql/printer/printer.ts:62"
+      },
+      {
+        "Name": "isLineBreak",
+        "Location": "stage1/typescript/scanner/characters.ts:270"
+      }
+    ],
+    "9d33a7f458c76ffbe4c8696a27b56ea060bbdd1a4f87e38a607d42288998a587": [
+      {
+        "Name": "string",
+        "Location": "stage1/cohere/css/tree.ts:73"
+      },
+      {
+        "Name": "get",
+        "Location": "stage1/cohere/css/nodes.ts:42"
+      }
+    ],
+    "ac6e57277b8d7e4492f014bb703521ddf6b8fc1f176ed0c53149b08606afc553": [
+      {
+        "Name": "nodeAt",
+        "Location": "stage1/cohere/mediaquery/parsers.ts:34"
+      },
+      {
+        "Name": "modeAt",
+        "Location": "stage1/cohere/mediaquery/parsers.ts:49"
+      }
+    ],
+    "bc538afaa5ec087f0cbedc83fb4c12cffa68e01119935d0381b5ecf3f0eada26": [
+      {
+        "Name": "wide",
+        "Location": "stage1/cohere/json/width.ts:52"
+      },
+      {
+        "Name": "wide",
+        "Location": "stage1/cohere/yaml/width.ts:52"
+      },
+      {
+        "Name": "wide",
+        "Location": "stage1/cohere/tsprinter/width.ts:52"
+      }
+    ],
+    "d6afe349cb4a09bb1f60e0dc3910ad55f1d280ffc3bacea45472ad5f8c4f403c": [
+      {
+        "Name": "stringWidth",
+        "Location": "stage1/cohere/json/width.ts:68"
+      },
+      {
+        "Name": "stringWidth",
+        "Location": "stage1/cohere/tsprinter/width.ts:68"
+      }
+    ],
+    "fd0ca43c33098619b0e4d4c769414318ce11163b82e0b4b30f0e07d8ec6ad859": [
+      {
+        "Name": "concat",
+        "Location": "stage1/cohere/json/doc.ts:35"
+      },
+      {
+        "Name": "concat",
+        "Location": "stage1/cohere/graphql/printer/doc.ts:60"
+      }
+    ]
+  }
+}

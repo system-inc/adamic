@@ -1,0 +1,46 @@
+=== RUN   TestLinkedCommand
+=== PAUSE TestLinkedCommand
+=== CONT  TestLinkedCommand
+    command_test.go:178: quiet files=29, retained TS proving files=3, Go controls=30, total=59
+    command_test.go:179: lower+emit=57.303483921s C=14432303 bytes
+    command_test.go:179: C compile=1m51.506971966s
+    command_test.go:179: archive=8307758 binary=4384408 link=201.99448ms sanitized=false
+    command_test.go:205: compared 59 files differences=0
+    command_test.go:209: lower+emit=95.794328ms C=299 bytes
+    command_test.go:209: C compile=76.331874ms
+    command_test.go:209: archive=1862 binary=360368 link=94.232352ms sanitized=false
+    command_test.go:221: independent entry objects refuse to link: /usr/bin/ld: /tmp/adamic-gate/TestLinkedCommand186060556/001/second/command.o: in function `main':
+        command.c:(.text+0x0): multiple definition of `main'; /tmp/adamic-gate/TestLinkedCommand186060556/001/release/command.o:command.c:(.text+0x0): first defined here
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+    command_test.go:283: Go command flags: 54 exact formatted outputs, 5 exact findings with unchanged input; all 59 held
+    command_test.go:295: Go no-fix shortest input 0: exit=1, source unchanged, output="/tmp/adamic-gate/TestLinkedCommand186060556/003/gate.json:1:1 error fix --fix would rewrite this file: format\n✗ ☠️ 0.006s • 1 file would change • ⚠ 🔷 types not checked • ⚠ 👑 lint not checked\n"
+    command_test.go:299: compared 59 files differences=0
+    command_test.go:340: whole-file unsupported proofs=4; Go formats 2 and refuses 2 raw multi-file compiler cases; Node/native explicitly refuse all 4
+    command_test.go:341: lower+emit=1m26.993192948s C=14432303 bytes
+    command_test.go:341: C compile=3m41.078316859s
+    command_test.go:341: archive=39636412 binary=26307400 link=1.096566915s sanitized=true
+    command_test.go:342: compared 59 files differences=0
+=== RUN   TestLinkedCommand/mutant0
+    command_test.go:360: lower+emit=1m19.717937702s C=14431967 bytes
+    command_test.go:360: C compile=2m1.62543417s
+    command_test.go:360: archive=8307478 binary=4384408 link=376.472783ms sanitized=false
+    command_test.go:361: compared 59 files differences=12
+    command_test.go:362: compared 59 files differences=12
+=== RUN   TestLinkedCommand/mutant1
+    command_test.go:360: lower+emit=1m1.268786731s C=14432373 bytes
+    command_test.go:360: C compile=1m32.753533251s
+    command_test.go:360: archive=8307958 binary=4384512 link=191.10963ms sanitized=false
+    command_test.go:361: compared 59 files differences=19
+    command_test.go:362: compared 59 files differences=19
+=== RUN   TestLinkedCommand/mutant2
+    command_test.go:360: lower+emit=1m8.061941901s C=14433287 bytes
+    command_test.go:360: C compile=1m57.303005555s
+    command_test.go:360: archive=8307718 binary=4384304 link=154.089115ms sanitized=false
+    command_test.go:361: compared 59 files differences=8
+    command_test.go:362: compared 59 files differences=8
+--- PASS: TestLinkedCommand (1066.23s)
+    --- PASS: TestLinkedCommand/mutant0 (203.45s)
+    --- PASS: TestLinkedCommand/mutant1 (155.59s)
+    --- PASS: TestLinkedCommand/mutant2 (187.41s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/command	1066.255s

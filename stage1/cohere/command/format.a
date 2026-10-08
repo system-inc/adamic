@@ -1,0 +1,49 @@
+import { format as jsonFormat } from '../json/formatter.ts';
+import { format as cssFormat } from '../css/print.ts';
+import { format as yamlFormat } from '../yaml/format.ts';
+import { format as graphqlFormat } from '../graphql/printer/printer.ts';
+import { formatFile } from '../tsprinter/files.ts';
+
+export type Result = { readonly kind: 'Ok'; readonly text: string } | { readonly kind: 'Error'; readonly message: string };
+export function formatOnce(name: string, source: string): Result {
+    const bom = source.startsWith('\ufeff');
+    const text = (bom ? source.slice(1) : source).split('\r\n').join('\n').split('\r').join('\n');
+    const suffix = name.slice(name.lastIndexOf('.')).toLowerCase();
+    let formatted = '';
+    if(suffix === '.json') {
+        try { formatted = jsonFormat(name, text); }
+        catch(error) { return { kind: 'Error', message: error instanceof Error ? error.message : '?' }; }
+    }
+    else if(suffix === '.css') {
+        const result = cssFormat(text);
+        if(result.kind === 'Refused') return { kind: 'Error', message: result.message };
+        formatted = result.text;
+    }
+    else if(suffix === '.yaml' || suffix === '.yml') {
+        const result = yamlFormat(text);
+        if(result.kind === 'Error') return { kind: 'Error', message: result.message };
+        formatted = result.text;
+    }
+    else if(suffix === '.graphql' || suffix === '.gql') {
+        const result = graphqlFormat(text, { printWidth: 80, tabWidth: 2, useTabs: false, bracketSpacing: true });
+        if(result.kind === 'Error') return { kind: 'Error', message: result.message };
+        formatted = result.text;
+    }
+    else if(suffix === '.a' || suffix === '.ts' || suffix === '.js') {
+        const result = formatFile(text, { printWidth: 80, tabWidth: 2, useTabs: false });
+        if(result.kind === 'NotYet') return { kind: 'Error', message: result.reason };
+        formatted = result.text;
+    }
+    else return { kind: 'Error', message: `unsupported file type: ${suffix}` };
+    return { kind: 'Ok', text: (bom ? '\ufeff' : '') + formatted };
+}
+export function format(name: string, source: string): Result {
+    let current = source;
+    for(let pass = 1; pass <= 3; pass++) {
+        const result = formatOnce(name, current);
+        if(result.kind === 'Error') return result;
+        if(result.text === current) return result;
+        current = result.text;
+    }
+    return { kind: 'Error', message: `${name} is not idempotent under the formatter: pass 3 still changed it` };
+}

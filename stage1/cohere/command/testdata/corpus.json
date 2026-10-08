@@ -1,0 +1,387 @@
+[
+  {
+    "repo": "actualbudget/actual",
+    "commit": "9732a4463aac2909ac2aad1627085e0eb7a207b5",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "actualbudget/actual",
+        "commit": "9732a4463aac2909ac2aad1627085e0eb7a207b5",
+        "source": "package.json",
+        "fixture": "corpus/actualbudget__actual-9732a446/package.json",
+        "sha256": "9969c499ad99df364cd02b81411979e8da1e40c46fa85fa9352592b8b61859cd"
+      },
+      {
+        "repo": "actualbudget/actual",
+        "commit": "9732a4463aac2909ac2aad1627085e0eb7a207b5",
+        "source": "packages/component-library/.storybook/public/global-styles.css",
+        "fixture": "corpus/actualbudget__actual-9732a446/packages/component-library/.storybook/public/global-styles.css",
+        "sha256": "152c8ad22daeb51a639ce578ba338b3487e08cb66414d430321ceccad405d833"
+      },
+      {
+        "repo": "actualbudget/actual",
+        "commit": "9732a4463aac2909ac2aad1627085e0eb7a207b5",
+        "source": "packages/component-library/src/themes/dark.css",
+        "fixture": "corpus/actualbudget__actual-9732a446/packages/component-library/src/themes/dark.css",
+        "sha256": "9c0f8358d50c8726c54859b444caa871d07f35e89d761edef6cbf7e46c17281b"
+      }
+    ]
+  },
+  {
+    "repo": "angular/angular",
+    "commit": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "angular/angular",
+        "commit": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+        "source": "package.json",
+        "fixture": "corpus/angular__angular-c0dc8c4b/package.json",
+        "sha256": "c9d065c1d64f9a8e76fbf9390293b43778d31c9d3bac43bf1e3f79f46839a5f5"
+      }
+    ]
+  },
+  {
+    "repo": "babel/babel",
+    "commit": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "babel/babel",
+        "commit": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+        "source": "package.json",
+        "fixture": "corpus/babel__babel-f67453d5/package.json",
+        "sha256": "4c2c9c30af70935e635278f6d8ac67de67db597eab155f01573021d57a43ba06"
+      }
+    ]
+  },
+  {
+    "repo": "backstage/backstage",
+    "commit": "532931240eec03b318efaadb39e24d9ee6d7076c",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "backstage/backstage",
+        "commit": "532931240eec03b318efaadb39e24d9ee6d7076c",
+        "source": "package.json",
+        "fixture": "corpus/backstage__backstage-53293124/package.json",
+        "sha256": "6d0f69d4cf0d96ace40d331e54965a15f692503251908c71d1c040bc2e23061d"
+      }
+    ]
+  },
+  {
+    "repo": "calcom/cal.diy",
+    "commit": "54343aa685ae8f33159d2f485ec4a57bad5c574a",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "calcom/cal.diy",
+        "commit": "54343aa685ae8f33159d2f485ec4a57bad5c574a",
+        "source": "package.json",
+        "fixture": "corpus/calcom__cal.diy-54343aa6/package.json",
+        "sha256": "489360a75ae861401a110b8155cbae3d82b08980ccf0645024e92d87549ec35c"
+      }
+    ]
+  },
+  {
+    "repo": "date-fns/date-fns",
+    "commit": "717ce0a807ea4c6b540d015b5c408723175b2838",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "date-fns/date-fns",
+        "commit": "717ce0a807ea4c6b540d015b5c408723175b2838",
+        "source": "package.json",
+        "fixture": "corpus/date-fns__date-fns-717ce0a8/package.json",
+        "sha256": "cc74fea690b8b6c1c062f78467300270c766b59b6446939d6d9f1cba41913f0c"
+      }
+    ]
+  },
+  {
+    "repo": "excalidraw/excalidraw",
+    "commit": "ed10ac7dca7e40f3f4a31269b4bfba980d0db41e",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "excalidraw/excalidraw",
+        "commit": "ed10ac7dca7e40f3f4a31269b4bfba980d0db41e",
+        "source": "package.json",
+        "fixture": "corpus/excalidraw__excalidraw-ed10ac7d/package.json",
+        "sha256": "7b7a3a1ac12b2a3d15ee280c02abce3fb4beafdd7156a05b4e9c5446aa66bb1c"
+      }
+    ]
+  },
+  {
+    "repo": "grafana/grafana",
+    "commit": "c7a7b797c1980a886efdd01b433a8d92b7ae7166",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "grafana/grafana",
+        "commit": "c7a7b797c1980a886efdd01b433a8d92b7ae7166",
+        "source": "package.json",
+        "fixture": "corpus/grafana__grafana-c7a7b797/package.json",
+        "sha256": "bfbe32a366039bfeeb91561ba3ad18d80f32261c1947e2f2e7dd8df071ee38af"
+      }
+    ]
+  },
+  {
+    "repo": "microsoft/playwright",
+    "commit": "2a8ba77a33a5a39a52372c42f12d254506296c76",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "microsoft/playwright",
+        "commit": "2a8ba77a33a5a39a52372c42f12d254506296c76",
+        "source": "package.json",
+        "fixture": "corpus/microsoft__playwright-2a8ba77a/package.json",
+        "sha256": "1945af892d3830e3bf4cc5fd07ef169e2fc75695541742debc7bde440b30f7b9"
+      }
+    ]
+  },
+  {
+    "repo": "n8n-io/n8n",
+    "commit": "e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "n8n-io/n8n",
+        "commit": "e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073",
+        "source": "package.json",
+        "fixture": "corpus/n8n-io__n8n-e77e30c7/package.json",
+        "sha256": "b09b2e35855c311e45c8fd94c1881ab88543a8a6e1917b40db9693067c841bfe"
+      }
+    ]
+  },
+  {
+    "repo": "nestjs/nest",
+    "commit": "35142c3eca8edaaf6abc5984d915da2fbd458aa2",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "nestjs/nest",
+        "commit": "35142c3eca8edaaf6abc5984d915da2fbd458aa2",
+        "source": "package.json",
+        "fixture": "corpus/nestjs__nest-35142c3e/package.json",
+        "sha256": "5488578d3ae433f36c2c10e94292745d0ec16460f2e5f65a1160bc006bded344"
+      }
+    ]
+  },
+  {
+    "repo": "outline/outline",
+    "commit": "478e8121cbe517b9d7773e9d68d20bfe26056c59",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "outline/outline",
+        "commit": "478e8121cbe517b9d7773e9d68d20bfe26056c59",
+        "source": "package.json",
+        "fixture": "corpus/outline__outline-478e8121/package.json",
+        "sha256": "0dd0efcc46d1e43aab796be127f2bfdf2d1dc499b43421c1cad79c7abe652553"
+      }
+    ]
+  },
+  {
+    "repo": "prisma/prisma",
+    "commit": "c882b03377e70c090d7bbe05cf85bf04fe9e33b2",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "prisma/prisma",
+        "commit": "c882b03377e70c090d7bbe05cf85bf04fe9e33b2",
+        "source": "package.json",
+        "fixture": "corpus/prisma__prisma-c882b033/package.json",
+        "sha256": "7192d1a04474c09ea669eed39c4d07deb88fd2446fcfd14c9ac2e3165b79de59"
+      }
+    ]
+  },
+  {
+    "repo": "shadcn-ui/ui",
+    "commit": "a2e305c2e15b6affdb760e65058be69e8212713f",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "shadcn-ui/ui",
+        "commit": "a2e305c2e15b6affdb760e65058be69e8212713f",
+        "source": "package.json",
+        "fixture": "corpus/shadcn-ui__ui-a2e305c2/package.json",
+        "sha256": "9aaebab51ddc457aa3a8a2144ad51ea7ab14c5f3277c49003360c187391ab5e1"
+      }
+    ]
+  },
+  {
+    "repo": "supabase/supabase",
+    "commit": "87681812a0b4aef538d18ea78a78e5ab6257952e",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "supabase/supabase",
+        "commit": "87681812a0b4aef538d18ea78a78e5ab6257952e",
+        "source": "package.json",
+        "fixture": "corpus/supabase__supabase-87681812/package.json",
+        "sha256": "66f6f997c9b5d084ba54f09e5be7e5ebee6341ca4428200a6278dff2ade155f6"
+      }
+    ]
+  },
+  {
+    "repo": "TanStack/query",
+    "commit": "eaa75f4f8f819237febca9f7e887455367b7ab97",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "TanStack/query",
+        "commit": "eaa75f4f8f819237febca9f7e887455367b7ab97",
+        "source": "package.json",
+        "fixture": "corpus/TanStack__query-eaa75f4f/package.json",
+        "sha256": "b8bfa7bf9e49535747fab4d75f79f6e71797a72b72ffb167d45baaa4f7a3ca79"
+      },
+      {
+        "repo": "TanStack/query",
+        "commit": "eaa75f4f8f819237febca9f7e887455367b7ab97",
+        "source": "examples/angular/simple/src/styles.css",
+        "fixture": "corpus/TanStack__query-eaa75f4f/examples/angular/simple/src/styles.css",
+        "sha256": "c7295b915b6a250b910d30ff3b9d1991b6f43c9474d3afafc6cba59eee44383e"
+      },
+      {
+        "repo": "TanStack/query",
+        "commit": "eaa75f4f8f819237febca9f7e887455367b7ab97",
+        "source": "examples/preact/simple/src/style.css",
+        "fixture": "corpus/TanStack__query-eaa75f4f/examples/preact/simple/src/style.css",
+        "sha256": "d47ea709719ede1c4ce5bc4b4986793d14311c34f92ca0c3a616f4a9558c6c3e"
+      }
+    ]
+  },
+  {
+    "repo": "tldraw/tldraw",
+    "commit": "db1c86ea7857483c47aa333cf4e92abf455a67cf",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "tldraw/tldraw",
+        "commit": "db1c86ea7857483c47aa333cf4e92abf455a67cf",
+        "source": "package.json",
+        "fixture": "corpus/tldraw__tldraw-db1c86ea/package.json",
+        "sha256": "c0833a0dd9c73171b370fed3b5c3711be69b94ba49ce351739514fec58fe5b2a"
+      }
+    ]
+  },
+  {
+    "repo": "trpc/trpc",
+    "commit": "d756e591a5e37ef20b8d75ecd4d736c195497289",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "trpc/trpc",
+        "commit": "d756e591a5e37ef20b8d75ecd4d736c195497289",
+        "source": "package.json",
+        "fixture": "corpus/trpc__trpc-d756e591/package.json",
+        "sha256": "e73bd25429d99c043d7daff04f84e7e198ab9c460cf760a1e31a89ac541bd1cc"
+      },
+      {
+        "repo": "trpc/trpc",
+        "commit": "d756e591a5e37ef20b8d75ecd4d736c195497289",
+        "source": "examples/next-prisma-starter/src/styles/globals.css",
+        "fixture": "corpus/trpc__trpc-d756e591/examples/next-prisma-starter/src/styles/globals.css",
+        "sha256": "e118ce4682c9c45e8671f479001454dff81c790a309ade25d8991d6a62db0576"
+      },
+      {
+        "repo": "trpc/trpc",
+        "commit": "d756e591a5e37ef20b8d75ecd4d736c195497289",
+        "source": "examples/next-prisma-websockets-starter/src/styles/global.css",
+        "fixture": "corpus/trpc__trpc-d756e591/examples/next-prisma-websockets-starter/src/styles/global.css",
+        "sha256": "cc1a7ad0d019ddb1d32d0ecb588ba0ac26ce41d8625dd6c366348b25f83a28ec"
+      }
+    ]
+  },
+  {
+    "repo": "twentyhq/twenty",
+    "commit": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "twentyhq/twenty",
+        "commit": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+        "source": "package.json",
+        "fixture": "corpus/twentyhq__twenty-ddd16625/package.json",
+        "sha256": "8e913abf5b20d039cc71dcbb4710339378452cbcf440a7f4b1bb50ad29ff0ad2"
+      }
+    ]
+  },
+  {
+    "repo": "typeorm/typeorm",
+    "commit": "c64a1f052fc39f6688b6b73b83d065d7147ba8bb",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "typeorm/typeorm",
+        "commit": "c64a1f052fc39f6688b6b73b83d065d7147ba8bb",
+        "source": "package.json",
+        "fixture": "corpus/typeorm__typeorm-c64a1f05/package.json",
+        "sha256": "7a9a7cdfdd4280785d12cafbacd913a866460878e3111032f1f58ebb34c31b29"
+      }
+    ]
+  },
+  {
+    "repo": "microsoft/TypeScript",
+    "commit": "50d70a3f5f453a79a4323b263165da51f656a4e3",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "microsoft/TypeScript",
+        "commit": "50d70a3f5f453a79a4323b263165da51f656a4e3",
+        "source": "package.json",
+        "fixture": "corpus/microsoft__TypeScript-50d70a3f/package.json",
+        "sha256": "2828c1d269bd9c80d634131ec107ac69f1cfc3bf1f98d24c112c825c8acd7902"
+      }
+    ]
+  },
+  {
+    "repo": "microsoft/TypeScript",
+    "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "microsoft/TypeScript",
+        "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+        "source": "package.json",
+        "fixture": "corpus/microsoft__TypeScript-050880ce/package.json",
+        "sha256": "f875dff6a05b632b92280bb85ba529f02e853eb12ccf3101de8ff76556ef26f2"
+      },
+      {
+        "repo": "microsoft/TypeScript",
+        "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+        "source": "tests/cases/compiler/2dArrays.ts",
+        "fixture": "corpus/microsoft__TypeScript-050880ce/tests/cases/compiler/2dArrays.ts",
+        "sha256": "15f3cb88aefd8b61e4aea913e6cd400c12e020c7389cbbb301c5ad0e0b595e7c"
+      },
+      {
+        "repo": "microsoft/TypeScript",
+        "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+        "source": "tests/cases/compiler/APILibCheck.ts",
+        "fixture": "corpus/microsoft__TypeScript-050880ce/tests/cases/compiler/APILibCheck.ts",
+        "sha256": "cbe1c026710dd6c10eb8ed7085dafa4311105e5565886f886a8cc54715c4893a"
+      },
+      {
+        "repo": "microsoft/TypeScript",
+        "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+        "source": "tests/cases/compiler/APISample_Watch.ts",
+        "fixture": "corpus/microsoft__TypeScript-050880ce/tests/cases/compiler/APISample_Watch.ts",
+        "sha256": "9d035b3f42ecf405bda005260c2beab77fb0ae3835ac5620bfbcaf345e3a3da4"
+      }
+    ]
+  },
+  {
+    "repo": "vuejs/core",
+    "commit": "4ab865a848a1da3d10fb674f857e5fff13094644",
+    "status": "fetched",
+    "files": [
+      {
+        "repo": "vuejs/core",
+        "commit": "4ab865a848a1da3d10fb674f857e5fff13094644",
+        "source": "package.json",
+        "fixture": "corpus/vuejs__core-4ab865a8/package.json",
+        "sha256": "ec46cbc3c8195b751147da5695f88d66ed2d8db230dcd4705ac459fd59a1f80b"
+      }
+    ]
+  }
+]

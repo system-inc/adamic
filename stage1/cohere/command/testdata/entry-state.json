@@ -1,0 +1,174 @@
+{
+  "stage1/cohere/json/main.ts": [
+    {
+      "site": "stage1/cohere/json/main.ts:40",
+      "declaration": "const args = programArguments();"
+    },
+    {
+      "site": "stage1/cohere/json/main.ts:41",
+      "declaration": "const batch = args[0] === '--cases';"
+    },
+    {
+      "site": "stage1/cohere/json/main.ts:42",
+      "declaration": "const path = args[batch ? 1 : 0] ?? panic('usage: main.ts <file> | --cases <cases>');"
+    },
+    {
+      "site": "stage1/cohere/json/main.ts:43",
+      "declaration": "const read = readTextFile(path);"
+    }
+  ],
+  "stage1/cohere/css/main.ts": [
+    {
+      "site": "stage1/cohere/css/main.ts:43",
+      "declaration": "const args = programArguments();"
+    },
+    {
+      "site": "stage1/cohere/css/main.ts:44",
+      "declaration": "const read = readTextFile(args[0] ?? panic('usage: main.ts <cases file> [count]'));"
+    },
+    {
+      "site": "stage1/cohere/css/main.ts:48",
+      "declaration": "const texts: string[] = [];"
+    },
+    {
+      "site": "stage1/cohere/css/main.ts:49",
+      "declaration": "const modes: boolean[] = [];"
+    },
+    {
+      "site": "stage1/cohere/css/main.ts:56",
+      "declaration": "let count = 0;"
+    },
+    {
+      "site": "stage1/cohere/css/main.ts:57",
+      "declaration": "let parsed = 0;"
+    },
+    {
+      "site": "stage1/cohere/css/main.ts:58",
+      "declaration": "let nodes = 0;"
+    }
+  ],
+  "stage1/cohere/css/print_main.ts": [
+    {
+      "site": "stage1/cohere/css/print_main.ts:44",
+      "declaration": "const args = programArguments();"
+    },
+    {
+      "site": "stage1/cohere/css/print_main.ts:45",
+      "declaration": "const read = readTextFile(args[0] ?? panic('usage: main.ts <cases file> [count]'));"
+    },
+    {
+      "site": "stage1/cohere/css/print_main.ts:49",
+      "declaration": "const texts: string[] = [];"
+    },
+    {
+      "site": "stage1/cohere/css/print_main.ts:50",
+      "declaration": "const modes: boolean[] = [];"
+    },
+    {
+      "site": "stage1/cohere/css/print_main.ts:57",
+      "declaration": "let count = 0;"
+    },
+    {
+      "site": "stage1/cohere/css/print_main.ts:58",
+      "declaration": "let parsed = 0;"
+    },
+    {
+      "site": "stage1/cohere/css/print_main.ts:59",
+      "declaration": "let nodes = 0;"
+    }
+  ],
+  "stage1/cohere/yaml/main.ts": [
+    {
+      "site": "stage1/cohere/yaml/main.ts:20",
+      "declaration": "const args = programArguments();"
+    },
+    {
+      "site": "stage1/cohere/yaml/main.ts:21",
+      "declaration": "const batch = args[0] === '--cases';"
+    },
+    {
+      "site": "stage1/cohere/yaml/main.ts:22",
+      "declaration": "const path = args[batch ? 1 : 0] ?? panic('usage: main.ts <file> | --cases <cases>');"
+    },
+    {
+      "site": "stage1/cohere/yaml/main.ts:23",
+      "declaration": "const read = readTextFile(path);"
+    }
+  ],
+  "stage1/cohere/graphql/printer/main.ts": [
+    {
+      "site": "stage1/cohere/graphql/printer/main.ts:41",
+      "declaration": "const args = programArguments();"
+    },
+    {
+      "site": "stage1/cohere/graphql/printer/main.ts:42",
+      "declaration": "const batch = args[0] === '--cases';"
+    },
+    {
+      "site": "stage1/cohere/graphql/printer/main.ts:43",
+      "declaration": "const mode = args[2] ?? 'defaults';"
+    },
+    {
+      "site": "stage1/cohere/graphql/printer/main.ts:44",
+      "declaration": "const settings: SettingsOptions = {"
+    },
+    {
+      "site": "stage1/cohere/graphql/printer/main.ts:50",
+      "declaration": "const path = args[batch ? 1 : 0] ?? panic('usage: main.ts <file> | --cases <cases>');"
+    },
+    {
+      "site": "stage1/cohere/graphql/printer/main.ts:51",
+      "declaration": "const read = readTextFile(path);"
+    }
+  ],
+  "stage1/cohere/tsprinter/main.ts": [
+    {
+      "site": "stage1/cohere/tsprinter/main.ts:4",
+      "declaration": "const args = programArguments();"
+    },
+    {
+      "site": "stage1/cohere/tsprinter/main.ts:5",
+      "declaration": "const batch = args[0] === '--cases';"
+    },
+    {
+      "site": "stage1/cohere/tsprinter/main.ts:6",
+      "declaration": "const input = readTextFile(args[batch ? 1 : 0] ?? panic('usage: main.ts <expression-file> | --cases <batch> [width]'));"
+    },
+    {
+      "site": "stage1/cohere/tsprinter/main.ts:8",
+      "declaration": "const settings = { printWidth: args[2] === undefined ? 120 : Number(args[2]), tabWidth: 4, useTabs: false };"
+    }
+  ],
+  "stage1/cohere/tsprinter/statementsMain.ts": [
+    {
+      "site": "stage1/cohere/tsprinter/statementsMain.ts:4",
+      "declaration": "const args = programArguments();"
+    },
+    {
+      "site": "stage1/cohere/tsprinter/statementsMain.ts:5",
+      "declaration": "const batch = args[0] === '--cases';"
+    },
+    {
+      "site": "stage1/cohere/tsprinter/statementsMain.ts:6",
+      "declaration": "const input = readTextFile("
+    },
+    {
+      "site": "stage1/cohere/tsprinter/statementsMain.ts:10",
+      "declaration": "const settings = { printWidth: args[2] === undefined ? 120 : Number(args[2]), tabWidth: 4, useTabs: false };"
+    }
+  ],
+  "stage1/cohere/lint/main.ts": [
+    {
+      "site": "stage1/cohere/lint/main.ts:11",
+      "declaration": "const junkRows = programArguments().includes('--junk-rows');"
+    },
+    {
+      "site": "stage1/cohere/lint/main.ts:174",
+      "declaration": "const args = programArguments();"
+    },
+    {
+      "site": "stage1/cohere/lint/main.ts:175",
+      "declaration": "const first = args[0] ?? panic('usage: main.ts <file> or --manifest <file> [--count]');"
+    }
+  ]
+}

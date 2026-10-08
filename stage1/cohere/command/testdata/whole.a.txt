@@ -1,0 +1,13 @@
+import { format } from './format.a';
+import { Linter } from '../lint/lint.ts';
+import { Settings } from '../lint/settings.ts';
+import { Parser } from '../../typescript/parser/parser.ts';
+import { Scanner } from '../../typescript/scanner/scanner.ts';
+const source = 'debugger;';
+const parser = new Parser(source, 'probe.ts');
+const scanner = new Scanner(source);
+const lint = new Linter(source, parser, scanner, 'no-debugger', '', '', false, new Settings());
+lint.run();
+console.log(`${lint.findings.length}`);
+const result = format('probe.json', '{}');
+console.log(result.kind === 'Ok' ? result.text : result.message);

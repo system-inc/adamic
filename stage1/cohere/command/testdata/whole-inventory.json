@@ -1,0 +1,2172 @@
+{
+  "modules": [
+    "stage1/cohere/command/format.a",
+    "stage1/cohere/command/probe.a",
+    "stage1/cohere/css/compose.ts",
+    "stage1/cohere/css/convert.ts",
+    "stage1/cohere/css/input.ts",
+    "stage1/cohere/css/location.ts",
+    "stage1/cohere/css/nodes.ts",
+    "stage1/cohere/css/parse_value.ts",
+    "stage1/cohere/css/parser.ts",
+    "stage1/cohere/css/print.ts",
+    "stage1/cohere/css/print_doc.ts",
+    "stage1/cohere/css/print_utilities.ts",
+    "stage1/cohere/css/print_width_data.ts",
+    "stage1/cohere/css/tokenize.ts",
+    "stage1/cohere/css/tree.ts",
+    "stage1/cohere/cssnumbers/numbers.ts",
+    "stage1/cohere/cssstrings/strings.ts",
+    "stage1/cohere/graphql/blockString.ts",
+    "stage1/cohere/graphql/characterClasses.ts",
+    "stage1/cohere/graphql/lexer.ts",
+    "stage1/cohere/graphql/parser.ts",
+    "stage1/cohere/graphql/printer/doc.ts",
+    "stage1/cohere/graphql/printer/printer.ts",
+    "stage1/cohere/graphql/token.ts",
+    "stage1/cohere/json/doc.ts",
+    "stage1/cohere/json/formatter.ts",
+    "stage1/cohere/json/identifierTables.ts",
+    "stage1/cohere/json/parser.ts",
+    "stage1/cohere/json/width.ts",
+    "stage1/cohere/json/widthTables.ts",
+    "stage1/cohere/lint/.generated/registry.ts",
+    "stage1/cohere/lint/checker.a",
+    "stage1/cohere/lint/checker_bridge.a",
+    "stage1/cohere/lint/comment_ranges.a",
+    "stage1/cohere/lint/comments.ts",
+    "stage1/cohere/lint/context.ts",
+    "stage1/cohere/lint/finding.ts",
+    "stage1/cohere/lint/helpers/comments/all.ts",
+    "stage1/cohere/lint/helpers/comments/can_begin_at.ts",
+    "stage1/cohere/lint/helpers/comments/collect_list_interiors.ts",
+    "stage1/cohere/lint/helpers/comments/comment.ts",
+    "stage1/cohere/lint/helpers/comments/for_file.ts",
+    "stage1/cohere/lint/helpers/comments/sort_by_position.ts",
+    "stage1/cohere/lint/helpers/core/append_node_signature.a",
+    "stage1/cohere/lint/helpers/core/append_tokens_between.a",
+    "stage1/cohere/lint/helpers/core/from_parser.a",
+    "stage1/cohere/lint/helpers/core/has_same_tokens.a",
+    "stage1/cohere/lint/helpers/core/is_empty_bracket_literal.a",
+    "stage1/cohere/lint/helpers/core/kind_number.a",
+    "stage1/cohere/lint/helpers/core/nodes.a",
+    "stage1/cohere/lint/helpers/core/token_signature.a",
+    "stage1/cohere/lint/helpers/ecmascript/text/best_match.a",
+    "stage1/cohere/lint/helpers/ecmascript/text/minimum_edit_distance.a",
+    "stage1/cohere/lint/helpers/ecmascript/text/runes.a",
+    "stage1/cohere/lint/helpers/imports/bindings_of.a",
+    "stage1/cohere/lint/helpers/imports/nodes.a",
+    "stage1/cohere/lint/helpers/jsx/ast.a",
+    "stage1/cohere/lint/helpers/jsx/attribute_name.a",
+    "stage1/cohere/lint/helpers/jsx/element_parts.a",
+    "stage1/cohere/lint/helpers/jsx/has_attribute_named.a",
+    "stage1/cohere/lint/helpers/jsx/intrinsic_element_named.a",
+    "stage1/cohere/lint/helpers/jsx/match_exactly.a",
+    "stage1/cohere/lint/helpers/module/has_export_modifier.a",
+    "stage1/cohere/lint/helpers/module/is_exported.a",
+    "stage1/cohere/lint/helpers/module/modifier_view.a",
+    "stage1/cohere/lint/helpers/module/node_view.a",
+    "stage1/cohere/lint/helpers/options_json.ts",
+    "stage1/cohere/lint/helpers/property_name.a",
+    "stage1/cohere/lint/helpers/react/component_base_name.a",
+    "stage1/cohere/lint/helpers/react/nodes.a",
+    "stage1/cohere/lint/helpers/react/projection.a",
+    "stage1/cohere/lint/helpers/react/react_component_base.a",
+    "stage1/cohere/lint/helpers/react/react_es6_component_class.a",
+    "stage1/cohere/lint/helpers/react/react_identifier_named.a",
+    "stage1/cohere/lint/helpers/rules-react/enclosing_function_of.a",
+    "stage1/cohere/lint/helpers/rules-react/has_valid_component_parameters.a",
+    "stage1/cohere/lint/helpers/rules-react/is_component_identifier_name.a",
+    "stage1/cohere/lint/helpers/rules-react/is_function_like.a",
+    "stage1/cohere/lint/helpers/rules-react/is_hook_identifier_name.a",
+    "stage1/cohere/lint/helpers/rules-react/is_non_node_expression.a",
+    "stage1/cohere/lint/helpers/rules-react/is_react_compiled_function.a",
+    "stage1/cohere/lint/helpers/rules-react/is_rest_parameter.a",
+    "stage1/cohere/lint/helpers/rules-react/is_top_level_compilation_candidate.a",
+    "stage1/cohere/lint/helpers/rules-react/mentions_ref.a",
+    "stage1/cohere/lint/helpers/rules-react/parameters_of.a",
+    "stage1/cohere/lint/helpers/rules-react/react_function_name_of.a",
+    "stage1/cohere/lint/helpers/rules-react/returns_non_node.a",
+    "stage1/cohere/lint/helpers/slot02_ast.a",
+    "stage1/cohere/lint/helpers/structure_file_context.a",
+    "stage1/cohere/lint/helpers/wave15/accessed_property/accessed_name.a",
+    "stage1/cohere/lint/lint.ts",
+    "stage1/cohere/lint/rules/adamic-no-type-predicate/messages.ts",
+    "stage1/cohere/lint/rules/adamic-no-type-predicate/rule.ts",
+    "stage1/cohere/lint/rules/base-boundary-no-global-container/messages.a",
+    "stage1/cohere/lint/rules/base-boundary-no-global-container/rule.a",
+    "stage1/cohere/lint/rules/base-consistency-no-console/messages.ts",
+    "stage1/cohere/lint/rules/base-consistency-no-console/rule.ts",
+    "stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/messages.a",
+    "stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/rule.a",
+    "stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/messages.a",
+    "stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/patterns.a",
+    "stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/rule.a",
+    "stage1/cohere/lint/rules/eqeqeq/messages.ts",
+    "stage1/cohere/lint/rules/eqeqeq/rule.ts",
+    "stage1/cohere/lint/rules/max-classes-per-file/messages.a",
+    "stage1/cohere/lint/rules/max-classes-per-file/rule.a",
+    "stage1/cohere/lint/rules/max-depth/messages.a",
+    "stage1/cohere/lint/rules/max-depth/options.a",
+    "stage1/cohere/lint/rules/max-depth/rule.a",
+    "stage1/cohere/lint/rules/max-nested-callbacks/messages.a",
+    "stage1/cohere/lint/rules/max-nested-callbacks/rule.a",
+    "stage1/cohere/lint/rules/next-no-sync-scripts/messages.a",
+    "stage1/cohere/lint/rules/next-no-sync-scripts/rule.a",
+    "stage1/cohere/lint/rules/next-no-typos/messages.a",
+    "stage1/cohere/lint/rules/next-no-typos/rule.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/abbreviation_vocabulary.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/bindings.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/messages.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/patterns.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/policy_data.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/helpers.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/messages.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/rule.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-enum/messages.ts",
+    "stage1/cohere/lint/rules/nexus-consistency-no-enum/rule.ts",
+    "stage1/cohere/lint/rules/nexus-consistency-no-for-in/messages.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-for-in/rule.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/messages.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/helpers.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/messages.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-shouting/messages.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-shouting/patterns.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-shouting/policy_data.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-shouting/rule.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_anchors.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_ranges.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/messages.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/trim.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/messages.a",
+    "stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/rule.a",
+    "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/messages.ts",
+    "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts",
+    "stage1/cohere/lint/rules/no-await-in-loop/messages.ts",
+    "stage1/cohere/lint/rules/no-await-in-loop/rule.ts",
+    "stage1/cohere/lint/rules/no-bitwise/messages.ts",
+    "stage1/cohere/lint/rules/no-bitwise/rule.ts",
+    "stage1/cohere/lint/rules/no-caller/messages.a",
+    "stage1/cohere/lint/rules/no-caller/rule.a",
+    "stage1/cohere/lint/rules/no-continue/messages.ts",
+    "stage1/cohere/lint/rules/no-continue/rule.ts",
+    "stage1/cohere/lint/rules/no-debugger/messages.ts",
+    "stage1/cohere/lint/rules/no-debugger/rule.ts",
+    "stage1/cohere/lint/rules/no-div-regex/messages.ts",
+    "stage1/cohere/lint/rules/no-div-regex/rule.ts",
+    "stage1/cohere/lint/rules/no-dupe-else-if/messages.a",
+    "stage1/cohere/lint/rules/no-dupe-else-if/rule.a",
+    "stage1/cohere/lint/rules/no-duplicate-case/messages.ts",
+    "stage1/cohere/lint/rules/no-duplicate-case/rule.ts",
+    "stage1/cohere/lint/rules/no-empty-character-class/escapes.a",
+    "stage1/cohere/lint/rules/no-empty-character-class/messages.a",
+    "stage1/cohere/lint/rules/no-empty-character-class/rule.a",
+    "stage1/cohere/lint/rules/no-empty-pattern/messages.a",
+    "stage1/cohere/lint/rules/no-empty-pattern/rule.a",
+    "stage1/cohere/lint/rules/no-empty-static-block/messages.a",
+    "stage1/cohere/lint/rules/no-empty-static-block/rule.a",
+    "stage1/cohere/lint/rules/no-empty/messages.ts",
+    "stage1/cohere/lint/rules/no-empty/rule.ts",
+    "stage1/cohere/lint/rules/no-ex-assign/messages.a",
+    "stage1/cohere/lint/rules/no-ex-assign/rule.a",
+    "stage1/cohere/lint/rules/no-iterator/messages.a",
+    "stage1/cohere/lint/rules/no-iterator/rule.a",
+    "stage1/cohere/lint/rules/no-labels/messages.ts",
+    "stage1/cohere/lint/rules/no-labels/rule.ts",
+    "stage1/cohere/lint/rules/no-multi-assign/messages.a",
+    "stage1/cohere/lint/rules/no-multi-assign/rule.a",
+    "stage1/cohere/lint/rules/no-negated-condition/messages.ts",
+    "stage1/cohere/lint/rules/no-negated-condition/rule.ts",
+    "stage1/cohere/lint/rules/no-new/messages.ts",
+    "stage1/cohere/lint/rules/no-new/rule.ts",
+    "stage1/cohere/lint/rules/no-octal-escape/messages.ts",
+    "stage1/cohere/lint/rules/no-octal-escape/rule.ts",
+    "stage1/cohere/lint/rules/no-plusplus/messages.ts",
+    "stage1/cohere/lint/rules/no-plusplus/rule.ts",
+    "stage1/cohere/lint/rules/no-proto/messages.a",
+    "stage1/cohere/lint/rules/no-proto/rule.a",
+    "stage1/cohere/lint/rules/no-prototype-builtins/messages.a",
+    "stage1/cohere/lint/rules/no-prototype-builtins/rule.a",
+    "stage1/cohere/lint/rules/no-redundant-type-constituents/context.a",
+    "stage1/cohere/lint/rules/no-redundant-type-constituents/messages.a",
+    "stage1/cohere/lint/rules/no-redundant-type-constituents/no_redundant_type_constituents.a",
+    "stage1/cohere/lint/rules/no-redundant-type-constituents/rule.a",
+    "stage1/cohere/lint/rules/no-return-assign/messages.ts",
+    "stage1/cohere/lint/rules/no-return-assign/rule.ts",
+    "stage1/cohere/lint/rules/no-script-url/messages.a",
+    "stage1/cohere/lint/rules/no-script-url/rule.a",
+    "stage1/cohere/lint/rules/no-self-compare/messages.a",
+    "stage1/cohere/lint/rules/no-self-compare/rule.a",
+    "stage1/cohere/lint/rules/no-sequences/messages.ts",
+    "stage1/cohere/lint/rules/no-sequences/rule.ts",
+    "stage1/cohere/lint/rules/no-sparse-arrays/messages.ts",
+    "stage1/cohere/lint/rules/no-sparse-arrays/rule.ts",
+    "stage1/cohere/lint/rules/no-template-curly-in-string/messages.ts",
+    "stage1/cohere/lint/rules/no-template-curly-in-string/rule.ts",
+    "stage1/cohere/lint/rules/no-underscore-dangle/rule.a",
+    "stage1/cohere/lint/rules/no-unexpected-multiline/messages.ts",
+    "stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts",
+    "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/rule.a",
+    "stage1/cohere/lint/rules/no-unneeded-ternary/messages.ts",
+    "stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts",
+    "stage1/cohere/lint/rules/no-unsafe-finally/messages.a",
+    "stage1/cohere/lint/rules/no-unsafe-finally/rule.a",
+    "stage1/cohere/lint/rules/no-unsafe-negation/rule.a",
+    "stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a",
+    "stage1/cohere/lint/rules/no-unused-labels/messages.a",
+    "stage1/cohere/lint/rules/no-unused-labels/rule.a",
+    "stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+    "stage1/cohere/lint/rules/no-useless-catch/messages.a",
+    "stage1/cohere/lint/rules/no-useless-catch/rule.a",
+    "stage1/cohere/lint/rules/no-useless-concat/messages.a",
+    "stage1/cohere/lint/rules/no-useless-concat/rule.a",
+    "stage1/cohere/lint/rules/no-useless-constructor/messages.ts",
+    "stage1/cohere/lint/rules/no-useless-constructor/rule.ts",
+    "stage1/cohere/lint/rules/no-useless-rename/messages.a",
+    "stage1/cohere/lint/rules/no-useless-rename/rule.a",
+    "stage1/cohere/lint/rules/no-var/messages.ts",
+    "stage1/cohere/lint/rules/no-var/rule.a",
+    "stage1/cohere/lint/rules/no-warning-comments/messages.ts",
+    "stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+    "stage1/cohere/lint/rules/no-with/messages.ts",
+    "stage1/cohere/lint/rules/no-with/rule.ts",
+    "stage1/cohere/lint/rules/operator-assignment/messages.a",
+    "stage1/cohere/lint/rules/operator-assignment/rule.a",
+    "stage1/cohere/lint/rules/prefer-destructuring/helpers.a",
+    "stage1/cohere/lint/rules/prefer-destructuring/messages.a",
+    "stage1/cohere/lint/rules/prefer-destructuring/rule.a",
+    "stage1/cohere/lint/rules/prefer-find/index.a",
+    "stage1/cohere/lint/rules/prefer-find/messages.a",
+    "stage1/cohere/lint/rules/prefer-find/rule.a",
+    "stage1/cohere/lint/rules/prefer-template/messages.ts",
+    "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "stage1/cohere/lint/rules/react-forward-ref-uses-ref/messages.ts",
+    "stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts",
+    "stage1/cohere/lint/rules/react-hooks-error-boundaries/messages.a",
+    "stage1/cohere/lint/rules/react-hooks-error-boundaries/rule.a",
+    "stage1/cohere/lint/rules/react-jsx-curly-brace-presence/messages.a",
+    "stage1/cohere/lint/rules/react-jsx-curly-brace-presence/rule.a",
+    "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/messages.ts",
+    "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts",
+    "stage1/cohere/lint/rules/react-no-find-dom-node/messages.ts",
+    "stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts",
+    "stage1/cohere/lint/rules/react-no-is-mounted/messages.ts",
+    "stage1/cohere/lint/rules/react-no-is-mounted/rule.ts",
+    "stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts",
+    "stage1/cohere/lint/rules/react-require-optimization/messages.a",
+    "stage1/cohere/lint/rules/react-require-optimization/rule.a",
+    "stage1/cohere/lint/rules/react-state-in-constructor/messages.a",
+    "stage1/cohere/lint/rules/react-state-in-constructor/rule.a",
+    "stage1/cohere/lint/rules/require-yield/messages.ts",
+    "stage1/cohere/lint/rules/require-yield/rule.ts",
+    "stage1/cohere/lint/rules/structure-network-no-direct-fetch/messages.a",
+    "stage1/cohere/lint/rules/structure-network-no-direct-fetch/rule.a",
+    "stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/messages.a",
+    "stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/rule.a",
+    "stage1/cohere/lint/rules/typescript-eslint-consistent-type-definitions/messages.a",
+    "stage1/cohere/lint/rules/typescript-eslint-consistent-type-definitions/rule.a",
+    "stage1/cohere/lint/rules/typescript-eslint-no-inferrable-types/messages.a",
+    "stage1/cohere/lint/rules/typescript-eslint-no-inferrable-types/rule.a",
+    "stage1/cohere/lint/rules/typescript-init-declarations/initializer.a",
+    "stage1/cohere/lint/rules/typescript-init-declarations/messages.a",
+    "stage1/cohere/lint/rules/typescript-init-declarations/rule.a",
+    "stage1/cohere/lint/rules/typescript-method-signature-style/messages.ts",
+    "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "stage1/cohere/lint/rules/typescript-no-import-type-side-effects/messages.a",
+    "stage1/cohere/lint/rules/typescript-no-import-type-side-effects/rule.a",
+    "stage1/cohere/lint/rules/typescript-no-this-alias/rule.a",
+    "stage1/cohere/lint/rules/typescript-no-useless-empty-export/messages.a",
+    "stage1/cohere/lint/rules/typescript-no-useless-empty-export/rule.a",
+    "stage1/cohere/lint/rules/typescript-no-wrapper-object-types/messages.ts",
+    "stage1/cohere/lint/rules/typescript-no-wrapper-object-types/rule.ts",
+    "stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/messages.ts",
+    "stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts",
+    "stage1/cohere/lint/rules/unicode-bom/messages.ts",
+    "stage1/cohere/lint/rules/unicode-bom/rule.ts",
+    "stage1/cohere/lint/rules/vars-on-top/messages.ts",
+    "stage1/cohere/lint/rules/vars-on-top/rule.ts",
+    "stage1/cohere/lint/settings.ts",
+    "stage1/cohere/lint/suggestions.a",
+    "stage1/cohere/lint/unicode.ts",
+    "stage1/cohere/mediaquery/index.ts",
+    "stage1/cohere/mediaquery/nodes.ts",
+    "stage1/cohere/mediaquery/parsers.ts",
+    "stage1/cohere/mediaquery/whitespace.ts",
+    "stage1/cohere/selector/nodes.ts",
+    "stage1/cohere/selector/parser.ts",
+    "stage1/cohere/selector/source.ts",
+    "stage1/cohere/selector/tokenize.ts",
+    "stage1/cohere/tsprinter/doc.ts",
+    "stage1/cohere/tsprinter/expressions.ts",
+    "stage1/cohere/tsprinter/files.ts",
+    "stage1/cohere/tsprinter/keys.ts",
+    "stage1/cohere/tsprinter/literals.ts",
+    "stage1/cohere/tsprinter/parentheses.ts",
+    "stage1/cohere/tsprinter/syntax.ts",
+    "stage1/cohere/tsprinter/width.ts",
+    "stage1/cohere/tsprinter/widthTables.ts",
+    "stage1/cohere/typeaware/diagnostic.ts",
+    "stage1/cohere/typeaware/facts.ts",
+    "stage1/cohere/typeaware/flags.ts",
+    "stage1/cohere/typeaware/frames.ts",
+    "stage1/cohere/typeaware/repair.ts",
+    "stage1/cohere/typeaware/suggestion.ts",
+    "stage1/cohere/typeaware/type_fact.ts",
+    "stage1/cohere/typeaware/types.ts",
+    "stage1/cohere/values/nodes.ts",
+    "stage1/cohere/values/parser.ts",
+    "stage1/cohere/values/tokenize.ts",
+    "stage1/cohere/values/values.ts",
+    "stage1/cohere/yaml/blockLine.ts",
+    "stage1/cohere/yaml/collectionItem.ts",
+    "stage1/cohere/yaml/composeError.ts",
+    "stage1/cohere/yaml/composedDocument.ts",
+    "stage1/cohere/yaml/composedNode.ts",
+    "stage1/cohere/yaml/composer.ts",
+    "stage1/cohere/yaml/cst.ts",
+    "stage1/cohere/yaml/cstParser.ts",
+    "stage1/cohere/yaml/directives.ts",
+    "stage1/cohere/yaml/format.ts",
+    "stage1/cohere/yaml/formatResult.ts",
+    "stage1/cohere/yaml/layout.ts",
+    "stage1/cohere/yaml/layoutCommand.ts",
+    "stage1/cohere/yaml/layoutIndent.ts",
+    "stage1/cohere/yaml/layoutNode.ts",
+    "stage1/cohere/yaml/lexer.ts",
+    "stage1/cohere/yaml/newlineFold.ts",
+    "stage1/cohere/yaml/patternNode.ts",
+    "stage1/cohere/yaml/printer.ts",
+    "stage1/cohere/yaml/props.ts",
+    "stage1/cohere/yaml/propsResolver.ts",
+    "stage1/cohere/yaml/scalar.ts",
+    "stage1/cohere/yaml/scalarResolution.ts",
+    "stage1/cohere/yaml/scalarText.ts",
+    "stage1/cohere/yaml/schemaPattern.ts",
+    "stage1/cohere/yaml/schemaTag.ts",
+    "stage1/cohere/yaml/schemaTags.ts",
+    "stage1/cohere/yaml/unistContext.ts",
+    "stage1/cohere/yaml/unistDocumentData.ts",
+    "stage1/cohere/yaml/unistNode.ts",
+    "stage1/cohere/yaml/unistPoint.ts",
+    "stage1/cohere/yaml/unistPosition.ts",
+    "stage1/cohere/yaml/width.ts",
+    "stage1/cohere/yaml/widthTables.ts",
+    "stage1/typescript/parser/grammar.ts",
+    "stage1/typescript/parser/jsx.ts",
+    "stage1/typescript/parser/lexical.ts",
+    "stage1/typescript/parser/lookahead.ts",
+    "stage1/typescript/parser/nodes.ts",
+    "stage1/typescript/parser/parser.ts",
+    "stage1/typescript/parser/recovery.ts",
+    "stage1/typescript/parser/spelling.ts",
+    "stage1/typescript/parser/statements.ts",
+    "stage1/typescript/scanner/characters.ts",
+    "stage1/typescript/scanner/scanner.ts",
+    "stage1/typescript/scanner/tokens.ts"
+  ],
+  "missing": [],
+  "duplicate_names": {
+    "CommandInterface": [
+      "stage1/cohere/graphql/printer/doc.ts:13",
+      "stage1/cohere/json/doc.ts:12",
+      "stage1/cohere/tsprinter/doc.ts:47"
+    ],
+    "Comment": [
+      "stage1/cohere/graphql/parser.ts:67",
+      "stage1/cohere/lint/helpers/comments/comment.ts:2"
+    ],
+    "CommentRange": [
+      "stage1/cohere/lint/comment_ranges.a:18",
+      "stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:21",
+      "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_ranges.a:18"
+    ],
+    "DocInterface": [
+      "stage1/cohere/graphql/printer/doc.ts:6",
+      "stage1/cohere/json/doc.ts:5",
+      "stage1/cohere/tsprinter/doc.ts:32"
+    ],
+    "Documents": [
+      "stage1/cohere/css/print_doc.ts:63",
+      "stage1/cohere/graphql/printer/doc.ts:30",
+      "stage1/cohere/json/doc.ts:18",
+      "stage1/cohere/tsprinter/doc.ts:62"
+    ],
+    "FormatResult": [
+      "stage1/cohere/css/print.ts:264",
+      "stage1/cohere/yaml/formatResult.ts:1"
+    ],
+    "HelperNode": [
+      "stage1/cohere/lint/helpers/imports/nodes.a:3",
+      "stage1/cohere/lint/helpers/jsx/ast.a:3",
+      "stage1/cohere/lint/helpers/react/nodes.a:1",
+      "stage1/cohere/lint/helpers/slot02_ast.a:3"
+    ],
+    "Lexer": [
+      "stage1/cohere/graphql/lexer.ts:740",
+      "stage1/cohere/yaml/lexer.ts:104"
+    ],
+    "Parsed": [
+      "stage1/cohere/css/parser.ts:673",
+      "stage1/cohere/values/parser.ts:38"
+    ],
+    "Parser": [
+      "stage1/cohere/css/parser.ts:47",
+      "stage1/cohere/graphql/parser.ts:146",
+      "stage1/cohere/selector/parser.ts:17",
+      "stage1/cohere/values/parser.ts:153",
+      "stage1/typescript/parser/parser.ts:42"
+    ],
+    "Position": [
+      "stage1/cohere/css/input.ts:5",
+      "stage1/cohere/values/nodes.ts:32"
+    ],
+    "Printer": [
+      "stage1/cohere/css/print.ts:14",
+      "stage1/cohere/graphql/printer/printer.ts:123",
+      "stage1/cohere/json/formatter.ts:202"
+    ],
+    "Result": [
+      "stage1/cohere/command/format.a:7",
+      "stage1/cohere/mediaquery/parsers.ts:26"
+    ],
+    "ResultType": [
+      "stage1/cohere/graphql/printer/printer.ts:642",
+      "stage1/cohere/tsprinter/expressions.ts:27"
+    ],
+    "Rule": [
+      "stage1/cohere/lint/rules/adamic-no-type-predicate/rule.ts:5",
+      "stage1/cohere/lint/rules/base-boundary-no-global-container/rule.a:5",
+      "stage1/cohere/lint/rules/base-consistency-no-console/rule.ts:6",
+      "stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/rule.a:5",
+      "stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/rule.a:6",
+      "stage1/cohere/lint/rules/eqeqeq/rule.ts:5",
+      "stage1/cohere/lint/rules/max-classes-per-file/rule.a:6",
+      "stage1/cohere/lint/rules/max-depth/rule.a:6",
+      "stage1/cohere/lint/rules/max-nested-callbacks/rule.a:5",
+      "stage1/cohere/lint/rules/next-no-sync-scripts/rule.a:10",
+      "stage1/cohere/lint/rules/next-no-typos/rule.a:5",
+      "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:327",
+      "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/rule.a:6",
+      "stage1/cohere/lint/rules/nexus-consistency-no-enum/rule.ts:5",
+      "stage1/cohere/lint/rules/nexus-consistency-no-for-in/rule.a:6",
+      "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a:99",
+      "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:189",
+      "stage1/cohere/lint/rules/nexus-consistency-no-shouting/rule.a:19",
+      "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.a:58",
+      "stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/rule.a:6",
+      "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts:5",
+      "stage1/cohere/lint/rules/no-await-in-loop/rule.ts:5",
+      "stage1/cohere/lint/rules/no-bitwise/rule.ts:40",
+      "stage1/cohere/lint/rules/no-caller/rule.a:5",
+      "stage1/cohere/lint/rules/no-continue/rule.ts:5",
+      "stage1/cohere/lint/rules/no-debugger/rule.ts:4",
+      "stage1/cohere/lint/rules/no-div-regex/rule.ts:6",
+      "stage1/cohere/lint/rules/no-dupe-else-if/rule.a:8",
+      "stage1/cohere/lint/rules/no-duplicate-case/rule.ts:20",
+      "stage1/cohere/lint/rules/no-empty-character-class/rule.a:7",
+      "stage1/cohere/lint/rules/no-empty-pattern/rule.a:6",
+      "stage1/cohere/lint/rules/no-empty-static-block/rule.a:5",
+      "stage1/cohere/lint/rules/no-empty/rule.ts:4",
+      "stage1/cohere/lint/rules/no-ex-assign/rule.a:5",
+      "stage1/cohere/lint/rules/no-iterator/rule.a:8",
+      "stage1/cohere/lint/rules/no-labels/rule.ts:9",
+      "stage1/cohere/lint/rules/no-multi-assign/rule.a:22",
+      "stage1/cohere/lint/rules/no-negated-condition/rule.ts:6",
+      "stage1/cohere/lint/rules/no-new/rule.ts:5",
+      "stage1/cohere/lint/rules/no-octal-escape/rule.ts:56",
+      "stage1/cohere/lint/rules/no-plusplus/rule.ts:6",
+      "stage1/cohere/lint/rules/no-proto/rule.a:5",
+      "stage1/cohere/lint/rules/no-prototype-builtins/rule.a:7",
+      "stage1/cohere/lint/rules/no-redundant-type-constituents/rule.a:5",
+      "stage1/cohere/lint/rules/no-return-assign/rule.ts:6",
+      "stage1/cohere/lint/rules/no-script-url/rule.a:5",
+      "stage1/cohere/lint/rules/no-self-compare/rule.a:5",
+      "stage1/cohere/lint/rules/no-sequences/rule.ts:6",
+      "stage1/cohere/lint/rules/no-sparse-arrays/rule.ts:6",
+      "stage1/cohere/lint/rules/no-template-curly-in-string/rule.ts:5",
+      "stage1/cohere/lint/rules/no-underscore-dangle/rule.a:4",
+      "stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts:77",
+      "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/rule.a:9",
+      "stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts:9",
+      "stage1/cohere/lint/rules/no-unsafe-finally/rule.a:10",
+      "stage1/cohere/lint/rules/no-unsafe-negation/rule.a:5",
+      "stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a:6",
+      "stage1/cohere/lint/rules/no-unused-labels/rule.a:6",
+      "stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:143",
+      "stage1/cohere/lint/rules/no-useless-catch/rule.a:5",
+      "stage1/cohere/lint/rules/no-useless-concat/rule.a:15",
+      "stage1/cohere/lint/rules/no-useless-constructor/rule.ts:129",
+      "stage1/cohere/lint/rules/no-useless-rename/rule.a:6",
+      "stage1/cohere/lint/rules/no-var/rule.a:4",
+      "stage1/cohere/lint/rules/no-warning-comments/rule.ts:48",
+      "stage1/cohere/lint/rules/no-with/rule.ts:5",
+      "stage1/cohere/lint/rules/operator-assignment/rule.a:10",
+      "stage1/cohere/lint/rules/prefer-destructuring/rule.a:7",
+      "stage1/cohere/lint/rules/prefer-find/rule.a:11",
+      "stage1/cohere/lint/rules/prefer-template/rule.ts:199",
+      "stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:113",
+      "stage1/cohere/lint/rules/react-hooks-error-boundaries/rule.a:5",
+      "stage1/cohere/lint/rules/react-jsx-curly-brace-presence/rule.a:92",
+      "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts:34",
+      "stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts:33",
+      "stage1/cohere/lint/rules/react-no-is-mounted/rule.ts:34",
+      "stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts:59",
+      "stage1/cohere/lint/rules/react-require-optimization/rule.a:10",
+      "stage1/cohere/lint/rules/react-state-in-constructor/rule.a:9",
+      "stage1/cohere/lint/rules/require-yield/rule.ts:5",
+      "stage1/cohere/lint/rules/structure-network-no-direct-fetch/rule.a:4",
+      "stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/rule.a:17",
+      "stage1/cohere/lint/rules/typescript-eslint-consistent-type-definitions/rule.a:10",
+      "stage1/cohere/lint/rules/typescript-eslint-no-inferrable-types/rule.a:88",
+      "stage1/cohere/lint/rules/typescript-init-declarations/rule.a:6",
+      "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts:12",
+      "stage1/cohere/lint/rules/typescript-no-import-type-side-effects/rule.a:8",
+      "stage1/cohere/lint/rules/typescript-no-this-alias/rule.a:8",
+      "stage1/cohere/lint/rules/typescript-no-useless-empty-export/rule.a:5",
+      "stage1/cohere/lint/rules/typescript-no-wrapper-object-types/rule.ts:5",
+      "stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts:9",
+      "stage1/cohere/lint/rules/unicode-bom/rule.ts:6",
+      "stage1/cohere/lint/rules/vars-on-top/rule.ts:5"
+    ],
+    "SettingsOptions": [
+      "stage1/cohere/graphql/printer/doc.ts:18",
+      "stage1/cohere/tsprinter/doc.ts:27"
+    ],
+    "Source": [
+      "stage1/cohere/selector/source.ts:1",
+      "stage1/cohere/values/nodes.ts:43"
+    ],
+    "Suggestion": [
+      "stage1/cohere/lint/suggestions.a:12",
+      "stage1/cohere/typeaware/suggestion.ts:2"
+    ],
+    "Token": [
+      "stage1/cohere/css/tokenize.ts:5",
+      "stage1/cohere/graphql/token.ts:45",
+      "stage1/cohere/selector/tokenize.ts:2",
+      "stage1/cohere/values/tokenize.ts:35",
+      "stage1/cohere/yaml/cst.ts:3"
+    ],
+    "TokenKind": [
+      "stage1/cohere/graphql/token.ts:13",
+      "stage1/cohere/values/tokenize.ts:17"
+    ],
+    "assignment": [
+      "stage1/cohere/lint/rules/no-multi-assign/rule.a:7",
+      "stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:2",
+      "stage1/cohere/lint/rules/typescript-no-this-alias/rule.a:4"
+    ],
+    "atEnd": [
+      "stage1/cohere/selector/tokenize.ts:22",
+      "stage1/cohere/values/tokenize.ts:77"
+    ],
+    "blank": [
+      "stage1/cohere/css/compose.ts:13",
+      "stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a:12"
+    ],
+    "child": [
+      "stage1/cohere/graphql/parser.ts:92",
+      "stage1/cohere/graphql/printer/printer.ts:13",
+      "stage1/cohere/lint/rules/typescript-eslint-no-inferrable-types/rule.a:132"
+    ],
+    "commentAnchors": [
+      "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a:62",
+      "stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:129"
+    ],
+    "comments": [
+      "stage1/cohere/lint/comment_ranges.a:36",
+      "stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:39",
+      "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_ranges.a:36"
+    ],
+    "concatenation": [
+      "stage1/cohere/lint/rules/no-useless-concat/rule.a:7",
+      "stage1/cohere/lint/rules/prefer-template/rule.ts:41"
+    ],
+    "contains": [
+      "stage1/cohere/lint/rules/prefer-template/rule.ts:47",
+      "stage1/cohere/tsprinter/keys.ts:187",
+      "stage1/cohere/typeaware/facts.ts:7",
+      "stage1/typescript/scanner/characters.ts:240"
+    ],
+    "create": [
+      "stage1/cohere/lint/rules/adamic-no-type-predicate/rule.ts:16",
+      "stage1/cohere/lint/rules/base-boundary-no-global-container/rule.a:24",
+      "stage1/cohere/lint/rules/base-consistency-no-console/rule.ts:30",
+      "stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/rule.a:40",
+      "stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/rule.a:43",
+      "stage1/cohere/lint/rules/eqeqeq/rule.ts:60",
+      "stage1/cohere/lint/rules/max-classes-per-file/rule.a:61",
+      "stage1/cohere/lint/rules/max-depth/rule.a:71",
+      "stage1/cohere/lint/rules/max-nested-callbacks/rule.a:86",
+      "stage1/cohere/lint/rules/next-no-sync-scripts/rule.a:38",
+      "stage1/cohere/lint/rules/next-no-typos/rule.a:36",
+      "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a:335",
+      "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/rule.a:24",
+      "stage1/cohere/lint/rules/nexus-consistency-no-enum/rule.ts:17",
+      "stage1/cohere/lint/rules/nexus-consistency-no-for-in/rule.a:17",
+      "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a:106",
+      "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:199",
+      "stage1/cohere/lint/rules/nexus-consistency-no-shouting/rule.a:54",
+      "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.a:68",
+      "stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/rule.a:28",
+      "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts:82",
+      "stage1/cohere/lint/rules/no-await-in-loop/rule.ts:72",
+      "stage1/cohere/lint/rules/no-bitwise/rule.ts:75",
+      "stage1/cohere/lint/rules/no-caller/rule.a:28",
+      "stage1/cohere/lint/rules/no-continue/rule.ts:16",
+      "stage1/cohere/lint/rules/no-debugger/rule.ts:29",
+      "stage1/cohere/lint/rules/no-div-regex/rule.ts:22",
+      "stage1/cohere/lint/rules/no-dupe-else-if/rule.a:68",
+      "stage1/cohere/lint/rules/no-duplicate-case/rule.ts:34",
+      "stage1/cohere/lint/rules/no-empty-character-class/rule.a:51",
+      "stage1/cohere/lint/rules/no-empty-pattern/rule.a:46",
+      "stage1/cohere/lint/rules/no-empty-static-block/rule.a:23",
+      "stage1/cohere/lint/rules/no-empty/rule.ts:44",
+      "stage1/cohere/lint/rules/no-ex-assign/rule.a:39",
+      "stage1/cohere/lint/rules/no-iterator/rule.a:34",
+      "stage1/cohere/lint/rules/no-labels/rule.ts:61",
+      "stage1/cohere/lint/rules/no-multi-assign/rule.a:54",
+      "stage1/cohere/lint/rules/no-negated-condition/rule.ts:42",
+      "stage1/cohere/lint/rules/no-new/rule.ts:19",
+      "stage1/cohere/lint/rules/no-octal-escape/rule.ts:66",
+      "stage1/cohere/lint/rules/no-plusplus/rule.ts:70",
+      "stage1/cohere/lint/rules/no-proto/rule.a:30",
+      "stage1/cohere/lint/rules/no-prototype-builtins/rule.a:46",
+      "stage1/cohere/lint/rules/no-redundant-type-constituents/rule.a:18",
+      "stage1/cohere/lint/rules/no-return-assign/rule.ts:71",
+      "stage1/cohere/lint/rules/no-script-url/rule.a:25",
+      "stage1/cohere/lint/rules/no-self-compare/rule.a:32",
+      "stage1/cohere/lint/rules/no-sequences/rule.ts:107",
+      "stage1/cohere/lint/rules/no-sparse-arrays/rule.ts:91",
+      "stage1/cohere/lint/rules/no-template-curly-in-string/rule.ts:35",
+      "stage1/cohere/lint/rules/no-underscore-dangle/rule.a:80",
+      "stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts:87",
+      "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/rule.a:190",
+      "stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts:232",
+      "stage1/cohere/lint/rules/no-unsafe-finally/rule.a:53",
+      "stage1/cohere/lint/rules/no-unsafe-negation/rule.a:27",
+      "stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a:70",
+      "stage1/cohere/lint/rules/no-unused-labels/rule.a:73",
+      "stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts:153",
+      "stage1/cohere/lint/rules/no-useless-catch/rule.a:54",
+      "stage1/cohere/lint/rules/no-useless-concat/rule.a:33",
+      "stage1/cohere/lint/rules/no-useless-constructor/rule.ts:139",
+      "stage1/cohere/lint/rules/no-useless-rename/rule.a:100",
+      "stage1/cohere/lint/rules/no-var/rule.a:33",
+      "stage1/cohere/lint/rules/no-warning-comments/rule.ts:248",
+      "stage1/cohere/lint/rules/no-with/rule.ts:17",
+      "stage1/cohere/lint/rules/operator-assignment/rule.a:145",
+      "stage1/cohere/lint/rules/prefer-destructuring/rule.a:63",
+      "stage1/cohere/lint/rules/prefer-find/rule.a:158",
+      "stage1/cohere/lint/rules/prefer-template/rule.ts:211",
+      "stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts:123",
+      "stage1/cohere/lint/rules/react-hooks-error-boundaries/rule.a:22",
+      "stage1/cohere/lint/rules/react-jsx-curly-brace-presence/rule.a:244",
+      "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts:44",
+      "stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts:43",
+      "stage1/cohere/lint/rules/react-no-is-mounted/rule.ts:44",
+      "stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts:69",
+      "stage1/cohere/lint/rules/react-require-optimization/rule.a:106",
+      "stage1/cohere/lint/rules/react-state-in-constructor/rule.a:39",
+      "stage1/cohere/lint/rules/require-yield/rule.ts:50",
+      "stage1/cohere/lint/rules/structure-network-no-direct-fetch/rule.a:21",
+      "stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/rule.a:104",
+      "stage1/cohere/lint/rules/typescript-eslint-consistent-type-definitions/rule.a:131",
+      "stage1/cohere/lint/rules/typescript-eslint-no-inferrable-types/rule.a:129",
+      "stage1/cohere/lint/rules/typescript-init-declarations/rule.a:67",
+      "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts:188",
+      "stage1/cohere/lint/rules/typescript-no-import-type-side-effects/rule.a:39",
+      "stage1/cohere/lint/rules/typescript-no-this-alias/rule.a:44",
+      "stage1/cohere/lint/rules/typescript-no-useless-empty-export/rule.a:42",
+      "stage1/cohere/lint/rules/typescript-no-wrapper-object-types/rule.ts:65",
+      "stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts:125",
+      "stage1/cohere/lint/rules/unicode-bom/rule.ts:29",
+      "stage1/cohere/lint/rules/vars-on-top/rule.ts:58"
+    ],
+    "decimal": [
+      "stage1/cohere/lint/rules/prefer-find/index.a:2",
+      "stage1/cohere/typeaware/frames.ts:3"
+    ],
+    "defaults": [
+      "stage1/cohere/css/print.ts:12",
+      "stage1/cohere/graphql/printer/doc.ts:24"
+    ],
+    "description": [
+      "stage1/cohere/lint/rules/eqeqeq/messages.ts:1",
+      "stage1/cohere/lint/rules/nexus-consistency-no-shouting/messages.a:2"
+    ],
+    "digit": [
+      "stage1/cohere/cssnumbers/numbers.ts:80",
+      "stage1/cohere/json/parser.ts:61",
+      "stage1/typescript/scanner/characters.ts:290"
+    ],
+    "emoji": [
+      "stage1/cohere/json/widthTables.ts:129",
+      "stage1/cohere/tsprinter/widthTables.ts:129",
+      "stage1/cohere/yaml/widthTables.ts:129"
+    ],
+    "emojiStart": [
+      "stage1/cohere/json/widthTables.ts:128",
+      "stage1/cohere/tsprinter/widthTables.ts:128",
+      "stage1/cohere/yaml/widthTables.ts:128"
+    ],
+    "field": [
+      "stage1/cohere/graphql/parser.ts:100",
+      "stage1/cohere/graphql/printer/printer.ts:7"
+    ],
+    "first": [
+      "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a:8",
+      "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/helpers.a:3"
+    ],
+    "flag": [
+      "stage1/cohere/graphql/parser.ts:87",
+      "stage1/cohere/graphql/printer/printer.ts:21"
+    ],
+    "flatten": [
+      "stage1/cohere/css/parse_value.ts:37",
+      "stage1/cohere/tsprinter/syntax.ts:94"
+    ],
+    "format": [
+      "stage1/cohere/command/format.a:40",
+      "stage1/cohere/css/print.ts:265",
+      "stage1/cohere/graphql/printer/printer.ts:644",
+      "stage1/cohere/json/formatter.ts:474",
+      "stage1/cohere/yaml/format.ts:8"
+    ],
+    "hasNewline": [
+      "stage1/cohere/css/print_utilities.ts:89",
+      "stage1/cohere/graphql/printer/printer.ts:82"
+    ],
+    "isBracedListKind": [
+      "stage1/cohere/lint/helpers/comments/collect_list_interiors.ts:32",
+      "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a:30",
+      "stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:110",
+      "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_anchors.a:25",
+      "stage1/cohere/lint/rules/no-warning-comments/rule.ts:28"
+    ],
+    "isDigit": [
+      "stage1/cohere/graphql/characterClasses.ts:20",
+      "stage1/cohere/values/parser.ts:61"
+    ],
+    "isParameterListKind": [
+      "stage1/cohere/lint/helpers/comments/collect_list_interiors.ts:12",
+      "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a:10",
+      "stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:90",
+      "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_anchors.a:5",
+      "stage1/cohere/lint/rules/no-warning-comments/rule.ts:8"
+    ],
+    "last": [
+      "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a:11",
+      "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/helpers.a:7"
+    ],
+    "leadingWhitespace": [
+      "stage1/cohere/graphql/blockString.ts:6",
+      "stage1/cohere/mediaquery/whitespace.ts:33"
+    ],
+    "lineIndex": [
+      "stage1/cohere/lint/comment_ranges.a:4",
+      "stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:7",
+      "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_ranges.a:4"
+    ],
+    "list": [
+      "stage1/cohere/graphql/parser.ts:96",
+      "stage1/cohere/graphql/printer/printer.ts:17"
+    ],
+    "mapped": [
+      "stage1/cohere/json/width.ts:4",
+      "stage1/cohere/tsprinter/width.ts:4",
+      "stage1/cohere/yaml/width.ts:4"
+    ],
+    "match": [
+      "stage1/cohere/json/width.ts:8",
+      "stage1/cohere/tsprinter/width.ts:8",
+      "stage1/cohere/yaml/width.ts:8"
+    ],
+    "message": [
+      "stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/messages.a:1",
+      "stage1/cohere/lint/rules/next-no-sync-scripts/messages.a:1",
+      "stage1/cohere/lint/rules/next-no-typos/messages.a:1",
+      "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/messages.a:1",
+      "stage1/cohere/lint/rules/no-prototype-builtins/messages.a:1",
+      "stage1/cohere/lint/rules/no-redundant-type-constituents/messages.a:2",
+      "stage1/cohere/lint/rules/prefer-find/messages.a:1",
+      "stage1/cohere/lint/rules/react-hooks-error-boundaries/messages.a:1",
+      "stage1/cohere/lint/rules/typescript-eslint-no-inferrable-types/messages.a:1",
+      "stage1/cohere/lint/rules/typescript-no-import-type-side-effects/messages.a:1",
+      "stage1/cohere/lint/rules/typescript-no-useless-empty-export/messages.a:1"
+    ],
+    "name": [
+      "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a:15",
+      "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/rule.a:5"
+    ],
+    "narrow": [
+      "stage1/cohere/css/print_doc.ts:6",
+      "stage1/cohere/json/widthTables.ts:1742",
+      "stage1/cohere/tsprinter/widthTables.ts:1742",
+      "stage1/cohere/yaml/widthTables.ts:1742"
+    ],
+    "narrowStart": [
+      "stage1/cohere/json/widthTables.ts:1741",
+      "stage1/cohere/tsprinter/widthTables.ts:1741",
+      "stage1/cohere/yaml/widthTables.ts:1741"
+    ],
+    "newline": [
+      "stage1/cohere/graphql/printer/printer.ts:76",
+      "stage1/cohere/values/tokenize.ts:63"
+    ],
+    "nextEmpty": [
+      "stage1/cohere/css/print_utilities.ts:94",
+      "stage1/cohere/graphql/printer/printer.ts:92"
+    ],
+    "noEdits": [
+      "stage1/cohere/lint/context.ts:12",
+      "stage1/cohere/lint/rules/no-iterator/rule.a:6"
+    ],
+    "numberText": [
+      "stage1/cohere/json/formatter.ts:10",
+      "stage1/cohere/tsprinter/literals.ts:2"
+    ],
+    "operators": [
+      "stage1/cohere/lint/rules/operator-assignment/rule.a:8",
+      "stage1/cohere/lint/rules/typescript-no-this-alias/rule.a:6",
+      "stage1/cohere/tsprinter/syntax.ts:24"
+    ],
+    "pair": [
+      "stage1/cohere/css/print_utilities.ts:66",
+      "stage1/cohere/yaml/cstParser.ts:6"
+    ],
+    "parse": [
+      "stage1/cohere/css/parser.ts:700",
+      "stage1/cohere/graphql/parser.ts:1257",
+      "stage1/cohere/mediaquery/index.ts:32",
+      "stage1/cohere/selector/parser.ts:403",
+      "stage1/cohere/values/values.ts:21"
+    ],
+    "parts": [
+      "stage1/cohere/lint/rules/typescript-eslint-no-inferrable-types/rule.a:136",
+      "stage1/cohere/yaml/directives.ts:3"
+    ],
+    "printable": [
+      "stage1/cohere/graphql/lexer.ts:28",
+      "stage1/cohere/lint/unicode.ts:1617"
+    ],
+    "quote": [
+      "stage1/cohere/lint/comments.ts:136",
+      "stage1/cohere/lint/rules/react-jsx-curly-brace-presence/rule.a:48",
+      "stage1/cohere/selector/nodes.ts:36"
+    ],
+    "reachableComments": [
+      "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a:123",
+      "stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a:192"
+    ],
+    "render": [
+      "stage1/cohere/css/nodes.ts:65",
+      "stage1/cohere/selector/nodes.ts:117"
+    ],
+    "report": [
+      "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a:9",
+      "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a:75"
+    ],
+    "source": [
+      "stage1/cohere/command/probe.a:6",
+      "stage1/cohere/css/location.ts:31"
+    ],
+    "space": [
+      "stage1/cohere/css/tokenize.ts:22",
+      "stage1/cohere/lint/comments.ts:15",
+      "stage1/cohere/lint/context.ts:65",
+      "stage1/cohere/values/tokenize.ts:64"
+    ],
+    "stringEnd": [
+      "stage1/cohere/cssnumbers/numbers.ts:140",
+      "stage1/cohere/cssstrings/strings.ts:39"
+    ],
+    "stringText": [
+      "stage1/cohere/json/formatter.ts:53",
+      "stage1/cohere/tsprinter/literals.ts:46"
+    ],
+    "stringWidth": [
+      "stage1/cohere/css/print_doc.ts:7",
+      "stage1/cohere/json/width.ts:69",
+      "stage1/cohere/tsprinter/width.ts:69",
+      "stage1/cohere/yaml/width.ts:112"
+    ],
+    "text": [
+      "stage1/cohere/graphql/parser.ts:83",
+      "stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/messages.a:2"
+    ],
+    "tokenStart": [
+      "stage1/cohere/lint/helpers/comments/collect_list_interiors.ts:6",
+      "stage1/cohere/lint/rules/prefer-template/rule.ts:5"
+    ],
+    "tokenize": [
+      "stage1/cohere/selector/tokenize.ts:64",
+      "stage1/cohere/values/tokenize.ts:197"
+    ],
+    "trim": [
+      "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a:49",
+      "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/helpers.a:19",
+      "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/trim.a:17",
+      "stage1/cohere/mediaquery/whitespace.ts:54"
+    ],
+    "whitespace": [
+      "stage1/cohere/json/parser.ts:46",
+      "stage1/cohere/lint/rules/react-jsx-curly-brace-presence/rule.a:10",
+      "stage1/cohere/selector/tokenize.ts:16",
+      "stage1/cohere/yaml/scalarText.ts:5"
+    ],
+    "wide": [
+      "stage1/cohere/json/width.ts:53",
+      "stage1/cohere/tsprinter/width.ts:53",
+      "stage1/cohere/yaml/width.ts:53"
+    ],
+    "wideRanges": [
+      "stage1/cohere/json/widthTables.ts:3",
+      "stage1/cohere/tsprinter/widthTables.ts:3",
+      "stage1/cohere/yaml/widthTables.ts:3"
+    ],
+    "word": [
+      "stage1/cohere/css/print_utilities.ts:63",
+      "stage1/cohere/lint/comments.ts:6"
+    ],
+    "wordEnd": [
+      "stage1/cohere/selector/tokenize.ts:38",
+      "stage1/cohere/values/tokenize.ts:98"
+    ],
+    "written": [
+      "stage1/cohere/graphql/lexer.ts:34",
+      "stage1/typescript/parser/nodes.ts:26"
+    ]
+  },
+  "byte_identical_modules": [
+    [
+      "stage1/cohere/json/width.ts",
+      "stage1/cohere/tsprinter/width.ts"
+    ],
+    [
+      "stage1/cohere/json/widthTables.ts",
+      "stage1/cohere/tsprinter/widthTables.ts",
+      "stage1/cohere/yaml/widthTables.ts"
+    ]
+  ],
+  "module_declarations": [
+    {
+      "site": "stage1/cohere/command/probe.a:6",
+      "declaration": "const source = 'debugger;';"
+    },
+    {
+      "site": "stage1/cohere/command/probe.a:7",
+      "declaration": "const parser = new Parser(source, 'probe.ts');"
+    },
+    {
+      "site": "stage1/cohere/command/probe.a:8",
+      "declaration": "const scanner = new Scanner(source);"
+    },
+    {
+      "site": "stage1/cohere/command/probe.a:9",
+      "declaration": "const lint = new Linter(source, parser, scanner, 'no-debugger', '', '', false, new Settings());"
+    },
+    {
+      "site": "stage1/cohere/command/probe.a:12",
+      "declaration": "const result = format('probe.json', '{}');"
+    },
+    {
+      "site": "stage1/cohere/css/print.ts:12",
+      "declaration": "export const defaults: PrintOptions = {width: 80, tabWidth: 2, tabs: false, single: false, trailingComma: 'all'};"
+    },
+    {
+      "site": "stage1/cohere/css/print.ts:13",
+      "declaration": "const knownUnits: readonly string[] = 'em rem ex rex cap rcap ch rch ic ric lh rlh vw svw lvw dvw vh svh lvh dvh vi svi lvi dvi vb svb lvb dvb vmin svmin lvmin dvmin vmax svmax lvmax dvmax cm mm q in pt pc px deg grad rad turn s ms hz khz dpi dpcm dppx x cqw cqh cqi cqb cqmin cqmax fr'.split(' ');"
+    },
+    {
+      "site": "stage1/cohere/css/print_doc.ts:5",
+      "declaration": "const emojis = new RegExp(emojiPatternSource, 'gu');"
+    },
+    {
+      "site": "stage1/cohere/css/print_doc.ts:6",
+      "declaration": "const narrow = new RegExp(narrowEmojiPatternSource, 'u');"
+    },
+    {
+      "site": "stage1/cohere/css/print_width_data.ts:2",
+      "declaration": "export const wideStarts: readonly number[] = [0x1100,0x231A,0x2329,0x23E9,0x23F0,0x23F3,0x25FD,0x2614,0x2630,0x2648,0x267F,0x268A,0x2693,0x26A1,0x26AA,0x26BD,0x26C4,0x26CE,0x26D4,0x26EA,0x26F2,0x26F5,0x26FA,0x26FD,0x2705,0x270A,0x2728,0x274C,0x274E,0x2753,0x2757,0x2795,0x27B0,0x27BF,0x2B1B,0x2B50,0x2B55,0x2E80,0x2E9B,0x2F00,0x2FF0,0x3041,0x3099,0x3105,0x3131,0x3190,0x31EF,0x3220,0x3250,0xA490,0xA960,0xAC00,0xF900,0xFE10,0xFE30,0xFE54,0xFE68,0xFF01,0xFFE0,0x16FE0,0x16FF0,0x17000,0x18CFF,0x18D80,0x1AFF0,0x1AFF5,0x1AFFD,0x1B000,0x1B132,0x1B150,0x1B155,0x1B164,0x1B170,0x1D300,0x1D360,0x1F004,0x1F0CF,0x1F18E,0x1F191,0x1F200,0x1F210,0x1F240,0x1F250,0x1F260,0x1F300,0x1F32D,0x1F337,0x1F37E,0x1F3A0,0x1F3CF,0x1F3E0,0x1F3F4,0x1F3F8,0x1F440,0x1F442,0x1F4FF,0x1F54B,0x1F550,0x1F57A,0x1F595,0x1F5A4,0x1F5FB,0x1F680,0x1F6CC,0x1F6D0,0x1F6D5,0x1F6DC,0x1F6EB,0x1F6F4,0x1F7E0,0x1F7F0,0x1F90C,0x1F93C,0x1F947,0x1FA70,0x1FA80,0x1FA8E,0x1FAC8,0x1FACD,0x1FADF,0x1FAEF,0x20000,0x30000];"
+    },
+    {
+      "site": "stage1/cohere/css/print_width_data.ts:3",
+      "declaration": "export const wideEnds: readonly number[] = [0x115F,0x231B,0x232A,0x23EC,0x23F0,0x23F3,0x25FE,0x2615,0x2637,0x2653,0x267F,0x268F,0x2693,0x26A1,0x26AB,0x26BE,0x26C5,0x26CE,0x26D4,0x26EA,0x26F3,0x26F5,0x26FA,0x26FD,0x2705,0x270B,0x2728,0x274C,0x274E,0x2755,0x2757,0x2797,0x27B0,0x27BF,0x2B1C,0x2B50,0x2B55,0x2E99,0x2EF3,0x2FD5,0x303E,0x3096,0x30FF,0x312F,0x318E,0x31E5,0x321E,0x3247,0xA48C,0xA4C6,0xA97C,0xD7A3,0xFAFF,0xFE19,0xFE52,0xFE66,0xFE6B,0xFF60,0xFFE6,0x16FE4,0x16FF6,0x18CD5,0x18D1E,0x18DF2,0x1AFF3,0x1AFFB,0x1AFFE,0x1B122,0x1B132,0x1B152,0x1B155,0x1B167,0x1B2FB,0x1D356,0x1D376,0x1F004,0x1F0CF,0x1F18E,0x1F19A,0x1F202,0x1F23B,0x1F248,0x1F251,0x1F265,0x1F320,0x1F335,0x1F37C,0x1F393,0x1F3CA,0x1F3D3,0x1F3F0,0x1F3F4,0x1F43E,0x1F440,0x1F4FC,0x1F53D,0x1F54E,0x1F567,0x1F57A,0x1F596,0x1F5A4,0x1F64F,0x1F6C5,0x1F6CC,0x1F6D2,0x1F6D8,0x1F6DF,0x1F6EC,0x1F6FC,0x1F7EB,0x1F7F0,0x1F93A,0x1F945,0x1F9FF,0x1FA7C,0x1FA8A,0x1FAC6,0x1FAC8,0x1FADC,0x1FAEA,0x1FAF8,0x2FFFD,0x3FFFD];"
+    },
+    {
+      "site": "stage1/cohere/css/print_width_data.ts:4",
+      "declaration": "export const emojiPatternSource = \"[#*0-9]\ufe0f?\u20e3|[\u00a9\u00ae\u203c\u2049\u2122\u2139\u2194-\u2199\u21a9\u21aa\u231a\u231b\u2328\u23cf\u23ed-\u23ef\u23f1\u23f2\u23f8-\u23fa\u24c2\u25aa\u25ab\u25b6\u25c0\u25fb\u25fc\u25fe\u2600-\u2604\u260e\u2611\u2614\u2615\u2618\u2620\u2622\u2623\u2626\u262a\u262e\u262f\u2638-\u263a\u2640\u2642\u2648-\u2653\u265f\u2660\u2663\u2665\u2666\u2668\u267b\u267e\u267f\u2692\u2694-\u2697\u2699\u269b\u269c\u26a0\u26a7\u26aa\u26b0\u26b1\u26bd\u26be\u26c4\u26c8\u26cf\u26d1\u26e9\u26f0-\u26f5\u26f7\u26f8\u26fa\u2702\u2708\u2709\u270f\u2712\u2714\u2716\u271d\u2721\u2733\u2734\u2744\u2747\u2757\u2763\u27a1\u2934\u2935\u2b05-\u2b07\u2b1b\u2b1c\u2b55\u3030\u303d\u3297\u3299]\ufe0f?|[\u261d\u270c\u270d](?:\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff]|\ufe0f)?|[\u270a\u270b](?:\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff])?|[\u23e9-\u23ec\u23f0\u23f3\u25fd\u2693\u26a1\u26ab\u26c5\u26ce\u26d4\u26ea\u26fd\u2705\u2728\u274c\u274e\u2753-\u2755\u2795-\u2797\u27b0\u27bf\u2b50]|\u26d3\ufe0f?(?:\u200d\udbc0\udc3d\udbc1\udca5)?|\u26f9(?:\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff]|\ufe0f)?(?:\u200d[\u2640\u2642]\ufe0f?)?|\u2764\ufe0f?(?:\u200d(?:\udbc0\udc3d\udbc1\udd25|\udbc0\udc3e\udbc1\ude79))?|\udbc0\udc3c(?:[\udbc1\udc04\udbc1\udd70\udbc1\udd71\udbc1\udd7e\udbc1\udd7f\udbc1\ude02\udbc1\ude37\udbc1\udf21\udbc1\udf24-\udbc1\udf2c\udbc1\udf36\udbc1\udf7d\udbc1\udf96\udbc1\udf97\udbc1\udf99-\udbc1\udf9b\udbc1\udf9e\udbc1\udf9f\udbc1\udfcd\udbc1\udfce\udbc1\udfd4-\udbc1\udfdf\udbc1\udff5\udbc1\udff7]\ufe0f?|[\udbc1\udf85\udbc1\udfc2\udbc1\udfc7](?:\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff])?|[\udbc1\udfc4\udbc1\udfca](?:\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff])?(?:\u200d[\u2640\u2642]\ufe0f?)?|[\udbc1\udfcb\udbc1\udfcc](?:\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff]|\ufe0f)?(?:\u200d[\u2640\u2642]\ufe0f?)?|[\udbc1\udccf\udbc1\udd8e\udbc1\udd91-\udbc1\udd9a\udbc1\ude01\udbc1\ude1a\udbc1\ude2f\udbc1\ude32-\udbc1\ude36\udbc1\ude38-\udbc1\ude3a\udbc1\ude50\udbc1\ude51\udbc1\udf00-\udbc1\udf20\udbc1\udf2d-\udbc1\udf35\udbc1\udf37-\udbc1\udf43\udbc1\udf45-\udbc1\udf4a\udbc1\udf4c-\udbc1\udf7c\udbc1\udf7e-\udbc1\udf84\udbc1\udf86-\udbc1\udf93\udbc1\udfa0-\udbc1\udfc1\udbc1\udfc5\udbc1\udfc6\udbc1\udfc8\udbc1\udfc9\udbc1\udfcf-\udbc1\udfd3\udbc1\udfe0-\udbc1\udff0\udbc1\udff8-\udbc1\udfff]|\udbc1\udde6\udbc0\udc3c[\udbc1\udde8-\udbc1\uddec\udbc1\uddee\udbc1\uddf1\udbc1\uddf2\udbc1\uddf4\udbc1\uddf6-\udbc1\uddfa\udbc1\uddfc\udbc1\uddfd\udbc1\uddff]|\udbc1\udde7\udbc0\udc3c[\udbc1\udde6\udbc1\udde7\udbc1\udde9-\udbc1\uddef\udbc1\uddf1-\udbc1\uddf4\udbc1\uddf6-\udbc1\uddf9\udbc1\uddfb\udbc1\uddfc\udbc1\uddfe\udbc1\uddff]|\udbc1\udde8\udbc0\udc3c[\udbc1\udde6\udbc1\udde8\udbc1\udde9\udbc1\uddeb-\udbc1\uddee\udbc1\uddf0-\udbc1\uddf7\udbc1\uddfa-\udbc1\uddff]|\udbc1\udde9\udbc0\udc3c[\udbc1\uddea\udbc1\uddec\udbc1\uddef\udbc1\uddf0\udbc1\uddf2\udbc1\uddf4\udbc1\uddff]|\udbc1\uddea\udbc0\udc3c[\udbc1\udde6\udbc1\udde8\udbc1\uddea\udbc1\uddec\udbc1\udded\udbc1\uddf7-\udbc1\uddfa]|\udbc1\uddeb\udbc0\udc3c[\udbc1\uddee-\udbc1\uddf0\udbc1\uddf2\udbc1\uddf4\udbc1\uddf7]|\udbc1\uddec\udbc0\udc3c[\udbc1\udde6\udbc1\udde7\udbc1\udde9-\udbc1\uddee\udbc1\uddf1-\udbc1\uddf3\udbc1\uddf5-\udbc1\uddfa\udbc1\uddfc\udbc1\uddfe]|\udbc1\udded\udbc0\udc3c[\udbc1\uddf0\udbc1\uddf2\udbc1\uddf3\udbc1\uddf7\udbc1\uddf9\udbc1\uddfa]|\udbc1\uddee\udbc0\udc3c[\udbc1\udde8-\udbc1\uddea\udbc1\uddf1-\udbc1\uddf4\udbc1\uddf6-\udbc1\uddf9]|\udbc1\uddef\udbc0\udc3c[\udbc1\uddea\udbc1\uddf2\udbc1\uddf4\udbc1\uddf5]|\udbc1\uddf0\udbc0\udc3c[\udbc1\uddea\udbc1\uddec-\udbc1\uddee\udbc1\uddf2\udbc1\uddf3\udbc1\uddf5\udbc1\uddf7\udbc1\uddfc\udbc1\uddfe\udbc1\uddff]|\udbc1\uddf1\udbc0\udc3c[\udbc1\udde6-\udbc1\udde8\udbc1\uddee\udbc1\uddf0\udbc1\uddf7-\udbc1\uddfb\udbc1\uddfe]|\udbc1\uddf2\udbc0\udc3c[\udbc1\udde6\udbc1\udde8-\udbc1\udded\udbc1\uddf0-\udbc1\uddff]|\udbc1\uddf3\udbc0\udc3c[\udbc1\udde6\udbc1\udde8\udbc1\uddea-\udbc1\uddec\udbc1\uddee\udbc1\uddf1\udbc1\uddf4\udbc1\uddf5\udbc1\uddf7\udbc1\uddfa\udbc1\uddff]|\udbc1\uddf4\udbc0\udc3c\udbc1\uddf2|\udbc1\uddf5\udbc0\udc3c[\udbc1\udde6\udbc1\uddea-\udbc1\udded\udbc1\uddf0-\udbc1\uddf3\udbc1\uddf7-\udbc1\uddf9\udbc1\uddfc\udbc1\uddfe]|\udbc1\uddf6\udbc0\udc3c\udbc1\udde6|\udbc1\uddf7\udbc0\udc3c[\udbc1\uddea\udbc1\uddf4\udbc1\uddf8\udbc1\uddfa\udbc1\uddfc]|\udbc1\uddf8\udbc0\udc3c[\udbc1\udde6-\udbc1\uddea\udbc1\uddec-\udbc1\uddf4\udbc1\uddf7-\udbc1\uddf9\udbc1\uddfb\udbc1\uddfd-\udbc1\uddff]|\udbc1\uddf9\udbc0\udc3c[\udbc1\udde6\udbc1\udde8\udbc1\udde9\udbc1\uddeb-\udbc1\udded\udbc1\uddef-\udbc1\uddf4\udbc1\uddf7\udbc1\uddf9\udbc1\uddfb\udbc1\uddfc\udbc1\uddff]|\udbc1\uddfa\udbc0\udc3c[\udbc1\udde6\udbc1\uddec\udbc1\uddf2\udbc1\uddf3\udbc1\uddf8\udbc1\uddfe\udbc1\uddff]|\udbc1\uddfb\udbc0\udc3c[\udbc1\udde6\udbc1\udde8\udbc1\uddea\udbc1\uddec\udbc1\uddee\udbc1\uddf3\udbc1\uddfa]|\udbc1\uddfc\udbc0\udc3c[\udbc1\uddeb\udbc1\uddf8]|\udbc1\uddfd\udbc0\udc3c\udbc1\uddf0|\udbc1\uddfe\udbc0\udc3c[\udbc1\uddea\udbc1\uddf9]|\udbc1\uddff\udbc0\udc3c[\udbc1\udde6\udbc1\uddf2\udbc1\uddfc]|\udbc1\udf44(?:\u200d\udbc0\udc3d\udbc1\udfeb)?|\udbc1\udf4b(?:\u200d\udbc0\udc3d\udbc1\udfe9)?|\udbc1\udfc3(?:\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff])?(?:\u200d(?:[\u2640\u2642]\ufe0f?(?:\u200d\u27a1\ufe0f?)?|\u27a1\ufe0f?))?|\udbc1\udff3\ufe0f?(?:\u200d(?:\u26a7\ufe0f?|\udbc0\udc3c\udbc1\udf08))?|\udbc1\udff4(?:\u200d\u2620\ufe0f?|\udbc0\udf40\udbc1\udc67\udbc0\udf40\udbc1\udc62\udbc0\udf40(?:\udbc1\udc65\udbc0\udf40\udbc1\udc6e\udbc0\udf40\udbc1\udc67|\udbc1\udc73\udbc0\udf40\udbc1\udc63\udbc0\udf40\udbc1\udc74|\udbc1\udc77\udbc0\udf40\udbc1\udc6c\udbc0\udf40\udbc1\udc73)\udbc0\udf40\udbc1\udc7f)?)|\udbc0\udc3d(?:[\udbc1\udc3f\udbc1\udcfd\udbc1\udd49\udbc1\udd4a\udbc1\udd6f\udbc1\udd70\udbc1\udd73\udbc1\udd76-\udbc1\udd79\udbc1\udd87\udbc1\udd8a-\udbc1\udd8d\udbc1\udda5\udbc1\udda8\udbc1\uddb1\udbc1\uddb2\udbc1\uddbc\udbc1\uddc2-\udbc1\uddc4\udbc1\uddd1-\udbc1\uddd3\udbc1\udddc-\udbc1\uddde\udbc1\udde1\udbc1\udde3\udbc1\udde8\udbc1\uddef\udbc1\uddf3\udbc1\uddfa\udbc1\udecb\udbc1\udecd-\udbc1\udecf\udbc1\udee0-\udbc1\udee5\udbc1\udee9\udbc1\udef0\udbc1\udef3]\ufe0f?|[\udbc1\udc42\udbc1\udc43\udbc1\udc46-\udbc1\udc50\udbc1\udc66\udbc1\udc67\udbc1\udc6b-\udbc1\udc6d\udbc1\udc72\udbc1\udc74-\udbc1\udc76\udbc1\udc78\udbc1\udc7c\udbc1\udc83\udbc1\udc85\udbc1\udc8f\udbc1\udc91\udbc1\udcaa\udbc1\udd7a\udbc1\udd95\udbc1\udd96\udbc1\ude4c\udbc1\ude4f\udbc1\udec0\udbc1\udecc](?:\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff])?|[\udbc1\udc6e-\udbc1\udc71\udbc1\udc73\udbc1\udc77\udbc1\udc81\udbc1\udc82\udbc1\udc86\udbc1\udc87\udbc1\ude45-\udbc1\ude47\udbc1\ude4b\udbc1\ude4d\udbc1\ude4e\udbc1\udea3\udbc1\udeb4\udbc1\udeb5](?:\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff])?(?:\u200d[\u2640\u2642]\ufe0f?)?|[\udbc1\udd74\udbc1\udd90](?:\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff]|\ufe0f)?|[\udbc1\udc00-\udbc1\udc07\udbc1\udc09-\udbc1\udc14\udbc1\udc16-\udbc1\udc25\udbc1\udc27-\udbc1\udc3a\udbc1\udc3c-\udbc1\udc3e\udbc1\udc40\udbc1\udc44\udbc1\udc45\udbc1\udc51-\udbc1\udc65\udbc1\udc6a\udbc1\udc79-\udbc1\udc7b\udbc1\udc7d-\udbc1\udc80\udbc1\udc84\udbc1\udc88-\udbc1\udc8e\udbc1\udc90\udbc1\udc92-\udbc1\udca9\udbc1\udcab-\udbc1\udcfc\udbc1\udcff-\udbc1\udd3d\udbc1\udd4b-\udbc1\udd4e\udbc1\udd50-\udbc1\udd67\udbc1\udda4\udbc1\uddfb-\udbc1\ude2d\udbc1\ude2f-\udbc1\ude34\udbc1\ude37-\udbc1\ude41\udbc1\ude43\udbc1\ude44\udbc1\ude48-\udbc1\ude4a\udbc1\ude80-\udbc1\udea2\udbc1\udea4-\udbc1\udeb3\udbc1\udeb7-\udbc1\udebf\udbc1\udec1-\udbc1\udec5\udbc1\uded0-\udbc1\uded2\udbc1\uded5-\udbc1\uded8\udbc1\udedc-\udbc1\udedf\udbc1\udeeb\udbc1\udeec\udbc1\udef4-\udbc1\udefc\udbc1\udfe0-\udbc1\udfeb\udbc1\udff0]|\udbc1\udc08(?:\u200d\u2b1b)?|\udbc1\udc15(?:\u200d\udbc0\udc3e\udbc1\uddba)?|\udbc1\udc26(?:\u200d(?:\u2b1b|\udbc0\udc3d\udbc1\udd25))?|\udbc1\udc3b(?:\u200d\u2744\ufe0f?)?|\udbc1\udc41\ufe0f?(?:\u200d\udbc0\udc3d\udbc1\udde8\ufe0f?)?|\udbc1\udc68(?:\u200d(?:[\u2695\u2696\u2708]\ufe0f?|\u2764\ufe0f?\u200d\udbc0\udc3d(?:\udbc1\udc8b\u200d\udbc0\udc3d)?\udbc1\udc68|\udbc0\udc3c[\udbc1\udf3e\udbc1\udf73\udbc1\udf7c\udbc1\udf93\udbc1\udfa4\udbc1\udfa8\udbc1\udfeb\udbc1\udfed]|\udbc0\udc3d(?:[\udbc1\udc68\udbc1\udc69]\u200d\udbc0\udc3d(?:\udbc1\udc66(?:\u200d\udbc0\udc3d\udbc1\udc66)?|\udbc1\udc67(?:\u200d\udbc0\udc3d[\udbc1\udc66\udbc1\udc67])?)|[\udbc1\udcbb\udbc1\udcbc\udbc1\udd27\udbc1\udd2c\udbc1\ude80\udbc1\ude92]|\udbc1\udc66(?:\u200d\udbc0\udc3d\udbc1\udc66)?|\udbc1\udc67(?:\u200d\udbc0\udc3d[\udbc1\udc66\udbc1\udc67])?)|\udbc0\udc3e(?:[\udbc1\uddaf\udbc1\uddbc\udbc1\uddbd](?:\u200d\u27a1\ufe0f?)?|[\udbc1\uddb0-\udbc1\uddb3]))|\udbc0\udc3c(?:\udbc1\udffb(?:\u200d(?:[\u2695\u2696\u2708]\ufe0f?|\u2764\ufe0f?\u200d\udbc0\udc3d(?:\udbc1\udc8b\u200d\udbc0\udc3d)?\udbc1\udc68\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff]|\udbc0\udc3c[\udbc1\udf3e\udbc1\udf73\udbc1\udf7c\udbc1\udf93\udbc1\udfa4\udbc1\udfa8\udbc1\udfeb\udbc1\udfed]|\udbc0\udc3d(?:[\udbc1\udcbb\udbc1\udcbc\udbc1\udd27\udbc1\udd2c\udbc1\ude80\udbc1\ude92]|\udbc1\udc30\u200d\udbc0\udc3d\udbc1\udc68\udbc0\udc3c[\udbc1\udffc-\udbc1\udfff])|\udbc0\udc3e(?:[\udbc1\udd1d\udbc1\udeef]\u200d\udbc0\udc3d\udbc1\udc68\udbc0\udc3c[\udbc1\udffc-\udbc1\udfff]|[\udbc1\uddaf\udbc1\uddbc\udbc1\uddbd](?:\u200d\u27a1\ufe0f?)?|[\udbc1\uddb0-\udbc1\uddb3])))?|\udbc1\udffc(?:\u200d(?:[\u2695\u2696\u2708]\ufe0f?|\u2764\ufe0f?\u200d\udbc0\udc3d(?:\udbc1\udc8b\u200d\udbc0\udc3d)?\udbc1\udc68\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff]|\udbc0\udc3c[\udbc1\udf3e\udbc1\udf73\udbc1\udf7c\udbc1\udf93\udbc1\udfa4\udbc1\udfa8\udbc1\udfeb\udbc1\udfed]|\udbc0\udc3d(?:[\udbc1\udcbb\udbc1\udcbc\udbc1\udd27\udbc1\udd2c\udbc1\ude80\udbc1\ude92]|\udbc1\udc30\u200d\udbc0\udc3d\udbc1\udc68\udbc0\udc3c[\udbc1\udffb\udbc1\udffd-\udbc1\udfff])|\udbc0\udc3e(?:[\udbc1\udd1d\udbc1\udeef]\u200d\udbc0\udc3d\udbc1\udc68\udbc0\udc3c[\udbc1\udffb\udbc1\udffd-\udbc1\udfff]|[\udbc1\uddaf\udbc1\uddbc\udbc1\uddbd](?:\u200d\u27a1\ufe0f?)?|[\udbc1\uddb0-\udbc1\uddb3])))?|\udbc1\udffd(?:\u200d(?:[\u2695\u2696\u2708]\ufe0f?|\u2764\ufe0f?\u200d\udbc0\udc3d(?:\udbc1\udc8b\u200d\udbc0\udc3d)?\udbc1\udc68\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff]|\udbc0\udc3c[\udbc1\udf3e\udbc1\udf73\udbc1\udf7c\udbc1\udf93\udbc1\udfa4\udbc1\udfa8\udbc1\udfeb\udbc1\udfed]|\udbc0\udc3d(?:[\udbc1\udcbb\udbc1\udcbc\udbc1\udd27\udbc1\udd2c\udbc1\ude80\udbc1\ude92]|\udbc1\udc30\u200d\udbc0\udc3d\udbc1\udc68\udbc0\udc3c[\udbc1\udffb\udbc1\udffc\udbc1\udffe\udbc1\udfff])|\udbc0\udc3e(?:[\udbc1\udd1d\udbc1\udeef]\u200d\udbc0\udc3d\udbc1\udc68\udbc0\udc3c[\udbc1\udffb\udbc1\udffc\udbc1\udffe\udbc1\udfff]|[\udbc1\uddaf\udbc1\uddbc\udbc1\uddbd](?:\u200d\u27a1\ufe0f?)?|[\udbc1\uddb0-\udbc1\uddb3])))?|\udbc1\udffe(?:\u200d(?:[\u2695\u2696\u2708]\ufe0f?|\u2764\ufe0f?\u200d\udbc0\udc3d(?:\udbc1\udc8b\u200d\udbc0\udc3d)?\udbc1\udc68\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff]|\udbc0\udc3c[\udbc1\udf3e\udbc1\udf73\udbc1\udf7c\udbc1\udf93\udbc1\udfa4\udbc1\udfa8\udbc1\udfeb\udbc1\udfed]|\udbc0\udc3d(?:[\udbc1\udcbb\udbc1\udcbc\udbc1\udd27\udbc1\udd2c\udbc1\ude80\udbc1\ude92]|\udbc1\udc30\u200d\udbc0\udc3d\udbc1\udc68\udbc0\udc3c[\udbc1\udffb-\udbc1\udffd\udbc1\udfff])|\udbc0\udc3e(?:[\udbc1\udd1d\udbc1\udeef]\u200d\udbc0\udc3d\udbc1\udc68\udbc0\udc3c[\udbc1\udffb-\udbc1\udffd\udbc1\udfff]|[\udbc1\uddaf\udbc1\uddbc\udbc1\uddbd](?:\u200d\u27a1\ufe0f?)?|[\udbc1\uddb0-\udbc1\uddb3])))?|\udbc1\udfff(?:\u200d(?:[\u2695\u2696\u2708]\ufe0f?|\u2764\ufe0f?\u200d\udbc0\udc3d(?:\udbc1\udc8b\u200d\udbc0\udc3d)?\udbc1\udc68\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff]|\udbc0\udc3c[\udbc1\udf3e\udbc1\udf73\udbc1\udf7c\udbc1\udf93\udbc1\udfa4\udbc1\udfa8\udbc1\udfeb\udbc1\udfed]|\udbc0\udc3d(?:[\udbc1\udcbb\udbc1\udcbc\udbc1\udd27\udbc1\udd2c\udbc1\ude80\udbc1\ude92]|\udbc1\udc30\u200d\udbc0\udc3d\udbc1\udc68\udbc0\udc3c[\udbc1\udffb-\udbc1\udffe])|\udbc0\udc3e(?:[\udbc1\udd1d\udbc1\udeef]\u200d\udbc0\udc3d\udbc1\udc68\udbc0\udc3c[\udbc1\udffb-\udbc1\udffe]|[\udbc1\uddaf\udbc1\uddbc\udbc1\uddbd](?:\u200d\u27a1\ufe0f?)?|[\udbc1\uddb0-\udbc1\uddb3])))?))?|\udbc1\udc69(?:\u200d(?:[\u2695\u2696\u2708]\ufe0f?|\u2764\ufe0f?\u200d\udbc0\udc3d(?:\udbc1\udc8b\u200d\udbc0\udc3d)?[\udbc1\udc68\udbc1\udc69]|\udbc0\udc3c[\udbc1\udf3e\udbc1\udf73\udbc1\udf7c\udbc1\udf93\udbc1\udfa4\udbc1\udfa8\udbc1\udfeb\udbc1\udfed]|\udbc0\udc3d(?:[\udbc1\udcbb\udbc1\udcbc\udbc1\udd27\udbc1\udd2c\udbc1\ude80\udbc1\ude92]|\udbc1\udc66(?:\u200d\udbc0\udc3d\udbc1\udc66)?|\udbc1\udc67(?:\u200d\udbc0\udc3d[\udbc1\udc66\udbc1\udc67])?|\udbc1\udc69\u200d\udbc0\udc3d(?:\udbc1\udc66(?:\u200d\udbc0\udc3d\udbc1\udc66)?|\udbc1\udc67(?:\u200d\udbc0\udc3d[\udbc1\udc66\udbc1\udc67])?))|\udbc0\udc3e(?:[\udbc1\uddaf\udbc1\uddbc\udbc1\uddbd](?:\u200d\u27a1\ufe0f?)?|[\udbc1\uddb0-\udbc1\uddb3]))|\udbc0\udc3c(?:\udbc1\udffb(?:\u200d(?:[\u2695\u2696\u2708]\ufe0f?|\u2764\ufe0f?\u200d\udbc0\udc3d(?:[\udbc1\udc68\udbc1\udc69]|\udbc1\udc8b\u200d\udbc0\udc3d[\udbc1\udc68\udbc1\udc69])\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff]|\udbc0\udc3c[\udbc1\udf3e\udbc1\udf73\udbc1\udf7c\udbc1\udf93\udbc1\udfa4\udbc1\udfa8\udbc1\udfeb\udbc1\udfed]|\udbc0\udc3d(?:[\udbc1\udcbb\udbc1\udcbc\udbc1\udd27\udbc1\udd2c\udbc1\ude80\udbc1\ude92]|\udbc1\udc30\u200d\udbc0\udc3d\udbc1\udc69\udbc0\udc3c[\udbc1\udffc-\udbc1\udfff])|\udbc0\udc3e(?:[\udbc1\uddaf\udbc1\uddbc\udbc1\uddbd](?:\u200d\u27a1\ufe0f?)?|[\udbc1\uddb0-\udbc1\uddb3]|\udbc1\udd1d\u200d\udbc0\udc3d[\udbc1\udc68\udbc1\udc69]\udbc0\udc3c[\udbc1\udffc-\udbc1\udfff]|\udbc1\udeef\u200d\udbc0\udc3d\udbc1\udc69\udbc0\udc3c[\udbc1\udffc-\udbc1\udfff])))?|\udbc1\udffc(?:\u200d(?:[\u2695\u2696\u2708]\ufe0f?|\u2764\ufe0f?\u200d\udbc0\udc3d(?:[\udbc1\udc68\udbc1\udc69]|\udbc1\udc8b\u200d\udbc0\udc3d[\udbc1\udc68\udbc1\udc69])\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff]|\udbc0\udc3c[\udbc1\udf3e\udbc1\udf73\udbc1\udf7c\udbc1\udf93\udbc1\udfa4\udbc1\udfa8\udbc1\udfeb\udbc1\udfed]|\udbc0\udc3d(?:[\udbc1\udcbb\udbc1\udcbc\udbc1\udd27\udbc1\udd2c\udbc1\ude80\udbc1\ude92]|\udbc1\udc30\u200d\udbc0\udc3d\udbc1\udc69\udbc0\udc3c[\udbc1\udffb\udbc1\udffd-\udbc1\udfff])|\udbc0\udc3e(?:[\udbc1\uddaf\udbc1\uddbc\udbc1\uddbd](?:\u200d\u27a1\ufe0f?)?|[\udbc1\uddb0-\udbc1\uddb3]|\udbc1\udd1d\u200d\udbc0\udc3d[\udbc1\udc68\udbc1\udc69]\udbc0\udc3c[\udbc1\udffb\udbc1\udffd-\udbc1\udfff]|\udbc1\udeef\u200d\udbc0\udc3d\udbc1\udc69\udbc0\udc3c[\udbc1\udffb\udbc1\udffd-\udbc1\udfff])))?|\udbc1\udffd(?:\u200d(?:[\u2695\u2696\u2708]\ufe0f?|\u2764\ufe0f?\u200d\udbc0\udc3d(?:[\udbc1\udc68\udbc1\udc69]|\udbc1\udc8b\u200d\udbc0\udc3d[\udbc1\udc68\udbc1\udc69])\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff]|\udbc0\udc3c[\udbc1\udf3e\udbc1\udf73\udbc1\udf7c\udbc1\udf93\udbc1\udfa4\udbc1\udfa8\udbc1\udfeb\udbc1\udfed]|\udbc0\udc3d(?:[\udbc1\udcbb\udbc1\udcbc\udbc1\udd27\udbc1\udd2c\udbc1\ude80\udbc1\ude92]|\udbc1\udc30\u200d\udbc0\udc3d\udbc1\udc69\udbc0\udc3c[\udbc1\udffb\udbc1\udffc\udbc1\udffe\udbc1\udfff])|\udbc0\udc3e(?:[\udbc1\uddaf\udbc1\uddbc\udbc1\uddbd](?:\u200d\u27a1\ufe0f?)?|[\udbc1\uddb0-\udbc1\uddb3]|\udbc1\udd1d\u200d\udbc0\udc3d[\udbc1\udc68\udbc1\udc69]\udbc0\udc3c[\udbc1\udffb\udbc1\udffc\udbc1\udffe\udbc1\udfff]|\udbc1\udeef\u200d\udbc0\udc3d\udbc1\udc69\udbc0\udc3c[\udbc1\udffb\udbc1\udffc\udbc1\udffe\udbc1\udfff])))?|\udbc1\udffe(?:\u200d(?:[\u2695\u2696\u2708]\ufe0f?|\u2764\ufe0f?\u200d\udbc0\udc3d(?:[\udbc1\udc68\udbc1\udc69]|\udbc1\udc8b\u200d\udbc0\udc3d[\udbc1\udc68\udbc1\udc69])\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff]|\udbc0\udc3c[\udbc1\udf3e\udbc1\udf73\udbc1\udf7c\udbc1\udf93\udbc1\udfa4\udbc1\udfa8\udbc1\udfeb\udbc1\udfed]|\udbc0\udc3d(?:[\udbc1\udcbb\udbc1\udcbc\udbc1\udd27\udbc1\udd2c\udbc1\ude80\udbc1\ude92]|\udbc1\udc30\u200d\udbc0\udc3d\udbc1\udc69\udbc0\udc3c[\udbc1\udffb-\udbc1\udffd\udbc1\udfff])|\udbc0\udc3e(?:[\udbc1\uddaf\udbc1\uddbc\udbc1\uddbd](?:\u200d\u27a1\ufe0f?)?|[\udbc1\uddb0-\udbc1\uddb3]|\udbc1\udd1d\u200d\udbc0\udc3d[\udbc1\udc68\udbc1\udc69]\udbc0\udc3c[\udbc1\udffb-\udbc1\udffd\udbc1\udfff]|\udbc1\udeef\u200d\udbc0\udc3d\udbc1\udc69\udbc0\udc3c[\udbc1\udffb-\udbc1\udffd\udbc1\udfff])))?|\udbc1\udfff(?:\u200d(?:[\u2695\u2696\u2708]\ufe0f?|\u2764\ufe0f?\u200d\udbc0\udc3d(?:[\udbc1\udc68\udbc1\udc69]|\udbc1\udc8b\u200d\udbc0\udc3d[\udbc1\udc68\udbc1\udc69])\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff]|\udbc0\udc3c[\udbc1\udf3e\udbc1\udf73\udbc1\udf7c\udbc1\udf93\udbc1\udfa4\udbc1\udfa8\udbc1\udfeb\udbc1\udfed]|\udbc0\udc3d(?:[\udbc1\udcbb\udbc1\udcbc\udbc1\udd27\udbc1\udd2c\udbc1\ude80\udbc1\ude92]|\udbc1\udc30\u200d\udbc0\udc3d\udbc1\udc69\udbc0\udc3c[\udbc1\udffb-\udbc1\udffe])|\udbc0\udc3e(?:[\udbc1\uddaf\udbc1\uddbc\udbc1\uddbd](?:\u200d\u27a1\ufe0f?)?|[\udbc1\uddb0-\udbc1\uddb3]|\udbc1\udd1d\u200d\udbc0\udc3d[\udbc1\udc68\udbc1\udc69]\udbc0\udc3c[\udbc1\udffb-\udbc1\udffe]|\udbc1\udeef\u200d\udbc0\udc3d\udbc1\udc69\udbc0\udc3c[\udbc1\udffb-\udbc1\udffe])))?))?|\udbc1\udd75(?:\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff]|\ufe0f)?(?:\u200d[\u2640\u2642]\ufe0f?)?|\udbc1\ude2e(?:\u200d\udbc0\udc3d\udbc1\udca8)?|\udbc1\ude35(?:\u200d\udbc0\udc3d\udbc1\udcab)?|\udbc1\ude36(?:\u200d\udbc0\udc3c\udbc1\udf2b\ufe0f?)?|\udbc1\ude42(?:\u200d[\u2194\u2195]\ufe0f?)?|\udbc1\udeb6(?:\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff])?(?:\u200d(?:[\u2640\u2642]\ufe0f?(?:\u200d\u27a1\ufe0f?)?|\u27a1\ufe0f?))?)|\udbc0\udc3e(?:[\udbc1\udd0c\udbc1\udd0f\udbc1\udd18-\udbc1\udd1f\udbc1\udd30-\udbc1\udd34\udbc1\udd36\udbc1\udd77\udbc1\uddb5\udbc1\uddb6\udbc1\uddbb\udbc1\uddd2\udbc1\uddd3\udbc1\uddd5\udbc1\udec3-\udbc1\udec5\udbc1\udef0\udbc1\udef2-\udbc1\udef8](?:\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff])?|[\udbc1\udd26\udbc1\udd35\udbc1\udd37-\udbc1\udd39\udbc1\udd3c-\udbc1\udd3e\udbc1\uddb8\udbc1\uddb9\udbc1\uddcd\udbc1\uddcf\udbc1\uddd4\udbc1\uddd6-\udbc1\udddd](?:\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff])?(?:\u200d[\u2640\u2642]\ufe0f?)?|[\udbc1\uddde\udbc1\udddf](?:\u200d[\u2640\u2642]\ufe0f?)?|[\udbc1\udd0d\udbc1\udd0e\udbc1\udd10-\udbc1\udd17\udbc1\udd20-\udbc1\udd25\udbc1\udd27-\udbc1\udd2f\udbc1\udd3a\udbc1\udd3f-\udbc1\udd45\udbc1\udd47-\udbc1\udd76\udbc1\udd78-\udbc1\uddb4\udbc1\uddb7\udbc1\uddba\udbc1\uddbc-\udbc1\uddcc\udbc1\uddd0\udbc1\udde0-\udbc1\uddff\udbc1\ude70-\udbc1\ude7c\udbc1\ude80-\udbc1\ude8a\udbc1\ude8e-\udbc1\udec2\udbc1\udec6\udbc1\udec8\udbc1\udecd-\udbc1\udedc\udbc1\udedf-\udbc1\udeea\udbc1\udeef]|\udbc1\uddce(?:\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff])?(?:\u200d(?:[\u2640\u2642]\ufe0f?(?:\u200d\u27a1\ufe0f?)?|\u27a1\ufe0f?))?|\udbc1\uddd1(?:\u200d(?:[\u2695\u2696\u2708]\ufe0f?|\udbc0\udc3c[\udbc1\udf3e\udbc1\udf73\udbc1\udf7c\udbc1\udf84\udbc1\udf93\udbc1\udfa4\udbc1\udfa8\udbc1\udfeb\udbc1\udfed]|\udbc0\udc3d[\udbc1\udcbb\udbc1\udcbc\udbc1\udd27\udbc1\udd2c\udbc1\ude80\udbc1\ude92]|\udbc0\udc3e(?:[\udbc1\uddaf\udbc1\uddbc\udbc1\uddbd](?:\u200d\u27a1\ufe0f?)?|[\udbc1\uddb0-\udbc1\uddb3\udbc1\ude70]|\udbc1\udd1d\u200d\udbc0\udc3e\udbc1\uddd1|\udbc1\uddd1\u200d\udbc0\udc3e\udbc1\uddd2(?:\u200d\udbc0\udc3e\udbc1\uddd2)?|\udbc1\uddd2(?:\u200d\udbc0\udc3e\udbc1\uddd2)?))|\udbc0\udc3c(?:\udbc1\udffb(?:\u200d(?:[\u2695\u2696\u2708]\ufe0f?|\u2764\ufe0f?\u200d(?:\udbc0\udc3d\udbc1\udc8b\u200d)?\udbc0\udc3e\udbc1\uddd1\udbc0\udc3c[\udbc1\udffc-\udbc1\udfff]|\udbc0\udc3c[\udbc1\udf3e\udbc1\udf73\udbc1\udf7c\udbc1\udf84\udbc1\udf93\udbc1\udfa4\udbc1\udfa8\udbc1\udfeb\udbc1\udfed]|\udbc0\udc3d(?:[\udbc1\udcbb\udbc1\udcbc\udbc1\udd27\udbc1\udd2c\udbc1\ude80\udbc1\ude92]|\udbc1\udc30\u200d\udbc0\udc3e\udbc1\uddd1\udbc0\udc3c[\udbc1\udffc-\udbc1\udfff])|\udbc0\udc3e(?:[\udbc1\uddaf\udbc1\uddbc\udbc1\uddbd](?:\u200d\u27a1\ufe0f?)?|[\udbc1\uddb0-\udbc1\uddb3\udbc1\ude70]|\udbc1\udd1d\u200d\udbc0\udc3e\udbc1\uddd1\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff]|\udbc1\udeef\u200d\udbc0\udc3e\udbc1\uddd1\udbc0\udc3c[\udbc1\udffc-\udbc1\udfff])))?|\udbc1\udffc(?:\u200d(?:[\u2695\u2696\u2708]\ufe0f?|\u2764\ufe0f?\u200d(?:\udbc0\udc3d\udbc1\udc8b\u200d)?\udbc0\udc3e\udbc1\uddd1\udbc0\udc3c[\udbc1\udffb\udbc1\udffd-\udbc1\udfff]|\udbc0\udc3c[\udbc1\udf3e\udbc1\udf73\udbc1\udf7c\udbc1\udf84\udbc1\udf93\udbc1\udfa4\udbc1\udfa8\udbc1\udfeb\udbc1\udfed]|\udbc0\udc3d(?:[\udbc1\udcbb\udbc1\udcbc\udbc1\udd27\udbc1\udd2c\udbc1\ude80\udbc1\ude92]|\udbc1\udc30\u200d\udbc0\udc3e\udbc1\uddd1\udbc0\udc3c[\udbc1\udffb\udbc1\udffd-\udbc1\udfff])|\udbc0\udc3e(?:[\udbc1\uddaf\udbc1\uddbc\udbc1\uddbd](?:\u200d\u27a1\ufe0f?)?|[\udbc1\uddb0-\udbc1\uddb3\udbc1\ude70]|\udbc1\udd1d\u200d\udbc0\udc3e\udbc1\uddd1\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff]|\udbc1\udeef\u200d\udbc0\udc3e\udbc1\uddd1\udbc0\udc3c[\udbc1\udffb\udbc1\udffd-\udbc1\udfff])))?|\udbc1\udffd(?:\u200d(?:[\u2695\u2696\u2708]\ufe0f?|\u2764\ufe0f?\u200d(?:\udbc0\udc3d\udbc1\udc8b\u200d)?\udbc0\udc3e\udbc1\uddd1\udbc0\udc3c[\udbc1\udffb\udbc1\udffc\udbc1\udffe\udbc1\udfff]|\udbc0\udc3c[\udbc1\udf3e\udbc1\udf73\udbc1\udf7c\udbc1\udf84\udbc1\udf93\udbc1\udfa4\udbc1\udfa8\udbc1\udfeb\udbc1\udfed]|\udbc0\udc3d(?:[\udbc1\udcbb\udbc1\udcbc\udbc1\udd27\udbc1\udd2c\udbc1\ude80\udbc1\ude92]|\udbc1\udc30\u200d\udbc0\udc3e\udbc1\uddd1\udbc0\udc3c[\udbc1\udffb\udbc1\udffc\udbc1\udffe\udbc1\udfff])|\udbc0\udc3e(?:[\udbc1\uddaf\udbc1\uddbc\udbc1\uddbd](?:\u200d\u27a1\ufe0f?)?|[\udbc1\uddb0-\udbc1\uddb3\udbc1\ude70]|\udbc1\udd1d\u200d\udbc0\udc3e\udbc1\uddd1\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff]|\udbc1\udeef\u200d\udbc0\udc3e\udbc1\uddd1\udbc0\udc3c[\udbc1\udffb\udbc1\udffc\udbc1\udffe\udbc1\udfff])))?|\udbc1\udffe(?:\u200d(?:[\u2695\u2696\u2708]\ufe0f?|\u2764\ufe0f?\u200d(?:\udbc0\udc3d\udbc1\udc8b\u200d)?\udbc0\udc3e\udbc1\uddd1\udbc0\udc3c[\udbc1\udffb-\udbc1\udffd\udbc1\udfff]|\udbc0\udc3c[\udbc1\udf3e\udbc1\udf73\udbc1\udf7c\udbc1\udf84\udbc1\udf93\udbc1\udfa4\udbc1\udfa8\udbc1\udfeb\udbc1\udfed]|\udbc0\udc3d(?:[\udbc1\udcbb\udbc1\udcbc\udbc1\udd27\udbc1\udd2c\udbc1\ude80\udbc1\ude92]|\udbc1\udc30\u200d\udbc0\udc3e\udbc1\uddd1\udbc0\udc3c[\udbc1\udffb-\udbc1\udffd\udbc1\udfff])|\udbc0\udc3e(?:[\udbc1\uddaf\udbc1\uddbc\udbc1\uddbd](?:\u200d\u27a1\ufe0f?)?|[\udbc1\uddb0-\udbc1\uddb3\udbc1\ude70]|\udbc1\udd1d\u200d\udbc0\udc3e\udbc1\uddd1\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff]|\udbc1\udeef\u200d\udbc0\udc3e\udbc1\uddd1\udbc0\udc3c[\udbc1\udffb-\udbc1\udffd\udbc1\udfff])))?|\udbc1\udfff(?:\u200d(?:[\u2695\u2696\u2708]\ufe0f?|\u2764\ufe0f?\u200d(?:\udbc0\udc3d\udbc1\udc8b\u200d)?\udbc0\udc3e\udbc1\uddd1\udbc0\udc3c[\udbc1\udffb-\udbc1\udffe]|\udbc0\udc3c[\udbc1\udf3e\udbc1\udf73\udbc1\udf7c\udbc1\udf84\udbc1\udf93\udbc1\udfa4\udbc1\udfa8\udbc1\udfeb\udbc1\udfed]|\udbc0\udc3d(?:[\udbc1\udcbb\udbc1\udcbc\udbc1\udd27\udbc1\udd2c\udbc1\ude80\udbc1\ude92]|\udbc1\udc30\u200d\udbc0\udc3e\udbc1\uddd1\udbc0\udc3c[\udbc1\udffb-\udbc1\udffe])|\udbc0\udc3e(?:[\udbc1\uddaf\udbc1\uddbc\udbc1\uddbd](?:\u200d\u27a1\ufe0f?)?|[\udbc1\uddb0-\udbc1\uddb3\udbc1\ude70]|\udbc1\udd1d\u200d\udbc0\udc3e\udbc1\uddd1\udbc0\udc3c[\udbc1\udffb-\udbc1\udfff]|\udbc1\udeef\u200d\udbc0\udc3e\udbc1\uddd1\udbc0\udc3c[\udbc1\udffb-\udbc1\udffe])))?))?|\udbc1\udef1(?:\udbc0\udc3c(?:\udbc1\udffb(?:\u200d\udbc0\udc3e\udbc1\udef2\udbc0\udc3c[\udbc1\udffc-\udbc1\udfff])?|\udbc1\udffc(?:\u200d\udbc0\udc3e\udbc1\udef2\udbc0\udc3c[\udbc1\udffb\udbc1\udffd-\udbc1\udfff])?|\udbc1\udffd(?:\u200d\udbc0\udc3e\udbc1\udef2\udbc0\udc3c[\udbc1\udffb\udbc1\udffc\udbc1\udffe\udbc1\udfff])?|\udbc1\udffe(?:\u200d\udbc0\udc3e\udbc1\udef2\udbc0\udc3c[\udbc1\udffb-\udbc1\udffd\udbc1\udfff])?|\udbc1\udfff(?:\u200d\udbc0\udc3e\udbc1\udef2\udbc0\udc3c[\udbc1\udffb-\udbc1\udffe])?))?)\";"
+    },
+    {
+      "site": "stage1/cohere/css/print_width_data.ts:5",
+      "declaration": "export const narrowEmojiPatternSource = \"^(?:[\u00a9\u00ae\u203c\u2049\u2122\u2139\u2194-\u2199\u21a9\u21aa\u2328\u23cf\u23ed-\u23ef\u23f1\u23f2\u23f8-\u23fa\u24c2\u25aa\u25ab\u25b6\u25c0\u25fb\u25fc\u2600-\u2604\u260e\u2611\u2618\u2620\u2622\u2623\u2626\u262a\u262e\u262f\u2638-\u263a\u2640\u2642\u265f\u2660\u2663\u2665\u2666\u2668\u267b\u267e\u2692\u2694-\u2697\u2699\u269b\u269c\u26a0\u26a7\u26b0\u26b1\u26c8\u26cf\u26d1\u26d3\u26e9\u26f0\u26f1\u26f4\u26f7\u26f8\u2702\u2708\u2709\u270f\u2712\u2714\u2716\u271d\u2721\u2733\u2734\u2744\u2747\u2763\u2764\u27a1\u2934\u2935\u2b05-\u2b07]|\udbc0\udc3c[\udbc1\udd70\udbc1\udd71\udbc1\udd7e\udbc1\udd7f\udbc1\udf21\udbc1\udf24-\udbc1\udf2c\udbc1\udf36\udbc1\udf7d\udbc1\udf96\udbc1\udf97\udbc1\udf99-\udbc1\udf9b\udbc1\udf9e\udbc1\udf9f\udbc1\udfcd\udbc1\udfce\udbc1\udfd4-\udbc1\udfdf\udbc1\udff3\udbc1\udff5\udbc1\udff7]|\udbc0\udc3d[\udbc1\udc3f\udbc1\udc41\udbc1\udcfd\udbc1\udd49\udbc1\udd4a\udbc1\udd6f\udbc1\udd70\udbc1\udd73\udbc1\udd76-\udbc1\udd79\udbc1\udd87\udbc1\udd8a-\udbc1\udd8d\udbc1\udda5\udbc1\udda8\udbc1\uddb1\udbc1\uddb2\udbc1\uddbc\udbc1\uddc2-\udbc1\uddc4\udbc1\uddd1-\udbc1\uddd3\udbc1\udddc-\udbc1\uddde\udbc1\udde1\udbc1\udde3\udbc1\udde8\udbc1\uddef\udbc1\uddf3\udbc1\uddfa\udbc1\udecb\udbc1\udecd-\udbc1\udecf\udbc1\udee0-\udbc1\udee5\udbc1\udee9\udbc1\udef0\udbc1\udef3])$\";"
+    },
+    {
+      "site": "stage1/cohere/graphql/lexer.ts:28",
+      "declaration": "const printable = ' !\"#$%&\\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\\\]^_`abcdefghijklmnopqrstuvwxyz{|}~';"
+    },
+    {
+      "site": "stage1/cohere/graphql/parser.ts:81",
+      "declaration": "const undefinedValue: Value = { kind: 'Undefined' };"
+    },
+    {
+      "site": "stage1/cohere/graphql/printer/doc.ts:24",
+      "declaration": "export const defaults: SettingsOptions = {"
+    },
+    {
+      "site": "stage1/cohere/graphql/printer/printer.ts:6",
+      "declaration": "const absent: Value = { kind: 'Undefined' };"
+    },
+    {
+      "site": "stage1/cohere/json/identifierTables.ts:2",
+      "declaration": "export const letters: readonly (readonly number[])[] = ["
+    },
+    {
+      "site": "stage1/cohere/json/identifierTables.ts:663",
+      "declaration": "export const continuations: readonly (readonly number[])[] = ["
+    },
+    {
+      "site": "stage1/cohere/json/widthTables.ts:3",
+      "declaration": "export const wideRanges: readonly (readonly number[])[] = ["
+    },
+    {
+      "site": "stage1/cohere/json/widthTables.ts:128",
+      "declaration": "export const emojiStart = 1469;"
+    },
+    {
+      "site": "stage1/cohere/json/widthTables.ts:129",
+      "declaration": "export const emoji: readonly (readonly number[])[] = ["
+    },
+    {
+      "site": "stage1/cohere/json/widthTables.ts:1741",
+      "declaration": "export const narrowStart = 1;"
+    },
+    {
+      "site": "stage1/cohere/json/widthTables.ts:1742",
+      "declaration": "export const narrow: readonly (readonly number[])[] = ["
+    },
+    {
+      "site": "stage1/cohere/lint/context.ts:12",
+      "declaration": "export const noEdits: readonly SuggestionEdit[] = [];"
+    },
+    {
+      "site": "stage1/cohere/lint/context.ts:13",
+      "declaration": "export const noSuggestions: readonly Suggestion[] = [];"
+    },
+    {
+      "site": "stage1/cohere/lint/helpers/core/kind_number.a:2",
+      "declaration": "const kinds: readonly string[] = ["
+    },
+    {
+      "site": "stage1/cohere/lint/helpers/property_name.a:4",
+      "declaration": "export const Named = 1;"
+    },
+    {
+      "site": "stage1/cohere/lint/helpers/property_name.a:5",
+      "declaration": "export const Quoted = 2;"
+    },
+    {
+      "site": "stage1/cohere/lint/helpers/property_name.a:6",
+      "declaration": "export const Templated = 4;"
+    },
+    {
+      "site": "stage1/cohere/lint/helpers/property_name.a:7",
+      "declaration": "export const Numeric = 8;"
+    },
+    {
+      "site": "stage1/cohere/lint/helpers/property_name.a:8",
+      "declaration": "export const Private = 16;"
+    },
+    {
+      "site": "stage1/cohere/lint/helpers/property_name.a:9",
+      "declaration": "export const Computed = 32;"
+    },
+    {
+      "site": "stage1/cohere/lint/helpers/property_name.a:10",
+      "declaration": "export const Static = 63;"
+    },
+    {
+      "site": "stage1/cohere/lint/helpers/property_name.a:11",
+      "declaration": "export const Textual = 3;"
+    },
+    {
+      "site": "stage1/cohere/lint/helpers/rules-react/is_hook_identifier_name.a:3",
+      "declaration": "const upperRanges: readonly { readonly lo: number; readonly hi: number; readonly stride: number }[] = ["
+    },
+    {
+      "site": "stage1/cohere/lint/helpers/wave15/accessed_property/accessed_name.a:10",
+      "declaration": "const propertyAccessKind = 213;"
+    },
+    {
+      "site": "stage1/cohere/lint/helpers/wave15/accessed_property/accessed_name.a:11",
+      "declaration": "const elementAccessKind = 214;"
+    },
+    {
+      "site": "stage1/cohere/lint/helpers/wave15/accessed_property/accessed_name.a:12",
+      "declaration": "const identifierKind = 79;"
+    },
+    {
+      "site": "stage1/cohere/lint/helpers/wave15/accessed_property/accessed_name.a:13",
+      "declaration": "const privateIdentifierKind = 80;"
+    },
+    {
+      "site": "stage1/cohere/lint/lint.ts:16",
+      "declaration": "const passBudget = 10;"
+    },
+    {
+      "site": "stage1/cohere/lint/lint.ts:17",
+      "declaration": "const passBudgetMessage = 'the pass budget was exhausted before the file converged';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/adamic-no-type-predicate/messages.ts:1",
+      "declaration": "export const messageTypePredicate ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/base-boundary-no-global-container/messages.a:1",
+      "declaration": "export const boundaryNoGlobalContainerMessage = \"Usage of 'getGlobalContainer' is not allowed.\";"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/messages.a:1",
+      "declaration": "export const message = \"Do not build a BaseError that names a declared failure. Call the tier that declares it: 'AccountModule.error(identifier, data, cause)', 'ApiWorker.error(...)', or 'Base.error(...)'. The status comes from the declaration, so writing it here is how one failure ends up answering two.\";"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/messages.a:1",
+      "declaration": "export const invalidName = \"A GraphQlArgument of PaginationInput type must be named \\\"pagination\\\", or end with \\\"Pagination\\\" when a query takes more than one paginator and the names have to be told apart. A caller reads the argument name to know which paginator it is driving, and a name outside that convention makes them guess.\";"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/max-classes-per-file/messages.a:2",
+      "declaration": "export const messageMaximum = 'File has too many classes (%d). Maximum allowed is %d. A file holding several classes makes the reader hold several vocabularies at once, and the import that names the file no longer says which one it wanted. Split them into a file each, named for the class.';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/max-depth/messages.a:1",
+      "declaration": "export const messageTooDeeply = \"Each level of nesting is another condition the reader has to hold in their head to know whether this line runs at all. Lift a branch into a named function, return early to flatten the happy path, or invert a condition so the exceptional case exits first.\";"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/max-nested-callbacks/messages.a:1",
+      "declaration": "export const messageExceed ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/next-no-sync-scripts/messages.a:1",
+      "declaration": "export const message = 'This <script> has a src and neither `async` nor `defer`, so the browser stops parsing the document, fetches the script, and runs it before continuing. Everything below it waits on the network. Add `defer` to run it after parsing, `async` if it does not depend on the document, or use the `Script` component from `next/script`.';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/abbreviation_vocabulary.a:22",
+      "declaration": "const capitals: string[] = vocabulary.map((entry) => capitalized(entry[0] ?? panic('word')));"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/policy_data.a:2",
+      "declaration": "export const vocabulary: string[][] = ["
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/policy_data.a:91",
+      "declaration": "export const allowedNames: string[] = ['URLSearchParams'];"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/policy_data.a:92",
+      "declaration": "export const allowedSegments: string[] = ['InnoDb'];"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/helpers.a:5",
+      "declaration": "export const singleLowercaseLetter = /^[a-z](?![\\s\\S])/u;"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/helpers.a:6",
+      "declaration": "const handlerNamePattern = /handle|on[A-Z]|event/iu;"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/helpers.a:7",
+      "declaration": "const eventHandlerKeyPattern = /^on[A-Z]/u;"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/messages.a:1",
+      "declaration": "export const messageNoUnderscore = \"Identifier \\\"_\\\" is not descriptive enough. Name it explicitly, or prefix an underscore to a real name such as \\\"_event\\\" when the point is that the value is deliberately unused.\";"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/rule.a:5",
+      "declaration": "const name = 'nexus/consistency-no-ambiguous-identifier';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-enum/messages.ts:1",
+      "declaration": "export const messageNoEnum ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-for-in/messages.a:1",
+      "declaration": "export const forInMessage = \"Iterate an object with `for (const [key, value] of Object.entries(object))`, or `Object.keys(object)` when only the key matters, rather than `for...in`. `for...in` walks the prototype chain, so it needs a guard to be correct, and a guard is a line someone forgets; it also hands back every key as a bare `string`, which is why these loops grow `key as keyof typeof object` casts to read the value. `Object.entries` returns own keys only, with the value already in hand, so there is nothing to guard and nothing to cast, and every loop over an object has one shape.\";"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/messages.a:2",
+      "declaration": "const description = \"{{tokens}} in a comment reads as shouting, and the register spreads: the next reader mirrors it, so emphasis on everything becomes emphasis on nothing. If it is code, put it in backticks. If it is a point, make it in a normal voice, and if the sentence needed the volume to land, it probably needed the reason instead.\";"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/patterns.a:2",
+      "declaration": "export const digitOrUnderscore = /[0-9_]/gu;"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/patterns.a:3",
+      "declaration": "export const vowel = /[AEIOUY]/gu;"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/patterns.a:4",
+      "declaration": "export const uppercaseToken = /\\b[A-Z][A-Z0-9_]*\\b/gu;"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/patterns.a:5",
+      "declaration": "export const fencedBlock = /```[\\s\\S]*?```/gu;"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/patterns.a:6",
+      "declaration": "export const inlineBackticks = /`[^`]*`/gu;"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/patterns.a:7",
+      "declaration": "export const doubleQuoted = /\"[^\"\\n]*\"/gu;"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/patterns.a:8",
+      "declaration": "export const singleQuotedToken = /'[A-Za-z0-9_.\\-\\/]+'/gu;"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/patterns.a:9",
+      "declaration": "export const singleQuotedCapitalPhrase = /'[A-Z0-9_][A-Z0-9_ .,:=\\-\\/]*[A-Z0-9_]'/gu;"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/patterns.a:10",
+      "declaration": "export const notNewline = /[^\\n]/gu;"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/patterns.a:11",
+      "declaration": "export const jsDocGutter = /^[ \\t\\n\\f\\r]*\\*?[ \\t\\n\\f\\r]?/gu;"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/patterns.a:12",
+      "declaration": "export const blockCommentGutter = /^[ \\t]*\\*(?: |\\t|(?![\\s\\S]))/gu;"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/patterns.a:13",
+      "declaration": "export const exampleTag = /^@example\\b/gu;"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/patterns.a:14",
+      "declaration": "export const anyJsDocTag = /^@\\w+/gu;"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/patterns.a:15",
+      "declaration": "export const commandLine = /^[ \\t\\n\\f\\r]*(\\$|ahra[ \\t\\n\\f\\r]|git[ \\t\\n\\f\\r]|pnpm[ \\t\\n\\f\\r]|npm[ \\t\\n\\f\\r]|sqlite3[ \\t\\n\\f\\r]|curl[ \\t\\n\\f\\r]|s[ \\t\\n\\f\\r]+c\\b)/gu;"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/patterns.a:16",
+      "declaration": "export const structureCommandStarter = /s[ \\t\\n\\f\\r]+c/gu;"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/policy_data.a:2",
+      "declaration": "export const allowedUppercaseTokens: readonly string[] = ["
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/policy_data.a:306",
+      "declaration": "export const currencyCodes: readonly string[] = ["
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/policy_data.a:393",
+      "declaration": "export const shoutedTwoLetterWords: readonly string[] = ["
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/messages.a:1",
+      "declaration": "export const messageUseSimpleComment ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/messages.a:2",
+      "declaration": "const text = '\"{{name}}.{{name}}\" stutters, which means the name is carrying nothing: it repeats the field instead of saying which {{name}} this is. Rename the value for what it holds, the type it came back as or whatever distinguishes it from another {{name}} in this scope, so a reader forty lines down does not have to find the declaration.';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-await-in-loop/messages.ts:1",
+      "declaration": "export const messageAwait ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-bitwise/messages.ts:1",
+      "declaration": "export const messageBitwise ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-continue/messages.ts:1",
+      "declaration": "export const messageContinue ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-debugger/messages.ts:1",
+      "declaration": "export const debuggerMessage ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-div-regex/messages.ts:1",
+      "declaration": "export const messageDivRegex ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-dupe-else-if/messages.a:1",
+      "declaration": "export const unexpected = \"This branch can never execute, because an earlier condition in the same if-else-if chain already covers it. The code inside is unreachable and nothing says so: it compiles, it type-checks, and it silently never runs, which usually means either the condition was meant to be different or the branch was meant to come first.\";"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-duplicate-case/messages.ts:1",
+      "declaration": "export const duplicateMessage ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-empty-character-class/messages.a:1",
+      "declaration": "export const messageEmptyCharacterClass ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-empty-pattern/messages.a:1",
+      "declaration": "export const messageEmptyObjectPattern ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-empty-pattern/messages.a:3",
+      "declaration": "export const messageEmptyArrayPattern ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-empty-static-block/messages.a:1",
+      "declaration": "export const messageUnexpectedEmptyStaticBlock ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-empty/messages.ts:1",
+      "declaration": "export const blockMessage ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-empty/messages.ts:4",
+      "declaration": "export const switchMessage ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-ex-assign/messages.a:1",
+      "declaration": "export const messageUnexpectedExceptionAssignment ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-iterator/messages.a:1",
+      "declaration": "export const messageNoIterator ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-iterator/messages.a:3",
+      "declaration": "export const messageUseSymbolIterator = 'Replace `__iterator__` with `[Symbol.iterator]`.';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-iterator/rule.a:6",
+      "declaration": "const noEdits: readonly SuggestionEdit[] = [];"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-labels/messages.ts:1",
+      "declaration": "export const messageUnexpectedLabel ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-labels/messages.ts:3",
+      "declaration": "export const messageUnexpectedLabelInBreak ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-labels/messages.ts:5",
+      "declaration": "export const messageUnexpectedLabelInContinue ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-multi-assign/messages.a:1",
+      "declaration": "export const messageNoMultiAssign ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-negated-condition/messages.ts:1",
+      "declaration": "export const messageNoNegatedCondition ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-new/messages.ts:1",
+      "declaration": "export const messageNew ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-octal-escape/messages.ts:2",
+      "declaration": "export const messageOctalEscape ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-proto/messages.a:1",
+      "declaration": "export const messageNoProto = \"This reads or writes `__proto__`, which reaches an object's prototype through a deprecated accessor. It is normative only for web compatibility, it is slow because writing it deoptimizes the object's shape, and on an object parsed from untrusted input it is the prototype pollution vector. Use `Object.getPrototypeOf` and `Object.setPrototypeOf`, or `Object.create(null)` for a map that has no prototype to reach.\";"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-prototype-builtins/messages.a:1",
+      "declaration": "export const message = \"This calls an `Object.prototype` method directly on an object that may not have inherited it. `Object.create(null)` produces objects with no prototype at all, and any object can carry a property that shadows the builtin, so parsed JSON like `{\\\"hasOwnProperty\\\": 1}` turns this call into a crash. Call it through the prototype instead: `Object.prototype.hasOwnProperty.call(target, key)`.\";"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-return-assign/messages.ts:1",
+      "declaration": "export const messageReturnAssignment ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-return-assign/messages.ts:4",
+      "declaration": "export const messageArrowAssignment ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-script-url/messages.a:1",
+      "declaration": "export const messageScriptUrl ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-self-compare/messages.a:1",
+      "declaration": "export const comparingToSelf ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-sequences/messages.ts:1",
+      "declaration": "export const messageUnexpectedCommaExpression ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-sparse-arrays/messages.ts:1",
+      "declaration": "export const messageSparse ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-template-curly-in-string/messages.ts:1",
+      "declaration": "export const messageTemplateCurly ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-unexpected-multiline/messages.ts:2",
+      "declaration": "export const messageUnexpectedMultilineDivision ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-unexpected-multiline/messages.ts:4",
+      "declaration": "export const messageUnexpectedMultilineFunction ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-unexpected-multiline/messages.ts:6",
+      "declaration": "export const messageUnexpectedMultilineProperty ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-unexpected-multiline/messages.ts:8",
+      "declaration": "export const messageUnexpectedMultilineTaggedTemplate ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/rule.a:8",
+      "declaration": "const ruleName = '@typescript-eslint/no-unnecessary-boolean-literal-compare';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-unneeded-ternary/messages.ts:1",
+      "declaration": "export const messageNoUnneededTernaryConditionalExpression ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-unneeded-ternary/messages.ts:3",
+      "declaration": "export const messageNoUnneededTernaryConditionalAssignment ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-unsafe-finally/messages.a:1",
+      "declaration": "export const messageUnsafeFinallyReturn ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-unsafe-finally/messages.a:3",
+      "declaration": "export const messageUnsafeFinallyThrow ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-unsafe-finally/messages.a:5",
+      "declaration": "export const messageUnsafeFinallyBreak ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-unsafe-finally/messages.a:7",
+      "declaration": "export const messageUnsafeFinallyContinue ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a:4",
+      "declaration": "const unsafe = 'This optional chain can evaluate to `undefined`, and the code around it then reaches into that `undefined` rather than short-circuiting with it. The `?.` protects only the links inside its own chain: once the chain ends, the result is an ordinary value and the next access, call, spread, or destructuring throws a TypeError. Either extend the chain so the whole expression short-circuits, or supply a fallback with `??`.';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a:5",
+      "declaration": "const arithmeticMessage = 'This optional chain can evaluate to `undefined`, and arithmetic on `undefined` produces NaN rather than throwing. So this does not fail where the value is missing, it silently poisons every number computed from it, and the NaN surfaces somewhere far from the cause. Supply a fallback with `??` before doing arithmetic on it.';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-unused-labels/messages.a:1",
+      "declaration": "export const messageUnusedLabel = 'This label is declared and nothing jumps to it. A label only does anything when a `break` or `continue` names it, so an unnamed one is dead syntax, and it is usually what is left over when the jump that used it was removed or rewritten.';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-useless-catch/messages.a:1",
+      "declaration": "export const messageUnnecessaryCatch ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-useless-catch/messages.a:3",
+      "declaration": "export const messageUnnecessaryCatchClause ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-useless-concat/messages.a:1",
+      "declaration": "export const messageUnexpectedConcat = 'These two literals are joined at runtime where the source could have written one literal. Nothing is computed between them, so the concatenation only adds an operator for a reader to follow and a chance for the two halves to drift apart.';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-useless-constructor/messages.ts:2",
+      "declaration": "export const messageNoUselessConstructor ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-useless-constructor/messages.ts:4",
+      "declaration": "export const messageNoUselessConstructorRemove = 'Remove the constructor, leaving the behaviour the class already had.';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-useless-rename/messages.a:1",
+      "declaration": "export const unnecessarilyRenamed = 'This renames a binding to the name it already had, so the rename does nothing and the longer spelling only invites a reader to look for a difference that is not there.';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-var/messages.ts:1",
+      "declaration": "export const varMessage ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/no-with/messages.ts:1",
+      "declaration": "export const messageWith ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/operator-assignment/rule.a:6",
+      "declaration": "const binaryKinds = ['AsteriskToken', 'AmpersandToken', 'CaretToken', 'BarToken', 'PlusToken', 'MinusToken', 'SlashToken', 'PercentToken', 'LessThanLessThanToken', 'GreaterThanGreaterThanToken', 'GreaterThanGreaterThanGreaterThanToken', 'AsteriskAsteriskToken'];"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/operator-assignment/rule.a:7",
+      "declaration": "const compoundKinds = ['AsteriskEqualsToken', 'AmpersandEqualsToken', 'CaretEqualsToken', 'BarEqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken', 'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken', 'GreaterThanGreaterThanGreaterThanEqualsToken', 'AsteriskAsteriskEqualsToken'];"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/operator-assignment/rule.a:8",
+      "declaration": "const operators = ['*', '&', '^', '|', '+', '-', '/', '%', '<<', '>>', '>>>', '**'];"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/prefer-destructuring/messages.a:1",
+      "declaration": "export const explanation = 'Pulling one name out of an object or array by hand repeats the name on both sides, so a rename touches two places and the two can drift. Destructuring writes it once.';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/prefer-find/index.a:2",
+      "declaration": "const decimal = /^[+-]?(?:[0-9](?:_?[0-9])*(?:\\.(?:[0-9](?:_?[0-9])*)?)?|\\.[0-9](?:_?[0-9])*)(?:[eE][+-]?[0-9](?:_?[0-9])*)?$/u;"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/prefer-find/index.a:3",
+      "declaration": "const hexadecimal = /^[+-]?0[xX]_?(?:[a-fA-F0-9](?:_?[a-fA-F0-9])*(?:\\.(?:[a-fA-F0-9](?:_?[a-fA-F0-9])*)?)?|\\.[a-fA-F0-9](?:_?[a-fA-F0-9])*)[pP][+-]?[0-9](?:_?[0-9])*$/u;"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/prefer-find/messages.a:1",
+      "declaration": "export const message = 'Prefer .find(...) instead of .filter(...)[0].';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/prefer-find/messages.a:2",
+      "declaration": "export const suggestionMessage = 'Use .find(...) instead of .filter(...)[0].';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/prefer-template/messages.ts:2",
+      "declaration": "export const messagePreferTemplateUnexpectedStringConcatenation ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/react-forward-ref-uses-ref/messages.ts:2",
+      "declaration": "export const messageForwardRefAddRefParameter = 'Add a `ref` parameter.';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/react-forward-ref-uses-ref/messages.ts:3",
+      "declaration": "export const messageForwardRefRemoveWrapper = 'Remove the `forwardRef` wrapper.';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/react-forward-ref-uses-ref/messages.ts:4",
+      "declaration": "export const messageForwardRefUsesRef ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/react-hooks-error-boundaries/messages.a:1",
+      "declaration": "export const message = \"This JSX is constructed inside a try block, which does not catch what the author almost certainly means to catch. Writing JSX builds a plain description object and renders nothing, so React runs the component later, long after this try has returned. The only errors this catch can see are the rare ones thrown while building the description itself, never the rendering errors the pattern is reaching for. Move the JSX out of the try and wrap the component in an error boundary, which is the mechanism that does catch errors during rendering.\";"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/react-jsx-curly-brace-presence/messages.a:2",
+      "declaration": "export const unnecessary = \"These curly braces wrap a plain string and do nothing. A JSX expression container exists to let a value cross from JavaScript into the markup; around a literal that the markup could hold directly it is a pair of braces the reader has to look past. Write the literal on its own.\";"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/react-jsx-curly-brace-presence/messages.a:3",
+      "declaration": "export const missing = \"This literal is written as bare markup where the surrounding code wraps its literals in an expression container. Written both ways in one file, the reader has to decide each time whether the difference means something. Wrap it.\";"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/messages.ts:2",
+      "declaration": "export const messageJsxNoCommentTextnodes ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/react-no-find-dom-node/messages.ts:2",
+      "declaration": "export const messageNoFindDOMNode ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/react-no-is-mounted/messages.ts:2",
+      "declaration": "export const messageNoIsMounted ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/react-require-optimization/messages.a:1",
+      "declaration": "export const messageNoShouldComponentUpdate = \"This class component re-renders whenever its parent does, even when nothing it displays has changed. React cannot know that on its own, so the component has to say so: add a `shouldComponentUpdate` method, or extend `React.PureComponent`, which compares props and state shallowly for you.\";"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/react-state-in-constructor/messages.a:1",
+      "declaration": "export const messageInConstructor = \"This component declares `state` as a class property while the configuration asks for state to be set up in the constructor. Both styles work; what costs the reader is a codebase that uses each in about half its components, because then finding where a component's initial state comes from means checking two places instead of one. Move the initial value into `this.state = ...` in the constructor.\";"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/react-state-in-constructor/messages.a:2",
+      "declaration": "export const messageClassProperty = \"This component assigns `this.state` in its constructor while the configuration asks for state to be declared as a class property. Both styles work; what costs the reader is a codebase that uses each in about half its components, because then finding where a component's initial state comes from means checking two places instead of one. Declare `state = ...` as a class property instead.\";"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/require-yield/messages.ts:1",
+      "declaration": "export const messageYield ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/structure-network-no-direct-fetch/messages.a:1",
+      "declaration": "export const noDirectFetchMessage = \"This calls `fetch` directly. Every network request goes through NetworkService instead, which is where retries, timeouts, error shaping, authentication headers and cache invalidation live. A direct call gets none of them and fails differently from every other request in the application, which is the kind of inconsistency that only shows up under a flaky connection. NetworkService.ts itself is exempt, since it is the one place the raw primitive is allowed.\";"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/typescript-eslint-consistent-type-definitions/messages.a:1",
+      "declaration": "export const messageConsistentTypeDefinitionsInterfaceOverType ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/typescript-eslint-consistent-type-definitions/messages.a:3",
+      "declaration": "export const messageConsistentTypeDefinitionsTypeOverInterface ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/typescript-method-signature-style/messages.ts:1",
+      "declaration": "export const messageMethodSignatureStyleErrorMethod ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/typescript-method-signature-style/messages.ts:4",
+      "declaration": "export const messageMethodSignatureStyleErrorProperty ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/typescript-method-signature-style/messages.ts:7",
+      "declaration": "export const messageMethodSignatureStyleConvertToMethod ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts:10",
+      "declaration": "const rule = '@typescript-eslint/method-signature-style';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/typescript-no-import-type-side-effects/messages.a:1",
+      "declaration": "export const message = \"Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.\";"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/typescript-no-import-type-side-effects/rule.a:1",
+      "declaration": "const emptyElements: readonly number[] = [];"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/typescript-no-this-alias/rule.a:4",
+      "declaration": "const assignment = 'This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/typescript-no-this-alias/rule.a:5",
+      "declaration": "const destructure = 'This pattern pulls members off `this` into local bindings. Each one is read once, at the moment of destructuring, so a later write to the property is invisible here, and a method taken this way has lost its receiver and throws when called. Read through `this` at the point of use instead.';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/typescript-no-this-alias/rule.a:6",
+      "declaration": "const operators = ['EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken', 'AsteriskAsteriskEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken', 'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken', 'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken', 'BarEqualsToken', 'CaretEqualsToken', 'BarBarEqualsToken', 'AmpersandAmpersandEqualsToken', 'QuestionQuestionEqualsToken'];"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/typescript-no-this-alias/rule.a:7",
+      "declaration": "const wrappers = ['ParenthesizedExpression', 'AsExpression', 'SatisfiesExpression', 'TypeAssertionExpression', 'NonNullExpression'];"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/typescript-no-useless-empty-export/messages.a:1",
+      "declaration": "export const message = 'An `export {}` exists to make a script into a module, and this file is already a module because something else in it imports or exports. The statement therefore changes nothing, and it reads as though it were load-bearing to anyone deciding whether they may delete it. Remove it.';"
+    },
+    {
+      "site": "stage1/cohere/lint/rules/typescript-no-wrapper-object-types/messages.ts:1",
+      "declaration": "export const messageBannedWrapperObjectType ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/messages.ts:1",
+      "declaration": "export const messagePreferLiteralEnumMemberNotLiteral ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/messages.ts:4",
+      "declaration": "export const messagePreferLiteralEnumMemberNotLiteralOrBitwise ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/unicode-bom/messages.ts:1",
+      "declaration": "export const messageUnicodeBomExpected ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/unicode-bom/messages.ts:3",
+      "declaration": "export const messageUnicodeBomUnexpected ="
+    },
+    {
+      "site": "stage1/cohere/lint/rules/vars-on-top/messages.ts:1",
+      "declaration": "export const messageVars ="
+    },
+    {
+      "site": "stage1/cohere/lint/unicode.ts:3",
+      "declaration": "const folds = new Map<number, number>(["
+    },
+    {
+      "site": "stage1/cohere/lint/unicode.ts:1524",
+      "declaration": "const unprintable: number[] = ["
+    },
+    {
+      "site": "stage1/cohere/mediaquery/parsers.ts:30",
+      "declaration": "export const errorReadingMode = \"Cannot read properties of undefined (reading 'mode')\";"
+    },
+    {
+      "site": "stage1/cohere/mediaquery/parsers.ts:34",
+      "declaration": "export const errorUnclosedUrl = 'postcss-media-query-parser never returns on an unclosed url(: its parentheses loop reads past the end forever';"
+    },
+    {
+      "site": "stage1/cohere/selector/parser.ts:10",
+      "declaration": "export const loopsForever ="
+    },
+    {
+      "site": "stage1/cohere/tsprinter/doc.ts:4",
+      "declaration": "const supportedKinds: readonly string[] = ["
+    },
+    {
+      "site": "stage1/cohere/tsprinter/keys.ts:2",
+      "declaration": "const keyStart: readonly number[] = ["
+    },
+    {
+      "site": "stage1/cohere/tsprinter/keys.ts:88",
+      "declaration": "const keyPart: readonly number[] = ["
+    },
+    {
+      "site": "stage1/cohere/tsprinter/syntax.ts:6",
+      "declaration": "export const assignmentOperators: readonly string[] = ["
+    },
+    {
+      "site": "stage1/cohere/tsprinter/syntax.ts:24",
+      "declaration": "const operators = new Map<string, string>(["
+    },
+    {
+      "site": "stage1/cohere/tsprinter/widthTables.ts:3",
+      "declaration": "export const wideRanges: readonly (readonly number[])[] = ["
+    },
+    {
+      "site": "stage1/cohere/tsprinter/widthTables.ts:128",
+      "declaration": "export const emojiStart = 1469;"
+    },
+    {
+      "site": "stage1/cohere/tsprinter/widthTables.ts:129",
+      "declaration": "export const emoji: readonly (readonly number[])[] = ["
+    },
+    {
+      "site": "stage1/cohere/tsprinter/widthTables.ts:1741",
+      "declaration": "export const narrowStart = 1;"
+    },
+    {
+      "site": "stage1/cohere/tsprinter/widthTables.ts:1742",
+      "declaration": "export const narrow: readonly (readonly number[])[] = ["
+    },
+    {
+      "site": "stage1/cohere/typeaware/flags.ts:2",
+      "declaration": "export const unionFlag = 134217728;"
+    },
+    {
+      "site": "stage1/cohere/typeaware/flags.ts:3",
+      "declaration": "export const intersectionFlag = 268435456;"
+    },
+    {
+      "site": "stage1/cohere/typeaware/flags.ts:4",
+      "declaration": "export const numberLike = 64 | 2048 | 65536;"
+    },
+    {
+      "site": "stage1/cohere/typeaware/flags.ts:5",
+      "declaration": "export const bigintLike = 128 | 4096;"
+    },
+    {
+      "site": "stage1/cohere/typeaware/flags.ts:6",
+      "declaration": "export const stringLike = 32 | 1024 | 4194304 | 8388608;"
+    },
+    {
+      "site": "stage1/cohere/typeaware/flags.ts:7",
+      "declaration": "export const booleanLike = 256 | 8192;"
+    },
+    {
+      "site": "stage1/cohere/typeaware/flags.ts:8",
+      "declaration": "export const nullish = 4 | 8;"
+    },
+    {
+      "site": "stage1/cohere/values/parser.ts:150",
+      "declaration": "const noChildren: readonly ValueTree[] = [];"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:48",
+      "declaration": "const openBracket = 0x7b; // {"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:49",
+      "declaration": "const closeBracket = 0x7d; // }"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:50",
+      "declaration": "const openParen = 0x28; // ("
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:51",
+      "declaration": "const closeParen = 0x29; // )"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:52",
+      "declaration": "const singleQuote = 0x27; // '"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:53",
+      "declaration": "const doubleQuote = 0x22; // \""
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:54",
+      "declaration": "const backslash = 0x5c; // \\"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:55",
+      "declaration": "const slash = 0x2f; // /"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:56",
+      "declaration": "const period = 0x2e; // ."
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:57",
+      "declaration": "const comma = 0x2c; // ,"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:58",
+      "declaration": "const colon = 0x3a; // :"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:59",
+      "declaration": "const asterisk = 0x2a; // *"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:60",
+      "declaration": "const minus = 0x2d; // -"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:61",
+      "declaration": "const plus = 0x2b; // +"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:62",
+      "declaration": "const pound = 0x23; // #"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:63",
+      "declaration": "const newline = 0x0a;"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:64",
+      "declaration": "const space = 0x20;"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:65",
+      "declaration": "const feed = 0x0c;"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:66",
+      "declaration": "const tab = 0x09;"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:67",
+      "declaration": "const cr = 0x0d;"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:68",
+      "declaration": "const at = 0x40; // @"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:69",
+      "declaration": "const lowerE = 0x65; // e"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:70",
+      "declaration": "const upperE = 0x45; // E"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:71",
+      "declaration": "const digit0 = 0x30;"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:72",
+      "declaration": "const digit9 = 0x39;"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:73",
+      "declaration": "const lowerU = 0x75; // u"
+    },
+    {
+      "site": "stage1/cohere/values/tokenize.ts:74",
+      "declaration": "const upperU = 0x55; // U"
+    },
+    {
+      "site": "stage1/cohere/yaml/composer.ts:15",
+      "declaration": "const coreTags = schemaTags('1.2');"
+    },
+    {
+      "site": "stage1/cohere/yaml/composer.ts:16",
+      "declaration": "const legacyTags = schemaTags('1.1');"
+    },
+    {
+      "site": "stage1/cohere/yaml/lexer.ts:7",
+      "declaration": "const ascii: readonly string[] = asciiCharacters();"
+    },
+    {
+      "site": "stage1/cohere/yaml/lexer.ts:97",
+      "declaration": "const hexDigits = '0123456789ABCDEFabcdef';"
+    },
+    {
+      "site": "stage1/cohere/yaml/lexer.ts:98",
+      "declaration": "const tagChars = \"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-#;/?:@&=+$_.!~*'()\";"
+    },
+    {
+      "site": "stage1/cohere/yaml/lexer.ts:99",
+      "declaration": "const flowIndicatorChars = ',[]{}';"
+    },
+    {
+      "site": "stage1/cohere/yaml/lexer.ts:100",
+      "declaration": "const invalidAnchorChars = ' ,[]{}\\n\\r\\t';"
+    },
+    {
+      "site": "stage1/cohere/yaml/width.ts:102",
+      "declaration": "const emojiFirst = emojiEntries();"
+    },
+    {
+      "site": "stage1/cohere/yaml/widthTables.ts:3",
+      "declaration": "export const wideRanges: readonly (readonly number[])[] = ["
+    },
+    {
+      "site": "stage1/cohere/yaml/widthTables.ts:128",
+      "declaration": "export const emojiStart = 1469;"
+    },
+    {
+      "site": "stage1/cohere/yaml/widthTables.ts:129",
+      "declaration": "export const emoji: readonly (readonly number[])[] = ["
+    },
+    {
+      "site": "stage1/cohere/yaml/widthTables.ts:1741",
+      "declaration": "export const narrowStart = 1;"
+    },
+    {
+      "site": "stage1/cohere/yaml/widthTables.ts:1742",
+      "declaration": "export const narrow: readonly (readonly number[])[] = ["
+    },
+    {
+      "site": "stage1/typescript/parser/grammar.ts:207",
+      "declaration": "const parameterKinds: readonly string[] = ["
+    },
+    {
+      "site": "stage1/typescript/parser/nodes.ts:38",
+      "declaration": "const printedDepths = '0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31'.split(' ');"
+    },
+    {
+      "site": "stage1/typescript/scanner/characters.ts:3",
+      "declaration": "const identifierStart: readonly number[] = ["
+    },
+    {
+      "site": "stage1/typescript/scanner/characters.ts:111",
+      "declaration": "const identifierPart: readonly number[] = ["
+    },
+    {
+      "site": "stage1/typescript/scanner/tokens.ts:2",
+      "declaration": "export const keywords = new Map<string, string>(["
+    },
+    {
+      "site": "stage1/typescript/scanner/tokens.ts:91",
+      "declaration": "export const punctuators = new Map<string, string>(["
+    }
+  ],
+  "go_var_blocks": [
+    {
+      "site": "cohere/command/cohere/content_pack.go:15",
+      "declaration": "var ("
+    },
+    {
+      "site": "cohere/command/cohere/content_pack.go:22",
+      "declaration": "var runCacheCheckStats *program.StatSnapshot"
+    },
+    {
+      "site": "cohere/command/cohere/coverage.go:50",
+      "declaration": "var coverageCategoryOrder = []coverageCategory{"
+    },
+    {
+      "site": "cohere/command/cohere/coverage.go:63",
+      "declaration": "var coverageCategoryTerms = map[coverageCategory]string{"
+    },
+    {
+      "site": "cohere/command/cohere/coverage.go:78",
+      "declaration": "var coverageCategoryMeanings = map[coverageCategory]string{"
+    },
+    {
+      "site": "cohere/command/cohere/coverage.go:201",
+      "declaration": "var noListenerReasons = map[rule.NoListenerKind]string{"
+    },
+    {
+      "site": "cohere/command/cohere/discovery.go:37",
+      "declaration": "var neverDescended = map[string]bool{"
+    },
+    {
+      "site": "cohere/command/cohere/discovery.go:97",
+      "declaration": "var newIgnoreScope = newGitignoreScope"
+    },
+    {
+      "site": "cohere/command/cohere/fix.go:348",
+      "declaration": "var errRelintRefused = errors.New(\"re-linting is left to the serial path\")"
+    },
+    {
+      "site": "cohere/command/cohere/fix.go:357",
+      "declaration": "var parallelFormatWorkers = func() int { return runtime.GOMAXPROCS(0) }"
+    },
+    {
+      "site": "cohere/command/cohere/footer.go:49",
+      "declaration": "var phaseGlyphs = map[phaseName]string{"
+    },
+    {
+      "site": "cohere/command/cohere/format_record.go:335",
+      "declaration": "var aheadFormatWalk *formatWalkAhead"
+    },
+    {
+      "site": "cohere/command/cohere/house_sets.go:89",
+      "declaration": "var errHouseSetsPerFile = errors.New(\"this project has no CohereSettings.json that names its sets, so which house sets \" +"
+    },
+    {
+      "site": "cohere/command/cohere/main.go:37",
+      "declaration": "var cacheOff bool"
+    },
+    {
+      "site": "cohere/command/cohere/main.go:42",
+      "declaration": "var processStart = time.Now()"
+    },
+    {
+      "site": "cohere/command/cohere/main.go:1575",
+      "declaration": "var ("
+    },
+    {
+      "site": "cohere/command/cohere/memory.go:31",
+      "declaration": "var activeMemoryPolicy = func() memoryPolicy {"
+    },
+    {
+      "site": "cohere/command/cohere/memory_windows.go:21",
+      "declaration": "var globalMemoryStatus = syscall.NewLazyDLL(\"kernel32.dll\").NewProc(\"GlobalMemoryStatusEx\")"
+    },
+    {
+      "site": "cohere/command/cohere/output_mode.go:39",
+      "declaration": "var activeOutput = outputSettings{Mode: outputHuman}"
+    },
+    {
+      "site": "cohere/command/cohere/output_mode.go:52",
+      "declaration": "var activeSummary runSummary"
+    },
+    {
+      "site": "cohere/command/cohere/outside_program.go:17",
+      "declaration": "var programExtensions = map[string]bool{"
+    },
+    {
+      "site": "cohere/command/cohere/ownership.go:355",
+      "declaration": "var activeProjectYield = sync.OnceValues(func() (projectYield, error) {"
+    },
+    {
+      "site": "cohere/command/cohere/phases.go:48",
+      "declaration": "var phaseOrder = []phaseName{phaseFix, phaseTypes, phaseLint, phaseUnused}"
+    },
+    {
+      "site": "cohere/command/cohere/phases.go:55",
+      "declaration": "var optInPhases = map[phaseName]bool{phaseUnused: true}"
+    },
+    {
+      "site": "cohere/command/cohere/profile.go:10",
+      "declaration": "var profileFile *os.File"
+    },
+    {
+      "site": "cohere/command/cohere/projects.go:98",
+      "declaration": "var discoveredListings *program.DirectoryListings"
+    },
+    {
+      "site": "cohere/command/cohere/readiness.go:41",
+      "declaration": "var adamicOptions = []struct {"
+    },
+    {
+      "site": "cohere/command/cohere/readiness.go:203",
+      "declaration": "var readinessLoaded = struct {"
+    },
+    {
+      "site": "cohere/command/cohere/readiness.go:218",
+      "declaration": "var adamicReadinessRequested bool"
+    },
+    {
+      "site": "cohere/command/cohere/run_cache.go:56",
+      "declaration": "var activeRunCache *runCacheSession"
+    },
+    {
+      "site": "cohere/command/cohere/run_cache.go:341",
+      "declaration": "var prepareCacheDirectoryOnce sync.Once"
+    },
+    {
+      "site": "cohere/command/cohere/run_cache.go:345",
+      "declaration": "var runCacheClock time.Time"
+    },
+    {
+      "site": "cohere/command/cohere/run_cache.go:663",
+      "declaration": "var signatureGraduationBudget = time.Second"
+    },
+    {
+      "site": "cohere/command/cohere/run_cache.go:806",
+      "declaration": "var invocationTag = []byte(\"\\x1ecohere-invocation\\x1e\")"
+    },
+    {
+      "site": "cohere/command/cohere/run_cache.go:856",
+      "declaration": "var provenanceTag = []byte(\"\\x1ecohere-provenance\\x1e\")"
+    },
+    {
+      "site": "cohere/command/cohere/run_cache.go:889",
+      "declaration": "var rootTag = []byte(\"\\x1ecohere-root\\x1e\")"
+    },
+    {
+      "site": "cohere/command/cohere/run_cache.go:1040",
+      "declaration": "var pendingTypes *typesRecord"
+    },
+    {
+      "site": "cohere/command/cohere/stdin.go:186",
+      "declaration": "var errStdinNeedsFix = errors.New(\"--stdin-filepath answers what --fix writes for one file: pass --fix, and --format to format\")"
+    },
+    {
+      "site": "cohere/command/cohere/swift_engine.go:26",
+      "declaration": "var swiftPassThroughSwitches = []string{"
+    },
+    {
+      "site": "cohere/command/cohere/swift_engine.go:36",
+      "declaration": "var swiftFrontDoorFlags = []string{"
+    },
+    {
+      "site": "cohere/command/cohere/swift_engine.go:42",
+      "declaration": "var swiftRefusals = map[string]string{"
+    },
+    {
+      "site": "cohere/command/cohere/swift_engine.go:84",
+      "declaration": "var swiftEnginePlatform = release.Target{GoOperatingSystem: runtime.GOOS, GoArchitecture: runtime.GOARCH}"
+    },
+    {
+      "site": "cohere/command/cohere/swift_records.go:181",
+      "declaration": "var swiftOutcomes = map[string]phaseOutcome{"
+    },
+    {
+      "site": "cohere/command/cohere/swift_records.go:511",
+      "declaration": "var swiftUnusedWords = map[string]struct{ section, noun string }{"
+    },
+    {
+      "site": "cohere/command/cohere/verdict.go:18",
+      "declaration": "var verdictFile = takeVerdictFile()"
+    },
+    {
+      "site": "cohere/command/cohere/verdict.go:56",
+      "declaration": "var verdictSent bool"
+    },
+    {
+      "site": "cohere/internal/format/native/markdown.go:17",
+      "declaration": "var embedDocs = sync.Pool{New: func() any {"
+    },
+    {
+      "site": "cohere/internal/format/native/native.go:48",
+      "declaration": "var ("
+    },
+    {
+      "site": "cohere/internal/format/native/native.go:82",
+      "declaration": "var embeddedFileNames = map[string]string{"
+    },
+    {
+      "site": "cohere/internal/format/native/native.go:100",
+      "declaration": "var embeddedParsers = map[string]string{"
+    },
+    {
+      "site": "cohere/internal/format/formatoptions/resolve.go:40",
+      "declaration": "var ErrPrettierConfigRemains = errors.New(\"Prettier config remains where cohere no longer reads it\")"
+    },
+    {
+      "site": "cohere/internal/format/formatoptions/resolve.go:44",
+      "declaration": "var prettierConfigFiles = []string{"
+    },
+    {
+      "site": "cohere/internal/format/formatoptions/resolve.go:192",
+      "declaration": "var chains = struct {"
+    },
+    {
+      "site": "cohere/internal/format/formatoptions/resolve.go:439",
+      "declaration": "var BlockKeys = []BlockKey{"
+    }
+  ]
+}
