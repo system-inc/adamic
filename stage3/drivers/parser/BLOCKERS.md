@@ -1,3 +1,28 @@
+# Main-based parser run: first checker stop, continuing discovery
+
+Fresh scratch uses origin/main ef3141e9 plus clean namespace 47a6fabe and enum
+reachability 2152fc3b merges, unpushed ca36518c. Library 51761b0, method-presence
+16cb9b10, predicates-2 0f722679, callable views 37fa06d3 and debugger 7d2cbc89
+were not ancestors; each conflicted and was aborted without resolutions.
+
+Compiler Go build exits 0. Both native split modes on the unchanged validated
+slice exit 1 in checking, before lowering/C/clang. First diagnostic:
+parser-proof-main.a:3:21 TS2591, Cannot find name 'node:fs'. Seven more diagnostics
+refer to NodeJS, require, perf_hooks, fs and process. Node API dependencies are
+installed, but this clean scratch has no Node-types loader implementation.
+
+Minimal native-node-fs-import.a prints `function\n` on Node, exit 0 and empty
+stderr; native build exits 1 with the same TS2591. No native parser binary or
+byte comparison is available. Initial split/off attempt times are 0.4690 and
+0.4681 seconds, not clang times; no warm-cache claim.
+
+[First-stop evidence](evidence/front30/first-stop.json) is pushed early as
+requested. Work continues: try front3 only because this stop needs its loader,
+and retain it only if the merge is clean. Discovery placeholders will remain
+in a separate uncommitted source copy; no adaptation or compiler edit.
+
+---
+
 # Restart from front-3: stopped on convention merge conflicts
 
 Fresh scratch started from front-3 0059e65c. Convention 22fd701a was not an
