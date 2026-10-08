@@ -1,1 +1,2 @@
-red: b1d058d87e89543dfb0e23a883f993a1bc8bc676 first failure at tests after 83.7 s (still running for triage)
+red: b1d058d87e89543dfb0e23a883f993a1bc8bc676 full gate, first failure at tests after 83.7 s (coverage=0.0s build=13.5s tools=0.1s vet=28.3s wasi=162.9s catalog=225.3s stage3=794.4s tests=1446.5s; 271 units over 30 s (33594 s, 209 on the burn-down, 62 drifted over)), 32 fail, 9885 pass
+stopped: stopped
