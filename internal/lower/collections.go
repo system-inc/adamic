@@ -49,7 +49,8 @@ func (l *lowering) iterated(node *ast.Node) (ir.Expression, ir.Type, error) {
 			}
 		}
 	}
-	if l.checker.IsArrayType(l.checker.GetTypeAtLocation(node)) {
+	_, arrayTuple := l.arrayTupleElement(l.checker.GetTypeAtLocation(node))
+	if arrayTuple || l.checker.IsArrayType(l.checker.GetTypeAtLocation(node)) {
 		element, err := l.elementType(node)
 		if err != nil {
 			return nil, 0, err

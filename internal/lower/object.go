@@ -255,6 +255,9 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 // elementType is the representation of an array's elements, from the checker's type for the node.
 func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	arrayType := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node))
+	if element, known := l.arrayTupleElement(arrayType); known {
+		return element, nil
+	}
 	if l.isLibraryType(arrayType, "RegExpExecArray", "RegExpMatchArray") {
 		return ir.String, nil
 	}
@@ -1842,6 +1845,9 @@ func (l *lowering) tupleType(node *ast.Node) *checker.Type {
 // made what its element's type holds. A literal with as many elements as its tuple has is lowered;
 // one leaving out an optional element, or spreading, is not yet.
 func (l *lowering) tupleLiteral(node *ast.Node, tuple *checker.Type) (ir.Expression, error) {
+	if element, known := l.arrayTupleElement(tuple); known {
+		return l.arrayTupleLiteral(node, tuple, element)
+	}
 	items := node.AsArrayLiteralExpression().Elements.Nodes
 	elements := l.checker.GetTypeArguments(tuple)
 	if len(items) > len(elements) {
@@ -1964,7 +1970,8 @@ func (l *lowering) tupleWhereArrayGoes(value *checker.Type, target *checker.Type
 	valueTuple, targetTuple := checker.IsTupleType(value), checker.IsTupleType(target)
 	switch {
 	case valueTuple && !targetTuple && l.checker.IsArrayType(target):
-		return true
+		_, known := l.arrayTupleElement(value)
+		return !known
 	case valueTuple && targetTuple:
 		return l.pairwiseTupleWhereArrayGoes(l.checker.GetTypeArguments(value), l.checker.GetTypeArguments(target), depth)
 	case l.checker.IsArrayType(value) && l.checker.IsArrayType(target):

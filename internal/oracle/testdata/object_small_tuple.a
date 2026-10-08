@@ -1,0 +1,26 @@
+enum Ending { A, B, C }
+function make(): [Ending, ...Ending[]] { return [Ending.A]; }
+function priorities(values: readonly [Ending, ...Ending[]]): string {
+ return `${values.length}:${values.indexOf(Ending.A)},${values.indexOf(Ending.B)},${values.indexOf(Ending.C)}`;
+}
+const values = make();
+console.log(priorities(values));
+console.log(String(values.push(Ending.B, Ending.C)));
+console.log(priorities(values));
+console.log(`${values[0]},${values[1] ?? -1},${values[8] ?? -1}`);
+const many: [Ending, ...Ending[]] = [Ending.C, Ending.B, Ending.A, Ending.C];
+console.log(priorities(many));
+console.log(String(many.indexOf(Ending.C, -1)));
+function text(values: readonly [string, ...string[]]): string { return `${values.length}:${values.indexOf("x")}`; }
+const words: [string, ...string[]] = ["x".repeat(1), "y".repeat(3)];
+console.log(text(words));
+console.log(String(words.push("x")));
+console.log(text(words));
+
+const arrayView: readonly Ending[] = values;
+console.log(String(arrayView.indexOf(Ending.C)));
+const copied = [Ending.C, ...values];
+console.log(copied.join(","));
+let total = 0;
+for (const value of values) total += value;
+console.log(String(total));

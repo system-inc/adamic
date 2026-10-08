@@ -29,6 +29,9 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	proven = l.concrete(proven)
+	if _, known := l.arrayTupleElement(proven); known {
+		return ir.Array, true
+	}
 	if kind := l.typedArrayKind(proven); kind != 0 {
 		return kind, true
 	}
@@ -272,7 +275,9 @@ func (l *lowering) tupleSeenAsArray(from *checker.Type, to *checker.Type, visite
 	}
 	visited[[2]*checker.Type{from, to}] = true
 	if checker.IsTupleType(from) && !checker.IsTupleType(to) {
-		return from, to
+		if _, known := l.arrayTupleElement(from); !known {
+			return from, to
+		}
 	}
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
@@ -292,7 +297,9 @@ func (l *lowering) tupleSeenAsArray(from *checker.Type, to *checker.Type, visite
 	case from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.checker.IsArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")):
 		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
 		if checker.IsTupleType(from) && l.checker.IsArrayType(to) {
-			return from, to
+			if _, known := l.arrayTupleElement(from); !known {
+				return from, to
+			}
 		}
 		for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
 			if tuple, array := l.tupleSeenAsArray(fromArguments[index], toArguments[index], visited); tuple != nil {
