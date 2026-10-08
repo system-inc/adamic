@@ -21,7 +21,20 @@ func (l *lowering) lowerOptionalCall(node *ast.Node, discarded bool) (ir.Express
 	if callee.Kind == ast.KindPropertyAccessExpression {
 		property := callee.AsPropertyAccessExpression()
 		if property.QuestionDotToken == nil && property.Expression.Flags&ast.NodeFlagsOptionalChain != 0 {
-			return nil, true, l.notYet(node, "an optional call continuing through an unguarded intermediate property")
+			// A present, required reference field can be missing here only
+			// because its optional receiver stopped the chain. Reuse its read
+			// as the saved receiver. Nullable fields need separate chain state.
+			source := ast.SkipParentheses(property.Expression)
+			field := l.checker.GetSymbolAtLocation(source)
+			safe := false
+			if source.Kind == ast.KindPropertyAccessExpression && source.AsPropertyAccessExpression().QuestionDotToken != nil && field != nil && field.Flags&(ast.SymbolFlagsOptional|ast.SymbolFlagsGetAccessor|ast.SymbolFlagsSetAccessor) == 0 {
+				declared := l.checker.GetTypeOfSymbol(field)
+				represented, known := l.representation(declared)
+				safe = known && represented.IsReference() && !l.includesUndefined(declared) && !l.includesNull(declared)
+			}
+			if !safe {
+				return nil, true, l.notYet(node, "an optional call continuing through an unguarded intermediate property")
+			}
 		}
 	}
 	explicit := call.QuestionDotToken != nil

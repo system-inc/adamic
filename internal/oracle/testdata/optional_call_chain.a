@@ -1,0 +1,10 @@
+interface Container { readonly table: ReadonlyMap<string, number>; }
+let reads = 0;
+let argumentsRun = 0;
+function receiver(value: Container | undefined): Container | undefined { reads += 1; return value; }
+function key(): string { argumentsRun += 1; return 'key'; }
+function lookup(value: Container | undefined): number | undefined { return receiver(value)?.table.get(key()); }
+console.log(`${lookup(undefined) ?? -1}`);
+const table = new Map<string, number>(); table.set('key', 0);
+console.log(`${lookup({ table }) ?? -2}`);
+console.log(`${reads} ${argumentsRun}`);
