@@ -1,0 +1,48 @@
+import type { RuleContext } from '../../context.ts';
+import { OptionsJson } from '../../helpers/options_json.ts';
+import { message } from './messages.a';
+export class Component {
+ readonly name: string;readonly props: readonly string[];
+ constructor(name: string, props: readonly string[]) {this.name=name;this.props=props;}
+}
+export class Rule {
+ readonly context: RuleContext;readonly components: Component[]=[new Component('a',['href'])];
+ constructor(context: RuleContext) {
+  this.context=context;
+  this.options();
+ }
+ options(): void {
+  const context=this.context;
+  const json=new OptionsJson(context.settings.text==='' ? '{}' : context.settings.text);const root=json.parse();
+  if(root<0) {return;}let entries=json.field(root,'Legacy');
+  if(json.node(root).kind==='array') {const first=json.node(root).children[0] ?? -1;if(first>=0 && json.node(first).kind==='array') {entries=first;}}
+  if(entries<0 || json.node(entries).kind!=='array') {return;}
+  for(const entry of json.node(entries).children) {
+   let name=json.field(entry,'Name');if(name<0) {name=json.field(entry,'name');}
+   let props=json.field(entry,'Props');if(props<0) {props=json.field(entry,'props');}
+   const values: string[]=[];if(props>=0 && json.node(props).kind==='array') {for(const prop of json.node(props).children) {values.push(json.node(prop).text);}}
+   this.components.push(new Component(name<0 ? '' : json.node(name).text,values));
+  }
+ }
+ protocol(text: string): boolean {
+  let index=0;while(index<text.length && text.charCodeAt(index)<=32) {index++;}
+  for(let j=0;j<'javascript:'.length;j++) {
+   if(index>=text.length) {return false;}let code=text.charCodeAt(index);const wanted='javascript:'.charCodeAt(j);
+   if(wanted!==58) {code=code|32;}
+   if(code!==wanted) {return false;}index++;
+   while(index<text.length && [9,10,13].includes(text.charCodeAt(index))) {index++;}
+  }
+  return true;
+ }
+ visit(index: number): void {
+  const ctx=this.context;const node=ctx.node(index);const name=node.children[0] ?? -1;const value=node.children[1] ?? -1;
+  if(name<0 || value<0 || ctx.node(name).kind!=='Identifier' || ctx.node(value).kind!=='StringLiteral') {return;}
+  const attrs=ctx.parents[index] ?? -1;const element=attrs<0 ? -1 : ctx.parents[attrs] ?? -1;const tag=element<0 ? -1 : ctx.node(element).children[0] ?? -1;
+  if(tag<0 || ctx.node(tag).kind!=='Identifier') {return;}
+  let allowed: readonly string[]=[];
+  for(const component of this.components) {if(component.name===ctx.node(tag).text) {allowed=component.props;}}
+  if(!allowed.includes(ctx.node(name).text) || !this.protocol(ctx.node(value).text)) {return;}
+  ctx.report(index,'react/jsx-no-script-url','noScriptURL',message,'','','');
+ }
+}
+export function create(context: RuleContext): Rule {return new Rule(context);}
