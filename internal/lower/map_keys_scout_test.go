@@ -93,3 +93,41 @@ func TestScoutMapBrandRefinementRefused(t *testing.T) {
 		t.Fatalf("want literal-refinement refusal, got %v", err)
 	}
 }
+
+func TestScoutMapPresenceRules(t *testing.T) {
+	for _, test := range []struct {
+		name, body string
+		checked    int
+	}{
+		{"early missing return", "if(!map.has(key)){return -1;}return map.get(key);", 0},
+		{"early return then alias write", "const alias=map;if(!map.has(key))return -1;alias.clear();return map.get(key);", 1},
+		{"same map/key", "if(map.has(key)){return map.get(key);}return -1;", 0},
+		{"different key", "if(map.has(key)){return map.get('missing');}return -1;", 1},
+		{"different map", "const other=new Map<string,number>();if(map.has(key)){return other.get(key);}return -1;", 1},
+		{"alias write", "const alias=map;if(map.has(key)){alias.delete(key);return map.get(key);}return -1;", 1},
+		{"unknown call", "function clear():void{map.clear();}if(map.has(key)){clear();return map.get(key);}return -1;", 1},
+		{"key update", "if(map.has(key)){key='missing';return map.get(key);}return -1;", 1},
+		{"optional stored undefined", "const optional=new Map<string,number|undefined>();if(optional.has(key)){return optional.get(key);}return -1;", 1},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			program, err := lowerSource(t, "function read(map:Map<string,number>,key:string):number{"+test.body+"}")
+			if err != nil {
+				t.Fatal(err)
+			}
+			checks := 0
+			for _, function := range program.Functions {
+				walk(function.Body, func(node any) bool {
+					if c, ok := node.(ir.Coalesce); ok && c.Panic != nil {
+						if text, ok := c.Panic.(ir.StringConstant); ok && strings.HasPrefix(program.Strings[text.Index], "collection lookup failed:") {
+							checks++
+						}
+					}
+					return true
+				})
+			}
+			if checks != test.checked {
+				t.Fatalf("want %d lookup checks, got %d", test.checked, checks)
+			}
+		})
+	}
+}

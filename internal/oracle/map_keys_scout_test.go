@@ -13,6 +13,7 @@ func init() {
 		path    string
 		checked bool
 	}{
+		{"scout_map_presence.a", false}, {"scout_map_presence_invalidated.a", true},
 		{"scout_map_brands.a", false}, {"scout_map_brand_boundary.a", true},
 	} {
 		fixtures = append(fixtures, struct {
@@ -154,4 +155,27 @@ func TestScoutMapBrandBoundaryMutant(t *testing.T) {
 		t.Fatalf("JavaScript mutant did not finish: %d %s", actual.exitCode, actual.stderr)
 	}
 	t.Log("missing brand check: both mutant backends exit 0, native sanitizer/leaks clean; expected panic exit 70 catches omission")
+}
+
+func TestScoutMapPresenceInvalidationContract(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout_map_presence_invalidated.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := run{exitCode: 70, stdout: []byte("reading\n"), stderr: []byte("adamic: panic: collection lookup failed: map.get('key') is undefined\n")}
+	actual, binary := nativelyUncached(t, program)
+	if actual.exitCode == 0 {
+		if report := leaks(t, program, binary); report != "" {
+			t.Fatal(report)
+		}
+	}
+	for backend, result := range map[string]run{"native": actual, "JavaScript": onJavaScriptBackend(t, program)} {
+		if difference := disagreement(want, result); difference != "" {
+			t.Fatalf("%s invalidated proof: %s; exit %d stdout %q stderr %q", backend, difference, result.exitCode, result.stdout, result.stderr)
+		}
+	}
 }

@@ -274,3 +274,29 @@ go vet ./internal/lower ./internal/oracle > /tmp/scout19-brands-vet.log 2>&1
 ```
 
 All passed. Successful brand fixture counts: 34 allocations, 34 frees, 48 retains, 71 releases, peak 11, zero regions. The failing fixture stops at panic and is not a successful-program leak claim. Counts refresh changes only the two added rows. Setup succeeded with node 0.021s, Go 0.022s, submodules 0.065s, markdown 0.074s, clang 0.178s, build 37.967s, deferred 38.089s, warm 38.090s, done 38.119s, cumulative as printed; nproc 5. Full logs are under `stage3/map-keys/evidence/ruling-brands`.
+
+### Piece 2: collection presence and checked reads
+
+The ruling now has a loader obligation and a lowering proof. The loader discharges only TS2322/TS2345 relations whose sole missing fact is an ordinary library Map/ReadonlyMap lookup's undefined arm. The present payload must remain assignable to the receiving type. Direct calls and const-local snapshots are recognized; wrong payloads, nullable payloads, custom methods named get and mutable local snapshots retain checker errors. An unsupported presence representation fails loudly in lowering.
+
+Lowering proves the same receiver and key bindings (or the same primitive literal) under a positive has branch or after a missing-key guard that immediately returns or throws. Intervening assignments, updates, calls, constructors, property/index reads and other effectful operations invalidate the proof conservatively, including writes through aliases. A value type admitting undefined never loses its stored undefined. An unproven required read panics rather than supplying a scalar default. Existing checked TypeScript assertions benefit from the proof; Adamic's assertion refusal remains unchanged. The initial regression caught an unnecessarily broadened assertion exception, which was removed before delivery.
+
+The two new fixtures reduce core.ts createSet's has/get pattern with monomorphic payloads. The successful fixture agrees with source Node for zero, NaN, absent keys, allocated string values, stored undefined and alias deletion with an explicit fallback. The invalidated required read prints reading and then both generated backends panic with collection lookup failed: map.get('key') is undefined, exit 70. Source Node instead prints undefined; this intentional checked contract is asserted separately. Successful native execution passes sanitizers and leak accounting: 19 allocations, 19 frees, 12 retains, 29 releases, peak 9, zero regions. The panic fixture is not a successful-program leak claim.
+
+The production mutant makes collectionPrefixUnchanged always true. The flow tests fail for alias writes, unknown calls, key updates and an early-return guard followed by an alias write. The runtime contract fails because the mutant exits 0 and prints reading followed by 0 instead of panicking. The native mutant runs without a sanitizer or leak finding. Both mutant commands exit 1; the source is restored afterward.
+
+Scoped commands, with environment sourced and output redirected to the named logs:
+
+```sh
+go test ./internal/load -run '^TestCollectionRead' -count=1 -v > /tmp/scout19-presence-load.log 2>&1
+go test ./internal/lower -run '^(TestScoutMap.*|TestNonNull.*|TestWhatZeroOneRefusesIsRefusedWithAFix|TestLibraryMapSet.*)$' -count=1 -v > /tmp/scout19-presence-regression-lower.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(scout_map_.*[.]a|non_null.*[.]a|library_map_set_keys[.]a)$' -count=1 -timeout 30m -v > /tmp/scout19-presence-regression-oracle.log 2>&1
+go test ./internal/oracle -run '^TestScoutMapPresenceInvalidationContract$' -count=1 > /tmp/scout19-presence-contract.log 2>&1
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts > /tmp/scout19-presence-counts.log 2>&1
+go vet ./internal/load ./internal/lower ./internal/oracle > /tmp/scout19-presence-vet.log 2>&1
+# With collectionPrefixUnchanged mutated, each must fail:
+go test ./internal/lower -run '^TestScoutMapPresenceRules$' -count=1 > /tmp/scout19-presence-mutant-flow.log 2>&1
+go test ./internal/oracle -run '^TestScoutMapPresenceInvalidationContract$' -count=1 > /tmp/scout19-presence-mutant-contract.log 2>&1
+```
+
+All unmutated checks pass. The uncached oracle run records 22 native misses and 16 Node misses, no hits. Evidence logs are in stage3/map-keys/evidence/ruling-presence. Additional frozen census roots credited: zero. This piece implements a ruled flow fact; it does not remove createSet's generic-key, union-value or generator blockers, and no entry-root or hidden-byte credit is inferred from a reduced fixture. Indexed arrays and collection protocol implementations remain separate pieces.

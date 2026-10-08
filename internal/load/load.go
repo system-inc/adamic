@@ -1,9 +1,9 @@
 // Package load turns Adamic source files into a checked program: every file parsed, bound and
 // type-checked by typescript-go in this process, under the one set of options Adamic 0.1 allows.
 //
-// A program either loads clean or Load returns an error naming every diagnostic. There is no
-// half-loaded state, because a compiler that lowers a program the checker rejected is lowering a
-// guess.
+// A program either loads with proven relations or sanctioned checked collection reads, or Load
+// returns its diagnostics. Every admitted absence obligation names the exact occurrence lowering
+// must check; no wrong payload relation is admitted.
 package load
 
 import (
@@ -31,8 +31,9 @@ import (
 
 var errReadOnly = errors.New("load: the source file system is read-only")
 
-// Program is a loaded Adamic program that the checker accepted.
+// Program is a checked Adamic program, including its sanctioned collection-read obligations.
 type Program struct {
+	collectionReads map[*ast.Node]bool
 	// tsgo opts this compilation into the external native checker library.
 	tsgo bool
 
@@ -234,6 +235,9 @@ func (p *Program) diagnostics(ctx context.Context) []string {
 	}
 	formatted := make([]string, 0, len(all))
 	for _, diagnostic := range all {
+		if p.collectionReadDiagnostic(ctx, diagnostic) {
+			continue
+		}
 		formatted = append(formatted, p.formatDiagnostic(diagnostic))
 	}
 	sort.Strings(formatted)

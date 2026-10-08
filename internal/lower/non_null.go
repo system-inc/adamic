@@ -73,6 +73,9 @@ stored:
 	if err != nil {
 		return nil, err
 	}
+	if l.collectionNonNull(node) && l.collectionPresenceProven(operand) {
+		return l.collectionPresentValue(operand, value, of, true), nil
+	}
 	proven := l.checker.GetTypeAtLocation(operand)
 	if !weakOperand && !l.includesUndefined(proven) && !l.includesNull(proven) && !l.narrowedAway(ast.SkipParentheses(operand)) && !value.Type().IsMaybe() {
 		if value.Type() == ir.Union && of != ir.Union {

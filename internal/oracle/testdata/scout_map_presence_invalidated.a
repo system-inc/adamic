@@ -1,0 +1,4 @@
+// The same key is not proven present after a write through an alias.
+const map=new Map<string,number>();map.set('key',9);const alias=map;
+function read():number {if(map.has('key')) {alias.delete('key');return map.get('key');} return -1;}
+console.log('reading');console.log(`${read()}`);

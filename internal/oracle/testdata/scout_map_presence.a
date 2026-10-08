@@ -1,0 +1,17 @@
+// Reduced from core.ts createSet's has/get contract; payloads and driver are monomorphic.
+function read(map: Map<string, number>, key: string): number {
+    if (map.has(key)) { return map.get(key); }
+    return -1;
+}
+const map=new Map<string,number>();map.set(`key-${1}`,0);map.set(`key-${2}`,NaN);
+console.log(`${read(map,'key-1')}:${read(map,'key-2')}:${read(map,'absent')}`);
+function strings(map: Map<string,string>,key:string):string {if(map.has(key)){return map.get(key);}return 'absent';}
+const text=new Map<string,string>();text.set(`key-${1}`,`value-${1}`);console.log(strings(text,'key-1'));
+const optional=new Map<string,number|undefined>();optional.set('present',undefined);
+if(optional.has('present')) console.log(`${optional.get('present')===undefined}:${optional.has('missing')}`);
+function lookupAfterAliasWrite(): number {
+    const source=new Map<string,number>();source.set('key',9);const alias=source;
+    if(source.has('key')) { alias.delete('key'); return source.get('key') ?? -2; }
+    return -1;
+}
+console.log(`${lookupAfterAliasWrite()}`);
