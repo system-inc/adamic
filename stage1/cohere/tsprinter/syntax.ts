@@ -532,8 +532,11 @@ export function statementUnsupported(parser: Parser, source: string, index: numb
 
 export function functionUnsupported(parser: Parser, source: string, index: number): string {
     const node = syntaxNode(parser, index);
+    const last = node.children[node.children.length - 1] ?? panic('missing function child');
+    const bodylessDeclaration = node.kind === 'FunctionDeclaration' && syntaxNode(parser, last).kind !== 'Block';
+    const signatureLength = node.children.length - (bodylessDeclaration ? 0 : 1);
     let named = false;
-    for(let position = 0; position < node.children.length - 1; position++) {
+    for(let position = 0; position < signatureLength; position++) {
         const child = node.children[position] ?? panic('missing function child');
         const item = syntaxNode(parser, child);
         if(
@@ -571,6 +574,7 @@ export function functionUnsupported(parser: Parser, source: string, index: numbe
     }
     if(node.kind === 'FunctionExpression' && !named) return 'FunctionExpression';
     if(node.kind === 'FunctionDeclaration' && !named) return 'FunctionDeclaration';
+    if(bodylessDeclaration) return '';
     const body = node.children[node.children.length - 1] ?? panic('missing function body');
     return syntaxNode(parser, body).kind === 'Block'
         ? statementUnsupported(parser, source, body)
