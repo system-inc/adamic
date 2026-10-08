@@ -1,0 +1,12 @@
+interface Entry { word: string }
+const table = { files: { word: "owned:" + "files" }, directories: { word: "owned:" + "dirs" }, exclude: { word: "owned:" + "exclude" } };
+function select(kind: "files" | "directories" | "exclude", { word }: Entry = table[kind]): string { return word; }
+console.log(select("files"));
+console.log(select("directories"));
+console.log(select("exclude"));
+console.log(select("files", { word: "override" }));
+let events = "";
+function receiver(): typeof table { events += "r"; return table; }
+function key(kind: "files" | "directories" | "exclude"): "files" | "directories" | "exclude" { events += "k"; return kind; }
+console.log(receiver()[key("directories")].word);
+console.log(events);
