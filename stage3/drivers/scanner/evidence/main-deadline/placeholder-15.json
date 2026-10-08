@@ -1,0 +1,6 @@
+{
+  "function": "createScanner",
+  "replacement": "{ throw new Error(\"uncommitted scanner discovery stop 15: optional any error parameter\"); }",
+  "removed_sha256": "a5eba2798259e0214b0e6a1fce3332153ce73884b8b1d062fb085f82801a7db6",
+  "note": "The error function parameter itself cannot lower; throwing only its body cannot bypass the signature. Enclosing createScanner body is replaced after the fifteenth stop. No further compile attempted."
+}

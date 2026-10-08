@@ -1,0 +1,3 @@
+let value: string = 'set';
+value = undefined!;
+console.log(`${value}`);

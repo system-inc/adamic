@@ -1,0 +1,2 @@
+const values = { Script_Extensions: undefined! as Set<string> };
+console.log(`${values.Script_Extensions === undefined}`);

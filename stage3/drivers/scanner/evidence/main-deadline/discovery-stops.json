@@ -131,5 +131,133 @@
       "removed_sha256": "dd1f72ab5fe2903910130b996fbefc902ab377b733e96a34e3b8a6dd7347abcd",
       "replacement": "{ throw new Error(\"uncommitted scanner discovery stop 8\"); }"
     }
+  },
+  {
+    "number": 9,
+    "file": "scanner.ts",
+    "line": 2070,
+    "column": 45,
+    "message": "Adamic 0.1 refuses &&=; write the if",
+    "minimal_program": "probes/main-logical-and-assignment.a",
+    "compiler": "ba30a48427e9e0e8ebc8be3a93bea37379c73de7",
+    "discovery_only": true,
+    "placeholder": {
+      "file": "/workspace/scratch/scanner-main-discovery/adapted/src/compiler/scanner.ts",
+      "line": 2070,
+      "column": 45,
+      "function": "scanClassSetSubExpression",
+      "start": 119955,
+      "end": 123153,
+      "removed_sha256": "431231fb38fbd67caf6e6123562b0019e88fca4c2695d10729049572aa1b2cc3",
+      "replacement": "{ throw new Error(\"uncommitted scanner discovery stop 9\"); }"
+    }
+  },
+  {
+    "number": 10,
+    "file": "scanner.ts",
+    "line": 2827,
+    "column": 24,
+    "message": "Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined",
+    "minimal_program": "probes/main-undefined-property-initializer.a",
+    "compiler": "ba30a48427e9e0e8ebc8be3a93bea37379c73de7",
+    "discovery_only": true,
+    "placeholder": {
+      "scope": "valuesOfNonBinaryUnicodeProperties.Script_Extensions initializer",
+      "replacement": "scannerDiscoveryScriptExtensions()",
+      "behavior": "throws"
+    },
+    "scope": "Top-level Script_Extensions initializer. The first assignment-form reduction compiled and does not reproduce this stop; precise property initializer does."
+  },
+  {
+    "number": 11,
+    "file": "core.ts",
+    "line": 107,
+    "column": 20,
+    "message": "stage 0 can't lower new an Identifier yet",
+    "minimal_program": "probes/array-length-constructor.a",
+    "compiler": "ba30a48427e9e0e8ebc8be3a93bea37379c73de7",
+    "discovery_only": true,
+    "placeholder": {
+      "file": "/workspace/scratch/scanner-main-discovery/adapted/src/compiler/core.ts",
+      "line": 107,
+      "column": 20,
+      "function": "levenshteinWithMax",
+      "start": 4184,
+      "end": 6072,
+      "removed_sha256": "a119c16c92273a9fe3b7bd368bf699b5b1b616aebd3a4abfd0f156247bdf2263",
+      "replacement": "{ throw new Error(\"uncommitted scanner discovery stop 11\"); }"
+    }
+  },
+  {
+    "number": 12,
+    "file": "utilities.ts",
+    "line": 14,
+    "column": 22,
+    "message": "stage 0 can't lower a Map of V yet",
+    "minimal_program": "probes/generic-map-callback-inference.a",
+    "compiler": "ba30a48427e9e0e8ebc8be3a93bea37379c73de7",
+    "discovery_only": true,
+    "placeholder": {
+      "file": "/workspace/scratch/scanner-main-discovery/adapted/src/compiler/utilities.ts",
+      "line": 14,
+      "column": 22,
+      "function": "forEachEntry",
+      "start": 488,
+      "end": 711,
+      "removed_sha256": "b97b39263ed9f97106b0a13e747a5a1639c62aa432b127c543057091a6de86dd",
+      "replacement": "{ throw new Error(\"uncommitted scanner discovery stop 12\"); }"
+    },
+    "minimal_message_note": "Concrete union-valued specialization reproduces a Map of string | number; scanner reports generic V. Number-only first reduction builds and is retained as a control."
+  },
+  {
+    "number": 13,
+    "file": "utilities.ts",
+    "line": 17,
+    "column": 56,
+    "message": "stage 0 can't lower a function value taking string | number yet",
+    "minimal_program": "probes/main-union-callback-parameter.a",
+    "compiler": "ba30a48427e9e0e8ebc8be3a93bea37379c73de7",
+    "discovery_only": true,
+    "placeholder": {
+      "function": "getNameOfScriptTarget",
+      "replacement": "{ throw new Error(\"uncommitted scanner discovery stop 13\"); }",
+      "note": "Arrow-body throw cannot bypass unsupported parameter signature; replaced enclosing helper instead."
+    }
+  },
+  {
+    "number": 14,
+    "file": "scanner.ts",
+    "line": 258,
+    "column": 27,
+    "message": "stage 0 can't lower a void call used as a value yet",
+    "minimal_program": "probes/coalesce-never-fallback.a",
+    "compiler": "ba30a48427e9e0e8ebc8be3a93bea37379c73de7",
+    "discovery_only": true,
+    "placeholder": {
+      "file": "/workspace/scratch/scanner-main-discovery/adapted/src/compiler/scanner.ts",
+      "line": 258,
+      "column": 27,
+      "function": "lookupInUnicodeMap",
+      "start": 40058,
+      "end": 40881,
+      "removed_sha256": "f25b0e1c210490d84c9bf31bf19e6f6bcf2c188b19530e9fee57eb1d659b0c9a",
+      "replacement": "{ throw new Error(\"uncommitted scanner discovery stop 14\"); }"
+    }
+  },
+  {
+    "number": 15,
+    "file": "scanner.ts",
+    "line": 580,
+    "column": 87,
+    "message": "stage 0 can't lower a value of type any yet",
+    "minimal_program": "probes/main-optional-any-parameter.a",
+    "compiler": "ba30a48427e9e0e8ebc8be3a93bea37379c73de7",
+    "discovery_only": true,
+    "placeholder": {
+      "function": "createScanner",
+      "replacement": "{ throw new Error(\"uncommitted scanner discovery stop 15: optional any error parameter\"); }",
+      "removed_sha256": "a5eba2798259e0214b0e6a1fce3332153ce73884b8b1d062fb085f82801a7db6",
+      "note": "The error function parameter itself cannot lower; throwing only its body cannot bypass the signature. Enclosing createScanner body is replaced after the fifteenth stop. No further compile attempted."
+    }
   }
 ]

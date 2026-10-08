@@ -1,0 +1,73 @@
+{
+  "status": "native scanner blocked; fifteen stops recorded",
+  "stops": 15,
+  "compiler_main": "ef3141e9b1152ab51b51497f8ce3a2799449c8a3",
+  "compiler_integrated": "ba30a48427e9e0e8ebc8be3a93bea37379c73de7",
+  "front3": "a36d1c0472649ef2ee549cc2505b93a84e893b59",
+  "closure_skipped": "22fd701a, conflicts in internal/oracle/counts.md",
+  "node": {
+    "files": 81,
+    "tokens": 509014,
+    "bytes": 27879197,
+    "sha256": "c1a9f239790e158cc4471aa6c9273ff678cb32e5890b3d4c95e077ee90c61b0f",
+    "full_tree_vs_slice_diff_exit": 0
+  },
+  "native_modes": [
+    0,
+    1
+  ],
+  "native_scanner_output": null,
+  "c_size": null,
+  "clang_unsplit_wall": null,
+  "clang_split_wall": null,
+  "warm_wall": null,
+  "binary_size": null,
+  "native_best_of_three_user": null,
+  "node_best_of_three_user": "not newly measured because native is blocked",
+  "mutants": [
+    {
+      "kind": "one-byte Node scanner output",
+      "caught_by": "diff",
+      "exit": 1
+    },
+    {
+      "kind": "one-byte native index-signature control output",
+      "caught_by": "diff",
+      "exit": 1,
+      "scope": "control probe only, not scanner"
+    },
+    {
+      "kind": "one-byte source comment in copied adapted slice",
+      "caught_by": "slice verify.cjs",
+      "exit": 1
+    },
+    {
+      "kind": "setup heap overread",
+      "caught_by": "AddressSanitizer heap-buffer-overflow",
+      "scope": "toolchain probe"
+    }
+  ],
+  "limits": [
+    "No native scanner comparison; no scanner metrics.",
+    "Throwing placeholders remain uncommitted in separate discovery copy; no equivalence claimed.",
+    "No compile after planting placeholder fifteen.",
+    "No full compiler gate; only setup builds and focused source/native probes.",
+    "Parser-directed rescans and retained-trivia/cooked-value/error dump are outside this requested historical 509014-token run."
+  ],
+  "scratch_discovery": "/workspace/scratch/scanner-main-discovery",
+  "scratch_validated": "/workspace/scratch/scanner-main-slice",
+  "scratch_reference": "/workspace/scratch/scanner-main-proof",
+  "early_result_commit": "763390b5f",
+  "progress_commit": "543b6b4d6",
+  "commands": {
+    "main_build": "ADAMIC_NATIVE_SPLIT=0 or 1 ADAMIC_NATIVE_JOBS=5 COMPILER build /workspace/scratch/scanner-main-proof/main.a -o OUTPUT",
+    "compiler_cwd": "/workspace/scratch/scanner-main-20261008",
+    "compiler_main": "/workspace/scratch/scanner-main-adamic",
+    "compiler_integrated": "/workspace/scratch/scanner-main-front3-adamic",
+    "slice_gather": "SLICE_TYPESCRIPT=/workspace/scratch/scanner-main-cache/api/node_modules/typescript/lib/typescript.js bash stage3/slice/run.sh /workspace/scratch/scanner-main-full/adapted /workspace/scratch/scanner-main-slice src/compiler/scanner.ts:createScanner src/compiler/types.ts:ScriptTarget src/compiler/types.ts:SyntaxKind",
+    "node_reference": "SCANNER_TYPESCRIPT=STOCK_API SCANNER_RUNTIME=oracle/adamic.mjs node --disable-warning=ExperimentalWarning stage3/drivers/scanner/node.mjs SCRATCH/main.a ALL_81_INPUT_PATHS_FROM_files.json",
+    "minimal_node": "node --disable-warning=ExperimentalWarning oracle/node.mjs PROBE.a",
+    "minimal_native": "COMPILER build ABSOLUTE_PROBE.a -o SCRATCH_BINARY",
+    "slice_audit": "node stage3/slice/verify.cjs /workspace/scratch/scanner-main-slice"
+  }
+}

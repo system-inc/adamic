@@ -1,0 +1,3 @@
+let found = true;
+found &&= false;
+console.log(`${found}`);

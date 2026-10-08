@@ -37,7 +37,7 @@ records feature and merges cleanly. Scratch integration ba30a484 builds.
 Both split modes with this integration still stop at the same Node checker
 findings in the unchanged validated slice (jobs 5).
 
-Uncommitted throwing-placeholder discovery, first eight stops:
+Uncommitted throwing-placeholder discovery, fifteen stops:
 
 | Stop | File:line:column in discovery copy | Message family | Minimal program |
 | --- | --- | --- | --- |
@@ -49,6 +49,13 @@ Uncommitted throwing-placeholder discovery, first eight stops:
 | 6 | scanner.ts:1413:44 | comma operator | main-comma-expression.a |
 | 7 | scanner.ts:1393:40 | comma operator | main-comma-expression.a |
 | 8 | scanner.ts:2097:57 | logical-or assignment | main-logical-or-assignment.a |
+| 9 | scanner.ts:2070:45 | logical-and assignment | main-logical-and-assignment.a |
+| 10 | scanner.ts:2827:24 | exact undefined assertion | main-undefined-property-initializer.a |
+| 11 | core.ts:107:20 | Array length constructor | array-length-constructor.a |
+| 12 | utilities.ts:14:22 | union-valued Map | generic-map-callback-inference.a |
+| 13 | utilities.ts:17:56 | union callback parameter | main-union-callback-parameter.a |
+| 14 | scanner.ts:258:27 | never call used as value | coalesce-never-fallback.a |
+| 15 | scanner.ts:580:87 | optional any parameter | main-optional-any-parameter.a |
 
 Node probes exit 0 with empty stderr; native builds reproduce each family.
 Exact messages, compiler pins and placeholder scopes are in
@@ -59,7 +66,32 @@ reScanGreaterToken, and the affected regex implementation with throws.
 The erased Node import becomes an unused throwing function; a first top-level
 throw induced unreachable-code narrowing diagnostics, corrected and excluded.
 These changes remain only in scratch. Later line numbers shift as bodies shrink.
-No runtime equivalence is claimed for the discovery copy. More stops follow.
+No runtime equivalence is claimed for the discovery copy. The pass stops at
+fifteen. Its final placeholder replaces createScanner's body because the error
+callback's any parameter cannot lower even when its own body throws. No further
+compile is attempted. Full exact diagnostics and tested reductions are retained.
+The first number-only Map reduction compiled; the corrected union-valued
+reduction reproduces the Map family. Stop 10 is the top-level Script_Extensions
+initializer. Its precise property-initializer reduction refuses; the first
+assignment-form reduction compiled and was excluded from the stop claim. Throwing only the stop-13 arrow body did not bypass its
+unsupported parameter signature; replacing getNameOfScriptTarget did.
+
+The unchanged index-signature probe builds under main plus front-3 and matches
+Node's ok. Its one-byte native-output mutant is caught by diff exit 1. This is
+a native control, not scanner output. A copied slice source comment-byte mutant
+is caught by verify.cjs (exit 1); the untouched validated slice re-audit passes.
+Setup's heap-overread mutant is caught by ASan. All distinct minimal Node
+stdout/stderr and native refusal families pass the evidence audit. Node's
+one-byte scanner-output mutant was caught earlier. No native scanner-output
+mutant could run.
+
+Final result remains red for the native scanner. No generated C, clang split,
+unsplit or warm time, scanner binary size or native user time exists. No new
+best-of-three Node timing was taken while native remained blocked. The full
+compiler gate was not run. Discovery changes and scratch merges were never
+pushed. Only scanner documentation, probes and evidence are committed.
+[evidence/main-deadline/final-report.json](evidence/main-deadline/final-report.json)
+records commands' scope and all limits.
 
 ## October 8: reconciled closure restart stops at checked narrowing integration
 

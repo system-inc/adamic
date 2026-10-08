@@ -1,0 +1,8 @@
+PASS: fifteen exact ordered stop records.
+PASS: all distinct minimal Node stdout and empty stderr match expected observations.
+PASS: native minimal refusals reproduce each diagnostic family.
+PASS: untouched validated slice audit.
+PASS: Node full-tree and slice streams reproduce historical token count, bytes and SHA-256.
+PASS: native index-signature fixed control equals Node.
+Mutants caught: Node output byte, native control output byte, source comment byte, setup heap overread.
+No native scanner equality or metrics claimed.

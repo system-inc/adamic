@@ -1,0 +1,5 @@
+{
+  "function": "getNameOfScriptTarget",
+  "replacement": "{ throw new Error(\"uncommitted scanner discovery stop 13\"); }",
+  "note": "Arrow-body throw cannot bypass unsupported parameter signature; replaced enclosing helper instead."
+}
