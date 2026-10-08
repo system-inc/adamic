@@ -312,11 +312,16 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 			}
 			statement = value
 		case ir.ForOf:
-			if value.Iterable.Type() != ir.Array || value.RegexIterator || value.MapPart != "" || value.Pattern != nil {
+			if value.RegexIterator || (value.Iterable.Type() != ir.Array && value.Iterable.Type() != ir.String && value.Iterable.Type() != ir.Map) || (value.Pattern != nil && value.MapPart == "") {
 				return nil, fmt.Errorf("async for-of over this iterable or pattern is not yet proven")
 			}
-			if n.program.Locals[value.Local].Captured {
+			if value.Pattern == nil && n.program.Locals[value.Local].Captured {
 				return nil, fmt.Errorf("async per-iteration captured cells are not yet represented")
+			}
+			for _, binding := range value.Pattern {
+				if n.program.Locals[binding.Local].Captured {
+					return nil, fmt.Errorf("async per-iteration captured cells are not yet represented")
+				}
 			}
 			var outerBreak bool
 			inspectAsyncIR(reflect.ValueOf(value.Body), func(node any) {
@@ -326,6 +331,48 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 			})
 			if outerBreak && containsAwait(reflect.ValueOf(value.Body)) {
 				return nil, fmt.Errorf("async for-of labeled outer break is not yet proven")
+			}
+			if value.Iterable.Type() != ir.Array {
+				iterable := n.expression(value.Iterable, &before, true)
+				var iterator ir.Expression = ir.StringIterator{Value: iterable}
+				element := value.Element
+				if value.MapPart != "" {
+					iterator = ir.CollectionIterator{Collection: iterable, Part: value.MapPart, Key: value.Key, Value: value.Value}
+					switch value.MapPart {
+					case "keys":
+						element = value.Key
+					case "values":
+						element = value.Value
+					default:
+						element = ir.Object
+					}
+				}
+				held := n.snapshot(iterator, &before)
+				stepLocal := n.temporary(ir.Object)
+				step := ir.Read{Local: stepLocal, Of: ir.Object}
+				body := []ir.Statement{
+					ir.Declare{Local: stepLocal, Value: ir.CallClosure{Closure: ir.Property{Object: held, Name: "next", Of: ir.Closure}, Returns: ir.Object}},
+					ir.If{Condition: ir.Property{Object: step, Name: "done", Of: ir.Boolean}, Then: []ir.Statement{ir.Break{}}},
+				}
+				var item ir.Expression = ir.Property{Object: step, Name: "value", Of: element}
+				if element == ir.Number {
+					item = ir.Unwrap{Value: ir.Property{Object: step, Name: "value", Of: ir.MaybeNumber}}
+				}
+				if value.Pattern == nil {
+					body = append(body, ir.Declare{Local: value.Local, Value: item})
+				} else {
+					for _, binding := range value.Pattern {
+						body = append(body, ir.Declare{Local: binding.Local, Value: ir.Property{Object: item, Name: binding.Field, Of: n.program.Locals[binding.Local].Type}})
+					}
+				}
+				body = append(body, value.Body...)
+				normalized, failure := n.statements([]ir.Statement{ir.Loop{Condition: ir.BooleanConstant{Value: true}, Body: body}})
+				if failure != nil {
+					return nil, failure
+				}
+				out = append(out, before...)
+				out = append(out, normalized...)
+				continue
 			}
 			// Hold the array itself, not a copy or its current length. The next pass
 			// observes mutations made while suspended, like an array iterator on Node.

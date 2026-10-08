@@ -480,7 +480,6 @@ func TestAsyncReaderProbes(t *testing.T) {
 		cycle              bool
 	}{
 		{"async_refuse_frame_capture_cycle", "async frame capture cycle", "seed3:held:7\n", true},
-		{"async_refuse_for_of_string", "async for-of over this iterable", "a\nb\n", false},
 		{"async_refuse_loop_body_capture", "async per-iteration captured cells", "item0 item1 item2\n", false},
 		{"async_refuse_return_thenable", "return of thenables", "7\n", false},
 		{"async_refuse_arrow_thenable", "return of thenables", "7\n", false},
@@ -615,4 +614,62 @@ func TestAsyncForOfWrongIterationMutant(t *testing.T) {
 		t.Fatalf("only Node stdout must catch wrong iteration: %+v", result)
 	}
 	t.Logf("caught: Node %q; wrong iteration %q", oracle.stdout, result.stdout)
+}
+
+// Advance the held iterator once more after the suspended body resumes. The binary must
+// remain clean; the source oracle must catch its skipped code point or entry.
+func TestAsyncBuiltinIteratorWrongEntryMutant(t *testing.T) {
+	for _, name := range []string{"async_for_of_string", "async_for_of_map", "async_for_of_collections_mutation"} {
+		t.Run(name, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			changed := false
+			var mutate func([]ir.Statement)
+			mutate = func(body []ir.Statement) {
+				for index, statement := range body {
+					switch value := statement.(type) {
+					case ir.Loop:
+						if len(value.Body) > 0 {
+							if declaration, ok := value.Body[0].(ir.Declare); ok {
+								if call, ok := declaration.Value.(ir.CallClosure); ok {
+									value.Update = append(value.Update, ir.Evaluate{Value: call})
+									body[index] = value
+									changed = true
+								}
+							}
+						}
+					case ir.Block:
+						mutate(value.Body)
+					}
+				}
+			}
+			for _, function := range program.Functions {
+				mutate(function.Body)
+			}
+			if !changed {
+				t.Fatal("no held iterator step to mutate")
+			}
+			binary := filepath.Join(t.TempDir(), "wrong-entry")
+			code := native.C(program)
+			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+				t.Fatal(err)
+			}
+			if report := leakcheck.Report(t, code, binary); report != "" {
+				t.Fatal(report)
+			}
+			oracle := onNode(t, path)
+			for name, result := range map[string]run{"native": execute(t, binary), "JavaScript": onJavaScriptBackend(t, program)} {
+				if disagreement(oracle, result) != "stdout differs" || result.exitCode != 0 || len(result.stderr) != 0 {
+					t.Fatalf("only Node stdout must catch %s wrong entry: %+v", name, result)
+				}
+				t.Logf("Node catches %s wrong entry", name)
+			}
+		})
+	}
 }

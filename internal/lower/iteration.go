@@ -362,6 +362,16 @@ func (l *lowering) closeIteration(where *ast.Node, state *iterationState, body [
 }
 
 func (l *lowering) forOfUser(node *ast.Node, plan *iterationPlan, name *ast.Node) ([]ir.Statement, error) {
+	var suspends ast.Visitor
+	suspends = func(child *ast.Node) bool {
+		if ast.IsFunctionLike(child) {
+			return false
+		}
+		return child.Kind == ast.KindAwaitExpression || child.ForEachChild(suspends)
+	}
+	if (l.function != nil && l.function.Async) || suspends(node) {
+		return nil, l.notYet(node, "async for-of over a user iterator")
+	}
 	source, err := l.expression(node.AsForInOrOfStatement().Expression)
 	if err != nil {
 		return nil, err
