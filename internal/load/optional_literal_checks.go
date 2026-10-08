@@ -49,6 +49,9 @@ func (p *Program) acceptOptionalLiteral(site OptionSite) bool {
 			}
 			if candidate != nil {
 				candidate = ast.SkipParentheses(candidate)
+				if candidate.Kind == ast.KindBinaryExpression && candidate.AsBinaryExpression().OperatorToken.Kind == ast.KindAmpersandAmpersandToken {
+					candidate = ast.SkipParentheses(candidate.AsBinaryExpression().Right)
+				}
 				if candidate.Kind == ast.KindObjectLiteralExpression && plainDataLiteral(candidate) {
 					found = candidate
 					return true

@@ -100,11 +100,26 @@ func (e *emitter) effects(expression ir.Effects) string {
 	savedOwned, savedAt := e.owned, e.at
 	e.outerOwned = append(e.outerOwned, savedOwned)
 	e.owned, e.at = nil, nil
+	// An Effects local belongs to this expression, including in a lazy branch.
+	// Keep its result before releasing locals, then pass that count to the caller.
+	depth := len(e.scopes)
+	e.scopes = append(e.scopes, nil)
 	for _, statement := range expression.Body {
 		e.statement(statement)
 	}
+	value := e.value(expression.Result)
+	if expression.Type().IsReference() {
+		value = e.snapshot(expression.Type(), e.kept(value))
+	} else {
+		value = e.snapshot(expression.Type(), value)
+	}
 	e.end()
+	e.releaseScopes(depth)
+	e.scopes = e.scopes[:depth]
 	e.owned, e.at = savedOwned, savedAt
 	e.outerOwned = e.outerOwned[:len(e.outerOwned)-1]
-	return e.value(expression.Result)
+	if expression.Type().IsReference() {
+		e.owned = append(e.owned, value)
+	}
+	return value
 }

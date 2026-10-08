@@ -55,17 +55,6 @@
     ]
   },
   {
-    "position": 10488,
-    "file": "src/compiler/moduleNameResolver.ts",
-    "line": 286,
-    "column": 9,
-    "code": 2322,
-    "message": "src/compiler/moduleNameResolver.ts:286:9: error TS2322: Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.\n  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'originalPath' are incompatible.\n      Type 'string | undefined' is not assignable to type 'string'.\n        Type 'undefined' is not assignable to type 'string'.",
-    "options": [
-      "exactOptionalPropertyTypes"
-    ]
-  },
-  {
     "position": 27024,
     "file": "src/compiler/moduleNameResolver.ts",
     "line": 642,

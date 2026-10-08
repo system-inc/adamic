@@ -162,3 +162,31 @@ Spread native package validation passed in 125.274s; JavaScript has no package
 tests. Updated focused runtime proof passed in 5.341s. Batch commit 59ca7f85 is
 pushed to codex/stricter-optional-writes. Provisional October 10 UTC remains an
 estimate, contingent on the ownership-scope and production declaration blocks.
+
+Each production declaration blocker now has its own file:line:column and required contract work in [PRODUCTION-ROUTING.md](PRODUCTION-ROUTING.md). Raw messages and ledger identities remain in the JSON evidence.
+
+Cleanup-scope batch: Effects declares guard locals through declareLocal in
+emit_locals.go, which holds each local in e.scopes. Previously effects in taste.go
+did not push a scope, so releaseScopes emitted those releases in the enclosing
+function after the lazy branch had ended. Every Effects expression now pushes
+one private cleanup scope, holds its result before cleanup, releases its locals
+at the expression site, and transfers the result count to the caller. This is
+one rule for all guard expressions and other Effects uses. No protected emitter
+assembly file was edited.
+
+The saved conditional reproducer is now a passing fixture, tested with present
+and undefined branches and repeated constructions. Native ASan/UBSan, explicit
+LeakSanitizer, counted builds and JavaScript match Node. Counts are allocations
+12, frees 12, retains 9, releases 21, peak 6, regions 0. A compiling mutant moves
+guard-local cleanup to outer process scope, overwriting the held earlier value:
+its output matches Node, but LeakSanitizer and allocation/free counts catch the
+leak. Its failure is not a clang diagnostic. The original construction absence
+mutant still stops at the presence guard. There are now 17 run mutants.
+
+The pinned production probe schedules 54 of 67, including moduleNameResolver.ts
+286, with zero emitted whole-program checks and 207 errors (90 production
+declaration contracts, 104 other flag contracts, 13 remaining optional contracts).
+Focused oracle and all 17 mutants pass in 14.446s. Setup finished in 29.964s with
+nproc 5; Go ready 0.024s, Node 0.028s, submodules 0.064s, markdown 0.075s, clang
+0.174s, Go build 29.819s. Full affected packages and count regeneration are
+checked separately. Provisional all-67 date remains October 10 UTC.
