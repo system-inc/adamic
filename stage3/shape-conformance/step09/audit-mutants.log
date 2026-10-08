@@ -1,0 +1,4 @@
+drop-corpus-site: valid corpus metadata; independent audit catches assert len(result['sites'])==len(mapped)==len(lookup)
+duplicate-corpus-site: valid corpus metadata; independent audit catches key=(row['file'],row['start'],row['end']);assert key not in seen;seen.add(key)
+invent-aggregate-free: valid corpus metadata; independent audit catches assert counts==result['counts']
+PASS three actual-corpus audit mutants; original artifact was not modified

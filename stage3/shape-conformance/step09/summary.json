@@ -1,0 +1,144 @@
+{
+  "measurement": "measured on a checker-rejected program",
+  "status": "PASS",
+  "before": {
+    "tagged": {
+      "sites": 1758,
+      "buckets": {
+        "unknown: diagnosed body": 1566,
+        "unknown: flow the graph can't see": 192
+      },
+      "free": 0,
+      "free_share": 0.0,
+      "proven_conforming": 0,
+      "proven_conforming_share": 0.0,
+      "conditional_conformance": 0
+    },
+    "untagged": {
+      "sites": 1178,
+      "buckets": {
+        "unknown: diagnosed body": 1005,
+        "unknown: flow the graph can't see": 170,
+        "unknown: host metadata": 3
+      },
+      "free": 0,
+      "free_share": 0.0,
+      "proven_conforming": 0,
+      "proven_conforming_share": 0.0,
+      "conditional_conformance": 0
+    },
+    "all": {
+      "sites": 2936,
+      "buckets": {
+        "unknown: diagnosed body": 2571,
+        "unknown: flow the graph can't see": 362,
+        "unknown: host metadata": 3
+      },
+      "free": 0,
+      "free_share": 0.0,
+      "proven_conforming": 0,
+      "proven_conforming_share": 0.0,
+      "conditional_conformance": 0
+    }
+  },
+  "after": {
+    "tagged": {
+      "sites": 1758,
+      "buckets": {
+        "unknown: diagnosed body": 1693,
+        "unknown: flow the graph can't see": 65
+      },
+      "free": 0,
+      "free_share": 0.0,
+      "proven_conforming": 0,
+      "proven_conforming_share": 0.0,
+      "conditional_conformance": 0
+    },
+    "untagged": {
+      "sites": 1178,
+      "buckets": {
+        "unknown: diagnosed body": 1027,
+        "unknown: flow the graph can't see": 148,
+        "unknown: host metadata": 3
+      },
+      "free": 0,
+      "free_share": 0.0,
+      "proven_conforming": 0,
+      "proven_conforming_share": 0.0,
+      "conditional_conformance": 0
+    },
+    "all": {
+      "sites": 2936,
+      "buckets": {
+        "unknown: diagnosed body": 2720,
+        "unknown: flow the graph can't see": 213,
+        "unknown: host metadata": 3
+      },
+      "free": 0,
+      "free_share": 0.0,
+      "proven_conforming": 0,
+      "proven_conforming_share": 0.0,
+      "conditional_conformance": 0
+    }
+  },
+  "per_site_rows": 2936,
+  "unchanged_diagnostics": 260,
+  "before_allocation_schemas": 2563,
+  "after_allocation_schemas": 2563,
+  "newly_free_sites": [],
+  "lost_free_sites": [],
+  "changed_buckets": 149,
+  "changed_detail_sets": 2634,
+  "changed_diagnostic_frontier_counts": 2487,
+  "transitions": [
+    {
+      "before": "unknown: diagnosed body",
+      "after": "unknown: diagnosed body",
+      "kind": "tagged",
+      "sites": 1566
+    },
+    {
+      "before": "unknown: diagnosed body",
+      "after": "unknown: diagnosed body",
+      "kind": "untagged",
+      "sites": 1005
+    },
+    {
+      "before": "unknown: flow the graph can't see",
+      "after": "unknown: diagnosed body",
+      "kind": "tagged",
+      "sites": 127
+    },
+    {
+      "before": "unknown: flow the graph can't see",
+      "after": "unknown: diagnosed body",
+      "kind": "untagged",
+      "sites": 22
+    },
+    {
+      "before": "unknown: flow the graph can't see",
+      "after": "unknown: flow the graph can't see",
+      "kind": "tagged",
+      "sites": 65
+    },
+    {
+      "before": "unknown: flow the graph can't see",
+      "after": "unknown: flow the graph can't see",
+      "kind": "untagged",
+      "sites": 148
+    },
+    {
+      "before": "unknown: host metadata",
+      "after": "unknown: host metadata",
+      "kind": "untagged",
+      "sites": 3
+    }
+  ],
+  "definition": "Proven conformance is Free plus readiness-only. Conforms-if remains conditional. Free is analysis eligibility for erasure; rejected source produces no production IR.",
+  "rule_scope": {
+    "uninitialized-declaration-cause": "names an existing Unknown; cannot itself erase a cast",
+    "object-binding-property-edge": "connects a bound identifier to its initializer field",
+    "iteration-producer-frontier": "retains Unknown and iterable provenance; cannot itself erase a cast",
+    "nonnull-callable-reference": "preserves an already represented operand identity through reference classification"
+  }
+}

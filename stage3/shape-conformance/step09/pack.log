@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "roundtrip": "all observations equal",
+  "values": 49019,
+  "counts": {
+    "tagged": {
+      "conforms and ready (free)": 0,
+      "conforms but not proven ready (readiness checks only)": 0,
+      "conforms-if": 0,
+      "unknown": 1758
+    },
+    "untagged": {
+      "conforms and ready (free)": 0,
+      "conforms but not proven ready (readiness checks only)": 0,
+      "conforms-if": 0,
+      "unknown": 1178
+    }
+  },
+  "raw_sha256": "71df7417aa350b710a574b79521567090c539a6ec18d96fb128b942c0b6f60ce",
+  "artifact_bytes": 4708945
+}

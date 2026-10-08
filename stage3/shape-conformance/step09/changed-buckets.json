@@ -1,0 +1,3727 @@
+[
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 2835,
+    "column": 26,
+    "start": 100697,
+    "end": 100721,
+    "kind": "tagged",
+    "text": "parent as ImportTypeNode",
+    "site_key": "src/compiler/utilities.ts:100697:100721",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "de118a74ac619680a18295dfbdd69cff509e567ede83c86e5c94380b4dc8b73a",
+      "diagnostic_causes": 92
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 2850,
+    "column": 38,
+    "start": 101451,
+    "end": 101485,
+    "kind": "tagged",
+    "text": "parent as TypeParameterDeclaration",
+    "site_key": "src/compiler/utilities.ts:101451:101485",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "78e4228cba8e912026f1da82dcc17f1ba14f30d4bf4cd6955513d88f79c8a04f",
+      "diagnostic_causes": 97
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 2852,
+    "column": 38,
+    "start": 101588,
+    "end": 101614,
+    "kind": "tagged",
+    "text": "parent as JSDocTemplateTag",
+    "site_key": "src/compiler/utilities.ts:101588:101614",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "71756580cbbfe1cd1226d0a5757ebc0d08849c3de63ae899474e2b433e8eb258",
+      "diagnostic_causes": 93
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 2857,
+    "column": 38,
+    "start": 101870,
+    "end": 101887,
+    "kind": "tagged",
+    "text": "parent as HasType",
+    "site_key": "src/compiler/utilities.ts:101870:101887",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "3929fcbe1a88d95157615ef072183345cedb402d092d732bce8048d2aa16789d",
+      "diagnostic_causes": 95
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 2866,
+    "column": 38,
+    "start": 102328,
+    "end": 102361,
+    "kind": "tagged",
+    "text": "parent as FunctionLikeDeclaration",
+    "site_key": "src/compiler/utilities.ts:102328:102361",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "ddf12d876045f828a7abb3fc8b7e80ab96c31d8d42ae4199f08dc38ba502b73e",
+      "diagnostic_causes": 99
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 2870,
+    "column": 38,
+    "start": 102557,
+    "end": 102587,
+    "kind": "tagged",
+    "text": "parent as SignatureDeclaration",
+    "site_key": "src/compiler/utilities.ts:102557:102587",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "3e466dd93e64fa35649436964df9f70075c8e03c477649e0d01343a296df3c7a",
+      "diagnostic_causes": 91
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 2872,
+    "column": 38,
+    "start": 102691,
+    "end": 102714,
+    "kind": "tagged",
+    "text": "parent as TypeAssertion",
+    "site_key": "src/compiler/utilities.ts:102691:102714",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "9f989169f3518c347a3eed5373a586bba61b6a014de128acfeede6f067cca83d",
+      "diagnostic_causes": 93
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 2876,
+    "column": 38,
+    "start": 102916,
+    "end": 102967,
+    "kind": "tagged",
+    "text": "parent as CallExpression | TaggedTemplateExpression",
+    "site_key": "src/compiler/utilities.ts:102916:102967",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "de9892c7b4096f8b9d049c371a1fee67200de45263b8ed6a8a6d8eaba4b5a2dc",
+      "diagnostic_causes": 91
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 3625,
+    "column": 17,
+    "start": 135751,
+    "end": 135782,
+    "kind": "tagged",
+    "text": "parent as JsxOpeningLikeElement",
+    "site_key": "src/compiler/utilities.ts:135751:135782",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "29fc6e72c98373c72d27e3ae1062f40aa585f291cba27032d9d8acf69da29ec0",
+      "diagnostic_causes": 93
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 3714,
+    "column": 21,
+    "start": 139789,
+    "end": 139813,
+    "kind": "tagged",
+    "text": "parent as HasInitializer",
+    "site_key": "src/compiler/utilities.ts:139789:139813",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "0fe686dc26187e002bd55a80d47d19ee8423d7059d8d72089ed954197f798bf9",
+      "diagnostic_causes": 95
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 3724,
+    "column": 21,
+    "start": 140223,
+    "end": 140252,
+    "kind": "tagged",
+    "text": "parent as ExpressionStatement",
+    "site_key": "src/compiler/utilities.ts:140223:140252",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "48cbdc250684df25c46d21452fb96d4cd4b261758a36fbcd7bc6f232a9c74698",
+      "diagnostic_causes": 96
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 3726,
+    "column": 34,
+    "start": 140348,
+    "end": 140370,
+    "kind": "tagged",
+    "text": "parent as ForStatement",
+    "site_key": "src/compiler/utilities.ts:140348:140370",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "f7f6311e8ae84d614f92c5a2e5088e2ea1b9e75385bcf235c3012eb45fab1fd5",
+      "diagnostic_causes": 98
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 3732,
+    "column": 40,
+    "start": 140729,
+    "end": 140757,
+    "kind": "tagged",
+    "text": "parent as ForInOrOfStatement",
+    "site_key": "src/compiler/utilities.ts:140729:140757",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "86841bd6f1c31426b8108b088e364e56f9c6955ccffcdce0d644f7d952992976",
+      "diagnostic_causes": 98
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 3737,
+    "column": 30,
+    "start": 141078,
+    "end": 141107,
+    "kind": "tagged",
+    "text": "parent as AssertionExpression",
+    "site_key": "src/compiler/utilities.ts:141078:141107",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "eb3a86bd9a2da6e454dd0724e3d5e70cc559d7b995bcc1f82f6ca0527d697dd0",
+      "diagnostic_causes": 92
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 3739,
+    "column": 30,
+    "start": 141190,
+    "end": 141212,
+    "kind": "tagged",
+    "text": "parent as TemplateSpan",
+    "site_key": "src/compiler/utilities.ts:141190:141212",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "5101c67fad41b2ba2b3b376579dada9735c06a11a4ab0e5e96b47e79bc7cab6f",
+      "diagnostic_causes": 91
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 3741,
+    "column": 30,
+    "start": 141303,
+    "end": 141333,
+    "kind": "tagged",
+    "text": "parent as ComputedPropertyName",
+    "site_key": "src/compiler/utilities.ts:141303:141333",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "f479417062d1f27ae2b12f16668c79667b441f6ce4a0d17c36a04c42cdbfacbb",
+      "diagnostic_causes": 95
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 3748,
+    "column": 21,
+    "start": 141612,
+    "end": 141649,
+    "kind": "tagged",
+    "text": "parent as ExpressionWithTypeArguments",
+    "site_key": "src/compiler/utilities.ts:141612:141649",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "c0f91e29d4c5aadc41011df3fbb7fcef2de4fb4b62dcf0f5ffb5c2d882863dc6",
+      "diagnostic_causes": 87
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 3751,
+    "column": 21,
+    "start": 141857,
+    "end": 141894,
+    "kind": "tagged",
+    "text": "parent as ShorthandPropertyAssignment",
+    "site_key": "src/compiler/utilities.ts:141857:141894",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "43ccb2481746776e6c3febcd532c01f58b82dcefda63c824b1929c61767ac35c",
+      "diagnostic_causes": 94
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 3753,
+    "column": 30,
+    "start": 142010,
+    "end": 142039,
+    "kind": "tagged",
+    "text": "parent as SatisfiesExpression",
+    "site_key": "src/compiler/utilities.ts:142010:142039",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "87bcf8a3698614ef1545235488efdf250562f3fc4c954288a73fe3045ddc44b0",
+      "diagnostic_causes": 95
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 3849,
+    "column": 55,
+    "start": 146037,
+    "end": 146061,
+    "kind": "tagged",
+    "text": "expression as Identifier",
+    "site_key": "src/compiler/utilities.ts:146037:146061",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "273ff7a8c41d63403c28505dc2127cd1dfe8413b8a74e887fd613631df1f6742",
+      "diagnostic_causes": 99
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 8107,
+    "column": 34,
+    "start": 318248,
+    "end": 318304,
+    "kind": "tagged",
+    "text": "parent as PrefixUnaryExpression | PostfixUnaryExpression",
+    "site_key": "src/compiler/utilities.ts:318248:318304",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "a697111876075a003baa5a67feead440443b40de0a5e1757f70703b1a4193eeb",
+      "diagnostic_causes": 83
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 8110,
+    "column": 45,
+    "start": 318537,
+    "end": 318563,
+    "kind": "tagged",
+    "text": "parent as BinaryExpression",
+    "site_key": "src/compiler/utilities.ts:318537:318563",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "81dc3e30a3d6ce04d86db35df6116b7f1d9203278ed62267994eb8ab735107d5",
+      "diagnostic_causes": 91
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 8115,
+    "column": 21,
+    "start": 318858,
+    "end": 318892,
+    "kind": "tagged",
+    "text": "parent as PropertyAccessExpression",
+    "site_key": "src/compiler/utilities.ts:318858:318892",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "0db9ff85e1153199ee8c24f6087277c140ce71cb5149d8c197bac02138598cbe",
+      "diagnostic_causes": 99
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 8119,
+    "column": 30,
+    "start": 319186,
+    "end": 319214,
+    "kind": "tagged",
+    "text": "parent as PropertyAssignment",
+    "site_key": "src/compiler/utilities.ts:319186:319214",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "db01eda3dc241c61276392243d10142dffeafa25968060c2e49b65c4f4c73565",
+      "diagnostic_causes": 100
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 8123,
+    "column": 30,
+    "start": 319490,
+    "end": 319527,
+    "kind": "tagged",
+    "text": "parent as ShorthandPropertyAssignment",
+    "site_key": "src/compiler/utilities.ts:319490:319527",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "59186380ce2de061c9eb2dcb9f6449e5a3aa4c93f5aa4f57f8dc5a7f969f10df",
+      "diagnostic_causes": 90
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 8128,
+    "column": 30,
+    "start": 319805,
+    "end": 319846,
+    "kind": "tagged",
+    "text": "parent as ForInStatement | ForOfStatement",
+    "site_key": "src/compiler/utilities.ts:319805:319846",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "c91faf0b83120d89f870b3379ba25eb091d59db61b82653a52e82e3e3bcfe080",
+      "diagnostic_causes": 96
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 8638,
+    "column": 20,
+    "start": 338868,
+    "end": 338912,
+    "kind": "untagged",
+    "text": "diagnostic as DiagnosticWithDetachedLocation",
+    "site_key": "src/compiler/utilities.ts:338868:338912",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "e994fc9348b2b7427a8f73dbd32c77adcc5b83a9444a872d33795e088f4223a9",
+      "diagnostic_causes": 5
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 10838,
+    "column": 43,
+    "start": 432098,
+    "end": 432146,
+    "kind": "tagged",
+    "text": "parent as TypeLiteralNode | InterfaceDeclaration",
+    "site_key": "src/compiler/utilities.ts:432098:432146",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "b58015ea87af242afbb93d5c1054f4d5dfd406b727e9e07aa6af1ee040a58f0b",
+      "diagnostic_causes": 90
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 10841,
+    "column": 21,
+    "start": 432269,
+    "end": 432306,
+    "kind": "tagged",
+    "text": "parent as UnionOrIntersectionTypeNode",
+    "site_key": "src/compiler/utilities.ts:432269:432306",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "598b921b812e6cbcad67457ee60871b1de5b6ff851fd29b2d7d518c513ebbd0e",
+      "diagnostic_causes": 89
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 10847,
+    "column": 21,
+    "start": 432545,
+    "end": 432645,
+    "kind": "tagged",
+    "text": "parent as TupleTypeNode | ArrayLiteralExpression | CommaListExpression | NamedImports | NamedExports",
+    "site_key": "src/compiler/utilities.ts:432545:432645",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "772d1e9dc5fbaa261729eef809599f647d993908138c4fbfbf4b06735e762ab8",
+      "diagnostic_causes": 93
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 10850,
+    "column": 21,
+    "start": 432768,
+    "end": 432827,
+    "kind": "untagged",
+    "text": "parent as ObjectLiteralExpressionBase<ObjectLiteralElement>",
+    "site_key": "src/compiler/utilities.ts:432768:432827",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "58fb1a795ba7f5acd34f5eaecc51937412650a5e0070d3fd69e92ccc54a7f855",
+      "diagnostic_causes": 91
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 10853,
+    "column": 40,
+    "start": 432962,
+    "end": 433002,
+    "kind": "tagged",
+    "text": "parent as CallExpression | NewExpression",
+    "site_key": "src/compiler/utilities.ts:432962:433002",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "4e84c86cc7f1cbb6d3fc751364d5576151e0840b49a7c816e2b4767f92003f4e",
+      "diagnostic_causes": 99
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 10854,
+    "column": 18,
+    "start": 433038,
+    "end": 433078,
+    "kind": "tagged",
+    "text": "parent as CallExpression | NewExpression",
+    "site_key": "src/compiler/utilities.ts:433038:433078",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "5b9c57c5f8d2b4f761f8c388341b4173e1449f706affd25b37d5f4249b8fdbbc",
+      "diagnostic_causes": 93
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 10855,
+    "column": 18,
+    "start": 433132,
+    "end": 433172,
+    "kind": "tagged",
+    "text": "parent as CallExpression | NewExpression",
+    "site_key": "src/compiler/utilities.ts:433132:433172",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "43fc982279c62820e6d002a6f3364ef1be2446827f90d164e08387b02cc2d0a7",
+      "diagnostic_causes": 88
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 10858,
+    "column": 40,
+    "start": 433300,
+    "end": 433334,
+    "kind": "tagged",
+    "text": "parent as JsxElement | JsxFragment",
+    "site_key": "src/compiler/utilities.ts:433300:433334",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "c9a548fd929e94a21a18be7070b5390d998946fb86d1ffcf5ed40b1e2e75ca8c",
+      "diagnostic_causes": 95
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 10861,
+    "column": 40,
+    "start": 433490,
+    "end": 433541,
+    "kind": "tagged",
+    "text": "parent as JsxOpeningElement | JsxSelfClosingElement",
+    "site_key": "src/compiler/utilities.ts:433490:433541",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "9bfa82c8dee3b717fe965208a8cd7ebcc80cc0b27ee414027ec1f12b4e1475d4",
+      "diagnostic_causes": 83
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 10866,
+    "column": 21,
+    "start": 433738,
+    "end": 433789,
+    "kind": "tagged",
+    "text": "parent as Block | CaseOrDefaultClause | ModuleBlock",
+    "site_key": "src/compiler/utilities.ts:433738:433789",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "1d3c509977aa691b0eda6eb6d8dcf6af59d44751045913319f7838d543f951b6",
+      "diagnostic_causes": 93
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 10868,
+    "column": 21,
+    "start": 433860,
+    "end": 433879,
+    "kind": "tagged",
+    "text": "parent as CaseBlock",
+    "site_key": "src/compiler/utilities.ts:433860:433879",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "eb80107ee125c6e3dd17dc7357717a2e613e3b2451c5a7b8e4353a835c411e60",
+      "diagnostic_causes": 89
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 10871,
+    "column": 44,
+    "start": 434019,
+    "end": 434049,
+    "kind": "tagged",
+    "text": "parent as ClassLikeDeclaration",
+    "site_key": "src/compiler/utilities.ts:434019:434049",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "a32ab9d69ffe4a7db0b0268a08ec7d10888a32a1755d5704230884b20326e412",
+      "diagnostic_causes": 94
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 10873,
+    "column": 42,
+    "start": 434156,
+    "end": 434181,
+    "kind": "tagged",
+    "text": "parent as EnumDeclaration",
+    "site_key": "src/compiler/utilities.ts:434156:434181",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "250547dc76ad5a0daacede3bc91cf016395cedd99ef43d40283566eeb8efb31f",
+      "diagnostic_causes": 91
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 10875,
+    "column": 21,
+    "start": 434262,
+    "end": 434282,
+    "kind": "tagged",
+    "text": "parent as SourceFile",
+    "site_key": "src/compiler/utilities.ts:434262:434282",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "29f844969e24b619a313180e0a14b7a3ebb5ce9f7188cfb6f4326f50b96e8983",
+      "diagnostic_causes": 100
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 11458,
+    "column": 70,
+    "start": 462357,
+    "end": 462389,
+    "kind": "tagged",
+    "text": "member as ConstructorDeclaration",
+    "site_key": "src/compiler/utilities.ts:462357:462389",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "c1699b40b1580531d17d171cafedac73ea44e5e6d9c242254199c4d3fbf9dd9a",
+      "diagnostic_causes": 98
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 11459,
+    "column": 20,
+    "start": 462420,
+    "end": 462452,
+    "kind": "tagged",
+    "text": "member as ConstructorDeclaration",
+    "site_key": "src/compiler/utilities.ts:462420:462452",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "ec4d772268fd37fc48338f8bf67dd40eea2d5a3c486aaaddd3024a0b7d35752e",
+      "diagnostic_causes": 100
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "line": 3576,
+    "column": 19,
+    "start": 180433,
+    "end": 180457,
+    "kind": "untagged",
+    "text": "arr as MissingList<Node>",
+    "site_key": "src/compiler/parser.ts:180433:180457",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "87a2887baecc8129504646750d34560d7830503e747d35f23c3778e681776273",
+      "diagnostic_causes": 103
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 2181,
+    "column": 26,
+    "start": 84552,
+    "end": 84575,
+    "kind": "untagged",
+    "text": "options as BuildOptions",
+    "site_key": "src/compiler/commandLineParser.ts:84552:84575",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "e7f59cf8254b32a2871a27d8c49f16007cbb492b336ae85f74021f18bd7c5c8f",
+      "diagnostic_causes": 2
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 3231,
+    "column": 32,
+    "start": 132814,
+    "end": 132830,
+    "kind": "untagged",
+    "text": "raw[prop] as T[]",
+    "site_key": "src/compiler/commandLineParser.ts:132814:132830",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "22fa35783e0877914f3c6c00fba6275c13872be0b8f6de99f1b8dac61b6c30e9",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "fc63b39c61e8d1cf89f0f82b002691c03b2987164661306ae989b07997b039b2",
+      "diagnostic_causes": 1
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 5268,
+    "column": 81,
+    "start": 264722,
+    "end": 264747,
+    "kind": "tagged",
+    "text": "node as ExportDeclaration",
+    "site_key": "src/compiler/checker.ts:264722:264747",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "ba3b3aecdd0f5c4a4ef7035257732eb7fd4919e4ee920fd2c08a926f7707afa3",
+      "diagnostic_causes": 101
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 5269,
+    "column": 71,
+    "start": 264839,
+    "end": 264864,
+    "kind": "tagged",
+    "text": "node as ExportDeclaration",
+    "site_key": "src/compiler/checker.ts:264839:264864",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "ea92694b42cbc3fe0fd9a28457ba10365913b23d6ba0f641dd87a1ead193474b",
+      "diagnostic_causes": 93
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 5269,
+    "column": 113,
+    "start": 264881,
+    "end": 264906,
+    "kind": "tagged",
+    "text": "node as ExportDeclaration",
+    "site_key": "src/compiler/checker.ts:264881:264906",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "c9da041a50fb196886e6a994109178e96779538623516a7e728791debaa5ec91",
+      "diagnostic_causes": 95
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 5274,
+    "column": 29,
+    "start": 265128,
+    "end": 265153,
+    "kind": "tagged",
+    "text": "node as ExportDeclaration",
+    "site_key": "src/compiler/checker.ts:265128:265153",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "766620718e011d43c156964fd15f251619aa32b3bc5a03696e9a563559e5af31",
+      "diagnostic_causes": 99
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 9817,
+    "column": 85,
+    "start": 559203,
+    "end": 559228,
+    "kind": "tagged",
+    "text": "node as ExportDeclaration",
+    "site_key": "src/compiler/checker.ts:559203:559228",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "f26cd783cf00a457846ed43f4c43667851550faf41eca91fcf8e9b7be6bfc0e3",
+      "diagnostic_causes": 96
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 9819,
+    "column": 49,
+    "start": 559358,
+    "end": 559383,
+    "kind": "tagged",
+    "text": "node as ExportDeclaration",
+    "site_key": "src/compiler/checker.ts:559358:559383",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "7aaa2ae87ae2ff92a8992a9502868b9e90482625e4578aaa4ae115f24e19b732",
+      "diagnostic_causes": 93
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 13143,
+    "column": 37,
+    "start": 763847,
+    "end": 763935,
+    "kind": "tagged",
+    "text": "node as InterfaceDeclaration | TypeAliasDeclaration | JSDocTypedefTag | JSDocCallbackTag",
+    "site_key": "src/compiler/checker.ts:763847:763935",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "a5a03235c944f66c971a04279cc3bdc19649efa4c779f61c479897ec458b01a5",
+      "diagnostic_causes": 92
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 13257,
+    "column": 77,
+    "start": 770591,
+    "end": 770626,
+    "kind": "tagged",
+    "text": "declaration as ClassLikeDeclaration",
+    "site_key": "src/compiler/checker.ts:770591:770626",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "8defde001db893215446a0f864652f51f506eb8e4cfc716f36e416f218deca2e",
+      "diagnostic_causes": 105
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 13404,
+    "column": 103,
+    "start": 779273,
+    "end": 779308,
+    "kind": "tagged",
+    "text": "declaration as InterfaceDeclaration",
+    "site_key": "src/compiler/checker.ts:779273:779308",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "0e9012152b12662fee9d2df5fcb76f3c5060a304dd9b7fb9a23b614772b103af",
+      "diagnostic_causes": 99
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 13405,
+    "column": 66,
+    "start": 779379,
+    "end": 779414,
+    "kind": "tagged",
+    "text": "declaration as InterfaceDeclaration",
+    "site_key": "src/compiler/checker.ts:779379:779414",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "07de41f73ae40655eedf3b6c973dda9e4c56af91ca4dabb0dbe3aa75b4aad5a1",
+      "diagnostic_causes": 95
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 13447,
+    "column": 65,
+    "start": 781427,
+    "end": 781462,
+    "kind": "tagged",
+    "text": "declaration as InterfaceDeclaration",
+    "site_key": "src/compiler/checker.ts:781427:781462",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "c6b3ad2394bde8c1c018530ba722ec11b20a1ca88e416686b5f647143666c839",
+      "diagnostic_causes": 95
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 13551,
+    "column": 47,
+    "start": 787634,
+    "end": 787664,
+    "kind": "tagged",
+    "text": "declaration as EnumDeclaration",
+    "site_key": "src/compiler/checker.ts:787634:787664",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "3418c3d878fb9a3a3b4475107007336d665949a3feaac1b44953f9a90cf95591",
+      "diagnostic_causes": 98
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 16717,
+    "column": 119,
+    "start": 971755,
+    "end": 971790,
+    "kind": "untagged",
+    "text": "declaration as LateBoundDeclaration",
+    "site_key": "src/compiler/checker.ts:971755:971790",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "3cbd2f6374af4411de96a4b5dc6a43539c8aaf2ddbd21f260d284f26c92c12b6",
+      "diagnostic_causes": 101
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 16778,
+    "column": 80,
+    "start": 976149,
+    "end": 976179,
+    "kind": "tagged",
+    "text": "childTypeParameter as TypeNode",
+    "site_key": "src/compiler/checker.ts:976149:976179",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "23f0274556934e279d0d352450255f2f557d64b2385298ef6c8e913ef3ac37f5",
+      "diagnostic_causes": 91
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 18114,
+    "column": 106,
+    "start": 1053225,
+    "end": 1053242,
+    "kind": "untagged",
+    "text": "type as UnionType",
+    "site_key": "src/compiler/checker.ts:1053225:1053242",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "6730c6028632d706b6b2d1dd7e4012fbf35528796fb7a924abf666cfabe3b152",
+      "diagnostic_causes": 93
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 18244,
+    "column": 32,
+    "start": 1060694,
+    "end": 1060718,
+    "kind": "untagged",
+    "text": "type as IntersectionType",
+    "site_key": "src/compiler/checker.ts:1060694:1060718",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "716bc47dd3668cc6bd00954c86d495edea44df3b55c0473ddad022b7b6dcba0e",
+      "diagnostic_causes": 1
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 18245,
+    "column": 46,
+    "start": 1060815,
+    "end": 1060839,
+    "kind": "untagged",
+    "text": "type as IntersectionType",
+    "site_key": "src/compiler/checker.ts:1060815:1060839",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "716bc47dd3668cc6bd00954c86d495edea44df3b55c0473ddad022b7b6dcba0e",
+      "diagnostic_causes": 1
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 18256,
+    "column": 36,
+    "start": 1061518,
+    "end": 1061542,
+    "kind": "untagged",
+    "text": "type as IntersectionType",
+    "site_key": "src/compiler/checker.ts:1061518:1061542",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "fc122b8ad3de28bc0dcdd598b77f3696de659313693c214815de50d54963619c",
+      "diagnostic_causes": 1
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 18257,
+    "column": 26,
+    "start": 1061619,
+    "end": 1061643,
+    "kind": "untagged",
+    "text": "type as IntersectionType",
+    "site_key": "src/compiler/checker.ts:1061619:1061643",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "fc122b8ad3de28bc0dcdd598b77f3696de659313693c214815de50d54963619c",
+      "diagnostic_causes": 1
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 18258,
+    "column": 49,
+    "start": 1061727,
+    "end": 1061751,
+    "kind": "untagged",
+    "text": "type as IntersectionType",
+    "site_key": "src/compiler/checker.ts:1061727:1061751",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "fc122b8ad3de28bc0dcdd598b77f3696de659313693c214815de50d54963619c",
+      "diagnostic_causes": 1
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 18283,
+    "column": 73,
+    "start": 1063077,
+    "end": 1063094,
+    "kind": "untagged",
+    "text": "type as UnionType",
+    "site_key": "src/compiler/checker.ts:1063077:1063094",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "432d2d194ce97d70732aeb9a618263fe8d2a65484c1576c1dacf8924e90a6eb8",
+      "diagnostic_causes": 98
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 18289,
+    "column": 33,
+    "start": 1063304,
+    "end": 1063318,
+    "kind": "untagged",
+    "text": "t as UnionType",
+    "site_key": "src/compiler/checker.ts:1063304:1063318",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "74f53d3411f12a5cb0b4f67f4eeaf293c0e9855228f090b4940a19b7ad5cc298",
+      "diagnostic_causes": 108
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 25150,
+    "column": 56,
+    "start": 1499891,
+    "end": 1499909,
+    "kind": "untagged",
+    "text": "t as TypeReference",
+    "site_key": "src/compiler/checker.ts:1499891:1499909",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "a5aa9e0d40054e6d4f00890f32f2fa42265cf885dc0e729a4e34e1b93d6be589",
+      "diagnostic_causes": 84
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 27129,
+    "column": 72,
+    "start": 1611262,
+    "end": 1611286,
+    "kind": "untagged",
+    "text": "type as IntersectionType",
+    "site_key": "src/compiler/checker.ts:1611262:1611286",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "8be4a3e6394fd8e67b5268ec9847019736aa7c57204b1cc999fc0328e1792298",
+      "diagnostic_causes": 97
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 28367,
+    "column": 50,
+    "start": 1688310,
+    "end": 1688334,
+    "kind": "tagged",
+    "text": "parent as ForOfStatement",
+    "site_key": "src/compiler/checker.ts:1688310:1688334",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "bf18fa5f5971a4ff1f0061fde7dba916ca48b42517c58a00b3f6dacecae27eee",
+      "diagnostic_causes": 91
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 28369,
+    "column": 58,
+    "start": 1688455,
+    "end": 1688481,
+    "kind": "tagged",
+    "text": "parent as BinaryExpression",
+    "site_key": "src/compiler/checker.ts:1688455:1688481",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "bbef2f66cd963f3d842cd0fb9ab5373c65b4ce9a55cf17e468b6c22a47515384",
+      "diagnostic_causes": 98
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 28373,
+    "column": 61,
+    "start": 1688684,
+    "end": 1688716,
+    "kind": "tagged",
+    "text": "parent as ArrayLiteralExpression",
+    "site_key": "src/compiler/checker.ts:1688684:1688716",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "9e389cf3ebd1f05fb9d6e4bdfd03913c16ba799842ce0f637f37e9d8cb4df4e9",
+      "diagnostic_causes": 96
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 28375,
+    "column": 58,
+    "start": 1688827,
+    "end": 1688850,
+    "kind": "tagged",
+    "text": "parent as SpreadElement",
+    "site_key": "src/compiler/checker.ts:1688827:1688850",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "b3102344aff051ecda3bec70a2c6db1f26ca23699ac7ef5986316963fd09f27d",
+      "diagnostic_causes": 91
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 28377,
+    "column": 60,
+    "start": 1688962,
+    "end": 1688990,
+    "kind": "tagged",
+    "text": "parent as PropertyAssignment",
+    "site_key": "src/compiler/checker.ts:1688962:1688990",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "2fefd59a9741f65cc2fb1148e2c0db34a8bcba05cc7323225a49141f77d341fa",
+      "diagnostic_causes": 87
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 28379,
+    "column": 69,
+    "start": 1689120,
+    "end": 1689157,
+    "kind": "tagged",
+    "text": "parent as ShorthandPropertyAssignment",
+    "site_key": "src/compiler/checker.ts:1689120:1689157",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "3309f2537d593c03600098797a718de4bee4a758195b095165e3647eeae60163",
+      "diagnostic_causes": 82
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 28450,
+    "column": 65,
+    "start": 1692641,
+    "end": 1692667,
+    "kind": "tagged",
+    "text": "parent as BinaryExpression",
+    "site_key": "src/compiler/checker.ts:1692641:1692667",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "8afc3e5d6f65a719ff075752e2d415d1cdc40dfcea90f51c13806976908aeec5",
+      "diagnostic_causes": 95
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 28450,
+    "column": 143,
+    "start": 1692719,
+    "end": 1692745,
+    "kind": "tagged",
+    "text": "parent as BinaryExpression",
+    "site_key": "src/compiler/checker.ts:1692719:1692745",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "b1e0ab24b15fa1df285647c1c205e455063f9f3107b3627437d5954c62cdf7bf",
+      "diagnostic_causes": 80
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 28451,
+    "column": 65,
+    "start": 1692829,
+    "end": 1692855,
+    "kind": "tagged",
+    "text": "parent as BinaryExpression",
+    "site_key": "src/compiler/checker.ts:1692829:1692855",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "21c474fc2fae9358b05a01c9229b8165b91c8b5eeb3b6098031b1a5aec2a3324",
+      "diagnostic_causes": 99
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 28451,
+    "column": 142,
+    "start": 1692906,
+    "end": 1692932,
+    "kind": "tagged",
+    "text": "parent as BinaryExpression",
+    "site_key": "src/compiler/checker.ts:1692906:1692932",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "e5dc2a23fe54c945601f1ec17112a3e12ce62e2ed31e0a3202d6986fde8357bc",
+      "diagnostic_causes": 94
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 29325,
+    "column": 82,
+    "start": 1742177,
+    "end": 1742207,
+    "kind": "untagged",
+    "text": "antecedent as FlowSwitchClause",
+    "site_key": "src/compiler/checker.ts:1742177:1742207",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "957387eeae6a99d9b24593e9b37be813ec781b86e436eda7758b877710d3d20f",
+      "diagnostic_causes": 94
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 29325,
+    "column": 136,
+    "start": 1742231,
+    "end": 1742261,
+    "kind": "untagged",
+    "text": "antecedent as FlowSwitchClause",
+    "site_key": "src/compiler/checker.ts:1742231:1742261",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "a7d145a752e544e7ba41940650e365dc10d1e00a39ad05a7c3647b443de1ac4a",
+      "diagnostic_causes": 99
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 29327,
+    "column": 34,
+    "start": 1742421,
+    "end": 1742451,
+    "kind": "untagged",
+    "text": "antecedent as FlowSwitchClause",
+    "site_key": "src/compiler/checker.ts:1742421:1742451",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "f26b69684a8de40acf2356bda6e48f04246890d9e5ac7ad913f504515aaf5c54",
+      "diagnostic_causes": 92
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 32804,
+    "column": 57,
+    "start": 1951949,
+    "end": 1951974,
+    "kind": "tagged",
+    "text": "parent as YieldExpression",
+    "site_key": "src/compiler/checker.ts:1951949:1951974",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "7b4d55f468edfc5cbc1dbe3a5a7168dc38538beb64de15fafbe1632548e2e0e7",
+      "diagnostic_causes": 94
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 32806,
+    "column": 57,
+    "start": 1952094,
+    "end": 1952119,
+    "kind": "tagged",
+    "text": "parent as AwaitExpression",
+    "site_key": "src/compiler/checker.ts:1952094:1952119",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "5b750dfed05ef762b57da50ea83981573fba74dbb5e230e836b5b4fc8ea589b1",
+      "diagnostic_causes": 93
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 32809,
+    "column": 53,
+    "start": 1952278,
+    "end": 1952318,
+    "kind": "tagged",
+    "text": "parent as CallExpression | NewExpression",
+    "site_key": "src/compiler/checker.ts:1952278:1952318",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "e84d8d176fcbc634c90fab73dc3e957b2680f64cc136206fa00fc05ca1868c9c",
+      "diagnostic_causes": 91
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 32811,
+    "column": 54,
+    "start": 1952421,
+    "end": 1952440,
+    "kind": "tagged",
+    "text": "parent as Decorator",
+    "site_key": "src/compiler/checker.ts:1952421:1952440",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "4e31b2b2a26c37498abf12026948a41296488f40e23f87633dfb7546939db898",
+      "diagnostic_causes": 89
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 32814,
+    "column": 46,
+    "start": 1952586,
+    "end": 1952615,
+    "kind": "tagged",
+    "text": "parent as AssertionExpression",
+    "site_key": "src/compiler/checker.ts:1952586:1952615",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "c557b0c2402ab78edd016c2619580b358dd40fa8a7214ad7f98599bc520b165c",
+      "diagnostic_causes": 98
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 32814,
+    "column": 103,
+    "start": 1952643,
+    "end": 1952672,
+    "kind": "tagged",
+    "text": "parent as AssertionExpression",
+    "site_key": "src/compiler/checker.ts:1952643:1952672",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "2827431bbecae019f5c0a47aba9c2309bb20429b8fa836da901cab20a8b3d702",
+      "diagnostic_causes": 101
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 32814,
+    "column": 171,
+    "start": 1952711,
+    "end": 1952740,
+    "kind": "tagged",
+    "text": "parent as AssertionExpression",
+    "site_key": "src/compiler/checker.ts:1952711:1952740",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "df54050bd5ad816a3950114d4ff97725b6f71a7f705d50c193bb017f811c4039",
+      "diagnostic_causes": 93
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 32819,
+    "column": 65,
+    "start": 1953047,
+    "end": 1953105,
+    "kind": "tagged",
+    "text": "parent as PropertyAssignment | ShorthandPropertyAssignment",
+    "site_key": "src/compiler/checker.ts:1953047:1953105",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "d5a53f7409c00264696ac388a53803b1baacf63f77827502e4851f81a9b1cc3a",
+      "diagnostic_causes": 99
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 32823,
+    "column": 38,
+    "start": 1953361,
+    "end": 1953393,
+    "kind": "tagged",
+    "text": "parent as ArrayLiteralExpression",
+    "site_key": "src/compiler/checker.ts:1953361:1953393",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "ebe8303686b3e443afc388ef83bcfe61f3eb9acf381d46da0dbca2f8177bfb43",
+      "diagnostic_causes": 93
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 32845,
+    "column": 42,
+    "start": 1954983,
+    "end": 1955016,
+    "kind": "tagged",
+    "text": "parent as ParenthesizedExpression",
+    "site_key": "src/compiler/checker.ts:1954983:1955016",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "adff6326f54200585c9e212bd07b3ccd6b43f2a9b15ddefa9ddfb9008b5214a4",
+      "diagnostic_causes": 96
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 32848,
+    "column": 42,
+    "start": 1955138,
+    "end": 1955165,
+    "kind": "tagged",
+    "text": "parent as NonNullExpression",
+    "site_key": "src/compiler/checker.ts:1955138:1955165",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "663405643f4548f0a8e731c3ec8b162dfdddedbb457711c0e87f149aa0d96d42",
+      "diagnostic_causes": 97
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 32850,
+    "column": 45,
+    "start": 1955277,
+    "end": 1955306,
+    "kind": "tagged",
+    "text": "parent as SatisfiesExpression",
+    "site_key": "src/compiler/checker.ts:1955277:1955306",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "d252bbda62d47c25964bf71a22338dc25e911339a863c239ac6aaa6c20a28765",
+      "diagnostic_causes": 94
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 32852,
+    "column": 56,
+    "start": 1955418,
+    "end": 1955444,
+    "kind": "tagged",
+    "text": "parent as ExportAssignment",
+    "site_key": "src/compiler/checker.ts:1955418:1955444",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "776926ec38693db0d3d82272060440bbed75b46bca350ec86c9957f526b75bfc",
+      "diagnostic_causes": 97
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 32854,
+    "column": 58,
+    "start": 1955549,
+    "end": 1955572,
+    "kind": "tagged",
+    "text": "parent as JsxExpression",
+    "site_key": "src/compiler/checker.ts:1955549:1955572",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "85e8b472da7396214754037c3965c4a2a7556102f62a238148ec0a670e49976a",
+      "diagnostic_causes": 91
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 32857,
+    "column": 57,
+    "start": 1955738,
+    "end": 1955781,
+    "kind": "tagged",
+    "text": "parent as JsxAttribute | JsxSpreadAttribute",
+    "site_key": "src/compiler/checker.ts:1955738:1955781",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "f66601d39070a879eb726b5d3a0f44e7197de260da867347771012277e05fe7e",
+      "diagnostic_causes": 96
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 32860,
+    "column": 62,
+    "start": 1955960,
+    "end": 1955991,
+    "kind": "tagged",
+    "text": "parent as JsxOpeningLikeElement",
+    "site_key": "src/compiler/checker.ts:1955960:1955991",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "4a0b83164a77d9b9fae4b0a6d80a99086096440d0f468dc5ff44aff27cdc25c9",
+      "diagnostic_causes": 94
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 32862,
+    "column": 57,
+    "start": 1956111,
+    "end": 1956136,
+    "kind": "tagged",
+    "text": "parent as ImportAttribute",
+    "site_key": "src/compiler/checker.ts:1956111:1956136",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "6b22cdd4e3032f4e75fd3cdc6d5686b7ca551e6e8d65ebd23ab9b5618647197b",
+      "diagnostic_causes": 97
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 37230,
+    "column": 68,
+    "start": 2208799,
+    "end": 2208834,
+    "kind": "untagged",
+    "text": "intersectionMember as InterfaceType",
+    "site_key": "src/compiler/checker.ts:2208799:2208834",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "e4b2497fc600fca97d0681bbd2228da743c9ec3d2d25dabfadf93033b466564d",
+      "diagnostic_causes": 95
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 38934,
+    "column": 34,
+    "start": 2302393,
+    "end": 2302437,
+    "kind": "tagged",
+    "text": "parent as ClassDeclaration | ClassExpression",
+    "site_key": "src/compiler/checker.ts:2302393:2302437",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "d0bdc4c2df396c829b9d7488a39b7e9429d5318764c5a087c06a74a5f6207f7d",
+      "diagnostic_causes": 94
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 38944,
+    "column": 34,
+    "start": 2302958,
+    "end": 2303035,
+    "kind": "tagged",
+    "text": "parent as MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration",
+    "site_key": "src/compiler/checker.ts:2302958:2303035",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "a65c047d2b3fbad639434ba85f4a33bea2004c891bc487777f483634d66fad48",
+      "diagnostic_causes": 92
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 38985,
+    "column": 34,
+    "start": 2305670,
+    "end": 2305699,
+    "kind": "tagged",
+    "text": "parent as PropertyDeclaration",
+    "site_key": "src/compiler/checker.ts:2305670:2305699",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "818a0598a6e64c594ce7638b42d7692c4e955c764329c6fdcae771e68d5e16fe",
+      "diagnostic_causes": 91
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 39030,
+    "column": 34,
+    "start": 2308626,
+    "end": 2308670,
+    "kind": "tagged",
+    "text": "parent as ClassDeclaration | ClassExpression",
+    "site_key": "src/compiler/checker.ts:2308626:2308670",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "d992e131d0a8a2ceef321635eef4990a61c9418132c55b50e87acd4ef67e30b9",
+      "diagnostic_causes": 91
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 39044,
+    "column": 34,
+    "start": 2309448,
+    "end": 2309478,
+    "kind": "tagged",
+    "text": "parent as ParameterDeclaration",
+    "site_key": "src/compiler/checker.ts:2309448:2309478",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "55c94273311ab0e83d0a0f2622ce1de920251106be919c7190e7ce0dc912d61f",
+      "diagnostic_causes": 89
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 39087,
+    "column": 34,
+    "start": 2311621,
+    "end": 2311692,
+    "kind": "tagged",
+    "text": "parent as MethodDeclaration | AccessorDeclaration | PropertyDeclaration",
+    "site_key": "src/compiler/checker.ts:2311621:2311692",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "20844982f86a63ef8a14ee79c11f841111d741f2b8d37246b68c339132013887",
+      "diagnostic_causes": 92
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 42244,
+    "column": 38,
+    "start": 2491970,
+    "end": 2492002,
+    "kind": "tagged",
+    "text": "member as ConstructorDeclaration",
+    "site_key": "src/compiler/checker.ts:2491970:2492002",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "61ebfcac9d383d55575665d888476939a3e22bd973b2ceb4862e3eb5e75ee4af",
+      "diagnostic_causes": 99
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 43234,
+    "column": 30,
+    "start": 2544868,
+    "end": 2544936,
+    "kind": "tagged",
+    "text": "current as SignatureDeclaration | ClassDeclaration | ClassExpression",
+    "site_key": "src/compiler/checker.ts:2544868:2544936",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "64a0d2034c6a667578d8cbea0a635a27a93add6ebaf8cf30f366104799e9210b",
+      "diagnostic_causes": 95
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 44517,
+    "column": 46,
+    "start": 2609798,
+    "end": 2609830,
+    "kind": "tagged",
+    "text": "member as ConstructorDeclaration",
+    "site_key": "src/compiler/checker.ts:2609798:2609830",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "dd4b6867501bc8987cedc977972bb65a93836d75c860d676c39367a57d35d790",
+      "diagnostic_causes": 96
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 47769,
+    "column": 35,
+    "start": 2789781,
+    "end": 2789810,
+    "kind": "tagged",
+    "text": "member as PropertyDeclaration",
+    "site_key": "src/compiler/checker.ts:2789781:2789810",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "6f50bace72c3d49cc657c7cbb8f34215e4274de248d39b09a1067882b2868f44",
+      "diagnostic_causes": 91
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 47785,
+    "column": 15,
+    "start": 2790688,
+    "end": 2790715,
+    "kind": "tagged",
+    "text": "node as PropertyDeclaration",
+    "site_key": "src/compiler/checker.ts:2790688:2790715",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "e88798070dd9b5cb678348821764177342a98d48bb00177e5f258dc0d94f4693",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "a2432cbb9a6c64ede0973ad1e3b9b410d2aee8a59c8b1db2a98cfe6a678e9754",
+      "diagnostic_causes": 98
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 47786,
+    "column": 15,
+    "start": 2790752,
+    "end": 2790779,
+    "kind": "tagged",
+    "text": "node as PropertyDeclaration",
+    "site_key": "src/compiler/checker.ts:2790752:2790779",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "e88798070dd9b5cb678348821764177342a98d48bb00177e5f258dc0d94f4693",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "10daa9f2d4a61a7f865bcd5ee06c62b32fb7f60946161a2efe3074de9a2a26c9",
+      "diagnostic_causes": 98
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 48119,
+    "column": 96,
+    "start": 2808521,
+    "end": 2808559,
+    "kind": "tagged",
+    "text": "declaration as FunctionLikeDeclaration",
+    "site_key": "src/compiler/checker.ts:2808521:2808559",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "a5fa9cd2b27a2f0ce5b7d4a502669b42a21ac044abf3e5fb84b082bce6277b1b",
+      "diagnostic_causes": 90
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 48275,
+    "column": 37,
+    "start": 2817466,
+    "end": 2817491,
+    "kind": "tagged",
+    "text": "node as VariableStatement",
+    "site_key": "src/compiler/checker.ts:2817466:2817491",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "f93a20312356f1a6d588a73abe742d07e03aca6e521fc96a80a30258a6eff828",
+      "diagnostic_causes": 94
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 48292,
+    "column": 31,
+    "start": 2818528,
+    "end": 2818572,
+    "kind": "tagged",
+    "text": "node as VariableDeclaration | BindingElement",
+    "site_key": "src/compiler/checker.ts:2818528:2818572",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "f4c059c738ff0195da1eb18188c72ee70eb5e2fd1c6d69414d18fe616ceb94e1",
+      "diagnostic_causes": 95
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 50204,
+    "column": 57,
+    "start": 2920103,
+    "end": 2920124,
+    "kind": "untagged",
+    "text": "parent as Declaration",
+    "site_key": "src/compiler/checker.ts:2920103:2920124",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "d41e821ddc0e5dc727bcca3b57595a62518c18d110880b9f1f35b2d28e98e150",
+      "diagnostic_causes": 95
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 50220,
+    "column": 27,
+    "start": 2920900,
+    "end": 2920924,
+    "kind": "tagged",
+    "text": "parent as BindingElement",
+    "site_key": "src/compiler/checker.ts:2920900:2920924",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "37939e85cbe514dd6a18a06b42ad476bf7570f2f85b36d501d6e3a6cb96eacc7",
+      "diagnostic_causes": 96
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 201,
+    "column": 38,
+    "start": 7294,
+    "end": 7319,
+    "kind": "tagged",
+    "text": "node as ImportDeclaration",
+    "site_key": "src/compiler/transformers/utilities.ts:7294:7319",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "e6b334594207ea8e46c873e888abdbf365c18e8bd5046fec8f2098ba4987dc49",
+      "diagnostic_causes": 104
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 202,
+    "column": 70,
+    "start": 7392,
+    "end": 7417,
+    "kind": "tagged",
+    "text": "node as ImportDeclaration",
+    "site_key": "src/compiler/transformers/utilities.ts:7392:7417",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "f0700d27c818aafe434fe96b0c17298595ccbe1fb07257ad9107a469926775f5",
+      "diagnostic_causes": 97
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 205,
+    "column": 76,
+    "start": 7560,
+    "end": 7585,
+    "kind": "tagged",
+    "text": "node as ImportDeclaration",
+    "site_key": "src/compiler/transformers/utilities.ts:7560:7585",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "56e482189a7429b8ab0dd64e65c77f80f7c3a75c26d2ac166f67156bc83af910",
+      "diagnostic_causes": 101
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 211,
+    "column": 22,
+    "start": 7757,
+    "end": 7788,
+    "kind": "tagged",
+    "text": "node as ImportEqualsDeclaration",
+    "site_key": "src/compiler/transformers/utilities.ts:7757:7788",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "3962b9d62120bdcf918a25a0ffab5c9a9eb9bcfeaf746f7a7c254cf8e9abc5b2",
+      "diagnostic_causes": 97
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 213,
+    "column": 42,
+    "start": 7945,
+    "end": 7976,
+    "kind": "tagged",
+    "text": "node as ImportEqualsDeclaration",
+    "site_key": "src/compiler/transformers/utilities.ts:7945:7976",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "227fae3f8f75f060fea873dd4fe7edcad9282c1659824b4654c99de5d6ad1a47",
+      "diagnostic_causes": 100
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 219,
+    "column": 22,
+    "start": 8096,
+    "end": 8121,
+    "kind": "tagged",
+    "text": "node as ExportDeclaration",
+    "site_key": "src/compiler/transformers/utilities.ts:8096:8121",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "d9e5898baf04dc0e47d42a28227fff555396c9a5ee7432a874c0e72d5f931efe",
+      "diagnostic_causes": 89
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 220,
+    "column": 27,
+    "start": 8169,
+    "end": 8194,
+    "kind": "tagged",
+    "text": "node as ExportDeclaration",
+    "site_key": "src/compiler/transformers/utilities.ts:8169:8194",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "14f51dbaa5af097d2c1d7d0da3841ebff1ac11ab571611af858af1133c77ce4a",
+      "diagnostic_causes": 97
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 222,
+    "column": 46,
+    "start": 8306,
+    "end": 8331,
+    "kind": "tagged",
+    "text": "node as ExportDeclaration",
+    "site_key": "src/compiler/transformers/utilities.ts:8306:8331",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "ce2d42cd0c1f5791ff69f2bb47661ed464003e8a9d2d683a1ab19892d0c91e7c",
+      "diagnostic_causes": 99
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 228,
+    "column": 46,
+    "start": 8602,
+    "end": 8627,
+    "kind": "tagged",
+    "text": "node as ExportDeclaration",
+    "site_key": "src/compiler/transformers/utilities.ts:8602:8627",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "9e7792c902eba24415fe4035ad6fbc556982c9dbbb460af90a820e7b0e6f7b97",
+      "diagnostic_causes": 102
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 229,
+    "column": 45,
+    "start": 8675,
+    "end": 8700,
+    "kind": "tagged",
+    "text": "node as ExportDeclaration",
+    "site_key": "src/compiler/transformers/utilities.ts:8675:8700",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "6177bdb1e39d7491d547061d400639d223b8f95f2dd23ff89cfd63c232a2d86f",
+      "diagnostic_causes": 99
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 230,
+    "column": 66,
+    "start": 8786,
+    "end": 8811,
+    "kind": "tagged",
+    "text": "node as ExportDeclaration",
+    "site_key": "src/compiler/transformers/utilities.ts:8786:8811",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "ff2764d3b953da91eec98a3b664c018408d42df11cad84e8a08ef1762b8f7883",
+      "diagnostic_causes": 103
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 231,
+    "column": 76,
+    "start": 8890,
+    "end": 8915,
+    "kind": "tagged",
+    "text": "node as ExportDeclaration",
+    "site_key": "src/compiler/transformers/utilities.ts:8890:8915",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "5b5ec241a683de66dfb39499ef231591d7781047f6df36d6ca01a0da28515474",
+      "diagnostic_causes": 102
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 234,
+    "column": 44,
+    "start": 9035,
+    "end": 9060,
+    "kind": "tagged",
+    "text": "node as ExportDeclaration",
+    "site_key": "src/compiler/transformers/utilities.ts:9035:9060",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "e5a45dd7a5bc3692225dd741dd76c62f5ead3812c13ffb931d31b9c68d512a97",
+      "diagnostic_causes": 96
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 248,
+    "column": 58,
+    "start": 9881,
+    "end": 9906,
+    "kind": "tagged",
+    "text": "node as ExportDeclaration",
+    "site_key": "src/compiler/transformers/utilities.ts:9881:9906",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "2730b52c731dda5a9dc94366018558212683c81350eccaa92a12fd30f5022a91",
+      "diagnostic_causes": 96
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 253,
+    "column": 22,
+    "start": 10023,
+    "end": 10047,
+    "kind": "tagged",
+    "text": "node as ExportAssignment",
+    "site_key": "src/compiler/transformers/utilities.ts:10023:10047",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "74ffb696b8152911701177320b96b09ab8eb32fd018407b7717d621bef6fb531",
+      "diagnostic_causes": 96
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 255,
+    "column": 36,
+    "start": 10155,
+    "end": 10179,
+    "kind": "tagged",
+    "text": "node as ExportAssignment",
+    "site_key": "src/compiler/transformers/utilities.ts:10155:10179",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "19f274111866db2715eadaec57349a8ae9808854a8276353ef9c91cdffeb1fac",
+      "diagnostic_causes": 92
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 261,
+    "column": 41,
+    "start": 10388,
+    "end": 10413,
+    "kind": "tagged",
+    "text": "node as VariableStatement",
+    "site_key": "src/compiler/transformers/utilities.ts:10388:10413",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "7cb710309914f237a4adce46d7cd2aa205cfe38dd3b6e1ae1481ad84a20eeb70",
+      "diagnostic_causes": 90
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 269,
+    "column": 52,
+    "start": 10814,
+    "end": 10841,
+    "kind": "tagged",
+    "text": "node as FunctionDeclaration",
+    "site_key": "src/compiler/transformers/utilities.ts:10814:10841",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "2c3ee9c3f87857f09a2cb3499488be9b2266a51672d3028543f32fe528c20e54",
+      "diagnostic_causes": 101
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 278,
+    "column": 130,
+    "start": 11391,
+    "end": 11415,
+    "kind": "tagged",
+    "text": "node as ClassDeclaration",
+    "site_key": "src/compiler/transformers/utilities.ts:11391:11415",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "7d61609bb74384be6f3dc05c994c06e974a53cf88fd44dae7b0a908c1a601d5d",
+      "diagnostic_causes": 90
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 284,
+    "column": 39,
+    "start": 11637,
+    "end": 11661,
+    "kind": "tagged",
+    "text": "node as ClassDeclaration",
+    "site_key": "src/compiler/transformers/utilities.ts:11637:11661",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "5f3c9f7bbb90cf8b90d4ea3656e3496bf2800f58921b6151379bd514a85930f0",
+      "diagnostic_causes": 98
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 2258,
+    "column": 79,
+    "start": 98372,
+    "end": 98403,
+    "kind": "tagged",
+    "text": "member as SemicolonClassElement",
+    "site_key": "src/compiler/transformers/es2015.ts:98372:98403",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "0b7682bab1b1dbb08dee5a3d8fd6d4ee8af1ede2daf7a59711685e50ecb5dd2f",
+      "diagnostic_causes": 97
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 2262,
+    "column": 116,
+    "start": 98605,
+    "end": 98632,
+    "kind": "tagged",
+    "text": "member as MethodDeclaration",
+    "site_key": "src/compiler/transformers/es2015.ts:98605:98632",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "5b9b98c893c2bd928f0142534212f26c02d9085353e4ff75ee1d71fd54d99603",
+      "diagnostic_causes": 96
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 2267,
+    "column": 80,
+    "start": 98844,
+    "end": 98873,
+    "kind": "tagged",
+    "text": "member as AccessorDeclaration",
+    "site_key": "src/compiler/transformers/es2015.ts:98844:98873",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "e4e85df67812877308e9ac421f66e971356ee74e4c37aec83834a0a92c05e576",
+      "diagnostic_causes": 97
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "line": 799,
+    "column": 25,
+    "start": 32878,
+    "end": 32910,
+    "kind": "tagged",
+    "text": "left as PropertyAccessExpression",
+    "site_key": "src/compiler/transformers/generators.ts:32878:32910",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "868f239634fcc3cd235640a7585825927a2e1489a46dcf59d81579a848f1a8f1",
+      "diagnostic_causes": 88
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "line": 800,
+    "column": 71,
+    "start": 32983,
+    "end": 33015,
+    "kind": "tagged",
+    "text": "left as PropertyAccessExpression",
+    "site_key": "src/compiler/transformers/generators.ts:32983:33015",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "3901661f7994d86ef1be794e4edfbc6d1220aaabdae915c82175811d2f6dbc4c",
+      "diagnostic_causes": 92
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "line": 801,
+    "column": 26,
+    "start": 33093,
+    "end": 33125,
+    "kind": "tagged",
+    "text": "left as PropertyAccessExpression",
+    "site_key": "src/compiler/transformers/generators.ts:33093:33125",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "e3cd4dab58e3b8947e86632eccbab4a453dc4f139a91466be8318fb3be9eb93f",
+      "diagnostic_causes": 89
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "line": 817,
+    "column": 68,
+    "start": 33700,
+    "end": 33731,
+    "kind": "tagged",
+    "text": "left as ElementAccessExpression",
+    "site_key": "src/compiler/transformers/generators.ts:33700:33731",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "ba7eff429f67ce8ad3ab70734f7cb359a915ca20e1d1d5f447e358336bb0c070",
+      "diagnostic_causes": 93
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "line": 817,
+    "column": 147,
+    "start": 33779,
+    "end": 33810,
+    "kind": "tagged",
+    "text": "left as ElementAccessExpression",
+    "site_key": "src/compiler/transformers/generators.ts:33779:33810",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "61f66d4e96ce137ee7b431cb525c8d452d22248cf5990824caeab7a856a4bcae",
+      "diagnostic_causes": 97
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "line": 817,
+    "column": 276,
+    "start": 33908,
+    "end": 33939,
+    "kind": "tagged",
+    "text": "left as ElementAccessExpression",
+    "site_key": "src/compiler/transformers/generators.ts:33908:33939",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "10d376919472300dab9f9291f4bb11d65b53e79649f58a0948b4585f5b324db1",
+      "diagnostic_causes": 97
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/programDiagnostics.ts",
+    "line": 393,
+    "column": 67,
+    "start": 19260,
+    "end": 19292,
+    "kind": "untagged",
+    "text": "sourceFile as TsConfigSourceFile",
+    "site_key": "src/compiler/programDiagnostics.ts:19260:19292",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "eaabc541550fb06bab61599217428af6b8f2c5fa65909b2c1151b83a8e4bb3b7",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "554cc2fec2761bf0185e06eca3803ae741e9192ee9edd3cdf9043bc5d8165548",
+      "diagnostic_causes": 2
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  },
+  {
+    "file": "src/compiler/binder.ts",
+    "line": 1825,
+    "column": 47,
+    "start": 86206,
+    "end": 86224,
+    "kind": "tagged",
+    "text": "e as SpreadElement",
+    "site_key": "src/compiler/binder.ts:86206:86224",
+    "before": {
+      "outcome": "unknown",
+      "cause": "flow the graph can't see",
+      "detail_sha256": "96ef67f54811f7f8c09d120897866ce3b720c6146b16fa9203dfa7f743f48c45",
+      "diagnostic_causes": 0
+    },
+    "after": {
+      "outcome": "unknown",
+      "cause": "diagnosed body",
+      "detail_sha256": "f6b8fb35971f80dba055c10b37c1ed6278cb9f06b3aeea9535df5189230de2a4",
+      "diagnostic_causes": 95
+    },
+    "newly_free": false,
+    "ceased_free": false,
+    "erasure_attribution": null
+  }
+]
