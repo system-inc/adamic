@@ -1,0 +1,5 @@
+type Holder = { cursor: Iterator<string> | undefined };
+const array: string[] = ['a'.repeat(2)];
+const holder: Holder = { cursor: undefined };
+holder.cursor = array.values();
+console.log(`${array.length}`);

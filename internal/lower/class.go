@@ -67,6 +67,9 @@ type template struct {
 func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, where *ast.Node) (*instance, error) {
 	// Box<T> inside Maker<Node> is a Box<Node>: what it is, for the cycle finder.
 	classType = l.concrete(classType)
+	if classType == nil || !isClassInstance(classType) {
+		return nil, l.notYet(where, "instantiating a class from its constructor type instead of an instance type")
+	}
 	if view := l.classView(classType, declaration); view != nil {
 		classType = view
 	} else {
@@ -117,7 +120,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 
 	if len(parameters) > 0 {
 		if l.genericDepth >= maximumGenericDepth {
-			return nil, &Refused{Where: l.program.Where(where), What: "a generic class instantiated without end (polymorphic recursion)", Fix: "keep recursive type arguments unchanged, or write a class per type"}
+			return nil, &Refused{Where: l.program.Where(where), What: "a generic class instantiated without end (polymorphic recursion)", Fix: "keep recursive type arguments unchanged, or write a class per type (adamic/polymorphic-recursion)"}
 		}
 		l.genericDepth++
 		defer func() { l.genericDepth-- }()
@@ -161,7 +164,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		switch member.Kind {
 		case ast.KindMethodDeclaration, ast.KindGetAccessor, ast.KindSetAccessor:
 			if !ast.IsIdentifier(member.Name()) && member.Name().Kind != ast.KindPrivateIdentifier && !(member.Kind == ast.KindMethodDeclaration && member.Name().Kind == ast.KindComputedPropertyName && l.symbolIterator(member.Name().AsComputedPropertyName().Expression)) {
-				return nil, l.notYet(member, "a method with a computed name")
+				return nil, l.notYet(member, "a method with a computed name (give the method a fixed identifier name)")
 			}
 			if ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 				continue
@@ -237,6 +240,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 			return nil, err
 		}
 	}
+	l.program.RecordOptionalRelation(declaration)
 	return lowered, nil
 }
 
@@ -289,7 +293,7 @@ func containsThis(node *ast.Node) bool {
 // construct lowers new Class(...).
 func (l *lowering) construct(node *ast.Node, declaration *ast.Node) (ir.Expression, error) {
 	if ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAbstract) {
-		return nil, &Refused{Where: l.program.Where(node), What: "new of an abstract class", Fix: "construct a concrete subclass that implements its abstract methods"}
+		return nil, &Refused{Where: l.program.Where(node), What: "new of an abstract class", Fix: "construct a concrete subclass that implements its abstract methods (adamic/concrete-construction)"}
 	}
 	lowered, err := l.instantiate(declaration, l.checker.GetTypeAtLocation(node), node)
 	if err != nil {
@@ -335,6 +339,9 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 		return l.call(node)
 	}
 	class := method.Declarations[0].Parent
+	if class == nil || class.Name() == nil {
+		return nil, l.notYet(node, "a method of an anonymous class")
+	}
 	declaration, isClass := l.classes[l.symbol(class.Name())]
 	if !isClass {
 		return nil, l.notYet(node, "a method of a class stage 0 doesn't have")
@@ -377,10 +384,10 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 	var object ir.Expression
 	var err error
 	if ast.SkipParentheses(receiver).Kind == ast.KindSuperKeyword {
-		if err := l.useOfThis(receiver); err != nil {
-			return nil, err
+		if err = l.useOfThis(ast.SkipParentheses(receiver)); err == nil {
+			l.touch(l.this)
+			object = ir.Read{Local: l.this, Of: ir.Object}
 		}
-		object = ir.Read{Local: l.this, Of: ir.Object}
 	} else {
 		object, err = l.expression(receiver)
 	}
@@ -406,6 +413,10 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 
 // setProperty lowers object.name = value, as a statement.
 func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+	uninitialized := l.uninitializedInitializer(valueNode)
+	if member := l.checker.GetSymbolAtLocation(target.Name()); uninitialized && member != nil && accessorSymbol(member) {
+		return nil, l.notYet(target, "deinitializing an accessor property")
+	}
 	if call, handled, err := l.superAccessor(target, valueNode); handled {
 		if err != nil {
 			return nil, err
@@ -413,7 +424,12 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	}
 	if member := l.checker.GetSymbolAtLocation(target); member != nil && member.Flags&ast.SymbolFlagsMethod != 0 {
-		return nil, l.notYet(target, "replacing a represented method at runtime")
+		return nil, l.notYet(target, "replacing a represented method at runtime (store a replaceable arrow function in a declared callback field instead)")
+	}
+	if member := l.checker.GetSymbolAtLocation(target); member != nil && member.Flags&ast.SymbolFlagsOptional != 0 && !isClassInstance(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression)) {
+		if stored, _ := l.representation(l.checker.GetTypeOfSymbol(member)); stored == ir.MaybeBoolean || stored == ir.Union || (stored.IsReference() && l.absentLiteralField(target)) {
+			return nil, l.notYet(target, "writing a possibly absent optional own field")
+		}
 	}
 	object, err := l.expression(target.AsPropertyAccessExpression().Expression)
 	if err != nil {
@@ -422,25 +438,35 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	if object.Type() != ir.Object {
 		return nil, l.notYet(target, "assigning a field of a "+typeName(object.Type()))
 	}
-	value, err := l.expression(valueNode)
-	if err != nil {
-		return nil, err
-	}
 	of, err := l.typeOf(target)
 	if field := l.checker.GetSymbolAtLocation(target.Name()); field != nil {
 		// What the field is declared to keep, not what the checker narrowed this write to.
 		of, err = l.typeOfSymbol(target, field)
 	}
-	if err != nil || slotless(of) || slotless(value.Type()) {
+	if err != nil || (slotless(of) && of != ir.MaybeBoolean && of != ir.Union) {
+		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
+	}
+	value := uninitializedValue(of)
+	if !uninitialized {
+		value, err = l.expression(valueNode)
+		if err != nil {
+			return nil, err
+		}
+	}
+	if slotless(value.Type()) && value.Type() != ir.MaybeBoolean && value.Type() != ir.Union {
 		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
 	}
 	// A field of number | undefined is given a packed word, whatever it's assigned.
 	value = fit(value, of)
-	if call, handled := l.privateStaticStore(target, object, value); handled {
+	if call, handled := l.privateStaticStore(target, object, value, uninitialized); handled {
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	}
 	// A #private field is stored under its name, # and all, which nothing else can spell.
-	return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
+	store := ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Uninitialized: uninitialized, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}
+	if _, checked := l.program.OptionalWriteSite(target); checked {
+		return l.checkedOptionalWrite(target, store), nil
+	}
+	return []ir.Statement{store}, nil
 }
 
 // updateProperty lowers object.name op= value, and object.name++ and -- (a nil value, a step of 1).
@@ -534,7 +560,7 @@ func nodesOf(list *ast.NodeList) []*ast.Node {
 func lastFieldAssignment(declaration *ast.Node, constructor *ast.Node) int {
 	unset := map[string]bool{}
 	for _, member := range declaration.Members() {
-		if member.Kind == ast.KindPropertyDeclaration && member.AsPropertyDeclaration().Initializer == nil && !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
+		if member.Kind == ast.KindPropertyDeclaration && member.AsPropertyDeclaration().Initializer == nil && !(member.PostfixToken() != nil && member.PostfixToken().Kind == ast.KindExclamationToken) && !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			unset[member.Name().Text()] = true
 		}
 	}
@@ -569,8 +595,37 @@ func lastFieldAssignment(declaration *ast.Node, constructor *ast.Node) int {
 // object of a field it reads or writes: a method it calls, or a function it's handed to, could read a
 // field not set yet.
 func (l *lowering) useOfThis(node *ast.Node) error {
+	path := "this"
+	if node.Kind == ast.KindSuperKeyword {
+		path = "super"
+	}
+	if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression {
+		path += "." + parent.Name().Text()
+		if parent.Parent != nil && parent.Parent.Kind == ast.KindCallExpression {
+			path += "(...)"
+		}
+	}
+
 	if l.instance != nil && l.instance.unreadyThis[node] {
-		return &Refused{Where: l.program.Where(node), What: "this before super returns", Fix: "call super(...) before using this"}
+		return &Refused{Where: l.program.Where(node), What: "this before super returns", Fix: "call super(...) before using this (adamic/this-after-super)"}
+	}
+	// An arrow captures this when it is created, even if its body only reads a field.
+	// Use the outermost arrow's position: nested arrows can run while fields are unset too.
+	var closure *ast.Node
+	for parent := node.Parent; parent != nil; parent = parent.Parent {
+		if parent.Kind == ast.KindArrowFunction {
+			closure = parent
+		}
+		if parent.Kind == ast.KindConstructor || parent.Kind == ast.KindMethodDeclaration || parent.Kind == ast.KindFunctionDeclaration || parent.Kind == ast.KindFunctionExpression {
+			break
+		}
+	}
+	if closure != nil && ((l.unsetUntil != 0 && closure.Pos() < l.unsetUntil) || (l.instance != nil && l.instance.constructing && l.instance.hasDescendants)) {
+		name := "an arrow closure"
+		if parent := closure.Parent; parent != nil && parent.Kind == ast.KindVariableDeclaration {
+			name = "closure " + parent.Name().Text()
+		}
+		return &Refused{Where: l.program.Where(closure), What: "this captured by " + name + " before every field is set", Fix: "create the closure after the fields are set, or pass the value in"}
 	}
 	if l.instance != nil && l.instance.constructing && l.instance.hasDescendants {
 		if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression {
@@ -578,7 +633,7 @@ func (l *lowering) useOfThis(node *ast.Node) error {
 				return nil
 			}
 		}
-		return &Refused{Where: l.program.Where(node), What: "this escaping a base constructor before derived fields are initialized", Fix: "use this only to read or write initialized base fields; call methods and publish the object after construction"}
+		return &Refused{Where: l.program.Where(node), What: path + " escaping a base constructor before derived fields are initialized", Fix: "use this only to read or write initialized base fields; call methods and publish the object after construction (adamic/initialized-this)"}
 	}
 	if l.unsetUntil == 0 || node.Pos() >= l.unsetUntil {
 		return nil
@@ -588,7 +643,7 @@ func (l *lowering) useOfThis(node *ast.Node) error {
 			return nil
 		}
 	}
-	return &Refused{Where: l.program.Where(node), What: "this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise)", Fix: "assign every field first, then use this"}
+	return &Refused{Where: l.program.Where(node), What: path + " escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise)", Fix: "assign every field first, then use this (adamic/initialized-this)"}
 }
 
 // The checker owns type identity, including recursive structural types. Reuse the

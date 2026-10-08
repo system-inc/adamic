@@ -1,0 +1,1 @@
+type Key = string; type Bag<T> = Record<Key, T>;

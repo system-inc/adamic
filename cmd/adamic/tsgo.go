@@ -9,6 +9,10 @@ import (
 )
 
 func build(path, output string, arguments []string) int {
+	return buildInput([]string{path}, "", output, arguments)
+}
+
+func buildInput(paths []string, project, output string, arguments []string) int {
 	options := native.Options{}
 	archive := ""
 	explain := false
@@ -47,14 +51,25 @@ func build(path, output string, arguments []string) int {
 		fmt.Fprintln(os.Stderr, "adamic: --tsgo is not supported for wasm32-wasi")
 		return 1
 	}
+	if explain {
+		if options.Target != "" {
+			fmt.Fprintln(os.Stderr, "adamic: --explain-checks currently requires a native target")
+			return 1
+		}
+		paths = append(append([]string{}, paths...), "--explain-checks")
+	}
 	var program *ir.Program
 	var code int
 	handler := -1
 	if options.Target == "wasm32-wasi" {
-		program, handler, code = compileWASI(path)
+		if len(paths) != 1 || project != "" {
+			fmt.Fprintln(os.Stderr, "adamic: wasm32-wasi requires one source file without --project")
+			return 1
+		}
+		program, handler, code = compileWASI(paths[0])
 		options.Request = handler >= 0
 	} else {
-		program, code = compileLibrary(path, archive != "")
+		program, code = compileInput(paths, project, archive != "")
 	}
 	if program == nil {
 		return code

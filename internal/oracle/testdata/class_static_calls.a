@@ -1,0 +1,31 @@
+class Stepper {
+	readonly label: string;
+
+	constructor(label: string) {
+		this.label = label;
+	}
+
+	static down(count: number): number {
+		return count + 1;
+	}
+
+	static twice(count: number): number {
+		return Stepper.down(Stepper.down(count));
+	}
+
+	static describe(count: number): string {
+		return `step${Stepper.twice(count)}`;
+	}
+
+	static recurse(count: number): number {
+		return count === 0 ? 0 : Stepper.recurse(count - 1) + 1;
+	}
+
+	describe(count: number): string {
+		const Alias = Stepper;
+		return `${this.label}/${Alias.describe(count)}`;
+	}
+}
+const stepper = new Stepper(`label${1}`);
+console.log(`${Stepper.twice(3)}/${Stepper.recurse(4)}`);
+console.log(stepper.describe(3));

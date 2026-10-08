@@ -1,0 +1,3 @@
+interface Fields { slot?: number | undefined; }
+const record: Fields = { slot: undefined };
+console.log(`${'slot' in record}|${Object.keys(record).join(',')}|${Object.hasOwn(record, 'slot')}|${String(record.slot)}`);

@@ -1,0 +1,15 @@
+type Table = {[key: string]: string};
+function make(): Table { return {first: ['fir', 'st'].join('')}; }
+function put(r: Table, key: string, value: string): Table { r[key] = value; return r; }
+class Holder {
+ table: Table;
+ constructor(table: Table) { this.table = table; }
+ read(key: string): string | undefined { return this.table[key]; }
+}
+const table = make();
+const holder = new Holder(put(table, 'second', 'two'));
+console.log(String(holder.read('first')));
+console.log(String(holder.read('absent')));
+holder.table['first'] = 'changed';
+console.log(String(table['first']));
+console.log(Object.entries(holder.table).map(e => e[0] + ':' + e[1]).join(','));

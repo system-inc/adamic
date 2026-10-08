@@ -1,0 +1,3 @@
+export enum Shade { Black, Gray = 5, White = Gray + 1, Alias = White }
+export enum Name { Black = 'black', White = 'white' }
+export const enum Scale { Small = 1, Large = Small << 2 }

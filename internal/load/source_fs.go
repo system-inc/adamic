@@ -2,6 +2,7 @@ package load
 
 import (
 	_ "embed"
+	"sort"
 	"strings"
 	"time"
 
@@ -36,6 +37,7 @@ type sourceFS struct {
 	vfs.FS
 	overlay          map[tspath.RootedFilePath]string
 	projectConsole   bool
+	nodeTypes        bool
 	jsonAssumeString bool
 }
 
@@ -73,15 +75,24 @@ func (s *sourceFS) FileExists(path tspath.RootedFilePath) bool {
 func (s *sourceFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
 	if path == preludePath {
 		text := prelude
+		if s.nodeTypes {
+			text = nodePrelude()
+		}
 		if s.jsonAssumeString {
 			text = strings.ReplaceAll(text, "stringify(value?: unknown, replacer?: unknown, space?: unknown): string | undefined;", "stringify(value?: unknown, replacer?: unknown, space?: unknown): string;")
 		}
 		if s.projectConsole {
-			// Project console declarations can accept arbitrary data. This true
-			// runtime signature must not shadow an inherited Node console method
-			// with the narrower standalone Adamic signature.
 			text = strings.ReplaceAll(text, "log(message: string): void;", "log(...data: any[]): void;")
 			text = strings.ReplaceAll(text, "error(message: string): void;", "error(...data: any[]): void;")
+			start := strings.Index(text, "declare var console:")
+			if start < 0 {
+				start = strings.Index(text, "declare const console:")
+			}
+			if start >= 0 && !s.nodeTypes {
+				if end := strings.Index(text[start:], "declare module 'adamic'"); end >= 0 {
+					text = text[:start] + text[start+end:]
+				}
+			}
 			return text, true
 		}
 		return text, true
@@ -139,4 +150,18 @@ func (s *sourceFS) Remove(path tspath.RootedPath) error {
 
 func (s *sourceFS) Chtimes(path tspath.RootedPath, aTime time.Time, mTime time.Time) error {
 	return errReadOnly
+}
+
+// Expose the same .a aliases to config glob expansion that module resolution already sees.
+func (s *sourceFS) GetAccessibleEntries(path tspath.RootedDirectoryPath) vfs.Entries {
+	entries := s.FS.GetAccessibleEntries(path)
+	files := append([]string(nil), entries.Files...)
+	for _, name := range entries.Files {
+		if strings.HasSuffix(name, ".a") && !s.FS.FileExists(path.ResolveFile(name+".ts")) {
+			files = append(files, name+".ts")
+		}
+	}
+	sort.Strings(files)
+	entries.Files = files
+	return entries
 }

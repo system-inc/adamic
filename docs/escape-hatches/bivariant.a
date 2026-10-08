@@ -1,0 +1,6 @@
+interface Animal { readonly n: number; }
+interface Dog extends Animal { readonly bark: () => string; }
+interface Handler { run(x: Animal): string; }
+const dogHandler = { run: (x: Dog): string => x.bark() };
+const h: Handler = dogHandler;
+console.log(h.run({ n: 1 }));

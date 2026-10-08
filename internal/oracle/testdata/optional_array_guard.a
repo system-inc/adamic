@@ -1,0 +1,12 @@
+interface Fields { slot?: number | undefined; }
+const source: { slot: number | undefined } = { slot: undefined };
+const computed = [1, 2].map(() => source);
+function produce(enabled: boolean) { return enabled ? computed : undefined; }
+const records: readonly Fields[] | undefined = produce(true);
+const missing: readonly Fields[] | undefined = produce(false);
+if (records) {
+    for (const record of records) {
+        console.log(`${'slot' in record}|${Object.keys(source).join(',')}|${Object.hasOwn(source, 'slot')}|${String(record.slot)}`);
+    }
+}
+console.log(String(missing === undefined));

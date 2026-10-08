@@ -1,0 +1,3 @@
+function isNumber(x: number | string): x is number { return true; }
+function f(x: number | string): void { if (isNumber(x)) { console.log(`${x + 1}`); } }
+f('wrong');

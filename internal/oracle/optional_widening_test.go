@@ -8,4 +8,8 @@ func init() {
 			lowers, checked bool
 		}{path: "internal/oracle/testdata/optional_widening_" + name + ".a", lowers: true})
 	}
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
+	}{"internal/oracle/testdata/optional_widening_sound.a", true, false})
 }

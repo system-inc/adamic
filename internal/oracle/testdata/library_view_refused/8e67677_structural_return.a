@@ -1,0 +1,4 @@
+interface Tester { test(text: string): boolean; }
+function run(tester: Tester): boolean { return tester.test('xa'); }
+function make(): Tester { return /a/; }
+console.log(`${run(make())}`);

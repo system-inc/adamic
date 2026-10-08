@@ -1,0 +1,5 @@
+let total = 0;
+for (let index = 0; index < 300000000; index++) {
+    total = (total + index * 7) % 1048573;
+}
+console.log(`${total}`);

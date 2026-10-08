@@ -1,0 +1,19 @@
+import { programArguments } from 'adamic';
+const root = programArguments()[0] ?? '';
+function failure(error: Error): void {
+    const code = 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+    console.log(`${code ?? ''}: ${error.message.replace(root, '<root>')}`);
+}
+import { statSync, utimesSync } from 'node:fs';
+utimesSync(root + '/file', 1000.125, 1700000000.123456);
+const options = {throwIfNoEntry:false};
+const absent=statSync(root + '/missing',options); console.log(`shared=${absent === undefined}`);
+const file=statSync(root + '/file');
+console.log(`${file.isFile()} ${file.isDirectory()} ${file.isSymbolicLink()} ${file.size} ${file.mtimeMs} ${file.mtime.getTime()}`);
+const dir=statSync(root + '/directory'); console.log(`${dir.isFile()} ${dir.isDirectory()} ${dir.isSymbolicLink()}`);
+const link=statSync(root + '/link'); console.log(`${link.isFile()} ${link.isSymbolicLink()} ${link.size}`);
+console.log(`missing=${statSync(root + '/missing',{throwIfNoEntry:false}) === undefined}`);
+console.log(`notdir=${statSync(root + '/file/child',{throwIfNoEntry:false}) === undefined}`);
+try { statSync(root + '/missing'); } catch(error) { if (error instanceof Error) { failure(error); } }
+try { statSync(root + '/closed/file',{throwIfNoEntry:false}); } catch(error) { if (error instanceof Error) { failure(error); } }
+const user={atime:7}; console.log(`${user.atime} ${file.atime.getTime()}`);

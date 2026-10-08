@@ -12,6 +12,12 @@ func init() {
 	for _, path := range []string{
 		"internal/oracle/testdata/e4eec87_u02_optional_absent.a",
 		"internal/oracle/testdata/literal_optional_shapes.a",
+		"internal/oracle/testdata/optional_field_write.a",
+		"internal/oracle/testdata/optional_field_presence.a",
+		"internal/oracle/testdata/optional_field_construction.a",
+		"internal/oracle/testdata/optional_field_unknown.a",
+		"internal/oracle/testdata/optional_field_alias.a",
+		"internal/oracle/testdata/optional_field_alias_variants.a",
 	} {
 		fixtures = append(fixtures, struct {
 			path            string

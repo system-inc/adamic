@@ -37,22 +37,32 @@ type Program struct {
 	// tsgo opts this compilation into the external native checker library.
 	tsgo bool
 
-	compiler       *compiler.Program
-	projectOptions bool
-	optionSites    []OptionSite
-	fs             *sourceFS
-	sparseOnce     sync.Once
-	sparseArrays   bool
+	compiler           *compiler.Program
+	projectOptions     bool
+	optionSites        []OptionSite
+	optionDispositions []OptionDisposition
+	fs                 *sourceFS
+	sparseOnce         sync.Once
+	sparseArrays       bool
 
 	// files is the program's own source, in the order Load was given it: no prelude, no lib.
-	files []*ast.SourceFile
+	files             []*ast.SourceFile
+	entries           []*ast.SourceFile
+	optionalChecks    map[string]OptionSite
+	optionalRelations map[string]OptionSite
+	optionalLiterals  map[string][]OptionSite
+	optionalViews     map[string]OptionalViewContract
+	checkedOptions    map[string]bool
 }
 
 // CheckError is a program the checker rejected, with every diagnostic it gave.
 type CheckError struct {
 	Diagnostics []string
 	// OptionSites remain errors until lowering can insert their runtime checks.
-	OptionSites []OptionSite
+	OptionSites          []OptionSite
+	ScheduledOptionSites []OptionSite
+	OptionDispositions   []OptionDisposition
+	OrdinaryDiagnostics  []string
 }
 
 func (e *CheckError) Error() string {
@@ -95,7 +105,11 @@ func LoadOverlay(paths []string, overlay map[string]string) (*Program, error) {
 }
 
 func load(paths []string, overlay map[string]string) (*Program, error) {
-	if len(paths) == 0 {
+	return loadInput(paths, overlay, "")
+}
+
+func loadInput(paths []string, overlay map[string]string, requestedProject string) (*Program, error) {
+	if len(paths) == 0 && requestedProject == "" {
 		return nil, errors.New("load: no files given")
 	}
 	workingDirectory, err := os.Getwd()
@@ -109,26 +123,51 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		normalizedOverlay[currentDirectory.ResolveFile(name)] = source
 	}
 	fs := &sourceFS{FS: osvfs.FS(), overlay: normalizedOverlay}
+	var projectConfig *tsoptions.ParsedCommandLine
+	if requestedProject != "" {
+		projectConfig, err = parseProject(requestedProject, currentDirectory, fs)
+		if err != nil {
+			return nil, err
+		}
+		paths = nil
+		for _, path := range projectConfig.FileNames() {
+			paths = append(paths, fs.displayName(path))
+		}
+	}
 	roots := make([]tspath.RootedFilePath, 0, len(paths)+1)
+	seenRoots := map[tspath.PathKey]bool{}
 	for _, path := range paths {
 		root, err := rootFileName(fs, currentDirectory, path)
 		if err != nil {
 			return nil, err
 		}
-		roots = append(roots, root)
+		key := fs.CaseSensitivity().PathKey(root.AsPath())
+		if !seenRoots[key] {
+			roots = append(roots, root)
+			seenRoots[key] = true
+		}
 	}
-	userRoots := roots
+	ownedRoots := roots
 
 	// bundled.WrapFS lays the embedded lib.*.d.ts files over the source view, and cachedvfs memoizes
 	// the stats module resolution repeats.
 	fileSystem := cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
 	options, project, err := projectOptionsForRoots(fs, roots)
+	if requestedProject != "" && projectConfig != nil {
+		adamic := false
+		for _, root := range roots {
+			_, proof := fs.adamicFile(root)
+			adamic = adamic || proof
+		}
+		if adamic {
+			options = projectConfig.CompilerOptions()
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
-	fs.projectConsole = project != ""
+	fs.projectConsole = project != "" || requestedProject != ""
 	checkRoots := append([]tspath.RootedFilePath{}, roots...)
-	var projectConfig *tsoptions.ParsedCommandLine
 	if project != "" {
 		projectConfig, _ = tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(project), &core.CompilerOptions{}, nil, fs, nil)
 		if options.Composite == core.TSTrue {
@@ -150,17 +189,44 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 	}
 	config := tsoptions.NewParsedCommandLine(options, checkRoots, nil, currentDirectory, fileSystem.CaseSensitivity())
 	if projectConfig != nil {
-		config = tsoptions.NewParsedCommandLine(options, checkRoots, projectConfig.ProjectReferences(), tspath.RootedDirectoryPathFromAbsolute(filepath.Dir(project)), fileSystem.CaseSensitivity())
+		config = tsoptions.NewParsedCommandLine(options, checkRoots, projectConfig.ProjectReferences(), currentDirectory.ResolveDirectory(filepath.Dir(projectConfig.ConfigFileName().AsString())), fileSystem.CaseSensitivity())
 		config.ConfigFile = projectConfig.ConfigFile
 	}
-	host := compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
-	program := compiler.NewProgram(compiler.ProgramOptions{
-		Config:         config,
-		Host:           host,
-		SingleThreaded: core.TSTrue,
-	})
+	// A fresh cache preserves the prelude rebuild used by project console discovery.
+	buildProgram := func() *compiler.Program {
+		view := cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
+		host := compiler.NewCachedFSCompilerHost(view, bundled.LibPath(), nil, nil, nil)
+		return compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host, SingleThreaded: core.TSTrue})
+	}
+	program := buildProgram()
 	if program == nil {
 		return nil, errors.New("load: the compiler built no program")
+	}
+	if projectConfig != nil && !hasHostConsole(program.GetSourceFiles()) {
+		fs.projectConsole = false
+		program = buildProgram()
+		if program == nil {
+			return nil, errors.New("load: the compiler built no program")
+		}
+	}
+
+	if project == "" && usesNodeModules(program) {
+		index, err := nodeTypesIndex(workingDirectory)
+		if err != nil {
+			return nil, err
+		}
+		fs.nodeTypes = true
+		fs.projectConsole = true
+		roots = append(roots, currentDirectory.ResolveFile(index))
+		nodeRoots := append(append([]tspath.RootedFilePath{}, roots...), preludePath, setPreludePath)
+		config = tsoptions.NewParsedCommandLine(options, nodeRoots, nil, currentDirectory, fs.CaseSensitivity())
+		if projectConfig != nil {
+			config = projectConfig.WithFileNames(roots)
+		}
+		program = buildProgram()
+		if program == nil {
+			return nil, errors.New("load: the compiler built no Node program")
+		}
 	}
 
 	loaded := &Program{compiler: program, fs: fs, projectOptions: project != ""}
@@ -192,7 +258,7 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		}
 		report := &ProjectOptionReport{}
 		if !alreadyStricter(options) {
-			report, err = auditProjectOptions(context.Background(), project, fs, userRoots)
+			report, err = auditProjectOptions(context.Background(), project, fs, ownedRoots)
 			if err != nil {
 				return nil, err
 			}
@@ -228,22 +294,20 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 			}
 		}
 	}
+	ordinaryDiagnostics := append([]string(nil), diagnostics...)
+	scheduled := []OptionSite{}
 	for _, site := range sites {
-		if len(site.Options) == 1 && site.Options[0] == "JSON.stringify" {
-			continue
+		row := loaded.scheduleOptionSite(site)
+		loaded.optionDispositions = append(loaded.optionDispositions, row)
+		if row.State == OptionRemainingError {
+			diagnostics = append(diagnostics, site.Message)
+		} else {
+			scheduled = append(scheduled, site)
 		}
-		// Every successfully lowered project indexed read requiring presence is
-		// guarded by lower.checkedIndexedRead. Unsupported representations refuse
-		// before emission. For a joint optional/index site the recorded ancestor
-		// also forces the read guard through its permissive contextual type.
-		if len(site.Options) > 0 && site.Options[0] == "noUncheckedIndexedAccess" && (len(site.Options) == 1 || len(site.Options) == 2 && site.Options[1] == "exactOptionalPropertyTypes") {
-			continue
-		}
-		diagnostics = append(diagnostics, site.Message)
 	}
 	if len(diagnostics) > 0 {
 		sort.Strings(diagnostics)
-		return nil, &CheckError{Diagnostics: diagnostics, OptionSites: sites}
+		return nil, &CheckError{Diagnostics: diagnostics, OptionSites: sites, ScheduledOptionSites: scheduled, OptionDispositions: loaded.optionDispositions, OrdinaryDiagnostics: ordinaryDiagnostics}
 	}
 
 	// Every root must be in the program. One that is not would be a file silently left unchecked.
@@ -251,12 +315,17 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 	for _, sourceFile := range program.GetSourceFiles() {
 		byPath[sourceFile.PathKey()] = sourceFile
 	}
-	for _, root := range userRoots {
+	for _, root := range ownedRoots {
 		sourceFile, isLoaded := byPath[fileSystem.CaseSensitivity().PathKey(root.AsPath())]
 		if !isLoaded {
 			return nil, fmt.Errorf("load: %s was named but the compiler did not load it", fs.displayName(root))
 		}
-		loaded.files = append(loaded.files, sourceFile)
+		if projectConfig == nil || !sourceFile.IsDeclarationFile {
+			loaded.files = append(loaded.files, sourceFile)
+		}
+	}
+	if requestedProject == "" {
+		loaded.entries = loaded.files
 	}
 	return loaded, nil
 }
@@ -265,6 +334,9 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 func (p *Program) Files() []*ast.SourceFile {
 	return p.files
 }
+
+// Entries returns explicitly selected execution entries. Project checking roots never become entries.
+func (p *Program) Entries() []*ast.SourceFile { return p.entries }
 
 // Checker returns the checker that owns a file, and the function that releases it.
 func (p *Program) Checker(ctx context.Context, sourceFile *ast.SourceFile) (*checker.Checker, func()) {
@@ -301,6 +373,9 @@ func rootFileName(fs *sourceFS, currentDirectory tspath.RootedDirectoryPath, pat
 	fileName := currentDirectory.ResolveFile(path)
 	switch filepath.Ext(fileName.AsString()) {
 	case ".ts":
+		if strings.HasSuffix(fileName.AsString(), ".a.ts") && fs.FS.FileExists(fileName.RemoveExtension(".ts").AppendSuffix("")) && fs.FS.FileExists(fileName) {
+			return "", fmt.Errorf("load: %s and %s both exist; rename one", fileName.RemoveExtension(".ts"), fileName)
+		}
 		if !fs.FS.FileExists(fileName) {
 			return "", fmt.Errorf("load: no file at %s", path)
 		}
@@ -349,7 +424,11 @@ func (p *Program) formatDiagnostic(diagnostic *ast.Diagnostic) string {
 		line, column := p.lineAndColumn(diagnostic.File(), diagnostic.Pos())
 		fmt.Fprintf(&builder, "%s:%d:%d: ", p.fs.displayName(diagnostic.File().FileName()), line, column)
 	}
-	fmt.Fprintf(&builder, "error TS%d: %s", diagnostic.Code(), diagnostic.Localize(english))
+	message := starCollision(diagnostic)
+	if message == "" {
+		message = diagnostic.Localize(english)
+	}
+	fmt.Fprintf(&builder, "error TS%d: %s", diagnostic.Code(), message)
 	writeChain(&builder, diagnostic.MessageChain(), 1)
 	return builder.String()
 }

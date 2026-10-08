@@ -46,8 +46,10 @@ func programs(t *testing.T) []string {
 	// normalize_coverage_long.a observes every point of million-unit normalized strings.
 	// Its trace would record hundreds of millions of instructions; the smaller normalization
 	// fixtures cover the same loop shapes here, and the oracle still runs the long program.
+	// The structural block-arrow probe is deliberately refused and held by
+	// TestArrowBlockStructuralViewRefused, so it has no lowered graph to trace.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "normalize_coverage_long.a"
+		return filepath.Base(path) == "normalize_coverage_long.a" || filepath.Base(path) == "arrow_block_structural.a" || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
@@ -126,7 +128,7 @@ func checkReads(t *testing.T, where string, program *ir.Program, function int) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if !program.Locals[local].Global && !program.Locals[local].Captured {
+		if !program.Locals[local].Global && !program.Locals[local].Captured && !program.Locals[local].ExpressionAssigned {
 			want++
 		}
 	}

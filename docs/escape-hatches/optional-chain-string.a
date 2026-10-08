@@ -1,0 +1,2 @@
+const x = { s: 'ok' };
+console.log(x?.s);

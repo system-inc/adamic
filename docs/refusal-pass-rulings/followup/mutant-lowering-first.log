@@ -1,0 +1,40 @@
+--- FAIL: TestRefusalPassRulings (0.00s)
+    --- FAIL: TestRefusalPassRulings/eval-order.a (0.08s)
+        refusal_pass_test.go:40: got /tmp/adamic-gate/TestRefusalPassRulingseval-order.a2680852117/001/main.a:1:26: stage 0 can't lower a function inside a function (a closure) yet, want Refused
+    --- FAIL: TestRefusalPassRulings/any-order.a (0.09s)
+        refusal_pass_test.go:40: got /tmp/adamic-gate/TestRefusalPassRulingsany-order.a1580850158/001/main.a:2:5: stage 0 can't lower a value of type any yet, want Refused
+    --- FAIL: TestRefusalPassRulings/eval.a (0.06s)
+        refusal_pass_test.go:40: got /tmp/adamic-gate/TestRefusalPassRulingseval.a2323109741/001/main.a:1:1: stage 0 can't lower reading eval yet, want Refused
+    --- FAIL: TestRefusalPassRulings/expando-index.a (0.07s)
+        refusal_pass_test.go:40: got /tmp/adamic-gate/TestRefusalPassRulingsexpando-index.a1441572732/001/main.a:1:21: stage 0 can't lower assigning an element of a value yet, want Refused
+    --- FAIL: TestRefusalPassRulings/expando.a (0.08s)
+        refusal_pass_test.go:40: got /tmp/adamic-gate/TestRefusalPassRulingsexpando.a2541710652/001/main.a:1:21: stage 0 can't lower assigning a field of a value yet, want Refused
+    --- FAIL: TestRefusalPassRulings/expando-order.a (0.08s)
+        refusal_pass_test.go:40: got /tmp/adamic-gate/TestRefusalPassRulingsexpando-order.a3440843392/001/main.a:1:26: stage 0 can't lower a function inside a function (a closure) yet, want Refused
+    --- FAIL: TestRefusalPassRulings/record-operation-permanent-priority.a (0.09s)
+        refusal_pass_test.go:40: got /tmp/adamic-gate/TestRefusalPassRulingsrecord-operation-permanent-priority.a1849495424/001/main.a:3:20: stage 0 can't lower an ElementAccessExpression yet, want Refused
+    --- FAIL: TestRefusalPassRulings/record-values.a (0.09s)
+        refusal_pass_test.go:45: got "main.a:2:27: stage 0 can't lower Object.values on a shape not proven by a plain literal or its const binding yet", want "main.a:2:13: stage 0 can't lower Object.values on a record (own-key record enumeration is not implemented; use Map.values) yet"
+    --- FAIL: TestRefusalPassRulings/record-entries.a (0.07s)
+        refusal_pass_test.go:45: got "main.a:2:31: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet", want "main.a:2:16: stage 0 can't lower Object.entries on a record (own-key record enumeration is not implemented; use Map.entries) yet"
+    --- FAIL: TestRefusalPassRulings/record-element-read.a (0.07s)
+        refusal_pass_test.go:45: got "main.a:2:20: stage 0 can't lower an ElementAccessExpression yet", want "main.a:2:20: stage 0 can't lower dynamic record reads (own-key lookup returning T | undefined is not implemented; use Map.get) yet"
+    --- FAIL: TestRefusalPassRulings/record-dynamic-write.a (0.06s)
+        refusal_pass_test.go:45: got "main.a:3:1: stage 0 can't lower assigning an element of a value yet", want "main.a:3:1: stage 0 can't lower dynamic record writes (own-key record storage is not implemented; use Map.set) yet"
+    --- FAIL: TestRefusalPassRulings/record-dynamic-read.a (0.07s)
+        refusal_pass_test.go:45: got "main.a:3:20: stage 0 can't lower an ElementAccessExpression yet", want "main.a:3:20: stage 0 can't lower dynamic record reads (own-key lookup returning T | undefined is not implemented; use Map.get) yet"
+    --- FAIL: TestRefusalPassRulings/any.a (0.06s)
+        refusal_pass_test.go:40: got /tmp/adamic-gate/TestRefusalPassRulingsany.a360374461/001/main.a:1:5: stage 0 can't lower a value of type any yet, want Refused
+    --- FAIL: TestRefusalPassRulings/observe-function.a (0.04s)
+        refusal_pass_test.go:40: got /tmp/adamic-gate/TestRefusalPassRulingsobserve-function.a385784113/001/main.a:1:55: stage 0 can't lower a call to an Identifier yet, want Refused
+    --- FAIL: TestRefusalPassRulings/new-function.a (0.05s)
+        refusal_pass_test.go:40: got /tmp/adamic-gate/TestRefusalPassRulingsnew-function.a1582995984/001/main.a:1:15: stage 0 can't lower new an Identifier yet, want Refused
+    --- FAIL: TestRefusalPassRulings/class-namespace.a (0.04s)
+        refusal_pass_test.go:40: got /tmp/adamic-gate/TestRefusalPassRulingsclass-namespace.a4178701370/001/main.a:1:22: stage 0 can't lower a ModuleDeclaration yet, want Refused
+    --- FAIL: TestRefusalPassRulings/class-namespace-first.a (0.06s)
+        refusal_pass_test.go:40: got /tmp/adamic-gate/TestRefusalPassRulingsclass-namespace-first.a3175620361/001/main.a:1:1: stage 0 can't lower a ModuleDeclaration yet, want Refused
+    --- FAIL: TestRefusalPassRulings/new-function-order.a (0.04s)
+        refusal_pass_test.go:40: got /tmp/adamic-gate/TestRefusalPassRulingsnew-function-order.a313752831/001/main.a:1:26: stage 0 can't lower a function inside a function (a closure) yet, want Refused
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.490s
+FAIL

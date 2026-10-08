@@ -1,0 +1,12 @@
+const arrays: Record<string, number[]> = {a: [1, 2], b: []};
+const old = arrays['a'];
+const entries = Object.entries(arrays);
+const copy: Record<string, number[]> = {...arrays, c: [3]};
+arrays['a'] = [9]; delete arrays['b'];
+if (old !== undefined) console.log(old.join(','));
+console.log(entries.map(e => e[0] + ':' + e[1].join(',')).join('|'));
+console.log(String(JSON.stringify(copy)));
+const nested: Record<string, Record<string, boolean>> = {outer: {yes: true, no: false}};
+const inside = nested['outer'];
+if (inside !== undefined) {inside['extra'] = false; console.log(String(inside['missing']));}
+console.log(String(JSON.stringify(nested)));

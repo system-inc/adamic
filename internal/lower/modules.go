@@ -79,7 +79,7 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 		switch statement.Kind {
 		case ast.KindVariableStatement:
 			list := statement.AsVariableStatement().DeclarationList
-			if list.Flags&ast.NodeFlagsBlockScoped == 0 && !namespaceVariable(list) {
+			if list.Flags&ast.NodeFlagsBlockScoped == 0 && !assertionVarList(list) && !namespaceVariable(list) {
 				continue // statements() refuses var where it stands
 			}
 			for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
@@ -99,6 +99,7 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 							l.result.Locals[local].NamespaceVar = true
 							l.result.Locals[local].NamespaceState = true
 						}
+						l.result.Locals[local].Hoisted = list.Flags&ast.NodeFlagsBlockScoped == 0
 					}
 					continue
 				}
@@ -112,6 +113,7 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 						l.result.Locals[local].NamespaceVar = list.Flags&ast.NodeFlagsBlockScoped == 0
 						l.result.Locals[local].NamespaceState = declaration.Initializer() == nil || l.result.Locals[local].NamespaceVar
 					}
+					l.result.Locals[local].Hoisted = list.Flags&ast.NodeFlagsBlockScoped == 0
 				}
 			}
 		case ast.KindEnumDeclaration:

@@ -16,11 +16,16 @@ import (
 	"path/filepath"
 )
 
-// Lower lowers a checked program from one entry, in ESM evaluation order.
+// Lower lowers a checked program from its explicit execution entries in the order supplied.
 func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
-	files := program.Files()
-	if len(files) != 1 {
-		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+	files := []*ast.SourceFile{}
+	for _, file := range program.Entries() {
+		if !file.IsDeclarationFile {
+			files = append(files, file)
+		}
+	}
+	if len(files) == 0 {
+		return nil, fmt.Errorf("lower: no executable root files, got %d", len(files))
 	}
 	entry := files[0]
 	// Stage 0 checks single-threaded, so one checker answers for every file.
@@ -30,7 +35,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1}
 	// The base name only, so the same program emits the same C on every machine.
 	lowering.result.Source = filepath.Base(program.FileName(entry))
-	modules, err := lowering.moduleOrder(entry)
+	modules, err := lowering.rootOrder(files)
 	if err != nil {
 		return nil, err
 	}
@@ -79,6 +84,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	if err := lowering.findCycles(modules); err != nil {
 		return nil, err
 	}
+	readiness(lowering.result)
 	borrow(lowering.result)
 	counters(lowering.result)
 	return lowering.result, nil

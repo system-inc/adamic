@@ -1,0 +1,15 @@
+import { programArguments } from 'adamic';
+const root = programArguments()[0] ?? '';
+function failure(error: Error): void {
+    const code = 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+    console.log(`${code ?? ''}: ${error.message.replace(root, '<root>')}`);
+}
+import { openSync, writeSync, closeSync, readFileSync } from 'node:fs';
+const fd=openSync(root + '/out','w+');
+console.log(`${writeSync(fd, 'hé🌍\uD800', undefined, 'utf8')}`);
+console.log(`${writeSync(fd, 'XY', 0)}`);
+writeSync(fd,'!', null, 'utf-8');
+writeSync(fd,'?',1.5); writeSync(fd,'n',NaN);
+closeSync(fd);
+console.log(readFileSync(root + '/out','utf8'));
+try { writeSync(fd,'closed'); } catch(error) { if (error instanceof Error) { failure(error); } }

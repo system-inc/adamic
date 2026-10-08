@@ -1,0 +1,23 @@
+import { readFile } from '../../load/node_fs_file_system.a';
+import { readFileSync, openSync, closeSync } from 'node:fs';
+import { programArguments } from 'adamic';
+const root = programArguments()[0] ?? '';
+for (const name of ['file', 'utf8', 'bom', 'bad']) {
+    const bytes = readFileSync(root + '/' + name);
+    console.log(bytes.toString('hex'));
+    console.log(bytes.toString('utf8'));
+}
+const fd = openSync(root + '/file', 'r');
+console.log(readFileSync(fd).toString('hex'));
+console.log(readFileSync(fd).toString('hex'));
+closeSync(fd);
+for (const name of ['missing', 'directory']) {
+    try { readFileSync(root + '/' + name); }
+    catch (error) {
+        if (error instanceof Error) {
+            const code = 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+            console.log(code ?? 'missing');
+        }
+    }
+}
+for (const name of ['file','bom','bad','utf16le','utf16be','utf16be-odd','empty','missing','directory']) { console.log(JSON.stringify(readFile(root + '/' + name, 'latin1')) ?? 'undefined'); }

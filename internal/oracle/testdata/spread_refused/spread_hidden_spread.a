@@ -1,0 +1,4 @@
+const full = { y: 2, x: "hidden" };
+const view: { readonly y: number } = full;
+const value = { ...{ x: 1 }, ...view };
+console.log(String(value.x));
