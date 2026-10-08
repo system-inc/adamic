@@ -242,3 +242,17 @@ All 19 landing steps, JSX/listener/library proofs, 43 Node fixtures and eight
 incoming typeof mutant executions pass. Required external receipt: 100 passing
 events, zero skips or failures. No additional claims. Three hooks remain parked
 for native high-level IR, SSA and capture analysis. See TYPEOF_LANDING_REPORT.md.
+
+## October 8 shared-checker merge landing
+
+Merged the current lint area, without rebasing or deleting either side's checks.
+Six existing ports now have owned unified descriptors using RuleContext.checker.
+Four fully match every captured row plus witnesses: no-undef-init, prefer-for-of,
+prefer-rest-params and jsx-no-undef. Indexed-object-style is 119/121, blocked by
+empty index-signature recovery; promise-reject-errors is 123/124, blocked by a
+malformed TSX capture rejected by the shared Go adapter. All six owned witnesses
+and mutants pass. All 81 registered rule mutants pass. The six remaining existing
+ports are pending shared checker routing or external declaration view, and the
+three hook claims remain parked. Exact consumers and current package receipts:
+wave07_jsx/CHECKER_BLOCKERS.md and wave07_jsx/CHECKER_LANDING_REPORT.md.
+No new ownership is claimed.

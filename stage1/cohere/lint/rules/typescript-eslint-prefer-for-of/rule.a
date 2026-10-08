@@ -4,7 +4,7 @@ import { Bindings, waveNode } from './bindings.a';
 import { WaveSymbol } from './symbol.a';
 export class Rule {
     readonly bindings: Bindings;
-    
+
     constructor(context: RuleContext) { this.bindings=new Bindings(context); }
     identifier(index: number, name: string): boolean {
         const node = waveNode(this.bindings.rules, index);

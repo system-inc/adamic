@@ -46,3 +46,26 @@ TestCheckerBridgeRefusalPending awaits TSGoError in internal/load/prelude.d.ts
 and the bridge error-as-value transport. Its exact skip reason and all package
 results are archived beside CHECKER_LANDING_REPORT.md. No input-dependent check
 was deliberately disabled, and no skip or failed assertion was removed.
+
+## Newly measured unified-harness blockers
+
+- @typescript-eslint/consistent-indexed-object-style: two captured clean recovery
+  inputs, `interface Foo {\n  [];\n}\n` and `type Foo = { [] };\n`,
+  reach stage1/typescript/parser/parser.ts:176 primary() and exit 70 on
+  CloseBracketToken. Cohere's TestConsistentIndexedObjectStyleStaysSilentOnUpstreamPassCases
+  includes these at cohere/internal/lint/rules/typescript/consistent_indexed_object_style_test.go:114
+  and :112. The other 119 captured cases match all four runtimes. Their sources,
+  manifests, unchanged Go outputs and native stderr are in checker-landing evidence.
+- prefer-promise-reject-errors: the captured `input.tsx` containing
+  `Promise.reject(<string>'x');` is an intentionally malformed JSX recovery
+  case at cohere/internal/lint/rules/core/prefer_promise_reject_errors_test.go:298,
+  TestPreferPromiseRejectErrorsShapesUpstreamCannotWrite. The shared oracle
+  collect() at stage1/cohere/lint/testdata/oracle.go:186 rejects the captured row
+  without a recovery marker and exits 2 before any port comparison. The other
+  123 captured cases match all four runtimes. No row was silently renamed to .ts
+  or omitted.
+- The new descriptors add 45 JSX cases for react/jsx-no-undef and one for
+  prefer-promise-reject-errors. The fixed expected map in shared jsxSources(),
+  stage1/cohere/lint/jsx_integration_test.go:61, omits both rules and fails
+  TestJsxLintTrees and TestJsxLintReleaseAndThroughput. This unit preserves that
+  check; shared test-map upkeep is an integration change.

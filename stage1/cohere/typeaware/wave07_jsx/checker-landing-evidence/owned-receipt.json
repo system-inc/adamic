@@ -1,0 +1,91 @@
+[
+  {
+    "rule": "no-undef-init",
+    "cases": 43,
+    "pass": 43,
+    "fail": [],
+    "seconds": {
+      "Go": 2.6381331249981486,
+      "native": 3.34423168199919,
+      "Node": 11.776563336000436,
+      "emitted": 2.679100166000353
+    }
+  },
+  {
+    "rule": "@typescript-eslint/prefer-for-of",
+    "cases": 97,
+    "pass": 97,
+    "fail": [],
+    "seconds": {
+      "Go": 5.569041055002344,
+      "native": 7.105589053999665,
+      "Node": 25.430465276001087,
+      "emitted": 5.997738159002438
+    }
+  },
+  {
+    "rule": "@typescript-eslint/consistent-indexed-object-style",
+    "cases": 121,
+    "pass": 119,
+    "fail": [
+      {
+        "case": "/workspace/lint-wave07-owned-comparison/typescript-eslint-consistent-indexed-object-style/44",
+        "reason": "native exited 70",
+        "source": "interface Foo {\n  [];\n}\n"
+      },
+      {
+        "case": "/workspace/lint-wave07-owned-comparison/typescript-eslint-consistent-indexed-object-style/95",
+        "reason": "native exited 70",
+        "source": "type Foo = { [] };\n"
+      }
+    ],
+    "seconds": {
+      "Go": 7.154579534999357,
+      "native": 8.95983942400062,
+      "Node": 32.24659945600115,
+      "emitted": 7.643139256997529
+    }
+  },
+  {
+    "rule": "prefer-rest-params",
+    "cases": 23,
+    "pass": 23,
+    "fail": [],
+    "seconds": {
+      "Go": 1.3517638219996115,
+      "native": 1.7118081880007594,
+      "Node": 6.307454084998426,
+      "emitted": 1.467203589001656
+    }
+  },
+  {
+    "rule": "prefer-promise-reject-errors",
+    "cases": 124,
+    "pass": 123,
+    "fail": [
+      {
+        "case": "/workspace/lint-wave07-owned-comparison/prefer-promise-reject-errors/120",
+        "reason": "Go exited 2",
+        "source": "Promise.reject(<string>'x');\n"
+      }
+    ],
+    "seconds": {
+      "Go": 7.721881777001727,
+      "native": 9.6352415750016,
+      "Node": 34.515742280997074,
+      "emitted": 8.073545132999243
+    }
+  },
+  {
+    "rule": "react/jsx-no-undef",
+    "cases": 45,
+    "pass": 45,
+    "fail": [],
+    "seconds": {
+      "Go": 2.6359209239994925,
+      "native": 3.3497524859994883,
+      "Node": 12.374017353999989,
+      "emitted": 2.8119355650001125
+    }
+  }
+]

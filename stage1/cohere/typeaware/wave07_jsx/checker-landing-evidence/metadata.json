@@ -1,0 +1,209 @@
+{
+  "area_merge": "755f6b69c764a3e9296406e10ec89c3ec42bfb89",
+  "merged_area": "c4bdc23fa86d55cf7e579989201c11258f4d3a62",
+  "tested_source_commit": "c92db09f6d102d4bda4ef446752eb77f0e0f8819",
+  "current_rule_files": {
+    "stage1/cohere/lint/rules/no-undef-init/symbol.a": {
+      "compiled_sha256": "a781b3dfb2eff868bd1b18e27b6dc9b81ba156ad4258b13090f98be2f5689e1d",
+      "current_sha256": "a781b3dfb2eff868bd1b18e27b6dc9b81ba156ad4258b13090f98be2f5689e1d",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/no-undef-init/oracle.go": {
+      "compiled_sha256": "765ea2ca4e07d8380c4248952460ba4622785db2df92a031c741e1fc2a5fb5e7",
+      "current_sha256": "765ea2ca4e07d8380c4248952460ba4622785db2df92a031c741e1fc2a5fb5e7",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/no-undef-init/mutant.json": {
+      "compiled_sha256": "ceab79db76e19bbd22642c225dd34fe93a204d2e5139ff2f6e25a919ae053d0a",
+      "current_sha256": "ceab79db76e19bbd22642c225dd34fe93a204d2e5139ff2f6e25a919ae053d0a",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/no-undef-init/bindings.a": {
+      "compiled_sha256": "08217908e2421545affb6fbdca015d17d183a8d7ad82e2b8d24fdeed7c890937",
+      "current_sha256": "c832ee7814a3fe9409afdc668841ac588cb5c1eebecb88fa3a51977b49d4bf4f",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/no-undef-init/rule.json": {
+      "compiled_sha256": "0cdcecab1f5e35afc14a15ad652b4c2a222573ea9cab5aa023b24019ac6ab5d1",
+      "current_sha256": "0cdcecab1f5e35afc14a15ad652b4c2a222573ea9cab5aa023b24019ac6ab5d1",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/no-undef-init/rule.a": {
+      "compiled_sha256": "22345b442f50b45ab7cfd74ef5fe42ba2d2c978921703f46ae25c0773e142517",
+      "current_sha256": "22345b442f50b45ab7cfd74ef5fe42ba2d2c978921703f46ae25c0773e142517",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/typescript-eslint-prefer-for-of/symbol.a": {
+      "compiled_sha256": "a781b3dfb2eff868bd1b18e27b6dc9b81ba156ad4258b13090f98be2f5689e1d",
+      "current_sha256": "a781b3dfb2eff868bd1b18e27b6dc9b81ba156ad4258b13090f98be2f5689e1d",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/typescript-eslint-prefer-for-of/oracle.go": {
+      "compiled_sha256": "36f21ec529a20b97c16dfb381fe6c983ff1e6300c9aedf81d2894523f0bf87dd",
+      "current_sha256": "36f21ec529a20b97c16dfb381fe6c983ff1e6300c9aedf81d2894523f0bf87dd",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/typescript-eslint-prefer-for-of/mutant.json": {
+      "compiled_sha256": "92596a6918665d3a44c8322b7571921058060e086310d1d1d076e15f84518e88",
+      "current_sha256": "92596a6918665d3a44c8322b7571921058060e086310d1d1d076e15f84518e88",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/typescript-eslint-prefer-for-of/bindings.a": {
+      "compiled_sha256": "08217908e2421545affb6fbdca015d17d183a8d7ad82e2b8d24fdeed7c890937",
+      "current_sha256": "c832ee7814a3fe9409afdc668841ac588cb5c1eebecb88fa3a51977b49d4bf4f",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/typescript-eslint-prefer-for-of/rule.json": {
+      "compiled_sha256": "a264ae51fcebf991f79b193bf8202cb0c43d96293f7f4977bb3a5f3702c6fff6",
+      "current_sha256": "a264ae51fcebf991f79b193bf8202cb0c43d96293f7f4977bb3a5f3702c6fff6",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/typescript-eslint-prefer-for-of/rule.a": {
+      "compiled_sha256": "7c3775e9161da2ec058a513b82bb1a6e30dd2809f767b30a3ca08d72cd86ac8a",
+      "current_sha256": "4b023b017d2e13a80ab399f1a03bdaf52495a1b8676cfbb77b46a5f529e209b7",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/typescript-eslint-consistent-indexed-object-style/symbol.a": {
+      "compiled_sha256": "a781b3dfb2eff868bd1b18e27b6dc9b81ba156ad4258b13090f98be2f5689e1d",
+      "current_sha256": "a781b3dfb2eff868bd1b18e27b6dc9b81ba156ad4258b13090f98be2f5689e1d",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/typescript-eslint-consistent-indexed-object-style/type_reference_graph.a": {
+      "compiled_sha256": "09dfd98e47e7e4ef25585d19fbcf0cf89bf74679c10ff1df1f270af3c3db278d",
+      "current_sha256": "09dfd98e47e7e4ef25585d19fbcf0cf89bf74679c10ff1df1f270af3c3db278d",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/typescript-eslint-consistent-indexed-object-style/oracle.go": {
+      "compiled_sha256": "65c6994fd42004a961f33d39c88b02fce3da12572c32057ace49939845d989ee",
+      "current_sha256": "65c6994fd42004a961f33d39c88b02fce3da12572c32057ace49939845d989ee",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/typescript-eslint-consistent-indexed-object-style/node.a": {
+      "compiled_sha256": "a37a351d0846cb6a0cbc9a248d9a9e2821dc1f9266326597fb69a2971bc49104",
+      "current_sha256": "a37a351d0846cb6a0cbc9a248d9a9e2821dc1f9266326597fb69a2971bc49104",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/typescript-eslint-consistent-indexed-object-style/mutant.json": {
+      "compiled_sha256": "10e4cd7e278ea70dd9e6b09ecab898772db29f40ed89849c1693da35381f81bd",
+      "current_sha256": "10e4cd7e278ea70dd9e6b09ecab898772db29f40ed89849c1693da35381f81bd",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/typescript-eslint-consistent-indexed-object-style/bindings.a": {
+      "compiled_sha256": "6b9b712363181d404b40ddec9064244a0ddf4c6edd94d43e7643f51501cdf350",
+      "current_sha256": "b8b1d8dd0b37585ac7d0601f1c779b13e8bc29b9ce5b765afe3b263018efb064",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/typescript-eslint-consistent-indexed-object-style/rule.json": {
+      "compiled_sha256": "baa8ae50ee046f88d6fa5b23b42d86ce7b782bfe8100f3efb0a779a0f3f6e622",
+      "current_sha256": "baa8ae50ee046f88d6fa5b23b42d86ce7b782bfe8100f3efb0a779a0f3f6e622",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/typescript-eslint-consistent-indexed-object-style/reference_node.a": {
+      "compiled_sha256": "b72b4b26494fc60d76aec0fa2524d0bbcfbecaaba0f2df3ffe2d54d8881eac90",
+      "current_sha256": "b72b4b26494fc60d76aec0fa2524d0bbcfbecaaba0f2df3ffe2d54d8881eac90",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/typescript-eslint-consistent-indexed-object-style/rule.a": {
+      "compiled_sha256": "669d65239fbb94031f9ee049476bc71e00dda87547370a069b4fb6ac12ca0809",
+      "current_sha256": "669d65239fbb94031f9ee049476bc71e00dda87547370a069b4fb6ac12ca0809",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/prefer-rest-params/symbol.a": {
+      "compiled_sha256": "a781b3dfb2eff868bd1b18e27b6dc9b81ba156ad4258b13090f98be2f5689e1d",
+      "current_sha256": "a781b3dfb2eff868bd1b18e27b6dc9b81ba156ad4258b13090f98be2f5689e1d",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/prefer-rest-params/oracle.go": {
+      "compiled_sha256": "14aadd64db3e000ed7696d7f1a5403615a2a8c68e20df61eb5dee30244f15cd5",
+      "current_sha256": "14aadd64db3e000ed7696d7f1a5403615a2a8c68e20df61eb5dee30244f15cd5",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/prefer-rest-params/mutant.json": {
+      "compiled_sha256": "a8bd71aa18af6d5279751ef880d9a670dc555a9dc93a16b84d59e0d61324eafe",
+      "current_sha256": "a8bd71aa18af6d5279751ef880d9a670dc555a9dc93a16b84d59e0d61324eafe",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/prefer-rest-params/bindings.a": {
+      "compiled_sha256": "08217908e2421545affb6fbdca015d17d183a8d7ad82e2b8d24fdeed7c890937",
+      "current_sha256": "c832ee7814a3fe9409afdc668841ac588cb5c1eebecb88fa3a51977b49d4bf4f",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/prefer-rest-params/rule.json": {
+      "compiled_sha256": "fec92d25221cb070b76559dffb1aa45c242cc3f2faef0ba85fca7f10c92d6d01",
+      "current_sha256": "fec92d25221cb070b76559dffb1aa45c242cc3f2faef0ba85fca7f10c92d6d01",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/prefer-rest-params/rule.a": {
+      "compiled_sha256": "da86791834aff787644ca3a5d512a74dc2818f5a9a1ba1c88a3f9683beeb9cf8",
+      "current_sha256": "da86791834aff787644ca3a5d512a74dc2818f5a9a1ba1c88a3f9683beeb9cf8",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/prefer-promise-reject-errors/symbol.a": {
+      "compiled_sha256": "a781b3dfb2eff868bd1b18e27b6dc9b81ba156ad4258b13090f98be2f5689e1d",
+      "current_sha256": "a781b3dfb2eff868bd1b18e27b6dc9b81ba156ad4258b13090f98be2f5689e1d",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/prefer-promise-reject-errors/oracle.go": {
+      "compiled_sha256": "afc23fa63492818202ce4289db32967c36616b79b741acb3675fe0b0d2f90e38",
+      "current_sha256": "afc23fa63492818202ce4289db32967c36616b79b741acb3675fe0b0d2f90e38",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/prefer-promise-reject-errors/helpers.a": {
+      "compiled_sha256": "71a2994207aecaa6ab3ab5b244fc777c8fd011ffe19b38513c00591bd4259a0c",
+      "current_sha256": "71a2994207aecaa6ab3ab5b244fc777c8fd011ffe19b38513c00591bd4259a0c",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/prefer-promise-reject-errors/mutant.json": {
+      "compiled_sha256": "87f353dee970f7546d30df4a6a048a6f8a48d1129c43e5c08c927fe57a6245ad",
+      "current_sha256": "87f353dee970f7546d30df4a6a048a6f8a48d1129c43e5c08c927fe57a6245ad",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/prefer-promise-reject-errors/bindings.a": {
+      "compiled_sha256": "08217908e2421545affb6fbdca015d17d183a8d7ad82e2b8d24fdeed7c890937",
+      "current_sha256": "c832ee7814a3fe9409afdc668841ac588cb5c1eebecb88fa3a51977b49d4bf4f",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/prefer-promise-reject-errors/rule.json": {
+      "compiled_sha256": "de0595cab37895bc07fedf1830d38fa1f9b94ca478e1f5073bd246ea7c474484",
+      "current_sha256": "de0595cab37895bc07fedf1830d38fa1f9b94ca478e1f5073bd246ea7c474484",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/prefer-promise-reject-errors/rule.a": {
+      "compiled_sha256": "5989dac34089da62fa196acb6e970e05526b9c4d2a1a8e3283e4b7a644666ea2",
+      "current_sha256": "5989dac34089da62fa196acb6e970e05526b9c4d2a1a8e3283e4b7a644666ea2",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/react-jsx-no-undef/symbol.a": {
+      "compiled_sha256": "a781b3dfb2eff868bd1b18e27b6dc9b81ba156ad4258b13090f98be2f5689e1d",
+      "current_sha256": "a781b3dfb2eff868bd1b18e27b6dc9b81ba156ad4258b13090f98be2f5689e1d",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/react-jsx-no-undef/oracle.go": {
+      "compiled_sha256": "332aea50f5f5cd6d3bbacacb310b04bcc649377214693d68b6538461816aa94f",
+      "current_sha256": "332aea50f5f5cd6d3bbacacb310b04bcc649377214693d68b6538461816aa94f",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/react-jsx-no-undef/mutant.json": {
+      "compiled_sha256": "64e8cddaeb78ce0b9f6080153b2b602cc222cf830ed14a58f4d877c7393312d0",
+      "current_sha256": "64e8cddaeb78ce0b9f6080153b2b602cc222cf830ed14a58f4d877c7393312d0",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/react-jsx-no-undef/bindings.a": {
+      "compiled_sha256": "08217908e2421545affb6fbdca015d17d183a8d7ad82e2b8d24fdeed7c890937",
+      "current_sha256": "c832ee7814a3fe9409afdc668841ac588cb5c1eebecb88fa3a51977b49d4bf4f",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/react-jsx-no-undef/rule.json": {
+      "compiled_sha256": "9690e61f2b1a11823c41c45e21e226b2a873242a1b500c29b0feaa4ca1f8f541",
+      "current_sha256": "9690e61f2b1a11823c41c45e21e226b2a873242a1b500c29b0feaa4ca1f8f541",
+      "identical_or_trailing_whitespace_only": true
+    },
+    "stage1/cohere/lint/rules/react-jsx-no-undef/rule.a": {
+      "compiled_sha256": "fe9e2db27f480fbda714b45d391add02490c4c2bfe67f519063fa97e2b178787",
+      "current_sha256": "fe9e2db27f480fbda714b45d391add02490c4c2bfe67f519063fa97e2b178787",
+      "identical_or_trailing_whitespace_only": true
+    }
+  },
+  "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "corpus": "050880ce59e30b356b686bd3144efe24f875ebc8"
+}
