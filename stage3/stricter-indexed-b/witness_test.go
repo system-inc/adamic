@@ -44,6 +44,7 @@ func run(command string, args ...string) observation {
 // Each row is isolated so a preceding failed check cannot hide this site's check.
 // Fixture text is materialized as .ts under its own project, as in the base worker.
 func TestGeneratorWitnesses(t *testing.T) {
+	t.Parallel()
 	cli := filepath.Join(t.TempDir(), "adamic")
 	if result := run("go", "build", "-o", cli, "../../cmd/adamic"); result.code != 0 {
 		t.Fatalf("CLI build: %+v", result)
@@ -61,7 +62,10 @@ func TestGeneratorWitnesses(t *testing.T) {
 	if len(sites) != 27 {
 		t.Fatalf("want 27 ledger rows, got %d", len(sites))
 	}
-	for _, site := range sites {
+	for index, site := range sites {
+		if site.ID != fmt.Sprintf("D%d", 195+index) {
+			t.Fatalf("ledger identity/order at %d: %s", index, site.ID)
+		}
 		t.Run(site.ID, func(t *testing.T) {
 			text, err := os.ReadFile(filepath.Join("fixtures", site.ID+".ts.txt"))
 			if err != nil {
@@ -93,7 +97,10 @@ func TestGeneratorWitnesses(t *testing.T) {
 					}
 					program, err := lower.Lower(context.Background(), checked)
 					if err != nil {
-						t.Skipf("BLOCKED %s: %v", site.ID, err)
+						if (site.ID == "D212" || site.ID == "D220") && strings.Contains(err.Error(), "Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case") {
+							t.Skipf("BLOCKED %s: %v", site.ID, err)
+						}
+						t.Fatalf("unexpected lowering failure for %s: %v", site.ID, err)
 					}
 					checks := ir.InsertedChecks(program)
 					if len(checks) != 1 || checks[0].Kind != "indexed-presence" {

@@ -1,6 +1,6 @@
-Built 27 isolated project-.ts fixture templates and a Node/native/JavaScript witness harness; 19 sites proven.
-Base 390af985; latest preceding commit bff31ede914f99e7aa447c0ab6d1d27ffb1e2d25; branch codex/stricter-indexed-b only.
-Logged filtered go tests: 19 proven, 1 blocked, 7 remaining; final gate recorded below.
+Built 27 isolated project-.ts fixture templates and a Node/native/JavaScript witness harness; 24 sites proven.
+Base 390af985; latest preceding commit 0f3ebb3a79e3955706d7609d38b51e3aa814f253; branch codex/stricter-indexed-b only.
+Logged filtered go tests: 24 proven, 1 blocked, 2 remaining; final gate recorded below.
 Every proven site has an emitted-C erase-panic mutant that builds under sanitizers and loses the pinned exit-70 observation.
 Whole-program compilation, sparse holes, typed arrays and records are not covered; refused shapes are never counted as proven.
 
@@ -61,11 +61,11 @@ must list exactly one checked indexed-presence site, count one, and trust zero.
 | D212 | 2446 | `supportsLabeledBreakOrContinue(containingBlock)` | object union array | blocked: main.ts:5:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case |
 | D213 | 2469 | `supportsLabeledBreakOrContinue(block)` | object union array | proven, erase-panic caught |
 | D214 | 2472 | `supportsUnlabeledBreak(block)` | object union array | proven, erase-panic caught |
-| D215 | 2480 | `supportsUnlabeledBreak(block)` | object union array | remaining |
-| D216 | 2499 | `supportsUnlabeledContinue(block)` | object union array | remaining |
-| D217 | 2507 | `supportsUnlabeledContinue(block)` | object union array | remaining |
-| D218 | 2880 | `withBlock.expression` | object array | remaining |
-| D219 | 2951 | `labelNumbers[labelNumber]` | number[][] | remaining |
+| D215 | 2480 | `supportsUnlabeledBreak(block)` | object union array | proven, erase-panic caught |
+| D216 | 2499 | `supportsUnlabeledContinue(block)` | object union array | proven, erase-panic caught |
+| D217 | 2507 | `supportsUnlabeledContinue(block)` | object union array | proven, erase-panic caught |
+| D218 | 2880 | `withBlock.expression` | object array | proven, erase-panic caught |
+| D219 | 2951 | `labelNumbers[labelNumber]` | number[][] | proven, erase-panic caught |
 | D220 | 2983 | `blockOffsets![blockIndex]` | number[] | remaining |
 | D221 | 2984 | `block` | object union array | remaining |
 
@@ -77,6 +77,7 @@ All test output is written to log files, never piped. Current proof logs:
 - `/tmp/stricter-indexed-b-group2-final.log`
 - `/tmp/stricter-indexed-b-group3-final.log`
 - `/tmp/stricter-indexed-b-group4-final.log`
+- `/tmp/stricter-indexed-b-group5-final.log`
 
 Setup: `export GOPROXY='https://proxy.golang.org|direct'; bash cloud/setup.sh`
 with `/workspace/adamic-tools/env.sh` sourced for builds and tests. nproc=5.
