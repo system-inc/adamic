@@ -1,0 +1,29 @@
+=== RUN   TestMutants/react-no-this-in-sfc-component-name-inverted
+=== PAUSE TestMutants/react-no-this-in-sfc-component-name-inverted
+=== CONT  TestMutants/react-no-this-in-sfc-component-name-inverted
+    lint_test.go:1000: checker compilation phases: load=236.387849ms lower=6.44501906s C=745.534491ms JavaScript=31.563453ms
+    lint_test.go:1006: react-no-this-in-sfc-component-name-inverted caught on Node: case 88 line 4600: port "/tmp/adamic-gate/TestMutantsreact-no-this-in-sfc-component-name-inverted3879412685/019/react-no-this-in-sfc-0.ts:4:41", Go "/tmp/adamic-gate/TestMutantsreact-no-this-in-sfc-component-name-inverted3879412685/019/react-no-this-in-sfc-0.ts:1:30"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 88
+        /tmp/adamic-gate/TestMutantsreact-no-this-in-sfc-component-name-inverted3879412685/019/react-no-this-in-sfc-0.ts:1:30
+          react/no-this-in-sfc  A function component is called, not constructed, so `this` is not the component. It is `undefined` under a module's strict mode and the global object otherwise, and either way the props being read here belong to nothing. The read almost always survives a class component that was rewritten as a function and the `this.` prefixes were left behind. Take props and context as parameters instead.
+        
+        range 29 33 noThisInSfc 			29 33
+        /tmp/adamic-gate/TestMutantsreact-no-this-in-sfc-component-name-inverted3879412685/019/react-no-this-in-sfc-0.ts:1:53
+    lint_test.go:1006: react-no-this-in-sfc-component-name-inverted caught on emitted JavaScript: case 88 line 4600: port "/tmp/adamic-gate/TestMutantsreact-no-this-in-sfc-component-name-inverted3879412685/019/react-no-this-in-sfc-0.ts:4:41", Go "/tmp/adamic-gate/TestMutantsreact-no-this-in-sfc-component-name-inverted3879412685/019/react-no-this-in-sfc-0.ts:1:30"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 88
+        /tmp/adamic-gate/TestMutantsreact-no-this-in-sfc-component-name-inverted3879412685/019/react-no-this-in-sfc-0.ts:1:30
+          react/no-this-in-sfc  A function component is called, not constructed, so `this` is not the component. It is `undefined` under a module's strict mode and the global object otherwise, and either way the props being read here belong to nothing. The read almost always survives a class component that was rewritten as a function and the `this.` prefixes were left behind. Take props and context as parameters instead.
+        
+        range 29 33 noThisInSfc 			29 33
+        /tmp/adamic-gate/TestMutantsreact-no-this-in-sfc-component-name-inverted3879412685/019/react-no-this-in-sfc-0.ts:1:53
+--- PASS: TestMutants/react-no-this-in-sfc-component-name-inverted (8.54s)
