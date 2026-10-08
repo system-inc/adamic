@@ -1,0 +1,342 @@
+{
+  "measurement": "measured on a checker-rejected program",
+  "note": "Distinct sites per pattern; patterns overlap. Indirect/callback/intrinsic is a mixed boundary, not proof that every such site uses a callback.",
+  "before_patterns": {
+    "function-value escape callback boundary": {
+      "untagged": 12,
+      "tagged": 16
+    },
+    "constructors": {
+      "untagged": 36
+    },
+    "whole-array contracts": {
+      "untagged": 4
+    },
+    "missing local/result producers": {
+      "tagged": 164,
+      "untagged": 73
+    },
+    "unbounded callback identity": {
+      "untagged": 23,
+      "tagged": 23
+    }
+  },
+  "after_patterns": {
+    "function-value escape callback boundary": {
+      "untagged": 12,
+      "tagged": 16
+    },
+    "constructors": {
+      "untagged": 4
+    },
+    "missing local/result producers": {
+      "untagged": 76,
+      "tagged": 164
+    },
+    "whole-array contracts": {
+      "untagged": 4
+    },
+    "unbounded callback identity": {
+      "untagged": 23,
+      "tagged": 23
+    }
+  },
+  "transitions": [
+    {
+      "before": "diagnosed body",
+      "after": "diagnosed body",
+      "kind": "tagged",
+      "sites": 1566
+    },
+    {
+      "before": "diagnosed body",
+      "after": "diagnosed body",
+      "kind": "untagged",
+      "sites": 973
+    },
+    {
+      "before": "flow the graph can't see",
+      "after": "diagnosed body",
+      "kind": "untagged",
+      "sites": 32
+    },
+    {
+      "before": "flow the graph can't see",
+      "after": "flow the graph can't see",
+      "kind": "tagged",
+      "sites": 192
+    },
+    {
+      "before": "flow the graph can't see",
+      "after": "flow the graph can't see",
+      "kind": "untagged",
+      "sites": 170
+    },
+    {
+      "before": "host metadata",
+      "after": "host metadata",
+      "kind": "untagged",
+      "sites": 3
+    }
+  ],
+  "changed_sites": [
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2635,
+      "column": 24,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 5537,
+      "column": 22,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 5553,
+      "column": 22,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 13475,
+      "column": 76,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 13580,
+      "column": 29,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 13581,
+      "column": 27,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 14731,
+      "column": 34,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 14862,
+      "column": 34,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 16926,
+      "column": 20,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 16936,
+      "column": 22,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 16949,
+      "column": 22,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 17246,
+      "column": 24,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 18301,
+      "column": 24,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 18446,
+      "column": 20,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 18641,
+      "column": 24,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 18859,
+      "column": 24,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 18866,
+      "column": 24,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 19110,
+      "column": 22,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 19166,
+      "column": 24,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 19172,
+      "column": 22,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 19736,
+      "column": 26,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 19882,
+      "column": 22,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 20277,
+      "column": 22,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 20308,
+      "column": 51,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 20314,
+      "column": 51,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 20321,
+      "column": 49,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 20344,
+      "column": 22,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 20969,
+      "column": 14,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 20973,
+      "column": 14,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 20978,
+      "column": 14,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 26499,
+      "column": 26,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 28642,
+      "column": 24,
+      "kind": "untagged",
+      "before": "flow the graph can't see",
+      "after": "diagnosed body"
+    }
+  ],
+  "unchanged_diagnostics": 260,
+  "conforms_if": []
+}

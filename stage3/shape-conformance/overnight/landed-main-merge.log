@@ -1,0 +1,222 @@
+Auto-merging stage1/cohere/formatfiles/formatfiles_test.go
+Auto-merging stage1/cohere/gitignore/gitignore_test.go
+Auto-merging stage1/cohere/graphql/graphql_test.go
+Auto-merging stage1/cohere/markdownblocks/support_test.go
+Auto-merging stage1/cohere/markdowninline/port_test.go
+Auto-merging stage1/cohere/suppression/suppression_test.go
+Auto-merging stage1/cohere/values/values_test.go
+Merge made by the 'ort' strategy.
+ documentation/velocity/landings.csv                |    4 +
+ internal/testguard/guard.go                        |   89 +
+ stage1/cohere/formatfiles/formatfiles_test.go      |   26 +-
+ stage1/cohere/gitignore/gitignore_test.go          |   34 +-
+ stage1/cohere/graphql/graphql_test.go              |   26 +-
+ stage1/cohere/graphql/printer/helpers_test.go      |   24 +-
+ stage1/cohere/graphql/printer/performance_test.go  |    2 +-
+ stage1/cohere/graphql/printer/printer_test.go      |    2 +-
+ stage1/cohere/lint/corpus_sources_test.go          |  104 +
+ stage1/cohere/lint/deadlines_test.go               |   88 +
+ .../cohere/lint/helpers/comments/comments_test.go  |   14 +-
+ stage1/cohere/lint/helpers/helpers_test.go         |   15 +-
+ stage1/cohere/lint/jsx_integration_test.go         |    4 +-
+ stage1/cohere/lint/lint_test.go                    |  204 +-
+ stage1/cohere/lint/shared_test.go                  |   10 +-
+ .../validation/compiler-agree-balance/REPORT.md    |  125 +
+ .../compiler-agree-balance/after-load.json.gz      |  Bin 0 -> 3333 bytes
+ .../compiler-agree-balance/after-tests.md          |   32 +
+ .../compiler-agree-balance/after-wall.json         |   35 +
+ .../compiler-agree-balance/after.jsonl.gz          |  Bin 0 -> 68084 bytes
+ .../validation/compiler-agree-balance/after.log.gz |  Bin 0 -> 34991 bytes
+ .../compiler-agree-balance/before-load.json.gz     |  Bin 0 -> 3545 bytes
+ .../compiler-agree-balance/before-tests.md         |   32 +
+ .../compiler-agree-balance/before-wall.json        |   37 +
+ .../compiler-agree-balance/before.jsonl.gz         |  Bin 0 -> 66415 bytes
+ .../compiler-agree-balance/before.log.gz           |  Bin 0 -> 34009 bytes
+ .../compiler-agree-balance/byte-proof-wall.json    |   17 +
+ .../compiler-agree-balance/byte-proof.txt          |   42 +
+ .../compiler-agree-balance/drop-proof-wall.json    |   17 +
+ .../compiler-agree-balance/drop-proof.txt          |   13 +
+ .../compiler-agree-balance/measurements.json       |  284 ++
+ .../validation/compiler-agree-balance/smoke.txt    |    1 +
+ .../lint/validation/compiler-agree-balance/vet.txt |    0
+ .../compiler-agree-corpus-sources/REPORT.md        |   39 +
+ .../agreement-summary.json                         |  110 +
+ .../compiler-agree-corpus-sources/agreement.jsonl  |   38 +
+ .../excluded-paths.txt                             |  243 ++
+ .../expanded-policy-overlay.json                   |    5 +
+ .../expanded-policy.patch                          |   11 +
+ .../expanded-policy.txt                            |    8 +
+ .../fixture-leak-overlay.json                      |    5 +
+ .../fixture-leak.patch                             |   11 +
+ .../compiler-agree-corpus-sources/fixture-leak.txt |   12 +
+ .../compiler-agree-corpus-sources/fixtures.txt     |    9 +
+ .../compiler-agree-corpus-sources/inventory.json   |   13 +
+ .../mutants-summary.json                           |   20 +
+ .../prefix-exclusion-overlay.json                  |    5 +
+ .../prefix-exclusion.patch                         |   11 +
+ .../prefix-exclusion.txt                           |   12 +
+ .../compiler-agree-corpus-sources/run-mutants.py   |   28 +
+ .../compiler-agree-corpus-sources/tested-code.json |   10 +
+ .../compiler-agree-corpus-sources/vet.txt          |    0
+ .../validation/compiler-agree-guard-main/REPORT.md |   98 +
+ .../compiler-agree-guard-main/corpus-audit.json    |   20 +
+ .../compiler-agree-guard-main/corpus-audit.py      |    8 +
+ .../compiler-agree-guard-main/guard-retry.txt      |   11 +
+ .../compiler-agree-guard-main/helpers-retry.txt    |    1 +
+ .../compiler-agree-guard-main/helpers.txt          |    9 +
+ .../jsx-recovery-retry.txt                         |   24 +
+ .../compiler-agree-guard-main/loaded-load.jsonl    |  533 ++++
+ .../compiler-agree-guard-main/loaded-summary.json  |  190 ++
+ .../compiler-agree-guard-main/loaded-wall.json     |   31 +
+ .../compiler-agree-guard-main/loaded.jsonl         | 2921 ++++++++++++++++++++
+ .../validation/compiler-agree-guard-main/merge.txt |    8 +
+ .../compiler-agree-guard-main/module-cache.txt     |    0
+ .../normal-interrupted-load.jsonl                  |    8 +
+ .../normal-interrupted-wall.json                   |   25 +
+ .../normal-interrupted.jsonl                       |   39 +
+ .../normal-jsx-failed-load.jsonl                   |  207 ++
+ .../normal-jsx-failed-wall.json                    |   25 +
+ .../normal-jsx-failed.jsonl                        | 2912 +++++++++++++++++++
+ .../compiler-agree-guard-main/normal-load.jsonl    |  188 ++
+ .../compiler-agree-guard-main/normal-summary.json  |  149 +
+ .../compiler-agree-guard-main/normal-wall.json     |   25 +
+ .../compiler-agree-guard-main/normal.jsonl         | 2921 ++++++++++++++++++++
+ .../validation/compiler-agree-guard-main/run.py    |   28 +
+ .../validation/compiler-agree-guard-main/smoke.txt |   12 +
+ .../validation/compiler-agree-guard-main/status.py |   13 +
+ .../compiler-agree-guard-main/summarize.py         |   33 +
+ .../validation/compiler-agree-guard-main/vet.txt   |    0
+ .../validation/compiler-agree-shards/REPORT.md     |   33 +
+ .../compiler-agree-shards/gate-wall.json           |   23 +
+ .../validation/compiler-agree-shards/gate.jsonl.gz |  Bin 0 -> 69127 bytes
+ .../validation/compiler-agree-shards/gate.log.gz   |  Bin 0 -> 34742 bytes
+ .../interrupted-gate.jsonl.gz                      |  Bin 0 -> 2852 bytes
+ .../interrupted-load.jsonl.gz                      |  Bin 0 -> 1220 bytes
+ .../validation/compiler-agree-shards/load.jsonl.gz |  Bin 0 -> 8842 bytes
+ .../validation/compiler-agree-shards/merge.log     |   14 +
+ .../compiler-agree-shards/proof-wall.json          |   17 +
+ .../validation/compiler-agree-shards/proof.log     |   32 +
+ .../compiler-agree-shards/setup-wasi.log           |   18 +
+ .../validation/compiler-agree-shards/setup.log     |   25 +
+ .../validation/compiler-agree-shards/smoke.log     |    4 +
+ .../validation/compiler-agree-shards/timings.json  |  119 +
+ .../lint/validation/compiler-agree-shards/vet.log  |    0
+ .../compiler-agree-shards/wasi-version.log         |    5 +
+ stage1/cohere/markdownblocks/ast_test.go           |    2 +-
+ stage1/cohere/markdownblocks/audit_test.go         |    2 +-
+ stage1/cohere/markdownblocks/chunks_test.go        |    2 +-
+ stage1/cohere/markdownblocks/decode_test.go        |    4 +-
+ stage1/cohere/markdownblocks/events_test.go        |    2 +-
+ stage1/cohere/markdownblocks/frontmatter_test.go   |    2 +-
+ stage1/cohere/markdownblocks/identifier_test.go    |    2 +-
+ stage1/cohere/markdownblocks/lists_test.go         |    4 +-
+ stage1/cohere/markdownblocks/mdast_errors_test.go  |    2 +-
+ stage1/cohere/markdownblocks/mdast_gap_test.go     |    2 +-
+ stage1/cohere/markdownblocks/mdast_test.go         |    2 +-
+ stage1/cohere/markdownblocks/path_test.go          |    2 +-
+ stage1/cohere/markdownblocks/prefix_test.go        |    2 +-
+ stage1/cohere/markdownblocks/support_test.go       |   29 +-
+ stage1/cohere/markdownblocks/text_test.go          |    4 +-
+ stage1/cohere/markdownblocks/width_test.go         |    4 +-
+ stage1/cohere/markdowninline/port_test.go          |   26 +-
+ .../static_single_assignment_test.go               |   20 +-
+ stage1/cohere/suppression/suppression_test.go      |   20 +-
+ stage1/cohere/tsprinter/corpus_test.go             |    4 +-
+ stage1/cohere/tsprinter/doc_test.go                |    2 +-
+ stage1/cohere/tsprinter/expressions_test.go        |    2 +-
+ stage1/cohere/tsprinter/helpers_test.go            |   46 +-
+ stage1/cohere/tsprinter/statements_test.go         |    2 +-
+ .../cohere/tsprinter/testdata/run_tsc_mutants.py   |   22 +-
+ stage1/cohere/tsprinter/tsc_corpus_test.go         |    2 +-
+ stage1/cohere/tsprinter/upstream_test.go           |    2 +-
+ stage1/cohere/values/values_test.go                |   26 +-
+ stage1/cohere/yaml/benchmark_lexer.py              |    9 +-
+ stage1/cohere/yaml/lexer_test.go                   |   11 +-
+ stage1/typescript/scanner/childguard-validation.md |   65 +
+ stage1/typescript/scanner/scanner_test.go          |    9 +-
+ 128 files changed, 12689 insertions(+), 246 deletions(-)
+ create mode 100644 internal/testguard/guard.go
+ create mode 100644 stage1/cohere/lint/corpus_sources_test.go
+ create mode 100644 stage1/cohere/lint/deadlines_test.go
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-balance/REPORT.md
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-balance/after-load.json.gz
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-balance/after-tests.md
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-balance/after-wall.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-balance/after.jsonl.gz
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-balance/after.log.gz
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-balance/before-load.json.gz
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-balance/before-tests.md
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-balance/before-wall.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-balance/before.jsonl.gz
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-balance/before.log.gz
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-balance/byte-proof-wall.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-balance/byte-proof.txt
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-balance/drop-proof-wall.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-balance/drop-proof.txt
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-balance/measurements.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-balance/smoke.txt
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-balance/vet.txt
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-corpus-sources/REPORT.md
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-corpus-sources/agreement-summary.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-corpus-sources/agreement.jsonl
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-corpus-sources/excluded-paths.txt
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-corpus-sources/expanded-policy-overlay.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-corpus-sources/expanded-policy.patch
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-corpus-sources/expanded-policy.txt
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-corpus-sources/fixture-leak-overlay.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-corpus-sources/fixture-leak.patch
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-corpus-sources/fixture-leak.txt
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-corpus-sources/fixtures.txt
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-corpus-sources/inventory.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-corpus-sources/mutants-summary.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-corpus-sources/prefix-exclusion-overlay.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-corpus-sources/prefix-exclusion.patch
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-corpus-sources/prefix-exclusion.txt
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-corpus-sources/run-mutants.py
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-corpus-sources/tested-code.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-corpus-sources/vet.txt
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/REPORT.md
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/corpus-audit.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/corpus-audit.py
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/guard-retry.txt
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/helpers-retry.txt
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/helpers.txt
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/jsx-recovery-retry.txt
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/loaded-load.jsonl
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/loaded-summary.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/loaded-wall.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/loaded.jsonl
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/merge.txt
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/module-cache.txt
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/normal-interrupted-load.jsonl
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/normal-interrupted-wall.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/normal-interrupted.jsonl
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/normal-jsx-failed-load.jsonl
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/normal-jsx-failed-wall.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/normal-jsx-failed.jsonl
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/normal-load.jsonl
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/normal-summary.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/normal-wall.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/normal.jsonl
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/run.py
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/smoke.txt
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/status.py
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/summarize.py
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-guard-main/vet.txt
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-shards/REPORT.md
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-shards/gate-wall.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-shards/gate.jsonl.gz
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-shards/gate.log.gz
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-shards/interrupted-gate.jsonl.gz
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-shards/interrupted-load.jsonl.gz
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-shards/load.jsonl.gz
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-shards/merge.log
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-shards/proof-wall.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-shards/proof.log
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-shards/setup-wasi.log
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-shards/setup.log
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-shards/smoke.log
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-shards/timings.json
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-shards/vet.log
+ create mode 100644 stage1/cohere/lint/validation/compiler-agree-shards/wasi-version.log
+ create mode 100644 stage1/typescript/scanner/childguard-validation.md

@@ -22,5 +22,19 @@
     "native_build_exit": 1,
     "native_build_stdout": "",
     "diagnostic": "adamic: native: clang failed: exit status 1\n/tmp/adamic-gate/adamic-build-3110844471/main.c:86:62: error: used type 'adamic_maybe_number' (aka 'struct adamic_maybe_number') where arithmetic or pointer type is required\n   86 | if (count > 0) adapted[0].number = adamic_maybe_number_pack(((adamic_maybe_number)adamic_union_narrow(arguments[0].reference, 7)));\n      |                                                              ^                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n/tmp/adamic-gate/adamic-build-3110844471/main.c:94:62: error: used type 'adamic_maybe_number' (aka 'struct adamic_maybe_number') where arithmetic or pointer type is required\n   94 | if (count > 0) adapted[0].number = adamic_maybe_number_pack(((adamic_maybe_number)adamic_union_narrow(arguments[0].reference, 7)));\n      |                                                              ^                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n2 errors generated.\n\n"
+  },
+  {
+    "name": "minimal-union-optional-interaction",
+    "source": "function run(): number { function inner(value?: number): number { return value ?? 1; } return inner(); } console.log(String(run()));\nfunction isText(value: string | number): value is string { return typeof value === 'string'; }\nfunction describe(test: (value: string | number) => value is string): boolean { return test(1); }\nconsole.log(String(describe(isText)));\n",
+    "node_stdout": "1\nfalse\n",
+    "native_build_exit": 1,
+    "diagnostic": "adamic: native: clang failed: exit status 1\n/tmp/adamic-gate/adamic-build-2051478570/main.c:37:62: error: used type 'adamic_maybe_number' (aka 'struct adamic_maybe_number') where arithmetic or pointer type is required\n   37 | if (count > 0) adapted[0].number = adamic_maybe_number_pack(((adamic_maybe_number)adamic_union_narrow(arguments[0].reference, 7)));\n      |                                                              ^                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n1 error generated.\n\n"
+  },
+  {
+    "name": "minimal-union-default-interaction",
+    "source": "function run(): number { function inner(value = 1): number { return value ?? 1; } return inner(); } console.log(String(run()));\nfunction isText(value: string | number): value is string { return typeof value === 'string'; }\nfunction describe(test: (value: string | number) => value is string): boolean { return test(1); }\nconsole.log(String(describe(isText)));\n",
+    "node_stdout": "1\nfalse\n",
+    "native_build_exit": 1,
+    "diagnostic": "adamic: native: clang failed: exit status 1\n/tmp/adamic-gate/adamic-build-238969131/main.c:37:62: error: used type 'adamic_maybe_number' (aka 'struct adamic_maybe_number') where arithmetic or pointer type is required\n   37 | if (count > 0) adapted[0].number = adamic_maybe_number_pack(((adamic_maybe_number)adamic_union_narrow(arguments[0].reference, 7)));\n      |                                                              ^                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n1 error generated.\n\n"
   }
 ]

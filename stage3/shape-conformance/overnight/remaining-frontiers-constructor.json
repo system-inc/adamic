@@ -1,0 +1,3210 @@
+{
+  "missing producers": [
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1543,
+      "column": 17,
+      "kind": "untagged",
+      "text": "new Map<K, V[]>() as MultiMap<K, V>",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 2064,
+      "column": 21,
+      "kind": "tagged",
+      "text": "expr as PrefixUnaryExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 2065,
+      "column": 18,
+      "kind": "tagged",
+      "text": "expr as PrefixUnaryExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 2835,
+      "column": 26,
+      "kind": "tagged",
+      "text": "parent as ImportTypeNode",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 2850,
+      "column": 38,
+      "kind": "tagged",
+      "text": "parent as TypeParameterDeclaration",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 2852,
+      "column": 38,
+      "kind": "tagged",
+      "text": "parent as JSDocTemplateTag",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 2857,
+      "column": 38,
+      "kind": "tagged",
+      "text": "parent as HasType",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 2866,
+      "column": 38,
+      "kind": "tagged",
+      "text": "parent as FunctionLikeDeclaration",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 2870,
+      "column": 38,
+      "kind": "tagged",
+      "text": "parent as SignatureDeclaration",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 2872,
+      "column": 38,
+      "kind": "tagged",
+      "text": "parent as TypeAssertion",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 2876,
+      "column": 38,
+      "kind": "tagged",
+      "text": "parent as CallExpression | TaggedTemplateExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3625,
+      "column": 17,
+      "kind": "tagged",
+      "text": "parent as JsxOpeningLikeElement",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3714,
+      "column": 21,
+      "kind": "tagged",
+      "text": "parent as HasInitializer",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3724,
+      "column": 21,
+      "kind": "tagged",
+      "text": "parent as ExpressionStatement",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3726,
+      "column": 34,
+      "kind": "tagged",
+      "text": "parent as ForStatement",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3732,
+      "column": 40,
+      "kind": "tagged",
+      "text": "parent as ForInOrOfStatement",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3737,
+      "column": 30,
+      "kind": "tagged",
+      "text": "parent as AssertionExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3739,
+      "column": 30,
+      "kind": "tagged",
+      "text": "parent as TemplateSpan",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3741,
+      "column": 30,
+      "kind": "tagged",
+      "text": "parent as ComputedPropertyName",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3748,
+      "column": 21,
+      "kind": "tagged",
+      "text": "parent as ExpressionWithTypeArguments",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3751,
+      "column": 21,
+      "kind": "tagged",
+      "text": "parent as ShorthandPropertyAssignment",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3753,
+      "column": 30,
+      "kind": "tagged",
+      "text": "parent as SatisfiesExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3849,
+      "column": 55,
+      "kind": "tagged",
+      "text": "expression as Identifier",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 6100,
+      "column": 63,
+      "kind": "untagged",
+      "text": "diagnostics as SortedArray<DiagnosticWithLocation>",
+      "matches": [
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 6902,
+      "column": 13,
+      "kind": "tagged",
+      "text": "node as HasType",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8107,
+      "column": 34,
+      "kind": "tagged",
+      "text": "parent as PrefixUnaryExpression | PostfixUnaryExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8110,
+      "column": 45,
+      "kind": "tagged",
+      "text": "parent as BinaryExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8115,
+      "column": 21,
+      "kind": "tagged",
+      "text": "parent as PropertyAccessExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8119,
+      "column": 30,
+      "kind": "tagged",
+      "text": "parent as PropertyAssignment",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8123,
+      "column": 30,
+      "kind": "tagged",
+      "text": "parent as ShorthandPropertyAssignment",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8128,
+      "column": 30,
+      "kind": "tagged",
+      "text": "parent as ForInStatement | ForOfStatement",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8638,
+      "column": 20,
+      "kind": "untagged",
+      "text": "diagnostic as DiagnosticWithDetachedLocation",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 10838,
+      "column": 43,
+      "kind": "tagged",
+      "text": "parent as TypeLiteralNode | InterfaceDeclaration",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 10841,
+      "column": 21,
+      "kind": "tagged",
+      "text": "parent as UnionOrIntersectionTypeNode",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 10847,
+      "column": 21,
+      "kind": "tagged",
+      "text": "parent as TupleTypeNode | ArrayLiteralExpression | CommaListExpression | NamedImports | NamedExports",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 10850,
+      "column": 21,
+      "kind": "untagged",
+      "text": "parent as ObjectLiteralExpressionBase<ObjectLiteralElement>",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 10853,
+      "column": 40,
+      "kind": "tagged",
+      "text": "parent as CallExpression | NewExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 10854,
+      "column": 18,
+      "kind": "tagged",
+      "text": "parent as CallExpression | NewExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 10855,
+      "column": 18,
+      "kind": "tagged",
+      "text": "parent as CallExpression | NewExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 10858,
+      "column": 40,
+      "kind": "tagged",
+      "text": "parent as JsxElement | JsxFragment",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 10861,
+      "column": 40,
+      "kind": "tagged",
+      "text": "parent as JsxOpeningElement | JsxSelfClosingElement",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 10866,
+      "column": 21,
+      "kind": "tagged",
+      "text": "parent as Block | CaseOrDefaultClause | ModuleBlock",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 10868,
+      "column": 21,
+      "kind": "tagged",
+      "text": "parent as CaseBlock",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 10871,
+      "column": 44,
+      "kind": "tagged",
+      "text": "parent as ClassLikeDeclaration",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 10873,
+      "column": 42,
+      "kind": "tagged",
+      "text": "parent as EnumDeclaration",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 10875,
+      "column": 21,
+      "kind": "tagged",
+      "text": "parent as SourceFile",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 11458,
+      "column": 70,
+      "kind": "tagged",
+      "text": "member as ConstructorDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 11459,
+      "column": 20,
+      "kind": "tagged",
+      "text": "member as ConstructorDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/factory/parenthesizerRules.ts",
+      "line": 381,
+      "column": 23,
+      "kind": "untagged",
+      "text": "expression as LeftHandSideExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/factory/parenthesizerRules.ts",
+      "line": 405,
+      "column": 20,
+      "kind": "untagged",
+      "text": "expression as LeftHandSideExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1675,
+      "column": 42,
+      "kind": "tagged",
+      "text": "parsePrefixUnaryExpression() as JsonMinusNumericLiteral",
+      "matches": [
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1684,
+      "column": 42,
+      "kind": "tagged",
+      "text": "parseLiteralNode() as StringLiteral | NumericLiteral",
+      "matches": [
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1709,
+      "column": 31,
+      "kind": "untagged",
+      "text": "factoryCreateExpressionStatement(expression) as JsonObjectExpressionStatement",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 2716,
+      "column": 26,
+      "kind": "tagged",
+      "text": "parseLiteralNode() as StringLiteral | NumericLiteral | BigIntLiteral",
+      "matches": [
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 3295,
+      "column": 47,
+      "kind": "tagged",
+      "text": "node as MethodDeclaration",
+      "matches": [
+        "local or result has no tracked producer",
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 3395,
+      "column": 36,
+      "kind": "tagged",
+      "text": "node as VariableDeclaration",
+      "matches": [
+        "local or result has no tracked producer",
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 3405,
+      "column": 27,
+      "kind": "tagged",
+      "text": "node as ParameterDeclaration",
+      "matches": [
+        "local or result has no tracked producer",
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 3570,
+      "column": 22,
+      "kind": "untagged",
+      "text": "createNodeArray<T>([], getNodePos()) as MissingList<T>",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 3576,
+      "column": 19,
+      "kind": "untagged",
+      "text": "arr as MissingList<Node>",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 3736,
+      "column": 16,
+      "kind": "untagged",
+      "text": "parseLiteralLikeNode(token()) as LiteralExpression",
+      "matches": [
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 3745,
+      "column": 16,
+      "kind": "tagged",
+      "text": "fragment as TemplateHead",
+      "matches": [
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 3751,
+      "column": 16,
+      "kind": "tagged",
+      "text": "fragment as TemplateMiddle | TemplateTail",
+      "matches": [
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 4535,
+      "column": 13,
+      "kind": "untagged",
+      "text": "parseLiteralLikeNode(token()) as LiteralExpression",
+      "matches": [
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 6119,
+      "column": 24,
+      "kind": "tagged",
+      "text": "finishNode(factory.createBinaryExpression(result, operatorToken as Token<SyntaxKind.CommaToken>, invalidElement), pos) as Node as JsxElement",
+      "matches": [
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 6306,
+      "column": 24,
+      "kind": "tagged",
+      "text": "parseLiteralNode() as StringLiteral",
+      "matches": [
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 6510,
+      "column": 66,
+      "kind": "tagged",
+      "text": "parseLiteralNode() as NoSubstitutionTemplateLiteral",
+      "matches": [
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 6974,
+      "column": 26,
+      "kind": "tagged",
+      "text": "finishNode(node, pos) as ForStatement | ForInOrOfStatement",
+      "matches": [
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 7497,
+      "column": 24,
+      "kind": "untagged",
+      "text": "consumeNode(node) as Statement",
+      "matches": [
+        "local or result has no tracked producer",
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8309,
+      "column": 15,
+      "kind": "untagged",
+      "text": "parseModuleOrNamespaceDeclaration(getNodePos(), /*hasJSDoc*/ false, /*modifiers*/ undefined, NodeFlags.NestedNamespace | namespaceFlag) as NamespaceDeclaration",
+      "matches": [
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8324,
+      "column": 20,
+      "kind": "tagged",
+      "text": "parseLiteralNode() as StringLiteral",
+      "matches": [
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8450,
+      "column": 84,
+      "kind": "tagged",
+      "text": "parseLiteralLikeNode(SyntaxKind.StringLiteral) as StringLiteral",
+      "matches": [
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8573,
+      "column": 55,
+      "kind": "tagged",
+      "text": "parseLiteralNode() as StringLiteral",
+      "matches": [
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 9589,
+      "column": 28,
+      "kind": "untagged",
+      "text": "finishNode(factoryCreatePropertyAccessExpression(node, name), pos) as PropertyAccessEntityNameExpression",
+      "matches": [
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 9711,
+      "column": 36,
+      "kind": "tagged",
+      "text": "tag as JSDocReturnTag",
+      "matches": [
+        "no tracked producer",
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2181,
+      "column": 26,
+      "kind": "untagged",
+      "text": "options as BuildOptions",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3231,
+      "column": 32,
+      "kind": "untagged",
+      "text": "raw[prop] as T[]",
+      "matches": [
+        "local or result has no tracked producer",
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3825,
+      "column": 50,
+      "kind": "untagged",
+      "text": "opt as CommandLineOptionOfCustomType",
+      "matches": [
+        "local or result has no tracked producer",
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 5268,
+      "column": 81,
+      "kind": "tagged",
+      "text": "node as ExportDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 5269,
+      "column": 71,
+      "kind": "tagged",
+      "text": "node as ExportDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 5269,
+      "column": 113,
+      "kind": "tagged",
+      "text": "node as ExportDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 5274,
+      "column": 29,
+      "kind": "tagged",
+      "text": "node as ExportDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6315,
+      "column": 27,
+      "kind": "untagged",
+      "text": "context as NodeBuilderContext",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6318,
+      "column": 47,
+      "kind": "untagged",
+      "text": "context as NodeBuilderContext",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6329,
+      "column": 152,
+      "kind": "untagged",
+      "text": "symbol as MappedSymbol",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6345,
+      "column": 50,
+      "kind": "untagged",
+      "text": "context as NodeBuilderContext",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6348,
+      "column": 33,
+      "kind": "untagged",
+      "text": "syntacticContext as NodeBuilderContext",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6355,
+      "column": 33,
+      "kind": "untagged",
+      "text": "syntacticContext as NodeBuilderContext",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6361,
+      "column": 33,
+      "kind": "untagged",
+      "text": "syntacticContext as NodeBuilderContext",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6377,
+      "column": 106,
+      "kind": "untagged",
+      "text": "context as NodeBuilderContext",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6380,
+      "column": 33,
+      "kind": "untagged",
+      "text": "syntacticContext as NodeBuilderContext",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6387,
+      "column": 42,
+      "kind": "untagged",
+      "text": "context as NodeBuilderContext",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6390,
+      "column": 33,
+      "kind": "untagged",
+      "text": "syntacticContext as NodeBuilderContext",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6399,
+      "column": 42,
+      "kind": "untagged",
+      "text": "context as NodeBuilderContext",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6404,
+      "column": 42,
+      "kind": "untagged",
+      "text": "context as NodeBuilderContext",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6408,
+      "column": 37,
+      "kind": "untagged",
+      "text": "context as NodeBuilderContext",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6411,
+      "column": 54,
+      "kind": "untagged",
+      "text": "context as NodeBuilderContext",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6414,
+      "column": 83,
+      "kind": "untagged",
+      "text": "context as NodeBuilderContext",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6417,
+      "column": 33,
+      "kind": "untagged",
+      "text": "syntacticContext as NodeBuilderContext",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6447,
+      "column": 41,
+      "kind": "untagged",
+      "text": "context as NodeBuilderContext",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6450,
+      "column": 33,
+      "kind": "untagged",
+      "text": "syntacticContext as NodeBuilderContext",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 9817,
+      "column": 85,
+      "kind": "tagged",
+      "text": "node as ExportDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 9819,
+      "column": 49,
+      "kind": "tagged",
+      "text": "node as ExportDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10234,
+      "column": 133,
+      "kind": "untagged",
+      "text": "defaultReplaced as Extract<HasModifiers, Statement>[]",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10845,
+      "column": 44,
+      "kind": "tagged",
+      "text": "d as SetAccessorDeclaration",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 13143,
+      "column": 37,
+      "kind": "tagged",
+      "text": "node as InterfaceDeclaration | TypeAliasDeclaration | JSDocTypedefTag | JSDocCallbackTag",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 13257,
+      "column": 77,
+      "kind": "tagged",
+      "text": "declaration as ClassLikeDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 13377,
+      "column": 38,
+      "kind": "untagged",
+      "text": "type as InterfaceType",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 13380,
+      "column": 52,
+      "kind": "untagged",
+      "text": "type as TypeReference",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 13404,
+      "column": 103,
+      "kind": "tagged",
+      "text": "declaration as InterfaceDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 13405,
+      "column": 66,
+      "kind": "tagged",
+      "text": "declaration as InterfaceDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 13447,
+      "column": 65,
+      "kind": "tagged",
+      "text": "declaration as InterfaceDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 13551,
+      "column": 47,
+      "kind": "tagged",
+      "text": "declaration as EnumDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 16717,
+      "column": 119,
+      "kind": "untagged",
+      "text": "declaration as LateBoundDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 16775,
+      "column": 47,
+      "kind": "tagged",
+      "text": "grandParent as TypeReferenceNode",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 16778,
+      "column": 80,
+      "kind": "tagged",
+      "text": "childTypeParameter as TypeNode",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 16805,
+      "column": 71,
+      "kind": "tagged",
+      "text": "grandParent as ParameterDeclaration",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 16807,
+      "column": 78,
+      "kind": "tagged",
+      "text": "grandParent as NamedTupleMember",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 16825,
+      "column": 72,
+      "kind": "tagged",
+      "text": "grandParent as MappedTypeNode",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 16826,
+      "column": 42,
+      "kind": "tagged",
+      "text": "grandParent as MappedTypeNode",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 18114,
+      "column": 106,
+      "kind": "untagged",
+      "text": "type as UnionType",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 18244,
+      "column": 32,
+      "kind": "untagged",
+      "text": "type as IntersectionType",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 18245,
+      "column": 46,
+      "kind": "untagged",
+      "text": "type as IntersectionType",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 18256,
+      "column": 36,
+      "kind": "untagged",
+      "text": "type as IntersectionType",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 18257,
+      "column": 26,
+      "kind": "untagged",
+      "text": "type as IntersectionType",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 18258,
+      "column": 49,
+      "kind": "untagged",
+      "text": "type as IntersectionType",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 18283,
+      "column": 73,
+      "kind": "untagged",
+      "text": "type as UnionType",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 18289,
+      "column": 33,
+      "kind": "untagged",
+      "text": "t as UnionType",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 18758,
+      "column": 79,
+      "kind": "untagged",
+      "text": "t as UnionType",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 18763,
+      "column": 80,
+      "kind": "untagged",
+      "text": "t as UnionType",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 18763,
+      "column": 132,
+      "kind": "untagged",
+      "text": "t as UnionType",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 25150,
+      "column": 56,
+      "kind": "untagged",
+      "text": "t as TypeReference",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 25277,
+      "column": 78,
+      "kind": "untagged",
+      "text": "target as IntersectionType",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 27129,
+      "column": 72,
+      "kind": "untagged",
+      "text": "type as IntersectionType",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 28367,
+      "column": 50,
+      "kind": "tagged",
+      "text": "parent as ForOfStatement",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 28369,
+      "column": 58,
+      "kind": "tagged",
+      "text": "parent as BinaryExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 28373,
+      "column": 61,
+      "kind": "tagged",
+      "text": "parent as ArrayLiteralExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 28375,
+      "column": 58,
+      "kind": "tagged",
+      "text": "parent as SpreadElement",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 28377,
+      "column": 60,
+      "kind": "tagged",
+      "text": "parent as PropertyAssignment",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 28379,
+      "column": 69,
+      "kind": "tagged",
+      "text": "parent as ShorthandPropertyAssignment",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 28450,
+      "column": 65,
+      "kind": "tagged",
+      "text": "parent as BinaryExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 28450,
+      "column": 143,
+      "kind": "tagged",
+      "text": "parent as BinaryExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 28451,
+      "column": 65,
+      "kind": "tagged",
+      "text": "parent as BinaryExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 28451,
+      "column": 142,
+      "kind": "tagged",
+      "text": "parent as BinaryExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 29325,
+      "column": 82,
+      "kind": "untagged",
+      "text": "antecedent as FlowSwitchClause",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 29325,
+      "column": 136,
+      "kind": "untagged",
+      "text": "antecedent as FlowSwitchClause",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 29327,
+      "column": 34,
+      "kind": "untagged",
+      "text": "antecedent as FlowSwitchClause",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32804,
+      "column": 57,
+      "kind": "tagged",
+      "text": "parent as YieldExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32806,
+      "column": 57,
+      "kind": "tagged",
+      "text": "parent as AwaitExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32809,
+      "column": 53,
+      "kind": "tagged",
+      "text": "parent as CallExpression | NewExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32811,
+      "column": 54,
+      "kind": "tagged",
+      "text": "parent as Decorator",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32814,
+      "column": 46,
+      "kind": "tagged",
+      "text": "parent as AssertionExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32814,
+      "column": 103,
+      "kind": "tagged",
+      "text": "parent as AssertionExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32814,
+      "column": 171,
+      "kind": "tagged",
+      "text": "parent as AssertionExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32819,
+      "column": 65,
+      "kind": "tagged",
+      "text": "parent as PropertyAssignment | ShorthandPropertyAssignment",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32823,
+      "column": 38,
+      "kind": "tagged",
+      "text": "parent as ArrayLiteralExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32845,
+      "column": 42,
+      "kind": "tagged",
+      "text": "parent as ParenthesizedExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32848,
+      "column": 42,
+      "kind": "tagged",
+      "text": "parent as NonNullExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32850,
+      "column": 45,
+      "kind": "tagged",
+      "text": "parent as SatisfiesExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32852,
+      "column": 56,
+      "kind": "tagged",
+      "text": "parent as ExportAssignment",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32854,
+      "column": 58,
+      "kind": "tagged",
+      "text": "parent as JsxExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32857,
+      "column": 57,
+      "kind": "tagged",
+      "text": "parent as JsxAttribute | JsxSpreadAttribute",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32860,
+      "column": 62,
+      "kind": "tagged",
+      "text": "parent as JsxOpeningLikeElement",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32862,
+      "column": 57,
+      "kind": "tagged",
+      "text": "parent as ImportAttribute",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 37230,
+      "column": 68,
+      "kind": "untagged",
+      "text": "intersectionMember as InterfaceType",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 38934,
+      "column": 34,
+      "kind": "tagged",
+      "text": "parent as ClassDeclaration | ClassExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 38944,
+      "column": 34,
+      "kind": "tagged",
+      "text": "parent as MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 38985,
+      "column": 34,
+      "kind": "tagged",
+      "text": "parent as PropertyDeclaration",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 39030,
+      "column": 34,
+      "kind": "tagged",
+      "text": "parent as ClassDeclaration | ClassExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 39044,
+      "column": 34,
+      "kind": "tagged",
+      "text": "parent as ParameterDeclaration",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 39087,
+      "column": 34,
+      "kind": "tagged",
+      "text": "parent as MethodDeclaration | AccessorDeclaration | PropertyDeclaration",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 42244,
+      "column": 38,
+      "kind": "tagged",
+      "text": "member as ConstructorDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 43234,
+      "column": 30,
+      "kind": "tagged",
+      "text": "current as SignatureDeclaration | ClassDeclaration | ClassExpression",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 44517,
+      "column": 46,
+      "kind": "tagged",
+      "text": "member as ConstructorDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 47769,
+      "column": 35,
+      "kind": "tagged",
+      "text": "member as PropertyDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 47785,
+      "column": 15,
+      "kind": "tagged",
+      "text": "node as PropertyDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 47786,
+      "column": 15,
+      "kind": "tagged",
+      "text": "node as PropertyDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 48119,
+      "column": 96,
+      "kind": "tagged",
+      "text": "declaration as FunctionLikeDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 48275,
+      "column": 37,
+      "kind": "tagged",
+      "text": "node as VariableStatement",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 48292,
+      "column": 31,
+      "kind": "tagged",
+      "text": "node as VariableDeclaration | BindingElement",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49505,
+      "column": 36,
+      "kind": "tagged",
+      "text": "node as CallLikeExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49511,
+      "column": 70,
+      "kind": "tagged",
+      "text": "node as FunctionExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49515,
+      "column": 42,
+      "kind": "tagged",
+      "text": "node as AccessorDeclaration",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49518,
+      "column": 46,
+      "kind": "tagged",
+      "text": "node as ClassExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49521,
+      "column": 44,
+      "kind": "tagged",
+      "text": "node as TypeParameterDeclaration",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49524,
+      "column": 52,
+      "kind": "tagged",
+      "text": "node as JsxSelfClosingElement",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49527,
+      "column": 41,
+      "kind": "tagged",
+      "text": "node as JsxElement",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49532,
+      "column": 40,
+      "kind": "tagged",
+      "text": "node as AssertionExpression | JSDocTypeAssertion",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49535,
+      "column": 34,
+      "kind": "tagged",
+      "text": "node as VoidExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 50204,
+      "column": 57,
+      "kind": "untagged",
+      "text": "parent as Declaration",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 50220,
+      "column": 27,
+      "kind": "tagged",
+      "text": "parent as BindingElement",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 201,
+      "column": 38,
+      "kind": "tagged",
+      "text": "node as ImportDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 202,
+      "column": 70,
+      "kind": "tagged",
+      "text": "node as ImportDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 205,
+      "column": 76,
+      "kind": "tagged",
+      "text": "node as ImportDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 211,
+      "column": 22,
+      "kind": "tagged",
+      "text": "node as ImportEqualsDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 213,
+      "column": 42,
+      "kind": "tagged",
+      "text": "node as ImportEqualsDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 219,
+      "column": 22,
+      "kind": "tagged",
+      "text": "node as ExportDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 220,
+      "column": 27,
+      "kind": "tagged",
+      "text": "node as ExportDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 222,
+      "column": 46,
+      "kind": "tagged",
+      "text": "node as ExportDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 228,
+      "column": 46,
+      "kind": "tagged",
+      "text": "node as ExportDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 229,
+      "column": 45,
+      "kind": "tagged",
+      "text": "node as ExportDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 230,
+      "column": 66,
+      "kind": "tagged",
+      "text": "node as ExportDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 231,
+      "column": 76,
+      "kind": "tagged",
+      "text": "node as ExportDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 234,
+      "column": 44,
+      "kind": "tagged",
+      "text": "node as ExportDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 248,
+      "column": 58,
+      "kind": "tagged",
+      "text": "node as ExportDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 253,
+      "column": 22,
+      "kind": "tagged",
+      "text": "node as ExportAssignment",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 255,
+      "column": 36,
+      "kind": "tagged",
+      "text": "node as ExportAssignment",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 261,
+      "column": 41,
+      "kind": "tagged",
+      "text": "node as VariableStatement",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 269,
+      "column": 52,
+      "kind": "tagged",
+      "text": "node as FunctionDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 278,
+      "column": 130,
+      "kind": "tagged",
+      "text": "node as ClassDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 284,
+      "column": 39,
+      "kind": "tagged",
+      "text": "node as ClassDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/destructuring.ts",
+      "line": 418,
+      "column": 88,
+      "kind": "tagged",
+      "text": "rhsValue as ElementAccessExpression",
+      "matches": [
+        "local or result has no tracked producer",
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 2050,
+      "column": 35,
+      "kind": "untagged",
+      "text": "factory.cloneNode(temp) as GeneratedIdentifier",
+      "matches": [
+        "local or result has no tracked producer",
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 3064,
+      "column": 20,
+      "kind": "untagged",
+      "text": "factory.updateBinaryExpression(node, left, node.operatorToken, right) as AssignmentExpression<EqualsToken>",
+      "matches": [
+        "local or result has no tracked producer",
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/typeSerializer.ts",
+      "line": 615,
+      "column": 16,
+      "kind": "untagged",
+      "text": "factory.createPropertyAccessExpression(serializeEntityNameAsExpression(node.left), node.right) as PropertyAccessEntityNameExpression",
+      "matches": [
+        "local or result has no tracked producer",
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "line": 2258,
+      "column": 79,
+      "kind": "tagged",
+      "text": "member as SemicolonClassElement",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "line": 2262,
+      "column": 116,
+      "kind": "tagged",
+      "text": "member as MethodDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "line": 2267,
+      "column": 80,
+      "kind": "tagged",
+      "text": "member as AccessorDeclaration",
+      "matches": [
+        "missing expression"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "line": 799,
+      "column": 25,
+      "kind": "tagged",
+      "text": "left as PropertyAccessExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "line": 800,
+      "column": 71,
+      "kind": "tagged",
+      "text": "left as PropertyAccessExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "line": 801,
+      "column": 26,
+      "kind": "tagged",
+      "text": "left as PropertyAccessExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "line": 817,
+      "column": 68,
+      "kind": "tagged",
+      "text": "left as ElementAccessExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "line": 817,
+      "column": 147,
+      "kind": "tagged",
+      "text": "left as ElementAccessExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "line": 817,
+      "column": 276,
+      "kind": "tagged",
+      "text": "left as ElementAccessExpression",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1312,
+      "column": 34,
+      "kind": "tagged",
+      "text": "node as SourceFile",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1314,
+      "column": 36,
+      "kind": "tagged",
+      "text": "node as Bundle",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/watchUtilities.ts",
+      "line": 157,
+      "column": 57,
+      "kind": "untagged",
+      "text": "entries.directories.map(getCanonicalFileName).sort() as SortedArray<Canonicalized>",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/watchUtilities.ts",
+      "line": 159,
+      "column": 16,
+      "kind": "untagged",
+      "text": "entries as SortedAndCanonicalizedMutableFileSystemEntries",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/watchUtilities.ts",
+      "line": 629,
+      "column": 64,
+      "kind": "untagged",
+      "text": "program as BuilderProgram",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1191,
+      "column": 13,
+      "kind": "untagged",
+      "text": "location as ReferenceFileLocation",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/programDiagnostics.ts",
+      "line": 191,
+      "column": 36,
+      "kind": "untagged",
+      "text": "getReferencedFileLocation(program, reason) as ReferenceFileLocation",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/programDiagnostics.ts",
+      "line": 393,
+      "column": 67,
+      "kind": "untagged",
+      "text": "sourceFile as TsConfigSourceFile",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 1708,
+      "column": 10,
+      "kind": "untagged",
+      "text": "builderProgram as SemanticDiagnosticsBuilderProgram",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 1711,
+      "column": 10,
+      "kind": "untagged",
+      "text": "builderProgram as EmitAndSemanticDiagnosticsBuilderProgram",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 1712,
+      "column": 10,
+      "kind": "untagged",
+      "text": "builderProgram as EmitAndSemanticDiagnosticsBuilderProgram",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1713,
+      "column": 10,
+      "kind": "untagged",
+      "text": "resolution as ResolvedModuleWithFailedLookupLocations",
+      "matches": [
+        "local or result has no tracked producer",
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1714,
+      "column": 10,
+      "kind": "untagged",
+      "text": "resolution as ResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+      "matches": [
+        "local or result has no tracked producer",
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 260,
+      "column": 31,
+      "kind": "untagged",
+      "text": "buildOrder as CircularBuildOrder",
+      "matches": [
+        "missing expression",
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1330,
+      "column": 13,
+      "kind": "untagged",
+      "text": "buildOrder as BuildOrder",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1337,
+      "column": 13,
+      "kind": "untagged",
+      "text": "buildOrder as BuildOrder",
+      "matches": [
+        "no tracked producer"
+      ]
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1825,
+      "column": 47,
+      "kind": "tagged",
+      "text": "e as SpreadElement",
+      "matches": [
+        "missing expression"
+      ]
+    }
+  ],
+  "unknown callable": [
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 6100,
+      "column": 63,
+      "kind": "untagged",
+      "text": "diagnostics as SortedArray<DiagnosticWithLocation>",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 6108,
+      "column": 38,
+      "kind": "untagged",
+      "text": "nonFileDiagnostics.slice() as SortedArray<Diagnostic>",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1675,
+      "column": 42,
+      "kind": "tagged",
+      "text": "parsePrefixUnaryExpression() as JsonMinusNumericLiteral",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1684,
+      "column": 42,
+      "kind": "tagged",
+      "text": "parseLiteralNode() as StringLiteral | NumericLiteral",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1709,
+      "column": 31,
+      "kind": "untagged",
+      "text": "factoryCreateExpressionStatement(expression) as JsonObjectExpressionStatement",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1730,
+      "column": 24,
+      "kind": "untagged",
+      "text": "sourceFile as JsonSourceFile",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 2716,
+      "column": 26,
+      "kind": "tagged",
+      "text": "parseLiteralNode() as StringLiteral | NumericLiteral | BigIntLiteral",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 3295,
+      "column": 47,
+      "kind": "tagged",
+      "text": "node as MethodDeclaration",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 3395,
+      "column": 36,
+      "kind": "tagged",
+      "text": "node as VariableDeclaration",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 3405,
+      "column": 27,
+      "kind": "tagged",
+      "text": "node as ParameterDeclaration",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 3570,
+      "column": 22,
+      "kind": "untagged",
+      "text": "createNodeArray<T>([], getNodePos()) as MissingList<T>",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 3736,
+      "column": 16,
+      "kind": "untagged",
+      "text": "parseLiteralLikeNode(token()) as LiteralExpression",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 3745,
+      "column": 16,
+      "kind": "tagged",
+      "text": "fragment as TemplateHead",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 3751,
+      "column": 16,
+      "kind": "tagged",
+      "text": "fragment as TemplateMiddle | TemplateTail",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 4535,
+      "column": 13,
+      "kind": "untagged",
+      "text": "parseLiteralLikeNode(token()) as LiteralExpression",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 6119,
+      "column": 24,
+      "kind": "tagged",
+      "text": "finishNode(factory.createBinaryExpression(result, operatorToken as Token<SyntaxKind.CommaToken>, invalidElement), pos) as Node as JsxElement",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 6306,
+      "column": 24,
+      "kind": "tagged",
+      "text": "parseLiteralNode() as StringLiteral",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 6510,
+      "column": 66,
+      "kind": "tagged",
+      "text": "parseLiteralNode() as NoSubstitutionTemplateLiteral",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 6974,
+      "column": 26,
+      "kind": "tagged",
+      "text": "finishNode(node, pos) as ForStatement | ForInOrOfStatement",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 7497,
+      "column": 24,
+      "kind": "untagged",
+      "text": "consumeNode(node) as Statement",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8309,
+      "column": 15,
+      "kind": "untagged",
+      "text": "parseModuleOrNamespaceDeclaration(getNodePos(), /*hasJSDoc*/ false, /*modifiers*/ undefined, NodeFlags.NestedNamespace | namespaceFlag) as NamespaceDeclaration",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8324,
+      "column": 20,
+      "kind": "tagged",
+      "text": "parseLiteralNode() as StringLiteral",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8450,
+      "column": 84,
+      "kind": "tagged",
+      "text": "parseLiteralLikeNode(SyntaxKind.StringLiteral) as StringLiteral",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8573,
+      "column": 55,
+      "kind": "tagged",
+      "text": "parseLiteralNode() as StringLiteral",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 9589,
+      "column": 28,
+      "kind": "untagged",
+      "text": "finishNode(factoryCreatePropertyAccessExpression(node, name), pos) as PropertyAccessEntityNameExpression",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 9676,
+      "column": 48,
+      "kind": "untagged",
+      "text": "factory.createModuleDeclaration(\r\n                        /*modifiers*/ undefined,\r\n                        typeNameOrNamespaceName,\r\n                        body,\r\n                        nested ? NodeFlags.NestedNamespace : undefined,\r\n                    ) as JSDocNamespaceDeclaration",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 9711,
+      "column": 36,
+      "kind": "tagged",
+      "text": "tag as JSDocReturnTag",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3825,
+      "column": 50,
+      "kind": "untagged",
+      "text": "opt as CommandLineOptionOfCustomType",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/destructuring.ts",
+      "line": 418,
+      "column": 88,
+      "kind": "tagged",
+      "text": "rhsValue as ElementAccessExpression",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 2050,
+      "column": 35,
+      "kind": "untagged",
+      "text": "factory.cloneNode(temp) as GeneratedIdentifier",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 3064,
+      "column": 20,
+      "kind": "untagged",
+      "text": "factory.updateBinaryExpression(node, left, node.operatorToken, right) as AssignmentExpression<EqualsToken>",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/typeSerializer.ts",
+      "line": 615,
+      "column": 16,
+      "kind": "untagged",
+      "text": "factory.createPropertyAccessExpression(serializeEntityNameAsExpression(node.left), node.right) as PropertyAccessEntityNameExpression",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/watchUtilities.ts",
+      "line": 157,
+      "column": 57,
+      "kind": "untagged",
+      "text": "entries.directories.map(getCanonicalFileName).sort() as SortedArray<Canonicalized>",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/watchUtilities.ts",
+      "line": 159,
+      "column": 16,
+      "kind": "untagged",
+      "text": "entries as SortedAndCanonicalizedMutableFileSystemEntries",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 3151,
+      "column": 40,
+      "kind": "tagged",
+      "text": "parent as DeclarationWithTypeParameterChildren",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 3159,
+      "column": 40,
+      "kind": "tagged",
+      "text": "parent as VariableStatement",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 3160,
+      "column": 45,
+      "kind": "tagged",
+      "text": "parent as VariableStatement",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 3166,
+      "column": 40,
+      "kind": "tagged",
+      "text": "parent as PropertyDeclaration",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 3167,
+      "column": 52,
+      "kind": "untagged",
+      "text": "nodes as NodeArray<ModifierLike>",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 3181,
+      "column": 40,
+      "kind": "tagged",
+      "text": "parent as ParameterDeclaration",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 3193,
+      "column": 40,
+      "kind": "tagged",
+      "text": "parent as NodeWithTypeArguments",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1713,
+      "column": 10,
+      "kind": "untagged",
+      "text": "resolution as ResolvedModuleWithFailedLookupLocations",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1714,
+      "column": 10,
+      "kind": "untagged",
+      "text": "resolution as ResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 260,
+      "column": 31,
+      "kind": "untagged",
+      "text": "buildOrder as CircularBuildOrder",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1330,
+      "column": 13,
+      "kind": "untagged",
+      "text": "buildOrder as BuildOrder",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1337,
+      "column": 13,
+      "kind": "untagged",
+      "text": "buildOrder as BuildOrder",
+      "matches": [
+        "callback target identity is unknown"
+      ]
+    }
+  ],
+  "callback escape": [
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1316,
+      "column": 26,
+      "kind": "untagged",
+      "text": "collection as MapLike<T>",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/symbolWalker.ts:6:5"
+      ]
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 7047,
+      "column": 42,
+      "kind": "tagged",
+      "text": "statements[i] as PrologueDirective",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/factory/nodeFactory.ts:6973:14",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/factory/nodeFactory.ts:6972:14"
+      ]
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 7051,
+      "column": 43,
+      "kind": "tagged",
+      "text": "declarations[i] as PrologueDirective",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/factory/nodeFactory.ts:6973:14",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/factory/nodeFactory.ts:6972:14"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 3295,
+      "column": 47,
+      "kind": "tagged",
+      "text": "node as MethodDeclaration",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/parser.ts:10020:31",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/parser.ts:9959:27",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/parser.ts:1363:25",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/parser.ts:1356:25",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/parser.ts:1382:19"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 3395,
+      "column": 36,
+      "kind": "tagged",
+      "text": "node as VariableDeclaration",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/parser.ts:10020:31",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/parser.ts:9959:27",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/parser.ts:1363:25",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/parser.ts:1356:25",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/parser.ts:1382:19"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 3405,
+      "column": 27,
+      "kind": "tagged",
+      "text": "node as ParameterDeclaration",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/parser.ts:10020:31",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/parser.ts:9959:27",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/parser.ts:1363:25",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/parser.ts:1356:25",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/parser.ts:1382:19"
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 7497,
+      "column": 24,
+      "kind": "untagged",
+      "text": "consumeNode(node) as Statement",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/parser.ts:10020:31",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/parser.ts:9959:27",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/parser.ts:1363:25",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/parser.ts:1356:25",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/parser.ts:1382:19"
+      ]
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3825,
+      "column": 50,
+      "kind": "untagged",
+      "text": "opt as CommandLineOptionOfCustomType",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/commandLineParser.ts:3776:10",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/commandLineParser.ts:3775:10"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49505,
+      "column": 36,
+      "kind": "tagged",
+      "text": "node as CallLikeExpression",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:49486:41"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49511,
+      "column": 70,
+      "kind": "tagged",
+      "text": "node as FunctionExpression",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:49486:41"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49515,
+      "column": 42,
+      "kind": "tagged",
+      "text": "node as AccessorDeclaration",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:49486:41"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49518,
+      "column": 46,
+      "kind": "tagged",
+      "text": "node as ClassExpression",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:49486:41"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49521,
+      "column": 44,
+      "kind": "tagged",
+      "text": "node as TypeParameterDeclaration",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:49486:41"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49524,
+      "column": 52,
+      "kind": "tagged",
+      "text": "node as JsxSelfClosingElement",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:49486:41"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49527,
+      "column": 41,
+      "kind": "tagged",
+      "text": "node as JsxElement",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:49486:41"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49532,
+      "column": 40,
+      "kind": "tagged",
+      "text": "node as AssertionExpression | JSDocTypeAssertion",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:49486:41"
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49535,
+      "column": 34,
+      "kind": "tagged",
+      "text": "node as VoidExpression",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:49486:41"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 2261,
+      "column": 33,
+      "kind": "tagged",
+      "text": "node as SourceFile",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/transformers/module/module.ts:208:26"
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 1772,
+      "column": 33,
+      "kind": "tagged",
+      "text": "node as SourceFile",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/transformers/module/system.ts:156:26"
+      ]
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1191,
+      "column": 13,
+      "kind": "untagged",
+      "text": "location as ReferenceFileLocation",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/watch.ts:75:5",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/programDiagnostics.ts:42:5"
+      ]
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 260,
+      "column": 31,
+      "kind": "untagged",
+      "text": "buildOrder as CircularBuildOrder",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/executeCommandLine.ts:50:5"
+      ]
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1357,
+      "column": 16,
+      "kind": "untagged",
+      "text": "createFlowNode(FlowFlags.BranchLabel, /*node*/ undefined, /*antecedent*/ undefined) as FlowLabel",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/binder.ts:582:15",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/binder.ts:496:18"
+      ]
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1361,
+      "column": 16,
+      "kind": "untagged",
+      "text": "createFlowNode(FlowFlags.LoopLabel, /*node*/ undefined, /*antecedent*/ undefined) as FlowLabel",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/binder.ts:582:15",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/binder.ts:496:18"
+      ]
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1365,
+      "column": 16,
+      "kind": "untagged",
+      "text": "createFlowNode(FlowFlags.ReduceLabel, { target, antecedents }, antecedent) as FlowReduceLabel",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/binder.ts:582:15",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/binder.ts:496:18"
+      ]
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1398,
+      "column": 16,
+      "kind": "untagged",
+      "text": "createFlowNode(flags, expression, antecedent) as FlowCondition",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/binder.ts:582:15",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/binder.ts:496:18"
+      ]
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1403,
+      "column": 16,
+      "kind": "untagged",
+      "text": "createFlowNode(FlowFlags.SwitchClause, { switchStatement, clauseStart, clauseEnd }, antecedent) as FlowSwitchClause",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/binder.ts:582:15",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/binder.ts:496:18"
+      ]
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1409,
+      "column": 24,
+      "kind": "untagged",
+      "text": "createFlowNode(flags, node, antecedent) as FlowAssignment | FlowArrayMutation",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/binder.ts:582:15",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/binder.ts:496:18"
+      ]
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1419,
+      "column": 16,
+      "kind": "untagged",
+      "text": "createFlowNode(FlowFlags.Call, node, antecedent) as FlowCall",
+      "matches": [
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/binder.ts:582:15",
+        "function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/binder.ts:496:18"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "sources": 79,
+  "async_bodies": 0,
+  "generator_bodies": 13,
+  "rows": [
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 21677,
+      "column": 5,
+      "kind": "FunctionDeclaration",
+      "name": "generateJsxAttributes",
+      "async": false,
+      "generator": true
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 21685,
+      "column": 5,
+      "kind": "FunctionDeclaration",
+      "name": "generateJsxChildren",
+      "async": false,
+      "generator": true
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 21781,
+      "column": 30,
+      "kind": "FunctionExpression",
+      "name": "<anonymous>",
+      "async": false,
+      "generator": true
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 21822,
+      "column": 5,
+      "kind": "FunctionDeclaration",
+      "name": "generateLimitedTupleElements",
+      "async": false,
+      "generator": true
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 21859,
+      "column": 5,
+      "kind": "FunctionDeclaration",
+      "name": "generateObjectLiteralElements",
+      "async": false,
+      "generator": true
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 26543,
+      "column": 5,
+      "kind": "FunctionDeclaration",
+      "name": "getUnmatchedProperties",
+      "async": false,
+      "generator": true
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 332,
+      "column": 1,
+      "kind": "FunctionDeclaration",
+      "name": "mapIterator",
+      "async": false,
+      "generator": true
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 437,
+      "column": 1,
+      "kind": "FunctionDeclaration",
+      "name": "flatMapIterator",
+      "async": false,
+      "generator": true
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 509,
+      "column": 1,
+      "kind": "FunctionDeclaration",
+      "name": "mapDefinedIterator",
+      "async": false,
+      "generator": true
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 538,
+      "column": 1,
+      "kind": "FunctionDeclaration",
+      "name": "singleIterator",
+      "async": false,
+      "generator": true
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1043,
+      "column": 1,
+      "kind": "FunctionDeclaration",
+      "name": "arrayReverseIterator",
+      "async": false,
+      "generator": true
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1626,
+      "column": 5,
+      "kind": "FunctionDeclaration",
+      "name": "getElementIterator",
+      "async": false,
+      "generator": true
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1731,
+      "column": 9,
+      "kind": "MethodDeclaration",
+      "name": "entries",
+      "async": false,
+      "generator": true
+    }
+  ]
+}
