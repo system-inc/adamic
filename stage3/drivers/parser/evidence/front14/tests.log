@@ -1,0 +1,22 @@
+--- FAIL: TestPhantomArrayRequiredCastsAreErased (0.10s)
+    phantom_array_brands_test.go:130: /workspace/scratch/parser-build-tmp/TestPhantomArrayRequiredCastsAreErased220687133/001/main.a:2:59: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- FAIL: TestPhantomArrayCastsAreErased (0.11s)
+    phantom_array_brands_test.go:67: /workspace/scratch/parser-build-tmp/TestPhantomArrayCastsAreErased2097133226/001/main.a:2:49: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- FAIL: TestPhantomArrayWeakKeeping (0.08s)
+    phantom_array_brands_test.go:114: got /workspace/scratch/parser-build-tmp/TestPhantomArrayWeakKeeping3309245193/001/main.a:1:177: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast), want refused physical change from strong elements to weak handles
+--- FAIL: TestPhantomArrayPresenceNarrowing (0.19s)
+    phantom_array_presence_test.go:60: got /workspace/scratch/parser-build-tmp/TestPhantomArrayPresenceNarrowing717757259/001/main.a:6:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast), want Adamic 0.1 refuses presence of phantom array brand member  __sortedArrayBrand via in; read the brand member's undefined value without testing its presence; use a separate real field or Map for observable presence
+--- FAIL: TestPhantomArrayProofs (0.00s)
+    --- FAIL: TestPhantomArrayProofs/mutable_widening (0.10s)
+        phantom_array_brands_test.go:93: got /workspace/scratch/parser-build-tmp/TestPhantomArrayProofsmutable_widening1202079849/001/main.a:1:111: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast), want refusal containing adamic/invariant-mutable
+    --- FAIL: TestPhantomArrayProofs/element_narrowing (0.06s)
+        phantom_array_brands_test.go:93: got /workspace/scratch/parser-build-tmp/TestPhantomArrayProofselement_narrowing226704576/001/main.a:1:122: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast), want refusal containing source is not assignable
+    --- FAIL: TestPhantomArrayProofs/cycle (0.04s)
+        phantom_array_brands_test.go:93: got /workspace/scratch/parser-build-tmp/TestPhantomArrayProofscycle531887724/001/main.a:1:125: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast), want refusal containing adamic/cycle-capable
+    --- FAIL: TestPhantomArrayProofs/interface_mutable_widening (0.04s)
+        phantom_array_brands_test.go:93: got /workspace/scratch/parser-build-tmp/TestPhantomArrayProofsinterface_mutable_widening3855425482/001/main.a:1:125: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast), want refusal containing adamic/invariant-mutable
+    --- FAIL: TestPhantomArrayProofs/readonly_removal (0.06s)
+        phantom_array_brands_test.go:93: got /workspace/scratch/parser-build-tmp/TestPhantomArrayProofsreadonly_removal960789368/001/main.a:1:101: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast), want refusal containing adamic/invariant-mutable
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	1.171s
+FAIL
