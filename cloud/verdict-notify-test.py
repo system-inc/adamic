@@ -59,7 +59,7 @@ class VerdictTests(unittest.TestCase):
 
     def test_held_or_unrouted_worker_goes_to_integration_with_why(self):
         sends = self.send('codex/held-views', self.red)
-        self.assertEqual([name for name, _ in sends], ['system_adamic_integration'])
+        self.assertEqual([name for name, _ in sends], ['system_adamic_integration', 'system_adamic_compiler'])
         self.assertIn('Routed to integration: area-routes.tsv holds codex/held-*', sends[0][1])
         self.assertEqual([name for name, _ in self.send('codex/other', self.red)], ['system_adamic_integration'])
 

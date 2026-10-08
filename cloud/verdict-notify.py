@@ -8,7 +8,7 @@ router, area-route.py, the one auto-area-merge trusts):
   area/<name>    the area's owner, and integration
   cloud/land-*   integration, and the owner of the area the landing's tip commit names
   codex/*        the owner of the area integration's router sends the branch to; a held branch goes
-                 to integration, who decides holds
+                 to integration, who decides holds, and to every @name the hold's note names
   devtools/*     developer tools, except devtools/fast-gate: the gate's own tools branch, gated against main
                  with the whole tools delta, reads red at darwin on every push and is checked by its canaries
 Integration hears every verdict, not only landings and areas, while the watcher's state directory holds a
@@ -91,7 +91,9 @@ def recipients(branch, sha):
             else:
                 area, why = route(branch, directory)
                 if area == 'hold' or area not in areaOwners:
+                    # Integration keeps the hold; the Circles its note names hear the verdict too.
                     names.append(integration)
+                    names += re.findall(r'@([a-z0-9_]+)', why)
                     note = ' Routed to integration: %s.' % why.rstrip('.')
                 else:
                     names.append(areaOwners[area])
