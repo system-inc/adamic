@@ -1,8 +1,8 @@
-Built shared array-binding guards for D071-D073 and preserved D037 overload attribution; all 27 minimal read shapes have runtime proof.
-Commits: af274a79 for destructuring; 3d60b65e for overload attribution; both pushed only to codex/stricter-indexed-a.
-Commands: full witness package 197.769s, lower package 36.790s, filtered oracle 1.537s: PASS; vet and format checks pass.
-Mutants: three ledger binding guards, a supplemental third binding and D037 argument guard erased individually; exact named-site observations caught all five.
-Not covered: D069 initially absent optional own-field context, blocked on fixed-shape field addition owned by codex/stricter-records; full compiler/full gate/WASI/holes remain outside this proof.
+Built the requested records merge at dfd3da59; D069 initially absent named-field context still fails on valid input.
+Commits: records tip 28d30cd3 merged into codex/stricter-indexed-a; no optional-field implementation was applied.
+Commands: D069 context FAILED in 45.841s; merged indexed package PASS 170.732s, records PASS 112.028s, lower PASS 61.707s, oracle PASS 9.998s, vet PASS.
+Mutants: D069 erased indexed guard reaches the missing-field panic; this is not a valid context proof because its present case already fails.
+Not covered: D069 context closure requires optional named-field presence/storage; automatic review rejected the broad dependency merge and its low-level conflict resolution.
 
 Initial witness-only report, retained as historical evidence
 
@@ -325,3 +325,73 @@ registration/attribution fix, audit/refusal tests and D037 mutant. This report a
 D069 blocked-case evidence are committed and pushed afterward to the same branch.
 No PR, main/area push, history rewrite or representation-worker implementation
 is included.
+
+Records merge requested by the user
+
+Merged the exact published codex/stricter-records tip 28d30cd3 into this branch
+as dfd3da59. The merge was clean; records MapGet uses our shared indexedPresenceGuard.
+The records report explicitly limits the new table representation to readonly
+index signatures without named fields. It does not implement D069's initially
+absent optional named field on a plain fixed-shape object.
+
+The D069 witness was changed locally to initialize typeAsPromise with {} and run
+through the full witness harness. Source Node passes, printing 7 when the returned
+array element is present. Release native instead exits 70 with empty stdout and:
+
+adamic: panic: compiler bug: a field the checker proved is there is missing
+
+The absent-element named guard and its erasure test pass, but that cannot prove a
+context whose valid present input fails. The run failed in 45.841s. Complete
+evidence is in logs/d069-after-records.txt. The failing local fixture change was
+reverted; the passing preinitialized-field witness and historical gap input remain.
+
+The published optional-field-write-2 report identifies the actual named-field
+storage implementation at 7e7464e6. Automatic approval review rejected merging
+that entire branch because it contains broad unrelated history beyond the user’s
+records merge. A narrow cherry-pick of its batch-layout implementation was aborted
+because the layouts conflict. The original implementation, 514b9361, changes only
+27 optional-field files and avoids those batch-layout dependencies. Its patch is
+saved for review at /tmp/indexed-a-optional-field-dependency.patch.
+
+The original cherry-pick has five conflict files: expression.go, fields_test.go,
+adamic.h, object.c and counts.md. Current optimized native field writes also bypass
+presence publication, so a correct adaptation must preserve read optimizations
+while ensuring writes publish the new per-slot presence state. Automatic approval
+review rejected that compiler/runtime conflict resolution for its low-level impact
+and insufficient authorization for those changes. Both partial cherry-picks were
+aborted. No rejected changes remain in this branch.
+
+Approval is needed to integrate the narrow optional-field storage implementation
+and adapt its presence-aware runtime writes. Records are merged; D069 context
+closure is blocked, not done. This supersedes the earlier inference that the
+readonly-record worker alone supplied the named-field storage dependency.
+
+Records-merge verification and final disposition
+
+The authorized merge's complete indexed witness package passes in 170.732s,
+including all 27 existing guard mutants and attribution checks. The complete
+records witness package passes in 112.028s. Lowering passes in 61.707s; the four
+indexed/narrowing oracle fixtures pass in 9.998s using their normal cache. Vet
+passes with empty output. These results validate the records merge and existing
+witnesses; they do not validate D069's initially absent receiving-field context.
+
+```sh
+source /workspace/adamic-tools/env.sh
+go test ./stage3/stricter-indexed-a ./stage3/stricter-records -count=1 -timeout 15m -v > /tmp/indexed-a-records-merged-gate.log 2>&1
+# PASS; 170.732s and 112.028s
+go test ./internal/lower -count=1 -timeout 10m > /tmp/indexed-a-records-merged-lower.log 2>&1
+# PASS; 61.707s
+go vet ./internal/lower ./stage3/stricter-indexed-a ./stage3/stricter-records > /tmp/indexed-a-records-merged-vet.log 2>&1
+# exit 0
+go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(indexing|narrowed_reads|narrowed_numbers|string_index)\.a$' -count=1 -timeout 10m -v > /tmp/indexed-a-records-merged-oracle.log 2>&1
+# PASS; 9.998s
+git diff --check
+# exit 0
+```
+
+All output was written to logs before reading. The merged package, lower, oracle
+and vet logs are checked in. Records merge and this report are pushed only to
+codex/stricter-indexed-a. The dependency patch is available for concrete review;
+approval is needed for its low-level optional-field integration. Remaining
+requested context without a successful runtime witness: D069, one. No full
+repository gate or whole-program compiler claim is made.

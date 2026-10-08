@@ -5,6 +5,6 @@
   "read": "getTypeArguments(type)[0]",
   "receiver": "returned readonly object array, constant zero",
   "source": "interface Type { readonly flags: number; }\nconst absent = ABSENT;\nfunction getTypeArguments(type: Type): readonly Type[] { return absent ? [] : [type]; }\nconst type: Type = { flags: 7 };\nconst typeAsPromise: { promisedTypeOfPromise?: Type } = {};\ntypeAsPromise.promisedTypeOfPromise = getTypeArguments(type)[0];\nconst value = typeAsPromise.promisedTypeOfPromise;\nconsole.log(value === undefined ? \"undefined\" : `${value.flags}`);\n",
-  "observation": "Follow-up: source Node present exits 0 printing 7, absent exits 0 printing undefined. Both native modes build. Present exits 70 with compiler bug: a field the checker proved is there is missing; absent exits 70 at named indexed read main.ts:6:39. Explain counts one indexed-presence check. See logs/absent-field-followup.txt. The initially absent field context is not proven.",
-  "dependency": "codex/stricter-records: identity-preserving own-field addition and presence storage"
+  "observation": "Records 28d30cd3 merged at dfd3da59. Initially absent-field source Node present prints 7 with exit 0; native present still exits 70: compiler bug: a field the checker proved is there is missing. D069 context witness fails; see logs/d069-after-records.txt. No rejected optional-field dependency changes were applied.",
+  "dependency": "optional named-field storage/presence: original implementation 514b9361; adaptation requires approval after automatic review rejection"
 }
