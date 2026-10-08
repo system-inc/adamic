@@ -1,0 +1,20 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_never_array.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_never_array.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_never_array.a
+    oracle_test.go:770: stdout differs
+        node:   exit 0, stdout "0\n", stderr ""
+        native: exit 0, stdout "1\n", stderr ""
+    oracle_test.go:776: JavaScript backend: stdout differs
+        node:    exit 0, stdout "0\n", stderr ""
+        backend: exit 0, stdout "1\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_never_array.a (0.40s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.419s
+FAIL

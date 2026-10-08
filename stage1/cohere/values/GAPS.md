@@ -95,7 +95,9 @@ A `private step()` lowers.
 
 **Original workaround, removed:** the parser used TypeScript `private` methods with `#private` fields.
 
-## 5. An empty array literal as a default
+## 5. An empty array literal as a default (closed by never-array lowering)
+
+Closed: the gap program now lowers and agrees with Node. The port workaround remains; its removal needs the port corpus. The following records the original refusal.
 
 ```ts
 function size(list: readonly string[] | undefined): number {

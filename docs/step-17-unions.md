@@ -458,3 +458,9 @@ arm. Their existing Maybe pair/packed scalar slots remain valid specializations
 of present-versus-undefined; this unit does not force them into allocated boxes.
 The class-field gate still rejects optional booleans on this base even though
 interface reads have a tagged byte. Completing that class path is remaining work.
+
+## Never-array dependency replay
+
+Imported only f81387f2 and b3b32769 from codex/hidden-08-never-array, as 216b80d5 and f5f39ba4. The same hash-pinned sourcemap.ts setSourceContent function is attempted with no findings after the change. The historical selector 105:51 exits 1 because an array of never is absent, not because the replay crashes. There is no next boundary within this selected function; this does not establish whole-project lowering.
+
+The two imported fixtures pass source Node, both backends, sanitizers and leak checks. Writable widening remains Refused. An independent lowering overlay inserts a number into an empty numeric literal: both backends complete and print 1 where Node prints 0, catching the mutant. Counts refresh passes and changes no rows beyond the two imported fixture rows (3,3,0,4,3,0 and 17,17,8,33,5,0). Values gap 5 now builds; only its outcome record changed, with the corpus workaround retained. Evidence logs are in evidence/never-*.log.

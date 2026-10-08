@@ -1,0 +1,17 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_never_array.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_never_array.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_never_array_observations.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_never_array_observations.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_never_array.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_never_array_observations.a
+--- PASS: TestNativeAgreesWithNode (0.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_never_array.a (0.45s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_never_array_observations.a (0.47s)
+PASS
+gate cache: native hits=0 misses=6
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.496s
