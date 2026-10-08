@@ -258,5 +258,57 @@
     "present": "[{ text: \"7\" }]",
     "absent": "[]",
     "blocked": false
+  },
+  {
+    "id": "D228",
+    "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+    "line": 163,
+    "expression": "importsAndRequiresToRewriteOrShim[0]",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "importsAndRequiresToRewriteOrShim[0]",
+    "receiver": "array of object",
+    "source": "interface Item { readonly pos: number }\nconst importsAndRequiresToRewriteOrShim: Item[] = @VALUES@;\nconst value: Item = importsAndRequiresToRewriteOrShim[0];\nconsole.log(value === undefined ? 'undefined' : `${value.pos}`);\n",
+    "present": "[{ pos: 7 }]",
+    "absent": "[]",
+    "blocked": false
+  },
+  {
+    "id": "D229",
+    "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+    "line": 194,
+    "expression": "node.arguments",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "node.arguments[0]",
+    "receiver": "NodeArray of object",
+    "source": "interface Item { readonly text: string }\nconst node: { readonly arguments: readonly Item[] } = { arguments: @VALUES@ };\nconst value: Item = node.arguments[0];\nconsole.log(value === undefined ? 'undefined' : `${value.text}`);\n",
+    "present": "[{ text: \"7\" }]",
+    "absent": "[]",
+    "blocked": false
+  },
+  {
+    "id": "D230",
+    "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+    "line": 196,
+    "expression": "node.arguments",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "node.arguments[0]",
+    "receiver": "NodeArray of object",
+    "source": "interface Item { readonly text: string }\nconst node: { readonly arguments: readonly Item[] } = { arguments: @VALUES@ };\nconst value: Item = node.arguments[0];\nconsole.log(value === undefined ? 'undefined' : `${value.text}`);\n",
+    "present": "[{ text: \"7\" }]",
+    "absent": "[]",
+    "blocked": false
+  },
+  {
+    "id": "D231",
+    "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+    "line": 251,
+    "expression": "importRequireStatements[1]",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "importRequireStatements[1].declarationList.declarations[0]",
+    "receiver": "NodeArray of object inside tuple",
+    "source": "interface Item { readonly name: string }\nconst importRequireStatements: readonly [{ readonly kind: number }, { readonly declarationList: { readonly declarations: readonly Item[] } }] = [{ kind: 0 }, { declarationList: { declarations: @VALUES@ } }];\nconst value: Item = importRequireStatements[1].declarationList.declarations[0];\nconsole.log(value === undefined ? 'undefined' : `${value.name}`);\n",
+    "present": "[{ name: \"7\" }]",
+    "absent": "[]",
+    "blocked": false
   }
 ]
