@@ -1,0 +1,6 @@
+=== RUN   TestCounterInventoryProbe
+    counter_inventory_probe_test.go:11: TestLoopCountersAgreeWithNode: 1193 distinct shard units
+    counter_inventory_probe_test.go:11: TestCountsAreRecorded: 819 distinct shard units
+--- PASS: TestCounterInventoryProbe (3.25s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-gate	3.256s

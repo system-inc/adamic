@@ -14,7 +14,7 @@ The gate enumerates the initialized test inventory using `-oracle-unit-list`, in
 
 ## Planted failures
 
-`mutants.patch` records both temporary changes, removed before final validation:
+`mutants.patch.gz` records both temporary changes, removed before final validation:
 
 * Flip only c1's integer expectation: `TestLoopCountersAgreeWithNode/c1` fails with `kept in an integer true, want false`; c2 passes.
 * Change only string_views_lifetime.a's recorded allocations from 19 to 20: its own counts leaf fails, showing recorded 20 versus measured 19; string_views_holders.a passes.
