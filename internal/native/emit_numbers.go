@@ -20,14 +20,18 @@ func (e *emitter) numberFormat(format ir.NumberFormat) string {
 		if format.Argument == nil {
 			return e.own(ir.String, fmt.Sprintf("adamic_string_from_number(%s)", value))
 		}
-		return e.own(ir.String, fmt.Sprintf("adamic_number_to_radix(%s, %s)", value, e.value(format.Argument)))
+		result := e.own(ir.String, fmt.Sprintf("adamic_number_to_radix(%s, %s)", value, e.value(format.Argument)))
+		e.checkThrown()
+		return result
 	}
 	argument, hasArgument := "0.0", "false"
 	if format.Argument != nil {
 		argument, hasArgument = e.value(format.Argument), "true"
 	}
 	function := map[string]string{"toExponential": "adamic_number_to_exponential", "toPrecision": "adamic_number_to_precision"}[format.Method]
-	return e.own(ir.String, fmt.Sprintf("%s(%s, %s, %s)", function, value, argument, hasArgument))
+	result := e.own(ir.String, fmt.Sprintf("%s(%s, %s, %s)", function, value, argument, hasArgument))
+	e.checkThrown()
+	return result
 }
 
 // cIeee754 are the Math functions ported from V8 (runtime/ieee754.c), each adamic_math_<name>. C's

@@ -749,6 +749,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.NodeBufferCall:
 		return e.nodeBufferCall(expression)
 	case ir.ObjectCall:
+		if expression.Method == "errorIsType" {
+			return "(" + e.value(expression.Arguments[0]) + " instanceof globalThis[" + e.value(expression.Arguments[1]) + "])"
+		}
 		if expression.Method == "errorCaptureStack" {
 			return "(Object.defineProperty(" + e.value(expression.Arguments[0]) + ", 'stack', {value: '', writable: true, configurable: true, enumerable: false}), undefined)"
 		}
@@ -792,6 +795,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.Box:
 		return e.value(expression.Value)
 	case ir.MakeError:
+		if name, ok := expression.Name.(ir.StringConstant); ok && (e.program.Strings[name.Index] == "TypeError" || e.program.Strings[name.Index] == "RangeError") {
+			return "new globalThis." + e.program.Strings[name.Index] + "(" + e.value(expression.Message) + ")"
+		}
 		if expression.Name != nil {
 			return "Object.assign(new Error(" + e.value(expression.Message) + "), {name: " + e.value(expression.Name) + "})"
 		}

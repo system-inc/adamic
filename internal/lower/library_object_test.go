@@ -43,7 +43,6 @@ func TestObjectUnprovenShapesStayNotYet(t *testing.T) {
 		`Object.assign({value:1}, {extra:2});`,
 		`function keys(source:{value:number}|undefined):string[] { return Object.keys({...source}); }`,
 		`function own(object:{value?:number}):boolean { return Object.hasOwn(object,'value'); }`,
-		`const object={value:1}; Object.freeze(object); try { object.value=2; } catch { console.log('caught'); }`,
 		`Object.groupBy([1,2], (value:number):string => value===1 ? 'one' : 'other');`,
 	} {
 		t.Run(source, func(t *testing.T) {
@@ -94,5 +93,12 @@ func TestObjectReplacedBindingsStayUnproven(t *testing.T) {
 				t.Fatalf("got %v, want NotYet", err)
 			}
 		})
+	}
+}
+
+func TestFrozenPropertyErrorIsCatchable(t *testing.T) {
+	_, err := lowerSource(t, `const object={value:1}; Object.freeze(object); try { object.value=2; } catch { console.log('caught'); }`)
+	if err != nil {
+		t.Fatal(err)
 	}
 }

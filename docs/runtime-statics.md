@@ -471,3 +471,8 @@ Additional storage inherited from area/library, audited during the runtime compi
 - `from_codes.c:name_cache:1`: name slot cache. The merged packed cache publishes and reads with atomic operations, including concurrent error construction.
 - `node_fs_directory.c:target_before:1`, `node_fs_directory.c:arrow:1`, and `node_fs_directory.c:quote:2`: immortal error-message strings initialized statically. No literal cache writes or registration.
 - `union.c:shape_types:1`: area/library's process-wide shape-type metadata registry, written by adamic_register_shape_types during generated object construction and read by dynamic_slot. Preserved from the area, not added by the regex compiler. Unsafe today for concurrent registration/dynamic reads: neither this head nor metadata next links are protected. Requires the area's registry owner to arrange registration before the pool or synchronized publication; this merge does not certify that inherited concurrency behavior.
+
+Library error files reviewed: `runtime-file:library_errors.c` and
+`runtime-file:library_errors.h`. All error strings are automatic constants or
+owned heap copies. There are no mutable statics or lazy registries; the pending
+error uses the existing thread-local adamic_thrown protocol.

@@ -16,6 +16,21 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 	case "defineProperty", "defineProperties", "getOwnPropertyDescriptor", "getOwnPropertyDescriptors":
 		return refused("property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores")
 	case "getPrototypeOf", "setPrototypeOf", "create":
+		if name != "getPrototypeOf" {
+			arguments := node.AsCallExpression().Arguments.Nodes
+			index := 0
+			if name == "setPrototypeOf" {
+				index = 1
+			}
+			if len(arguments) > index {
+				for _, field := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(arguments[index])) {
+					of, known := l.representation(l.checker.GetTypeOfSymbol(field))
+					if !known || of == ir.Object || of == ir.Array || of == ir.Map || of == ir.Closure || of == ir.Union {
+						return nil, true, l.notYet(node, "field '"+field.Name+"' plus [[Prototype]] link can close a counted cycle; compiler graph-region proof is the way out")
+					}
+				}
+			}
+		}
 		return refused("prototypes expose or replace fields outside the declared shape; use a declared object or class with composition")
 	case "fromEntries":
 		return refused("tsc returns an index-signature object with unproven keys; Adamic fixes object shapes and refuses index signatures; use Map")

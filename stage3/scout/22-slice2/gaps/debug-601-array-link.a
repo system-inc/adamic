@@ -1,0 +1,5 @@
+// debug.ts:601. Array-to-prototype edge needs the array ownership and graph-region path.
+const array = [1, 2];
+const nodeArrayProto = {};
+Object.setPrototypeOf(array, nodeArrayProto);
+console.log(`${array.length}`);

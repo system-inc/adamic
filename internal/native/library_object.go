@@ -12,6 +12,9 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 		arguments = append(arguments, e.value(argument))
 	}
 	switch call.Method {
+	case "errorIsType":
+		e.declarations = append(e.declarations, "#include \"library_errors.h\"")
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_library_error_is_type(%s, %s)", arguments[0], arguments[1]))
 	case "errorCaptureStack":
 		return fmt.Sprintf("adamic_error_capture_stack(%s)", arguments[0])
 	case "errorReadStack":
@@ -37,6 +40,7 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 	case "assign":
 		for _, source := range arguments[1:] {
 			e.line("adamic_object_assign(%s, %s);", arguments[0], source)
+			e.checkThrown()
 		}
 		return e.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", arguments[0]))
 	}
