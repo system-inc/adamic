@@ -1,0 +1,8 @@
+=== RUN   TestUndecidedCycleReadsUseReadyChecks
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_value
+    import_cycle_ready_test.go:62: proven imported read retained a TDZ check
+--- FAIL: TestUndecidedCycleReadsUseReadyChecks (0.32s)
+    --- FAIL: TestUndecidedCycleReadsUseReadyChecks/initialized_value (0.32s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.329s
+FAIL

@@ -20,7 +20,18 @@ func TestMain(m *testing.M) {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-	os.Exit(m.Run())
+	directory, err := os.MkdirTemp("", "lint-shared-")
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+	sharedDirectory = directory
+	code := m.Run()
+	cleanupCheckerArchives()
+	if err := os.RemoveAll(directory); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+	}
+	os.Exit(code)
 }
 
 func TestOwnedWitnesses(t *testing.T) {
@@ -33,6 +44,20 @@ func TestOwnedWitnesses(t *testing.T) {
 	for _, d := range prepareRegistry(t, ".") {
 		for _, row := range ownedWitnessRows(t, directory, d) {
 			path := strings.SplitN(row, "\t", 2)[0]
+			if d.Typed {
+				config := filepath.Join(t.TempDir(), "tsconfig.json")
+				options := fmt.Sprintf(`{"compilerOptions":{"strict":true},"files":[%q]}`, path)
+				if err := os.WriteFile(config, []byte(options), 0644); err != nil {
+					t.Fatal(err)
+				}
+				projectManifest := manifest(t, []string{"program " + config, row, path + "\tall"})
+				compare(t, oracle, buildPort(t, directory, true), directory, projectManifest)
+				answer := execute(t, "", oracle, "--manifest", manifest(t, []string{"program " + config, row}), "--count")
+				if string(answer.output) == "0\n" {
+					t.Fatalf("%s typed witness reports no findings", d.Name)
+				}
+				continue
+			}
 			pair := recoveryRows(t, oracle, []string{row, path + "\tall"})
 			answer := execute(t, "", oracle, "--manifest", manifest(t, pair[:1]), "--count")
 			if string(answer.output) == "0\n" {
@@ -56,7 +81,7 @@ func TestRegistrationMutant(t *testing.T) {
 		run  execution
 	}{
 		{"Node", node(t, directory, path, false)},
-		{"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)},
+		{"emitted JavaScript", emittedNode(t, directory, path, false)},
 	} {
 		if bytes.Equal(side.run.output, want) {
 			t.Fatalf("listener omission survived on %s", side.name)
@@ -114,13 +139,20 @@ func TestFactoryHooks(t *testing.T) {
 	path := manifest(t, []string{fixture + "\tno-debugger\t\t\tfalse\t{\"Number\":-2,\"Payload\":{\"enabled\":true}}"})
 	expected := []byte("case 0\nfactory\nprepare\nvisit\nfinish\n")
 	run := func(mutated bool) {
-		for _, side := range []struct {
+		sides := []struct {
 			name string
 			run  execution
 		}{
 			{"Node", node(t, directory, path, false)},
-			{"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)},
-		} {
+			{"emitted JavaScript", emittedNode(t, directory, path, false)},
+		}
+		if !mutated {
+			sides = append(sides, struct {
+				name string
+				run  execution
+			}{"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)})
+		}
+		for _, side := range sides {
 			matches := bytes.HasPrefix(side.run.output, expected)
 			if matches == mutated {
 				t.Fatalf("hook sequence on %s (mutant=%t): %s", side.name, mutated, side.run.output)
@@ -291,7 +323,7 @@ func TestDecodedOptionsAndMutant(t *testing.T) {
 		run  execution
 	}{
 		{"Node", node(t, changed, path, false)},
-		{"native", execute(t, "", buildPort(t, changed, true), "--manifest", path)},
+		{"emitted JavaScript", emittedNode(t, changed, path, false)},
 	} {
 		if bytes.Equal(side.run.output, want) {
 			t.Fatalf("ignored decoded-option mutant survived on %s", side.name)

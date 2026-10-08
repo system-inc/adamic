@@ -1,0 +1,190 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { FileQuestion } from '../../checker.a';
+import { Frames, header } from '../../../typeaware/frames.ts';
+import { types } from '../../../typeaware/facts.ts';
+import { booleanLike, unionFlag, nullish } from '../../../typeaware/flags.ts';
+const ruleName = '@typescript-eslint/no-unnecessary-boolean-literal-compare';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    prepare(root: number): void {
+        const checker = this.context.checker;
+        if(checker === undefined) { return; }
+        const answer = checker.askFile(new FileQuestion('ReadsCompilerOptions', 'options'));
+        if(answer.value === undefined) { return; }
+        const frames = new Frames(answer.value);
+        header(frames, 'options');
+        const strict = frames.yes(); frames.end();
+        if(!strict && this.context.settings.read('allowruletorunwithoutstrictnullchecks', this.context.settings.read('allowruletorunwithoutstrictnullchecksiknowwhatiamdoing', 'false')) !== 'true') {
+            this.context.reportRange(0, 0, ruleName, 'noStrictNullCheck', 'This rule needs the `strictNullChecks` compiler option to tell a boolean from a nullable one. Without it every nullable boolean looks like a plain boolean, so the rule would propose repairs that silently change what the code does on null.');
+        }
+    }
+    visit(node: ParseNode, index: number): void {
+        const operator = this.context.parser.node(node.children[1] ?? panic('missing comparison operator')).kind;
+        const positive = operator === 'EqualsEqualsToken' || operator === 'EqualsEqualsEqualsToken';
+        if(!positive && operator !== 'ExclamationEqualsToken' && operator !== 'ExclamationEqualsEqualsToken') {
+            return;
+        }
+        const left = node.children[0] ?? panic('missing comparison left');
+        const right = node.children[2] ?? panic('missing comparison right');
+        let literal = this.context.parser.node(this.context.unwrap(right));
+        let expression = this.context.unwrap(left);
+        if(literal.kind !== 'TrueKeyword' && literal.kind !== 'FalseKeyword') {
+            literal = this.context.parser.node(this.context.unwrap(left));
+            expression = this.context.unwrap(right);
+        }
+        if(literal.kind !== 'TrueKeyword' && literal.kind !== 'FalseKeyword') {
+            return;
+        }
+        const answer = this.context.checker?.ask(expression, 'type-shape');
+        if(answer === undefined || answer.value === undefined) { return; }
+        const facts = types(answer.value, 'type-shape');
+        const type = facts.root();
+        const plain = (type.flags & booleanLike) !== 0;
+        const parts = facts.parts(type);
+        const survivors = parts.filter((id) => (facts.type(id).flags & nullish) === 0);
+        const nullable =
+            (type.flags & unionFlag) !== 0 &&
+            survivors.length > 0 &&
+            survivors.length < parts.length &&
+            survivors.every((id) => (facts.type(id).flags & booleanLike) !== 0);
+        // Both nullable comparison allowances are true in the production defaults.
+        if((!plain && !nullable) || (nullable && this.context.settings.read(literal.kind === 'TrueKeyword' ? 'allowcomparingnullablebooleanstotrue' : 'allowcomparingnullablebooleanstofalse', 'true') === 'true')) {
+            return;
+        }
+        let id = positive ? 'direct' : 'negated';
+        let message = positive
+            ? 'This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.'
+            : 'This compares a boolean to a boolean literal to ask whether it is false, which the value already answers. Negate the expression instead.';
+        if(nullable) {
+            if(literal.kind === 'FalseKeyword') { id = 'comparingNullableToFalse'; message = 'This compares a nullable boolean to `false`, which treats null and undefined the same as `true`. Supply a default with the nullish coalescing operator so the nullish case is a decision rather than a side effect of the comparison.'; }
+            else if(positive) { id = 'comparingNullableToTrueDirect'; message = 'This compares a nullable boolean to `true`, which is a roundabout way of asking whether it is exactly true. Use the expression directly, or supply a default with the nullish coalescing operator so the nullish case is stated rather than implied.'; }
+            else { id = 'comparingNullableToTrueNegated'; message = 'This compares a nullable boolean to `true` to ask whether it is anything else, which lumps `false` together with null and undefined. Negate the expression instead, so the nullish case is stated rather than implied.'; }
+        }
+        let outer = index;
+        while(
+            (this.context.parents[outer] ?? -1) >= 0 &&
+            this.context.parser.node(this.context.parents[outer] ?? -1).kind === 'ParenthesizedExpression'
+        ) {
+            outer = this.context.parents[outer] ?? -1;
+        }
+        const parent = this.context.parents[outer] ?? -1;
+        const wrapped =
+            parent >= 0 &&
+            this.context.parser.node(parent).kind === 'PrefixUnaryExpression' &&
+            this.context.parser.node(parent).operator === 'ExclamationToken';
+        const mutated = wrapped ? parent : index;
+        const inversions = (wrapped ? 1 : 0) + (positive ? 0 : 1) + (literal.kind === 'TrueKeyword' ? 0 : 1);
+        let text = this.context.raw(expression);
+        let weak = !this.strong(expression);
+        if(nullable && inversions % 2 === 0 && !this.conditional(mutated)) {
+            text = `${weak ? `(${text})` : text} ?? false`;
+            weak = true;
+        }
+        else if(nullable && literal.kind === 'FalseKeyword') {
+            text = `${weak ? `(${text})` : text} ?? true`;
+            weak = true;
+        }
+        if(inversions % 2 === 1) {
+            text = `!${weak ? `(${text})` : text}`;
+            weak = false;
+        }
+        if(weak && this.weakParent(mutated)) {
+            text = `(${text})`;
+        }
+        const finding = this.context.report(index, ruleName, id, message, 'fix', text, '');
+        finding.editStart = this.context.start(mutated);
+        finding.editEnd = this.context.node(mutated).end;
+    }
+    strong(index: number): boolean {
+        return [
+            'NumericLiteral',
+            'BigIntLiteral',
+            'StringLiteral',
+            'RegularExpressionLiteral',
+            'NoSubstitutionTemplateLiteral',
+            'TrueKeyword',
+            'FalseKeyword',
+            'ParenthesizedExpression',
+            'Identifier',
+            'TypeReference',
+            'TypeOperator',
+            'ArrayLiteralExpression',
+            'ObjectLiteralExpression',
+            'PropertyAccessExpression',
+            'ElementAccessExpression',
+            'CallExpression',
+            'NewExpression',
+            'TaggedTemplateExpression',
+            'ExpressionWithTypeArguments',
+        ].includes(this.context.parser.node(index).kind);
+    }
+    weakParent(index: number): boolean {
+        const parentIndex = this.context.parents[index] ?? -1;
+        if(parentIndex < 0) {
+            return false;
+        }
+        const parent = this.context.parser.node(parentIndex);
+        if(
+            [
+                'PrefixUnaryExpression',
+                'PostfixUnaryExpression',
+                'BinaryExpression',
+                'ConditionalExpression',
+                'AwaitExpression',
+            ].includes(parent.kind)
+        ) {
+            return true;
+        }
+        return (
+            [
+                'PropertyAccessExpression',
+                'ElementAccessExpression',
+                'CallExpression',
+                'NewExpression',
+                'TaggedTemplateExpression',
+            ].includes(parent.kind) && parent.children[0] === index
+        );
+    }
+    // The parser omits absent for clauses. Locate the first delimiter while skipping
+    // the complete initializer node, so nested expressions and regex literals stay opaque.
+    forCondition(node: ParseNode, current: number): boolean {
+        let child = 0;
+        this.context.scanAt(node.pos);
+        let token = this.context.scanAt(this.context.scanEnd());
+        if(token === 'AwaitKeyword') { child++; token = this.context.scanAt(this.context.scanEnd()); }
+        if(token !== 'OpenParenToken') { panic('missing for opening delimiter'); }
+        token = this.context.scanAt(this.context.scanEnd());
+        if(token !== 'SemicolonToken') {
+            const initializer = node.children[child] ?? panic('missing for initializer');
+            child++;
+            this.context.scanAt(this.context.node(initializer).end);
+        }
+        if(this.context.scanKind() !== 'SemicolonToken') { panic('missing for initializer delimiter'); }
+        token = this.context.scanAt(this.context.scanEnd());
+        return token !== 'SemicolonToken' && node.children[child] === current;
+    }
+    conditional(index: number): boolean {
+        let current = index;
+        while(this.context.parent(current) >= 0) {
+            const parent = this.context.parent(current);
+            const node = this.context.node(parent);
+            switch(node.kind) {
+                case 'ParenthesizedExpression': current = parent; continue;
+                case 'PrefixUnaryExpression': if(node.operator === 'ExclamationToken') { current = parent; continue; } return false;
+                case 'BinaryExpression':
+                    if(['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(this.context.kind(node.children[1] ?? -1))) { current = parent; continue; }
+                    return false;
+                case 'ConditionalExpression': if(node.children[0] === current) { return true; } current = parent; continue;
+                case 'IfStatement': case 'WhileStatement': return node.children[0] === current;
+                case 'DoStatement': return node.children[1] === current;
+                case 'ForStatement': return this.forCondition(node, current);
+                default: return false;
+            }
+        }
+        return false;
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

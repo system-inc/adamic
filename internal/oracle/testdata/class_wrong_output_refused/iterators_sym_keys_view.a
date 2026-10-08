@@ -1,0 +1,5 @@
+const source = { value: 1, [Symbol.iterator]() { let index = 0; return { next() { index++; return { value: index, done: index > 2 }; }, }; }, };
+function keys(view: { readonly value: number }): string { return Object.keys(view).join(','); }
+console.log(keys(source)); console.log([...source].join(','));
+class Ranged { readonly value = 3; [Symbol.iterator](): Ranged { return this; } next(): { readonly value: number; readonly done: boolean } { return { value: 0, done: true }; } }
+console.log(keys(new Ranged())); console.log(Object.keys(new Ranged()).join(','));

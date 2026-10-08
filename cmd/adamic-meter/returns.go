@@ -34,7 +34,7 @@ func returnAdaptations(paths []string, overlay map[string]string, before error) 
 	}
 	files := make(map[string]*ast.SourceFile)
 	for _, file := range program.GetSourceFiles() {
-		files[file.FileName()] = file
+		files[file.FileName().AsString()] = file
 	}
 	selected := make(map[*ast.Node]bool)
 	for _, diagnostic := range diagnostics.Diagnostics {
@@ -86,7 +86,7 @@ func returnAdaptations(paths []string, overlay map[string]string, before error) 
 		body := node.Body()
 		end := body.End() - 1
 		if end < 0 || file.Text()[end] != '}' {
-			return nil, 0, fmt.Errorf("invalid return body in %s", file.FileName())
+			return nil, 0, fmt.Errorf("invalid return body in %s", file.FileName().AsString())
 		}
 		edits[file] = append(edits[file], optionalEdit{start: end, end: end, replacement: "\nreturn void 0;\n"})
 		// Bare returns also complete with undefined. Keep their completion kind and
@@ -117,7 +117,7 @@ func returnAdaptations(paths []string, overlay map[string]string, before error) 
 		for _, change := range changes {
 			source = source[:change.start] + change.replacement + source[change.end:]
 		}
-		name := file.FileName()
+		name := file.FileName().AsString()
 		if strings.HasSuffix(name, ".a.ts") && owned[strings.TrimSuffix(name, ".ts")] {
 			name = strings.TrimSuffix(name, ".ts")
 		}

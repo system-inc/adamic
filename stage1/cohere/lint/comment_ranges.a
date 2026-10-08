@@ -1,0 +1,85 @@
+import { utf8Length } from 'adamic';
+import { isLineBreak } from '../../typescript/scanner/characters.ts';
+
+function lineIndex(lines: readonly number[], position: number): number {
+    let left = 0;
+    let right = lines.length;
+    while(left < right) {
+        const middle = Math.floor((left + right) / 2);
+        if((lines[middle] ?? 0) <= position) {
+            left = middle + 1;
+        }
+        else {
+            right = middle;
+        }
+    }
+    return left - 1;
+}
+export class CommentRange {
+    readonly start: number;
+    readonly end: number;
+    readonly text: string;
+    readonly line: number;
+    readonly endLine: number;
+    readonly column: number;
+    readonly prefix: string;
+    constructor(source: string, start: number, end: number, lines: readonly number[]) {
+        this.start = start;
+        this.end = end;
+        this.text = source.slice(start, end);
+        this.line = lineIndex(lines, start);
+        this.endLine = lineIndex(lines, end);
+        this.prefix = source.slice(lines[this.line] ?? 0, start);
+        this.column = utf8Length(this.prefix);
+    }
+}
+export function comments(
+    source: string,
+    literalEnds: readonly number[],
+    reachable: readonly boolean[],
+): CommentRange[] {
+    const lines: number[] = [0];
+    for(let cursor = 0; cursor < source.length; cursor++) {
+        const code = source.charCodeAt(cursor);
+        if(code === 13 && source.charCodeAt(cursor + 1) === 10) {
+            cursor++;
+        }
+        if(isLineBreak(code)) {
+            lines.push(cursor + 1);
+        }
+    }
+    const result: CommentRange[] = [];
+    for(let cursor = 0; cursor < source.length;) {
+        const literalEnd = literalEnds[cursor] ?? -1;
+        if(literalEnd >= 0) {
+            cursor = literalEnd;
+            continue;
+        }
+        if(cursor === 0 && source.startsWith('#!')) {
+            while(cursor < source.length && !isLineBreak(source.charCodeAt(cursor))) {
+                cursor++;
+            }
+            continue;
+        }
+        const opening = source.charCodeAt(cursor) === 47 ? source.slice(cursor, cursor + 2) : '';
+        if(opening !== '//' && opening !== '/*') {
+            cursor++;
+            continue;
+        }
+        const start = cursor;
+        cursor += 2;
+        if(opening === '//') {
+            while(cursor < source.length && !isLineBreak(source.charCodeAt(cursor))) {
+                cursor++;
+            }
+        }
+        else {
+            const close = source.indexOf('*/', cursor);
+            cursor = close < 0 ? source.length : close + 2;
+        }
+        if(reachable[start] === true) {
+            result.push(new CommentRange(source, start, cursor, lines));
+        }
+    }
+    return result;
+}

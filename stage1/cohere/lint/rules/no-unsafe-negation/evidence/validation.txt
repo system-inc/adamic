@@ -1,0 +1,69 @@
+command ['go', 'build', '-overlay=/tmp/wave07-negation/oracle-overlay.json', '-o', '/tmp/wave07-negation/oracle', '/workspace/adamic/cohere/adamic_wave07_owned.go', '/workspace/adamic/cohere/adamic_wave07_adapter.go']
+exit 0, stdout 0 bytes, stderr 0 bytes
+command ['go', 'test', './stage1/cohere/lint/rules/no-unsafe-negation', '-run', '^TestCompileProfiles$', '-count=1', '-v']
+exit 0, stdout 160 bytes, stderr 0 bytes
+command ['/tmp/wave07-negation/oracle', '/tmp/wave07-negation/upstream-manifest.txt']
+exit 0, stdout 21752 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-negation/profile.a', '/tmp/wave07-negation/upstream-manifest.txt']
+exit 0, stdout 21752 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-negation/baseline/emitted.mjs', '/tmp/wave07-negation/upstream-manifest.txt']
+exit 0, stdout 21752 bytes, stderr 0 bytes
+command ['/tmp/wave07-negation/baseline/native', '/tmp/wave07-negation/upstream-manifest.txt']
+exit 0, stdout 21752 bytes, stderr 0 bytes
+PASS upstream: 62 file rows, 21752 identical bytes
+command ['git', '-C', '/tmp/wave07-typescript', 'rev-parse', 'HEAD']
+exit 0, stdout 41 bytes, stderr 0 bytes
+command ['/tmp/wave07-negation/oracle', '/tmp/wave07-negation/compiler-stage1-manifest.txt']
+exit 0, stdout 13250967 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-negation/profile.a', '/tmp/wave07-negation/compiler-stage1-manifest.txt']
+exit 0, stdout 13250967 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-negation/baseline/emitted.mjs', '/tmp/wave07-negation/compiler-stage1-manifest.txt']
+exit 0, stdout 13250967 bytes, stderr 0 bytes
+command ['/tmp/wave07-negation/baseline/native', '/tmp/wave07-negation/compiler-stage1-manifest.txt']
+exit 0, stdout 13250967 bytes, stderr 0 bytes
+PASS compiler-stage1: 347 file rows, 13250967 identical bytes
+command ['go', 'test', './stage1/cohere/lint/rules/no-unsafe-negation', '-run', '^TestCompileProfiles$', '-count=1', '-v']
+exit 0, stdout 160 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-negation/mutant-source/profile.a', '/tmp/wave07-negation/upstream-manifest.txt']
+exit 0, stdout 16276 bytes, stderr 0 bytes
+PASS mutant ordering-relations-ignored caught only by byte comparison on Node
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/tmp/wave07-negation/mutant/emitted.mjs', '/tmp/wave07-negation/upstream-manifest.txt']
+exit 0, stdout 16276 bytes, stderr 0 bytes
+PASS mutant ordering-relations-ignored caught only by byte comparison on emitted JavaScript
+command ['/tmp/wave07-negation/mutant/native', '/tmp/wave07-negation/upstream-manifest.txt']
+exit 0, stdout 16276 bytes, stderr 0 bytes
+PASS mutant ordering-relations-ignored caught only by byte comparison on sanitized native
+command ['/tmp/wave07-negation/oracle', '/tmp/wave07-negation/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-negation/oracle', '/tmp/wave07-negation/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-negation/oracle', '/tmp/wave07-negation/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-negation/oracle', '/tmp/wave07-negation/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-negation/oracle', '/tmp/wave07-negation/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+THROUGHPUT Go 198183.80 findings/s best of 5 including startup
+command ['/tmp/wave07-negation/baseline/release', '/tmp/wave07-negation/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-negation/baseline/release', '/tmp/wave07-negation/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-negation/baseline/release', '/tmp/wave07-negation/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-negation/baseline/release', '/tmp/wave07-negation/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['/tmp/wave07-negation/baseline/release', '/tmp/wave07-negation/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+THROUGHPUT native 92265.76 findings/s best of 5 including startup
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-negation/profile.a', '/tmp/wave07-negation/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-negation/profile.a', '/tmp/wave07-negation/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-negation/profile.a', '/tmp/wave07-negation/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-negation/profile.a', '/tmp/wave07-negation/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+command ['node', '--disable-warning=ExperimentalWarning', '/workspace/adamic/oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-negation/profile.a', '/tmp/wave07-negation/throughput-manifest.txt', '--count']
+exit 0, stdout 5 bytes, stderr 0 bytes
+THROUGHPUT Node 8990.31 findings/s best of 5 including startup
+PASS owned profile and owner suggestion API attachment
