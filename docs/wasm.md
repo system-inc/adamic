@@ -276,6 +276,22 @@ Each unavailable entry also has a runtime panic with its member and reason for
 callers that did not pass through that boundary. There are no fabricated ids,
 platform strings, executable paths, terminal widths or allocation observations.
 
+Filesystem capability proofs also run at that boundary. `openSync` and path
+`writeFileSync` (string or Buffer) require a literal creation mode of `0666`, or
+literal flags that do not create a file. `mkdirSync` requires literal `0777`.
+Preview 1 has no mode parameter or permission-setting operation for these calls.
+Descriptor writes ignore mode as Node does; read-only opens validate but ignore
+mode, so they remain available. Dynamic modes that might create a file refuse.
+
+`utimesSync` requires both arguments to be literal nonnegative whole seconds,
+no greater than `18446744073` (the whole-second range of an unsigned 64-bit
+nanosecond timestamp). Node's Preview 1 host loses fractional timestamp precision;
+Date and dynamic numeric arguments do not carry this proof and refuse before
+clang. A refusal names the intrinsic even when reached through a System helper.
+The check covers all emitted function bodies, including unused imported helpers.
+Native and JavaScript retain their full existing host behavior. Runtime panics
+are no longer accepted as filesystem target skips by the oracle.
+
 WASI libc supplies ordinary file and descriptor I/O, positioned reads and writes,
 fsync, directory enumeration, stat/lstat, realpath, readlink, removal, clocks,
 allocation, environment access and mutation. Symlink creation, chmod and

@@ -1,0 +1,24 @@
+import { programArguments } from 'adamic';
+import { Buffer } from 'node:buffer';
+import { mkdirSync, openSync, closeSync, writeSync, writeFileSync, readFileSync, utimesSync, statSync } from 'node:fs';
+const root = programArguments()[0] ?? '';
+// Imports and marker text alone must not trigger a target refusal.
+console.log('ADAMIC_WASI_FS_OPEN_MODE ADAMIC_WASI_FS_MKDIR_MODE ADAMIC_WASI_FS_UTIMES');
+mkdirSync(root + '/default');
+const fd = openSync(root + '/default/text', 'w');
+writeSync(fd, 'first');
+// The descriptor overload ignores mode: no file creation happens here.
+writeFileSync(fd, '-fd', { mode: 0o600 });
+writeFileSync(fd, Buffer.from([33]), { mode: 0o600 });
+closeSync(fd);
+const read = openSync(root + '/default/text', 'r', 0o600);
+closeSync(read);
+console.log(readFileSync(root + '/default/text', 'utf8'));
+writeFileSync(root + '/default/text', '-append', { flag: 'a' });
+writeFileSync(root + '/default/bytes', Buffer.from([0, 255]));
+console.log(readFileSync(root + '/default/bytes').toString('hex'));
+utimesSync(root + '/default/text', 1000, 1700000000);
+console.log(`${statSync(root + '/default/text').atime.getTime()} ${statSync(root + '/default/text').mtimeMs}`);
+// The largest whole-second timestamp representable by Preview 1.
+utimesSync(root + '/default/text', 0, 18446744073);
+console.log(`${statSync(root + '/default/text').atime.getTime()} ${statSync(root + '/default/text').mtimeMs}`);

@@ -22,24 +22,6 @@ func buildWASI(t *testing.T, source, binary string) {
 	}
 }
 
-// Only these exact, owned runtime refusals are target gaps. A build failure,
-// ordinary panic, trap, or unknown mismatch must still fail the oracle.
-func wasiRuntimeRefusal(t *testing.T, actual run) {
-	t.Helper()
-	if actual.exitCode != 70 {
-		return
-	}
-	for _, reason := range []string{
-		"file creation permission bits are not supported",
-		"directory creation permission bits are not supported",
-		"fs.utimesSync timestamp precision or range is unavailable",
-	} {
-		if string(actual.stderr) == "adamic: panic: wasm32-wasi: "+reason+"\n" {
-			t.Skipf("target refusal: %s", reason)
-		}
-	}
-}
-
 // The input fixtures hold the host members and their filesystem effects. Run
 // them with the same directory, arguments and uid as the native input leg.
 func TestWASIInputAgreesWithNode(t *testing.T) {
@@ -83,7 +65,6 @@ func TestWASIInputAgreesWithNode(t *testing.T) {
 			nodeRun, wasmRun := prepared("node"), prepared("wasi")
 			expected := onNodeWith(t, nodeRun, path)
 			actual := executeInput(t, wasmRun, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, binary}, wasmRun.arguments...)...)
-			wasiRuntimeRefusal(t, actual)
 			if difference := disagreement(expected, actual); difference != "" {
 				t.Errorf("%s\nnode: exit %d, stdout %q, stderr %q\nwasi: exit %d, stdout %q, stderr %q", difference, expected.exitCode, expected.stdout, expected.stderr, actual.exitCode, actual.stdout, actual.stderr)
 			}
@@ -145,11 +126,14 @@ func TestWASIFileAgreesWithNode(t *testing.T) {
 			}
 			shared := sharedDirectory(t)
 			binary := filepath.Join(shared, "program.wasm")
+			if want, exists := wasiFSRefusedFixtures[fixture]; exists {
+				assertWASIFSRefusal(t, native.C(program), binary, want)
+				return
+			}
 			buildWASI(t, native.C(program), binary)
 			nodeRun, wasmRun := fsFilePrepare(t, shared, "node"), fsFilePrepare(t, shared, "wasi")
 			expected := onNodeWith(t, nodeRun, path)
 			actual := executeInput(t, wasmRun, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, binary}, wasmRun.arguments...)...)
-			wasiRuntimeRefusal(t, actual)
 			if difference := disagreement(expected, actual); difference != "" {
 				t.Errorf("%s\nnode: exit %d, stdout %q, stderr %q\nwasi: exit %d, stdout %q, stderr %q", difference, expected.exitCode, expected.stdout, expected.stderr, actual.exitCode, actual.stdout, actual.stderr)
 			}

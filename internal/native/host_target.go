@@ -15,12 +15,16 @@ func (r *TargetRefused) Error() string {
 }
 
 var wasiHostRefusals = map[string]TargetRefused{
-	"adamic_node_argv":         {"process.argv", "WASI has no executable paths"},
-	"adamic_fs_file_mkdtemp":   {"fs.mkdtempSync", "WASI has no temporary directory creation"},
-	"adamic_node_pid":          {"process.pid", "WASI has no process identifiers"},
-	"adamic_node_platform":     {"process.platform", "WASI has no Node host platform"},
-	"adamic_node_columns":      {"process.stdout.columns", "WASI has no terminal size"},
-	"adamic_node_memory_usage": {"process.memoryUsage", "WASI has no allocator observations"},
+	"ADAMIC_WASI_FS_OPEN_MODE":       {"fs.openSync", "Preview 1 path_open has no mode parameter; creation mode must be proven 0666 or the flags must be proven not to create"},
+	"ADAMIC_WASI_FS_WRITE_FILE_MODE": {"fs.writeFileSync", "Preview 1 path_open has no mode parameter; creation mode must be proven 0666 or the flags must be proven not to create"},
+	"ADAMIC_WASI_FS_MKDIR_MODE":      {"fs.mkdirSync", "Preview 1 path_create_directory has no mode parameter; directory mode must be proven 0777"},
+	"ADAMIC_WASI_FS_UTIMES":          {"fs.utimesSync", "Preview 1 timestamps are unsigned and Node WASI drops subsecond precision; both times must be proven nonnegative whole seconds within the timestamp range"},
+	"adamic_node_argv":               {"process.argv", "WASI has no executable paths"},
+	"adamic_fs_file_mkdtemp":         {"fs.mkdtempSync", "WASI has no temporary directory creation"},
+	"adamic_node_pid":                {"process.pid", "WASI has no process identifiers"},
+	"adamic_node_platform":           {"process.platform", "WASI has no Node host platform"},
+	"adamic_node_columns":            {"process.stdout.columns", "WASI has no terminal size"},
+	"adamic_node_memory_usage":       {"process.memoryUsage", "WASI has no allocator observations"},
 }
 
 func validateBuild(source string, options Options) error {

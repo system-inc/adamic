@@ -14,7 +14,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-var fsFileFixtures = []string{"read", "open", "write", "close", "write_file", "exists", "stat", "mkdir", "unlink", "utimes", "date", "system", "buffer", "read_sync", "write_buffer", "mkdtemp", "rm"}
+var fsFileFixtures = []string{"read", "open", "write", "close", "write_file", "exists", "stat", "mkdir", "unlink", "utimes", "date", "system", "buffer", "read_sync", "write_buffer", "mkdtemp", "rm", "wasi_defaults", "wasi_dynamic_open", "wasi_dynamic_mkdir", "wasi_dynamic_utimes"}
 
 func fsFilePrepare(t *testing.T, shared, name string) inputRun {
 	t.Helper()

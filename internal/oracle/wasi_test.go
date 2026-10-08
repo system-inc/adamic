@@ -55,7 +55,6 @@ func onWASI(t *testing.T, source string) run {
 	binary := filepath.Join(t.TempDir(), "program.wasm")
 	buildWASI(t, source, binary)
 	actual := execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "wasi.mjs"), binary)
-	wasiRuntimeRefusal(t, actual)
 	return actual
 }
 

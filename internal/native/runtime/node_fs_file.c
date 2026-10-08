@@ -191,7 +191,7 @@ static int open_file(const adamic_string *path, const adamic_string *flag, doubl
     if (of < 0) { free(name); return -1; }
     if (!integer(mode, 4294967295., "mode")) { free(name); return -1; }
 #ifdef ADAMIC_TARGET_WASI
-    if (mode != 0666) {
+    if ((of & O_CREAT) != 0 && mode != 0666) {
         free(name);
         adamic_panic("wasm32-wasi: file creation permission bits are not supported", sizeof "wasm32-wasi: file creation permission bits are not supported" - 1);
     }

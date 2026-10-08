@@ -1,0 +1,7 @@
+import { programArguments } from 'adamic';
+import { utimesSync, statSync } from 'node:fs';
+const root = programArguments()[0] ?? '';
+let time = 1000;
+time = 1000.5;
+utimesSync(root + '/file', time, time);
+console.log(`${statSync(root + '/file').mtimeMs}`);

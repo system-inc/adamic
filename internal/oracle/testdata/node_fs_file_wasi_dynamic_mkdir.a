@@ -1,0 +1,7 @@
+import { programArguments } from 'adamic';
+import { mkdirSync, statSync } from 'node:fs';
+const root = programArguments()[0] ?? '';
+let mode = 0o777;
+mode = 0o700;
+mkdirSync(root + '/dynamic', mode);
+console.log(`${statSync(root + '/dynamic').isDirectory()}`);
