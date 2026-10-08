@@ -535,7 +535,10 @@ reads stage1/cohere/formatfiles stage1/cohere/gitignore/glob.ts
 # TestThePortParsesAsGoCohereDoes — stage1/cohere/formatfiles/formatfiles_test.go:58 (imported input)
 reads stage1/cohere/formatfiles stage1/cohere/gitignore/path.ts
 # TestThePortAnswersAsGoCohereAndGitDo via askedCases — stage1/cohere/gitignore/gitignore_test.go:379
-reads stage1/cohere/gitignore *
+# It reads which paths exist and the .gitignore files, never other files' contents: only an added or
+# deleted path, or a changed .gitignore, changes its input (95 s on every change otherwise).
+reads stage1/cohere/gitignore * paths
+reads stage1/cohere/gitignore *.gitignore
 # TestThePortAnswersAsGoCohereAndGitDo via askedCases — stage1/cohere/gitignore/gitignore_test.go:379
 # TestThePortAnswersAsGoCohereAndGitDo via cohereSide — stage1/cohere/gitignore/gitignore_test.go:431
 # TestThePortAnswersAsGoCohereAndGitDo via cohereSide — stage1/cohere/gitignore/gitignore_test.go:435

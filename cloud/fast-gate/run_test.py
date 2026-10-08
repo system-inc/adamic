@@ -156,6 +156,19 @@ class Coverage(FailClosed):
                 self.assertEqual(result["executors"], {"inert": 1} if unowned else {})
                 self.assertEqual(result["reads"], [{"line": 1, "package": "stage1/cohere/tsprinter", "glob": "**/*.ts", "paths": [path], "map_changed": False}] if matches else [])
 
+    def test_a_paths_reader_fires_only_when_paths_come_or_go(self):
+        with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
+            handle.write("reads stage1/cohere/gitignore * paths\nreads stage1/cohere/gitignore *.gitignore\ninert *\n")
+        gate = run.Gate.__new__(run.Gate)
+        gate.arguments = mock.Mock(tools=self.tree)
+        gate.result, gate.steps, gate.exits = {}, {}, {}
+        gate.cover(["notes/edited.md"], ["notes/edited.md"], [])
+        self.assertEqual(gate.extraPackages, [])
+        gate.cover(["notes/added.md"], ["notes/added.md"], ["notes/added.md"])
+        self.assertEqual(gate.extraPackages, [run.module + "/stage1/cohere/gitignore"])
+        gate.cover(["stage3/.gitignore"], ["stage3/.gitignore"], [])
+        self.assertEqual(gate.extraPackages, [run.module + "/stage1/cohere/gitignore"])
+
     def test_reads_do_not_cover_an_unowned_path(self):
         with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
             handle.write("reads stage1/cohere/tsprinter **/*.ts\n")
