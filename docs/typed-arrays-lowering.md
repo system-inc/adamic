@@ -291,3 +291,54 @@ Workers handler are outside this numeric fixture's proof.
 The complete uncached landing native suite passed in 305.735s and the oracle
 suite in 142.527s. A final fetch confirmed origin/main is still the merged
 `b6b1538b0cebc4ba6741ac34f1aedb60293c1d06`.
+
+## Main refresh after element-type ownership ruling
+
+The follow-on element types, including Uint16Array, belong to runtime end to
+end under the final ruling. No element-type extension was implemented here.
+This landing merges origin/main at
+`71d7e491b3c9724f7a0e2ee754592149e7f9790b` into the existing compiler branch.
+The only conflicts were fixture registration and recorded counts. Registration
+retains every fixture from both parents and registers typeof_null exactly once;
+main's oracle harness changes are imported without hand changes.
+
+Setup's first run overlapped the incoming merge and failed compiling
+cmd/adamic-test262 with `could not import sync (open : no such file or directory)`
+and downstream undefined symbols. Retrying on the resolved tree passed:
+Node ready 0.018s, Go ready 0.021s, submodules ready 0.049s, clang ready 0.149s,
+markdown dependencies ready 3.284s, Go build ready 33.910s, cache warm 34.478s,
+done 34.598s. nproc is 5; cpu.max is 400000 100000 (four CPUs).
+
+Validation uses the printed /workspace/adamic-tools/env.sh in each test shell:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/ir ./internal/flow ./internal/fresh ./internal/javascript ./internal/native ./internal/oracle -count=1 -timeout 30m
+gofmt -l cmd internal
+go vet ./...
+```
+
+No new compiler check was added, so no new mutant was introduced for this merge.
+The prior conversion, bounds, view-aliasing, refusal and percentile mutant proofs
+remain in this document and its logs. The full repository gate and macOS-specific
+leak path are not exercised by this Linux worker landing.
+
+The uncached run passed lowering (46.176s), IR (1.708s), flow (144.779s),
+freshness (81.737s) and native (371.894s); JavaScript has no standalone tests.
+The oracle ran in 211.321s and failed only the conflicting regexp_tree.ts count
+row inherited from main: measured 91/91/81/85/35/0, recorded 97/97/69/85/35/0.
+The uncached behavioral, sanitizer and typed-array pins reported no failures.
+The table is regenerated rather than selecting either parent's row by hand.
+Formatting and vet exited 0 with no diagnostics.
+
+Count regeneration passed in 17.156s and changed only the stale regexp row;
+all ten typed-array rows remain unchanged. The complete oracle rerun passed
+in 108.934s using unchanged successful observations from the uncached run.
+Its commands were:
+
+```sh
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts
+go test ./internal/oracle -count=1 -timeout 30m
+```
+
+The final fetch confirmed origin/main remains the tested 71d7e491 merge parent.
+Logs for this refresh have relanding- names under cloud/reports/typed-arrays.

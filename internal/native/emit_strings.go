@@ -23,7 +23,7 @@ func (e *emitter) appendsTo(statement ir.Assign) ([]ir.Expression, bool) {
 	if !isConcat || len(concat.Parts) < 2 {
 		return nil, false
 	}
-	if read, isRead := concat.Parts[0].(ir.Read); !isRead || read.Local != statement.Local || read.Checked {
+	if read, isRead := concat.Parts[0].(ir.Read); !isRead || read.Local != statement.Local || read.Checked || read.Readiness != "" {
 		return nil, false
 	}
 	return concat.Parts[1:], true

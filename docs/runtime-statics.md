@@ -442,3 +442,31 @@ introduced. This entry records this extension, not an inventory of earlier units
 | Audit key | Holds / writers and timing | Classification |
 |---|---|---|
 | `async.c:cleanups:1` | Borrowed frame cleanup records; generated wrappers register, settlement/destruction forget, cancel and exit take records before releasing reactions | Loop confined under the host bridge loop-affinity contract. No foreign publisher accesses this list; source pool callbacks capturing async frames are rejected. Records own no Adamic reference |
+
+## Closures meet the runtime area, October 8, 2026
+
+Step 04's closures (compiler/area-next-fixtures 118579fc) merged into area/runtime brought the Node host files and the shape-type registry. Each mutable storage below is classified against concurrency part 1: only Shareable values cross threads, and parallelMap's task proof (`internal/lower/parallel.go`, `call`) refuses every library method call except reads on strings, numbers, arrays and Maps, so Node host calls never run in a task.
+
+| Audit key | Holds / writers and timing | Classification |
+|---|---|---|
+| `adamic.h:adamic_null:1` | Header extern for the null sentinel | Written only before pool starts: C static initialization, zero count, never retained or released |
+| `union.c:adamic_null:1` | Null sentinel heap header, compared by address | Written only before pool starts: C static initialization, zero count, never retained or released |
+| `union.c:shape_types:1` | Registry of program shapes' scalar tags, pushed when an object of the shape is first made, read by dynamic property reads | Guarded by shape_types_lock for the one-time push; published with release order, read with acquire; entries never change once listed. Tasks make objects too, so this was a race before (two first registrations could link an entry to itself): fixture `shape_types`, mutant `shape_types_registry` |
+| `union.c:shape_types_lock:1` | Mutex serializing first registrations | Mutex |
+| `map_set.c:collection_next:1` | A function declaration through the `adamic_code_function` typedef, not storage | Not storage |
+| `node_fs_file.c:dots:1` | Immortal "..." string literal | Written only before pool starts: static initializer; string_index.c never mutates immortal literals |
+| `node_fs_file.c:cache:1` | Packed slot cache for `_fsFileTime` | Atomic: packed cache word uses __atomic_load_n/store_n in adamic.h and object.c |
+| `node_fs_file.c:cache:2` | Packed slot cache for `_fsFileMode` | Atomic: packed cache word uses __atomic_load_n/store_n in adamic.h and object.c |
+| `node_host.c:current_directory:1` | Cached process working directory, released at exit | Main thread only: Node host calls are refused in tasks (parallel.go). Requires review when step 29 binds Node imports |
+| `node_host.c:cleanup_registered:1` | Whether the directory cache's exit cleanup is registered | Main thread only, as current_directory |
+| `node_host.c:error_name:1` | Immortal "Error" string literal | Written only before pool starts: static initializer; string_index.c never mutates immortal literals |
+
+- `runtime-file:census_small.c`: no mutable static storage.
+- `runtime-file:node_buffer.c`: no mutable static storage; Buffer values are counted heap objects.
+- `runtime-file:node_buffer.h`: declarations only.
+- `runtime-file:node_crypto.c`: no mutable static storage; hash state lives in counted objects.
+- `runtime-file:node_crypto.h`: declarations only.
+- `runtime-file:node_fs_file.c`: the literal and two packed caches above.
+- `runtime-file:node_fs_file.h`: declarations only.
+- `runtime-file:node_host.c`: the main-thread directory cache above.
+- `runtime-file:regexp_replace.c`: no mutable static storage.

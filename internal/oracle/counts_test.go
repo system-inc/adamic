@@ -103,6 +103,9 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 			if writes {
 				how.arguments = append([]string{writable(t, shared, "counted")}, how.arguments...)
 			}
+			if strings.HasPrefix(path, "internal/oracle/testdata/node_fs_file_") {
+				how = fsFilePrepare(t, shared, "counted")
+			}
 			binary := filepath.Join(shared, "program")
 			if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
 				t.Fatal(err)
@@ -150,7 +153,7 @@ func TestCountsAreRecorded(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	rows := make([]string, len(fixtures)+len(inputFixtures)+len(probes))
+	rows := make([]string, len(fixtures)+len(inputFixtures)+len(fsFileFixtures)+len(probes))
 	var lock sync.Mutex
 	t.Run("fixtures", func(t *testing.T) {
 		for index, fixture := range fixtures {
@@ -174,7 +177,7 @@ func TestCountsAreRecorded(t *testing.T) {
 				t.Parallel()
 				row := counted(t, relative, false, nil, false, false)
 				lock.Lock()
-				rows[len(fixtures)+len(inputFixtures)+index] = row
+				rows[len(fixtures)+len(inputFixtures)+len(fsFileFixtures)+index] = row
 				lock.Unlock()
 			})
 		}
@@ -187,10 +190,21 @@ func TestCountsAreRecorded(t *testing.T) {
 				lock.Unlock()
 			})
 		}
+		for index, fixture := range fsFileFixtures {
+			path := "internal/oracle/testdata/node_fs_file_" + fixture + ".a"
+			t.Run(path, func(t *testing.T) {
+				t.Parallel()
+				row := counted(t, path, true, nil, false, false)
+				lock.Lock()
+				rows[len(fixtures)+len(inputFixtures)+index] = row
+				lock.Unlock()
+			})
+		}
 	})
 	if t.Failed() {
 		return
 	}
+	rows = append(rows, interfaceCastCounts(t)...)
 	var table strings.Builder
 	table.WriteString(countsHeader)
 	for _, row := range rows {
@@ -199,6 +213,7 @@ func TestCountsAreRecorded(t *testing.T) {
 			table.WriteString("\n")
 		}
 	}
+	table.WriteString(predicateCountsTable(t))
 	if *updateCounts {
 		if err := os.WriteFile(countsPath, []byte(table.String()), 0o644); err != nil {
 			t.Fatal(err)

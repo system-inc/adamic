@@ -19,12 +19,13 @@ func (e *emitter) arrayFrom(from ir.ArrayFrom) string {
 	e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
 	// Undefined as the first parameter holds it: a null reference, or a packed word.
 	undefined := "{.reference = NULL}"
-	if from.First == ir.MaybeNumber {
-		undefined = fmt.Sprintf("{.number = %s}", slotted(ir.MaybeNumber, zero(ir.MaybeNumber)))
+	if from.First.IsMaybe() {
+		undefined = fmt.Sprintf("{.%s = %s}", member(from.First), slotted(from.First, zero(from.First)))
 	}
 	e.indent++
 	element := e.temporary()
-	e.line("adamic_value %s = %s->code(%s, (adamic_value[]){%s, {.number = (double)%s}});", element, callback, callback, undefined, index)
+	call := e.callbackCall(callback, from.Callback, from.CallbackType, undefined, fmt.Sprintf("{.number = (double)%s}", index))
+	e.line("adamic_value %s = %s;", element, call)
 	// What's made so far is the statement's, let go with its temporaries.
 	e.closureThrown()
 	if e.graphTypes(from.GraphTypes) && from.Element.IsReference() {

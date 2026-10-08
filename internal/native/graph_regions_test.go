@@ -24,7 +24,7 @@ static const bool references[] = {true, true, true};
 static const adamic_shape shape = {3, names, references, NULL};
 static adamic_object *node(void) {
  adamic_object *object = adamic_object_new(&shape);
- return adamic_graph_adopt(object, sizeof *object + 3 * sizeof(adamic_value));
+ return adamic_graph_adopt(object, adamic_object_size(3));
 }
 static void link(adamic_object *from, size_t index, adamic_object *to) {
  void *old = from->slots[index].reference;
@@ -93,7 +93,7 @@ func TestGraphRegionsRuntime(t *testing.T) {
 					t.Fatal(text)
 				}
 				if counted {
-					if !strings.Contains(text, "live 3 bytes 192 reachable 2 bytes 128 unreachable 1 bytes 64") {
+					if !strings.Contains(text, "live 3 bytes 210 reachable 2 bytes 140 unreachable 1 bytes 70") {
 						t.Fatal(text)
 					}
 					if !strings.Contains(text, "graph counts: regions 1 merges 2") {
@@ -233,7 +233,7 @@ int main(void) {
 	if err != nil {
 		t.Fatalf("native: %v\n%s", err, output)
 	}
-	if !strings.Contains(string(output), "live 1000000 bytes 64000000 reachable 950001 bytes 60800064 unreachable 49999 bytes 3199936 metadata 16000064") {
+	if !strings.Contains(string(output), "live 1000000 bytes 70000000 reachable 950001 bytes 66500070 unreachable 49999 bytes 3499930 metadata 16000064") {
 		t.Fatal(string(output))
 	}
 	t.Logf("native runtime foundation:\n%s", output)
@@ -341,7 +341,7 @@ func TestGraphContainerBoundary(t *testing.T) {
 	if !strings.Contains(string(output), "graph counts: regions 1 merges 3") {
 		t.Fatal(string(output))
 	}
-	if !strings.Contains(string(output), "live 4 bytes 592 reachable 3 bytes 192 unreachable 1 bytes 400") {
+	if !strings.Contains(string(output), "live 4 bytes 604 reachable 3 bytes 204 unreachable 1 bytes 400") {
 		t.Fatal(string(output))
 	}
 	if !strings.Contains(string(output), "allocations 6 frees 6 retains 1 releases 5 peak 6 regions 0") {
@@ -385,7 +385,7 @@ func TestGraphLazyRegions(t *testing.T) {
 	if !strings.Contains(string(output), "graph counts: regions 2 merges 3") || !strings.Contains(string(output), "allocations 5 frees 5") {
 		t.Fatal(string(output))
 	}
-	if !strings.Contains(string(output), "live 1 bytes 64 reachable 1 bytes 64 unreachable 0 bytes 0 metadata 16") {
+	if !strings.Contains(string(output), "live 1 bytes 70 reachable 1 bytes 70 unreachable 0 bytes 0 metadata 16") {
 		t.Fatal(string(output))
 	}
 	t.Logf("lazy regions:\n%s", output)

@@ -238,7 +238,7 @@ bool adamic_graph_counted(const void *value) {
 #ifdef ADAMIC_COUNT
 static size_t bytes(adamic_heap *heap) {
 	switch (heap->kind) {
-	case adamic_kind_object: return sizeof(adamic_object) + ((adamic_object *)heap)->shape->count * sizeof(adamic_value);
+	case adamic_kind_object: return adamic_object_size(((adamic_object *)heap)->shape->count);
 	case adamic_kind_array: return sizeof(adamic_array) + ((adamic_array *)heap)->capacity * sizeof(adamic_value);
 	case adamic_kind_map: {
 		adamic_map *map = (adamic_map *)heap;

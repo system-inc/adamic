@@ -12,6 +12,8 @@ struct adamic_async_frame {
     adamic_async_promise *waiting;
     void (*resume)(adamic_async_frame *, adamic_value, bool);
     void (*children)(adamic_async_frame *, void (*)(void *));
+    // Canonical closures over this frame's own locals, as adamic_environment's functions (closure.c).
+    struct adamic_closure *functions;
 };
 struct adamic_async_promise {
     adamic_heap heap;

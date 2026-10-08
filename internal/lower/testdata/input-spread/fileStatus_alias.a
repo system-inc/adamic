@@ -1,0 +1,3 @@
+import { fileStatus as door } from 'adamic';
+const args: [string] = ['.'];
+door(...args);

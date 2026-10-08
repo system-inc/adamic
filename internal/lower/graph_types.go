@@ -78,8 +78,10 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 		}
 	}
 	for local, declared := range f.l.result.Locals {
+		// A closed frame input (closed_frame_inputs.go) is proven not to close a cycle, so its cell
+		// stays counted rather than seeding a graph region.
 		proven := f.l.localTypes[local]
-		if declared.Captured && !declared.Global && proven != nil && !f.weak(proven) && f.reaches(proven, cycleNode{cell: local + 1}) {
+		if declared.Captured && !declared.Global && proven != nil && !f.weak(proven) && f.reaches(proven, cycleNode{cell: local + 1}) && !f.l.closedFrameInput(local) {
 			// An async frame owns its captured cells and is never a graph member, so a cycle through
 			// one stays refused, as it was before graph regions.
 			if declared.Function >= 0 && f.l.result.Functions[declared.Function].Async {

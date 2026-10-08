@@ -99,9 +99,8 @@ func TestLiteralMethodViewsDoNotLoseThis(t *testing.T) {
 		"const own={value:1,read():number{return this.value;}};const view:{readonly value:number;read():number}=own;console.log(`${view.read()}`);",
 	} {
 		_, err := lowerSource(t, source)
-		var gap *NotYet
-		if !errors.As(err, &gap) || !strings.Contains(gap.What, "erases its receiver") {
-			t.Fatalf("got %v, want an explicit erased literal-method refusal", err)
+		if err != nil {
+			t.Fatalf("literal-method call must preserve its receiver: %v", err)
 		}
 	}
 }

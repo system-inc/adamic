@@ -23,7 +23,7 @@ func TestRuntimeStaticsParallel(t *testing.T) {
 		t.Skip("concurrency-area has not been merged; parallel.c is absent")
 	}
 	library, root := staticsRaceLibrary(t, "", "", "")
-	for _, fixture := range []string{"regex", "string_bmp", "string_supplementary", "normalization", "numbers", "map", "heap_weak", "field_cache", "json", "profiling", "output"} {
+	for _, fixture := range []string{"regex", "string_bmp", "string_supplementary", "normalization", "numbers", "map", "heap_weak", "field_cache", "json", "profiling", "output", "shape_types"} {
 		t.Run(fixture, func(t *testing.T) {
 			binary := staticsRaceFixture(t, root, library, fixture)
 			staticsRaceRun(t, binary, false)
@@ -48,6 +48,7 @@ func TestRuntimeStaticsProtectionMutants(t *testing.T) {
 		{"allocator_lists", "heap.c", "static _Thread_local chunk *giving", "static chunk *giving", "heap_weak"},
 		{"count_allocation", "count.c", "atomic_fetch_add_explicit(&adamic_counted.allocations, 1, memory_order_relaxed);", "(*(size_t *)&adamic_counted.allocations)++;", "heap_weak"},
 		{"output_buffer", "adamic.c", "pthread_mutex_lock(&output_lock);", "(void)&output_lock;", "output"},
+		{"shape_types_registry", "union.c", "pthread_mutex_lock(&shape_types_lock);", "(void)&shape_types_lock;", "shape_types"},
 		{"normalization_classes", "normalize.c", "static _Thread_local uint8_t cached_classes", "static uint8_t cached_classes", "normalization"},
 		{"normalization_mappings", "normalize.c", "static _Thread_local const normalize_mapping *cached_mappings", "static const normalize_mapping *cached_mappings", "normalization"},
 		{"normalization_pairs", "normalize.c", "static _Thread_local normalize_pair cached_pairs", "static normalize_pair cached_pairs", "normalization"},
@@ -213,6 +214,9 @@ func staticsRaceLibrary(t *testing.T, mutantFile, old, changed string) (string, 
 			source = []byte(strings.ReplaceAll(string(source), old, changed))
 			if mutantFile == "adamic.c" && old == "pthread_mutex_lock(&output_lock);" {
 				source = []byte(strings.ReplaceAll(string(source), "pthread_mutex_unlock(&output_lock);", "/* mutant: no output unlock */"))
+			}
+			if mutantFile == "union.c" {
+				source = []byte(strings.ReplaceAll(string(source), "pthread_mutex_unlock(&shape_types_lock);", "/* mutant: no registry unlock */"))
 			}
 			if mutantFile == "weak.c" {
 				source = []byte(strings.ReplaceAll(string(source), "pthread_mutex_unlock(&table_lock);", "/* mutant: no table unlock */"))

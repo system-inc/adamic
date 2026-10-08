@@ -194,7 +194,7 @@ static void execute_range(scope *scope, size_t from, size_t end) {
 	adamic_thrown = NULL;
 	for (size_t index = from; index < end; index++) {
 		adamic_value arguments[] = {scope->items->elements[index], {.number = (double)index}};
-		adamic_value result = scope->work->code(scope->work, arguments);
+		adamic_value result = adamic_closure_call(scope->work, arguments, 2);
 		if (adamic_thrown != NULL) {
 			adamic_object *error = adamic_thrown;
 			adamic_thrown = NULL;
@@ -297,7 +297,7 @@ static adamic_array *parallel_map(adamic_array *items, adamic_closure *work, boo
 	if (thread_count == 1) {
 		for (size_t index = 0; index < items->length; index++) {
 			adamic_value arguments[] = {items->elements[index], {.number = (double)index}};
-			adamic_value result = work->code(work, arguments);
+			adamic_value result = adamic_closure_call(work, arguments, 2);
 			if (adamic_thrown != NULL) {
 				if (results->references) { adamic_release(result.reference); }
 				adamic_release(results); return NULL;

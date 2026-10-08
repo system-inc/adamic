@@ -21,7 +21,20 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 		}
 		return ir.Number, nil
 	}
-	if valueType, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown {
+	if ast.IsIdentifier(node) && l.exactPlainObject(node) {
+		return ir.Object, nil
+	}
+	if node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
+		// A field narrowed to undefined still occupies its declared slot, which may hold a packed
+		// optional number or a different reference kind. Read that representation, not an object.
+		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
+			return l.typeOfSymbol(node, field)
+		}
+	}
+	if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 && (node.Kind == ast.KindVoidExpression || voidInitializer(node)) {
+		return ir.Object, nil
+	}
+	if valueType, isKnown := l.representation(l.arrayPredicateObservedType(node)); isKnown {
 		return valueType, nil
 	}
 	return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
@@ -33,6 +46,19 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return kind, true
 	}
 	flags := proven.Flags()
+	if flags&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {
+		return ir.Union, true
+	}
+	if flags&checker.TypeFlagsIntersection != 0 {
+		for _, part := range proven.Types() {
+			if part.Flags()&checker.TypeFlagsNonPrimitive != 0 {
+				return ir.Union, true
+			}
+		}
+	}
+	if l.nodeBufferType(proven, "Buffer") {
+		return ir.Array, true
+	}
 	if flags&checker.TypeFlagsTypeParameter != 0 {
 		// Inside a generic class, a type parameter is what this instantiation made it.
 		substituted, isKnown := l.substitution[proven]
@@ -46,6 +72,8 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return l.objectIntersection(proven)
 	}
 	switch {
+	case flags&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0:
+		return ir.Object, true
 	case flags&checker.TypeFlagsNumberLike != 0:
 		return ir.Number, true
 	case flags&checker.TypeFlagsStringLike != 0:
@@ -59,20 +87,27 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Map, true
 	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "Promise"):
 		return ir.Promise, true
+	case flags&checker.TypeFlagsObject != 0 && !isClassInstance(proven) && (l.checker.IsTypeAssignableTo(l.checker.GetNumberType(), proven) || l.checker.IsTypeAssignableTo(l.checker.GetStringType(), proven) || l.checker.IsTypeAssignableTo(l.checker.GetBooleanType(), proven)):
+		// Structural types such as {} admit primitives. Their slots must preserve
+		// the runtime brand with the same boxes used for scalar/reference unions.
+		return ir.Union, true
 	case flags&checker.TypeFlagsObject != 0 && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) == 0:
 		return ir.Object, true
 	case flags&checker.TypeFlagsObject != 0:
 		// An object with call signatures is a function, held as a closure.
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
-		if l.includesNull(proven) {
-			// A nullable match result uses NULL. A type also holding undefined needs a tag.
+		if l.includesNull(proven) && !dynamicObjectType(proven) {
+			// A nullable object reference uses NULL. Null and undefined together need distinct tags.
 			if l.includesUndefined(proven) {
 				return 0, false
 			}
 			for _, member := range proven.Types() {
-				if member.Flags()&checker.TypeFlagsNull == 0 && !l.isLibraryType(member, "RegExpExecArray", "RegExpMatchArray") {
-					return 0, false
+				if member.Flags()&checker.TypeFlagsNull == 0 {
+					of, known := l.representation(member)
+					if !known || !of.IsReference() || of == ir.String || of == ir.Union {
+						return 0, false
+					}
 				}
 			}
 		}
@@ -162,12 +197,30 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
 		return nil, err
 	}
+	if err := l.nodeBufferUnsupportedUse(node); err != nil {
+		return nil, err
+	}
 	if err := l.regexUnsupportedUse(node); err != nil {
 		return nil, err
 	}
 	value, err := l.value(node)
 	if err == nil {
 		value = l.graphAllocation(value, node)
+		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+			if err := l.unknownView(node, l.checker.GetTypeAtLocation(node), contextual); err != nil {
+				return nil, err
+			}
+		}
+	}
+	if err == nil && value.Type() != ir.Weak && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
+		if _, constant := value.(ir.Undefined); !constant {
+			if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+				if to, known := l.representation(contextual); known && to != value.Type() && to != ir.Union && (to.IsMaybe() || to.IsReference()) {
+					// Keep the read or call's effects when converting its only possible value.
+					value = ir.Narrow{Value: ir.Box{Value: value}, To: to}
+				}
+			}
+		}
 	}
 	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
 		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
@@ -176,7 +229,10 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		// as an object, so it can't be seen as an array either, here or anywhere inside. A literal is
 		// made as the type it's written into, so it never differs.
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
-			if own := l.checker.GetTypeAtLocation(node); !l.typedArraySetArgument(node) && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
+			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferView(l.present(own), l.present(contextual)) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) {
+				return nil, l.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
+			}
+			if own := l.checker.GetTypeAtLocation(node); !l.typedArraySetArgument(node) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
 				if l.typedArrayKind(l.checker.GetNonNullableType(own)) != 0 {
 					return nil, l.notYet(node, "a typed array seen through a structural view that loses its buffer representation")
 				}
@@ -198,7 +254,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	}
 	read := l.checker.GetTypeAtLocation(node)
 	to, present := ir.Object, false
-	if target, isKnown := l.representation(read); isKnown && target != ir.Weak {
+	if target, isKnown := l.representation(read); isKnown && target != ir.Weak && read.Flags()&checker.TypeFlagsUndefined == 0 {
 		// The checker narrowed it to present (Target & WeakBrand).
 		to, present = target, true
 	} else if read.Flags()&checker.TypeFlagsUnion != 0 {
@@ -228,6 +284,9 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 	if fromKind, toKind := l.typedArrayKind(from), l.typedArrayKind(to); fromKind != 0 || toKind != 0 {
 		return fromKind != 0 && fromKind == toKind
 	}
+	if !l.nodeBufferView(from, to) {
+		return false
+	}
 	same := func(inside, viewed *checker.Type) bool {
 		fromKept, _ := l.kept(inside)
 		toKept, _ := l.kept(viewed)
@@ -238,6 +297,9 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 	switch {
 	case len(fromSignatures) > 0 && len(toSignatures) > 0:
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
+		if l.censusNeverRestSignature(toSignatures[0]) {
+			toParameters = nil
+		}
 		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
 			if !same(l.checker.GetTypeOfSymbol(fromParameters[index]), l.checker.GetTypeOfSymbol(toParameters[index])) {
 				return false
@@ -282,6 +344,9 @@ func (l *lowering) tupleSeenAsArray(from *checker.Type, to *checker.Type, visite
 	case len(fromSignatures) > 0 && len(toSignatures) > 0:
 		// A function is handed the other's arguments, and its results are seen as the other's.
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
+		if l.censusNeverRestSignature(toSignatures[0]) {
+			toParameters = nil
+		}
 		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
 			if tuple, array := l.tupleSeenAsArray(l.checker.GetTypeOfSymbol(toParameters[index]), l.checker.GetTypeOfSymbol(fromParameters[index]), visited); tuple != nil {
 				return tuple, array
@@ -403,6 +468,15 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	if value, handled, err := l.typedArrayExpression(node); handled {
 		return value, err
 	}
+	if value, known, err := l.namespaceExpression(node); known {
+		return value, err
+	}
+	if value, known, err := l.libraryMethodValue(node); known {
+		return value, err
+	}
+	if l.isArgumentsLength(node) {
+		return l.readArgumentsCount(), nil
+	}
 	if value, known, err := l.enumExpression(node); known {
 		return value, err
 	}
@@ -451,7 +525,7 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if !isLocal {
 			return nil, l.notYet(node, "reading "+node.Text())
 		}
-		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checkedModuleRead(node, local)})
+		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checkedModuleRead(node, local), Readiness: sourceExpression(node)})
 		if l.result.Locals[local].Type == ir.Union {
 			// Where the checker has narrowed it to fewer members held one way, it's read as that.
 			parent := node.Parent
@@ -459,7 +533,7 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 				parent = parent.Parent
 			}
 			observing := comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression)
-			if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union && !observing {
+			if narrowed, isKnown := l.representation(l.arrayPredicateObservedType(node)); isKnown && narrowed != ir.Union && !observing {
 				// Calls and captured writes can invalidate the checker's narrowing. Check the
 				// held member before casting it, with ordinary IR shared by both backends.
 				name := "object"
@@ -489,12 +563,16 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 				b := l.libraryArrayBuilder([]ir.Expression{read})
 				held := b.read(b.parameters[0])
 				matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
-				if l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
+				if narrowed == ir.Array {
+					matches = ir.ArrayIsArray{Value: held}
+				}
+				if l.includesUndefined(l.arrayPredicateObservedType(node)) {
 					matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: held}}
 				}
 				message := "union member where the checker narrowed it away: a call since the narrowing put it back"
 				b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
 				read = b.finish("narrowed_union_member", ir.Narrow{Value: held, To: narrowed})
+				l.result.Functions[b.function].CheckedUnionNarrow = true
 			}
 		}
 		if declared := l.result.Locals[local].Type; declared.IsMaybe() {
@@ -504,6 +582,17 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 			}
 		}
 		return l.defined(node, read), nil
+	case ast.KindVoidExpression:
+		operand, err := l.discardedValue(node.AsVoidExpression().Expression)
+		if err != nil {
+			return nil, err
+		}
+		if operand.Type() == ir.Promise {
+			// void drops the Promise, and with it the task's rejection: the same unawaited task a
+			// call statement refuses (statements.go).
+			return nil, &Refused{Where: l.program.Where(node), What: "an unawaited async task through the void operator", Fix: "await the call or keep and return its Promise"}
+		}
+		return ir.Void{Value: operand}, nil
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
 	case ast.KindTypeOfExpression:
@@ -530,6 +619,18 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		return ir.TypeOf{Value: operand, Null: null}, nil
 	case ast.KindBinaryExpression:
 		binary := node.AsBinaryExpression()
+		if _, compound := compoundAssignments[binary.OperatorToken.Kind]; compound || binary.OperatorToken.Kind == ast.KindEqualsToken {
+			return l.assignmentValue(node)
+		}
+		if binary.OperatorToken.Kind == ast.KindCommaToken {
+			return l.comma(node)
+		}
+		if logicalAssignment(binary.OperatorToken.Kind) {
+			return l.logicalAssignment(node)
+		}
+		if binary.OperatorToken.Kind == ast.KindInKeyword {
+			return l.inProperty(node)
+		}
 		if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken {
 			return l.coalesce(node)
 		}
@@ -538,6 +639,11 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 				return lowered, nil
 			}
 			return l.classInstanceOf(node)
+		}
+		// A flow-narrowed never expression still reads its declared boolean slots.
+		// Only a live result needs a placeholder for a non-returning arm.
+		if (binary.OperatorToken.Kind == ast.KindBarBarToken || binary.OperatorToken.Kind == ast.KindAmpersandAmpersandToken) && l.isNever(binary.Right) && !l.isNever(node) {
+			return l.logicalNever(node)
 		}
 		left, err := l.expression(binary.Left)
 		if err != nil {
@@ -581,6 +687,8 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		return ir.Read{Local: l.this, Of: ir.Object}, nil
 	case ast.KindArrowFunction:
 		return l.closure(node)
+	case ast.KindNonNullExpression:
+		return l.nonNull(node)
 	case ast.KindAsExpression:
 		return l.cast(node)
 	case ast.KindSatisfiesExpression:
@@ -595,13 +703,15 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if value, handled, err := l.promiseValue(node); handled {
 			return value, err
 		}
+		if value, known, err := l.optionalIntrinsic(node); known {
+			return value, err
+		}
 		if err := l.optionalCall(node); err != nil {
 			return nil, err
 		}
 		if lowered, isBuiltin, err := l.builtin(node); isBuiltin {
 			if err == nil && lowered.Type() == 0 {
-				// forEach is void; as a value it's undefined, which only places 0.1 refuses would use.
-				return nil, l.notYet(node, "a void call used as a value")
+				return ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: lowered}}, Result: ir.Undefined{}}, nil
 			}
 			return lowered, err
 		}
@@ -610,9 +720,7 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 		if call.Type() == 0 {
-			// The checker allows a void call where a value goes only in places 0.1 refuses anyway
-			// (a template of void prints "undefined"); stage 0 says so rather than guess.
-			return nil, l.notYet(node, "a void call used as a value")
+			return ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: call}}, Result: ir.Undefined{}}, nil
 		}
 		return call, nil
 	}
@@ -623,6 +731,10 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 // number | undefined or boolean | undefined goes, since that is two words and they are one. It also
 // unwraps a maybe value the checker narrowed to its present type. Anything else is left as it is.
 func fit(value ir.Expression, to ir.Type) ir.Expression {
+	if discarded, ok := value.(ir.Void); ok && (to.IsMaybe() || to.IsReference()) {
+		discarded.Of = to
+		return discarded
+	}
 	if to == ir.Weak && value != nil && value.Type() != ir.Weak {
 		return ir.WeakOf{Value: value}
 	}
@@ -668,22 +780,26 @@ func (l *lowering) numericLiteral(node *ast.Node) (ir.Expression, error) {
 
 func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
 	prefix := node.AsPrefixUnaryExpression()
-	if prefix.Operator == ast.KindPlusToken {
-		return l.libraryNumber(prefix.Operand)
+	if prefix.Operator == ast.KindPlusToken || prefix.Operator == ast.KindMinusToken || prefix.Operator == ast.KindTildeToken {
+		operand, err := l.libraryNumber(prefix.Operand)
+		if err != nil {
+			return nil, err
+		}
+		operator := ir.Plus
+		if prefix.Operator == ast.KindMinusToken {
+			operator = ir.Negate
+		}
+		if prefix.Operator == ast.KindTildeToken {
+			operator = ir.BitNot
+		}
+		return ir.Unary{Operator: operator, Operand: operand}, nil
 	}
 	operand, err := l.expression(prefix.Operand)
 	if err != nil {
 		return nil, err
 	}
-	switch {
-	case prefix.Operator == ast.KindMinusToken && operand.Type() == ir.Number:
-		return ir.Unary{Operator: ir.Negate, Operand: operand}, nil
-	case prefix.Operator == ast.KindPlusToken && operand.Type() == ir.Number:
-		return ir.Unary{Operator: ir.Plus, Operand: operand}, nil
-	case prefix.Operator == ast.KindExclamationToken && operand.Type() == ir.Boolean:
-		return ir.Unary{Operator: ir.Not, Operand: operand}, nil
-	case prefix.Operator == ast.KindTildeToken && operand.Type() == ir.Number:
-		return ir.Unary{Operator: ir.BitNot, Operand: operand}, nil
+	if prefix.Operator == ast.KindExclamationToken {
+		return ir.Unary{Operator: ir.Not, Operand: censusCondition(operand)}, nil
 	}
 	return nil, l.notYet(node, describe(node)+" on a "+typeName(operand.Type()))
 }
@@ -745,7 +861,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftNull {
 				operand = node.AsBinaryExpression().Right
 			}
-			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !l.includesNull(l.checker.GetTypeAtLocation(operand))})
+			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: value.Type() != ir.Union && !l.includesNull(l.checker.GetTypeAtLocation(operand))})
 			if operator == ast.KindExclamationEqualsEqualsToken {
 				test = ir.Unary{Operator: ir.Not, Operand: test}
 			}
@@ -772,7 +888,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftUndefined {
 				operand = node.AsBinaryExpression().Right
 			}
-			if l.includesNull(l.checker.GetTypeAtLocation(operand)) {
+			if value.Type() != ir.Union && l.includesNull(l.checker.GetTypeAtLocation(operand)) {
 				test = ir.IsNull{Value: value, AlwaysFalse: true}
 			}
 			if operator == ast.KindExclamationEqualsEqualsToken {
@@ -799,13 +915,24 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 		}
 		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
 	}
-	if (operator == ast.KindAmpersandAmpersandToken || operator == ast.KindBarBarToken) && both(ir.Boolean) {
+	if value, known := l.censusBooleanLogical(node, operator, left, right); known {
+		return value, nil
+	}
+	if operator == ast.KindAmpersandAmpersandToken || operator == ast.KindBarBarToken {
+		if !both(ir.Boolean) {
+			of, err := l.typeOf(node)
+			if err != nil {
+				return nil, err
+			}
+			return ir.Logical{Left: left, Right: fit(right, of), Of: of, KeepTruthy: operator == ast.KindBarBarToken}, nil
+		}
 		lowered := ir.And
 		if operator == ast.KindBarBarToken {
 			lowered = ir.Or
 		}
 		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
 	}
+
 	return nil, l.notYet(node, describe(node)+" with a "+typeName(left.Type())+" and a "+typeName(right.Type()))
 }
 
@@ -838,7 +965,7 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 		case ir.MaybeNumber, ir.MaybeBoolean:
 			value = ir.MaybeToString{Value: value}
 		case ir.Union:
-			if !l.writable(l.checker.GetTypeAtLocation(span.AsTemplateSpan().Expression)) {
+			if !l.writable(l.arrayPredicateObservedType(span.AsTemplateSpan().Expression)) {
 				return nil, l.notYet(span, "a template interpolating a union with an object, an array, a map or a function in it")
 			}
 			value = ir.UnionToString{Value: value}
@@ -862,6 +989,9 @@ func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
 	condition, err := l.condition(conditional.Condition)
 	if err != nil {
 		return nil, err
+	}
+	if l.isNever(conditional.WhenTrue) || l.isNever(conditional.WhenFalse) {
+		return l.conditionalNever(node, condition)
 	}
 	whenTrue, err := l.expression(conditional.WhenTrue)
 	if err != nil {
@@ -928,6 +1058,8 @@ func typeName(valueType ir.Type) string {
 // writable reports whether every member of a union is one a template writes: a number, a boolean, a
 // string or undefined.
 func (l *lowering) writable(proven *checker.Type) bool {
+	// Judge the members this instantiation stores, rather than the generic binder.
+	proven = l.concrete(proven)
 	members := []*checker.Type{proven}
 	if proven.Flags()&checker.TypeFlagsUnion != 0 {
 		members = proven.Types()
@@ -946,7 +1078,8 @@ func (l *lowering) writable(proven *checker.Type) bool {
 
 // slotless reports whether a value of the type can't yet be held in one word: a field, an element, a
 // map's value, a cell, or a function value's argument or result. number | undefined is packed into
-// one (a reserved NaN is undefined); boolean | undefined is two words that aren't packed yet, and a
+// one (a reserved NaN is undefined); boolean | undefined has a tagged byte for object fields
+// (censusFieldSlotless), but remains unsupported in the other slot contexts, and a
 // Union has to be boxed on its way in, which stage 0 does only where a variable, a parameter or a
 // result takes one.
 func slotless(valueType ir.Type) bool {
@@ -970,17 +1103,38 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 			}
 			arguments = append(arguments, value)
 		}
-		return ir.CallClosure{Closure: ir.ClosureSelf{}, Direct: direct + 1, Arguments: arguments, Returns: l.result.Functions[direct].Returns}, nil
+		carrier := ir.Expression(ir.ClosureSelf{})
+		if l.function.NestedParent != l.result.Functions[direct].NestedParent {
+			// Anonymous captures have their own layout. Materialize a temporary carrier
+			// for the target layout; do not capture a sibling's canonical function value.
+			carrier = ir.MakeClosure{Function: direct}
+		}
+		return ir.CallClosure{Closure: carrier, Direct: direct + 1, Arguments: arguments, Returns: l.result.Functions[direct].Returns}, nil
 	}
-	if declaration, isGeneric := l.generics[l.symbol(callee)]; ast.IsIdentifier(callee) && isGeneric {
+	qualified := l.namespaceMember(callee)
+	if declaration, isGeneric := l.generics[l.symbol(callee)]; (ast.IsIdentifier(callee) || qualified) && isGeneric {
 		instance, err := l.instantiateFunction(node, declaration)
 		if err != nil {
 			return nil, err
 		}
+		if l.result.Functions[instance].Closure {
+			arguments := []ir.Expression{}
+			for position, argument := range call.Arguments.Nodes {
+				value, err := l.expression(argument)
+				if err != nil {
+					return nil, err
+				}
+				if position < len(l.result.Functions[instance].Parameters) {
+					value = fit(value, l.result.Locals[l.result.Functions[instance].Parameters[position]].Type)
+				}
+				arguments = append(arguments, value)
+			}
+			return ir.CallClosure{Closure: ir.MakeClosure{Function: instance}, Arguments: arguments, Returns: l.result.Functions[instance].Returns}, nil
+		}
 		return l.callFunction(call, instance)
 	}
 	function, isFunction := l.functions[l.symbol(callee)]
-	if !ast.IsIdentifier(callee) || !isFunction {
+	if (!ast.IsIdentifier(callee) && !qualified) || !isFunction {
 		if calleeType, _ := l.representation(l.checker.GetTypeAtLocation(callee)); calleeType == ir.Closure {
 			return l.callClosure(node)
 		}
@@ -991,15 +1145,12 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 
 // callFunction lowers a call's arguments, in order, and the call to function.
 func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expression, error) {
-	arguments := []ir.Expression{}
-	for _, argument := range call.Arguments.Nodes {
-		lowered, err := l.expression(argument)
-		if err != nil {
-			return nil, err
-		}
-		arguments = append(arguments, lowered)
+	arguments, spread, err := l.callArguments(call.Arguments.Nodes)
+	if err != nil {
+		return nil, err
 	}
-	return ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns}, nil
+	l.fitCallArguments(function, arguments, spread)
+	return l.censusOverloadResult(call, ir.Call{Function: function, Arguments: arguments, Spread: spread, Returns: l.result.Functions[function].Returns})
 }
 
 // coalesce lowers value ?? fallback, and value ?? panic('why'), evaluating the right side only when
@@ -1027,6 +1178,13 @@ func (l *lowering) coalesce(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 		return ir.Coalesce{Value: value, Panic: message, Of: of}, nil
+	}
+	if l.isNever(binary.Right) {
+		fallback, err := l.neverValue(binary.Right, of)
+		if err != nil {
+			return nil, err
+		}
+		return ir.Coalesce{Value: value, Fallback: fallback, Of: of}, nil
 	}
 	fallback, err := l.expression(binary.Right)
 	if err != nil {
@@ -1056,32 +1214,43 @@ func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 	return ir.MakeClosure{Function: index}, nil
 }
 
-// functionValue lowers a module function read as a value rather than called: a function value whose
-// code forwards its arguments to the function, made once for each function read so, before the
-// program runs. It takes exactly
-// the parameters the function declares, so one with a parameter that may be left out isn't made yet:
-// a function value is called with the arguments its caller has, and no more.
+// functionValue makes one stable adapter per named function. It binds optional
+// and rest parameters and forwards the original count, even though its ordinary
+// parameters have been padded or collected before reaching the target.
 func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {
+	symbol := l.symbol(node)
+	if node.Kind == ast.KindShorthandPropertyAssignment {
+		symbol = l.checker.GetShorthandAssignmentValueSymbol(node)
+		if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
+			symbol = l.checker.GetAliasedSymbol(symbol)
+		}
+		symbol = l.checker.GetExportSymbolOfSymbol(symbol)
+	}
+	if symbol != nil {
+		for _, declaration := range symbol.Declarations {
+			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {
+				return nil, l.notYet(node, "an overloaded function as a value")
+			}
+		}
+	}
 	if held, isMade := l.forwarders[target]; isMade {
 		return ir.Read{Local: held, Of: ir.Closure}, nil
 	}
-	symbol := l.symbol(node)
 	for _, parameter := range symbol.Declarations[0].Parameters() {
-		declared := parameter.AsParameterDeclaration()
-		if declared.Initializer != nil || declared.QuestionToken != nil || declared.DotDotDotToken != nil {
-			return nil, l.notYet(node, "a function with an optional or rest parameter, as a value")
+		if parameter.Name().Text() == "this" {
+			return nil, l.notYet(parameter, "a function with a this parameter used as a value; pass the receiver explicitly or use an arrow")
 		}
 	}
 	callee := l.result.Functions[target]
-	if slotless(callee.Returns) {
+	if censusCallableSlotless(callee.Returns) {
 		return nil, l.notYet(node, "a function value returning "+typeName(callee.Returns))
 	}
 	index := len(l.result.Functions)
-	forwarder := ir.Function{Name: callee.Name + "_value", Closure: true, Returns: callee.Returns}
+	forwarder := ir.Function{Name: callee.Name + "_value", Closure: true, Returns: callee.Returns, RestElement: callee.RestElement, ForwardsArguments: target + 1}
 	arguments := []ir.Expression{}
 	for _, parameter := range callee.Parameters {
 		declared := l.result.Locals[parameter]
-		if slotless(declared.Type) {
+		if censusCallableSlotless(declared.Type) {
 			return nil, l.notYet(node, "a function value taking "+typeName(declared.Type))
 		}
 		local := len(l.result.Locals)
@@ -1089,13 +1258,14 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 		forwarder.Parameters = append(forwarder.Parameters, local)
 		arguments = append(arguments, ir.Read{Local: local, Of: declared.Type})
 	}
-	call := ir.Call{Function: target, Arguments: arguments, Returns: callee.Returns}
+	call := ir.Call{Function: target, Arguments: arguments, Returns: callee.Returns, ForwardCount: true, RestPacked: true}
 	if callee.Returns == 0 {
 		forwarder.Body = []ir.Statement{ir.Evaluate{Value: call}}
 	} else {
 		forwarder.Body = []ir.Statement{ir.Return{Value: call}}
 	}
 	l.result.Functions = append(l.result.Functions, forwarder)
+	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node)), function: index, node: node})
 	// One function value for the function, made before anything runs and held by a global of its
 	// own, so reading the function twice gives the same value, === as JavaScript's.
 	held := len(l.result.Locals)
@@ -1115,7 +1285,7 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 // class's, an interface's, or a function value in a field): the call goes through the object's
 // methods, which stops at undefined as JavaScript's chain does (ir.Property's Method).
 func (l *lowering) optionalCall(call *ast.Node) error {
-	if call.Flags&ast.NodeFlagsOptionalChain == 0 {
+	if call.Flags&ast.NodeFlagsOptionalChain == 0 || l.isOptionalJoin(call) {
 		return nil
 	}
 	callee := ast.SkipParentheses(call.AsCallExpression().Expression)
@@ -1129,6 +1299,12 @@ func (l *lowering) optionalCall(call *ast.Node) error {
 
 // callClosure lowers a call through a function value.
 func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
+	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall)
+	if len(signatures) == 1 && l.censusNeverRestSignature(signatures[0]) {
+		// never[] admits a zero-argument call in TypeScript. The erased slot does
+		// not retain a source signature to prove its required arguments or ABI.
+		return nil, l.notYet(node, "a call through an erased never-rest callable marker")
+	}
 	closure, err := l.expression(node.AsCallExpression().Expression)
 	if err != nil {
 		return nil, err
@@ -1139,16 +1315,12 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		property.Method = true
 		closure = property
 	}
-	arguments := []ir.Expression{}
-	for _, argument := range node.AsCallExpression().Arguments.Nodes {
-		lowered, err := l.expression(argument)
-		if err != nil {
-			return nil, err
-		}
-		arguments = append(arguments, lowered)
+	arguments, spread, err := l.callArguments(node.AsCallExpression().Arguments.Nodes)
+	if err != nil {
+		return nil, err
 	}
 	var returns ir.Type
-	if result := l.checker.GetTypeAtLocation(node); result.Flags()&checker.TypeFlagsVoid == 0 {
+	if result := l.concrete(l.checker.GetTypeAtLocation(node)); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
 		var isKnown bool
 		if returns, isKnown = l.representation(result); !isKnown {
 			return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))
@@ -1157,21 +1329,51 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	// Each argument is made what the function value takes: a number or undefined where it takes
 	// number | undefined is packed as one.
 	if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall); len(signatures) == 1 {
-		for index, parameter := range signatures[0].Parameters() {
-			if index < len(arguments) {
-				if takes, isKnown := l.representation(l.checker.GetTypeOfSymbol(parameter)); isKnown {
-					arguments[index] = fit(arguments[index], takes)
-				}
+		parameters := signatures[0].Parameters()
+		position := 0
+		expanded := false
+		for index := range arguments {
+			if len(spread) > index && spread[index] {
+				expanded = true
+				continue
 			}
+			if len(parameters) == 0 {
+				break
+			}
+			parameter := parameters[min(position, len(parameters)-1)]
+			rest := len(parameter.Declarations) > 0 && parameter.Declarations[0].Kind == ast.KindParameter && parameter.Declarations[0].AsParameterDeclaration().DotDotDotToken != nil
+			proven := l.checker.GetTypeOfSymbol(parameter)
+			if rest {
+				elements := l.checker.GetTypeArguments(proven)
+				if len(elements) == 1 {
+					proven = elements[0]
+				}
+			} else if expanded || position >= len(parameters) {
+				position++
+				continue
+			}
+			if takes, known := l.representation(proven); known {
+				// The checker describes a defaulted parameter by its present type,
+				// but its incoming slot must preserve undefined until the body runs.
+				if !rest && len(parameter.Declarations) > 0 && parameter.Declarations[0].Kind == ast.KindParameter && parameter.Declarations[0].AsParameterDeclaration().Initializer != nil {
+					takes = ir.Maybe(takes)
+				}
+				arguments[index] = fit(arguments[index], takes)
+			}
+			position++
 		}
 	}
 	for _, argument := range arguments {
-		if slotless(argument.Type()) {
+		if censusCallableSlotless(argument.Type()) {
 			return nil, l.notYet(node, "passing "+typeName(argument.Type())+" to a function value")
 		}
 	}
-	if slotless(returns) {
+	if censusCallableSlotless(returns) {
 		return nil, l.notYet(node, "a function value returning "+typeName(returns))
 	}
-	return ir.CallClosure{Closure: closure, Arguments: arguments, Returns: returns}, nil
+	return ir.CallClosure{Closure: closure, Arguments: arguments, Spread: spread, FunctionType: int(l.concrete(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)).Id()), Returns: returns}, nil
 }
+
+// Optional booleans have a three-state byte in the function-call ABI.
+// General union arguments still need a representation adapter.
+func argumentSlotless(valueType ir.Type) bool { return valueType == ir.Union }

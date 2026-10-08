@@ -70,13 +70,27 @@ func (e *emitter) store(local int, value string, owned bool) {
 }
 
 // checkReady panics as JavaScript throws when a global is touched before its declaration has run.
-func (e *emitter) checkReady(local int) {
-	message := fmt.Sprintf("ReferenceError: Cannot access '%s' before initialization", e.program.Locals[local].Name)
-	ready := readyName(local)
-	if cell := e.cellReference(local); cell != "" {
-		ready = cell + "->ready"
+func (e *emitter) checkReady(local int) { e.checkReadyRead(local, "") }
+
+func (e *emitter) localReady(local int) string {
+	if binding := e.program.Locals[local].Ready; binding != 0 {
+		return e.read(ir.Read{Local: binding - 1, Of: ir.Boolean})
 	}
-	e.line("if (!%s) {", ready)
+	// A captured local's readiness lives in its cell, wherever the cell is (an environment, or an
+	// async function's frame).
+	if cell := e.cellReference(local); cell != "" {
+		return cell + "->ready"
+	}
+	return readyName(local)
+}
+
+func (e *emitter) checkReadyRead(local int, expression string) {
+	message := fmt.Sprintf("ReferenceError: Cannot access '%s' before initialization", e.program.Locals[local].Name)
+	if expression != "" {
+		message = fmt.Sprintf("read before assignment: variable '%s' in %s", e.program.Locals[local].Name, expression)
+	}
+	e.line("if (!%s) {", e.localReady(local))
+	// An array's initializer, so a long message stays a brace list, never a compound literal.
 	e.line("\tstatic const char message[] = %s;", cArray(message))
 	e.line("\tadamic_panic(message, sizeof message - 1);")
 	e.line("}")
@@ -87,6 +101,12 @@ func (e *emitter) checkReady(local int) {
 // checked against the temporal dead zone first.
 func (e *emitter) read(read ir.Read) string {
 	name := e.localName(read.Local)
+	if read.Checked {
+		e.checkReady(read.Local)
+	}
+	if read.Readiness != "" {
+		e.checkReadyRead(read.Local, read.Readiness)
+	}
 	if e.program.Locals[read.Local].Counter {
 		// Read as the double it stands for, which every value it can hold is exactly.
 		return "((double)" + name + ")"
@@ -111,11 +131,8 @@ func (e *emitter) read(read ir.Read) string {
 		e.line("%s %s = %s;", cType(read.Of), snapshot, value)
 		return snapshot
 	}
-	if !e.program.Locals[read.Local].Global {
+	if !e.program.Locals[read.Local].Global && !e.program.Locals[read.Local].ExpressionAssigned {
 		return name
-	}
-	if read.Checked {
-		e.checkReady(read.Local)
 	}
 	if lent {
 		e.self = true

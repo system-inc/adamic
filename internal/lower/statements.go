@@ -3,7 +3,9 @@ package lower
 
 import (
 	"errors"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
@@ -26,18 +28,30 @@ func (l *lowering) statements(nodes []*ast.Node) ([]ir.Statement, error) {
 // statement lowers one statement to none, one or several.
 func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 	switch node.Kind {
+	case ast.KindModuleDeclaration:
+		return l.statements(namespaceStatements(node))
 	case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement:
 		// Types erase to nothing, and so does an empty statement.
 		return nil, nil
-	case ast.KindImportDeclaration, ast.KindExportDeclaration:
+	case ast.KindImportDeclaration:
 		// What an import brings in is resolved through the checker at each use, and the module it
 		// names runs first (moduleOrder).
 		return nil, nil
+	case ast.KindExportDeclaration:
+		if clause := node.AsExportDeclaration().ExportClause; clause == nil || clause.Kind == ast.KindNamedExports {
+			// The checker resolves each live binding, and moduleOrder runs re-export dependencies.
+			return nil, nil
+		}
+		return nil, &Refused{Where: l.program.Where(node), What: "a namespace export", Fix: "export named bindings"}
 	case ast.KindExportAssignment:
-		return nil, &Refused{Where: l.program.Where(node), What: describe(node), Fix: "export where you declare: export function, export const (one name for one thing)"}
+		return nil, &Refused{Where: l.program.Where(node), What: describe(node), Fix: "export named bindings"}
 	case ast.KindFunctionDeclaration:
+		if node.Parent != nil && (node.Parent.Kind == ast.KindCaseClause || node.Parent.Kind == ast.KindDefaultClause) {
+			// Switch functions are initialized at entry, before dispatch.
+			return nil, nil
+		}
 		if l.function != nil {
-			if local, ok := l.locals[l.symbol(node.Name())]; ok && l.result.Locals[local].NestedFunction > 0 {
+			if local, ok := l.locals[l.symbol(node.Name())]; ok && l.result.Locals[local].NestedFunction != 0 {
 				return nil, nil
 			}
 			return nil, l.notYet(node, "a block-scoped nested function declaration")
@@ -79,25 +93,16 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 	case ast.KindSwitchStatement:
 		return l.switchStatement(node)
 	case ast.KindLabeledStatement:
-		statement := node.AsLabeledStatement().Statement
-		for statement.Kind == ast.KindLabeledStatement {
-			statement = statement.AsLabeledStatement().Statement
-		}
-		if statement.Kind != ast.KindSwitchStatement && !ast.IsIterationStatement(statement, false) {
-			return nil, l.notYet(node, "a label on a statement other than a loop or switch")
-		}
-		return l.statement(node.AsLabeledStatement().Statement)
+		return l.labeled(node)
 	case ast.KindBreakStatement, ast.KindContinueStatement:
+		label := ""
 		if node.Label() != nil {
-			if node.Kind == ast.KindContinueStatement {
-				return nil, l.notYet(node, "a labeled continue")
-			}
-			return l.labeledBreak(node)
+			label = node.Label().Text()
 		}
 		if node.Kind == ast.KindBreakStatement {
-			return []ir.Statement{ir.Break{}}, nil
+			return []ir.Statement{ir.Break{Label: label}}, nil
 		}
-		return []ir.Statement{ir.Continue{}}, nil
+		return []ir.Statement{ir.Continue{Label: label}}, nil
 	case ast.KindThrowStatement:
 		return l.throwStatement(node)
 	case ast.KindTryStatement:
@@ -116,6 +121,12 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 	switch expression.Kind {
 	case ast.KindAwaitExpression:
 		value, err := l.awaitExpression(expression)
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
+	case ast.KindNonNullExpression, ast.KindVoidExpression:
+		value, err := l.expression(expression)
 		if err != nil {
 			return nil, err
 		}
@@ -168,6 +179,20 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		}
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	case ast.KindBinaryExpression:
+		if expression.AsBinaryExpression().OperatorToken.Kind == ast.KindCommaToken {
+			value, err := l.comma(expression)
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.Evaluate{Value: value}}, nil
+		}
+		if logicalAssignment(expression.AsBinaryExpression().OperatorToken.Kind) {
+			value, err := l.logicalAssignment(expression)
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.Evaluate{Value: value}}, nil
+		}
 		return l.assignment(expression)
 	case ast.KindPrefixUnaryExpression, ast.KindPostfixUnaryExpression:
 		return l.increment(expression)
@@ -188,9 +213,21 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 		}
 		return []ir.Statement{returned}, nil
 	}
+	expression = ast.SkipParentheses(expression)
+	if expression.Kind == ast.KindBinaryExpression && expression.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
+		return l.returnAssignment(expression)
+	}
 	if l.isPanicCall(expression) {
 		// return panic('why'): panic never returns, so there is nothing to return, and it is the panic.
 		return l.expressionStatement(expression)
+	}
+	// A generic return specialized to void still evaluates the call before returning.
+	if l.function.Returns == 0 && expression.Kind == ast.KindCallExpression && l.concrete(l.checker.GetTypeAtLocation(expression)).Flags()&checker.TypeFlagsVoid != 0 {
+		statements, err := l.expressionStatement(expression)
+		if err != nil {
+			return nil, err
+		}
+		return append(statements, ir.Return{}), nil
 	}
 	value, err := l.expression(expression)
 	if err != nil {
@@ -199,5 +236,31 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 	if err := l.checkAsyncReturn(expression, value); err != nil {
 		return nil, err
 	}
+	// BodyReturns is what the body returns: an async function's settled value, not its Promise.
+	if l.function.BodyReturns() == 0 {
+		return []ir.Statement{ir.Evaluate{Value: value}, ir.Return{}}, nil
+	}
 	return []ir.Statement{ir.Return{Value: fit(value, l.function.BodyReturns())}}, nil
+}
+
+// returnAssignment preserves the right side's value, assigns once, then returns
+// that same value. Reading the target again could observe another write.
+func (l *lowering) returnAssignment(node *ast.Node) ([]ir.Statement, error) {
+	statements, err := l.assignment(node)
+	if err != nil {
+		return nil, err
+	}
+	if len(statements) != 1 {
+		return nil, l.notYet(node, "returning a destructuring assignment")
+	}
+	assignment, ok := statements[0].(ir.Assign)
+	if !ok {
+		return nil, l.notYet(node, "returning a property or element assignment")
+	}
+	held := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "assigned", Type: assignment.Value.Type(), Function: l.functionIndex})
+	value := assignment.Value
+	read := ir.Read{Local: held, Of: value.Type()}
+	assignment.Value = read
+	return []ir.Statement{ir.Declare{Local: held, Value: value}, assignment, ir.Return{Value: fit(read, l.function.Returns)}}, nil
 }

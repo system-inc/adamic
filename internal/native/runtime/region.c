@@ -27,7 +27,7 @@ struct adamic_region_block {
 #define ALIGN 16
 
 static size_t object_size(size_t count) {
-	size_t size = sizeof(adamic_object) + count * sizeof(adamic_value);
+	size_t size = adamic_object_size(count);
 	return (size + ALIGN - 1) & ~(size_t)(ALIGN - 1);
 }
 
@@ -73,6 +73,10 @@ static inline adamic_object *object_new(adamic_region *region, const adamic_shap
 		// the region must walk it, including the still-zero slots on its exceptional exit.
 		region->holds_outside = true;
 	}
+	// Readiness and representation bytes follow the slots on both paths: a filled object's caller
+	// writes only the slots.
+	memset(adamic_object_initialized(object), 1, shape->count);
+	memset(adamic_object_field_types(object), 0, shape->count);
 	region->count++;
 	ADAMIC_COUNT_ALLOCATION();
 	return object;

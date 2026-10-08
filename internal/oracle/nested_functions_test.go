@@ -2,12 +2,14 @@ package oracle
 
 import (
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
 func init() {
-	for _, name := range []string{"minimal", "captures", "hoisting", "mutual", "returned", "array", "three_levels", "tdz", "tdz_write", "weak", "destructured", "destructured_tdz", "mixed", "pattern_parameter"} {
+	for _, name := range []string{"minimal", "captures", "hoisting", "mutual", "returned", "array", "three_levels", "tdz", "tdz_write", "weak", "destructured", "destructured_tdz", "mixed", "pattern_parameter", "owned_parameter", "generic_capture", "assignment_return", "reduced_parameter_unused", "reduced_parameter_unreachable", "reduced_parameter_escaped", "callback_recursive", "callback_escaped", "callback_levels", "callback_late_capture"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -109,4 +111,67 @@ func TestNestedCycleUsesRegions(t *testing.T) {
 	if report := leaksUncached(t, program, binary); report != "" {
 		t.Fatalf("captured function region leaked: %s", report)
 	}
+}
+
+func TestNestedRebindingCheckerRefusal(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/refusals/nested_rebinding.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = load.Load([]string{path})
+	if err == nil || !strings.Contains(err.Error(), "TS2630") {
+		t.Fatalf("want checker refusal, got %v", err)
+	}
+}
+
+func TestNestedCallbackCarrierMutantIsCaught(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/nested_callback_escaped.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	changed := false
+	for index := range program.Functions {
+		function := &program.Functions[index]
+		if function.ForwardedNestedParent == 0 {
+			continue
+		}
+		for i, statement := range function.Body {
+			result, ok := statement.(ir.Return)
+			if !ok {
+				continue
+			}
+			sum, ok := result.Value.(ir.Binary)
+			if !ok {
+				continue
+			}
+			call, ok := sum.Right.(ir.CallClosure)
+			if !ok || call.Direct == 0 {
+				continue
+			}
+			call.Closure = ir.ClosureSelf{}
+			sum.Right = call
+			result.Value = sum
+			function.Body[i] = result
+			changed = true
+		}
+	}
+	if !changed {
+		t.Fatal("carrier mutant did not change a call")
+	}
+	expected := onNode(t, path)
+	actual, binary := nativelyUncached(t, program)
+	if actual.exitCode != 0 {
+		t.Fatalf("want output-only mutant, got %+v", actual)
+	}
+	if report := leaksUncached(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+	if disagreement(expected, actual) == "" {
+		t.Fatal("wrong carrier escaped Node comparison")
+	}
+	t.Logf("wrong carrier caught by Node: %s", disagreement(expected, actual))
 }

@@ -12,7 +12,9 @@ import (
 	"testing"
 )
 
-const historicalCommonFlags = "-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -pthread"
+// -Wcast-function-type-strict joined with the closure convention (area-next): a closure called
+// through the wrong code type fails to compile instead of running.
+const historicalCommonFlags = "-std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -pthread"
 
 // These literals pin order and bytes to the pre-LTO policy, independently of Flags.
 func TestNonShippingFlagsStayIdentical(t *testing.T) {
@@ -179,7 +181,9 @@ os.execv(COMPILER, [COMPILER, *args])
 			if err := os.WriteFile(log, nil, 0o644); err != nil {
 				t.Fatal(err)
 			}
-			if _, err := RuntimeLibrary("", row.options); err != nil {
+			// Feature-gated units (library.go) compile only with their feature, so turn every one on:
+			// the audit covers each runtime unit a program can link.
+			if _, err := runtimeLibrary("", row.options, []string{"-DADAMIC_REGEXP_REPLACE_CALLBACK=1", "-DADAMIC_NODE_HOST=1"}); err != nil {
 				t.Fatal(err)
 			}
 			if err := audit(); err != nil {

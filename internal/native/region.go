@@ -51,7 +51,7 @@ func planRegions(program *ir.Program) *regionPlan {
 		plan.escapes[index] = map[int]bool{}
 		for position, parameter := range function.Parameters {
 			local := program.Locals[parameter]
-			plan.escapes[index][position] = function.Closure || local.Captured || local.Type != ir.Object
+			plan.escapes[index][position] = function.Closure || local.Captured || local.ExpressionAssigned || local.Type != ir.Object
 		}
 	}
 	for changed := true; changed; {
@@ -68,7 +68,7 @@ func planRegions(program *ir.Program) *regionPlan {
 	// Fresh: start from every named function returning an object, and take away any that returns
 	// something else, until none changes.
 	for index, function := range program.Functions {
-		if !function.Closure && function.Returns == ir.Object {
+		if !function.Closure && function.RestElement == 0 && function.Returns == ir.Object {
 			plan.fresh[index] = true
 		}
 	}
@@ -377,6 +377,9 @@ func (e *emitter) regionStatement(at *ir.Statement) bool {
 
 // Every possible implementation must finish with the argument before its region can end.
 func (plan *regionPlan) callEscapes(call ir.Call, position int) bool {
+	if plan.program.CallExpandsArguments(call) {
+		return true
+	}
 	targets := plan.program.CallTargets(call)
 	if len(targets) == 0 {
 		return true
@@ -395,7 +398,7 @@ func (plan *regionPlan) callEscapes(call ir.Call, position int) bool {
 // targets return fresh, so virtual calls stay on the counted heap.
 func (plan *regionPlan) regionTarget(call ir.Call) int {
 	targets := plan.program.CallTargets(call)
-	if call.Virtual != 0 || len(targets) != 1 || !plan.fresh[targets[0]] {
+	if call.Virtual != 0 || plan.program.CallExpandsArguments(call) || len(targets) != 1 || !plan.fresh[targets[0]] {
 		return -1
 	}
 	return targets[0]

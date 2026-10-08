@@ -38,7 +38,7 @@ func TestGraphRegionsCompiledMillion(t *testing.T) {
 		if !strings.Contains(string(result.stdout), "members 1000000 reachable 950001") {
 			t.Fatal(string(result.stdout))
 		}
-		if options.Count && !strings.Contains(string(result.stderr), "live 1000000 bytes 64000000 reachable 950001 bytes 60800064 unreachable 49999 bytes 3199936 metadata 16000064") {
+		if options.Count && !strings.Contains(string(result.stderr), "live 1000000 bytes 70000000 reachable 950001 bytes 66500070 unreachable 49999 bytes 3499930 metadata 16000064") {
 			t.Fatal(string(result.stderr))
 		}
 		t.Logf("compiled Adamic count=%t flags %s:\n%s%s", options.Count, strings.Join(native.Flags(options), " "), result.stdout, result.stderr)

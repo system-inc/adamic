@@ -32,6 +32,10 @@ func Build(program *ir.Program, function int) *Function {
 				builder.function.Params = append(builder.function.Params, builder.place(parameter))
 			}
 		}
+		if count := program.Functions[function].ArgumentsCount; count != 0 && builder.tracked(count-1) {
+			builder.function.Params = append(builder.function.Params, builder.place(count-1))
+		}
+
 	}
 	builder.function.Program = program
 	builder.statements(statements)
@@ -83,13 +87,14 @@ type attempt struct {
 }
 
 type jump struct {
+	name                string
 	breakTo, continueTo BlockId
 }
 
 // tracked reports whether a local is a value the graph follows: one only its own function writes.
 func (b *builder) tracked(local int) bool {
 	declared := b.program.Locals[local]
-	return !declared.Global && !declared.Captured
+	return !declared.Global && !declared.Captured && !declared.ExpressionAssigned
 }
 
 // place is a tracked local's place: its one identifier, minted the first time it's met.
@@ -208,6 +213,12 @@ func (b *builder) statement(at *ir.Statement) {
 	case ir.Panic:
 		b.emit(at, 0, statement.Message, b.uses(statement.Message), nil)
 		b.terminate(&Unreachable{})
+	case ir.Labeled:
+		after := b.function.NewBlock()
+		b.jumps = append(b.jumps, jump{name: statement.Name, breakTo: after.Id, continueTo: InvalidBlock})
+		b.statements(statement.Body)
+		b.enter(after)
+		b.jumps = b.jumps[:len(b.jumps)-1]
 	case ir.Block:
 		b.statements(statement.Body)
 	case ir.If:
@@ -228,10 +239,15 @@ func (b *builder) statement(at *ir.Statement) {
 		b.switchStatement(at, statement)
 	case ir.Break:
 		depth := len(b.jumps) - 1 - statement.Depth
+		if statement.Label != "" {
+			for depth >= 0 && b.jumps[depth].name != statement.Label {
+				depth--
+			}
+		}
 		b.terminate(&Goto{Block: b.route(b.jumps[depth].breakTo, b.leaving(depth))})
 	case ir.Continue:
 		for index := len(b.jumps) - 1; index >= 0; index-- {
-			if b.jumps[index].continueTo != InvalidBlock {
+			if b.jumps[index].continueTo != InvalidBlock && ((statement.Label == "" && b.jumps[index].name == "") || b.jumps[index].name == statement.Label) {
 				b.terminate(&Goto{Block: b.route(b.jumps[index].continueTo, b.leaving(index))})
 				return
 			}
@@ -258,6 +274,7 @@ func (b *builder) loop(at *ir.Statement, statement ir.Loop) {
 	} else {
 		b.enter(test)
 	}
+	b.linkLabels(statement.Labels, update.Id)
 	b.jumps = append(b.jumps, jump{breakTo: after.Id, continueTo: update.Id})
 	b.current = body
 	b.statements(statement.Body)
@@ -292,6 +309,7 @@ func (b *builder) forOf(at *ir.Statement, statement ir.ForOf) {
 		defines = b.defines(statement.Local)
 	}
 	b.emit(at, 1, nil, nil, defines)
+	b.linkLabels(statement.Labels, head.Id)
 	b.jumps = append(b.jumps, jump{breakTo: after.Id, continueTo: head.Id})
 	b.statements(statement.Body)
 	b.jumps = b.jumps[:len(b.jumps)-1]
@@ -466,6 +484,12 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				walk(value.Elem())
 			}
 		case reflect.Struct:
+			if call, ok := value.Interface().(ir.RegExpCall); ok && call.Replacement != nil && program.ClosuresMayThrow {
+				throws = true
+			}
+			if call, ok := value.Interface().(ir.NodeFSFile); ok && call.MayThrow() {
+				throws = true
+			}
 			switch value.Type() {
 			case callType:
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
@@ -513,5 +537,16 @@ func (b *builder) suspend(at *ir.Statement, wait ir.Await, local int) {
 	b.current = fulfilled
 	if local >= 0 {
 		b.function.AddInstruction(b.current, &Instruction{At: at, Part: 1, Defines: b.defines(local)})
+	}
+}
+
+func (b *builder) linkLabels(names []string, target BlockId) {
+	for _, name := range names {
+		for index := len(b.jumps) - 1; index >= 0; index-- {
+			if b.jumps[index].name == name {
+				b.jumps[index].continueTo = target
+				break
+			}
+		}
 	}
 }

@@ -287,7 +287,7 @@ adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair
 		if (map->reference_values) {
 			adamic_retain(entry->value.reference);
 		}
-		if (adamic_graph_is(map)) { tuple = adamic_graph_adopt_owned(tuple, sizeof *tuple + pair->count * sizeof(adamic_value)); }
+		if (adamic_graph_is(map)) { tuple = adamic_graph_adopt_owned(tuple, adamic_object_size(pair->count)); }
 		adamic_array_push(entries, (adamic_value){.reference = tuple});
 	}
 	return entries;
