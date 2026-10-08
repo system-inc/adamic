@@ -1367,6 +1367,9 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 		return l.newError(node)
 	}
 	if !l.isLibraryGlobal(created.Expression, "Map") {
+		if value, handled, err := l.newClassValue(node); handled {
+			return value, err
+		}
 		return nil, l.notYet(node, "new "+describe(created.Expression))
 	}
 	key, value, err := l.mapTypes(node)
