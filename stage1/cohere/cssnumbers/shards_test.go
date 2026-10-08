@@ -72,6 +72,10 @@ func numbersUnits(corpus numbersCorpus) []numbersUnit {
 	for _, side := range []string{"Go", "native", "Node", "Prettier"} {
 		units = append(units, numbersUnit{name: "throughput-" + side, kind: "throughput", side: side, ids: []string{"throughput-" + side}})
 	}
+	for ordinal := range units {
+		units[ordinal].name = fmt.Sprintf("shard-%03d", ordinal)
+	}
+
 	return units
 }
 
