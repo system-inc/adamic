@@ -2,7 +2,7 @@ Built inline sentinel predicates, address-safe nullable Map/Set keys, null-byte 
 Commits: inline predicates and migration assertion 3a69e75c; Map/Set, conversions and new Node controls in this commit; prior witness completion 71897d7e.
 Commands: all runtime-review controls and compiler packages pass; full merged witness/runtime regression results follow.
 Mutants: erased Map hash/comparison address checks and erased JSON sentinel classification both caught; prior null/undefined and indexed guard mutants retained.
-Not covered: D119 nested record payload remains refused; full repository gate, whole TypeScript build and WebAssembly timing not run.
+Not covered: full repository gate, whole TypeScript build and WebAssembly timing not run; mutable/cyclic record payloads stay outside the published representation.
 
 ## Scope and assumptions
 
@@ -521,7 +521,7 @@ use new Array<T>(1), with the same receiver and index form as the dense source.
 | D229 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
 | D230 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
 | D231 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
-| D119 | Blocked | Nested record payload unsupported; waits on records implementation expansion; refusal pinned at D119.ts:1:24 |
+| D119 | Proven | One checked record read; nested receiver and string-variable key; release and sanitized erased-guard mutants caught |
 | D151 | Proven | One presence check; string/null/absent/hole; equality, typeof, String and console; both guard and sentinel-conflation mutants |
 | D170 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
 
@@ -658,3 +658,29 @@ null JSON Node fixture catches it. Initial failing observations are retained
 in runtime-review-controls.log; the intermediate literal-call fix is retained
 in runtime-review-controls-fixed.log. Compiler lower/IR packages pass in
 22.345s and 14.473s; JavaScript has no standalone tests.
+
+
+## D119 completed alongside runtime review
+
+Merged codex/stricter-records b150f83c as a160f053. The finite readonly nested
+record validator merged cleanly and preserves this branch's string-record cast
+scoping correction. D119's existing source still declares
+`{ readonly [key: string]: { readonly [path: string]: string[] } }`, reads
+`typesVersions[key]` and observes the record-valued result. The present key
+prints 7 under Node, JS, native release and ASan/UBSan. The absent key prints
+undefined under source Node; both compiled backends instead stop with empty
+stdout, exit 70 and exact independently located indexed-read stderr.
+IR inventory and CLI explain both assert exactly one indexed-presence guard
+and zero trusted checks. The witness is a record read, so no array-hole variant
+is generated for it. Existing record-to-array chains keep their explicit hole
+controls and two guards.
+
+D119's erased single guard is compiled and run independently in native release
+and ASan/UBSan. Both mutants exit 0, stdout "undefined\n", empty stderr. Both
+are caught by the named-stop comparison. D119's complete witness passes in
+7.488s (runtime-review-D119.log). All 27 assigned rows are now proven, all 26
+array/record-chain hole variants are proven, no rows blocked or remaining.
+Earlier refusal descriptions in this report are historical checkpoints;
+the per-row table now marks D119 proven. Every row's current state is proven.
+The published validator still refuses mutable/cyclic record payloads and
+finite nesting beyond its conservative bound; D119 needs none of those.
