@@ -17,7 +17,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 	if literal, handled, err := l.accessorLiteral(node); handled {
 		return literal, err
 	}
-	literal := ir.ObjectLiteral{SpreadReadiness: sourceExpression(node)}
+	literal := ir.ObjectLiteral{SpreadReadiness: sourceExpression(node), ContractType: l.allocationContractType(node)}
 	for index, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 		switch property.Kind {
 		case ast.KindSpreadAssignment:
@@ -96,11 +96,11 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			return nil, l.notYet(property, describe(property)+" in an object literal")
 		}
 	}
-	// A copied shape retains the source declaration. Replacing a checked field would
-	// require a new contract-bearing shape, so keep that operation refused for now.
+	// A copied shape retains the source declaration, including its allocation type.
+	// Any replacement needs a new contract-bearing shape in a checked-write program.
 	if literal.Spread != nil {
-		for _, field := range literal.Fields {
-			if l.result.CheckedWrites[field.Name] {
+		for range literal.Fields {
+			if len(l.result.CheckedWrites) != 0 {
 				return nil, l.notYet(node, "overriding a checked field contract in an object spread")
 			}
 		}

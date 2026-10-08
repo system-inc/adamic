@@ -1,0 +1,25 @@
+export GOPROXY='https://proxy.golang.org|direct'
+bash cloud/setup.sh > /tmp/checked-structural-setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle ./cmd/adamic ./internal/native ./internal/lower -run 'TestCheckedWider|TestCheckedDiagnosticReferenceMutants|TestExplainCheckedWritesOutput|TestRuntimeFieldLayoutsAreIncluded|TestUniformFieldsMatchNode|TestProvenRelations|TestExplainChecksOutput|TestInterfaceCastOracle|TestRegExpIteratorResultShape' -count=1 -v -timeout 10m > /tmp/checked-structural-validation.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 15m -args -update-counts > /tmp/checked-structural-counts.log 2>&1
+bash stage3/checked-writes/census.sh /tmp/checked-wider-adapted /tmp/checked-wider-evidence/stage3/adapt/71-writable-views/language-decision/results.json /tmp/checked-structural-census.log > /tmp/checked-structural-census-driver.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedWiderWrites/parent|^TestCheckedDiagnosticReferenceMutants$' -count=1 -v -timeout 10m > /tmp/checked-structural-spread.log 2>&1
+
+Final focused validation: all four selected packages passed. All 32 fixtures passed
+Node comparisons or pinned inserted-check differences in sanitized native, release
+native and JavaScript. Five mutants were caught in both backends. Counts passed and
+were refreshed. The census passed after verifying all 603 pinned hashes and denying
+ordinary Load and backend Lower in its scratch overlay. The final spread check
+aligned JavaScript's preserved allocation identity with native and passed cloned
+parent controls and all three new reference mutants. No whole package suite or
+full gate ran. No unlanded worker branch was merged.
+
+Assumptions: allocation declarations remain enforced through named aliases; no
+snapshot narrowing is treated as a lifetime proof. Rich compatible reference types
+use directional checker proofs selected by the actual runtime slot and allocation.
+Unknown or incompatible references fail closed. Direct container element contracts,
+class allocation identities and unrestricted recursive union schemas are deferred.
+The 25 no-current-refusal rows are not counted as checked or newly proven. These
+are relation admission counts; complete stock TypeScript compiler execution is not
+claimed. Setup passed; nproc was 5. Setup timing lines are in the evidence log.

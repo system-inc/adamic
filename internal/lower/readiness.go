@@ -53,6 +53,7 @@ func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
 // between declarations: an assignment makes the slot ready, and calls cannot unset it.
 // Captures and globals participate in this bit analysis even though value SSA excludes them.
 func readiness(program *ir.Program) {
+	finishWriteContracts(program)
 	names := map[string]bool{}
 	walk(program.Main, func(node any) bool {
 		if value, ok := node.(ir.ObjectLiteral); ok {

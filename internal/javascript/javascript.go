@@ -471,7 +471,7 @@ func (e *emitter) statement(at *ir.Statement) {
 		e.line("panic(%s);", e.value(statement.Message))
 	case ir.SetProperty:
 		if statement.WriteCheck != "" {
-			e.line("adamicCheckedWrite(%s, %s, %s, %d, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), statement.Value.Type(), quote(statement.WriteCheck))
+			e.line("adamicCheckedWrite(%s, %s, %s, %d, %d, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), statement.Value.Type(), statement.WriteType, quote(statement.WriteCheck))
 			break
 		}
 		if e.program.CheckedFields[statement.Name] && !statement.Define && !statement.Uninitialized {
@@ -883,14 +883,18 @@ func (e *emitter) value(expression ir.Expression) string {
 			contracts := []string{}
 			for _, field := range expression.Fields {
 				if c := field.Contract; c != nil {
-					contracts = append(contracts, quote(field.Name)+fmt.Sprintf(": {kind: %d, declared: %s, nullable: %t, allowed: [%s]}", c.Kind, quote(c.Declared), c.Nullable, e.values(c.Allowed)))
+					contracts = append(contracts, quote(field.Name)+": "+e.writeContract(c))
 				}
 			}
 			parentContracts := ""
 			if expression.Spread != nil {
 				parentContracts = "...adamicFieldContracts.get(adamicSpreadSource), "
 			}
-			object = "adamicRecordFieldContracts(" + object + ", {" + parentContracts + strings.Join(contracts, ", ") + "})"
+			allocationType := fmt.Sprint(expression.ContractType)
+			if expression.Spread != nil {
+				allocationType = "adamicAllocationContracts.get(adamicSpreadSource) || 0"
+			}
+			object = "adamicRecordFieldContracts(" + object + ", {" + parentContracts + strings.Join(contracts, ", ") + "}, " + allocationType + ")"
 		}
 		if spreadValue != "" {
 			object = "((adamicSpreadSource) => " + object + ")(" + spreadValue + ")"

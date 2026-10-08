@@ -21,6 +21,8 @@ type Program struct {
 	// CheckedWrites marks fields whose wider TypeScript views require actual-shape checks.
 	CheckedWrites map[string]bool
 	WriteChecks   []WriteCheck
+	// WriteContracts retain allocation declarations and their directional type proofs.
+	WriteContracts []*FieldContract
 
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
@@ -369,6 +371,8 @@ type (
 	// {}: the object made is Empty, each of the source type's fields the literal doesn't give, as
 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
+		// ContractType is the allocation declaration, even when a later source view is broader.
+		ContractType    int
 		SpreadReadiness string
 		// Class is the nominal class ID, or zero for a plain object.
 		Class                int
@@ -872,12 +876,25 @@ type (
 	FileStatus struct{ Path Expression }
 )
 
-// FieldContract preserves a declared field domain independently of its current value.
+// ContractField is one required or optional member of a reference allocation contract.
+type ContractField struct {
+	Name     string
+	Optional bool
+	Contract *FieldContract
+}
+
+// FieldContract preserves a declared domain and directional proofs independently of its payload.
 type FieldContract struct {
-	Kind     Type
-	Declared string
-	Nullable bool
-	Allowed  []Expression
+	TypeID       int
+	Reference    bool
+	Structural   bool
+	ProvenWrites []int
+	ProvenFields []int
+	Fields       []ContractField
+	Kind         Type
+	Declared     string
+	Nullable     bool
+	Allowed      []Expression
 }
 
 // WriteCheck is one emitted actual-shape write check.
@@ -1160,7 +1177,10 @@ type (
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
-		WriteCheck    string
+		WriteCheck string
+		// WriteOrigin lets final allocation contracts protect aliases lowered earlier.
+		WriteOrigin   WriteCheck
+		WriteType     int
 		Uninitialized bool
 		Object        Expression
 		Name          string

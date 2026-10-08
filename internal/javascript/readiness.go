@@ -6,8 +6,27 @@ import "fmt"
 const fieldReadinessRuntime = `const adamicFieldReadiness = new WeakMap();
 const adamicFieldRepresentations = new WeakMap();
 const adamicFieldContracts = new WeakMap();
-const adamicRecordFieldContracts = (object, contracts) => { adamicFieldContracts.set(object, contracts); return object; };
-const adamicCheckedWrite = (object, name, value, kind, expression) => { const contract = adamicFieldContracts.get(object)?.[name]; if (!Object.hasOwn(object, name) || !contract || contract.kind !== kind || value == null && !contract.nullable || value != null && contract.allowed.length && !contract.allowed.includes(value)) panic("write failed: " + expression + " expects " + (contract?.declared || "unavailable field contract") + ", got " + (value === undefined ? "undefined" : value === null ? "undefined" : typeof value === "object" ? "object" : String(value))); adamicWriteField(object, name, value); };
+const adamicAllocationContracts = new WeakMap();
+const adamicRecordFieldContracts = (object, contracts, allocationType = 0) => { adamicFieldContracts.set(object, contracts); adamicAllocationContracts.set(object, allocationType); return object; };
+const adamicContractObject = (contract, value) => {
+ if (!adamicFieldContracts.has(value)) return false;
+ if (contract.provenFields.includes(adamicAllocationContracts.get(value))) return true;
+ if (!contract.structural) return false;
+ for (const field of contract.fields) {
+  if (!Object.hasOwn(value, field.name)) { if (field.optional) continue; return false; }
+  if (adamicFieldReadiness.get(value)?.has(field.name) || Object.getOwnPropertyDescriptor(value, field.name)?.get) return false;
+  const actual = adamicFieldContracts.get(value)?.[field.name];
+  if (!actual || !field.contract.provenFields.includes(actual.typeID)) return false;
+ }
+ return true;
+};
+const adamicCheckedWrite = (object, name, value, kind, sourceType, expression) => {
+ const contract = adamicFieldContracts.get(object)?.[name];
+ let valid = Object.hasOwn(object, name) && contract && (contract.kind === kind || contract.kind === 1 && kind === 7) && (value != null || contract.nullable) && (value == null || !contract.allowed.length || contract.allowed.includes(value));
+ if (valid && value != null && contract.reference) valid = contract.provenWrites.includes(sourceType) || kind === 4 && adamicContractObject(contract, value);
+ if (!valid) panic("write failed: " + expression + " expects " + (contract?.declared || "unavailable field contract") + ", got " + (value === undefined ? "undefined" : value === null ? "undefined" : typeof value === "object" ? "object" : String(value)));
+ adamicWriteField(object, name, value);
+};
 const adamicRecordFieldTypes = (object, types) => { adamicFieldRepresentations.set(object, {...adamicFieldRepresentations.get(object), ...types}); return object; };
 const adamicViewWrite = (object, name, value, type) => { if (!Object.hasOwn(object, name) || adamicFieldRepresentations.get(object)?.[name] !== type && !(adamicFieldRepresentations.get(object)?.[name] === 10 && type <= 2) && !(adamicFieldRepresentations.get(object)?.[name] === 7 && type === 1)) adamicViewField(object, name, "<write>." + name, type); adamicWriteField(object, name, value); adamicRecordFieldTypes(object, {[name]: adamicFieldRepresentations.get(object)?.[name] === 10 && type <= 2 ? 10 : type}); };
 const adamicUninitializedFields = (object, names) => { adamicFieldReadiness.set(object, new Set(names)); return object; };
@@ -29,7 +48,7 @@ const adamicViewField = (object, name, expression, type, expected = adamicViewTy
 };
 const adamicCheckedViewCast = (object, field, type, allowed, message) => allowed.includes(adamicViewField(object, field, field, type)) ? object : panic(message);
 const adamicDefineField = (object, name, value, enumerable, ready, type) => { if (type !== undefined) adamicRecordFieldTypes(object, {[name]: type}); Object.defineProperty(object, name, {value, writable: true, enumerable, configurable: true}); if (ready) adamicFieldReadiness.get(object)?.delete(name); else { let fields = adamicFieldReadiness.get(object); if (!fields) adamicFieldReadiness.set(object, fields = new Set()); fields.add(name); } };
-const adamicSpreadFields = (object, expression) => { const result = {}; if (object !== undefined && object !== null) for (const name of Object.keys(object)) Object.defineProperty(result, name, {value: adamicReadField(object, name, expression), enumerable: true, writable: true, configurable: true}); return adamicRecordFieldContracts(adamicRecordFieldTypes(result, adamicFieldRepresentations.get(object) || {}), adamicFieldContracts.get(object) || {}); };
+const adamicSpreadFields = (object, expression) => { const result = {}; if (object !== undefined && object !== null) for (const name of Object.keys(object)) Object.defineProperty(result, name, {value: adamicReadField(object, name, expression), enumerable: true, writable: true, configurable: true}); return adamicRecordFieldContracts(adamicRecordFieldTypes(result, adamicFieldRepresentations.get(object) || {}), adamicFieldContracts.get(object) || {}, adamicAllocationContracts.get(object) || 0); };
 const adamicWriteField = (object, name, value) => { object[name] = value; adamicFieldReadiness.get(object)?.delete(name); };
 `
 

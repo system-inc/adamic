@@ -1,0 +1,30 @@
+=== RUN   TestCheckedWiderWrites
+=== RUN   TestCheckedWiderWrites/parent-fit
+    checked_writes_test.go:94: Node exit 0 stdout "parentparent\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/parent-misfit
+    checked_writes_test.go:94: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: (copy as Mutable<T>).parent expects Parent, got undefined\n"; 1 checks
+--- PASS: TestCheckedWiderWrites (2.41s)
+    --- PASS: TestCheckedWiderWrites/parent-fit (1.49s)
+    --- PASS: TestCheckedWiderWrites/parent-misfit (0.91s)
+=== RUN   TestCheckedWiderWritesAdamicRefuses
+--- PASS: TestCheckedWiderWritesAdamicRefuses (0.25s)
+=== RUN   TestCheckedWiderWritesKeepContainerRefusals
+--- PASS: TestCheckedWiderWritesKeepContainerRefusals (0.07s)
+=== RUN   TestCheckedWiderWritesKeepSpreadOverrideRefusal
+--- PASS: TestCheckedWiderWritesKeepSpreadOverrideRefusal (0.05s)
+=== RUN   TestCheckedDiagnosticReferenceMutants
+=== RUN   TestCheckedDiagnosticReferenceMutants/drop_alias_check
+    checked_writes_test.go:314: caught drop alias check: expected exit 70, mutant exit 0 stdout "0\n"
+=== RUN   TestCheckedDiagnosticReferenceMutants/drop_allocation_proof
+    checked_writes_test.go:314: caught drop allocation proof: expected exit 70, mutant exit 0 stdout "0\n"
+=== RUN   TestCheckedDiagnosticReferenceMutants/drop_nested_contract
+    checked_writes_test.go:314: caught drop nested contract: expected exit 70, mutant exit 0 stdout "0\n"
+--- PASS: TestCheckedDiagnosticReferenceMutants (2.11s)
+    --- PASS: TestCheckedDiagnosticReferenceMutants/drop_alias_check (0.67s)
+    --- PASS: TestCheckedDiagnosticReferenceMutants/drop_allocation_proof (0.85s)
+    --- PASS: TestCheckedDiagnosticReferenceMutants/drop_nested_contract (0.58s)
+PASS
+gate cache: native hits=0 misses=4
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.904s

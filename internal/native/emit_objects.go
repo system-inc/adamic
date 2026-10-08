@@ -223,31 +223,28 @@ func (e *emitter) shape(fields []ir.Field) string {
 		names = append(names, field.Name)
 		types = append(types, field.Value.Type())
 	}
-	return e.shapeWith(names, types, nil, fields)
+	return e.shapeWith(names, types, nil, fields, 0)
 }
 
 // literalShape is the layout an object literal makes: a class's constructor's has the class's methods
 // too, so it's the class's own, never shared with a literal of the same fields.
 func (e *emitter) literalShape(literal ir.ObjectLiteral) string {
-	if len(literal.Methods) == 0 {
-		return e.shape(literal.Fields)
-	}
 	names, types := []string{}, []ir.Type{}
 	for _, field := range literal.Fields {
 		names = append(names, field.Name)
 		types = append(types, field.Value.Type())
 	}
-	return e.shapeWith(names, types, literal.Methods, literal.Fields)
+	return e.shapeWith(names, types, literal.Methods, literal.Fields, literal.ContractType)
 }
 
 // shapeOf declares a layout by its field names and types.
 func (e *emitter) shapeOf(fieldNames []string, fieldTypes []ir.Type) string {
-	return e.shapeWith(fieldNames, fieldTypes, nil)
+	return e.shapeWith(fieldNames, fieldTypes, nil, nil, 0)
 }
 
 // shapeWith declares a layout by its field names and types, and a class's methods, each called
 // through a thunk that takes what a call through an interface gives (adamic_method).
-func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods []ir.Method, contracts ...[]ir.Field) string {
+func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods []ir.Method, contracts []ir.Field, allocationType int) string {
 	names, references, kinds := []string{}, []string{}, []string{}
 	for index, name := range fieldNames {
 		names = append(names, cString(name))
@@ -260,14 +257,18 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 		layout = kinds
 	}
 	key := strings.Join(names, ",") + "|" + strings.Join(layout, ",")
-	if len(e.program.CheckedWrites) != 0 && len(contracts) != 0 {
-		for _, field := range contracts[0] {
+	if len(e.program.CheckedWrites) != 0 && contracts != nil {
+		for _, field := range contracts {
 			if c := field.Contract; c != nil {
 				key += fmt.Sprintf("|%d:%s:%t:%#v", c.Kind, c.Declared, c.Nullable, c.Allowed)
+				key += fmt.Sprintf("|type=%d", c.TypeID)
 			} else {
 				key += "|no contract"
 			}
 		}
+	}
+	if len(e.program.CheckedWrites) != 0 {
+		key += fmt.Sprintf("|allocation=%d", allocationType)
 	}
 	for _, method := range methods {
 		key += fmt.Sprintf("|%s=%d", method.Name, method.Function)
@@ -282,8 +283,8 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 	e.shapes[key] = name
 	table := "NULL"
 	contractTable := "NULL"
-	if len(e.program.CheckedWrites) != 0 && len(contracts) != 0 && len(fields) > 0 {
-		contractTable = e.shapeContracts(name, contracts[0])
+	if len(e.program.CheckedWrites) != 0 && (contracts != nil || allocationType != 0) {
+		contractTable = e.shapeContracts(name, contracts, allocationType)
 	}
 	methodNames, thunks := []string{}, []string{}
 	for _, method := range methods {
@@ -309,7 +310,7 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 		table = "&" + name + "_methods"
 	}
 	if len(fields) == 0 {
-		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_shape %s = {0, NULL, NULL, %s, NULL};", name, table))
+		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_shape %s = {0, NULL, NULL, %s, %s};", name, table, contractTable))
 	} else {
 		e.declarations = append(e.declarations,
 			fmt.Sprintf("static const char *const %s_names[] = {%s};", name, strings.Join(names, ", ")),

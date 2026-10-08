@@ -204,7 +204,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.line("}")
 		e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
 		if statement.WriteCheck != "" {
-			e.line("adamic_object_check_contract(%s, %s, %d, (adamic_value){.%s = %s}, %s);", object, cString(statement.Name), statement.Value.Type(), member(statement.Value.Type()), slotted(statement.Value.Type(), value), cString(statement.WriteCheck))
+			e.line("adamic_object_check_contract(%s, %s, %d, (adamic_value){.%s = %s}, %d, %s);", object, cString(statement.Name), statement.Value.Type(), member(statement.Value.Type()), slotted(statement.Value.Type(), value), statement.WriteType, cString(statement.WriteCheck))
 		}
 		slot := e.temporary()
 		cache := ""

@@ -1,8 +1,8 @@
 {
   "class_d_counts": {
-    "checked relation": 27,
+    "checked relation": 227,
     "no current relation refusal": 25,
-    "stopped": 463
+    "stopped": 263
   },
   "measurement": "relation admission on checker-rejected adapted TypeScript; no backend IR produced",
   "records": [
@@ -270,19 +270,23 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/binder.ts:3288:21: Adamic 0.1 refuses a value of type Symbol | undefined seen as Declaration | undefined, which can write number | undefined where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "id"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 30,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/binder.ts:3288:21"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/binder.ts:3373:13: Adamic 0.1 refuses a value of type Symbol | undefined seen as Declaration | undefined, which can write number | undefined where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "id"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 31,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/binder.ts:3373:13"
     },
     {
@@ -306,28 +310,40 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/binder.ts:853:49: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 34,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/binder.ts:853:49"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/binder.ts:861:75: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 35,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/binder.ts:861:75"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/binder.ts:864:53: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 36,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/binder.ts:864:53"
     },
     {
@@ -528,19 +544,27 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:12272:33: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 58,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:12272:33"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:12276:33: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 59,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:12276:33"
     },
     {
@@ -606,10 +630,14 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:13243:45: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 66,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:13243:45"
     },
     {
@@ -705,10 +733,14 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:13357:29: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 77,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:13357:29"
     },
     {
@@ -923,10 +955,14 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:15353:60: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 101,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:15353:60"
     },
     {
@@ -1127,82 +1163,136 @@
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:17507:148: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "callSignatures",
+        "constructSignatures",
+        "indexInfos",
+        "members",
+        "properties"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 123,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:17507:148"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:17512:128: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "callSignatures",
+        "constructSignatures",
+        "indexInfos",
+        "members",
+        "properties"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 124,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:17512:128"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:17528:54: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "callSignatures",
+        "constructSignatures",
+        "indexInfos",
+        "members",
+        "properties"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 125,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:17528:54"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:17534:135: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "callSignatures",
+        "constructSignatures",
+        "indexInfos",
+        "members",
+        "properties"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 126,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:17534:135"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:17538:133: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "callSignatures",
+        "constructSignatures",
+        "indexInfos",
+        "members",
+        "properties"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 127,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:17538:133"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:17550:125: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "callSignatures",
+        "constructSignatures",
+        "indexInfos",
+        "members",
+        "properties"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 128,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:17550:125"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:17566:145: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "callSignatures",
+        "constructSignatures",
+        "indexInfos",
+        "members",
+        "properties"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 129,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:17566:145"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:17632:121: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "callSignatures",
+        "constructSignatures",
+        "indexInfos",
+        "members",
+        "properties"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 130,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:17632:121"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:17636:131: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "callSignatures",
+        "constructSignatures",
+        "indexInfos",
+        "members",
+        "properties"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 131,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:17636:131"
     },
     {
@@ -1219,10 +1309,16 @@
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:17663:123: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "callSignatures",
+        "constructSignatures",
+        "indexInfos",
+        "members",
+        "properties"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 133,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:17663:123"
     },
     {
@@ -1369,19 +1465,27 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:19332:41: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 149,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:19332:41"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:19391:49: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 150,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:19391:49"
     },
     {
@@ -1414,28 +1518,40 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:21438:21: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 154,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:21438:21"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:21487:25: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 155,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:21487:25"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:21502:25: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 156,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:21502:25"
     },
     {
@@ -1450,64 +1566,90 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:21567:41: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 158,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:21567:41"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:21568:45: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 159,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:21568:45"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:21589:33: Adamic 0.1 refuses a value of type IndexInfo | undefined seen as IndexSignatureDeclaration | undefined, which can write number | undefined where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "id"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 160,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:21589:33"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:21591:62: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 161,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:21591:62"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:21600:37: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 162,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:21600:37"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:21657:41: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 163,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:21657:41"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:21658:45: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 164,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:21658:45"
     },
     {
@@ -1531,37 +1673,53 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:22445:73: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 167,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:22445:73"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:22454:106: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 168,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:22454:106"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:22457:33: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 169,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:22457:33"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:22936:42: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 170,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:22936:42"
     },
     {
@@ -1587,10 +1745,14 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:24413:42: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 173,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:24413:42"
     },
     {
@@ -1614,10 +1776,14 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:2515:15: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 176,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:2515:15"
     },
     {
@@ -1650,55 +1816,79 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:2535:15: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 180,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:2535:15"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:2575:43: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 181,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:2575:43"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:2578:39: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 182,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:2578:39"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:2590:40: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 183,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:2590:40"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:2600:17: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 184,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:2600:17"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:2604:35: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 185,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:2604:35"
     },
     {
@@ -1722,28 +1912,40 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:2815:112: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 188,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:2815:112"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:2815:177: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 189,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:2815:177"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:2816:33: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 190,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:2816:33"
     },
     {
@@ -1760,10 +1962,14 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:28748:48: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 192,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:28748:48"
     },
     {
@@ -1780,10 +1986,14 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:28845:25: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 194,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:28845:25"
     },
     {
@@ -1807,19 +2017,27 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:2923:37: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 197,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:2923:37"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:30895:42: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 198,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:30895:42"
     },
     {
@@ -1843,10 +2061,14 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:31480:46: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 201,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:31480:46"
     },
     {
@@ -1872,10 +2094,12 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:32265:30: Adamic 0.1 refuses a value of type Symbol | undefined seen as Declaration | undefined, which can write number | undefined where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "id"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 204,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:32265:30"
     },
     {
@@ -1921,10 +2145,14 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:3284:33: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 209,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:3284:33"
     },
     {
@@ -1939,10 +2167,14 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:33278:37: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 211,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:33278:37"
     },
     {
@@ -1957,19 +2189,27 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:3386:13: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 213,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:3386:13"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:33986:48: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 214,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:33986:48"
     },
     {
@@ -2046,19 +2286,27 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:34855:25: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 222,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:34855:25"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:34860:25: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 223,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:34860:25"
     },
     {
@@ -2073,28 +2321,36 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:35056:33: Adamic 0.1 refuses a value of type Symbol | undefined seen as Declaration | undefined, which can write number | undefined where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "id"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 225,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:35056:33"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:35111:47: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 226,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:35111:47"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:35143:27: Adamic 0.1 refuses a value of type Symbol | undefined seen as Declaration | undefined, which can write number | undefined where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "id"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 227,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:35143:27"
     },
     {
@@ -2111,28 +2367,40 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:35176:31: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic | undefined, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 229,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:35176:31"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:35191:39: Adamic 0.1 refuses a value of type DiagnosticWithLocation | undefined seen as Diagnostic | undefined, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 230,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:35191:39"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:35206:135: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 231,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:35206:135"
     },
     {
@@ -2167,28 +2435,40 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:36130:42: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 235,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:36130:42"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:36133:110: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 236,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:36133:110"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:36136:37: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 237,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:36136:37"
     },
     {
@@ -2230,136 +2510,196 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:36224:69: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 242,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:36224:69"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:3633:51: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 243,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:3633:51"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:36413:20: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 244,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:36413:20"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:36440:20: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 245,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:36440:20"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:36454:24: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 246,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:36454:24"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:36456:20: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 247,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:36456:20"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:36464:30: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 248,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:36464:30"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:36467:30: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 249,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:36467:30"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:36475:51: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 250,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:36475:51"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:36491:24: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 251,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:36491:24"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:36493:20: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 252,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:36493:20"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:36592:37: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 253,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:36592:37"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:36694:51: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 254,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:36694:51"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:36745:32: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 255,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:36745:32"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:36760:37: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 256,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:36760:37"
     },
     {
@@ -2374,100 +2714,144 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:36782:48: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 258,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:36782:48"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:37084:46: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation | undefined, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 259,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:37084:46"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:37371:40: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 260,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:37371:40"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:37378:25: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 261,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:37378:25"
     },
     {
       "class": "b",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:37379:53: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 262,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:37379:53"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:37393:40: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 263,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:37393:40"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:37416:33: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 264,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:37416:33"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:37480:38: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 265,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:37480:38"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:37482:29: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 266,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:37482:29"
     },
     {
       "class": "b",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:37483:71: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 267,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:37483:71"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:3749:66: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 268,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:3749:66"
     },
     {
@@ -2484,10 +2868,14 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:37554:37: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 270,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:37554:37"
     },
     {
@@ -2502,55 +2890,77 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:3784:36: Adamic 0.1 refuses a value of type Symbol | undefined seen as SourceFile | undefined, which can write number | undefined where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "id"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 272,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:3784:36"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:38076:33: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 273,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:38076:33"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:38205:29: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 274,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:38205:29"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:38683:21: Adamic 0.1 refuses a value of type Type | undefined seen as Expression | undefined, which can write number | undefined where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "id"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 275,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:38683:21"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:3911:25: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 276,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:3911:25"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:39313:20: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "callSignatures",
+        "constructSignatures",
+        "indexInfos",
+        "members",
+        "properties"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 277,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:39313:20"
     },
     {
@@ -2637,10 +3047,14 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:3973:48: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 287,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:3973:48"
     },
     {
@@ -2657,10 +3071,12 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:39758:17: Adamic 0.1 refuses a value of type Symbol seen as Declaration | undefined, which can write number | undefined where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "id"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 289,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:39758:17"
     },
     {
@@ -2684,82 +3100,118 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:39912:41: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 292,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:39912:41"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:39923:37: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 293,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:39923:37"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:39941:45: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 294,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:39941:45"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:39957:52: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 295,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:39957:52"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:39959:37: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 296,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:39959:37"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:39980:53: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 297,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:39980:53"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:4112:44: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 298,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:4112:44"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:41167:37: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 299,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:41167:37"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:4144:48: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 300,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:4144:48"
     },
     {
@@ -2776,10 +3228,13 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:41551:49: Adamic 0.1 refuses a value of type Type | undefined seen as Signature | undefined, which can write SignatureFlags where TypeFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "checker",
+        "flags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 302,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:41551:49"
     },
     {
@@ -2812,19 +3267,27 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:43319:25: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 306,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:43319:25"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:43349:29: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 307,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:43349:29"
     },
     {
@@ -2839,37 +3302,52 @@
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:43707:20: Adamic 0.1 refuses a value of type AwaitedTypeInstantiation seen as Type | undefined, which can write Symbol | undefined where Symbol is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "aliasSymbol",
+        "aliasTypeArguments"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 309,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:43707:20"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:43818:33: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 310,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:43818:33"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:43932:38: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 311,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:43932:38"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:44000:21: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 312,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:44000:21"
     },
     {
@@ -2893,28 +3371,40 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:44735:25: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 315,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:44735:25"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:44738:33: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 316,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:44738:33"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:45255:33: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 317,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:45255:33"
     },
     {
@@ -2949,19 +3439,27 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:46373:54: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 321,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:46373:54"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:46441:54: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 322,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:46441:54"
     },
     {
@@ -2976,19 +3474,25 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:46804:48: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 324,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:46804:48"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:4681:20: Adamic 0.1 refuses a value of type Symbol seen as Declaration | undefined, which can write number | undefined where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "id"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 325,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:4681:20"
     },
     {
@@ -3043,28 +3547,40 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:47750:41: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 331,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:47750:41"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:48422:33: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 332,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:48422:33"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:4849:45: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 333,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:4849:45"
     },
     {
@@ -3088,19 +3604,27 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:49035:53: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 336,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:49035:53"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:49332:78: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 337,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:49332:78"
     },
     {
@@ -3115,10 +3639,14 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:49616:45: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 339,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:49616:45"
     },
     {
@@ -3245,55 +3773,79 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:51574:41: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 353,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:51574:41"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:51672:33: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 354,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:51672:33"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:51674:21: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 355,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:51674:21"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:51676:33: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 356,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:51676:33"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:51678:21: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 357,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:51678:21"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:51843:29: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 358,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:51843:29"
     },
     {
@@ -3308,109 +3860,157 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:52367:29: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 360,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:52367:29"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:52662:64: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 361,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:52662:64"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:52763:45: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 362,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:52763:45"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:52772:41: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 363,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:52772:41"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:52787:37: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 364,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:52787:37"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:52801:56: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 365,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:52801:56"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:52803:41: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 366,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:52803:41"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:5284:41: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 367,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:5284:41"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:53347:29: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 368,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:53347:29"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:53356:29: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 369,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:53356:29"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:53552:49: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 370,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:53552:49"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:53573:29: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 371,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:53573:29"
     },
     {
@@ -3470,55 +4070,87 @@
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:5665:59: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "callSignatures",
+        "constructSignatures",
+        "indexInfos",
+        "members",
+        "properties"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 378,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:5665:59"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:5668:70: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "callSignatures",
+        "constructSignatures",
+        "indexInfos",
+        "members",
+        "properties"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 379,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:5668:70"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:5676:61: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "callSignatures",
+        "constructSignatures",
+        "indexInfos",
+        "members",
+        "properties"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 380,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:5676:61"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:5677:65: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "callSignatures",
+        "constructSignatures",
+        "indexInfos",
+        "members",
+        "properties"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 381,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:5677:65"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:5678:16: Adamic 0.1 refuses a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "callSignatures",
+        "constructSignatures",
+        "indexInfos",
+        "members",
+        "properties"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 382,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:5678:16"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:5985:13: Adamic 0.1 refuses a value of type Symbol | undefined seen as Node | undefined, which can write number | undefined where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "id"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 383,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:5985:13"
     },
     {
@@ -3533,10 +4165,12 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:6393:42: Adamic 0.1 refuses a value of type Type | undefined seen as JSDocTypeExpression | undefined, which can write number | undefined where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "id"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 385,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:6393:42"
     },
     {
@@ -3587,10 +4221,12 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:6951:46: Adamic 0.1 refuses a value of type Type seen as TypeNode, which can write number | undefined where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "id"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 391,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:6951:46"
     },
     {
@@ -3637,10 +4273,12 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:8346:42: Adamic 0.1 refuses a value of type Type | undefined seen as TypeNode | undefined, which can write number | undefined where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "id"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 396,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:8346:42"
     },
     {
@@ -3655,19 +4293,23 @@
     {
       "class": "a",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:8357:36: Adamic 0.1 refuses a value of type Type | undefined seen as TypeNode | undefined, which can write number | undefined where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "id"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 398,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:8357:36"
     },
     {
       "class": "a",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/checker.ts:8368:30: Adamic 0.1 refuses a value of type Type | undefined seen as TypeNode | undefined, which can write number | undefined where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "id"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 399,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/checker.ts:8368:30"
     },
     {
@@ -3729,46 +4371,66 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/commandLineParser.ts:2281:16: Adamic 0.1 refuses a value of type DiagnosticWithLocation | undefined seen as Diagnostic | undefined, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 406,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/commandLineParser.ts:2281:16"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/commandLineParser.ts:3592:21: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 407,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/commandLineParser.ts:3592:21"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/commandLineParser.ts:3626:33: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 408,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/commandLineParser.ts:3626:33"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/commandLineParser.ts:3636:33: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 409,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/commandLineParser.ts:3636:33"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/commandLineParser.ts:3719:21: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 410,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/commandLineParser.ts:3719:21"
     },
     {
@@ -3783,10 +4445,14 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/commandLineParser.ts:3796:9: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 412,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/commandLineParser.ts:3796:9"
     },
     {
@@ -3932,10 +4598,14 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/emitter.ts:916:40: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 427,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/emitter.ts:916:40"
     },
     {
@@ -4031,73 +4701,167 @@
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:1640:22: Adamic 0.1 refuses a value of type TypeParameterDeclaration seen as Mutable\u003cTypeParameterDeclaration\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "constraint",
+        "default",
+        "end",
+        "flags",
+        "kind",
+        "modifiers",
+        "name",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 438,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:1640:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:1752:45: Adamic 0.1 refuses a value of type PropertySignature seen as Mutable\u003cPropertySignature\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "initializer",
+        "kind",
+        "modifiers",
+        "name",
+        "parent",
+        "pos",
+        "questionToken",
+        "transformFlags",
+        "type"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 439,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:1752:45"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:1968:55: Adamic 0.1 refuses a value of type ClassStaticBlockDeclaration seen as Mutable\u003cClassStaticBlockDeclaration\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "body",
+        "end",
+        "flags",
+        "kind",
+        "modifiers",
+        "name",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 440,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:1968:55"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:2188:52: Adamic 0.1 refuses a value of type CallSignatureDeclaration seen as Mutable\u003cCallSignatureDeclaration\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "name",
+        "parameters",
+        "parent",
+        "pos",
+        "questionToken",
+        "transformFlags",
+        "type",
+        "typeParameters"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 441,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:2188:52"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:2221:52: Adamic 0.1 refuses a value of type ConstructSignatureDeclaration seen as Mutable\u003cConstructSignatureDeclaration\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "name",
+        "parameters",
+        "parent",
+        "pos",
+        "questionToken",
+        "transformFlags",
+        "type",
+        "typeParameters"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 442,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:2221:52"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:2254:52: Adamic 0.1 refuses a value of type IndexSignatureDeclaration seen as Mutable\u003cIndexSignatureDeclaration\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "modifiers",
+        "name",
+        "parameters",
+        "parent",
+        "pos",
+        "questionToken",
+        "transformFlags",
+        "type",
+        "typeParameters"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 443,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:2254:52"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:2350:44: Adamic 0.1 refuses a value of type FunctionTypeNode seen as Mutable\u003cFunctionTypeNode\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "modifiers",
+        "name",
+        "parameters",
+        "parent",
+        "pos",
+        "transformFlags",
+        "type",
+        "typeParameters"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 444,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:2350:44"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:2416:52: Adamic 0.1 refuses a value of type ConstructorTypeNode seen as Mutable\u003cConstructorTypeNode\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "modifiers",
+        "name",
+        "parameters",
+        "parent",
+        "pos",
+        "transformFlags",
+        "type",
+        "typeParameters"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 445,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:2416:52"
     },
     {
@@ -4112,28 +4876,63 @@
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:2669:22: Adamic 0.1 refuses a value of type ImportTypeNode seen as Mutable\u003cImportTypeNode\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "argument",
+        "assertions",
+        "attributes",
+        "end",
+        "flags",
+        "isTypeOf",
+        "kind",
+        "parent",
+        "pos",
+        "qualifier",
+        "transformFlags",
+        "typeArguments"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 447,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:2669:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:2709:22: Adamic 0.1 refuses a value of type TypeOperatorNode seen as Mutable\u003cTypeOperatorNode\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "operator",
+        "parent",
+        "pos",
+        "transformFlags",
+        "type"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 448,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:2709:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:2754:22: Adamic 0.1 refuses a value of type MappedTypeNode seen as Mutable\u003cMappedTypeNode\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "members",
+        "nameType",
+        "parent",
+        "pos",
+        "questionToken",
+        "readonlyToken",
+        "transformFlags",
+        "type",
+        "typeParameter"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 449,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:2754:22"
     },
     {
@@ -4150,91 +4949,180 @@
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:3629:22: Adamic 0.1 refuses a value of type YieldExpression seen as Mutable\u003cYieldExpression\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "asteriskToken",
+        "end",
+        "expression",
+        "flags",
+        "kind",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 451,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:3629:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:3871:22: Adamic 0.1 refuses a value of type Block seen as Mutable\u003cBlock\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "parent",
+        "pos",
+        "statements",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 452,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:3871:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:3920:22: Adamic 0.1 refuses a value of type ExpressionStatement seen as Mutable\u003cExpressionStatement\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "expression",
+        "flags",
+        "kind",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 453,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:3920:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:4091:22: Adamic 0.1 refuses a value of type ContinueStatement seen as Mutable\u003cContinueStatement\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "label",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 454,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:4091:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:4110:22: Adamic 0.1 refuses a value of type BreakStatement seen as Mutable\u003cBreakStatement\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "label",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 455,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:4110:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:4131:22: Adamic 0.1 refuses a value of type ReturnStatement seen as Mutable\u003cReturnStatement\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "expression",
+        "flags",
+        "kind",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 456,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:4131:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:4174:22: Adamic 0.1 refuses a value of type SwitchStatement seen as Mutable\u003cSwitchStatement\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "caseBlock",
+        "end",
+        "expression",
+        "flags",
+        "kind",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 457,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:4174:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:4617:22: Adamic 0.1 refuses a value of type CaseBlock seen as Mutable\u003cCaseBlock\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "clauses",
+        "end",
+        "flags",
+        "kind",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 458,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:4617:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:4722:22: Adamic 0.1 refuses a value of type ImportDeclaration seen as Mutable\u003cImportDeclaration\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "assertClause",
+        "attributes",
+        "end",
+        "flags",
+        "importClause",
+        "kind",
+        "modifiers",
+        "moduleSpecifier",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 459,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:4722:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:4753:22: Adamic 0.1 refuses a value of type ImportClause seen as Mutable\u003cImportClause\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "isTypeOnly",
+        "kind",
+        "name",
+        "namedBindings",
+        "parent",
+        "phaseModifier",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 460,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:4753:22"
     },
     {
@@ -4249,10 +5137,19 @@
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:4788:22: Adamic 0.1 refuses a value of type AssertEntry seen as Mutable\u003cAssertEntry\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "name",
+        "parent",
+        "pos",
+        "transformFlags",
+        "value"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 462,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:4788:22"
     },
     {
@@ -4276,37 +5173,70 @@
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:4841:22: Adamic 0.1 refuses a value of type ImportAttribute seen as Mutable\u003cImportAttribute\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "name",
+        "parent",
+        "pos",
+        "transformFlags",
+        "value"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 465,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:4841:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:4857:22: Adamic 0.1 refuses a value of type NamespaceImport seen as Mutable\u003cNamespaceImport\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "name",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 466,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:4857:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:4874:22: Adamic 0.1 refuses a value of type NamespaceExport seen as Mutable\u003cNamespaceExport\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "name",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 467,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:4874:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:4890:22: Adamic 0.1 refuses a value of type NamedImports seen as Mutable\u003cNamedImports\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "elements",
+        "end",
+        "flags",
+        "kind",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 468,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:4890:22"
     },
     {
@@ -4339,55 +5269,110 @@
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5102:22: Adamic 0.1 refuses a value of type T seen as Mutable\u003cT\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of T[\"pos\"] would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "parent",
+        "pos",
+        "postfix",
+        "transformFlags",
+        "type"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 472,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:5102:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5112:22: Adamic 0.1 refuses a value of type T seen as Mutable\u003cT\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of T[\"pos\"] would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "parent",
+        "pos",
+        "transformFlags",
+        "type"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 473,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:5112:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5135:22: Adamic 0.1 refuses a value of type JSDocFunctionType seen as Mutable\u003cJSDocFunctionType\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "name",
+        "parameters",
+        "parent",
+        "pos",
+        "transformFlags",
+        "type",
+        "typeParameters"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 474,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:5135:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5151:22: Adamic 0.1 refuses a value of type JSDocTypeLiteral seen as Mutable\u003cJSDocTypeLiteral\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "isArrayType",
+        "jsDocPropertyTags",
+        "kind",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 475,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:5151:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5165:22: Adamic 0.1 refuses a value of type JSDocTypeExpression seen as Mutable\u003cJSDocTypeExpression\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "parent",
+        "pos",
+        "transformFlags",
+        "type"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 476,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:5165:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5187:22: Adamic 0.1 refuses a value of type JSDocSignature seen as Mutable\u003cJSDocSignature\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "parameters",
+        "parent",
+        "pos",
+        "transformFlags",
+        "type",
+        "typeParameters"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 477,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:5187:22"
     },
     {
@@ -4474,28 +5459,52 @@
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5384:22: Adamic 0.1 refuses a value of type JSDocNameReference seen as Mutable\u003cJSDocNameReference\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "name",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 487,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:5384:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5417:22: Adamic 0.1 refuses a value of type JSDocLink seen as Mutable\u003cJSDocLink\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "name",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 488,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:5417:22"
     },
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5432:22: Adamic 0.1 refuses a value of type JSDocLinkCode seen as Mutable\u003cJSDocLinkCode\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "name",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 489,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:5432:22"
     },
     {
@@ -4510,10 +5519,18 @@
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5447:22: Adamic 0.1 refuses a value of type JSDocLinkPlain seen as Mutable\u003cJSDocLinkPlain\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "name",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 491,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:5447:22"
     },
     {
@@ -4546,10 +5563,17 @@
     {
       "class": "d",
       "family": "other",
-      "fields": [],
-      "first_reason": "src/compiler/factory/nodeFactory.ts:5577:22: Adamic 0.1 refuses a value of type JSDocText seen as Mutable\u003cJSDocText\u003e, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+      "fields": [
+        "end",
+        "flags",
+        "kind",
+        "parent",
+        "pos",
+        "transformFlags"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 495,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/factory/nodeFactory.ts:5577:22"
     },
     {
@@ -4762,10 +5786,14 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/program.ts:1325:10: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 519,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/program.ts:1325:10"
     },
     {
@@ -4834,19 +5862,27 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/program.ts:2937:30: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 527,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/program.ts:2937:30"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/program.ts:3131:45: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 528,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/program.ts:3131:45"
     },
     {
@@ -4933,73 +5969,105 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/program.ts:4221:52: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 538,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/program.ts:4221:52"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/program.ts:4231:56: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 539,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/program.ts:4231:56"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/program.ts:4624:64: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 540,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/program.ts:4624:64"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/program.ts:4673:52: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 541,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/program.ts:4673:52"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/program.ts:4700:56: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 542,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/program.ts:4700:56"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/program.ts:4703:56: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 543,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/program.ts:4703:56"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/program.ts:4742:56: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 544,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/program.ts:4742:56"
     },
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/program.ts:4745:56: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 545,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/program.ts:4745:56"
     },
     {
@@ -5014,10 +6082,14 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/programDiagnostics.ts:172:57: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 547,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/programDiagnostics.ts:172:57"
     },
     {
@@ -5032,10 +6104,14 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/programDiagnostics.ts:297:13: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 549,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/programDiagnostics.ts:297:13"
     },
     {
@@ -5650,10 +6726,14 @@
     {
       "class": "d",
       "family": "diagnostics",
-      "fields": [],
-      "first_reason": "src/compiler/utilities.ts:8662:64: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "fields": [
+        "file",
+        "length",
+        "start"
+      ],
+      "first_reason": "actual-shape field contract",
       "id": 610,
-      "status": "stopped",
+      "status": "checked relation",
       "where": "src/compiler/utilities.ts:8662:64"
     },
     {

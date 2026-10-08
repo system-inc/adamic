@@ -221,6 +221,17 @@ typedef struct adamic_field_contract {
 	const char *declared;
 	size_t count;
 	const adamic_value *allowed;
+ int type_id;
+ bool reference;
+ bool structural;
+ size_t write_proof_count;
+ const int *write_proofs;
+ size_t field_proof_count;
+ const int *field_proofs;
+ size_t field_count;
+ const char *const *field_names;
+ const bool *field_optional;
+ const struct adamic_field_contract *field_contracts;
 } adamic_field_contract;
 
 typedef struct adamic_shape {
@@ -1083,6 +1094,6 @@ void *adamic_library_identity(size_t index);
 #endif
 #endif
 
-void adamic_object_check_contract(adamic_object *object, const char *name, unsigned char kind, adamic_value value, const char *expression);
+void adamic_object_check_contract(adamic_object *object, const char *name, unsigned char kind, adamic_value value, int source_type, const char *expression);
 
 #endif

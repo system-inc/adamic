@@ -13,6 +13,19 @@ import (
 )
 
 var checkedWriteFixtures = []struct{ name, stdout, message string }{
+	{"diagnostic-alias-fit", "16\n", ""},
+	{"diagnostic-alias-misfit", "", "write failed: wide.flags expects 16, got 0"},
+	{"diagnostic-proof-fit", "newnew 16\n", ""},
+	{"diagnostic-proof-misfit", "", "write failed: (view as Mutable<T>).file expects SynthesizedSourceFile, got object"},
+	{"diagnostic-rich-fit", "newnew 3 2 3 4\nNaN -Infinity\n", ""},
+	{"diagnostic-rich-misfit", "", "write failed: view.file expects SourceFile, got undefined"},
+	{"diagnostic-related-fit", "7\n", ""},
+	{"diagnostic-related-misfit", "", "write failed: view.start expects number, got undefined"},
+	{"diagnostic-nested-fit", "newnew 16\n", ""},
+	{"diagnostic-nested-misfit", "", "write failed: view.file expects SynthesizedSourceFile, got object"},
+	{"diagnostic-inner-fit", "32\n", ""},
+	{"diagnostic-inner-misfit", "", "write failed: view.file.metadata.flags expects 16 | 32, got 0"},
+	{"reference-structure", "", "write failed: (node as Mutable<T>).parent expects { readonly name: \"left\"; }, got object"},
 	{"flags-fit", "16\n268435472\n", ""},
 	{"flags-misfit", "before 16\n", "write failed: (node as Mutable<T>).flags expects NodeFlags.Synthesized, got 0"},
 	{"string-fit", "right\n", ""},
@@ -87,7 +100,7 @@ func TestCheckedWiderWriteMutants(t *testing.T) {
 	for _, mutant := range []string{"drop check", "drop literal set"} {
 		t.Run(mutant, func(t *testing.T) {
 			program, path := checkedWriteFixture(t, "flags-misfit")
-			expected := run{exitCode: 70, stdout: []byte("before 16\n"), stderr: []byte("adamic: panic: " + checkedWriteFixtures[1].message + "\n")}
+			expected := run{exitCode: 70, stdout: []byte("before 16\n"), stderr: []byte("adamic: panic: " + "write failed: (node as Mutable<T>).flags expects NodeFlags.Synthesized, got 0" + "\n")}
 			if mutant == "drop check" {
 				// Mutate real stores, not a test predicate or a compile-time rejection.
 				var visit func(reflect.Value)
@@ -213,17 +226,92 @@ func TestCheckedWiderWritesKeepSpreadOverrideRefusal(t *testing.T) {
 	}
 }
 
-func TestCheckedWiderWritesKeepReferenceStructureRefusal(t *testing.T) {
-	source, err := os.ReadFile(filepath.Join(repository, "stage3/checked-writes/reference-structure.a"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	path := filepath.Join(t.TempDir(), "reference-structure.ts")
-	if err = os.WriteFile(path, source, 0644); err != nil {
-		t.Fatal(err)
-	}
-	_, err = lowered(t, path)
-	if err == nil || !strings.Contains(err.Error(), "structural field contract") {
-		t.Fatalf("reference contract refusal: %v", err)
+func TestCheckedDiagnosticReferenceMutants(t *testing.T) {
+	for _, mutant := range []struct{ name, fixture string }{
+		{"drop alias check", "diagnostic-alias-misfit"},
+		{"drop allocation proof", "diagnostic-proof-misfit"},
+		{"drop nested contract", "diagnostic-nested-misfit"},
+	} {
+		t.Run(mutant.name, func(t *testing.T) {
+			program, path := checkedWriteFixture(t, mutant.fixture)
+			var pinned string
+			for _, fixture := range checkedWriteFixtures {
+				if fixture.name == mutant.fixture {
+					pinned = fixture.message
+				}
+			}
+			expected := run{exitCode: 70, stderr: []byte("adamic: panic: " + pinned + "\n")}
+			changes := 0
+			change := func(value ir.Expression) ir.Expression {
+				literal, ok := value.(ir.ObjectLiteral)
+				if !ok {
+					return value
+				}
+				for index, field := range literal.Fields {
+					contract := field.Contract
+					if contract == nil || contract.Declared != "SynthesizedSourceFile" {
+						continue
+					}
+					copy := *contract
+					if mutant.name == "drop allocation proof" {
+						copy.Reference = false
+					} else {
+						copy.Fields = nil
+						copy.Structural = true
+					}
+					literal.Fields[index].Contract = &copy
+					changes++
+				}
+				return literal
+			}
+			if mutant.name == "drop alias check" {
+				var visit func(reflect.Value)
+				visit = func(value reflect.Value) {
+					switch value.Kind() {
+					case reflect.Interface:
+						if value.IsNil() {
+							return
+						}
+						if write, ok := value.Interface().(ir.SetProperty); ok && write.Name == "flags" && write.WriteCheck != "" {
+							write.WriteCheck = ""
+							value.Set(reflect.ValueOf(write))
+							changes++
+							return
+						}
+						visit(value.Elem())
+					case reflect.Struct:
+						for i := 0; i < value.NumField(); i++ {
+							visit(value.Field(i))
+						}
+					case reflect.Slice:
+						for i := 0; i < value.Len(); i++ {
+							visit(value.Index(i))
+						}
+					}
+				}
+				visit(reflect.ValueOf(&program.Main).Elem())
+				visit(reflect.ValueOf(&program.Functions).Elem())
+			}
+			mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), change)
+			mutateStringExpressions(reflect.ValueOf(&program.Functions).Elem(), change)
+			if changes == 0 {
+				t.Fatal("mutant did not change a checked store or allocation contract")
+			}
+			truth := onNode(t, path)
+			got, binary := nativelyUncached(t, program)
+			if disagreement(expected, got) == "" {
+				t.Fatal("mutant survived the pinned failure")
+			}
+			if d := disagreement(truth, got); d != "" {
+				t.Fatalf("mutant must run valid Node behavior: %s", d)
+			}
+			if d := disagreement(truth, onJavaScriptBackend(t, program)); d != "" {
+				t.Fatal(d)
+			}
+			if report := leaks(t, program, binary); report != "" {
+				t.Fatal(report)
+			}
+			t.Logf("caught %s: expected exit 70, mutant exit %d stdout %q", mutant.name, got.exitCode, got.stdout)
+		})
 	}
 }

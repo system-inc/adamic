@@ -234,16 +234,40 @@ adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, co
 	return adamic_maybe_boolean_unpack(slot->maybe_boolean);
 }
 
+static bool adamic_contract_proven(size_t count, const int *proofs, int source) {
+ for (size_t index = 0; index < count; index++) { if (proofs[index] == source) { return true; } }
+ return false;
+}
+
+// Compare allocation declarations, not a snapshot of a mutable object's values.
+// This preserves a nested literal contract even when the candidate arrived through
+// a broader source view. Getters and unavailable allocation metadata fail closed.
+static bool adamic_contract_object(const adamic_field_contract *contract, const adamic_object *value) {
+ if (value->shape->contracts == NULL) { return false; }
+ if (adamic_contract_proven(contract->field_proof_count, contract->field_proofs, value->shape->contracts[-1].type_id)) { return true; }
+ if (!contract->structural) { return false; }
+ for (size_t index = 0; index < contract->field_count; index++) {
+  adamic_slot_cache cache = {NULL, 0};
+  adamic_value *slot = adamic_object_optional_field(value, contract->field_names[index], &cache);
+  if (slot == NULL) { if (contract->field_optional[index]) { continue; } return false; }
+  if (!adamic_object_initialized(value)[cache.index] || adamic_accessor_find(value, contract->field_names[index]) != NULL) { return false; }
+  const adamic_field_contract *actual = &value->shape->contracts[cache.index];
+  const adamic_field_contract *expected = &contract->field_contracts[index];
+  if (!adamic_contract_proven(expected->field_proof_count, expected->field_proofs, actual->type_id)) { return false; }
+ }
+ return true;
+}
+
 // Check the incoming value before ownership changes or a store. The old payload is never
 // evidence for a literal domain: the immutable actual shape carries the declaration.
-void adamic_object_check_contract(adamic_object *object, const char *name, unsigned char kind, adamic_value value, const char *expression) {
+void adamic_object_check_contract(adamic_object *object, const char *name, unsigned char kind, adamic_value value, int source_type, const char *expression) {
  adamic_slot_cache cache = {NULL, 0};
  adamic_value *slot = adamic_object_optional_field(object, name, &cache);
  const adamic_field_contract *contract = slot == NULL || object->shape->contracts == NULL ? NULL : &object->shape->contracts[cache.index];
  bool present = true;
  if (kind >= 3 && kind <= 6) { present = value.reference != NULL; }
  if (kind == 7) { present = adamic_maybe_number_unpack(value.number).present; }
- bool valid = contract != NULL && contract->kind == kind && (present || contract->nullable);
+ bool valid = contract != NULL && (contract->kind == kind || (contract->kind == 1 && kind == 7)) && (present || contract->nullable);
  if (valid && present && contract->count != 0) {
   valid = false;
   for (size_t index = 0; index < contract->count; index++) {
@@ -252,6 +276,10 @@ void adamic_object_check_contract(adamic_object *object, const char *name, unsig
    if (kind == 2 && value.boolean == allowed.boolean) { valid = true; }
    if (kind == 3 && adamic_string_equal(value.reference, allowed.reference)) { valid = true; }
   }
+ }
+ if (valid && present && contract->reference) {
+  valid = adamic_contract_proven(contract->write_proof_count, contract->write_proofs, source_type);
+  if (!valid && kind == 4) { valid = adamic_contract_object(contract, value.reference); }
  }
  if (valid) { return; }
  const char *expected = contract == NULL || contract->declared == NULL ? "unavailable field contract" : contract->declared;

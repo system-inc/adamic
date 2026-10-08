@@ -62,12 +62,12 @@ func (l *lowering) checkedFieldRelation(from, to *checker.Type, fields map[strin
 		if !l.checker.IsReadonlySymbol(target) && (l.checker.IsReadonlySymbol(source) || !l.checker.IsTypeAssignableTo(viewed, own) || !l.enumAssignable(viewed, own)) {
 			contract := l.fieldContract(own)
 			viewKind, viewKnown := l.representation(viewed)
-			if contract == nil || !viewKnown || viewKind != contract.Kind {
+			if contract == nil || !viewKnown || (viewKind != contract.Kind && !(contract.Kind == ir.Number && viewKind == ir.MaybeNumber)) {
 				return false
 			}
 			a, b := l.checker.GetNonNullableType(own), l.checker.GetNonNullableType(viewed)
-			// Reference contracts check presence, not arbitrary structural subtyping.
-			if !interfaceScalar(a) && !identicalTypes(l.checker, a, b) {
+			// A present reference needs a directional type proof or a reifiable allocation shape.
+			if !interfaceScalar(a) && !identicalTypes(l.checker, a, b) && !contract.Structural {
 				return false
 			}
 			fields[target.Name] = true
@@ -89,14 +89,10 @@ func (l *lowering) fieldContract(declared *checker.Type) *ir.FieldContract {
 	}
 	contract := &ir.FieldContract{Kind: kind, Declared: l.checker.TypeToString(declared), Nullable: l.includesUndefined(declared) || l.includesNull(declared)}
 	present := l.checker.GetNonNullableType(declared)
-	if kind.IsReference() && kind != ir.String && !l.broadReferencePayload(present, map[*checker.Type]bool{}) {
-		// Keep the declaration for diagnostics, but fail closed when a hidden generic
-		// subtype needs container elements, callable identity, or nested literal domains.
-		contract.Kind = 0
-	}
 	if interfaceScalar(present) && l.checker.TypeToString(present) != "boolean" && !l.openNumericEnumType(present) {
 		contract.Allowed = l.viewLiterals(present)
 	}
+	l.referenceContract(contract, declared)
 	return contract
 }
 
@@ -130,62 +126,4 @@ func (l *lowering) contractType(declared *checker.Type) *checker.Type {
 		}
 	}
 	return declared
-}
-
-// Monomorphized asserted receivers can expose a reference contract narrower than
-// the generic constraint. Presence checks cannot prove its structural payload.
-func (l *lowering) checkedReferenceWrite(target, value *ast.Node) error {
-	if !l.result.CheckedWrites[l.fieldName(target.Name())] {
-		return nil
-	}
-	receiver := ast.SkipParentheses(target.AsPropertyAccessExpression().Expression)
-	if receiver.Kind != ast.KindAsExpression {
-		return nil
-	}
-	own := l.concrete(l.checker.GetTypeAtLocation(receiver.AsAsExpression().Expression))
-	field := l.checker.GetPropertyOfType(own, l.fieldName(target.Name()))
-	if field == nil {
-		return nil
-	}
-	declared := l.contractType(l.checker.GetTypeOfSymbol(field))
-	kind, known := l.representation(declared)
-	incoming := l.contractType(l.checker.GetTypeAtLocation(value))
-	if known && kind.IsReference() && incoming.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull|checker.TypeFlagsNever) == 0 && !l.checker.IsTypeAssignableTo(l.checker.GetNonNullableType(incoming), l.checker.GetNonNullableType(declared)) {
-		return l.notYet(target, "a checked reference write requiring a structural field contract")
-	}
-	return nil
-}
-
-func (l *lowering) broadReferencePayload(declared *checker.Type, seen map[*checker.Type]bool) bool {
-	declared = l.contractType(declared)
-	if seen[declared] {
-		return true
-	}
-	seen[declared] = true
-	if len(l.containers(declared)) != 0 || l.callableViewContract(declared) {
-		return false
-	}
-	if interfaceScalar(declared) {
-		return len(l.viewLiterals(declared)) == 0 || l.openNumericEnumType(declared) || l.checker.TypeToString(declared) == "boolean"
-	}
-	if declared.Flags()&checker.TypeFlagsUnion != 0 {
-		for _, member := range declared.Types() {
-			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
-				continue
-			}
-			if !l.broadReferencePayload(member, seen) {
-				return false
-			}
-		}
-		return true
-	}
-	if !l.structured(declared) {
-		return false
-	}
-	for _, field := range l.checker.GetPropertiesOfType(declared) {
-		if !l.broadReferencePayload(l.checker.GetTypeOfSymbol(field), seen) {
-			return false
-		}
-	}
-	return true
 }
