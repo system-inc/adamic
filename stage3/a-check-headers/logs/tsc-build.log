@@ -1,0 +1,12 @@
+Using /tmp/stage3-ruling/adapted/Herebyfile.mjs to run tsc
+Starting lib
+Starting shim-compile-cache-tsc
+Starting generate-diagnostics
+> /workspace/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Finished shim-compile-cache-tsc in 7ms
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished lib in 64ms
+Finished generate-diagnostics in 87ms
+Starting bundle-tsc
+Finished bundle-tsc in 263ms
+Completed tsc in 351ms

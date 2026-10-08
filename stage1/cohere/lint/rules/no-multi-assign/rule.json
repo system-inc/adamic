@@ -1,0 +1,13 @@
+{
+  "name": "no-multi-assign",
+  "kinds": [
+    "BinaryExpression"
+  ],
+  "visit": "visit",
+  "node": true,
+  "oracle": "oracleNoMultiAssign",
+  "upstreamPackage": "core",
+  "upstreamTest": "Test",
+  "factory": "create",
+  "class": "Rule"
+}

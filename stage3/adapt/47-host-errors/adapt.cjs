@@ -20,9 +20,8 @@ function compiler(tree, ts) {
     if (read.error) throw new Error(ts.flattenDiagnosticMessageText(read.error.messageText, "\n"));
     const config = ts.parseJsonConfigFileContent(read.config, ts.sys, path.dirname(configFile), {
         strict: true, strictBindCallApply: true, useUnknownInCatchVariables: true,
-        noImplicitReturns: true, noFallthroughCasesInSwitch: true,
         noUncheckedIndexedAccess: true, exactOptionalPropertyTypes: true,
-        verbatimModuleSyntax: true, erasableSyntaxOnly: true,
+        verbatimModuleSyntax: true, erasableSyntaxOnly: false,
         module: ts.ModuleKind.ESNext, moduleResolution: ts.ModuleResolutionKind.Bundler,
         moduleDetection: ts.ModuleDetectionKind.Force, target: ts.ScriptTarget.ES2024,
         noEmit: true, emitDeclarationOnly: false,

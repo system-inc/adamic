@@ -1,0 +1,162 @@
+=== RUN   TestCheckerNoProgramCoverage
+    checker_pending_test.go:30: before: coverage check caught mutant: case 0
+        skipped @typescript-eslint/no-unnecessary-boolean-literal-compare ignored
+        fixed	declare const b: boolean; if (b === true) {}\u000a
+    checker_pending_test.go:35: after: coverage check passes: case 0
+        skipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program
+        fixed	declare const b: boolean; if (b === true) {}\u000a
+--- PASS: TestCheckerNoProgramCoverage (10.82s)
+=== RUN   TestCheckerBridgeRefusalPending
+    checker_pending_test.go:74: bridge refusal matches native, Node and emitted JavaScript: case 0
+        refused @typescript-eslint/no-unnecessary-boolean-literal-compare /tmp/adamic-gate/TestCheckerBridgeRefusalPending3676023250/002/no-unnecessary-boolean-literal-compare-0.ts 0 45 unsupported checker question: pending-refusal-control
+        /tmp/adamic-gate/TestCheckerBridgeRefusalPending3676023250/002/no-unnecessary-boolean-literal-compare-0.ts:1:31
+          @typescript-eslint/no-unnecessary-boolean-literal-compare  This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.
+        
+        range 30 40 direct fix	b		30 40
+        fixed	declare const b: boolean; if (b) {}\u000a
+    checker_pending_test.go:96: emitted JavaScript refusal handling mutant builds and runs, caught by wire comparison
+    checker_pending_test.go:96: native refusal handling mutant builds and runs, caught by wire comparison
+    checker_pending_test.go:96: Node refusal handling mutant builds and runs, caught by wire comparison
+    checker_pending_test.go:110: restoring refusal handling passes all three runtime wire comparisons
+--- PASS: TestCheckerBridgeRefusalPending (176.47s)
+=== RUN   TestCheckerReplayEntryControl
+    checker_pending_test.go:202: native recording verified against live bridge and Go findings
+    checker_pending_test.go:208: before: removed entry fails Node comparison: case 0
+        refused @typescript-eslint/no-unnecessary-boolean-literal-compare /tmp/adamic-gate/TestCheckerReplayEntryControl2976606036/001/source.ts 30 31 missing transcript entry
+        fixed	declare const b: boolean; if (b === true) {}\u000a
+    checker_pending_test.go:213: after: complete live-bridge transcript matches Go: case 0
+        /tmp/adamic-gate/TestCheckerReplayEntryControl2976606036/001/source.ts:1:31
+          @typescript-eslint/no-unnecessary-boolean-literal-compare  This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.
+        
+        range 30 40 direct fix	b		30 40
+        fixed	declare const b: boolean; if (b) {}\u000a
+    checker_pending_test.go:218: reverse guard rejects an unasked entry
+    checker_pending_test.go:223: pilot type-verdict mutant caught only by findings comparison on Node
+    checker_pending_test.go:230: pilot's harness-owned refusal reaches the wire: case 0
+        refused @typescript-eslint/no-unnecessary-boolean-literal-compare /tmp/adamic-gate/TestCheckerReplayEntryControl2976606036/001/source.ts 0 45 undeclared program read ReadsOtherFiles
+        /tmp/adamic-gate/TestCheckerReplayEntryControl2976606036/001/source.ts:1:31
+          @typescript-eslint/no-unnecessary-boolean-literal-compare  This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.
+        
+        range 30 40 direct fix	b		30 40
+        fixed	declare const b: boolean; if (b) {}\u000a
+--- PASS: TestCheckerReplayEntryControl (93.28s)
+=== RUN   TestCheckerHashes
+--- PASS: TestCheckerHashes (0.87s)
+=== RUN   TestProfileArtifacts
+    profile_test.go:78: release, counted and -O2 -g profiling builds saved in /workspace/checker-library-unit-final
+--- PASS: TestProfileArtifacts (98.69s)
+=== RUN   TestProfileCompilation
+    profile_test.go:143: release, counted and -O2 -g profiling builds saved in /tmp/adamic-gate/TestProfileCompilation4254668397/001
+    profile_test.go:146: Go, Node, emitted JavaScript, native identical: 654 bytes
+    profile_test.go:179: counted instrumentation: adamic: counts: allocations 336 frees 336 retains 2021 releases 881 peak 210 regions 0
+--- PASS: TestProfileCompilation (105.39s)
+=== RUN   TestProfileSnapshotsAgree
+    lint_test.go:426: cohere cases: 3879 unique source/rule/options combinations
+    profile_test.go:226: Go recovered output: case 0
+        recovery findings only
+    profile_test.go:226: explicit unsupported recovery: /workspace/checker-library-unit-final/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-278/repository/source/Thing.ts
+    profile_test.go:226: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-278/repository/source/Thing.ts
+    profile_test.go:227: Go recovered output: case 0
+        recovery findings only
+    profile_test.go:227: explicit unsupported recovery: /workspace/checker-library-unit-final/profiled: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-278/repository/source/Thing.ts
+    profile_test.go:227: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-278/repository/source/Thing.ts
+    profile_test.go:226: Go recovered output: case 0
+        recovery findings only
+    profile_test.go:226: explicit unsupported recovery: /workspace/checker-library-unit-final/scanner: timeout=true: signal: killed: 
+    profile_test.go:226: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    profile_test.go:227: Go recovered output: case 0
+        recovery findings only
+    profile_test.go:227: explicit unsupported recovery: /workspace/checker-library-unit-final/profiled: timeout=true: signal: killed: 
+    profile_test.go:227: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    profile_test.go:226: Go recovered output: case 0
+        recovery findings only
+    profile_test.go:226: explicit unsupported recovery: /workspace/checker-library-unit-final/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-284/repository/source/Thing.ts
+    profile_test.go:226: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-284/repository/source/Thing.ts
+    profile_test.go:227: Go recovered output: case 0
+        recovery findings only
+    profile_test.go:227: explicit unsupported recovery: /workspace/checker-library-unit-final/profiled: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-284/repository/source/Thing.ts
+    profile_test.go:227: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-284/repository/source/Thing.ts
+    profile_test.go:226: Go recovered output: case 0
+        recovery findings only
+    profile_test.go:226: explicit unsupported recovery: /workspace/checker-library-unit-final/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-285/repository/source/Thing.ts
+    profile_test.go:226: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-285/repository/source/Thing.ts
+    profile_test.go:227: Go recovered output: case 0
+        recovery findings only
+    profile_test.go:227: explicit unsupported recovery: /workspace/checker-library-unit-final/profiled: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-285/repository/source/Thing.ts
+    profile_test.go:227: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-285/repository/source/Thing.ts
+    profile_test.go:226: Go recovered output: case 0
+        recovery findings only
+    profile_test.go:226: explicit unsupported recovery: /workspace/checker-library-unit-final/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-294/repository/source/Thing.ts
+    profile_test.go:226: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-294/repository/source/Thing.ts
+    profile_test.go:227: Go recovered output: case 0
+        recovery findings only
+    profile_test.go:227: explicit unsupported recovery: /workspace/checker-library-unit-final/profiled: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-294/repository/source/Thing.ts
+    profile_test.go:227: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-294/repository/source/Thing.ts
+    profile_test.go:226: Go recovered output: case 0
+        /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-296/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 33 errorMethod fix	m: (a: string) => void;		14 33
+        recovery findings only
+    profile_test.go:226: explicit unsupported recovery: /workspace/checker-library-unit-final/scanner: timeout=true: signal: killed: 
+    profile_test.go:226: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    profile_test.go:227: Go recovered output: case 0
+        /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-296/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 33 errorMethod fix	m: (a: string) => void;		14 33
+        recovery findings only
+    profile_test.go:227: explicit unsupported recovery: /workspace/checker-library-unit-final/profiled: timeout=true: signal: killed: 
+    profile_test.go:227: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    profile_test.go:226: Go recovered output: case 0
+        /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-298/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 34 errorMethod fix	m: (a: string) => void;		14 34
+        recovery findings only
+    profile_test.go:226: explicit unsupported recovery: /workspace/checker-library-unit-final/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-298/repository/source/Thing.ts
+    profile_test.go:226: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-298/repository/source/Thing.ts
+    profile_test.go:227: Go recovered output: case 0
+        /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-298/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 34 errorMethod fix	m: (a: string) => void;		14 34
+        recovery findings only
+    profile_test.go:227: explicit unsupported recovery: /workspace/checker-library-unit-final/profiled: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-298/repository/source/Thing.ts
+    profile_test.go:227: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-298/repository/source/Thing.ts
+    profile_test.go:226: Go recovered output: case 0
+        /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-299/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 27 errorMethod 			14 27
+        recovery findings only
+    profile_test.go:226: explicit unsupported recovery: /workspace/checker-library-unit-final/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-299/repository/source/Thing.ts
+    profile_test.go:226: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-299/repository/source/Thing.ts
+    profile_test.go:227: Go recovered output: case 0
+        /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-299/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 27 errorMethod 			14 27
+        recovery findings only
+    profile_test.go:227: explicit unsupported recovery: /workspace/checker-library-unit-final/profiled: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-299/repository/source/Thing.ts
+    profile_test.go:227: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestProfileSnapshotsAgree2773451949/016/case-299/repository/source/Thing.ts
+    profile_test.go:242: /workspace/checker-library-unit-final: release, profiled and Node identical to Go: 41805211 bytes
+--- PASS: TestProfileSnapshotsAgree (297.18s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: live Go, native, Node and emitted JavaScript replay identical: 1996 bytes
+    registration_test.go:61: Node: case 126 line 1360: port "range 21 44 useSimpleComment fix\t// Unicode prose.\t\t21 44", Go "range 21 44 useSimpleComment fix\t// \\u0085Unicode prose.\\u0085\t\t21 44"
+        Go context:
+        fixed	#!/usr/bin/env node\u000a// Leading prose.\u000aconst text = '/** literal content. */';\u000aconst expression = /[/*]/;\u000aconst template = `/** template content. */`;\u000a/** @returns nothing */\u000afunction f() {\u000a    /**\u000a     * Single wrapped prose.\u000a     */\u000a    /** See // for details. */\u000a    return 1;\u000a}\u000af(/** argument */);\u000aconst [a, b /**, c */] = [1, 2];\u000a/** Two lines.\u000a * More prose.\u000a */\u000a// Trailing prose.\u000a
+        case 126
+        /tmp/adamic-gate/TestOwnedWitnesses962047251/321/nexus-consistency-no-single-line-jsdoc-2.ts:2:1
+          nexus/consistency-no-single-line-jsdoc  A JSDoc comment carrying one line of description should be a line comment. JSDoc's delimiters exist to hold structure, so spending three lines of them on a sentence tells a reader to look for tags that are not there.
+        
+        range 21 44 useSimpleComment fix	// \u0085Unicode prose.\u0085		21 44
+        /tmp/adamic-gate/TestOwnedWitnesses962047251/321/nexus-consistency-no-single-line-jsdoc-2.ts:4:1
+          nexus/consistency-no-single-line-jsdoc  A JSDoc comment carrying one line of description should be a line comment. JSDoc's delimiters exist to hold structure, so spending three lines of them on a sentence tells a reader to look for tags that are not there.
+        
+        range 63 87 useSimpleComment fix	// BOM retained.		63 87
+--- FAIL: TestOwnedWitnesses (29.91s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	812.892s
+FAIL

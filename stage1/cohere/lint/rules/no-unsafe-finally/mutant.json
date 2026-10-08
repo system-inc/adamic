@@ -1,0 +1,5 @@
+{
+  "name": "finally continue incorrectly absorbed by switch",
+  "from": "if(isBreak && label < 0 && owner.kind === 'SwitchStatement')",
+  "to": "if((isBreak || isContinue) && label < 0 && owner.kind === 'SwitchStatement')"
+}
