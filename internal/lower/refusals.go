@@ -19,7 +19,6 @@ type refusal struct {
 // refusals by syntax kind. Each is checked before lowering, so a program learns it has written
 // something 0.1 refuses for good, never that stage 0 hasn't got to it yet.
 var refusals = map[ast.Kind]refusal{
-	ast.KindAwaitExpression:   {"await", "0.1 has no async; it arrives with the concurrency model"},
 	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
@@ -44,6 +43,9 @@ var refusedOperators = map[ast.Kind]refusal{
 
 // refuse walks a module for what 0.1 refuses and returns the first, with where it is and the fix.
 func (l *lowering) refuse(module *ast.SourceFile) error {
+	if err := l.parallelPreflight(module); err != nil {
+		return err
+	}
 	// Use the parser's directives, which also recognize the block forms honored by the checker.
 	// Text in a string or a prose comment never enters this list.
 	if len(module.CommentDirectives) > 0 {
@@ -63,6 +65,9 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: "@" + pragma.Name + " checking pragma", Fix: "remove it and fix any type errors"}
 		}
 	}
+	if err := l.parallelPreflight(module); err != nil {
+		return err
+	}
 	var found error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -71,6 +76,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		}
 		if refused, isRefused := refusals[node.Kind]; isRefused {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
+			return true
+		}
+		if err := l.typedArrayUnsupported(node); err != nil {
+			found = err
 			return true
 		}
 		if node.Kind == ast.KindTypePredicate {
@@ -124,10 +133,9 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"}
 			return true
 		}
-		if ast.IsFunctionLike(node) && ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {
-			found = &Refused{Where: l.program.Where(node), What: "an async function", Fix: "0.1 has no async; it arrives with the concurrency model"}
-			return true
-		}
+		// Covered async syntax is lowered by async.go. Unsupported lifecycle and Promise
+		// operations get specific NotYet there; permanent refusals above still apply.
+
 		if node.Kind == ast.KindIdentifier && node.Text() == "arguments" {
 			// JavaScript's arguments object, not a variable the program named arguments.
 			if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && len(symbol.Declarations) == 0 {

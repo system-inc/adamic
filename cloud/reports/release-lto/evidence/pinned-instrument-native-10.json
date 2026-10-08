@@ -1,0 +1,20 @@
+{
+  "results": [
+    {
+      "command": "taskset -c 3 /workspace/scratch/release-lto/baseline/parse --manifest /workspace/scratch/release-lto/compiler.txt --count",
+      "mean": 0.9480609050000001,
+      "stddev": null,
+      "median": 0.9480609050000001,
+      "user": 0.8850349999999999,
+      "system": 0.062368,
+      "min": 0.9480609050000001,
+      "max": 0.9480609050000001,
+      "times": [
+        0.9480609050000001
+      ],
+      "exit_codes": [
+        0
+      ]
+    }
+  ]
+}

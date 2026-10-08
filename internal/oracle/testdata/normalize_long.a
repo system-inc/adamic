@@ -1,0 +1,4 @@
+// From integration's reading of d96d304 (#fxspptb): more than 64 code points through normalize, so
+// its list of points (normalize.c, points_add) grows past its first block.
+const text = 'é'.repeat(100);
+console.log(`${text.normalize('NFD').length} ${text.normalize('NFD').normalize().length} ${'ﷺ'.repeat(10).normalize('NFKD').length}`);

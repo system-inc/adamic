@@ -52,7 +52,7 @@ import (
 // may keep them. Summaries are found to a fixed point over the call graph from "returns nothing",
 // recursion included, and fall back to "returns something outside" if that takes too long.
 func ProveWrites(program *ir.Program) []Write {
-	proof := &freshness{program: program, summaries: map[int]*summary{}, origins: map[originKey]int{}, direct: directlyCalled(program)}
+	proof := &freshness{program: program, summaries: map[int]*summary{}, origins: map[originKey]int{}, direct: directlyCalled(program), top: program.HasAsync()}
 	functions := []int{}
 	for index := range program.Functions {
 		functions = append(functions, index)
@@ -804,6 +804,13 @@ func (a *analysis) block(block *flow.BasicBlock, entry *state) (*state, *state) 
 		}
 		a.run(id)
 	}
+	if _, suspends := block.Terminal.(*flow.Suspend); suspends {
+		// The environment owns these values, but confinement across queued work is unproved.
+		for _, held := range a.state.locals {
+			a.state.escape(held)
+		}
+		a.state.clobbered = true
+	}
 	return before, a.state
 }
 
@@ -824,6 +831,8 @@ func (a *analysis) run(id flow.InstructionId) {
 		a.value(statement.Index)
 		held := a.value(statement.Value)
 		a.write(WriteElement, statement.Site, "", holder, held, elementKey)
+	case ir.AllocateEnvironment:
+		// Empty captured storage allocates no user value and changes no existing slot.
 	case ir.Declare:
 		a.define(statement.Local, a.value(statement.Value))
 	case ir.Assign:
@@ -1015,6 +1024,10 @@ func (a *analysis) value(expression ir.Expression) value {
 		return held
 	}
 	switch expression := expression.(type) {
+	case ir.Await:
+		return a.call([]value{a.value(expression.Value)}, expression.Of)
+	case ir.PromiseValue:
+		return a.call([]value{a.value(expression.Value)}, ir.Promise)
 	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.JSONNull, ir.Null:
 		return value{}
 	case ir.Read:
@@ -1421,6 +1434,9 @@ func (a *analysis) value(expression ir.Expression) value {
 		// Cells and structural receivers are outside this summary's model. The
 		// union for any bounded target set, and for Unknown, is an arbitrary call.
 		return a.call(a.operands(expression), expression.Returns)
+	case ir.ParallelMap:
+		// Tasks have a separate effect proof; results may alias shared inputs.
+		return a.call([]value{a.value(expression.Items), a.value(expression.Work)}, ir.Array)
 	case ir.ArrayMap:
 		return a.call([]value{a.value(expression.Array), a.value(expression.Callback)}, ir.Array)
 	case ir.ArrayVisit:
