@@ -20,6 +20,13 @@ The complete merged package also runs with `ADAMIC_TYPESCRIPT_SOURCE` pointing
 to TypeScript 6.0.3, `ADAMIC_LINT_BENCH=1`, and both profile artifact and profile
 snapshot inputs set. Test output is written to regular log files.
 
-Observed: 99 unique upstream cases and 45 owned witnesses.
-The `no-location-assign-relative-destination-gate-inverted` mutant was caught on source Node,
+Observed: 99 unique upstream cases and 46 owned witnesses.
+The `go-unicode-scheme-fold-omitted` mutant was caught on source Node,
 emitted JavaScript and ASan/UBSan native, with identical mutated output.
+
+A final independent probe found Go simple-fold accepting the long s and Kelvin
+sign as scheme letters. The port spells those two extra range members explicitly,
+because JavaScript legacy regexp ignore-case excludes them. The owned
+`testdata/unicode-schemes.ts.txt` witness pins both range positions. The primary
+mutant removes those members and must fail against Go on all three runtimes.
+The earlier relative-gate inversion also failed on all three runtimes.

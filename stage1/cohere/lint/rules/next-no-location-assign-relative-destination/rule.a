@@ -38,7 +38,9 @@ const functions = [
 export class Rule {
     readonly context: RuleContext;
     readonly importNodes: ImportNode[] = [];
-    readonly absolute = /^(?:[a-z][0-9+.a-z-]*:|\/\/)/i;
+    // Go regexp simple-fold includes long s and Kelvin sign in ASCII letter ranges.
+    // Spell those two members explicitly for JavaScript and native regexp parity.
+    readonly absolute = /^(?:[a-z\u017f\u212a][0-9+.a-z\u017f\u212a-]*:|\/\/)/i;
     constructor(context: RuleContext) {
         this.context = context;
     }
