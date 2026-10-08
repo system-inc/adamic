@@ -1,0 +1,29 @@
+import type {RuleContext} from '../../context.ts';
+import {enclosingComponentOf} from '../../helpers/rules-react/enclosing_component_of.a';
+import {message} from './messages.a';
+class Method {readonly name:string;readonly node:number;constructor(name:string,node:number){this.name=name;this.node=node;}}
+class Variable {readonly name:string;readonly node:number;readonly scope:number;constructor(name:string,node:number,scope:number){this.name=name;this.node=node;this.scope=scope;}}
+export class Rule {
+ readonly context:RuleContext;readonly methods:Method[]=[];readonly variables:Variable[]=[];
+ constructor(context:RuleContext){this.context=context;}
+ kind(index:number):string{return this.context.kind(index);}
+ child(index:number,pos:number):number{return index<0?-1:this.context.node(index).children[pos] ?? -1;}
+ last(index:number):number{if(index<0){return -1;}const c=this.context.node(index).children;return c[c.length-1] ?? -1;}
+ name(index:number):number{return this.context.name(index);}
+ text(index:number):string{return this.kind(index)==='Identifier'?this.context.node(index).text:'';}
+ report(index:number):void{this.context.report(index,'react/no-access-state-in-setstate','useCallback',message,'','','');}
+ scope(index:number):number {for(let n=this.context.parent(index);n>=0;n=this.context.parent(n)){switch(this.kind(n)){case 'FunctionDeclaration':case 'FunctionExpression':case 'ArrowFunction':case 'MethodDeclaration':case 'GetAccessor':case 'SetAccessor':case 'Constructor':case 'ClassStaticBlockDeclaration':case 'Block':case 'ForStatement':case 'ForInStatement':case 'ForOfStatement':case 'CaseBlock':case 'CatchClause':case 'ModuleBlock':case 'SourceFile':return n;}}return -1;}
+ firstArgument(candidate:number,index:number):boolean {if(this.kind(candidate)!=='CallExpression'){return false;}const callee=this.child(candidate,0);if(this.kind(callee)!=='PropertyAccessExpression'||this.kind(this.child(callee,0))!=='ThisKeyword'||this.text(this.last(callee))!=='setState'){return false;}const first=this.context.arguments(candidate)[0] ?? -1;if(first<0){return false;}let walk=index;while(walk>=0&&this.context.parent(walk)!==candidate){walk=this.context.parent(walk);}return walk>=0&&walk===first;}
+ enclosingMethod(index:number):string {for(let n=this.context.parent(index);n>=0;n=this.context.parent(n)){if(this.kind(n)==='SourceFile'){return '';}const p=this.context.parent(n);if(this.kind(n)==='MethodDeclaration'&&(this.kind(p)==='ClassDeclaration'||this.kind(p)==='ClassExpression')){return this.text(this.name(n));}}return '';}
+ visitCall(index:number):void {if(enclosingComponentOf(this.context,index)<0){return;}const callee=this.text(this.child(index,0));if(callee!==''){const existing=this.methods.length;for(let i=0;i<existing;i++){const method=this.methods[i];if(method!==undefined&&method.name===callee){const enclosing=this.enclosingMethod(index);if(enclosing!==''){this.methods.push(new Method(enclosing,method.node));}}}}
+ for(let n=this.context.parent(index);n>=0;n=this.context.parent(n)){if(this.firstArgument(n,index)){for(const method of this.methods){if(method.name===callee){this.report(method.node);}}break;}}}
+ visitState(index:number):void {if(this.kind(this.child(index,0))!=='ThisKeyword'){return;}if(this.text(this.last(index))!=='state'||enclosingComponentOf(this.context,index)<0){return;}
+ for(let n=index;n>=0;n=this.context.parent(n)){if(this.firstArgument(n,index)){this.report(index);return;}if(this.kind(n)==='MethodDeclaration'){this.methods.push(new Method(this.text(this.name(n)),index));return;}if(this.kind(n)==='FunctionExpression'){const p=this.context.parent(n);if(this.kind(p)==='PropertyAssignment'||this.kind(p)==='PropertyDeclaration'){this.methods.push(new Method(this.text(this.name(p)),index));return;}}if(this.kind(n)==='VariableDeclaration'){const name=this.name(n);if(this.kind(name)==='Identifier'){this.variables.push(new Variable(this.text(name),index,this.scope(index)));}return;}}
+ }
+ visitIdentifier(index:number):void {let current=index;while(this.kind(this.context.parent(current))==='BinaryExpression'){current=this.context.parent(current);}const p=this.context.parent(current);const kind=this.kind(p);if(!((kind==='PropertyAssignment'&&this.last(p)===current)||((kind==='PropertyAccessExpression'||kind==='ElementAccessExpression')&&this.child(p,0)===current))){return;}
+ for(let walk=current;walk>=0;walk=this.context.parent(walk)){if(!this.firstArgument(walk,index)){continue;}const scope=this.scope(index);for(const variable of this.variables){if(variable.scope===scope&&variable.name===this.text(index)){this.report(variable.node);}}}}
+ visitPattern(index:number):void {const p=this.context.parent(index);if(this.kind(p)!=='VariableDeclaration'||this.kind(this.last(p))!=='ThisKeyword'){return;}for(const element of this.context.children(index,'BindingElement')){let key=this.child(element,0);if(this.kind(key)==='DotDotDotToken'){key=this.child(element,1);}if(this.kind(key)==='Identifier'&&this.text(key)==='state'){this.variables.push(new Variable(this.text(key),key,this.scope(index)));}}}
+ walk(index:number):void {switch(this.kind(index)){case 'CallExpression':this.visitCall(index);break;case 'PropertyAccessExpression':this.visitState(index);break;case 'Identifier':this.visitIdentifier(index);break;case 'ObjectBindingPattern':this.visitPattern(index);break;}for(const child of this.context.node(index).children){this.walk(child);}}
+ visit(index:number,parent:number):void {this.walk(index);}
+}
+export function create(context:RuleContext):Rule{return new Rule(context);}

@@ -1,0 +1,5 @@
+{
+  "name": "state_read_receiver_inverted",
+  "from": "if(this.kind(this.child(index,0))!=='ThisKeyword'){return;}",
+  "to": "if(this.kind(this.child(index,0))==='ThisKeyword'){return;}"
+}

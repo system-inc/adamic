@@ -1,0 +1,1 @@
+class C extends React.Component { update(){ this.setState({n:this.state.n+1}); } }

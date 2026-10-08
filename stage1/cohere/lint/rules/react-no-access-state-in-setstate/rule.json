@@ -1,0 +1,13 @@
+{
+  "name": "react/no-access-state-in-setstate",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleReactNoAccessStateInSetstate",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestNoAccessStateInSetstate"
+}

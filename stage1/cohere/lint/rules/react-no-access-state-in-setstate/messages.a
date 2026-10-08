@@ -1,0 +1,1 @@
+export const message = "Use callback in setState when referencing the previous state. React batches state updates, so `this.state` read while building the next state is whatever was there before the pending updates applied, and two updates in one batch will read the same stale value. The callback form is handed the state React is about to apply.";
