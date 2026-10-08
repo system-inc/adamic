@@ -1,7 +1,7 @@
 Integrated checked-view lane checkpoints into codex/views-integration from ab4d6f902; further tips remain queued.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
-Focused compiler packages, full IR, filtered Node oracle and vet pass after every published merge.
-409 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
+Final checkpoint gates cover focused packages, full IR, filtered Node oracle and vet; the rejected-owner publication was immediately corrected.
+448 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -1170,3 +1170,88 @@ in history but its entire source change is reverted. A later repaired owner tip
 will require explicit reapplication of the reverted changes before gating.
 No history rewrite or force push. This was an integrator command error, not a
 reviewer rejection. All subsequent mutating sequences stop on the first error.
+
+Ranked array integration: fetched 1ff63ff942647d7eafe3ba2d4bebb71da7ba0e8e,
+which contains requested 257568b0eb90669bd0585f04e81f8b1e11039760 and
+5c609c0109e7dcad3d9169f866d17f20cfbb3fd3, the fourth group. Pending merges of 60d9bf9f and 924eccb0 were aborted
+successfully to take the newly published groups before committing. No intermediate
+array checkpoint was published. Groups four through fourteen add 381 source
+fixtures: 375 executable fixtures and six named compile-refusal fixtures.
+
+Two conflicted hunks, both in docs/checked-views-plan.md, resolved separately:
+1. Incoming moved reference-write/readonly-union hook sections duplicate sections
+   already later in integration. Keep existing sections in their integration
+   position, add only ranked4 through ranked14 here, exactly once. Both behaviors
+   are retained: TestCheckedViewArrayReferenceWrites,
+   TestCheckedViewRankedArrayUnionContracts and TestCheckedViewMutableArrayUnionRefusal,
+   alongside TestCheckedViewRanked4ArrayContracts through Ranked14ArrayContracts.
+2. Incoming has no addition where integration's later hook inventories and
+   callable, dictionary, intersection and untagged evidence are appended. Keep
+   those existing additions. No production behavior is selected away. Proof
+   includes required-mode TestCheckedViewUntaggedSourceDispatch, dictionary storage,
+   original intersection/object-primitive suites and existing callable fixtures.
+
+Four incoming production changes merge without conflict and were inspected:
+arrayLiteralElement avoids asking a union for type arguments while joining may-flow
+seeds; graph adoption uses adamic_object_size including aligned slot contracts;
+native write diagnostics name object/array/Map consistently with JavaScript;
+present NULL array references name undefined, preserving boxed null separately.
+
+Preflight caught ranked4-label-assign admitting an uncertified original mixed-slot
+array write: native exit 0, stdout "1:1", rather than the pinned exit 70
+(74.102s overall). Untagged's actual-13 explicit-undefined reference-write hook
+also admitted wanted-5 arrays. Narrow that exception only for arrays, retaining
+string/object/Map/callable/boxed-reference behavior. The original slot has no
+reifiable array certificate; physical pointer storage is not that proof. No
+refusal pin is weakened. Ranked4 label cases, all untagged suites and default
+source-view writes pass together in 112.763s. Removing this new exclusion makes
+ranked4-label-assign execute successfully again and is caught by its exact pin.
+
+The counts helper's existing ranked*.a wildcard also tried to compile incoming
+ranked10-resolved-arguments-assign, which intentionally has no executable runtime.
+Its exact NotYet caused TestCheckedViewRankedArrayCounts to fail (4.89s). Retain
+all six new compile-refusal cases in their Node-backed frontier suites; list them
+explicitly, alongside the existing ranked3 refusal, only in the runtime-count
+helper. All other lowering errors remain fatal. Measure the executable fixtures:
+375 new rows, no changed old rows, inserted before the predicate EOF table.
+The update passes in 53.949s. The red oracle was stopped explicitly before
+refreshing the pending merge; no pass is inferred from that interrupted run.
+
+Executed source mutants: ranked4 seven, ranked5 eight, ranked6 five, ranked7 two,
+ranked8 four, ranked9 two, ranked10 two, ranked11 two, ranked12 two, ranked13 two,
+ranked14 three. Total 39 caught: 38 compiled runtime witnesses and one named
+compile-refusal omission witness (ranked14's field-name fallback). Native and
+JavaScript failures include lost refusals, wrong diagnostic timing and sanitizer
+errors after successful compilation; build/frontend errors are rejected as runtime
+proof. Every source mutation is restored in finally before the next mutation.
+The initially copied ranked4 harness selected Ranked5 and ran no tests; it received
+no credit and was corrected before all seven proper witnesses were rerun.
+The first formatter command lacked the toolchain environment, failed without
+continuing, and was rerun after sourcing /workspace/adamic-tools/env.sh.
+
+Separate counterfactuals, not added to the 39: old GetTypeArguments(union) reproduces
+a frontend panic on ranked4-label-push; omitting union-specific element seeds
+survives every ranked4 fixture. This conservative may-flow addition has no proved
+runtime-check witness. The native ranked12 member mask alone also survives;
+its emitted member selector still refuses. The combined mask/selector omission is
+caught with a later narrowing diagnostic, and is counted once. Both survivor logs
+are retained. Cumulative explicit implementation/component count: 409 + 39 = 448.
+
+Final required gates: lower 8.307s, native 12.790s, JavaScript 1.282s, full IR 2.568s, whole vet exit 0; uncached filtered oracle 584.603s, 3101 Node and 898 native misses, no configured exclusions, original intersection/object-primitive suites and required-mode untagged dispatch enabled.
+No whole-repository test gate or unchanged-tsc production reachability census is
+claimed. Lane 2's 145 pairs / 2701 reads are candidate-projection counts; its
+full EmitHelper.text and untagged BaseType element shapes remain unclaimed.
+Optional-boolean landing hold remains in force, with no published fix ref found.
+
+Newest owner priority inspection: 0ea22091e93375f5f03e3b34b76edf7b96891898,
+which includes adc4dd1c's key/nested conversions and nominal data-class Map proofs,
+still inherits the rejected unscoped callable ABI admission. Its exact tip fails
+TestMixedUnionCallbackABIIsPending/mixed_union_callback and
+/mixed_union_callback_variance, both got nil instead of the named union ABI
+refusal (isolated checkout, 0.446s). Test and fixture source are unchanged from
+integration. The isolated checkout was restored to its prior baseline. This item
+is not retained or re-published. Restoring the old callable guard was already
+shown to break the owner's required entry-live-mutation Map agreement, so no clean
+resolution keeps all refusals and new Node agreements. See the previous 706 retry
+and publication correction for exact evidence and the reverted-owner ancestry.
+Lane 4 original-brand tip 6858d196802c9826a62188c8d4887fe0810e4700 is next.

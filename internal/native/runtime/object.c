@@ -266,7 +266,8 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
 		unsigned char actual = adamic_object_field_types(object)[cache->index];
 		// Untagged explicit-undefined producer hook: semantic undefined still
         // occupies a reference slot; replacing it with a reference is safe.
-        bool reference_write = (wanted >= 3 && wanted <= 6) || wanted == 8 || wanted == 10;
+        // Arrays need their original element certificate even when the old value is undefined.
+        bool reference_write = wanted == 3 || wanted == 4 || wanted == 6 || wanted == 8 || wanted == 10;
         if (actual == wanted || (actual == 13 && reference_write && object->shape->references[cache->index]) || (actual == 10 && wanted <= 2) || (actual == 7 && wanted == 1)) { return; }
 	}
 	(void)adamic_object_view(object, name, cache, wanted, type, expression);
