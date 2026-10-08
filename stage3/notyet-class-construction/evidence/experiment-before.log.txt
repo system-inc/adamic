@@ -1,0 +1,6 @@
+--- FAIL: TestNativeAgreesWithNode (0.11s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_construction_union.a (0.32s)
+        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/class_construction_union.a:23:19: stage 0 can't lower a field of type string | readonly Comment[] | undefined yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.581s
+FAIL

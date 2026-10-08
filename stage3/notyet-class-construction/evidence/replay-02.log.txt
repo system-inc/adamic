@@ -1,0 +1,3 @@
+actual caller: github.com/system-inc/adamic/internal/lower.(*lowering).property /workspace/adamic/internal/lower/object.go:484 reason=a field of type "boolean" | "list" | "listOrElement" | "number" | "object" | "string" | Map<string, string | number>
+replay load/register/lower: 5.453251224s
+reproduced NotYet: a field of type "boolean" | "list" | "listOrElement" | "number" | "object" | "string" | Map<string, string | number> at /tmp/class-construction-census-source/src/compiler/commandLineParser.ts:2599:13

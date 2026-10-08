@@ -1,0 +1,3 @@
+actual caller: github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue /workspace/adamic/internal/lower/expression.go:454 reason=reading result
+replay load/register/lower: 3.898609778s
+replay signature did not reproduce: NotYet a field of type string | number | undefined at /tmp/class-construction-census-source/src/compiler/checker.ts:47945:13 (selected /tmp/class-construction-census-source/src/compiler/checker.ts:47941:5)

@@ -1,0 +1,3 @@
+actual caller: github.com/system-inc/adamic/internal/lower.(*lowering).property /workspace/adamic/internal/lower/object.go:484 reason=a field of type false | string[] | undefined
+replay load/register/lower: 3.203830505s
+reproduced NotYet: a field of type false | string[] | undefined at /tmp/class-construction-census-source/src/compiler/moduleNameResolver.ts:2235:23

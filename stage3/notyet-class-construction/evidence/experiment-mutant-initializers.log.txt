@@ -1,0 +1,14 @@
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_construction_union.a (0.65s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "text0\ncomment1\nmissing\nfield0;constructor;field1;constructor;field2;constructor;\n", stderr ""
+            native: exit 0, stdout "missing\nmissing\nmissing\nconstructor;constructor;constructor;\n", stderr ""
+        oracle_test.go:767: JavaScript backend: stdout differs
+            node:    exit 0, stdout "text0\ncomment1\nmissing\nfield0;constructor;field1;constructor;field2;constructor;\n", stderr ""
+            backend: exit 0, stdout "missing\nmissing\nmissing\nconstructor;constructor;constructor;\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.685s
+FAIL
