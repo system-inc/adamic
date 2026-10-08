@@ -250,12 +250,18 @@ typedef struct adamic_object {
 	const adamic_shape *shape;
 	const adamic_class *class;
 	bool frozen;
+	bool tuple;
 	adamic_value slots[];
 } adamic_object;
 
 // Metadata belongs to the slot returned by lookup, independently of cache layout.
 static inline size_t adamic_slot_index(const adamic_object *object, const adamic_value *slot) {
     return (size_t)(slot - object->slots);
+}
+
+// Include both per-slot tails in object allocation and relocation sizes.
+static inline size_t adamic_object_size(size_t count) {
+    return sizeof(adamic_object) + count * (sizeof(adamic_value) + 2);
 }
 
 // Initialized bits follow slots in the same allocation, indexed by the actual shape.

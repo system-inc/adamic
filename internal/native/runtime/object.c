@@ -8,10 +8,11 @@
 #include <stdlib.h>
 
 adamic_object *adamic_object_new(const adamic_shape *shape) {
-	adamic_object *object = adamic_allocate(sizeof *object + shape->count * (sizeof object->slots[0] + 2), adamic_kind_object);
+	adamic_object *object = adamic_allocate(adamic_object_size(shape->count), adamic_kind_object);
 	object->shape = shape;
 	object->class = NULL;
 	object->frozen = false;
+	object->tuple = false;
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
 	memset(adamic_object_initialized(object), 1, shape->count);
 	memset(adamic_object_field_types(object), 0, shape->count);
