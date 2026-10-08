@@ -44,6 +44,7 @@ type Program struct {
 	entries           []*ast.SourceFile
 	optionalChecks    map[string]OptionSite
 	optionalRelations map[string]OptionSite
+	optionalLiterals  map[string][]OptionSite
 	checkedOptions    map[string]bool
 }
 
@@ -264,7 +265,7 @@ func loadInput(paths []string, overlay map[string]string, requestedProject strin
 	diagnostics := loaded.diagnostics(context.Background())
 	scheduled := []OptionSite{}
 	for _, site := range sites {
-		if !loaded.acceptOptionalWrite(site) && !loaded.acceptOptionalRelation(site) {
+		if !loaded.acceptOptionalWrite(site) && !loaded.acceptOptionalRelation(site) && !loaded.acceptOptionalLiteral(site) {
 			diagnostics = append(diagnostics, site.Message)
 		} else {
 			scheduled = append(scheduled, site)

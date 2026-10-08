@@ -55,6 +55,12 @@ func (p *Program) RecordOptionalWrite(target *ast.Node) { p.checkedOptions[p.Whe
 func (p *Program) ExplainedOptionalChecks() []string {
 	result := []string{}
 	for where := range p.checkedOptions {
+		if literals, ok := p.optionalLiterals[where]; ok {
+			for _, literal := range literals {
+				result = append(result, fmt.Sprintf("%s: checked TS%d exactOptionalPropertyTypes: object construction preserves own presence", where, literal.Code))
+			}
+			continue
+		}
 		if relation, ok := p.optionalRelations[where]; ok {
 			result = append(result, fmt.Sprintf("%s: checked TS%d exactOptionalPropertyTypes: implements relation uses own-presence representation", where, relation.Code))
 			continue
