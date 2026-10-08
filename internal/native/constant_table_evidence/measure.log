@@ -1,0 +1,10 @@
+=== RUN   TestMeasureOutlinedBuild
+    constant_measure_test.go:30: 0-before-sanitized 6.938289s
+    constant_measure_test.go:30: 0-after-sanitized 2.703474s
+    constant_measure_test.go:30: 1-after-sanitized 2.852136s
+    constant_measure_test.go:30: 1-before-sanitized 6.989128s
+    constant_measure_test.go:30: 2-before-sanitized 7.003275s
+    constant_measure_test.go:30: 2-after-sanitized 2.768864s
+--- PASS: TestMeasureOutlinedBuild (35.26s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	35.275s

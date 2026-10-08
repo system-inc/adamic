@@ -1,0 +1,72 @@
+{
+  "final-unsplit": {
+    "exit": 0,
+    "packages": [
+      {
+        "Time": "2026-10-08T00:18:34.16152925Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Elapsed": 55.18
+      },
+      {
+        "Time": "2026-10-08T00:25:35.525412922Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Elapsed": 476.543
+      },
+      {
+        "Time": "2026-10-08T00:26:23.942285595Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Elapsed": 525.644
+      }
+    ],
+    "node_fixtures_passed": 497,
+    "failed_tests": []
+  },
+  "final-split": {
+    "exit": 0,
+    "packages": [
+      {
+        "Time": "2026-10-08T00:27:30.380073422Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Elapsed": 586.928
+      }
+    ],
+    "node_fixtures_passed": 497,
+    "failed_tests": []
+  },
+  "gate-unsplit": {
+    "exit": 0,
+    "packages": [
+      {
+        "Time": "2026-10-08T00:07:20.276371119Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Elapsed": 590.173
+      },
+      {
+        "Time": "2026-10-08T00:09:26.575465949Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Elapsed": 716.667
+      }
+    ],
+    "node_fixtures_passed": 494,
+    "failed_tests": []
+  },
+  "gate-split": {
+    "exit": 0,
+    "packages": [
+      {
+        "Time": "2026-10-08T00:11:01.96183937Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Elapsed": 809.369
+      }
+    ],
+    "node_fixtures_passed": 494,
+    "failed_tests": []
+  }
+}

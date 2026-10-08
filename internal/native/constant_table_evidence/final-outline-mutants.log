@@ -1,0 +1,8 @@
+module-order caught: stdout differs
+unbounded-chunk caught: large initialization wrapper or chunk
+inline-again caught: large initializer was not outlined
+omit-root-cleanup caught: LeakSanitizer: detected memory leaks
+outlined-chunk-placement caught: large initializer stayed in its module unit
+outlined-storage-owner caught: initializer global table owned by module_
+outlined-global-owner caught: initializer global table owned by main.c
+outlined-noinline-prototype caught: module initializer lost noinline prototype
