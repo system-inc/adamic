@@ -1,0 +1,19 @@
+missing-nested-unit mutant caught: stock declaration coverage
+body-span mutant caught: stock declaration span
+diagnostic-ownership mutant caught: direct diagnostic ownership
+PASS: stock TypeScript declaration coverage, spans, parents, direct checker diagnostic ownership and body eligibility
+drop-observation mutant caught: raw filter/observations
+wrong-phase mutant caught: raw filter/observations
+total mutant caught: totals
+reason-count mutant caught: rank/count
+file-attribution mutant caught: file attribution
+example mutant caught: examples
+context mutant caught: context flag
+disposition mutant caught: disposition
+writable-variance-disposition mutant caught: disposition
+coverage mutant caught: coverage
+tail mutant caught: tail
+PASS: exact filtered observations, site deduplication, source hashes/reach, reason ranking, file attribution, examples, context flags, dispositions, shares, tail and rendered table
+checker diagnostics: 260
+unit statuses: {'attempted': 10560, 'split_checker_body': 138}
+non-NotYet lowering kinds: {'Boundary': 16602, 'Refused': 1054, 'panic': 51, 'error': 27, 'SkippedDependency': 14}

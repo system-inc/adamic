@@ -1,0 +1,91 @@
+// Provenance exists only in the guarded measurement overlay and never changes IR.
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"os"
+)
+
+// A cause contains an actual finding signature, not a name-based guess.
+type LatentCause struct {
+	Unit   string `json:"unit"`
+	Phase  string `json:"phase"`
+	Kind   string `json:"kind"`
+	Where  string `json:"where"`
+	Reason string `json:"reason"`
+	Text   string `json:"text"`
+}
+type latentDeclarationFrame struct {
+	node    *ast.Node
+	symbols map[*ast.Symbol]*ast.Node
+}
+
+var latentDeclarationFrames []*latentDeclarationFrame
+
+type latentBlockedBinding struct {
+	cause       *LatentCause
+	declaration string
+}
+
+var latentBlockedSymbols map[*ast.Symbol]latentBlockedBinding
+var latentEchoCauses map[*NotYet]*LatentCause
+var latentEchoDeclarations map[*NotYet]string
+
+// Keep names of declarations whose containing statement may be rolled back.
+// Symbol identities distinguish shadowed names. Ancestor/dependency declarations
+// outside the current statement span cannot be mistaken for its failed locals.
+func (l *lowering) latentDeclaredName(name *ast.Node) {
+	if name == nil || len(latentDeclarationFrames) == 0 {
+		return
+	}
+	if name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern {
+		for _, element := range name.AsBindingPattern().Elements.Nodes {
+			if !skipped(element) {
+				l.latentDeclaredName(element.Name())
+			}
+		}
+		return
+	}
+	if !ast.IsIdentifier(name) {
+		return
+	}
+	symbol := l.symbol(name)
+	if symbol == nil {
+		return
+	}
+	for _, frame := range latentDeclarationFrames {
+		if ast.GetSourceFileOfNode(frame.node) == ast.GetSourceFileOfNode(name) && frame.node.Pos() <= name.Pos() && name.End() <= frame.node.End() {
+			frame.symbols[symbol] = name
+		}
+	}
+}
+
+// Call before restoring the checkpoint: the missing bindings and failure belong
+// to this same attempt. Keep provenance separately from rolled-back IR state.
+func (l *lowering) latentBlockDeclarations(frame *latentDeclarationFrame, finding LatentFinding, checkpoint *lowering) {
+	if os.Getenv("LATENT_MUTANT_DROP_BLOCKED_BY") == "1" {
+		return
+	}
+	cause := finding.BlockedBy
+	if cause == nil {
+		cause = &LatentCause{Unit: finding.Unit, Phase: finding.Phase, Kind: finding.Kind, Where: finding.Where, Reason: finding.Reason, Text: finding.Text}
+	}
+	for symbol, name := range frame.symbols {
+		if _, existed := checkpoint.locals[symbol]; !existed {
+			declaration := symbol.ValueDeclaration
+			if declaration == nil {
+				declaration = name
+			}
+			latentBlockedSymbols[symbol] = latentBlockedBinding{cause: cause, declaration: l.program.Where(declaration)}
+		}
+	}
+}
+
+func (l *lowering) latentReadNotYet(node *ast.Node, symbol *ast.Symbol, name string) error {
+	failure := l.notYet(node, "reading "+name).(*NotYet)
+	if binding, known := latentBlockedSymbols[symbol]; known {
+		latentEchoCauses[failure] = binding.cause
+		latentEchoDeclarations[failure] = binding.declaration
+	}
+	return failure
+}

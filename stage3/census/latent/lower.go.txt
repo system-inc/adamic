@@ -19,15 +19,17 @@ func (e *LatentDependencySkipped) Error() string {
 }
 
 type LatentFinding struct {
-	Measurement string `json:"measurement"`
-	Unit        string `json:"unit"`
-	Phase       string `json:"phase"`
-	Kind        string `json:"kind"`
-	Where       string `json:"where"`
-	Reason      string `json:"reason"`
-	Text        string `json:"text"`
-	Start       int    `json:"start,omitempty"`
-	End         int    `json:"end,omitempty"`
+	Measurement        string       `json:"measurement"`
+	Unit               string       `json:"unit"`
+	Phase              string       `json:"phase"`
+	Kind               string       `json:"kind"`
+	Where              string       `json:"where"`
+	Reason             string       `json:"reason"`
+	Text               string       `json:"text"`
+	Start              int          `json:"start,omitempty"`
+	End                int          `json:"end,omitempty"`
+	BlockedBy          *LatentCause `json:"blocked_by,omitempty"`
+	BlockedDeclaration string       `json:"blocked_symbol_declaration,omitempty"`
 }
 
 // The measurement driver is sequential. Nothing returns usable IR.
@@ -51,6 +53,10 @@ func latentRecord(err error) {
 		finding.Kind, finding.Where, finding.Reason = "NotYet", notYet.Where, notYet.What
 	default:
 		finding.Reason = err.Error()
+	}
+	if notYet != nil {
+		finding.BlockedBy = latentEchoCauses[notYet]
+		finding.BlockedDeclaration = latentEchoDeclarations[notYet]
 	}
 	latentFindings = append(latentFindings, finding)
 }

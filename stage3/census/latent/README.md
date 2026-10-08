@@ -231,3 +231,30 @@ assertion. Run the positive test with `LATENT_REPLAY_MUTANT_PARENT_SIBLING=1` to
 prove that the equality/reproduction check itself fails under that mutant.
 
 [Replay validation and three real-project timings](replay/REPORT.md) compare the command with the 10,551-attempt full entry census.
+
+## Rollback echo provenance
+
+Full-mode findings now include optional `blocked_by` (the governing finding's
+unit, phase, kind, where, exact reason and text) and
+`blocked_symbol_declaration` (the failed binding's declaration position).
+Before restoring a failed statement's checkpoint, the overlay records its
+attempted declaration symbols and root finding. A later missing read is tagged
+only when its resolved checker symbol matches that failed binding. Shorthand
+reads use the checker's shorthand value symbol. Shadowed names and declarations
+in other files cannot match merely by spelling or overlapping byte positions.
+Transitive failures preserve the original root, rather than chaining echoes.
+Provenance is scoped to each independent unit and kept outside rolled-back IR.
+
+`provenance_audit.py BINARY OUTPUT_DIRECTORY` exercises the poison witness,
+shorthand, a transitive secondary binding, a shadowed name and an unrelated
+parameter. `LATENT_MUTANT_DROP_BLOCKED_BY=1` drops tagging before rollback;
+the same poison test must fail specifically at its `blocked_by` assertion.
+The driver and loader still enforce the existing no-output guards.
+
+A reproduced `reading X` signature alone is not an independent compiler lesson:
+replay uses the same recovery algorithm and can reproduce the failed initializer
+and its echo together. Root-only tables exclude sites tagged in every attempt,
+retain mixed or untagged observations conservatively, and list the echoes under
+their actual root. Refused and measurement roots remain distinct from NotYet
+roots. This provenance does not infer causes for bindings lost during registration,
+skipped bodies, or other independently attempted units.

@@ -34,6 +34,7 @@ replace[str(repository / 'internal/lower/statements.go')] = str(statement_output
 overlay('internal/lower/latent_full.go', (territory / 'full.go.txt').read_text())
 overlay('internal/lower/latent_units.go', (territory / 'units.go.txt').read_text())
 overlay('internal/lower/latent_replay.go', (territory / 'replay.go.txt').read_text())
+overlay('internal/lower/latent_provenance.go', (territory / 'provenance.go.txt').read_text())
 
 # Parse the exact refusal function and its visitor scopes; fail on unsupported shapes.
 refusal_output = scratch / 'internal_lower_refusals.go'
@@ -62,7 +63,15 @@ expressions = expressions.replace(needle, needle + '\n if err := l.latentSignatu
 needle = 'func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {'
 assert needle in expressions
 expressions = expressions.replace(needle, needle + '\n if err := l.latentSignature(target); err != nil { return nil, err }')
+needle = 'return nil, l.notYet(node, "reading "+node.Text())'
+assert expressions.count(needle) == 1
+expressions = expressions.replace(needle, 'return nil, l.latentReadNotYet(node, l.symbol(node), node.Text())')
 overlay('internal/lower/expression.go', expressions)
+objects = (repository / 'internal/lower/object.go').read_text()
+needle = 'return nil, l.notYet(property, "reading "+property.Name().Text())'
+assert objects.count(needle) == 1
+objects = objects.replace(needle, 'return nil, l.latentReadNotYet(property, symbol, property.Name().Text())')
+overlay('internal/lower/object.go', objects)
 functions = (repository / 'internal/lower/functions.go').read_text()
 needle = 'l.signed[index] = signed{this: this, defaults: defaults, patterns: patterns}'
 assert needle in functions
@@ -75,6 +84,12 @@ locals_source = (repository / 'internal/lower/locals.go').read_text()
 needle = 'local, isLocal := l.locals[symbol]'
 assert locals_source.count(needle) == 1
 locals_source = locals_source.replace(needle, 'if latentFullEnabled() { l.latentLexicalLocal(identifier, symbol) }\n' + needle)
+needle = 'func (l *lowering) declareLocal(name *ast.Node) (int, error) {'
+assert locals_source.count(needle) == 1
+locals_source = locals_source.replace(needle, needle + '\n l.latentDeclaredName(name)')
+needle = 'func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {'
+assert locals_source.count(needle) == 1
+locals_source = locals_source.replace(needle, needle + '\n for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes { l.latentDeclaredName(declaration.Name()) }')
 overlay('internal/lower/locals.go', locals_source)
 
 hook = (territory / 'lower.go.txt').read_text()

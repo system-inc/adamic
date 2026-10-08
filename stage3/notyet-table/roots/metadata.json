@@ -1,0 +1,21 @@
+{
+  "report_start": "dc6b1529ae9d2a2210672e105c8bb6374619a59d",
+  "production_base": "44583d3283fdd8674085a7ddcce040cf2a73a94e",
+  "replay_tooling": "9a1f14c5d994aa855625e7cfa295677060348fec",
+  "full_mode": true,
+  "no_output_guard": true,
+  "original_notyet_sites": 10426,
+  "notyet_root_sites": 6791,
+  "echo_only_sites": 3635,
+  "unattributed_reads": 688,
+  "production_diff": "",
+  "sources_sha256": {
+    "stage3/census/latent/full.go.txt": "7b4c732cdc1b5b263d0cc2b281b2cb51ee10457b9b449914ac78cba36cd1fbde",
+    "stage3/census/latent/lower.go.txt": "f64de5d9d8c642d4b362d865ab06eda45d62b78d987d24108958be3ec0d94948",
+    "stage3/census/latent/units.go.txt": "fc2bf2d6ebfe1bd5ffcd41a4d026185799f7fed4c759a1b5ddd1a71c319acea5",
+    "stage3/census/latent/make_overlay.py": "e6fdf403115a15fc07411fcfeb4a52f765d1768061554b7433ef12494291b12e",
+    "stage3/census/latent/provenance.go.txt": "845793fcbcf46911a405112904e9d8ac9ac456944662460c9287fbeb1726610b",
+    "stage3/census/latent/provenance_audit.py": "e79274eb40e99d8c4be6d036fcc264a864a0d46e6f6dd1d649ecea6603ed6e4b"
+  },
+  "annotated_raw_sha256": "2e2442451bd08d608e9bf5dff358216c4ffa359e039487f5c962b6b6786da6a8"
+}

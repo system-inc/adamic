@@ -82,7 +82,7 @@ def verify(raw_rows,report):
 
 verify(raw,summary)
 # Check the user-facing table against the independently checked artifact.
-table=(out/'TABLE.md').read_text()
+table=(out/'roots/original-TABLE.md' if (out/'roots/original-TABLE.md').exists() else out/'TABLE.md').read_text()
 esc=lambda s:s.replace('|','&#124;').replace('\n','<br>')
 table_rows=[line for line in table.splitlines() if line.startswith('| ') and len(line.split(' | '))==7 and line.split(' | ')[0][2:].isdigit()]
 assert len(table_rows)==len(ranked), 'table coverage'

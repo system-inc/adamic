@@ -145,6 +145,10 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 				continue
 			}
 			latentFindingOwner, latentFindingPhase = program.Where(node), "lowering"
+			latentBlockedSymbols = map[*ast.Symbol]latentBlockedBinding{}
+			latentEchoCauses = map[*NotYet]*LatentCause{}
+			latentEchoDeclarations = map[*NotYet]string{}
+			latentDeclarationFrames = nil
 			unit := LatentUnit{Measurement: LatentMeasurementLabel, Where: program.Where(node), Kind: node.Kind.String(), Status: "attempted", CheckerDiagnostics: []string{}, Parent: candidate.parent, Top: candidate.top, Depth: candidate.depth}
 			if node.Name() != nil {
 				unit.Name = node.Name().Text()

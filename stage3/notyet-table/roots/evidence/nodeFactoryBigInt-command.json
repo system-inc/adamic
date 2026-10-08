@@ -1,0 +1,13 @@
+[
+  "go",
+  "run",
+  "./stage3/census/latent/replay",
+  "-project",
+  "/tmp/stage3-notyet-adapted/src/tsc/tsc.ts",
+  "-where",
+  "/tmp/stage3-notyet-adapted/src/compiler/factory/nodeFactory.ts:1246:9",
+  "-kind",
+  "NotYet",
+  "-reason",
+  "reading node"
+]

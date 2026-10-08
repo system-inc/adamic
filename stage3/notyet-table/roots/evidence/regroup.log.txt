@@ -1,0 +1,30 @@
+{
+  "original_notyet_sites": 10426,
+  "raw_notyet_observations": 14705,
+  "echo_only_sites": 3635,
+  "tagged_echo_sites": 3635,
+  "mixed_sites": 0,
+  "notyet_root_sites": 6791,
+  "root_reasons": 483,
+  "root_reasons_under_five": 382,
+  "unattributed_read_sites": 688,
+  "referenced_other_root_sites": 121,
+  "referenced_other_roots_by_kind": {
+    "Refused": 119,
+    "SkippedDependency": 2
+  },
+  "coverage": {
+    "5": {
+      "sites": 3528,
+      "share": 51.95111176557208
+    },
+    "10": {
+      "sites": 4322,
+      "share": 63.64305698718893
+    },
+    "20": {
+      "sites": 5138,
+      "share": 75.65896038874982
+    }
+  }
+}

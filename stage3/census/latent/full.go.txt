@@ -110,6 +110,9 @@ func (l *lowering) latentStatement(node *ast.Node) (result []ir.Statement, failu
 	if os.Getenv("LATENT_MUTANT_FIRST_ERROR_ONLY") == "1" {
 		return l.latentStatementRaw(node)
 	}
+	frame := &latentDeclarationFrame{node: node, symbols: map[*ast.Symbol]*ast.Node{}}
+	latentDeclarationFrames = append(latentDeclarationFrames, frame)
+	defer func() { latentDeclarationFrames = latentDeclarationFrames[:len(latentDeclarationFrames)-1] }()
 	var checkpoint *lowering
 	defer func() {
 		if crash := recover(); crash != nil {
@@ -121,6 +124,9 @@ func (l *lowering) latentStatement(node *ast.Node) (result []ir.Statement, failu
 		}
 		if failure != nil {
 			latentRecord(failure)
+			if checkpoint != nil {
+				l.latentBlockDeclarations(frame, latentFindings[len(latentFindings)-1], checkpoint)
+			}
 			boundary := "failed statement; state rolled back; continued at next statement or declaration"
 			if checkpoint == nil {
 				boundary = "state snapshot failed; cannot safely continue this unit"
