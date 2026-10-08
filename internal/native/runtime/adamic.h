@@ -475,7 +475,11 @@ bool adamic_map_delete(adamic_map *map, adamic_value key);
 typedef adamic_object adamic_record;
 typedef adamic_object adamic_record_iterator;
 
+bool adamic_record_is(const adamic_object *object);
+void adamic_record_check_missing_member(const adamic_string *key);
 adamic_record *adamic_record_new(bool reference_values);
+adamic_record *adamic_record_new_typed(bool reference_values, unsigned char element);
+void adamic_record_storage_check(const adamic_record *record, unsigned char element);
 // Own lookup returns a borrowed slot, NULL for absence (including an inherited name).
 adamic_value *adamic_record_get_own(const adamic_record *record, const adamic_string *key);
 bool adamic_record_has_own(const adamic_record *record, const adamic_string *key);

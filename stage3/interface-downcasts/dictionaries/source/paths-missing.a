@@ -1,0 +1,7 @@
+interface MapLike<T> { [key: string]: T; }
+interface Base { readonly kind: 'Paths'; }
+interface Holder extends Base { readonly paths?: MapLike<string[]>; }
+const payload={kind:'Paths' as const,paths:undefined};
+const base:Base=payload;
+const view=base as Holder;
+const table=view.paths; console.log(table===undefined ? 'missing' : 'present');

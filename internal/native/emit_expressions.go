@@ -125,6 +125,9 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 	case ir.PhantomMember:
 		return e.phantomMember(expression)
 	case ir.Property:
+		if expression.DictionaryKey != nil {
+			return e.dictionaryRead(expression)
+		}
 		if expression.View != "" {
 			return e.viewField(expression)
 		}
@@ -691,6 +694,12 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 			return e.own(ir.String, function+"(0, NULL)")
 		}
 		return e.own(ir.String, fmt.Sprintf("%s(%d, (const double[]){%s})", function, len(codes), strings.Join(codes, ", ")))
+	case ir.RecordCoalesce:
+		return e.recordCoalesce(expression)
+	case ir.RecordCall:
+		return e.recordCall(expression)
+	case ir.RecordLiteral:
+		return e.recordLiteral(expression)
 	case ir.ObjectCall:
 		return e.objectCall(expression)
 	case ir.NumberCall:

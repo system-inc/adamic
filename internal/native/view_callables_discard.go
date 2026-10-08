@@ -26,6 +26,6 @@ func (e *emitter) emitViewCallableDiscard(property ir.Property, closure string) 
 	result := e.temporary()
 	e.line("adamic_value %s = adamic_node_performance_invoke(%s, NULL, 0, false);", result, closure)
 	e.closureThrown()
-	e.line("if (%s->result == %d || %s->result == %d || %s->result == %d || %s->result == %d || %s->result == %d || %s->result == %d || %s->result == %d) adamic_release(%s.reference);", recorded, ir.String, recorded, ir.Object, recorded, ir.Array, recorded, ir.Map, recorded, ir.Closure, recorded, ir.Weak, recorded, ir.Union, result)
+	e.line("if (%s->result == %d || %s->result == %d || %s->result == %d || %s->result == %d || %s->result == %d || %s->result == %d || %s->result == %d || %s->result == %d) adamic_release(%s.reference);", recorded, ir.String, recorded, ir.Object, recorded, ir.Array, recorded, ir.Map, recorded, ir.Closure, recorded, ir.Weak, recorded, ir.Union, recorded, ir.Record, result)
 	return "0"
 }

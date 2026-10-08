@@ -1,0 +1,6 @@
+interface Table { [key:string]: string | number | undefined; }
+const payload={item:'name'};
+const base:{}=payload;
+const view=base as Table;
+view.item=42;
+console.log(`${payload.item}`);

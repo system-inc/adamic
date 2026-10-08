@@ -1,0 +1,297 @@
+=== RUN   TestCheckedViewDictionaryPropagation
+=== RUN   TestCheckedViewDictionaryPropagation/helper-good
+=== RUN   TestCheckedViewDictionaryPropagation/helper-wrong
+=== RUN   TestCheckedViewDictionaryPropagation/generic-good
+=== RUN   TestCheckedViewDictionaryPropagation/generic-wrong
+=== RUN   TestCheckedViewDictionaryPropagation/callback-good
+=== RUN   TestCheckedViewDictionaryPropagation/callback-wrong
+=== RUN   TestCheckedViewDictionaryPropagation/field-good
+=== RUN   TestCheckedViewDictionaryPropagation/field-wrong
+--- PASS: TestCheckedViewDictionaryPropagation (3.23s)
+    --- PASS: TestCheckedViewDictionaryPropagation/helper-good (0.45s)
+    --- PASS: TestCheckedViewDictionaryPropagation/helper-wrong (0.41s)
+    --- PASS: TestCheckedViewDictionaryPropagation/generic-good (0.40s)
+    --- PASS: TestCheckedViewDictionaryPropagation/generic-wrong (0.39s)
+    --- PASS: TestCheckedViewDictionaryPropagation/callback-good (0.41s)
+    --- PASS: TestCheckedViewDictionaryPropagation/callback-wrong (0.39s)
+    --- PASS: TestCheckedViewDictionaryPropagation/field-good (0.38s)
+    --- PASS: TestCheckedViewDictionaryPropagation/field-wrong (0.39s)
+=== RUN   TestCheckedViewDictionaryArrays
+=== RUN   TestCheckedViewDictionaryArrays/paths-good
+=== RUN   TestCheckedViewDictionaryArrays/paths-missing
+=== RUN   TestCheckedViewDictionaryArrays/paths-container-wrong
+    checked_view_dictionary_propagation_test.go:75: pinned exit 70: adamic: panic: field read failed: view.paths is not a MapLike<string[]> | undefined; expected MapLike<string[]> | undefined, found number
+    checked_view_dictionary_propagation_test.go:75: pinned exit 70: adamic: panic: field read failed: view.paths is not a MapLike<string[]> | undefined; expected MapLike<string[]> | undefined, found number
+    checked_view_dictionary_propagation_test.go:75: pinned exit 70: adamic: panic: field read failed: view.paths is not a MapLike<string[]> | undefined; expected MapLike<string[]> | undefined, found number
+=== RUN   TestCheckedViewDictionaryArrays/paths-wrong
+    checked_view_dictionary_propagation_test.go:75: pinned exit 70: adamic: panic: field read failed: table['item']; expected string[] | undefined, found number
+    checked_view_dictionary_propagation_test.go:75: pinned exit 70: adamic: panic: field read failed: table['item']; expected string[] | undefined, found number
+    checked_view_dictionary_propagation_test.go:75: pinned exit 70: adamic: panic: field read failed: table['item']; expected string[] | undefined, found number
+=== RUN   TestCheckedViewDictionaryArrays/paths-element-wrong
+    checked_view_dictionary_propagation_test.go:75: pinned exit 70: adamic: panic: element read failed: values[0] expected string, found number
+    checked_view_dictionary_propagation_test.go:75: pinned exit 70: adamic: panic: element read failed: values[0] expected string, found number
+    checked_view_dictionary_propagation_test.go:75: pinned exit 70: adamic: panic: element read failed: values[0] expected string, found number
+=== RUN   TestCheckedViewDictionaryArrays/paths-key-missing
+--- PASS: TestCheckedViewDictionaryArrays (2.18s)
+    --- PASS: TestCheckedViewDictionaryArrays/paths-good (0.38s)
+    --- PASS: TestCheckedViewDictionaryArrays/paths-missing (0.36s)
+    --- PASS: TestCheckedViewDictionaryArrays/paths-container-wrong (0.35s)
+    --- PASS: TestCheckedViewDictionaryArrays/paths-wrong (0.36s)
+    --- PASS: TestCheckedViewDictionaryArrays/paths-element-wrong (0.36s)
+    --- PASS: TestCheckedViewDictionaryArrays/paths-key-missing (0.36s)
+=== RUN   TestCheckedViewDictionaryRoot
+=== RUN   TestCheckedViewDictionaryRoot/good
+=== RUN   TestCheckedViewDictionaryRoot/wrong
+--- PASS: TestCheckedViewDictionaryRoot (0.70s)
+    --- PASS: TestCheckedViewDictionaryRoot/good (0.36s)
+    --- PASS: TestCheckedViewDictionaryRoot/wrong (0.35s)
+=== RUN   TestCheckedViewDictionaryWriteGuard
+--- PASS: TestCheckedViewDictionaryWriteGuard (0.12s)
+=== RUN   TestCheckedViewDictionarySource
+=== RUN   TestCheckedViewDictionarySource/options-good
+=== RUN   TestCheckedViewDictionarySource/options-read-wrong
+=== RUN   TestCheckedViewDictionarySource/array-read-wrong
+=== RUN   TestCheckedViewDictionarySource/options-wrong
+=== RUN   TestCheckedViewDictionarySource/nested-good
+=== RUN   TestCheckedViewDictionarySource/nested-wrong
+=== RUN   TestCheckedViewDictionarySource/array-wrong
+--- PASS: TestCheckedViewDictionarySource (2.58s)
+    --- PASS: TestCheckedViewDictionarySource/options-good (0.36s)
+    --- PASS: TestCheckedViewDictionarySource/options-read-wrong (0.35s)
+    --- PASS: TestCheckedViewDictionarySource/array-read-wrong (0.36s)
+    --- PASS: TestCheckedViewDictionarySource/options-wrong (0.38s)
+    --- PASS: TestCheckedViewDictionarySource/nested-good (0.38s)
+    --- PASS: TestCheckedViewDictionarySource/nested-wrong (0.38s)
+    --- PASS: TestCheckedViewDictionarySource/array-wrong (0.36s)
+=== RUN   TestCheckedViewDictionarySourceMutants
+=== RUN   TestCheckedViewDictionarySourceMutants/skip-check
+    checked_view_dictionary_source_test.go:84: pinned source read catches skip-check: exit=0 stdout="object\n" stderr=""
+    checked_view_dictionary_source_test.go:84: pinned source read catches skip-check: exit=0 stdout="object\n" stderr=""
+=== RUN   TestCheckedViewDictionarySourceMutants/accept-wrong-shape
+    checked_view_dictionary_source_test.go:84: pinned source read catches accept-wrong-shape: exit=0 stdout="object\n" stderr=""
+    checked_view_dictionary_source_test.go:84: pinned source read catches accept-wrong-shape: exit=0 stdout="object\n" stderr=""
+=== RUN   TestCheckedViewDictionarySourceMutants/drop-transitive-check
+    checked_view_dictionary_source_test.go:84: pinned source read catches drop-transitive-check: exit=0 stdout="42\n" stderr=""
+    checked_view_dictionary_source_test.go:84: pinned source read catches drop-transitive-check: exit=0 stdout="42\n" stderr=""
+--- PASS: TestCheckedViewDictionarySourceMutants (0.61s)
+    --- PASS: TestCheckedViewDictionarySourceMutants/skip-check (0.20s)
+    --- PASS: TestCheckedViewDictionarySourceMutants/accept-wrong-shape (0.21s)
+    --- PASS: TestCheckedViewDictionarySourceMutants/drop-transitive-check (0.21s)
+=== RUN   TestCheckedViewDictionaryStorageMutants
+=== RUN   TestCheckedViewDictionaryStorageMutants/skip-check
+    checked_view_dictionary_source_test.go:126: pinned source read catches skip-check: exit=0 stdout="object\n" stderr=""
+    checked_view_dictionary_source_test.go:126: pinned source read catches skip-check: exit=0 stdout="object\n" stderr=""
+=== RUN   TestCheckedViewDictionaryStorageMutants/accept-wrong-shape
+    checked_view_dictionary_source_test.go:126: pinned source read catches accept-wrong-shape: exit=0 stdout="object\n" stderr=""
+    checked_view_dictionary_source_test.go:126: pinned source read catches accept-wrong-shape: exit=0 stdout="object\n" stderr=""
+=== RUN   TestCheckedViewDictionaryStorageMutants/drop-transitive-check
+    checked_view_dictionary_source_test.go:126: pinned source read catches drop-transitive-check: exit=0 stdout="42\n" stderr=""
+    checked_view_dictionary_source_test.go:126: pinned source read catches drop-transitive-check: exit=0 stdout="42\n" stderr=""
+--- PASS: TestCheckedViewDictionaryStorageMutants (0.60s)
+    --- PASS: TestCheckedViewDictionaryStorageMutants/skip-check (0.20s)
+    --- PASS: TestCheckedViewDictionaryStorageMutants/accept-wrong-shape (0.20s)
+    --- PASS: TestCheckedViewDictionaryStorageMutants/drop-transitive-check (0.20s)
+=== RUN   TestCheckedViewDictionaryStorage
+=== RUN   TestCheckedViewDictionaryStorage/mutable-good
+=== RUN   TestCheckedViewDictionaryStorage/mutable-wrong
+=== RUN   TestCheckedViewDictionaryStorage/array-shape-wrong
+=== RUN   TestCheckedViewDictionaryStorage/union-shape-wrong
+=== RUN   TestCheckedViewDictionaryStorage/number-good
+=== RUN   TestCheckedViewDictionaryStorage/number-wrong
+=== RUN   TestCheckedViewDictionaryStorage/boolean-good
+=== RUN   TestCheckedViewDictionaryStorage/boolean-wrong
+=== RUN   TestCheckedViewDictionaryStorage/string-good
+=== RUN   TestCheckedViewDictionaryStorage/union-good
+=== RUN   TestCheckedViewDictionaryStorage/partial-good
+=== RUN   TestCheckedViewDictionaryStorage/partial-wrong
+=== RUN   TestCheckedViewDictionaryStorage/object-good
+=== RUN   TestCheckedViewDictionaryStorage/object-wrong
+=== RUN   TestCheckedViewDictionaryStorage/array-good
+=== RUN   TestCheckedViewDictionaryStorage/array-wrong
+--- PASS: TestCheckedViewDictionaryStorage (6.00s)
+    --- PASS: TestCheckedViewDictionaryStorage/mutable-good (0.38s)
+    --- PASS: TestCheckedViewDictionaryStorage/mutable-wrong (0.37s)
+    --- PASS: TestCheckedViewDictionaryStorage/array-shape-wrong (0.39s)
+    --- PASS: TestCheckedViewDictionaryStorage/union-shape-wrong (0.37s)
+    --- PASS: TestCheckedViewDictionaryStorage/number-good (0.38s)
+    --- PASS: TestCheckedViewDictionaryStorage/number-wrong (0.36s)
+    --- PASS: TestCheckedViewDictionaryStorage/boolean-good (0.37s)
+    --- PASS: TestCheckedViewDictionaryStorage/boolean-wrong (0.35s)
+    --- PASS: TestCheckedViewDictionaryStorage/string-good (0.38s)
+    --- PASS: TestCheckedViewDictionaryStorage/union-good (0.38s)
+    --- PASS: TestCheckedViewDictionaryStorage/partial-good (0.38s)
+    --- PASS: TestCheckedViewDictionaryStorage/partial-wrong (0.38s)
+    --- PASS: TestCheckedViewDictionaryStorage/object-good (0.39s)
+    --- PASS: TestCheckedViewDictionaryStorage/object-wrong (0.37s)
+    --- PASS: TestCheckedViewDictionaryStorage/array-good (0.39s)
+    --- PASS: TestCheckedViewDictionaryStorage/array-wrong (0.38s)
+=== RUN   TestCheckedViewDictionaryProducerCertificateMutant
+    checked_view_dictionary_storage_test.go:83: wrong producer certificate caught only by record storage check, exit 70
+--- PASS: TestCheckedViewDictionaryProducerCertificateMutant (0.20s)
+=== RUN   TestCheckedViewDictionaryComponents
+=== PAUSE TestCheckedViewDictionaryComponents
+=== RUN   TestCheckedViewDictionaryComponentMutants
+=== PAUSE TestCheckedViewDictionaryComponentMutants
+=== RUN   TestCheckedViewDictionaryJavaScriptGuards
+=== PAUSE TestCheckedViewDictionaryJavaScriptGuards
+=== RUN   TestCheckedViewDictionaryNativeStorageGuard
+=== PAUSE TestCheckedViewDictionaryNativeStorageGuard
+=== RUN   TestNodeProcessEnvironmentRuntime
+=== PAUSE TestNodeProcessEnvironmentRuntime
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestCheckedViewDictionaryComponents
+=== CONT  TestCheckedViewDictionaryNativeStorageGuard
+=== CONT  TestCheckedViewDictionaryComponentMutants
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestCheckedViewDictionaryJavaScriptGuards
+=== RUN   TestCheckedViewDictionaryComponentMutants/skip-check
+=== RUN   TestCheckedViewDictionaryJavaScriptGuards/container
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_discarded.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_discarded.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_guarded_snapshot.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_guarded_snapshot.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_missing_scalar.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_missing_scalar.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_left.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_left.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_right.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_right.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_environment_boundary.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_environment_boundary.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_parser.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_parser.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_views.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_views.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_undefined.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_undefined.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_refuse/r24.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_refuse/r24.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_operations.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_operations.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_ownership.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_ownership.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_for_in.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_for_in.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_census.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_census.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_scalars.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_scalars.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_optional.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_optional.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_number.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_number.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_reference.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_reference.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_read.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_read.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_in.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_in.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_set.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_set.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_scanner.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_scanner.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_composition.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_composition.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_value.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_value.a
+=== CONT  TestNodeProcessEnvironmentRuntime
+=== RUN   TestCheckedViewDictionaryJavaScriptGuards/accessor
+=== NAME  TestCheckedViewDictionaryComponentMutants/skip-check
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="[object Object]\nundefined\n"
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="[object Object]\nundefined\n"
+=== RUN   TestCheckedViewDictionaryComponentMutants/accept-wrong-shape
+=== RUN   TestCheckedViewDictionaryComponents/options-good
+=== RUN   TestCheckedViewDictionaryJavaScriptGuards/missing-child
+--- PASS: TestCheckedViewDictionaryNativeStorageGuard (0.22s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_discarded.a
+=== RUN   TestCheckedViewDictionaryJavaScriptGuards/required-missing
+=== NAME  TestCheckedViewDictionaryComponentMutants/accept-wrong-shape
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="undefined\n"
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="undefined\n"
+=== RUN   TestCheckedViewDictionaryComponentMutants/drop-transitive-contract
+=== RUN   TestCheckedViewDictionaryComponents/options-wrong
+--- PASS: TestCheckedViewDictionaryJavaScriptGuards (0.38s)
+    --- PASS: TestCheckedViewDictionaryJavaScriptGuards/container (0.12s)
+    --- PASS: TestCheckedViewDictionaryJavaScriptGuards/accessor (0.08s)
+    --- PASS: TestCheckedViewDictionaryJavaScriptGuards/missing-child (0.10s)
+    --- PASS: TestCheckedViewDictionaryJavaScriptGuards/required-missing (0.08s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_for_in.a
+=== RUN   TestNodeProcessEnvironmentRuntime/set
+=== NAME  TestCheckedViewDictionaryComponentMutants/drop-transitive-contract
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="42\n"
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="42\n"
+--- PASS: TestCheckedViewDictionaryComponentMutants (0.46s)
+    --- PASS: TestCheckedViewDictionaryComponentMutants/skip-check (0.17s)
+    --- PASS: TestCheckedViewDictionaryComponentMutants/accept-wrong-shape (0.16s)
+    --- PASS: TestCheckedViewDictionaryComponentMutants/drop-transitive-contract (0.13s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_value.a
+=== RUN   TestCheckedViewDictionaryComponents/nested-good
+=== RUN   TestCheckedViewDictionaryComponents/nested-wrong
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_composition.a
+=== NAME  TestNodeProcessEnvironmentRuntime/set
+    node_process_environment_test.go:75: clean runtime mutant caught by Node stdout comparison
+=== RUN   TestNodeProcessEnvironmentRuntime/delete
+=== RUN   TestCheckedViewDictionaryComponents/array-wrong
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_scanner.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_set.a
+--- PASS: TestCheckedViewDictionaryComponents (0.98s)
+    --- PASS: TestCheckedViewDictionaryComponents/options-good (0.17s)
+    --- PASS: TestCheckedViewDictionaryComponents/options-wrong (0.14s)
+    --- PASS: TestCheckedViewDictionaryComponents/nested-good (0.16s)
+    --- PASS: TestCheckedViewDictionaryComponents/nested-wrong (0.17s)
+    --- PASS: TestCheckedViewDictionaryComponents/array-wrong (0.14s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_in.a
+=== NAME  TestNodeProcessEnvironmentRuntime/delete
+    node_process_environment_test.go:75: clean runtime mutant caught by Node stdout comparison
+--- PASS: TestNodeProcessEnvironmentRuntime (1.11s)
+    --- PASS: TestNodeProcessEnvironmentRuntime/set (0.36s)
+    --- PASS: TestNodeProcessEnvironmentRuntime/delete (0.35s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_read.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_reference.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_number.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_optional.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_scalars.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_census.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_parser.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_ownership.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_operations.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_refuse/r24.a
+    oracle_test.go:734: not yet: /workspace/adamic/internal/oracle/testdata/records_refuse/r24.a:4:20: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_undefined.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_views.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_left.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_environment_boundary.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_right.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_missing_scalar.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_guarded_snapshot.a
+--- PASS: TestNativeAgreesWithNode (0.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_discarded.a (0.56s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_for_in.a (0.56s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_value.a (0.50s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_composition.a (0.55s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_scanner.a (0.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_set.a (0.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_in.a (0.52s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_read.a (0.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_reference.a (0.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_number.a (0.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_optional.a (0.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_scalars.a (0.56s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_refuse/r24.a (0.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_census.a (0.58s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_parser.a (0.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_ownership.a (0.60s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_operations.a (0.60s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_undefined.a (0.53s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_views.a (0.55s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_left.a (0.50s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_right.a (0.49s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_environment_boundary.a (0.52s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_missing_scalar.a (0.54s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_guarded_snapshot.a (0.44s)
+PASS
+gate cache: native hits=0 misses=80
+gate cache: node hits=0 misses=160
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	19.454s

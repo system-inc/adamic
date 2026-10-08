@@ -1603,3 +1603,160 @@ rank 36) are already in our 42/181 inventory; they are not added or certified
 again. Owned resume/dictionary-member-handoff.json records this split and counts.
 Full dynamic lookup validation awaits lane 6's hooks in views-integration,
 currently ba59427c locally; no dictionary branch was merged.
+
+### Dictionary source hooks, October 8 rule change
+
+The user now authorizes minimal named shared hooks. This supersedes the waiting
+on owner handoffs above. Dictionary source read group owns these shared hunks:
+
+- `ir/views.go`: ViewDictionary, a read descriptor, never a writable-slot proof.
+- `ir/ir.go`: Property.DictionaryKey, evaluated after the receiver exactly once.
+- `ir/view_dictionaries.go`: DictionaryReadKinds, common fail-closed adapter boundary.
+- `lower/view_lazy.go`: stringDictionary dispatch to viewDictionaryContractHook.
+- `lower/refusals.go`: defer index-signature obligations to producer/read lowering.
+- `lower/object.go`: named and indexed dictionaryRead hooks before tuple dispatch.
+- `lower/readiness.go`: preserve DictionaryKey guards through final rewriting.
+- `lower/shape_conformance.go`: exclude dynamic dictionary reads from scalar erasure.
+- `lower/view_writes.go`: dictionary read descriptors cannot certify writes.
+- `flow/infer.go`: visit dictionary key effects after receiver effects.
+- `native/emit_expressions.go` and `javascript/javascript.go`: dictionaryRead dispatch.
+- JavaScript assembly includes DictionaryRuntime after shared readiness metadata.
+- `runtime/record.c` and `adamic.h`: adamic_record_is checks the actual producer
+  shape; adamic_record_check_missing_member reuses the existing own-key policy.
+
+The new native source adapter probes actual fixed-shape slot type/readiness before
+normalizing a selected value. It preserves identity and does not copy or reinterpret
+an ordinary object as a table. Actual record wrappers route through existing record.c
+and independently check the table's reference-value representation. No second record
+representation is introduced. Source dictionary literals currently retain their
+existing fixed shapes; dynamic record producers/writes are the next owned group.
+
+Seven compiler-source controls and six source semantic mutants supplement the
+original component tests. Rich element adapters remain demanded-read refusals.
+The accepted measurement is 29 pairs / 228 reads, labeled static candidates.
+No production candidate pair is credited from representative fixtures alone.
+
+### Dictionary shared storage and propagation hooks, October 8
+
+This lane merges records-lowering 456c981b at the user's explicit request. It
+supersedes the earlier handoff for record production; other lane changes still
+arrive through views-integration. No parallel table representation is introduced.
+
+Owned minimal shared hunks in this group:
+
+- `lower/generic.go`: inferDictionaryIndexTypes carries instantiated string-index
+  element arguments into generic helper bodies.
+- `lower/view_objects.go`: structural dictionary views use the existing view path.
+- `ir/ir.go`: Record uses storage tag 14, preserving reserved null/undefined tags
+  12 and 13 already used by checked field writes.
+- `ir/records.go`: read demand metadata and an optional DictionaryRead descriptor.
+- `lower/records.go`: prepare checked record reads, reuse finite-partial storage,
+  permit boxed primitive unions, and defer structural casts to checked admission.
+- `lower/view_dictionaries.go`: internDictionaryViewContract describes Record
+  producers; dictionaryProducerRefusal checks unsupported actual producers;
+  dictionaryWriteRefusal separates ordinary records from uncertified view writes;
+  regexDictionaryReceiver keeps named RegExp groups on their owning adapter.
+- `lower/view_lazy.go`: finite-partial dictionary descriptors, Record aggregate
+  reachability, and demanded refusals for unsupported reads/enumeration.
+- `lower/view_contracts.go` and `lower/interface_cast.go`: Record-valued optional
+  fields retain their dictionary contracts and lazy admission.
+- `native/emit_records.go` and `javascript/records.go`: select the checked read
+  descriptor conservatively when the program has view origins; plain programs
+  retain the original record operations. Native producers call record_new_typed.
+- `runtime/record.c` and `adamic.h`: record_new_typed stores an independent
+  element representation certificate in the existing wrapper's numeric slot 1;
+  record_storage_check rejects operations through mismatched storage.
+- `runtime/view_dictionaries.c`: scalar/maybe-number reads decode that source
+  certificate; reference tables still classify existing heap values and boxes.
+- `runtime/object.c`, `native/view_fields.go`, `javascript/readiness.go`: Record
+  container reads check the ordinary object heap kind before read dispatch.
+- `fresh/fresh.go`: dynamic dictionary reads use the existing element edge.
+- `lower/cycles.go`: unsafe writes into counted record tables retain cycle
+  refusals until the graph ownership lane supplies record cleanup.
+- Merge compatibility: callableDataDeclaration in `lower/view_callables.go`
+  prevents a destructuring BindingPattern from reaching Node.Text; the existing
+  flow oracle for require_node_perf_hooks exercises the repaired path.
+- `native/record_test.go`: preserve semantic mutants after the exported missing
+  member helper rename; `oracle/records_test.go`: use the current leak checker.
+
+Group 3's MapLike<string[]> candidate has source reads over both fixed objects
+and genuine record producers, with transitive array checks. It credits 1 pair / 6
+candidate reads; 28 pairs / 222 reads remain. Enumeration and uncertified writes
+remain demanded refusals. Rich CompilerOptions element unions are unfinished.
+
+### Dictionary group 4: lazy rich container read
+
+New lane files: `internal/oracle/checked_view_dictionary_container_test.go` and
+`dictionaries/source/command-options-{good,wrong,missing}.a`. No shared code hook
+was needed. The required ParsedCommandLine.options container read checks object
+kind and presence without demanding unread rich union elements. This credits
+the 111-read candidate container pair only, not CompilerOptions dynamic reads.
+
+Union selection overlap proposed to lane 4: scalar and nullish alternatives at
+dictionary element extraction. Lane 4b: object/array alternatives in
+CompilerOptionsValue and TsConfigSourceFile unions. Dictionary storage, lookup,
+absence and enumeration adapters remain this lane's responsibility.
+
+### Dictionary group 5: remaining direct container shapes
+
+Lane files: extend `internal/oracle/checked_view_dictionary_container_test.go`
+and `checked_view_dictionary_propagation_test.go`; new `.a` witnesses under
+`dictionaries/source/` named watch-options, wildcard-directories, version-paths,
+incremental-{multi-options,bundle-options,options}, {reusable,builder}-state-options,
+and compiler-paths, each with valid, wrong and absent cases. No shared hook
+changed. Parent container checks retain unsupported unread union descriptors;
+CompilerOptions.paths uses the mixed named/index-signature read dispatch and
+checks extracted arrays transitively. Container bypass is a semantic C/JS mutant.
+
+User accepted lane 4's primitive/nullish and lane 4b's object/array/TsConfigSourceFile
+element selection handoffs. Storage, lookup, absence and enumeration remain
+with dictionaries. Candidate string and Path dynamic rows are string indexing
+according to their census sites; counts stay pending until disposition evidence.
+
+### Dictionary group 6: optional receiver presence
+
+New lane files: `internal/oracle/checked_view_dictionary_optional_test.go` and
+`dictionaries/source/optional-{watch,options,wildcard}-{good,wrong,missing,receiver-missing}.a`.
+Minimal shared hooks: `native/runtime/object.c:adamic_object_optional_view`
+distinguishes an absent receiver from a missing required field on a present
+receiver; `javascript/readiness.go:adamicViewField` permits undefined because
+of optional chaining only when the receiver is absent. The compiling C/JS
+optional-absence mutant deliberately restores that conflation.
+
+### Dictionary group 7: erased-source lookup admission
+
+New lane files: `internal/oracle/checked_view_dictionary_lookup_test.go` and
+`dictionaries/source/{map-string,map-generic,package-paths}-*.a`. Named hook
+`lower/view_dictionaries.go:dictionaryCastNeedsView` is called minimally from
+`lower/cast_proof.go` before apparent upcast admission. An erased structural
+source declaring no keys cannot certify dictionary storage by assignability;
+its reads install the ordinary lazy dictionary view. Nominal and writable-slot
+restrictions remain required. Existing shared record storage is reused.
+
+Group 7 also adds the minimal dictionary-property pointer traversal in
+`lower/readiness.go:readinessStatement`. Its record read descriptor must receive
+the same parameter readiness facts as its enclosing operation; otherwise a
+generic dictionary helper emits a nonexistent parameter readiness flag.
+
+### Dictionary group 8: finite keys and optional named lookup
+
+New lane file: `lower/view_dictionary_lookup.go`, containing named hooks
+finiteDictionaryKeys and optionalDictionaryField. Minimal dispatch hooks in
+`lower/object.go` select these adapters; `lower/view_dictionaries.go` exposes
+dictionaryReadContract to preserve the selected declaration through an optional
+receiver. Finite string keys select ordinary own fields through the existing
+dictionary probe. Optional named lookup uses an ordinary IR conditional helper,
+evaluates the receiver once and distinguishes receiver absence from field absence.
+New source witnesses are optional-paths and finite-cache shapes; the propagation
+oracle gains the optional-paths controls. No record representation is added.
+
+Group 8 also owns `internal/oracle/checked_view_dictionary_finite_test.go`, finite-cache
+and enum-map source controls, optional required-field controls, and compiling C/JS
+finite-key and optional short-circuit mutants. Numeric enums use the existing adapter.
+
+Dictionary integration cleanup hook: native/view_callables_discard.go releases
+known Record producer results along with the existing reference result kinds.
+lane5/stored-marker/record.a exercises a dynamically allocated string in that
+record; TestCheckedViewStoredMarkerCalls pins Node agreement and native cleanup.
+The producer result certificate determines ownership; no valued callable shape
+is admitted by this discarded-result cleanup.

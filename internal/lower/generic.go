@@ -237,6 +237,7 @@ func (l *lowering) inferTypes(declared *checker.Type, instantiated *checker.Type
 		return
 	}
 	if declared.Flags()&checker.TypeFlagsObject != 0 && instantiated.Flags()&checker.TypeFlagsObject != 0 {
+		l.inferDictionaryIndexTypes(declared, instantiated, into)
 		if declared.ObjectFlags()&checker.ObjectFlagsReference != 0 && instantiated.ObjectFlags()&checker.ObjectFlagsReference != 0 {
 			declaredArguments, instantiatedArguments := l.checker.GetTypeArguments(declared), l.checker.GetTypeArguments(instantiated)
 			for index := range declaredArguments {

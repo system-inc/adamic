@@ -1,7 +1,7 @@
 Integrated checked-view lane checkpoints into codex/views-integration from ab4d6f902; further tips remain queued.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
 Focused compiler packages, full IR, filtered Node oracle and vet pass after every published merge.
-330 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
+361 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -975,3 +975,90 @@ functions and exact execution reachability remain unmeasured. Optional-boolean
 landing hold remains until explicitly lifted by the user.
 
 Object/primitive required gates pass: lower 13.159s, native 20.909s, JavaScript 1.386s; full IR 18.977s; filtered uncached oracle 298.001s, 1531 Node executions, both original suites enabled; go vet ./... exit 0.
+
+Dictionary newest tip deec3c933543c7b5e7ba0d9db0964265d03c494c
+
+Fourteen conflicting hunks in eleven files are resolved individually:
+- docs/checked-views-plan.md: retain both append inventories and all shared hooks.
+- ir/views.go: retain Nullable and Map kind ordinals, append Dictionary separately.
+- javascript/javascript.go (two): keep Map certificate runtime plus dictionary runtime;
+  dispatch explicit DictionaryKey reads before ordinary boxed-union field dispatch.
+- javascript/readiness.go: keep ninth undefined-member flag, strict required-field
+  presence and callable kind 8; add Record kind 14 as an object heap read.
+- lower/interface_cast.go: add Record to the existing supported-storage exception
+  without dropping nullable/Map/callable/object-primitive handling or accessors.
+- lower/library_object.go: dispatch record operations and array-record production
+  independently, preserving the original object operations below them.
+- lower/optional_widening_census_test.go (two): retain AsString API and structured
+  disposition/diagnostic census, rather than old string conversions.
+- lower/view_lazy.go: keep owner nullable/Map dispatch, then dictionary descriptors.
+- lower/view_writes.go: refuse Unknown, Nullable, Map and Dictionary slot writes
+  unless their owning adapter supplies a certificate; keep all older refusals.
+- native/runtime/object.c: keep separate undefined-member payload, optional
+  receiver and optional-field flags, matching the incoming presence tightening.
+- oracle/testdata/field_access_paths.a: keep readonly qualifiers and declaration
+  order pinned by prior optional storage evidence.
+
+The first dictionary source preflight (95.657s) exposes nullable Record masks
+using physical type 14 while the runtime independently reports object heap kind 4.
+Normalize only that logical kind in the lower mask; native nullish storage validates actual Record-tagged references as
+object heaps before using them. Element storage certificates remain independent,
+and container admission does not scan unread entries. Nullable diagnostic pins
+now name the owner's matches-no-member refusal while retaining exact field, type,
+found value and exit 70. Reconciled container, optional-required-presence, absence
+mutant and nested array suites pass in 39.797s.
+
+The independently known Record callable producer result must be released by
+discarded marker calls. Before the added Record cleanup, stored-marker/record.a
+compiles but leaks 341 bytes in three allocations under LeakSanitizer (0.601s).
+The source dynamically allocates its string, so immortal literal optimization
+cannot hide ownership. Adding Record to the independently recorded result-kind
+release restores Node/native/JS agreement and cleanup (0.425s). Counts are measured
+in 6.829s and the new row is inserted before the untouched predicate table.
+No valued callable ABI admission changes; ordinary mixed-union callbacks remain
+refused. The incoming narrow callableDataDeclaration guard preserves supported
+runtime signatures while preventing BindingPattern.Text panics.
+
+The Go cache filled the workspace disk during reconciliation and an integration
+mutant attempt. These setup/build failures are not mutant kills. Source was
+restored in finally; only disposable cache entries older than two hours were
+removed (16638411467 bytes). Exact initial and rerun logs are retained. Required
+gates run on restored production after all integration mutations complete.
+Optional-boolean landing hold remains; this merge is not advertised for landing.
+
+Integration mutations now execute successfully: omitting Record discard release
+reproduces LeakSanitizer's compiled leak; restoring the old physical-kind mask
+rejects valid wildcardDirectories; omitting native actual-14 decoding rejects a
+genuine Record producer in paths-producer-good.a. The initial last mutation used
+a fixed-object producer and survived, so it is not credited. The added genuine
+producer first passes Node, sanitized native, release native and JavaScript
+(0.628s), then detects the omission. All three finally restore production.
+
+A fourth isolated source mutant uses a Go overlay to remove only the counted-
+Record cycle refusal while leaving the working source untouched. TestRecordRefusals
+then admits both direct self and Node.links self-cycle programs, losing two
+required refusals (2.392s); no compile failure is credited. The normal record
+suite runs independently on restored source. The overlay and all raw logs are
+retained. Dictionary's existing source/storage/finite/member/origin/producer
+counterfactual suites execute in the required oracle; their component group
+was counted previously and is not counted twice.
+
+Supplemental full flow/freshness run remains red: flow 172.078s and freshness
+119.913s. BindingPattern panic is gone and perf_hooks programs are no longer
+failing. The full run exposes eleven refused source fixtures in flow: the two
+previously reproduced census refusals, process_exit/default/bad_code, cwd_error,
+write_file/write_buffer/rm/mkdtemp and nbody_field_values. An unmodified prior
+integration 8afdc710 exact nine-fixture trace run reproduces all nine latter
+messages in 1.818s. Freshness reports thirteen unknown PhantomMember writes; an
+isolated test-only overlay that selects phantom fixtures against that same
+unchanged parent reproduces all thirteen in .505s. This overlay is only baseline
+evidence, not a change to the normal corpus or an excluded required oracle.
+
+Supplemental records/readiness gate passes native 58.029s and oracle 15.168s.
+Lower reports one newly added diagnostic pin: nullable Record JSON.stringify
+still refuses as NotYet, now specifically naming missing runtime element
+metadata rather than generic value-of-type refusal. Updating only that reason
+retains the refused fixture; all record lower tests pass in 2.882s and lower vet
+passes. No broader source feature was enabled to make this pin pass.
+
+Dictionary required gates pass on restored production: lower 14.446s, native 55.921s, JavaScript 2.334s, full IR 14.444s; filtered oracle 588.603s, 1855 Node checks and 526 native checks, no exclusions; whole vet passes. This merge adds 27 dictionary counterfactuals and four integration mutants (31 total). Final cycle overlay detects only the two expected lost refusals (.516s). Final whole vet also passes after the diagnostic pin and removal of unreachable nullable member mappings. Next: final untagged tip cd32db423, then ranked arrays 5c609c010.

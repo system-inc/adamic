@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/tmp/views-integration-dictionary-mutants.py", line 12, in <module>
+    out=logfile.read_text();assert r.returncode!=0 and '--- FAIL: Test' in out and '[build failed]' not in out and 'clang failed' not in out,out
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: # github.com/system-inc/adamic/internal/oracle
+internal/oracle/array_holes_test.go:6:2: open /home/agent/.cache/go-build/24/24cd558b0c06cbc037c922e86742c2f40ba1a5fd1a714e8121f8eea4be2006f2-a: no space left on device
+FAIL	github.com/system-inc/adamic/internal/oracle [setup failed]
+FAIL
+

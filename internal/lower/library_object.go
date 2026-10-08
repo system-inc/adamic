@@ -9,6 +9,9 @@ import (
 )
 
 func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+	if value, handled, err := l.recordObjectCall(node, name); handled {
+		return value, true, err
+	}
 	if value, handled, err := l.viewArrayRecordProduction(node, name); handled {
 		return value, true, err
 	}

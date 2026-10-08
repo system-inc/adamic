@@ -18,7 +18,7 @@ func (e *emitter) viewField(property ir.Property) string {
 	}
 	object := e.value(property.Object)
 	slot := e.temporary()
-	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map", ir.Closure: "function", ir.MaybeNumber: "number | undefined", ir.MaybeBoolean: "boolean | undefined"}
+	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Record: "object", ir.Array: "array", ir.Map: "Map", ir.Closure: "function", ir.MaybeNumber: "number | undefined", ir.MaybeBoolean: "boolean | undefined"}
 	name, supported := names[of]
 	if !supported || property.Method {
 		panic("compiler bug: incomplete checked field contract")
