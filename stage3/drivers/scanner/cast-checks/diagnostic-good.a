@@ -1,0 +1,6 @@
+interface DiagnosticMessage { elidedInCompatabilityPyramid?: boolean; }
+function diag(elidedInCompatabilityPyramid?: boolean) {
+    return { elidedInCompatabilityPyramid };
+}
+const value = diag(true) as DiagnosticMessage;
+console.log(`${value.elidedInCompatabilityPyramid}`);

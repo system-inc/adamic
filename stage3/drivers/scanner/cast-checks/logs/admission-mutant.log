@@ -1,0 +1,6 @@
+=== RUN   TestOptionalPresenceViewCast
+    view_optional_presence_cast_test.go:11: /tmp/adamic-gate/TestOptionalPresenceViewCast3777758913/001/main.a:1:103: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- FAIL: TestOptionalPresenceViewCast (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.064s
+FAIL

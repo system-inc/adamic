@@ -1,0 +1,21 @@
+=== RUN   TestCountsAreRecorded
+=== PAUSE TestCountsAreRecorded
+=== CONT  TestCountsAreRecorded
+=== RUN   TestCountsAreRecorded/fixtures
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/process_exit_default.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/process_exit_default.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/census_small_boolean.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/census_small_boolean.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/process_exit_default.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/census_small_boolean.a
+=== NAME  TestCountsAreRecorded/fixtures/internal/oracle/testdata/process_exit_default.a
+    counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/process_exit_default.a:3:26: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet
+=== NAME  TestCountsAreRecorded/fixtures/internal/oracle/testdata/census_small_boolean.a
+    counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/census_small_boolean.a:19:16: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet
+--- FAIL: TestCountsAreRecorded (0.08s)
+    --- FAIL: TestCountsAreRecorded/fixtures (0.03s)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/process_exit_default.a (0.05s)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/census_small_boolean.a (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.088s
+FAIL

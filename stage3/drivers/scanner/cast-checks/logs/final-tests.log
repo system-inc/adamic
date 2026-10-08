@@ -1,0 +1,212 @@
+=== RUN   TestOptionalWideningViews
+=== PAUSE TestOptionalWideningViews
+=== RUN   TestOptionalWideningAllowed
+=== PAUSE TestOptionalWideningAllowed
+=== RUN   TestViewPreflightPreservesOtherRefusals
+--- PASS: TestViewPreflightPreservesOtherRefusals (0.07s)
+=== RUN   TestOptionalPresenceViewCast
+--- PASS: TestOptionalPresenceViewCast (0.03s)
+=== RUN   TestOptionalPresenceViewPreservesSlotTypes
+--- PASS: TestOptionalPresenceViewPreservesSlotTypes (0.16s)
+=== CONT  TestOptionalWideningViews
+=== CONT  TestOptionalWideningAllowed
+=== RUN   TestOptionalWideningAllowed/class
+=== PAUSE TestOptionalWideningAllowed/class
+=== RUN   TestOptionalWideningAllowed/fresh
+=== PAUSE TestOptionalWideningAllowed/fresh
+=== RUN   TestOptionalWideningAllowed/declared
+=== PAUSE TestOptionalWideningAllowed/declared
+=== RUN   TestOptionalWideningAllowed/subclass
+=== PAUSE TestOptionalWideningAllowed/subclass
+=== RUN   TestOptionalWideningAllowed/generic_subclass
+=== PAUSE TestOptionalWideningAllowed/generic_subclass
+=== CONT  TestOptionalWideningAllowed/class
+=== CONT  TestOptionalWideningAllowed/subclass
+=== CONT  TestOptionalWideningAllowed/generic_subclass
+=== CONT  TestOptionalWideningAllowed/declared
+=== RUN   TestOptionalWideningViews/argument
+=== PAUSE TestOptionalWideningViews/argument
+=== RUN   TestOptionalWideningViews/array_element
+=== PAUSE TestOptionalWideningViews/array_element
+=== RUN   TestOptionalWideningViews/arrow
+=== PAUSE TestOptionalWideningViews/arrow
+=== RUN   TestOptionalWideningViews/assignment
+=== PAUSE TestOptionalWideningViews/assignment
+=== RUN   TestOptionalWideningViews/cast
+=== PAUSE TestOptionalWideningViews/cast
+=== RUN   TestOptionalWideningViews/class_derived
+=== PAUSE TestOptionalWideningViews/class_derived
+=== RUN   TestOptionalWideningViews/class_expression
+=== PAUSE TestOptionalWideningViews/class_expression
+=== RUN   TestOptionalWideningViews/class_field
+=== PAUSE TestOptionalWideningViews/class_field
+=== RUN   TestOptionalWideningViews/class_generic
+=== PAUSE TestOptionalWideningViews/class_generic
+=== RUN   TestOptionalWideningViews/class_generic_compound
+=== PAUSE TestOptionalWideningViews/class_generic_compound
+=== RUN   TestOptionalWideningViews/class_transitive
+=== PAUSE TestOptionalWideningViews/class_transitive
+=== RUN   TestOptionalWideningViews/field
+=== PAUSE TestOptionalWideningViews/field
+=== RUN   TestOptionalWideningViews/field_access_paths
+=== PAUSE TestOptionalWideningViews/field_access_paths
+=== RUN   TestOptionalWideningViews/generic
+=== PAUSE TestOptionalWideningViews/generic
+=== RUN   TestOptionalWideningViews/incompatible
+=== PAUSE TestOptionalWideningViews/incompatible
+=== RUN   TestOptionalWideningViews/initializer
+=== PAUSE TestOptionalWideningViews/initializer
+=== RUN   TestOptionalWideningViews/nested
+=== PAUSE TestOptionalWideningViews/nested
+=== RUN   TestOptionalWideningViews/parameter_default
+=== PAUSE TestOptionalWideningViews/parameter_default
+=== RUN   TestOptionalWideningViews/property_write
+=== PAUSE TestOptionalWideningViews/property_write
+=== RUN   TestOptionalWideningViews/readonly
+=== PAUSE TestOptionalWideningViews/readonly
+=== RUN   TestOptionalWideningViews/return
+=== PAUSE TestOptionalWideningViews/return
+=== RUN   TestOptionalWideningViews/shorthand
+=== PAUSE TestOptionalWideningViews/shorthand
+=== RUN   TestOptionalWideningViews/spread
+=== PAUSE TestOptionalWideningViews/spread
+=== RUN   TestOptionalWideningViews/spread_other_missing
+=== PAUSE TestOptionalWideningViews/spread_other_missing
+=== RUN   TestOptionalWideningViews/tuple_element
+=== PAUSE TestOptionalWideningViews/tuple_element
+=== RUN   TestOptionalWideningViews/widening_boolean_as_number
+=== PAUSE TestOptionalWideningViews/widening_boolean_as_number
+=== RUN   TestOptionalWideningViews/widening_boolean_as_number_array
+=== PAUSE TestOptionalWideningViews/widening_boolean_as_number_array
+=== RUN   TestOptionalWideningViews/widening_boolean_as_number_ops
+=== PAUSE TestOptionalWideningViews/widening_boolean_as_number_ops
+=== RUN   TestOptionalWideningViews/widening_boolean_as_number_parameter
+=== PAUSE TestOptionalWideningViews/widening_boolean_as_number_parameter
+=== RUN   TestOptionalWideningViews/widening_boolean_as_number_return
+=== PAUSE TestOptionalWideningViews/widening_boolean_as_number_return
+=== RUN   TestOptionalWideningViews/widening_false_as_number
+=== PAUSE TestOptionalWideningViews/widening_false_as_number
+=== CONT  TestOptionalWideningAllowed/fresh
+=== CONT  TestOptionalWideningViews/argument
+=== CONT  TestOptionalWideningViews/widening_false_as_number
+=== CONT  TestOptionalWideningViews/widening_boolean_as_number_return
+=== CONT  TestOptionalWideningViews/widening_boolean_as_number_parameter
+--- PASS: TestOptionalWideningAllowed (0.00s)
+    --- PASS: TestOptionalWideningAllowed/declared (0.09s)
+    --- PASS: TestOptionalWideningAllowed/subclass (0.10s)
+    --- PASS: TestOptionalWideningAllowed/class (0.10s)
+    --- PASS: TestOptionalWideningAllowed/fresh (0.10s)
+    --- PASS: TestOptionalWideningAllowed/generic_subclass (0.12s)
+=== CONT  TestOptionalWideningViews/widening_boolean_as_number_ops
+=== CONT  TestOptionalWideningViews/widening_boolean_as_number_array
+=== CONT  TestOptionalWideningViews/widening_boolean_as_number
+=== CONT  TestOptionalWideningViews/tuple_element
+=== CONT  TestOptionalWideningViews/spread_other_missing
+=== CONT  TestOptionalWideningViews/spread
+=== CONT  TestOptionalWideningViews/shorthand
+=== CONT  TestOptionalWideningViews/return
+=== CONT  TestOptionalWideningViews/readonly
+=== CONT  TestOptionalWideningViews/property_write
+=== CONT  TestOptionalWideningViews/parameter_default
+=== CONT  TestOptionalWideningViews/nested
+=== CONT  TestOptionalWideningViews/initializer
+=== CONT  TestOptionalWideningViews/incompatible
+=== CONT  TestOptionalWideningViews/generic
+=== CONT  TestOptionalWideningViews/field_access_paths
+=== CONT  TestOptionalWideningViews/field
+=== CONT  TestOptionalWideningViews/class_transitive
+=== CONT  TestOptionalWideningViews/class_generic_compound
+=== CONT  TestOptionalWideningViews/class_generic
+=== CONT  TestOptionalWideningViews/class_field
+=== CONT  TestOptionalWideningViews/class_expression
+=== CONT  TestOptionalWideningViews/class_derived
+=== CONT  TestOptionalWideningViews/cast
+=== CONT  TestOptionalWideningViews/assignment
+=== CONT  TestOptionalWideningViews/arrow
+=== CONT  TestOptionalWideningViews/array_element
+--- PASS: TestOptionalWideningViews (0.01s)
+    --- PASS: TestOptionalWideningViews/argument (0.08s)
+    --- PASS: TestOptionalWideningViews/widening_boolean_as_number_return (0.08s)
+    --- PASS: TestOptionalWideningViews/widening_boolean_as_number_ops (0.08s)
+    --- PASS: TestOptionalWideningViews/widening_boolean_as_number_parameter (0.11s)
+    --- PASS: TestOptionalWideningViews/widening_boolean_as_number_array (0.07s)
+    --- PASS: TestOptionalWideningViews/widening_boolean_as_number (0.07s)
+    --- PASS: TestOptionalWideningViews/widening_false_as_number (0.15s)
+    --- PASS: TestOptionalWideningViews/tuple_element (0.08s)
+    --- PASS: TestOptionalWideningViews/spread_other_missing (0.06s)
+    --- PASS: TestOptionalWideningViews/shorthand (0.08s)
+    --- PASS: TestOptionalWideningViews/return (0.09s)
+    --- PASS: TestOptionalWideningViews/spread (0.13s)
+    --- PASS: TestOptionalWideningViews/readonly (0.10s)
+    --- PASS: TestOptionalWideningViews/property_write (0.09s)
+    --- PASS: TestOptionalWideningViews/parameter_default (0.11s)
+    --- PASS: TestOptionalWideningViews/nested (0.11s)
+    --- PASS: TestOptionalWideningViews/incompatible (0.07s)
+    --- PASS: TestOptionalWideningViews/generic (0.07s)
+    --- PASS: TestOptionalWideningViews/initializer (0.11s)
+    --- PASS: TestOptionalWideningViews/field (0.07s)
+    --- PASS: TestOptionalWideningViews/class_generic_compound (0.08s)
+    --- PASS: TestOptionalWideningViews/field_access_paths (0.09s)
+    --- PASS: TestOptionalWideningViews/class_transitive (0.08s)
+    --- PASS: TestOptionalWideningViews/class_field (0.06s)
+    --- PASS: TestOptionalWideningViews/class_expression (0.07s)
+    --- PASS: TestOptionalWideningViews/cast (0.09s)
+    --- PASS: TestOptionalWideningViews/class_derived (0.10s)
+    --- PASS: TestOptionalWideningViews/class_generic (0.14s)
+    --- PASS: TestOptionalWideningViews/assignment (0.06s)
+    --- PASS: TestOptionalWideningViews/arrow (0.05s)
+    --- PASS: TestOptionalWideningViews/array_element (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.947s
+=== RUN   TestCheckedViewLazyUnread
+=== RUN   TestCheckedViewLazyUnread/unread
+=== RUN   TestCheckedViewLazyUnread/unread-untagged
+=== RUN   TestCheckedViewLazyUnread/unread-mixed
+=== RUN   TestCheckedViewLazyUnread/optional-error
+=== RUN   TestCheckedViewLazyUnread/optional-error-fields
+--- PASS: TestCheckedViewLazyUnread (3.23s)
+    --- PASS: TestCheckedViewLazyUnread/unread (0.73s)
+    --- PASS: TestCheckedViewLazyUnread/unread-untagged (0.57s)
+    --- PASS: TestCheckedViewLazyUnread/unread-mixed (0.43s)
+    --- PASS: TestCheckedViewLazyUnread/optional-error (0.73s)
+    --- PASS: TestCheckedViewLazyUnread/optional-error-fields (0.76s)
+=== RUN   TestCheckedViewLazyMissingNameMutant
+    checked_views_lazy_test.go:78: caught missing-name mutant: adamic: panic: field read failed: value.name is not initialized; expected string, found missing
+    checked_views_lazy_test.go:78: caught missing-name mutant: adamic: panic: field read failed: value.name is not initialized; expected string, found missing
+    checked_views_lazy_test.go:78: caught missing-name mutant: adamic: panic: field read failed: value.name is not initialized; expected string, found missing
+--- PASS: TestCheckedViewLazyMissingNameMutant (0.45s)
+=== RUN   TestScannerCastDiagnostic
+=== RUN   TestScannerCastDiagnostic/good
+=== RUN   TestScannerCastDiagnostic/undefined
+=== RUN   TestScannerCastDiagnostic/missing
+=== RUN   TestScannerCastDiagnostic/wrong
+--- PASS: TestScannerCastDiagnostic (1.79s)
+    --- PASS: TestScannerCastDiagnostic/good (0.49s)
+    --- PASS: TestScannerCastDiagnostic/undefined (0.45s)
+    --- PASS: TestScannerCastDiagnostic/missing (0.43s)
+    --- PASS: TestScannerCastDiagnostic/wrong (0.43s)
+=== RUN   TestScannerCastDiagnosticMutant
+    scanner_cast_checks_test.go:82: native release omission caught by exit/message pin: exit=0 stdout="false\n"
+    scanner_cast_checks_test.go:82: JavaScript omission caught by exit/message pin: exit=0 stdout="42\n"
+--- PASS: TestScannerCastDiagnosticMutant (0.22s)
+=== RUN   TestScannerCastConstructorFrontiers
+=== RUN   TestScannerCastConstructorFrontiers/error-any
+    scanner_cast_checks_test.go:106: Node-valid frontier: /workspace/adamic/stage3/drivers/scanner/cast-checks/error-any.a:2:6: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestScannerCastConstructorFrontiers/string-any
+    scanner_cast_checks_test.go:106: Node-valid frontier: /workspace/adamic/stage3/drivers/scanner/cast-checks/string-any.a:1:48: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestScannerCastConstructorFrontiers/error-typed
+    scanner_cast_checks_test.go:106: Node-valid frontier: /workspace/adamic/stage3/drivers/scanner/cast-checks/error-typed.a:2:1: stage 0 can't lower node:globals.ErrorConstructor.captureStackTrace yet
+=== RUN   TestScannerCastConstructorFrontiers/string-typed
+    scanner_cast_checks_test.go:106: Node-valid frontier: /workspace/adamic/stage3/drivers/scanner/cast-checks/string-typed.a:2:17: stage 0 can't lower String as a value outside equality or typeof (overloaded calls and static properties need their own representation) yet
+--- PASS: TestScannerCastConstructorFrontiers (1.15s)
+    --- PASS: TestScannerCastConstructorFrontiers/error-any (0.16s)
+    --- PASS: TestScannerCastConstructorFrontiers/string-any (0.14s)
+    --- PASS: TestScannerCastConstructorFrontiers/error-typed (0.67s)
+    --- PASS: TestScannerCastConstructorFrontiers/string-typed (0.18s)
+=== RUN   TestScannerCastCounts
+--- PASS: TestScannerCastCounts (0.55s)
+PASS
+gate cache: native hits=0 misses=12
+gate cache: node hits=0 misses=26
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	7.431s

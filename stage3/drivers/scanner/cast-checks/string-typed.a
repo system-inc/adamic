@@ -1,0 +1,3 @@
+type CodePointEncoder = Pick<StringConstructor, "fromCodePoint">;
+const encoder = String as CodePointEncoder;
+console.log(encoder.fromCodePoint(65));

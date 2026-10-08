@@ -63,5 +63,6 @@ func interfaceCastCounts(t *testing.T) []string {
 	rows = append(rows, viewCallableCounts(t)...)
 	rows = append(rows, tupleOriginalCounts(t)...)
 	rows = append(rows, viewRankedArrayCounts(t)...)
-	return append(rows, viewIntersectionDeferredCounts(t)...)
+	rows = append(rows, viewIntersectionDeferredCounts(t)...)
+	return append(rows, scannerCastCounts(t)...)
 }

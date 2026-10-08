@@ -1,0 +1,9 @@
+interface DiagnosticMessage { elidedInCompatabilityPyramid?: boolean; }
+function diag(elidedInCompatabilityPyramid?: boolean) {
+    return { elidedInCompatabilityPyramid };
+}
+function hidden(value: {}): { elidedInCompatabilityPyramid: boolean | undefined } {
+    return value as { elidedInCompatabilityPyramid: boolean | undefined };
+}
+const value = hidden({ elidedInCompatabilityPyramid: 42 }) as DiagnosticMessage;
+console.log(`${value.elidedInCompatabilityPyramid}`);
