@@ -1,0 +1,19 @@
+..F
+======================================================================
+FAIL: test_per_ref_builds_and_runs_each_pinned_compiler (compiler_test.CompilerSelectionTests.test_per_ref_builds_and_runs_each_pinned_compiler)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/meter/compiler_test.py", line 144, in test_per_ref_builds_and_runs_each_pinned_compiler
+    self.assertEqual(tree['latent_lowering']['per_reason'], {'NotYet: compiled with ' + label: 1})
+AssertionError: {'NotYet: compiled with checkout': 1} != {'NotYet: compiled with main': 1}
+- {'NotYet: compiled with checkout': 1}
+?                         ^^^^^^^^
+
++ {'NotYet: compiled with main': 1}
+?                         ^^^^
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 3.483s
+
+FAILED (failures=1)

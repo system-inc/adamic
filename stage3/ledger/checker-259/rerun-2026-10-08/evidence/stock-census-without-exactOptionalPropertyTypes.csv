@@ -1,0 +1,173 @@
+file,line,column,code,message
+src/compiler/checker.ts,5311,45,TS2322,"Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'."
+src/compiler/checker.ts,12034,30,TS18048,'file' is possibly 'undefined'.
+src/compiler/checker.ts,17946,29,TS2769,"No overload matches this call.
+  Overload 1 of 2, '(type: Type, mapper: (t: Type) => Type, noReductions?: boolean | undefined): Type', gave the following error.
+    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+      Type 'undefined' is not assignable to type 'Type'.
+  Overload 2 of 2, '(type: Type, mapper: (t: Type) => Type | undefined, noReductions?: boolean | undefined): Type | undefined', gave the following error.
+    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+      Type 'undefined' is not assignable to type 'Type'."
+src/compiler/checker.ts,19044,25,TS2769,"No overload matches this call.
+  Overload 1 of 2, '(type: Type, mapper: (t: Type) => Type, noReductions?: boolean | undefined): Type', gave the following error.
+    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+      Type 'undefined' is not assignable to type 'Type'.
+  Overload 2 of 2, '(type: Type, mapper: (t: Type) => Type | undefined, noReductions?: boolean | undefined): Type | undefined', gave the following error.
+    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+      Type 'undefined' is not assignable to type 'Type'."
+src/compiler/checker.ts,20595,32,TS2722,Cannot invoke an object which is possibly 'undefined'.
+src/compiler/checker.ts,22498,29,TS2556,A spread argument must either have a tuple type or be passed to a rest parameter.
+src/compiler/checker.ts,22498,32,TS2488,"Type '[message: DiagnosticMessage, ...args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."
+src/compiler/checker.ts,38430,64,TS2345,"Argument of type 'ElementFlags | undefined' is not assignable to parameter of type 'ElementFlags'.
+  Type 'undefined' is not assignable to type 'ElementFlags'."
+src/compiler/checker.ts,42849,65,TS2345,"Argument of type 'TypeParameter | undefined' is not assignable to parameter of type 'TypeParameter'.
+  Type 'undefined' is not assignable to type 'TypeParameter'."
+src/compiler/checker.ts,46114,128,TS2345,"Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+  Type 'undefined' is not assignable to type 'Type'."
+src/compiler/checker.ts,46114,208,TS2345,"Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+  Type 'undefined' is not assignable to type 'Type'."
+src/compiler/checker.ts,46128,128,TS2345,"Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+  Type 'undefined' is not assignable to type 'Type'."
+src/compiler/checker.ts,50153,121,TS2532,Object is possibly 'undefined'.
+src/compiler/checker.ts,52426,13,TS18048,'parameter' is possibly 'undefined'.
+src/compiler/checker.ts,52427,39,TS18048,'parameter' is possibly 'undefined'.
+src/compiler/checker.ts,52429,35,TS2345,"Argument of type 'ParameterDeclaration | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'."
+src/compiler/checker.ts,52430,39,TS18048,'parameter' is possibly 'undefined'.
+src/compiler/checker.ts,52432,13,TS18048,'parameter' is possibly 'undefined'.
+src/compiler/checker.ts,52433,39,TS18048,'parameter' is possibly 'undefined'.
+src/compiler/checker.ts,52435,13,TS18048,'parameter' is possibly 'undefined'.
+src/compiler/checker.ts,52436,39,TS18048,'parameter' is possibly 'undefined'.
+src/compiler/checker.ts,52438,14,TS18048,'parameter' is possibly 'undefined'.
+src/compiler/checker.ts,52439,39,TS18048,'parameter' is possibly 'undefined'.
+src/compiler/checker.ts,52441,42,TS18048,'parameter' is possibly 'undefined'.
+src/compiler/checker.ts,52443,39,TS18048,'parameter' is possibly 'undefined'.
+src/compiler/checker.ts,52446,39,TS18048,'parameter' is possibly 'undefined'.
+src/compiler/commandLineParser.ts,2077,79,TS2345,"Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'."
+src/compiler/commandLineParser.ts,2301,91,TS18046,'e' is of type 'unknown'.
+src/compiler/commandLineParser.ts,2952,13,TS2322,"Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'."
+src/compiler/moduleNameResolver.ts,474,36,TS2322,"Type 'MapLike<string[]> | undefined' is not assignable to type 'MapLike<string[]>'.
+  Type 'undefined' is not assignable to type 'MapLike<string[]>'."
+src/compiler/program.ts,406,25,TS18046,'e' is of type 'unknown'.
+src/compiler/program.ts,441,25,TS18046,'e' is of type 'unknown'.
+src/compiler/program.ts,4157,64,TS2345,"Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'."
+src/compiler/program.ts,4160,69,TS2345,"Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'."
+src/compiler/program.ts,4160,95,TS2345,"Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'."
+src/compiler/sourcemap.ts,216,58,TS2345,"Argument of type 'string | null | undefined' is not assignable to parameter of type 'string | null'.
+  Type 'undefined' is not assignable to type 'string | null'."
+src/compiler/sys.ts,1281,43,TS18046,'e' is of type 'unknown'.
+src/compiler/sys.ts,1617,13,TS2322,"Type '(baseDir: string, moduleName: string) => { module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type '(baseDir: string, moduleName: string) => ModuleImportResult'.
+  Type '{ module: any; modulePath: string; error: undefined; } | { module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+    Type '{ module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type 'ModuleImportResult'.
+      Type '{ module: undefined; modulePath: undefined; error: unknown; }' is not assignable to type '{ module: undefined; modulePath?: undefined; error: { stack?: string | undefined; message?: string | undefined; }; }'.
+        Types of property 'error' are incompatible.
+          Type 'unknown' is not assignable to type '{ stack?: string | undefined; message?: string | undefined; }'."
+src/compiler/sys.ts,1708,56,TS2345,"Argument of type 'string | undefined' is not assignable to parameter of type 'string | ArrayBufferView<ArrayBufferLike>'.
+  Type 'undefined' is not assignable to type 'string | ArrayBufferView<ArrayBufferLike>'."
+src/compiler/transformer.ts,367,9,TS2532,Object is possibly 'undefined'.
+src/compiler/transformer.ts,395,9,TS2532,Object is possibly 'undefined'.
+src/compiler/transformer.ts,563,9,TS2322,"Type 'VariableDeclaration[] | undefined' is not assignable to type 'VariableDeclaration[]'.
+  Type 'undefined' is not assignable to type 'VariableDeclaration[]'."
+src/compiler/transformer.ts,564,9,TS2322,"Type 'FunctionDeclaration[] | undefined' is not assignable to type 'FunctionDeclaration[]'.
+  Type 'undefined' is not assignable to type 'FunctionDeclaration[]'."
+src/compiler/transformer.ts,565,9,TS2322,"Type 'Statement[] | undefined' is not assignable to type 'Statement[]'.
+  Type 'undefined' is not assignable to type 'Statement[]'."
+src/compiler/transformer.ts,614,9,TS2322,"Type 'Identifier[] | undefined' is not assignable to type 'Identifier[]'.
+  Type 'undefined' is not assignable to type 'Identifier[]'."
+src/compiler/transformers/classFields.ts,1835,21,TS2532,Object is possibly 'undefined'.
+src/compiler/transformers/classFields.ts,2251,45,TS2538,Type 'undefined' cannot be used as an index type.
+src/compiler/transformers/classFields.ts,2252,97,TS18048,'superStatementIndex' is possibly 'undefined'.
+src/compiler/transformers/classFields.ts,2253,27,TS18048,'superStatementIndex' is possibly 'undefined'.
+src/compiler/transformers/classFields.ts,2297,52,TS2345,"Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'."
+src/compiler/transformers/classFields.ts,2376,56,TS2345,"Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'."
+src/compiler/transformers/declarations.ts,1678,110,TS2345,"Argument of type 'ExpressionWithTypeArguments | undefined' is not assignable to parameter of type 'DeclarationDiagnosticProducing'.
+  Type 'undefined' is not assignable to type 'DeclarationDiagnosticProducing'."
+src/compiler/transformers/es2015.ts,2803,38,TS2532,Object is possibly 'undefined'.
+src/compiler/transformers/es2015.ts,3046,64,TS2532,Object is possibly 'undefined'.
+src/compiler/transformers/es2015.ts,4437,29,TS2345,"Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'."
+src/compiler/transformers/es2015.ts,4691,34,TS2532,Object is possibly 'undefined'.
+src/compiler/transformers/es2015.ts,4693,13,TS2532,Object is possibly 'undefined'.
+src/compiler/transformers/es2017.ts,599,86,TS2532,Object is possibly 'undefined'.
+src/compiler/transformers/es2017.ts,764,38,TS18048,'outerParameter' is possibly 'undefined'.
+src/compiler/transformers/es2017.ts,765,25,TS18048,'originalParameter' is possibly 'undefined'.
+src/compiler/transformers/es2017.ts,765,58,TS18048,'originalParameter' is possibly 'undefined'.
+src/compiler/transformers/es2017.ts,767,76,TS18048,'outerParameter' is possibly 'undefined'.
+src/compiler/transformers/es2017.ts,770,44,TS18048,'outerParameter' is possibly 'undefined'.
+src/compiler/transformers/esDecorators.ts,1164,45,TS2538,Type 'undefined' cannot be used as an index type.
+src/compiler/transformers/esDecorators.ts,1165,97,TS18048,'superStatementIndex' is possibly 'undefined'.
+src/compiler/transformers/esDecorators.ts,1192,80,TS18048,'superStatementIndex' is possibly 'undefined'.
+src/compiler/transformers/esnext.ts,183,34,TS2345,"Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'."
+src/compiler/transformers/esnext.ts,344,44,TS2345,"Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'."
+src/compiler/transformers/esnext.ts,384,36,TS2345,"Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'."
+src/compiler/transformers/esnext.ts,767,34,TS2345,"Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'."
+src/compiler/transformers/esnext.ts,767,70,TS2345,"Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'."
+src/compiler/transformers/generators.ts,1283,39,TS2345,"Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'."
+src/compiler/transformers/generators.ts,1370,35,TS18048,'variable' is possibly 'undefined'.
+src/compiler/transformers/generators.ts,1374,70,TS2345,"Argument of type 'InitializedVariableDeclaration | undefined' is not assignable to parameter of type 'InitializedVariableDeclaration'.
+  Type 'undefined' is not assignable to type 'InitializedVariableDeclaration'.
+    Type 'undefined' is not assignable to type 'VariableDeclaration'."
+src/compiler/transformers/generators.ts,1684,46,TS2532,Object is possibly 'undefined'.
+src/compiler/transformers/generators.ts,1729,55,TS2532,Object is possibly 'undefined'.
+src/compiler/transformers/generators.ts,1866,21,TS18048,'clause' is possibly 'undefined'.
+src/compiler/transformers/generators.ts,1880,25,TS18048,'clause' is possibly 'undefined'.
+src/compiler/transformers/generators.ts,1881,43,TS18048,'clause' is possibly 'undefined'.
+src/compiler/transformers/generators.ts,1881,50,TS2339,"Property 'expression' does not exist on type 'CaseOrDefaultClause'.
+  Property 'expression' does not exist on type 'DefaultClause'."
+src/compiler/transformers/generators.ts,1887,62,TS18048,'clause' is possibly 'undefined'.
+src/compiler/transformers/generators.ts,1887,69,TS2339,"Property 'expression' does not exist on type 'CaseOrDefaultClause'.
+  Property 'expression' does not exist on type 'DefaultClause'."
+src/compiler/transformers/generators.ts,1889,55,TS2345,"Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'."
+src/compiler/transformers/generators.ts,1889,85,TS18048,'clause' is possibly 'undefined'.
+src/compiler/transformers/generators.ts,1889,92,TS2339,"Property 'expression' does not exist on type 'CaseOrDefaultClause'.
+  Property 'expression' does not exist on type 'DefaultClause'."
+src/compiler/transformers/generators.ts,1911,27,TS2345,"Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'."
+src/compiler/transformers/generators.ts,1918,27,TS2345,"Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'."
+src/compiler/transformers/generators.ts,1919,44,TS2532,Object is possibly 'undefined'.
+src/compiler/transformers/generators.ts,2446,48,TS2345,"Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'."
+src/compiler/transformers/generators.ts,2469,56,TS2345,"Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'."
+src/compiler/transformers/generators.ts,2472,53,TS2345,"Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'."
+src/compiler/transformers/generators.ts,2480,48,TS2345,"Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'."
+src/compiler/transformers/generators.ts,2499,51,TS2345,"Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'."
+src/compiler/transformers/generators.ts,2507,51,TS2345,"Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'."
+src/compiler/transformers/generators.ts,2880,63,TS18048,'withBlock' is possibly 'undefined'.
+src/compiler/transformers/generators.ts,2951,21,TS2532,Object is possibly 'undefined'.
+src/compiler/transformers/generators.ts,2983,57,TS2532,Object is possibly 'undefined'.
+src/compiler/transformers/generators.ts,2984,23,TS2322,"Type 'CodeBlock | undefined' is not assignable to type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'."
+src/compiler/transformers/jsx.ts,309,58,TS2345,"Argument of type 'JsxChild | undefined' is not assignable to parameter of type 'JsxChild'.
+  Type 'undefined' is not assignable to type 'JsxChild'."
+src/compiler/transformers/jsx.ts,502,62,TS2345,"Argument of type 'Expression | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'."
+src/compiler/transformers/module/esnextAnd2015.ts,100,46,TS2345,"Argument of type 'Expression | undefined' is not assignable to parameter of type 'Node | FileReference'.
+  Type 'undefined' is not assignable to type 'Node | FileReference'."
+src/compiler/transformers/module/esnextAnd2015.ts,163,91,TS2345,"Argument of type 'CallExpression | undefined' is not assignable to parameter of type 'TextRange'.
+  Type 'undefined' is not assignable to type 'TextRange'."
+src/compiler/transformers/module/esnextAnd2015.ts,194,37,TS2345,"Argument of type 'Expression | undefined' is not assignable to parameter of type 'Node | FileReference'.
+  Type 'undefined' is not assignable to type 'Node | FileReference'."
+src/compiler/transformers/module/esnextAnd2015.ts,196,81,TS2345,"Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'.
+  Type 'undefined' is not assignable to type 'Expression'."
+src/compiler/transformers/module/esnextAnd2015.ts,251,22,TS2532,Object is possibly 'undefined'.
