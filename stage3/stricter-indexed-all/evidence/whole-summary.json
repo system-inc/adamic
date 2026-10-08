@@ -1,0 +1,19 @@
+{
+  "roots": 79,
+  "literal_strict": {
+    "stage": "checker",
+    "diagnostics": 171,
+    "indexed_errors": 99
+  },
+  "production_conversion": {
+    "stage": "checker",
+    "diagnostics": 72,
+    "indexed_errors": 0,
+    "native_indexed_outcomes_unmeasured": 99
+  },
+  "minimal_manifest_dispositions": {
+    "proven": 90,
+    "refused": 9
+  },
+  "native_artifact": null
+}
