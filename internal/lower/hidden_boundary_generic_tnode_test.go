@@ -46,6 +46,16 @@ func TestHiddenTNodeConstraintRepresentation(t *testing.T) {
 			if held, known := l.representation(parameter); held != probe.want || known != probe.known {
 				t.Fatalf("constraint representation = (%v, %v), want (%v, %v)", held, known, probe.want, probe.known)
 			}
+			// signature declares this actual parameter through typeOf; the binder
+			// and parameter must use the same constraint storage path.
+			parameterNode := file.Statements.Nodes[0].Parameters()[0].Name()
+			held, parameterErr := l.typeOf(parameterNode)
+			if probe.known && (parameterErr != nil || held != probe.want) {
+				t.Fatalf("parameter storage = %v, %v; want %v", held, parameterErr, probe.want)
+			}
+			if !probe.known && parameterErr == nil {
+				t.Fatalf("unsupported parameter constraint accepted: %v", held)
+			}
 			// A concrete substitution must win even when its storage differs from the constraint.
 			l.substitution = map[*checker.Type]ir.Type{parameter: ir.Array}
 			if held, known := l.representation(parameter); !known || held != ir.Array {
@@ -61,7 +71,7 @@ func TestHiddenTNodeConstraintRepresentation(t *testing.T) {
 }
 
 func TestHiddenTNodeGenericValueRemainsNotYet(t *testing.T) {
-	source, err := os.ReadFile("../oracle/testdata/hidden_boundary_generic_tnode_value.a")
+	source, err := os.ReadFile("../oracle/testdata/notyet/hidden_boundary_generic_tnode_value.a")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -73,7 +83,7 @@ func TestHiddenTNodeGenericValueRemainsNotYet(t *testing.T) {
 }
 
 func TestHiddenTNodeConstraintMutationRemainsNotYet(t *testing.T) {
-	source, err := os.ReadFile("../oracle/testdata/hidden_boundary_generic_tnode_mutation.a")
+	source, err := os.ReadFile("../oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a")
 	if err != nil {
 		t.Fatal(err)
 	}

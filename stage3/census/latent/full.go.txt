@@ -18,7 +18,7 @@ func (l *lowering) latentBodyDiagnostics(body *ast.Node) []string {
 
 func latentFullEnabled() bool { return os.Getenv("LATENT_FULL") == "1" }
 
-// IR fields are exported. Compiler/checker identities remain shared; all mutable
+// IR fields are exported except an unused emitter cache. Compiler/checker identities remain shared; all mutable
 // lowering-owned state is copied by the generated typed state copier.
 func latentCopyIR[T any](value T, seen map[any]any) T {
 	var copyValue func(reflect.Value) reflect.Value
@@ -50,6 +50,11 @@ func latentCopyIR[T any](value T, seen map[any]any) T {
 			result := reflect.New(v.Type()).Elem()
 			for i := 0; i < v.NumField(); i++ {
 				if !result.Field(i).CanSet() {
+					// The emitter cache is unused in no-output lowering. Only its
+					// empty state can be copied without touching private IR data.
+					if v.Type() == reflect.TypeOf(ir.Program{}) && v.Type().Field(i).Name == "argumentFacts" && v.Field(i).Kind() == reflect.Pointer && v.Field(i).IsNil() {
+						continue
+					}
 					panic("latent state copy: unexported IR field " + v.Type().Field(i).Name)
 				}
 				result.Field(i).Set(copyValue(v.Field(i)))
