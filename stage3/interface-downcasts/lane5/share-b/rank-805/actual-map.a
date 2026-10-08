@@ -1,0 +1,7 @@
+// Original Map declaration/read; original primitive aliases retained.
+type Path = string & { __pathBrand: any; };
+interface BuilderFileEmit {readonly value:number;}
+interface Base {readonly delete:unknown;}
+interface Target<K,V> {delete(key: K): boolean;}
+function probe(value:Base):void {const state={affectedFilesPendingEmit:value as Target<Path,BuilderFileEmit>};state.affectedFilesPendingEmit!.delete("key" as Path);console.log("called");}
+probe(new Map<Path,BuilderFileEmit>());

@@ -1,0 +1,7 @@
+// Original Map declaration/read; original primitive aliases retained.
+type Path = string & { __pathBrand: any; };
+interface ResolvedProjectReference {readonly value:number;}
+interface Base {readonly set:unknown;}
+interface Target<K,V> {set(key: K, value: V): this;}
+function probe(value:Base):void {const projectReferenceRedirects=value as Target<Path,false | ResolvedProjectReference>;projectReferenceRedirects.set("key" as Path,{value:3});console.log("called");}
+probe(new Map<Path,false | ResolvedProjectReference>());

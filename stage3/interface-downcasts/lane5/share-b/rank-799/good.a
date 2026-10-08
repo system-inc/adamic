@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface GenericType { readonly value: number; }
+interface Base {readonly getGlobalIteratorObjectType:unknown;}
+interface Target {getGlobalIteratorObjectType: (reportErrors: boolean) => GenericType;}
+function probe(value:Base):void {const resolver=value as Target;console.log(`${resolver.getGlobalIteratorObjectType(true).value}`);}
+probe({getGlobalIteratorObjectType:(reportErrors: boolean):GenericType=>{console.log(`${reportErrors}`);return {value:3};}});

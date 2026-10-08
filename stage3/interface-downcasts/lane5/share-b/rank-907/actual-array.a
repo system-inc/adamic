@@ -1,0 +1,6 @@
+// Original array declaration/read; adjacent element object reduced.
+interface Expression {readonly value:number;}
+interface Base {readonly indexOf:unknown;}
+interface Target<T> {indexOf(searchElement: T, fromIndex?: number): number;}
+function probe(value:Base):void {const node={elements:value as Target<Expression>};node.elements.indexOf({value:3},0);console.log("called");}
+probe([{value:3}]);

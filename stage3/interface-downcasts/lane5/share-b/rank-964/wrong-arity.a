@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface DeleteExpression { readonly value: number; }
+interface Expression { readonly value: number; }
+interface Base {readonly updateDeleteExpression:unknown;}
+interface Target {updateDeleteExpression(node: DeleteExpression, expression: Expression): DeleteExpression;}
+function probe(value:Base):void {const context = {factory:value as Target};console.log(`${context.factory.updateDeleteExpression({value:3},{value:3}).value}`);}
+probe({updateDeleteExpression:():DeleteExpression=>{return {value:3};}});

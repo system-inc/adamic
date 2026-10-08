@@ -1,0 +1,7 @@
+// Original Map declaration/read; original primitive aliases retained.
+type Path = string & { __pathBrand: any; };
+type EmitSignature = string | [signature: string];
+interface Base {readonly set:unknown;}
+interface Target<K,V> {set(key: K, value: V): this;}
+function probe(value:Base):void {const emitSignatures=value as Target<Path,EmitSignature>;emitSignatures.set("key" as Path,"value");console.log("called");}
+probe(new Map<Path,EmitSignature>());

@@ -1,0 +1,7 @@
+// Original Map declaration/read; original primitive aliases retained.
+type RedirectsCacheKey = string & { __compilerOptionsKey: any; };
+interface CompilerOptions {readonly value:number;}
+interface Base {readonly get:unknown;}
+interface Target<K,V> {get(key: K): V | undefined;}
+function probe(value:Base):void {const optionsToRedirectsKey=value as Target<CompilerOptions,RedirectsCacheKey>;optionsToRedirectsKey.get({value:3});console.log("called");}
+probe(new Map<CompilerOptions,RedirectsCacheKey>());

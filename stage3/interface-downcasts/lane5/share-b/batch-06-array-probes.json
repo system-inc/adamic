@@ -1,0 +1,31 @@
+[
+  {
+    "rank": 907,
+    "receiver_type_id": 9428,
+    "type": "NodeArray<Expression>",
+    "field": "indexOf",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 28346,
+      "column": 73
+    },
+    "read": "node.elements.indexOf",
+    "call": "node.elements.indexOf(element)",
+    "utf16Start": 1687337,
+    "utf16End": 1687358,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declaration": "indexOf(searchElement: T, fromIndex?: number): number;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "NodeArray",
+      "ReadonlyArray"
+    ],
+    "filename": "rank-907/actual-array.a",
+    "output": "called\n",
+    "refusal": "",
+    "expected": "adamic: panic: field read failed: node.elements.indexOf expected (searchElement: Expression, fromIndex?: number | undefined) => number, found function with unknown signature\n"
+  }
+]

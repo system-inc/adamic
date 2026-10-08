@@ -1,0 +1,8 @@
+// Original Map declaration/read; original primitive aliases retained.
+
+type THash = string;
+interface TElement {readonly value:number;}
+interface Base {readonly get:unknown;}
+interface Target<K,V> {get(key: K): V | undefined;}
+function probe(value:Base):void {const multiMap=value as Target<THash,TElement | TElement[]>;multiMap.get("key");console.log("called");}
+probe(new Map<THash,TElement | TElement[]>());

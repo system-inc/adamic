@@ -1,0 +1,7 @@
+// Original Map declaration/read; original primitive aliases retained.
+type Path = string & { __pathBrand: any; };
+interface DirPathToWatcherOfPackageDirWatcher {readonly value:number;}
+interface Base {readonly get:unknown;}
+interface Target<K,V> {get(key: K): V | undefined;}
+function probe(value:Base):void {const packageDirWatcher={dirPathToWatcher:value as Target<Path,DirPathToWatcherOfPackageDirWatcher>};packageDirWatcher.dirPathToWatcher.get("key" as Path);console.log("called");}
+probe(new Map<Path,DirPathToWatcherOfPackageDirWatcher>());

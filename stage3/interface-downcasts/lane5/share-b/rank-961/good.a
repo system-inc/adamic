@@ -1,0 +1,9 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface ConditionalExpression { readonly value: number; }
+interface Expression { readonly value: number; }
+interface QuestionToken { readonly value: number; }
+interface ColonToken { readonly value: number; }
+interface Base {readonly updateConditionalExpression:unknown;}
+interface Target {updateConditionalExpression(node: ConditionalExpression, condition: Expression, questionToken: QuestionToken, whenTrue: Expression, colonToken: ColonToken, whenFalse: Expression): ConditionalExpression;}
+function probe(value:Base):void {const context = {factory:value as Target};console.log(`${context.factory.updateConditionalExpression({value:3},{value:3},{value:3},{value:3},{value:3},{value:3}).value}`);}
+probe({updateConditionalExpression:(node: ConditionalExpression, condition: Expression, questionToken: QuestionToken, whenTrue: Expression, colonToken: ColonToken, whenFalse: Expression):ConditionalExpression=>{console.log(`${node.value}`);console.log(`${condition.value}`);console.log(`${questionToken.value}`);console.log(`${whenTrue.value}`);console.log(`${colonToken.value}`);console.log(`${whenFalse.value}`);return {value:3};}});

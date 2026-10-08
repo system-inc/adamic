@@ -1,0 +1,6 @@
+// Original array declaration/read; adjacent element object reduced.
+interface ObjectLiteralElementLike {readonly value:number;}
+interface Base {readonly some:unknown;}
+interface Target<T> {some(predicate: (value: T, index: number, array: readonly T[]) => unknown, thisArg?: any): boolean;}
+function probe(value:Base):void {const obj={properties:value as Target<ObjectLiteralElementLike>};obj.properties.some((item:ObjectLiteralElementLike,index:number,array:readonly ObjectLiteralElementLike[]):boolean=>true);console.log("called");}
+probe({some:7});

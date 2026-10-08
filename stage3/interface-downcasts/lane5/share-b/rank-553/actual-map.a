@@ -1,0 +1,6 @@
+// Original Map declaration/read; original primitive aliases retained.
+type Path = string & { __pathBrand: any; };
+interface Base {readonly clear:unknown;}
+interface Target<K,V> {clear(): void;}
+function probe(value:Base):void {const isSymlinkCache=value as Target<Path,boolean>;isSymlinkCache.clear();console.log("called");}
+probe(new Map<Path,boolean>());

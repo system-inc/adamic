@@ -634,6 +634,89 @@
     "basis": "complete original callable declaration/read; admission refusal"
   },
   {
+    "rank": 550,
+    "pair": "Map<Path, FileInfo>.set",
+    "reads": 3,
+    "read": "fileInfos.set",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-550/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained"
+  },
+  {
+    "rank": 553,
+    "pair": "Map<Path, boolean>.clear",
+    "reads": 3,
+    "read": "isSymlinkCache.clear",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-553/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained"
+  },
+  {
+    "rank": 556,
+    "pair": "Map<Path, false | ResolvedProjectReference>.set",
+    "reads": 3,
+    "read": "projectReferenceRedirects.set",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-556/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained"
+  },
+  {
+    "rank": 559,
+    "pair": "Map<Path, string> | undefined.has",
+    "reads": 3,
+    "read": "skipOutputs?.has",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-559/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained"
+  },
+  {
+    "rank": 562,
+    "pair": "Map<ResolvedConfigFilePath, ProgramUpdateLevel>.set",
+    "reads": 3,
+    "read": "projectPendingBuild.set",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-562/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained"
+  },
+  {
+    "rank": 565,
+    "pair": "Map<THash, TElement | TElement[]>.get",
+    "reads": 3,
+    "read": "multiMap.get",
+    "stop": "native collection-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "collection receiver conversion, immutable intrinsic callable metadata and receiver-preserving checked calls",
+    "fixture": "rank-565/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained",
+    "expectedJavaScript": "adamic: panic: field read failed: multiMap.get expected (key: string) => TElement[] | TElement | undefined, found function with unknown signature\n"
+  },
+  {
+    "rank": 568,
+    "pair": "Map<string, RelationComparisonResult>.get",
+    "reads": 3,
+    "read": "enumRelation.get",
+    "stop": "native collection-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "collection receiver conversion, immutable intrinsic callable metadata and receiver-preserving checked calls",
+    "fixture": "rank-568/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained",
+    "expectedJavaScript": "adamic: panic: field read failed: enumRelation.get expected (key: string) => RelationComparisonResult | undefined, found function with unknown signature\n"
+  },
+  {
+    "rank": 571,
+    "pair": "Map<string, number>.delete",
+    "reads": 3,
+    "read": "durations.delete",
+    "stop": "native collection-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "collection receiver conversion, immutable intrinsic callable metadata and receiver-preserving checked calls",
+    "fixture": "rank-571/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained",
+    "expectedJavaScript": "adamic: panic: field read failed: durations.delete expected (key: string) => boolean, found function with unknown signature\n"
+  },
+  {
     "rank": 577,
     "pair": "NodeArray<Expression>.slice",
     "reads": 3,
@@ -753,6 +836,212 @@
     "fixture": "rank-751/good.a",
     "basis": "Node, native release, ASan/UBSan, JavaScript and leaks pass; original complete type display fails",
     "expectedJavaScript": "(hasLexicalThis: boolean, argumentsExpression: Expression | undefined, promiseConstructor: Expression | EntityName | undefined, parameters: readonly ParameterDeclaration[] | undefined, body: Block) => Expression"
+  },
+  {
+    "rank": 802,
+    "pair": "Map<CompilerOptions, RedirectsCacheKey>.get",
+    "reads": 2,
+    "read": "optionsToRedirectsKey.get",
+    "stop": "a primitive brand member __compilerOptionsKey whose type is not void",
+    "needed": "original RedirectsCacheKey brand admission preserving __compilerOptionsKey: any",
+    "fixture": "rank-802/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained"
+  },
+  {
+    "rank": 805,
+    "pair": "Map<Path, BuilderFileEmit>.delete",
+    "reads": 2,
+    "read": "state.affectedFilesPendingEmit!.delete",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-805/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained"
+  },
+  {
+    "rank": 808,
+    "pair": "Map<Path, DirPathToWatcherOfPackageDirWatcher>.get",
+    "reads": 2,
+    "read": "packageDirWatcher.dirPathToWatcher.get",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-808/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained"
+  },
+  {
+    "rank": 811,
+    "pair": "Map<Path, EmitSignature>.set",
+    "reads": 2,
+    "read": "emitSignatures.set",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-811/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained"
+  },
+  {
+    "rank": 814,
+    "pair": "Map<Path, FileInfo>.forEach",
+    "reads": 2,
+    "read": "state.fileInfos.forEach",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-814/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained"
+  },
+  {
+    "rank": 817,
+    "pair": "Map<Path, PackageDirWatcher>.get",
+    "reads": 2,
+    "read": "packageDirWatchers.get",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-817/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained"
+  },
+  {
+    "rank": 820,
+    "pair": "Map<Path, ResolvedRefAndSource>.set",
+    "reads": 2,
+    "read": "mapOutputFileToResolvedRef?.set",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-820/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained"
+  },
+  {
+    "rank": 823,
+    "pair": "Map<Path, SourceFile>.set",
+    "reads": 2,
+    "read": "seenFileNamesMap.set",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-823/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained"
+  },
+  {
+    "rank": 826,
+    "pair": "Map<Path, boolean>.delete",
+    "reads": 2,
+    "read": "fileExistsCache.delete",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-826/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained"
+  },
+  {
+    "rank": 829,
+    "pair": "Map<Path, number>.get",
+    "reads": 2,
+    "read": "dirPathToSymlinkPackageRefCount.get",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-829/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained"
+  },
+  {
+    "rank": 832,
+    "pair": "Map<Path, readonly Diagnostic[]>.set",
+    "reads": 2,
+    "read": "state.semanticDiagnosticsPerFile.set",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-832/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained"
+  },
+  {
+    "rank": 835,
+    "pair": "Map<Path, string>.get",
+    "reads": 2,
+    "read": "oldProgram.sourceFileToPackageName.get",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-835/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained"
+  },
+  {
+    "rank": 862,
+    "pair": "Map<number, string>.has",
+    "reads": 2,
+    "read": "context.remappedSymbolNames!.has",
+    "stop": "native collection-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "collection receiver conversion, immutable intrinsic callable metadata and receiver-preserving checked calls",
+    "fixture": "rank-862/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained",
+    "expectedJavaScript": "adamic: panic: field read failed: context.remappedSymbolNames!.has expected (key: number) => boolean, found function with unknown signature\n"
+  },
+  {
+    "rank": 868,
+    "pair": "Map<string, HostFileInfo>.delete",
+    "reads": 2,
+    "read": "sourceFilesCache.delete",
+    "stop": "native collection-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "collection receiver conversion, immutable intrinsic callable metadata and receiver-preserving checked calls",
+    "fixture": "rank-868/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained",
+    "expectedJavaScript": "adamic: panic: field read failed: sourceFilesCache.delete expected (key: string) => boolean, found function with unknown signature\n"
+  },
+  {
+    "rank": 871,
+    "pair": "Map<string, SourceFile>.set",
+    "reads": 2,
+    "read": "packageIdToSourceFile.set",
+    "stop": "native collection-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "collection receiver conversion, immutable intrinsic callable metadata and receiver-preserving checked calls",
+    "fixture": "rank-871/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained",
+    "expectedJavaScript": "adamic: panic: field read failed: packageIdToSourceFile.set expected (key: string, value: SourceFile) => Target<string, SourceFile>, found function with unknown signature\n"
+  },
+  {
+    "rank": 874,
+    "pair": "Map<string, Type | undefined>.get",
+    "reads": 2,
+    "read": "reverseHomomorphicMappedCache.get",
+    "stop": "native collection-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "collection receiver conversion, immutable intrinsic callable metadata and receiver-preserving checked calls",
+    "fixture": "rank-874/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained",
+    "expectedJavaScript": "adamic: panic: field read failed: reverseHomomorphicMappedCache.get expected (key: string) => Type | undefined, found function with unknown signature\n"
+  },
+  {
+    "rank": 877,
+    "pair": "Map<string, Type>.clear",
+    "reads": 2,
+    "read": "activeTypeMappersCaches[activeTypeMappersCount].clear",
+    "stop": "native collection-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "collection receiver conversion, immutable intrinsic callable metadata and receiver-preserving checked calls",
+    "fixture": "rank-877/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained",
+    "expectedJavaScript": "adamic: panic: field read failed: activeTypeMappersCaches[activeTypeMappersCount].clear expected () => void, found function with unknown signature\n"
+  },
+  {
+    "rank": 880,
+    "pair": "Map<string, number>.forEach",
+    "reads": 2,
+    "read": "durations.forEach",
+    "stop": "checked view read of field forEach with unsupported callable contract",
+    "needed": "original callback callable contract admission",
+    "fixture": "rank-880/actual-map.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained"
+  },
+  {
+    "rank": 907,
+    "pair": "NodeArray<Expression>.indexOf",
+    "reads": 2,
+    "read": "node.elements.indexOf",
+    "stop": "native collection-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "collection receiver conversion, immutable intrinsic callable metadata and receiver-preserving checked calls",
+    "fixture": "rank-907/actual-array.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained",
+    "expectedJavaScript": "adamic: panic: field read failed: node.elements.indexOf expected (searchElement: Expression, fromIndex?: number | undefined) => number, found function with unknown signature\n"
+  },
+  {
+    "rank": 910,
+    "pair": "NodeArray<ObjectLiteralElementLike>.some",
+    "reads": 2,
+    "read": "obj.properties.some",
+    "stop": "checked view read of field some with unsupported callable contract",
+    "needed": "original callback callable contract admission",
+    "fixture": "rank-910/contract-probe.a",
+    "basis": "original generic collection declaration/read; actual receivers or signature admission probe; original primitive aliases retained"
   },
   {
     "rank": 1075,

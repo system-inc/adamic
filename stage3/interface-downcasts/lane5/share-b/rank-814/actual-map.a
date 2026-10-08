@@ -1,0 +1,7 @@
+// Original Map declaration/read; original primitive aliases retained.
+type Path = string & { __pathBrand: any; };
+interface FileInfo {readonly value:number;}
+interface Base {readonly forEach:unknown;}
+interface Target<K,V> {forEach(callbackfn: (value: V, key: K, map: Map<K, V>) => void, thisArg?: any): void;}
+function probe(value:Base):void {const state={fileInfos:value as Target<Path,FileInfo>};state.fileInfos.forEach((item:FileInfo,key:Path,map:Map<Path,FileInfo>):void=>{});console.log("called");}
+probe(new Map<Path,FileInfo>());

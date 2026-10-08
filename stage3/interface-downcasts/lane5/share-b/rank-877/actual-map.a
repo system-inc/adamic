@@ -1,0 +1,7 @@
+// Original Map declaration/read; original primitive aliases retained.
+
+interface Type {readonly value:number;}
+interface Base {readonly clear:unknown;}
+interface Target<K,V> {clear(): void;}
+function probe(value:Base):void {const activeTypeMappersCount=0;const activeTypeMappersCaches:Target<string,Type>[]=[value as Target<string,Type>];if(activeTypeMappersCaches[activeTypeMappersCount]===undefined){throw new Error("missing");}activeTypeMappersCaches[activeTypeMappersCount].clear();console.log("called");}
+probe(new Map<string,Type>());

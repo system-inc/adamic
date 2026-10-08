@@ -1,0 +1,30 @@
+[
+  {
+    "rank": 910,
+    "receiver_type_id": 38723,
+    "type": "NodeArray<ObjectLiteralElementLike>",
+    "field": "some",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/transformers/jsx.ts",
+      "line": 260,
+      "column": 16
+    },
+    "read": "obj.properties.some",
+    "call": "obj.properties.some(p =>\r\n            isPropertyAssignment(p) &&\r\n            (isIdentifier(p.name) && idText(p.name) === \"__proto__\" || isStringLiteral(p.name) && p.name.text === \"__proto__\")\r\n        )",
+    "utf16Start": 10217,
+    "utf16End": 10236,
+    "fileSha256": "2d9f268e5764a96ef52c2fd4d8b889bf248914917c6152358666a3effb041e6b",
+    "declaration": "some(predicate: (value: T, index: number, array: readonly T[]) => unknown, thisArg?: any): boolean;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "NodeArray",
+      "ReadonlyArray"
+    ],
+    "filename": "rank-910/contract-probe.a",
+    "output": "",
+    "refusal": "checked view read of field some with unsupported callable contract"
+  }
+]

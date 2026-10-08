@@ -1,0 +1,6 @@
+// Original Map declaration/read; original primitive aliases retained.
+type Path = string & { __pathBrand: any; };
+interface Base {readonly has:unknown;}
+interface Target<K,V> {has(key: K): boolean;}
+function probe(value:Base):void {const skipOutputs=value as Target<Path,string>;skipOutputs?.has("key" as Path);console.log("called");}
+probe(new Map<Path,string>());

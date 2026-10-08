@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface TypeNode { readonly value: number; }
+interface JSDocNullableType { readonly value: number; }
+interface Base {readonly createJSDocNullableType:unknown;}
+interface Target {createJSDocNullableType(type: TypeNode, postfix?: boolean): JSDocNullableType;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createJSDocNullableType({value:3},true).value}`);}
+probe({createJSDocNullableType:(type:number,postfix:number):JSDocNullableType=>{return {value:3};}});

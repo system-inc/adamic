@@ -1,0 +1,933 @@
+[
+  {
+    "rank": 550,
+    "receiver_type_id": 94280,
+    "type": "Map<Path, FileInfo>",
+    "field": "set",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/builderState.ts",
+      "line": 330,
+      "column": 13
+    },
+    "read": "fileInfos.set",
+    "call": "fileInfos.set(sourceFile.resolvedPath, {\r\n                version,\r\n                signature,\r\n                // No need to calculate affectsGlobalScope with --out since its not used at all\r\n                affectsGlobalScope: !options.outFile ? isFileAffectingGlobalScope(sourceFile) || undefined : undefined,\r\n                impliedFormat: sourceFile.impliedNodeFormat,\r\n            })",
+    "utf16Start": 12947,
+    "utf16End": 12960,
+    "fileSha256": "51ef79dcaebb2e9b09c5270d07ca8f4abf3eb04e4849eb9014bf2d55f2c570a5",
+    "declaration": "set(key: K, value: V): this;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-550/actual-map.a",
+    "output": "called\n",
+    "refusal": "a primitive brand member __pathBrand whose type is not void",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type Path = string & { __pathBrand: any; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ]
+  },
+  {
+    "rank": 553,
+    "receiver_type_id": 94599,
+    "type": "Map<Path, boolean>",
+    "field": "clear",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 683,
+      "column": 9
+    },
+    "read": "isSymlinkCache.clear",
+    "call": "isSymlinkCache.clear()",
+    "utf16Start": 29450,
+    "utf16End": 29470,
+    "fileSha256": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6",
+    "declaration": "clear(): void;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-553/actual-map.a",
+    "output": "called\n",
+    "refusal": "a primitive brand member __pathBrand whose type is not void",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type Path = string & { __pathBrand: any; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ]
+  },
+  {
+    "rank": 556,
+    "receiver_type_id": 95236,
+    "type": "Map<Path, false | ResolvedProjectReference>",
+    "field": "set",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/program.ts",
+      "line": 4018,
+      "column": 17
+    },
+    "read": "projectReferenceRedirects.set",
+    "call": "projectReferenceRedirects.set(sourceFilePath, false)",
+    "utf16Start": 204140,
+    "utf16End": 204169,
+    "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+    "declaration": "set(key: K, value: V): this;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-556/actual-map.a",
+    "output": "called\n",
+    "refusal": "a primitive brand member __pathBrand whose type is not void",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type Path = string & { __pathBrand: any; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ]
+  },
+  {
+    "rank": 559,
+    "receiver_type_id": 45188,
+    "type": "Map<Path, string> | undefined",
+    "field": "has",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1830,
+      "column": 14
+    },
+    "read": "skipOutputs?.has",
+    "call": "skipOutputs?.has(toPath(state, buildInfoPath))",
+    "utf16Start": 80151,
+    "utf16End": 80167,
+    "fileSha256": "3337fb2a5fcb5757f2800b03849452f809227ebd74fcffd2b597e17e13dcb2a5",
+    "declaration": "has(key: K): boolean;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-559/actual-map.a",
+    "output": "called\n",
+    "refusal": "a primitive brand member __pathBrand whose type is not void",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type Path = string & { __pathBrand: any; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ]
+  },
+  {
+    "rank": 562,
+    "receiver_type_id": 101317,
+    "type": "Map<ResolvedConfigFilePath, ProgramUpdateLevel>",
+    "field": "set",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 805,
+      "column": 9
+    },
+    "read": "projectPendingBuild.set",
+    "call": "projectPendingBuild.set(proj, updateLevel)",
+    "utf16Start": 34406,
+    "utf16End": 34429,
+    "fileSha256": "3337fb2a5fcb5757f2800b03849452f809227ebd74fcffd2b597e17e13dcb2a5",
+    "declaration": "set(key: K, value: V): this;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-562/actual-map.a",
+    "output": "called\n",
+    "refusal": "a primitive brand member __pathBrand whose type is not void",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };",
+      "type ResolvedConfigFileName = string & { _isResolvedConfigFileName: never; };",
+      "type ResolvedConfigFilePath = ResolvedConfigFileName & Path;",
+      "enum ProgramUpdateLevel {\n    /** Program is updated with same root file names and options */\n    Update,\n    /** Loads program after updating root file names from the disk */\n    RootNamesAndUpdate,\n    /**\n     * Loads program completely, including:\n     *  - re-reading contents of config file from disk\n     *  - calculating root file names for the program\n     *  - Updating the program\n     */\n\n    Full,\n}"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type Path = string & { __pathBrand: any; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      },
+      {
+        "declaration": "type ResolvedConfigFileName = string & { _isResolvedConfigFileName: never; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      },
+      {
+        "declaration": "type ResolvedConfigFilePath = ResolvedConfigFileName & Path;",
+        "sourceFile": "src/compiler/tsbuildPublic.ts",
+        "sha256": "3337fb2a5fcb5757f2800b03849452f809227ebd74fcffd2b597e17e13dcb2a5"
+      },
+      {
+        "declaration": "enum ProgramUpdateLevel {\n    /** Program is updated with same root file names and options */\n    Update,\n    /** Loads program after updating root file names from the disk */\n    RootNamesAndUpdate,\n    /**\n     * Loads program completely, including:\n     *  - re-reading contents of config file from disk\n     *  - calculating root file names for the program\n     *  - Updating the program\n     */\n\n    Full,\n}",
+        "sourceFile": "src/compiler/watchUtilities.ts",
+        "sha256": "0a4919e1976ea0683ea06137ec02c97fe5ad44ca8d0bc709f69eb0230b7a5487"
+      }
+    ]
+  },
+  {
+    "rank": 565,
+    "receiver_type_id": 3090,
+    "type": "Map<THash, TElement | TElement[]>",
+    "field": "get",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/core.ts",
+      "line": 1641,
+      "column": 32
+    },
+    "read": "multiMap.get",
+    "call": "multiMap.get(hash)",
+    "utf16Start": 57538,
+    "utf16End": 57550,
+    "fileSha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+    "declaration": "get(key: K): V | undefined;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-565/actual-map.a",
+    "output": "called\n",
+    "refusal": "",
+    "carrierDeclarations": [],
+    "carrierEvidence": [],
+    "genericInstantiation": "THash=string; TElement structural object fixture",
+    "expected": "adamic: panic: field read failed: multiMap.get expected (key: string) => TElement[] | TElement | undefined, found function with unknown signature\n"
+  },
+  {
+    "rank": 568,
+    "receiver_type_id": 67975,
+    "type": "Map<string, RelationComparisonResult>",
+    "field": "get",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 22173,
+      "column": 23
+    },
+    "read": "enumRelation.get",
+    "call": "enumRelation.get(id)",
+    "utf16Start": 1301816,
+    "utf16End": 1301832,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declaration": "get(key: K): V | undefined;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-568/actual-map.a",
+    "output": "called\n",
+    "refusal": "",
+    "carrierDeclarations": [
+      "enum RelationComparisonResult {\n    None                = 0,\n    Succeeded           = 1 << 0, // Should be truthy\n    Failed              = 1 << 1,\n\n    ReportsUnmeasurable = 1 << 3,\n    ReportsUnreliable   = 1 << 4,\n    ReportsMask         = ReportsUnmeasurable | ReportsUnreliable,\n\n    ComplexityOverflow  = 1 << 5,\n    StackDepthOverflow  = 1 << 6,\n    Overflow            = ComplexityOverflow | StackDepthOverflow,\n}"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "enum RelationComparisonResult {\n    None                = 0,\n    Succeeded           = 1 << 0, // Should be truthy\n    Failed              = 1 << 1,\n\n    ReportsUnmeasurable = 1 << 3,\n    ReportsUnreliable   = 1 << 4,\n    ReportsMask         = ReportsUnmeasurable | ReportsUnreliable,\n\n    ComplexityOverflow  = 1 << 5,\n    StackDepthOverflow  = 1 << 6,\n    Overflow            = ComplexityOverflow | StackDepthOverflow,\n}",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ],
+    "expected": "adamic: panic: field read failed: enumRelation.get expected (key: string) => RelationComparisonResult | undefined, found function with unknown signature\n"
+  },
+  {
+    "rank": 571,
+    "receiver_type_id": 8212,
+    "type": "Map<string, number>",
+    "field": "delete",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/performance.ts",
+      "line": 147,
+      "column": 29
+    },
+    "read": "durations.delete",
+    "call": "durations.delete(name)",
+    "utf16Start": 4360,
+    "utf16End": 4376,
+    "fileSha256": "b12e3cdedb651fe1d94fceae1bb236c2745530ba7fe0c9dc996d61ba22b6c473",
+    "declaration": "delete(key: K): boolean;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-571/actual-map.a",
+    "output": "called\n",
+    "refusal": "",
+    "carrierDeclarations": [],
+    "carrierEvidence": [],
+    "expected": "adamic: panic: field read failed: durations.delete expected (key: string) => boolean, found function with unknown signature\n"
+  },
+  {
+    "rank": 802,
+    "receiver_type_id": 66039,
+    "type": "Map<CompilerOptions, RedirectsCacheKey>",
+    "field": "get",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 1031,
+      "column": 38
+    },
+    "read": "optionsToRedirectsKey.get",
+    "call": "optionsToRedirectsKey.get(ownOptions)",
+    "utf16Start": 46519,
+    "utf16End": 46544,
+    "fileSha256": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f",
+    "declaration": "get(key: K): V | undefined;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-802/actual-map.a",
+    "output": "called\n",
+    "refusal": "a primitive brand member __compilerOptionsKey whose type is not void",
+    "carrierDeclarations": [
+      "type RedirectsCacheKey = string & { __compilerOptionsKey: any; };"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type RedirectsCacheKey = string & { __compilerOptionsKey: any; };",
+        "sourceFile": "src/compiler/moduleNameResolver.ts",
+        "sha256": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f"
+      }
+    ]
+  },
+  {
+    "rank": 805,
+    "receiver_type_id": 97246,
+    "type": "Map<Path, BuilderFileEmit>",
+    "field": "delete",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/builder.ts",
+      "line": 715,
+      "column": 23
+    },
+    "read": "state.affectedFilesPendingEmit!.delete",
+    "call": "state.affectedFilesPendingEmit!.delete(path)",
+    "utf16Start": 30713,
+    "utf16End": 30751,
+    "fileSha256": "6e5b07ce2c67226096cad19391791073b2e37164d4e702bf77e7b2bc28ae9814",
+    "declaration": "delete(key: K): boolean;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-805/actual-map.a",
+    "output": "called\n",
+    "refusal": "a primitive brand member __pathBrand whose type is not void",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type Path = string & { __pathBrand: any; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ]
+  },
+  {
+    "rank": 808,
+    "receiver_type_id": 98915,
+    "type": "Map<Path, DirPathToWatcherOfPackageDirWatcher>",
+    "field": "get",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1291,
+      "column": 28
+    },
+    "read": "packageDirWatcher.dirPathToWatcher.get",
+    "call": "packageDirWatcher.dirPathToWatcher.get(dirPath)",
+    "utf16Start": 60454,
+    "utf16End": 60492,
+    "fileSha256": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6",
+    "declaration": "get(key: K): V | undefined;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-808/actual-map.a",
+    "output": "called\n",
+    "refusal": "a primitive brand member __pathBrand whose type is not void",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type Path = string & { __pathBrand: any; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ]
+  },
+  {
+    "rank": 811,
+    "receiver_type_id": 97242,
+    "type": "Map<Path, EmitSignature>",
+    "field": "set",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/builder.ts",
+      "line": 2294,
+      "column": 60
+    },
+    "read": "emitSignatures.set",
+    "call": "emitSignatures.set(path, stateFileInfo.signature)",
+    "utf16Start": 108050,
+    "utf16End": 108068,
+    "fileSha256": "6e5b07ce2c67226096cad19391791073b2e37164d4e702bf77e7b2bc28ae9814",
+    "declaration": "set(key: K, value: V): this;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-811/actual-map.a",
+    "output": "called\n",
+    "refusal": "a primitive brand member __pathBrand whose type is not void",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };",
+      "type EmitSignature = string | [signature: string];"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type Path = string & { __pathBrand: any; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      },
+      {
+        "declaration": "type EmitSignature = string | [signature: string];",
+        "sourceFile": "src/compiler/builder.ts",
+        "sha256": "6e5b07ce2c67226096cad19391791073b2e37164d4e702bf77e7b2bc28ae9814"
+      }
+    ]
+  },
+  {
+    "rank": 814,
+    "receiver_type_id": 94280,
+    "type": "Map<Path, FileInfo>",
+    "field": "forEach",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/builder.ts",
+      "line": 379,
+      "column": 5
+    },
+    "read": "state.fileInfos.forEach",
+    "call": "state.fileInfos.forEach((info, sourceFilePath) => {\r\n        let oldInfo: Readonly<BuilderState.FileInfo> | undefined;\r\n        let newReferences: ReadonlySet<Path> | undefined;\r\n\r\n        // if not using old state, every file is changed\r\n        if (\r\n            !useOldState ||\r\n            // File wasn't present in old state\r\n            !(oldInfo = oldState!.fileInfos.get(sourceFilePath)) ||\r\n            // versions dont match\r\n            oldInfo.version !== info.version ||\r\n            // Implied formats dont match\r\n            oldInfo.impliedFormat !== info.impliedFormat ||\r\n            // Referenced files changed\r\n            !hasSameKeys(newReferences = referencedMap && referencedMap.getValues(sourceFilePath), oldReferencedMap && oldReferencedMap.getValues(sourceFilePath)) ||\r\n            // Referenced file was deleted in the new program\r\n            newReferences && forEachKey(newReferences, path => !state.fileInfos.has(path) && oldState!.fileInfos.has(path))\r\n        ) {\r\n            // Register file as changed file and do not copy semantic diagnostics, since all changed files need to be re-evaluated\r\n            addFileToChangeSet(sourceFilePath);\r\n        }\r\n        else {\r\n            const sourceFile = newProgram.getSourceFileByPath(sourceFilePath)!;\r\n            const emitDiagnostics = canCopyEmitDiagnostics ?\r\n                oldState!.emitDiagnosticsPerFile?.get(sourceFilePath) : undefined;\r\n            if (emitDiagnostics) {\r\n                (state.emitDiagnosticsPerFile ??= new Map()).set(\r\n                    sourceFilePath,\r\n                    oldState!.hasReusableDiagnostic ?\r\n                        convertToDiagnostics(emitDiagnostics as readonly ReusableDiagnostic[], sourceFilePath, newProgram) :\r\n                        repopulateDiagnostics(emitDiagnostics as readonly Diagnostic[], newProgram),\r\n                );\r\n            }\r\n\r\n            if (canCopySemanticDiagnostics) {\r\n                if (sourceFile.isDeclarationFile && !copyDeclarationFileDiagnostics) return;\r\n                if (newProgram.isSourceFileDefaultLibrary(sourceFile) && !copyLibFileDiagnostics) return;\r\n\r\n                // Unchanged file copy diagnostics\r\n                const diagnostics = oldState!.semanticDiagnosticsPerFile.get(sourceFilePath);\r\n                if (diagnostics) {\r\n                    state.semanticDiagnosticsPerFile.set(\r\n                        sourceFilePath,\r\n                        oldState!.hasReusableDiagnostic ?\r\n                            convertToDiagnostics(diagnostics as readonly ReusableDiagnostic[], sourceFilePath, newProgram) :\r\n                            repopulateDiagnostics(diagnostics as readonly Diagnostic[], newProgram),\r\n                    );\r\n                    (state.semanticDiagnosticsFromOldState ??= new Set()).add(sourceFilePath);\r\n                }\r\n            }\r\n        }\r\n        if (canCopyEmitSignatures) {\r\n            const oldEmitSignature = oldState.emitSignatures.get(sourceFilePath);\r\n            if (oldEmitSignature) {\r\n                (state.emitSignatures ??= new Map()).set(sourceFilePath, getEmitSignatureFromOldSignature(compilerOptions, oldState.compilerOptions, oldEmitSignature));\r\n            }\r\n        }\r\n    })",
+    "utf16Start": 14758,
+    "utf16End": 14781,
+    "fileSha256": "6e5b07ce2c67226096cad19391791073b2e37164d4e702bf77e7b2bc28ae9814",
+    "declaration": "forEach(callbackfn: (value: V, key: K, map: Map<K, V>) => void, thisArg?: any): void;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-814/actual-map.a",
+    "output": "called\n",
+    "refusal": "a primitive brand member __pathBrand whose type is not void",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type Path = string & { __pathBrand: any; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ]
+  },
+  {
+    "rank": 817,
+    "receiver_type_id": 98899,
+    "type": "Map<Path, PackageDirWatcher>",
+    "field": "get",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1264,
+      "column": 33
+    },
+    "read": "packageDirWatchers.get",
+    "call": "packageDirWatchers.get(packageDirPath)",
+    "utf16Start": 59203,
+    "utf16End": 59225,
+    "fileSha256": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6",
+    "declaration": "get(key: K): V | undefined;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-817/actual-map.a",
+    "output": "called\n",
+    "refusal": "a primitive brand member __pathBrand whose type is not void",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type Path = string & { __pathBrand: any; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ]
+  },
+  {
+    "rank": 820,
+    "receiver_type_id": 95240,
+    "type": "Map<Path, ResolvedRefAndSource>",
+    "field": "set",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/program.ts",
+      "line": 4049,
+      "column": 17
+    },
+    "read": "mapOutputFileToResolvedRef?.set",
+    "call": "mapOutputFileToResolvedRef?.set(toPath(outDts), { resolvedRef })",
+    "utf16Start": 205936,
+    "utf16End": 205967,
+    "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+    "declaration": "set(key: K, value: V): this;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-820/actual-map.a",
+    "output": "called\n",
+    "refusal": "a primitive brand member __pathBrand whose type is not void",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type Path = string & { __pathBrand: any; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ]
+  },
+  {
+    "rank": 823,
+    "receiver_type_id": 94600,
+    "type": "Map<Path, SourceFile>",
+    "field": "set",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/builderState.ts",
+      "line": 610,
+      "column": 9
+    },
+    "read": "seenFileNamesMap.set",
+    "call": "seenFileNamesMap.set(sourceFileWithUpdatedShape.resolvedPath, sourceFileWithUpdatedShape)",
+    "utf16Start": 25167,
+    "utf16End": 25187,
+    "fileSha256": "51ef79dcaebb2e9b09c5270d07ca8f4abf3eb04e4849eb9014bf2d55f2c570a5",
+    "declaration": "set(key: K, value: V): this;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-823/actual-map.a",
+    "output": "called\n",
+    "refusal": "a primitive brand member __pathBrand whose type is not void",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type Path = string & { __pathBrand: any; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ]
+  },
+  {
+    "rank": 826,
+    "receiver_type_id": 94599,
+    "type": "Map<Path, boolean>",
+    "field": "delete",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/program.ts",
+      "line": 584,
+      "column": 13
+    },
+    "read": "fileExistsCache.delete",
+    "call": "fileExistsCache.delete(key)",
+    "utf16Start": 19972,
+    "utf16End": 19994,
+    "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+    "declaration": "delete(key: K): boolean;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-826/actual-map.a",
+    "output": "called\n",
+    "refusal": "a primitive brand member __pathBrand whose type is not void",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type Path = string & { __pathBrand: any; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ]
+  },
+  {
+    "rank": 829,
+    "receiver_type_id": 98900,
+    "type": "Map<Path, number>",
+    "field": "get",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1300,
+      "column": 74
+    },
+    "read": "dirPathToSymlinkPackageRefCount.get",
+    "call": "dirPathToSymlinkPackageRefCount.get(dirPath)",
+    "utf16Start": 60829,
+    "utf16End": 60864,
+    "fileSha256": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6",
+    "declaration": "get(key: K): V | undefined;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-829/actual-map.a",
+    "output": "called\n",
+    "refusal": "a primitive brand member __pathBrand whose type is not void",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type Path = string & { __pathBrand: any; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ]
+  },
+  {
+    "rank": 832,
+    "receiver_type_id": 95088,
+    "type": "Map<Path, readonly Diagnostic[]>",
+    "field": "set",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/builder.ts",
+      "line": 420,
+      "column": 21
+    },
+    "read": "state.semanticDiagnosticsPerFile.set",
+    "call": "state.semanticDiagnosticsPerFile.set(\r\n                        sourceFilePath,\r\n                        oldState!.hasReusableDiagnostic ?\r\n                            convertToDiagnostics(diagnostics as readonly ReusableDiagnostic[], sourceFilePath, newProgram) :\r\n                            repopulateDiagnostics(diagnostics as readonly Diagnostic[], newProgram),\r\n                    )",
+    "utf16Start": 17104,
+    "utf16End": 17140,
+    "fileSha256": "6e5b07ce2c67226096cad19391791073b2e37164d4e702bf77e7b2bc28ae9814",
+    "declaration": "set(key: K, value: V): this;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-832/actual-map.a",
+    "output": "called\n",
+    "refusal": "a primitive brand member __pathBrand whose type is not void",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type Path = string & { __pathBrand: any; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ]
+  },
+  {
+    "rank": 835,
+    "receiver_type_id": 10048,
+    "type": "Map<Path, string>",
+    "field": "get",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/program.ts",
+      "line": 2432,
+      "column": 33
+    },
+    "read": "oldProgram.sourceFileToPackageName.get",
+    "call": "oldProgram.sourceFileToPackageName.get(oldSourceFile.path)",
+    "utf16Start": 119201,
+    "utf16End": 119239,
+    "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+    "declaration": "get(key: K): V | undefined;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-835/actual-map.a",
+    "output": "called\n",
+    "refusal": "a primitive brand member __pathBrand whose type is not void",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type Path = string & { __pathBrand: any; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ]
+  },
+  {
+    "rank": 862,
+    "receiver_type_id": 70163,
+    "type": "Map<number, string>",
+    "field": "has",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 11099,
+      "column": 25
+    },
+    "read": "context.remappedSymbolNames!.has",
+    "call": "context.remappedSymbolNames!.has(id)",
+    "utf16Start": 648162,
+    "utf16End": 648194,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declaration": "has(key: K): boolean;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-862/actual-map.a",
+    "output": "called\n",
+    "refusal": "",
+    "carrierDeclarations": [],
+    "carrierEvidence": [],
+    "expected": "adamic: panic: field read failed: context.remappedSymbolNames!.has expected (key: number) => boolean, found function with unknown signature\n"
+  },
+  {
+    "rank": 868,
+    "receiver_type_id": 100599,
+    "type": "Map<string, HostFileInfo>",
+    "field": "delete",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 718,
+      "column": 21
+    },
+    "read": "sourceFilesCache.delete",
+    "call": "sourceFilesCache.delete(missingFilePath)",
+    "utf16Start": 35887,
+    "utf16End": 35910,
+    "fileSha256": "74fdacba504a4962aa0b591c385b6f7061742d37122842e55886a77ffa8d2bef",
+    "declaration": "delete(key: K): boolean;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-868/actual-map.a",
+    "output": "called\n",
+    "refusal": "",
+    "carrierDeclarations": [],
+    "carrierEvidence": [],
+    "expected": "adamic: panic: field read failed: sourceFilesCache.delete expected (key: string) => boolean, found function with unknown signature\n"
+  },
+  {
+    "rank": 871,
+    "receiver_type_id": 95223,
+    "type": "Map<string, SourceFile>",
+    "field": "set",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/program.ts",
+      "line": 3658,
+      "column": 17
+    },
+    "read": "packageIdToSourceFile.set",
+    "call": "packageIdToSourceFile.set(packageIdKey, file)",
+    "utf16Start": 185969,
+    "utf16End": 185994,
+    "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+    "declaration": "set(key: K, value: V): this;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-871/actual-map.a",
+    "output": "called\n",
+    "refusal": "",
+    "carrierDeclarations": [],
+    "carrierEvidence": [],
+    "expected": "adamic: panic: field read failed: packageIdToSourceFile.set expected (key: string, value: SourceFile) => Target<string, SourceFile>, found function with unknown signature\n"
+  },
+  {
+    "rank": 874,
+    "receiver_type_id": 69025,
+    "type": "Map<string, Type | undefined>",
+    "field": "get",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 26455,
+      "column": 20
+    },
+    "read": "reverseHomomorphicMappedCache.get",
+    "call": "reverseHomomorphicMappedCache.get(cacheKey)",
+    "utf16Start": 1570372,
+    "utf16End": 1570405,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declaration": "get(key: K): V | undefined;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-874/actual-map.a",
+    "output": "called\n",
+    "refusal": "",
+    "carrierDeclarations": [],
+    "carrierEvidence": [],
+    "expected": "adamic: panic: field read failed: reverseHomomorphicMappedCache.get expected (key: string) => Type | undefined, found function with unknown signature\n"
+  },
+  {
+    "rank": 877,
+    "receiver_type_id": 10563,
+    "type": "Map<string, Type>",
+    "field": "clear",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 32925,
+      "column": 9
+    },
+    "read": "activeTypeMappersCaches[activeTypeMappersCount].clear",
+    "call": "activeTypeMappersCaches[activeTypeMappersCount].clear()",
+    "utf16Start": 1958487,
+    "utf16End": 1958540,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declaration": "clear(): void;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-877/actual-map.a",
+    "output": "called\n",
+    "refusal": "",
+    "carrierDeclarations": [],
+    "carrierEvidence": [],
+    "expected": "adamic: panic: field read failed: activeTypeMappersCaches[activeTypeMappersCount].clear expected () => void, found function with unknown signature\n"
+  },
+  {
+    "rank": 880,
+    "receiver_type_id": 8212,
+    "type": "Map<string, number>",
+    "field": "forEach",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/performance.ts",
+      "line": 137,
+      "column": 5
+    },
+    "read": "durations.forEach",
+    "call": "durations.forEach((duration, measureName) => cb(measureName, duration))",
+    "utf16Start": 4034,
+    "utf16End": 4051,
+    "fileSha256": "b12e3cdedb651fe1d94fceae1bb236c2745530ba7fe0c9dc996d61ba22b6c473",
+    "declaration": "forEach(callbackfn: (value: V, key: K, map: Map<K, V>) => void, thisArg?: any): void;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es2015.collection.d.ts",
+    "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+    "inheritancePath": [
+      "Map"
+    ],
+    "filename": "rank-880/actual-map.a",
+    "output": "called\n",
+    "refusal": "checked view read of field forEach with unsupported callable contract",
+    "carrierDeclarations": [],
+    "carrierEvidence": []
+  }
+]

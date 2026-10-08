@@ -1,0 +1,6 @@
+// Original Map declaration/read; original primitive aliases retained.
+
+interface Base {readonly has:unknown;}
+interface Target<K,V> {has(key: K): boolean;}
+function probe(value:Base):void {const context={remappedSymbolNames:value as Target<number,string>};context.remappedSymbolNames!.has(3);console.log("called");}
+probe(new Map<number,string>());

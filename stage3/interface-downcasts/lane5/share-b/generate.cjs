@@ -39,13 +39,13 @@ for (const member of evidence.members.filter(m => ranks.has(m.rank))) {
  const parameters = signature.parameters.map(p => p.getText(source)).join(', ');
  const parameterTypes = signature.parameters.map(p => p.type.getText(source));
  const resultType = signature.type.getText(source);
- const args = parameterTypes.map(t => (t.includes('[]') || preserveArrayCarriers && t.includes('NodeArray<')) ? '[{value:3}]' : enumDeclarations.has(t) ? t + '.' + enumMembers.get(t) : t === 'string' ? '"value3"' : t === 'boolean' ? 'true' : t === 'number' ? '3' : '{value:3}');
+ const args = parameterTypes.map(type => {const t=type.replace(/\s*\|\s*undefined$/, '');return (t.includes('[]') || preserveArrayCarriers && t.includes('NodeArray<')) ? '[{value:3}]' : enumDeclarations.has(t) ? t + '.' + enumMembers.get(t) : t === 'string' ? '"value3"' : t === 'boolean' ? 'true' : t === 'number' ? '3' : '{value:3}';});
  const observations = signature.parameters.map((p,i) => {
   const n = p.name.getText(source), t = parameterTypes[i];
   if (t.includes('[]') || preserveArrayCarriers && t.includes('NodeArray<')) return t.includes('undefined') || p.questionToken ? `if (${n} !== undefined) {for (const element of ${n}) {console.log(\`\${element.value}\`);}}` : `for (const element of ${n}) {console.log(\`\${element.value}\`);}`;
   if (t === 'string') return `console.log(${n});`;
-  if (t === 'boolean' || t === 'number' || enumDeclarations.has(t)) return `console.log(\`\${${n}}\`);`;
-  if (t.includes('string')) return `if (typeof ${n} === \"string\") {console.log(${n});} else {console.log(\`\${${n}.value}\`);}`;
+  if (/^(boolean|number)(\s*\|\s*undefined)?$/.test(t) || enumDeclarations.has(t)) return `console.log(\`\${${n}}\`);`;
+  if (t.includes('string')) {const observation=`if (typeof ${n} === \"string\") {console.log(${n});} else {console.log(\`\${${n}.value}\`);}`;return p.questionToken || t.includes('undefined') ? `if (${n} !== undefined) {${observation}}` : observation;}
   return t.includes('undefined') || p.questionToken ? `if (${n} !== undefined) {console.log(\`\${${n}.value}\`);}` : `console.log(\`\${${n}.value}\`);`;
  }).join('');
  const arrayResult = resultType.includes('[]') || preserveArrayCarriers && resultType.includes('NodeArray<');

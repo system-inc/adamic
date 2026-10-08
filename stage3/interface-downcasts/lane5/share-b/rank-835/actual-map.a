@@ -1,0 +1,6 @@
+// Original Map declaration/read; original primitive aliases retained.
+type Path = string & { __pathBrand: any; };
+interface Base {readonly get:unknown;}
+interface Target<K,V> {get(key: K): V | undefined;}
+function probe(value:Base):void {const oldProgram={sourceFileToPackageName:value as Target<Path,string>};oldProgram.sourceFileToPackageName.get("key" as Path);console.log("called");}
+probe(new Map<Path,string>());

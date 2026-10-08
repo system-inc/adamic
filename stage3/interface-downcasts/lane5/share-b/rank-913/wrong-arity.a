@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Statement { readonly value: number; }
+interface Base {readonly copyStandardPrologue:unknown;}
+interface Target {copyStandardPrologue(source: readonly Statement[], target: Statement[], statementOffset: number | undefined, ensureUseStrict?: boolean): number;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.copyStandardPrologue([{value:3}],[{value:3}],3,true)}`);}
+probe({copyStandardPrologue:():number=>{return 3;}});

@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface JsxTagNameExpression { readonly value: number; }
+interface JsxClosingElement { readonly value: number; }
+interface Base {readonly createJsxClosingElement:unknown;}
+interface Target {createJsxClosingElement(tagName: JsxTagNameExpression): JsxClosingElement;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createJsxClosingElement({value:3}).value}`);}
+probe({createJsxClosingElement:7});

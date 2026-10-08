@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface PseudoBigInt { readonly value: number; }
+interface BigIntLiteral { readonly value: number; }
+interface Base {readonly createBigIntLiteral:unknown;}
+interface Target {createBigIntLiteral(value: string | PseudoBigInt): BigIntLiteral;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createBigIntLiteral({value:3}).value}`);}
+probe({createBigIntLiteral:():BigIntLiteral=>{return {value:3};}});

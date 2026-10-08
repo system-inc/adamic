@@ -1,0 +1,6 @@
+// Original Map declaration/read; original primitive aliases retained.
+
+interface Base {readonly delete:unknown;}
+interface Target<K,V> {delete(key: K): boolean;}
+function probe(value:Base):void {const durations=value as Target<string,number>;durations.delete("key");console.log("called");}
+probe(new Map<string,number>());

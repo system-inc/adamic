@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Expression { readonly value: number; }
+interface TypeOfExpression { readonly value: number; }
+interface Base {readonly createTypeOfExpression:unknown;}
+interface Target {createTypeOfExpression(expression: Expression): TypeOfExpression;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createTypeOfExpression({value:3}).value}`);}
+probe({createTypeOfExpression:(expression:number):TypeOfExpression=>{return {value:3};}});

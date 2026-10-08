@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Identifier { readonly value: number; }
+interface ContinueStatement { readonly value: number; }
+interface Base {readonly createContinueStatement:unknown;}
+interface Target {createContinueStatement(label?: string | Identifier): ContinueStatement;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createContinueStatement({value:3}).value}`);}
+probe({createContinueStatement:():ContinueStatement=>{return {value:3};}});

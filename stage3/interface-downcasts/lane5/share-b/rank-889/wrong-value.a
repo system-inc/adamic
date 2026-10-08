@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly clear:unknown;}
+interface Target {clear(): void;}
+function probe(value:Base):void {const moduleResolutionCache=value as Target;moduleResolutionCache?.clear();}
+probe({clear:7});

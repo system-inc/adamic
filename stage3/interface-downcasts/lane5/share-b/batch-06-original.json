@@ -1,0 +1,1234 @@
+{
+  "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "basis": "complete original member declarations and reads; adjacent data carriers reduced",
+  "members": [
+    {
+      "rank": 550,
+      "receiver_type_id": 94280,
+      "type": "Map<Path, FileInfo>",
+      "field": "set",
+      "candidateReads": 3,
+      "witness": {
+        "file": "src/compiler/builderState.ts",
+        "line": 330,
+        "column": 13
+      },
+      "read": "fileInfos.set",
+      "call": "fileInfos.set(sourceFile.resolvedPath, {\r\n                version,\r\n                signature,\r\n                // No need to calculate affectsGlobalScope with --out since its not used at all\r\n                affectsGlobalScope: !options.outFile ? isFileAffectingGlobalScope(sourceFile) || undefined : undefined,\r\n                impliedFormat: sourceFile.impliedNodeFormat,\r\n            })",
+      "utf16Start": 12947,
+      "utf16End": 12960,
+      "fileSha256": "51ef79dcaebb2e9b09c5270d07ca8f4abf3eb04e4849eb9014bf2d55f2c570a5",
+      "declaration": "set(key: K, value: V): this;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 553,
+      "receiver_type_id": 94599,
+      "type": "Map<Path, boolean>",
+      "field": "clear",
+      "candidateReads": 3,
+      "witness": {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 683,
+        "column": 9
+      },
+      "read": "isSymlinkCache.clear",
+      "call": "isSymlinkCache.clear()",
+      "utf16Start": 29450,
+      "utf16End": 29470,
+      "fileSha256": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6",
+      "declaration": "clear(): void;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 556,
+      "receiver_type_id": 95236,
+      "type": "Map<Path, false | ResolvedProjectReference>",
+      "field": "set",
+      "candidateReads": 3,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 4018,
+        "column": 17
+      },
+      "read": "projectReferenceRedirects.set",
+      "call": "projectReferenceRedirects.set(sourceFilePath, false)",
+      "utf16Start": 204140,
+      "utf16End": 204169,
+      "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+      "declaration": "set(key: K, value: V): this;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 559,
+      "receiver_type_id": 45188,
+      "type": "Map<Path, string> | undefined",
+      "field": "has",
+      "candidateReads": 3,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1830,
+        "column": 14
+      },
+      "read": "skipOutputs?.has",
+      "call": "skipOutputs?.has(toPath(state, buildInfoPath))",
+      "utf16Start": 80151,
+      "utf16End": 80167,
+      "fileSha256": "3337fb2a5fcb5757f2800b03849452f809227ebd74fcffd2b597e17e13dcb2a5",
+      "declaration": "has(key: K): boolean;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 562,
+      "receiver_type_id": 101317,
+      "type": "Map<ResolvedConfigFilePath, ProgramUpdateLevel>",
+      "field": "set",
+      "candidateReads": 3,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 805,
+        "column": 9
+      },
+      "read": "projectPendingBuild.set",
+      "call": "projectPendingBuild.set(proj, updateLevel)",
+      "utf16Start": 34406,
+      "utf16End": 34429,
+      "fileSha256": "3337fb2a5fcb5757f2800b03849452f809227ebd74fcffd2b597e17e13dcb2a5",
+      "declaration": "set(key: K, value: V): this;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 565,
+      "receiver_type_id": 3090,
+      "type": "Map<THash, TElement | TElement[]>",
+      "field": "get",
+      "candidateReads": 3,
+      "witness": {
+        "file": "src/compiler/core.ts",
+        "line": 1641,
+        "column": 32
+      },
+      "read": "multiMap.get",
+      "call": "multiMap.get(hash)",
+      "utf16Start": 57538,
+      "utf16End": 57550,
+      "fileSha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+      "declaration": "get(key: K): V | undefined;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 568,
+      "receiver_type_id": 67975,
+      "type": "Map<string, RelationComparisonResult>",
+      "field": "get",
+      "candidateReads": 3,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 22173,
+        "column": 23
+      },
+      "read": "enumRelation.get",
+      "call": "enumRelation.get(id)",
+      "utf16Start": 1301816,
+      "utf16End": 1301832,
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declaration": "get(key: K): V | undefined;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 571,
+      "receiver_type_id": 8212,
+      "type": "Map<string, number>",
+      "field": "delete",
+      "candidateReads": 3,
+      "witness": {
+        "file": "src/compiler/performance.ts",
+        "line": 147,
+        "column": 29
+      },
+      "read": "durations.delete",
+      "call": "durations.delete(name)",
+      "utf16Start": 4360,
+      "utf16End": 4376,
+      "fileSha256": "b12e3cdedb651fe1d94fceae1bb236c2745530ba7fe0c9dc996d61ba22b6c473",
+      "declaration": "delete(key: K): boolean;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 799,
+      "receiver_type_id": 67516,
+      "type": "IterationTypesResolver",
+      "field": "getGlobalIteratorObjectType",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 46109,
+        "column": 37
+      },
+      "read": "resolver.getGlobalIteratorObjectType",
+      "call": "resolver.getGlobalIteratorObjectType(/*reportErrors*/ false)",
+      "utf16Start": 2697482,
+      "utf16End": 2697518,
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declaration": "getGlobalIteratorObjectType: (reportErrors: boolean) => GenericType;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/checker.ts",
+      "declarationSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "inheritancePath": [
+        "IterationTypesResolver"
+      ]
+    },
+    {
+      "rank": 802,
+      "receiver_type_id": 66039,
+      "type": "Map<CompilerOptions, RedirectsCacheKey>",
+      "field": "get",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 1031,
+        "column": 38
+      },
+      "read": "optionsToRedirectsKey.get",
+      "call": "optionsToRedirectsKey.get(ownOptions)",
+      "utf16Start": 46519,
+      "utf16End": 46544,
+      "fileSha256": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f",
+      "declaration": "get(key: K): V | undefined;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 805,
+      "receiver_type_id": 97246,
+      "type": "Map<Path, BuilderFileEmit>",
+      "field": "delete",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 715,
+        "column": 23
+      },
+      "read": "state.affectedFilesPendingEmit!.delete",
+      "call": "state.affectedFilesPendingEmit!.delete(path)",
+      "utf16Start": 30713,
+      "utf16End": 30751,
+      "fileSha256": "6e5b07ce2c67226096cad19391791073b2e37164d4e702bf77e7b2bc28ae9814",
+      "declaration": "delete(key: K): boolean;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 808,
+      "receiver_type_id": 98915,
+      "type": "Map<Path, DirPathToWatcherOfPackageDirWatcher>",
+      "field": "get",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 1291,
+        "column": 28
+      },
+      "read": "packageDirWatcher.dirPathToWatcher.get",
+      "call": "packageDirWatcher.dirPathToWatcher.get(dirPath)",
+      "utf16Start": 60454,
+      "utf16End": 60492,
+      "fileSha256": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6",
+      "declaration": "get(key: K): V | undefined;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 811,
+      "receiver_type_id": 97242,
+      "type": "Map<Path, EmitSignature>",
+      "field": "set",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2294,
+        "column": 60
+      },
+      "read": "emitSignatures.set",
+      "call": "emitSignatures.set(path, stateFileInfo.signature)",
+      "utf16Start": 108050,
+      "utf16End": 108068,
+      "fileSha256": "6e5b07ce2c67226096cad19391791073b2e37164d4e702bf77e7b2bc28ae9814",
+      "declaration": "set(key: K, value: V): this;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 814,
+      "receiver_type_id": 94280,
+      "type": "Map<Path, FileInfo>",
+      "field": "forEach",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 379,
+        "column": 5
+      },
+      "read": "state.fileInfos.forEach",
+      "call": "state.fileInfos.forEach((info, sourceFilePath) => {\r\n        let oldInfo: Readonly<BuilderState.FileInfo> | undefined;\r\n        let newReferences: ReadonlySet<Path> | undefined;\r\n\r\n        // if not using old state, every file is changed\r\n        if (\r\n            !useOldState ||\r\n            // File wasn't present in old state\r\n            !(oldInfo = oldState!.fileInfos.get(sourceFilePath)) ||\r\n            // versions dont match\r\n            oldInfo.version !== info.version ||\r\n            // Implied formats dont match\r\n            oldInfo.impliedFormat !== info.impliedFormat ||\r\n            // Referenced files changed\r\n            !hasSameKeys(newReferences = referencedMap && referencedMap.getValues(sourceFilePath), oldReferencedMap && oldReferencedMap.getValues(sourceFilePath)) ||\r\n            // Referenced file was deleted in the new program\r\n            newReferences && forEachKey(newReferences, path => !state.fileInfos.has(path) && oldState!.fileInfos.has(path))\r\n        ) {\r\n            // Register file as changed file and do not copy semantic diagnostics, since all changed files need to be re-evaluated\r\n            addFileToChangeSet(sourceFilePath);\r\n        }\r\n        else {\r\n            const sourceFile = newProgram.getSourceFileByPath(sourceFilePath)!;\r\n            const emitDiagnostics = canCopyEmitDiagnostics ?\r\n                oldState!.emitDiagnosticsPerFile?.get(sourceFilePath) : undefined;\r\n            if (emitDiagnostics) {\r\n                (state.emitDiagnosticsPerFile ??= new Map()).set(\r\n                    sourceFilePath,\r\n                    oldState!.hasReusableDiagnostic ?\r\n                        convertToDiagnostics(emitDiagnostics as readonly ReusableDiagnostic[], sourceFilePath, newProgram) :\r\n                        repopulateDiagnostics(emitDiagnostics as readonly Diagnostic[], newProgram),\r\n                );\r\n            }\r\n\r\n            if (canCopySemanticDiagnostics) {\r\n                if (sourceFile.isDeclarationFile && !copyDeclarationFileDiagnostics) return;\r\n                if (newProgram.isSourceFileDefaultLibrary(sourceFile) && !copyLibFileDiagnostics) return;\r\n\r\n                // Unchanged file copy diagnostics\r\n                const diagnostics = oldState!.semanticDiagnosticsPerFile.get(sourceFilePath);\r\n                if (diagnostics) {\r\n                    state.semanticDiagnosticsPerFile.set(\r\n                        sourceFilePath,\r\n                        oldState!.hasReusableDiagnostic ?\r\n                            convertToDiagnostics(diagnostics as readonly ReusableDiagnostic[], sourceFilePath, newProgram) :\r\n                            repopulateDiagnostics(diagnostics as readonly Diagnostic[], newProgram),\r\n                    );\r\n                    (state.semanticDiagnosticsFromOldState ??= new Set()).add(sourceFilePath);\r\n                }\r\n            }\r\n        }\r\n        if (canCopyEmitSignatures) {\r\n            const oldEmitSignature = oldState.emitSignatures.get(sourceFilePath);\r\n            if (oldEmitSignature) {\r\n                (state.emitSignatures ??= new Map()).set(sourceFilePath, getEmitSignatureFromOldSignature(compilerOptions, oldState.compilerOptions, oldEmitSignature));\r\n            }\r\n        }\r\n    })",
+      "utf16Start": 14758,
+      "utf16End": 14781,
+      "fileSha256": "6e5b07ce2c67226096cad19391791073b2e37164d4e702bf77e7b2bc28ae9814",
+      "declaration": "forEach(callbackfn: (value: V, key: K, map: Map<K, V>) => void, thisArg?: any): void;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 817,
+      "receiver_type_id": 98899,
+      "type": "Map<Path, PackageDirWatcher>",
+      "field": "get",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 1264,
+        "column": 33
+      },
+      "read": "packageDirWatchers.get",
+      "call": "packageDirWatchers.get(packageDirPath)",
+      "utf16Start": 59203,
+      "utf16End": 59225,
+      "fileSha256": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6",
+      "declaration": "get(key: K): V | undefined;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 820,
+      "receiver_type_id": 95240,
+      "type": "Map<Path, ResolvedRefAndSource>",
+      "field": "set",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 4049,
+        "column": 17
+      },
+      "read": "mapOutputFileToResolvedRef?.set",
+      "call": "mapOutputFileToResolvedRef?.set(toPath(outDts), { resolvedRef })",
+      "utf16Start": 205936,
+      "utf16End": 205967,
+      "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+      "declaration": "set(key: K, value: V): this;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 823,
+      "receiver_type_id": 94600,
+      "type": "Map<Path, SourceFile>",
+      "field": "set",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/builderState.ts",
+        "line": 610,
+        "column": 9
+      },
+      "read": "seenFileNamesMap.set",
+      "call": "seenFileNamesMap.set(sourceFileWithUpdatedShape.resolvedPath, sourceFileWithUpdatedShape)",
+      "utf16Start": 25167,
+      "utf16End": 25187,
+      "fileSha256": "51ef79dcaebb2e9b09c5270d07ca8f4abf3eb04e4849eb9014bf2d55f2c570a5",
+      "declaration": "set(key: K, value: V): this;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 826,
+      "receiver_type_id": 94599,
+      "type": "Map<Path, boolean>",
+      "field": "delete",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 584,
+        "column": 13
+      },
+      "read": "fileExistsCache.delete",
+      "call": "fileExistsCache.delete(key)",
+      "utf16Start": 19972,
+      "utf16End": 19994,
+      "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+      "declaration": "delete(key: K): boolean;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 829,
+      "receiver_type_id": 98900,
+      "type": "Map<Path, number>",
+      "field": "get",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 1300,
+        "column": 74
+      },
+      "read": "dirPathToSymlinkPackageRefCount.get",
+      "call": "dirPathToSymlinkPackageRefCount.get(dirPath)",
+      "utf16Start": 60829,
+      "utf16End": 60864,
+      "fileSha256": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6",
+      "declaration": "get(key: K): V | undefined;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 832,
+      "receiver_type_id": 95088,
+      "type": "Map<Path, readonly Diagnostic[]>",
+      "field": "set",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 420,
+        "column": 21
+      },
+      "read": "state.semanticDiagnosticsPerFile.set",
+      "call": "state.semanticDiagnosticsPerFile.set(\r\n                        sourceFilePath,\r\n                        oldState!.hasReusableDiagnostic ?\r\n                            convertToDiagnostics(diagnostics as readonly ReusableDiagnostic[], sourceFilePath, newProgram) :\r\n                            repopulateDiagnostics(diagnostics as readonly Diagnostic[], newProgram),\r\n                    )",
+      "utf16Start": 17104,
+      "utf16End": 17140,
+      "fileSha256": "6e5b07ce2c67226096cad19391791073b2e37164d4e702bf77e7b2bc28ae9814",
+      "declaration": "set(key: K, value: V): this;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 835,
+      "receiver_type_id": 10048,
+      "type": "Map<Path, string>",
+      "field": "get",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 2432,
+        "column": 33
+      },
+      "read": "oldProgram.sourceFileToPackageName.get",
+      "call": "oldProgram.sourceFileToPackageName.get(oldSourceFile.path)",
+      "utf16Start": 119201,
+      "utf16End": 119239,
+      "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+      "declaration": "get(key: K): V | undefined;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 862,
+      "receiver_type_id": 70163,
+      "type": "Map<number, string>",
+      "field": "has",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 11099,
+        "column": 25
+      },
+      "read": "context.remappedSymbolNames!.has",
+      "call": "context.remappedSymbolNames!.has(id)",
+      "utf16Start": 648162,
+      "utf16End": 648194,
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declaration": "has(key: K): boolean;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 868,
+      "receiver_type_id": 100599,
+      "type": "Map<string, HostFileInfo>",
+      "field": "delete",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 718,
+        "column": 21
+      },
+      "read": "sourceFilesCache.delete",
+      "call": "sourceFilesCache.delete(missingFilePath)",
+      "utf16Start": 35887,
+      "utf16End": 35910,
+      "fileSha256": "74fdacba504a4962aa0b591c385b6f7061742d37122842e55886a77ffa8d2bef",
+      "declaration": "delete(key: K): boolean;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 871,
+      "receiver_type_id": 95223,
+      "type": "Map<string, SourceFile>",
+      "field": "set",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 3658,
+        "column": 17
+      },
+      "read": "packageIdToSourceFile.set",
+      "call": "packageIdToSourceFile.set(packageIdKey, file)",
+      "utf16Start": 185969,
+      "utf16End": 185994,
+      "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+      "declaration": "set(key: K, value: V): this;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 874,
+      "receiver_type_id": 69025,
+      "type": "Map<string, Type | undefined>",
+      "field": "get",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 26455,
+        "column": 20
+      },
+      "read": "reverseHomomorphicMappedCache.get",
+      "call": "reverseHomomorphicMappedCache.get(cacheKey)",
+      "utf16Start": 1570372,
+      "utf16End": 1570405,
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declaration": "get(key: K): V | undefined;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 877,
+      "receiver_type_id": 10563,
+      "type": "Map<string, Type>",
+      "field": "clear",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 32925,
+        "column": 9
+      },
+      "read": "activeTypeMappersCaches[activeTypeMappersCount].clear",
+      "call": "activeTypeMappersCaches[activeTypeMappersCount].clear()",
+      "utf16Start": 1958487,
+      "utf16End": 1958540,
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declaration": "clear(): void;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 880,
+      "receiver_type_id": 8212,
+      "type": "Map<string, number>",
+      "field": "forEach",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/performance.ts",
+        "line": 137,
+        "column": 5
+      },
+      "read": "durations.forEach",
+      "call": "durations.forEach((duration, measureName) => cb(measureName, duration))",
+      "utf16Start": 4034,
+      "utf16End": 4051,
+      "fileSha256": "b12e3cdedb651fe1d94fceae1bb236c2745530ba7fe0c9dc996d61ba22b6c473",
+      "declaration": "forEach(callbackfn: (value: V, key: K, map: Map<K, V>) => void, thisArg?: any): void;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 886,
+      "receiver_type_id": 10037,
+      "type": "ModuleResolutionCache",
+      "field": "clear",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 699,
+        "column": 9
+      },
+      "read": "moduleResolutionCache.clear",
+      "call": "moduleResolutionCache.clear()",
+      "utf16Start": 30168,
+      "utf16End": 30195,
+      "fileSha256": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6",
+      "declaration": "clear(): void;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/moduleNameResolver.ts",
+      "declarationSha256": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f",
+      "inheritancePath": [
+        "ModuleResolutionCache",
+        "PerDirectoryResolutionCache"
+      ]
+    },
+    {
+      "rank": 889,
+      "receiver_type_id": 10042,
+      "type": "ModuleResolutionCache | undefined",
+      "field": "clear",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 791,
+        "column": 5
+      },
+      "read": "moduleResolutionCache?.clear",
+      "call": "moduleResolutionCache?.clear()",
+      "utf16Start": 33779,
+      "utf16End": 33807,
+      "fileSha256": "3337fb2a5fcb5757f2800b03849452f809227ebd74fcffd2b597e17e13dcb2a5",
+      "declaration": "clear(): void;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/moduleNameResolver.ts",
+      "declarationSha256": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f",
+      "inheritancePath": [
+        "ModuleResolutionCache",
+        "PerDirectoryResolutionCache"
+      ]
+    },
+    {
+      "rank": 901,
+      "receiver_type_id": 9941,
+      "type": "ModuleSpecifierResolutionHost",
+      "field": "useCaseSensitiveFileNames",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 571,
+        "column": 61
+      },
+      "read": "host.useCaseSensitiveFileNames",
+      "call": "host.useCaseSensitiveFileNames ? host.useCaseSensitiveFileNames() : true",
+      "utf16Start": 25841,
+      "utf16End": 25871,
+      "fileSha256": "9a7623ef273cfe670f11132590583b7628dec59c2d85e36e897ca5deed8f168a",
+      "declaration": "useCaseSensitiveFileNames(): boolean;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "ModuleSpecifierResolutionHost"
+      ]
+    },
+    {
+      "rank": 907,
+      "receiver_type_id": 9428,
+      "type": "NodeArray<Expression>",
+      "field": "indexOf",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 28346,
+        "column": 73
+      },
+      "read": "node.elements.indexOf",
+      "call": "node.elements.indexOf(element)",
+      "utf16Start": 1687337,
+      "utf16End": 1687358,
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declaration": "indexOf(searchElement: T, fromIndex?: number): number;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "inheritancePath": [
+        "NodeArray",
+        "ReadonlyArray"
+      ]
+    },
+    {
+      "rank": 910,
+      "receiver_type_id": 38723,
+      "type": "NodeArray<ObjectLiteralElementLike>",
+      "field": "some",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/jsx.ts",
+        "line": 260,
+        "column": 16
+      },
+      "read": "obj.properties.some",
+      "call": "obj.properties.some(p =>\r\n            isPropertyAssignment(p) &&\r\n            (isIdentifier(p.name) && idText(p.name) === \"__proto__\" || isStringLiteral(p.name) && p.name.text === \"__proto__\")\r\n        )",
+      "utf16Start": 10217,
+      "utf16End": 10236,
+      "fileSha256": "2d9f268e5764a96ef52c2fd4d8b889bf248914917c6152358666a3effb041e6b",
+      "declaration": "some(predicate: (value: T, index: number, array: readonly T[]) => unknown, thisArg?: any): boolean;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "inheritancePath": [
+        "NodeArray",
+        "ReadonlyArray"
+      ]
+    },
+    {
+      "rank": 913,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "copyStandardPrologue",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 1285,
+        "column": 37
+      },
+      "read": "factory.copyStandardPrologue",
+      "call": "factory.copyStandardPrologue(constructor.body.statements, prologue, /*statementOffset*/ 0)",
+      "utf16Start": 52452,
+      "utf16End": 52480,
+      "fileSha256": "79d70178e4923796212e8900090695875e51c9df60a6c604fbe9e43cd0ffbdf4",
+      "declaration": "copyStandardPrologue(source: readonly Statement[], target: Statement[], statementOffset: number | undefined, ensureUseStrict?: boolean): number;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 916,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createBigIntLiteral",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 6862,
+        "column": 54
+      },
+      "read": "factory.createBigIntLiteral",
+      "call": "factory.createBigIntLiteral((type as BigIntLiteralType).value)",
+      "utf16Start": 361583,
+      "utf16End": 361610,
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declaration": "createBigIntLiteral(value: string | PseudoBigInt): BigIntLiteral;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 919,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createContinueStatement",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 6987,
+        "column": 15
+      },
+      "read": "factory.createContinueStatement",
+      "call": "factory.createContinueStatement(label)",
+      "utf16Start": 346156,
+      "utf16End": 346187,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "createContinueStatement(label?: string | Identifier): ContinueStatement;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 922,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createGlobalMethodCall",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/es2016.ts",
+        "line": 110,
+        "column": 30
+      },
+      "read": "factory.createGlobalMethodCall",
+      "call": "factory.createGlobalMethodCall(\"Math\", \"pow\", [value, right])",
+      "utf16Start": 3989,
+      "utf16End": 4019,
+      "fileSha256": "3e3ba9728ee63a9c68e8aee6356e84b611ec19c4acbfc7b4b806b49903c2967e",
+      "declaration": "createGlobalMethodCall(globalObjectName: string, globalMethodName: string, argumentsList: readonly Expression[]): CallExpression;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 925,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createJSDocFunctionType",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 3884,
+        "column": 41
+      },
+      "read": "factory.createJSDocFunctionType",
+      "call": "factory.createJSDocFunctionType(parameters, type)",
+      "utf16Start": 193773,
+      "utf16End": 193804,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "createJSDocFunctionType(parameters: readonly ParameterDeclaration[], type: TypeNode | undefined): JSDocFunctionType;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 928,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createJSDocNullableType",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 3874,
+        "column": 31
+      },
+      "read": "factory.createJSDocNullableType",
+      "call": "factory.createJSDocNullableType(parseType(), /*postfix*/ false)",
+      "utf16Start": 193248,
+      "utf16End": 193279,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "createJSDocNullableType(type: TypeNode, postfix?: boolean): JSDocNullableType;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 931,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createJsxClosingElement",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 6070,
+        "column": 36
+      },
+      "read": "factory.createJsxClosingElement",
+      "call": "factory.createJsxClosingElement(finishNode(factoryCreateIdentifier(\"\"), end, end))",
+      "utf16Start": 297797,
+      "utf16End": 297828,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "createJsxClosingElement(tagName: JsxTagNameExpression): JsxClosingElement;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 934,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createMappedTypeNode",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 4435,
+        "column": 27
+      },
+      "read": "factory.createMappedTypeNode",
+      "call": "factory.createMappedTypeNode(readonlyToken, typeParameter, nameType, questionToken, type, members)",
+      "utf16Start": 218714,
+      "utf16End": 218742,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "createMappedTypeNode(readonlyToken: ReadonlyKeyword | PlusToken | MinusToken | undefined, typeParameter: TypeParameterDeclaration, nameType: TypeNode | undefined, questionToken: QuestionToken | PlusToken | MinusToken | undefined, type: TypeNode | undefined, members: NodeArray<TypeElement> | undefined): MappedTypeNode;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 937,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createNamespaceExportDeclaration",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 8378,
+        "column": 22
+      },
+      "read": "factory.createNamespaceExportDeclaration",
+      "call": "factory.createNamespaceExportDeclaration(name)",
+      "utf16Start": 412927,
+      "utf16End": 412967,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "createNamespaceExportDeclaration(name: string | Identifier): NamespaceExportDeclaration;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 940,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createPostfixUnaryExpression",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 532,
+        "column": 9
+      },
+      "read": "factory.createPostfixUnaryExpression",
+      "call": "factory.createPostfixUnaryExpression(temp, operator)",
+      "utf16Start": 19791,
+      "utf16End": 19827,
+      "fileSha256": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31",
+      "declaration": "createPostfixUnaryExpression(operand: Expression, operator: PostfixUnaryOperator): PostfixUnaryExpression;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 943,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createShorthandPropertyAssignment",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/factory/nodeConverters.ts",
+        "line": 129,
+        "column": 49
+      },
+      "read": "factory.createShorthandPropertyAssignment",
+      "call": "factory.createShorthandPropertyAssignment(element.name, element.initializer)",
+      "utf16Start": 4794,
+      "utf16End": 4835,
+      "fileSha256": "3d5979059f70d4c381bbd5998181441dd6aaa7e15f6564a8f97d446ad85b041d",
+      "declaration": "createShorthandPropertyAssignment(name: string | Identifier, objectAssignmentInitializer?: Expression): ShorthandPropertyAssignment;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 946,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createTemplateLiteralLikeNode",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 2629,
+        "column": 43
+      },
+      "read": "factory.createTemplateLiteralLikeNode",
+      "call": "factory.createTemplateLiteralLikeNode(kind, \"\", \"\", /*templateFlags*/ undefined)",
+      "utf16Start": 134085,
+      "utf16End": 134122,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "createTemplateLiteralLikeNode(kind: TemplateLiteralToken[\"kind\"], text: string, rawText: string, templateFlags: TokenFlags | undefined): TemplateLiteralLikeNode;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 949,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createTemplateSpan",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 3727,
+        "column": 13
+      },
+      "read": "factory.createTemplateSpan",
+      "call": "factory.createTemplateSpan(\r\n                allowInAnd(parseExpression),\r\n                parseLiteralOfTemplateSpan(isTaggedTemplate),\r\n            )",
+      "utf16Start": 186905,
+      "utf16End": 186931,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "createTemplateSpan(expression: Expression, literal: TemplateMiddle | TemplateTail): TemplateSpan;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 952,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createTypeOfExpression",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 5705,
+        "column": 27
+      },
+      "read": "factory.createTypeOfExpression",
+      "call": "factory.createTypeOfExpression(nextTokenAnd(parseSimpleUnaryExpression))",
+      "utf16Start": 279950,
+      "utf16End": 279980,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "createTypeOfExpression(expression: Expression): TypeOfExpression;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 955,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "getNamespaceMemberName",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 2544,
+        "column": 21
+      },
+      "read": "factory.getNamespaceMemberName",
+      "call": "factory.getNamespaceMemberName(currentNamespaceContainerName, exportName, /*allowComments*/ false, /*allowSourceMaps*/ true)",
+      "utf16Start": 107050,
+      "utf16End": 107080,
+      "fileSha256": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2",
+      "declaration": "getNamespaceMemberName(ns: Identifier, name: Identifier, allowComments?: boolean, allowSourceMaps?: boolean): PropertyAccessExpression;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 958,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "updateAsExpression",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 1231,
+        "column": 16
+      },
+      "read": "context.factory.updateAsExpression",
+      "call": "context.factory.updateAsExpression(\r\n            node,\r\n            Debug.checkDefined(nodeVisitor(node.expression, visitor, isExpression)),\r\n            Debug.checkDefined(nodeVisitor(node.type, visitor, isTypeNode)),\r\n        )",
+      "utf16Start": 59684,
+      "utf16End": 59718,
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "declaration": "updateAsExpression(node: AsExpression, expression: Expression, type: TypeNode): AsExpression;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 961,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "updateConditionalExpression",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 1178,
+        "column": 16
+      },
+      "read": "context.factory.updateConditionalExpression",
+      "call": "context.factory.updateConditionalExpression(\r\n            node,\r\n            Debug.checkDefined(nodeVisitor(node.condition, visitor, isExpression)),\r\n            tokenVisitor ? Debug.checkDefined(nodeVisitor(node.questionToken, tokenVisitor, isQuestionToken)) : node.questionToken,\r\n            Debug.checkDefined(nodeVisitor(node.whenTrue, visitor, isExpression)),\r\n            tokenVisitor ? Debug.checkDefined(nodeVisitor(node.colonToken, tokenVisitor, isColonToken)) : node.colonToken,\r\n            Debug.checkDefined(nodeVisitor(node.whenFalse, visitor, isExpression)),\r\n        )",
+      "utf16Start": 56764,
+      "utf16End": 56807,
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "declaration": "updateConditionalExpression(node: ConditionalExpression, condition: Expression, questionToken: QuestionToken, whenTrue: Expression, colonToken: ColonToken, whenFalse: Expression): ConditionalExpression;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 964,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "updateDeleteExpression",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 1127,
+        "column": 16
+      },
+      "read": "context.factory.updateDeleteExpression",
+      "call": "context.factory.updateDeleteExpression(\r\n            node,\r\n            Debug.checkDefined(nodeVisitor(node.expression, visitor, isExpression)),\r\n        )",
+      "utf16Start": 54214,
+      "utf16End": 54252,
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "declaration": "updateDeleteExpression(node: DeleteExpression, expression: Expression): DeleteExpression;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    },
+    {
+      "rank": 967,
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "updateExternalModuleReference",
+      "candidateReads": 2,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 1625,
+        "column": 16
+      },
+      "read": "context.factory.updateExternalModuleReference",
+      "call": "context.factory.updateExternalModuleReference(\r\n            node,\r\n            Debug.checkDefined(nodeVisitor(node.expression, visitor, isExpression)),\r\n        )",
+      "utf16Start": 79466,
+      "utf16End": 79511,
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "declaration": "updateExternalModuleReference(node: ExternalModuleReference, expression: Expression): ExternalModuleReference;",
+      "originalFunctionHeaders": [],
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "inheritancePath": [
+        "NodeFactory"
+      ]
+    }
+  ]
+}

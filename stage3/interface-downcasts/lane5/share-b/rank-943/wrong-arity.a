@@ -1,0 +1,8 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Identifier { readonly value: number; }
+interface Expression { readonly value: number; }
+interface ShorthandPropertyAssignment { readonly value: number; }
+interface Base {readonly createShorthandPropertyAssignment:unknown;}
+interface Target {createShorthandPropertyAssignment(name: string | Identifier, objectAssignmentInitializer?: Expression): ShorthandPropertyAssignment;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createShorthandPropertyAssignment({value:3},{value:3}).value}`);}
+probe({createShorthandPropertyAssignment:():ShorthandPropertyAssignment=>{return {value:3};}});
