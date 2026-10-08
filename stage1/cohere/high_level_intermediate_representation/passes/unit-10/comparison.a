@@ -1,0 +1,41 @@
+import { panic } from 'adamic';
+import type { ManualMemoDependencyInterface, DependencyPathEntryInterface } from '../../replay/index.ts';
+
+// Go manual_memo_comparison.go: the order is the disagreement merge order.
+export type CompareDependencyResult = 0 | 1 | 2 | 3 | 4;
+export function MergeCompareDependencyResults(first: CompareDependencyResult, second: CompareDependencyResult): CompareDependencyResult {
+    return first > second ? first : second;
+}
+export function CompareDependencyMessage(result: number): string {
+    switch(result) {
+        case 0: return 'ok';
+        case 1: return 'the inferred and source dependencies name different values';
+        case 2: return 'the inferred dependency reads a different path than the source declared';
+        case 3: return 'the source dependency is a prefix of the inferred one';
+        case 4: return 'a partial match through a ref access, which proves nothing';
+        default: return '<unknown compare-dependency result>';
+    }
+}
+function pathReadsRefCurrent(path: readonly DependencyPathEntryInterface[]): boolean {
+    for(const entry of path) { if(entry.property === 'current') { return true; } }
+    return false;
+}
+export function CompareManualMemoDependencies(inferred: ManualMemoDependencyInterface, source: ManualMemoDependencyInterface): CompareDependencyResult {
+    if(inferred.root.isGlobal !== source.root.isGlobal) { return 1; }
+    if(inferred.root.isGlobal) {
+        if(inferred.root.name !== source.root.name) { return 1; }
+    } else if(inferred.root.place.identifier !== source.root.place.identifier) { return 1; }
+    let isSubpath = true;
+    const shared = Math.min(inferred.path.length, source.path.length);
+    for(let index = 0; index < shared; index++) {
+        const inferredEntry = inferred.path[index] ?? panic('missing inferred path entry');
+        const sourceEntry = source.path[index] ?? panic('missing source path entry');
+        if(inferredEntry.property !== sourceEntry.property) { isSubpath = false; break; }
+        if(inferredEntry.optional !== sourceEntry.optional) { return 2; }
+    }
+    if(isSubpath && (source.path.length === inferred.path.length ||
+        (inferred.path.length >= source.path.length && !pathReadsRefCurrent(inferred.path)))) { return 0; }
+    if(!isSubpath) { return 2; }
+    if(pathReadsRefCurrent(source.path) || pathReadsRefCurrent(inferred.path)) { return 4; }
+    return 3;
+}

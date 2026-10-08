@@ -1,0 +1,14 @@
+=== RUN   TestUnit10DependencyCheckpoint
+=== PAUSE TestUnit10DependencyCheckpoint
+=== RUN   TestUnit10ScopeProducerCheckpoint
+=== PAUSE TestUnit10ScopeProducerCheckpoint
+=== CONT  TestUnit10DependencyCheckpoint
+=== CONT  TestUnit10ScopeProducerCheckpoint
+=== NAME  TestUnit10DependencyCheckpoint
+    stage1_unit10_test.go:63: comparison before/after: 20 path cases, 25 merge cases, 1 message case
+=== NAME  TestUnit10ScopeProducerCheckpoint
+    stage1_unit10_test.go:107: actual Go scope producer emits the terminal missing from shared replay
+--- PASS: TestUnit10DependencyCheckpoint (0.00s)
+--- PASS: TestUnit10ScopeProducerCheckpoint (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/ecmascript/high_level_intermediate_representation	0.006s

@@ -1,0 +1,26 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Payload } from '../../replay/index.ts';
+import type { PayloadIndex, ManualMemoDependencyInterface } from '../../replay/index.ts';
+import { HIRFunction } from '../../core.ts';
+import { CompareManualMemoDependencies, CompareDependencyMessage, MergeCompareDependencyResults } from './comparison.a';
+import type { CompareDependencyResult } from './comparison.a';
+
+const input = readTextFile(programArguments()[0] ?? panic('missing comparison input'));
+if(input.kind === 'Error') { panic(input.message); }
+const data = new Payload(input.text);
+const fn = new HIRFunction('comparison');
+fn.named('first', 0, 0); fn.named('second', 0, 0);
+function dependency(index: PayloadIndex): ManualMemoDependencyInterface {
+    const root = data.field(index, 'root');
+    const identifier = data.numberField(root, 'identifier');
+    const place = { identifier: fn.identifierAt(identifier), effect: '<unknown>' as const, reactive: false, start: 0, end: 0 };
+    return { root: { isGlobal: data.booleanField(root, 'global'), name: data.stringField(root, 'name'), place },
+        path: data.array(data.field(index, 'path')).map((entry) => ({ property: data.stringField(entry, 'property'), optional: data.booleanField(entry, 'optional') })) };
+}
+for(const row of data.array(data.rootHandle())) {
+    const result = CompareManualMemoDependencies(dependency(data.field(row, 'inferred')), dependency(data.field(row, 'source')));
+    console.log(`${data.stringField(row, 'name')}\t${result}\t${CompareDependencyMessage(result)}`);
+}
+const results: CompareDependencyResult[] = [0, 1, 2, 3, 4];
+for(const first of results) { for(const second of results) { console.log(`merge\t${first}\t${second}\t${MergeCompareDependencyResults(first, second)}`); } }
+console.log(CompareDependencyMessage(99));

@@ -1,0 +1,46 @@
+identical	0	ok
+deeper	0	ok
+shallower	3	the source dependency is a prefix of the inferred one
+diverging	2	the inferred dependency reads a different path than the source declared
+different-root	1	the inferred and source dependencies name different values
+empty	0	ok
+ref-prefix	4	a partial match through a ref access, which proves nothing
+ref-control	0	ok
+ref-exact	0	ok
+optional-plain	2	the inferred dependency reads a different path than the source declared
+plain-optional	2	the inferred dependency reads a different path than the source declared
+optional-exact	0	ok
+global-same	0	ok
+global-different	1	the inferred and source dependencies name different values
+global-local	1	the inferred and source dependencies name different values
+zero-local-global	1	the inferred and source dependencies name different values
+source-ref-longer	4	a partial match through a ref access, which proves nothing
+unicode-global	0	ok
+unicode-property	0	ok
+optional-extra-suffix	0	ok
+merge	0	0	0
+merge	0	1	1
+merge	0	2	2
+merge	0	3	3
+merge	0	4	4
+merge	1	0	1
+merge	1	1	1
+merge	1	2	2
+merge	1	3	3
+merge	1	4	4
+merge	2	0	2
+merge	2	1	2
+merge	2	2	2
+merge	2	3	3
+merge	2	4	4
+merge	3	0	3
+merge	3	1	3
+merge	3	2	3
+merge	3	3	3
+merge	3	4	4
+merge	4	0	4
+merge	4	1	4
+merge	4	2	4
+merge	4	3	4
+merge	4	4	4
+<unknown compare-dependency result>

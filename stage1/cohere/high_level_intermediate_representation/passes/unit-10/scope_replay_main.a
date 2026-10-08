@@ -1,0 +1,6 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { readGraph, decodeGraph } from '../../replay/index.ts';
+import { dump } from '../../dump.ts';
+const input = readTextFile(programArguments()[0] ?? panic('missing Go scope graph'));
+if(input.kind === 'Error') { panic(input.message); }
+console.log(dump(decodeGraph(readGraph(input.text))).slice(0, -1));

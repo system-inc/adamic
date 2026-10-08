@@ -1,0 +1,17 @@
+=== RUN   TestDependencyComparison
+=== PAUSE TestDependencyComparison
+=== RUN   TestScopeReplayBlocked
+=== PAUSE TestScopeReplayBlocked
+=== CONT  TestDependencyComparison
+=== CONT  TestScopeReplayBlocked
+    comparison_test.go:108: Node: 20 dependency cases, 25 merges, 1 message case match Go; census certificate 0/1465
+    comparison_test.go:115: sanitized native: 20 dependency cases, 25 merges, 1 message case match Go; census certificate 0/1465
+    comparison_test.go:121: emitted JavaScript: 46/46 comparison probes
+    comparison_test.go:181: shared decoder declines the actual Go Scope terminal on Node, emitted JavaScript and sanitized native; no validation census cases certified
+--- PASS: TestScopeReplayBlocked (32.48s)
+    comparison_test.go:151: Node: successful missing-dependency semantic mutant caught by byte comparison
+    comparison_test.go:151: native: successful missing-dependency semantic mutant caught by byte comparison
+    comparison_test.go:151: emitted JavaScript: successful missing-dependency semantic mutant caught by byte comparison
+--- PASS: TestDependencyComparison (56.04s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/high_level_intermediate_representation/passes/unit-10	56.045s

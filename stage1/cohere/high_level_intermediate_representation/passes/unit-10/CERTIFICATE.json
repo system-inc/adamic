@@ -1,0 +1,40 @@
+{
+  "status": "stopped",
+  "base": "9addb0e8a48b1cf60621ae24ef2196c860ff33ce",
+  "census": {
+    "native": {
+      "matched": 0,
+      "required": 1465
+    },
+    "Node": {
+      "matched": 0,
+      "required": 1465
+    },
+    "emittedJavaScript": {
+      "matched": 0,
+      "required": 1465
+    },
+    "Flow": {
+      "matched": 0,
+      "required": 23
+    }
+  },
+  "probes": {
+    "native": 46,
+    "Node": 46,
+    "emittedJavaScript": 46
+  },
+  "mutant": {
+    "name": "accept-missing-manual-dependency",
+    "native": "caught by output comparison",
+    "Node": "caught by output comparison",
+    "emittedJavaScript": "caught by output comparison"
+  },
+  "ownedTests": {
+    "pass": 2,
+    "fail": 0,
+    "skip": 0,
+    "packageSeconds": 56.045
+  },
+  "blocker": "shared Scope terminal absent from core and replay decoder"
+}

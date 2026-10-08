@@ -1,0 +1,7 @@
+{
+  "name": "accept-missing-manual-dependency",
+  "file": "comparison.a",
+  "from": "return 3;",
+  "to": "return 0;",
+  "caughtBy": "TestDependencyComparison"
+}
