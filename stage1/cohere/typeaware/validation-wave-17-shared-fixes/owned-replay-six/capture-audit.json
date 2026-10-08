@@ -1,0 +1,14 @@
+{
+  "checked": 174,
+  "expected": 174,
+  "finding_ids_and_counts_differ": [
+    {
+      "index": 140,
+      "rule": "no-global-assign",
+      "expected": [],
+      "actual": [
+        "noGlobalAssign"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "checked": 679,
+  "expected": 679,
+  "finding_ids_and_counts_differ": [
+    {
+      "index": 10,
+      "rule": "no-throw-literal",
+      "expected": [],
+      "actual": [
+        "object"
+      ]
+    }
+  ]
+}

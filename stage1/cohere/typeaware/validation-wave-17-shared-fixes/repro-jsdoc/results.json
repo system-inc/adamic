@@ -1,0 +1,12 @@
+{
+  "Go": {
+    "exit": 0,
+    "stdout": "case 0\n/workspace/lint-shared-fixes/wave17/repro-jsdoc/source.tsx:1:4\n  nexus/consistency-no-single-line-jsdoc  A JSDoc comment carrying one line of description should be a line comment. JSDoc's delimiters exist to hold structure, so spending three lines of them on a sentence tells a reader to look for tags that are not there.\n\nrange 3 9 useSimpleComment \t\t\t3 9\nfixed\t<>{/**x*/}</>\n",
+    "stderr": ""
+  },
+  "Node": {
+    "exit": 0,
+    "stdout": "case 0\nfixed\t<>{/**x*/}</>\n",
+    "stderr": ""
+  }
+}

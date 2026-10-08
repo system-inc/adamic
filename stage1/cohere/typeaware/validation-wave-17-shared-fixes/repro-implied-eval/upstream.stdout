@@ -1,0 +1,6 @@
+case 0
+/workspace/lint-shared-fixes/wave17/repro-implied-eval/source.ts:1:1
+  no-implied-eval  This passes a string where a function belongs, so the string is compiled and run when the timer fires. That is `eval` with a delay: the code loses the surrounding scope and anything interpolated into it becomes executable. Pass a function instead.
+
+range 0 14 impliedEval 			0 14
+fixed	setTimeout('');

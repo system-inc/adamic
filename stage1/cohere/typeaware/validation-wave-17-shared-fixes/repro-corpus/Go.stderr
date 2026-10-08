@@ -1,0 +1,9 @@
+panic: invalid corpus /workspace/lint-shared-fixes/wave17/repro-corpus/source.ts: [Expression expected. ',' expected.]; source="new Promise(@dec async () => {})\n"
+
+goroutine 1 [running]:
+main.collect({0x36032a101360, 0x3a}, {0x36032a37d1d0, 0x21}, {0x36032a4eb500, 0x7, 0x8}, 0x0)
+	/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe
+main.run({0x36032a101360?, 0x36032a40bc40?}, 0x0, 0x36032a40bc40, 0x0)
+	/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171
+main.main()
+	/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595

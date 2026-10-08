@@ -1,0 +1,10 @@
+from pathlib import Path
+import json,collections
+p=Path(__file__).parent
+selected=['no-throw-literal','no-useless-backreference','prefer-arrow-callback','react-hooks/unsupported-syntax','react-hooks/use-memo'];rows=[json.loads(l) for l in (p.parent/'upstream-selected.jsonl').read_text().split('\n') if l and json.loads(l)['rule'] in selected];bad=[];checked=0
+for i,r in enumerate(rows):
+ f=p/'cases'/str(i)/'Go.stdout'
+ if not f.exists():continue
+ checked+=1;ids=[s.split(' ')[3] for s in f.read_text().split('\n') if s.startswith('range ')];want=[x['messageId'] for x in r.get('findings',[])];
+ if collections.Counter(ids)!=collections.Counter(want):bad.append({'index':i,'rule':r['rule'],'expected':want,'actual':ids})
+result={'checked':checked,'expected':len(rows),'finding_ids_and_counts_differ':bad};(p/'capture-audit.json').write_text(json.dumps(result,indent=2));print(result)

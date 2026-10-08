@@ -1,0 +1,22 @@
+{
+  "Go": {
+    "exit": 0,
+    "output": "case 0\nskipped no-throw-literal no program\nfixed\tthrow 'error';\n",
+    "stderr": ""
+  },
+  "native": {
+    "exit": 0,
+    "output": "case 0\nskipped no-throw-literal no program\nfixed\tthrow 'error';\n",
+    "stderr": ""
+  },
+  "Node": {
+    "exit": 0,
+    "output": "case 0\nskipped no-throw-literal no program\nfixed\tthrow 'error';\n",
+    "stderr": ""
+  },
+  "JavaScript": {
+    "exit": 0,
+    "output": "case 0\nskipped no-throw-literal no program\nfixed\tthrow 'error';\n",
+    "stderr": ""
+  }
+}

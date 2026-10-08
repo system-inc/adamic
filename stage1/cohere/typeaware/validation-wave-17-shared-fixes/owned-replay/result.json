@@ -1,0 +1,44 @@
+{
+  "cases": 679,
+  "expected": 679,
+  "by_rule": {
+    "no-throw-literal": 48,
+    "no-useless-backreference": 408,
+    "prefer-arrow-callback": 81,
+    "react-hooks/unsupported-syntax": 61,
+    "react-hooks/use-memo": 79
+  },
+  "failures": [
+    {
+      "index": 470,
+      "rule": "prefer-arrow-callback",
+      "file": "/repository/source/PreferArrowCallback.ts",
+      "failure": [
+        "native: bytes differ"
+      ],
+      "times": {
+        "Go": 0.039275359000384924,
+        "native": 0.09706948200073384
+      }
+    },
+    {
+      "index": 495,
+      "rule": "prefer-arrow-callback",
+      "file": "/repository/source/PreferArrowCallback.ts",
+      "failure": [
+        "native: bytes differ"
+      ],
+      "times": {
+        "Go": 0.03321640500143985,
+        "native": 0.051450970000587404
+      }
+    }
+  ],
+  "wall_seconds": 581.6314977970014,
+  "time_totals": {
+    "Go": 25.848586425971007,
+    "native": 44.58828539199203,
+    "Node": 432.339768730013,
+    "JavaScript": 77.50569619500493
+  }
+}

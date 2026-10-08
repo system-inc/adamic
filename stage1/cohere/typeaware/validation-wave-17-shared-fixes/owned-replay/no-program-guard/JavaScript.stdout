@@ -1,0 +1,3 @@
+case 0
+skipped no-throw-literal no program
+fixed	throw 'error';

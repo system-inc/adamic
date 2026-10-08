@@ -1,0 +1,77 @@
+{
+  "@next/next/no-async-client-component": {
+    "unique_upstream_cases": 43,
+    "with_companion_files": 0,
+    "positive_cases": 17
+  },
+  "@next/next/no-duplicate-head": {
+    "unique_upstream_cases": 27,
+    "with_companion_files": 0,
+    "positive_cases": 15
+  },
+  "@next/next/no-script-component-in-head": {
+    "unique_upstream_cases": 23,
+    "with_companion_files": 0,
+    "positive_cases": 10
+  },
+  "nexus/correctness-no-collection-misuse": {
+    "unique_upstream_cases": 6,
+    "with_companion_files": 0,
+    "positive_cases": 3
+  },
+  "nexus/correctness-no-discarded-outcome": {
+    "unique_upstream_cases": 31,
+    "with_companion_files": 31,
+    "positive_cases": 17
+  },
+  "nexus/correctness-no-discarded-pure-result": {
+    "unique_upstream_cases": 22,
+    "with_companion_files": 0,
+    "positive_cases": 9
+  },
+  "no-global-assign": {
+    "unique_upstream_cases": 53,
+    "with_companion_files": 0,
+    "positive_cases": 23
+  },
+  "no-implicit-globals": {
+    "unique_upstream_cases": 148,
+    "with_companion_files": 0,
+    "positive_cases": 42
+  },
+  "no-implied-eval": {
+    "unique_upstream_cases": 197,
+    "with_companion_files": 170,
+    "positive_cases": 91
+  },
+  "no-throw-literal": {
+    "unique_upstream_cases": 48,
+    "with_companion_files": 0,
+    "positive_cases": 19
+  },
+  "no-useless-backreference": {
+    "unique_upstream_cases": 408,
+    "with_companion_files": 0,
+    "positive_cases": 199
+  },
+  "prefer-arrow-callback": {
+    "unique_upstream_cases": 83,
+    "with_companion_files": 0,
+    "positive_cases": 57
+  },
+  "react-hooks/unsupported-syntax": {
+    "unique_upstream_cases": 61,
+    "with_companion_files": 0,
+    "positive_cases": 27
+  },
+  "react-hooks/use-memo": {
+    "unique_upstream_cases": 79,
+    "with_companion_files": 0,
+    "positive_cases": 45
+  },
+  "max-classes-per-file": {
+    "unique_upstream_cases": 29,
+    "with_companion_files": 0,
+    "positive_cases": 18
+  }
+}

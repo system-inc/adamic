@@ -1,0 +1,22 @@
+{
+  "Go": {
+    "exit": 0,
+    "output": "case 0\nskipped no-global-assign no program\nfixed\tString = 'hello world';\n",
+    "stderr": ""
+  },
+  "native": {
+    "exit": 0,
+    "output": "case 0\nskipped no-global-assign no program\nfixed\tString = 'hello world';\n",
+    "stderr": ""
+  },
+  "Node": {
+    "exit": 0,
+    "output": "case 0\nskipped no-global-assign no program\nfixed\tString = 'hello world';\n",
+    "stderr": ""
+  },
+  "JavaScript": {
+    "exit": 0,
+    "output": "case 0\nskipped no-global-assign no program\nfixed\tString = 'hello world';\n",
+    "stderr": ""
+  }
+}

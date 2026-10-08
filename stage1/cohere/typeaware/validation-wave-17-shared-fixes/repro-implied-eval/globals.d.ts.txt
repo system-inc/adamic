@@ -1,0 +1,15 @@
+declare function setTimeout(handler: unknown, timeout?: number, ...rest: unknown[]): number;
+declare function setInterval(handler: unknown, timeout?: number, ...rest: unknown[]): number;
+declare function execScript(source: unknown, ...rest: unknown[]): void;
+interface ImpliedEvalGlobalObject {
+	setTimeout(handler: unknown, timeout?: number, ...rest: unknown[]): number;
+	setInterval(handler: unknown, timeout?: number, ...rest: unknown[]): number;
+	execScript(source: unknown, ...rest: unknown[]): void;
+	window: ImpliedEvalGlobalObject;
+	self: ImpliedEvalGlobalObject;
+	global: ImpliedEvalGlobalObject;
+	globalThis: ImpliedEvalGlobalObject;
+}
+declare var window: ImpliedEvalGlobalObject;
+declare var self: ImpliedEvalGlobalObject;
+declare var global: ImpliedEvalGlobalObject;

@@ -1,0 +1,27 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout=90m",
+    "./stage1/cohere/lint"
+  ],
+  "branch": "codex/typeaware-wave-17",
+  "source_sha": "f22028f934458fb83ae2ef9877580bcef36e1d7c",
+  "start_load": [
+    7.376953125,
+    2.24609375,
+    1.3310546875
+  ],
+  "env": {
+    "GOMAXPROCS": "2",
+    "GOFLAGS": "-buildvcs=false",
+    "GOPROXY": "https://proxy.golang.org|direct",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/wave-17-typescript",
+    "ADAMIC_LINT_PROFILE_DIR": "/workspace/lint-shared-fixes/wave17/profiles",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/lint-shared-fixes/wave17/profiles",
+    "TMPDIR": "/tmp/adamic-gate/shared-fixes-wave17"
+  }
+}

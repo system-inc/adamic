@@ -1,0 +1,3 @@
+package main
+import("context";"os";"github.com/system-inc/adamic/internal/load";"github.com/system-inc/adamic/internal/lower";"github.com/system-inc/adamic/internal/javascript")
+func main(){p,e:=load.Load([]string{"/workspace/adamic/stage1/cohere/lint/main.ts"});if e!=nil{panic(e)};p.EnableTSGo();l,e:=lower.Lower(context.Background(),p);if e!=nil{panic(e)};if e=os.WriteFile("/workspace/lint-shared-fixes/wave17/owned-replay/lint.mjs",[]byte(javascript.JavaScript(l)),0644);e!=nil{panic(e)}}

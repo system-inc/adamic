@@ -1,0 +1,20 @@
+{
+  "cases": 174,
+  "expected": 174,
+  "by_rule": {
+    "@next/next/no-async-client-component": 43,
+    "@next/next/no-duplicate-head": 27,
+    "@next/next/no-script-component-in-head": 23,
+    "nexus/correctness-no-collection-misuse": 6,
+    "nexus/correctness-no-discarded-pure-result": 22,
+    "no-global-assign": 53
+  },
+  "failures": [],
+  "wall_seconds": 112.32098740200126,
+  "time_totals": {
+    "Go": 4.933089374986594,
+    "native": 8.205861378995905,
+    "Node": 82.1681813819996,
+    "JavaScript": 16.718405895015167
+  }
+}

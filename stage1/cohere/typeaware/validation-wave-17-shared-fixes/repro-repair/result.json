@@ -1,0 +1,17 @@
+[
+  {
+    "index": 0,
+    "input": "f(x||function(){}.bind(this))",
+    "bytes_differ": true
+  },
+  {
+    "index": 1,
+    "input": "f(function(){}.bind(this).bind(x))",
+    "bytes_differ": true
+  },
+  {
+    "index": 2,
+    "input": "f(x||function(){this}.bind(this))",
+    "bytes_differ": true
+  }
+]

@@ -1,0 +1,15 @@
+case 0
+/workspace/lint-shared-fixes/wave17/repro-repair/1/source.ts:1:3
+  prefer-arrow-callback  An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.
+
+range 2 14 preferArrowCallback fix			14 25
+fix-edit	2 10	
+fix-edit	12 12	 =>
+fix-edit	2 2	(
+fix-edit	25 25	)
+rejected prefer-arrow-callback 25 25 prefer-arrow-callback overlaps another fix
+rejected prefer-arrow-callback 2 2  the rewritten file does not parse (TS1005: ')' expected.)
+rejected prefer-arrow-callback 2 10  the rewritten file does not parse (TS1005: ')' expected.)
+rejected prefer-arrow-callback 12 12  the rewritten file does not parse (TS1005: ')' expected.)
+rejected prefer-arrow-callback 14 25  the rewritten file does not parse (TS1005: ')' expected.)
+fixed	f(function(){}.bind(this).bind(x))

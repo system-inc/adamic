@@ -1,0 +1,16 @@
+import pathlib,json,subprocess,time,os,collections
+root=pathlib.Path('/workspace/lint-shared-fixes/wave17/owned-replay-six'); selected=['@next/next/no-async-client-component','@next/next/no-duplicate-head','@next/next/no-script-component-in-head','nexus/correctness-no-collection-misuse','nexus/correctness-no-discarded-pure-result','no-global-assign']; rows=[json.loads(l) for l in (root.parent/'upstream-selected.jsonl').read_text().split('\n') if l and json.loads(l)['rule'] in selected]; results=[]; start=time.monotonic(); env=dict(os.environ,GOMAXPROCS='1')
+for i,r in enumerate(rows):
+ d=root/'cases'/str(i);d.mkdir(parents=True,exist_ok=True); f=d/r['file'].lstrip('/');f.parent.mkdir(parents=True,exist_ok=True);f.write_text(r['source']); config=d/'tsconfig.json';config.write_text(json.dumps({'compilerOptions':{'strict':True,'target':'ES2022','lib':['ES2022'],'moduleDetection':'force','types':[]},'files':[str(f)]}));manifest=d/'manifest.txt';manifest.write_text('program '+str(config)+'\n'+'\t'.join([str(f),r['rule'],'','','false',r['rawOptions'],''])+'\n');prefix=str(d/'transcript'); outputs={}; times={}; failure=[]
+ commands={'Go':[str(root/'oracle'),'--manifest',str(manifest)],'native':[str(root/'scanner'),'--manifest',str(manifest),'--record',prefix],'Node':['node','--disable-warning=ExperimentalWarning','/workspace/adamic/oracle/node.mjs','/workspace/adamic/stage1/cohere/lint/main.ts','--manifest',str(manifest),'--replay',prefix],'JavaScript':['node','--disable-warning=ExperimentalWarning','/workspace/adamic/oracle/node.mjs',str(root/'lint.mjs'),'--manifest',str(manifest),'--replay',prefix]}
+ for name,cmd in commands.items():
+  t=time.monotonic();p=subprocess.run(cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=env);times[name]=time.monotonic()-t
+  if name=='Go' and p.returncode and b'invalid corpus' in p.stderr:
+   (d/'parse-refusal.stderr').write_bytes(p.stderr);manifest.write_text(manifest.read_text().rstrip('\n')+'recovery\n');p=subprocess.run(cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=env)
+  (d/(name+'.stdout')).write_bytes(p.stdout);(d/(name+'.stderr')).write_bytes(p.stderr);outputs[name]=p.stdout
+  if p.returncode or p.stderr:failure.append(name+': exit '+str(p.returncode)+' stderr '+p.stderr.decode(errors='replace')[:300])
+  if name!='Go' and p.stdout!=outputs['Go']:failure.append(name+': bytes differ')
+  if failure:break
+ result={'index':i,'rule':r['rule'],'file':r['file'],'failure':failure,'times':times};results.append(result);(root/'progress.json').write_text(json.dumps({'done':len(results),'total':len(rows),'last':result}));
+ if failure:print(result,flush=True)
+summary={'cases':len(results),'expected':len(rows),'by_rule':dict(collections.Counter(x['rule'] for x in results if not x['failure'])),'failures':[x for x in results if x['failure']],'wall_seconds':time.monotonic()-start,'time_totals':{n:sum(x['times'].get(n,0) for x in results) for n in ['Go','native','Node','JavaScript']}};(root/'result.json').write_text(json.dumps(summary,indent=2));(root/'case-results.json').write_text(json.dumps(results));print(summary,flush=True)

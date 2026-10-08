@@ -1,0 +1,6 @@
+case 0
+/workspace/lint-shared-fixes/wave17/repro-project/source.js:1:1
+  no-implicit-globals  This assigns to a name that was never declared, which creates a global at run time rather than the local the code reads as. Declare the variable if it is meant to be local, which is almost always what a bare assignment like this intended.
+
+range 0 1 globalVariableLeak 			0 1
+fixed	x=1;

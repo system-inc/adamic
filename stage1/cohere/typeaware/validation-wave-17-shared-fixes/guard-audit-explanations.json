@@ -1,0 +1,12 @@
+{
+  "owned-replay": {
+    "captured_untyped_guard_index": 10,
+    "upstream_symbol": "TestNoThrowLiteralNeedsTheTypedHarness (cohere/internal/lint/rules/core/no_throw_literal_test.go:201)",
+    "verified_separately": "owned-replay/no-program-guard/result.json"
+  },
+  "owned-replay-six": {
+    "captured_untyped_guard_index": 140,
+    "upstream_symbol": "TestNoGlobalAssignRequiresTheTypedHarness (cohere/internal/lint/rules/core/no_global_assign_test.go:271)",
+    "verified_separately": "owned-replay-six/no-program-guard/result.json"
+  }
+}
