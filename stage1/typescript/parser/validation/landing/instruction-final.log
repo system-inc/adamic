@@ -1,0 +1,39 @@
+COMMAND ['go', 'run', './cmd/adamic', 'build', '/workspace/parser-recovery-land/stage1/typescript/parser/main.ts', '-o', '/workspace/scratch/parser-land-counts/final-landing-native']
+COMMAND ['/workspace/scratch/parser-land-counts/final-landing-native', '--manifest', '/workspace/scratch/parser-land-counts/compiler.manifest', '--whole']
+final-landing identical tree bytes 44766682 sha256 8ae015600498b915cc25abab82730299451ae990b50478980d5a3bc465801bfe
+COMMAND ['/workspace/scratch/parser-land-valgrind/usr/bin/valgrind', '--tool=callgrind', '--callgrind-out-file=/workspace/scratch/parser-land-counts/final-landing.callgrind', '/workspace/scratch/parser-land-counts/final-landing-native', '--manifest', '/workspace/scratch/parser-land-counts/compiler.manifest', '--whole', '--count']
+final-landing Ir 8923007866 nodes 887803
+COMMAND ['go', 'run', './cmd/adamic', 'build', '/workspace/scratch/parser-land-counts/final-extra-parse/stage1/typescript/parser/main.ts', '-o', '/workspace/scratch/parser-land-counts/final-extra-parse-native']
+COMMAND ['/workspace/scratch/parser-land-counts/final-extra-parse-native', '--manifest', '/workspace/scratch/parser-land-counts/compiler.manifest', '--whole']
+final-extra-parse identical tree bytes 44766682 sha256 8ae015600498b915cc25abab82730299451ae990b50478980d5a3bc465801bfe
+COMMAND ['/workspace/scratch/parser-land-valgrind/usr/bin/valgrind', '--tool=callgrind', '--callgrind-out-file=/workspace/scratch/parser-land-counts/final-extra-parse.callgrind', '/workspace/scratch/parser-land-counts/final-extra-parse-native', '--manifest', '/workspace/scratch/parser-land-counts/compiler.manifest', '--whole', '--count']
+final-extra-parse Ir 17295608569 nodes 887803
+{
+  "rows": {
+    "base": {
+      "instructions": 7403103936,
+      "nodes": 887803
+    },
+    "area": {
+      "instructions": 7412969065,
+      "nodes": 887803
+    },
+    "recovery": {
+      "instructions": 8916818105,
+      "nodes": 887803
+    },
+    "final-landing": {
+      "instructions": 8923007866,
+      "nodes": 887803
+    },
+    "final-extra-parse": {
+      "instructions": 17295608569,
+      "nodes": 887803
+    }
+  },
+  "recovery_added": 1513714169,
+  "landing_added": 1510038801,
+  "budget": 8926683234,
+  "margin": 3675368,
+  "mutant_excess": 8368925335
+}

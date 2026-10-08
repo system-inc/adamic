@@ -1,0 +1,1 @@
+class A { get #a() { return 1; } #a = 1; m() { this.#a = 1; } }

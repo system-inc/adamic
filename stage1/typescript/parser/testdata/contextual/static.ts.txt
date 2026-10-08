@@ -1,0 +1,17 @@
+{
+    static = true;
+    static();
+    static.value;
+    static
+}
+{
+    static
+    class C {}
+}
+{
+    static
+    function f() {}
+}
+{
+    static class D {}
+}

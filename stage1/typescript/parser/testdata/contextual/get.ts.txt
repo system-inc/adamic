@@ -1,0 +1,14 @@
+{
+    get = true;
+    get();
+    get.value;
+    get
+}
+{
+    get
+    class C {}
+}
+{
+    get
+    function f() {}
+}
