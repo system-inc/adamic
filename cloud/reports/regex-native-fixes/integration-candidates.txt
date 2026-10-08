@@ -1,0 +1,64 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_null_undefined_inline.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_null_undefined_inline.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_structural_method.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_structural_method.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_structural_optional.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_structural_optional.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_null_undefined_inline.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_structural_optional.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_structural_method.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_structural_optional.a
+    oracle_test.go:583: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_null_undefined_inline.a
+    oracle_test.go:583: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_structural_method.a
+    oracle_test.go:583: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_structural_optional.a
+    oracle_test.go:583: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_structural_method.a
+    oracle_test.go:583: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_null_undefined_inline.a
+    oracle_test.go:583: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_structural_optional.a
+    oracle_test.go:472: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_null_undefined_inline.a
+    oracle_test.go:472: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_structural_method.a
+    oracle_test.go:472: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_structural_optional.a
+    oracle_test.go:465: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_structural_method.a
+    oracle_test.go:465: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_null_undefined_inline.a
+    oracle_test.go:465: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_structural_method.a
+    oracle_test.go:604: exit codes differ
+        node:   exit 0, stdout "true\n", stderr ""
+        native: exit 70, stdout "", stderr "adamic: panic: compiler bug: a method the checker proved is there is missing\n"
+    oracle_test.go:479: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_structural_optional.a
+    oracle_test.go:604: exit codes differ
+        node:   exit 0, stdout "has test\nno test\n", stderr ""
+        native: exit 70, stdout "", stderr "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    oracle_test.go:479: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_null_undefined_inline.a
+    oracle_test.go:604: stdout differs
+        node:   exit 0, stdout "absent: undefined=true null=false\nmiss: undefined=false null=true\npast end: undefined=true null=false\nstored: undefined=false null=true\n", stderr ""
+        native: exit 0, stdout "absent: undefined=false null=true\nmiss: undefined=false null=true\npast end: undefined=false null=true\nstored: undefined=false null=true\n", stderr ""
+    oracle_test.go:610: JavaScript backend: stdout differs
+        node:    exit 0, stdout "absent: undefined=true null=false\nmiss: undefined=false null=true\npast end: undefined=true null=false\nstored: undefined=false null=true\n", stderr ""
+        backend: exit 0, stdout "absent: undefined=false null=false\nmiss: undefined=false null=true\npast end: undefined=false null=false\nstored: undefined=false null=true\n", stderr ""
+    oracle_test.go:479: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_structural_method.a (0.85s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_structural_optional.a (0.85s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_native_null_undefined_inline.a (0.88s)
+FAIL
+gate cache: native hits=3 misses=6
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.903s
+FAIL

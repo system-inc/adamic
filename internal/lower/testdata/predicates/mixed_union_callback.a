@@ -1,0 +1,22 @@
+function cast<TOut extends TIn, TIn = unknown>(value: TIn, test: (value: TIn) => value is TOut): TOut {
+    if (test(value)) return value;
+    throw new Error("missing");
+}
+function isString(value: number | string): value is string { return typeof value === "string"; }
+console.log(cast<string, number | string>("word".toUpperCase(), isString));
+console.log(cast<number, number | string>(7, (value: number | string) => typeof value === "number").toString());
+try { cast<string, number | string>(7, isString); } catch (error) {
+    if (error instanceof Error) console.log(error.message);
+}
+function apply(value: number | string, callback: (value: number | string) => number | string): number | string { return callback(value); }
+function identity(value: number | string): number | string { return value; }
+console.log(`${apply(9, identity)}`);
+console.log(`${apply("returned".toUpperCase(), (value: number | string): number | string => value)}`);
+const show = (value: string | number): string => `${value}`;
+console.log(show(10));
+console.log(show("arrow".toUpperCase()));
+const made = Array.from({ length: 2 }, (value: string | number | undefined, index: number) => {
+    if (value === undefined) return index;
+    return -1;
+});
+console.log(made.join(","));

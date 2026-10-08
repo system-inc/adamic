@@ -1,0 +1,10 @@
+interface Base { readonly kind: 'items' | 'other'; }
+interface Items extends Base { readonly kind: 'items'; readonly values: readonly Entry[]; }
+function items(node: Base): Items { return node as Items; }
+interface Entry { readonly kind: 'entry'; readonly value: number; }
+const first = {kind: 'entry' as const, value: 7};
+const other = {kind: 'entry' as const, value: 8};
+const raw = {kind: 'items' as const, values: [first, other, first]};
+const values = items(raw).values;
+console.log(`${values.indexOf(first)}:${values.lastIndexOf(first)}:${values.includes(other)}`);
+console.log(`${values.indexOf({kind: 'entry', value: 7})}`);

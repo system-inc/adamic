@@ -1,0 +1,20 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0.020s)
+v24.19.0
+setup: node ready (0.023s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.008s
+setup: markdown dependencies ready (0.081s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.217s)
+Submodule path 'cohere': checked out '7945d102a6c18dd36adf9114a758ce646e8b2359'
+From https://github.com/kirkouimet/TypeScript
+ * branch                d92d9bfee114c80be2c375d72edae966176e3a4f -> FETCH_HEAD
+Submodule path 'cohere/TypeScript': checked out 'd92d9bfee114c80be2c375d72edae966176e3a4f'
+setup: submodules ready (4.070s)
+setup: go build ready (172.110s)
+setup: test binaries deferred (use --warm-tests) (172.301s)
+setup: build cache warm (172.302s)
+setup: build-flags commit=b4cfd1aa34a889e2d290036592bb75eb2b499eb1 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=0.07 0.06 0.13 1/250 192945 load-after=7.51 3.24 1.32 1/254 194235
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (172.330s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.j7sI4n

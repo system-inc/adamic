@@ -1,0 +1,9 @@
+--- FAIL: TestCheckedViewArrayReferenceWrites (0.00s)
+    --- FAIL: TestCheckedViewArrayReferenceWrites/reference-array-uninitialized (0.88s)
+        checked_views_array_reference_writes_test.go:36: exit codes differ; stderr ""; stdout "written\n"; exit 0
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.894s
+FAIL

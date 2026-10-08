@@ -177,6 +177,7 @@ func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name s
 // Structural object views can hide an override, an Error, or an artificial absent-spread slot.
 // Until prototype dispatch and presence descriptors exist, refuse any compatible runtime shape
 // in the whole program with one of those hazards. This deliberately errs toward refusal.
+// An empty name tests own descriptors without dispatching an overridable receiver method.
 func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 	view := l.concrete(l.checker.GetTypeAtLocation(receiver))
 	modules, err := l.moduleOrder(l.program.Files()[0])
@@ -207,7 +208,7 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 					return true
 				}
 				member := l.checker.GetPropertyOfType(shape, name)
-				if member != nil && !l.librarySymbol(member) {
+				if name != "" && member != nil && !l.librarySymbol(member) {
 					reason = "a user-defined " + name + " may be hidden by the view"
 					return true
 				}
@@ -218,7 +219,7 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 						return true
 					}
 				}
-				if name == "hasOwnProperty" || name == "propertyIsEnumerable" {
+				if name == "" || name == "hasOwnProperty" || name == "propertyIsEnumerable" {
 					for _, field := range l.checker.GetPropertiesOfType(shape) {
 						if strings.ContainsRune(field.Name, 0) {
 							reason = "a field name contains NUL, which native shape names cannot represent"

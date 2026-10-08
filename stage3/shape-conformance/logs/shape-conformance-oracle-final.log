@@ -1,0 +1,165 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestReadinessMutants
+=== PAUSE TestReadinessMutants
+=== RUN   TestDeinitializationIsNotOrdinaryStoreMutant
+=== PAUSE TestDeinitializationIsNotOrdinaryStoreMutant
+=== RUN   TestRequiredViewFieldPrimitive
+=== RUN   TestRequiredViewFieldPrimitive/number
+=== RUN   TestRequiredViewFieldPrimitive/boolean
+=== RUN   TestRequiredViewFieldPrimitive/string
+=== RUN   TestRequiredViewFieldPrimitive/wrong_string
+=== RUN   TestRequiredViewFieldPrimitive/missing
+=== RUN   TestRequiredViewFieldPrimitive/uninitialized
+    view_fields_test.go:72: drop field check mutant caught by pinned exit/message, with valid C
+    view_fields_test.go:84: drop initialization tracking mutant caught by pinned exit/message
+=== RUN   TestRequiredViewFieldPrimitive/wrong_type
+    view_fields_test.go:72: drop field check mutant caught by pinned exit/message, with valid C
+--- PASS: TestRequiredViewFieldPrimitive (4.38s)
+    --- PASS: TestRequiredViewFieldPrimitive/number (0.65s)
+    --- PASS: TestRequiredViewFieldPrimitive/boolean (0.57s)
+    --- PASS: TestRequiredViewFieldPrimitive/string (0.65s)
+    --- PASS: TestRequiredViewFieldPrimitive/wrong_string (0.45s)
+    --- PASS: TestRequiredViewFieldPrimitive/missing (0.52s)
+    --- PASS: TestRequiredViewFieldPrimitive/uninitialized (0.77s)
+    --- PASS: TestRequiredViewFieldPrimitive/wrong_type (0.76s)
+=== RUN   TestRequiredViewFieldOperandOnce
+--- PASS: TestRequiredViewFieldOperandOnce (0.57s)
+=== RUN   TestNarrowedFieldUsesSharedReadiness
+=== RUN   TestNarrowedFieldUsesSharedReadiness/identifier
+=== RUN   TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized
+=== RUN   TestNarrowedFieldUsesSharedReadiness/number
+=== RUN   TestNarrowedFieldUsesSharedReadiness/number-uninitialized
+    view_fields_test.go:199: drop initialization tracking caught by exit/output assertion on valid release C
+--- PASS: TestNarrowedFieldUsesSharedReadiness (2.29s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/identifier (0.55s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized (0.48s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/number (0.71s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/number-uninitialized (0.55s)
+=== RUN   TestDefaultTaggedSourceViews
+=== RUN   TestDefaultTaggedSourceViews/default-staged
+=== RUN   TestDefaultTaggedSourceViews/default-boxed-string
+=== RUN   TestDefaultTaggedSourceViews/default-boxed-write
+=== RUN   TestDefaultTaggedSourceViews/default-destructure
+=== RUN   TestDefaultTaggedSourceViews/default-wrong-type
+=== RUN   TestDefaultTaggedSourceViews/default-wrong-boolean
+=== RUN   TestDefaultTaggedSourceViews/default-literal
+=== RUN   TestDefaultTaggedSourceViews/default-read-before-set
+--- PASS: TestDefaultTaggedSourceViews (4.27s)
+    --- PASS: TestDefaultTaggedSourceViews/default-staged (0.55s)
+    --- PASS: TestDefaultTaggedSourceViews/default-boxed-string (0.64s)
+    --- PASS: TestDefaultTaggedSourceViews/default-boxed-write (0.55s)
+    --- PASS: TestDefaultTaggedSourceViews/default-destructure (0.53s)
+    --- PASS: TestDefaultTaggedSourceViews/default-wrong-type (0.45s)
+    --- PASS: TestDefaultTaggedSourceViews/default-wrong-boolean (0.59s)
+    --- PASS: TestDefaultTaggedSourceViews/default-literal (0.52s)
+    --- PASS: TestDefaultTaggedSourceViews/default-read-before-set (0.44s)
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestDeinitializationIsNotOrdinaryStoreMutant
+=== CONT  TestReadinessMutants
+=== RUN   TestReadinessMutants/scanner-var-capture
+=== PAUSE TestReadinessMutants/scanner-var-capture
+=== RUN   TestReadinessMutants/deinitialization-values
+=== PAUSE TestReadinessMutants/deinitialization-values
+=== RUN   TestReadinessMutants/deinitialization-entries
+=== PAUSE TestReadinessMutants/deinitialization-entries
+=== RUN   TestReadinessMutants/deinitialization-assign-source
+=== PAUSE TestReadinessMutants/deinitialization-assign-source
+=== RUN   TestReadinessMutants/deinitialization-field-alias
+=== PAUSE TestReadinessMutants/deinitialization-field-alias
+=== RUN   TestReadinessMutants/deinitialization-field-method
+=== PAUSE TestReadinessMutants/deinitialization-field-method
+=== RUN   TestReadinessMutants/keep-slot-proven-after-deinitialization
+=== PAUSE TestReadinessMutants/keep-slot-proven-after-deinitialization
+=== RUN   TestReadinessMutants/deinitialization-through-capture
+=== PAUSE TestReadinessMutants/deinitialization-through-capture
+=== RUN   TestReadinessMutants/deinitialization-exception-path
+=== PAUSE TestReadinessMutants/deinitialization-exception-path
+=== RUN   TestReadinessMutants/drop-check
+=== PAUSE TestReadinessMutants/drop-check
+=== RUN   TestReadinessMutants/erase-without-proof
+=== PAUSE TestReadinessMutants/erase-without-proof
+=== RUN   TestReadinessMutants/initialize-to-zero
+=== PAUSE TestReadinessMutants/initialize-to-zero
+=== RUN   TestReadinessMutants/miss-captured-read
+=== PAUSE TestReadinessMutants/miss-captured-read
+=== RUN   TestReadinessMutants/miss-exception-path
+=== PAUSE TestReadinessMutants/miss-exception-path
+=== RUN   TestReadinessMutants/lazy-read
+=== PAUSE TestReadinessMutants/lazy-read
+=== RUN   TestReadinessMutants/weak-generic-message
+=== PAUSE TestReadinessMutants/weak-generic-message
+=== CONT  TestReadinessMutants/scanner-var-capture
+=== CONT  TestReadinessMutants/drop-check
+=== CONT  TestReadinessMutants/deinitialization-field-method
+--- PASS: TestNativeAgreesWithNode (0.07s)
+=== CONT  TestReadinessMutants/deinitialization-exception-path
+=== NAME  TestDeinitializationIsNotOrdinaryStoreMutant
+    readiness_test.go:367: ordinary undefined store caught by pinned output: exit 0 stdout "before\nundefined\n"
+--- PASS: TestDeinitializationIsNotOrdinaryStoreMutant (1.12s)
+=== CONT  TestReadinessMutants/deinitialization-through-capture
+=== NAME  TestReadinessMutants/scanner-var-capture
+    readiness_test.go:165: caught by pinned output: exit 0 stdout "before\nfalse\n" stderr ""
+=== CONT  TestReadinessMutants/keep-slot-proven-after-deinitialization
+=== NAME  TestReadinessMutants/drop-check
+    readiness_test.go:165: caught by pinned output: exit 0 stdout "before\n0\n" stderr ""
+=== CONT  TestReadinessMutants/deinitialization-field-alias
+=== NAME  TestReadinessMutants/deinitialization-field-method
+    readiness_test.go:165: caught by pinned output: exit 0 stdout "before\n0\n" stderr ""
+=== CONT  TestReadinessMutants/deinitialization-assign-source
+=== NAME  TestReadinessMutants/deinitialization-exception-path
+    readiness_test.go:165: caught by pinned output: exit 0 stdout "caught\n0\n" stderr ""
+=== CONT  TestReadinessMutants/deinitialization-entries
+=== NAME  TestReadinessMutants/keep-slot-proven-after-deinitialization
+    readiness_test.go:165: caught by pinned output: exit 0 stdout "before\n0\n" stderr ""
+=== CONT  TestReadinessMutants/deinitialization-values
+=== NAME  TestReadinessMutants/deinitialization-through-capture
+    readiness_test.go:165: caught by pinned output: exit 0 stdout "before\n0\n" stderr ""
+=== NAME  TestReadinessMutants/deinitialization-assign-source
+    readiness_test.go:165: caught by pinned output: exit 0 stdout "before\n" stderr ""
+=== NAME  TestReadinessMutants/deinitialization-field-alias
+    readiness_test.go:165: caught by pinned output: exit 0 stdout "before\n0\n" stderr ""
+=== CONT  TestReadinessMutants/miss-exception-path
+=== CONT  TestReadinessMutants/initialize-to-zero
+=== CONT  TestReadinessMutants/miss-captured-read
+=== NAME  TestReadinessMutants/deinitialization-entries
+    readiness_test.go:165: caught by pinned output: exit 0 stdout "before\n1\n" stderr ""
+=== CONT  TestReadinessMutants/erase-without-proof
+=== NAME  TestReadinessMutants/deinitialization-values
+    readiness_test.go:165: caught by pinned output: exit 0 stdout "before\n1\n" stderr ""
+=== CONT  TestReadinessMutants/weak-generic-message
+=== NAME  TestReadinessMutants/initialize-to-zero
+    readiness_test.go:165: caught by pinned output: exit 0 stdout "before\n0\n" stderr ""
+=== CONT  TestReadinessMutants/lazy-read
+=== NAME  TestReadinessMutants/miss-exception-path
+    readiness_test.go:165: caught by pinned output: exit 0 stdout "caught\n0\n" stderr ""
+=== NAME  TestReadinessMutants/erase-without-proof
+    readiness_test.go:165: caught by pinned output: exit 0 stdout "0\n" stderr ""
+=== NAME  TestReadinessMutants/miss-captured-read
+    readiness_test.go:165: caught by pinned output: exit 0 stdout "before\n0\n" stderr ""
+=== NAME  TestReadinessMutants/weak-generic-message
+    readiness_test.go:165: caught by pinned output: exit 70 stdout "before\n" stderr "adamic: panic: a weak reference was read after what it pointed to was freed\n"
+=== NAME  TestReadinessMutants/lazy-read
+    readiness_test.go:165: caught by pinned output: exit 0 stdout "before\n\n" stderr ""
+--- PASS: TestReadinessMutants (0.04s)
+    --- PASS: TestReadinessMutants/scanner-var-capture (1.16s)
+    --- PASS: TestReadinessMutants/drop-check (1.18s)
+    --- PASS: TestReadinessMutants/deinitialization-field-method (1.35s)
+    --- PASS: TestReadinessMutants/deinitialization-exception-path (1.41s)
+    --- PASS: TestReadinessMutants/keep-slot-proven-after-deinitialization (1.12s)
+    --- PASS: TestReadinessMutants/deinitialization-assign-source (1.29s)
+    --- PASS: TestReadinessMutants/deinitialization-field-alias (1.47s)
+    --- PASS: TestReadinessMutants/deinitialization-through-capture (1.57s)
+    --- PASS: TestReadinessMutants/deinitialization-entries (1.30s)
+    --- PASS: TestReadinessMutants/deinitialization-values (1.62s)
+    --- PASS: TestReadinessMutants/initialize-to-zero (1.53s)
+    --- PASS: TestReadinessMutants/miss-exception-path (1.68s)
+    --- PASS: TestReadinessMutants/erase-without-proof (1.59s)
+    --- PASS: TestReadinessMutants/miss-captured-read (1.84s)
+    --- PASS: TestReadinessMutants/weak-generic-message (1.29s)
+    --- PASS: TestReadinessMutants/lazy-read (1.23s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=52
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	16.964s

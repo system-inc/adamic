@@ -1,0 +1,5 @@
+--- FAIL: TestPhantomOverloadLiteralResultRefused (0.04s)
+    phantom_overload_results_test.go:16: got <nil>, want named overload result refusal and fix
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.049s
+FAIL

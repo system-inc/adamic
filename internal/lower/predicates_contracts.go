@@ -9,8 +9,8 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func (l *lowering) predicateRefusal(node *ast.Node) error {
-	original := l.provePredicate(node)
+func (l *lowering) closedPredicateRefusal(node *ast.Node) error {
+	original := l.proveFlowPredicate(node)
 	if original == nil {
 		return nil
 	}
@@ -144,7 +144,7 @@ func (l *lowering) predicateCallbackContract(node *ast.Node) (bool, error) {
 	if index < 0 {
 		return false, nil
 	}
-	failure := (&predicateProof{l: l}).refused(node, "callback arguments do not all have independent body proofs")
+	failure := (&predicateFlowProof{l: l}).refused(node, "callback arguments do not all have independent body proofs")
 	parameterSymbol, functionSymbol := l.symbol(parameter.Name()), l.symbol(function.Name())
 	valid := true
 	var visit ast.Visitor
@@ -173,7 +173,7 @@ func (l *lowering) predicateCallbackContract(node *ast.Node) (bool, error) {
 					}
 					if guard == nil || guard.Type() == nil || guard.Type().Kind != ast.KindTypePredicate || guard.Type().AsTypePredicateNode().AssertsModifier != nil || guard.Type().AsTypePredicateNode().Type == nil {
 						valid = false
-					} else if !checker.Checker_isTypeIdenticalTo(l.checker, l.checker.GetTypeFromTypeNode(annotation.Type), l.checker.GetTypeFromTypeNode(guard.Type().AsTypePredicateNode().Type)) || (l.provePredicate(guard.Type()) != nil && !(l.predicateHatchContract(node) && l.predicateHatchContract(guard.Type()))) {
+					} else if !checker.Checker_isTypeIdenticalTo(l.checker, l.checker.GetTypeFromTypeNode(annotation.Type), l.checker.GetTypeFromTypeNode(guard.Type().AsTypePredicateNode().Type)) || (l.proveFlowPredicate(guard.Type()) != nil && !(l.predicateHatchContract(node) && l.predicateHatchContract(guard.Type()))) {
 						valid = false
 					}
 				}

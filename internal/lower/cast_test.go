@@ -16,7 +16,6 @@ func TestUncheckableCastsStayRefused(t *testing.T) {
 		{"mutable widening", "function cast(x: { value: 'dog' }): { value: string } { return x as { value: string }; }"},
 		{"mutable union tag", "type A = { kind: 'a'; readonly n: number }; type B = { kind: 'b'; readonly n: number }; function f(x: A | B): A { return x as A; }"},
 		{"mutable union payload", "type A = { readonly kind: 'a'; n: 1 }; type B = { readonly kind: 'b'; n: 2 }; function f(x: A | B): A { return x as A; }"},
-		{"hidden optional field", "function cast(x: { readonly n: number }): { readonly n: number; readonly hidden?: number } { return x as { readonly n: number; readonly hidden?: number }; }"},
 		{"double assertion", "const n = ('wrong' as unknown) as number;"},
 		{"related double assertion", "function f(n: number): number { return (n as unknown) as number; }"},
 		{"primitive union", "function f(x: number | string | boolean): number { return x as number; }"},
@@ -79,5 +78,17 @@ func TestCheckedCastProofAndElision(t *testing.T) {
 				t.Fatalf("got %d checks, want %d", checks, probe.checks)
 			}
 		})
+	}
+}
+
+// Optional widening now installs the shared checked view, so this formerly
+// refused upcast is allowed only while the hidden field retains a read check.
+func TestOptionalCastKeepsHiddenFieldCheck(t *testing.T) {
+	program, err := lowerSource(t, "function cast(x: { readonly n: number }): { readonly n: number; readonly hidden?: number } { return x as { readonly n: number; readonly hidden?: number }; }")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !program.CheckedFields["hidden"] {
+		t.Fatal("hidden optional cast lost its checked read")
 	}
 }

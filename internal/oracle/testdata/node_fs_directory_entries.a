@@ -1,0 +1,14 @@
+import { readdirSync } from 'node:fs';
+for (const path of ['node_fs_directory_inputs', 'walking', 'walking/inner', 'walking/link-to-inner', 'reading']) {
+    console.log(`names ${path} ${readdirSync(path).join('|')}`);
+    for (const entry of readdirSync(path, { withFileTypes: true })) {
+        console.log(`${entry.name} ${entry.isFile()} ${entry.isDirectory()} ${entry.isSymbolicLink()}`);
+    }
+}
+for (const path of ['', 'walking/missing', 'reading/hello.txt/child', 'reading/hello.txt', '\0', 'x\0\ny', "'\0", '"\0', `"'\0`, '\r\t\b\v\f\0', 'a'.repeat(150) + '\0', '\ud800\0']) {
+    try { console.log(readdirSync(path).join('|')); }
+    catch (error) { if (error instanceof Error) { const failure: NodeJS.ErrnoException = error; console.log(`${failure.code ?? ''} ${error.message}`); } }
+}
+
+try { throw new Error('ordinary'); }
+catch (error) { if (error instanceof Error) { const failure: NodeJS.ErrnoException = error; console.log(`${failure.code ?? 'no code'} ${error.message}`); } }

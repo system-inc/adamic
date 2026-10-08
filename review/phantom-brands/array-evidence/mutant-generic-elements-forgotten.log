@@ -1,0 +1,19 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/phantom_array_brands.a (0.49s)
+        oracle_test.go:729: gate cache node miss
+        oracle_test.go:729: gate cache node miss
+        oracle_test.go:576: gate cache native miss
+        oracle_test.go:569: gate cache native miss
+        oracle_test.go:734: the release build: stdout differs
+            sanitized: exit 0, stdout "true true\nundefined\n1,2,3 3 1\n2,3 true\nundefined\n2 2\n2 2\n1 1\n2 4,5\n13\n6.73234880011517e-310\n", stderr ""
+            release:   exit 0, stdout "true true\nundefined\n1,2,3 3 1\n2,3 true\nundefined\n2 2\n2 2\n1 1\n2 4,5\n13\n4.65324952790643e-310\n", stderr ""
+        oracle_test.go:750: stdout differs
+            node:   exit 0, stdout "true true\nundefined\n1,2,3 3 1\n2,3 true\nundefined\n2 2\n2 2\n1 1\n2 4,5\n13\nmadefirst\n", stderr ""
+            native: exit 0, stdout "true true\nundefined\n1,2,3 3 1\n2,3 true\nundefined\n2 2\n2 2\n1 1\n2 4,5\n13\n6.73234880011517e-310\n", stderr ""
+        oracle_test.go:583: gate cache native hit
+FAIL
+gate cache: native hits=1 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.509s
+FAIL

@@ -1,0 +1,10 @@
+=== RUN   TestShapeProjectionJoinsInitialAndStoredValues
+    shape_flow_test.go:88: opaque store must retain known shapes and unknown: {Sites:[-3 -2] Unknown:false Reasons:[]}
+--- FAIL: TestShapeProjectionJoinsInitialAndStoredValues (0.00s)
+=== RUN   TestShapeProjectionCyclesAndMissingFieldsStayUnknown
+--- PASS: TestShapeProjectionCyclesAndMissingFieldsStayUnknown (0.00s)
+=== RUN   TestShapeProjectionConstantElements
+--- PASS: TestShapeProjectionConstantElements (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.011s
+FAIL

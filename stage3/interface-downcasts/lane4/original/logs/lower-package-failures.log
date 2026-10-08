@@ -1,0 +1,28 @@
+--- FAIL: TestCensusMarkerResultIsAssignable (0.06s)
+    census_marker_test.go:15: expected result relation refusal, got <nil>
+--- FAIL: TestCensusMarkerZeroCallIsNotAssumedSafe (0.09s)
+    census_marker_test.go:25: expected explicit erased-call boundary, got <nil>
+--- FAIL: TestOverloadedShorthandFunctionValueStaysNotYet (0.04s)
+    census_optional_values_test.go:28: got <nil>, want overload-value diagnostic
+--- FAIL: TestCensusPredicateMarkerKeepsProofBoundaries (0.09s)
+    census_predicate_marker_test.go:19: unobservable marker exception escaped its boundary: /tmp/adamic-gate/TestCensusPredicateMarkerKeepsProofBoundaries250822342/002/main.a:1:88: stage 0 can't lower passing union of differently held members to a function value yet
+--- FAIL: TestCensusOverloadRelation (0.81s)
+    --- FAIL: TestCensusOverloadRelation/result_covariance (0.23s)
+        census_small_test.go:41: expected strict overload refusal naming "overload 1 of ensureTrailingDirectorySeparator result"; got /tmp/adamic-gate/TestCensusOverloadRelationresult_covariance573926836/001/main.a:1:13: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom
+--- FAIL: TestPhantomArrayRequiredCastsAreErased (0.28s)
+    phantom_array_brands_test.go:137: required undefined array brands or casts changed the unbranded IR
+--- FAIL: TestPhantomArrayCastsAreErased (0.21s)
+    phantom_array_brands_test.go:74: array brands or casts changed the unbranded IR
+--- FAIL: TestNestedFunctionGapsAreLoud (1.14s)
+    --- FAIL: TestNestedFunctionGapsAreLoud/optional (0.18s)
+        nested_functions_test.go:28: want NotYet "function value with an optional parameter", got <nil>
+    --- FAIL: TestNestedFunctionGapsAreLoud/default (0.03s)
+        nested_functions_test.go:28: want NotYet "function value with an optional parameter", got <nil>
+    --- FAIL: TestNestedFunctionGapsAreLoud/rest (0.04s)
+        nested_functions_test.go:28: want NotYet "parameter that isn't a plain name", got /tmp/adamic-gate/TestNestedFunctionGapsAreLoudrest4249873162/001/main.a:1:41: stage 0 can't lower a rest parameter in a named closure yet
+--- FAIL: TestPhantomArrayProofs (0.00s)
+    --- FAIL: TestPhantomArrayProofs/cycle (0.18s)
+        phantom_array_brands_test.go:93: got <nil>, want refusal containing adamic/cycle-capable
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	184.249s
+FAIL

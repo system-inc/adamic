@@ -1,0 +1,25 @@
+=== RUN   TestCheckedViewPrimitiveArrayPairGap
+=== RUN   TestCheckedViewPrimitiveArrayPairGap/string
+    checked_views_primitive_pairs_test.go:142: gate cache node miss
+=== RUN   TestCheckedViewPrimitiveArrayPairGap/number
+    checked_views_primitive_pairs_test.go:142: gate cache node miss
+=== RUN   TestCheckedViewPrimitiveArrayPairGap/plain-number
+    checked_views_primitive_pairs_test.go:142: gate cache node miss
+=== RUN   TestCheckedViewPrimitiveArrayPairGap/plain-string
+    checked_views_primitive_pairs_test.go:142: gate cache node miss
+=== RUN   TestCheckedViewPrimitiveArrayPairGap/wrong
+    checked_views_primitive_pairs_test.go:142: gate cache node miss
+=== RUN   TestCheckedViewPrimitiveArrayPairGap/bounds
+    checked_views_primitive_pairs_test.go:142: gate cache node miss
+--- PASS: TestCheckedViewPrimitiveArrayPairGap (1.22s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairGap/string (0.25s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairGap/number (0.19s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairGap/plain-number (0.16s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairGap/plain-string (0.20s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairGap/wrong (0.18s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairGap/bounds (0.24s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.234s

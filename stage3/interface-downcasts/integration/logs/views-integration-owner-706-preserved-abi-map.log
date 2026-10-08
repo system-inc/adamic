@@ -1,0 +1,8 @@
+=== RUN   TestCheckedViewMapCertificates
+=== RUN   TestCheckedViewMapCertificates/entry-live-mutation
+    checked_views_map_certificates_test.go:24: /workspace/adamic/stage3/interface-downcasts/nullish/maps/entry-live-mutation.a:5:82: stage 0 can't lower a function value taking string | number | null yet
+--- FAIL: TestCheckedViewMapCertificates (0.04s)
+    --- FAIL: TestCheckedViewMapCertificates/entry-live-mutation (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.047s
+FAIL

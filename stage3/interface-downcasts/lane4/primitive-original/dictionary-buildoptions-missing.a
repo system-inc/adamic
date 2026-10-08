@@ -1,0 +1,8 @@
+import type { BuildOptions } from 'original-tsc-tsbuildPublic';
+interface Base { readonly kind: 'box' | 'other'; }
+interface Carrier extends Base { readonly kind: 'box'; readonly child: BuildOptions; }
+function helper(value: BuildOptions, key: string): void { console.log(String(value[key])); }
+const raw = {kind: 'box' as const, child: {}};
+const base: Base = raw;
+const carrier = base as Carrier;
+helper(carrier.child, 'item');

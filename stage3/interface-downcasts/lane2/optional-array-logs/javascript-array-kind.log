@@ -1,0 +1,11 @@
+--- FAIL: TestCheckedViewOptionalDeclarations (0.00s)
+    --- FAIL: TestCheckedViewOptionalDeclarations/optional-declarations-wrong-array (0.44s)
+        checked_views_optional_arrays_test.go:22: gate cache node hit
+        checked_views_optional_arrays_test.go:35: gate cache node hit
+        checked_views_optional_arrays_test.go:37: exit codes differ; got oracle.run{stdout:[]uint8{0x70, 0x72, 0x65, 0x73, 0x65, 0x6e, 0x74, 0xa}, stderr:[]uint8{}, exitCode:0}
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.453s
+FAIL

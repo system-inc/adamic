@@ -1,0 +1,18 @@
+--- FAIL: TestParserAssertionProofErasure (0.19s)
+    --- FAIL: TestParserAssertionProofErasure/erase_assertion_body (0.04s)
+        predicates_parser_test.go:61: want assertion normal-return proof refusal, got <nil>
+    --- FAIL: TestParserAssertionProofErasure/erase_undefined_exclusion (0.03s)
+        predicates_parser_test.go:61: want assertion normal-return proof refusal, got <nil>
+    --- FAIL: TestParserAssertionProofErasure/erase_null_exclusion (0.03s)
+        predicates_parser_test.go:61: want assertion normal-return proof refusal, got <nil>
+    --- FAIL: TestParserAssertionProofErasure/returning_helper (0.03s)
+        predicates_parser_test.go:61: want assertion normal-return proof refusal, got <nil>
+    --- FAIL: TestParserAssertionProofErasure/annotation_only_helper (0.02s)
+        predicates_parser_test.go:61: want assertion normal-return proof refusal, got /tmp/adamic-gate/TestParserAssertionProofErasureannotation_only_helper2437847275/001/main.a:2:1: Adamic 0.1 refuses an overload result never not proven by its implementation result void; return a type proven by the implementation, or use only an accepted phantom brand difference (adamic/overload-results)
+    --- FAIL: TestParserAssertionProofErasure/recursive_helper (0.02s)
+        predicates_parser_test.go:61: want assertion normal-return proof refusal, got <nil>
+    --- FAIL: TestParserAssertionProofErasure/early_normal_return (0.02s)
+        predicates_parser_test.go:61: want assertion normal-return proof refusal, got <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.199s
+FAIL

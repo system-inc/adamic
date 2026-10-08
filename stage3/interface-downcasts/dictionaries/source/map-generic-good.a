@@ -1,0 +1,7 @@
+interface MapLike<T> { [key: string]: T; }
+const payload = { item: 'name' };
+const base: {} = payload;
+const view = base as MapLike<string>;
+function read<T>(table: MapLike<T>): T | undefined { return table['item']; }
+const value = read(view);
+console.log(`${value}`);

@@ -1,0 +1,6 @@
+import type { TsConfigSourceFile } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+const raw = { kind: 308, parseDiagnostics: 'bad' };
+const base: Base = raw;
+const items = (base as TsConfigSourceFile).parseDiagnostics;
+console.log(`${items.length}`);

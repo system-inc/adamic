@@ -13,6 +13,12 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 }
 
 func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
+	if value, handled, err := l.recordObjectCall(node, name); handled {
+		return value, true, err
+	}
+	if value, handled, err := l.viewArrayRecordProduction(node, name); handled {
+		return value, true, err
+	}
 	refused := func(reason string) (ir.Expression, bool, error) {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason}
 	}
@@ -44,7 +50,7 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 			return value, true, err
 		}
 	}
-	call := ir.ObjectCall{Method: name, Returns: ir.Boolean}
+	call := ir.ObjectCall{Method: name, Returns: ir.Boolean, Readiness: sourceExpression(node)}
 	switch name {
 	case "is":
 		for _, argument := range written {
@@ -52,7 +58,12 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 			if err != nil {
 				return nil, true, err
 			}
-			call.Arguments = append(call.Arguments, fit(value, ir.Union))
+			boxed := fit(value, ir.Union)
+			if box, ok := boxed.(ir.Box); ok {
+				box.NullReference = l.includesNull(l.checker.GetTypeAtLocation(argument)) && value.Type().IsReference()
+				boxed = box
+			}
+			call.Arguments = append(call.Arguments, boxed)
 		}
 	case "isFrozen":
 		value, err := l.expression(written[0])
@@ -223,9 +234,12 @@ func (l *lowering) objectCanFreeze() bool {
 	return found
 }
 
-// objectIntersection represents tsc's intersection of plain object views. Every constituent must
-// be a plain, noncallable shape, and every resulting field must have a proven scalar type.
+// objectIntersection assigns plain structural intersections an object reference
+// slot. Checked views retain separate lazy obligations for the resulting fields.
 func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool) {
+	if l.objectPrimitiveIntersectionStorage(proven) {
+		return ir.Object, true
+	}
 	for _, part := range proven.Types() {
 		if part.Flags()&checker.TypeFlagsObject == 0 || l.checker.IsArrayType(part) || checker.IsTupleType(part) || isClassInstance(part) || len(l.checker.GetSignaturesOfType(part, checker.SignatureKindCall)) != 0 {
 			return 0, false

@@ -1,0 +1,35 @@
+=== RUN   TestCheckedViewBrandsOriginalPairs
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier/good
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier/internal
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier/undefined
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier/wrong
+    checked_views_brands_original_test.go:115: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_brands_original_test.go:115: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier/null
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier/missing
+=== RUN   TestCheckedViewBrandsOriginalPairs/Symbol/good
+=== RUN   TestCheckedViewBrandsOriginalPairs/Symbol/internal
+=== RUN   TestCheckedViewBrandsOriginalPairs/Symbol/undefined
+=== RUN   TestCheckedViewBrandsOriginalPairs/Symbol/wrong
+    checked_views_brands_original_test.go:115: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_brands_original_test.go:115: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewBrandsOriginalPairs/Symbol/null
+=== RUN   TestCheckedViewBrandsOriginalPairs/Symbol/missing
+--- PASS: TestCheckedViewBrandsOriginalPairs (48.80s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier/good (30.24s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier/internal (1.57s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier/undefined (1.84s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier/wrong (1.50s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier/null (1.41s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier/missing (1.57s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Symbol/good (1.73s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Symbol/internal (2.30s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Symbol/undefined (2.16s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Symbol/wrong (1.55s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Symbol/null (1.45s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Symbol/missing (1.49s)
+PASS
+gate cache: native hits=0 misses=6
+gate cache: node hits=0 misses=26
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	48.827s

@@ -1,0 +1,6 @@
+interface RecordValue { first?: number; }
+const record: RecordValue = {};
+record.first = undefined;
+console.log(String('first' in record));
+console.log('[' + Object.keys(record).join(',') + ']');
+console.log(String(Object.hasOwn(record, 'first')));

@@ -1,0 +1,116 @@
+=== RUN   TestCheckedViewFiniteStringKeyComponent
+=== RUN   TestCheckedViewFiniteStringKeyComponent/9761/target
+=== RUN   TestCheckedViewFiniteStringKeyComponent/9761/strict
+=== RUN   TestCheckedViewFiniteStringKeyComponent/9761/undefined
+=== RUN   TestCheckedViewFiniteStringKeyComponent/9761/missing
+=== RUN   TestCheckedViewFiniteStringKeyComponent/9761/wrong
+    checked_views_primitive_pairs_test.go:127: literal-member bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_primitive_pairs_test.go:127: literal-member bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewFiniteStringKeyComponent/9761/number
+=== RUN   TestCheckedViewFiniteStringKeyComponent/9761/null
+=== RUN   TestCheckedViewFiniteStringKeyComponent/97180/target
+=== RUN   TestCheckedViewFiniteStringKeyComponent/97180/strict
+=== RUN   TestCheckedViewFiniteStringKeyComponent/97180/undefined
+=== RUN   TestCheckedViewFiniteStringKeyComponent/97180/missing
+=== RUN   TestCheckedViewFiniteStringKeyComponent/97180/wrong
+    checked_views_primitive_pairs_test.go:127: literal-member bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_primitive_pairs_test.go:127: literal-member bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewFiniteStringKeyComponent/97180/number
+=== RUN   TestCheckedViewFiniteStringKeyComponent/97180/null
+--- PASS: TestCheckedViewFiniteStringKeyComponent (4.62s)
+    --- PASS: TestCheckedViewFiniteStringKeyComponent/9761/target (0.46s)
+    --- PASS: TestCheckedViewFiniteStringKeyComponent/9761/strict (0.41s)
+    --- PASS: TestCheckedViewFiniteStringKeyComponent/9761/undefined (0.39s)
+    --- PASS: TestCheckedViewFiniteStringKeyComponent/9761/missing (0.37s)
+    --- PASS: TestCheckedViewFiniteStringKeyComponent/9761/wrong (0.32s)
+    --- PASS: TestCheckedViewFiniteStringKeyComponent/9761/number (0.21s)
+    --- PASS: TestCheckedViewFiniteStringKeyComponent/9761/null (0.21s)
+    --- PASS: TestCheckedViewFiniteStringKeyComponent/97180/target (0.38s)
+    --- PASS: TestCheckedViewFiniteStringKeyComponent/97180/strict (0.38s)
+    --- PASS: TestCheckedViewFiniteStringKeyComponent/97180/undefined (0.38s)
+    --- PASS: TestCheckedViewFiniteStringKeyComponent/97180/missing (0.38s)
+    --- PASS: TestCheckedViewFiniteStringKeyComponent/97180/wrong (0.32s)
+    --- PASS: TestCheckedViewFiniteStringKeyComponent/97180/number (0.21s)
+    --- PASS: TestCheckedViewFiniteStringKeyComponent/97180/null (0.20s)
+=== RUN   TestCheckedViewPrimitiveArrayPairGap
+=== RUN   TestCheckedViewPrimitiveArrayPairGap/string
+=== RUN   TestCheckedViewPrimitiveArrayPairGap/number
+=== RUN   TestCheckedViewPrimitiveArrayPairGap/plain-number
+=== RUN   TestCheckedViewPrimitiveArrayPairGap/plain-string
+=== RUN   TestCheckedViewPrimitiveArrayPairGap/wrong
+=== RUN   TestCheckedViewPrimitiveArrayPairGap/bounds
+--- PASS: TestCheckedViewPrimitiveArrayPairGap (0.78s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairGap/string (0.13s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairGap/number (0.13s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairGap/plain-number (0.13s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairGap/plain-string (0.13s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairGap/wrong (0.13s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairGap/bounds (0.13s)
+=== RUN   TestCheckedViewOpenCompilerOptionKeySelection
+=== RUN   TestCheckedViewOpenCompilerOptionKeySelection/9761/string
+=== RUN   TestCheckedViewOpenCompilerOptionKeySelection/9761/number
+=== RUN   TestCheckedViewOpenCompilerOptionKeySelection/9761/undefined
+=== RUN   TestCheckedViewOpenCompilerOptionKeySelection/9761/missing
+=== RUN   TestCheckedViewOpenCompilerOptionKeySelection/9761/wrong
+    checked_views_primitive_pairs_test.go:193: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-4156385883/main.c:29:62: error: incompatible pointer types passing 'adamic_string *' (aka 'struct adamic_string *') to parameter of type 'adamic_heap *' (aka 'struct adamic_heap *') [-Werror,-Wincompatible-pointer-types]
+           29 |         adamic_string * adamic_temporary_2 = adamic_union_to_string(adamic_temporary_1);
+              |                                                                     ^~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/14183a251e152b3b613a4c9bdbff6e538acc793405cd29bfd891a56b2bedc83a/adamic.h:789:52: note: passing argument to parameter 'value' here
+          789 | adamic_string *adamic_union_to_string(adamic_heap *value);
+              |                                                    ^
+        1 error generated.
+        
+=== RUN   TestCheckedViewOpenCompilerOptionKeySelection/9761/null
+    checked_views_primitive_pairs_test.go:193: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-4043489528/main.c:29:62: error: incompatible pointer types passing 'adamic_string *' (aka 'struct adamic_string *') to parameter of type 'adamic_heap *' (aka 'struct adamic_heap *') [-Werror,-Wincompatible-pointer-types]
+           29 |         adamic_string * adamic_temporary_2 = adamic_union_to_string(adamic_temporary_1);
+              |                                                                     ^~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/14183a251e152b3b613a4c9bdbff6e538acc793405cd29bfd891a56b2bedc83a/adamic.h:789:52: note: passing argument to parameter 'value' here
+          789 | adamic_string *adamic_union_to_string(adamic_heap *value);
+              |                                                    ^
+        1 error generated.
+        
+=== RUN   TestCheckedViewOpenCompilerOptionKeySelection/97180/string
+=== RUN   TestCheckedViewOpenCompilerOptionKeySelection/97180/number
+=== RUN   TestCheckedViewOpenCompilerOptionKeySelection/97180/undefined
+=== RUN   TestCheckedViewOpenCompilerOptionKeySelection/97180/missing
+=== RUN   TestCheckedViewOpenCompilerOptionKeySelection/97180/wrong
+    checked_views_primitive_pairs_test.go:193: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-1922498953/main.c:29:62: error: incompatible pointer types passing 'adamic_string *' (aka 'struct adamic_string *') to parameter of type 'adamic_heap *' (aka 'struct adamic_heap *') [-Werror,-Wincompatible-pointer-types]
+           29 |         adamic_string * adamic_temporary_2 = adamic_union_to_string(adamic_temporary_1);
+              |                                                                     ^~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/14183a251e152b3b613a4c9bdbff6e538acc793405cd29bfd891a56b2bedc83a/adamic.h:789:52: note: passing argument to parameter 'value' here
+          789 | adamic_string *adamic_union_to_string(adamic_heap *value);
+              |                                                    ^
+        1 error generated.
+        
+=== RUN   TestCheckedViewOpenCompilerOptionKeySelection/97180/null
+    checked_views_primitive_pairs_test.go:193: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-4155453696/main.c:29:62: error: incompatible pointer types passing 'adamic_string *' (aka 'struct adamic_string *') to parameter of type 'adamic_heap *' (aka 'struct adamic_heap *') [-Werror,-Wincompatible-pointer-types]
+           29 |         adamic_string * adamic_temporary_2 = adamic_union_to_string(adamic_temporary_1);
+              |                                                                     ^~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/14183a251e152b3b613a4c9bdbff6e538acc793405cd29bfd891a56b2bedc83a/adamic.h:789:52: note: passing argument to parameter 'value' here
+          789 | adamic_string *adamic_union_to_string(adamic_heap *value);
+              |                                                    ^
+        1 error generated.
+        
+--- FAIL: TestCheckedViewOpenCompilerOptionKeySelection (4.72s)
+    --- PASS: TestCheckedViewOpenCompilerOptionKeySelection/9761/string (0.39s)
+    --- PASS: TestCheckedViewOpenCompilerOptionKeySelection/9761/number (0.39s)
+    --- PASS: TestCheckedViewOpenCompilerOptionKeySelection/9761/undefined (0.39s)
+    --- PASS: TestCheckedViewOpenCompilerOptionKeySelection/9761/missing (0.38s)
+    --- FAIL: TestCheckedViewOpenCompilerOptionKeySelection/9761/wrong (0.42s)
+    --- FAIL: TestCheckedViewOpenCompilerOptionKeySelection/9761/null (0.40s)
+    --- PASS: TestCheckedViewOpenCompilerOptionKeySelection/97180/string (0.38s)
+    --- PASS: TestCheckedViewOpenCompilerOptionKeySelection/97180/number (0.39s)
+    --- PASS: TestCheckedViewOpenCompilerOptionKeySelection/97180/undefined (0.38s)
+    --- PASS: TestCheckedViewOpenCompilerOptionKeySelection/97180/missing (0.38s)
+    --- FAIL: TestCheckedViewOpenCompilerOptionKeySelection/97180/wrong (0.41s)
+    --- FAIL: TestCheckedViewOpenCompilerOptionKeySelection/97180/null (0.42s)
+FAIL
+gate cache: native hits=0 misses=8
+gate cache: node hits=0 misses=60
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	10.126s
+FAIL

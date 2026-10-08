@@ -1,0 +1,13 @@
+=== RUN   TestPackedBooleanViewSnapshot
+=== PAUSE TestPackedBooleanViewSnapshot
+=== CONT  TestPackedBooleanViewSnapshot
+=== RUN   TestPackedBooleanViewSnapshot/sanitized
+    view_boolean_storage_test.go:58: got "false false\nadamic: panic: field read failed: actual.value is not a boolean | undefined; expected boolean | undefined, found nullish\n", exit status 70; Node "false false\nundefined undefined\ntrue true\n"
+=== RUN   TestPackedBooleanViewSnapshot/release
+    view_boolean_storage_test.go:58: got "false false\nadamic: panic: field read failed: actual.value is not a boolean | undefined; expected boolean | undefined, found nullish\n", exit status 70; Node "false false\nundefined undefined\ntrue true\n"
+--- FAIL: TestPackedBooleanViewSnapshot (10.81s)
+    --- FAIL: TestPackedBooleanViewSnapshot/sanitized (6.90s)
+    --- FAIL: TestPackedBooleanViewSnapshot/release (3.88s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	10.820s
+FAIL

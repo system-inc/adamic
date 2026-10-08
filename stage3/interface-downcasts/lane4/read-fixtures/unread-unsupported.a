@@ -1,0 +1,6 @@
+interface Base { readonly kind: 'box' | 'other' }
+interface Box extends Base { readonly kind: 'box'; readonly ready: boolean; readonly unread: string | number }
+function helper(value: Box): void { console.log(String(value.ready)); }
+const raw = {kind: 'box' as const, ready: true, unread: 42};
+const base: Base = raw;
+helper(base as Box);

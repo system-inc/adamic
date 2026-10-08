@@ -23,7 +23,7 @@ func init() {
 func TestPredicateCheckedNarrowing(t *testing.T) {
 	for _, branch := range []string{"true", "false", "callback"} {
 		t.Run(branch, func(t *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/predicate_hatch_"+branch+".a"))
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/predicate_hatches/"+branch+".a"))
 			if err != nil {
 				t.Fatal(err)
 			}

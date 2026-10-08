@@ -1,0 +1,9 @@
+--- FAIL: TestCheckedViewRankedArrayContracts (0.00s)
+    --- FAIL: TestCheckedViewRankedArrayContracts/ranked-union-wrong-array (0.44s)
+        checked_views_ranked_arrays_test.go:35: exit codes differ; got oracle.run{stdout:[]uint8{0x75, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0xa}, stderr:[]uint8{}, exitCode:0}
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.450s
+FAIL

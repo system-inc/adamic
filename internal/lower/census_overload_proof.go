@@ -162,7 +162,7 @@ func (l *lowering) censusReturnProof(implementation, overload *ast.Node, admitte
 				binary := check.AsBinaryExpression()
 				if binary.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken || binary.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken {
 					for _, parameter := range parameters {
-						proof := predicateProof{l: l, parameter: parameter}
+						proof := predicateFlowProof{l: l, parameter: parameter}
 						trusted = trusted || proof.reference(ast.SkipParentheses(binary.Left)) && proof.literal(binary.Right) || proof.reference(ast.SkipParentheses(binary.Right)) && proof.literal(binary.Left)
 					}
 				}
@@ -173,7 +173,7 @@ func (l *lowering) censusReturnProof(implementation, overload *ast.Node, admitte
 			then, otherwise := []*ast.FlowNode{}, []*ast.FlowNode{}
 			for _, flow := range flows {
 				for _, truth := range []bool{true, false} {
-					path := predicateBranch(predicatePath{flow: flow}, branch.Expression, truth).flow
+					path := predicateBranch(predicateFlowPath{flow: flow}, branch.Expression, truth).flow
 					if reachable(path) {
 						if truth {
 							then = append(then, path)

@@ -1,0 +1,5 @@
+--- FAIL: TestParserCallbackLie (0.04s)
+    predicates_parser_test.go:37: want callback body proof refusal, got <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.055s
+FAIL

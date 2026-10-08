@@ -1,0 +1,71 @@
+{
+  "measurement": "Conservative Unknown fallback inventory, not certified reachable reads or compiler support counts",
+  "source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "adaptation_commit": "234ab1aa5f728a5221fb6075c35b94f88a2c6437",
+  "pairs": 2018,
+  "reads": 9101,
+  "production_reachability_unmeasured_pairs": 2018,
+  "production_reachability_unmeasured_reads": 9101,
+  "read_forms": {
+    "element": 128,
+    "property": 8712,
+    "destructure": 261
+  },
+  "overlapping_families": [
+    {
+      "family": "array or tuple contracts",
+      "pairs": 219,
+      "reads": 1195
+    },
+    {
+      "family": "callable contracts",
+      "pairs": 224,
+      "reads": 392
+    },
+    {
+      "family": "dictionary contracts",
+      "pairs": 221,
+      "reads": 868
+    },
+    {
+      "family": "generic field contract",
+      "pairs": 3,
+      "reads": 4
+    },
+    {
+      "family": "intersection field contract",
+      "pairs": 15,
+      "reads": 42
+    },
+    {
+      "family": "mixed primitive union",
+      "pairs": 27,
+      "reads": 124
+    },
+    {
+      "family": "nullish members",
+      "pairs": 2018,
+      "reads": 9101
+    },
+    {
+      "family": "object plus primitive union",
+      "pairs": 60,
+      "reads": 181
+    },
+    {
+      "family": "optional properties",
+      "pairs": 1679,
+      "reads": 7859
+    },
+    {
+      "family": "tagged object union",
+      "pairs": 131,
+      "reads": 883
+    },
+    {
+      "family": "untagged object union",
+      "pairs": 8,
+      "reads": 17
+    }
+  ]
+}

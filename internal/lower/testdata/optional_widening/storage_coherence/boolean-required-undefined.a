@@ -1,0 +1,6 @@
+const actual: { x: number; value: boolean | undefined } = { x: 1, value: false };
+const narrow: { x: number } = actual;
+const view: { x: number; value?: boolean | undefined } = narrow;
+const scalar = narrow as { x: number; value: boolean };
+view.value = undefined;
+console.log(`${scalar.value}`);

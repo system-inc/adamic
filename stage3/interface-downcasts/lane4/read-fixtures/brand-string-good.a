@@ -1,0 +1,7 @@
+type __String = string & { __escapedIdentifier: void };
+interface Base { readonly kind: 'box' | 'other' }
+interface Box extends Base { readonly kind: 'box'; readonly unsupported: __String }
+function helper(value: Box): void { console.log(String(value.unsupported)); }
+const raw = {kind: 'box' as const, unsupported: 'word'};
+const base: Base = raw;
+helper(base as Box);

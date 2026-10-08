@@ -1,0 +1,8 @@
+import type { CompilerOptions } from 'original-tsc-types';
+interface Base { readonly kind: 'box' | 'other'; }
+interface Carrier extends Base { readonly kind: 'box'; readonly child: CompilerOptions; }
+function helper(value: CompilerOptions, key: string): void { console.log(typeof value[key]); }
+const raw = {kind: 'box' as const, child: {item: { value: 42 }}};
+const base: Base = raw;
+const carrier = base as Carrier;
+helper(carrier.child, 'item');
