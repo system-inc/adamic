@@ -1,0 +1,106 @@
+{
+  "full": {
+    "counts": {
+      "pass": 120,
+      "skip": 1,
+      "fail": 1
+    },
+    "limits": [
+      {
+        "test": "TestCheckerBridgeRefusalPending",
+        "action": "skip"
+      },
+      {
+        "test": "TestRulesAgree",
+        "action": "fail"
+      }
+    ],
+    "package": [
+      {
+        "action": "fail",
+        "elapsed": 2014.417
+      }
+    ]
+  },
+  "correctness": {
+    "counts": {
+      "pass": 2
+    },
+    "limits": [],
+    "package": [
+      {
+        "action": "pass",
+        "elapsed": 392.477
+      }
+    ]
+  },
+  "mutant": {
+    "counts": {
+      "pass": 2
+    },
+    "limits": [],
+    "package": [
+      {
+        "action": "pass",
+        "elapsed": 59.725
+      }
+    ]
+  },
+  "base": "d845dccde413c89643293e808626344d12e3f023",
+  "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "upstream_matched": 316,
+  "programReads": [],
+  "corpus": {
+    "files": 554,
+    "rows": 1108,
+    "load_before": [
+      0.08349609375,
+      1.11083984375,
+      1.849609375
+    ],
+    "runs": {
+      "Go": {
+        "exit": 0,
+        "seconds": 1.7419864909970784,
+        "bytes": 29171974,
+        "sha256": "9e78261b962d03cd79d0b4a7565006d2d7a37fe787439a254acb08707ac1eacc",
+        "refused_or_skipped": 0
+      },
+      "native-release": {
+        "exit": 0,
+        "seconds": 5.599130126000091,
+        "bytes": 29171974,
+        "sha256": "9e78261b962d03cd79d0b4a7565006d2d7a37fe787439a254acb08707ac1eacc",
+        "refused_or_skipped": 0
+      },
+      "sanitized-native": {
+        "exit": 0,
+        "seconds": 24.604334875002678,
+        "bytes": 29171974,
+        "sha256": "9e78261b962d03cd79d0b4a7565006d2d7a37fe787439a254acb08707ac1eacc",
+        "refused_or_skipped": 0
+      }
+    },
+    "identical": true,
+    "load_after": [
+      0.44580078125,
+      1.09912109375,
+      1.8203125
+    ]
+  },
+  "full_run": {
+    "started": 1791473192.0745132,
+    "nproc": 5,
+    "load": [
+      0.89794921875,
+      0.6533203125,
+      0.478515625
+    ],
+    "wall_seconds": 2016.4931757450104,
+    "load_after": [
+      1.61865234375,
+      2.2041015625,
+      2.40625
+    ]
+  }
+}

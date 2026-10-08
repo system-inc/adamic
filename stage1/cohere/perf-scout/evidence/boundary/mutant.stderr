@@ -1,0 +1,69 @@
+=================================================================
+==23480==ERROR: AddressSanitizer: heap-use-after-free on address 0x7c1706de1b10 at pc 0x55633689edf5 bp 0x7ffe8b4e4d70 sp 0x7ffe8b4e4d68
+READ of size 8 at 0x7c1706de1b10 thread T0
+    #0 0x55633689edf4 in adamic_retain /workspace/scratch/perf-boundary/run/runtime/heap.c:221:28
+    #1 0x5563365d0d3a in adamic_function_456_Parser_node /workspace/scratch/perf-boundary/run/unpaired-mutant.c:58949:100
+    #2 0x5563366bb0ad in adamic_function_404_RuleContext_node /workspace/scratch/perf-boundary/run/unpaired-mutant.c:56896:43
+    #3 0x556336684232 in adamic_function_1162_RuleSet_visit /workspace/scratch/perf-boundary/run/unpaired-mutant.c:118661:43
+    #4 0x556336683e27 in adamic_function_1168_Linter_walk /workspace/scratch/perf-boundary/run/unpaired-mutant.c:124378:2
+    #5 0x55633659d4c4 in adamic_function_1165_Linter_run /workspace/scratch/perf-boundary/run/unpaired-mutant.c:124282:2
+    #6 0x556336587a5b in adamic_function_372_run /workspace/scratch/perf-boundary/run/unpaired-mutant.c:51301:2
+    #7 0x55633657d093 in main /workspace/scratch/perf-boundary/run/unpaired-mutant.c:135467:44
+    #8 0x7f4707d98ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+    #9 0x7f4707d98d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+    #10 0x556336462520 in _start (/workspace/scratch/perf-boundary/run/unpaired-mutant+0x404520)
+
+0x7c1706de1b10 is located 0 bytes inside of 144-byte region [0x7c1706de1b10,0x7c1706de1ba0)
+freed by thread T0 here:
+    #0 0x556336505096 in free /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:51:3
+    #1 0x55633689f45f in deallocate /workspace/scratch/perf-boundary/run/runtime/heap.c:212:3
+    #2 0x55633689f45f in free_one /workspace/scratch/perf-boundary/run/runtime/heap.c:316:2
+    #3 0x55633689f45f in release_last /workspace/scratch/perf-boundary/run/runtime/heap.c:329:3
+    #4 0x55633659a9b2 in adamic_function_1165_Linter_run /workspace/scratch/perf-boundary/run/unpaired-mutant.c:124254:2
+    #5 0x556336587a5b in adamic_function_372_run /workspace/scratch/perf-boundary/run/unpaired-mutant.c:51301:2
+    #6 0x55633657d093 in main /workspace/scratch/perf-boundary/run/unpaired-mutant.c:135467:44
+    #7 0x7f4707d98ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+
+previously allocated by thread T0 here:
+    #0 0x556336505334 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+    #1 0x55633689eccf in adamic_allocate /workspace/scratch/perf-boundary/run/runtime/heap.c:196:10
+    #2 0x5563365aaafa in adamic_function_457_Parser_make /workspace/scratch/perf-boundary/run/unpaired-mutant.c:58972:43
+    #3 0x55633667c3ac in adamic_function_521_Parser_file /workspace/scratch/perf-boundary/run/unpaired-mutant.c:65783:34
+    #4 0x5563365998f2 in adamic_function_1165_Linter_run /workspace/scratch/perf-boundary/run/unpaired-mutant.c:124170:34
+    #5 0x556336587a5b in adamic_function_372_run /workspace/scratch/perf-boundary/run/unpaired-mutant.c:51301:2
+    #6 0x55633657d093 in main /workspace/scratch/perf-boundary/run/unpaired-mutant.c:135467:44
+    #7 0x7f4707d98ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+
+SUMMARY: AddressSanitizer: heap-use-after-free /workspace/scratch/perf-boundary/run/runtime/heap.c:221:28 in adamic_retain
+Shadow bytes around the buggy address:
+  0x7c1706de1880: fa fa fa fa fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7c1706de1900: fd fd fd fd fd fd fa fa fa fa fa fa fa fa fd fd
+  0x7c1706de1980: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7c1706de1a00: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+  0x7c1706de1a80: fd fd fd fd fd fd fd fd fd fd fa fa fa fa fa fa
+=>0x7c1706de1b00: fa fa[fd]fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7c1706de1b80: fd fd fd fd fa fa fa fa fa fa fa fa fa fa fa fa
+  0x7c1706de1c00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x7c1706de1c80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x7c1706de1d00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x7c1706de1d80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==23480==ABORTING

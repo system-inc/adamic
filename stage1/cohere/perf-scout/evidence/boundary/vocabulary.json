@@ -1,0 +1,149 @@
+{
+  "scanner": {
+    "calibration_ns": 21,
+    "sites": [
+      {
+        "id": 0,
+        "key": "noAbbreviatedIdentifier#0:vocabulary",
+        "category": "vocabulary",
+        "caller": "adamic_function_185_noAbbreviatedIdentifier",
+        "callee": "adamic_function_164_abbreviation",
+        "c_line": 37034,
+        "eligible": false,
+        "calls": 19895,
+        "retains": 17752146,
+        "releases": 17687820,
+        "paired_releases": 0,
+        "samples": 311,
+        "sampled_ns": 1748638,
+        "calibrated_ns_per_call": 5601.630225080386,
+        "estimated_total_ns": 111444433.32797427
+      },
+      {
+        "id": 1,
+        "key": "abbreviation#0:membership:0",
+        "category": "membership",
+        "caller": "adamic_function_164_abbreviation",
+        "caller_key": "abbreviation#0",
+        "callee": "adamic_array_search_from",
+        "start": 2110823,
+        "end": 2110969,
+        "c_line": 34749,
+        "expression": "adamic_array_search_from(adamic_temporary_3221, (adamic_value){.reference = adamic_local_447_text}, adamic_equal_strings, true, 0.0, false, false)",
+        "aliases": [],
+        "release_vars": [],
+        "eligible": false,
+        "excluded_reasons": [
+          "no unique result binding"
+        ],
+        "calls": 19895,
+        "retains": 0,
+        "releases": 0,
+        "paired_releases": 0,
+        "samples": 20,
+        "sampled_ns": 1893,
+        "calibrated_ns_per_call": 73.65,
+        "estimated_total_ns": 1465266.75
+      }
+    ],
+    "global_counts": "adamic: counts: allocations 4123448 frees 4123448 retains 36957236 releases 36783879 peak 484343 regions 0"
+  },
+  "public23": {
+    "calibration_ns": 33,
+    "sites": [
+      {
+        "id": 0,
+        "key": "noAbbreviatedIdentifier#0:vocabulary",
+        "category": "vocabulary",
+        "caller": "adamic_function_185_noAbbreviatedIdentifier",
+        "callee": "adamic_function_164_abbreviation",
+        "c_line": 37034,
+        "eligible": false,
+        "calls": 199,
+        "retains": 176051,
+        "releases": 175427,
+        "paired_releases": 0,
+        "samples": 4,
+        "sampled_ns": 25919,
+        "calibrated_ns_per_call": 6446.75,
+        "estimated_total_ns": 1282903.25
+      },
+      {
+        "id": 1,
+        "key": "abbreviation#0:membership:0",
+        "category": "membership",
+        "caller": "adamic_function_164_abbreviation",
+        "caller_key": "abbreviation#0",
+        "callee": "adamic_array_search_from",
+        "start": 2110823,
+        "end": 2110969,
+        "c_line": 34749,
+        "expression": "adamic_array_search_from(adamic_temporary_3221, (adamic_value){.reference = adamic_local_447_text}, adamic_equal_strings, true, 0.0, false, false)",
+        "aliases": [],
+        "release_vars": [],
+        "eligible": false,
+        "excluded_reasons": [
+          "no unique result binding"
+        ],
+        "calls": 199,
+        "retains": 0,
+        "releases": 0,
+        "paired_releases": 0,
+        "samples": 1,
+        "sampled_ns": 741,
+        "calibrated_ns_per_call": 708.0,
+        "estimated_total_ns": 140892.0
+      }
+    ],
+    "global_counts": "adamic: counts: allocations 51259 frees 51259 retains 406136 releases 398463 peak 1502 regions 0"
+  },
+  "compiler77": {
+    "calibration_ns": 21,
+    "sites": [
+      {
+        "id": 0,
+        "key": "noAbbreviatedIdentifier#0:vocabulary",
+        "category": "vocabulary",
+        "caller": "adamic_function_185_noAbbreviatedIdentifier",
+        "callee": "adamic_function_164_abbreviation",
+        "c_line": 37034,
+        "eligible": false,
+        "calls": 1083820,
+        "retains": 978781510,
+        "releases": 975463417,
+        "paired_releases": 0,
+        "samples": 16935,
+        "sampled_ns": 106116497,
+        "calibrated_ns_per_call": 6245.105521110127,
+        "estimated_total_ns": 6768570265.889577
+      },
+      {
+        "id": 1,
+        "key": "abbreviation#0:membership:0",
+        "category": "membership",
+        "caller": "adamic_function_164_abbreviation",
+        "caller_key": "abbreviation#0",
+        "callee": "adamic_array_search_from",
+        "start": 2110823,
+        "end": 2110969,
+        "c_line": 34749,
+        "expression": "adamic_array_search_from(adamic_temporary_3221, (adamic_value){.reference = adamic_local_447_text}, adamic_equal_strings, true, 0.0, false, false)",
+        "aliases": [],
+        "release_vars": [],
+        "eligible": false,
+        "excluded_reasons": [
+          "no unique result binding"
+        ],
+        "calls": 1083820,
+        "retains": 0,
+        "releases": 0,
+        "paired_releases": 0,
+        "samples": 1059,
+        "sampled_ns": 50279,
+        "calibrated_ns_per_call": 26.477809254013223,
+        "estimated_total_ns": 28697179.225684613
+      }
+    ],
+    "global_counts": "adamic: counts: allocations 147658681 frees 147658681 retains 1729382367 releases 1684385637 peak 6304948 regions 0"
+  }
+}

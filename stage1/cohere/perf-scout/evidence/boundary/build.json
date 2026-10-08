@@ -1,0 +1,22 @@
+{
+  "flags": [
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic",
+    "-Wno-unused-variable",
+    "-Wno-unused-but-set-variable",
+    "-Wno-unused-function",
+    "-Wno-unused-parameter",
+    "-Wno-self-assign",
+    "-ffp-contract=off",
+    "-fno-optimize-sibling-calls",
+    "-DADAMIC_TSGO",
+    "-g",
+    "-O2"
+  ],
+  "base": "/workspace/adamic",
+  "original_sha256": "ff7f736585a3014b592dea71c8250662a697d3b9726d79a81e04d2f9b05f64de",
+  "selected_sites": 562
+}
