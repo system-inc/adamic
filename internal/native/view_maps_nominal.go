@@ -72,16 +72,16 @@ func (e *emitter) mapEntryNominalCertificate(id ir.ViewContractID, value, where 
 		child := e.temporary()
 		schema := e.program.ViewContracts[field.Contract-1]
 		reading := child + ".reference"
-		if schema.Kind == ir.ViewNullable || schema.Undefined {
+		if schema.Kind == ir.ViewNullable || schema.Undefined || field.Optional {
 			e.declarations = append(e.declarations, "#include \"view_nullish.h\"")
 			present, _, _ := mapNominalContract(e.program, field.Contract)
 			reading = child
-			e.line("adamic_heap *%s = %s;", child, fmt.Sprintf("adamic_object_nullish_view((adamic_object *)%s,%s,&%s,%d,%t,%t,false,false,%s,%s)", stored, cString(field.Name), e.cache(), 1<<present.Of, schema.Null, schema.Undefined, cString(where+"."+field.Name), cString(schema.Name)))
+			e.line("adamic_heap *%s = %s;", child, fmt.Sprintf("adamic_object_nullish_view((adamic_object *)%s,%s,&%s,%d,%t,%t,%t,false,%s,%s)", stored, cString(field.Name), e.cache(), 1<<present.Of, schema.Null, schema.Undefined || field.Optional, field.Optional, cString(where+"."+field.Name), cString(schema.Name)))
 		} else {
 			e.line("adamic_value %s = adamic_object_view((adamic_object *)%s,%s,&%s,%d,%s,%s);", child, stored, cString(field.Name), e.cache(), schema.Of, cString(schema.Name), cString(where+"."+field.Name))
 		}
 		e.mapEntryNominalCertificate(field.Contract, reading, where+"."+field.Name)
-		if schema.Kind == ir.ViewNullable || schema.Undefined {
+		if schema.Kind == ir.ViewNullable || schema.Undefined || field.Optional {
 			e.line("adamic_release(%s);", reading)
 		}
 		e.indent--

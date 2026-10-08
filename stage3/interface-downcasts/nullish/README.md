@@ -840,3 +840,39 @@ TestCheckedViewMutableNominal|TestCheckedViewNullableNominalAggregate`) passed i
 183.157 seconds. Touched-package checks (`View|Map|Contract|Callable|Tuple`, inherited
 Phantom exclusion) passed: IR 0.017s, lower 5.474s, native 36.916s, JavaScript 1.033s.
 Scoped vet passed. The complete repository gate was not run for this group.
+
+### Optional nominal fields, October 8
+
+Finite structural producer descriptors now admit readonly optional nominal
+fields. Native producer extraction passes the optional field's absence allowance
+to the shared nullish reader, retaining readiness and actual present-value checks.
+Class identity remains checked independently at subsequent reads. JavaScript's
+ordinary-object producer predicate now rejects arrays, Maps and Sets, so an
+all-optional schema cannot admit an incompatible container merely because its
+fields are absent.
+
+Node/native/JavaScript controls distinguish absent `child` from present undefined:
+stdout for the presence control is `7\nmissing\nmissing\n7\ntrue\n\nchild\n`.
+The true line is `Object.hasOwn(present, 'child')`; empty and present key lists are
+empty and `child`. `Object.hasOwn` on the absent binding remains excluded by its
+existing declared-public-field/complete-literal-shape rules; this group does not
+change reflection admission.
+
+Three payload mutants supply a structural lookalike at a producer, corrupt a
+field after production, or supply an array to an all-optional object schema. Four
+identity-check bypasses and a separate JavaScript object-kind bypass all fail
+behaviorally. Evidence is under `evidence/map-nominal-optional-*` and
+`evidence/map-optional-nominal-*`. Mutable optional nominal writes, nullable class
+source-slot widening, boxed class/null array elements and recursive nominal
+aggregates remain outside this group. Exact production discharge is unmeasured.
+
+Optional nominal validation: the first scoped oracle exposed a fixed-tuple
+JavaScript predicate regression, which was corrected without changing tuple
+conventions. The restored optional/tuple controls passed in 3.295 seconds, and
+the final scoped uncached oracle (`Map|Nullish|NullableSelection|
+TestCheckedViewArrayJSONStorageRefusal|TestCheckedViewNominalArray|
+TestCheckedViewMutableNominal|TestCheckedViewNullableNominalAggregate|
+TestCheckedViewOptionalNominal`) passed in 165.989 seconds. Touched-package checks
+(`View|Map|Contract|Callable|Tuple`, inherited Phantom exclusion) passed: IR 0.011s,
+lower 4.961s, native 34.598s, JavaScript 0.964s; the final JavaScript check passed
+in 0.682s. Scoped vet passed. The complete repository gate was not run.

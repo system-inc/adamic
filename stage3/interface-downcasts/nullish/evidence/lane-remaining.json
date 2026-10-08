@@ -63,6 +63,11 @@
       "family": "nullable finite nominal aggregate entries",
       "scope": "immutable structural object or array entries unioned with null, undefined, or both; producer traversal skips only declared sentinels; nested class identity remains checked independently",
       "production_reaching_view_counts": "unmeasured"
+    },
+    {
+      "family": "optional readonly nominal fields",
+      "scope": "finite readonly structural paths with optional class fields; absent versus present undefined retains distinct key presence; present class identity checked at producer and read; arrays rejected as ordinary objects even when all fields are optional",
+      "production_reaching_view_counts": "unmeasured"
     }
   ]
 }

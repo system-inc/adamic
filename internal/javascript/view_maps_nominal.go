@@ -21,8 +21,8 @@ func (e *emitter) mapEntryNominalCertificate(id ir.ViewContractID, value, where 
 	if !ir.HasMapNominalWitness(e.program, id) {
 		return value
 	}
-	accepted := []string{"entry !== null && typeof entry === 'object'"}
-	if contract.Kind == ir.ViewArray {
+	accepted := []string{"entry !== null && typeof entry === 'object' && !Array.isArray(entry) && !(entry instanceof Map) && !(entry instanceof Set)"}
+	if contract.Kind == ir.ViewArray || len(contract.Tuple) != 0 {
 		accepted = []string{"Array.isArray(entry)"}
 	}
 	if contract.NominalClass != 0 {

@@ -11,6 +11,11 @@ log_root = Path('/tmp/map-storage-mutants')
 log_root.mkdir(exist_ok=True)
 runtime = 'internal/native/runtime/map_view_storage.c'
 cases = [
+ ('optional-nominal-javascript-object-kind', 'internal/javascript/view_maps_nominal.go', " && !Array.isArray(entry) && !(entry instanceof Map) && !(entry instanceof Set)", "", '^TestCheckedViewOptionalNominalMutants$/^container$'),
+ ('optional-nominal-native-producer', 'internal/native/view_maps_nominal.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewOptionalNominalMutants$/^producer$'),
+ ('optional-nominal-javascript-producer', 'internal/javascript/view_maps_nominal.go', '\"((entry) => {if (!(\" + strings.Join', '\"((entry) => {if (false && !(\" + strings.Join', '^TestCheckedViewOptionalNominalMutants$/^producer$'),
+ ('optional-nominal-native-read', 'internal/native/view_nominal_reads.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewOptionalNominalMutants$/^read$'),
+ ('optional-nominal-javascript-read', 'internal/javascript/view_nominal_reads.go', '\"((value) => (\" + strings.Join', '\"((value) => (true || \" + strings.Join', '^TestCheckedViewOptionalNominalMutants$/^read$'),
  ('aggregate-nominal-native-producer', 'internal/native/view_maps_nominal.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewNullableNominalAggregateMutants$'),
  ('aggregate-nominal-javascript-producer', 'internal/javascript/view_maps_nominal.go', '\"((entry) => {if (!(\" + strings.Join', '\"((entry) => {if (false && !(\" + strings.Join', '^TestCheckedViewNullableNominalAggregateMutants$'),
  ('mutable-nominal-native-write', 'internal/native/view_maps_nominal.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewMutableNominalWriteMutant$'),

@@ -156,3 +156,68 @@ func TestCheckedViewNullableNominalAggregateMutants(t *testing.T) {
 		}
 	}
 }
+
+func TestCheckedViewOptionalNominalMutants(t *testing.T) {
+	for _, site := range []string{"producer", "container", "read"} {
+		t.Run(site, func(t *testing.T) {
+			fixture := "entry-nominal-optional"
+			if site != "read" {
+				fixture += "-producer"
+			}
+			program, path := interfaceFixture(t, "nullish/maps/"+fixture)
+			truth := onNode(t, path)
+			fake, item := -1, -1
+			for i, local := range program.Locals {
+				if local.Name == "fake" {
+					fake = i
+				}
+				if local.Name == "item" {
+					item = i
+				}
+			}
+			if fake < 0 || item < 0 {
+				t.Fatal("missing local")
+			}
+			changed := false
+			for i, statement := range program.Main {
+				declaration, ok := statement.(ir.Declare)
+				if !ok || program.Locals[declaration.Local].Name != "source" {
+					continue
+				}
+				if site != "read" {
+					creation, ok := declaration.Value.(ir.MapNew)
+					if !ok {
+						t.Fatal("missing Map")
+					}
+					creation.Entries[0][1] = ir.ObjectLiteral{Fields: []ir.Field{{Name: "child", Value: ir.Read{Local: fake, Of: ir.Object}}}}
+					if site == "container" {
+						creation.Entries[0][1] = ir.ArrayLiteral{Element: ir.Number, Elements: []ir.Expression{ir.NumberConstant{Value: 7}}}
+					}
+					declaration.Value = creation
+					program.Main[i] = declaration
+				} else {
+					mutation := ir.SetProperty{Object: ir.Read{Local: item, Of: ir.Object}, Name: "child", Value: ir.Read{Local: fake, Of: ir.Object}}
+					remaining := append([]ir.Statement(nil), program.Main[i+1:]...)
+					program.Main = append(program.Main[:i+1], mutation)
+					program.Main = append(program.Main, remaining...)
+				}
+				changed = true
+				break
+			}
+			if !changed {
+				t.Fatal("mutation missed")
+			}
+			native, _ := nativelyUncached(t, program)
+			expected := "field read failed:"
+			if site != "read" {
+				expected = "Map nominal producer failed:"
+			}
+			for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if got.exitCode != 70 || !strings.Contains(string(got.stderr), expected) || !strings.Contains(string(got.stderr), "class identity") {
+					t.Fatalf("optional nominal lookalike ran on: %#v", got)
+				}
+			}
+			t.Logf("Node=%q; optional lookalike caught at %s", truth.stdout, site)
+		})
+	}
+}
