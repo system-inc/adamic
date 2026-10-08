@@ -47,6 +47,7 @@ func discoverJsxInventory(descriptors []registry.Descriptor, rows []string, hasJ
 }
 
 func TestJsxInventoryDiscovery(t *testing.T) {
+	t.Parallel()
 	descriptors := []registry.Descriptor{
 		{Name: "first", Kinds: []string{"JsxText"}},
 		{Name: "generic", Kinds: []string{"CallExpression"}},
