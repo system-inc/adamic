@@ -1,0 +1,5 @@
+{
+  "name": "target-blank-external-inverted",
+  "from": "if (text.startsWith('//')) { return true; }",
+  "to": "if (text.startsWith('//')) { return false; }"
+}

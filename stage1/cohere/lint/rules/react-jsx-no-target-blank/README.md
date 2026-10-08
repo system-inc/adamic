@@ -1,0 +1,2 @@
+Ports Go react.JsxNoTargetBlank, including all five options, conditional branch pairing, last-match judgments, first-rel fixes, spread refusals and form findings without fixes. Ownership checked across every origin branch; upstream count: 150.
+Verified all 150 upstream source/options cases, owned witness selected/all rows, and the output mutant on source Node, emitted JavaScript and sanitized native against unchanged Go. The branch includes the separately tested no-progress edit-engine refusal fix.
