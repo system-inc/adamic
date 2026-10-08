@@ -2,7 +2,7 @@ Built: a streaming exact-byte node-dump comparator, parser-source fixtures, and 
 Base: origin/main 45487a809f89885a3fc651cd590e7dabf31362dc; branch codex/step24-scout; only this directory changes.
 Results: comparator green; fresh latent census and Node recursion measured; context and native frame calibration agree with source Node.
 Mutants: comparator, context restoration, speculation rewind, factory header, instrumentation and existing parser mutants all caught, detailed below.
-Limits: no native parser acceptance; reconstructed corpus differs from the committed target by 13 bytes; language options remain undecided.
+Limits: no native parser acceptance; corpus reconstruction now matches the committed reference; language options remain undecided.
 
 # Evidence and scope
 
@@ -305,9 +305,9 @@ python3 stage3/scouts/step24/package-evidence.py > /tmp/step24-package-final.log
 go vet ./stage3/scouts/step24/dumpdiff/... > /tmp/step24-vet.log 2>&1
 ```
 
-Corpus reconstruction uses the local pinned bare mirror, 00-setup, current
-10-type-imports and the upstream diagnostic generator; it is separate from full
-apply. Its manifest and per-file hashes are preserved. The first parser attempt
+The initial corpus reconstruction used the local pinned bare mirror, 00-setup,
+current 10-type-imports and the upstream diagnostic generator; it was separate
+from full apply. Its original manifest and per-file hashes are preserved. The first parser attempt
 overlapped incomplete apply and is discarded. A census invocation before its
 binary finished building exited 127 and was repeated after the build completed.
 Initial fixture console arguments were corrected to strings before validation;
@@ -329,10 +329,61 @@ The completed run.sh dump is **36,429,244 bytes**, SHA256
 36,429,231 bytes / 686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615.
 The adaptation-10 compiler-source parser on these same reconstructed inputs also
 produces the fresh 36,429,244 bytes, byte-identical to the current-main parser.
-This separates the mismatch from current full adaptations, but the exact historical
-input difference is unresolved without the old full dump/corpus bytes. The reference
-is not changed. No native acceptance, new recovery-case hashes, Go differential,
+This separated the mismatch from current full adaptations. The follow-up below
+resolves the historical input difference without changing the committed reference. No native acceptance, new recovery-case hashes, Go differential,
 full stage3 upstream lane, full compiler package tests or repository gate is claimed.
+
+# Follow-up: exact corpus reconstruction
+
+`reconstruct-corpus.py` pins TypeScript to 050880ce59e30b356b686bd3144efe24f875ebc8
+and both adapters to the historical a3ef0dc93d5b2a6cf58f74669c763dc83a1aad0e.
+It runs the upstream generator **from the corpus root with the relative argument**
+`src/compiler/diagnosticMessages.json`. The prior absolute invocation embedded
+`/tmp/step24-corpus/` into line 2 of `src/compiler/diagnosticInformationMap.generated.ts`.
+The generator owns this comment at `scripts/processDiagnosticMessages.mjs:87`.
+
+Exactly one input file differed. The extra bytes began at zero-based byte offset 42:
+`2f746d702f7374657032342d636f727075732f` (19 bytes). Its correct size is 579,194,
+SHA256 0cfeabc14c72149bf65f0b5cb72f251adc45064edccebe30871b4efd73b97e89.
+Both versions have 2,142 CRLF endings. All other 80 files are byte-identical;
+pinning the older adapters introduces no additional input differences.
+
+The path prefix shifts source positions. Exactly 27,778 dump rows differ, all in
+`diagnosticInformationMap.generated.ts`; the decimal offsets account for the
+aggregate 13-byte difference. The first differing row is line 370,512,
+`diagnosticInformationMap.generated.ts/preorder/0`: SourceFile.end 579213 versus
+579194. [reconstruction-drift.json](evidence/reconstruction-drift.json) records
+exact bytes, input hashes, row counts and first difference.
+
+The corrected compiler-source Node dump is **36,429,231 bytes**, SHA256
+**686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615**, matching
+both committed reference fields. The script also verifies the 81-file manifest and
+[reconstructed-input-hashes.json](evidence/reconstructed-input-hashes.json), so
+input bytes absent from the node projection are still guarded.
+
+A one-byte mutant replaces `D` with `X` in the generated file's first
+`DiagnosticCategory` import identifier. Node parses successfully; the committed
+size/hash guard rejects the dump and the input hash guard catches the file change.
+The comparator exits 1 at `diagnosticInformationMap.generated.ts/preorder/5`,
+line 370,517 (Identifier text DiagnosticCategory versus XiagnosticCategory).
+The script restores the file afterward. An initial same-length `j` to `J` mutation
+in the ordinary generator comment survived the node dump, as that comment is not
+projected. That failed experiment motivated the independent input hash guard;
+its log is retained. An identifier attempt initially changed the parser runtime
+as well as the corpus and exited 70; the final script uses an independent parser
+source copy so the mutant changes only parser inputs. No blanket claim that node dumps encode every source byte
+is made. No new Adamic fixtures were added; counts.md remains unchanged.
+
+Focused command (all subprocess outputs go to logs in the new output directory):
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 stage3/scouts/step24/reconstruct-corpus.py /tmp/step24-reconstruction-final --cache /home/agent/.cache/adamic-stage3 > /tmp/step24-reconstruction-final.log 2>&1
+```
+
+[reconstruction-report.json](evidence/reconstruction-report.json) records the
+reference acceptance and mutant rejection. This follow-up does not rerun native
+parser compilation, the census, recursion measurement, full packages or the gate.
 
 # Options within Adamic's rules, undecided
 
