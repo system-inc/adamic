@@ -1,0 +1,4 @@
+// boundary check: Adamic stops, Node continues
+// Adamic: adamic: panic: boundary check: $[1] expected number, got string
+const value: number[] = JSON.parse('[1,"wrong"]');
+console.log('Node continues');

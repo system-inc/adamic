@@ -1,0 +1,20 @@
+// Test the scalar/array contracts used inside tsc's JSON document shapes.
+function parseNumber(text: string): number { return JSON.parse(text) as number; }
+function parseText(text: string): string { return JSON.parse(text) as string; }
+function parseNumbers(text: string): number[] { return JSON.parse(text) as number[]; }
+for (const text of ['-0', '1e400', '1e-400', '9007199254740993', '0.1234567890123456789012345']) {
+    const value = parseNumber(text);
+    console.log(String(value));
+    console.log(String(1 / value));
+}
+const value: boolean = JSON.parse('false');
+console.log(String(value));
+for (const text of ['"a\\nb"', '"\\ud800"', '"\\ud800\\udc00"', '"🌍"', '"\\u0000"']) {
+    const value = parseText(text);
+    console.log(JSON.stringify(value) ?? 'missing');
+    console.log(String(value.length));
+}
+const numbers = parseNumbers('[0,-0,1e400,0.5]');
+console.log(numbers.map(value => String(value)).join(','));
+const lone: '\ud800' = JSON.parse('"\\ud800"');
+console.log(JSON.stringify(lone) ?? 'missing');

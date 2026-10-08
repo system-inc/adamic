@@ -17,7 +17,7 @@ import (
 func TestJSONStringifyRefusals(t *testing.T) {
 	t.Parallel()
 	cases := []struct{ name, source, reason string }{
-		{"parse", `JSON.parse('{"n":1}');`, "result's type can't be proven from the text"},
+		{"parse_reviver", `JSON.parse('{"n":1}', (key, value) => value);`, "no reviver occurs"},
 		{"hidden_fields", `const full = { n: 1, extra: 'kept by Node' }; const view: { readonly n: number } = full; JSON.stringify(view);`, "structural types can hide fields"},
 		{"array_of_objects", `const items = [{ n: 1 }]; JSON.stringify(items);`, "structural types can hide fields"},
 		{"toJSON", `JSON.stringify({ toJSON: () => 7 });`, "toJSON semantics"},
@@ -37,9 +37,6 @@ func TestJSONStringifyRefusals(t *testing.T) {
 			_, err = lower.Lower(context.Background(), program)
 			if err == nil || !strings.Contains(err.Error(), test.reason) {
 				t.Fatalf("want refusal containing %q, got %v", test.reason, err)
-			}
-			if test.name == "parse" && !strings.Contains(err.Error(), "checked parse against a declared type is a later design") {
-				t.Fatalf("parse refusal omitted its later design: %v", err)
 			}
 		})
 	}

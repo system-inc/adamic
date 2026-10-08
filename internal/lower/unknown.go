@@ -100,6 +100,9 @@ func (l *lowering) dynamicScalarProperty(node *ast.Node) bool {
 	known := true
 	var visit ast.Visitor
 	visit = func(candidate *ast.Node) bool {
+		if l.isJSONParse(candidate) {
+			known = false
+		}
 		if candidate.Kind == ast.KindObjectLiteralExpression || candidate.Kind == ast.KindNewExpression || candidate.Kind == ast.KindArrayLiteralExpression {
 			if field := l.checker.GetPropertyOfType(l.checker.GetTypeAtLocation(candidate), name); field != nil {
 				proven := l.checker.GetTypeOfSymbol(field)

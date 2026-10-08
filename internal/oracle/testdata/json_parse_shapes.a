@@ -1,0 +1,24 @@
+// compiler/emitter.ts:1143 casts the parsed buildinfo to BuildInfo.
+interface BuildInfo { version: string; }
+const info = JSON.parse('{"version":"6.0.3","fileNames":["a.ts"],"extra":{"flag":true}}') as BuildInfo;
+console.log(info.version);
+console.log(Object.keys(info).join(','));
+// compiler/sourcemap.ts:424: its checked source-map core, without optional nullable fields.
+interface SourceMap { version: 3; file: string; sources: string[]; mappings: string; }
+const sourceMap: SourceMap = JSON.parse('{"version":3,"file":"a.js","sources":["a.ts"],"mappings":"AAAA"}');
+console.log(sourceMap.file);
+console.log(sourceMap.sources.join(','));
+console.log(String(sourceMap.version));
+// Untyped JSON lives behind unknown rather than trusting any.
+const raw: unknown = JSON.parse('{"version":3,"name":"value"}');
+console.log(typeof raw);
+if (typeof raw === 'object' && raw !== null && 'version' in raw) console.log(typeof raw.version);
+const scalar: unknown = JSON.parse('42');
+console.log(typeof scalar);
+const nothing: unknown = JSON.parse('null');
+console.log(typeof nothing);
+console.log(String(nothing === null));
+
+const inferred = JSON.parse('{"version":3}');
+console.log(typeof inferred);
+console.log(typeof inferred.version);

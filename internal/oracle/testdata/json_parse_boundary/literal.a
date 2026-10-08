@@ -1,0 +1,5 @@
+// boundary check: Adamic stops, Node continues
+// Adamic: adamic: panic: boundary check: $.version expected 3, got number
+interface SourceMap { version: 3; }
+const value: SourceMap = JSON.parse('{"version":4}');
+console.log('Node continues');

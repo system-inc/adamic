@@ -1,0 +1,13 @@
+// compiler/utilities.ts:7809 strict parsing; runtime text, including syntax errors.
+import { programArguments } from 'adamic';
+for (const document of programArguments()) {
+    try {
+        JSON.parse(document);
+        console.log('accepted');
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(error.name);
+            console.log(JSON.stringify(error.message) ?? 'missing');
+        }
+    }
+}

@@ -1,0 +1,5 @@
+// boundary check: Adamic stops, Node continues
+// Adamic: adamic: panic: boundary check: $.version expected string, got undefined
+interface BuildInfo { version: string; }
+const value = JSON.parse('{}') as BuildInfo;
+console.log('Node continues');

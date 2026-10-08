@@ -163,6 +163,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			}
 		case ir.StringFromCodes:
 			found = found || node.CodePoints
+		case ir.JSONParse:
+			found = true
 		case ir.NodeFSFile:
 			found = found || node.MayThrow()
 		case ir.Throw:

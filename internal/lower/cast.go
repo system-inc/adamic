@@ -14,6 +14,9 @@ import (
 // (adamic/no-unchecked-cast).
 func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	as := node.AsAsExpression()
+	if l.isJSONParse(as.Expression) {
+		return l.jsonParse(ast.SkipParentheses(as.Expression), l.checker.GetTypeAtLocation(node))
+	}
 	proof, err := l.castProof(node)
 	if err != nil {
 		return nil, err

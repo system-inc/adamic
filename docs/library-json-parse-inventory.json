@@ -1,0 +1,331 @@
+{
+  "status": "implemented subset with terminal declared-type boundary checks; unsupported result representations refused at compile time",
+  "base": "ca016bab19c040c44748924cde12976afbf68978",
+  "typescript_version": "6.0.3",
+  "source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "direct_parse_calls": 32,
+  "reviver_calls": 0,
+  "counts_before": 635,
+  "counts_after": 644,
+  "sites": [
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "line": 424,
+      "source": "const parsed = JSON.parse(text);",
+      "shape": "Source map v3; file/mappings strings, sources array, optional names/sourceRoot/sourcesContent",
+      "result_typing": "any, then isRawSourceMap runtime predicate; returns RawSourceMap | undefined",
+      "reviver": false
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 7811,
+      "source": "return JSON.parse(text);",
+      "shape": "Arbitrary JSON; common package.json and tsbuildinfo entry point",
+      "result_typing": "tryParseJson returns any; catches syntax failures and returns undefined",
+      "reviver": false
+    },
+    {
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 749,
+      "source": "setLocalizedDiagnosticMessages(JSON.parse(fileContents!));",
+      "shape": "Localized diagnostic-message dictionary of strings",
+      "result_typing": "argument to setLocalizedDiagnosticMessages(MapLike<string> | undefined); no cast/check",
+      "reviver": false
+    },
+    {
+      "file": "src/harness/client.ts",
+      "line": 183,
+      "source": "response = JSON.parse(responseBody);",
+      "shape": "Server response or event; type discriminator, protocol body",
+      "result_typing": "assignment to response: T extends protocol.Response; no boundary check",
+      "reviver": false
+    },
+    {
+      "file": "src/harness/documentsUtil.ts",
+      "line": 84,
+      "source": "this.raw = typeof data === \"string\" ? JSON.parse(data) as RawSourceMap : data;",
+      "shape": "Harness RawSourceMap with numeric version, file/mappings strings and string arrays",
+      "result_typing": "as RawSourceMap; assigned to this.raw",
+      "reviver": false
+    },
+    {
+      "file": "src/harness/evaluatorImpl.ts",
+      "line": 158,
+      "source": "const json = JSON.parse(text);",
+      "shape": "package.json; main field used for module loading",
+      "result_typing": "any inferred; main used directly",
+      "reviver": false
+    },
+    {
+      "file": "src/harness/fourslashImpl.ts",
+      "line": 4633,
+      "source": "changes = JSON.parse(JSON.stringify(changes));",
+      "shape": "Array of TextChange {span:{start:number,length:number},newText:string}; deep copy",
+      "result_typing": "assignment to changes: readonly ts.TextChange[]; no cast/check",
+      "reviver": false
+    },
+    {
+      "file": "src/harness/fourslashImpl.ts",
+      "line": 4864,
+      "source": "markerValue = JSON.parse(\"{ \" + text + \" }\") as { name?: unknown; };",
+      "shape": "Marker object; arbitrary fields and optional name",
+      "result_typing": "as { name?: unknown }; name subsequently typeof-narrowed",
+      "reviver": false
+    },
+    {
+      "file": "src/harness/harnessIO.ts",
+      "line": 898,
+      "source": "const sourcemapJSON = JSON.parse(sourcemap);",
+      "shape": "Source map; file and sources used to resolve preview inputs",
+      "result_typing": "any inferred; no boundary check",
+      "reviver": false
+    },
+    {
+      "file": "src/harness/harnessLanguageService.ts",
+      "line": 725,
+      "source": "return JSON.stringify(JSON.parse(message), undefined, 2);",
+      "shape": "Arbitrary protocol message; parse then pretty stringify",
+      "result_typing": "any passed directly to JSON.stringify",
+      "reviver": false
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 1571,
+      "source": "const raw: TypesMapFile = JSON.parse(fileContent);",
+      "shape": "typesMap entries with serialized match strings, exclude mixed string/number arrays, types string arrays; simpleMap string dictionary",
+      "result_typing": "raw: TypesMapFile; declaration typesMap uses SafeList whose match is RegExp, converted from string after parse",
+      "reviver": false
+    },
+    {
+      "file": "src/server/session.ts",
+      "line": 3948,
+      "source": "return JSON.parse(message as any as string) as protocol.Request;",
+      "shape": "Protocol Request {seq:number,type:\"request\",command:string,arguments?:any}",
+      "result_typing": "input as any as string; result as protocol.Request",
+      "reviver": false
+    },
+    {
+      "file": "src/testRunner/parallel/host.ts",
+      "line": 206,
+      "source": "return JSON.parse(perfDataContents);",
+      "shape": "Saved test performance dictionary: test hash to number",
+      "result_typing": "contextual return { [testHash:string]:number } | undefined",
+      "reviver": false
+    },
+    {
+      "file": "src/testRunner/projectsRunner.ts",
+      "line": 199,
+      "source": "testCase = JSON.parse(testFileText!) as ProjectRunnerTestCase & ts.CompilerOptions;",
+      "shape": "Project test {scenario,projectRoot,inputFiles,...} with compiler options",
+      "result_typing": "as ProjectRunnerTestCase & ts.CompilerOptions",
+      "reviver": false
+    },
+    {
+      "file": "src/testRunner/projectsRunner.ts",
+      "line": 241,
+      "source": "const resolutionInfo: ProjectRunnerTestCaseResolutionInfo & ts.CompilerOptions = JSON.parse(JSON.stringify(this.testCase));",
+      "shape": "Clone project test with compiler options; resolvedInputFiles/emittedFiles added afterwards",
+      "result_typing": "resolutionInfo: ProjectRunnerTestCaseResolutionInfo & ts.CompilerOptions; required resolution arrays absent at parse boundary",
+      "reviver": false
+    },
+    {
+      "file": "src/testRunner/runner.ts",
+      "line": 122,
+      "source": "const testConfig = JSON.parse(testConfigContent) as TestConfig;",
+      "shape": "TestConfig optional flags, timeout/worker/shard numbers, runner/test string arrays, stackTraceLimit number or \"full\"",
+      "result_typing": "as TestConfig",
+      "reviver": false
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/tsc.ts",
+      "line": 410,
+      "source": "const readableBuildInfo = JSON.parse(text) as ReadableBuildInfo;",
+      "shape": "Readable buildinfo: version string, size number, optional incremental tables",
+      "result_typing": "as ReadableBuildInfo; subsequently narrowed to incremental variants",
+      "reviver": false
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/typingsInstaller.ts",
+      "line": 55,
+      "source": "const content = JSON.parse(host.readFile(typesRegistryFilePath)!) as TypesRegistryFile;",
+      "shape": "Type registry {entries:dictionary<dictionary<string>>}",
+      "result_typing": "as TypesRegistryFile; entries passed to Object.entries",
+      "reviver": false
+    },
+    {
+      "file": "src/testRunner/unittests/jsDocParsing.ts",
+      "line": 101,
+      "source": "Harness.Baseline.runBaseline(\"JSDocParsing/DocComments.parsesCorrectly.\" + name + \".json\", JSON.stringify(comment.jsDoc, (_, v) => v && v.pos !== undefined ? JSON.parse(Utils.sourceFileToJSON(v)) : v, 4));",
+      "shape": "Serialized AST/JSDoc nodes with syntax-specific fields",
+      "result_typing": "any inside stringify replacer; this callback is NOT a parse reviver",
+      "reviver": false
+    },
+    {
+      "file": "src/testRunner/unittests/publicApi.ts",
+      "line": 306,
+      "source": "const config = !useJsonParsingApi ? JSON.parse(sys.readFile(\"/home/src/projects/project/packages/a/tsconfig.json\")!) : undefined;",
+      "shape": "tsconfig object used by public API tests",
+      "result_typing": "any inferred; conditional undefined branch",
+      "reviver": false
+    },
+    {
+      "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+      "line": 832,
+      "source": "return JSON.parse(jsonToReadableText(filesOrOptions));",
+      "shape": "Deep copy of CompilerOptions object or string[]",
+      "result_typing": "any inferred return from overloaded duplicate; overloads declare CompilerOptions/string[]",
+      "reviver": false
+    },
+    {
+      "file": "src/testRunner/unittests/tsc/incremental.ts",
+      "line": 433,
+      "source": "const config = JSON.parse(sys.readFile(\"/home/src/workspaces/project/tsconfig.json\")!);",
+      "shape": "tsconfig object; compilerOptions.declarationMap changed",
+      "result_typing": "any inferred; no boundary check",
+      "reviver": false
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/projectsWithReferences.ts",
+      "line": 77,
+      "source": "const configJson = JSON.parse(sys.readFile(config)!);",
+      "shape": "tsconfig object; compilerOptions.paths replaced",
+      "result_typing": "any inferred; no boundary check",
+      "reviver": false
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/autoImportProvider.ts",
+      "line": 289,
+      "source": "const dependencies = packages.reduce((hash, p) => ({ ...hash, [JSON.parse(p[0].content).name]: \"*\" }), {});",
+      "shape": "Package manifest object; name used as computed dictionary key",
+      "result_typing": "any immediate property access; no boundary check",
+      "reviver": false
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/projectsWithReferences.ts",
+      "line": 110,
+      "source": "const cTsConfigJson = JSON.parse(cConfig.content);",
+      "shape": "tsconfig object; project references edited",
+      "result_typing": "any inferred",
+      "reviver": false
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/projectsWithReferences.ts",
+      "line": 128,
+      "source": "const bTsConfigJson = JSON.parse(bConfig.content);",
+      "shape": "tsconfig object; project references edited",
+      "result_typing": "any inferred",
+      "reviver": false
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/projectsWithReferences.ts",
+      "line": 225,
+      "source": "const cTsConfigJson = JSON.parse(cConfig.content);",
+      "shape": "tsconfig object; project references edited",
+      "result_typing": "any inferred",
+      "reviver": false
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/projectsWithReferences.ts",
+      "line": 243,
+      "source": "const bTsConfigJson = JSON.parse(bConfig.content);",
+      "shape": "tsconfig object; project references edited",
+      "result_typing": "any inferred",
+      "reviver": false
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/symLinks.ts",
+      "line": 157,
+      "source": "const config = JSON.parse(host.readFile(recognizerDateTimeTsconfigPath)!);",
+      "shape": "tsconfig object; compiler module-resolution option changed",
+      "result_typing": "any inferred",
+      "reviver": false
+    },
+    {
+      "file": "src/typingsInstaller/nodeTypingsInstaller.ts",
+      "line": 63,
+      "source": "const content = JSON.parse(host.readFile(typesRegistryFilePath)!) as TypesRegistryFile;",
+      "shape": "Type registry {entries:dictionary<dictionary<string>>}",
+      "result_typing": "as TypesRegistryFile; entries passed to Object.entries",
+      "reviver": false
+    },
+    {
+      "file": "src/typingsInstallerCore/typingsInstaller.ts",
+      "line": 320,
+      "source": "const npmConfig = JSON.parse(this.installTypingHost.readFile(packageJson)!) as NpmConfig; // TODO: GH#18217",
+      "shape": "package.json devDependencies dictionary",
+      "result_typing": "as NpmConfig; devDependencies declared MapLike<any>",
+      "reviver": false
+    },
+    {
+      "file": "src/typingsInstallerCore/typingsInstaller.ts",
+      "line": 321,
+      "source": "const npmLock = JSON.parse(this.installTypingHost.readFile(packageLockJson)!) as NpmLock; // TODO: GH#18217",
+      "shape": "package-lock.json optional dependencies/packages dictionaries with version strings",
+      "result_typing": "as NpmLock",
+      "reviver": false
+    }
+  ],
+  "indirect_readers": [
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1143,
+      "route": "readJsonOrUndefined -> tryParseJson -> JSON.parse",
+      "result_typing": "as BuildInfo | undefined; BuildInfo requires version:string; preserves additional incremental fields"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 2470,
+      "route": "readJson -> readJsonOrUndefined -> tryParseJson -> JSON.parse",
+      "result_typing": "as PackageJson; optional path fields, typesVersions and dependency dictionaries; fields validated later"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 831,
+      "route": "readJson -> readJsonOrUndefined -> tryParseJson -> JSON.parse",
+      "result_typing": "as PackageJson; typings compared to null although declared optional string"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 1154,
+      "route": "tryParseJson -> JSON.parse",
+      "result_typing": "any fallback packageJsonContent"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 1256,
+      "route": "tryParseJson -> JSON.parse",
+      "result_typing": "Record<string,any> | undefined"
+    },
+    {
+      "file": "src/services/utilities.ts",
+      "line": 3600,
+      "route": "tryParseJson -> JSON.parse",
+      "result_typing": "as PackageJsonRaw | undefined; four optional dependency dictionaries"
+    }
+  ],
+  "sys_ts_direct_calls": 0,
+  "tsconfig_reader": "compiler/commandLineParser.ts:2245,2278 uses parseJsonText, its own syntax parser supporting comments/trailing commas, not JSON.parse",
+  "ruling": "Conforming documents compare with unchanged Node source. Nonconforming fixtures name boundary check: Adamic stops, Node continues and record the exact terminal exit-70 message. Syntax errors remain catchable; boundary checks are not catchable.",
+  "test262": {
+    "commit": "c8c798898646638cd0c24879f8e0374e847e7d74",
+    "directory": "built-ins/JSON/parse",
+    "before": {
+      "pass": 0,
+      "disagreement": 0,
+      "refused": 50,
+      "not_typescript": 7,
+      "crashed": 0,
+      "skipped": 20
+    },
+    "after": {
+      "pass": 32,
+      "disagreement": 0,
+      "refused": 18,
+      "not_typescript": 7,
+      "crashed": 0,
+      "skipped": 20
+    },
+    "admitted_javascript": 32,
+    "admitted_wasi": 32
+  }
+}

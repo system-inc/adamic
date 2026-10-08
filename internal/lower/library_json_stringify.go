@@ -11,7 +11,8 @@ import (
 
 func (l *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, bool, error) {
 	if name == "parse" {
-		return nil, true, &Refused{Where: l.program.Where(node), What: "JSON.parse: its result's type can't be proven from the text", Fix: "a checked parse against a declared type is a later design; construct typed values explicitly for now"}
+		value, err := l.jsonParse(node, nil)
+		return value, true, err
 	}
 	if name != "stringify" {
 		return nil, true, l.notYet(node, "JSON."+name)

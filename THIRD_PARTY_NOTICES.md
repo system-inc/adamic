@@ -56,6 +56,9 @@ IN THE SOFTWARE.
     src/builtins/string-iswellformed.tq and src/builtins/string-towellformed.tq,
     adapted to canonical WTF-8 storage);
   - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
+  - JSON parsing (`runtime/json_parse.c`, porting the grammar, error selection, UTF-16 positions
+    and context windows from Node v24.19.0 deps/v8/src/json/json-parser.cc and
+    deps/v8/src/common/message-template.h; container traversal uses an explicit stack);
   - generic Array indexOf and lastIndexOf lowering (`internal/lower/library_array_generic.go`,
     after Runtime_ArrayIndexOf in src/runtime/runtime-array.cc and GetFromIndex /
     GenericArrayLastIndexOf in src/builtins/array-lastindexof.tq, V8 13.6.233.17);

@@ -1,0 +1,5 @@
+// boundary check: Adamic stops, Node continues
+// Adamic: adamic: panic: boundary check: $.options.count expected number, got string
+interface Config { options: { incremental: boolean; count: number; }; }
+const value: Config = JSON.parse('{"options":{"incremental":true,"count":"wrong"}}');
+console.log('Node continues');

@@ -1,0 +1,9 @@
+// boundary check: Adamic stops, Node continues
+// Adamic: adamic: panic: boundary check: $.version expected string, got number
+interface BuildInfo { version: string; }
+try {
+    const value: BuildInfo = JSON.parse('{"version":1}');
+    console.log('Node continues');
+} catch {
+    console.log('incorrectly caught boundary');
+}

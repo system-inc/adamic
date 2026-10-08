@@ -1,0 +1,15 @@
+// compiler/utilities.ts:7809: strict tryParseJson catches syntax failures.
+function tryParseJson(text: string): void {
+    try {
+        JSON.parse(text);
+        console.log('accepted');
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(error.name);
+            console.log(error.message);
+        }
+    }
+}
+const documents = ['', ' ', 'undefined', 'NaN', 'Infinity', '[object Object]', 'x', 'true', 'null', 'false', '0', '-0', '1e400', '{"__proto__":7,"a":1,"a":2}', '[1,true,null,"x"]', '01', '-', '-x', '1.', '1e', '1e+', '1 2', 'truefalse', 't', 'truX', '[', '[1', '[1,]', '[1 2]', '{', '{x:1}', '{"x"}', '{"x":}', '{"x":1', '{"x":1,}', '"', '"\\', '"\\x"', '"\\u12x4"', '"\\ud800"', '"\\ud800\\udc00"', '"a\n"', '\r\n {"x":1,\r\n y:2}', 'this is a long invalid document', '                      x', '"🌍" x', '{"x": "🌍", "y":}', '"\\🌍"'];
+for (const document of documents) tryParseJson(document);
+tryParseJson('['.repeat(20000) + '0' + ']'.repeat(20000));

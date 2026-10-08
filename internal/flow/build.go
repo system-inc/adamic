@@ -450,6 +450,8 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				throws = true
 			}
 			switch value.Type() {
+			case reflect.TypeOf(ir.JSONParse{}):
+				throws = true
 			case reflect.TypeOf(ir.StringFromCodes{}):
 				if value.Interface().(ir.StringFromCodes).CodePoints {
 					throws = true
