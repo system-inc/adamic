@@ -1,8 +1,0 @@
-interface Dictionary { [key: string]: string | number | boolean | null | undefined; }
-function helper(value: Dictionary, key: string): void { console.log(String(value[key])); }
-const ordinary: Dictionary = {item: null};
-const raw = {item: 'word' + '-built'};
-const base: {} = raw;
-const viewed = base as Dictionary;
-helper(ordinary, 'item');
-helper(viewed, 'item');

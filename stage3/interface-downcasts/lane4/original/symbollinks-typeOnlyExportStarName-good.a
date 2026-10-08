@@ -1,8 +1,0 @@
-import type { SymbolLinks } from 'original-tsc-types';
-interface Base { readonly kind: 'box' | 'other'; }
-interface Carrier extends Base { readonly kind: 'box'; readonly child: SymbolLinks; }
-function helper(value: SymbolLinks): void { console.log(String(value.typeOnlyExportStarName)); }
-const raw = {kind: 'box' as const, child: {typeOnlyExportStarName: 'word' + '-built'}};
-const base: Base = raw;
-const carrier = base as Carrier;
-helper(carrier.child);

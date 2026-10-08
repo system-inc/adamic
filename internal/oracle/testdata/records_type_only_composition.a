@@ -1,8 +1,0 @@
-interface MapLike<T> {
-    [index: string]: T;
-}
-type Numbers = MapLike<number>;
-interface TypeOnlyContainer {
-    dictionaries: MapLike<Numbers>;
-}
-console.log("ok");

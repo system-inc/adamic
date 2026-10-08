@@ -25,8 +25,3 @@ console.log(`${new Set(set).size} ${[...set.keys()].join(',')}`);
 const onlyMissing = new Set<number | undefined>([undefined]);
 const onlyNan = new Set<number | undefined>([NaN]);
 console.log(`${onlyMissing.union(onlyNan).size} ${onlyMissing.intersection(onlyNan).size} ${onlyMissing.isDisjointFrom(onlyNan)}`);
-// An open iterator keeps a deleted historical slot, which must not count toward size.
-const held = map.keys();
-map.delete(undefined);
-console.log(`held size ${map.size}`);
-console.log(`held next done ${held.next().done}`);

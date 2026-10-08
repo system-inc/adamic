@@ -1,8 +1,0 @@
-function make(start: number): () => string {
- let count = start;
- let label = `counter${start}`;
- function next(): string { count += 1; label = label + '!'; return `${label}:${count}`; }
- return next;
-}
-const first = make(1); const second = make(100);
-console.log(`${first()} ${first()} ${second()} ${first()}`);

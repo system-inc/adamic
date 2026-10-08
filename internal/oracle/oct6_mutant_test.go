@@ -103,7 +103,15 @@ func TestOct6ReleaseMutant(t *testing.T) {
 	if difference := disagreement(want, got); difference != "" {
 		t.Fatalf("only the leak check should catch this: %s, stderr %q", difference, got.stderr)
 	}
-	report := leakChecked(t, mutated, binary)
+	var report string
+	switch runtime.GOOS {
+	case "linux":
+		report = leakSanitizer(t, binary)
+	case "darwin":
+		report = leaksCounted(t, mutated)
+	default:
+		t.Fatalf("no leak check for %s", runtime.GOOS)
+	}
 	if !strings.Contains(report, "LeakSanitizer") && !strings.Contains(report, "leaked") {
 		t.Fatalf("leak mutant survived: %s", report)
 	}

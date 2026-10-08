@@ -139,9 +139,6 @@ func unwrap(expression string) string {
 func (e *emitter) coalesce(coalesce ir.Coalesce) string {
 	value := e.value(coalesce.Value)
 	present, unwrapped := value+" != NULL", value
-	if coalesce.Value.Type() == ir.Union {
-		present = value + " != NULL && " + value + " != &adamic_null"
-	}
 	if coalesce.Value.Type().IsMaybe() {
 		present, unwrapped = value+".present", value+"."+member(coalesce.Value.Type().Present())
 	}

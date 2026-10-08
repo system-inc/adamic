@@ -1,7 +1,0 @@
-interface MapLike<T>{[key:string]:T}
-interface Base{readonly kind:'Storage'}
-interface Holder extends Base{readonly table:{readonly [key:string]:string}}
-const table:Record<string,number>={item:42};
-const payload={kind:'Storage' as const,table};
-const base:Base=payload; const view=base as Holder;
-console.log(typeof view.table['item']);

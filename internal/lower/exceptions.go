@@ -127,10 +127,6 @@ func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
 func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
 	binary := node.AsBinaryExpression()
 	left := ast.SkipParentheses(binary.Left)
-	if binary.OperatorToken.Kind == ast.KindInstanceOfKeyword && ast.IsIdentifier(left) && l.caught[l.symbol(left)] && l.isLibraryGlobal(binary.Right, "RangeError") {
-		local, _ := l.local(left)
-		return ir.ArrayRangeErrorIs{Value: ir.Read{Local: local, Of: ir.Object}}, true
-	}
 	if binary.OperatorToken.Kind != ast.KindInstanceOfKeyword || !ast.IsIdentifier(left) || !l.caught[l.symbol(left)] || !l.isLibraryGlobal(binary.Right, "Error") {
 		return nil, false
 	}
@@ -172,7 +168,7 @@ func (l *lowering) exceptions() error {
 			return l.notYet(record.node, "a try around "+failing+", whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)")
 		}
 	}
-	return l.checkArrayHoles()
+	return nil
 }
 
 // throwsOut reports whether a throw can leave statements: a throw, or a call to a function that can
@@ -188,16 +184,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 				found = found || l.throwsOut(node.Catch) || l.throwsOut(node.Finally)
 				return false
 			}
-		case ir.NodeFSFile:
-			found = found || node.MayThrow()
-		case ir.PhantomMember:
-			found = found || !node.Optional
-		case ir.Throw, ir.ArrayHoles, ir.ArraySetLength:
+		case ir.Throw:
 			found = true
-		case ir.NodeHostCall:
-			found = node.Throws
-		case ir.ProcessCall:
-			found = node.Operation == "exit" || node.Operation == "setExitCode" || node.Operation == "cwd" || node.Operation == "chdir" || node.Operation == "measure"
 		case ir.Call:
 			if l.result.CallMayThrow(node) {
 				found = true
@@ -247,10 +235,6 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 		case ir.SetProperty:
 			if l.objectCanFreeze() {
 				failing = "a write to a potentially frozen object"
-			}
-		case ir.NodeBufferCall:
-			if node.Function == "hash_update" || node.Function == "hash_digest" {
-				failing = "Hash finalization, whose catchable .code contract is not supported yet"
 			}
 		case ir.ObjectCall:
 			if node.Method == "assign" && l.objectCanFreeze() {

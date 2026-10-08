@@ -1,8 +1,0 @@
-const fs = require('fs');
-const prefixed = require('node:fs');
-console.log(`${fs.existsSync('.')} ${prefixed.existsSync('.')}`);
-function check(): boolean {
-    const local = require('fs');
-    return local.existsSync('.');
-}
-console.log(`${check()}`);

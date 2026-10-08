@@ -1,7 +1,0 @@
-=== RUN   TestNodeFSDirectoryRuntimeLayouts
-=== PAUSE TestNodeFSDirectoryRuntimeLayouts
-=== CONT  TestNodeFSDirectoryRuntimeLayouts
-    node_fs_directory_layout_test.go:58: realPath layout agrees on both backends; slot-0 mutant caught only by Node stdout comparison
---- PASS: TestNodeFSDirectoryRuntimeLayouts (0.81s)
-PASS
-ok  	github.com/system-inc/adamic/internal/oracle	0.815s

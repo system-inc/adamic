@@ -1,9 +1,0 @@
-=== RUN   TestRegExpBytecodeV8Node
-    regexp_v8_test.go:101: compatibility totals: 2659 cases, 2659 accepted, 0 explicitly refused
-    regexp_v8_test.go:101: compiling 107 patterns, 2659 executions, 386472 C bytes; regular eligible: 34 patterns, 672 executions
-    regexp_v8_test.go:101: mode=[] native execution totals: 2659 cases, 0 disagreements
-    regexp_v8_test.go:101: mode=[unlimited] native execution totals: 2659 cases, 0 disagreements
-    regexp_v8_test.go:101: mode=[unlimited vm] native execution totals: 2659 cases, 0 disagreements
---- PASS: TestRegExpBytecodeV8Node (1.62s)
-PASS
-ok  	github.com/system-inc/adamic/internal/native	1.633s

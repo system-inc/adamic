@@ -20,7 +20,7 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	result := "0"
 	switch visit.Method {
 	case "filter":
-		result = e.graphArray(fmt.Sprintf("adamic_array_new(0, %t)", references), visit.GraphTypes)
+		result = e.own(ir.Array, fmt.Sprintf("adamic_array_new(0, %t)", references))
 	case "some", "every":
 		result = e.snapshot(ir.Boolean, strconv.FormatBool(visit.Method == "every"))
 	case "findIndex", "findLastIndex":
@@ -51,25 +51,11 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		e.line("\tcontinue;")
 	}
 	e.line("}")
-	if visit.ViewRead.View != "" {
-		if e.hasArrayHoles() && visit.Method != "find" && visit.Method != "findIndex" && visit.Method != "findLast" && visit.Method != "findLastIndex" {
-			e.line("if (adamic_array_holes_at(%s, (double)%s) == NULL) continue;", source, index)
-		}
-		checked := e.viewArrayElementSlot(visit.ViewRead, source, index)
-		e.line("adamic_value %s = %s;", element, checked)
-	} else if e.hasArrayHoles() {
-		slot := e.temporary()
-		e.line("adamic_value *%s = adamic_array_holes_at(%s, (double)%s);", slot, source, index)
-		e.line("if (%s == NULL) continue;", slot)
-		e.line("adamic_value %s = *%s;", element, slot)
-	} else {
-		e.line("adamic_value %s = %s->elements[%s];", element, source, index)
-	}
+	e.line("adamic_value %s = %s->elements[%s];", element, source, index)
 	if references {
 		e.line("adamic_retain(%s.reference);", element)
 	}
-	invoke := e.viewCallableBoxedInvokeTypes([]ir.Type{visit.Element, ir.Number, ir.Array}, visit.Returns, false)
-	call := fmt.Sprintf("%s(%s, (adamic_value[]){%s, {.number = (double)%s}, {.reference = %s}}, 3, false)", invoke, callback, element, index, source)
+	call := fmt.Sprintf("%s->code(%s, (adamic_value[]){%s, {.number = (double)%s}, {.reference = %s}}, 3)", callback, callback, element, index, source)
 	if visit.Method == "forEach" && !visit.Returns.IsReference() {
 		e.line("%s;", call)
 	} else {
@@ -95,9 +81,6 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		release()
 	case "filter":
 		e.line("if (%s.boolean) {", answer)
-		if references && e.graphTypes(visit.GraphTypes) {
-			e.line("\t%s.reference = adamic_graph_take(%s, %s.reference);", element, result, element)
-		}
 		e.line("\tadamic_array_push(%s, %s);", result, element)
 		if references {
 			e.line("} else {")
@@ -160,26 +143,12 @@ func (e *emitter) arrayReduce(reduce ir.ArrayReduce) string {
 	e.line("if (%s >= %s->length) {", index, source)
 	e.line("\tcontinue;")
 	e.line("}")
-	if reduce.ViewRead.View != "" {
-		if e.hasArrayHoles() {
-			e.line("if (adamic_array_holes_at(%s, (double)%s) == NULL) continue;", source, index)
-		}
-		checked := e.viewArrayElementSlot(reduce.ViewRead, source, index)
-		e.line("adamic_value %s = %s;", element, checked)
-	} else if e.hasArrayHoles() {
-		slot := e.temporary()
-		e.line("adamic_value *%s = adamic_array_holes_at(%s, (double)%s);", slot, source, index)
-		e.line("if (%s == NULL) continue;", slot)
-		e.line("adamic_value %s = *%s;", element, slot)
-	} else {
-		e.line("adamic_value %s = %s->elements[%s];", element, source, index)
-	}
+	e.line("adamic_value %s = %s->elements[%s];", element, source, index)
 	if reduce.Element.IsReference() {
 		e.line("adamic_retain(%s.reference);", element)
 	}
-	invoke := e.viewCallableBoxedInvokeTypes([]ir.Type{reduce.Result, reduce.Element, ir.Number, ir.Array}, reduce.Result, false)
-	e.line("adamic_value %s = %s(%s, (adamic_value[]){{.%s = %s}, %s, {.number = (double)%s}, {.reference = %s}}, 4, false);",
-		answer, invoke, callback, member(reduce.Result), slotted(reduce.Result, accumulator), element, index, source)
+	e.line("adamic_value %s = %s->code(%s, (adamic_value[]){{.%s = %s}, %s, {.number = (double)%s}, {.reference = %s}}, 4);",
+		answer, callback, callback, member(reduce.Result), slotted(reduce.Result, accumulator), element, index, source)
 	// The element held across the call is let go; the accumulator is the statement's.
 	if reduce.Element.IsReference() {
 		e.closureThrown(element + ".reference")
@@ -250,7 +219,7 @@ func (e *emitter) spliceArguments(splice ir.ArraySplice) string {
 	}
 	items := []string{}
 	for _, item := range splice.Items {
-		items = append(items, e.heldIn(array, splice.Element, e.value(item)))
+		items = append(items, held(splice.Element, e.value(item)))
 	}
 	packed := "NULL"
 	if len(items) > 0 {

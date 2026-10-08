@@ -1,7 +1,0 @@
-// Namespace-free reduction of parser proof 5d777de3.
-// Reduced from TypeScript 6.0.3, Debug.shouldAssertFunction.
-type AnyFunction = (...args: never[]) => void;
-function shouldLog(level: number): boolean { return level > 0; }
-const cache: { assertion: AnyFunction } = { assertion: shouldLog };
-console.log("function view loaded");
-cache.assertion();

@@ -1,6 +1,0 @@
-interface Base { readonly kind: 'program' | 'other'; }
-interface Program extends Base { readonly kind: 'program'; readonly getCurrentDirectory: () => string; readonly unread: <T>(value: T) => T; }
-function viewed(value: Base): Program { return value as Program; }
-function read(p: Program): string { return p.getCurrentDirectory(); }
-const raw = {kind: 'program' as const, getCurrentDirectory: (): string => '/here'};
-console.log(read(viewed(raw)));

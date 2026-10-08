@@ -1,8 +1,0 @@
-interface TreeNode {
-	readonly name: string;
-	parent: TreeNode | undefined;
-	readonly children: readonly TreeNode[];
-}
-const root: TreeNode = { name: 'root', parent: undefined, children: [] };
-root.parent = root;
-

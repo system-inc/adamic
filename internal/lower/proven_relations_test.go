@@ -26,9 +26,12 @@ const dogs: Dog[] = [dog];
 		{"upcast function parameter", animals + `interface Handler { run(value: Animal): string } const handler = { run: (value: Dog): string => value.bark() }; const checked = handler as Handler;`, "function taking Dog"},
 		{"upcast nominal identity", `class A { read(): string { return 'a'; } } class B { read(): string { return 'b'; } } const b = new B(); const checked = b as A;`, "nominal ancestry for A"},
 		{"satisfies nominal identity", `class A { read(): string { return 'a'; } } const checked = ({ read: () => 'b' } satisfies A);`, "nominal ancestry for A"},
+		{"satisfies hidden optional", `const actual = { name: 'a', count: 'wrong' }; const hidden: { readonly name: string } = actual; const checked = hidden satisfies { readonly name: string; readonly count?: number };`, "optional field count"},
+		{"upcast hidden optional", `const actual = { name: 'a', count: 'wrong' }; const hidden: { readonly name: string } = actual; const checked = hidden as { readonly name: string; readonly count?: number };`, "optional field count"},
 		{"upcast mutable optional elements", `interface Named { readonly name: string } interface Counted extends Named { readonly count?: number } const values: Counted[] = []; const checked = values as Named[];`, "optional field element.count"},
 		{"satisfies mutable optional field", `interface Named { readonly name: string } interface Counted extends Named { readonly count?: number } const holder: { pet: Counted } = { pet: { name: 'a' } }; const checked = holder satisfies { pet: Named };`, "optional field pet.count"},
 		{"upcast invariant optional class argument", `interface Named { readonly name: string } interface Counted extends Named { readonly count?: number } class Box<T> { readonly value: T; constructor(value: T) { this.value = value; } } const box = new Box<Counted>({ name: 'a' }); const checked = box as Box<Named>;`, "optional field type argument.count"},
+		{"satisfies nested optional", `const actual = { name: 'a', count: 'wrong' }; const hidden: { readonly name: string } = actual; const holders = [hidden]; const checked = holders satisfies readonly { readonly name: string; readonly count?: number }[];`, "optional field element.count"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

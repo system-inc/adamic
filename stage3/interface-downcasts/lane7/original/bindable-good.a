@@ -1,6 +1,0 @@
-import type { BindableStaticAccessExpression, PropertyAccessEntityNameExpression, SyntaxKind } from 'original-tsc-types';
-interface Base { readonly kind: SyntaxKind }
-const actual = { kind: 212, expression: { kind: 80, escapedText: 'x' } };
-const base: Base = actual;
-function read(view: BindableStaticAccessExpression): boolean { const value = view.expression; return value !== undefined; }
-console.log(`${read(base as PropertyAccessEntityNameExpression)}`);

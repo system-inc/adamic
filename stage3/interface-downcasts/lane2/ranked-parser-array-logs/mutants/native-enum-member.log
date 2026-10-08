@@ -1,9 +1,0 @@
---- FAIL: TestCheckedViewRankedParserArrayContracts (0.00s)
-    --- FAIL: TestCheckedViewRankedParserArrayContracts/ranked2-tuple-wrong-member (0.65s)
-        checked_views_ranked_parser_arrays_test.go:37: exit codes differ; stderr ""; stdout "2\n"; exit 0
-FAIL
-gate cache: native hits=0 misses=0
-gate cache: node hits=0 misses=2
-gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	0.664s
-FAIL

@@ -2,6 +2,7 @@
 package lower
 
 import (
+	"errors"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
@@ -16,16 +17,13 @@ func (l *lowering) console(call *ast.Node) (ir.Statement, error) {
 	arguments := call.AsCallExpression().Arguments.Nodes
 	if len(arguments) != 1 {
 		// The prelude declares one parameter, so the checker has already refused any other count.
-		return nil, l.notYet(call, "console."+call.AsCallExpression().Expression.Name().Text()+" with other than one string argument")
+		return nil, errors.New("lower: " + l.program.Where(call) + ": console takes one argument, and the checker let another count through")
 	}
 	value, err := l.expression(arguments[0])
 	if err != nil {
 		return nil, err
 	}
-	if value.Type() != ir.String {
-		return nil, l.notYet(call, "console."+call.AsCallExpression().Expression.Name().Text()+" with a non-string argument")
-	}
-	return ir.WriteLine{Stream: stream, Value: l.spelled(arguments[0], value)}, nil
+	return ir.WriteLine{Stream: stream, Value: value}, nil
 }
 
 // isPanicCall reports whether an expression is a call to the prelude's panic, which never returns.
@@ -51,7 +49,7 @@ func (l *lowering) isConsole(callee *ast.Node) bool {
 		return false
 	}
 	symbol := l.checker.GetSymbolAtLocation(callee.AsPropertyAccessExpression().Expression)
-	return isPreludeConsole(symbol)
+	return symbol != nil && len(symbol.Declarations) > 0 && load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0]))
 }
 
 // consoleStream is the stream a callee writes to, when it is the prelude's console.log or
@@ -62,7 +60,7 @@ func (l *lowering) consoleStream(callee *ast.Node) (ir.Stream, error) {
 	}
 	object := callee.AsPropertyAccessExpression().Expression
 	symbol := l.checker.GetSymbolAtLocation(object)
-	if !isPreludeConsole(symbol) {
+	if symbol == nil || len(symbol.Declarations) == 0 || !load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
 		return 0, l.notYet(callee, "a method call")
 	}
 	switch callee.Name().Text() {
@@ -72,18 +70,4 @@ func (l *lowering) consoleStream(callee *ast.Node) (ir.Stream, error) {
 		return ir.Stderr, nil
 	}
 	return 0, l.notYet(callee, "console."+callee.Name().Text())
-}
-
-// Node's global console declaration merges with the prelude variable. Inspect
-// all declarations so source ordering cannot turn the real console into a user one.
-func isPreludeConsole(symbol *ast.Symbol) bool {
-	if symbol == nil || symbol.Name != "console" {
-		return false
-	}
-	for _, declaration := range symbol.Declarations {
-		if load.IsPrelude(ast.GetSourceFileOfNode(declaration)) {
-			return true
-		}
-	}
-	return false
 }

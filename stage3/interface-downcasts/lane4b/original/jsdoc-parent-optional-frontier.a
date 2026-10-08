@@ -1,6 +1,0 @@
-import type { JSDoc } from 'original-tsc-types';
-interface Base {readonly kind:number;}
-function read(node:JSDoc|undefined):string {if(node===undefined)return 'absent'; return `${node.parent.kind}`;}
-const concrete = {kind:321,parent:{kind:80}};
-const base:Base=concrete;
-console.log(read(base as JSDoc));

@@ -1,6 +1,0 @@
---- FAIL: TestViewCallableShapeNative (0.07s)
-    --- FAIL: TestViewCallableShapeNative/number (0.07s)
-        view_callables_contract_test.go:84: exit 0 stdout "8\n" stderr ""; want 70 "" "adamic: panic: field read failed: node.run expected function(number) -> number, found number\n"
-FAIL
-FAIL	github.com/system-inc/adamic/internal/native	0.078s
-FAIL

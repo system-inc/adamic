@@ -1,8 +1,0 @@
-interface Base { readonly kind: 'items' | 'other'; }
-interface Items extends Base { readonly kind: 'items'; readonly values: readonly number[]; }
-function items(node: Base): Items { return node as Items; }
-const raw = {kind: 'items' as const, values: [7, 8, 7, NaN, -0]};
-const values = items(raw).values;
-const starts = [-Infinity, -20, -5, -2.9, -1, -0, 0, 1.9, 3, 5, 20, Infinity, NaN];
-for (const start of starts) console.log(`${start}:${values.indexOf(7, start)}:${values.lastIndexOf(7, start)}:${values.includes(NaN, start)}`);
-console.log(`${values.lastIndexOf(7)}:${values.lastIndexOf(7, undefined)}:${values.indexOf(NaN)}:${values.includes(-0)}`);

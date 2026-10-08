@@ -1,6 +1,0 @@
-function read(actual: { value: boolean | undefined }): void { console.log(`${actual.value}`); }
-const actual: { x: number; value: boolean | undefined } = { x: 1, value: true };
-const narrow: { x: number } = actual;
-const view: { x: number; value?: boolean | undefined } = narrow;
-view.value = undefined;
-read(actual);

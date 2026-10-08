@@ -7,7 +7,6 @@ type ObjectCall struct {
 	Arguments []Expression
 	Element   Type
 	Returns   Type
-	Readiness string
 }
 
 func (c ObjectCall) Type() Type { return c.Returns }

@@ -1,6 +1,0 @@
-interface Expression {readonly value:number;}
-interface ArrayLiteralExpression {readonly value:number;}
-interface Base {readonly createArrayLiteralExpression:unknown;}
-interface Target {createArrayLiteralExpression(elements?: readonly Expression[], multiLine?: boolean): ArrayLiteralExpression;}
-function probe(value:Base):void {const factory=value as Target;const elements:readonly Expression[]=[{value:3}];console.log(`${factory.createArrayLiteralExpression(elements).value}`);}
-probe({createArrayLiteralExpression:(elements?:readonly Expression[],multiLine?:boolean):number=>9});

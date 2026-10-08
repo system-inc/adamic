@@ -1,5 +1,0 @@
-// Original tsc declaration/read; adjacent carriers and helpers reduced.
-interface Base {readonly measure:unknown;}
-interface Target {measure(measureName: string, startMarkName?: string, endMarkName?: string): void;}
-function probe(value:Base):void {const performance=value as Target;performance.measure("Tracing","beginTracing","endTracing");}
-probe({measure:(measureName:string,startMarkName?:string,endMarkName?:string):void=>{console.log(`${measureName.length+(startMarkName===undefined?0:startMarkName.length)+(endMarkName===undefined?0:endMarkName.length)}`);}});

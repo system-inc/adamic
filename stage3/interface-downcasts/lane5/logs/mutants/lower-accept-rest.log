@@ -1,6 +1,0 @@
---- FAIL: TestViewCallableShapeContract (0.03s)
-    --- FAIL: TestViewCallableShapeContract/type_Target_=_(...values:_number[])_=>_number; (0.03s)
-        view_callables_contract_test.go:107: unsupported signature must fail at read: child unavailable calls 1
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.034s
-FAIL

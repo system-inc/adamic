@@ -1,6 +1,0 @@
---- FAIL: TestViewCallableShapeNode (0.08s)
-    --- FAIL: TestViewCallableShapeNode/number (0.03s)
-        view_callables_contract_test.go:34: exit 1, stdout "", stderr "file:///workspace/adamic/internal/javascript/[eval1]:4\nconst adamicCall = (value, arguments_) => value.code(value, arguments_);\n                                                ^\n\nTypeError: value.code is not a function\n    at adamicCall (file:///workspace/adamic/internal/javascript/[eval1]:4:49)\n    at file:///workspace/adamic/internal/javascript/[eval1]:29:51\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async node:internal/modules/esm/loader:224:26\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:221:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.19.0\n"; want 70, "", "adamic: panic: field read failed: node.run expected function(number) -> number, found number\n"
-FAIL
-FAIL	github.com/system-inc/adamic/internal/javascript	0.085s
-FAIL

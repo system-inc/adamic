@@ -1,9 +1,0 @@
---- FAIL: TestCheckedViewRanked14Frontiers (0.00s)
-    --- FAIL: TestCheckedViewRanked14Frontiers/ranked14-text-name-fallback (0.21s)
-        checked_views_ranked14_arrays_test.go:97: frontier program was admitted
-FAIL
-gate cache: native hits=0 misses=0
-gate cache: node hits=0 misses=1
-gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	0.223s
-FAIL

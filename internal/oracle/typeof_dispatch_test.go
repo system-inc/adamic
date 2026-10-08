@@ -2,7 +2,6 @@ package oracle
 
 import (
 	"path/filepath"
-	"runtime"
 	"strings"
 	"testing"
 
@@ -49,12 +48,7 @@ static adamic_string *typeof_constructor_mutant(const adamic_heap *value, bool n
 	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	// LeakSanitizer is Linux's: macOS's AddressSanitizer aborts when asked for it.
-	var leakCheck []string
-	if runtime.GOOS == "linux" {
-		leakCheck = []string{"ASAN_OPTIONS=detect_leaks=1"}
-	}
-	got := executeWith(t, leakCheck, binary)
+	got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
 	if got.exitCode != 0 || len(got.stderr) != 0 {
 		t.Fatalf("mutant must finish cleanly without leaks: exit %d, stderr %q", got.exitCode, got.stderr)
 	}
@@ -91,12 +85,7 @@ static adamic_string *typeof_string_mutant(const adamic_heap *value, bool null) 
 	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	// LeakSanitizer is Linux's: macOS's AddressSanitizer aborts when asked for it.
-	var leakCheck []string
-	if runtime.GOOS == "linux" {
-		leakCheck = []string{"ASAN_OPTIONS=detect_leaks=1"}
-	}
-	got := executeWith(t, leakCheck, binary)
+	got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
 	if got.exitCode != 0 || len(got.stderr) != 0 {
 		t.Fatalf("mutant must finish cleanly: exit %d, stderr %q", got.exitCode, got.stderr)
 	}

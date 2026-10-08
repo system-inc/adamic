@@ -1,8 +1,0 @@
-process.exitCode = 5;
-function end(code: number): never { return process.exit(code); }
-try {
-	console.log('before exit');
-	console.error('stderr before exit');
-	end(258);
-} finally { console.log('must not run finally'); }
-console.log('must not run after exit');

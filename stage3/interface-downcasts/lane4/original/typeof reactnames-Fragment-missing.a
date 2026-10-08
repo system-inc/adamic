@@ -1,8 +1,0 @@
-import type { ReactNames } from 'original-tsc-names';
-interface Base { readonly kind: 'box' | 'other'; }
-interface Carrier extends Base { readonly kind: 'box'; readonly child: typeof ReactNames; }
-function helper(value: typeof ReactNames): void { console.log(String(value.Fragment)); }
-const raw = {kind: 'box' as const, child: {}};
-const base: Base = raw;
-const carrier = base as Carrier;
-helper(carrier.child);

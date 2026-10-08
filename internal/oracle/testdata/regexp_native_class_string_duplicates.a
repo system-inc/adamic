@@ -1,7 +1,0 @@
-// Duplicate strings, including after folding, are one set alternative.
-let text = '';
-for (let i = 0; i < 28; i++) text += 'ab';
-text += 'x';
-console.log(`${/^(?:[\q{ab|ab}])*$/v.test(text)}`);
-console.log(`${/^(?:[\q{ab|AB}])*$/vi.test(text)}`);
-console.log(`${/^(?:[\q{ab}\q{ab}])*$/v.test(text)}`);

@@ -1,7 +1,0 @@
-interface MapLike<T> { [key: string]: T; }
-interface Base { readonly kind: 'Paths'; }
-interface Holder extends Base { readonly paths?: MapLike<string[]>; }
-const payload={kind:'Paths' as const,paths:{ item: ['name'] }};
-const base:Base=payload;
-const view=base as Holder;
-const table=view.paths; if(table!==undefined) { const values=table['item']; if(values!==undefined) console.log(`${values[0]}`); }

@@ -8,16 +8,12 @@
 // Their fields are implementation storage, never the record's observable own properties.
 // Tuple names 0 and 1, and key at slot 2, reuse offsets already covered by the compiler's
 // global field-layout proof (fields.go). No new unchecked field offset is introduced.
-static const char *const record_names[] = {"0", "1"};
-static const bool record_references[] = {true, false};
-static const adamic_shape record_shape = {2, record_names, record_references, NULL};
+static const char *const record_names[] = {"0"};
+static const bool record_references[] = {true};
+static const adamic_shape record_shape = {1, record_names, record_references, NULL};
 static const char *const iteration_names[] = {"0", "1", "key"};
 static const bool iteration_references[] = {true, true, false};
 static const adamic_shape iteration_shape = {3, iteration_names, iteration_references, NULL};
-
-bool adamic_record_is(const adamic_object *object) {
-	return object != NULL && object->heap.kind == adamic_kind_object && object->shape == &record_shape;
-}
 
 static adamic_map *table(const adamic_record *record) {
 	return record->slots[0].reference;
@@ -27,19 +23,6 @@ adamic_record *adamic_record_new(bool reference_values) {
 	adamic_record *record = adamic_object_new(&record_shape);
 	record->slots[0].reference = adamic_map_new(true, reference_values);
 	return record;
-}
-
-adamic_record *adamic_record_new_typed(bool references, unsigned char element) {
- adamic_record *record = adamic_record_new(references);
- record->slots[1].number = element;
- return record;
-}
-
-void adamic_record_storage_check(const adamic_record *record, unsigned char element) {
- if (!adamic_record_is(record) || (unsigned char)record->slots[1].number != element) {
-  static const char message[] = "record operation failed: source storage does not match the declared element representation";
-  adamic_panic(message, sizeof message - 1);
- }
 }
 
 adamic_value *adamic_record_get_own(const adamic_record *record, const adamic_string *key) {
@@ -84,7 +67,7 @@ static bool prototype_member(const adamic_string *key) {
 	}
 }
 
-void adamic_record_check_missing_member(const adamic_string *key) {
+static void check_missing_member(const adamic_string *key) {
 	if (prototype_member(key)) {
 		static const char prefix[] = "record member '";
 		static const char suffix[] = "' is missing; records hold own keys only";
@@ -100,7 +83,7 @@ void adamic_record_check_missing_member(const adamic_string *key) {
 adamic_value *adamic_record_get(const adamic_record *record, const adamic_string *key) {
 	adamic_value *value = adamic_record_get_own(record, key);
 	if (value == NULL) {
-		adamic_record_check_missing_member(key);
+		check_missing_member(key);
 	}
 	return value;
 }

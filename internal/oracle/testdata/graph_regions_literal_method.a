@@ -1,1 +1,0 @@
-function make():void {let holder:{read():number}|undefined;const value={read():number{return holder===undefined?0:1;}};holder=value;console.log(`${value.read()}`);}make();

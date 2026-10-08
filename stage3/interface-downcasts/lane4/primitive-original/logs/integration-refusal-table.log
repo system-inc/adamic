@@ -1,9 +1,0 @@
---- FAIL: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat (0.00s)
-    --- FAIL: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from's_undefined_as_a_union (0.16s)
-        lower_test.go:104: got <nil>, want an error ending "main.a:1:41: stage 0 can't lower a function value taking string | number | undefined yet"
-    --- FAIL: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_union_a_function_value_takes (0.14s)
-        lower_test.go:104: got <nil>, want an error ending "main.a:1:15: stage 0 can't lower a function value taking string | number yet"
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	2.145s
-ok  	github.com/system-inc/adamic/internal/javascript	2.461s
-FAIL

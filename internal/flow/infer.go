@@ -351,40 +351,6 @@ func (n *inference) value(expression ir.Expression) shape {
 			n.value(allowed)
 		}
 		return result
-	case ir.RecordCoalesce:
-		holder := n.value(expression.Record)
-		n.value(expression.Key)
-		result := n.value(expression.Value)
-		n.store(holder, result)
-		result.part = append(result.part, holder.roots()...)
-		return result
-	case ir.RecordCall:
-		operands := n.operands(expression)
-		switch expression.Method {
-		case "set":
-			n.store(operands[0], operands[2])
-			return operands[2]
-		case "delete":
-			n.store(operands[0], shape{})
-			return shape{}
-		case "get":
-			return shape{part: operands[0].roots()}
-		case "values", "entries":
-			return shape{fresh: true, holds: operands[0].roots()}
-		case "keys":
-			return shape{fresh: true}
-		}
-		return shape{}
-	case ir.RecordLiteral:
-		result := shape{fresh: true}
-		if expression.Spread != nil {
-			result.holds = append(result.holds, n.value(expression.Spread).roots()...)
-		}
-		for _, entry := range expression.Entries {
-			n.value(entry.Key)
-			result.holds = append(result.holds, n.value(entry.Value).roots()...)
-		}
-		return result
 	case ir.ObjectLiteral:
 		result := shape{fresh: true}
 		if expression.Spread != nil {
@@ -402,11 +368,7 @@ func (n *inference) value(expression ir.Expression) shape {
 		}
 		return result
 	case ir.Property:
-		object := n.value(expression.Object)
-		if expression.DictionaryKey != nil {
-			n.value(expression.DictionaryKey)
-		}
-		return shape{part: object.roots()}
+		return shape{part: n.value(expression.Object).roots()}
 	case ir.ArrayIndex:
 		array := n.value(expression.Array)
 		n.value(expression.Index)
@@ -481,10 +443,8 @@ func (n *inference) operands(expression ir.Expression) []shape {
 
 // writes reports whether an IR node writes into a container it's handed.
 func writes(expression ir.Expression) bool {
-	switch call := expression.(type) {
-	case ir.NodeBufferCall:
-		return call.Function == "buffer_set" || call.Function == "hash_update" || call.Function == "hash_digest"
-	case ir.ArraySetLength, ir.ArraySplice, ir.ArrayFill, ir.ArraySort, ir.MapSet, ir.MapDelete:
+	switch expression.(type) {
+	case ir.ArraySplice, ir.ArrayFill, ir.ArraySort, ir.MapSet, ir.MapDelete:
 		return true
 	}
 	return false

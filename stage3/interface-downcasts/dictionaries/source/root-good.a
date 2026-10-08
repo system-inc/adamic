@@ -1,6 +1,0 @@
-interface Table { readonly [key:string]: string | undefined; }
-const payload={item:'name'};
-const base:{}=payload;
-const view=base as Table;
-console.log(`${view['item']}`);
-console.log(`${view['missing']}`);

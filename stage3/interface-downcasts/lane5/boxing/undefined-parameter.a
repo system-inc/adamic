@@ -1,3 +1,0 @@
-const f: (value:number|undefined)=>string = (value:number|string|undefined):string => `${value}`;
-console.log(f(5));
-console.log(f(undefined));

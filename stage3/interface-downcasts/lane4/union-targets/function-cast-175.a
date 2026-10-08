@@ -1,5 +1,0 @@
-import type { FunctionLikeDeclaration, ClassDeclaration, ClassExpression } from 'original-tsc-types';
-interface Base { readonly kind: number; }
-function same(a: Base, b: Base): boolean { return a === b; }
-function helper(value: Base): void { console.log(String(same(value as FunctionLikeDeclaration, value))); }
-helper({kind: 175});

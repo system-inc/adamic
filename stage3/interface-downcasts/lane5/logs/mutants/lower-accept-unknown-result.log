@@ -1,8 +1,0 @@
---- FAIL: TestViewCallableShapeContract (0.14s)
-    --- FAIL: TestViewCallableShapeContract/type_Target_=_(value:_number)_=>_number; (0.03s)
-        view_callables_contract_test.go:102: unknown result accepted: <nil>
-    --- FAIL: TestViewCallableShapeContract/type_Target_=_()_=>_string; (0.02s)
-        view_callables_contract_test.go:102: unknown result accepted: <nil>
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.148s
-FAIL

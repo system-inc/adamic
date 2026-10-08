@@ -1,6 +1,0 @@
-import { programArguments } from 'adamic';
-const root = programArguments()[0] ?? '';
-
-const date=new Date(1234567890123.75); console.log(`${date.getTime()} ${date.valueOf()}`);
-console.log(`${Number.isNaN(new Date(NaN).getTime())}`);
-console.log(`negative-zero=${Object.is(new Date(-0.5).getTime(), -0)}`);

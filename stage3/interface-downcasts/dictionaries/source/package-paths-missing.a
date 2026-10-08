@@ -1,6 +1,0 @@
-interface MapLike<T> { [key: string]: T; }
-interface PackageJsonPathFields { readonly [key: string]: MapLike<string> | undefined; }
-const payload = { other: { item: 'name' } };
-const base: {} = payload;
-const view = base as PackageJsonPathFields;
-const table = view['imports']; if (table === undefined) console.log('missing');

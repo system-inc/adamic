@@ -1,7 +1,0 @@
-=== RUN   TestNodePathRelativeRuntime
-=== PAUSE TestNodePathRelativeRuntime
-=== CONT  TestNodePathRelativeRuntime
-    node_path_relative_test.go:63: relative runtime agrees on both backends; join mutant caught only by Node stdout comparison
---- PASS: TestNodePathRelativeRuntime (47.60s)
-PASS
-ok  	github.com/system-inc/adamic/internal/oracle	47.755s

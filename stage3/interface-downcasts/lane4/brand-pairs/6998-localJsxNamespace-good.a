@@ -1,9 +1,0 @@
-export {};
-type InternalSymbolName = '__call' | '__new';
-type __String = (string & { __escapedIdentifier: void }) | (void & { __escapedIdentifier: void }) | InternalSymbolName;
-interface Base { readonly kind: 'box' | 'other' }
-interface SourceFile extends Base { readonly kind: 'box'; readonly localJsxNamespace?: __String | undefined }
-function helper(value: SourceFile): void { console.log(String(value.localJsxNamespace)); }
-const raw = {kind: 'box' as const, localJsxNamespace: 'word'};
-const base: Base = raw;
-helper(base as SourceFile);

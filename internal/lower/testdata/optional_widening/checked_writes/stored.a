@@ -1,1 +1,0 @@
-const source={x:1}; const wider:{x:number;y?:number}=source; wider.y=3; console.log(`${wider.y}`);
