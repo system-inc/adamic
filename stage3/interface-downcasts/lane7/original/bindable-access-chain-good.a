@@ -2,7 +2,7 @@ import type { BindablePropertyAssignmentExpression, SyntaxKind } from 'original-
 interface Base { readonly kind: SyntaxKind }
 const top = { pos: 0, end: 9, kind: 308, flags: 0, modifierFlagsCache: 0, transformFlags: 0, parent: {} };
 const statement = { pos: 0, end: 9, kind: 245, flags: 0, modifierFlagsCache: 0, transformFlags: 0, parent: top };
-const symbol = { flags: 4, escapedName: 'value', id: 1, mergeId: 0 };
+const symbol = { flags: 4, escapedName: 'value', id: 1, mergeId: 0, constEnumOnlyModule: false };
 // exports.inner.value: the left read checks the prefix's tag; its own read checks its fields.
 const outer = { pos: 0, end: 7, kind: 80, flags: 0, modifierFlagsCache: 0, transformFlags: 0, parent: statement, escapedText: 'exports', symbol };
 const inner = { pos: 8, end: 11, kind: 80, flags: 0, modifierFlagsCache: 0, transformFlags: 0, parent: statement, escapedText: 'inner', symbol };

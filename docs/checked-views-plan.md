@@ -2158,3 +2158,14 @@ union-target oracle and original FunctionLikeDeclaration/ClassDeclaration union
 fixtures. The integrator reconciles this small cast-proof dispatch hook.
 The existing certifiedCheckedCast hook also retains the union target contract
 on cast.go's multi-tag IR node. The tag proof remains distinct from payload proof.
+
+### Lane 7 approved deferred descendant selection
+
+Supported untagged object-union descendants in bounded intersections retain
+presence and object-kind checks. Member selection is demanded at the descendant
+read. The approved rule is witnessed by direct, helper, callback and destructured
+reads, plus an unread Node control. The named hook viewIntersectionBindingRead
+in lower/view_intersections.go supplies contract metadata from destructureFrom
+in collections.go. Selector-removal and hook-removal mutants fail these controls.
+Full original certification is restored to ten pairs / 56 reads; see lane7's
+DEFERRED-REPORT.md for evidence and remaining candidates.

@@ -453,3 +453,21 @@ func (l *lowering) finishBoundedIntersections() {
 		}
 	}
 }
+
+// Destructuring selects the same field as a property read. Preserve the union or
+// intersection contract so a bounded ancestor cannot bypass member selection.
+func (l *lowering) viewIntersectionBindingRead(node *ast.Node, receiver, target *checker.Type, property *ir.Property) error {
+	target = l.concrete(target)
+	if property.Of != ir.Object || target.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) == 0 {
+		return nil
+	}
+	id, err := l.viewContract(node, target)
+	if err != nil {
+		return err
+	}
+	property.ViewContract = id
+	property.ViewTypeID = int(target.Id())
+	property.ViewReceiverTypeID = int(receiver.Id())
+	property.ViewWhere = l.program.Where(node)
+	return nil
+}

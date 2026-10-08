@@ -352,6 +352,11 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		value.View = sourceExpression(binding) + " (field " + field + ")"
 		value.ViewType = l.checker.TypeToString(fieldType)
 		value.ViewAllowed = l.viewLiterals(fieldType)
+		if !tuple {
+			if err := l.viewIntersectionBindingRead(binding, destructured, fieldType, &value); err != nil {
+				return nil, err
+			}
+		}
 		statements = append(statements, ir.Declare{Local: local, Value: value})
 	}
 	return statements, nil

@@ -86,7 +86,9 @@ func BoundedIntersectionField(program *Program, id ViewContractID, walkable func
 			if tag, _ := UnionDiscriminant(program, id); tag != "" {
 				return BoundedArms, id
 			}
-			return BoundedRefused, 0
+			// Supported untagged descendants retain presence and object kind.
+			// Their member selection is checked when the descendant is read.
+			return BoundedKind, 0
 		}
 		return BoundedKind, 0
 	case ViewNullable:
