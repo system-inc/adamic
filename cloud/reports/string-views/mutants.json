@@ -1,0 +1,130 @@
+[
+  {
+    "name": "offset",
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "TestRuntimeStringViews",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "30m"
+    ],
+    "log": "/tmp/string-views-mutant-offset.log"
+  },
+  {
+    "name": "missing_hold",
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/shared_slices",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "30m"
+    ],
+    "log": "/tmp/string-views-mutant-missing_hold.log"
+  },
+  {
+    "name": "extra_hold",
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/shared_slices",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "30m"
+    ],
+    "log": "/tmp/string-views-mutant-extra_hold.log"
+  },
+  {
+    "name": "spare_capacity",
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "TestRuntimeStringViews",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "30m"
+    ],
+    "log": "/tmp/string-views-mutant-spare_capacity.log"
+  },
+  {
+    "name": "ratio",
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "TestRuntimeStringViews",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "30m"
+    ],
+    "log": "/tmp/string-views-mutant-ratio.log"
+  },
+  {
+    "name": "borrowed",
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "TestRuntimeStringViews",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "30m"
+    ],
+    "log": "/tmp/string-views-mutant-borrowed.log"
+  },
+  {
+    "name": "ascii_value",
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "TestRuntimeStringViews",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "30m"
+    ],
+    "log": "/tmp/string-views-mutant-ascii_value.log"
+  },
+  {
+    "name": "ascii_allocation",
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "TestRuntimeStringViews",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "30m"
+    ],
+    "log": "/tmp/string-views-mutant-ascii_allocation.log"
+  }
+]
