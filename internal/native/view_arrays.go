@@ -9,6 +9,12 @@ import (
 // Keep metadata at allocation, not at assertion. Wrapping dispatch here also
 // covers arrays produced inside callees, irrespective of source lowering order.
 func (e *emitter) evaluate(expression ir.Expression) string {
+	if record, ok := expression.(ir.ArrayRecord); ok {
+		return e.emitViewArrayRecord(record)
+	}
+	if properties, ok := expression.(ir.ArrayProperties); ok {
+		return e.emitViewArrayProperties(properties)
+	}
 	if sort, ok := expression.(ir.ArraySort); ok && sort.OptionalComparator {
 		return e.emitViewOptionalArraySort(sort)
 	}

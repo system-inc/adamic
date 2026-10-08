@@ -29,6 +29,7 @@ enum adamic_kind {
 	adamic_kind_boolean,
 	adamic_kind_weak,
 	adamic_kind_environment,
+	adamic_kind_null,
 };
 
 typedef struct adamic_heap {
@@ -40,6 +41,8 @@ typedef struct adamic_heap {
 } adamic_heap;
 
 // adamic_retain and adamic_release take any heap value. NULL (undefined) is left alone.
+extern adamic_heap adamic_null;
+adamic_heap *adamic_union_narrow(adamic_heap *value, unsigned char wanted);
 void *adamic_retain(void *value);
 void adamic_release(void *value);
 
@@ -380,6 +383,8 @@ typedef struct adamic_map_entry {
 
 typedef struct adamic_map {
 	adamic_heap heap;
+	unsigned int key_contract, value_contract;
+	const char *contract_name;
 	size_t count;
 	size_t used;
 	size_t capacity;

@@ -22,14 +22,22 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 	if id := l.result.ViewContractTypes[int(target.Id())]; id != 0 {
 		return id, nil
 	}
-	if target.Flags()&checker.TypeFlagsUndefined != 0 {
+	if target.Flags()&checker.TypeFlagsNull != 0 {
+		id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
+		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewNull, Name: "null", Null: true, Of: ir.Union})
+		l.result.ViewContractTypes[int(target.Id())] = id
+		return id, nil
+	}
+	if target.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(target) {
 		id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
 		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewUndefined, Name: "undefined", Undefined: true, Of: ir.Object})
 		l.result.ViewContractTypes[int(target.Id())] = id
 		return id, nil
 	}
 	build := func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) }
-	if target.Flags()&checker.TypeFlagsObject != 0 && (l.checker.IsArrayType(target) || checker.IsTupleType(target)) {
+	// Pure phantom brands retain their existing erased contract path.
+	// Real NodeArray own fields still require the array adapter.
+	if l.viewArrayBase(target) != nil && l.phantomArrayBase(target) == nil || checker.IsTupleType(target) {
 		if viewArrayContractHook == nil {
 			return 0, l.notYet(node, "an array checked-view contract")
 		}
@@ -40,6 +48,9 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 			return 0, &Refused{Where: l.program.Where(node), What: "a checked view with a callable contract", Fix: "prove the callable body rather than asserting its signature"}
 		}
 		return viewCallableContractHook(l, node, target, build)
+	}
+	if id, handled, err := l.viewOptionalArrayContract(node, target); handled {
+		return id, err
 	}
 	if l.includesUndefined(target) {
 		present := l.checker.GetNonNullableType(target)
@@ -77,7 +88,7 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 	if base := l.phantomBase(target); base != nil {
 		scalar = base
 	}
-	if target.Flags()&checker.TypeFlagsUndefined != 0 {
+	if target.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(target) {
 		contract.Kind = ir.ViewUndefined
 	} else if interfaceScalar(scalar) && of != ir.Union {
 		contract.Kind = ir.ViewScalar

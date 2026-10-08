@@ -1,0 +1,96 @@
+"""Build a scratch-only lower overlay. Production Lower is disabled in this binary."""
+import json
+import pathlib
+import sys
+
+repository = pathlib.Path(sys.argv[1]).resolve()
+scratch = pathlib.Path(sys.argv[2]).resolve()
+territory = pathlib.Path(__file__).resolve().parent
+scratch.mkdir(parents=True, exist_ok=True)
+replace = {}
+
+def overlay(name, text):
+    output = scratch / name.replace('/', '_')
+    output.write_text(text)
+    replace[str(repository / name)] = str(output)
+
+original = (repository / 'internal/lower/lower.go').read_text()
+start = original.index('\tfiles := program.Files()')
+end = original.index('\n}\n\ntype lowering', start)
+original = original[:start] + '\treturn nil, fmt.Errorf("latent census: measurement only; no IR output")' + original[end:]
+original = original.replace('\n\t"path/filepath"', '')
+original = original.replace('type lowering struct {', 'type lowering struct {\n latentDeclarations map[int]*ast.Node\n latentReady map[int]bool')
+overlay('internal/lower/lower.go', original)
+refuse = (repository / 'internal/lower/refusals.go').read_text()
+start = refuse.index('func (l *lowering) refuse(')
+end = refuse.index('\n// called ', start)
+body = refuse[start:end].replace('func (l *lowering) refuse(', 'func (l *lowering) latentRefuse(')
+body = body.replace('\t\tif found != nil {\n\t\t\treturn true\n\t\t}\n', '')
+body = body.replace('visit = func(node *ast.Node) bool {', 'visit = func(node *ast.Node) bool {\n if node.Parent != nil && node.Parent.Kind == ast.KindSourceFile { latentFindingOwner = l.program.Where(node) }\n if node.Kind == ast.KindFunctionDeclaration && node.Parent != nil && node.Parent.Kind == ast.KindSourceFile && len(l.program.LatentDiagnosticsIn(node.Body())) > 0 { return false }')
+# Preserve the original continuing traversal on the newer contract preflight seam.
+# Calls are already visited by the refusal visitor; a separate early-stop pass
+# would double-record or inspect diagnosed bodies outside the eligibility policy.
+marker = '\t// Validate arguments before visiting their annotations'
+if marker in body:
+    begin = body.index(marker)
+    finish = body.index('\tvar found error', begin)
+    body = body[:begin] + body[finish:]
+body = body.replace('return found != nil', 'latentRecord(found); found = nil; return false')
+body = body.replace('\t\t\treturn &Refused{Where:', '\t\t\tlatentRecord(&Refused{Where:')
+body = body.replace('Fix: "remove it and fix any type errors"}', 'Fix: "remove it and fix any type errors"})')
+body = body.replace('return true', 'latentRecord(found)\n\t\t\tfound = nil\n\t\t\tnode.ForEachChild(visit)\n\t\t\treturn false')
+# Directives are module metadata rather than visitor nodes; visit every directive.
+body = body.replace('if len(module.CommentDirectives) > 0 {\n\t\tdirective := module.CommentDirectives[0]', 'for _, directive := range module.CommentDirectives {')
+body = body.replace('return &Refused{Where:', 'latentRecord(&Refused{Where:', 1)
+body = body.replace('Fix: "remove it and fix the type error"}', 'Fix: "remove it and fix the type error"})', 1)
+overlay('internal/lower/refusals.go', refuse[:end] + '\n' + body + refuse[end:])
+# Keep all checker diagnostics and populated roots, but expose them only to measurement.
+loader = (repository / 'internal/load/load.go').read_text()
+loader = loader.replace('type Program struct {', 'type Program struct {\n latentSites []*ast.Diagnostic\n latentDiagnostics []string')
+needle = 'return nil, &CheckError{Diagnostics: diagnostics}'
+assert loader.count(needle) == 1
+loader = loader.replace(needle, 'loaded.latentDiagnostics = diagnostics')
+loader = loader.replace('formatted := make([]string, 0, len(all))', 'p.latentSites = all\n formatted := make([]string, 0, len(all))')
+# Rename the permissive API; ordinary Load and LoadOverlay cannot expose rejected programs.
+loader = loader.replace('func Load(paths []string)', 'func LatentLoad(paths []string)')
+loader = loader.replace('func LoadOverlay(paths []string, overlay map[string]string)', 'func latentLoadOverlay(paths []string, overlay map[string]string)')
+loader += '\nfunc Load(paths []string) (*Program, error) { return nil, fmt.Errorf("latent census: measurement loader only; no output path") }\nfunc LoadOverlay(paths []string, overlay map[string]string) (*Program, error) { return Load(paths) }\n'
+overlay('internal/load/load.go', loader)
+overlay('internal/load/latent_hook.go', (territory / 'load.go.txt').read_text())
+# Direct sibling calls need signatures, not sibling bodies. Prepare signatures lazily.
+expressions = (repository / 'internal/lower/expression.go').read_text()
+needle = 'func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expression, error) {'
+assert needle in expressions
+expressions = expressions.replace(needle, needle + '\n if err := l.latentSignature(function); err != nil { return nil, err }')
+needle = 'func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {'
+assert needle in expressions
+expressions = expressions.replace(needle, needle + '\n if err := l.latentSignature(target); err != nil { return nil, err }')
+overlay('internal/lower/expression.go', expressions)
+functions = (repository / 'internal/lower/functions.go').read_text()
+needle = 'l.signed[index] = signed{this: this, defaults: defaults, patterns: patterns}'
+assert needle in functions
+functions = functions.replace(needle, needle + '\n if l.latentReady == nil { l.latentReady = map[int]bool{} }; l.latentReady[index] = true')
+# Generic dependency instantiations must also obey body skip policy.
+needle = 'func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) error {'
+functions = functions.replace(needle, needle + '\n if len(l.program.LatentDiagnosticsIn(declaration.Body())) > 0 { return &LatentDependencySkipped{Where:l.program.Where(declaration)} }')
+overlay('internal/lower/functions.go', functions)
+predicates_path = repository / 'internal/lower/predicates.go'
+if predicates_path.exists():
+    predicates = predicates_path.read_text()
+    needle = '\t\tif !ast.IsFunctionLike(implementation)'
+    if needle in predicates:
+        predicates = predicates.replace(needle, '\t\tif ast.IsFunctionLike(implementation) && implementation.Body() != nil && len(l.program.LatentDiagnosticsIn(implementation.Body())) > 0 { return &LatentDependencySkipped{Where: l.program.Where(implementation)} }\n' + needle, 1)
+        overlay('internal/lower/predicates.go', predicates)
+hook = (territory / 'lower.go.txt').read_text()
+if (repository / 'internal/lower/enums.go').exists():
+    hook = hook.replace('// LATENT_ENUM_REGISTRATION', """case ast.KindEnumDeclaration:
+        if !ast.HasSyntacticModifier(node, ast.ModifierFlagsConst) {
+            func() {
+                defer func() { _ = recover() }()
+                if local, err := l.enumLocal(node); err == nil { l.result.Locals[local].Global = true }
+            }()
+        }""")
+overlay('internal/lower/latent_hook.go', hook)
+overlay('stage3/census/latent/tool/main.go', (territory / 'main.go.txt').read_text())
+(scratch / 'overlay.json').write_text(json.dumps({'Replace': replace}, indent=2) + '\n')
+print(scratch / 'overlay.json')

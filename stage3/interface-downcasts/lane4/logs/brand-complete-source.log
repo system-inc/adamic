@@ -1,0 +1,75 @@
+=== RUN   TestCheckedViewCompleteBrand
+=== RUN   TestCheckedViewCompleteBrand/good
+    checked_views_mixed_unions_test.go:317: gate cache node miss
+    checked_views_mixed_unions_test.go:328: gate cache node miss
+=== RUN   TestCheckedViewCompleteBrand/undefined
+    checked_views_mixed_unions_test.go:317: gate cache node miss
+    checked_views_mixed_unions_test.go:328: gate cache node miss
+    checked_views_mixed_unions_test.go:361: gate cache node miss
+    checked_views_mixed_unions_test.go:368: first-member substitution caught: exit 0 stdout "wordword\n"
+    checked_views_mixed_unions_test.go:368: first-member substitution caught: exit 0 stdout "wordword\n"
+=== RUN   TestCheckedViewCompleteBrand/wrong
+    checked_views_mixed_unions_test.go:317: gate cache node miss
+    checked_views_mixed_unions_test.go:328: gate cache node miss
+    checked_views_mixed_unions_test.go:345: gate cache node miss
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewCompleteBrand/null
+    checked_views_mixed_unions_test.go:317: gate cache node miss
+    checked_views_mixed_unions_test.go:328: gate cache node miss
+    checked_views_mixed_unions_test.go:345: gate cache node miss
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewCompleteBrand/missing
+    checked_views_mixed_unions_test.go:317: gate cache node miss
+    checked_views_mixed_unions_test.go:328: gate cache node miss
+    checked_views_mixed_unions_test.go:345: gate cache node miss
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewCompleteBrand/internal
+    checked_views_mixed_unions_test.go:317: gate cache node miss
+    checked_views_mixed_unions_test.go:328: gate cache node miss
+=== RUN   TestCheckedViewCompleteBrand/object
+    checked_views_mixed_unions_test.go:317: gate cache node miss
+    checked_views_mixed_unions_test.go:328: gate cache node miss
+    checked_views_mixed_unions_test.go:345: gate cache node miss
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewCompleteBrand/symbol-good
+    checked_views_mixed_unions_test.go:317: gate cache node miss
+    checked_views_mixed_unions_test.go:328: gate cache node miss
+=== RUN   TestCheckedViewCompleteBrand/symbol-undefined
+    checked_views_mixed_unions_test.go:317: gate cache node miss
+    checked_views_mixed_unions_test.go:328: gate cache node miss
+    checked_views_mixed_unions_test.go:361: gate cache node miss
+    checked_views_mixed_unions_test.go:368: first-member substitution caught: exit 0 stdout "wordword\n"
+    checked_views_mixed_unions_test.go:368: first-member substitution caught: exit 0 stdout "wordword\n"
+=== RUN   TestCheckedViewCompleteBrand/symbol-wrong
+    checked_views_mixed_unions_test.go:317: gate cache node miss
+    checked_views_mixed_unions_test.go:328: gate cache node miss
+    checked_views_mixed_unions_test.go:345: gate cache node miss
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewCompleteBrand/symbol-null
+    checked_views_mixed_unions_test.go:317: gate cache node miss
+    checked_views_mixed_unions_test.go:328: gate cache node miss
+    checked_views_mixed_unions_test.go:345: gate cache node miss
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+--- PASS: TestCheckedViewCompleteBrand (5.96s)
+    --- PASS: TestCheckedViewCompleteBrand/good (0.65s)
+    --- PASS: TestCheckedViewCompleteBrand/undefined (0.68s)
+    --- PASS: TestCheckedViewCompleteBrand/wrong (0.50s)
+    --- PASS: TestCheckedViewCompleteBrand/null (0.48s)
+    --- PASS: TestCheckedViewCompleteBrand/missing (0.58s)
+    --- PASS: TestCheckedViewCompleteBrand/internal (0.53s)
+    --- PASS: TestCheckedViewCompleteBrand/object (0.44s)
+    --- PASS: TestCheckedViewCompleteBrand/symbol-good (0.52s)
+    --- PASS: TestCheckedViewCompleteBrand/symbol-undefined (0.69s)
+    --- PASS: TestCheckedViewCompleteBrand/symbol-wrong (0.45s)
+    --- PASS: TestCheckedViewCompleteBrand/symbol-null (0.44s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=30
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	5.969s

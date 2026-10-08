@@ -144,18 +144,15 @@ func (l *lowering) supportsUntaggedRead(root ir.ViewContract) bool {
 // untaggedArrayElement joins only array members' logical element contracts.
 // It never chooses an arbitrary member's physical representation.
 func (l *lowering) untaggedArrayElement(target *checker.Type) *checker.Type {
-	if l.checker.IsArrayType(target) {
-		return l.checker.GetElementTypeOfArrayType(target)
+	if element := l.viewArrayElementType(target); element != nil {
+		return element
 	}
 	if target.Flags()&checker.TypeFlagsUnion == 0 {
 		return nil
 	}
 	var elements []*checker.Type
 	for _, member := range target.Types() {
-		if !l.checker.IsArrayType(member) {
-			return nil
-		}
-		element := l.checker.GetElementTypeOfArrayType(member)
+		element := l.viewArrayElementType(member)
 		if element == nil {
 			return nil
 		}

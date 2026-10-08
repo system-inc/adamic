@@ -1,0 +1,6 @@
+--- FAIL: TestParserAssertionBackends (0.33s)
+    --- FAIL: TestParserAssertionBackends/javascript (0.04s)
+        predicates_parser_test.go:101: javascript output "WORD\nmissing\nword\nadamic: panic: TypeError: Cannot read properties of null (reading '0')\n", error exit status 70; want "WORD\nmissing\nword\nno match\n1\nno number\nevaluated\nfalse\n"
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.340s
+FAIL

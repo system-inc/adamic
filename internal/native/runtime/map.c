@@ -25,6 +25,8 @@ static void *allocate_zeroed(size_t count, size_t size) {
 
 adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
 	adamic_map *map = adamic_allocate(sizeof *map, adamic_kind_map);
+	map->key_contract = map->value_contract = 0;
+	map->contract_name = "uncertified Map";
 	map->count = 0;
 	map->used = 0;
 	map->capacity = 4;

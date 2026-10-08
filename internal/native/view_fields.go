@@ -9,7 +9,13 @@ import (
 // The runtime returns a borrowed slot snapshot only after validating its physical storage.
 // Lowering must supply a complete runtime contract before using this for an admitted cast.
 func (e *emitter) viewField(property ir.Property) string {
+	if property.Nullish {
+		return e.nullishViewField(property)
+	}
 	of := property.Type()
+	if of == ir.Union {
+		return e.viewObjectPrimitive(property)
+	}
 	object := e.value(property.Object)
 	slot := e.temporary()
 	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map", ir.Closure: "function", ir.MaybeNumber: "number | undefined", ir.MaybeBoolean: "boolean | undefined"}
@@ -17,10 +23,11 @@ func (e *emitter) viewField(property ir.Property) string {
 	if !supported || property.Method {
 		panic("compiler bug: incomplete checked field contract")
 	}
-	if property.ViewType != "" && property.Of != ir.Closure {
+	if property.ViewType != "" && (property.Of != ir.Closure || property.ViewContract != 0 && (e.program.ViewContracts[property.ViewContract-1].Result != 0 || e.program.ViewContracts[property.ViewContract-1].DiscardResult)) {
 		name = property.ViewType
 	}
-	if property.Absent || property.Optional || of == ir.MaybeNumber || of == ir.MaybeBoolean {
+	undefined := e.viewStringUndefined(property)
+	if property.Absent || property.Optional || undefined || of == ir.MaybeNumber || of == ir.MaybeBoolean {
 		e.line("adamic_value %s = adamic_object_optional_view(%s, %s, &%s, %d, %s, %s, %t, %t);", slot, object, cString(property.Name), e.cache(), of, cString(name), cString(property.View), property.Absent, property.Optional)
 	} else {
 		e.line("adamic_value %s = adamic_object_view(%s, %s, &%s, %d, %s, %s);", slot, object, cString(property.Name), e.cache(), of, cString(name), cString(property.View))
@@ -58,11 +65,14 @@ func (e *emitter) viewField(property ir.Property) string {
 			if of == ir.MaybeNumber || of == ir.MaybeBoolean {
 				return "!(" + value + ").present || (" + test + ")"
 			}
-			if property.Absent && of.IsReference() {
+			if (property.Absent || undefined) && of.IsReference() {
 				return value + " == NULL || (" + test + ")"
 			}
 			return test
 		}(), cString(property.View), cString(name), literalOf, literalValue)
+	}
+	if of == ir.Map {
+		e.mapViewCertificate(property, value)
 	}
 	if of == ir.Object || of == ir.Array {
 		if property.Optional || property.Absent {
@@ -73,14 +83,10 @@ func (e *emitter) viewField(property ir.Property) string {
 			e.viewObjectUnion(property, value)
 		}
 	}
-	if of == ir.Closure && property.ViewContract > 0 {
-		contract := e.program.ViewContracts[property.ViewContract-1]
-		if contract.Kind == ir.ViewUnion && contract.Of == ir.Closure {
-			producer := e.temporary()
-			e.line("adamic_closure *%s = %s;", producer, value)
-			checked := e.emitViewCallableCertificate(property, producer)
-			value = "(adamic_closure *)" + checked
-		}
+	if of == ir.Closure && property.ViewContract != 0 && (e.program.ViewContracts[property.ViewContract-1].Kind == ir.ViewUnion && e.program.ViewContracts[property.ViewContract-1].Of == ir.Closure || e.program.ViewContracts[property.ViewContract-1].Result != 0 || e.program.ViewContracts[property.ViewContract-1].DiscardResult) {
+		callable := e.temporary()
+		e.line("adamic_closure *%s = (adamic_closure *)%s;", callable, value)
+		value = e.emitViewCallableCertificate(property, callable)
 	}
 	if of.IsReference() {
 		return e.own(of, fmt.Sprintf("adamic_retain((%s)%s)", cType(of), value))

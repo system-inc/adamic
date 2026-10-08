@@ -17,6 +17,13 @@ const viewCallablesRuntime = `const adamicViewCallableRead = (object, name, expr
     return value;
 };
 const adamicViewCallableCall = (value, receiver, arguments_, method) => method ? value(receiver, ...arguments_) : adamicCall(value, arguments_);
+const adamicViewCallablePreparedRead = (object, name, expression, method, optional, absent, expected) => {
+    let holder = object;
+    if (method && holder !== null && holder !== undefined) {
+        while (!Object.hasOwn(holder, name) && Object.getPrototypeOf(holder) !== null) holder = Object.getPrototypeOf(holder);
+    }
+    return adamicReadField(holder, name, expression, optional, absent, expected);
+};
 ` + viewCallableShapeRuntime
 
 func emitViewCallableRead(object, member, expression string, method bool) string {
@@ -28,6 +35,17 @@ func emitViewCallableCall(value, receiver, arguments string, method bool) string
 }
 
 func (e *emitter) emitViewCallableProperty(property ir.Property) string {
+	if property.ViewContract != 0 && (e.program.ViewContracts[property.ViewContract-1].Result != 0 || e.program.ViewContracts[property.ViewContract-1].DiscardResult) {
+		expected := e.program.ViewContracts[property.ViewContract-1].Name
+		raw := func(object string) string {
+			return fmt.Sprintf("adamicViewCallablePreparedRead(%s, %s, %s, %t, %t, %t, %s)", object, quote(property.Name), quote(property.View), property.Method, property.Optional, property.Absent, quote(expected))
+		}
+		if property.Method {
+			value := e.emitViewCallableCertificate(property, raw("object"))
+			return "((object) => { const value = " + value + "; return value instanceof AdamicClosure ? value : {code: (self, values) => value(object, ...values)}; })(" + e.value(property.Object) + ")"
+		}
+		return e.emitViewCallableCertificate(property, raw(e.value(property.Object)))
+	}
 	if property.Method {
 		return "((object) => { const value = " + emitViewCallableRead("object", property.Name, property.View, true) + "; return value instanceof AdamicClosure ? value : {code: (self, values) => value(object, ...values)}; })(" + e.value(property.Object) + ")"
 	}

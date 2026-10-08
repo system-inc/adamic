@@ -1,0 +1,6 @@
+const missing = /x/.exec("nothing");
+console.log(String(Object.is(missing, null)));
+console.log(String(Object.is(missing, undefined)));
+const present = /x/.exec("x");
+console.log(String(Object.is(present, null)));
+console.log(String(Object.is(/x/.exec("nothing"), null)));

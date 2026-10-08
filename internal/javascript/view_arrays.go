@@ -82,6 +82,12 @@ const adamicViewJoin = (array, separator, check) => array.map(value => check(val
 `
 
 func (e *emitter) value(expression ir.Expression) string {
+	if record, ok := expression.(ir.ArrayRecord); ok {
+		return e.emitViewArrayRecord(record)
+	}
+	if properties, ok := expression.(ir.ArrayProperties); ok {
+		return e.emitViewArrayProperties(properties)
+	}
 	if sort, ok := expression.(ir.ArraySort); ok && sort.OptionalComparator {
 		return e.emitViewOptionalArraySort(sort)
 	}

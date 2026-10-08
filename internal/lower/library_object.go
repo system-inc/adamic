@@ -9,6 +9,9 @@ import (
 )
 
 func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+	if value, handled, err := l.viewArrayRecordProduction(node, name); handled {
+		return value, true, err
+	}
 	refused := func(reason string) (ir.Expression, bool, error) {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason}
 	}
@@ -49,7 +52,12 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 			if err != nil {
 				return nil, true, err
 			}
-			call.Arguments = append(call.Arguments, fit(value, ir.Union))
+			boxed := fit(value, ir.Union)
+			if box, ok := boxed.(ir.Box); ok {
+				box.NullReference = l.includesNull(l.checker.GetTypeAtLocation(argument)) && value.Type().IsReference()
+				boxed = box
+			}
+			call.Arguments = append(call.Arguments, boxed)
 		}
 	case "isFrozen":
 		value, err := l.expression(written[0])

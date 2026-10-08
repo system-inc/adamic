@@ -1,0 +1,6 @@
+=== RUN   TestCheckedViewPrimitiveHeap
+    checked_views_primitive_heap_test.go:30: sanitized=false variant=true: exit codes differ; got oracle.run{stdout:[]uint8{0x62, 0x6f, 0x6f, 0x6c, 0x65, 0x61, 0x6e, 0x3a, 0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+--- FAIL: TestCheckedViewPrimitiveHeap (6.77s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	6.790s
+FAIL

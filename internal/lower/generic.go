@@ -105,6 +105,11 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 	// whatever function or closure called it.
 	outerSubstitution, outerLocals, outerClosures, outerTypeMapper := l.substitution, l.locals, l.closures, l.typeMapper
 	l.substitution, l.closures = substitution, nil
+	// Validation can return before signature or body lowering starts. Restore
+	// the caller's closure stack and type context on those exits too.
+	defer func() {
+		l.substitution, l.locals, l.closures, l.typeMapper = outerSubstitution, outerLocals, outerClosures, outerTypeMapper
+	}()
 	sources, targets := []*checker.Type{}, []*checker.Type{}
 	for _, parameter := range declaration.TypeParameters() {
 		parameterType := l.checker.GetTypeAtLocation(parameter.Name())
@@ -125,10 +130,7 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 		}
 	}
 	l.genericDepth++
-	defer func() {
-		l.substitution, l.locals, l.closures, l.typeMapper = outerSubstitution, outerLocals, outerClosures, outerTypeMapper
-		l.genericDepth--
-	}()
+	defer func() { l.genericDepth-- }()
 	if err := l.lowerFunction(index, declaration, -1); err != nil {
 		return 0, err
 	}

@@ -112,7 +112,7 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		// A function seen as another is handed the other's arguments, and its results are seen as
 		// the other's: each a view of its own.
 		if l.censusNeverRestSignature(toSignatures[0]) {
-			if l.censusDiscardedMarkerPredicate(fromSignatures[0], toSignatures[0]) {
+			if l.viewCallableVoidMarker(toSignatures[0]) || l.censusDiscardedMarkerPredicate(fromSignatures[0], toSignatures[0]) {
 				return nil
 			}
 			source := l.checker.GetReturnTypeOfSignature(fromSignatures[0])
@@ -403,6 +403,9 @@ func viewSite(node *ast.Node) bool {
 
 // refuseWidening refuses a value seen through a type that can write what it can't hold.
 func (l *lowering) refuseWidening(node *ast.Node) error {
+	if l.viewCallableDiscardedMarker(node) {
+		return nil
+	}
 	if l.nodeFSFileReadOnlyArgument(node) || l.nodeRequirePerformanceProjection(node) {
 		return nil
 	}

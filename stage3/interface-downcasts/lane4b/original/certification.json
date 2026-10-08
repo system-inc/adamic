@@ -1,0 +1,32 @@
+{
+  "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "source_types_sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+  "basis": "standalone source oracle using complete original declarations; all recorded sites audited against pinned upstream; whole-tsc execution reachability unmeasured",
+  "pairs": [
+    {
+      "type_id": 6998,
+      "type": "SourceFile",
+      "field": "externalModuleIndicator",
+      "candidate_reads": 20
+    },
+    {
+      "type_id": 9761,
+      "type": "Diagnostic",
+      "field": "messageText",
+      "candidate_reads": 15
+    }
+  ],
+  "fixtures": {
+    "diagnostic-boolean.a": "38901fb813dc01cb38482ca043902e64db4bf23dbda975ad0833709af220d617",
+    "diagnostic-code-wrong.a": "6315f02dd4419fc4ac946d87c9268c6f967015fe9bc2fe9c891c0deab1feeaac",
+    "diagnostic-good.a": "84f3ae28eb1f1d9a1953a59bc55317d8dce5c10d57f3984c8583d98286001543",
+    "source-file-false.a": "642072ad5d325f1a21f31500ccbb391fc1c50b597fdf2dbaa2ea7879ce8020f9",
+    "source-file-good.a": "41bcc59916ba47be612d751c811c1e8050f5b1bb919f6de7db495f4902e60f7b",
+    "source-file-helpers-false.a": "39f2b9d54adb2b14604d7e2e1cca3017ad0960844bed0ce62507d36691eb335e",
+    "source-file-helpers-good.a": "27d2a614685e2dcdedd96756deff1b834905b3909dfc595499d2c58cd7d95149",
+    "source-file-kind-wrong.a": "de7039f0807800d13b1cf95e88a3bc5e2070228f009caa40a4030af62c574d18",
+    "source-file-uninitialized.a": "a056880e2f402b6be817a7a09cc8fae19cd8722f5f0b7c7005ecadb14fa522bb"
+  },
+  "declaration_manifest": "declaration-manifest.json",
+  "runtime_gate": "logs/production-gate.log"
+}
