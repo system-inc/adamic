@@ -83,3 +83,16 @@ rewrites completed in 239.488s: entries 01-03, 05-07 and 12 detect their faults;
 04, 08, 09 and 11 report no-longer-applies. All five historical skipped entries
 retain their reasons. The four patches are refreshed without changing compiler
 production code; entry 11 targets the replacement readiness contract explicitly.
+
+Refreshed catalog validation:
+
+```sh
+bash verify/catalog/check.sh 5c104a61e1156aa7a3cc14844df4f32d0fa76ee4 -jobs 1
+```
+
+Exit 0, 283.391s. All eleven active entries report
+`applies-and-fails-as-recorded`; the five historical skips are not reassessed.
+The full per-entry timing/status manifest is
+[catalog/logs/compiler-area-closure-results.json](catalog/logs/compiler-area-closure-results.json).
+The catalog's exact named commands, expected failing subtests and diagnostics
+remain in catalog.json. No compiler production code changed in this refresh.

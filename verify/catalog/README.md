@@ -362,3 +362,10 @@ and TypeScript Git repositories. It still created independent submodule
 checkouts and verified the exact gitlinks; no source file was lifted or patched.
 This run exited 1 only for the four recorded applicability failures (239.488s).
 The refreshed check is recorded in the integration validation report.
+
+The refreshed checker on 5c104a61e1156aa7a3cc14844df4f32d0fa76ee4 exited 0
+in 283.391s. All eleven active entries apply and fail as recorded, including the
+replacement readiness expectation for 11; five historical skips remain outside
+this refresh. [The run manifest](logs/compiler-area-closure-results.json) records
+every entry, target, outcome and timing. This is a named-test sweep, not a new
+whole-package oracle measurement.
