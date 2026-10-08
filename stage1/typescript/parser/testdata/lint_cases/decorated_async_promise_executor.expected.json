@@ -1,0 +1,9 @@
+{
+  "file": "decorated_async_promise_executor.ts",
+  "found_by": "lint-wave1-03: no-async-promise-executor unified upstream recovery comparison",
+  "first_difference": {
+    "line": 1,
+    "port": "diagnostic 1109 12 1 1\tExpression expected.",
+    "typescript_go": "diagnostic 1109 16 0 1\tExpression expected."
+  }
+}
