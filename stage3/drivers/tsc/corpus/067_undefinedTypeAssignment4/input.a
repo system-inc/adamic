@@ -1,3 +1,4 @@
+// a-check: type error TS2414
 // @target: es2015
 class undefined {
 	foo: string;

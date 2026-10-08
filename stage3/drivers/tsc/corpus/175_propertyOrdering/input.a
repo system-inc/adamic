@@ -1,3 +1,4 @@
+// a-check: type error TS2551
 // @target: es2015
 class Foo {
     constructor(store: string) { }

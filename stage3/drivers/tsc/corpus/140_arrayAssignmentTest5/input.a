@@ -1,3 +1,4 @@
+// a-check: type error TS2366
 // @target: es2015
 namespace Test {
     interface IState {

@@ -1,3 +1,4 @@
+// a-check: type error TS2660
 // @target: es2015
 class User {
     sayHello() {

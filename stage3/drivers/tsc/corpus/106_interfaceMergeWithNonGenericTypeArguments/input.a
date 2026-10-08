@@ -1,3 +1,4 @@
+// a-check: type error TS2315
 // @target: es2015
 export class SomeBaseClass { }
 export interface SomeInterface { }

@@ -1,3 +1,4 @@
+// a-check: type error TS2593
 // @target: es2015
 // @lib: es5
 describe("my test suite", () => {

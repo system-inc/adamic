@@ -1,3 +1,4 @@
+// a-check: type error TS2454
 // @target: es2015
 enum E { A, B }
 let n: number;

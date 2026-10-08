@@ -1,3 +1,4 @@
+// a-check: type error TS2372
 // @target: es2015
 // @strict: false
 function foo(x: number = x) {

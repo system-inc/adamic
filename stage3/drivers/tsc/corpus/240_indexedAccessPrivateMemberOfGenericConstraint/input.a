@@ -1,3 +1,4 @@
+// a-check: type error TS4105
 // @target: es2015
 class A {
   private a: number;

@@ -1,2 +1,3 @@
+// a-check: type error TS2566
 // @target: es2015
 const { ...a: b } = {};

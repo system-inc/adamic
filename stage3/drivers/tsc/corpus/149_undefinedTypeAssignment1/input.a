@@ -1,3 +1,4 @@
+// a-check: type error TS2457
 // @target: es2015
 type undefined = string;
 function p(undefined = "wat") {

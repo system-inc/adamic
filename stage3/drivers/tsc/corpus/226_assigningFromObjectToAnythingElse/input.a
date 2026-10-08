@@ -1,3 +1,4 @@
+// a-check: type error TS2558
 // @target: es2015
 declare var x: Object;
 var y: RegExp;

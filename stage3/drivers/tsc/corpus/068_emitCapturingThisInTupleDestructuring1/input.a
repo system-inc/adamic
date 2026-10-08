@@ -1,3 +1,4 @@
+// a-check: type error TS7010
 ﻿// @target: es2015
 declare function wrapper(x: any);
 wrapper((array: [any]) => {

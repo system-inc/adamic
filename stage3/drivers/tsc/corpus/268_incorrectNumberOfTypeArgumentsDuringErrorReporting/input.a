@@ -1,3 +1,4 @@
+// a-check: type error TS2559
 // @target: es2015
 interface ObjA {
   y?:string,

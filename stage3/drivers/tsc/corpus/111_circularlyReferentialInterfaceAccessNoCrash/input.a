@@ -1,3 +1,4 @@
+// a-check: type error TS4110
 // @target: es2015
 type Mxs = Mx<'list', Mxs['p1']>;
 

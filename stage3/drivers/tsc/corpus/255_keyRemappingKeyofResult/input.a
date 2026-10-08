@@ -1,3 +1,4 @@
+// a-check: type error TS2322
 // @target: es6
 const sym = Symbol("")
 type Orig = { [k: string]: any, str: any, [sym]: any }

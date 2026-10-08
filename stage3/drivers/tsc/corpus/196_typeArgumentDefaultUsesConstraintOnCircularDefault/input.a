@@ -1,3 +1,4 @@
+// a-check: type error TS2744
 // @target: es2015
 type Test<T extends string = T> = { value: T };  // Error
 

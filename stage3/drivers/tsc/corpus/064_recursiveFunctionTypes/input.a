@@ -1,3 +1,4 @@
+// a-check: type error TS2355
 // @target: es2015
 function fn(): typeof fn { return 1; }
 

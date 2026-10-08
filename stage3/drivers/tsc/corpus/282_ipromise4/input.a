@@ -1,3 +1,4 @@
+// a-check: type error TS2322
 // @target: es2015
 declare namespace Windows.Foundation {
     export interface IPromise<T> {

@@ -1,3 +1,4 @@
+// a-check: type error TS2808
 // @target: es2015
 class C99 {
 	private get Baz():number { return 0; }

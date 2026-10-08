@@ -1,3 +1,4 @@
+// a-check: type error TS2348
 // @target: es2015
 class C { }
 var c = C();

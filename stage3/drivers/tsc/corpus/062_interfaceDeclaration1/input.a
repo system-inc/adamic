@@ -1,3 +1,4 @@
+// a-check: type error TS2310
 // @target: es2015
 interface I1 {
     item:number;

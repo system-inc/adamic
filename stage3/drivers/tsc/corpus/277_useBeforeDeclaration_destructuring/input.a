@@ -1,3 +1,4 @@
+// a-check: type error TS2448
 // @target: es2015
 a;
 let {a, b = a} = {a: '', b: 1};

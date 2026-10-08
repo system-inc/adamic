@@ -1,3 +1,4 @@
+// a-check: type error TS2690
 // @target: esnext
 
 type K = number | string;

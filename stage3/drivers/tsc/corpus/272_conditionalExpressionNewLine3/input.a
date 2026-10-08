@@ -1,3 +1,4 @@
+// a-check: type error TS2304
 // @target: es2015
 var v = a ?
   b : c;

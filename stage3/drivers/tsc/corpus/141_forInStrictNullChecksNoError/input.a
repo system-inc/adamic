@@ -1,3 +1,4 @@
+// a-check: type error TS18049
 // @target: es2015
 // @strictNullChecks: true
 function f(x: { [key: string]: number; } | null | undefined) {

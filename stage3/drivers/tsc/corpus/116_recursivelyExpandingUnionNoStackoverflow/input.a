@@ -1,3 +1,4 @@
+// a-check: type error TS2615
 // @target: es2015
 type N<T, K extends string> = T | { [P in K]: N<T, K> }[K];
 

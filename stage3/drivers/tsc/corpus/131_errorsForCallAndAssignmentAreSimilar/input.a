@@ -1,3 +1,4 @@
+// a-check: type error TS2820
 // @target: es2015
 function minimalExample1() {
     type Disc =

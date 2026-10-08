@@ -1,3 +1,4 @@
+// a-check: type error TS2855
 // @target: esnext
 class T {
     field = () => {}
