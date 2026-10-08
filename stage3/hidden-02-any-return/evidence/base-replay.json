@@ -1,0 +1,61 @@
+[
+  {
+    "measurement": "measured on a checker-rejected program",
+    "file": "/tmp/hidden-adapted/src/compiler/core.ts",
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/hidden-adapted/src/compiler/core.ts:1891:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 66769,
+        "body_end": 66948,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "memoize",
+        "top": "/tmp/hidden-adapted/src/compiler/core.ts:1891:1"
+      }
+    ],
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/hidden-adapted/src/compiler/core.ts:1891:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/hidden-adapted/src/compiler/core.ts:1892:9",
+        "reason": "a value of type T",
+        "text": "/tmp/hidden-adapted/src/compiler/core.ts:1892:9: stage 0 can't lower a value of type T yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/hidden-adapted/src/compiler/core.ts:1891:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/hidden-adapted/src/compiler/core.ts:1892:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/hidden-adapted/src/compiler/core.ts:1892:9: stage 0 can't lower a value of type T yet",
+        "start": 66771,
+        "end": 66790
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/hidden-adapted/src/compiler/core.ts:1891:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/hidden-adapted/src/compiler/core.ts:1893:12",
+        "reason": "a function returning T",
+        "text": "/tmp/hidden-adapted/src/compiler/core.ts:1893:12: stage 0 can't lower a function returning T yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/hidden-adapted/src/compiler/core.ts:1891:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/hidden-adapted/src/compiler/core.ts:1893:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/hidden-adapted/src/compiler/core.ts:1893:12: stage 0 can't lower a function returning T yet",
+        "start": 66790,
+        "end": 66945
+      }
+    ]
+  }
+]

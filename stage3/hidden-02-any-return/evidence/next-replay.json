@@ -1,0 +1,38 @@
+[
+  {
+    "measurement": "measured on a checker-rejected program",
+    "file": "/tmp/hidden-adapted/src/compiler/utilities.ts",
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/hidden-adapted/src/compiler/utilities.ts:1384:1",
+        "kind": "KindVariableStatement",
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "top": "/tmp/hidden-adapted/src/compiler/utilities.ts:1384:1"
+      }
+    ],
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/hidden-adapted/src/compiler/utilities.ts:1384:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/hidden-adapted/src/compiler/utilities.ts:1386:24",
+        "reason": "Object.entries",
+        "text": "/tmp/hidden-adapted/src/compiler/utilities.ts:1386:24: Adamic 0.1 refuses Object.entries; tsc's result must have one homogeneous number, string or boolean value type; any and widened field views are unsound"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/hidden-adapted/src/compiler/utilities.ts:1384:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/hidden-adapted/src/compiler/utilities.ts:1384:1",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/hidden-adapted/src/compiler/utilities.ts:1386:24: Adamic 0.1 refuses Object.entries; tsc's result must have one homogeneous number, string or boolean value type; any and widened field views are unsound",
+        "start": 48518,
+        "end": 64484
+      }
+    ]
+  }
+]

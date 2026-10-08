@@ -1,0 +1,32 @@
+export GOPROXY='https://proxy.golang.org|direct'
+bash cloud/setup.sh > /tmp/hidden-02-setup-base.log 2>&1
+source /workspace/adamic-tools/env.sh
+
+# At dcdbb909, and independently at 32b7eed5 in the detached comparison worktree.
+go run ./stage3/census/latent/replay -project /tmp/hidden-adapted/src/compiler -where /tmp/hidden-adapted/src/compiler/core.ts:1891:17 -kind NotYet -reason 'a function returning any' > /tmp/hidden-02-base-replay.log 2>&1
+# Repeat from the detached 32b7eed5 worktree, writing fixed-replay.log.
+# Each exits 1: signature mismatch, not reproduction.
+
+# At 32b7eed5.
+go run ./stage3/census/latent/replay -project /tmp/hidden-adapted/src/compiler -where /tmp/hidden-adapted/src/compiler/utilities.ts:1386:24 -kind Refused -reason Object.entries > /tmp/hidden-02-next-replay.log 2>&1
+# Exits 0: exact replacement reason and location reproduced.
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/any_returns_concrete.a$' -count=1 -v > /tmp/hidden-02-existing-oracle.log 2>&1
+go test ./internal/lower -run '^TestGenericResolvedReturnContracts$' -count=1 > /tmp/hidden-02-real-any-refusal.log 2>&1
+
+# On the delivery base: the exact any-bearing reduction remains blocked.
+node --disable-warning=ExperimentalWarning oracle/node.mjs /tmp/hidden-02-witness/unsafe.a > /tmp/hidden-02-unsafe-node.log 2>&1
+go run ./cmd/adamic c /tmp/hidden-02-witness/unsafe.a > /tmp/hidden-02-unsafe-refusal.log 2>&1
+
+# At the frozen adaptation pin, create the exact original source tree.
+bash stage3/apply.sh /tmp/hidden-adapted > /tmp/hidden-02-adapt.log 2>&1
+# All 82 bytes/hashes checked against stock.json.gz before the final measurements.
+
+# Independently at each compiler tip, build the existing guarded full census.
+python3 stage3/census/latent/make_overlay.py "$PWD" /tmp/hidden-02-base-overlay > /tmp/hidden-02-base-overlay.log 2>&1
+go build -buildvcs=false -overlay=/tmp/hidden-02-base-overlay/overlay.json -o /tmp/hidden-02-base-census ./stage3/census/latent/tool > /tmp/hidden-02-base-build.log 2>&1
+LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1 /tmp/hidden-02-base-census /tmp/hidden-adapted/src/compiler /tmp/hidden-02-base.jsonl > /tmp/hidden-02-base-census.log 2>&1
+# Fixed comparison uses the equivalent fixed-overlay, fixed-census, fixed.jsonl names.
+
+# Arithmetic references hidden.py from census pin 388096e6. It clips the hidden
+# ranges to utilities.ts [48518,64484), never credits the reason-group total.
+python3 /tmp/hidden-02-measure.py > /tmp/hidden-02-measure.log 2>&1
