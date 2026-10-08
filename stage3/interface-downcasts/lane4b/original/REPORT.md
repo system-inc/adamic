@@ -77,3 +77,62 @@ The working whole-family target remains October 13, 2026, 23:00 UTC. Candidate
 coverage is tracked in certification.json and the ranked lazy-pair-progress.json;
 completed_reads denotes candidate reads attached to witnessed pairs, never
 measured whole-program runtime reads.
+
+October 8, next original-pair checkpoint
+
+Built: full-declaration LiteralType.value witnesses and an explicit bindable intersection frontier.
+Commits: builds on d70bc4dd and integration ba59427c; tip is the commit containing this checkpoint.
+Commands/results: selected original, reduced, array, lazy and intersection gate plus go vet and diff check; timings recorded in logs/next-production-gate.log.
+Mutants: wrong scalar acceptance, skipped outer read check, wrong nested boolean acceptance and dropped transitive check caught in both release backends.
+Uncovered: 39 candidate pairs / 136 candidate reads; bindable expression's 11 reads remain included; exact whole-tsc reachability unmeasured.
+
+LiteralType.value (10 attached candidate reads) now joins the two certified
+standalone original field contracts. The complete upstream LiteralType and
+PseudoBigInt declarations are imported, inherited fields and mutable qualifiers
+included. Positive output is plain/42/true:123. Boolean at value pins the named
+string | number | PseudoBigInt refusal; nested negative and base10Value failures
+pin expected boolean/string and found number, exit 70 in native and JavaScript.
+The type does not allow absence, so there is no allowed-absence fixture.
+All ten original site texts are audited against the pinned upstream source.
+These are representative original field-contract witnesses, not executions of
+the original enclosing compiler functions.
+
+Release mutant outputs (native / JS), each exit 0 and caught by the refusal pin:
+accept boolean at value: wrong / wrong; skip outer check: wrong / wrong;
+accept wrong nested negative: true:123 / 42:123; drop its transitive check:
+false:123 / 42:123. Existing SourceFile and Diagnostic mutants remain enabled.
+
+The higher-ranked BindableStaticAccessExpression.expression (11 candidate reads)
+is audited and explicitly remains uncertified. A cast-only original parent
+witness prints admitted in Node and both backends. Its demanded expression read
+refuses with the pinned unsupported representation conversion contract message.
+A minimal named hook in lower/library_object.go calls the owned
+objectPrimitiveIntersectionStorage helper to recognize a physical object slot
+for plain structural union/intersection members with aggregate fields. This
+does not certify the intersection. Existing lazy contract refusal is unchanged,
+and existing intersection checks run in the selected gate. No emitter or
+view_lazy.go hook is added. The integrator should reconcile this storage hook.
+
+Provenance preparation now checks the four highest-ranked candidate pairs
+(including the uncertified frontier), hashes all emitted external declarations,
+and records complete LiteralType, PseudoBigInt and bindable field sets. The
+original suite is opt-in and ran with declarations enabled. Whole-program lazy
+census remains opt-in and unmeasured. Selected tests only; not the full gate.
+The whole-family working target remains October 13, 2026, 23:00 UTC.
+
+Final selected command (all output in logs/next-production-gate.log):
+
+```
+ADAMIC_OBJECT_PRIMITIVE_ORIGINAL_DECLS=/tmp/object-primitive-original-declarations ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/native ./internal/javascript ./internal/oracle -run 'TestCheckedViewObjectPrimitive|TestViewIntersection|TestCheckedViewLane4HelperReads|TestCheckedViewMixedSelection|TestLazyView|TestCheckedViewArrays' -count=1 -v -timeout 10m
+go vet ./internal/lower ./internal/native ./internal/javascript ./internal/oracle
+git diff --check
+```
+
+Passed: lower 1.411s, oracle 53.104s; native and JavaScript had no matching
+package-local tests and ran via the oracle. All 15 original cases passed,
+including both frontier cases; the frontier is deliberately not certified.
+Vet and diff checks passed. Fetch confirmed integration remains ba59427c.
+One initial original run exposed an unread control containing an unused reader;
+the cast-only control now contains no read. A subsequent rebuild failure during
+removal of an unnecessary draft helper was corrected before this final gate;
+neither failure was counted as a mutant kill.

@@ -1097,3 +1097,17 @@ refuses Named & Counted at value, so zero pairs/reads are complete. Native and
 JavaScript package tests pass; lower retains the documented mixed-array adapter
 failure. The lane-owned component work, six executable mutants and exact blocker
 handoff are recorded in lane7/REPORT.txt. Rest pending integrated lazy admission.
+
+Object plus primitive lane, original LiteralType checkpoint (October 8):
+New owned witnesses: lane4b/original/literal-{good,boolean,negative-wrong,text-wrong}.a
+and bindable-expression-{unread,frontier}.a. Original LiteralType.value (10
+candidate reads) imports complete LiteralType and PseudoBigInt declarations.
+Minimal named shared hook: internal/lower/library_object.go objectIntersection
+calls objectPrimitiveIntersectionStorage in the lane-owned lower helper. This
+recognizes object-reference storage for plain structural unions/intersections
+with aggregate fields; it proves no conjunction or member contract. Existing
+lazy admission still refuses the unsupported bindable expression at its read.
+Cast-only original bindable witness admits in both backends; demanded read pins
+the named representation-conversion refusal. This pair remains uncertified.
+Existing intersection oracle checks are included in validation. No change to
+view_lazy.go or shared contract acceptance is included.

@@ -14,6 +14,12 @@
       "type": "Diagnostic",
       "field": "messageText",
       "candidate_reads": 15
+    },
+    {
+      "type_id": 7536,
+      "type": "LiteralType",
+      "field": "value",
+      "candidate_reads": 10
     }
   ],
   "fixtures": {
@@ -25,7 +31,11 @@
     "source-file-helpers-false.a": "39f2b9d54adb2b14604d7e2e1cca3017ad0960844bed0ce62507d36691eb335e",
     "source-file-helpers-good.a": "27d2a614685e2dcdedd96756deff1b834905b3909dfc595499d2c58cd7d95149",
     "source-file-kind-wrong.a": "de7039f0807800d13b1cf95e88a3bc5e2070228f009caa40a4030af62c574d18",
-    "source-file-uninitialized.a": "a056880e2f402b6be817a7a09cc8fae19cd8722f5f0b7c7005ecadb14fa522bb"
+    "source-file-uninitialized.a": "a056880e2f402b6be817a7a09cc8fae19cd8722f5f0b7c7005ecadb14fa522bb",
+    "literal-boolean.a": "f7e5b6d4e1d210cf32bcc8748a71d16fe4e8ab05ae8ee32666d1156dbc323f3d",
+    "literal-negative-wrong.a": "1003abff48e5a383b7cde44d2d9cad9fb9b897018bb84f21ddbe74a08b794d89",
+    "literal-good.a": "e71f40e6ae4557a4d2ccd90625bdd425da0377590eeabb318f5f4030b70ae10e",
+    "literal-text-wrong.a": "541181808c1e536a8c0d46de188bec3ada58404d926e62c8f02c624d49b40751"
   },
   "declaration_manifest": "declaration-manifest.json",
   "runtime_gate": "logs/production-gate.log"

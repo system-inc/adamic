@@ -102,6 +102,73 @@
       "messageText",
       "next",
       "repopulateInfo"
+    ],
+    "BindableStaticPropertyAssignmentExpression": [
+      "_declarationBrand",
+      "_expressionBrand",
+      "_jsdocContainerBrand",
+      "emitNode",
+      "end",
+      "flags",
+      "id",
+      "jsDoc",
+      "kind",
+      "left",
+      "localSymbol",
+      "modifierFlagsCache",
+      "operatorToken",
+      "original",
+      "parent",
+      "pos",
+      "right",
+      "symbol",
+      "transformFlags"
+    ],
+    "BindableStaticAccessExpression": [
+      "_declarationBrand",
+      "_expressionBrand",
+      "_flowContainerBrand",
+      "_jsdocContainerBrand",
+      "_leftHandSideExpressionBrand",
+      "_memberExpressionBrand",
+      "_unaryExpressionBrand",
+      "_updateExpressionBrand",
+      "emitNode",
+      "end",
+      "expression",
+      "flags",
+      "flowNode",
+      "id",
+      "jsDoc",
+      "kind",
+      "localSymbol",
+      "modifierFlagsCache",
+      "original",
+      "parent",
+      "pos",
+      "questionDotToken",
+      "symbol",
+      "transformFlags"
+    ],
+    "LiteralType": [
+      "aliasSymbol",
+      "aliasTypeArguments",
+      "checker",
+      "flags",
+      "freshType",
+      "id",
+      "immediateBaseConstraint",
+      "pattern",
+      "permissiveInstantiation",
+      "regularType",
+      "restrictiveInstantiation",
+      "symbol",
+      "value",
+      "widened"
+    ],
+    "PseudoBigInt": [
+      "base10Value",
+      "negative"
     ]
   },
   "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
@@ -483,6 +550,192 @@
           "start": 9901,
           "end": 9923,
           "text": "diagnostic.messageText"
+        }
+      ]
+    },
+    {
+      "type_id": 9474,
+      "type": "BindableStaticAccessExpression",
+      "field": "expression",
+      "declared_type": "EntityNameExpression | (LeftHandSideExpression & BindableStaticNameExpression)",
+      "read_count": 11,
+      "sites": [
+        {
+          "file": "src/compiler/utilitiesPublic.ts",
+          "line": 1759,
+          "column": 79,
+          "start": 69549,
+          "end": 69564,
+          "text": "node.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3223,
+          "column": 54,
+          "start": 157159,
+          "end": 157179,
+          "text": "node.left.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3230,
+          "column": 87,
+          "start": 157512,
+          "end": 157532,
+          "text": "node.left.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3230,
+          "column": 144,
+          "start": 157569,
+          "end": 157589,
+          "text": "node.left.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3283,
+          "column": 82,
+          "start": 160958,
+          "end": 160970,
+          "text": "l.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3284,
+          "column": 75,
+          "start": 161050,
+          "end": 161062,
+          "text": "l.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3355,
+          "column": 35,
+          "start": 165178,
+          "end": 165193,
+          "text": "node.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3368,
+          "column": 32,
+          "start": 165699,
+          "end": 165719,
+          "text": "node.left.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3387,
+          "column": 32,
+          "start": 166905,
+          "end": 166919,
+          "text": "lhs.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3388,
+          "column": 37,
+          "start": 166992,
+          "end": 167017,
+          "text": "classPrototype.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3528,
+          "column": 77,
+          "start": 174934,
+          "end": 174959,
+          "text": "propertyAccess.expression"
+        }
+      ]
+    },
+    {
+      "type_id": 7536,
+      "type": "LiteralType",
+      "field": "value",
+      "declared_type": "string | number | PseudoBigInt",
+      "read_count": 10,
+      "sites": [
+        {
+          "file": "src/compiler/debug.ts",
+          "line": 644,
+          "column": 102,
+          "start": 28835,
+          "end": 28862,
+          "text": "(this as LiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 20286,
+          "column": 65,
+          "start": 1185648,
+          "end": 1185675,
+          "text": "(type as LiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 22256,
+          "column": 67,
+          "start": 1307463,
+          "end": 1307492,
+          "text": "(source as LiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 22256,
+          "column": 101,
+          "start": 1307497,
+          "end": 1307526,
+          "text": "(target as LiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 45357,
+          "column": 84,
+          "start": 2657570,
+          "end": 2657597,
+          "text": "(type as LiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 51329,
+          "column": 30,
+          "start": 2980954,
+          "end": 2980981,
+          "text": "(type as LiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 53970,
+          "column": 47,
+          "start": 3133145,
+          "end": 3133170,
+          "text": "(t1 as LiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 53970,
+          "column": 84,
+          "start": 3133182,
+          "end": 3133207,
+          "text": "(t2 as LiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 53977,
+          "column": 47,
+          "start": 3133471,
+          "end": 3133496,
+          "text": "(t1 as LiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 53977,
+          "column": 84,
+          "start": 3133508,
+          "end": 3133533,
+          "text": "(t2 as LiteralType).value"
         }
       ]
     }

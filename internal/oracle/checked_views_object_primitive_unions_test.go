@@ -239,7 +239,7 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 	if err := json.Unmarshal(manifestBytes, &manifest); err != nil {
 		t.Fatal(err)
 	}
-	if manifest.Commit != "050880ce59e30b356b686bd3144efe24f875ebc8" || len(manifest.Declarations) == 0 || len(manifest.Pairs) != 2 {
+	if manifest.Commit != "050880ce59e30b356b686bd3144efe24f875ebc8" || len(manifest.Declarations) == 0 || len(manifest.Pairs) != 4 {
 		t.Fatal("original declaration provenance changed")
 	}
 	for file, expected := range manifest.Declarations {
@@ -254,7 +254,14 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 	if manifest.Pairs[0].Type != "SourceFile" || manifest.Pairs[0].Reads != 20 || len(manifest.Pairs[0].Sites) != 20 || manifest.Pairs[1].Type != "Diagnostic" || manifest.Pairs[1].Reads != 15 || len(manifest.Pairs[1].Sites) != 15 {
 		t.Fatal("candidate pair provenance changed")
 	}
+	if manifest.Pairs[2].Type != "BindableStaticAccessExpression" || manifest.Pairs[2].Reads != 11 || len(manifest.Pairs[2].Sites) != 11 || manifest.Pairs[3].Type != "LiteralType" || manifest.Pairs[3].Reads != 10 || len(manifest.Pairs[3].Sites) != 10 {
+		t.Fatal("next pair provenance changed")
+	}
 	for _, sample := range []struct{ name, source, output, message, root, nested string }{
+		{"literal-good", "plain\n42\ntrue:123\n", "plain\n42\ntrue:123\n", "", "LiteralType", ""},
+		{"literal-boolean", "wrong\n", "", "field read failed: type.value matches no member of string | number | PseudoBigInt; expected string | number | PseudoBigInt, found boolean", "LiteralType", ""},
+		{"literal-negative-wrong", "42:123\n", "", "field read failed: member.negative is not a boolean; expected boolean, found number", "LiteralType", "member.negative"},
+		{"literal-text-wrong", "false:123\n", "", "field read failed: member.base10Value is not a string; expected string, found number", "LiteralType", ""},
 		{"source-file-helpers-good", "true\ntrue\n", "true\ntrue\n", "", "SourceFile", ""},
 		{"source-file-helpers-false", "false\n", "", "field read failed: file.externalModuleIndicator matches no member of true | Node | undefined; expected true | Node | undefined, found boolean", "SourceFile", ""},
 		{"source-file-uninitialized", "null\n", "", "field read failed: file.externalModuleIndicator is not initialized; expected true | Node | undefined, found uninitialized", "SourceFile", ""},
@@ -292,7 +299,7 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			for _, name := range []string{sample.root, map[string]string{"SourceFile": "Node", "Diagnostic": "DiagnosticMessageChain"}[sample.root]} {
+			for _, name := range []string{sample.root, map[string]string{"SourceFile": "Node", "Diagnostic": "DiagnosticMessageChain", "LiteralType": "PseudoBigInt"}[sample.root]} {
 				complete := false
 				for _, contract := range program.ViewContracts {
 					if contract.Name != name {
@@ -374,7 +381,11 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 				if count := changeObjectPrimitiveRead(program, matches, func(read ir.Property) ir.Property {
 					original = read
 					read.ViewAllowed = nil
-					read.Of = ir.Boolean
+					if sample.root == "LiteralType" {
+						read.Of = ir.Number
+					} else {
+						read.Of = ir.Boolean
+					}
 					return read
 				}); count != 1 {
 					t.Fatalf("want one nested read, got %d", count)
@@ -384,10 +395,10 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 				changeObjectPrimitiveRead(program, matches, func(read ir.Property) ir.Property { read.View = ""; return read })
 				caught("drop transitive check")
 			}
-			if sample.name == "source-file-false" || sample.name == "source-file-helpers-false" || sample.name == "diagnostic-boolean" {
+			if sample.name == "source-file-false" || sample.name == "source-file-helpers-false" || sample.name == "diagnostic-boolean" || sample.name == "literal-boolean" {
 				var root ir.Property
 				match := func(read ir.Property) bool {
-					return read.View == "file.externalModuleIndicator" || read.View == "diagnostic.messageText"
+					return read.View == "file.externalModuleIndicator" || read.View == "diagnostic.messageText" || read.View == "type.value"
 				}
 				if count := changeObjectPrimitiveRead(program, match, func(read ir.Property) ir.Property { root = read; return read }); count != 1 {
 					t.Fatalf("want one union read, got %d", count)
@@ -402,7 +413,7 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 					if sample.root == "SourceFile" && member.Of == ir.Boolean && len(member.Allowed) == 1 {
 						member.Allowed = append([]ir.ViewLiteral(nil), member.Allowed...)
 						member.Allowed[0].Boolean = false
-					} else if sample.root == "Diagnostic" && member.Of == ir.String {
+					} else if sample.root != "SourceFile" && member.Of == ir.String {
 						member.Of, member.Allowed = ir.Boolean, nil
 					} else {
 						continue
@@ -420,4 +431,47 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 			}
 		})
 	}
+	for _, name := range []string{"bindable-expression-unread", "bindable-expression-frontier"} {
+		t.Run(name, func(t *testing.T) {
+			input, err := os.ReadFile("../../stage3/interface-downcasts/lane4b/original/" + name + ".a")
+			if err != nil {
+				t.Fatal(err)
+			}
+			bound := strings.Replace(string(input), "'original-tsc-types'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(declarations, "compiler/types.d.ts"))), 1)
+			file := filepath.Join(t.TempDir(), name+".a")
+			if err := os.WriteFile(file, []byte(bound), 0600); err != nil {
+				t.Fatal(err)
+			}
+			output := "admitted\n"
+			if name == "bindable-expression-frontier" {
+				output = "80\n"
+			}
+			if diff := disagreement(run{stdout: []byte(output)}, onNode(t, file)); diff != "" {
+				t.Fatal("source Node: " + diff)
+			}
+			loaded, err := load.Load([]string{file})
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lower.Lower(context.Background(), loaded)
+			if name == "bindable-expression-frontier" {
+				refusal, ok := err.(*lower.Refused)
+				if !ok || refusal.What != "checked view read of field expression with unsupported representation conversion contract" {
+					t.Fatalf("expected named read-stage frontier, got %v", err)
+				}
+				t.Log("uncertified original pair: " + refusal.What)
+				return
+			}
+			if err != nil {
+				t.Fatal(err)
+			}
+			sanitized, _ := nativelyUncached(t, program)
+			for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if diff := disagreement(run{stdout: []byte(output)}, got); diff != "" {
+					t.Fatal(diff)
+				}
+			}
+		})
+	}
+
 }
