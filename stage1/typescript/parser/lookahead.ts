@@ -411,6 +411,25 @@ export function typeArgumentsAhead(scanner: Scanner): boolean {
     return result;
 }
 
+// Contextual modifiers remain names unless the next token can be a declaration
+// member. Static permits a line break; the other modifiers use same-line lookahead.
+export function declarationModifierAhead(scanner: Scanner): boolean {
+    if(!declarationModifierStart(kind(scanner))) {
+        return false;
+    }
+    const current = kind(scanner);
+    const state = new Speculation(scanner);
+    state.next();
+    const next = kind(scanner);
+    const result =
+        (current === 'StaticKeyword' || (scanner.flags & 1) === 0) &&
+        (next === 'Identifier' || next.endsWith('Keyword') ||
+            ['OpenBracketToken', 'OpenBraceToken', 'AsteriskToken', 'DotDotDotToken',
+                'StringLiteral', 'NumericLiteral', 'BigIntLiteral'].includes(next));
+    state.restore();
+    return result;
+}
+
 // A modifier is a declaration start only when its following tokens commit to
 // a declaration. Source-list recovery skips a stranded export token.
 export function declarationAhead(scanner: Scanner): boolean {

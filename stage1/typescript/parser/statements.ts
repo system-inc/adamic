@@ -4,7 +4,7 @@ import { Scanner } from '../scanner/scanner.ts';
 import type { ParseNode } from './nodes.ts';
 import { isReservedKind } from './grammar.ts';
 import { keywordSuggestion } from './spelling.ts';
-import { declarationAhead } from './lookahead.ts';
+import { declarationAhead, declarationModifierAhead } from './lookahead.ts';
 
 export interface StatementContextInterface {
     readonly scanner: Scanner;
@@ -1115,9 +1115,7 @@ export class Statements {
             this.parser.kind() === 'AtToken' ||
             (this.parser.kind() === 'ExportKeyword' && !this.exportedClauseAhead()) ||
             this.parser.kind() === 'DefaultKeyword' ||
-            ((this.parser.kind() === 'DeclareKeyword' || this.parser.kind() === 'AbstractKeyword') &&
-                declarationAhead(this.parser.scanner)) ||
-            (this.parser.kind() === 'AsyncKeyword' && this.parser.peek() === 'FunctionKeyword') ||
+            (declarationModifierAhead(this.parser.scanner) && declarationAhead(this.parser.scanner)) ||
             (this.parser.kind() === 'ConstKeyword' && this.parser.peek() === 'EnumKeyword')
         ) {
             if(this.parser.kind() === 'AsyncKeyword') {
@@ -1199,7 +1197,7 @@ export class Statements {
         }
         if(
             ((this.parser.kind() === 'NamespaceKeyword' || this.parser.kind() === 'ModuleKeyword') &&
-                (this.parser.nextIdentifierSameLine() || this.parser.peek() === 'StringLiteral')) ||
+                declarationAhead(this.parser.scanner)) ||
             (this.parser.kind() === 'GlobalKeyword' && this.parser.peek() === 'OpenBraceToken')
         ) {
             const keyword = this.parser.kind();

@@ -18,6 +18,7 @@ import {
     arrowAhead,
     jsxArrowAhead,
     statementAhead,
+    declarationModifierAhead,
     typeArgumentsAhead,
     typeMemberAhead,
     typeTokenStart,
@@ -27,7 +28,6 @@ import {
 import type { ParserStateInterface } from './lookahead.ts';
 import { listDiagnostic, listTerminator } from './recovery.ts';
 import { lexicalMessage } from './lexical.ts';
-
 interface ParseDiagnosticInterface {
     readonly code: number;
     readonly start: number;
@@ -393,7 +393,7 @@ export class Parser {
             case 'FunctionKeyword':
                 return this.functionExpression();
             case 'AsyncKeyword':
-                if(this.peek() === 'FunctionKeyword') {
+                if(this.peek() === 'FunctionKeyword' && declarationModifierAhead(this.scanner)) {
                     return this.functionExpression();
                 }
                 return this.identifier();

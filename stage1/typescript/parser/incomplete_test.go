@@ -13,6 +13,12 @@ import (
 	"time"
 )
 
+// The deadline covers parsing and printing. Keep the 10s floor for small inputs,
+// with 10s more per started MiB so large trees have scheduling and output margin.
+func incompleteDeadline(inputBytes int) time.Duration {
+	return 10*time.Second + time.Duration((inputBytes+(1<<20)-1)/(1<<20))*10*time.Second
+}
+
 // Four workers each run independently bounded subprocesses. The corpus pin
 // and point selection are deterministic and no diagnostic input is filtered.
 func TestIncompleteCompilerAgrees(t *testing.T) {
@@ -79,7 +85,7 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 		planned += count
 		t.Logf("planned %s: %d tokens, cutoff stride %d, edit stride %d, %d inputs", sourcePath, len(tokens), stride, editStride, count)
 	}
-	t.Logf("planned all %d compiler files: %d inputs; each Go/Node/native parse and print has a 10s deadline", files, planned)
+	t.Logf("planned all %d compiler files: %d inputs; each Go/Node/native parse and print has a 10s + 10s per started MiB deadline", files, planned)
 	var checked atomic.Int64
 	type comparison struct {
 		position, index  int
@@ -140,9 +146,9 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 	}
 	slowest := map[string]timing{}
 	var timingLock sync.Mutex
-	measure := func(label, path, command string, args ...string) ([]byte, error) {
+	measure := func(inputBytes int, label, path, command string, args ...string) ([]byte, error) {
 		started := time.Now()
-		data, err := recoveryRunLimit(t, 10*time.Second, path+"."+label, command, args...)
+		data, err := recoveryRunLimit(t, incompleteDeadline(inputBytes), path+"."+label, command, args...)
 		duration := time.Since(started)
 		timingLock.Lock()
 		if duration > slowest[label].duration {
@@ -171,7 +177,7 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 						t.Error(err)
 						return
 					}
-					want, err := measure("go", path, oracle, path, "--whole", "--recovery")
+					want, err := measure(len(job.input), "go", path, oracle, path, "--whole", "--recovery")
 					if err != nil {
 						stopped.Store(true)
 						t.Errorf("Go %s: %v; saved input %s", job.sourcePath, err, path)
@@ -185,7 +191,7 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 						{"Node", "node", []string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), path, "--whole", "--recovery"}},
 						{"native", binary, []string{path, "--whole", "--recovery"}},
 					} {
-						got, err := measure(side.name, path, side.command, side.args...)
+						got, err := measure(len(job.input), side.name, path, side.command, side.args...)
 						if err != nil {
 							failed = true
 							t.Errorf("%s %s %s token %d: %v; saved input %s", side.name, job.sourcePath, job.mode, job.index, err, path)
