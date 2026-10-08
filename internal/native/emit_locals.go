@@ -59,16 +59,25 @@ func (e *emitter) store(local int, value string, owned bool) {
 	e.line("adamic_release(%s);", old)
 }
 
-// checkReady guards globals and switch lexical bindings before their declarations have run.
-func (e *emitter) checkReady(local int) {
-	message := fmt.Sprintf("ReferenceError: Cannot access '%s' before initialization", e.program.Locals[local].Name)
-	ready := readyName(local)
+// checkReady guards globals, captured slots and switch lexical bindings.
+func (e *emitter) checkReady(local int) { e.checkReadyRead(local, "") }
+
+func (e *emitter) localReady(local int) string {
 	if binding := e.program.Locals[local].Ready; binding != 0 {
-		ready = e.read(ir.Read{Local: binding - 1, Of: ir.Boolean})
-	} else if cell := e.cellReference(local); cell != "" {
-		ready = cell + "->ready"
+		return e.read(ir.Read{Local: binding - 1, Of: ir.Boolean})
 	}
-	e.line("if (!%s) {", ready)
+	if cell := e.cellReference(local); cell != "" {
+		return cell + "->ready"
+	}
+	return readyName(local)
+}
+
+func (e *emitter) checkReadyRead(local int, expression string) {
+	message := fmt.Sprintf("ReferenceError: Cannot access '%s' before initialization", e.program.Locals[local].Name)
+	if expression != "" {
+		message = fmt.Sprintf("read before assignment: variable '%s' in %s", e.program.Locals[local].Name, expression)
+	}
+	e.line("if (!%s) {", e.localReady(local))
 	e.line("\tstatic const char message[] = %s;", cString(message))
 	e.line("\tadamic_panic(message, sizeof message - 1);")
 	e.line("}")
@@ -79,7 +88,9 @@ func (e *emitter) checkReady(local int) {
 // checked against the temporal dead zone first.
 func (e *emitter) read(read ir.Read) string {
 	name := e.localName(read.Local)
-	if read.Checked {
+	if read.Readiness != "" {
+		e.checkReadyRead(read.Local, read.Readiness)
+	} else if read.Checked {
 		e.checkReady(read.Local)
 	}
 	if e.program.Locals[read.Local].Counter {

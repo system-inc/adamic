@@ -1,0 +1,4 @@
+const values = new Uint16Array(1);
+console.log('before');
+values[1]! |= 1;
+console.log(`${values[0]}`);

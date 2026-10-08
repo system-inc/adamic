@@ -178,10 +178,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/14_comment_pending.a:10:19: Adamic 0.1 refuses a definite assignment assertion !; remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"
-    }
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/objects/14_comment_pending.a:20:13: Adamic 0.1 refuses a string as a condition; compare it explicitly, like name.length \u003e 0 or count !== 0"}
   },
   {
     "file": "15_accessor_absence.a",
@@ -194,10 +191,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/15_accessor_absence.a:17:22: Adamic 0.1 refuses a definite assignment assertion !; remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/15_accessor_absence.a:30:13: stage 0 can't lower a call returning never yet"}
   },
   {
     "file": "16_version_defaults.a",

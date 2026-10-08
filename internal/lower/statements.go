@@ -80,6 +80,9 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 	case ast.KindForInStatement:
 		return l.forIn(node)
 	case ast.KindForOfStatement:
+		if body, handled, err := l.typedArrayForOf(node); handled {
+			return body, err
+		}
 		return l.forOf(node)
 	case ast.KindSwitchStatement:
 		return l.switchStatement(node)
@@ -118,7 +121,21 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 	if statements, handled, err := l.conditionalSuper(expression); handled {
 		return statements, err
 	}
+	// Asserted logical targets need the checked read and held receiver/index path.
+	// Dispatch before generic logical-assignment expression lowering can claim them.
+	if expression.Kind == ast.KindBinaryExpression {
+		binary := expression.AsBinaryExpression()
+		if logicalAssignment(binary.OperatorToken.Kind) && nonNullAssignmentTarget(binary.Left) != nil {
+			return l.assignment(expression)
+		}
+	}
 	switch expression.Kind {
+	case ast.KindNonNullExpression:
+		value, err := l.expression(expression)
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
 	case ast.KindCallExpression:
 		if ast.SkipParentheses(expression.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
 			return l.superStatement(expression)
@@ -143,6 +160,12 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 				return nil, err
 			}
 			return []ir.Statement{ir.Panic{Message: message}}, nil
+		}
+		if value, handled, err := l.typedArrayExpression(expression); handled {
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.Evaluate{Value: value}}, nil
 		}
 		// A builtin's result thrown away, like map.set(key, value) or array.push(value).
 		if lowered, isBuiltin, err := l.builtin(expression); isBuiltin {

@@ -17,7 +17,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 	if literal, handled, err := l.accessorLiteral(node); handled {
 		return literal, err
 	}
-	literal := ir.ObjectLiteral{}
+	literal := ir.ObjectLiteral{SpreadReadiness: sourceExpression(node)}
 	for index, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 		switch property.Kind {
 		case ast.KindSpreadAssignment:
@@ -58,8 +58,19 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			}
 			var value ir.Expression
 			var err error
+			uninitialized := false
 			if property.Kind == ast.KindPropertyAssignment {
-				value, err = l.expression(property.AsPropertyAssignment().Initializer)
+				initializer := property.AsPropertyAssignment().Initializer
+				uninitialized = l.uninitializedInitializer(initializer)
+				if uninitialized {
+					declared := l.declaredField(node, fieldName)
+					if declared == 0 || slotless(declared) {
+						return nil, &Refused{Where: l.program.Where(initializer), What: "an uninitialized object property without a supported stored type", Fix: "use a supported scalar or reference field type"}
+					}
+					value = uninitializedValue(declared)
+				} else {
+					value, err = l.expression(initializer)
+				}
 			} else {
 				value, err = l.shorthand(property)
 			}
@@ -76,7 +87,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if slotless(value.Type()) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
-			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
+			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Uninitialized: uninitialized})
 		default:
 			return nil, l.notYet(property, describe(property)+" in an object literal")
 		}
@@ -500,7 +511,18 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 // Absence is a read result, never a synthetic own field: hasOwnProperty and object spread still see
 // the shape that was actually made. A narrowed number checks the declared optional representation.
 func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expression {
+	property.Readiness = sourceExpression(node)
 	field := l.checker.GetSymbolAtLocation(node.Name())
+	if field != nil {
+		for _, declaration := range field.Declarations {
+			if declaration.Kind == ast.KindPropertyDeclaration {
+				initializer := declaration.AsPropertyDeclaration().Initializer
+				if assertionInitializer(initializer) && !l.uninitializedInitializer(initializer) {
+					property.Readiness = sourceExpression(initializer)
+				}
+			}
+		}
+	}
 	if field == nil || field.Flags&ast.SymbolFlagsOptional == 0 {
 		return property
 	}

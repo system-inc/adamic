@@ -1,0 +1,6 @@
+const values = new Map<string, number>();
+const box = { value: values.get('missing') };
+function right(): number { console.log('right'); return 2; }
+console.log('before');
+box.value! |= right();
+console.log(`${box.value}`);

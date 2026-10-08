@@ -353,6 +353,9 @@ func variableRead(expression ir.Expression) (ir.Read, bool) {
 // (a global's read retains one).
 func (e *emitter) variable(expression ir.Expression, read ir.Read) string {
 	name := e.localName(read.Local)
+	if read.Readiness != "" {
+		e.checkReadyRead(read.Local, read.Readiness)
+	}
 	if defined, ok := expression.(ir.Defined); ok {
 		e.checkDefined(name, defined.Message)
 	}
@@ -560,10 +563,14 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 // the source may be undefined and is, a new object with the source type's other fields and the
 // literal's own, as JavaScript's { ...undefined } is {} with the literal's fields written in.
 func (e *emitter) spreadCopy(literal ir.ObjectLiteral, source string) string {
-	if !literal.SpreadMaybeUndefined {
-		return fmt.Sprintf("adamic_object_copy(%s)", source)
+	copy := fmt.Sprintf("adamic_object_copy(%s)", source)
+	if literal.SpreadReadiness != "" {
+		copy = fmt.Sprintf("adamic_object_copy_checked(%s, %s)", source, cString(literal.SpreadReadiness))
 	}
-	return fmt.Sprintf("(%s != NULL ? adamic_object_copy(%s) : adamic_object_new(&%s))", source, source, e.shape(emptyFields(literal)))
+	if !literal.SpreadMaybeUndefined {
+		return copy
+	}
+	return fmt.Sprintf("(%s != NULL ? %s : adamic_object_new(&%s))", source, copy, e.shape(emptyFields(literal)))
 }
 
 // emptySpread gives the fields of the object spreadCopy made for an undefined source the value

@@ -70,7 +70,7 @@ func (e *emitter) statement(statement ir.Statement) {
 	case ir.AllocateEnvironment:
 		// Emitted at function entry before captured parameters are initialized.
 	case ir.Declare:
-		if statement.Uninitialized {
+		if statement.Uninitialized && !e.program.Locals[statement.Local].Uninitialized {
 			if e.program.Locals[statement.Local].EnvironmentCell {
 				return
 			}
@@ -94,10 +94,20 @@ func (e *emitter) statement(statement ir.Statement) {
 		owned := e.taken(value)
 		if local.Global {
 			e.store(statement.Local, value, owned)
-			e.line("%s = true;", readyName(statement.Local))
+			e.line("%s = %t;", readyName(statement.Local), !statement.Uninitialized)
+			if local.Uninitialized {
+				e.line("%s_declared = true;", readyName(statement.Local))
+			}
 			e.initialized = append(e.initialized, statement.Local)
 		} else {
 			e.declareLocal(statement.Local, value, owned)
+			if local.Uninitialized {
+				if local.Captured {
+					e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
+				} else {
+					e.line("bool %s = %t; (void)%s;", readyName(statement.Local), !statement.Uninitialized, readyName(statement.Local))
+				}
+			}
 		}
 		e.end()
 	case ir.Assign:
@@ -122,6 +132,12 @@ func (e *emitter) statement(statement ir.Statement) {
 			break
 		}
 		value := e.value(statement.Value)
+		if e.program.Locals[statement.Local].Uninitialized && e.program.Locals[statement.Local].Global && !e.program.Locals[statement.Local].Hoisted {
+			e.line("if (!%s_declared) {", readyName(statement.Local))
+			message := "ReferenceError: Cannot access '" + e.program.Locals[statement.Local].Name + "' before initialization"
+			e.line("\tadamic_panic(%s, %d);", cString(message), len(message))
+			e.line("}")
+		}
 		if statement.Checked {
 			// After the value, as JavaScript does: the right side runs, then the write throws.
 			e.checkReady(statement.Local)
@@ -129,6 +145,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		// The store is the statement's last write: nothing after it can assign the variable again
 		// while the statement still reads the value, so what the statement owns, the variable takes.
 		e.store(statement.Local, value, e.taken(value))
+		if e.program.Locals[statement.Local].Uninitialized {
+			e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
+		}
 		e.end()
 	case ir.Evaluate:
 		if splice, isSplice := statement.Value.(ir.ArraySplice); isSplice {
@@ -157,6 +176,11 @@ func (e *emitter) statement(statement ir.Statement) {
 		array := e.value(statement.Array)
 		index := e.value(statement.Index)
 		value := e.value(statement.Value)
+		if statement.Array.Type().IsTypedArray() {
+			e.line("adamic_typed_array_set(%s, %s, %s);", array, index, value)
+			e.end()
+			break
+		}
 		if statement.Element.IsReference() {
 			value = retained(value)
 		}
@@ -183,6 +207,8 @@ func (e *emitter) statement(statement ir.Statement) {
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
 		}
+		// Direct-slot stores can bypass write_field; readiness must follow the store too.
+		e.line("adamic_object_set_initialized(%s, %s, %t);", object, cString(statement.Name), !statement.Uninitialized)
 		e.end()
 	case ir.Panic:
 		// The program ends here, so nothing it holds needs letting go.
@@ -286,6 +312,7 @@ func (e *emitter) loop(statement ir.Loop) {
 		cell := e.cellName(local)
 		fresh := e.temporary()
 		e.line("adamic_cell *%s = adamic_cell_new(%s->value, %s->references);", fresh, cell, cell)
+		e.line("%s->ready = %s->ready;", fresh, cell)
 		e.line("if (%s->references) {", fresh)
 		e.line("\tadamic_retain(%s->value.reference);", fresh)
 		e.line("}")
@@ -318,7 +345,10 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	overString := statement.Iterable.Type() == ir.String
 	overMap := statement.MapPart != ""
 	overRegex := statement.RegexIterator
-	if overMap {
+	overTyped := statement.Iterable.Type().IsTypedArray()
+	if overTyped {
+		e.line("adamic_typed_array_iterator *%s = adamic_typed_array_iterate(%s);", held, iterable)
+	} else if overMap {
 		e.line("adamic_map_iterator *%s = adamic_map_iterate(%s);", held, iterable)
 	} else if e.elementBorrows[e.at] {
 		// The same proof lends both the element and the array. Neither owns a count here.
@@ -335,7 +365,10 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	e.temporaries++
 	current := &loop{label: fmt.Sprintf("adamic_continue_%d", e.temporaries)}
 	entryKey, entryValue := e.temporary(), e.temporary()
-	if overMap {
+	if overTyped {
+		e.line("double %s;", entryValue)
+		e.line("while (adamic_typed_array_iterator_next(%s, &%s)) {", held, entryValue)
+	} else if overMap {
 		e.line("adamic_value %s, %s;", entryKey, entryValue)
 		e.line("while (adamic_map_iterator_next(%s, &%s, &%s)) {", held, entryKey, entryValue)
 	} else if overRegex {
@@ -393,6 +426,8 @@ func (e *emitter) forOf(statement ir.ForOf) {
 			}
 			e.declareLocal(binding.Local, field, false)
 		}
+	} else if overTyped {
+		e.declareLocal(statement.Local, entryValue, false)
 	} else if overRegex {
 		e.declareLocal(statement.Local, entryValue, true)
 	} else if overString {

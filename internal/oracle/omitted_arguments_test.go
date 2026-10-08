@@ -70,7 +70,7 @@ func TestOmittedArgumentZeroMutantIsCaught(t *testing.T) {
 }
 
 // Preserve the supplied source verbatim: Node confirms the expected output,
-// while this branch's language policy refuses the non-null assertion. The
+// while the original still needs string logical-expression lowering. The
 // executable normalized witness must not be mistaken for this original.
 func TestOmittedOriginalProbePolicy(t *testing.T) {
 	t.Parallel()
@@ -83,9 +83,9 @@ func TestOmittedOriginalProbePolicy(t *testing.T) {
 		t.Fatalf("want Node 11, got %+v", observed)
 	}
 	_, err = lowered(t, path)
-	var refused *lower.Refused
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "non-null assertion") {
-		t.Fatalf("want the unchanged policy refusal, got %v", err)
+	var notYet *lower.NotYet
+	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "BinaryExpression with a string and a string") {
+		t.Fatalf("want the remaining string logical-expression blocker, got %v", err)
 	}
 }
 

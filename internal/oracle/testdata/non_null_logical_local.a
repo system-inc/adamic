@@ -1,0 +1,12 @@
+let calls = 0;
+function right(): number { calls++; return 7; }
+function update(value: number | undefined): void {
+    value! ||= right();
+    value! ||= right();
+    value! &&= right();
+    value! = 0;
+    value! &&= right();
+    value! ??= right();
+    console.log(`${calls} ${value}`);
+}
+update(0);
