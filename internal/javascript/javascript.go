@@ -751,6 +751,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.DateCall:
 		return e.dateCall(expression)
 	case ir.ObjectCall:
+		if value, handled := e.objectDescriptorCall(expression); handled {
+			return value
+		}
 		if expression.Method == "errorCaptureStack" {
 			return "(Object.defineProperty(" + e.value(expression.Arguments[0]) + ", 'stack', {value: '', writable: true, configurable: true, enumerable: false}), undefined)"
 		}

@@ -13,6 +13,9 @@ import (
 // typeOf is what's left at runtime of the type the checker proved for a node: a number, a boolean or
 // a string. A union counts when every member is the same one ('Fizz' | 'Buzz' is a string).
 func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
+	if l.descriptorMapResult(node, 0) {
+		return ir.Object, nil
+	}
 	if l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
 		if symbol := l.flagValueSymbol(ast.SkipParentheses(node)); symbol != nil {
 			if stored, known := l.representation(l.checker.GetTypeOfSymbol(symbol)); known {
@@ -620,8 +623,14 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindArrayLiteralExpression:
 		return l.arrayLiteral(node)
 	case ast.KindPropertyAccessExpression:
+		if value, handled, err := l.objectDescriptorRead(node); handled {
+			return value, err
+		}
 		return l.property(node)
 	case ast.KindElementAccessExpression:
+		if value, handled, err := l.objectDescriptorElement(node); handled {
+			return value, err
+		}
 		return l.elementAccess(node)
 	case ast.KindNewExpression:
 		return l.newExpression(node)

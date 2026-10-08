@@ -7,6 +7,9 @@ import (
 )
 
 func (e *emitter) objectCall(call ir.ObjectCall) string {
+	if value, handled := e.objectDescriptorCall(call); handled {
+		return value
+	}
 	arguments := make([]string, 0, len(call.Arguments))
 	for _, argument := range call.Arguments {
 		arguments = append(arguments, e.value(argument))

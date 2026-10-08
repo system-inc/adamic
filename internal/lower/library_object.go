@@ -9,12 +9,13 @@ import (
 )
 
 func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+	if value, handled, err := l.objectDescriptorCall(node, name); handled {
+		return value, handled, err
+	}
 	refused := func(reason string) (ir.Expression, bool, error) {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason}
 	}
 	switch name {
-	case "defineProperty", "defineProperties", "getOwnPropertyDescriptor", "getOwnPropertyDescriptors":
-		return refused("property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores")
 	case "getPrototypeOf", "setPrototypeOf", "create":
 		return refused("prototypes expose or replace fields outside the declared shape; use a declared object or class with composition")
 	case "fromEntries":

@@ -59,6 +59,10 @@ IN THE SOFTWARE.
     JSReceiver::OrdinaryToPrimitive in src/objects/js-objects.cc, Node 24.19.0);
   - Object primitive own-name reflection (`runtime/object_names.c`, after
     src/builtins/builtins-object.cc, V8 13.6.233; fixed-shape keys reuse the existing Object ordering);
+  - Plain data-property descriptors (`runtime/library_object_descriptors.c`), restricted from
+    PropertyDescriptor::ToObject in src/objects/property-descriptor.cc and
+    JSReceiver::ValidateAndApplyPropertyDescriptor / DefineProperties in src/objects/js-objects.cc,
+    V8 13.6.233; lowering proves existing slots and refuses accessors and individual attribute changes;
   - Object sealing, freezing and extensibility, including constructor-proven internal-slot receivers
     (`internal/native/runtime/object_integrity.c`, after
     src/builtins/builtins-object.cc and src/objects/js-objects.cc, V8 13.6.233);

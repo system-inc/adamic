@@ -9,6 +9,7 @@ type ObjectCall struct {
 	Arguments      []Expression
 	Element        Type
 	Returns        Type
+	DescriptorFields []ObjectDescriptorField
 }
 
 func (c ObjectCall) Type() Type { return c.Returns }
