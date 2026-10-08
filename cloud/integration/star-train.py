@@ -7,7 +7,7 @@ slice n onto slice n-1's candidate. A candidate's name carries its source and ba
 (cloud/land-train-<n>-<slug>-<source8>-<base8>), so a new source commit or a new main builds a new
 candidate above it and nothing is ever force-pushed; the superseded ones go on the watcher's skip list.
 
-The bottom candidate lands itself: when its fast gate is green and main's newest whole gate on the
+The bottom candidate lands itself: when its own whole gate (full-main on its sha) is green and main's newest whole gate on the
 current main is green or explained (main-reds.tsv, rows starting OPEN don't count), this runs
 push-main.sh, whose checks are the verdict (deferred tests, records, base still main). Integration
 stays on reds and conflicts. One run per invocation; launchd runs it every minute.
@@ -133,11 +133,17 @@ hold = os.path.join(state, f"hold-{sourceSha[:8]}")
 if os.path.exists(hold):
     log(f"held: {name} ({open(hold).read().strip()})")
     sys.exit(0)
-reference, status = newestLog(candidate, "fast")
+# The star's slices land on their own whole gate (Kirk and @system_adamic, October 8): the full gate
+# run on the candidate is its verdict and main's confirmation at once. The fast gate stays the early
+# first-failure signal; a red on either is the slice's red.
+for kind in ("fast", "full-main"):
+    early, earlyStatus = newestLog(candidate, kind)
+    if earlyStatus.startswith("red"):
+        log(f"red: {name} {early}")
+        tell(f"red-{candidate}-{kind}", "system_adamic_integration", f"Train slice {number} ({slug}) is red on its {kind} gate: {early}. Everything above it waits for the fix on {source}.")
+        sys.exit(0)
+reference, status = newestLog(candidate, "full-main")
 if not status.startswith("green"):
-    if status.startswith("red"):
-        log(f"red: {name} {reference}")
-        tell(f"red-{candidate}", "system_adamic_integration", f"Train slice {number} ({slug}) is red: {reference}. Everything above it waits for the fix on {source}.")
     sys.exit(0)
 
 mainLog, mainStatus = newestLog(main, "full-main")
@@ -149,7 +155,7 @@ log(f"landing {name} on {reference}")
 if dryRun:
     sys.exit(0)
 note = f"the star's train, slice {number} ({slug}): {source} {git('rev-parse', 'origin/' + source)[:8]}"
-pushed = subprocess.run(["bash", os.path.join(directory, "push-main.sh"), "--fast-gate", reference, candidate, note], capture_output=True, text=True)
+pushed = subprocess.run(["bash", os.path.join(directory, "push-main.sh"), "--full-gate", reference, candidate, note], capture_output=True, text=True)
 with open(os.path.join(state, f"push-{candidate[:12]}.log"), "w") as handle:
     handle.write(pushed.stdout + pushed.stderr)
 if pushed.returncode == 0:
