@@ -73,6 +73,7 @@ func esmModuleOrder(typeChecker *checker.Checker, entry *ast.SourceFile) ([]*ast
 // call knows what the function it calls returns wherever that function is declared, and two
 // functions can call each other. Then each body is lowered.
 func (l *lowering) declareModule(statements []*ast.Node) error {
+	statements = namespaceDeclarations(statements)
 	declarations := []*ast.Node{}
 	for _, statement := range statements {
 		switch statement.Kind {
@@ -130,6 +131,12 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				l.staticStorage(statement)
 			}
 		case ast.KindFunctionDeclaration:
+			if statement.Body() == nil && l.censusImplementation(statement) != nil {
+				continue
+			}
+			if err := l.censusOverloads(statement); err != nil {
+				return err
+			}
 			symbol := l.symbol(statement.Name())
 			if len(statement.TypeParameters()) > 0 {
 				// A generic function is lowered once per instantiation, where it's called (generic.go).

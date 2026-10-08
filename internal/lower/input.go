@@ -7,6 +7,9 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
+// inputFunctions are the prelude functions input lowers.
+var inputFunctions = []string{"readTextFile", "writeTextFile", "utf8Length", "utf8At", "readDirectory", "fileStatus", "programArguments"}
+
 // input lowers the program's doors in from outside, opened in 0.2: readTextFile(path) and
 // programArguments() from 'adamic', the door out, writeTextFile(path, text), and what a walk of the
 // file system needs, readDirectory(path) and fileStatus(path). isInput is false for any other call.
@@ -16,6 +19,18 @@ func (l *lowering) input(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	callee := node.AsCallExpression().Expression
 	arguments := node.AsCallExpression().Arguments.Nodes
+	// A spread of a tuple is a count the checker accepts and the cases below can't see, so it is
+	// refused here, before any of them reads it as a checker bug.
+	for _, name := range inputFunctions {
+		if !l.isPreludeFunction(callee, name) {
+			continue
+		}
+		for _, argument := range arguments {
+			if argument.Kind == ast.KindSpreadElement {
+				return nil, true, l.notYet(argument, "a spread argument to "+name)
+			}
+		}
+	}
 	switch {
 	case l.isPreludeFunction(callee, "readTextFile"):
 		if len(arguments) != 1 {

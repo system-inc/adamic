@@ -46,7 +46,7 @@ func (l *lowering) iteratorMember(proven *checker.Type) *ast.Symbol {
 // lexical captures still use the existing cycle analysis and reference-counted closure environment.
 func (l *lowering) objectMethod(node *ast.Node) (ir.Expression, error) {
 	index := len(l.result.Functions)
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: "object_method", Closure: true})
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: "object_method", Closure: true, Receiver: true})
 	this := l.iterationLocal("this", ir.Object, index)
 	l.noteLocal(this, l.checker.GetTypeAtLocation(node.Parent), node)
 	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.checker.GetTypeAtLocation(node), function: index, node: node})
@@ -116,7 +116,7 @@ func (l *lowering) memberFunction(where *ast.Node, proven *checker.Type, value i
 				if err != nil {
 					return nil, false, -1, err
 				}
-				return nil, true, instance.methods[methodKey(declaration, instance.class)], nil
+				return nil, true, instance.methods[l.methodKey(declaration, instance.class)], nil
 			}
 		}
 	}
@@ -439,7 +439,8 @@ func (l *lowering) userMethodCall(node *ast.Node) (ir.Expression, bool, error) {
 		if member == nil || !literalMethod(member) {
 			return nil, false, nil
 		}
-		receiverNode = callee.AsPropertyAccessExpression().Expression
+		value, err := l.callClosure(node)
+		return value, true, err
 	default:
 		return nil, false, nil
 	}
