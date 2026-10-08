@@ -67,6 +67,9 @@ func Catalog() []Entry {
 		// provePredicate refuses a type predicate whose body does not prove it. An arrow predicate is an
 		// expression, so the writer can place it in every surrounding; the neighbor is the proven predicate.
 		{Name: "unproven-predicate", Diagnostic: "a type predicate whose return is not proven (true return narrows to string | undefined, not string)", Bad: "const isText = (x: string | undefined): x is string => true; const word: string | undefined = 'a'; if (isText(word)) { console.log(word); }", Good: "const isText = (x: string | undefined): x is string => x !== undefined; const word: string | undefined = 'a'; if (isText(word)) { console.log(word); }"},
+		// enumRefusal refuses misuse of enums, which lowering now admits: a write into the enum's runtime
+		// object is its plainest refusal. Enums must be declared at module scope.
+		{Name: "enum-object-write", Diagnostic: "a write into an enum runtime object", Bad: "enum Color { Red = 'r', Green = 'g' } Object.assign(Color, {Red: 'x'});", Good: "enum Color { Red = 'r', Green = 'g' } const value: Color = Color.Red;", Placement: "module"},
 		{Name: "method-override", Diagnostic: "adamic/contravariant-override", Boundary: "checkOverrides also guards inheritance member kinds, accessor descriptors and ABI representation; not generated in this 0.1 corpus"},
 		{Name: "parameter-properties", Boundary: "loader erasableSyntaxOnly rejects parameter properties (TS1294)"},
 		{Name: "overloads", Boundary: "implementation signatures are not lowered as overloads; needs a separate diagnostic design"},
