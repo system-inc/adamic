@@ -1,0 +1,2 @@
+import { PathAnalysis } from './path_analysis.a';
+export function newCyclePaths(a: PathAnalysis): void { for(let i=0;i<a.graph.arena.length;i++){a.active[i]=-1;a.cycleKnown[i]=false;a.cycleEnd[i]=false;} }

@@ -1,0 +1,5 @@
+{
+  "name": "invert CFG end reachability array-callback-return",
+  "from": "const end=fallsThrough(ast,index);",
+  "to": "const end=!fallsThrough(ast,index);"
+}
