@@ -652,6 +652,11 @@ func (e *emitter) binary(operator ir.Operator, operandType ir.Type, left string,
 	case operandType == ir.Union && operator == ir.NotEqual:
 		return fmt.Sprintf("(!adamic_union_equal(%s, %s))", left, right)
 	}
+	// Calls are hoisted to unique temporaries; identical operands are plain reads.
+	// Keep numeric comparisons for NaN, which is unequal to itself.
+	if left == right && operandType != ir.Number && (operator == ir.Equal || operator == ir.NotEqual) {
+		return fmt.Sprintf("((void)(%s), %t)", left, operator == ir.Equal)
+	}
 	return fmt.Sprintf("(%s %s %s)", left, cOperators[operator], right)
 }
 

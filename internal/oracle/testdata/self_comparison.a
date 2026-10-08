@@ -1,0 +1,15 @@
+// A value compared with itself: one C name on both sides, which clang refuses as a tautology
+// unless the operands are numbers (NaN differs from itself).
+function compare(): void {
+	const zeros = new Array<number>(5).fill(0);
+	console.log(`${zeros.fill(99) === zeros} ${zeros !== zeros.fill(1)}`);
+	const flag = zeros.length > 2;
+	const point = { x: 1 };
+	const table = new Map<string, number>();
+	const read = (): number => point.x;
+	console.log(`${flag === flag} ${point === point} ${table !== table} ${read === read}`);
+	const missing = Number('x');
+	const count = zeros.length;
+	console.log(`${missing === missing} ${count === count} ${missing !== missing}`);
+}
+compare();
