@@ -1,0 +1,23 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.60s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/substitution-hook/wrong-arity (0.39s)
+        checked_views_callable_later_ranked_test.go:72: gate cache node hit
+        checked_views_callable_later_ranked_test.go:92: gate cache node miss
+        checked_views_callable_later_ranked_test.go:112: backend2 exit 0 stdout "9\n" stderr "" want "onSubstituteNode" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: context.onSubstituteNode expected (hint: number, node: Node) => Node, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/internal-name/wrong-arity (0.37s)
+        checked_views_callable_later_ranked_test.go:72: gate cache node hit
+        checked_views_callable_later_ranked_test.go:92: gate cache node miss
+        checked_views_callable_later_ranked_test.go:112: backend2 exit 0 stdout "9\n" stderr "" want "getInternalName" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.getInternalName expected (node: Declaration, allowComments?: boolean | undefined, allowSourceMaps?: boolean | undefined) => Identifier, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/call-update/wrong-arity (0.40s)
+        checked_views_callable_later_ranked_test.go:72: gate cache node hit
+        checked_views_callable_later_ranked_test.go:92: gate cache node miss
+        checked_views_callable_later_ranked_test.go:112: backend2 exit 0 stdout "9\n" stderr "" want "updateCallExpression" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.updateCallExpression expected (node: CallExpression, expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[]) => CallExpression, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/class-update/wrong-arity (0.42s)
+        checked_views_callable_later_ranked_test.go:72: gate cache node hit
+        checked_views_callable_later_ranked_test.go:92: gate cache node miss
+        checked_views_callable_later_ranked_test.go:112: backend2 exit 0 stdout "9\n" stderr "" want "updateClassDeclaration" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.updateClassDeclaration expected (node: ClassDeclaration, modifiers: readonly ModifierLike[] | undefined, name: Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, heritageClauses: ... | undefined, members: ...) => ClassDeclaration, found function with arity 0\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=4 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.611s
+FAIL

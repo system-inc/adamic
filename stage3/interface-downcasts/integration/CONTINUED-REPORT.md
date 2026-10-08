@@ -15,8 +15,8 @@ Limits: latest owner integration is unresolved; additional optional suites and t
 | Mixed unions, first tip | d78c3f5cf19959be2bdb2ba4b72951750303cc4a | One plan hunk: append both independent reports; update the primitive helper to preserve its wrong-boolean runtime refusal | 6d9811a91da9346217f45c0c5223df9d194363eb | Stale compile-only helper expectation fixed; inherited failures unchanged |
 | Mixed unions, requested newer tip | 37763565c317a80c3b362e475edab8b61ab0eafd | No conflicts; retain producer certificates and original reference obligations; update stale array-gap assertions | 93a086abbfbaa3d36ccb9bbe2516733452d2b521 | Required tests pass; same 41 inherited counts failures |
 | Object and primitive unions | 8abb52a1518b9d8c3f0dbde993551d4f01ba10e2 | No conflicts; retain unread storage admission and named tuple-member refusal | b8b419d2b2e6f6a3bf62e02c749a6cd9f8465437 | Required tests pass; counts retain 41 baseline failures |
-| Intersections | 4c3c3009c1ab74e4da902ffa9357b81ec0cf7d95 | Five hunks: both binding hooks, both plan reports, all count rows, superseded gap lists and both blocker histories | This merge | Required filter passes; corrected JSDoc runtime probes pass; redundant hook mutant survives |
-| Callables | 0040752305d151dff23d234213edc47aaddbd305 | Pending | Pending | Pending |
+| Intersections | 4c3c3009c1ab74e4da902ffa9357b81ec0cf7d95 | Five hunks: both binding hooks, both plan reports, all count rows, superseded gap lists and both blocker histories | 167e5fdb779e8c6a64558a3c96b768b7067e776b | Required filter passes; corrected JSDoc runtime probes pass; redundant hook mutant survives |
+| Callables | 433e1ec09fdba7c83fe2a3d5153cf28962a23022 | One counts hunk: all allocation rows before retained predicate table; update five closed union gap expectations | This merge | Required filter passes; partial payload mutant runner result recorded |
 | Tuples | 5c54e8c6583462ae061557d5fc4618deaf4b67ee | Pending | Pending | Pending |
 | Dictionaries | deec3c933543c7b5e7ba0d9db0964265d03c494c | Already an ancestor | d718a9ffa0432245b69a3545c3ca080db865e0bb | None introduced |
 
@@ -210,3 +210,34 @@ in 55.884s, with no additions or removals.
 Intersections oracle: ok  	github.com/system-inc/adamic/internal/oracle	677.460s
 
 Intersections frontiers: ok  	github.com/system-inc/adamic/internal/oracle	11.220s
+
+## Callables newest tip
+
+Fresh fetch advanced to 433e1ec09fdba7c83fe2a3d5153cf28962a23022.
+Its single counts hunk retains all existing rows, appends all incoming callable
+allocation rows before the existing predicate table, and keeps that table intact.
+No compiler code changed. Backend checks pass: lower 6.161s, native 6.898s,
+JavaScript 0.881s. Official upstream provenance verification passes for 49 ranked
+fixtures, 363 later-ranked fixtures and 42 tagged aliases/discriminator fixtures.
+
+Six isolated native/JavaScript arity, result and parameter mutants are caught on
+the selected newest parameter-update, property-update, resolution-settings,
+scanner-scan, lexical-start and writer-space families. Relevant guard omissions
+execute valid code at exit 0, including wrong-arity output 9. Payload registration
+omission catches resolution-settings via native sanitizer SEGV; it survives the
+tagged parameter-update and property-update fixtures, whose independent checks
+remain. The runner stops on its assumption that every selected family fails;
+this partial result is retained, not counted as seven fully killed mutants.
+All source mutations were restored. Global counts refresh reproduces exactly the
+same 41 baseline failures in 53.734s; focused callable count checks run in the
+required filtered oracle.
+
+The first callable filtered run finished in 953.767s with five stale compile-only
+untagged union expectations. The existing integrated untagged adapter now supports
+string-from-node, for-update, variable-update, arrow-function and literal-type.
+Their corrected controls agree with Node in sanitized/release native and
+JavaScript, with successful-run leak checks, in 3.400s. Unbound-method and
+destructuring refusals remain. This test update changes no compiler guard and
+adds no whole-original receiver certification credit to reduced carriers.
+
+Corrected callable filtered oracle: ok  	github.com/system-inc/adamic/internal/oracle	939.959s

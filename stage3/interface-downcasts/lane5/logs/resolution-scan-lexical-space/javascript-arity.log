@@ -1,0 +1,23 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.48s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/resolution-settings/wrong-arity (0.42s)
+        checked_views_callable_later_ranked_test.go:76: gate cache node hit
+        checked_views_callable_later_ranked_test.go:96: gate cache node miss
+        checked_views_callable_later_ranked_test.go:116: backend2 exit 0 stdout "9\n" stderr "" want "getCompilationSettings" and "found function with arity 1"; sanitized exit 70 stderr "adamic: panic: field read failed: resolutionHost.getCompilationSettings expected () => CompilerOptions, found function with arity 1\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/scanner-scan/wrong-arity (0.34s)
+        checked_views_callable_later_ranked_test.go:76: gate cache node hit
+        checked_views_callable_later_ranked_test.go:96: gate cache node miss
+        checked_views_callable_later_ranked_test.go:116: backend2 exit 0 stdout "9\n" stderr "" want "scan" and "found function with arity 1"; sanitized exit 70 stderr "adamic: panic: field read failed: scanner.scan expected () => number, found function with arity 1\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/lexical-start/wrong-arity (0.34s)
+        checked_views_callable_later_ranked_test.go:76: gate cache node hit
+        checked_views_callable_later_ranked_test.go:96: gate cache node miss
+        checked_views_callable_later_ranked_test.go:116: backend2 exit 0 stdout "9\n" stderr "" want "startLexicalEnvironment" and "found function with arity 1"; sanitized exit 70 stderr "adamic: panic: field read failed: context.startLexicalEnvironment expected () => void, found function with arity 1\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/writer-space/wrong-arity (0.36s)
+        checked_views_callable_later_ranked_test.go:76: gate cache node hit
+        checked_views_callable_later_ranked_test.go:96: gate cache node miss
+        checked_views_callable_later_ranked_test.go:116: backend2 exit 0 stdout "9\n" stderr "" want "writeSpace" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: writer.writeSpace expected (text: string) => void, found function with arity 0\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=4 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.487s
+FAIL

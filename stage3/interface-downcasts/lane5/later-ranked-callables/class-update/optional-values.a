@@ -1,0 +1,11 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface ClassDeclaration {readonly value:number;}
+interface ModifierLike {readonly value:number;}
+interface Identifier {readonly value:number;}
+interface TypeParameterDeclaration {readonly value:number;}
+interface HeritageClause {readonly value:number;}
+interface ClassElement {readonly value:number;}
+interface Base {readonly updateClassDeclaration:unknown;}
+interface Target {updateClassDeclaration(node: ClassDeclaration, modifiers: readonly ModifierLike[] | undefined, name: Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, heritageClauses: readonly HeritageClause[] | undefined, members: readonly ClassElement[]): ClassDeclaration;}
+function probe(value:Base):void {const factory=value as Target;const classDecl:ClassDeclaration={value:1};console.log(`${factory.updateClassDeclaration(classDecl,undefined,undefined,undefined,undefined,[]).value}`);console.log(`${factory.updateClassDeclaration(classDecl,[],undefined,[],[],[{value:6}]).value}`);console.log(`${factory.updateClassDeclaration(classDecl,[{value:2}],{value:3},[{value:4}],[{value:5}],[{value:6}]).value}`);}
+probe({updateClassDeclaration:(node:ClassDeclaration,modifiers:readonly ModifierLike[]|undefined,name:Identifier|undefined,typeParameters:readonly TypeParameterDeclaration[]|undefined,heritageClauses:readonly HeritageClause[]|undefined,members:readonly ClassElement[]):ClassDeclaration=>{const modifier=modifiers===undefined?undefined:modifiers[0];const parameter=typeParameters===undefined?undefined:typeParameters[0];const heritage=heritageClauses===undefined?undefined:heritageClauses[0];const member=members[0];return {value:node.value+(modifier===undefined?0:modifier.value)+(name===undefined?0:name.value)+(parameter===undefined?0:parameter.value)+(heritage===undefined?0:heritage.value)+(member===undefined?0:member.value)};}});

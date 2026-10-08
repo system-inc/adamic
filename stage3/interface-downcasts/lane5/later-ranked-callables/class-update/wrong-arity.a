@@ -1,0 +1,11 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface ClassDeclaration {readonly value:number;}
+interface ModifierLike {readonly value:number;}
+interface Identifier {readonly value:number;}
+interface TypeParameterDeclaration {readonly value:number;}
+interface HeritageClause {readonly value:number;}
+interface ClassElement {readonly value:number;}
+interface Base {readonly updateClassDeclaration:unknown;}
+interface Target {updateClassDeclaration(node: ClassDeclaration, modifiers: readonly ModifierLike[] | undefined, name: Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, heritageClauses: readonly HeritageClause[] | undefined, members: readonly ClassElement[]): ClassDeclaration;}
+function probe(value:Base):void {const factory=value as Target;const classDecl:ClassDeclaration={value:1};console.log(`${factory.updateClassDeclaration(classDecl,[{value:2}],{value:3},[{value:4}],[{value:5}],[{value:6}]).value}`);}
+probe({updateClassDeclaration:():ClassDeclaration=>({value:9})});

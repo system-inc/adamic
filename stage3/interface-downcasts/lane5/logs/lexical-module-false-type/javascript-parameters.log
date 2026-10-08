@@ -1,0 +1,15 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (0.86s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/module-format/wrong-members (0.39s)
+        checked_views_callable_later_ranked_test.go:61: gate cache node hit
+        checked_views_callable_later_ranked_test.go:81: gate cache node miss
+        checked_views_callable_later_ranked_test.go:101: backend2 exit 0 stdout "3\n" stderr "" want "getEmitModuleFormatOfFile" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: host.getEmitModuleFormatOfFile expected (sourceFile: SourceFile) => number, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/parenthesized-type/wrong-members (0.46s)
+        checked_views_callable_later_ranked_test.go:61: gate cache node hit
+        checked_views_callable_later_ranked_test.go:81: gate cache node miss
+        checked_views_callable_later_ranked_test.go:101: backend2 exit 0 stdout "3\n" stderr "" want "createParenthesizedType" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createParenthesizedType expected (type: TypeNode) => ParenthesizedTypeNode, found function with incompatible parameter representations\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.866s
+FAIL

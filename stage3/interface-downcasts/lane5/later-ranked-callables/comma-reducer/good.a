@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Expression {readonly value:number;}
+interface BinaryExpression {readonly value:number;}
+interface Base {readonly createComma:unknown;}
+interface Target {createComma(left: Expression, right: Expression): BinaryExpression;}
+function probe(value:Base):void {const factory=value as Target;const expressions:readonly Expression[]=[{value:3},{value:4}];function reduceLeft(items:readonly Expression[],combine:(left:Expression,right:Expression)=>BinaryExpression):BinaryExpression{const left=items[0];const right=items[1];return combine(left===undefined?{value:0}:left,right===undefined?{value:0}:right);}console.log(`${reduceLeft(expressions,factory.createComma).value}`);}
+probe({createComma:(left:Expression,right:Expression):BinaryExpression=>({value:left.value+right.value})});
