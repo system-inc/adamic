@@ -124,7 +124,11 @@ func TestMutants(t *testing.T) {
 				if string(side.result.stdout) == want {
 					t.Fatalf("%s mutant escaped the byte comparison", side.name)
 				}
-				t.Logf("%s caught by successful-run output mismatch: %s", side.name, firstDifference(string(side.result.stdout), want))
+				difference := firstDifference(string(side.result.stdout), want)
+				if filepath.Base(cases) != "gaps.txt" {
+					difference = corpusDifference(t, cases, string(side.result.stdout), want)
+				}
+				t.Logf("%s caught by successful-run output mismatch: %s", side.name, difference)
 			}
 		})
 	}

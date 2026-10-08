@@ -13,6 +13,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
@@ -51,13 +52,13 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 }
 
 func executeResult(environment []string, name string, arguments ...string) (run, error) {
-	command := newProgressCommand(jsonProgressPolicy, name, arguments...)
+	command := exec.Command(name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
+	err := childguard.Run(command, jsonGuard)
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		return run{}, err
@@ -407,7 +408,7 @@ func buildGoDriver(t *testing.T) string {
 	binary := filepath.Join(directory, "go-cohere")
 	command := bounded(t, "go", "build", "-overlay="+overlay, "-o", binary, "./command/formatter_comparison")
 	command.Dir = cohere
-	if output, err := command.CombinedOutput(); err != nil {
+	if output, err := childguard.CombinedOutput(command, jsonGuard); err != nil {
 		t.Fatalf("Go driver: %v\n%s", err, output)
 	}
 	return binary

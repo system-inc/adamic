@@ -34,7 +34,7 @@ func TestMdastIdentifierWitnesses(t *testing.T) {
 	binaryGo := filepath.Join(dir, "go-gap")
 	build := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", binaryGo, mainPath)
 	build.Dir = cohere
-	if output, e := build.CombinedOutput(); e != nil {
+	if output, e := combinedOutput(build); e != nil {
 		t.Fatalf("Go %v %s", e, output)
 	}
 	transport := filepath.Join(dir, "events.txt")

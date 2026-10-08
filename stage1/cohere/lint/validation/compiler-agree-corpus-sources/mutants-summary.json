@@ -1,0 +1,20 @@
+[
+  {
+    "mutant": "fixture-leak",
+    "exit": 1,
+    "expected_failure": "exclusion exceeded named directory contract",
+    "wall_seconds": 12.076694403000147
+  },
+  {
+    "mutant": "expanded-policy",
+    "exit": 1,
+    "expected_failure": "exclusions grew beyond the named folders",
+    "wall_seconds": 7.603848164999363
+  },
+  {
+    "mutant": "prefix-exclusion",
+    "exit": 1,
+    "expected_failure": "exclusion exceeded named directory contract",
+    "wall_seconds": 8.801717098000154
+  }
+]

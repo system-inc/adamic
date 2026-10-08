@@ -75,7 +75,7 @@ func TestMarkdownASTPreprocessing(t *testing.T) {
 	goBinary := filepath.Join(dir, "go-ast")
 	command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
 	command.Dir = cohere
-	if output, err := command.CombinedOutput(); err != nil {
+	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("Go preprocess %v %s", err, output)
 	}
 	nativeCases := filepath.Join(dir, "native.txt")
