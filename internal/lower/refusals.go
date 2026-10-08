@@ -77,7 +77,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		}
 		if node.Kind == ast.KindIndexSignature {
 			if l.recordElement(l.checker.GetTypeAtLocation(node.Parent)) == nil {
-				found = l.notYet(node, "an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts)")
+				found = l.notYet(node, "a non-mutable unrestricted string signature, or numeric, symbol, patterned or callable dictionary storage")
 				return true
 			}
 		}
@@ -155,7 +155,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
-		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.detachedOwnMethod(node) {
+		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryMethodReadAllowed(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.detachedOwnMethod(node) {
 			// A method read as a value loses its object: this is undefined when it's called.
 			access := node.AsPropertyAccessExpression()
 			if access.Name().Text() == "isPrototypeOf" && l.libraryMember(node) {

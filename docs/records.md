@@ -1,7 +1,8 @@
 # String records
 
 Status: stage-3 lowering, October 7, 2026. The native and JavaScript backends
-implement pure mutable string records through the runtime from `754e666`.
+implement mutable string records through the runtime from `754e666`, including
+named data properties beside the index signature.
 The admitted operations are held to Node, with explicit checked stops at the
 prototype boundary. This decision supersedes the index-signature policy in
 [0.1](0.1.md) for the forms below; fixed-shape objects retain their own rules.
@@ -34,16 +35,16 @@ reached lowering in the census; its checker diagnostics precede these operations
 - `parser.ts:10734,10741,10794`: writes to pure string-index objects, including
   a value union and a possibly missing array read.
 - `commandLineParser.ts` and `utilities.ts`: many `CompilerOptions` lookups,
-  which do not establish that a mixed named-property shape is a pure record.
+  whose named properties now share the dictionary storage with index keys.
 
 Inference: dictionary lowering addresses a real source form, but it does not
-close all 68 sites. Mixed shapes, unchecked presence assumptions, host values,
+close all 68 sites. Unchecked presence assumptions, host values,
 casts and unrelated syntax need their own decisions and proofs.
 
 ## Admitted type forms
 
 A mutable record type has exactly one unrestricted string index signature and
-no named properties, methods, call signatures, construct signatures, numeric
+may have named data properties. Call signatures, construct signatures, numeric
 index signature or symbol index signature. Recognition uses the resolved checker
 type, including inherited members, not the name of an alias or interface.
 
@@ -59,14 +60,22 @@ as `Record<"left" | "right", T>` are fixed shapes, not unrestricted records.
 Numeric, symbol, template-pattern, multiple and readonly index signatures remain
 `NotYet` in this unit. Readonly views need a separate variance and mutation design.
 
-An index signature beside named properties remains `NotYet`, with a diagnostic
-explaining that the dictionary does not yet preserve named-property contracts.
-For example, `{ required: number; [key: string]: number }` promises `required`
-is present, whereas a dynamic delete could remove it. A narrower named field
-also has a stronger value type than an arbitrary index write. Optional fields,
-readonly fields and inherited named members do not remove this problem. Do not
-erase the fields, silently route them to another store, or accept a mixed shape
-through an alias. Conversions between fixed objects and records require a proven
+Named properties are actual dictionary keys. Only entries written in a literal
+are defined, so an absent optional property stays absent from `in` and enumeration.
+Literal-key reads, including dot reads, use the checker's declared property type;
+dynamic reads use the index type. Heterogeneous values use existing counted union
+boxes. Primitive member reads check their runtime kind before unboxing, allowing
+undefined exactly where the read type permits it. Required reads keep the existing
+loud missing-value checks if deletion invalidates their presence.
+
+An unrestricted write which can hit a narrower or readonly named property remains
+`NotYet` unless its value is accepted by every named property. Literal-key writes
+use the checker's named write contract. Aliases cannot erase or widen a narrower
+named contract, nor discard readonly protection. Object-kind narrowing from union
+storage remains `NotYet` where a checked runtime tag is unavailable. Existing
+prototype checks and unsupported operations are retained.
+
+Conversions between fixed objects and records require a proven
 copy or a representation-aware relation; an existing object cannot simply be
 reinterpreted as a dictionary.
 
@@ -332,7 +341,7 @@ for mixed named signatures, readonly signatures, numeric signatures, prototype
 literal refusal, storage views, invariance cycle-closing writes, and shallow-spread value widening are caught by
 the refusal probes. Their production files are restored after each run.
 
-Unsupported forms include mixed and readonly signatures, fixed/record alias
+Unsupported forms include readonly signatures, fixed/record alias
 conversions at any depth, optional record indexing, unsupported value slots (including Weak values and optional booleans),
 spreads from fixed objects, more than one leading spread, generic instantiated
 record functions outside existing generic support, and JSON values needing

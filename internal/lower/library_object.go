@@ -9,7 +9,11 @@ import (
 )
 
 func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool, error) {
-	if value, handled, err := l.recordObjectCall(node, name); handled {
+	return l.objectCallArguments(node, name, node.AsCallExpression().Arguments.Nodes)
+}
+
+func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
+	if value, handled, err := l.recordObjectCallArguments(node, name, written); handled {
 		return value, true, err
 	}
 	refused := func(reason string) (ir.Expression, bool, error) {
@@ -29,7 +33,6 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 	if name == "is" || name == "hasOwn" {
 		count = 2
 	}
-	written := node.AsCallExpression().Arguments.Nodes
 	if name == "assign" {
 		if len(written) < 1 {
 			return nil, true, l.notYet(node, "Object.assign without a target")

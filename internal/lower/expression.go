@@ -42,7 +42,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		for _, info := range l.checker.GetIndexInfosOfType(proven) {
 			if declaration := info.Declaration(); declaration != nil {
 				file := ast.GetSourceFileOfNode(declaration)
-				if load.IsLibrary(file) && strings.Contains(file.AsSourceFile().FileName(), ".regexp.") {
+				if load.IsLibrary(file) && strings.Contains(string(file.AsSourceFile().FileName()), ".regexp.") {
 					regex = true
 				}
 			}
@@ -410,6 +410,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 
 func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
+	if value, handled, err := l.libraryMethodValue(node); handled {
+		return value, err
+	}
 	if value, known, err := l.enumExpression(node); known {
 		return value, err
 	}

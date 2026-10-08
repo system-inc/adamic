@@ -39,7 +39,7 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 				l.initializing = map[int]*ast.Node{}
 			}
 			l.initializing[local] = name
-			if l.detachedOwnDeclaration(declaration) {
+			if l.detachedOwnDeclaration(declaration) && l.detachedOwnMethod(initializer) {
 				value = ir.BooleanConstant{Value: true}
 			} else {
 				value, err = l.expression(initializer)
