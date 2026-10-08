@@ -48,7 +48,7 @@ func TestCheckedViewMapCertificateWrites(t *testing.T) {
 	for _, name := range []string{"write-good", "write-wrong", "unknown"} {
 		t.Run(name, func(t *testing.T) {
 			if name == "write-wrong" {
-				path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/write-wrong.a"))
+				path, err := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/write-wrong.a")))
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -83,7 +83,7 @@ func TestCheckedViewMapCertificateWrites(t *testing.T) {
 }
 
 func TestCheckedViewMapPhantomRefusal(t *testing.T) {
-	path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/phantom-refused.a"))
+	path, err := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/phantom-refused.a")))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -109,7 +109,7 @@ func TestCheckedViewMapEntryFamilyBoundaries(t *testing.T) {
 	for _, family := range []string{"nullable-entry", "mixed-entry", "callable-entry", "tuple-entry", "nested-array-brand", "nested-object-brand"} {
 		for _, use := range []string{"read", "unread"} {
 			t.Run(family+"-"+use, func(t *testing.T) {
-				path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/"+family+"-"+use+".a"))
+				path, err := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/"+family+"-"+use+".a")))
 				if err != nil {
 					t.Fatal(err)
 				}

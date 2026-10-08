@@ -10,7 +10,7 @@ import (
 func viewRankedArrayCounts(t *testing.T) []string {
 	t.Helper()
 	var rows []string
-	for _, pattern := range []string{"ranked*.a", "reference-array-*.a"} {
+	for _, pattern := range []string{"ranked*.a", "ranked*.ts", "reference-array-*.a", "reference-array-*.ts"} {
 		paths, err := filepath.Glob(filepath.Join(repository, "stage3/interface-downcasts/lane2", pattern))
 		if err != nil {
 			t.Fatal(err)
@@ -18,7 +18,7 @@ func viewRankedArrayCounts(t *testing.T) []string {
 		for _, path := range paths {
 			// Named compile-refusal fixtures have no executable runtime to count.
 			// Their refusal and Node controls remain in the ranked frontier suites.
-			switch filepath.Base(path) {
+			switch strings.TrimSuffix(filepath.Base(path), filepath.Ext(path)) + ".a" {
 			case "ranked3-mutable-array-read.a",
 				"ranked6-jsdoc-parent-cache.a",
 				"ranked7-related-assign.a", "ranked10-resolved-arguments-assign.a",
@@ -29,7 +29,7 @@ func viewRankedArrayCounts(t *testing.T) []string {
 			if err != nil {
 				t.Fatal(err)
 			}
-			rows = append(rows, counted(t, relative, false, nil, false, false))
+			rows = append(rows, counted(t, checkedViewFixturePath(relative), false, nil, false, false))
 		}
 	}
 	rows = append(rows, ranked15ArrayCounts(t)...)
@@ -42,7 +42,7 @@ func viewRankedArrayCounts(t *testing.T) []string {
 func TestCheckedViewRankedArrayCounts(t *testing.T) {
 	rows := viewRankedArrayCounts(t)
 	path := filepath.Join(repository, "internal/oracle/counts.md")
-	data, err := os.ReadFile(path)
+	data, err := os.ReadFile(checkedViewFixturePath(path))
 	if err != nil {
 		t.Fatal(err)
 	}

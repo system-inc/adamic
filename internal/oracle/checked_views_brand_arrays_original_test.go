@@ -18,7 +18,7 @@ func TestCheckedViewBrandArrayOriginalPair(t *testing.T) {
 	if declarations == "" {
 		t.Skip("set ADAMIC_BRAND_ORIGINAL_DECLS to complete pinned declarations")
 	}
-	data, err := os.ReadFile(filepath.Join(declarations, "brand-manifest.json"))
+	data, err := os.ReadFile(checkedViewFixturePath(filepath.Join(declarations, "brand-manifest.json")))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -33,7 +33,7 @@ func TestCheckedViewBrandArrayOriginalPair(t *testing.T) {
 		t.Fatal("original declaration provenance changed")
 	}
 	for file, digest := range manifest.Declarations {
-		data, err := os.ReadFile(filepath.Join(declarations, file))
+		data, err := os.ReadFile(checkedViewFixturePath(filepath.Join(declarations, file)))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -43,7 +43,7 @@ func TestCheckedViewBrandArrayOriginalPair(t *testing.T) {
 	}
 	for _, variant := range []string{"good", "internal", "undefined", "wrong", "null", "bounds"} {
 		t.Run(variant, func(t *testing.T) {
-			input, err := os.ReadFile("../../stage3/interface-downcasts/lane4/original/array-" + variant + ".a")
+			input, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane4/original/array-" + variant + ".a"))
 			if err != nil {
 				t.Fatal(err)
 			}

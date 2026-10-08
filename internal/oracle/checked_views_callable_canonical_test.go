@@ -97,7 +97,7 @@ func TestCheckedViewCallablePendingBoundaries(t *testing.T) {
 		{"intrinsic-member-read", "unbound-method"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/lane5/gaps", probe.name+".a"))
+			path, err := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "stage3/interface-downcasts/lane5/gaps", probe.name+".a")))
 			if err != nil {
 				t.Fatal(err)
 			}

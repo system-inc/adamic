@@ -312,3 +312,104 @@ state remains 03aea1cbede84da46e84c78d599f287bc8585c1b with its completed green
 939.959s filtered oracle. No test repeat is needed for this documentation-only
 checkpoint. After another fetch, dictionary deec3c933543c7b5e7ba0d9db0964265d03c494c
 is still the newest tip and an ancestor, so no dictionary merge is necessary.
+
+
+## October 8 non-null fixture ruling
+
+Moved 436 assertion-bearing fixtures from .a to .ts, preserving every source byte and expected output.
+Commit inventory: internal/oracle/views_non_null_fixtures.json names all 54 readiness/non-null and 382 checked-view fixtures; the commit message names every old and new path.
+Validation: scoped backends, registered non-null source oracles, readiness mutants and declaration-bound count/copy checks pass; broader views runtime results below.
+Mutants: all sixteen readiness-output mutants and four additional readiness/weak/lazy/store mutants execute and are caught by their existing independent pins.
+Limits: global counts retain exactly 41 baseline failures; four additional original-pair frontier assertions reproduce at exact ffe428ab; the checked non-null area remains an unmerged dependency.
+
+The October 8 00:27 ruling keeps non-null assertions refused in Adamic .a and
+inserts checks in TypeScript .ts. The contradictory readiness registrations in
+new-expression evidence aae366090e25128bd8d152b87f5fd569a40dd58f, at
+stage3/notyet-new-expression/VIEWS-PROBE.md, motivated this fixture migration.
+The area tip c41c0e062e99da37820f822968d4df1b48cdaee7 is read for context, not
+merged. No compiler file changes in this unit. Only nine static fixture path
+strings change in oracle_test.go; its harness remains intact.
+
+The explicit fixture inventory resolves dynamic view/readiness paths. The
+ordinary loader is unchanged, so independent .a refusal fixtures in the area
+retain their own source contract. Bound original copies inherit the extension
+of their actual source fixture; non-migrated original frontiers retain .a.
+Callable and ranked-array count discovery includes both extensions and retains
+all existing compile-refusal exclusions. Provenance verifiers include both
+extensions. Live Node-control paths and the optional witness mutant runner
+follow the relocated fixtures. Historical reports remain historical.
+
+A byte comparison against ffe428ab passes for every relocated fixture. A fresh
+TypeScript AST scan finds zero non-null expression nodes in remaining .a files
+under stage3/interface-downcasts and the non_null oracle family. No fixture
+body, stdout, exit, diagnostic or mutant pin is rewritten. counts.md differs
+only in extension keys; every recorded numeric observation is identical.
+
+Setup: GOPROXY=https://proxy.golang.org|direct; bash cloud/setup.sh;
+source /workspace/adamic-tools/env.sh. Timing lines: Node 0.027s, Go 0.027s,
+submodules 0.071s, markdown dependencies 0.093s, clang 0.186s, build 43.149s,
+cache 43.297s, total 43.326s. nproc=5; cpu.max=400000 100000.
+
+Commands, with output redirected to the corresponding views-nonnull log:
+
+```sh
+go test ./internal/lower ./internal/native ./internal/javascript -run 'Test.*View|TestLazyView|TestPrepareViewCallableRead|TestSharedArrayContractAdapter|TestDefaultTaggedInterface|TestOptional|TestMixedUnion|TestPhantomOverload|TestPrimitive' -count=1 -timeout 30m
+go test ./internal/oracle -run '^TestReadinessMutants$|^TestUninitializedIsNotNullishMutant$|^TestNonNullWeakFreedNamesExpression$|^TestLazyInitializerIsNotEagerMutant$|^TestDeinitializationIsNotOrdinaryStoreMutant$|TestNativeAgreesWithNode/.*/non_null' -count=1 -v -timeout 10m
+go test ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/non_null' -count=1 -v -timeout 10m
+go test ./internal/oracle -run 'Test.*View|^TestPrimitiveOrdinaryProperty$|TestNativeAgreesWithNode/.*(view|union|tuple|dictionary|callable|optional|array)' -count=1 -v -timeout 30m
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -v -timeout 10m -args -update-counts
+source /tmp/checked-views-test-env.sh
+go test ./internal/oracle -run '^TestCheckedViewRanked(15|16|17|18)(OriginalArrays|ArrayCounts)$|^TestCheckedViewObjectPrimitiveOriginal' -count=1 -v -timeout 30m
+go test ./internal/oracle -run '^TestCheckedViewRanked(15|16|17|18)ArrayCounts$|^TestCheckedViewObjectPrimitiveOriginalPairs$/source-file-uninitialized$' -count=1 -v -timeout 10m
+# In the isolated exact ffe428ab checkout:
+go test ./internal/oracle -run '^TestCheckedViewObjectPrimitiveOriginalPairs$/(bindable-expression-frontier|jsdoc-parent-probe|bindable-static-left-probe|bindable-left-probe)$' -count=1 -v -timeout 10m
+node stage3/interface-downcasts/lane5/verify-ranked-callable-fixtures.cjs /tmp/checked-views-upstream 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49
+node stage3/interface-downcasts/lane5/verify-optional-aggregate-fixtures.cjs /tmp/checked-views-upstream
+```
+
+Backend checks pass: lower 19.914s, native 18.944s, JavaScript 3.400s.
+Readiness mutants pass in 7.237s. The initial selector did not execute the nested
+source-fixture subtests; the explicit slash-aware source selector then passes
+all registered non-null controls in 10.290s. This records actual coverage rather
+than crediting the earlier empty source selection. Sixteen readiness mutants
+are scanner-var-capture, deinitialization-values, deinitialization-entries,
+deinitialization-assign-source, deinitialization-field-alias,
+deinitialization-field-method, keep-slot-proven-after-deinitialization,
+deinitialization-through-capture, deinitialization-exception-path, drop-check,
+erase-without-proof, initialize-to-zero, miss-captured-read,
+miss-exception-path, lazy-read and weak-generic-message. Each is caught by the
+existing independent stdout/exit/diagnostic pin on native execution. Additional
+ordinary-nullish initializer and eager-lazy-initializer mutants fail Node
+comparisons; freed-Weak diagnostic mutation fails its expression-specific native
+pin; ordinary undefined-store mutation agrees with source Node at exit 0 and
+fails the retained readiness pin. These tests mutate IR, not fixture source.
+
+The declaration-bound run finishes in 607.499s. All 152 original array controls
+pass: original15 15, original16 42, original17 59, original18 36. Its only four
+failures are unchanged, non-migrated bindable-expression-frontier,
+jsdoc-parent-probe, bindable-static-left-probe and bindable-left-probe: each expects
+a compile refusal for union intersection that the integrated compiler now admits.
+An isolated checkout at exact ffe428ab reproduces all four in 14.945s. No unrelated
+frontier pin is changed. Final source-specific copy/count checks pass in 278.261s,
+including source-file-uninitialized and all four original array count groups.
+Provenance verification passes for 28 ranked and 14 optional aggregate fixtures,
+with complete original declarations and source read spans intact.
+
+The final count refresh finishes in 83.266s with exactly the recorded 41 baseline
+failures, no additions or removals and no failures on migrated .ts fixtures.
+It writes no complete replacement table because those failures remain. Migrated
+keys were updated directly without changing numeric values and independently
+remeasured by the focused controls and count groups. An earlier refresh on the
+partial count-discovery plumbing finishes in 65.466s with the same baseline set;
+only the final run is credited for complete renamed-fixture discovery.
+
+Two early path-helper mistakes were caught locally: recursive absolute-path
+resolution caused stack overflow, then a relative repository base missed dynamic
+paths. Both were corrected before the passing readiness run. An early broader
+oracle run was cancelled when superseded; its incomplete result is not credited.
+The source-specific temporary-copy adjustment and final count discovery were
+verified separately on the final test plumbing. Exact compressed logs are in
+logs/continued. No full package, full repository gate or unlanded worker merge
+was run. This completed unit receives one push under the standing rule.
+
+Broader views oracle: passes in 1056.031s, with 1001 native observations and 3961 Node observations missed from cache. The final source-specific copy and complete count-discovery plumbing are independently covered by the 278.261s and 83.266s runs above.

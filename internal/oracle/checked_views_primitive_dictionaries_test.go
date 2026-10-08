@@ -24,7 +24,7 @@ func TestCheckedViewOriginalDictionaryPrimitiveComponents(t *testing.T) {
 	for _, group := range []string{"compileroptions", "optionsbase", "buildoptions"} {
 		for _, variant := range []string{"string", "number", "boolean", "null", "undefined", "missing", "wrong", "wrong-array", "wrong-object"} {
 			t.Run(group+"/"+variant, func(t *testing.T) {
-				input, err := os.ReadFile("../../stage3/interface-downcasts/lane4/primitive-original/dictionary-" + group + "-" + variant + ".a")
+				input, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane4/primitive-original/dictionary-" + group + "-" + variant + ".a"))
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -203,7 +203,7 @@ static adamic_view_dictionary_result admit_function(const adamic_object *object,
 
 func assertOriginalDictionaryFields(t *testing.T, program *ir.Program, root string) {
 	t.Helper()
-	data, err := os.ReadFile("../../stage3/interface-downcasts/lane4/primitive-original/dictionary-candidates.json")
+	data, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane4/primitive-original/dictionary-candidates.json"))
 	if err != nil {
 		t.Fatal(err)
 	}

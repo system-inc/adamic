@@ -33,7 +33,7 @@ for (const rank of process.argv[3].split(',').map(Number)) {
  const family = families.get(rank);
  if (!family) throw Error('missing requested tagged family');
  const directory = path.join(__dirname, 'later-ranked-callables', family.directory);
- for (const name of fs.readdirSync(directory).filter(name => name.endsWith('.a'))) {
+ for (const name of fs.readdirSync(directory).filter(name => (name.endsWith('.a') || name.endsWith('.ts')))) {
   const source = ts.createSourceFile(name, fs.readFileSync(path.join(directory,name),'utf8'), ts.ScriptTarget.Latest, true);
   const fixture = collect(source);
   for (const alias of family.aliases) {

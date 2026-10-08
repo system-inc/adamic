@@ -19,7 +19,7 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 	if declarations == "" {
 		t.Skip("set ADAMIC_BRAND_ORIGINAL_DECLS to pinned complete declarations")
 	}
-	data, err := os.ReadFile(filepath.Join(declarations, "brand-manifest.json"))
+	data, err := os.ReadFile(checkedViewFixturePath(filepath.Join(declarations, "brand-manifest.json")))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -37,7 +37,7 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 		t.Fatal("original provenance changed")
 	}
 	for file, digest := range manifest.Declarations {
-		data, err := os.ReadFile(filepath.Join(declarations, file))
+		data, err := os.ReadFile(checkedViewFixturePath(filepath.Join(declarations, file)))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -46,7 +46,7 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 		}
 	}
 	if manifest.NamesHash != "" {
-		data, err := os.ReadFile(filepath.Join(declarations, "brand-names.d.ts"))
+		data, err := os.ReadFile(checkedViewFixturePath(filepath.Join(declarations, "brand-names.d.ts")))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -55,7 +55,7 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 		}
 	}
 	if manifest.PrivateHash != "" {
-		data, err := os.ReadFile(filepath.Join(declarations, "brand-private.d.ts"))
+		data, err := os.ReadFile(checkedViewFixturePath(filepath.Join(declarations, "brand-private.d.ts")))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -79,7 +79,7 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 				if pair.optional || strings.HasPrefix(pair.typ, "typeof ") {
 					name = strings.ToLower(pair.typ) + "-" + pair.field + "-" + fixtureVariant
 				}
-				input, err := os.ReadFile("../../stage3/interface-downcasts/lane4/original/" + name + ".a")
+				input, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane4/original/" + name + ".a"))
 				if err != nil {
 					t.Fatal(err)
 				}
