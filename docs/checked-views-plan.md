@@ -1487,6 +1487,18 @@ CompilerOptions.lib sits on an index-signature declaration 0.1 refuses. Fixtures
 `lane2/ranked11-*.a`, held by TestCheckedViewRanked11ArrayContracts; the report is
 `lane2/RANKED11_ARRAYS_REPORT.md`.
 
+### Lane 2 twelfth ranked arrays
+
+The twelfth ranked group (sixteen pairs: type parameters and modifiers of several
+declarations, JSDocFunctionType.parameters, ParsedCommandLine.errors, SourceFile
+moduleAugmentations and packageJsonLocations, JsonSourceFile.statements, template
+literal type spans, TypeLiteralNode.members, CaseClause.statements,
+NodeWithTypeArguments.typeArguments and JSDoc.comment as a string-or-array union)
+needed no new hook. Native checks a nullable union read twice (runtime mask, then
+emitted member selection). Fixtures are `lane2/ranked12-*.a`, held by
+TestCheckedViewRanked12ArrayContracts; the report is
+`lane2/RANKED12_ARRAYS_REPORT.md`.
+
 
 
 ## Lane 5 source hooks on ba59427 (October 8)
