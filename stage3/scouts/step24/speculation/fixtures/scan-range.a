@@ -1,4 +1,4 @@
-// Portions Copyright (c) Microsoft Corporation. MIT license: ../LICENSE.upstream.txt.
+// Portions Copyright (c) Microsoft Corporation. Apache 2.0 license: ../LICENSE.upstream.txt.
 // scanner.ts:3952-3974, parser.ts:8911. scanRange always restores all fields.
 // Token enums become numbers; comment directives become a scalar witness.
 let end = 30;
