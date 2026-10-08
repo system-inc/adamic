@@ -15,7 +15,7 @@ def runs(cmd, batch):
  with tempfile.NamedTemporaryFile(mode='w',suffix='.txt') as mf:
   mf.write('\n'.join(batch)+'\n');mf.flush()
   try:
-   p=subprocess.run(cmd(mf.name),capture_output=True,text=True,timeout=180)
+   p=subprocess.run(cmd(mf.name),capture_output=True,text=True,timeout=90)
   except subprocess.TimeoutExpired:
    if len(batch)>1:
     half=len(batch)//2;return runs(cmd,batch[:half])+runs(cmd,batch[half:])
@@ -37,17 +37,17 @@ def classify(a,b):
   xp=x.split('\t');yp=y.split('\t');xx=xp[0].split();yy=yp[0].split()
   if xx[:2]!=yy[:2]:add('kind/children',x,y);continue
   if xx[2:4]!=yy[2:4]:add('position',x,y)
-  delta=int(xx[4])^int(yy[4])
+  delta=(int(xx[4])^int(yy[4])) if xx[2:4]==yy[2:4] else 0
   for bit,name in flags.items():
    if delta&bit:add('flags/'+name,x,y)
   if xx[5:]!=yy[5:] or xp[1:]!=yp[1:]:add('payload/list/token-flags',x,y)
  return found,examples
-for start in range(0,len(paths),40):
- batch=paths[start:start+40]
+for start in range(0,len(paths),200):
+ batch=paths[start:start+200]
  aa=runs(lambda m:['node','--disable-warning=ExperimentalWarning',str(base/'port.mjs'),m],batch)
  bb=runs(lambda m:[sys.argv[3] if len(sys.argv)>3 else '/tmp/parser-census-oracle','--manifest',m,'--whole','--recovery'],batch)
  for path,(a,ae),(b,be) in zip(batch,aa,bb):
-  failures=[{'side':side,'error':line} for side,lines in [('port',a),('go',b)] for line in lines if line.startswith('adapter-failure')]
+  failures=[{'side':side,'error':line} for side,lines in [('port',a),('go',b)] for line in lines if line.startswith(('adapter-failure','adapter-failure','parse-failure'))]
   if failures:result['failures'].append({'path':path,'failures':failures});continue
   result['parsed']+=1
   if a==b:result['identical']+=1
@@ -61,7 +61,7 @@ for start in range(0,len(paths),40):
    if item['shortest_bytes'] is None or size<item['shortest_bytes']:
     item.update(shortest_bytes=size,path=path,input=pathlib.Path(path).read_text(errors='replace'),example=examples[c])
     folder=pathlib.Path(sys.argv[2]).with_suffix('')/'examples';folder.mkdir(parents=True,exist_ok=True)
-    label=c.replace('/','-');(folder/(label+pathlib.Path(path).suffix)).write_bytes(pathlib.Path(path).read_bytes())
+    label=c.replace('/','-');suffix='.d.ts' if path.endswith('.d.ts') else pathlib.Path(path).suffix;(folder/(label+suffix)).write_bytes(pathlib.Path(path).read_bytes())
     for side,tree in [('go',b),('port',a)]:
      with gzip.open(folder/(label+'.'+side+'.tree.gz'),'wt') as out:out.write('\n'.join(tree)+'\n')
  result['classes']=dict(sorted(classes.items(),key=lambda x:-x[1]['files']))

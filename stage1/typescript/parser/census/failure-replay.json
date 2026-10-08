@@ -1,0 +1,469 @@
+{
+  "files": 51,
+  "parsed": 0,
+  "identical": 0,
+  "shape_identical": 0,
+  "classes": {},
+  "failures": [
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/bigintPropertyName.ts",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure timeout (5s)"
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/constructorWithIncompleteTypeAnnotation.ts",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure timeout (5s)"
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/errorSpanForUnclosedJsxTag.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX missing closing tag at 157 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/errorSpanForUnclosedJsxTag.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/jsxAttributeValueBinaryExpression.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 56 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/jsxAttributeValueBinaryExpression.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/jsxNestedWithinTernaryParsesCorrectly.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected } at 263 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/jsxNestedWithinTernaryParsesCorrectly.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/tsxAttributeInvalidNames.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 246 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/tsxAttributeInvalidNames.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/tsxErrorRecovery2.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 134 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/tsxErrorRecovery2.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/tsxFragmentErrors.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX missing closing tag at 235 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/tsxFragmentErrors.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/unicodeEscapesInJsxtags.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX Unicode escape not allowed at 607 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/unicodeEscapesInJsxtags.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/compiler/bigintPropertyName.ts",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure timeout (5s)"
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/compiler/conflictMarkerTrivia3.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 39 in /workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/compiler/conflictMarkerTrivia3.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/compiler/errorSpanForUnclosedJsxTag.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX missing closing tag at 157 in /workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/compiler/errorSpanForUnclosedJsxTag.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/compiler/parsingDeepParenthensizedExpression.ts",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure timeout (5s)"
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/tsxAttributeInvalidNames.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 246 in /workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/tsxAttributeInvalidNames.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/tsxErrorRecovery2.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 134 in /workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/tsxErrorRecovery2.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/tsxFragmentErrors.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX missing closing tag at 235 in /workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/tsxFragmentErrors.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/babel__babel-f67453d56391/packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/jsx-opening-element/input.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 10 in /workspace/parser-corpus/babel__babel-f67453d56391/packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/jsx-opening-element/input.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/supabase__supabase-87681812a0b4/apps/docs/components/Navigation/NavigationMenu/GlobalNavigationMenu.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 6700 in /workspace/parser-corpus/supabase__supabase-87681812a0b4/apps/docs/components/Navigation/NavigationMenu/GlobalNavigationMenu.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/conflictMarkerTrivia3.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 39 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/conflictMarkerTrivia3.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/jsxAndTypeAssertion.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected } at 113 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/jsxAndTypeAssertion.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/jsxInvalidEsprimaTestSuite.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 83 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/jsxInvalidEsprimaTestSuite.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/tsxErrorRecovery3.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 131 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/tsxErrorRecovery3.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/statements/tryStatements/invalidTryStatements.ts",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure timeout (5s)"
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/compiler/jsxNamespacePrefixInName.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 335 in /workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/compiler/jsxNamespacePrefixInName.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/compiler/privateNameJsx.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 114 in /workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/compiler/privateNameJsx.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/jsxAndTypeAssertion.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected } at 113 in /workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/jsxAndTypeAssertion.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/jsxInvalidEsprimaTestSuite.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 83 in /workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/jsxInvalidEsprimaTestSuite.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/tsxErrorRecovery3.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 131 in /workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/tsxErrorRecovery3.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/unicodeEscapesInJsxtags.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX Unicode escape not allowed at 526 in /workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/unicodeEscapesInJsxtags.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/statements/tryStatements/invalidTryStatements.ts",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure timeout (5s)"
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/supabase__supabase-87681812a0b4/apps/studio/components/ui/DatePicker/index.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected } at 6863 in /workspace/parser-corpus/supabase__supabase-87681812a0b4/apps/studio/components/ui/DatePicker/index.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/jsxAttributeInitializerMultipleElementsNoCrash.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 184 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/jsxAttributeInitializerMultipleElementsNoCrash.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/jsxNamespacePrefixInName.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 335 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/jsxNamespacePrefixInName.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/checkJsxNamespaceNamesQuestionableForms.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 224 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/checkJsxNamespaceNamesQuestionableForms.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/jsxParsingErrorImmediateSpreadInAttributeValue.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 205 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/jsxParsingErrorImmediateSpreadInAttributeValue.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/compiler/jsxNamespacePrefixInNameReact.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 347 in /workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/compiler/jsxNamespacePrefixInNameReact.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/compiler/jsxNestedWithinTernaryParsesCorrectly.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected } at 263 in /workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/compiler/jsxNestedWithinTernaryParsesCorrectly.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/checkJsxNamespaceNamesQuestionableForms.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 224 in /workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/checkJsxNamespaceNamesQuestionableForms.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/jsxParsingErrorImmediateSpreadInAttributeValue.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 205 in /workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/jsxParsingErrorImmediateSpreadInAttributeValue.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/parser/ecmascript5/MissingTokens/parserMissingToken1.ts",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure timeout (5s)"
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/jsxAttributeMissingInitializer.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected attribute value at 57 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/jsxAttributeMissingInitializer.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/jsxNamespacePrefixInNameReact.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 347 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/jsxNamespacePrefixInNameReact.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/parsingDeepParenthensizedExpression.ts",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure timeout (5s)"
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/privateNameJsx.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 114 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/privateNameJsx.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/jsxParsingError2.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX mismatched closing tag at 296 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/jsxParsingError2.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/tsxErrorRecovery1.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 151 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/tsxErrorRecovery1.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/parser/ecmascript5/MissingTokens/parserMissingToken1.ts",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure timeout (5s)"
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/compiler/constructorWithIncompleteTypeAnnotation.ts",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure timeout (5s)"
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/compiler/jsxAttributeMissingInitializer.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected attribute value at 57 in /workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/compiler/jsxAttributeMissingInitializer.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/jsxParsingError2.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX mismatched closing tag at 296 in /workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/jsxParsingError2.tsx "
+        }
+      ]
+    },
+    {
+      "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/tsxErrorRecovery1.tsx",
+      "failures": [
+        {
+          "side": "port",
+          "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 151 in /workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/tsxErrorRecovery1.tsx "
+        }
+      ]
+    }
+  ],
+  "records": []
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "input": "/** @type { */ let x;",
+    "port_exit": 0,
+    "port_stdout": "{\"source\":\"/** @type { */ let x;\",\"roots\":[{\"kind\":\"JSDocAllType\",\"pos\":11,\"end\":13,\"children\":[],\"text\":\"\",\"raw\":\"\",\"operator\":\"\",\"semantic\":\"\",\"optional\":false,\"literalFlags\":0,\"list\":-1,\"trailing\":false,\"multiLine\":false}],\"diagnostics\":[{\"code\":1005,\"start\":13,\"length\":1,\"message\":\"'}' expected.\"}]}\n",
+    "port_stderr": "",
+    "go_tree": "type\n0 TypeReference 11 11 4194304 0 -1 0 0\t\t\t\t\n1 Identifier 11 11 4227072 0 -1 0 0\t\t\t\t\n"
+  },
+  {
+    "input": "/** @type */ let x;",
+    "port_exit": 70,
+    "port_stdout": "",
+    "port_stderr": "adamic: panic: doc type missing brace\n",
+    "go_tree": "type\n0 TypeReference 9 9 4194304 0 -1 0 0\t\t\t\t\n1 Identifier 9 9 4227072 0 -1 0 0\t\t\t\t\n"
+  },
+  {
+    "input": "/** @type {number?} */ let x;",
+    "port_exit": 0,
+    "port_stdout": "{\"source\":\"/** @type {number?} */ let x;\",\"roots\":[{\"kind\":\"JSDocNullableType\",\"pos\":11,\"end\":18,\"children\":[0],\"text\":\"\",\"raw\":\"\",\"operator\":\"\",\"semantic\":\"\",\"optional\":false,\"literalFlags\":0,\"list\":-1,\"trailing\":false,\"multiLine\":false}],\"diagnostics\":[]}\n",
+    "port_stderr": "",
+    "go_tree": "type\n0 JSDocNullableType 11 18 4194304 0 -1 0 0\t\t\t\t\n1 NumberKeyword 11 17 4194304 0 -1 0 0\t\t\t\t\n"
+  },
+  {
+    "input": "/** @type {?} */ let x;",
+    "port_exit": 0,
+    "port_stdout": "{\"source\":\"/** @type {?} */ let x;\",\"roots\":[{\"kind\":\"JSDocNullableType\",\"pos\":11,\"end\":12,\"children\":[1],\"text\":\"\",\"raw\":\"\",\"operator\":\"\",\"semantic\":\"\",\"optional\":false,\"literalFlags\":0,\"list\":-1,\"trailing\":false,\"multiLine\":false}],\"diagnostics\":[{\"code\":1110,\"start\":12,\"length\":1,\"message\":\"Type expected.\"}]}\n",
+    "port_stderr": "",
+    "go_tree": "type\n0 JSDocNullableType 11 12 4194304 0 -1 0 0\t\t\t\t\n1 TypeReference 12 12 4194304 0 -1 0 0\t\t\t\t\n2 Identifier 12 12 4227072 0 -1 0 0\t\t\t\t\n"
+  }
+]

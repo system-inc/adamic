@@ -1,0 +1,65 @@
+{
+  "parse-failure timeout (5s)": {
+    "files": 10,
+    "shortest_bytes": 30,
+    "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/parser/ecmascript5/MissingTokens/parserMissingToken1.ts",
+    "error": "parse-failure timeout (5s)",
+    "artifact": "failure-0",
+    "go_exit": 0,
+    "go_stderr": ""
+  },
+  "parse-failure worker exit 70 adamic: panic: JSX missing closing tag": {
+    "files": 4,
+    "shortest_bytes": 157,
+    "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/errorSpanForUnclosedJsxTag.tsx",
+    "error": "parse-failure worker exit 70 adamic: panic: JSX missing closing tag at 157 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/errorSpanForUnclosedJsxTag.tsx ",
+    "artifact": "failure-1",
+    "go_exit": 0,
+    "go_stderr": ""
+  },
+  "parse-failure worker exit 70 adamic: panic: JSX expected name": {
+    "files": 26,
+    "shortest_bytes": 33,
+    "path": "/workspace/parser-corpus/babel__babel-f67453d56391/packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/jsx-opening-element/input.tsx",
+    "error": "parse-failure worker exit 70 adamic: panic: JSX expected name at 10 in /workspace/parser-corpus/babel__babel-f67453d56391/packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/jsx-opening-element/input.tsx ",
+    "artifact": "failure-2",
+    "go_exit": 0,
+    "go_stderr": ""
+  },
+  "parse-failure worker exit 70 adamic: panic: JSX expected }": {
+    "files": 5,
+    "shortest_bytes": 296,
+    "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/jsxNestedWithinTernaryParsesCorrectly.tsx",
+    "error": "parse-failure worker exit 70 adamic: panic: JSX expected } at 263 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/jsxNestedWithinTernaryParsesCorrectly.tsx ",
+    "artifact": "failure-3",
+    "go_exit": 0,
+    "go_stderr": ""
+  },
+  "parse-failure worker exit 70 adamic: panic: JSX Unicode escape not allowed": {
+    "files": 2,
+    "shortest_bytes": 786,
+    "path": "/workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/unicodeEscapesInJsxtags.tsx",
+    "error": "parse-failure worker exit 70 adamic: panic: JSX Unicode escape not allowed at 526 in /workspace/parser-corpus/microsoft__TypeScript-050880ce59e3/tests/cases/conformance/jsx/unicodeEscapesInJsxtags.tsx ",
+    "artifact": "failure-4",
+    "go_exit": 0,
+    "go_stderr": ""
+  },
+  "parse-failure worker exit 70 adamic: panic: JSX expected attribute value": {
+    "files": 2,
+    "shortest_bytes": 79,
+    "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/jsxAttributeMissingInitializer.tsx",
+    "error": "parse-failure worker exit 70 adamic: panic: JSX expected attribute value at 57 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/compiler/jsxAttributeMissingInitializer.tsx ",
+    "artifact": "failure-5",
+    "go_exit": 0,
+    "go_stderr": ""
+  },
+  "parse-failure worker exit 70 adamic: panic: JSX mismatched closing tag": {
+    "files": 2,
+    "shortest_bytes": 515,
+    "path": "/workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/jsxParsingError2.tsx",
+    "error": "parse-failure worker exit 70 adamic: panic: JSX mismatched closing tag at 296 in /workspace/parser-corpus/microsoft__TypeScript-50d70a3f5f45/tsc/testdata/tests/cases/conformance/jsx/jsxParsingError2.tsx ",
+    "artifact": "failure-6",
+    "go_exit": 0,
+    "go_stderr": ""
+  }
+}

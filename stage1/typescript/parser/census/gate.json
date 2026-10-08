@@ -1,0 +1,1557 @@
+{
+  "files": 300,
+  "parsed": 300,
+  "identical": 202,
+  "shape_identical": 298,
+  "classes": {
+    "flags/Ambient": {
+      "files": 65,
+      "shortest_bytes": 60,
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/005_ambientEnumElementInitializer3/ambientEnumElementInitializer3.ts",
+      "input": "// @target: es2015\ndeclare enum E {\n e = 3.3 // Decimal\n}",
+      "example": {
+        "port": "1 EnumDeclaration 0 60 0 0 -1 0 0\t\t\t\t",
+        "go": "1 EnumDeclaration 0 60 8388608 0 -1 0 0\t\t\t\t"
+      }
+    },
+    "flags/AwaitContext": {
+      "files": 21,
+      "shortest_bytes": 115,
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/042_exportDefaultForNonInstantiatedModule/exportDefaultForNonInstantiatedModule.ts",
+      "input": "// @target: ES6\n\nnamespace m {\n    export interface foo {\n    }\n}\n// Should not be emitted\nexport default m;",
+      "example": {
+        "port": "2 Identifier 112 114 0 0 -1 0 0\t\tm\t\t",
+        "go": "2 Identifier 112 114 8192 0 -1 0 0\t\tm\t\t"
+      }
+    },
+    "flags/DecoratorContext": {
+      "files": 9,
+      "shortest_bytes": 154,
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/251_decoratorMetadataGenericTypeVariable/decoratorMetadataGenericTypeVariable.ts",
+      "input": "// @target: es2015\n// @experimentalDecorators: true\n// @emitDecoratorMetadata: true\n\nexport class C<TypeVariable> {\n  @Decorate\n  member: TypeVariable;\n}\n",
+      "example": {
+        "port": "4 Identifier 119 127 0 0 -1 0 0\t\tDecorate\t\t",
+        "go": "4 Identifier 119 127 12288 0 -1 0 0\t\tDecorate\t\t"
+      }
+    },
+    "flags/DisallowInContext": {
+      "files": 9,
+      "shortest_bytes": 87,
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/127_forInStatement4/forInStatement4.ts",
+      "input": "// @target: es2015\n// @strict: false\nvar expr: any;\nfor (var a: number in expr) {\n}",
+      "example": {
+        "port": "3 VariableDeclaration 63 73 0 0 -1 0 0\t\t\t\t",
+        "go": "3 VariableDeclaration 63 73 1024 0 -1 0 0\t\t\t\t"
+      }
+    },
+    "flags/YieldContext": {
+      "files": 6,
+      "shortest_bytes": 59,
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/257_generatorES6_5/generatorES6_5.ts",
+      "input": "// @target: es6\nfunction* foo() {\n    yield a ? b : c;\n}",
+      "example": {
+        "port": "2 Block 32 59 0 0 -1 0 0\t\t\t\t",
+        "go": "2 Block 32 59 2048 0 -1 0 0\t\t\t\t"
+      }
+    },
+    "flags/HasJSDoc": {
+      "files": 3,
+      "shortest_bytes": 101,
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/003_commentOnClassAccessor1/commentOnClassAccessor1.ts",
+      "input": "// @target: es2015\nclass C {\n  /**\n   * @type {number}\n   */\n  get bar(): number { return 1;}\n}",
+      "example": {
+        "port": "2 GetAccessor 29 98 0 0 -1 0 0\t\t\t\t",
+        "go": "2 GetAccessor 29 98 2097152 0 -1 0 0\t\t\t\t"
+      }
+    },
+    "flags/DisallowConditionalTypesContext": {
+      "files": 3,
+      "shortest_bytes": 247,
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/206_recursiveResolveTypeMembers/recursiveResolveTypeMembers.ts",
+      "input": "// @target: es2015\n// Repro from #25291\n\ntype PromisedTuple<L extends any[], U = (...args: L) => void> =\n    U extends (h: infer H, ...args: infer R) => [Promise<H>, ...PromisedTuple<R>] ? [] : []\n\ntype Promised = PromisedTuple<[1, 2, 3]> \n",
+      "example": {
+        "port": "3 FunctionType 122 190 0 0 -1 0 0\t\t\t\t",
+        "go": "3 FunctionType 122 190 16384 0 -1 0 0\t\t\t\t"
+      }
+    },
+    "flags/Reparsed": {
+      "files": 2,
+      "shortest_bytes": 97,
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/031_commentInNamespaceDeclarationWithIdentifierPathName/commentInNamespaceDeclarationWithIdentifierPathName.ts",
+      "input": "\ufeff// @target: es2015\nnamespace hello.hi.world\n{\n    function foo() {}\n\n    // TODO, blah\n}",
+      "example": {
+        "port": "3 ExportKeyword 39 39 0 0 -1 0 0\t\t\t\t",
+        "go": "3 ExportKeyword 39 39 8 0 -1 0 0\t\t\t\t"
+      }
+    },
+    "kind/children": {
+      "files": 2,
+      "shortest_bytes": 413,
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/074_parseInvalidNullableTypes/parseInvalidNullableTypes.ts",
+      "input": "// @target: es2015\n// @strict: true\n\nfunction f1(a: string): a is ?string {\n    return true;\n}\n\nfunction f2(a: string?) {}\nfunction f3(a: number?) {}\n\nfunction f4(a: ?string) {}\nfunction f5(a: ?number) {}\n\nfunction f6(a: string): ?string {\n    return true;\n}\n\nconst a = 1 as any?;\nconst b: number? = 1;\n\nconst c = 1 as ?any;\nconst d: ?number = 1;\n\nlet e: unknown?;\nlet f: never?;\nlet g: void?;\nlet h: undefined?;\n",
+      "example": {
+        "port": "4 NumberKeyword 289 296 0 0 -1 0 0\t\t\t\t",
+        "go": "4 JSDocNullableType 289 297 0 0 -1 0 0\t\t\t\t"
+      }
+    },
+    "diagnostics": {
+      "files": 2,
+      "shortest_bytes": 413,
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/074_parseInvalidNullableTypes/parseInvalidNullableTypes.ts",
+      "input": "// @target: es2015\n// @strict: true\n\nfunction f1(a: string): a is ?string {\n    return true;\n}\n\nfunction f2(a: string?) {}\nfunction f3(a: number?) {}\n\nfunction f4(a: ?string) {}\nfunction f5(a: ?number) {}\n\nfunction f6(a: string): ?string {\n    return true;\n}\n\nconst a = 1 as any?;\nconst b: number? = 1;\n\nconst c = 1 as ?any;\nconst d: ?number = 1;\n\nlet e: unknown?;\nlet f: never?;\nlet g: void?;\nlet h: undefined?;\n",
+      "example": {
+        "port": [
+          "diagnostic 1005 296 1 1\t',' expected.",
+          "diagnostic 1134 298 1 1\tVariable declaration expected.",
+          "diagnostic 1134 300 1 1\tVariable declaration expected."
+        ],
+        "go": []
+      }
+    },
+    "position": {
+      "files": 1,
+      "shortest_bytes": 413,
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/074_parseInvalidNullableTypes/parseInvalidNullableTypes.ts",
+      "input": "// @target: es2015\n// @strict: true\n\nfunction f1(a: string): a is ?string {\n    return true;\n}\n\nfunction f2(a: string?) {}\nfunction f3(a: number?) {}\n\nfunction f4(a: ?string) {}\nfunction f5(a: ?number) {}\n\nfunction f6(a: string): ?string {\n    return true;\n}\n\nconst a = 1 as any?;\nconst b: number? = 1;\n\nconst c = 1 as ?any;\nconst d: ?number = 1;\n\nlet e: unknown?;\nlet f: never?;\nlet g: void?;\nlet h: undefined?;\n",
+      "example": {
+        "port": "1 VariableStatement 280 299 0 0 -1 0 0\t\t\t\t",
+        "go": "1 VariableStatement 280 302 0 0 -1 0 0\t\t\t\t"
+      }
+    },
+    "children/count": {
+      "files": 1,
+      "shortest_bytes": 742,
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/239_expressionWithJSDocTypeArguments/expressionWithJSDocTypeArguments.ts",
+      "input": "// @target: es2015\n// @strict: true\n\n// Repro from #51802\n\nfunction foo<T>(x: T): T { return x }\n\nclass Bar<T> { constructor(public x: T) { } }\n\n// Errors expected on all of the following\n\nconst WhatFoo = foo<?>;\nconst HuhFoo = foo<string?>;\nconst NopeFoo = foo<?string>;\nconst ComeOnFoo = foo<?string?>;\n\ntype TWhatFoo = typeof foo<?>;\ntype THuhFoo = typeof foo<string?>;\ntype TNopeFoo = typeof foo<?string>;\ntype TComeOnFoo = typeof foo<?string?>;\n\nconst WhatBar = Bar<?>;\nconst HuhBar = Bar<string?>;\nconst NopeBar = Bar<?string>;\nconst ComeOnBar = Bar<?string?>;\n\ntype TWhatBar = typeof Bar<?>;\ntype THuhBar = typeof Bar<string?>;\ntype TNopeBar = typeof Bar<?string>;\ntype TComeOnBar = typeof Bar<?string?>;\n",
+      "example": {
+        "port": 216,
+        "go": 146
+      }
+    }
+  },
+  "failures": [],
+  "records": [
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/001_varianceCantBeStrictWhileStructureIsnt/varianceCantBeStrictWhileStructureIsnt.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/002_conditionalEqualityTestingNullability/conditionalEqualityTestingNullability.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/003_commentOnClassAccessor1/commentOnClassAccessor1.ts",
+      "classes": [
+        "flags/HasJSDoc"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/004_metadataOfUnion/metadataOfUnion.ts",
+      "classes": [
+        "flags/DecoratorContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/005_ambientEnumElementInitializer3/ambientEnumElementInitializer3.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/006_arrayDestructuringInSwitch1/arrayDestructuringInSwitch1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/007_nestedBlockScopedBindings15/nestedBlockScopedBindings15.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/008_library_StringSlice/library_StringSlice.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/009_es6ModuleWithModuleGenTargetCommonjs/es6ModuleWithModuleGenTargetCommonjs.ts",
+      "classes": [
+        "flags/AwaitContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/010_nestedTypeVariableInfersLiteral/nestedTypeVariableInfersLiteral.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/011_namespaces2/namespaces2.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/012_expandoFunctionExpressionsWithDynamicNames2/expandoFunctionExpressionsWithDynamicNames2.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/013_parseEntityNameWithReservedWord/parseEntityNameWithReservedWord.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/014_keyofObjectWithGlobalSymbolIncluded/keyofObjectWithGlobalSymbolIncluded.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/015_decoratorReferences/decoratorReferences.ts",
+      "classes": [
+        "flags/Ambient",
+        "flags/DecoratorContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/016_yieldStarContextualType/yieldStarContextualType.ts",
+      "classes": [
+        "flags/Ambient",
+        "flags/YieldContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/017_binopAssignmentShouldHaveType/binopAssignmentShouldHaveType.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/018_typeofUsedBeforeBlockScoped/typeofUsedBeforeBlockScoped.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/019_superHasMethodsFromMergedInterface/superHasMethodsFromMergedInterface.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/020_intersectionApparentTypeCaching/intersectionApparentTypeCaching.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/021_commentOnArrayElement12/commentOnArrayElement12.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/022_nestedBlockScopedBindings4/nestedBlockScopedBindings4.ts",
+      "classes": [
+        "flags/DisallowInContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/023_capturedLetConstInLoop10_ES6/capturedLetConstInLoop10_ES6.ts",
+      "classes": [
+        "flags/DisallowInContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/024_genericTypeParameterEquivalence2/genericTypeParameterEquivalence2.ts",
+      "classes": [
+        "flags/DisallowInContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/025_exportArrayBindingPattern/exportArrayBindingPattern.ts",
+      "classes": [
+        "flags/AwaitContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/026_functionAssignmentError/functionAssignmentError.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/027_multiExtendsSplitInterfaces1/multiExtendsSplitInterfaces1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/028_stringMatchAll/stringMatchAll.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/029_enumLiteralUnionNotWidened/enumLiteralUnionNotWidened.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/030_asyncYieldStarContextualType/asyncYieldStarContextualType.ts",
+      "classes": [
+        "flags/Ambient",
+        "flags/AwaitContext",
+        "flags/YieldContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/031_commentInNamespaceDeclarationWithIdentifierPathName/commentInNamespaceDeclarationWithIdentifierPathName.ts",
+      "classes": [
+        "flags/Reparsed"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/032_templateLiteralsAndDecoratorMetadata/templateLiteralsAndDecoratorMetadata.ts",
+      "classes": [
+        "flags/Ambient",
+        "flags/AwaitContext",
+        "flags/DecoratorContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/033_assignmentCompatability6/assignmentCompatability6.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/034_parseReplacementCharacter/parseReplacementCharacter.ts",
+      "classes": [
+        "flags/HasJSDoc"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/035_classOrder1/classOrder1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/036_conditionalExpressions2/conditionalExpressions2.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/037_singletonLabeledTuple/singletonLabeledTuple.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/038_breakInIterationOrSwitchStatement1/breakInIterationOrSwitchStatement1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/039_narrowByClauseExpressionInSwitchTrue2/narrowByClauseExpressionInSwitchTrue2.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/040_emitOneLineVariableDeclarationRemoveCommentsFalse/emitOneLineVariableDeclarationRemoveCommentsFalse.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/041_nongenericConditionalNotPartiallyComputed/nongenericConditionalNotPartiallyComputed.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/042_exportDefaultForNonInstantiatedModule/exportDefaultForNonInstantiatedModule.ts",
+      "classes": [
+        "flags/AwaitContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/043_collisionThisExpressionAndLocalVarInProperty/collisionThisExpressionAndLocalVarInProperty.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/044_functionWithDefaultParameterWithNoStatements10/functionWithDefaultParameterWithNoStatements10.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/045_discriminantUsingEvaluatableTemplateExpression/discriminantUsingEvaluatableTemplateExpression.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/046_assignmentCompatForEnums/assignmentCompatForEnums.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/047_promiseWithResolvers/promiseWithResolvers.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/048_uniqueSymbolAssignmentOnGlobalAugmentationSuceeds/uniqueSymbolAssignmentOnGlobalAugmentationSuceeds.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/049_decoratorMetadataNoStrictNull/decoratorMetadataNoStrictNull.ts",
+      "classes": [
+        "flags/DecoratorContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/050_unusedInterfaceinNamespace4/unusedInterfaceinNamespace4.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/051_extendedUnicodeEscapeSequenceIdentifiers/extendedUnicodeEscapeSequenceIdentifiers.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/052_commentOnClassAccessor2/commentOnClassAccessor2.ts",
+      "classes": [
+        "flags/HasJSDoc"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/053_contextualTypeBasedOnIntersectionWithAnyInTheMix5/contextualTypeBasedOnIntersectionWithAnyInTheMix5.ts",
+      "classes": [
+        "flags/Ambient",
+        "flags/DisallowConditionalTypesContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/054_contextualTyping19/contextualTyping19.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/055_modularizeLibrary_UsingES5LibES6ArrayLibES6WellknownSymbolLib/modularizeLibrary_UsingES5LibES6ArrayLibES6WellknownSymbolLib.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/056_genericCallInferenceInConditionalTypes1/genericCallInferenceInConditionalTypes1.ts",
+      "classes": [
+        "flags/Ambient",
+        "flags/DisallowConditionalTypesContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/057_localImportNameVsGlobalName/localImportNameVsGlobalName.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/058_contextualTypingOfConditionalExpression/contextualTypingOfConditionalExpression.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/059_functionOverloads31/functionOverloads31.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/060_numberAsInLHS/numberAsInLHS.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/061_constEnumErrors/constEnumErrors.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/062_interfaceDeclaration1/interfaceDeclaration1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/063_didYouMeanSuggestionErrors/didYouMeanSuggestionErrors.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/064_recursiveFunctionTypes/recursiveFunctionTypes.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/065_callOverloads2/callOverloads2.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/066_decoratorUsedBeforeDeclaration/decoratorUsedBeforeDeclaration.ts",
+      "classes": [
+        "flags/DecoratorContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/067_undefinedTypeAssignment4/undefinedTypeAssignment4.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/068_emitCapturingThisInTupleDestructuring1/emitCapturingThisInTupleDestructuring1.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/069_computedPropertiesInDestructuring1/computedPropertiesInDestructuring1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/070_assignmentToReferenceTypes/assignmentToReferenceTypes.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/071_overloadModifiersMustAgree/overloadModifiersMustAgree.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/072_noImplicitAnyForIn/noImplicitAnyForIn.ts",
+      "classes": [
+        "flags/DisallowInContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/073_superNewCall1/superNewCall1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/074_parseInvalidNullableTypes/parseInvalidNullableTypes.ts",
+      "classes": [
+        "diagnostics",
+        "kind/children",
+        "position"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/075_recursiveConditionalCrash4/recursiveConditionalCrash4.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/076_interfacedeclWithIndexerErrors/interfacedeclWithIndexerErrors.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/077_objectLitIndexerContextualType/objectLitIndexerContextualType.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/078_weakType/weakType.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/079_nullableFunctionError/nullableFunctionError.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/080_builtinIterator/builtinIterator.ts",
+      "classes": [
+        "flags/Ambient",
+        "flags/YieldContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/081_errorForUsingPropertyOfTypeAsType03/errorForUsingPropertyOfTypeAsType03.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/082_unusedDestructuring/unusedDestructuring.ts",
+      "classes": [
+        "flags/Ambient",
+        "flags/AwaitContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/083_indirectSelfReferenceGeneric/indirectSelfReferenceGeneric.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/084_thisInModule/thisInModule.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/085_narrowSwitchOptionalChainContainmentEvolvingArrayNoCrash1/narrowSwitchOptionalChainContainmentEvolvingArrayNoCrash1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/086_noImplicitSymbolToString/noImplicitSymbolToString.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/087_strictModeInConstructor/strictModeInConstructor.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/088_baseConstraintOfDecorator/baseConstraintOfDecorator.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/089_moduleVisibilityTest3/moduleVisibilityTest3.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/090_constraintWithIndexedAccess/constraintWithIndexedAccess.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/091_excessivelyLargeTupleSpread/excessivelyLargeTupleSpread.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/092_omittedExpressionForOfLoop/omittedExpressionForOfLoop.ts",
+      "classes": [
+        "flags/DisallowInContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/093_typeOfEnumAndVarRedeclarations/typeOfEnumAndVarRedeclarations.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/094_assignmentToParenthesizedExpression1/assignmentToParenthesizedExpression1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/095_interfaceExtendsClassWithPrivate1/interfaceExtendsClassWithPrivate1.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/096_importDeclRefereingExternalModuleWithNoResolve/importDeclRefereingExternalModuleWithNoResolve.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/097_mappedTypeGenericWithKnownKeys/mappedTypeGenericWithKnownKeys.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/098_moduleAugmentationGlobal7_1/moduleAugmentationGlobal7_1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/099_untypedFunctionCallsWithTypeParameters1/untypedFunctionCallsWithTypeParameters1.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/100_scopeCheckExtendedClassInsidePublicMethod2/scopeCheckExtendedClassInsidePublicMethod2.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/101_noUncheckedIndexedAccessCompoundAssignments/noUncheckedIndexedAccessCompoundAssignments.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/102_implicitAnyDeclareTypePropertyWithoutType/implicitAnyDeclareTypePropertyWithoutType.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/104_mixedStaticAndInstanceClassMembers/mixedStaticAndInstanceClassMembers.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/105_exportDefaultTypeClassAndValue/exportDefaultTypeClassAndValue.ts",
+      "classes": [
+        "flags/AwaitContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/106_interfaceMergeWithNonGenericTypeArguments/interfaceMergeWithNonGenericTypeArguments.ts",
+      "classes": [
+        "flags/AwaitContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/107_objectFreeze/objectFreeze.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/108_redeclareParameterInCatchBlock/redeclareParameterInCatchBlock.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/109_classExtendsNull2/classExtendsNull2.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/110_importDeclWithExportModifierAndExportAssignment/importDeclWithExportModifierAndExportAssignment.ts",
+      "classes": [
+        "flags/AwaitContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/111_circularlyReferentialInterfaceAccessNoCrash/circularlyReferentialInterfaceAccessNoCrash.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/112_noImplicitAnyParametersInInterface/noImplicitAnyParametersInInterface.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/113_duplicateSymbolsExportMatching/duplicateSymbolsExportMatching.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/114_truthinessPromiseCoercion/truthinessPromiseCoercion.ts",
+      "classes": [
+        "flags/Ambient",
+        "flags/AwaitContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/115_unusedClassesinNamespace4/unusedClassesinNamespace4.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/116_recursivelyExpandingUnionNoStackoverflow/recursivelyExpandingUnionNoStackoverflow.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/117_typeUsedAsTypeLiteralIndex/typeUsedAsTypeLiteralIndex.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/118_anyMappedTypesError/anyMappedTypesError.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/119_yieldExpressionInFlowLoop/yieldExpressionInFlowLoop.ts",
+      "classes": [
+        "flags/YieldContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/120_excessPropertyCheckWithSpread/excessPropertyCheckWithSpread.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/121_switchCasesExpressionTypeMismatch/switchCasesExpressionTypeMismatch.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/122_literalsInComputedProperties1/literalsInComputedProperties1.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/123_narrowByEquality/narrowByEquality.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/124_this_inside-enum-should-not-be-allowed/this_inside-enum-should-not-be-allowed.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/125_noMappedGetSet/noMappedGetSet.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/126_restInvalidArgumentType/restInvalidArgumentType.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/127_forInStatement4/forInStatement4.ts",
+      "classes": [
+        "flags/DisallowInContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/128_noImplicitAnyUnionNormalizedObjectLiteral1/noImplicitAnyUnionNormalizedObjectLiteral1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/129_enumWithPrimitiveName/enumWithPrimitiveName.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/130_inheritedStringIndexersFromDifferentBaseTypes2/inheritedStringIndexersFromDifferentBaseTypes2.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/131_errorsForCallAndAssignmentAreSimilar/errorsForCallAndAssignmentAreSimilar.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/132_missingCommaInTemplateStringsArray/missingCommaInTemplateStringsArray.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/133_forInStatement2/forInStatement2.ts",
+      "classes": [
+        "flags/Ambient",
+        "flags/DisallowInContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/134_augmentedTypesEnum/augmentedTypesEnum.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/135_narrowingTruthyObject/narrowingTruthyObject.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/136_nestedFreshLiteral/nestedFreshLiteral.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/137_duplicateErrorNameNotFound/duplicateErrorNameNotFound.ts",
+      "classes": [
+        "flags/AwaitContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/138_voidAsOperator/voidAsOperator.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/139_typeParametersInStaticAccessors/typeParametersInStaticAccessors.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/140_arrayAssignmentTest5/arrayAssignmentTest5.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/141_forInStrictNullChecksNoError/forInStrictNullChecksNoError.ts",
+      "classes": [
+        "flags/DisallowInContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/142_spreadUnionPropOverride/spreadUnionPropOverride.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/143_enumPropertyAccessBeforeInitalisation/enumPropertyAccessBeforeInitalisation.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/144_inheritedStringIndexersFromDifferentBaseTypes/inheritedStringIndexersFromDifferentBaseTypes.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/145_ClassDeclaration10/ClassDeclaration10.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/146_noImplicitAnyIndexing/noImplicitAnyIndexing.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/147_genericMappedTypeAsClause/genericMappedTypeAsClause.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/148_nonArrayRestArgs/nonArrayRestArgs.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/149_undefinedTypeAssignment1/undefinedTypeAssignment1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/150_useUnknownInCatchVariables01/useUnknownInCatchVariables01.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/151_normalizedIntersectionTooComplex/normalizedIntersectionTooComplex.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/152_errorOnEnumReferenceInCondition/errorOnEnumReferenceInCondition.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/153_returnTypeTypeArguments/returnTypeTypeArguments.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/154_emitThisInSuperMethodCall/emitThisInSuperMethodCall.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/155_varianceReferences/varianceReferences.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/156_misspelledNewMetaProperty/misspelledNewMetaProperty.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/157_varNameConflictsWithImportInDifferentPartOfModule/varNameConflictsWithImportInDifferentPartOfModule.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/158_incorrectRecursiveMappedTypeConstraint/incorrectRecursiveMappedTypeConstraint.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/159_objectBindingPattern_restElementWithPropertyName/objectBindingPattern_restElementWithPropertyName.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/160_incompatibleAssignmentOfIdenticallyNamedTypes/incompatibleAssignmentOfIdenticallyNamedTypes.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/161_didYouMeanElaborationsForExpressionsWhichCouldBeCalled/didYouMeanElaborationsForExpressionsWhichCouldBeCalled.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/162_instanceofWithPrimitiveUnion/instanceofWithPrimitiveUnion.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/163_ArrowFunctionExpression1/ArrowFunctionExpression1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/164_staticOffOfInstance1/staticOffOfInstance1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/165_defaultValueInConstructorOverload1/defaultValueInConstructorOverload1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/166_inheritanceMemberFuncOverridingProperty/inheritanceMemberFuncOverridingProperty.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/167_compareTypeParameterConstrainedByLiteralToLiteral/compareTypeParameterConstrainedByLiteralToLiteral.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/168_importedModuleAddToGlobal/importedModuleAddToGlobal.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/169_spreadInvalidArgumentType/spreadInvalidArgumentType.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/171_extendPrivateConstructorClass/extendPrivateConstructorClass.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/172_constDeclarationShadowedByVarDeclaration/constDeclarationShadowedByVarDeclaration.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/173_selfReferencesInFunctionParameters/selfReferencesInFunctionParameters.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/174_baseExpressionTypeParameters/baseExpressionTypeParameters.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/175_propertyOrdering/propertyOrdering.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/176_exportSpecifierReferencingOuterDeclaration1/exportSpecifierReferencingOuterDeclaration1.ts",
+      "classes": [
+        "flags/Ambient",
+        "flags/AwaitContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/177_readonlyTupleAndArrayElaboration/readonlyTupleAndArrayElaboration.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/178_bitwiseCompoundAssignmentOperators/bitwiseCompoundAssignmentOperators.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/179_callOnClass/callOnClass.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/180_keywordExpressionInternalComments/keywordExpressionInternalComments.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/181_noImplicitAnyDestructuringParameterDeclaration/noImplicitAnyDestructuringParameterDeclaration.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/182_propertyAccessibility1/propertyAccessibility1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/183_internalImportInstantiatedModuleNotReferencingInstance/internalImportInstantiatedModuleNotReferencingInstance.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/184_bindingPatternCannotBeOnlyInferenceSource/bindingPatternCannotBeOnlyInferenceSource.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/185_restParamsWithNonRestParams/restParamsWithNonRestParams.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/186_superInConstructorParam1/superInConstructorParam1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/187_deleteReadonlyInStrictNullChecks/deleteReadonlyInStrictNullChecks.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/188_uncalledFunctionChecksInConditional/uncalledFunctionChecksInConditional.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/189_circularModuleImports/circularModuleImports.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/190_interfaceMayNotBeExtendedWitACall/interfaceMayNotBeExtendedWitACall.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/191_extendedInterfacesWithDuplicateTypeParameters/extendedInterfacesWithDuplicateTypeParameters.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/192_constructorOverloads1/constructorOverloads1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/193_capturedParametersInInitializers1/capturedParametersInInitializers1.ts",
+      "classes": [
+        "flags/AwaitContext",
+        "flags/YieldContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/194_reachabilityChecks1/reachabilityChecks1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/195_inheritanceMemberAccessorOverridingProperty/inheritanceMemberAccessorOverridingProperty.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/196_typeArgumentDefaultUsesConstraintOnCircularDefault/typeArgumentDefaultUsesConstraintOnCircularDefault.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/197_classExtendsInterfaceInModule/classExtendsInterfaceInModule.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/198_shadowPrivateMembers/shadowPrivateMembers.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/199_getterMissingReturnError/getterMissingReturnError.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/200_instantiationExpressionErrorNoCrash/instantiationExpressionErrorNoCrash.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/201_thisPredicateInObjectLiteral/thisPredicateInObjectLiteral.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/202_reservedNameOnInterfaceImport/reservedNameOnInterfaceImport.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/203_incrementOnTypeParameter/incrementOnTypeParameter.ts",
+      "classes": [
+        "flags/DisallowInContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/204_classExpressionExtendingAbstractClass/classExpressionExtendingAbstractClass.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/205_noImplicitReturnsInAsync2/noImplicitReturnsInAsync2.ts",
+      "classes": [
+        "flags/AwaitContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/206_recursiveResolveTypeMembers/recursiveResolveTypeMembers.ts",
+      "classes": [
+        "flags/DisallowConditionalTypesContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/207_uniqueSymbolAllowsIndexInObjectWithIndexSignature/uniqueSymbolAllowsIndexInObjectWithIndexSignature.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/208_importAliasInModuleAugmentation/importAliasInModuleAugmentation.ts",
+      "classes": [
+        "flags/Ambient",
+        "flags/AwaitContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/209_genericSpecializations2/genericSpecializations2.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/210_illegalSuperCallsInConstructor/illegalSuperCallsInConstructor.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/211_functionParameterArityMismatch/functionParameterArityMismatch.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/212_duplicateIdentifierDifferentModifiers/duplicateIdentifierDifferentModifiers.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/213_inheritanceMemberPropertyOverridingAccessor/inheritanceMemberPropertyOverridingAccessor.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/214_ambientExternalModuleWithRelativeModuleName/ambientExternalModuleWithRelativeModuleName.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/215_classImplementsPrimitive/classImplementsPrimitive.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/216_functionTypeArgumentArityErrors/functionTypeArgumentArityErrors.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/217_fallFromLastCase2/fallFromLastCase2.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/218_shorthandPropertyUndefined/shorthandPropertyUndefined.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/219_classImplementsClass4/classImplementsClass4.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/220_bigIntWithTargetLessThanES2016/bigIntWithTargetLessThanES2016.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/221_unusedParameterProperty2/unusedParameterProperty2.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/222_staticPrototypeProperty/staticPrototypeProperty.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/223_instanceofOnInstantiationExpression/instanceofOnInstantiationExpression.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/224_newFunctionImplicitAny/newFunctionImplicitAny.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/225_returnInConstructor1/returnInConstructor1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/226_assigningFromObjectToAnythingElse/assigningFromObjectToAnythingElse.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/227_classFieldSuperNotAccessible/classFieldSuperNotAccessible.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/228_inKeywordAndUnknown/inKeywordAndUnknown.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/229_awaitCallExpressionInSyncFunction/awaitCallExpressionInSyncFunction.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/230_parameterPropertyInConstructor3/parameterPropertyInConstructor3.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/231_circularReferenceInReturnType/circularReferenceInReturnType.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/232_neverNullishThroughParentheses/neverNullishThroughParentheses.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/233_noImplicitAnyNamelessParameter/noImplicitAnyNamelessParameter.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/234_superCallFromClassThatHasNoBaseType1/superCallFromClassThatHasNoBaseType1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/235_reachabilityChecks3/reachabilityChecks3.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/236_returnValueInSetter/returnValueInSetter.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/237_gettersAndSettersAccessibility/gettersAndSettersAccessibility.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/238_typeParameterAsBaseClass/typeParameterAsBaseClass.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/239_expressionWithJSDocTypeArguments/expressionWithJSDocTypeArguments.ts",
+      "classes": [
+        "children/count",
+        "diagnostics",
+        "kind/children"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/240_indexedAccessPrivateMemberOfGenericConstraint/indexedAccessPrivateMemberOfGenericConstraint.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/241_implicitAnyGetAndSetAccessorWithAnyReturnType/implicitAnyGetAndSetAccessorWithAnyReturnType.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/242_constDeclarations-access2/constDeclarations-access2.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/243_classExtendsNull3/classExtendsNull3.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/244_modularizeLibrary_ErrorFromUsingES6FeaturesWithOnlyES5Lib/modularizeLibrary_ErrorFromUsingES6FeaturesWithOnlyES5Lib.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/245_inheritanceMemberFuncOverridingAccessor/inheritanceMemberFuncOverridingAccessor.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/246_noCrashOnMixin/noCrashOnMixin.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/247_missingDomElements/missingDomElements.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/248_relationComplexityError/relationComplexityError.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/249_mergedClassNamespaceRecordCast/mergedClassNamespaceRecordCast.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/250_parseInvalidNonNullableTypes/parseInvalidNonNullableTypes.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/251_decoratorMetadataGenericTypeVariable/decoratorMetadataGenericTypeVariable.ts",
+      "classes": [
+        "flags/AwaitContext",
+        "flags/DecoratorContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/252_unusedFunctionsinNamespaces3/unusedFunctionsinNamespaces3.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/253_correctOrderOfPromiseMethod/correctOrderOfPromiseMethod.ts",
+      "classes": [
+        "flags/AwaitContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/254_parseTypes/parseTypes.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/255_keyRemappingKeyofResult/keyRemappingKeyofResult.ts",
+      "classes": [
+        "flags/Ambient",
+        "flags/AwaitContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/256_namespaceDisambiguationInUnion/namespaceDisambiguationInUnion.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/257_generatorES6_5/generatorES6_5.ts",
+      "classes": [
+        "flags/YieldContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/258_decoratorMetadataGenericTypeVariableInScope/decoratorMetadataGenericTypeVariableInScope.ts",
+      "classes": [
+        "flags/AwaitContext",
+        "flags/DecoratorContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/259_conditionalAnyCheckTypePicksBothBranches/conditionalAnyCheckTypePicksBothBranches.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/260_unusedFunctionsinNamespaces6/unusedFunctionsinNamespaces6.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/261_promiseIdentity2/promiseIdentity2.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/262_decoratorMetadataConditionalType/decoratorMetadataConditionalType.ts",
+      "classes": [
+        "flags/Ambient",
+        "flags/DecoratorContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/263_keyofIsLiteralContexualType/keyofIsLiteralContexualType.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/264_unusedVariablesinNamespaces3/unusedVariablesinNamespaces3.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/265_promiseIdentity/promiseIdentity.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/266_decoratorMetadataGenericTypeVariableDefault/decoratorMetadataGenericTypeVariableDefault.ts",
+      "classes": [
+        "flags/AwaitContext",
+        "flags/DecoratorContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/267_reverseMappedTypeContextualTypeNotCircular/reverseMappedTypeContextualTypeNotCircular.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/268_incorrectNumberOfTypeArgumentsDuringErrorReporting/incorrectNumberOfTypeArgumentsDuringErrorReporting.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/269_unusedFunctionsinNamespaces5/unusedFunctionsinNamespaces5.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/270_promiseChaining1/promiseChaining1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/271_enumUsedBeforeDeclaration/enumUsedBeforeDeclaration.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/272_conditionalExpressionNewLine3/conditionalExpressionNewLine3.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/273_stringMappingAssignability/stringMappingAssignability.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/274_ipromise3/ipromise3.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/275_unusedInterfaceinNamespace1/unusedInterfaceinNamespace1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/276_intersectionsAndOptionalProperties/intersectionsAndOptionalProperties.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/277_useBeforeDeclaration_destructuring/useBeforeDeclaration_destructuring.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/278_typeOfOperator1/typeOfOperator1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/279_enumAssignmentCompat/enumAssignmentCompat.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/280_unusedClassesinNamespace2/unusedClassesinNamespace2.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/281_doubleUnderStringLiteralAssignability/doubleUnderStringLiteralAssignability.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/282_ipromise4/ipromise4.ts",
+      "classes": [
+        "flags/Ambient",
+        "flags/Reparsed"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/283_errorsWithInvokablesInUnions01/errorsWithInvokablesInUnions01.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/284_exhaustiveSwitchCheckCircularity/exhaustiveSwitchCheckCircularity.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/285_numberAssignableToEnumInsideUnion/numberAssignableToEnumInsideUnion.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/286_conditionalExpressionNewLine9/conditionalExpressionNewLine9.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/287_unusedFunctionsinNamespaces2/unusedFunctionsinNamespaces2.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/288_numberOnLeftSideOfInExpression/numberOnLeftSideOfInExpression.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/289_awaitedTypeStrictNull/awaitedTypeStrictNull.ts",
+      "classes": [
+        "flags/Ambient",
+        "flags/AwaitContext"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/290_contextuallyTypingOrOperator/contextuallyTypingOrOperator.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/291_nonexistentPropertyOnUnion/nonexistentPropertyOnUnion.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/292_scopingInCatchBlocks/scopingInCatchBlocks.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/293_augmentedTypesEnum2/augmentedTypesEnum2.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/294_mappedTypeWithCombinedTypeMappers/mappedTypeWithCombinedTypeMappers.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/295_unusedFunctionsinNamespaces4/unusedFunctionsinNamespaces4.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/296_numberToString/numberToString.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/297_promiseIdentityWithAny/promiseIdentityWithAny.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/298_destructuringAssignmentWithDefault2/destructuringAssignmentWithDefault2.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/299_contextualTypingOfArrayLiterals1/contextualTypingOfArrayLiterals1.ts",
+      "classes": []
+    },
+    {
+      "path": "/workspace/parser-scout/stage3/drivers/tsc/corpus/300_errorMessageOnIntersectionsWithDiscriminants01/errorMessageOnIntersectionsWithDiscriminants01.ts",
+      "classes": [
+        "flags/Ambient"
+      ]
+    }
+  ]
+}

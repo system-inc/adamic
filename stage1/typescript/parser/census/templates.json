@@ -1,0 +1,62 @@
+{
+  "files": 5,
+  "parsed": 5,
+  "identical": 0,
+  "shape_identical": 4,
+  "classes": {
+    "flags/ThisNodeHasError": {
+      "files": 5,
+      "shortest_bytes": 1,
+      "path": "/workspace/parser-scout/stage1/typescript/parser/census/template-probe-0.ts",
+      "input": "`",
+      "example": {
+        "port": "2 NoSubstitutionTemplateLiteral 0 1 0 4 -1 0 0\t\t\t\t",
+        "go": "2 NoSubstitutionTemplateLiteral 0 1 32768 4 -1 0 0\t\t\t\t"
+      }
+    },
+    "payload/list/token-flags": {
+      "files": 1,
+      "shortest_bytes": 2,
+      "path": "/workspace/parser-scout/stage1/typescript/parser/census/template-probe-1.ts",
+      "input": "`a",
+      "example": {
+        "port": "2 NoSubstitutionTemplateLiteral 0 2 0 4 -1 0 0\t\ta\t\t",
+        "go": "2 NoSubstitutionTemplateLiteral 0 2 32768 4 -1 0 0\t\ta\ta\t"
+      }
+    }
+  },
+  "failures": [],
+  "records": [
+    {
+      "path": "/workspace/parser-scout/stage1/typescript/parser/census/template-probe-0.ts",
+      "classes": [
+        "flags/ThisNodeHasError"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage1/typescript/parser/census/template-probe-1.ts",
+      "classes": [
+        "flags/ThisNodeHasError",
+        "payload/list/token-flags"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage1/typescript/parser/census/template-probe-2.ts",
+      "classes": [
+        "flags/ThisNodeHasError"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage1/typescript/parser/census/template-probe-3.ts",
+      "classes": [
+        "flags/ThisNodeHasError"
+      ]
+    },
+    {
+      "path": "/workspace/parser-scout/stage1/typescript/parser/census/template-probe-4.ts",
+      "classes": [
+        "flags/ThisNodeHasError"
+      ]
+    }
+  ]
+}

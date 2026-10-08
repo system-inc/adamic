@@ -1,0 +1,1 @@
+/** @type {number?} */ let x;

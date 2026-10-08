@@ -1,0 +1,212 @@
+[
+  {
+    "method": "expression",
+    "sourceContext": false,
+    "root": "ArrowFunction",
+    "next": "CloseBraceToken",
+    "diagnostics": [
+      {
+        "code": 1005,
+        "start": 3,
+        "length": 1,
+        "message": "',' expected."
+      },
+      {
+        "code": 1180,
+        "start": 4,
+        "length": 1,
+        "message": "Property destructuring pattern expected."
+      },
+      {
+        "code": 1005,
+        "start": 5,
+        "length": 1,
+        "message": "'=>' expected."
+      }
+    ],
+    "listContexts": []
+  },
+  {
+    "method": "expression",
+    "sourceContext": true,
+    "root": "ParenthesizedExpression",
+    "next": "EndOfFile",
+    "diagnostics": [],
+    "listContexts": []
+  },
+  {
+    "method": "assignment",
+    "sourceContext": false,
+    "root": "ArrowFunction",
+    "next": "CloseBraceToken",
+    "diagnostics": [
+      {
+        "code": 1005,
+        "start": 3,
+        "length": 1,
+        "message": "',' expected."
+      },
+      {
+        "code": 1180,
+        "start": 4,
+        "length": 1,
+        "message": "Property destructuring pattern expected."
+      },
+      {
+        "code": 1005,
+        "start": 5,
+        "length": 1,
+        "message": "'=>' expected."
+      }
+    ],
+    "listContexts": []
+  },
+  {
+    "method": "assignment",
+    "sourceContext": true,
+    "root": "ParenthesizedExpression",
+    "next": "EndOfFile",
+    "diagnostics": [],
+    "listContexts": []
+  },
+  {
+    "method": "rootExpression",
+    "sourceContext": false,
+    "root": "ArrowFunction",
+    "next": "CloseBraceToken",
+    "diagnostics": [
+      {
+        "code": 1005,
+        "start": 3,
+        "length": 1,
+        "message": "',' expected."
+      },
+      {
+        "code": 1180,
+        "start": 4,
+        "length": 1,
+        "message": "Property destructuring pattern expected."
+      },
+      {
+        "code": 1005,
+        "start": 5,
+        "length": 1,
+        "message": "'=>' expected."
+      }
+    ],
+    "listContexts": []
+  },
+  {
+    "method": "rootExpression",
+    "sourceContext": true,
+    "root": "ParenthesizedExpression",
+    "next": "EndOfFile",
+    "diagnostics": [],
+    "listContexts": []
+  },
+  {
+    "method": "rootAssignment",
+    "sourceContext": false,
+    "root": "ArrowFunction",
+    "next": "CloseBraceToken",
+    "diagnostics": [
+      {
+        "code": 1005,
+        "start": 3,
+        "length": 1,
+        "message": "',' expected."
+      },
+      {
+        "code": 1180,
+        "start": 4,
+        "length": 1,
+        "message": "Property destructuring pattern expected."
+      },
+      {
+        "code": 1005,
+        "start": 5,
+        "length": 1,
+        "message": "'=>' expected."
+      }
+    ],
+    "listContexts": []
+  },
+  {
+    "method": "rootAssignment",
+    "sourceContext": true,
+    "root": "ParenthesizedExpression",
+    "next": "EndOfFile",
+    "diagnostics": [],
+    "listContexts": []
+  },
+  {
+    "method": "allowInExpression",
+    "sourceContext": false,
+    "root": "ArrowFunction",
+    "next": "CloseBraceToken",
+    "diagnostics": [
+      {
+        "code": 1005,
+        "start": 3,
+        "length": 1,
+        "message": "',' expected."
+      },
+      {
+        "code": 1180,
+        "start": 4,
+        "length": 1,
+        "message": "Property destructuring pattern expected."
+      },
+      {
+        "code": 1005,
+        "start": 5,
+        "length": 1,
+        "message": "'=>' expected."
+      }
+    ],
+    "listContexts": []
+  },
+  {
+    "method": "allowInExpression",
+    "sourceContext": true,
+    "root": "ParenthesizedExpression",
+    "next": "EndOfFile",
+    "diagnostics": [],
+    "listContexts": []
+  },
+  {
+    "method": "allowInAssignment",
+    "sourceContext": false,
+    "root": "ArrowFunction",
+    "next": "CloseBraceToken",
+    "diagnostics": [
+      {
+        "code": 1005,
+        "start": 3,
+        "length": 1,
+        "message": "',' expected."
+      },
+      {
+        "code": 1180,
+        "start": 4,
+        "length": 1,
+        "message": "Property destructuring pattern expected."
+      },
+      {
+        "code": 1005,
+        "start": 5,
+        "length": 1,
+        "message": "'=>' expected."
+      }
+    ],
+    "listContexts": []
+  },
+  {
+    "method": "allowInAssignment",
+    "sourceContext": true,
+    "root": "ParenthesizedExpression",
+    "next": "EndOfFile",
+    "diagnostics": [],
+    "listContexts": []
+  }
+]
