@@ -2,13 +2,13 @@
 ==3554== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
 ==3554== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
 ==3554== Command: /tmp/trees-profile/before
-==3554== 
+==3554==
 ==3554== For interactive control, run 'callgrind_control -h'.
 ==3554== brk segment overflow in thread #1: can't grow to 0x485b000
 ==3554== (see section Limitations in user manual)
 ==3554== NOTE: further instances of this message will not be shown
-==3554== 
+==3554==
 ==3554== Events    : Ir
 ==3554== Collected : 5503698925
-==3554== 
+==3554==
 ==3554== I   refs:      5,503,698,925

@@ -1,0 +1,48 @@
+=== RUN   TestRemoteSlabDrainAndMutant
+=== RUN   TestRemoteSlabDrainAndMutant/control
+=== RUN   TestRemoteSlabDrainAndMutant/skip_nonempty
+    heap_remote_test.go:87: skip-nonempty mutant caught: remote slot was not recycled: full=0
+--- PASS: TestRemoteSlabDrainAndMutant (9.24s)
+    --- PASS: TestRemoteSlabDrainAndMutant/control (4.01s)
+    --- PASS: TestRemoteSlabDrainAndMutant/skip_nonempty (5.24s)
+=== RUN   TestFreedValuesAreCaughtWithSlabs
+=== PAUSE TestFreedValuesAreCaughtWithSlabs
+=== RUN   TestSizeClassesShareTheirChunks
+=== PAUSE TestSizeClassesShareTheirChunks
+=== RUN   TestParallelMemory
+=== PAUSE TestParallelMemory
+=== RUN   TestRegionEndWeakTargets
+=== PAUSE TestRegionEndWeakTargets
+=== RUN   TestRegionEndThrowInitialization
+=== PAUSE TestRegionEndThrowInitialization
+=== RUN   TestReleaseSharedValueAndUnsafeMutant
+    release_test.go:78: unsafe last-owner mutant compiles; ASan catches heap-use-after-free on dynamic shared text
+--- PASS: TestReleaseSharedValueAndUnsafeMutant (22.97s)
+=== RUN   TestRuntimeReleasePaths
+=== PAUSE TestRuntimeReleasePaths
+=== CONT  TestFreedValuesAreCaughtWithSlabs
+=== CONT  TestRegionEndWeakTargets
+=== CONT  TestRuntimeReleasePaths
+=== CONT  TestRegionEndThrowInitialization
+=== CONT  TestParallelMemory
+=== RUN   TestParallelMemory/asan_slabs
+--- PASS: TestRegionEndWeakTargets (0.75s)
+=== CONT  TestSizeClassesShareTheirChunks
+--- PASS: TestRegionEndThrowInitialization (0.97s)
+=== NAME  TestSizeClassesShareTheirChunks
+    heap_test.go:126: peak 6420 KiB through every class, 5932 KiB at one size
+--- PASS: TestSizeClassesShareTheirChunks (10.16s)
+--- PASS: TestFreedValuesAreCaughtWithSlabs (19.09s)
+--- PASS: TestRuntimeReleasePaths (19.22s)
+=== NAME  TestParallelMemory/asan_slabs
+    parallel_test.go:90: harness threads=4 arguments=[] runs=1 elapsed=1.605198352s
+=== RUN   TestParallelMemory/count
+    parallel_test.go:90: harness threads=4 arguments=[] runs=1 elapsed=228.420755ms
+=== RUN   TestParallelMemory/tsan
+    parallel_test.go:90: harness threads=4 arguments=[] runs=3 elapsed=8.950946284s
+--- PASS: TestParallelMemory (37.72s)
+    --- PASS: TestParallelMemory/asan_slabs (20.95s)
+    --- PASS: TestParallelMemory/count (0.44s)
+    --- PASS: TestParallelMemory/tsan (16.32s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	69.969s
