@@ -1,0 +1,18 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface CancellationToken {readonly value:number;}
+type WriteFileCallback = (
+    fileName: string,
+    text: string,
+    writeByteOrderMark: boolean,
+    onError?: (message: string) => void,
+    sourceFiles?: readonly SourceFile[],
+    data?: WriteFileCallbackData,
+) => void;
+interface SourceFile {readonly value:number;readonly kind:308;}
+interface WriteFileCallbackData {readonly value:number;}
+interface CustomTransformers {readonly value:number;}
+const enum ExitStatus {Success=0,DiagnosticsPresent_OutputsSkipped=1,DiagnosticsPresent_OutputsGenerated=2,InvalidProject_OutputsSkipped=3,ProjectReferenceCycle_OutputsSkipped=4}
+interface Base {readonly build:unknown;}
+interface Target {build(project?: string, cancellationToken?: CancellationToken, writeFile?: WriteFileCallback, getCustomTransformers?: (project: string) => CustomTransformers): ExitStatus;}
+function probe(value:Base):void {const builder=value as Target;const witnessResult=builder.build("abc",{value:3},(fileName: string,text: string,writeByteOrderMark: boolean,onError?: (message: string) => void,sourceFiles?: readonly SourceFile[],data?: WriteFileCallbackData):void=>{},(project: string):CustomTransformers=>({value:3}));console.log("completed");}
+probe({build:(project?: string,cancellationToken?: CancellationToken,writeFile?: WriteFileCallback,getCustomTransformers?: (project: string) => CustomTransformers):ExitStatus=>(0)});

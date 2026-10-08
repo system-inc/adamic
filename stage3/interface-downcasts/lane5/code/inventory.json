@@ -1,0 +1,2041 @@
+{
+  "roadmapStep": 9,
+  "pendingGroupsLargestReadCountFirst": [
+    {
+      "name": "predicate admission",
+      "pendingPairs": 5,
+      "pendingReads": 553
+    },
+    {
+      "name": "generic callable instantiation",
+      "pendingPairs": 14,
+      "pendingReads": 474
+    },
+    {
+      "name": "rest intrinsics and producer writes",
+      "pendingPairs": 20,
+      "pendingReads": 462
+    },
+    {
+      "name": "overload sets",
+      "pendingPairs": 10,
+      "pendingReads": 352
+    },
+    {
+      "name": "Set intrinsics",
+      "pendingPairs": 72,
+      "pendingReads": 223
+    },
+    {
+      "name": "higher-order signatures",
+      "pendingPairs": 6,
+      "pendingReads": 213
+    },
+    {
+      "name": "Map intrinsics",
+      "pendingPairs": 26,
+      "pendingReads": 165
+    },
+    {
+      "name": "other callable values and receivers",
+      "pendingPairs": 7,
+      "pendingReads": 124
+    },
+    {
+      "name": "Array receivers and callbacks",
+      "pendingPairs": 13,
+      "pendingReads": 122
+    },
+    {
+      "name": "unsupported original carrier domains",
+      "pendingPairs": 3,
+      "pendingReads": 3
+    }
+  ],
+  "members": [
+    {
+      "share": "a",
+      "rank": 3,
+      "pair": "NodeFactory.createIdentifier",
+      "reads": 206,
+      "group": "overload sets",
+      "status": "excluded factory owner",
+      "requiredChange": "Demand-time overload contract selection and immutable producer coverage of every advertised signature, preserving arity and parameter/result variance.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 9,
+      "pair": "NodeFactory.createStringLiteral",
+      "reads": 104,
+      "group": "overload sets",
+      "status": "excluded factory owner",
+      "requiredChange": "Demand-time overload contract selection and immutable producer coverage of every advertised signature, preserving arity and parameter/result variance.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 12,
+      "pair": "NodeFactory.cloneNode",
+      "reads": 91,
+      "group": "generic callable instantiation",
+      "status": "excluded factory owner",
+      "requiredChange": "Demand-time generic callable instantiation with sound parameter/result contracts; do not replace generic identity with a function tag.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 15,
+      "pair": "Expression[].push",
+      "reads": 85,
+      "group": "rest intrinsics and producer writes",
+      "status": "pending",
+      "requiredChange": "Support rest-parameter intrinsic callable contracts for Array.push, including immutable arity/domain descriptors and safe native receiver transport.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 24,
+      "pair": "NodeFactory.createUniqueName",
+      "reads": 58,
+      "group": "overload sets",
+      "status": "excluded factory owner",
+      "requiredChange": "Demand-time overload contract selection and immutable producer coverage of every advertised signature, preserving arity and parameter/result variance.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 27,
+      "pair": "Diagnostic[].push",
+      "reads": 55,
+      "group": "rest intrinsics and producer writes",
+      "status": "pending",
+      "requiredChange": "Support rest-parameter intrinsic callable contracts for Array.push, including immutable arity/domain descriptors and safe native receiver transport.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 30,
+      "pair": "Type[].push",
+      "reads": 49,
+      "group": "rest intrinsics and producer writes",
+      "status": "pending",
+      "requiredChange": "Support rest-parameter intrinsic callable contracts for Array.push, including immutable arity/domain descriptors and safe native receiver transport.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 33,
+      "pair": "RegExp.test",
+      "reads": 45,
+      "group": "other callable values and receivers",
+      "status": "pending",
+      "requiredChange": "Represent RegExp intrinsic methods through checked views in both backends, with immutable callable descriptors and safe receiver binding; valid inherited test must not be treated as a missing own field.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 45,
+      "pair": "StringConstructor.fromCharCode",
+      "reads": 38,
+      "group": "other callable values and receivers",
+      "status": "pending",
+      "requiredChange": "Represent the String constructor as a checked first-class value with static callable descriptors, or refuse its view transport before native emission.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 48,
+      "pair": "any[].push",
+      "reads": 36,
+      "group": "rest intrinsics and producer writes",
+      "status": "pending",
+      "requiredChange": "Support rest-parameter intrinsic callable contracts for Array.push, including immutable arity/domain descriptors and safe native receiver transport.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 57,
+      "pair": "Declaration[] | undefined.find",
+      "reads": 28,
+      "group": "predicate admission",
+      "status": "pending",
+      "requiredChange": "Sound demand-time overloaded predicate contract instantiation, accepting ambient predicate declarations without treating them as unproven implementations; preserve predicate/result correlation.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 66,
+      "pair": "Map<string, boolean>.set",
+      "reads": 23,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "Provide tagged native Map receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 87,
+      "pair": "JSON.stringify",
+      "reads": 19,
+      "group": "other callable values and receivers",
+      "status": "pending",
+      "requiredChange": "Represent the JSON namespace as a checked first-class value with static callable descriptors, or refuse its view transport before native emission.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 90,
+      "pair": "Set<string>.has",
+      "reads": 19,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 93,
+      "pair": "Map<string, number>.set",
+      "reads": 18,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "Provide tagged native Map receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 105,
+      "pair": "SymbolTable.has",
+      "reads": 16,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "Provide tagged native Map receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 108,
+      "pair": "TransformerFactory<SourceFile | Bundle>[].push",
+      "reads": 16,
+      "group": "rest intrinsics and producer writes",
+      "status": "pending",
+      "requiredChange": "Support rest-parameter intrinsic callable contracts for Array.push, including immutable arity/domain descriptors and safe native receiver transport.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 111,
+      "pair": "Map<string, Type>.set",
+      "reads": 15,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "Provide tagged native Map receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 114,
+      "pair": "NodeArray<ParameterDeclaration>.indexOf",
+      "reads": 15,
+      "group": "Array receivers and callbacks",
+      "status": "pending",
+      "requiredChange": "Provide tagged native Array receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 126,
+      "pair": "string[].map",
+      "reads": 14,
+      "group": "generic callable instantiation",
+      "status": "pending",
+      "requiredChange": "Support rest-parameter or generic higher-order Array intrinsic callable contracts, preserving parameter/result domains and safe receiver transport.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 138,
+      "pair": "VariableDeclaration[].push",
+      "reads": 13,
+      "group": "rest intrinsics and producer writes",
+      "status": "pending",
+      "requiredChange": "Support rest-parameter intrinsic callable contracts for Array.push, including immutable arity/domain descriptors and safe native receiver transport.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 147,
+      "pair": "Node[].push",
+      "reads": 12,
+      "group": "generic callable instantiation",
+      "status": "pending",
+      "requiredChange": "Support rest-parameter or generic higher-order Array intrinsic callable contracts, preserving parameter/result domains and safe receiver transport.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 150,
+      "pair": "readonly string[].map",
+      "reads": 12,
+      "group": "generic callable instantiation",
+      "status": "pending",
+      "requiredChange": "Instantiate generic higher-order Array.map callable contracts soundly, including callback parameter/result variance and native receiver descriptors.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 153,
+      "pair": "Map<string, Type>.get",
+      "reads": 11,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "Provide tagged native Map receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 165,
+      "pair": "TransformationContext.onEmitNode",
+      "reads": 11,
+      "group": "other callable values and receivers",
+      "status": "excluded factory owner",
+      "requiredChange": "Retain demand-time higher-order callable descriptors for malformed producers so arity and kind guards execute at the read without depending on compatible producer proof.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 168,
+      "pair": "string[].includes",
+      "reads": 11,
+      "group": "Array receivers and callbacks",
+      "status": "pending",
+      "requiredChange": "Provide tagged native Array receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 174,
+      "pair": "NodeFactory.createModifier",
+      "reads": 10,
+      "group": "generic callable instantiation",
+      "status": "excluded factory owner",
+      "requiredChange": "Demand-time generic callable instantiation with sound parameter/result contracts; do not replace generic identity with a function tag.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 186,
+      "pair": "NodeFactory.createImportClause",
+      "reads": 9,
+      "group": "overload sets",
+      "status": "excluded factory owner",
+      "requiredChange": "Demand-time overload contract selection and immutable producer coverage of every advertised signature, preserving arity and parameter/result variance.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 189,
+      "pair": "NodeFactory.createYieldExpression",
+      "reads": 9,
+      "group": "overload sets",
+      "status": "excluded factory owner",
+      "requiredChange": "Demand-time overload contract selection and immutable producer coverage of every advertised signature, preserving arity and parameter/result variance.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 195,
+      "pair": "SyntacticTypeNodeBuilderResolver.markNodeReuse",
+      "reads": 9,
+      "group": "generic callable instantiation",
+      "status": "pending",
+      "requiredChange": "Sound generic callable instantiation preserving range/result identity and context/location domains.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 198,
+      "pair": "string[] | undefined.push",
+      "reads": 9,
+      "group": "rest intrinsics and producer writes",
+      "status": "pending",
+      "requiredChange": "Support rest-parameter intrinsic callable contracts for Array.push, including immutable arity/domain descriptors and safe native receiver transport.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 204,
+      "pair": "Map<string, string>.set",
+      "reads": 8,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "Provide tagged native Map receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 219,
+      "pair": "Set<number>.add",
+      "reads": 8,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 222,
+      "pair": "string[].pop",
+      "reads": 8,
+      "group": "Array receivers and callbacks",
+      "status": "pending",
+      "requiredChange": "Provide tagged native Array receiver transport into structural checked views and intrinsic callable descriptors; reject unsupported transport during lowering until implemented. No C pointer cast or fabricated object metadata.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 228,
+      "pair": "Map<Path, FileInfo>.get",
+      "reads": 7,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "Provide tagged Map receiver transport into structural checked views and immutable intrinsic callable descriptors; reject unsupported transport during lowering until implemented.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 231,
+      "pair": "Map<string, RelationComparisonResult>.set",
+      "reads": 7,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "Provide tagged Map receiver transport into structural checked views and immutable intrinsic callable descriptors; reject unsupported transport during lowering until implemented.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 252,
+      "pair": "Set<number>.has",
+      "reads": 7,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 261,
+      "pair": "readonly Statement[].slice",
+      "reads": 7,
+      "group": "Array receivers and callbacks",
+      "status": "pending",
+      "requiredChange": "Provide tagged Array receiver transport into structural checked views and immutable intrinsic callable descriptors; reject unsupported transport during lowering until implemented.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 267,
+      "pair": "Date.getTime",
+      "reads": 6,
+      "group": "other callable values and receivers",
+      "status": "pending",
+      "requiredChange": "Represent Date intrinsic methods through checked views in both backends, with immutable callable descriptors and safe receiver binding.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 279,
+      "pair": "JSDocComment[].push",
+      "reads": 6,
+      "group": "generic callable instantiation",
+      "status": "pending",
+      "requiredChange": "Support rest-parameter or generic higher-order Array intrinsic callable contracts, preserving parameter/result domains and safe receiver transport.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 282,
+      "pair": "Map<number, Type>.get",
+      "reads": 6,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "Provide tagged Map receiver transport into structural checked views and immutable intrinsic callable descriptors; reject unsupported transport during lowering until implemented.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 309,
+      "pair": "Set<Node>.add",
+      "reads": 6,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 312,
+      "pair": "Statement[].unshift",
+      "reads": 6,
+      "group": "generic callable instantiation",
+      "status": "pending",
+      "requiredChange": "Support rest-parameter or generic higher-order Array intrinsic callable contracts, preserving parameter/result domains and safe receiver transport.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 318,
+      "pair": "TypeNode[].push",
+      "reads": 6,
+      "group": "generic callable instantiation",
+      "status": "pending",
+      "requiredChange": "Support rest-parameter or generic higher-order Array intrinsic callable contracts, preserving parameter/result domains and safe receiver transport.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 321,
+      "pair": "readonly string[].slice",
+      "reads": 6,
+      "group": "Array receivers and callbacks",
+      "status": "pending",
+      "requiredChange": "Provide tagged Array receiver transport into structural checked views and immutable intrinsic callable descriptors; reject unsupported transport during lowering until implemented.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 330,
+      "pair": "DiagnosticRelatedInformation[].push",
+      "reads": 5,
+      "group": "generic callable instantiation",
+      "status": "pending",
+      "requiredChange": "Support rest-parameter or generic higher-order Array intrinsic callable contracts, preserving parameter/result domains and safe receiver transport.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 381,
+      "pair": "Set<Path> | undefined.has",
+      "reads": 5,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 438,
+      "pair": "NodeFactory.createImmediatelyInvokedArrowFunction",
+      "reads": 4,
+      "group": "overload sets",
+      "status": "pending",
+      "requiredChange": "Demand-time overload selection with complete producer coverage of both single-argument and parameterized arrow-function overloads.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 459,
+      "pair": "ObjectAllocator.getIdentifierConstructor",
+      "reads": 4,
+      "group": "other callable values and receivers",
+      "status": "pending",
+      "requiredChange": "First-class class/constructor producer value representation, followed by callable result construct signatures and safe receiver transport. This control stops on Leaf before the original member guard is exercised.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 462,
+      "pair": "ObjectAllocator.getTokenConstructor",
+      "reads": 4,
+      "group": "generic callable instantiation",
+      "status": "pending",
+      "requiredChange": "First-class class/constructor producer value representation, followed by generic construct-signature instantiation preserving Token<TKind>. This control stops on Leaf before the original member guard is exercised.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 480,
+      "pair": "Set<ResolutionWithFailedLookupLocations>.clear",
+      "reads": 4,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 507,
+      "pair": "(Set<string> | undefined)[].push",
+      "reads": 3,
+      "group": "rest intrinsics and producer writes",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 552,
+      "pair": "Map<Path, Set<ResolutionWithFailedLookupLocations>>.get",
+      "reads": 3,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 579,
+      "pair": "NodeFactory.copyCustomPrologue",
+      "reads": 3,
+      "group": "overload sets",
+      "status": "pending",
+      "requiredChange": "Complete overload and higher-order visitor/filter contracts preserving optional offset and optional result correlation.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 630,
+      "pair": "ReadonlySet<Path> | undefined.forEach",
+      "reads": 3,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 636,
+      "pair": "Set<Node>.has",
+      "reads": 3,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 639,
+      "pair": "Set<__String>.forEach",
+      "reads": 3,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 1044,
+      "pair": "ReadonlySet<Path>.forEach",
+      "reads": 2,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 1074,
+      "pair": "Set<Path>.clear",
+      "reads": 2,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 1077,
+      "pair": "Set<ResolutionWithFailedLookupLocations>.delete",
+      "reads": 2,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 1080,
+      "pair": "Set<string> | undefined.delete",
+      "reads": 2,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 1245,
+      "pair": "(Set<string> | undefined)[].some",
+      "reads": 1,
+      "group": "Array receivers and callbacks",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 1497,
+      "pair": "Map<K, Set<V>>.delete",
+      "reads": 1,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 1500,
+      "pair": "Map<K, Set<V>>.set",
+      "reads": 1,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 1581,
+      "pair": "Map<Path, ReadonlySet<Path>>.set",
+      "reads": 1,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 1587,
+      "pair": "Map<Path, Set<ResolutionWithFailedLookupLocations>>.delete",
+      "reads": 1,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 2220,
+      "pair": "ReadonlyMap<K, U> | ReadonlySet<K> | undefined.forEach",
+      "reads": 1,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 2235,
+      "pair": "ReadonlySet<Path> | undefined.has",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 2316,
+      "pair": "Set<FlowNode>.add",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 2319,
+      "pair": "Set<FunctionDeclaration>.add",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 2322,
+      "pair": "Set<K>.has",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 2325,
+      "pair": "Set<ParameterDeclaration>.add",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 2328,
+      "pair": "Set<Path> | undefined.forEach",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 2331,
+      "pair": "Set<ResolutionWithFailedLookupLocations> | undefined.delete",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 2334,
+      "pair": "Set<ResolvedConfigFilePath>.has",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 2337,
+      "pair": "Set<ResolvedProjectReference> | undefined.has",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 2340,
+      "pair": "Set<T>.add",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 2343,
+      "pair": "Set<T>.has",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 2346,
+      "pair": "Set<__String>.delete",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "a",
+      "rank": 2349,
+      "pair": "Set<string>.delete",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
+      "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
+    },
+    {
+      "share": "b",
+      "rank": 1,
+      "pair": "typeof Debug.assert",
+      "reads": 439,
+      "group": "predicate admission",
+      "status": "pending",
+      "requiredChange": "proven original assertion-predicate callable admission",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 4,
+      "pair": "NodeFactory.createAssignment",
+      "reads": 143,
+      "group": "overload sets",
+      "status": "pending",
+      "requiredChange": "overloaded callable signature certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 10,
+      "pair": "string[].push",
+      "reads": 94,
+      "group": "rest intrinsics and producer writes",
+      "status": "pending",
+      "requiredChange": "rest-parameter intrinsic contract and actual array receiver certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 16,
+      "pair": "ObjectConstructor.entries",
+      "reads": 75,
+      "group": "overload sets",
+      "status": "pending",
+      "requiredChange": "original overload-set callable descriptors and overload selection checks",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 19,
+      "pair": "typeof Debug.assertNever",
+      "reads": 62,
+      "group": "higher-order signatures",
+      "status": "pending",
+      "requiredChange": "never parameter/result callable contracts and optional AnyFunction rest-never callback contract",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 25,
+      "pair": "NodeFactory.getGeneratedNameForNode",
+      "reads": 58,
+      "group": "overload sets",
+      "status": "pending",
+      "requiredChange": "original overload-set callable descriptors and overload selection checks",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 28,
+      "pair": "NodeFactory.createKeywordTypeNode",
+      "reads": 53,
+      "group": "generic callable instantiation",
+      "status": "pending",
+      "requiredChange": "generic callable descriptors with proven instantiation",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 37,
+      "pair": "string[].join",
+      "reads": 42,
+      "group": "Array receivers and callbacks",
+      "status": "pending",
+      "requiredChange": "array receiver conversion and immutable intrinsic signature metadata",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 40,
+      "pair": "NodeFactory.createToken",
+      "reads": 41,
+      "group": "overload sets",
+      "status": "pending",
+      "requiredChange": "original overload-set callable descriptors and overload selection checks",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 43,
+      "pair": "typeof Debug.assertIsDefined",
+      "reads": 39,
+      "group": "predicate admission",
+      "status": "pending",
+      "requiredChange": "proven original assertion-predicate callable admission, including generic overloads",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 46,
+      "pair": "typeof Debug.assertNode",
+      "reads": 38,
+      "group": "predicate admission",
+      "status": "pending",
+      "requiredChange": "proven original assertion-predicate callable admission, including generic overloads",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 55,
+      "pair": "Math.max",
+      "reads": 30,
+      "group": "rest intrinsics and producer writes",
+      "status": "pending",
+      "requiredChange": "rest-parameter callable descriptors and intrinsic signature checks",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 112,
+      "pair": "Map<string, boolean>.get",
+      "reads": 15,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "Map receiver conversion, immutable intrinsic callable metadata, and receiver-preserving checked method dispatch",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 130,
+      "pair": "NodeFactory.mergeLexicalEnvironment",
+      "reads": 13,
+      "group": "overload sets",
+      "status": "pending",
+      "requiredChange": "original overload-set callable descriptors and overload selection checks",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 172,
+      "pair": "NodeFactory.copyPrologue",
+      "reads": 10,
+      "group": "higher-order signatures",
+      "status": "certified higher-order",
+      "requiredChange": "callable descriptors for optional callback parameters and their return contracts",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 178,
+      "pair": "Set<__String>.add",
+      "reads": 10,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 181,
+      "pair": "ArrayConstructor.isArray",
+      "reads": 9,
+      "group": "predicate admission",
+      "status": "pending",
+      "requiredChange": "proven type-predicate callable admission",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 184,
+      "pair": "NodeArray<Statement>.slice",
+      "reads": 9,
+      "group": "Array receivers and callbacks",
+      "status": "pending",
+      "requiredChange": "array receiver conversion, immutable intrinsic callable metadata, and receiver-preserving checked method dispatch",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 190,
+      "pair": "NodeFactory.restoreEnclosingLabel",
+      "reads": 9,
+      "group": "higher-order signatures",
+      "status": "certified higher-order",
+      "requiredChange": "callable descriptors for optional callback parameters and their return contracts",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 205,
+      "pair": "ModuleResolutionCache | undefined.getPackageJsonInfoCache",
+      "reads": 8,
+      "group": "other callable values and receivers",
+      "status": "pending",
+      "requiredChange": "lower the original optional-chain member call and its following object field read",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 220,
+      "pair": "Set<string> | undefined.has",
+      "reads": 8,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 226,
+      "pair": "ElementFlags[].push",
+      "reads": 7,
+      "group": "rest intrinsics and producer writes",
+      "status": "pending",
+      "requiredChange": "rest-parameter callable descriptors and intrinsic signature checks",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 232,
+      "pair": "Map<string, string>.has",
+      "reads": 7,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "Map receiver conversion, immutable intrinsic callable metadata, and receiver-preserving checked method dispatch",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 244,
+      "pair": "NodeFactory.getGeneratedPrivateNameForNode",
+      "reads": 7,
+      "group": "overload sets",
+      "status": "pending",
+      "requiredChange": "original overload-set callable descriptors and overload selection checks",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 250,
+      "pair": "ObjectConstructor.defineProperties",
+      "reads": 7,
+      "group": "generic callable instantiation",
+      "status": "pending",
+      "requiredChange": "generic callable descriptors with proven instantiation",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 253,
+      "pair": "Signature[].push",
+      "reads": 7,
+      "group": "rest intrinsics and producer writes",
+      "status": "pending",
+      "requiredChange": "rest-parameter callable descriptors and intrinsic signature checks",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 259,
+      "pair": "number[].pop",
+      "reads": 7,
+      "group": "Array receivers and callbacks",
+      "status": "pending",
+      "requiredChange": "array receiver conversion, immutable intrinsic callable metadata, and receiver-preserving checked method dispatch",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 262,
+      "pair": "typeof Debug.assertLessThanOrEqual",
+      "reads": 7,
+      "group": "higher-order signatures",
+      "status": "pending",
+      "requiredChange": "nested optional AnyFunction callback contract with rest-never parameters",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 283,
+      "pair": "Map<string, number>.clear",
+      "reads": 6,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "Map receiver conversion, immutable intrinsic callable metadata, and receiver-preserving checked method dispatch",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 310,
+      "pair": "Set<__String>.has",
+      "reads": 6,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 319,
+      "pair": "Type[].map",
+      "reads": 6,
+      "group": "generic callable instantiation",
+      "status": "pending",
+      "requiredChange": "generic callable descriptors with proven instantiation",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 322,
+      "pair": "string[].forEach",
+      "reads": 6,
+      "group": "Array receivers and callbacks",
+      "status": "pending",
+      "requiredChange": "callable descriptors for optional callback parameters and their return contracts",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 343,
+      "pair": "Map<number, Type>.set",
+      "reads": 5,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "Map receiver conversion, immutable intrinsic callable metadata, and receiver-preserving checked method dispatch",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 346,
+      "pair": "Map<string, boolean>.has",
+      "reads": 5,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "Map receiver conversion, immutable intrinsic callable metadata, and receiver-preserving checked method dispatch",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 370,
+      "pair": "Path[].push",
+      "reads": 5,
+      "group": "rest intrinsics and producer writes",
+      "status": "pending",
+      "requiredChange": "original rest-parameter or callback callable descriptors and immutable intrinsic metadata",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 382,
+      "pair": "Statistic[].push",
+      "reads": 5,
+      "group": "rest intrinsics and producer writes",
+      "status": "pending",
+      "requiredChange": "original rest-parameter or callback callable descriptors and immutable intrinsic metadata",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 388,
+      "pair": "string[].sort",
+      "reads": 5,
+      "group": "rest intrinsics and producer writes",
+      "status": "pending",
+      "requiredChange": "original rest-parameter or callback callable descriptors and immutable intrinsic metadata",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 406,
+      "pair": "FileIncludeReason[] | undefined.forEach",
+      "reads": 4,
+      "group": "rest intrinsics and producer writes",
+      "status": "pending",
+      "requiredChange": "original rest-parameter or callback callable descriptors and immutable intrinsic metadata",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 439,
+      "pair": "NodeFactory.createImportAttributes",
+      "reads": 4,
+      "group": "overload sets",
+      "status": "pending",
+      "requiredChange": "original overloaded callable descriptors including indexed result-token types",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 448,
+      "pair": "NodeFactory.updateArrowFunction",
+      "reads": 4,
+      "group": "other callable values and receivers",
+      "status": "pending",
+      "requiredChange": "complete untruncated expected callable type in checked-view failure messages",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 463,
+      "pair": "ObjectConstructor.create",
+      "reads": 4,
+      "group": "overload sets",
+      "status": "pending",
+      "requiredChange": "checked representation for the original any-returning overloaded callable",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 496,
+      "pair": "number[].map",
+      "reads": 4,
+      "group": "rest intrinsics and producer writes",
+      "status": "pending",
+      "requiredChange": "original rest-parameter or callback callable descriptors and immutable intrinsic metadata",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 499,
+      "pair": "readonly string[].includes",
+      "reads": 4,
+      "group": "Array receivers and callbacks",
+      "status": "pending",
+      "requiredChange": "array receiver conversion, immutable intrinsic callable metadata, and receiver-preserving checked method dispatch",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 511,
+      "pair": "CaseClause[].push",
+      "reads": 3,
+      "group": "rest intrinsics and producer writes",
+      "status": "pending",
+      "requiredChange": "original rest-parameter or callback callable descriptors and immutable intrinsic metadata",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 520,
+      "pair": "Declaration[].slice",
+      "reads": 3,
+      "group": "Array receivers and callbacks",
+      "status": "pending",
+      "requiredChange": "array receiver conversion, immutable intrinsic callable metadata, and receiver-preserving checked method dispatch",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 523,
+      "pair": "Diagnostic[].forEach",
+      "reads": 3,
+      "group": "rest intrinsics and producer writes",
+      "status": "pending",
+      "requiredChange": "original rest-parameter or callback callable descriptors and immutable intrinsic metadata",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 637,
+      "pair": "Set<Path>.delete",
+      "reads": 3,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 1075,
+      "pair": "Set<Path>.forEach",
+      "reads": 2,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 1078,
+      "pair": "Set<Signature>.add",
+      "reads": 2,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 1081,
+      "pair": "Set<string> | undefined.forEach",
+      "reads": 2,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 2221,
+      "pair": "ReadonlyMap<K, U> | ReadonlySet<K> | undefined.has",
+      "reads": 1,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 2236,
+      "pair": "ReadonlySet<__String> | undefined.forEach",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 2314,
+      "pair": "Set<FileIncludeReason>.add",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 2317,
+      "pair": "Set<FlowNode>.delete",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 2320,
+      "pair": "Set<Identifier>.add",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 2323,
+      "pair": "Set<Node>.delete",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 2326,
+      "pair": "Set<ParameterDeclaration> | undefined.has",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 2329,
+      "pair": "Set<ResolutionWithFailedLookupLocations>.forEach",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 2332,
+      "pair": "Set<ResolvedConfigFilePath>.delete",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 2335,
+      "pair": "Set<ResolvedConfigFilePath> | undefined.forEach",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 2338,
+      "pair": "Set<Symbol> | undefined.has",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 2341,
+      "pair": "Set<T>.delete",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 2344,
+      "pair": "Set<V>.add",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 2347,
+      "pair": "Set<__String> | undefined.has",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "b",
+      "rank": 2350,
+      "pair": "Set<string>.keys",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
+      "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
+    },
+    {
+      "share": "c",
+      "rank": 236,
+      "pair": "NodeFactory.createCallBinding",
+      "reads": 7,
+      "group": "higher-order signatures",
+      "status": "certified higher-order",
+      "requiredChange": "Implement a checked producer certificate and invocation adapter for the complete original callable signature.",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 380,
+      "pair": "Scanner.setOnError",
+      "reads": 5,
+      "group": "higher-order signatures",
+      "status": "pending",
+      "requiredChange": "Provide a checked representation for the original ErrorCallback optional any parameter.",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 395,
+      "pair": "CompilerHost.getSourceFile",
+      "reads": 4,
+      "group": "higher-order signatures",
+      "status": "certified higher-order",
+      "requiredChange": "Implement a checked producer certificate and invocation adapter for the complete original callable signature.",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 1082,
+      "pair": "SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>.build",
+      "reads": 2,
+      "group": "higher-order signatures",
+      "status": "certified higher-order",
+      "requiredChange": "Implement a checked producer certificate and invocation adapter for the complete original callable signature.",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 1322,
+      "pair": "CompilerHost & ReadBuildProgramHost.getSourceFile",
+      "reads": 1,
+      "group": "higher-order signatures",
+      "status": "certified higher-order",
+      "requiredChange": "Implement a checked producer certificate and invocation adapter for the complete original callable signature.",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 1328,
+      "pair": "CompilerHost & ReadBuildProgramHost.writeFile",
+      "reads": 1,
+      "group": "higher-order signatures",
+      "status": "certified higher-order",
+      "requiredChange": "Implement a checked producer certificate and invocation adapter for the complete original callable signature.",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 1853,
+      "pair": "ModeAwareCache<T>.forEach",
+      "reads": 1,
+      "group": "other callable values and receivers",
+      "status": "certified higher-order",
+      "requiredChange": "The positive works, but the malformed producer is refused during lowering. Implement the complete checked callable contract so the demanded negative read reaches a pinned runtime exit 70.",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2078,
+      "pair": "ParenthesizerRules.getParenthesizeLeftSideOfBinaryForOperator",
+      "reads": 1,
+      "group": "other callable values and receivers",
+      "status": "certified higher-order",
+      "requiredChange": "The positive works, but the malformed producer is refused during lowering. Implement the complete checked callable contract so the demanded negative read reaches a pinned runtime exit 70.",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2138,
+      "pair": "Program.forEachResolvedTypeReferenceDirective",
+      "reads": 1,
+      "group": "unsupported original carrier domains",
+      "status": "pending",
+      "requiredChange": "Support the original non-phantom __pathBrand:any carrier soundly, or retain its loud refusal; do not rewrite the original brand to void.",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2162,
+      "pair": "Program.writeFile",
+      "reads": 1,
+      "group": "higher-order signatures",
+      "status": "certified higher-order",
+      "requiredChange": "Implement a checked producer certificate and invocation adapter for the complete original callable signature.",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2252,
+      "pair": "ResolutionCache.createHasInvalidatedResolutions",
+      "reads": 1,
+      "group": "unsupported original carrier domains",
+      "status": "pending",
+      "requiredChange": "Support the original non-phantom __pathBrand:any carrier soundly, or retain its loud refusal; do not rewrite the original brand to void.",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2273,
+      "pair": "ResolutionCacheHost.watchDirectoryOfFailedLookupLocation",
+      "reads": 1,
+      "group": "other callable values and receivers",
+      "status": "certified higher-order",
+      "requiredChange": "The positive works, but the malformed producer is refused during lowering. Implement the complete checked callable contract so the demanded negative read reaches a pinned runtime exit 70.",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2387,
+      "pair": "SolutionBuilderState<T>.watchDirectory",
+      "reads": 1,
+      "group": "higher-order signatures",
+      "status": "certified higher-order",
+      "requiredChange": "Implement a checked producer certificate and invocation adapter for the complete original callable signature.",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2546,
+      "pair": "TypeCheckerHost.getFileIncludeReasons",
+      "reads": 1,
+      "group": "unsupported original carrier domains",
+      "status": "pending",
+      "requiredChange": "Support the original non-phantom __pathBrand:any carrier soundly, or retain its loud refusal; do not rewrite the original brand to void.",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2594,
+      "pair": "WatchFactoryHost.watchDirectory",
+      "reads": 1,
+      "group": "higher-order signatures",
+      "status": "certified higher-order",
+      "requiredChange": "Implement a checked producer certificate and invocation adapter for the complete original callable signature.",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2,
+      "pair": "typeof Debug.checkDefined",
+      "reads": 313,
+      "group": "generic callable instantiation",
+      "status": "pending",
+      "requiredChange": "Support generic function values through checked callable views.",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 8,
+      "pair": "typeof Debug.fail",
+      "reads": 110,
+      "group": "higher-order signatures",
+      "status": "pending",
+      "requiredChange": "Support the original callable contract, including its optional AnyFunction callback and never return where declared.",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 65,
+      "pair": "typeof Debug.failBadSyntaxKind",
+      "reads": 24,
+      "group": "higher-order signatures",
+      "status": "pending",
+      "requiredChange": "Support the original callable contract, including its optional AnyFunction callback and never return where declared.",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 80,
+      "pair": "typeof Debug.assertEqual",
+      "reads": 21,
+      "group": "generic callable instantiation",
+      "status": "pending",
+      "requiredChange": "Support generic function values through checked callable views.",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 389,
+      "pair": "typeof Debug.assertGreaterThanOrEqual",
+      "reads": 5,
+      "group": "higher-order signatures",
+      "status": "pending",
+      "requiredChange": "Support the original callable contract, including its optional AnyFunction callback and never return where declared.",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 56,
+      "pair": "number[].push",
+      "reads": 29,
+      "group": "rest intrinsics and producer writes",
+      "status": "pending",
+      "requiredChange": "Preserve and enforce the literal element contract of the producer array during checked-view mutations.",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 59,
+      "pair": "Set<Path>.add",
+      "reads": 28,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 89,
+      "pair": "Set<string>.add",
+      "reads": 19,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 134,
+      "pair": "Set<Path>.has",
+      "reads": 13,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 311,
+      "pair": "Set<number> | undefined.has",
+      "reads": 6,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 479,
+      "pair": "Set<ResolutionWithFailedLookupLocations>.add",
+      "reads": 4,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 506,
+      "pair": "(Set<string> | undefined)[].pop",
+      "reads": 3,
+      "group": "Array receivers and callbacks",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 551,
+      "pair": "Map<Path, ReadonlySet<Path>>.get",
+      "reads": 3,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 629,
+      "pair": "ReadonlySet<Path>.keys",
+      "reads": 3,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 638,
+      "pair": "Set<Path>.keys",
+      "reads": 3,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 1073,
+      "pair": "Set<Node>.forEach",
+      "reads": 2,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 1076,
+      "pair": "Set<Path> | undefined.keys",
+      "reads": 2,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 1079,
+      "pair": "Set<Symbol>.add",
+      "reads": 2,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 1499,
+      "pair": "Map<K, Set<V>>.get",
+      "reads": 1,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 1580,
+      "pair": "Map<Path, ReadonlySet<Path>>.keys",
+      "reads": 1,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 1586,
+      "pair": "Map<Path, Set<ResolutionWithFailedLookupLocations>>.clear",
+      "reads": 1,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2234,
+      "pair": "ReadonlySet<Path>.has",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2237,
+      "pair": "ReadonlySet<string> | undefined.has",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2315,
+      "pair": "Set<FileIncludeReason> | undefined.has",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2318,
+      "pair": "Set<FlowNode>.has",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2321,
+      "pair": "Set<K>.add",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2324,
+      "pair": "Set<Node> | undefined.has",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2327,
+      "pair": "Set<Path> | undefined.delete",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2330,
+      "pair": "Set<ResolutionWithFailedLookupLocations> | Map<string, ResolutionWithFailedLookupLocations>.forEach",
+      "reads": 1,
+      "group": "Map intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2333,
+      "pair": "Set<ResolvedConfigFilePath>.forEach",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2336,
+      "pair": "Set<ResolvedProjectReference>.add",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2339,
+      "pair": "Set<T>.add",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2342,
+      "pair": "Set<T>.delete",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2345,
+      "pair": "Set<V> | undefined.delete",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2348,
+      "pair": "Set<number>.delete",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2351,
+      "pair": "Set<string> | undefined.add",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    },
+    {
+      "share": "c",
+      "rank": 2615,
+      "pair": "WeakSet<SourceFile>.add",
+      "reads": 1,
+      "group": "Set intrinsics",
+      "status": "pending",
+      "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
+      "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
+    }
+  ],
+  "certifiedPerShare": {
+    "a": {
+      "pairs": 0,
+      "reads": 0
+    },
+    "b": {
+      "pairs": 2,
+      "reads": 19
+    },
+    "c": {
+      "pairs": 11,
+      "reads": 21
+    }
+  }
+}

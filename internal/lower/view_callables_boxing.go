@@ -60,6 +60,9 @@ func (l *lowering) recordViewCallableRepresentations(index int, function *ir.Fun
 }
 
 func (l *lowering) viewCallableBoxedRepresentation(proven *checker.Type) bool {
+	if l.callableViewContract(l.checker.GetNonNullableType(proven)) {
+		return l.viewCallableNestedShape(proven, map[*checker.Type]bool{})
+	}
 	of, known := l.representation(proven)
 	if !known {
 		return false

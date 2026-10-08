@@ -1,0 +1,7 @@
+// Original member/read; adjacent carriers reduced for signature admission only.
+interface Statement {readonly value:number;}
+interface LabeledStatement {readonly value:number;}
+interface Base {readonly restoreEnclosingLabel:unknown;}
+interface Target {restoreEnclosingLabel(node: Statement, outermostLabeledStatement: LabeledStatement | undefined, afterRestoreLabelCallback?: (node: LabeledStatement) => void): Statement;}
+function probe(value:Base):void {const factory=value as Target;factory.restoreEnclosingLabel({value:3},undefined,undefined);console.log("completed");}
+probe({restoreEnclosingLabel:(node: Statement,outermostLabeledStatement: LabeledStatement | undefined,afterRestoreLabelCallback?: (node: string) => void):Statement=>({value:3})});

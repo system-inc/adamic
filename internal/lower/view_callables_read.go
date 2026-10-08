@@ -46,6 +46,12 @@ func (l *lowering) prepareViewCallableRead(node *ast.Node, declared *checker.Typ
 	if err := l.completeViewCallableShapeContract(node, target, id, build); err != nil {
 		return 0, err
 	}
+	if l.viewCallableNeedsLogicalProducer(target) {
+		if l.untaggedCallableTargets == nil {
+			l.untaggedCallableTargets = map[ir.ViewContractID]*checker.Type{}
+		}
+		l.untaggedCallableTargets[id] = target
+	}
 	return id, nil
 }
 

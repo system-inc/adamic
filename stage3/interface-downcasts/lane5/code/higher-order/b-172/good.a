@@ -1,0 +1,8 @@
+// Original member/read; adjacent carriers reduced for signature admission only.
+interface Statement {readonly value:number;}
+interface Node {readonly value:number;}
+interface VisitResult<T0> {readonly value:number;}
+interface Base {readonly copyPrologue:unknown;}
+interface Target {copyPrologue(source: readonly Statement[], target: Statement[], ensureUseStrict?: boolean, visitor?: (node: Node) => VisitResult<Node | undefined>): number;}
+function probe(value:Base):void {const factory=value as Target;factory.copyPrologue([],[],undefined,undefined);console.log("completed");}
+probe({copyPrologue:(source: readonly Statement[],target: Statement[],ensureUseStrict?: boolean,visitor?: (node: Node) => VisitResult<Node | undefined>):number=>3});

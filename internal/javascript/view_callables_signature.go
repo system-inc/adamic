@@ -12,6 +12,7 @@ func (e *emitter) emitViewCallableCertificate(property ir.Property, value string
 	if len(receiver) != 0 {
 		recorded = "(adamicViewSetSignature(" + receiver[0] + ", value) ?? " + recorded + ")"
 	}
+	recorded = e.viewCallableLogicalProducer(property, recorded)
 	expected = e.untaggedCallableUnionExpected(property, recorded, expected)
 	recorded = e.untaggedCallableRecorded(property, recorded, expected)
 	return "((value) => " + emitViewCallableShape("value", recorded, expected, property.View, property.Absent || property.Optional || property.UndefinedAllowed) + ")(" + value + ")"

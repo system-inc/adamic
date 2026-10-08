@@ -1,0 +1,112 @@
+=== RUN   TestCheckedViewCallableCodeHigherOrder
+=== RUN   TestCheckedViewCallableCodeHigherOrder/b-172
+=== RUN   TestCheckedViewCallableCodeHigherOrder/b-172/wrong-arity
+    checked_views_callable_code_test.go:51: negative exit 70 stdout "" stderr "adamic: panic: field read failed: factory.copyPrologue expected (source: readonly Statement[], target: Statement[], ensureUseStrict?: boolean | undefined, visitor?: ((node: Node) => VisitResult<Node | undefined>) | undefined) => number, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableCodeHigherOrder/b-172/wrong-callback
+    checked_views_callable_code_test.go:51: negative exit 0 stdout "completed\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeHigherOrder/b-190
+=== RUN   TestCheckedViewCallableCodeHigherOrder/b-190/wrong-arity
+    checked_views_callable_code_test.go:51: negative exit 70 stdout "" stderr "adamic: panic: field read failed: factory.restoreEnclosingLabel expected (node: Statement, outermostLabeledStatement: LabeledStatement | undefined, afterRestoreLabelCallback?: ((node: LabeledStatement) => void) | undefined) => Statement, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableCodeHigherOrder/b-190/wrong-callback
+    checked_views_callable_code_test.go:51: negative exit 0 stdout "completed\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1082
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1082/wrong-arity
+    checked_views_callable_code_test.go:51: negative exit 70 stdout "" stderr "adamic: panic: field read failed: builder.build expected (project?: string | undefined, cancellationToken?: CancellationToken | undefined, writeFile?: WriteFileCallback | undefined, getCustomTransformers?: ... | undefined) => ExitStatus, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1082/wrong-callback
+    checked_views_callable_code_test.go:51: negative exit 0 stdout "completed\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1322
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1322/wrong-arity
+    checked_views_callable_code_test.go:51: negative exit 70 stdout "" stderr "adamic: panic: field read failed: compilerHost.getSourceFile expected (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1322/wrong-callback
+    checked_views_callable_code_test.go:51: negative exit 0 stdout "completed\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1328
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1328/wrong-arity
+    checked_views_callable_code_test.go:51: negative exit 70 stdout "" stderr "adamic: panic: field read failed: compilerHost.writeFile expected WriteFileCallback, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1328/wrong-callback
+    checked_views_callable_code_test.go:51: negative exit 0 stdout "completed\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1853
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1853/wrong-arity
+    checked_views_callable_code_test.go:51: negative exit 70 stdout "" stderr "adamic: panic: field read failed: resolutions.forEach expected (cb: (elem: T, key: string, mode: ResolutionMode) => void) => void, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1853/wrong-callback
+    checked_views_callable_code_test.go:51: negative exit 0 stdout "completed\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2078
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2078/wrong-arity
+    checked_views_callable_code_test.go:51: negative exit 70 stdout "" stderr "adamic: panic: field read failed: parenthesizer.getParenthesizeLeftSideOfBinaryForOperator expected (binaryOperator: SyntaxKind) => (leftSide: Expression) => Expression, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2078/wrong-callback
+    checked_views_callable_code_test.go:51: negative exit 0 stdout "completed\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2162
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2162/wrong-arity
+    checked_views_callable_code_test.go:51: negative exit 70 stdout "" stderr "adamic: panic: field read failed: state.program.writeFile expected WriteFileCallback, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2162/wrong-callback
+    checked_views_callable_code_test.go:51: negative exit 0 stdout "completed\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2273
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2273/wrong-arity
+    checked_views_callable_code_test.go:51: negative exit 70 stdout "" stderr "adamic: panic: field read failed: resolutionHost.watchDirectoryOfFailedLookupLocation expected (directory: string, cb: DirectoryWatcherCallback, flags: WatchDirectoryFlags) => FileWatcher, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2273/wrong-callback
+    checked_views_callable_code_test.go:51: negative exit 0 stdout "completed\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-236
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-236/wrong-arity
+    checked_views_callable_code_test.go:51: negative exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createCallBinding expected (expression: Expression, recordTempVariable: (temp: Identifier) => void, languageVersion?: ScriptTarget | undefined, cacheIdentifiers?: boolean | undefined) => CallBinding, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-236/wrong-callback
+    checked_views_callable_code_test.go:51: negative exit 0 stdout "completed\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2387
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2387/wrong-arity
+    checked_views_callable_code_test.go:51: negative exit 70 stdout "" stderr "adamic: panic: field read failed: state.watchDirectory expected (directory: string, callback: DirectoryWatcherCallback, flags: WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2387/wrong-callback
+    checked_views_callable_code_test.go:51: negative exit 0 stdout "completed\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2594
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2594/wrong-arity
+    checked_views_callable_code_test.go:51: negative exit 70 stdout "" stderr "adamic: panic: field read failed: host.watchDirectory expected (path: string, callback: DirectoryWatcherCallback, recursive?: boolean | undefined, options?: WatchOptions | undefined) => FileWatcher, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2594/wrong-callback
+    checked_views_callable_code_test.go:51: negative exit 0 stdout "completed\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-395
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-395/wrong-arity
+    checked_views_callable_code_test.go:51: negative exit 70 stdout "" stderr "adamic: panic: field read failed: host.getSourceFile expected (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-395/wrong-callback
+    checked_views_callable_code_test.go:51: negative exit 0 stdout "completed\n" stderr ""
+--- FAIL: TestCheckedViewCallableCodeHigherOrder (20.90s)
+    --- FAIL: TestCheckedViewCallableCodeHigherOrder/b-172 (1.54s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/b-172/wrong-arity (0.48s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/b-172/wrong-callback (0.51s)
+    --- FAIL: TestCheckedViewCallableCodeHigherOrder/b-190 (1.58s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/b-190/wrong-arity (0.52s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/b-190/wrong-callback (0.51s)
+    --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-1082 (1.64s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-1082/wrong-arity (0.55s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-1082/wrong-callback (0.53s)
+    --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-1322 (1.59s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-1322/wrong-arity (0.53s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-1322/wrong-callback (0.54s)
+    --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-1328 (1.67s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-1328/wrong-arity (0.56s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-1328/wrong-callback (0.57s)
+    --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-1853 (1.54s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-1853/wrong-arity (0.51s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-1853/wrong-callback (0.50s)
+    --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-2078 (1.62s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-2078/wrong-arity (0.52s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-2078/wrong-callback (0.52s)
+    --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-2162 (1.69s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-2162/wrong-arity (0.54s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-2162/wrong-callback (0.61s)
+    --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-2273 (1.68s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-2273/wrong-arity (0.57s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-2273/wrong-callback (0.57s)
+    --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-236 (1.56s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-236/wrong-arity (0.50s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-236/wrong-callback (0.52s)
+    --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-2387 (1.60s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-2387/wrong-arity (0.53s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-2387/wrong-callback (0.53s)
+    --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-2594 (1.58s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-2594/wrong-arity (0.52s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-2594/wrong-callback (0.52s)
+    --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-395 (1.61s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-395/wrong-arity (0.53s)
+        --- FAIL: TestCheckedViewCallableCodeHigherOrder/c-395/wrong-callback (0.53s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=78
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	20.907s
+FAIL

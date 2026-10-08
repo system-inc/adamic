@@ -1,0 +1,15 @@
+=== RUN   TestCheckedViewCallableCodeCallbackExecution
+=== RUN   TestCheckedViewCallableCodeCallbackExecution/c-395
+    checked_views_callable_code_test.go:65: gate cache node miss
+    checked_views_callable_code_test.go:69: gate cache node miss
+=== RUN   TestCheckedViewCallableCodeCallbackExecution/c-2078
+    checked_views_callable_code_test.go:65: gate cache node miss
+    checked_views_callable_code_test.go:69: gate cache node miss
+--- PASS: TestCheckedViewCallableCodeCallbackExecution (1.24s)
+    --- PASS: TestCheckedViewCallableCodeCallbackExecution/c-395 (0.66s)
+    --- PASS: TestCheckedViewCallableCodeCallbackExecution/c-2078 (0.58s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.249s

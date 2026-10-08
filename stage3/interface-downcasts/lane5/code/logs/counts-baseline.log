@@ -1,0 +1,26 @@
+--- FAIL: TestCountsAreRecorded (15.75s)
+    --- FAIL: TestCountsAreRecorded/fixtures (0.03s)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/census_small_boolean.a (0.07s)
+            counts_test.go:169: Lower: /workspace/scratch/lane5-code-base/internal/oracle/testdata/census_small_boolean.a:19:16: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/census_overload_contracts.a (0.07s)
+            counts_test.go:169: Lower: /workspace/scratch/lane5-code-base/internal/oracle/testdata/census_overload_contracts.a:13:16: stage 0 can't lower an overloaded call with more arguments than its implementation yet
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_number_slots.a (15.71s)
+            counts_test.go:169: gate cache native miss
+            counts_test.go:118: native: clang failed: exit status 1
+                /tmp/adamic-gate/adamic-build-1605173221/main.c:654:68: error: passing 'adamic_object *' (aka 'struct adamic_object *') to parameter of incompatible type 'adamic_maybe_number' (aka 'struct adamic_maybe_number')
+                  654 |                                         adamic_string * adamic_temporary_179 = adamic_function_1_show(adamic_temporary_178);
+                      |                                                                                                       ^~~~~~~~~~~~~~~~~~~~
+                /tmp/adamic-gate/adamic-build-1605173221/main.c:125:67: note: passing argument to parameter 'adamic_local_11_value' here
+                  125 | static adamic_string * adamic_function_1_show(adamic_maybe_number adamic_local_11_value) {
+                      |                                                                   ^
+                1 error generated.
+                
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_regression_07.a (15.72s)
+            counts_test.go:169: gate cache native miss
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 364 reachable 2 bytes 364 unreachable 0 bytes 0 metadata 96\nfree(): invalid pointer\n"
+FAIL
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	15.759s
+FAIL

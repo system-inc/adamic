@@ -1,0 +1,8 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+type DirectoryWatcherCallback = (fileName: string) => void;
+const enum WatchDirectoryFlags {None=0,Recursive=1}
+interface FileWatcher {readonly value:number;}
+interface Base {readonly watchDirectoryOfFailedLookupLocation:unknown;}
+interface Target {watchDirectoryOfFailedLookupLocation(directory: string, cb: DirectoryWatcherCallback, flags: WatchDirectoryFlags): FileWatcher;}
+function probe(value:Base):void {const resolutionHost=value as Target;const witnessResult=resolutionHost.watchDirectoryOfFailedLookupLocation("abc",(fileName: string):void=>{},0);console.log("completed");}
+probe({watchDirectoryOfFailedLookupLocation:(directory: string,cb: DirectoryWatcherCallback,flags: WatchDirectoryFlags):FileWatcher=>({value:3})});

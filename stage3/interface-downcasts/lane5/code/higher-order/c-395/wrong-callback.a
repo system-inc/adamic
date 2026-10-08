@@ -1,0 +1,8 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+const enum ScriptTarget {ES3=0,ES5=1,ES2015=2,ES2016=3,ES2017=4,ES2018=5,ES2019=6,ES2020=7,ES2021=8,ES2022=9,ES2023=10,ES2024=11,ES2025=12,ESNext=99,JSON=100,Latest=99,LatestStandard=12}
+interface CreateSourceFileOptions {readonly value:number;}
+interface SourceFile {readonly value:number;readonly kind:308;}
+interface Base {readonly getSourceFile:unknown;}
+interface Target {getSourceFile(fileName: string, languageVersionOrOptions: ScriptTarget | CreateSourceFileOptions, onError?: (message: string) => void, shouldCreateNewSourceFile?: boolean): SourceFile | undefined;}
+function probe(value:Base):void {const host=value as Target;const witnessResult=host.getSourceFile("abc",0,(message: string):void=>{},true);console.log("completed");}
+probe({getSourceFile:(fileName: string,languageVersionOrOptions: ScriptTarget | CreateSourceFileOptions,onError?: (message: number) => void,shouldCreateNewSourceFile?: boolean):SourceFile | undefined=>({value:3,kind:308})});

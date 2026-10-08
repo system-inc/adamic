@@ -1,0 +1,15 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface SourceFile {readonly value:number;readonly kind:308;}
+interface WriteFileCallbackData {readonly value:number;}
+type WriteFileCallback = (
+    fileName: string,
+    text: string,
+    writeByteOrderMark: boolean,
+    onError?: (message: string) => void,
+    sourceFiles?: readonly SourceFile[],
+    data?: WriteFileCallbackData,
+) => void;
+interface Base {readonly writeFile:unknown;}
+interface Target {writeFile: WriteFileCallback;}
+function probe(value:Base):void {const state={program:value as Target};state.program.writeFile("abc","abc",true,(message: string):void=>{},[{value:3,kind:308}],{value:3});console.log("completed");}
+probe({writeFile:(): void=>{}});

@@ -18,6 +18,7 @@ func (e *emitter) emitViewCallableCertificate(property ir.Property, value string
 		e.line("if (%s != NULL && %s->heap.kind == adamic_kind_closure && %s->code == %s) %s = %s;", value, value, value, e.functionName(producer.Function), recorded, producer.Signature)
 	}
 	expected = e.untaggedCallableUnionExpected(property, recorded, expected)
+	e.viewCallableLogicalProducer(property, value, recorded)
 	e.certifyUntaggedCallableRecorded(property, value, recorded, expected)
 	return emitViewCallableShape(value, recorded, expected, property.View, property.Absent || property.Optional || property.UndefinedAllowed)
 }

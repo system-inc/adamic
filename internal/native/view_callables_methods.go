@@ -36,6 +36,10 @@ func (e *emitter) emitViewCallableMethodCertificate(property ir.Property, method
 		}
 	}
 	witness := e.temporary()
+	// Method thunks do not carry the higher-order closure producer certificate.
+	if property.ViewContract != 0 && e.program.ViewContracts[property.ViewContract-1].Kind == ir.ViewCallable && e.program.ViewContracts[property.ViewContract-1].ProducerCertified {
+		e.line("%s = NULL;", recorded)
+	}
 	e.line("adamic_closure %s = {.heap = {.references = 0, .kind = adamic_kind_closure, .slab = 0}, .code = NULL, .receiver = false, .count = 0};", witness)
 	e.line("(void)adamic_view_callable_shape(&%s.heap, %s, %s, %s, false);", witness, recorded, expected, cString(property.View))
 }

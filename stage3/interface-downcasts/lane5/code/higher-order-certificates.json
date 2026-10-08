@@ -1,0 +1,192 @@
+{
+  "roadmapStep": 9,
+  "base": "926a1d39d1a0d6b4cf49bbccf521a4cc02d10f56",
+  "shares": {
+    "a": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2",
+    "b": "edf888d7c53fefd2e7ae05f82e822885e77be7c1",
+    "c": "bd953abe3d9f4514820c08df1f541e07f484763b"
+  },
+  "members": [
+    {
+      "share": "b",
+      "rank": 172,
+      "pair": "NodeFactory.copyPrologue",
+      "reads": 10,
+      "originalFixture": "stage3/interface-downcasts/lane5/share-b/rank-172/contract-probe.a",
+      "shareCommit": "edf888d7c53fefd2e7ae05f82e822885e77be7c1",
+      "originalFixtureSha256": "336451022e9065f72fa3ef71d6be5619ceef0b16b1f97133acee5670b7fcb9a8",
+      "certificateDirectory": "higher-order/b-172",
+      "declaration": "interface Target {copyPrologue(source: readonly Statement[], target: Statement[], ensureUseStrict?: boolean, visitor?: (node: Node) => VisitResult<Node | undefined>): number;}",
+      "scope": "original member declaration; reduced adjacent carriers; candidate reads, not measured dynamic executions"
+    },
+    {
+      "share": "b",
+      "rank": 190,
+      "pair": "NodeFactory.restoreEnclosingLabel",
+      "reads": 9,
+      "originalFixture": "stage3/interface-downcasts/lane5/share-b/rank-190/contract-probe.a",
+      "shareCommit": "edf888d7c53fefd2e7ae05f82e822885e77be7c1",
+      "originalFixtureSha256": "12bf21b9f615e9e85c51251d4c74eaf10116c9d3a57a98f6f84e15b999e08680",
+      "certificateDirectory": "higher-order/b-190",
+      "declaration": "interface Target {restoreEnclosingLabel(node: Statement, outermostLabeledStatement: LabeledStatement | undefined, afterRestoreLabelCallback?: (node: LabeledStatement) => void): Statement;}",
+      "scope": "original member declaration; reduced adjacent carriers; candidate reads, not measured dynamic executions"
+    },
+    {
+      "share": "c",
+      "rank": 1082,
+      "pair": "SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>.build",
+      "reads": 2,
+      "originalFixture": "stage3/interface-downcasts/lane5/share-c/families/rank-1082/good.a",
+      "shareCommit": "bd953abe3d9f4514820c08df1f541e07f484763b",
+      "originalFixtureSha256": "6d7af1288dcc260b9fa6e8fcb405f07ff3131a45cff32486edf2100a3aae0e70",
+      "certificateDirectory": "higher-order/c-1082",
+      "declaration": "interface Target {build(project?: string, cancellationToken?: CancellationToken, writeFile?: WriteFileCallback, getCustomTransformers?: (project: string) => CustomTransformers): ExitStatus;}",
+      "scope": "original member declaration; reduced adjacent carriers; candidate reads, not measured dynamic executions"
+    },
+    {
+      "share": "c",
+      "rank": 1322,
+      "pair": "CompilerHost & ReadBuildProgramHost.getSourceFile",
+      "reads": 1,
+      "originalFixture": "stage3/interface-downcasts/lane5/share-c/families/rank-1322/good.a",
+      "shareCommit": "bd953abe3d9f4514820c08df1f541e07f484763b",
+      "originalFixtureSha256": "5da472947f57153345efe16ece905715f3dc9f1dd33a1497a0b1230f789f39a0",
+      "certificateDirectory": "higher-order/c-1322",
+      "declaration": "interface Target {getSourceFile(fileName: string, languageVersionOrOptions: ScriptTarget | CreateSourceFileOptions, onError?: (message: string) => void, shouldCreateNewSourceFile?: boolean): SourceFile | undefined;}",
+      "scope": "original member declaration; reduced adjacent carriers; candidate reads, not measured dynamic executions"
+    },
+    {
+      "share": "c",
+      "rank": 1328,
+      "pair": "CompilerHost & ReadBuildProgramHost.writeFile",
+      "reads": 1,
+      "originalFixture": "stage3/interface-downcasts/lane5/share-c/families/rank-1328/good.a",
+      "shareCommit": "bd953abe3d9f4514820c08df1f541e07f484763b",
+      "originalFixtureSha256": "de1d8eda743d46218e8aafd6245be584f5a3cc61a614043e04cd7ca2d448ad96",
+      "certificateDirectory": "higher-order/c-1328",
+      "declaration": "interface Target {writeFile: WriteFileCallback;}",
+      "scope": "original member declaration; reduced adjacent carriers; candidate reads, not measured dynamic executions"
+    },
+    {
+      "share": "c",
+      "rank": 1853,
+      "pair": "ModeAwareCache<T>.forEach",
+      "reads": 1,
+      "originalFixture": "stage3/interface-downcasts/lane5/share-c/families/rank-1853/good.a",
+      "shareCommit": "bd953abe3d9f4514820c08df1f541e07f484763b",
+      "originalFixtureSha256": "ddcf896f4923938bd47cafcee6fd4259a1b58691e33ae0fac57878fc7526b94f",
+      "certificateDirectory": "higher-order/c-1853",
+      "declaration": "interface Target {forEach(cb: (elem: T, key: string, mode: ResolutionMode) => void): void;}",
+      "scope": "original member declaration; reduced adjacent carriers; candidate reads, not measured dynamic executions"
+    },
+    {
+      "share": "c",
+      "rank": 2078,
+      "pair": "ParenthesizerRules.getParenthesizeLeftSideOfBinaryForOperator",
+      "reads": 1,
+      "originalFixture": "stage3/interface-downcasts/lane5/share-c/families/rank-2078/good.a",
+      "shareCommit": "bd953abe3d9f4514820c08df1f541e07f484763b",
+      "originalFixtureSha256": "b88378872df0ffd044ec75ed7eeeacc4702a30394b4cafc968c7b3c3ac933bea",
+      "certificateDirectory": "higher-order/c-2078",
+      "declaration": "interface Target {getParenthesizeLeftSideOfBinaryForOperator(binaryOperator: SyntaxKind): (leftSide: Expression) => Expression;}",
+      "scope": "original member declaration; reduced adjacent carriers; candidate reads, not measured dynamic executions"
+    },
+    {
+      "share": "c",
+      "rank": 2162,
+      "pair": "Program.writeFile",
+      "reads": 1,
+      "originalFixture": "stage3/interface-downcasts/lane5/share-c/families/rank-2162/good.a",
+      "shareCommit": "bd953abe3d9f4514820c08df1f541e07f484763b",
+      "originalFixtureSha256": "8f6ac9bf35c3ce5bc0cfd57b7b6e90d94599c027c963992a9ae4abdd79bb9ddd",
+      "certificateDirectory": "higher-order/c-2162",
+      "declaration": "interface Target {writeFile: WriteFileCallback;}",
+      "scope": "original member declaration; reduced adjacent carriers; candidate reads, not measured dynamic executions"
+    },
+    {
+      "share": "c",
+      "rank": 2273,
+      "pair": "ResolutionCacheHost.watchDirectoryOfFailedLookupLocation",
+      "reads": 1,
+      "originalFixture": "stage3/interface-downcasts/lane5/share-c/families/rank-2273/good.a",
+      "shareCommit": "bd953abe3d9f4514820c08df1f541e07f484763b",
+      "originalFixtureSha256": "90c3b6e1d12e7b7d4ae2c140824b4f9aab2c602cfba01b8e4a02c546c1f054d2",
+      "certificateDirectory": "higher-order/c-2273",
+      "declaration": "interface Target {watchDirectoryOfFailedLookupLocation(directory: string, cb: DirectoryWatcherCallback, flags: WatchDirectoryFlags): FileWatcher;}",
+      "scope": "original member declaration; reduced adjacent carriers; candidate reads, not measured dynamic executions"
+    },
+    {
+      "share": "c",
+      "rank": 236,
+      "pair": "NodeFactory.createCallBinding",
+      "reads": 7,
+      "originalFixture": "stage3/interface-downcasts/lane5/share-c/families/rank-236/good.a",
+      "shareCommit": "bd953abe3d9f4514820c08df1f541e07f484763b",
+      "originalFixtureSha256": "087bbe84404672f518b505076357b214429089468b0c9c320b03e159aba757f2",
+      "certificateDirectory": "higher-order/c-236",
+      "declaration": "interface Target {createCallBinding(expression: Expression, recordTempVariable: (temp: Identifier) => void, languageVersion?: ScriptTarget, cacheIdentifiers?: boolean): CallBinding;}",
+      "scope": "original member declaration; reduced adjacent carriers; candidate reads, not measured dynamic executions"
+    },
+    {
+      "share": "c",
+      "rank": 2387,
+      "pair": "SolutionBuilderState<T>.watchDirectory",
+      "reads": 1,
+      "originalFixture": "stage3/interface-downcasts/lane5/share-c/families/rank-2387/good.a",
+      "shareCommit": "bd953abe3d9f4514820c08df1f541e07f484763b",
+      "originalFixtureSha256": "d6df1d357fc05e665a5109e437ae51cef3c13afd6a77c4e3983dfc7f861b8fe3",
+      "certificateDirectory": "higher-order/c-2387",
+      "declaration": "interface Target {watchDirectory: (directory: string, callback: DirectoryWatcherCallback, flags: WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y) => FileWatcher;}",
+      "scope": "original member declaration; reduced adjacent carriers; candidate reads, not measured dynamic executions"
+    },
+    {
+      "share": "c",
+      "rank": 2594,
+      "pair": "WatchFactoryHost.watchDirectory",
+      "reads": 1,
+      "originalFixture": "stage3/interface-downcasts/lane5/share-c/families/rank-2594/good.a",
+      "shareCommit": "bd953abe3d9f4514820c08df1f541e07f484763b",
+      "originalFixtureSha256": "71908aee8efeca564cde2e714defc0dd28b6f6f5b03f17baa85660813b2c5107",
+      "certificateDirectory": "higher-order/c-2594",
+      "declaration": "interface Target {watchDirectory(path: string, callback: DirectoryWatcherCallback, recursive?: boolean, options?: WatchOptions): FileWatcher;}",
+      "scope": "original member declaration; reduced adjacent carriers; candidate reads, not measured dynamic executions"
+    },
+    {
+      "share": "c",
+      "rank": 395,
+      "pair": "CompilerHost.getSourceFile",
+      "reads": 4,
+      "originalFixture": "stage3/interface-downcasts/lane5/share-c/families/rank-395/good.a",
+      "shareCommit": "bd953abe3d9f4514820c08df1f541e07f484763b",
+      "originalFixtureSha256": "26ae2dee0cc635934935d8b7830f8bbfe7bba0052c2c0fad2e94d3245f82eed9",
+      "certificateDirectory": "higher-order/c-395",
+      "declaration": "interface Target {getSourceFile(fileName: string, languageVersionOrOptions: ScriptTarget | CreateSourceFileOptions, onError?: (message: string) => void, shouldCreateNewSourceFile?: boolean): SourceFile | undefined;}",
+      "scope": "original member declaration; reduced adjacent carriers; candidate reads, not measured dynamic executions"
+    }
+  ],
+  "certifiedPerShare": {
+    "a": {
+      "pairs": 0,
+      "reads": 0
+    },
+    "b": {
+      "pairs": 2,
+      "reads": 19
+    },
+    "c": {
+      "pairs": 11,
+      "reads": 21
+    }
+  },
+  "factoryOwnedExcludedRanks": [
+    3,
+    9,
+    12,
+    24,
+    165,
+    174,
+    186,
+    189
+  ],
+  "assumption": "Only exact complete checker signature identity certifies higher-order producers; broader assignability, recursive signatures, null-bearing callbacks, predicates, generics, rest, constructors and method thunks remain unsupported."
+}
