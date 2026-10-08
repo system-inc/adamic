@@ -559,7 +559,14 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 				held := b.read(b.parameters[0])
 				matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
 				if narrowed == ir.Object && l.isLibraryType(l.checker.GetTypeAtLocation(node), "Error", "RangeError", "TypeError") {
-					matches = ir.InstanceOf{Value: held, Class: -1}
+					identity := -1
+					for index, builtin := range []string{"Error", "RangeError", "TypeError"} {
+						if l.isLibraryType(l.checker.GetTypeAtLocation(node), builtin) {
+							identity = -index - 1
+							break
+						}
+					}
+					matches = ir.InstanceOf{Value: held, Class: identity}
 				} else if narrowed == ir.Object && isClassInstance(l.checker.GetTypeAtLocation(node)) {
 					proven := l.checker.GetTypeAtLocation(node)
 					declaration := l.classes[proven.Symbol()]
