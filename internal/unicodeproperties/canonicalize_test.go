@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"bytes"
 	"context"
-	"flag"
 	"fmt"
 	"os/exec"
 	"runtime"
@@ -197,22 +196,33 @@ func TestCanonicalizeLegacyNode(t *testing.T) {
 	reportDisagreements(t, disagreements)
 }
 
-// The measured winner keeps 80-line batches: the expensive singleton strides need
-// enough independent jobs to fill the capped worker pool. Flags reproduce the size study.
-var unicodeNodeBatchSize = flag.Int("unicode-node-batch-size", 80, "Unicode Node lines per batch; zero means all lines")
-var unicodeNodeWorkers = flag.Int("unicode-node-workers", 0, "Unicode Node workers; zero means GOMAXPROCS, requests are capped at GOMAXPROCS")
-
-// Not parallel: this sweep owns a Node pool capped at GOMAXPROCS, and must not
-// overlap the legacy sweep in this package. Every non-trivial class is scanned
-// as new RegExp('^\\u{X}$', 'iu')
-// and again with iv, over every code point. Singletons (the code points in no
-// class) are partitioned twice, into blocks of 1024 and into strides. Any two
-// distinct code points fall in different groups of at least one partition, so
-// a match Node would make and the tables would not is an extra hit on that
-// group's scan. The other way, a pair the tables claim and Node does not, is
-// reported by the class scan.
+// Each leaf owns at most sixteen complete scans; Go's parallel subtests are
+// the gate's scheduling units. No Node pool or cross-shard result cache hides
+// work inside a long parent. Every scan still visits every Unicode code point.
 func TestCanonicalizeUnicodeNode(t *testing.T) {
-	const codePoints = 0x110000
+	lines := unicodeCanonicalizeLines()
+	shards := unicodeCanonicalizeShards(lines)
+	if err := checkUnicodeShardCoverage(lines, shards); err != nil {
+		t.Fatal(err)
+	}
+	for _, shard := range shards {
+		t.Run(shard.name(), func(t *testing.T) {
+			t.Parallel()
+			examined, disagreements, err := runUnicodeBatch(shard.input)
+			if err != nil {
+				t.Fatal(err)
+			}
+			want := (shard.end - shard.start) * 0x110000
+			if examined != want {
+				t.Fatalf("checked %d code points, want %d", examined, want)
+			}
+			t.Logf("%d complete scans, %d code points, disagreements %d", shard.end-shard.start, examined, len(disagreements))
+			reportDisagreements(t, disagreements)
+		})
+	}
+}
+
+func unicodeCanonicalizeLines() []string {
 	var lines []string
 	for index, canon := range unicodeClassCanon {
 		members := unicodeClass[index]
@@ -232,26 +242,7 @@ func TestCanonicalizeUnicodeNode(t *testing.T) {
 		lines = append(lines, "GROUP iu "+formatCodePoints(group))
 	}
 
-	results, err := unicodeNodeBatches(lines, *unicodeNodeBatchSize, *unicodeNodeWorkers, runUnicodeBatch)
-	if err != nil {
-		t.Fatal(err)
-	}
-	var (
-		examined      int
-		disagreements []string
-		checked       int
-	)
-	for _, result := range results {
-		examined += result.examined
-		checked += result.examined / codePoints
-		disagreements = append(disagreements, result.disagreements...)
-	}
-	fmt.Printf("unicode canonicalize: %d class scans (iu and iv) + %d singleton groups, %d code points examined, disagreements %d\n",
-		len(unicodeClass)*2, len(blocks)+len(strides), examined, len(disagreements))
-	if checked != len(lines) || examined != len(lines)*codePoints {
-		t.Fatalf("checked %d lines and %d code points, want %d lines and %d code points", checked, examined, len(lines), len(lines)*codePoints)
-	}
-	reportDisagreements(t, disagreements)
+	return lines
 }
 
 // Results are collected by input index, never completion order. Workers cannot call Fatal:
