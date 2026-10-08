@@ -1,0 +1,12 @@
+FIRST FAILURE (tests, at 47.8 s):
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/01_readFile_utf8.a/stage0
+=== RUN   TestFixtures/host/01_readFile_utf8.a/stage0
+    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:Checker What:stage3/fixtures/host/01_readFile_utf8.a:11:24: error TS2591: Cannot find name 'node:buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+        stage3/fixtures/host/01_readFile_utf8.a:50:21: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+        stage3/fixtures/host/01_readFile_utf8.a:6:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+        stage3/fixtures/host/01_readFile_utf8.a:7:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+        stage3/fixtures/host/01_readFile_utf8.a:8:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+        stage3/fixtures/host/01_readFile_utf8.a:9:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.}; recorded {Outcome:Refused What:stage3/fixtures/host/01_readFile_utf8.a:20:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case}
+--- FAIL: TestFixtures/host/01_readFile_utf8.a/stage0 (0.00s)
+
