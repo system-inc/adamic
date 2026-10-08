@@ -88,7 +88,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				// Store the value as the member's slot holds it, rather than the initializer's type.
 				value = fit(value, declared)
 			}
-			if censusFieldSlotless(value.Type()) {
+			if censusFieldSlotless(value.Type()) && !(value.Type() == ir.Union && l.objectPrimitiveBoxedField(property)) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
 			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
@@ -308,6 +308,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		arrayType = target
 	}
 	arrayType = l.phantomArrayView(arrayType)
+	if base := l.viewArrayBase(arrayType); base != nil {
+		arrayType = base
+	}
 	if !l.checker.IsArrayType(arrayType) {
 		return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
 	}
@@ -461,6 +464,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if access.QuestionDotToken != nil && object.Type() != ir.Object {
 		return nil, l.notYet(node, "optional chaining to ."+name+" on a "+typeName(object.Type()))
 	}
+	object = l.viewArrayOwnReceiver(node, object)
 	switch {
 	case object.Type() == ir.Array && name == "length":
 		return ir.Length{Array: object}, nil
@@ -551,7 +555,7 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 		property.ViewAllowed = l.viewLiterals(declared)
 		property.ViewTypeID = int(declared.Id())
 		property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
-		if l.includesNull(declared) || l.includesUndefined(declared) {
+		if (l.includesNull(declared) || l.includesUndefined(declared)) && !l.objectPrimitiveViewType(declared) {
 			property.Nullish = true
 			property.NullAllowed = l.includesNull(declared)
 			property.UndefinedAllowed = l.includesUndefined(declared)

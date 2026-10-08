@@ -50,7 +50,7 @@ func TestLazyViewDemandUsesSharedFlow(t *testing.T) {
 }
 
 func TestLazyViewArrayDemand(t *testing.T) {
-	for _, method := range []string{"index", "map", "visit", "reduce", "pop", "join", "for of"} {
+	for _, method := range []string{"index", "map", "visit", "reduce", "pop", "join", "search", "for of"} {
 		t.Run(method, func(t *testing.T) {
 			array := ir.Read{Local: 0, Of: ir.Array}
 			metadata := ir.ArrayViewRead{ViewTypeID: 42, View: "values[element]", Element: ir.Closure}
@@ -68,6 +68,8 @@ func TestLazyViewArrayDemand(t *testing.T) {
 				consumer = ir.Evaluate{Value: ir.ArrayPop{Array: array, ViewRead: metadata}}
 			case "join":
 				consumer = ir.Evaluate{Value: ir.ArrayJoin{Array: array, ViewRead: metadata}}
+			case "search":
+				consumer = ir.Evaluate{Value: ir.ArraySearch{Array: array, ViewRead: metadata}}
 			case "for of":
 				consumer = ir.ForOf{Iterable: array, ViewRead: metadata}
 			}

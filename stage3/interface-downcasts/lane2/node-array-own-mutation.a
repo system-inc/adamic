@@ -1,0 +1,15 @@
+interface Base { readonly kind: 'block' | 'other'; }
+interface Statement { readonly text: string; }
+interface ReadonlyTextRange { readonly pos: number; readonly end: number; }
+interface NodeArray<T> extends ReadonlyArray<T>, ReadonlyTextRange { readonly hasTrailingComma: boolean; }
+interface Block extends Base { readonly kind: 'block'; readonly statements: NodeArray<Statement>; }
+function block(node: Base): Block { return node as Block; }
+interface MutableNodeArray<T> extends Array<T> { pos: number; end: number; hasTrailingComma: boolean; }
+interface MutableBlock extends Base { readonly kind: 'block'; readonly statements: MutableNodeArray<Statement>; }
+function mutableBlock(node: Base): MutableBlock { return node as MutableBlock; }
+const raw = {kind: 'block' as const, statements: Object.assign([{text: 'first'}], {pos: 3, end: 9, hasTrailingComma: false})};
+const statements = mutableBlock(raw).statements;
+statements.pos = 4;
+statements.end += 2;
+statements.hasTrailingComma = true;
+console.log(`${raw.statements.pos}:${raw.statements.end}:${raw.statements.hasTrailingComma}`);

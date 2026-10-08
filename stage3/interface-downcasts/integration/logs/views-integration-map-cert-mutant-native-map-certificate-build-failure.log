@@ -1,0 +1,16 @@
+=== RUN   TestCheckedViewMapCertificates
+=== RUN   TestCheckedViewMapCertificates/scalar-both-value-schema
+    checked_views_map_certificates_test.go:25: native: compiling runtime view_maps.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-2333364507/view_maps.c:11:13: error: overlapping comparisons always evaluate to true [-Werror,-Wtautological-overlap-compare]
+           11 |  if(count==0||count>0)return;
+              |     ~~~~~~~~^~~~~~~~~
+        1 error generated.
+        
+--- FAIL: TestCheckedViewMapCertificates (7.18s)
+    --- FAIL: TestCheckedViewMapCertificates/scalar-both-value-schema (7.18s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	7.228s
+FAIL
