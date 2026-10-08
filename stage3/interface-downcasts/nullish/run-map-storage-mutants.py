@@ -11,6 +11,11 @@ log_root = Path('/tmp/map-storage-mutants')
 log_root.mkdir(exist_ok=True)
 runtime = 'internal/native/runtime/map_view_storage.c'
 cases = [
+ ('json-array-native-representation', 'internal/native/json_array_reads.go', 'wanted := read.Element', 'wanted := read.Element\n if wanted == ir.Map || wanted == ir.Closure { wanted = ir.Object }', '^TestCheckedViewJSONArrayDomainMutants$/^(maps|functions)$'),
+ ('json-array-generic-concrete', 'internal/lower/library_json_stringify.go', 'element = l.concrete(element)', '// Counterfactual: keep the uninstantiated element type.', '^TestCheckedViewArrayJSONStorage$/^generic$'),
+ ('json-array-native-snapshot-owner', 'internal/native/runtime/json_stringify.c', 'adamic_release(owner); /* JSON element snapshots. */', '/* Counterfactual: retain JSON element snapshots. */', '^TestCheckedViewArrayJSONStorage$/^(finite|nested|arguments)$'),
+ ('json-array-native-domain', 'internal/native/json_array_reads.go', 'if (!(%s)) adamic_nullish_failure', 'if (false && !(%s)) adamic_nullish_failure', '^TestCheckedViewJSONArrayDomainMutants$'),
+ ('json-array-javascript-domain', 'internal/javascript/library_json_stringify.go', 'check = e.viewArrayChecker(schema.ArrayRead)', 'check = "(value) => value"', '^TestCheckedViewJSONArrayDomainMutants$'),
  ('optional-nominal-javascript-object-kind', 'internal/javascript/view_maps_nominal.go', " && !Array.isArray(entry) && !(entry instanceof Map) && !(entry instanceof Set)", "", '^TestCheckedViewOptionalNominalMutants$/^container$'),
  ('optional-nominal-native-producer', 'internal/native/view_maps_nominal.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewOptionalNominalMutants$/^producer$'),
  ('optional-nominal-javascript-producer', 'internal/javascript/view_maps_nominal.go', '\"((entry) => {if (!(\" + strings.Join', '\"((entry) => {if (false && !(\" + strings.Join', '^TestCheckedViewOptionalNominalMutants$/^producer$'),
@@ -44,7 +49,6 @@ cases = [
  ('packed-array-fallback', 'internal/native/view_arrays.go', 'fallback = "(adamic_value){.maybe_boolean = 2}"', 'fallback = "(adamic_value){.maybe_boolean = 0}"', 'entry-convert-nested-boolean-optional'),
  ('packed-array-native-literal', 'internal/native/view_arrays.go', 'if (%s != NULL && !(%s)) adamic_view_literal_failure', 'if (false && %s != NULL && !(%s)) adamic_view_literal_failure', '^TestCheckedViewMapNestedUnionLiteralMutant$/^entry-convert-nested-boolean-finite$'),
  ('packed-array-javascript-literal', 'internal/javascript/view_arrays.go', 'if (allowed.length && !allowed.includes(value))', 'if (false && allowed.length && !allowed.includes(value))', '^TestCheckedViewMapNestedUnionLiteralMutant$/^entry-convert-nested-boolean-finite$'),
- ('packed-json-boundary', 'internal/lower/library_json_stringify.go', 'known && (storage == ir.Union || storage == ir.MaybeBoolean)', 'known && false && (storage == ir.Union || storage == ir.MaybeBoolean)', '^TestCheckedViewArrayJSONStorageRefusal$'),
  ('boxed-native-member', 'internal/native/view_arrays_union.go', 'if (!(%s)) adamic_nullish_failure', 'if (false && !(%s)) adamic_nullish_failure', '^TestCheckedViewMapNestedUnionLiteralMutant$'),
  ('boxed-javascript-member', 'internal/javascript/view_arrays_union.go', 'if (!(%s)) panic', 'if (false && !(%s)) panic', '^TestCheckedViewMapNestedUnionLiteralMutant$'),
  ('boxed-number-payload', 'internal/native/runtime/view_arrays.c', 'adamic_box_number(snapshot->number)', 'adamic_box_number(0)', 'entry-convert-nested-union'),

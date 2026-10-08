@@ -40,7 +40,7 @@ const viewArrayElementsRuntime = `const adamicViewArrayIndex = (array, index, re
 };
 const adamicViewArrayElement = (value, expression, type, expected, allowed, required = false) => {
     if (value === undefined) { if (required) panic("element read failed: " + expression + " expected " + expected + ", found undefined"); return value; }
-    const valid = type === 1 || type === 7 ? typeof value === "number" : type === 2 || type === 9 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? value !== null && typeof value === "object" && !Array.isArray(value) && !(value instanceof Map) : type === 5 ? Array.isArray(value) : type === 8 ? adamicTypeOf(value) === "function" : type === 10 ? value === null || typeof value === "number" || typeof value === "boolean" || typeof value === "string" : false;
+    const valid = type === 1 || type === 7 ? typeof value === "number" : type === 2 || type === 9 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? value !== null && typeof value === "object" && !Array.isArray(value) && !(value instanceof Map) : type === 5 ? Array.isArray(value) : type === 6 ? value instanceof Map : type === 8 ? adamicTypeOf(value) === "function" : type === 10 ? value === null || typeof value === "number" || typeof value === "boolean" || typeof value === "string" : false;
     if (!valid) panic("element read failed: " + expression + " expected " + expected + ", found " + (value === null ? "nullish" : Array.isArray(value) ? "array" : adamicTypeOf(value)));
     if (allowed.length && !allowed.includes(value)) panic("field read failed: " + expression + " expected " + expected + ", found " + typeof value + " " + value);
     return value;

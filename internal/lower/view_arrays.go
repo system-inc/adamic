@@ -175,6 +175,8 @@ func (l *lowering) viewArrayHolesConsumer(node any) bool {
 		return false
 	}
 	switch value := node.(type) {
+	case ir.JSONStringify:
+		return value.Schema != nil && value.Schema.Kind == "array" && value.Schema.ArrayRead.Element != 0
 	case ir.MapNew:
 		// Static constructor entries do not iterate a potentially holey pairs source.
 		return value.Pairs == nil

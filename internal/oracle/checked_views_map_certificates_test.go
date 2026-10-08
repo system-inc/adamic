@@ -234,19 +234,21 @@ func TestCheckedViewMapRequiredBrandRefusal(t *testing.T) {
 	}
 }
 
-func TestCheckedViewArrayJSONStorageRefusal(t *testing.T) {
-	for _, family := range []string{"boxed", "packed"} {
+func TestCheckedViewArrayJSONStorage(t *testing.T) {
+	for _, family := range []string{"boxed-read", "packed-read", "finite", "string-finite", "nested", "arguments", "keys", "packed-values", "mixed", "sparse", "replace", "generic", "maps", "functions"} {
 		t.Run(family, func(t *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/entry-array-json-"+family+"-read.a"))
-			if err != nil {
-				t.Fatal(err)
-			}
+			program, path := interfaceFixture(t, "nullish/maps/entry-array-json-"+family)
 			truth := onNode(t, path)
-			_, err = lowered(t, path)
-			if err == nil || !strings.Contains(err.Error(), "JSON.stringify a boxed or packed boolean array requiring checked element conversion") {
-				t.Fatalf("JSON bypassed the checked extraction boundary: %v", err)
+			native, binary := nativelyUncached(t, program)
+			for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if diff := disagreement(truth, got); diff != "" {
+					t.Fatalf("%s: %#v", diff, got)
+				}
 			}
-			t.Logf("Node=%q; named consumer refusal=%v", truth.stdout, err)
+			if report := leaks(t, program, binary); report != "" {
+				t.Fatal(report)
+			}
+			t.Logf("Node=%q", truth.stdout)
 		})
 	}
 }

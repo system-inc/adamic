@@ -876,3 +876,47 @@ TestCheckedViewOptionalNominal`) passed in 165.989 seconds. Touched-package chec
 (`View|Map|Contract|Callable|Tuple`, inherited Phantom exclusion) passed: IR 0.011s,
 lower 4.961s, native 34.598s, JavaScript 0.964s; the final JavaScript check passed
 in 0.682s. Scoped vet passed. The complete repository gate was not run.
+
+### Checked JSON array extraction, October 8
+
+JSON array descriptors now carry the existing shared array read metadata. Native
+serialization calls the physical adapter at each present element and validates
+primitive membership, including finite literals and distinct null/undefined
+alternatives. Scalar snapshots are boxed into an operation-owned scratch array
+and released after serialization. Nested array and literal descriptors preserve
+these readers; the replacer key list uses the same extraction. Source arrays and
+their constructor storage stay unchanged. JavaScript applies equivalent element
+checks during normalization after all arguments have been evaluated. Generic
+helper elements are concretized before recording their nullish alternatives.
+Map and function elements get physical kind checks before opaque serialization;
+functions are not invoked and callable conventions are unchanged.
+
+Fourteen Node/native sanitized/release/JavaScript controls cover numeric and
+boolean widening, packed false/undefined/true, mixed primitives and dynamically
+built strings, finite number/string domains, nested arrays/literals, replacer key
+lists, sparse boolean holes, argument mutation/replacement, generic nullable
+helpers, Maps and functions. Six payload mutants supply excluded finite values,
+key values, nested values, or incompatible Map/function representations. Five
+behavioral counterfactuals remove backend domain checks, change the native opaque
+representation expectation, omit generic concretization, or omit scratch-owner
+release. The latter is caught by leak detection; none relies on a build failure.
+Evidence is under `evidence/json-array-*`.
+
+A full filesystem initially prevented a runtime build. Only stale oversized Go
+build-cache artifacts were removed, recovering roughly 28 GB; tests were then
+rerun. A stock-JSON filter initially selected no tests and was corrected to the
+full path-based subtest names. All nine stock JSON fixtures passed in 2.154s.
+Final scoped uncached oracle (`Map|Nullish|NullableSelection|JSONArray|
+ArrayJSONStorage|NominalArray|MutableNominal|OptionalNominal|NullableNominal|
+JSONStringify|TestArrayHoles(Milestone|Refusals)$`) passed in 213.595s. Final touched
+packages (`View|Map|Contract|Callable|Tuple|JSON|Generic`, inherited Phantom
+exclusion) passed: IR 0.016s, lower 7.030s, native 37.920s, JavaScript 1.117s.
+Scoped vet passed. The complete repository gate was not run.
+
+Nullable length constructors retain their existing representation refusal; sparse
+JSON is covered through a supported boolean constructor and a nullable view.
+Nonprimitive boxed JSON members, hidden object/toJSON behavior and recursive
+array types retain named refusals. Boxed class/null array reads, mutable optional
+nominal writes, nullable nominal slot widening and recursive nominal witnesses
+remain outside this group. Production reaching-view discharge is unmeasured;
+no fixture closure is subtracted from the 2,018-pair/9,101-read inventory.

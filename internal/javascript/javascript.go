@@ -883,7 +883,7 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		if expression.Space != nil {
 			space = e.value(expression.Space)
 		}
-		return "adamicJSONStringify(" + value + ", " + replacer + ", " + space + ")"
+		return "adamicJSONStringify(" + value + ", " + replacer + ", " + space + ", " + e.jsonReadSchema(expression.Schema) + ", " + e.jsonReadSchema(expression.ReplacerSchema) + ")"
 	case ir.JSONNull:
 		return "null"
 	case ir.MathCall:

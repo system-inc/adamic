@@ -17,11 +17,6 @@
       "outcome": "existing language refusal: brand member must be void"
     },
     {
-      "family": "JSON array extraction for boxed and packed boolean storage",
-      "read": "JSON.stringify(values)",
-      "outcome": "named compile refusal at consumer; runtime schema decoder does not use checked extraction"
-    },
-    {
       "family": "nominal class beneath a recursive aggregate entry",
       "read": "node.value",
       "outcome": "named compile refusal"
@@ -67,6 +62,11 @@
     {
       "family": "optional readonly nominal fields",
       "scope": "finite readonly structural paths with optional class fields; absent versus present undefined retains distinct key presence; present class identity checked at producer and read; arrays rejected as ordinary objects even when all fields are optional",
+      "production_reaching_view_counts": "unmeasured"
+    },
+    {
+      "family": "checked JSON primitive array extraction",
+      "scope": "boxed and packed boolean elements, primitive nullish members and finite domains, nested arrays/literal fields, replacer key arrays, sparse boolean sources, helper generic reification and argument mutation; physical Map/function kinds checked without invocation",
       "production_reaching_view_counts": "unmeasured"
     }
   ]

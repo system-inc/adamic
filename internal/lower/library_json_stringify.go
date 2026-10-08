@@ -201,11 +201,29 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 		if element == nil {
 			return nil, l.notYet(node, "JSON.stringify an array without a proven element type")
 		}
-		if storage, known := l.representation(element); known && (storage == ir.Union || storage == ir.MaybeBoolean) {
-			return nil, l.notYet(node, "JSON.stringify a boxed or packed boolean array requiring checked element conversion")
-		}
+		element = l.concrete(element)
 		child, err := l.jsonType(node, element, depth+1)
-		return &ir.JSONSchema{Kind: "array", Element: child}, err
+		if err != nil {
+			return nil, err
+		}
+		schema := &ir.JSONSchema{Kind: "array", Element: child}
+		storage, known := l.representation(element)
+		if known {
+			id, contractError := l.viewContract(node, l.concrete(element))
+			primitive := contractError == nil && ir.PrimitiveArrayContract(l.result, id)
+			if (storage == ir.Union || storage == ir.MaybeBoolean) && !primitive {
+				return nil, l.notYet(node, "JSON.stringify a boxed array containing non-primitive members")
+			}
+			if primitive || storage == ir.Array || storage == ir.Map || storage == ir.Closure {
+				schema.ArrayRead = ir.ArrayViewRead{Element: storage, View: sourceExpression(node) + "[JSON element]", ViewType: l.checker.TypeToString(element), ViewContract: id, UndefinedAllowed: l.includesUndefined(element), ViewAllowed: l.viewContractLiterals(element)}
+			}
+			if storage == ir.Union || storage == ir.MaybeBoolean {
+				if _, err := l.viewContract(node, t); err != nil {
+					return nil, err
+				}
+			}
+		}
+		return schema, nil
 	}
 	if of == ir.Object || of == ir.Weak {
 		return nil, l.notYet(node, "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)")
