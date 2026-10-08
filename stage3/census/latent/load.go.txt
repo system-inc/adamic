@@ -47,3 +47,51 @@ func (p *Program) LatentDiagnosticSites() []LatentDiagnosticSite {
 	}
 	return result
 }
+
+// Direct body ownership excludes nested declarations, including their signatures.
+// Diagnostics overlapping a declaration boundary remain conservatively owned.
+func (p *Program) LatentOwnDiagnosticsIn(body *ast.Node) []string {
+	if body == nil {
+		return nil
+	}
+	type span struct{ start, end int }
+	nested := []span{}
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindFunctionDeclaration {
+			nested = append(nested, span{node.Pos(), node.End()})
+			return false
+		}
+		node.ForEachChild(visit)
+		return false
+	}
+	body.ForEachChild(visit)
+	result := []string{}
+	file := ast.GetSourceFileOfNode(body)
+	for _, diagnostic := range p.latentSites {
+		if diagnostic.File() != file || diagnostic.Pos() >= body.End() || (diagnostic.End() <= body.Pos() && diagnostic.Pos() < body.Pos()) {
+			continue
+		}
+		childOwned := false
+		for _, child := range nested {
+			if diagnostic.Pos() >= child.start && diagnostic.End() <= child.end {
+				childOwned = true
+				break
+			}
+		}
+		if !childOwned {
+			result = append(result, p.formatDiagnostic(diagnostic))
+		}
+	}
+	return result
+}
+
+// Entry replay uses the same resolved graph as the entry census.
+func (p *Program) LatentReplayEntryReach() {
+	p.files = nil
+	for _, source := range p.compiler.GetSourceFiles() {
+		if !source.IsDeclarationFile && !IsLibrary(source) {
+			p.files = append(p.files, source)
+		}
+	}
+}
