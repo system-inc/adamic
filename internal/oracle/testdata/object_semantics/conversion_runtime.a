@@ -1,0 +1,35 @@
+// Both methods return owned objects: OrdinaryToPrimitive must exhaust and throw.
+let order = '';
+const blocked = {
+    valueOf() { order += 'valueOf '; return { held: 'value'.repeat(2) }; },
+    toString() { order += 'toString '; return { held: 'string'.repeat(2) }; }
+};
+try { console.log('' + blocked); console.log('wrongly continued'); }
+catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+finally { console.log(order); }
+order = '';
+try { console.log(`${blocked}`); console.log('wrongly continued'); }
+catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+finally { console.log(order); }
+// Returning an object alone is legal when the second method yields a primitive.
+const self = { text: 'kept'.repeat(2), valueOf() { return this; }, toString() { return this.text; } };
+console.log('' + self);
+console.log(self.text);
+const throwing = { valueOf(): number { throw new Error('method failed'); }, toString() { return 'unreached'; } };
+try { console.log('' + throwing); }
+catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+console.log('after catch');
+let absent = true;
+const maybeNumber = { valueOf(): number | undefined { return absent ? undefined : 3; }, toString() { return 'unused'; } };
+const maybeBoolean = { valueOf(): boolean | undefined { return absent ? undefined : false; }, toString() { return 'unused'; } };
+console.log('' + maybeNumber + ' ' + maybeBoolean);
+absent = false;
+console.log('' + maybeNumber + ' ' + maybeBoolean);
+const tagged = { valueOf(): boolean | { x: number } { return absent ? true : { x: 1 }; }, toString() { return 'unused'; } };
+console.log('' + tagged);
+absent = true;
+console.log('' + tagged);
+const nullable = { valueOf(): { x: number } | null { return absent ? null : { x: 1 }; }, toString() { return 'fallback'; } };
+console.log('' + nullable);
+absent = false;
+console.log('' + nullable);

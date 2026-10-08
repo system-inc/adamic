@@ -109,6 +109,12 @@ func (e *emitter) functionBody(function ir.Function) {
 			e.makeCell(parameter, e.localName(parameter), false)
 		}
 	}
+	if function.OrdinaryConversion != nil {
+		e.ordinaryConversionBody(function)
+		e.scopes = e.scopes[:e.functionDepth]
+		e.function = nil
+		return
+	}
 	for index := range function.Body {
 		e.statementAt(&function.Body[index])
 	}

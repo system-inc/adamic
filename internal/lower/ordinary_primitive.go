@@ -70,7 +70,21 @@ func (l *lowering) ordinaryStringPresent(node *ast.Node, value ir.Expression, st
 		if element != ir.Number && element != ir.String && element != ir.Boolean && element != ir.MaybeNumber {
 			return nil, l.notYet(node, "OrdinaryToPrimitive of an array with non-primitive elements")
 		}
-		return ir.ArrayJoin{Array: value, Separator: ir.StringConstant{Index: l.constant(",")}, Element: element}, nil
+		index := len(l.result.Functions)
+		local := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "array_operand", Type: ir.Array, Function: index})
+		read := ir.Read{Local: local, Of: ir.Array}
+		join := ir.ArrayJoin{Array: read, Separator: ir.StringConstant{Index: l.constant(",")}, Element: element}
+		callback := len(l.result.Functions) + 1
+		callbackLocal := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "array_receiver", Type: ir.Array, Function: callback})
+		callbackJoin := join
+		callbackJoin.Array = ir.Read{Local: callbackLocal, Of: ir.Array}
+		l.result.Functions = append(l.result.Functions,
+			ir.Function{Name: "ordinary_array", Parameters: []int{local}, Returns: ir.String, Body: []ir.Statement{ir.Return{Value: join}}, MayThrow: true,
+				OrdinaryConversion: &ir.OrdinaryConversion{StringHint: stringHint, Methods: map[string]ir.PrimitiveMethod{"valueOf": {Builtin: "valueOf"}, "toString": {Function: callback + 1}}}},
+			ir.Function{Name: "array_primitive_callback", Parameters: []int{callbackLocal}, Returns: ir.String, Body: []ir.Statement{ir.Return{Value: callbackJoin}}})
+		return ir.Call{Function: index, Arguments: []ir.Expression{value}, Returns: ir.String}, nil
 	}
 	index := len(l.result.Functions)
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: "ordinary_primitive", Returns: ir.String})
@@ -78,6 +92,7 @@ func (l *lowering) ordinaryStringPresent(node *ast.Node, value ir.Expression, st
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "operand", Type: ir.Object, Function: index})
 	read := ir.Read{Local: local, Of: ir.Object}
 	body := []ir.Statement{}
+	protocol := &ir.OrdinaryConversion{StringHint: stringHint, Methods: map[string]ir.PrimitiveMethod{}}
 	names := []string{"valueOf", "toString"}
 	if stringHint {
 		names = []string{"toString", "valueOf"}
@@ -92,6 +107,7 @@ func (l *lowering) ordinaryStringPresent(node *ast.Node, value ir.Expression, st
 					return nil, l.notYet(node, "OrdinaryToPrimitive through a view ("+reason+")")
 				}
 			}
+			protocol.Methods[name] = ir.PrimitiveMethod{Builtin: name}
 			if name == "toString" {
 				body = append(body, ir.Return{Value: ir.StringConstant{Index: l.constant("[object Object]")}})
 				break
@@ -109,6 +125,7 @@ func (l *lowering) ordinaryStringPresent(node *ast.Node, value ir.Expression, st
 		}
 		signatures := l.checker.GetSignaturesOfType(memberType, checker.SignatureKindCall)
 		if len(signatures) == 0 {
+			protocol.Methods[name] = ir.PrimitiveMethod{}
 			continue
 		} // IsCallable is false.
 		if len(signatures) != 1 || len(signatures[0].Parameters()) != 0 {
@@ -123,6 +140,19 @@ func (l *lowering) ordinaryStringPresent(node *ast.Node, value ir.Expression, st
 			return nil, l.notYet(node, "OrdinaryToPrimitive with an unrepresented conversion result")
 		}
 		call := ir.CallClosure{Closure: ir.Property{Object: read, Name: name, Of: ir.Closure, Method: true}, Returns: of}
+		// The runtime owns the protocol; each callback retains the source method ABI.
+		callbackIndex := len(l.result.Functions)
+		callbackLocal := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "conversion_receiver", Type: ir.Object, Function: callbackIndex})
+		callbackCall := call
+		callbackCall.Closure = ir.Property{Object: ir.Read{Local: callbackLocal, Of: ir.Object}, Name: name, Of: ir.Closure, Method: true}
+		callbackBody := []ir.Statement{ir.Return{Value: callbackCall}}
+		if of == 0 {
+			callbackBody = []ir.Statement{ir.Evaluate{Value: callbackCall}, ir.Return{}}
+		}
+		l.result.Functions = append(l.result.Functions, ir.Function{Name: "primitive_callback", Parameters: []int{callbackLocal}, Returns: of, Body: callbackBody})
+		protocol.Methods[name] = ir.PrimitiveMethod{Function: callbackIndex + 1, Null: result.Flags()&checker.TypeFlagsNull != 0, Undefined: result.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0, NullAbsent: l.includesNull(result), UndefinedAbsent: l.includesUndefined(result)}
+
 		if of == 0 {
 			body = append(body, ir.Evaluate{Value: call}, ir.Return{Value: ir.StringConstant{Index: l.constant("undefined")}})
 			break
@@ -131,6 +161,16 @@ func (l *lowering) ordinaryStringPresent(node *ast.Node, value ir.Expression, st
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: "primitive_result", Type: of, Function: index})
 		body = append(body, ir.Declare{Local: resultLocal, Value: call})
 		held := ir.Read{Local: resultLocal, Of: of}
+		if of.IsReference() && of != ir.Union && (l.includesNull(result) || l.includesUndefined(result)) {
+			absent := "undefined"
+			condition := ir.Expression(ir.IsUndefined{Value: held})
+			if l.includesNull(result) {
+				absent = "null"
+				condition = ir.IsNull{Value: held}
+			}
+			body = append(body, ir.If{Condition: condition, Then: []ir.Statement{ir.Return{Value: ir.StringConstant{Index: l.constant(absent)}}}})
+		}
+
 		if l.writable(result) || result.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsVoid) != 0 {
 			text, err := l.primitiveStringType(result, held)
 			if err != nil {
@@ -147,7 +187,8 @@ func (l *lowering) ordinaryStringPresent(node *ast.Node, value ir.Expression, st
 			primitive = ir.Binary{Operator: ir.Or, Left: primitive, Right: ir.IsNull{Value: held}}
 			body = append(body, ir.If{Condition: primitive, Then: []ir.Statement{ir.Return{Value: ir.Conditional{Condition: ir.IsNull{Value: held}, WhenTrue: ir.StringConstant{Index: l.constant("null")}, WhenNot: ir.UnionToString{Value: held}}}}})
 		}
-		// Non-primitives are released on the helper's exit, including exceptional exits.
+		// The IR falls through; native releases a rejected object result before
+		// the runtime looks up the next method.
 	}
 	body = append(body, ir.Throw{Value: ir.MakeError{
 		Name:    ir.StringConstant{Index: l.constant("TypeError")},
@@ -155,6 +196,7 @@ func (l *lowering) ordinaryStringPresent(node *ast.Node, value ir.Expression, st
 	}})
 	l.result.Functions[index].Parameters = []int{local}
 	l.result.Functions[index].Body = body
+	l.result.Functions[index].OrdinaryConversion = protocol
 	return ir.Call{Function: index, Arguments: []ir.Expression{value}, Returns: ir.String}, nil
 }
 

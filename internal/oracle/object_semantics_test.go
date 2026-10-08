@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	for _, path := range []string{"cached_own", "ordinary_primitive", "catchable_errors"} {
+	for _, path := range []string{"cached_own", "ordinary_primitive", "catchable_errors", "conversion_runtime"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
@@ -52,8 +52,9 @@ func objectSemanticsNode(t *testing.T, name string) {
 	if diff := disagreement(want, releasedUncached(t, program)); diff != "" {
 		t.Errorf("release: %s", diff)
 	}
-	if diff := disagreement(want, onJavaScriptBackend(t, program)); diff != "" {
-		t.Errorf("JavaScript: %s", diff)
+	javascript := onJavaScriptBackend(t, program)
+	if diff := disagreement(want, javascript); diff != "" {
+		t.Errorf("JavaScript: %s, stdout=%q stderr=%q exit=%d", diff, javascript.stdout, javascript.stderr, javascript.exitCode)
 	}
 }
 
@@ -119,6 +120,7 @@ func TestObjectOrdinaryPrimitiveMutant(t *testing.T) {
 		if function.Name != "ordinary_primitive" {
 			continue
 		}
+		function.OrdinaryConversion = nil // mutant bypasses the runtime protocol as well
 		for at, statement := range function.Body {
 			if _, throws := statement.(ir.Throw); throws {
 				function.Body[at] = ir.Return{Value: ir.StringConstant{Index: tag}}
@@ -218,4 +220,9 @@ func TestObjectCatchableErrorNameMutant(t *testing.T) {
 		t.Fatalf("JavaScript mutant escaped: %s", difference)
 	}
 	t.Logf("Node caught %d incorrectly named exceptions; native exited zero without leaks", changed)
+}
+
+func TestObjectConversionRuntime(t *testing.T) {
+	t.Parallel()
+	objectSemanticsNode(t, "conversion_runtime")
 }

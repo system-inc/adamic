@@ -109,7 +109,7 @@ func primitiveMutant(t *testing.T, source, old, changed string) string {
 		}
 	}
 	options := native.Options{Sanitize: true, Count: true}
-	library, err := native.RuntimeLibrary(directory, options)
+	library, err := native.RuntimeLibraryForSource(directory, source, options)
 	if err != nil {
 		t.Fatal(err)
 	}

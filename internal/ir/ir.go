@@ -107,8 +107,26 @@ type Accessor struct {
 	Getter, Setter int
 }
 
+// OrdinaryConversion records the verified conversion signatures. Body remains the
+// executable protocol for the JavaScript backend and effect/ownership analysis;
+// native uses these typed callbacks with the runtime's OrdinaryToPrimitive loop.
+type OrdinaryConversion struct {
+	StringHint bool
+	Methods    map[string]PrimitiveMethod
+}
+type PrimitiveMethod struct {
+	Function        int    // one-based typed callback helper; zero for a built-in
+	Builtin         string // valueOf or toString; empty for a non-callable member
+	Null            bool
+	Undefined       bool
+	NullAbsent      bool
+	UndefinedAbsent bool
+}
+
 // Function is a function declaration.
 type Function struct {
+	OrdinaryConversion *OrdinaryConversion
+
 	// GraphClosure joins its environment instead of counting captured graph cells.
 	GraphClosure bool
 	// CheckedUnionNarrow marks a synthetic checked load so non-null assertions can use its stored input.

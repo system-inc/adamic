@@ -160,3 +160,62 @@ runtime-base-lower.log under /tmp/object-semantics.
 The required TestCountsAreRecorded -count=1 -args -update-counts run passes and
 refreshes counts on this base (runtime-base-counts.log). No full gate or whole
 package was run.
+
+## Step 22: native conversion adapter
+
+Templates, String and string-producing addition now call
+adamic_ordinary_to_primitive for admitted object and array operands. Lowering
+records verified method signatures and emits typed callback helpers. Native
+keeps the original receiver, transfers owned strings and objects, unboxes scalar
+union results, distinguishes null from undefined, and checks the pending error
+before using a result. Rejected objects are released by the runtime before the
+next lookup. The original IR protocol remains executable for JavaScript and
+visible to ownership/effect analysis. Both addition operands still evaluate
+before conversion. The earlier statement that the C adapter is unfinished is
+superseded by this delivery.
+
+conversion_runtime.a returns owned objects from both conversion methods. Node
+prints TypeError: Cannot convert object to primitive value for addition and
+template conversion, with valueOf/toString order determined by the hint. A
+valueOf object result followed by a primitive toString result is legal and stays
+allowed. Controls cover returning this, method exceptions, optional numbers and
+booleans, tagged boolean/object results and nullable object results. Sanitized
+and release native and JavaScript agree with Node, with native leak checks.
+
+The runtime-only mutant removes the exhausted-protocol TypeError. The generated
+program then prints undefined and wrongly continued, exiting zero without leaks;
+Node catches the wrong output. The mutant archive now uses RuntimeLibraryForSource
+to match the generated program's runtime feature flags. A first attempt used an
+incompatible archive and failed ASan; that failure is not counted as a killed
+behavior mutant. The valid source-aware mutant is caught by output alone. The
+existing IR exhaustion mutant also bypasses the native runtime adapter and is
+caught in both backends.
+
+The conversion fixture caught an existing nullable-object conversion error in
+the JavaScript protocol: null fell through to toString. Lowering now tests null
+explicitly instead of testing only undefined. A proposed wider primitive-union
+return was rejected by the existing return-type boundary and is not admitted.
+Accessors, optional callable members, specialized host objects, Symbol.toPrimitive
+and directly interpolated object-containing unions retain their earlier NotYet
+boundaries. Prototype operations stay refused.
+
+Focused commands (all output under /tmp/object-semantics):
+- internal/oracle: TestObjectOrdinaryPrimitive, its mutant and
+  TestObjectConversionRuntime, uncached (conversion-adapter-fixtures.log).
+- internal/native: TestOrdinaryConversionAdapterMutant
+  (conversion-adapter-mutant.log).
+- internal/lower: TestOrdinaryPrimitiveAdmission, TestOrdinaryPrimitiveBoundaries
+  and TestLibraryStringRefusals (conversion-adapter-lower.log).
+- internal/oracle: the terminal accessor-readiness check and existing
+  library_string_conversion and library_method_values fixtures, uncached
+  (conversion-adapter-regressions.log).
+- internal/native: existing OrdinaryToPrimitive mutants and protocol guards
+  (conversion-adapter-runtime-mutants.log).
+- internal/oracle: TestCountsAreRecorded -count=1 -args -update-counts
+  (conversion-adapter-counts.log).
+No whole package or full gate was run.
+
+All focused commands listed for this adapter delivery pass. The new fixture
+allocates and frees 58 heap values; the existing conversion fixture allocates
+and frees 91. The runtime TypeError mutant exits zero, is leak-clean, and is
+rejected solely by disagreement with Node.
