@@ -1,4 +1,3 @@
-FIRST FAILURE (tests, at 175.0 s):
 github.com/system-inc/adamic/internal/fuzz TestExecuteCPULimit/infinite
 === RUN   TestExecuteCPULimit/infinite
     run_test.go:44: infinite CPU loop was not timed out: {Stdout:[] Stderr:[] ExitCode:-1 TimedOut:false}
