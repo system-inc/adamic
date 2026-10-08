@@ -1,0 +1,5 @@
+{
+  "name": "ignore-render-arrow-scope",
+  "from": "this.context.kind(current) === 'ArrowFunction'",
+  "to": "false"
+}

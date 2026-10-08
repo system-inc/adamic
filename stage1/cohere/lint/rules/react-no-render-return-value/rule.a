@@ -1,0 +1,62 @@
+import type { RuleContext } from '../../context.ts';
+import type { HelperNode } from '../../helpers/slot02_ast.a';
+import { propertyName, Named, Quoted, Templated } from '../../helpers/property_name.a';
+import type { NameAnswer } from '../../helpers/wave15/accessed_property/accessed_name.a';
+import { accessedName, SettledName } from '../../helpers/wave15/accessed_property/accessed_name.a';
+import { message } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    readonly nodes: HelperNode[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    prepare(root: number): void {
+        for(const node of this.context.parser.nodes) {
+            this.nodes.push({ kind: node.kind, text: node.text, expression: node.children[0] ?? -1, name: -1 });
+        }
+    }
+    skip(index: number): number {
+        let current = index;
+        while(current >= 0 && this.context.node(current).kind === 'ParenthesizedExpression') {
+            current = this.context.node(current).children[0] ?? -1;
+        }
+        return current;
+    }
+    visit(index: number, immediateParent: number): void {
+        const callee = this.context.node(index).children[0] ?? -1;
+        if(callee < 0) { return; }
+        const node = this.context.node(callee);
+        let kind = 0;
+        let key = -1;
+        if(node.kind === 'PropertyAccessExpression' || node.kind === 'ElementAccessExpression') {
+            kind = node.kind === 'PropertyAccessExpression' ? 213 : 214;
+            key = node.children[node.children.length - 1] ?? -1;
+            if(kind === 214) { key = this.skip(key); }
+        }
+        const keyKind = key < 0 ? '' : this.context.node(key).kind;
+        const answer = accessedName(true, kind, key, keyKind === 'Identifier' ? 79 : (keyKind === 'PrivateIdentifier' ? 80 : 0), Named | Quoted | Templated, (handle: number, accept: number): NameAnswer => {
+            const value = propertyName(this.nodes, handle, accept);
+            const result = new SettledName(); result.text = value.name; result.ok = value.named; return result;
+        });
+        if(!answer.ok || answer.text !== 'render') { return; }
+        const receiver = node.children[0] ?? -1;
+        if(this.context.kind(receiver) !== 'Identifier' || this.context.node(receiver).text !== 'ReactDOM') { return; }
+        const parent = immediateParent;
+        if(parent < 0) { return; }
+        const parentKind = this.context.kind(parent);
+        if(parentKind === 'VariableDeclaration' || parentKind === 'PropertyAssignment' || parentKind === 'ReturnStatement' || parentKind === 'ArrowFunction' || (parentKind === 'BinaryExpression' && this.assignment(this.context.kind(this.context.node(parent).children[1] ?? -1)))) { this.report(callee); }
+        let current = this.context.functionLike(parent) ? this.context.parent(parent) : parent;
+        while(current >= 0) {
+            if(this.context.functionLike(current)) {
+                const children = this.context.node(current).children;
+                const body = children[children.length - 1] ?? -1;
+                if(this.context.kind(current) === 'ArrowFunction' && body >= 0 && this.context.kind(body) !== 'Block') { this.report(callee); }
+                return;
+            }
+            current = this.context.parent(current);
+        }
+    }
+    assignment(operator: string): boolean {
+        return ['EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken', 'AsteriskAsteriskEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken', 'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken', 'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken', 'BarEqualsToken', 'CaretEqualsToken', 'BarBarEqualsToken', 'AmpersandAmpersandEqualsToken', 'QuestionQuestionEqualsToken'].includes(operator);
+    }
+    report(index: number): void { this.context.report(index, 'react/no-render-return-value', 'noRenderReturnValue', message, '', '', ''); }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

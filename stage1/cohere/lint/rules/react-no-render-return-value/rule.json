@@ -1,0 +1,14 @@
+{
+  "name": "react/no-render-return-value",
+  "kinds": [
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "parent": true,
+  "oracle": "oracleReactNoRenderReturnValue",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestNoRenderReturnValue",
+  "factory": "create",
+  "class": "Rule"
+}

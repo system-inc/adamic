@@ -1,0 +1,3 @@
+const value = ReactDOM[(`render`)](element, root);
+const nested = () => () => ReactDOM.render(element, root);
+const expression = () => 1 + ReactDOM.render(element, root);
