@@ -1,0 +1,4 @@
+{
+  "name": "isCompilerOptionsValue",
+  "text": "function isCompilerOptionsValue(option: CommandLineOption | undefined, value: any): value is CompilerOptionsValue {\n    if (option) {\n        if (isNullOrUndefined(value)) return !option.disallowNullOrUndefined; // All options are undefinable/nullable\n        if (option.type === \"list\") {\n            return isArray(value);\n        }\n        if (option.type === \"listOrElement\") {\n            return isArray(value) || isCompilerOptionsValue(option.element, value);\n        }\n        const expectedType = isString(option.type) ? option.type : \"string\";\n        return typeof value === expectedType;\n    }\n    return false;\n}"
+}

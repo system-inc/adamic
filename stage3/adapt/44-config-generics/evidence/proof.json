@@ -1,0 +1,159 @@
+{
+  "base": "45487a809f89885a3fc651cd590e7dabf31362dc",
+  "node": "v24.19.0",
+  "typescript": "6.0.3",
+  "reviewedSites": [
+    "parseConfig",
+    "S04",
+    "S07",
+    "S10",
+    "S11",
+    "S12",
+    "S13",
+    "S14",
+    "S15",
+    "convertJsonOption",
+    "convertJsonOptionOfListType",
+    "list-element-caller"
+  ],
+  "sourceFiles": 711,
+  "sourceJavaScriptIdentical": true,
+  "idempotent": true,
+  "LFReconstruction": true,
+  "predicateExact": true,
+  "runtime": {
+    "fixtures": "falsy and primitive raw inputs, bad list elements, normalized options, defaults, inherited keys, one-read accessor, cyclic object, compileOnSave mutation, watch/typeAcquisition diagnostics",
+    "sha256": "01eb59b37a693896679aa0d0963f2731ba587f36337fefa4b500042113816eb1"
+  },
+  "outputs": {
+    "built/local/_tsc.js": "dab59db4053464359a4461e8111591f15a1d0d737abe752ff4261c8c87ddf95f",
+    "built/local/_tsserver.js": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+    "built/local/_typingsInstaller.js": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+    "built/local/run.js": "bfa89ce905ad036e9338450b9001ec57bc89dee6611faef2974678c3a7b38412",
+    "built/local/tsc.js": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+    "built/local/tsserver.js": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+    "built/local/tsserverlibrary.js": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+    "built/local/typescript.d.ts": "edd733bf256465ddcbbd753a76cfe14cf4ef0a872ce5da7aa53072e1c9f93a9d",
+    "built/local/typescript.js": "c608261af17bf4b95fc1527c62ba34eb2c44e3f8f0c6944d045ec61b23fc156c",
+    "built/local/typescript/typescript.d.ts": "40d52e734bd760a03b8b13542c8d9dee58a62304f3569f2a545ad458b926578e",
+    "built/local/typingsInstaller.js": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+    "built/local/watchGuard.js": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88"
+  },
+  "jsFiles": 10,
+  "publicAPIFiles": [
+    "built/local/typescript.d.ts",
+    "built/local/typescript/typescript.d.ts"
+  ],
+  "lane": {
+    "status": "pass",
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ]
+  },
+  "mutants": [
+    {
+      "site": "parseConfig",
+      "mutation": "raw any to unreviewed unknown",
+      "caughtBy": "exact reviewed source guard",
+      "exit": 1
+    },
+    {
+      "site": "S04",
+      "mutation": "raw any to unreviewed unknown",
+      "caughtBy": "exact reviewed source guard",
+      "exit": 1
+    },
+    {
+      "site": "S07",
+      "mutation": "raw any to unreviewed unknown",
+      "caughtBy": "exact reviewed source guard",
+      "exit": 1
+    },
+    {
+      "site": "S10",
+      "mutation": "raw any to unreviewed unknown",
+      "caughtBy": "exact reviewed source guard",
+      "exit": 1
+    },
+    {
+      "site": "S11",
+      "mutation": "raw any to unreviewed unknown",
+      "caughtBy": "exact reviewed source guard",
+      "exit": 1
+    },
+    {
+      "site": "S12",
+      "mutation": "raw any to unreviewed unknown",
+      "caughtBy": "exact reviewed source guard",
+      "exit": 1
+    },
+    {
+      "site": "S13",
+      "mutation": "raw any to unreviewed unknown",
+      "caughtBy": "exact reviewed source guard",
+      "exit": 1
+    },
+    {
+      "site": "S14",
+      "mutation": "raw any to unreviewed unknown",
+      "caughtBy": "exact reviewed source guard",
+      "exit": 1
+    },
+    {
+      "site": "S15",
+      "mutation": "raw any to unreviewed unknown",
+      "caughtBy": "exact reviewed source guard",
+      "exit": 1
+    },
+    {
+      "site": "convertJsonOption",
+      "mutation": "raw any to unreviewed unknown",
+      "caughtBy": "exact reviewed source guard",
+      "exit": 1
+    },
+    {
+      "site": "convertJsonOptionOfListType",
+      "mutation": "raw any to unreviewed unknown",
+      "caughtBy": "exact reviewed source guard",
+      "exit": 1
+    },
+    {
+      "site": "list-element-caller",
+      "mutation": "copy list before mapping",
+      "caughtBy": "exact reviewed source guard",
+      "exit": 1
+    },
+    {
+      "site": "S02",
+      "mutation": "predicate input any to unknown",
+      "caughtBy": "protected predicate exact text guard",
+      "exit": 1
+    }
+  ],
+  "artifactMutants": [
+    {
+      "artifact": "built/local/_tsc.js",
+      "mutation": "one real emitted artifact byte added",
+      "caughtBy": "artifact SHA256 equality"
+    },
+    {
+      "artifact": "built/local/typescript.d.ts",
+      "mutation": "one real emitted artifact byte added",
+      "caughtBy": "artifact SHA256 equality"
+    }
+  ],
+  "laneCountMutant": "caught",
+  "runtimeMutant": {
+    "site": "convertOptionsFromJson",
+    "mutation": "return defaults for falsy input",
+    "caughtBy": "actual extracted converter return equality"
+  }
+}

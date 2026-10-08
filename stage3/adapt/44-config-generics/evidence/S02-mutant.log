@@ -1,0 +1,15 @@
+/workspace/adamic/stage3/adapt/44-config-generics/adapt.cjs:12
+    if (owners.length !== 1 || owners[0].getText(source).replaceAll("\r\n", "\n") !== predicate.text) throw Error("protected predicate changed: S02");
+                                                                                                      ^
+
+Error: protected predicate changed: S02
+    at Object.<anonymous> (/workspace/adamic/stage3/adapt/44-config-generics/adapt.cjs:12:109)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v24.19.0
