@@ -297,6 +297,43 @@ publishEarlyRed() {
 # The position of the roadmap step whose Branches: globs name this branch (0 for the first ready step that
 # declares any), or 99: the queue is the waterfall, the star's work ahead of scouts and leaves
 # (@system_adamic, Oct 8). Within a step, the kinds keep their order (landings, areas, tools, workers).
+# Tips the dispatcher would only discard leave the queue in one pass before ranking: already gated,
+# skipped by hand or by pattern, or superseded by a newer tip of their branch. Ranking reads the whole queue
+# for every pick (about 40 s at 150 queued, Oct 8 19:08Z), so each discard found there cost a full pass,
+# and a run of them kept the loop from reaping finished gates for minutes.
+pruneQueue() {
+  [ -s "${state}/queue" ] || return 0
+  touch "${state}/seen" "${state}/gated" "${state}/skip"
+  local verdict line class queued branch sha glob kept=${state}/queue.pruned skipped
+  awk 'FILENAME == ARGV[1] { seen[$1 " " $2] = 1; next }
+       FILENAME == ARGV[2] { gated[$1] = 1; next }
+       FILENAME == ARGV[3] { skip[$0] = 1; next }
+       { key = $3 " " $4
+         if ($4 in gated) print "gated\t" $0
+         else if (key in skip) print "skip\t" $0
+         else if (!(key in seen)) print "superseded\t" $0
+         else print "keep\t" $0 }' "${state}/seen" "${state}/gated" "${state}/skip" "${state}/queue" > "${state}/queue.verdicts"
+  : > "${kept}"
+  while IFS=$'\t' read -r verdict line; do
+    read -r class queued branch sha <<< "${line}"
+    case "${verdict}" in
+      gated) continue ;;
+      skip) echo "$(date -u +%H:%M:%S) skipped by hand ${branch} ${sha}"; continue ;;
+      superseded) echo "$(date -u +%H:%M:%S) superseded ${branch} ${sha}"; continue ;;
+    esac
+    skipped=""
+    while read -r glob _; do
+      [ -n "${glob}" ] && [[ ${glob} != \#* ]] && [[ ${branch} == ${glob} ]] && { skipped=${glob}; break; }
+    done < <(cat "${state}/skip-globs" 2>/dev/null)
+    if [ -n "${skipped}" ]; then
+      echo "$(date -u +%H:%M:%S) skipped by pattern ${skipped} ${branch} ${sha}"
+      continue
+    fi
+    echo "${line}" >> "${kept}"
+  done < "${state}/queue.verdicts"
+  mv "${kept}" "${state}/queue"
+  rm -f "${state}/queue.verdicts"
+}
 # ${state}/front (a glob per line, # comments) puts a tip ahead of every roadmap step, behind only a reserved
 # landing: a fix the parent ruled lands first, such as Oct 8's cloud/land-gate-speed.
 stepPosition() {
@@ -548,6 +585,7 @@ while true; do
       fi
     fi
   fi
+  pruneQueue
   while [ "${canaryRequired}" = 0 ] && [ ! -f "${state}/storm" ] && [ -s "${state}/queue" ]; do
     touch "${state}/priority"
     # Free slots per box and class: the table's count less the gates running there (an entry from

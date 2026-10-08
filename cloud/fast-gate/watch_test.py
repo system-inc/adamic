@@ -484,6 +484,27 @@ class WatchTests(unittest.TestCase):
         self.assertEqual([x.split()[0] for x in w.read('starts').splitlines() if x.startswith('codex/')],
                          ['codex/step-a-x', 'codex/step-b-x', 'codex/other'])
 
+    def test_discards_leave_the_queue_in_one_pass_before_ranking(self):
+        w = self.start(0)
+        live = ('codex/live', '7' * 40)
+        stale = [('codex/old%d' % i, '%040x' % (i + 1)) for i in range(20)]
+        (w.state / 'skip').write_text('codex/hand %s\n' % ('8' * 40))
+        (w.state / 'skip-globs').write_text('codex/views-* why\n')
+        (w.state / 'gated').write_text('9' * 40 + '\n')
+        (w.state / 'seen').write_text('codex/live %s\ncodex/hand %s\ncodex/views-a %s\n' % ('7' * 40, '8' * 40, '6' * 40))
+        w.put('tips', '%s\trefs/heads/codex/live\n%s\trefs/heads/codex/hand\n%s\trefs/heads/codex/views-a\n' % ('7' * 40, '8' * 40, '6' * 40))
+        rows = ['S %d %s %s' % (800 + i, b, sha) for i, (b, sha) in enumerate(stale)]
+        rows += ['S 900 codex/hand %s' % ('8' * 40), 'S 901 codex/views-a %s' % ('6' * 40), 'S 902 codex/gone %s' % ('9' * 40), 'S 950 codex/live %s' % ('7' * 40)]
+        (w.state / 'queue').write_text('\n'.join(rows) + '\n')
+        w.put('mode', 'pass')
+        w.put('initial', 'pass')
+        w.wait(lambda: 'codex/live ' in w.read('starts'))
+        output = w.read('output')
+        self.assertEqual(sum('superseded codex/old' in line for line in output.splitlines()), 20)
+        self.assertIn('skipped by hand codex/hand', output)
+        self.assertIn('skipped by pattern codex/views-* codex/views-a', output)
+        self.assertNotIn('codex/gone', w.read('starts'))
+
     def test_front_outranks_every_step_and_skip_globs_take_a_family_out(self):
         # The steps' globs are known before any slot exists, so the second step's tip would go first without
         # front. (The first step's own tips are reserved and stay ahead of front.)
