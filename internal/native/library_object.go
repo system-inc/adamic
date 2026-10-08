@@ -12,6 +12,12 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 		arguments = append(arguments, e.value(argument))
 	}
 	switch call.Method {
+	case "optionalSpreadKeys":
+		e.line("extern adamic_array *adamic_optional_spread_keys(const adamic_object *);")
+		return e.own(ir.Array, fmt.Sprintf("adamic_optional_spread_keys(%s)", arguments[0]))
+	case "optionalSpreadPresence":
+		e.line("extern bool adamic_optional_spread_presence(const adamic_object *, const adamic_array *, const char *);")
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_optional_spread_presence(%s, %s, %s)", arguments[0], arguments[1], cString(call.Readiness)))
 	case "optionalWritePresence":
 		e.line("extern bool adamic_optional_write_presence(const adamic_object *, const adamic_string *, const char *);")
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_optional_write_presence(%s, %s, %s)", arguments[0], arguments[1], cString(call.Readiness)))

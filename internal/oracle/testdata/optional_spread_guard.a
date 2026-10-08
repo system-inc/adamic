@@ -1,0 +1,7 @@
+interface Fields { slot?: number | undefined; copied?: number | undefined; callback?: () => string; }
+const source: { copied?: number | undefined; slot: number | undefined; callback: () => string } = { copied: undefined, slot: undefined, callback: () => 'source' };
+function eraseCopied(): number | undefined { delete source.copied; return undefined; }
+const record: Fields = { ...source, slot: eraseCopied(), callback() { return 'method'; } };
+console.log(`${'copied' in record}|${Object.keys(record).join(',')}|${Object.hasOwn(record, 'copied')}|${String(record.copied)}`);
+console.log(`${'slot' in record}|${Object.hasOwn(record, 'slot')}|${String(record.slot)}`);
+console.log(`${'callback' in record}|${Object.hasOwn(record, 'callback')}|${String(record.slot)}`);

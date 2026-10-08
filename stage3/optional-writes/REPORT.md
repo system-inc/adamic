@@ -119,3 +119,31 @@ whitespace in main-imported CRLF proving input and retained validation logs.
 Those upstream evidence bytes were preserved. The optional unit and the manually
 reconciled markdownblocks files pass the scoped whitespace check. Full raw
 merge-wide whitespace output is retained in evidence/main-whitespace.log.gz.
+
+Spread batch (October 8 UTC): 53 of 67 contracts scheduled, zero emitted in
+the whole-program probe. Added leading-spread snapshot checks and fixed-name
+method construction checks. The source key snapshot precedes later initializers:
+a fixture deletes a copied property after the spread, and Node, native and
+JavaScript still agree that the copy is present with an undefined value. A mutant
+that drops copied presence stops at the guard with exit 70. Unsupported spread
+lowering stops with a named NotYet rather than omitting the copy check. There are
+now 15 run mutants; the additional mutant is the lost copied-presence mutant.
+
+The remaining inventory now contains 14 sites. The 90 previously called ordinary
+production errors are declaration-contract diagnostics in the same adapted
+compiler sources, outside all 171 stricter-option rows. Of these, 88 match ledger
+rows classified other: 82 collection iterator inference, two nested JSX callback
+unknowns, two JSON.stringify return contracts, one repeated tuple destructuring
+diagnostic and one ES2025 Set declaration mismatch. Two additional diagnostics
+are core.ts:1626:37 and core.ts:1731:21, where Generator<T, undefined, unknown>
+fails the production prelude SetIterator contract because its yielded done may
+be undefined while the prelude requires false. Full messages, ledger identities
+and causes are in evidence/production-declaration-diagnostics.json. The project's
+own tsconfig audit reports zero project errors. These 90 are therefore not
+ordinary errors under the project's own tsconfig. They remain production loader
+blocks; this unit does not change the other worker's JSON or indexed contracts.
+
+Focused loader/lower/command tests pass (5.682s, 0.662s, 0.008s); the prior spread
+oracle pass was 5.036s. The updated guard refusal is also rechecked before commit.
+The provisional completion estimate remains October 10 UTC, with no verified
+whole-program completion date while the declaration blocks remain.

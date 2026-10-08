@@ -5,8 +5,8 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/scanner"
 )
 
-// Admit only a fresh literal's own data properties. Spread, accessor and nested
-// function contracts need their own checks and remain diagnostics.
+// Admit fresh own fields and one leading spread. The spread's own keys are
+// captured before construction, so losing copied presence is checked too.
 func (p *Program) acceptOptionalLiteral(site OptionSite) bool {
 	if len(site.Options) != 1 || site.Options[0] != "exactOptionalPropertyTypes" {
 		return false
@@ -73,8 +73,14 @@ func (p *Program) acceptOptionalLiteral(site OptionSite) bool {
 }
 
 func plainDataLiteral(node *ast.Node) bool {
-	for _, field := range node.AsObjectLiteralExpression().Properties.Nodes {
-		if field.Kind != ast.KindPropertyAssignment && field.Kind != ast.KindShorthandPropertyAssignment {
+	for index, field := range node.AsObjectLiteralExpression().Properties.Nodes {
+		if field.Kind == ast.KindSpreadAssignment {
+			if index != 0 {
+				return false
+			}
+			continue
+		}
+		if field.Kind != ast.KindPropertyAssignment && field.Kind != ast.KindShorthandPropertyAssignment && field.Kind != ast.KindMethodDeclaration {
 			return false
 		}
 		if field.Name() == nil || (field.Name().Kind != ast.KindIdentifier && field.Name().Kind != ast.KindStringLiteral && field.Name().Kind != ast.KindNumericLiteral) {
