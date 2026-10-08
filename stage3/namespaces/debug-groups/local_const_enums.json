@@ -1,0 +1,6 @@
+{
+ "sites":["debug.ts:879:9","debug.ts:893:9"],
+ "mutations":[["lr='─'","lr='x'"]],
+ "boundary":"enum inside a function or block",
+ "judgment":"Constant-valued local const enums have no observable runtime object in the admitted checker subset. Accept direct member reads dominated by the lexical declaration, preserve declaration identity and scope, and keep ordinary local enums, early reads and deferred captures NotYet."
+}

@@ -180,3 +180,24 @@ func TestDebugUnknownAssertionBoundaries(t *testing.T) {
 		})
 	}
 }
+
+func TestDebugLocalConstEnums(t *testing.T) {
+	t.Parallel()
+	source, err := os.ReadFile("../../stage3/namespaces/debug-groups/local_const_enums.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err = lowerSource(t, string(source)); err != nil {
+		t.Fatal(err)
+	}
+	for _, test := range []struct{ source, reason string }{
+		{"function run():number {const enum E {A=1} const read=():number=>E.A;return read();} console.log(`${run()}`);", "deferred body"},
+		{"function run():number {enum E {A=1} return E.A;}", "enum inside a function"},
+	} {
+		_, err := lowerSource(t, test.source)
+		var notYet *NotYet
+		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), test.reason) {
+			t.Fatalf("local enum boundary lost: %v", err)
+		}
+	}
+}

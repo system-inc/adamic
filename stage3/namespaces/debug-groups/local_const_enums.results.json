@@ -1,0 +1,51 @@
+{
+  "group": "local_const_enums",
+  "sites": [
+    "debug.ts:879:9",
+    "debug.ts:893:9"
+  ],
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/stage3/namespaces/debug-groups/local_const_enums.a"
+    ],
+    "stdout": "\u256d\u2500\u256b:15:16\n\u256d\u2500\u256b:0:16\nouterinner\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "mutant": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/tmp/debug-groups/local_const_enums/mutant.a"
+    ],
+    "stdout": "\u256dx\u256b:15:16\n\u256dx\u256b:0:16\nouterinner\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "build": {
+    "command": [
+      "/tmp/debug-groups-adamic",
+      "build",
+      "/workspace/adamic/stage3/namespaces/debug-groups/local_const_enums.a",
+      "-o",
+      "/tmp/debug-groups/local_const_enums/native",
+      "--sanitize"
+    ],
+    "stdout": "",
+    "stderr": "",
+    "exit": 0
+  },
+  "judgment": "Constant-valued local const enums have no observable runtime object in the admitted checker subset. Accept direct member reads dominated by the lexical declaration, preserve declaration identity and scope, and keep ordinary local enums, early reads and deferred captures NotYet.",
+  "native": {
+    "command": [
+      "/tmp/debug-groups/local_const_enums/native"
+    ],
+    "stdout": "\u256d\u2500\u256b:15:16\n\u256d\u2500\u256b:0:16\nouterinner\n",
+    "stderr": "",
+    "exit": 0
+  }
+}

@@ -243,6 +243,9 @@ func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error) {
 	if member != nil {
 		declaration := member.Parent
 		if ast.HasSyntacticModifier(declaration, ast.ModifierFlagsConst) {
+			if err := l.localConstEnumRead(node, declaration); err != nil {
+				return nil, true, err
+			}
 			value, err := l.enumConstant(member)
 			if err == nil {
 				value = l.namespaceReadyValue(node, value)
@@ -390,7 +393,7 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 		}
 	}
 	if node.Kind == ast.KindEnumDeclaration {
-		if node.Parent.Kind != ast.KindSourceFile && node.Parent.Kind != ast.KindModuleBlock {
+		if node.Parent.Kind != ast.KindSourceFile && node.Parent.Kind != ast.KindModuleBlock && !localConstEnum(node) {
 			return l.notYet(node, "an enum inside a function or block; declare it at module scope")
 		}
 		symbol := l.symbol(node.Name())

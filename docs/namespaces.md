@@ -331,3 +331,19 @@ inside debug.ts; the production whole-file build still fails its dependency
 checker errors. The component report includes the exact remaining-site ledger,
 raw findings and failed production build. Existing post-initialization and
 unresolved-before-initialization Debug reads remain held to Node.
+
+## Debug local const enums
+
+Constant enums in a function or lexical block now lower when direct member
+reads follow the declaration in that block. The Debug graph formatter fixture
+contains the real BoxCharacter glyphs and Connection masks, plus shadowed
+local declarations. Native and JavaScript backends match Node. Ordinary local
+enum objects and reads captured by deferred functions remain NotYet: Node
+transforms local const enums into hoisted runtime vars, so compile-time values
+cannot silently replace a potentially uninitialized read. TypeScript rejects
+a direct earlier read (TS2450); the lowering also retains a dominance guard.
+
+Evidence and source are in `stage3/namespaces/debug-groups/local_const_enums.*`.
+A compiler glyph mutant fails both backend comparisons; removing the deferred
+body guard fails the refusal pin. This accepts the two enum declaration shapes
+at debug.ts:879 and :893, without claiming the entire formatter body lowers.
