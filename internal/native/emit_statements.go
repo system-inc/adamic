@@ -145,6 +145,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		index := e.value(statement.Index)
 		value := e.value(statement.Value)
 		if statement.Array.Type().IsTypedArray() {
+			if statement.Array.Type() == ir.Uint16Array {
+				value = uint16Value(value)
+			}
 			e.line("adamic_typed_array_set(%s, %s, %s);", array, index, value)
 			e.end()
 			break
