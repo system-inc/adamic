@@ -1,0 +1,7 @@
+interface StaticView { readonly member: string | number; }
+class Base { static member = 7; }
+class Child extends Base {}
+function showStatic(view: StaticView): void { console.log(`${view.member}`); }
+showStatic(Child);
+Base.member = 9;
+showStatic(Child);
