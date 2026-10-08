@@ -1,0 +1,52 @@
+import {panic} from 'adamic';
+import type {RuleContext} from '../../context.ts';
+import {enclosingClassOf} from '../../helpers/rules-react/enclosing_class_of.a';
+import {semanticParentOf} from '../../helpers/rules-react/semantic_parent_of.a';
+import {skipParenthesesOptional} from '../../helpers/rules-react/skip_parentheses_optional.a';
+import {sortDefaultPropsInitializerOf} from '../../helpers/rules-react/sort_default_props_initializer_of.a';
+import {functionBodyBlock} from '../../helpers/rules-react/function_body_block.a';
+import {required,missing} from './messages.a';
+class Declarations {names:string[]=[];required:boolean[]=[];defaults:{name:string,node:number}[]=[];sawTypes=false;typesUnresolved=false;sawDefaults=false;defaultsUnresolved=false;}
+export class Rule {
+ readonly context:RuleContext;owners:string[]=[];declarations:Declarations[]=[];
+ constructor(context:RuleContext){this.context=context;}
+ child(index:number,pos:number):number{return index<0?-1:this.context.node(index).children[pos] ?? -1;}
+ last(index:number):number{if(index<0){return -1;}const c=this.context.node(index).children;return c[c.length-1] ?? -1;}
+ kind(index:number):string{return this.context.kind(index);}
+ skip(index:number):number{return skipParenthesesOptional(this.context,index);}
+ name(index:number):number{return index<0?-1:this.context.name(index);}
+ key(index:number):{name:string,found:boolean}{
+  const k=this.kind(index);if(['Identifier','PrivateIdentifier','StringLiteral','NumericLiteral','BigIntLiteral','NoSubstitutionTemplateLiteral'].includes(k)){return {name:this.context.node(index).text,found:true};}
+  if(k==='ComputedPropertyName'){const e=this.child(index,0);if(['StringLiteral','NumericLiteral','NoSubstitutionTemplateLiteral'].includes(this.kind(e))){return {name:this.context.node(e).text,found:true};}}
+  return {name:'',found:false};
+ }
+ ownerPath(index:number):{name:string,found:boolean}{index=this.skip(index);if(this.kind(index)==='Identifier'){return {name:this.context.node(index).text,found:true};}if(this.kind(index)==='PropertyAccessExpression'){const name=this.last(index);if(this.kind(name)==='Identifier'){const p=this.ownerPath(this.child(index,0));if(p.found){return {name:p.name+'.'+this.context.node(name).text,found:true};}}}return {name:'',found:false};}
+ classOwner(index:number):string {const c=enclosingClassOf(this.context,index);const name=this.name(c);return this.kind(name)==='Identifier'?this.context.node(name).text:'';}
+ objectOwner(index:number):string {const object=semanticParentOf(this.context,index);if(this.kind(object)!=='ObjectLiteralExpression'){return '';}const call=semanticParentOf(this.context,object);if(this.kind(call)!=='CallExpression'){return '';}const d=semanticParentOf(this.context,call);if(this.kind(d)!=='VariableDeclaration'){return '';}const name=this.name(d);return this.kind(name)==='Identifier'?this.context.node(name).text:'';}
+ forOwner(owner:string):Declarations {const i=this.owners.indexOf(owner);if(i>=0){return this.declarations[i] ?? panic('missing owner declarations');}const created=new Declarations();this.owners.push(owner);this.declarations.push(created);return created;}
+ returned(body:number):number {if(this.kind(body)!=='Block'){return -1;}for(const s of this.context.node(body).children){if(this.kind(s)==='ReturnStatement'){return this.child(s,0);}}return -1;}
+ resolve(index:number):number {for(let step=0;step<8;step++){index=this.skip(index);if(index<0){return -1;}if(this.kind(index)==='ObjectLiteralExpression'){return index;}if(this.kind(index)!=='Identifier'){return -1;}const d=this.declaration(index);if(d<0){return -1;}const next=sortDefaultPropsInitializerOf(this.context,d);if(next<0||next===index){return -1;}index=next;}return -1;}
+ declaration(index:number):number {const wanted=this.context.node(index).text;for(let scope=this.context.parent(index);scope>=0;scope=this.context.parent(scope)){for(const child of this.context.node(scope).children){if(this.kind(child)!=='VariableStatement'){continue;}const list=this.context.children(child,'VariableDeclarationList')[0] ?? -1;if(list<0){continue;}for(const d of this.context.children(list,'VariableDeclaration')){const name=this.name(d);if(this.kind(name)==='Identifier'&&this.context.node(name).text===wanted){return d;}}}}return -1;}
+ isRequired(index:number):boolean {index=this.skip(index);if(this.kind(index)!=='PropertyAccessExpression'){return false;}const name=this.last(index);return this.kind(name)==='Identifier'&&this.context.node(name).text==='isRequired';}
+ addType(info:Declarations,name:string,value:number):void {info.sawTypes=true;const i=info.names.indexOf(name);const isRequired=this.isRequired(value);if(i<0){info.names.push(name);info.required.push(isRequired);}else{info.required[i]=isRequired;}}
+ read(info:Declarations,name:number,value:number):void {const key=this.key(name);if(!key.found){return;}
+  if(key.name==='propTypes'){info.sawTypes=true;const object=this.resolve(value);if(object<0){info.typesUnresolved=true;return;}for(const p of this.context.node(object).children){if(!['PropertyAssignment','ShorthandPropertyAssignment'].includes(this.kind(p))){continue;}const key=this.key(this.name(p));if(key.found){this.addType(info,key.name,this.kind(p)==='PropertyAssignment'?this.last(p):-1);}}}
+  else if(key.name==='defaultProps'||key.name==='getDefaultProps'){info.sawDefaults=true;const object=this.resolve(value);if(object<0){info.defaultsUnresolved=true;return;}for(const p of this.context.node(object).children){if(!['PropertyAssignment','ShorthandPropertyAssignment','MethodDeclaration'].includes(this.kind(p))){info.defaultsUnresolved=true;continue;}const key=this.key(this.name(p));if(!key.found){info.defaultsUnresolved=true;continue;}info.defaults.push({node:p,name:key.name});}}
+ }
+ walk(index:number):void {
+  const k=this.kind(index);
+  if(k==='PropertyDeclaration'){this.read(this.forOwner(this.classOwner(index)),this.name(index),sortDefaultPropsInitializerOf(this.context,index));}
+  else if(k==='GetAccessor'){this.read(this.forOwner(this.classOwner(index)),this.name(index),this.returned(this.context.children(index,'Block')[0] ?? -1));}
+  else if(k==='MethodDeclaration'){this.read(this.forOwner(this.objectOwner(index)),this.name(index),this.returned(functionBodyBlock(this.context,index)));}
+  else if(k==='PropertyAssignment'){let value=this.skip(this.last(index));if(this.kind(value)==='FunctionExpression'||this.kind(value)==='ArrowFunction'){value=this.returned(functionBodyBlock(this.context,value));}this.read(this.forOwner(this.objectOwner(index)),this.name(index),value);}
+  else if(k==='BinaryExpression'&&this.kind(this.child(index,1))==='EqualsToken'){
+   const target=this.skip(this.child(index,0));if(this.kind(target)==='PropertyAccessExpression'){const member=this.last(target);if(this.kind(member)==='Identifier'){
+    const receiver=this.skip(this.child(target,0));if(this.kind(receiver)==='PropertyAccessExpression'){const inner=this.last(receiver);if(this.kind(inner)==='Identifier'){const owner=this.ownerPath(this.child(receiver,0));if(owner.found){const name=this.context.node(inner).text;const info=this.forOwner(owner.name);if(name==='propTypes'){this.addType(info,this.context.node(member).text,this.last(index));}else if(name==='defaultProps'||name==='getDefaultProps'){info.sawDefaults=true;info.defaults.push({node:index,name:this.context.node(member).text});}}}}
+    const owner=this.ownerPath(this.child(target,0));if(owner.found){this.read(this.forOwner(owner.name),member,this.last(index));}
+   }}
+  }
+  for(const child of this.context.node(index).children){this.walk(child);}
+ }
+ visit(index:number,parent:number):void {this.walk(index);const allow=this.context.settings.read('allowrequireddefaults','false')==='true';for(const info of this.declarations){if(!info.sawDefaults||info.defaultsUnresolved||info.typesUnresolved||!info.sawTypes||info.names.length===0){continue;}for(const entry of info.defaults){const i=info.names.indexOf(entry.name);if(i>=0&&(allow||!(info.required[i] ?? false))){continue;}this.context.report(entry.node,'react/default-props-match-prop-types',i>=0?'requiredHasDefault':'defaultHasNoType',i>=0?required(entry.name):missing(entry.name),'','','');}}}
+}
+export function create(context:RuleContext):Rule{return new Rule(context);}

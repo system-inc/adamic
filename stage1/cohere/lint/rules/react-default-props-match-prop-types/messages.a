@@ -1,0 +1,2 @@
+export function required(name:string):string{return `defaultProp "${name}" defined for isRequired propType.`;}
+export function missing(name:string):string{return `defaultProp "${name}" has no corresponding propTypes declaration.`;}

@@ -1,0 +1,13 @@
+{
+  "name": "react/default-props-match-prop-types",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleReactDefaultPropsMatchPropTypes",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestDefaultPropsMatchPropTypes"
+}
