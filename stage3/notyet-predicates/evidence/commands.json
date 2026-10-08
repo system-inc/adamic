@@ -1,0 +1,54 @@
+[
+  [
+    "bash",
+    "cloud/setup.sh"
+  ],
+  [
+    "bash",
+    "stage3/apply.sh",
+    "/tmp/notyet-predicates-adapted"
+  ],
+  [
+    "npm",
+    "ci",
+    "--prefix",
+    "stage3/api",
+    "--ignore-scripts",
+    "--no-audit",
+    "--no-fund"
+  ],
+  [
+    "go",
+    "run",
+    "./stage3/census/latent/replay",
+    "-project",
+    "/tmp/notyet-predicates-adapted/src/tsc/tsc.ts",
+    "-where",
+    "/tmp/notyet-predicates-adapted/src/compiler/factory/nodeConverters.ts:115:30",
+    "-kind",
+    "Refused",
+    "-reason",
+    "an unproven predicate argument for parameter test (argument \"isExpression\")"
+  ],
+  [
+    "go",
+    "run",
+    "./stage3/census/latent/replay",
+    "-project",
+    "/tmp/notyet-predicates-adapted/src/tsc/tsc.ts",
+    "-where",
+    "/tmp/notyet-predicates-adapted/src/compiler/utilitiesPublic.ts:616:5",
+    "-kind",
+    "Refused",
+    "-reason",
+    "a type predicate whose return is not proven (return expression is not a trusted check on node)"
+  ],
+  [
+    "go",
+    "test",
+    "./internal/lower",
+    "-run",
+    "TestPredicateBodiesAreProven|TestUnprovenPredicateReturnsAreRefused",
+    "-count=1"
+  ]
+]

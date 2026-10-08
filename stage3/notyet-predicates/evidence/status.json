@@ -1,0 +1,20 @@
+{
+  "compiler_base": "b410340dc8f889b5799c3bc519117c63def3aa24",
+  "replay_merge": "0de311f931132a534f4e6d5582f08f82a8981b1a",
+  "table_pin": "57b9777c8eb4ee28b1f50220e8c8fb51a2dfadf7",
+  "predicate_reference": "b131a36dc50163896dbbdd0ef6d304223454fd0a",
+  "csv_audit": {
+    "raw.csv": {
+      "observations": 14704,
+      "matching_predicate_observations": 0
+    },
+    "roots/raw.csv": {
+      "observations": 14705,
+      "matching_predicate_observations": 0
+    }
+  },
+  "source_hashes_matched": 81,
+  "source_hashes_total": 81,
+  "coverage_claim": 0,
+  "status": "Requested 122-site category is absent from both named raw CSVs. Predicate examples are Refused/refusal_scan findings in full.jsonl.gz. Replay checks lowering findings and intentionally omits refusal_scan. Need the CSV pin or exact root signatures before building this unit. No compiler change or new oracle fixture."
+}
