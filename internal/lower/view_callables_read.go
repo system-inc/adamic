@@ -46,7 +46,14 @@ func (l *lowering) prepareViewCallableRead(node *ast.Node, declared *checker.Typ
 // shared allocation pass decides whether their refusal is demanded. This also
 // handles helper bodies lowered before a cast appears in another function.
 func (l *lowering) prepareViewCallableProperty(node *ast.Node, declared *checker.Type, property *ir.Property) {
-	if property.Of != ir.Closure || !l.runtimeViewCallableShape(declared) {
+	if property.Of != ir.Closure {
+		return
+	}
+	if l.viewCallableMarkerType(declared) {
+		property.ViewContract = l.viewCallableMarkerContract(l.checker.GetNonNullableType(declared))
+		return
+	}
+	if !l.runtimeViewCallableShape(declared) {
 		return
 	}
 	id, err := l.prepareViewCallableRead(node, declared)

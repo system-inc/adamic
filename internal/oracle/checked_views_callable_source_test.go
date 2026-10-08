@@ -111,12 +111,6 @@ func TestCheckedViewCallableMarker(t *testing.T) {
 				t.Fatalf("Node %#v", truth)
 			}
 			program, err := lowered(t, path)
-			if name == "discarded-required" || name == "stored-call" {
-				if err == nil || !strings.Contains(err.Error(), "a call through an erased never-rest callable marker") {
-					t.Fatalf("marker arity refusal: %v", err)
-				}
-				return
-			}
 			if name == "write-back" {
 				if string(truth.stdout) != "undefined\n" {
 					t.Fatalf("Node write-back %#v", truth)
@@ -131,6 +125,17 @@ func TestCheckedViewCallableMarker(t *testing.T) {
 			}
 			actual, binary := nativelyUncached(t, program)
 			for _, got := range []run{releasedUncached(t, program), actual, onJavaScriptBackend(t, program)} {
+				if name == "discarded-required" || name == "stored-call" {
+					label, stdout := "(debug.shouldLog as AnyFunction)", ""
+					if name == "stored-call" {
+						label, stdout = "cache.assertion", "function view loaded\n"
+					}
+					expected := "adamic: panic: field read failed: " + label + " expected AnyFunction, found function with arity 1\n"
+					if got.exitCode != 70 || string(got.stdout) != stdout || string(got.stderr) != expected {
+						t.Fatalf("marker arity %#v expected %q", got, expected)
+					}
+					continue
+				}
 				if name == "discarded-wrong-arity" {
 					expected := "adamic: panic: field read failed: debug.shouldLog expected () => boolean, found function with arity 1\n"
 					if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != expected {
@@ -140,7 +145,7 @@ func TestCheckedViewCallableMarker(t *testing.T) {
 					t.Fatal(difference)
 				}
 			}
-			if name != "discarded-wrong-arity" {
+			if name != "discarded-wrong-arity" && name != "discarded-required" && name != "stored-call" {
 				if report := leaksUncached(t, program, binary); report != "" {
 					t.Fatal(report)
 				}
@@ -175,6 +180,47 @@ func TestCheckedViewCallableMethods(t *testing.T) {
 				}
 			}
 			if probe.found == "" {
+				if report := leaksUncached(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+			}
+		})
+	}
+}
+
+func TestCheckedViewStoredMarkerCalls(t *testing.T) {
+	for _, name := range []string{"boolean", "number", "string", "object", "array", "void", "wrong-arity", "field-good", "observed"} {
+		t.Run(name, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/lane5/stored-marker", name+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			if truth.exitCode != 0 {
+				t.Fatalf("Node %#v", truth)
+			}
+			program, err := lowered(t, path)
+			if name == "observed" {
+				if err == nil || !strings.Contains(err.Error(), "whose result is observed") && !strings.Contains(err.Error(), "a value of type void") {
+					t.Fatalf("observed marker refusal: %v", err)
+				}
+				return
+			}
+			if err != nil {
+				t.Fatal(err)
+			}
+			actual, binary := nativelyUncached(t, program)
+			for _, got := range []run{releasedUncached(t, program), actual, onJavaScriptBackend(t, program)} {
+				if name == "wrong-arity" {
+					expected := "adamic: panic: field read failed: callback expected AnyFunction, found function with arity 1\n"
+					if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != expected {
+						t.Fatalf("stored marker %#v expected %q", got, expected)
+					}
+				} else if difference := disagreement(truth, got); difference != "" {
+					t.Fatal(difference)
+				}
+			}
+			if name != "wrong-arity" {
 				if report := leaksUncached(t, program, binary); report != "" {
 					t.Fatal(report)
 				}

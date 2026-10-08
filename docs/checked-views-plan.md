@@ -1044,3 +1044,21 @@ candidate reads remain. Actual corpus reachable-read certification is unmeasured
 Higher-ranked intrinsic, optional/rest, overloaded and aggregate-return shapes
 remain unclaimed. Working family date: October 12, 2026, 18:00 UTC, subject to
 remeasurement after the checker-clean exact table and closure reconciliation.
+
+## Lane 5 stored marker calls and upstream witnesses (October 8)
+
+New minimal hooks: ir/views.go adds DiscardResult to callable contracts;
+ir/ir.go adds CheckedDiscard and its contract/label to CallClosure. lower/expression.go routes erased
+never-rest calls through lower/view_callables_marker.go, requiring a zero-argument
+call whose result is discarded. Native emit_functions.go dispatches that flag to
+owned view_callables_discard.go; it rechecks producer identity and arity and frees
+reference results according to the independently recorded result representation.
+Owned signature/read adapters recognize only this explicit discarded-result
+contract. Zero remains unknown; known void is separately recorded as metadata.
+Normal valued result contracts remain exact. javascript/javascript.go dispatches
+the same call flag to its owned view_callables_discard.go. No closure ABI is changed.
+
+Original candidate witnesses are verified against upstream TypeScript commit
+050880ce59e30b356b686bd3144efe24f875ebc8 in an independent source checkout, never
+by copying cohere files. Intrinsic and stored-callable evidence will be reported
+separately and counts remain candidates until exact reachability is measured.

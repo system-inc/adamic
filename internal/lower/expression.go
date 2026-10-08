@@ -1209,9 +1209,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	}
 	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall)
 	if len(signatures) == 1 && l.censusNeverRestSignature(signatures[0]) {
-		// never[] admits a zero-argument call in TypeScript. The erased slot does
-		// not retain a source signature to prove its required arguments or ABI.
-		return nil, l.notYet(node, "a call through an erased never-rest callable marker")
+		return l.viewCallableStoredMarkerCall(node, signatures[0])
 	}
 	closure, err := l.expression(node.AsCallExpression().Expression)
 	if err != nil {

@@ -45,7 +45,7 @@ func buildViewCallableContract(l *lowering, node *ast.Node, target *checker.Type
 func (l *lowering) viewCallableFieldUses(node *ast.Node, target *checker.Type, property *ast.Symbol) error {
 	// A supported shape is certified from producer code at each read, not from
 	// same-named implementations elsewhere. Unsupported shapes retain the old proof.
-	if l.runtimeViewCallableShape(l.checker.GetTypeOfSymbol(property)) {
+	if l.runtimeViewCallableShape(l.checker.GetTypeOfSymbol(property)) || l.viewCallableMarkerType(l.checker.GetTypeOfSymbol(property)) {
 		return nil
 	}
 	modules, err := l.moduleOrder(l.program.Files()[0])

@@ -35,7 +35,7 @@ func emitViewCallableCall(value, receiver, arguments string, method bool) string
 }
 
 func (e *emitter) emitViewCallableProperty(property ir.Property) string {
-	if property.ViewContract != 0 && e.program.ViewContracts[property.ViewContract-1].Result != 0 {
+	if property.ViewContract != 0 && (e.program.ViewContracts[property.ViewContract-1].Result != 0 || e.program.ViewContracts[property.ViewContract-1].DiscardResult) {
 		expected := e.program.ViewContracts[property.ViewContract-1].Name
 		raw := func(object string) string {
 			return fmt.Sprintf("adamicViewCallablePreparedRead(%s, %s, %s, %t, %t, %t, %s)", object, quote(property.Name), quote(property.View), property.Method, property.Optional, property.Absent, quote(expected))

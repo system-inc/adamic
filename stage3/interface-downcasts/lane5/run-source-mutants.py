@@ -6,6 +6,8 @@ root = Path(__file__).resolve().parents[3]
 logs = Path(__file__).resolve().parent / 'logs/source-mutants'
 logs.mkdir(parents=True, exist_ok=True)
 mutants = [
+ ('native-stored-marker-skip-shape', 'internal/native/view_callables_discard.go', '(void)adamic_view_callable_shape((const adamic_heap *)%s, %s, %s, %s, false);', '(void)%s; (void)%s; (void)%s; (void)%s;', 'TestCheckedViewStoredMarkerCalls/wrong-arity'),
+ ('native-stored-marker-leak-result', 'internal/native/view_callables_discard.go', 'adamic_release(%s.reference);', '(void)%s.reference;', 'TestCheckedViewStoredMarkerCalls/string'),
  ('lower-skip-read-contract', 'internal/lower/object.go', 'l.prepareViewCallableProperty(node, declared, &property)', '// mutant: omit read contract', 'TestCheckedViewCallableSourceContracts/number-wrong-arity'),
  ('native-skip-shape-dispatch', 'internal/native/view_fields.go', 'value = e.emitViewCallableCertificate(property, callable)', 'value = callable', 'TestCheckedViewCallableSourceContracts/number-wrong-arity'),
  ('native-accept-wrong-arity', 'internal/native/runtime/view_callables_contract.h', 'recorded->arity != expected->arity', 'false', 'TestCheckedViewCallableSourceContracts/number-wrong-arity'),

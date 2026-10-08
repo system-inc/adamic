@@ -7,7 +7,7 @@ import (
 
 func (e *emitter) emitViewCallableRead(property ir.Property, receiver, method string) string {
 	contract := property.ViewContract
-	if contract == 0 || e.program.ViewContracts[contract-1].Result == 0 {
+	if contract == 0 || (e.program.ViewContracts[contract-1].Result == 0 && !e.program.ViewContracts[contract-1].DiscardResult) {
 		return e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_view_callable(%s, %s, &%s, &%s, %s))", receiver, cString(property.Name), e.cache(), method, cString(property.View)))
 	}
 	expected := e.program.ViewContracts[contract-1].Name

@@ -10,13 +10,13 @@ import (
 func viewCallableCounts(t *testing.T) []string {
 	t.Helper()
 	var rows []string
-	for _, directory := range []string{"group1", "marker", "probes"} {
+	for _, directory := range []string{"group1", "marker", "probes", "stored-marker"} {
 		paths, err := filepath.Glob(filepath.Join(repository, "stage3/interface-downcasts/lane5", directory, "*.a"))
 		if err != nil {
 			t.Fatal(err)
 		}
 		for _, path := range paths {
-			if name := filepath.Base(path); name == "write-back.a" || name == "discarded-required.a" || name == "stored-call.a" {
+			if name := filepath.Base(path); name == "write-back.a" || name == "observed.a" {
 				continue
 			}
 			relative, err := filepath.Rel(repository, path)

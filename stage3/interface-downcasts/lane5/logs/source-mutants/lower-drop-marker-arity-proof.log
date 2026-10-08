@@ -1,10 +1,11 @@
---- FAIL: TestCheckedViewCallableMarker (0.16s)
-    --- FAIL: TestCheckedViewCallableMarker/discarded-required (0.16s)
+--- FAIL: TestCheckedViewCallableMarker (0.47s)
+    --- FAIL: TestCheckedViewCallableMarker/discarded-required (0.47s)
         checked_views_callable_source_test.go:109: gate cache node miss
-        checked_views_callable_source_test.go:116: marker arity refusal: <nil>
+        checked_views_callable_source_test.go:127: gate cache node miss
+        checked_views_callable_source_test.go:135: marker arity oracle.run{stdout:[]uint8{0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x65, 0x72, 0xa, 0x63, 0x61, 0x6c, 0x6c, 0x65, 0x64, 0xa}, stderr:[]uint8{}, exitCode:0} expected "adamic: panic: field read failed: (debug.shouldLog as AnyFunction) expected AnyFunction, found function with arity 1\n"
 FAIL
 gate cache: native hits=0 misses=0
-gate cache: node hits=0 misses=1
+gate cache: node hits=0 misses=2
 gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	0.170s
+FAIL	github.com/system-inc/adamic/internal/oracle	0.482s
 FAIL

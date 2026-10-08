@@ -22,7 +22,7 @@ func (e *emitter) emitViewCallableCertificate(property ir.Property, value string
 		for i, local := range function.Parameters {
 			parameters[i] = e.program.Locals[local].Type
 		}
-		signature := e.viewCallableSignature(parameters, function.Returns, function.Name)
+		signature := e.viewCallableSignature(parameters, viewCallableProducerResult(function.Returns), function.Name)
 		e.line("if (%s != NULL && %s->heap.kind == adamic_kind_closure && %s->code == %s) %s = %s;", value, value, value, e.functionName(index), recorded, signature)
 	}
 	return emitViewCallableShape(value, recorded, expected, property.View, property.Absent || property.Optional)
@@ -34,8 +34,11 @@ func (e *emitter) viewCallableExpected(property ir.Property) string {
 		return "NULL"
 	}
 	contract := e.program.ViewContracts[id-1]
-	if contract.Kind != ir.ViewCallable || contract.Result == 0 {
+	if contract.Kind != ir.ViewCallable || (contract.Result == 0 && !contract.DiscardResult) {
 		return "NULL"
+	}
+	if contract.DiscardResult {
+		return e.viewCallableSignature(nil, ir.Type(255), contract.Name)
 	}
 	parameters := make([]ir.Type, len(contract.Parameters))
 	for i, child := range contract.Parameters {
@@ -58,4 +61,11 @@ func (e *emitter) viewCallableSignature(parameters []ir.Type, result ir.Type, na
 	// Zero remains unknown. Void producer signatures cannot satisfy a valued result.
 	e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_callable_signature %s = {%d, %s, %d, %s};", signature, len(parameters), parameterName, result, cString(name)))
 	return "&" + signature
+}
+
+func viewCallableProducerResult(result ir.Type) ir.Type {
+	if result == 0 {
+		return ir.Type(254)
+	}
+	return result
 }
