@@ -1,3 +1,4 @@
+// a-check: refused a value as a condition
 import * as crypto from 'node:crypto';
 import * as second from 'node:crypto';
 function namespaceType(): string { return typeof (crypto); }
