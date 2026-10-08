@@ -1,0 +1,15 @@
+function reenter(): void {
+    for (const mode of ['init', 'skip']) {
+        switch (mode) {
+            case 'init':
+                let value = 7;
+                console.log(`${value}`);
+                break;
+            default:
+                const read = (): number => value;
+                console.log('second entry');
+                console.log(`${read()}`);
+        }
+    }
+}
+reenter();

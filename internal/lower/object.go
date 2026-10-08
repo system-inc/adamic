@@ -976,6 +976,23 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
+	bindings, err := l.switchBindings(statement.CaseBlock)
+	if err != nil {
+		return nil, err
+	}
+	var scrutinee []ir.Statement
+	if len(bindings) != 0 {
+		local := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "switch_value", Type: value.Type(), Function: l.functionIndex})
+		scrutinee = []ir.Statement{ir.Declare{Local: local, Value: value}}
+		value = ir.Read{Local: local, Of: value.Type()}
+	}
+	finish := func(body []ir.Statement) []ir.Statement {
+		if len(bindings) == 0 {
+			return body
+		}
+		return []ir.Statement{ir.Block{Body: append(scrutinee, ir.Block{Body: append(bindings, body...)})}}
+	}
 	lowered := ir.Switch{Value: value}
 	groups := []switchGroup{}
 	prefix := []ir.Statement{}
@@ -996,13 +1013,6 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 	tests := []ir.Expression{}
 	defaultPending := false
 	for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
-		for _, inner := range clause.AsCaseOrDefaultClause().Statements.Nodes {
-			if inner.Kind == ast.KindVariableStatement {
-				// A declaration directly in a case is scoped to the whole switch in JavaScript, where
-				// another case can see it (and hit its dead zone).
-				return nil, l.notYet(inner, "a declaration directly in a case (wrap the case in a block)")
-			}
-		}
 		isDefault := clause.Kind == ast.KindDefaultClause
 		if isDefault && len(tests) == 0 && l.enumDefaultUnreachable(node) && (len(groups) == 0 || switchBodyLeaves(groups[len(groups)-1].body)) {
 			continue
@@ -1052,16 +1062,16 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 		groups = append(groups, switchGroup{tests: tests, isDefault: defaultPending})
 	}
 	if checkedDefault {
-		return append(prefix, l.fallthroughSwitch(value, groups, neverCheck)...), nil
+		return finish(append(prefix, l.fallthroughSwitch(value, groups, neverCheck)...)), nil
 	}
 	for index, group := range groups {
 		// A default with tests must also have one body, rather than sharing statement
 		// addresses between two branches (flow instrumentation identifies those addresses).
 		if (group.isDefault && len(group.tests) > 0) || (index+1 < len(groups) && len(group.body) > 0 && !switchBodyLeaves(group.body)) {
-			return append(prefix, l.fallthroughSwitch(value, groups, nil)...), nil
+			return finish(append(prefix, l.fallthroughSwitch(value, groups, nil)...)), nil
 		}
 	}
-	return append(prefix, lowered), nil
+	return finish(append(prefix, lowered)), nil
 }
 
 // arrayMethod lowers array.push(value) and array.join(separator).

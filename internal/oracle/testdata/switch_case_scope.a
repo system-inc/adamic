@@ -1,0 +1,65 @@
+// Forward captures use the whole switch scope, and fallthrough runs initializers once.
+function initial(mode: string): string { console.log('initializer'); return ['live', mode].join(':'); }
+function inspect(mode: string): void {
+    let read = (): string => 'empty';
+    switch (mode) {
+        case 'start':
+            read = () => value;
+        case 'init':
+            let value = initial(mode);
+            value += '!';
+        case 'use':
+            console.log(read());
+            break;
+        default:
+            console.log('default');
+    }
+}
+inspect('start');
+inspect('init');
+inspect('use');
+inspect('none');
+// The discriminant reads the outer binding before the case scope exists.
+const value = 'outer';
+switch (value) {
+    case 'outer':
+        const value = ['inner'].join('');
+        console.log(value);
+        break;
+}
+console.log(value);
+// Each switch entry creates fresh cells, including on continue and break.
+const readers: (() => string)[] = [];
+for (let turn = 0; turn < 3; turn += 1) {
+    switch ('make') {
+        case 'make':
+            const label = ['item', `${turn}`].join('');
+            readers.push(() => label);
+            if (turn === 1) { continue; }
+            break;
+    }
+}
+console.log(readers.map(read => read()).join(','));
+// A destructured direct declaration uses the same storage and readiness.
+function pattern(): string {
+    let read = (): string => 'empty';
+    switch ('start') {
+        case 'start':
+            read = () => label;
+        default:
+            const { name: label } = { name: ['bound'].join('') };
+            return read();
+    }
+}
+console.log(pattern());
+function optional(): void {
+    switch ('init') {
+        case 'init':
+            let number: number;
+            number = 7;
+            let absent: string | undefined;
+            console.log(`${number}:${absent ?? 'missing'}`);
+            break;
+    }
+}
+optional();

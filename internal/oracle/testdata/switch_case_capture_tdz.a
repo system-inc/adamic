@@ -1,0 +1,12 @@
+function capture(): void {
+    switch ('start') {
+        case 'start':
+            const read = (): string => label;
+            console.log('before initialization');
+            console.log(read());
+        default:
+            const label = ['late'].join('');
+            console.log(label);
+    }
+}
+capture();

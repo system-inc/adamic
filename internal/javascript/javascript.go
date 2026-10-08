@@ -214,6 +214,13 @@ func (e *emitter) cellName(local int) string {
 	return e.name(local) + "_cell"
 }
 
+func (e *emitter) readiness(local int) string {
+	if flag := e.program.Locals[local].Ready; flag != 0 {
+		return e.variable(flag - 1)
+	}
+	return readyName(local)
+}
+
 func readyName(local int) string {
 	return fmt.Sprintf("ready_%d", local)
 }
@@ -349,7 +356,7 @@ func (e *emitter) statement(at *ir.Statement) {
 			// After the value, as JavaScript does: the right side runs, then the write throws.
 			temporary := e.temporary()
 			e.line("const %s = %s;", temporary, value)
-			e.line("if (!%s) adamicUnready(%s);", readyName(statement.Local), quote(e.program.Locals[statement.Local].Name))
+			e.line("if (!%s) adamicUnready(%s);", e.readiness(statement.Local), quote(e.program.Locals[statement.Local].Name))
 			value = temporary
 		}
 		e.line("%s = %s;", e.variable(statement.Local), value)
@@ -578,7 +585,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		return quote(e.program.Strings[expression.Index])
 	case ir.Read:
 		if expression.Checked {
-			return fmt.Sprintf("(%s ? %s : adamicUnready(%s))", readyName(expression.Local), e.variable(expression.Local), quote(e.program.Locals[expression.Local].Name))
+			return fmt.Sprintf("(%s ? %s : adamicUnready(%s))", e.readiness(expression.Local), e.variable(expression.Local), quote(e.program.Locals[expression.Local].Name))
 		}
 		return e.variable(expression.Local)
 	case ir.Unary:

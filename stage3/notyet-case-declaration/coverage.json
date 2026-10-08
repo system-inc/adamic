@@ -1,0 +1,24 @@
+{
+  "table_sha": "57b9777c8eb4ee28b1f50220e8c8fb51a2dfadf7",
+  "reason": "a declaration directly in a case (wrap the case in a block)",
+  "observations": 72,
+  "unique_sites": 63,
+  "files": {
+    "src/compiler/sys.ts": 1,
+    "src/compiler/scanner.ts": 5,
+    "src/compiler/utilitiesPublic.ts": 1,
+    "src/compiler/utilities.ts": 9,
+    "src/compiler/parser.ts": 3,
+    "src/compiler/binder.ts": 3,
+    "src/compiler/moduleSpecifiers.ts": 1,
+    "src/compiler/checker.ts": 30,
+    "src/compiler/transformers/typeSerializer.ts": 1,
+    "src/compiler/transformers/esDecorators.ts": 1,
+    "src/compiler/transformers/es2015.ts": 1,
+    "src/compiler/transformers/module/module.ts": 1,
+    "src/compiler/program.ts": 2,
+    "src/compiler/programDiagnostics.ts": 1,
+    "src/compiler/watch.ts": 1,
+    "src/compiler/expressionToTypeNode.ts": 2
+  }
+}
