@@ -1,0 +1,17 @@
+[
+  {
+    "mutant": "drop-observation",
+    "exit": 1,
+    "catcher": "observation coverage drift"
+  },
+  {
+    "mutant": "drop-body",
+    "exit": 1,
+    "catcher": "pinned totals drift"
+  },
+  {
+    "mutant": "invent-proven",
+    "exit": 1,
+    "catcher": "pinned totals drift"
+  }
+]
