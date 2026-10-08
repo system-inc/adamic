@@ -1,0 +1,5 @@
+{
+  "name": "wave14-no_array_delete",
+  "from": "if(!underlying)",
+  "to": "if(underlying)"
+}

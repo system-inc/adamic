@@ -1,0 +1,3 @@
+// Upstream descriptions, verbatim.
+export const arrayDeleteMessage = 'Using the `delete` operator with an array expression is unsafe.';
+export const spliceMessage = 'Use `array.splice()` instead.';

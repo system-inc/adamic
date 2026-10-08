@@ -1,0 +1,94 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { Parser } from '../../../../typescript/parser/parser.ts';
+import type { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+import { Suggestion, SuggestionEdit } from '../../suggestions.a';
+import { arrayDeleteMessage, spliceMessage } from './messages.a';
+import { types } from '../../../typeaware/facts.ts';
+import { Suggestion as RuleSuggestion } from '../../../typeaware/suggestion.ts';
+import { Repair } from '../../../typeaware/repair.ts';
+
+// Compatibility for this rule's existing fact grammar. The run owns the only checker.
+export class Rules {
+    readonly context: RuleContext;
+    readonly parser: Parser;
+    readonly scanner: Scanner;
+    readonly parents: readonly number[];
+    readonly path: string;
+    readonly offsets: readonly number[];
+    readonly findings: Diagnostic[] = [];
+    constructor(context: RuleContext) {
+        this.context = context; this.parser = context.parser; this.scanner = context.scanner;
+        this.parents = context.parents;
+        this.path = context.checker?.path ?? ''; this.offsets = context.checker?.offsets ?? [];
+    }
+    byte(position: number): number { return this.offsets[position] ?? panic('source position outside checker file'); }
+    utf16(position: number): number {
+        const result = this.offsets.indexOf(position);
+        if(result < 0) { panic('finding byte position is not a UTF-16 boundary'); }
+        return result;
+    }
+    start(node: ParseNode): number { this.scanner.pos = node.pos; this.scanner.scan(); return this.scanner.start; }
+    text(node: ParseNode): string { return this.scanner.text.slice(this.start(node), node.end); }
+    ask(index: number, question: string): string {
+        const answer = this.context.checker?.ask(index, question);
+        return answer?.value ?? panic(answer?.reason ?? 'typed rule without checker');
+    }
+    skip(index: number): number { return this.context.unwrap(index); }
+    add(rule: string, id: string, message: string, index: number): Diagnostic {
+        const node = this.parser.node(index);
+        const finding = new Diagnostic(rule, id, message, this.byte(this.start(node)), this.byte(node.end));
+        this.findings.push(finding); return finding;
+    }
+    flush(): void {
+        for(const diagnostic of this.findings) {
+            const edits: SuggestionEdit[] = [];
+            if(diagnostic.fixStart >= 0) { edits.push(new SuggestionEdit(this.utf16(diagnostic.fixStart), this.utf16(diagnostic.fixEnd), diagnostic.replacement)); }
+            for(const repair of diagnostic.repairs) { edits.push(new SuggestionEdit(this.utf16(repair.start), this.utf16(repair.end), repair.text)); }
+            const suggestions: Suggestion[] = [];
+            for(const suggestion of diagnostic.suggestions) {
+                suggestions.push(new Suggestion(suggestion.id, suggestion.message, suggestion.repairs.map((repair) => new SuggestionEdit(this.utf16(repair.start), this.utf16(repair.end), repair.text))));
+            }
+            this.context.reportRange(this.utf16(diagnostic.start), this.utf16(diagnostic.end), diagnostic.rule, diagnostic.id, diagnostic.message, edits, suggestions);
+        }
+        while(this.findings.length > 0) { this.findings.pop(); }
+    }
+}
+
+
+export class NoArrayDelete {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    visit(node: ParseNode, index: number): void {
+        const operand = this.rules.skip(node.children[0] ?? -1);
+        const access = this.rules.parser.node(operand);
+        if(access.kind !== 'ElementAccessExpression') { return; }
+        const receiver = access.children[0] ?? -1;
+        const argument = access.children[access.children.length - 1] ?? -1;
+        const facts = types(this.rules.ask(receiver, 'type-shape'), 'type-shape');
+        const root = facts.root();
+        const parts = (root.flags & (134217728 | 268435456)) !== 0 ? root.parts : [root.id];
+        const arrays = parts.map((id) => facts.type(id).array || facts.type(id).tuple >= 0);
+        const underlying = (root.flags & 268435456) !== 0 ? arrays.some((array) => array) : arrays.every((array) => array);
+        if(!underlying) { return; }
+        const finding = this.rules.add('no-array-delete', 'noArrayDelete', arrayDeleteMessage, index);
+        const repairs: Repair[] = [];
+        const scanner = this.rules.scanner;
+        for(let at = 0; at < 3; at++) {
+            scanner.pos = at === 0 ? node.pos : at === 1 ? this.rules.parser.node(receiver).end : this.rules.parser.node(argument).end;
+            scanner.scan();
+            repairs.push(new Repair(this.rules.byte(scanner.start), this.rules.byte(scanner.pos), at === 0 ? '' : at === 1 ? '.splice(' : ', 1)'));
+        }
+        finding.suggestions.push(new RuleSuggestion('useSplice', spliceMessage, repairs));
+    }
+}
+
+export class Rule {
+    readonly rules: Rules;
+    readonly listener: NoArrayDelete;
+    constructor(rules: Rules, listener: NoArrayDelete) { this.rules = rules; this.listener = listener; }
+    visit(node: ParseNode, index: number): void { this.listener.visit(node, index); this.rules.flush(); }
+}
+export function create(context: RuleContext): Rule { const rules = new Rules(context); const listener = new NoArrayDelete(rules); return new Rule(rules, listener); }
