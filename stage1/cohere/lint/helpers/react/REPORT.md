@@ -62,3 +62,20 @@ helper blockers from this package alone. The latter now has its rule port.
 There is no stopped helper or language gap. The unrelated checker-bridge test
 has an explicit pending skip for `codex/tsgo-errors-as-values`; this package does
 not modify that test or the missing bridge API.
+
+## JSX inventory fix rerun
+
+Merged `origin/lint-fix/jsx-inventory-discovery` at `e7c196a9` in merge
+`2986e318b2ceca14e9f4238436b62dc88898c3ea`. The dynamic inventory checks repair
+the two frozen JSX count failures described above.
+
+[Full lint rerun](testdata/jsx-merge-lint-full.jsonl) and
+[summary](testdata/jsx-merge-summary.json): package PASS; 121 passing test
+events, zero failures, one skip (`TestCheckerBridgeRefusalPending`, the
+unlanded TSGoError bridge prerequisite). No missing-input skips.
+Wall time 2,265.266 seconds; package elapsed 2,257.901 seconds; nproc 5.
+Load before 0.361 / 0.544 / 1.403; after 1.691 / 2.409 / 3.479.
+Registry generation passed. All input variables described above were set,
+with one fresh directory `/tmp/react-merge-profile.h4hZqK` for both profiles.
+The 4,120 captured cases, 890-file comparison, throughput, sharding,
+registered mutants, profile snapshots and registration checks pass.
