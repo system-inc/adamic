@@ -1,0 +1,35 @@
+=== RUN   TestIncompleteShardCoverage
+=== PAUSE TestIncompleteShardCoverage
+=== CONT  TestIncompleteShardCoverage
+=== RUN   TestIncompleteShardCoverage/one-byte
+    incomplete_shards_test.go:97: case testdata/recovery/corePublic.ts-cut-37.ts.txt:  line 1: port "gile", Go "file"
+        Go context:
+        file
+        
+=== RUN   TestIncompleteShardCoverage/dropped-first
+    incomplete_shards_test.go:97: missing case testdata/recovery/corePublic.ts-cut-37.ts.txt: expected case 0, got "case 1" (missing, extra, or duplicated case)
+=== RUN   TestIncompleteShardCoverage/dropped-last
+    incomplete_shards_test.go:97: missing case testdata/recovery/ts.moduleSpecifiers.ts-cut-1.ts.txt: returned 1 cases, expected 2
+=== RUN   TestIncompleteShardCoverage/extra
+    incomplete_shards_test.go:97: extra case "case 2" after testdata/recovery/ts.moduleSpecifiers.ts-cut-1.ts.txt
+=== RUN   TestIncompleteShardCoverage/duplicate
+    incomplete_shards_test.go:97: missing case testdata/recovery/ts.moduleSpecifiers.ts-cut-1.ts.txt: expected case 1, got "case 0" (missing, extra, or duplicated case)
+=== RUN   TestIncompleteShardCoverage/all-differences
+    incomplete_shards_test.go:107: case testdata/recovery/corePublic.ts-cut-37.ts.txt:  line 1: port "gile", Go "file"
+        Go context:
+        file
+        
+        case testdata/recovery/ts.moduleSpecifiers.ts-cut-1.ts.txt:  line 1: port "gile", Go "file"
+        Go context:
+        file
+        
+--- PASS: TestIncompleteShardCoverage (0.00s)
+    --- PASS: TestIncompleteShardCoverage/one-byte (0.00s)
+    --- PASS: TestIncompleteShardCoverage/dropped-first (0.00s)
+    --- PASS: TestIncompleteShardCoverage/dropped-last (0.00s)
+    --- PASS: TestIncompleteShardCoverage/extra (0.00s)
+    --- PASS: TestIncompleteShardCoverage/duplicate (0.00s)
+    --- PASS: TestIncompleteShardCoverage/all-differences (0.00s)
+PASS
+parser longest clang child: 0s; build hang guard: 4m0s
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	0.009s

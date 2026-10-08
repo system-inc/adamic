@@ -1,0 +1,1 @@
+class C { #x = 1; m(obj) { return #x in obj && this.#x; } }

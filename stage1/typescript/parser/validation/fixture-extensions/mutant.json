@@ -1,0 +1,7 @@
+{
+  "mutation": "rename one .ts.txt fixture back to .ts",
+  "case": "stage1/typescript/parser/testdata/lint_cases/decorated_async_promise_executor.ts",
+  "exit": 1,
+  "caught": true,
+  "wall_seconds": 2.0549982250013272
+}

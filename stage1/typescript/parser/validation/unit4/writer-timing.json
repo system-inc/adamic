@@ -1,0 +1,24 @@
+[
+  {
+    "mode": "before-writer",
+    "seconds": 10.135420921000332,
+    "bytes": 44766682,
+    "sha256": "8ae015600498b915cc25abab82730299451ae990b50478980d5a3bc465801bfe",
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "optimization": "-O1"
+  },
+  {
+    "mode": "after-writer",
+    "seconds": 8.387833484001021,
+    "bytes": 44766682,
+    "sha256": "8ae015600498b915cc25abab82730299451ae990b50478980d5a3bc465801bfe",
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "optimization": "-O1"
+  }
+]
