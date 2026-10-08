@@ -44,7 +44,7 @@ type widening struct {
 // written something it can't hold, or returns nil.
 func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
 	from, to = l.withoutUndefined(from), l.withoutUndefined(to)
-	if from == to || visited[[2]*checker.Type{from, to}] {
+	if from.Flags()&checker.TypeFlagsNever != 0 || from == to || visited[[2]*checker.Type{from, to}] {
 		return nil
 	}
 	visited[[2]*checker.Type{from, to}] = true
@@ -106,13 +106,19 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		// are, so Box<Dog> seen as Box<Animal>, or a plain object seen as a class, is judged by them.
 		return nil
 	}
+	if source, target := l.recordElement(from), l.recordElement(to); source != nil && target != nil {
+		if !l.checker.IsTypeAssignableTo(target, source) {
+			return &widening{source: source, target: target}
+		}
+		return l.widened(source, target, visited)
+	}
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	if len(fromSignatures) > 0 && len(toSignatures) > 0 {
 		// A function seen as another is handed the other's arguments, and its results are seen as
 		// the other's: each a view of its own.
 		if l.censusNeverRestSignature(toSignatures[0]) {
-			if l.censusDiscardedMarkerPredicate(fromSignatures[0], toSignatures[0]) {
+			if l.viewCallableVoidMarker(toSignatures[0]) || l.censusDiscardedMarkerPredicate(fromSignatures[0], toSignatures[0]) {
 				return nil
 			}
 			source := l.checker.GetReturnTypeOfSignature(fromSignatures[0])
@@ -245,6 +251,7 @@ func (l *lowering) containers(proven *checker.Type) []*checker.Type {
 	}
 	var found []*checker.Type
 	for _, member := range members {
+		member = l.phantomArrayView(member)
 		if member.Flags()&checker.TypeFlagsObject != 0 && member.ObjectFlags()&checker.ObjectFlagsReference != 0 &&
 			(l.checker.IsArrayType(member) || checker.IsTupleType(member) || l.isLibraryType(member, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
 			found = append(found, member)
@@ -275,6 +282,9 @@ func (l *lowering) canWrite(proven *checker.Type, visited map[*checker.Type]bool
 		return false
 	}
 	visited[proven] = true
+	if l.recordElement(proven) != nil {
+		return true
+	}
 	containers := l.containers(proven)
 	for _, container := range containers {
 		if !l.isLibraryType(container, "ReadonlyArray", "ReadonlyMap", "ReadonlySet") && !(checker.IsTupleType(container) && container.TargetTupleType().IsReadonly()) {
@@ -402,7 +412,10 @@ func viewSite(node *ast.Node) bool {
 
 // refuseWidening refuses a value seen through a type that can write what it can't hold.
 func (l *lowering) refuseWidening(node *ast.Node) error {
-	if l.nodeFSFileReadOnlyArgument(node) {
+	if l.viewCallableDiscardedMarker(node) {
+		return nil
+	}
+	if l.nodeFSFileReadOnlyArgument(node) || l.nodeRequirePerformanceProjection(node) {
 		return nil
 	}
 	var own, contextual *checker.Type
@@ -410,6 +423,7 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 	switch {
 	case node.Kind == ast.KindAsExpression:
 		as := node.AsAsExpression()
+		// A qualified name (NodeJS.ErrnoException) has no Text; only the identifier const is as const.
 		if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 			return nil
 		}
@@ -617,6 +631,9 @@ func (l *lowering) impliedTarget(node *ast.Node) *checker.Type {
 	switch parent.Kind {
 	case ast.KindConditionalExpression:
 		if conditional := parent.AsConditionalExpression(); conditional.WhenTrue == child || conditional.WhenFalse == child {
+			if target := l.readonlyArrayConsumer(parent); target != nil {
+				return target
+			}
 			return l.checker.GetTypeAtLocation(parent)
 		}
 	case ast.KindBinaryExpression:

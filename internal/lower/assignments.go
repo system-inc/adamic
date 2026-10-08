@@ -10,6 +10,15 @@ import (
 
 // assignment lowers =, and the compound assignments, to a local.
 func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
+	if statements, known, err := l.arrayLengthWrite(node); known {
+		return statements, err
+	}
+	if value, known, err := l.processValue(node); known {
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
+	}
 	binary := node.AsBinaryExpression()
 	operator, isCompound := compoundAssignments[binary.OperatorToken.Kind]
 	if binary.OperatorToken.Kind != ast.KindEqualsToken && !isCompound {
@@ -53,6 +62,10 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	if l.alwaysUndefined[l.symbol(target)] {
 		// Its type is unknown, so anything could be written to it, and it holds only undefined.
 		return nil, l.notYet(target, "assigning to a parameter that only ever receives undefined")
+	}
+	if !isCompound && l.uninitializedInitializer(binary.Right) {
+		l.result.Locals[local].Uninitialized = true
+		return []ir.Statement{ir.Assign{Local: local, Value: uninitializedValue(l.result.Locals[local].Type), Uninitialized: true}}, nil
 	}
 	value, err := l.expression(binary.Right)
 	if err != nil {

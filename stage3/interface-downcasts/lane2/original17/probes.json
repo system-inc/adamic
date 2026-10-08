@@ -1,0 +1,482 @@
+[
+  {
+    "name": "template-comment-good",
+    "source": "1:7\nabsent\nabsent\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocTemplateTag"
+    ]
+  },
+  {
+    "name": "template-comment-lazy",
+    "source": "346\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocTemplateTag"
+    ]
+  },
+  {
+    "name": "template-comment-wrong-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: (base as JSDocTemplateTag).comment matches no member of string | NodeArray<JSDocComment> | undefined; expected string | NodeArray<JSDocComment> | undefined, found boolean",
+    "contracts": [
+      "JSDocTemplateTag"
+    ]
+  },
+  {
+    "name": "template-comment-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "JSDocTemplateTag"
+    ]
+  },
+  {
+    "name": "template-comment-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "JSDocTemplateTag"
+    ]
+  },
+  {
+    "name": "template-comment-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocTemplateTag"
+    ]
+  },
+  {
+    "name": "template-comment-string",
+    "source": "2\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocTemplateTag"
+    ]
+  },
+  {
+    "name": "literal-properties-good",
+    "source": "1:7\nabsent\nabsent\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocTypeLiteral"
+    ]
+  },
+  {
+    "name": "literal-properties-lazy",
+    "source": "323\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocTypeLiteral"
+    ]
+  },
+  {
+    "name": "literal-properties-wrong-array",
+    "source": "3\n",
+    "diagnostic": "field read failed: (base as JSDocTypeLiteral).jsDocPropertyTags matches no member of readonly JSDocPropertyLikeTag[] | undefined; expected readonly JSDocPropertyLikeTag[] | undefined, found string",
+    "contracts": [
+      "JSDocTypeLiteral"
+    ]
+  },
+  {
+    "name": "literal-properties-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "JSDocTypeLiteral"
+    ]
+  },
+  {
+    "name": "literal-properties-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "JSDocTypeLiteral"
+    ]
+  },
+  {
+    "name": "literal-properties-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocTypeLiteral"
+    ]
+  },
+  {
+    "name": "signature-type-parameters-good",
+    "source": "1:7\nabsent\nabsent\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocSignature"
+    ]
+  },
+  {
+    "name": "signature-type-parameters-lazy",
+    "source": "324\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocSignature"
+    ]
+  },
+  {
+    "name": "signature-type-parameters-wrong-array",
+    "source": "3\n",
+    "diagnostic": "field read failed: (base as JSDocSignature).typeParameters matches no member of readonly JSDocTemplateTag[] | undefined; expected readonly JSDocTemplateTag[] | undefined, found string",
+    "contracts": [
+      "JSDocSignature"
+    ]
+  },
+  {
+    "name": "signature-type-parameters-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "JSDocSignature"
+    ]
+  },
+  {
+    "name": "signature-type-parameters-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "JSDocSignature"
+    ]
+  },
+  {
+    "name": "signature-type-parameters-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocSignature"
+    ]
+  },
+  {
+    "name": "intersection-types-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "IntersectionTypeNode"
+    ]
+  },
+  {
+    "name": "intersection-types-lazy",
+    "source": "194\n",
+    "diagnostic": "",
+    "contracts": [
+      "IntersectionTypeNode"
+    ]
+  },
+  {
+    "name": "intersection-types-wrong-array",
+    "source": "3\n",
+    "diagnostic": "field read failed: (base as IntersectionTypeNode).types is not a NodeArray<TypeNode>; expected NodeArray<TypeNode>, found string",
+    "contracts": [
+      "IntersectionTypeNode"
+    ]
+  },
+  {
+    "name": "intersection-types-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "IntersectionTypeNode"
+    ]
+  },
+  {
+    "name": "intersection-types-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "IntersectionTypeNode"
+    ]
+  },
+  {
+    "name": "intersection-types-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "IntersectionTypeNode"
+    ]
+  },
+  {
+    "name": "generic-local-good",
+    "source": "1:7\nabsent\n",
+    "diagnostic": "",
+    "contracts": [
+      "GenericType",
+      "TypeParameter"
+    ]
+  },
+  {
+    "name": "generic-local-lazy",
+    "source": "1\n",
+    "diagnostic": "",
+    "contracts": [
+      "GenericType"
+    ]
+  },
+  {
+    "name": "generic-local-wrong-array",
+    "source": "3\n",
+    "diagnostic": "field read failed: (base as GenericType).localTypeParameters matches no member of TypeParameter[] | undefined; expected TypeParameter[] | undefined, found string",
+    "contracts": [
+      "GenericType"
+    ]
+  },
+  {
+    "name": "generic-local-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.id is not a number; expected number, found string",
+    "contracts": [
+      "GenericType",
+      "TypeParameter"
+    ]
+  },
+  {
+    "name": "generic-local-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.id is not initialized; expected number, found missing",
+    "contracts": [
+      "GenericType",
+      "TypeParameter"
+    ]
+  },
+  {
+    "name": "generic-local-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "GenericType",
+      "TypeParameter"
+    ]
+  },
+  {
+    "name": "generic-outer-good",
+    "source": "1:7\nabsent\n",
+    "diagnostic": "",
+    "contracts": [
+      "GenericType",
+      "TypeParameter"
+    ]
+  },
+  {
+    "name": "generic-outer-lazy",
+    "source": "1\n",
+    "diagnostic": "",
+    "contracts": [
+      "GenericType"
+    ]
+  },
+  {
+    "name": "generic-outer-wrong-array",
+    "source": "3\n",
+    "diagnostic": "field read failed: (base as GenericType).outerTypeParameters matches no member of TypeParameter[] | undefined; expected TypeParameter[] | undefined, found string",
+    "contracts": [
+      "GenericType"
+    ]
+  },
+  {
+    "name": "generic-outer-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.id is not a number; expected number, found string",
+    "contracts": [
+      "GenericType",
+      "TypeParameter"
+    ]
+  },
+  {
+    "name": "generic-outer-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.id is not initialized; expected number, found missing",
+    "contracts": [
+      "GenericType",
+      "TypeParameter"
+    ]
+  },
+  {
+    "name": "generic-outer-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "GenericType",
+      "TypeParameter"
+    ]
+  },
+  {
+    "name": "callback-comment-good",
+    "source": "1:7\nabsent\nabsent\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocCallbackTag"
+    ]
+  },
+  {
+    "name": "callback-comment-lazy",
+    "source": "339\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocCallbackTag"
+    ]
+  },
+  {
+    "name": "callback-comment-wrong-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: (base as JSDocCallbackTag).comment matches no member of string | NodeArray<JSDocComment> | undefined; expected string | NodeArray<JSDocComment> | undefined, found boolean",
+    "contracts": [
+      "JSDocCallbackTag"
+    ]
+  },
+  {
+    "name": "callback-comment-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "JSDocCallbackTag"
+    ]
+  },
+  {
+    "name": "callback-comment-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "JSDocCallbackTag"
+    ]
+  },
+  {
+    "name": "callback-comment-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocCallbackTag"
+    ]
+  },
+  {
+    "name": "callback-comment-string",
+    "source": "2\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocCallbackTag"
+    ]
+  },
+  {
+    "name": "new-type-arguments-good",
+    "source": "1:7\nabsent\nabsent\n",
+    "diagnostic": "",
+    "contracts": [
+      "NewExpression"
+    ]
+  },
+  {
+    "name": "new-type-arguments-lazy",
+    "source": "215\n",
+    "diagnostic": "",
+    "contracts": [
+      "NewExpression"
+    ]
+  },
+  {
+    "name": "new-type-arguments-wrong-array",
+    "source": "3\n",
+    "diagnostic": "field read failed: (base as NewExpression).typeArguments matches no member of NodeArray<TypeNode> | undefined; expected NodeArray<TypeNode> | undefined, found string",
+    "contracts": [
+      "NewExpression"
+    ]
+  },
+  {
+    "name": "new-type-arguments-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "NewExpression"
+    ]
+  },
+  {
+    "name": "new-type-arguments-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "NewExpression"
+    ]
+  },
+  {
+    "name": "new-type-arguments-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "NewExpression"
+    ]
+  },
+  {
+    "name": "see-comment-good",
+    "source": "1:7\nabsent\nabsent\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocSeeTag"
+    ]
+  },
+  {
+    "name": "see-comment-lazy",
+    "source": "348\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocSeeTag"
+    ]
+  },
+  {
+    "name": "see-comment-wrong-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: (base as JSDocSeeTag).comment matches no member of string | NodeArray<JSDocComment> | undefined; expected string | NodeArray<JSDocComment> | undefined, found boolean",
+    "contracts": [
+      "JSDocSeeTag"
+    ]
+  },
+  {
+    "name": "see-comment-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "JSDocSeeTag"
+    ]
+  },
+  {
+    "name": "see-comment-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "JSDocSeeTag"
+    ]
+  },
+  {
+    "name": "see-comment-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocSeeTag"
+    ]
+  },
+  {
+    "name": "see-comment-string",
+    "source": "2\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocSeeTag"
+    ]
+  },
+  {
+    "name": "generic-local-missing-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: (base as GenericType).localTypeParameters is not initialized; expected TypeParameter[] | undefined, found missing",
+    "contracts": [
+      "GenericType"
+    ]
+  },
+  {
+    "name": "generic-outer-missing-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: (base as GenericType).outerTypeParameters is not initialized; expected TypeParameter[] | undefined, found missing",
+    "contracts": [
+      "GenericType"
+    ]
+  }
+]

@@ -14,7 +14,7 @@ func init() {
 			path    string
 			lowers  bool
 			checked bool
-		}{"stage3/fixtures/nested-functions/" + name + ".a", true, false})
+		}{checkedViewFixturePath("stage3/fixtures/nested-functions/" + name + ".a"), true, false})
 	}
 }
 
@@ -28,7 +28,7 @@ func errorText(err error) string {
 // The newly closed recursive constituent gap must retain the source's count,
 // not merely compile. This mutant produces valid C and has no leak or sanitizer failure.
 func TestClosedNestedConstituentMutant(t *testing.T) {
-	path, pathErr := filepath.Abs(filepath.Join(repository, "stage3/fixtures/nested-functions/09_checker_constituent_recursion.a"))
+	path, pathErr := filepath.Abs(filepath.Join(repository, "stage3/fixtures/nested-functions/09_checker_constituent_recursion.ts"))
 	if pathErr != nil {
 		t.Fatal(pathErr)
 	}

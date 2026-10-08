@@ -1,0 +1,7 @@
+class Named{readonly count:number=7;}
+interface Entry{child?:Named|undefined}
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';child?:Named|undefined}
+const witness=new Map<string,Entry>();const item={kind:'box',child:new Named()};const base:Base=item;
+function assign(entry:Target,value:Named|undefined):void{entry.child=value;}
+console.log(typeof witness);assign(base as Target,undefined);console.log('ran');

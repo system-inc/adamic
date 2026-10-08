@@ -1,0 +1,12 @@
+PASS: two literals share exactly one layout id; ready has number and boolean representation tags.
+const first = {kind: 'identifier' as const, ready: 0};
+const second = {kind: 'identifier' as const, ready: true};
+console.log(`${first.ready},${second.ready}`);
+
+static const adamic_shape adamic_shape_0 = {2, adamic_shape_0_names, adamic_shape_0_references, NULL};
+adamic_object * adamic_temporary_1 = adamic_object_new(&adamic_shape_0);
+adamic_object_field_types(adamic_temporary_1)[0] = 3;
+adamic_object_field_types(adamic_temporary_1)[1] = 1;
+adamic_object * adamic_temporary_3 = adamic_object_new(&adamic_shape_0);
+adamic_object_field_types(adamic_temporary_3)[0] = 3;
+adamic_object_field_types(adamic_temporary_3)[1] = 2;

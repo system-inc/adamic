@@ -1,0 +1,8 @@
+--- FAIL: TestCheckedViewMutableArrayUnionRefusal (0.37s)
+    cache_test.go:284: Rel: can't make /workspace/adamic/stage3/interface-downcasts/lane2/ranked3-mutable-array-read.a relative to ../../stage3/interface-downcasts/lane2
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=30
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	4.112s
+FAIL

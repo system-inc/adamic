@@ -14,7 +14,17 @@ import (
 
 func lowerSource(t *testing.T, source string) (*ir.Program, error) {
 	t.Helper()
-	path := filepath.Join(t.TempDir(), "main.a")
+	return lowerSourceExtension(t, source, ".a")
+}
+
+func lowerTypeScriptSource(t *testing.T, source string) (*ir.Program, error) {
+	t.Helper()
+	return lowerSourceExtension(t, source, ".ts")
+}
+
+func lowerSourceExtension(t *testing.T, source, extension string) (*ir.Program, error) {
+	t.Helper()
+	path := filepath.Join(t.TempDir(), "main"+extension)
 	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
 		t.Fatal(err)
 	}
@@ -68,6 +78,8 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 		{"assigning Array.from's undefined", "const made = Array.from({ length: 2 }, (value, index) => {\n\tvalue = index;\n\treturn index;\n});\n", "main.a:2:2: stage 0 can't lower assigning to a parameter that only ever receives undefined yet"},
 		{"an array of boolean | undefined", "const answers: (boolean | undefined)[] = [true, undefined];\n", "main.a:1:42: stage 0 can't lower an array of true | undefined yet"},
 		{"a captured boolean | undefined", "function run(): boolean {\n\tlet seen: boolean | undefined;\n\tconst mark = (): void => {\n\t\tseen = true;\n\t};\n\tmark();\n\treturn seen ?? false;\n}\nconsole.log(`${run()}`);\n", "main.a:4:3: stage 0 can't lower a boolean | undefined variable a function value captures yet"},
+		{"an array of a union", "const mixed: (string | number)[] = ['a', 1];\n", "main.a:1:36: stage 0 can't lower an array of string | number yet"},
+		{"a union stored in a field", "interface Shown {\n\tvalue: string | number;\n}\nconst shown: Shown = { value: 1 };\nshown.value = 'one';\n", "main.a:5:1: stage 0 can't lower storing string | number in a field yet"},
 		{"a class field of a union", "class Shown {\n\tvalue: string | number = 1;\n}\nconsole.log(`${new Shown() === new Shown()}`);\n", "main.a:2:2: stage 0 can't lower a field of type string | number yet"},
 		{"a template of a union with an object", "function pick(flag: boolean): number | { size: number } {\n\treturn flag ? 1 : { size: 2 };\n}\nconsole.log(`${pick(true)}`);\n", "main.a:4:16: stage 0 can't lower a template interpolating a union with an object, an array, a map or a function in it yet"},
 		{"?.[] on a string", "function first(word: string | undefined): string {\n\treturn word?.[0] ?? 'none';\n}\n", "main.a:2:9: stage 0 can't lower ?.[] on a string yet"},
@@ -142,7 +154,14 @@ func TestWhatZeroOneRefusesIsRefusedWithAFix(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSource(t, probe.source)
+			program, err := lowerSource(t, probe.source)
+			if strings.Contains(probe.want, "cycle reference counting can't free") || strings.Contains(probe.want, "which can reach back") || strings.Contains(probe.want, "can reach back") || strings.Contains(probe.want, "a variable a function value captures") {
+				if err != nil || len(program.GraphTypes) == 0 {
+					t.Errorf("want graph ownership, got %v", err)
+				}
+				return
+			}
+
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(refused.Error(), probe.want) {
 				t.Errorf("got %v, want a refusal ending %q", err, probe.want)

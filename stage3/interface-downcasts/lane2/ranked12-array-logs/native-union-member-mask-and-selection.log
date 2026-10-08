@@ -1,0 +1,9 @@
+--- FAIL: TestCheckedViewRanked12ArrayContracts (0.00s)
+    --- FAIL: TestCheckedViewRanked12ArrayContracts/ranked12-jsdoc-comment-wrong (0.53s)
+        checked_views_ranked12_arrays_test.go:64: stderr differs; stderr "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"; stdout ""; exit 70
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.540s
+FAIL

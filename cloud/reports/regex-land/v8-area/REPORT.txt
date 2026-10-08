@@ -1,0 +1,19 @@
+Merge origin/area/library 8b2f78bdea92053f925cc3fbfdcbc47d9cfd4c4c into codex/regex-v8-divergences-land 0dae4d7e955fd84b51f8e2802997b8839f7bb228. Merge commit, no rebase, no force-push. Only the landing branch is pushed; main and the original branches remain unchanged.
+Conflict resolution: replacement cleanup uses regex_input_free for both input and replacement, preserving the native UTF-16 cache ownership. All other native fixes and V8 surrogate matching/split behavior are retained. Counts regenerated completely on Linux, preserving all registered fixtures in registration order.
+The first complete package run passed lower (50.114s), regexp (26.115s), native (283.517s), but flow failed because the intentional compound-write refusal fixture was in its accepted-IR inventory. Added the exact fixture exclusion, preserving its oracle refusal test. The complete flow rerun passed (110.462s).
+Node v24.19.0, Linux x64. Toolchain: source /workspace/adamic-tools/env.sh. All test output goes directly to the adjacent logs.
+Commands:
+go test ./internal/lower ./internal/regexp ./internal/native ./internal/flow -timeout 30m -count=1 > packages.txt 2>&1
+go test ./internal/flow -timeout 30m -count=1 > flow-rerun.txt 2>&1
+go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(regexp|sweeps/regexp)|TestRegExpNativeTiming' -timeout 30m -count=1 -v > oracle.txt 2>&1
+Oracle PASS 152.278s, zero disagreements. All eight surrogate entry points and native timing guards included.
+go test ./internal/oracle -run TestCountsAreRecorded -timeout 30m -count=1 -args -update-counts > counts.txt 2>&1
+Counts PASS 64.985s. No numeric changes after retaining both row sets; reordered to fixture registration order.
+go vet ./internal/lower ./internal/regexp ./internal/native ./internal/flow > vet-final.txt 2>&1
+Vet exit 0.
+go build -o /tmp/regex-placement-adamic ./cmd/adamic > build.txt 2>&1
+python3 cloud/reports/regex-v8-divergences/split-placement/mutant.py > split-mutant.txt 2>&1
+Split mutant caught solely by Node stdout comparison; clean compilation, exit 0 and empty sanitizer stderr. The normal fixture agrees with Node.
+go test ./internal/oracle -run '^TestRegExpLongBacktrackNode$' -timeout 30m -count=1 -v > long-backtrack.txt 2>&1
+Full repository gate was not run. The complete affected packages and regex oracle fixture set were run. Previous native feature mutant proofs remain in the inherited reports; the split mutant was rerun on the merged runtime.
+Long-backtrack PASS 253.500s: sanitized comparison 146.795s exit 0, release comparison 16.646s exit 0, Linux LeakSanitizer 84.196s exit 0. No leaks or Node disagreements.

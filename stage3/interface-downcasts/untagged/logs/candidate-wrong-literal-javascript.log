@@ -1,0 +1,35 @@
+=== RUN   TestCheckedViewUntaggedCandidatePairs
+=== RUN   TestCheckedViewUntaggedCandidatePairs/13/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:344: javascript: exit codes differ; got oracle.run{stdout:[]uint8{0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.body matches no member of ModuleBody | undefined; expected ModuleBody | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/130/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of CandidateTarget | undefined; expected CandidateTarget | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of CandidateTarget | undefined; expected CandidateTarget | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/133/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.items[0] matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:344: javascript: exit codes differ; got oracle.run{stdout:[]uint8{0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+=== RUN   TestCheckedViewUntaggedCandidatePairs/138/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/213/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.elements is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.elements is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+--- FAIL: TestCheckedViewUntaggedCandidatePairs (1.16s)
+    --- FAIL: TestCheckedViewUntaggedCandidatePairs/13/wrong (0.28s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/130/wrong (0.23s)
+    --- FAIL: TestCheckedViewUntaggedCandidatePairs/133/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/138/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/213/wrong (0.21s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.174s
+FAIL

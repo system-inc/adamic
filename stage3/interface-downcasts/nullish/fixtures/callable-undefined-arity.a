@@ -1,0 +1,11 @@
+interface Base { readonly kind: string }
+interface Target extends Base { readonly kind: 'box'; readonly value: (() => string) | undefined }
+function make(): Base {
+ const raw = { kind: 'box', value: (ignored: number): string => ['made', 'here'].join('-') };
+ return raw;
+}
+function read(node: Target): void {
+ const value = node.value;
+ console.log(value === undefined ? 'missing' : 'present');
+}
+read(make() as Target);

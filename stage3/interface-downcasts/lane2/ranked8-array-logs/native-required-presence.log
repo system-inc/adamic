@@ -1,0 +1,9 @@
+--- FAIL: TestCheckedViewRanked8ArrayContracts (0.00s)
+    --- FAIL: TestCheckedViewRanked8ArrayContracts/ranked8-generic-missing (16.25s)
+        checked_views_ranked8_arrays_test.go:67: stderr differs; stderr "adamic: panic: field read failed: generic(raw).typeParameters matches no member of TypeParameter[] | undefined; expected TypeParameter[] | undefined, found unsupported representation\n"; stdout ""; exit 70
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	16.261s
+FAIL

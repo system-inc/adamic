@@ -1,0 +1,33 @@
+=== RUN   TestCheckedViewDictionaryOptionalContainers
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-watch-good
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-watch-wrong
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-watch-missing
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-watch-receiver-missing
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-options-good
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-options-wrong
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-options-missing
+    checked_view_dictionary_optional_test.go:36: optional receiver check: oracle.run{stdout:[]uint8{0x75, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0xa}, stderr:[]uint8{}, exitCode:0}; want "adamic: panic: field read failed: view?.options is not initialized; expected CompilerOptions, found missing\n"
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-options-receiver-missing
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-wildcard-good
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-wildcard-wrong
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-wildcard-missing
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-wildcard-receiver-missing
+--- FAIL: TestCheckedViewDictionaryOptionalContainers (4.67s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-watch-good (0.42s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-watch-wrong (0.36s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-watch-missing (0.35s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-watch-receiver-missing (0.39s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-options-good (0.39s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-options-wrong (0.39s)
+    --- FAIL: TestCheckedViewDictionaryOptionalContainers/optional-options-missing (0.37s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-options-receiver-missing (0.36s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-wildcard-good (0.39s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-wildcard-wrong (0.47s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-wildcard-missing (0.38s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-wildcard-receiver-missing (0.39s)
+FAIL
+gate cache: native hits=0 misses=8
+gate cache: node hits=0 misses=24
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	4.676s
+FAIL

@@ -110,6 +110,7 @@ static json_scalar scalar(adamic_value value, enum adamic_json_kind kind) {
 		if (reference == NULL) { kind = adamic_json_undefined; }
 		else {
 			switch (reference->kind) {
+			case adamic_kind_null: kind = adamic_json_null; break;
 			case adamic_kind_number: kind = adamic_json_number; value.number = ((adamic_number_box *)reference)->number; break;
 			case adamic_kind_boolean: kind = adamic_json_boolean; value.boolean = ((adamic_boolean_box *)reference)->boolean; break;
 			case adamic_kind_string: kind = adamic_json_string; break;
@@ -121,7 +122,7 @@ static json_scalar scalar(adamic_value value, enum adamic_json_kind kind) {
 			}
 			}
 		}
-	} else if ((kind == adamic_json_string || kind == adamic_json_map || kind == adamic_json_function || kind == adamic_json_array) && value.reference == NULL) {
+	} else if ((kind == adamic_json_string || kind == adamic_json_map || kind == adamic_json_function || kind == adamic_json_array || kind == adamic_json_record) && value.reference == NULL) {
 		kind = adamic_json_undefined;
 	}
 	return (json_scalar){kind, value};
@@ -165,17 +166,38 @@ static bool write_value(json_writer *w, adamic_value value, const adamic_json_sc
 		const adamic_array *array = value.reference;
 		const adamic_object *object = value.reference;
 		size_t count = tuple ? schema->count : array->length;
+		adamic_array *owner = !tuple && schema->array_read != NULL ? adamic_array_new(0,true) : NULL;
 		ascii(w, "[");
 		for (size_t index = 0; index < count; index++) {
 			if (index != 0) { ascii(w, ","); }
 			indent(w, depth + 1);
 			const adamic_json_schema *element = tuple ? schema->fields[index].schema : schema->element;
-			adamic_value item = tuple ? object->slots[schema->fields[index].slot] : array->elements[index];
+			adamic_value item = tuple ? object->slots[schema->fields[index].slot] : schema->array_read != NULL ? schema->array_read(array,index,owner) : array->elements[index];
 			if (!write_value(w, item, element, depth + 1)) { ascii(w, "null"); }
 		}
+		adamic_release(owner); /* JSON element snapshots. */
 		if (count != 0) { indent(w, depth); }
 		ascii(w, "]");
 		return true;
+	}
+	case adamic_json_record: {
+		const adamic_record *record = value.reference;
+		adamic_array *ordered = adamic_record_keys(record);
+		ascii(w, "{");
+		size_t written = 0;
+		size_t count = w->key_list ? w->key_count : ordered->length;
+		for (size_t index = 0; index < count; index++) {
+			adamic_string *key = w->key_list ? w->keys[index] : ordered->elements[index].reference;
+			const adamic_value *slot = adamic_record_get_own(record, key);
+			if (slot == NULL) { continue; }
+			json_scalar item = scalar(*slot, schema->element->kind);
+			if (item.kind == adamic_json_undefined || item.kind == adamic_json_function) { continue; }
+			if (written++ != 0) { ascii(w, ","); }
+			indent(w, depth + 1); quote(w, key); ascii(w, w->pretty ? ": " : ":");
+			(void)write_value(w, *slot, schema->element, depth + 1);
+		}
+		if (written != 0) { indent(w, depth); }
+		ascii(w, "}"); adamic_release(ordered); return true;
 	}
 	case adamic_json_object: {
 		const adamic_object *object = value.reference;
@@ -208,10 +230,11 @@ static void keys(json_writer *w, adamic_value value, const adamic_json_schema *s
 	const adamic_array *array = value.reference;
 	const adamic_object *object = value.reference;
 	size_t count = tuple ? schema->count : array->length;
+	adamic_array *owner = !tuple && schema->array_read != NULL ? adamic_array_new(0,true) : NULL;
 	if (count != 0) { w->keys = json_memory(count * sizeof *w->keys); }
 	for (size_t index = 0; index < count; index++) {
 		const adamic_json_schema *element = tuple ? schema->fields[index].schema : schema->element;
-		adamic_value item = tuple ? object->slots[schema->fields[index].slot] : array->elements[index];
+		adamic_value item = tuple ? object->slots[schema->fields[index].slot] : schema->array_read != NULL ? schema->array_read(array,index,owner) : array->elements[index];
 		json_scalar s = scalar(item, element->kind);
 		adamic_string *key;
 		if (s.kind == adamic_json_string) { key = adamic_retain(s.value.reference); }
@@ -223,6 +246,7 @@ static void keys(json_writer *w, adamic_value value, const adamic_json_schema *s
 		}
 		if (duplicate) { adamic_release(key); } else { w->keys[w->key_count++] = key; }
 	}
+	adamic_release(owner);
 }
 adamic_string *adamic_json_stringify(adamic_value value, const adamic_json_schema *schema,
 	adamic_value replacer, const adamic_json_schema *replacer_schema,

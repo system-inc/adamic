@@ -20,7 +20,7 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	result := "0"
 	switch visit.Method {
 	case "filter":
-		result = e.own(ir.Array, fmt.Sprintf("adamic_array_new(0, %t)", references))
+		result = e.graphArray(fmt.Sprintf("adamic_array_new(0, %t)", references), visit.GraphTypes)
 	case "some", "every":
 		result = e.snapshot(ir.Boolean, strconv.FormatBool(visit.Method == "every"))
 	case "findIndex", "findLastIndex":
@@ -32,6 +32,7 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 			result = e.own(visit.Element, "NULL")
 		}
 	}
+	owner := e.viewArrayReadOwner(visit.Element)
 	count, index, element, answer := e.temporary(), e.temporary(), e.temporary(), e.temporary()
 	e.line("size_t %s = %s->length;", count, source)
 	if visit.Method == "findLast" || visit.Method == "findLastIndex" {
@@ -51,11 +52,24 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		e.line("\tcontinue;")
 	}
 	e.line("}")
-	e.line("adamic_value %s = %s->elements[%s];", element, source, index)
-	if references {
+	if visit.ViewRead.View != "" {
+		if e.hasArrayHoles() && visit.Method != "find" && visit.Method != "findIndex" && visit.Method != "findLast" && visit.Method != "findLastIndex" {
+			e.line("if (adamic_array_holes_at(%s, (double)%s) == NULL) continue;", source, index)
+		}
+		checked := e.viewArrayElementSlot(visit.ViewRead, source, index, owner)
+		e.line("adamic_value %s = %s;", element, checked)
+	} else if e.hasArrayHoles() {
+		slot := e.temporary()
+		e.line("adamic_value *%s = adamic_array_holes_at(%s, (double)%s);", slot, source, index)
+		e.line("if (%s == NULL) continue;", slot)
+		e.line("adamic_value %s = *%s;", element, slot)
+	} else {
+		e.line("adamic_value %s = %s->elements[%s];", element, source, index)
+	}
+	if references && !visit.ViewRead.TupleUnion {
 		e.line("adamic_retain(%s.reference);", element)
 	}
-	call := e.callbackCall(callback, visit.Callback, visit.CallbackType, element, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
+	call := e.viewCallbackCall(callback, visit.Callback, visit.CallbackType, []ir.Type{visit.Element, ir.Number, ir.Array}, visit.Returns, element, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
 	if visit.Method == "forEach" && !visit.Returns.IsReference() {
 		e.line("%s;", call)
 	} else {
@@ -69,6 +83,9 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	}
 	release := func() {
 		if references {
+			if visit.ViewRead.TupleUnion {
+				e.line("/* tuple forEach transfer release */")
+			}
 			e.line("adamic_release(%s.reference);", element)
 		}
 	}
@@ -81,6 +98,9 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		release()
 	case "filter":
 		e.line("if (%s.boolean) {", answer)
+		if references && e.graphTypes(visit.GraphTypes) {
+			e.line("\t%s.reference = adamic_graph_take(%s, %s.reference);", element, result, element)
+		}
 		e.line("\tadamic_array_push(%s, %s);", result, element)
 		if references {
 			e.line("} else {")
@@ -91,8 +111,8 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		e.line("if (%s.boolean) {", answer)
 		if visit.Type().IsMaybe() {
 			found := element + "." + member(visit.Element)
-			if visit.Element == ir.MaybeNumber {
-				found = unslotted(ir.MaybeNumber, found)
+			if visit.Element == ir.MaybeNumber || visit.Element == ir.MaybeBoolean {
+				found = unslotted(visit.Element, found)
 			} else {
 				found = maybe(visit.Type(), found)
 			}
@@ -136,6 +156,7 @@ func (e *emitter) arrayReduce(reduce ir.ArrayReduce) string {
 	} else {
 		accumulator = e.snapshot(reduce.Result, initial)
 	}
+	owner := e.viewArrayReadOwner(reduce.Element)
 	count, index, element, answer := e.temporary(), e.temporary(), e.temporary(), e.temporary()
 	e.line("size_t %s = %s->length;", count, source)
 	e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
@@ -143,11 +164,24 @@ func (e *emitter) arrayReduce(reduce ir.ArrayReduce) string {
 	e.line("if (%s >= %s->length) {", index, source)
 	e.line("\tcontinue;")
 	e.line("}")
-	e.line("adamic_value %s = %s->elements[%s];", element, source, index)
+	if reduce.ViewRead.View != "" {
+		if e.hasArrayHoles() {
+			e.line("if (adamic_array_holes_at(%s, (double)%s) == NULL) continue;", source, index)
+		}
+		checked := e.viewArrayElementSlot(reduce.ViewRead, source, index, owner)
+		e.line("adamic_value %s = %s;", element, checked)
+	} else if e.hasArrayHoles() {
+		slot := e.temporary()
+		e.line("adamic_value *%s = adamic_array_holes_at(%s, (double)%s);", slot, source, index)
+		e.line("if (%s == NULL) continue;", slot)
+		e.line("adamic_value %s = *%s;", element, slot)
+	} else {
+		e.line("adamic_value %s = %s->elements[%s];", element, source, index)
+	}
 	if reduce.Element.IsReference() {
 		e.line("adamic_retain(%s.reference);", element)
 	}
-	call := e.callbackCall(callback, reduce.Callback, reduce.CallbackType, fmt.Sprintf("{.%s = %s}", member(reduce.Result), slotted(reduce.Result, accumulator)), element, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
+	call := e.viewCallbackCall(callback, reduce.Callback, reduce.CallbackType, []ir.Type{reduce.Result, reduce.Element, ir.Number, ir.Array}, reduce.Result, fmt.Sprintf("{.%s = %s}", member(reduce.Result), slotted(reduce.Result, accumulator)), element, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
 	e.line("adamic_value %s = %s;", answer, call)
 	// The element held across the call is let go; the accumulator is the statement's.
 	if reduce.Element.IsReference() {
@@ -224,7 +258,7 @@ func (e *emitter) spliceArguments(splice ir.ArraySplice) string {
 	}
 	items := []string{}
 	for _, item := range splice.Items {
-		items = append(items, held(splice.Element, e.value(item)))
+		items = append(items, e.heldIn(array, splice.Element, e.value(item)))
 	}
 	packed := "NULL"
 	if len(items) > 0 {

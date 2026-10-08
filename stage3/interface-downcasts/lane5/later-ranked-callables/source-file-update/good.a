@@ -1,0 +1,8 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Statement {readonly value:number;}
+interface SourceFile {readonly value:number;readonly statements:readonly Statement[];}
+interface FileReference {readonly value:number;}
+interface Base {readonly updateSourceFile:unknown;}
+interface Target {updateSourceFile(node: SourceFile, statements: readonly Statement[], isDeclarationFile?: boolean, referencedFiles?: readonly FileReference[], typeReferences?: readonly FileReference[], hasNoDefaultLib?: boolean, libReferences?: readonly FileReference[]): SourceFile;}
+function probe(value:Base):void {const factory=value as Target;const sourceFile:SourceFile={value:3,statements:[]};const statements:readonly Statement[]=[{value:4}];function factoryCreateNodeArray(items:readonly Statement[]):readonly Statement[]{return items;}function setTextRange(items:readonly Statement[],range:readonly Statement[]):readonly Statement[]{return items;}console.log(`${factory.updateSourceFile(sourceFile,setTextRange(factoryCreateNodeArray(statements),sourceFile.statements)).value}`);}
+probe({updateSourceFile:(node:SourceFile,statements:readonly Statement[],isDeclarationFile?:boolean,referencedFiles?:readonly FileReference[],typeReferences?:readonly FileReference[],hasNoDefaultLib?:boolean,libReferences?:readonly FileReference[]):SourceFile=>{const statement=statements[0];return {value:node.value+(statement===undefined?0:statement.value)+(isDeclarationFile===true?1:0)+(hasNoDefaultLib===true?2:0)+(referencedFiles===undefined?0:referencedFiles.length)+(typeReferences===undefined?0:typeReferences.length)+(libReferences===undefined?0:libReferences.length),statements};}});

@@ -1,0 +1,2 @@
+const callback = (value:number|string):void => {console.log(`${value}`);};
+[1,2].forEach(callback);

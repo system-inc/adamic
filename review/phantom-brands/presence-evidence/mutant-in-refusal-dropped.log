@@ -1,0 +1,5 @@
+--- FAIL: TestPhantomArrayPresenceNarrowing (0.11s)
+    phantom_array_presence_test.go:60: got /tmp/adamic-gate/TestPhantomArrayPresenceNarrowing3444905430/001/main.a:9:31: Adamic 0.1 refuses in; an object's shape is known; use a discriminant, or a Map, want Adamic 0.1 refuses presence of phantom array brand member  __sortedArrayBrand via in; read the brand member's undefined value without testing its presence; use a separate real field or Map for observable presence
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.117s
+FAIL

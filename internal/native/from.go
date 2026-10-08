@@ -15,6 +15,7 @@ func (e *emitter) arrayFrom(from ir.ArrayFrom) string {
 	count, index := e.temporary(), e.temporary()
 	e.line("size_t %s = adamic_array_from_length(%s);", count, length)
 	made := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%s, %t)", count, from.Element.IsReference()))
+	e.adoptGraph(made, "sizeof *"+made, e.graphTypes(from.GraphTypes))
 	e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
 	// Undefined as the first parameter holds it: a null reference, or a packed word.
 	undefined := "{.reference = NULL}"
@@ -23,10 +24,13 @@ func (e *emitter) arrayFrom(from ir.ArrayFrom) string {
 	}
 	e.indent++
 	element := e.temporary()
-	call := e.callbackCall(callback, from.Callback, from.CallbackType, undefined, fmt.Sprintf("{.number = (double)%s}", index))
+	call := e.viewCallbackCall(callback, from.Callback, from.CallbackType, []ir.Type{from.First, ir.Number}, from.Element, undefined, fmt.Sprintf("{.number = (double)%s}", index))
 	e.line("adamic_value %s = %s;", element, call)
 	// What's made so far is the statement's, let go with its temporaries.
 	e.closureThrown()
+	if e.graphTypes(from.GraphTypes) && from.Element.IsReference() {
+		e.line("%s.reference = adamic_graph_take(%s, %s.reference);", element, made, element)
+	}
 	e.line("adamic_array_push(%s, %s);", made, element)
 	e.indent--
 	e.line("}")

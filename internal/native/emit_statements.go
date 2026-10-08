@@ -79,10 +79,14 @@ func (e *emitter) statement(statement ir.Statement) {
 				return
 			}
 			local := e.program.Locals[statement.Local]
-			if local.Captured {
+			if local.Captured && !local.EnvironmentCell {
 				e.makeCell(statement.Local, zero(local.Type), true)
 				e.line("%s->ready = false;", e.cellReference(statement.Local))
 			}
+			return
+		}
+		if statement.Uninitialized && e.program.Locals[statement.Local].EnvironmentCell {
+			e.line("%s->ready = false;", e.cellReference(statement.Local))
 			return
 		}
 		if e.elementBorrows[e.at] {
@@ -150,7 +154,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		// while the statement still reads the value, so what the statement owns, the variable takes.
 		e.store(statement.Local, value, e.taken(value))
 		if e.program.Locals[statement.Local].Uninitialized {
-			e.line("%s = true;", e.localReady(statement.Local))
+			e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
 		}
 		e.end()
 	case ir.Evaluate:
@@ -185,12 +189,21 @@ func (e *emitter) statement(statement ir.Statement) {
 			e.end()
 			break
 		}
+		e.viewArrayMutation(array, statement.Element, value)
 		if statement.Element.IsReference() {
-			value = retained(value)
+			value = e.heldReferenceIn(array, value)
 		}
-		e.line("adamic_array_set(%s, %s, (adamic_value){.%s = %s});", array, index, member(statement.Element), slotted(statement.Element, value))
+		setter := "adamic_array_set"
+		if e.hasArrayHoles() {
+			setter = "adamic_array_holes_set"
+		}
+		e.line("%s(%s, %s, (adamic_value){.%s = %s});", setter, array, index, member(statement.Element), slotted(statement.Element, value))
 		e.end()
 	case ir.SetProperty:
+		if statement.WriteContract != 0 && e.program.CheckedFields[statement.Name] && !statement.Define && !statement.Uninitialized {
+			e.checkedWrite(statement)
+			break
+		}
 		object := e.value(statement.Object)
 		value := e.value(statement.Value)
 		// The object may be undefined where the checker narrowed it away and a call since put it back
@@ -206,16 +219,20 @@ func (e *emitter) statement(statement ir.Statement) {
 			cache = e.cache()
 		}
 		if e.program.CheckedFields[statement.Name] {
-			e.line("adamic_object_view_write(%s, %s, &%s, %d, %s, %s);", object, cString(statement.Name), cache, statement.Value.Type(), cString(map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[statement.Value.Type()]), cString("<write>."+statement.Name))
+			// The names are the JavaScript backend's adamicViewTypeNames, so both refuse a write
+			// into a slot of another representation, such as an array into one holding undefined,
+			// with the same diagnostic.
+			e.line("adamic_object_view_write(%s, %s, &%s, %d, %s, %s);", object, cString(statement.Name), cache, statement.Value.Type(), cString(map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}[statement.Value.Type()]), cString("<write>."+statement.Name))
 		}
 		if e.fieldTypesNeeded() {
 			e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, object, cString(statement.Name), cache)
 		} else {
 			e.line("adamic_value *%s = %s;", slot, e.writeFieldSlot(object, statement.Name, statement.Class))
+			e.line("adamic_object_initialized(%s)[%s - %s->slots] = 1;", object, slot, object)
 		}
 		converted := e.program.CheckedFields[statement.Name] && statement.Value.Type() <= ir.Boolean
 		if converted {
-			e.line("if (adamic_object_field_types(%s)[%s.index] == 10) {", object, cache)
+			e.line("if (adamic_object_field_types(%s)[%s.index] == %d) {", object, cache, ir.Union)
 			boxed := fmt.Sprintf("adamic_box_number(%s)", value)
 			if statement.Value.Type() == ir.Boolean {
 				boxed = fmt.Sprintf("(%s ? &adamic_box_true : &adamic_box_false)", value)
@@ -229,14 +246,16 @@ func (e *emitter) statement(statement ir.Statement) {
 			// The new reference is taken before the old is let go: they may be the same.
 			old := e.temporary()
 			e.line("void *%s = %s->reference;", old, slot)
-			e.line("%s->reference = %s;", slot, e.kept(value))
-			e.line("if (%s != NULL) adamic_release(%s);", old, old)
+			e.line("%s->reference = %s;", slot, e.keptIn(object, value))
+			if len(e.program.GraphTypes) != 0 {
+				e.dropIn(object, old)
+			} else {
+				e.line("if (%s != NULL) adamic_release(%s);", old, old)
+			}
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
 		}
-		if e.fieldTypesNeeded() {
-			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, statement.Value.Type())
-		}
+		e.line("adamic_object_field_types(%s)[%s - %s->slots] = %d;", object, slot, object, fieldRepresentation(statement.Value))
 		if converted {
 			e.line("}")
 		}
@@ -370,6 +389,7 @@ func (e *emitter) loop(statement ir.Loop) {
 		e.line("if (%s->references) {", fresh)
 		e.line("\tadamic_retain(%s->value.reference);", fresh)
 		e.line("}")
+		e.adoptGraph(fresh, "sizeof *"+fresh, e.program.Locals[local].GraphCell)
 		e.line("adamic_release(%s);", cell)
 		e.line("%s = %s;", cell, fresh)
 	}
@@ -413,6 +433,12 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	if !e.elementBorrows[e.at] {
 		e.hold(held)
 	}
+	owner := "NULL"
+	if !overMap && !overString && !overRegex && statement.ViewRead.View != "" && statement.Element == ir.Union {
+		owner = e.viewArrayReadOwner(statement.Element)
+		e.taken(owner)
+		e.hold(owner)
+	}
 	e.end()
 	index := e.temporary()
 	size := e.temporary()
@@ -447,6 +473,10 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	e.indent++
 	e.scopes = append(e.scopes, nil)
 	element := unslotted(statement.Element, fmt.Sprintf("%s->elements[%s].%s", held, index, member(statement.Element)))
+	if statement.ViewRead.View != "" {
+		slot := e.viewArrayElementSlot(statement.ViewRead, held, index, owner)
+		element = unslotted(statement.Element, slot+"."+member(statement.Element))
+	}
 	// bindEntry declares a local from the step's key or value, retained, since the body may delete
 	// the entry.
 	bindEntry := func(local int, slot string, of ir.Type) {
@@ -457,6 +487,18 @@ func (e *emitter) forOf(statement ir.ForOf) {
 		e.declareLocal(local, reading, false)
 	}
 	if overMap {
+		if statement.MapPart != "values" {
+			e.line("%s = adamic_map_read_key(%s,%s,%d);", entryKey, iterable, entryKey, statement.Key)
+			if statement.Key.IsReference() {
+				e.hold(entryKey + ".reference")
+			}
+		}
+		if statement.MapPart != "keys" {
+			e.line("%s = adamic_map_read_value(%s,%s,%d);", entryValue, iterable, entryValue, statement.Value)
+			if statement.Value.IsReference() {
+				e.hold(entryValue + ".reference")
+			}
+		}
 		switch statement.MapPart {
 		case "keys":
 			bindEntry(statement.Local, entryKey, statement.Key)

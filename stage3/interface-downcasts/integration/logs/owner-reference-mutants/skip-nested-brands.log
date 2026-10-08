@@ -1,0 +1,14 @@
+=== RUN   TestCheckedViewMapEntryFamilyBoundaries
+=== RUN   TestCheckedViewMapEntryFamilyBoundaries/nested-array-brand-read
+    checked_views_map_certificates_test.go:120: unsupported entry escaped or refused away from read: <nil>
+=== RUN   TestCheckedViewMapEntryFamilyBoundaries/nested-object-brand-read
+    checked_views_map_certificates_test.go:120: unsupported entry escaped or refused away from read: <nil>
+--- FAIL: TestCheckedViewMapEntryFamilyBoundaries (0.33s)
+    --- FAIL: TestCheckedViewMapEntryFamilyBoundaries/nested-array-brand-read (0.18s)
+    --- FAIL: TestCheckedViewMapEntryFamilyBoundaries/nested-object-brand-read (0.14s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.411s
+FAIL

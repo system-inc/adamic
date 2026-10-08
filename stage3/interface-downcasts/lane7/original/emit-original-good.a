@@ -1,0 +1,11 @@
+import type { GeneratedIdentifier, SyntaxKind } from 'original-tsc-types';
+interface Base { readonly kind: SyntaxKind }
+// A generated name: its EmitNode carries the autoGenerate record.
+const emitNode = { flags: 0, internalFlags: 0, autoGenerate: { flags: 1, id: 42, prefix: '_', suffix: '' } };
+const actual = { pos: -1, end: -1, kind: 80, flags: 16, modifierFlagsCache: 0, transformFlags: 0, escapedText: '', emitNode };
+const base: Base = actual;
+function flagsOf(node: GeneratedIdentifier): number {
+ const emitNode = node.emitNode;
+ return emitNode.flags;
+}
+console.log(`${flagsOf(base as GeneratedIdentifier)}`);

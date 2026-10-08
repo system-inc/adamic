@@ -1,0 +1,19 @@
+--- FAIL: TestCheckedViewCallableRankedFamilies (1.12s)
+    --- FAIL: TestCheckedViewCallableRankedFamilies/block/wrong-result (0.40s)
+        checked_views_callable_ranked_test.go:25: gate cache node hit
+        checked_views_callable_ranked_test.go:49: gate cache node miss
+        checked_views_callable_ranked_test.go:69: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createBlock([returnStatement],multiLine).value is not initialized; expected number, found missing\n" want "createBlock" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createBlock expected (statements: readonly Statement[], multiLine?: boolean | undefined) => Block, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableRankedFamilies/array-literal/wrong-result (0.36s)
+        checked_views_callable_ranked_test.go:25: gate cache node hit
+        checked_views_callable_ranked_test.go:49: gate cache node miss
+        checked_views_callable_ranked_test.go:69: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createArrayLiteralExpression(elements).value is not initialized; expected number, found missing\n" want "createArrayLiteralExpression" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createArrayLiteralExpression expected (elements?: readonly Expression[] | undefined, multiLine?: boolean | undefined) => ArrayLiteralExpression, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableRankedFamilies/object-literal/wrong-result (0.37s)
+        checked_views_callable_ranked_test.go:25: gate cache node hit
+        checked_views_callable_ranked_test.go:49: gate cache node miss
+        checked_views_callable_ranked_test.go:69: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createObjectLiteralExpression(properties).value is not initialized; expected number, found missing\n" want "createObjectLiteralExpression" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createObjectLiteralExpression expected (properties?: readonly ObjectLiteralElementLike[] | undefined, multiLine?: boolean | undefined) => ObjectLiteralExpression, found function with incompatible result representation\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=3 misses=3
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.133s
+FAIL

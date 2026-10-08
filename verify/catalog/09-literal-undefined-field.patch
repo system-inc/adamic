@@ -1,19 +1,18 @@
 --- a/internal/lower/object.go
 +++ b/internal/lower/object.go
-@@ -84,7 +84,7 @@
- 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
+@@ -92,7 +92,7 @@
  				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
  			}
--			if declared := l.declaredField(node, fieldName); declared != 0 && !censusFieldSlotless(declared) {
-+			if declared := l.declaredField(node, fieldName); declared == ir.MaybeNumber || declared == ir.MaybeBoolean || declared == ir.Weak {
+ 			boxedCallableField := l.viewCallableBoxedRecordField(node, fieldName)
+-			if declared := l.declaredField(node, fieldName); declared != 0 && (!censusFieldSlotless(declared) || boxedCallableField) {
++			if declared := l.declaredField(node, fieldName); declared == ir.MaybeNumber || declared == ir.MaybeBoolean || declared == ir.Weak || boxedCallableField {
  				// Store the value as the member's slot holds it, rather than the initializer's type.
  				value = fit(value, declared)
  			}
-@@ -150,27 +150,6 @@
- 	contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
+@@ -177,27 +177,7 @@
  	if contextual == nil {
  		return 0
--	}
+ 	}
 -	if contextual.Flags()&checker.TypeFlagsUnion != 0 {
 -		// The union's combined property can hold unrelated types. The literal belongs to a
 -		// member, whose fields are what reads after discriminant narrowing expect.
@@ -34,12 +33,14 @@
 -			shared = declared
 -		}
 -		return shared
- 	}
+-	}
++
  	field := l.checker.GetPropertyOfType(contextual, name)
  	if field == nil {
+ 		return 0
 --- a/internal/native/emit_expressions.go
 +++ b/internal/native/emit_expressions.go
-@@ -166,7 +166,6 @@
+@@ -175,7 +175,6 @@
  			if expression.Readiness != "" && !expression.Absent {
  				e.line("(void)%s;", slot)
  			}

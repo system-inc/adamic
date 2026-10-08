@@ -181,7 +181,9 @@ const (
 
 // Write is one write in the program, and whether it's proven not to close a cycle.
 type Write struct {
-	Kind WriteKind
+	// Unaliased proves the holder has never been stored, captured or passed.
+	Unaliased bool
+	Kind      WriteKind
 
 	// Site is the IR node's Site: which of lowering's writes it is, to find the type written into.
 	Site int
@@ -900,7 +902,8 @@ func (a *analysis) write(kind WriteKind, site int, name string, holder value, he
 	a.writeCount++
 	if a.judging {
 		write := Write{Kind: kind, Site: site, Name: name, Function: a.function, Proven: true}
-		a.proof.record(key, write)
+		recorded := a.proof.record(key, write)
+		recorded.Unaliased = recorded.Unaliased && a.unaliased(holder)
 		a.judge(key, write, holder, held, "", a.state.exposed)
 	}
 	for o := range holder.strong {
@@ -935,6 +938,7 @@ func (proof *freshness) record(key writeKey, write Write) *Write {
 	if recorded == nil {
 		recorded = &write
 		recorded.Proven, recorded.Why = true, ""
+		recorded.Unaliased = true
 		proof.writes[key] = recorded
 	}
 	return recorded
@@ -1097,6 +1101,8 @@ func (a *analysis) value(expression ir.Expression) value {
 		}
 		// Patterns are compiled constants; the runtime object holds only immutable strings.
 		return a.fresh(anyField, value{})
+	case ir.NodeHostCall:
+		return a.call(a.operands(expression), expression.Type())
 	case ir.RegExpCall:
 		return a.regexCall(expression)
 	case ir.RegExpProperty:
@@ -1183,6 +1189,25 @@ func (a *analysis) value(expression ir.Expression) value {
 			a.value(argument)
 		}
 		return value{}
+	case ir.RecordCoalesce:
+		holder := a.value(expression.Record)
+		a.value(expression.Key)
+		result := a.value(expression.Value)
+		a.write(WriteMapEntry, expression.Site, "", holder, result, elementKey)
+		result.merge(a.load(holder, elementKey))
+		return result
+	case ir.RecordCall:
+		return a.recordCall(expression)
+	case ir.RecordLiteral:
+		var entries value
+		if expression.Spread != nil {
+			entries.merge(a.load(a.value(expression.Spread), elementKey))
+		}
+		for _, entry := range expression.Entries {
+			a.value(entry.Key)
+			entries.merge(a.value(entry.Value))
+		}
+		return a.fresh(elementKey, entries)
 	case ir.ObjectCall:
 		return a.objectCall(expression)
 	case ir.NumberCall:
@@ -1331,6 +1356,9 @@ func (a *analysis) value(expression ir.Expression) value {
 		return a.fresh(anyField, a.fresh(elementKey, value{}))
 	case ir.NodeFSFile:
 		return a.nodeFSFile(expression)
+	case ir.RealPath:
+		a.value(expression.Path)
+		return a.fresh(anyField, value{})
 	case ir.FileStatus:
 		a.value(expression.Path)
 		return a.fresh(anyField, value{})
@@ -1363,6 +1391,10 @@ func (a *analysis) value(expression ir.Expression) value {
 		a.value(expression.Object)
 		return value{}
 	case ir.Property:
+		if expression.DictionaryKey != nil {
+			a.value(expression.DictionaryKey)
+			return a.load(a.value(expression.Object), elementKey)
+		}
 		return a.load(a.value(expression.Object), expression.Name)
 	case ir.ArrayIndex:
 		array := a.value(expression.Array)
@@ -1967,4 +1999,30 @@ func (a *analysis) expressionEffect(statement ir.Statement) {
 	default:
 		a.unknown(statement)
 	}
+}
+
+// This is the existing escape/identity analysis, with a stricter freshness fact:
+// even a confined local is an alias, so storing a literal ends this proof.
+func (a *analysis) unaliased(holder value) bool {
+	if len(holder.strong) != 1 || len(holder.weak) != 0 {
+		return false
+	}
+	for object := range holder.strong {
+		if object <= 0 || object%2 != 1 || a.state.exposed(object) {
+			return false
+		}
+		for _, held := range a.state.locals {
+			if a.state.reach(held)[object] {
+				return false
+			}
+		}
+		for _, fields := range a.state.heap {
+			for _, held := range fields {
+				if a.state.reach(held)[object] {
+					return false
+				}
+			}
+		}
+	}
+	return true
 }

@@ -1,0 +1,50 @@
+[
+  {
+    "name": "optional-mutable-late-helper",
+    "test": "^TestCheckedViewOptionalMutableNominalMutants$/^narrow-slot$",
+    "caught_by_behavior": true,
+    "log": "optional-mutable-late-helper.log.gz"
+  },
+  {
+    "name": "optional-mutable-slot",
+    "test": "^TestCheckedViewOptionalMutableNominalMutants$/^narrow-slot$",
+    "caught_by_behavior": true,
+    "log": "optional-mutable-slot.log.gz"
+  },
+  {
+    "name": "optional-mutable-native-producer",
+    "test": "^TestCheckedViewOptionalMutableNominalMutants$/^producer$",
+    "caught_by_behavior": true,
+    "log": "optional-mutable-native-producer.log.gz"
+  },
+  {
+    "name": "optional-mutable-js-producer",
+    "test": "^TestCheckedViewOptionalMutableNominalMutants$/^producer$",
+    "caught_by_behavior": true,
+    "log": "optional-mutable-js-producer.log.gz"
+  },
+  {
+    "name": "optional-mutable-native-write",
+    "test": "^TestCheckedViewOptionalMutableNominalMutants$/^write$",
+    "caught_by_behavior": true,
+    "log": "optional-mutable-native-write.log.gz"
+  },
+  {
+    "name": "optional-mutable-js-write",
+    "test": "^TestCheckedViewOptionalMutableNominalMutants$/^write$",
+    "caught_by_behavior": true,
+    "log": "optional-mutable-js-write.log.gz"
+  },
+  {
+    "name": "optional-mutable-native-read",
+    "test": "^TestCheckedViewOptionalMutableNominalMutants$/^read$",
+    "caught_by_behavior": true,
+    "log": "optional-mutable-native-read.log.gz"
+  },
+  {
+    "name": "optional-mutable-js-read",
+    "test": "^TestCheckedViewOptionalMutableNominalMutants$/^read$",
+    "caught_by_behavior": true,
+    "log": "optional-mutable-js-read.log.gz"
+  }
+]

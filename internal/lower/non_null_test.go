@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"errors"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
@@ -8,7 +9,7 @@ import (
 
 func TestNonNullAssertionLowersToNullishPanic(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, "const map = new Map<string, number>();\nconsole.log(`${map.get('a')!}`);\n")
+	program, err := lowerTypeScriptSource(t, "const map = new Map<string, number>();\nconsole.log(`${map.get('a')!}`);\n")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -33,7 +34,7 @@ func TestNonNullAssertionLowersToNullishPanic(t *testing.T) {
 
 func TestNonNullAssertionOnPresentTypeIsErased(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, "const value = 0!;\n")
+	program, err := lowerTypeScriptSource(t, "const value = 0!;\n")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -42,5 +43,22 @@ func TestNonNullAssertionOnPresentTypeIsErased(t *testing.T) {
 	}
 	if len(program.Strings) != 0 {
 		t.Fatalf("redundant assertion emitted panic text: %q", program.Strings)
+	}
+}
+
+func TestNonNullAssertionIsRefusedInAdamic(t *testing.T) {
+	for _, source := range []string{"const value = 0!;", "const map = new Map<string, number>(); const value = map.get('a')!;"} {
+		_, err := lowerSource(t, source)
+		var refusal *Refused
+		if !errors.As(err, &refusal) || refusal.What != "the non-null assertion !" {
+			t.Fatalf("want .a assertion refusal, got %v", err)
+		}
+	}
+}
+
+func TestObjectLiteralNeverMethodUsesOrdinaryCall(t *testing.T) {
+	_, err := lowerSource(t, "function fail(label: string): never { throw new Error(label); } const system = { abort(label: string): never { return fail(label); } }; try { system.abort('method'); } catch {}")
+	if err != nil {
+		t.Fatal(err)
 	}
 }

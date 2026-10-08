@@ -1,12 +1,10 @@
 package oracle
 
 import (
-	"errors"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"path/filepath"
 	"strings"
+	"path/filepath"
 	"testing"
 )
 
@@ -92,26 +90,27 @@ func TestNestedSiblingCycleMutantIsCaught(t *testing.T) {
 	t.Logf("sibling capture mutant caught only by the leak check:\n%s", report)
 }
 
-func TestNestedCycleRefusal(t *testing.T) {
+func TestNestedCycleUsesRegions(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/refusals/nested_cycle.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
 	program, err := lowered(t, path)
-	var refused *lower.Refused
-	if errors.As(err, &refused) && strings.Contains(err.Error(), "adamic/cycle-capable") {
-		return
-	}
 	if err != nil {
-		t.Fatalf("want cycle-capable refusal, got %v", err)
+		t.Fatal(err)
+	}
+	if len(program.GraphTypes) == 0 {
+		t.Fatal("captured function cycle has no graph types")
 	}
 	oracle := onNode(t, path)
 	actual, binary := nativelyUncached(t, program)
 	if difference := disagreement(oracle, actual); difference != "" {
 		t.Fatalf("accepted cycle differs from Node: %s", difference)
 	}
-	t.Fatalf("accepted a strong captured-function cycle; leak check:\n%s", leaksUncached(t, program, binary))
+	if report := leaksUncached(t, program, binary); report != "" {
+		t.Fatalf("captured function region leaked: %s", report)
+	}
 }
 
 func TestNestedRebindingCheckerRefusal(t *testing.T) {

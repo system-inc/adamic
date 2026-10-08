@@ -1,8 +1,26 @@
-Built: predicate direction reporting in the driver and oracle counts, plus a seven-configuration latent census rerun.
-Commits: reporting 460beeca; tested main merge and feature push e58c805469e3cfa36b2d1e37b0ada2a6ae2ade6a; this artifact records that code.
-Commands/results: affected packages, vet and filtered Node oracle pass; seven census builds/runs and independent recount pass.
-Mutants: dropped report direction, trusted inferred callback, census extra finding/body scope/attribution/output guards and report-artifact mutations caught.
-Limits: observed declaration refusals 581 to 518; callback refusals 0 to 451; checked-view field gaps 0 to 246; three census panics and existing readiness failures remain.
+Built: three compiler panic fixes, pinned reduced witnesses, and a complete seven-configuration census rerun.
+Commits: fixes 04b3f073992d6712bfb850677def5d47673fbaea, pushed before this census; reporting remains e58c8054.
+Commands/results: affected packages, vet, filtered Node oracle and sanitized qualified cast pass; seven census runs and independent recounts pass.
+Mutants: qualified cast and widening guards, computed field guard and early generic cleanup removed separately; each regression catches the original panic.
+Limits: zero compiler panics; declarations 581 to 519; callbacks 454; checked-view gaps 246; existing readiness failures and the ordinary no-symbol error remain.
+
+# Panic fixes and rerun
+
+The previous artifact `a09ca4ea` recorded three compiler panics. All three are fixed
+in `04b3f073`, pushed before rerunning the census. [PANICS.md](PANICS.md) contains
+each program, stack, root cause, fix, pinned test and mutant result.
+[PANIC_DELTA.json](PANIC_DELTA.json) independently records every changed diagnostic.
+
+The same seven configurations were rebuilt and rerun. All 78 source hashes and all
+six original baseline finding sets are unchanged. The fixed configuration retains
+4530 units, 223 skipped bodies and the same eligible units as the previous run.
+Its compiler panic count is 3 to 0; Refused sites are 2651 to 2673 and NotYet sites
+1005 to 1006. Predicate declarations are 518 to 519, callback contracts 451 to 454,
+and checked-view field gaps remain 246. The additional unique sites come from the
+resumed refusal scans. The emitter unit now preserves its original generic-write
+refusal instead of panicking; that error was already counted through another unit.
+These are diagnostic counts on checker-rejected source, not executable admission
+counts. The ordinary no-symbol error and readiness limitations remain.
 
 # Predicate direction reporting
 
@@ -70,16 +88,18 @@ remove the newer early-stop callback preflight from the continuing refusal scan
 without stopping, and skip diagnosed callback dependency bodies. The cumulative
 conflict recipe left two duplicate closing lines; a scratch repair removed them.
 The after merge retains predicate/interface/main enum and cast safeguards plus
-original namespace/nested/taste hooks. The exact merge diff (`evidence/feature-integration.patch.gz`), recipes and logs are
-in evidence/. Scratch resolution and backend integration are not claimed as native
+original namespace/nested/taste hooks. The original exact merge diff (`evidence/feature-integration.patch.gz`), recipes and
+logs are in evidence/. The after worktree then merges `04b3f073`; its unconflicted
+merge and final worktree configuration are retained in evidence/panics/ and
+evidence/worktrees.json. Scratch resolution and backend integration are not claimed as native
 validated production code. No scratch branch was pushed.
 
 # Family counts
 
 All values in the following tables are **measured on a checker-rejected program**.
 The wholesale predicate syntax diagnostic is 581 before and 0 after. Its replacement
-proof refusals still matter: declarations are 518 after, and argument contracts 451.
-These observations do not establish that 63 declarations became executable.
+proof refusals still matter: declarations are 519 after, and argument contracts 454.
+These observations do not establish that 62 declarations became executable.
 
 | Configuration | Predicate declaration refusals | Predicate argument refusals | Checked-view field NotYet |
 |---|---:|---:|---:|
@@ -89,12 +109,12 @@ These observations do not establish that 63 declarations became executable.
 | namespaces | 581 | 0 | 0 |
 | nested | 581 | 0 | 0 |
 | cumulative | 581 | 0 | 0 |
-| predicates | 518 | 451 | 246 |
+| predicates | 519 | 454 | 246 |
 
 The cumulative/after comparison has 4275 common eligible units,
 32 newly eligible units and 0 no-longer-eligible units.
-On common eligible units, declaration refusals are 581 to 517, argument refusals
-0 to 419 and checked-view field gaps 0 to 194. Changed eligibility and moved first
+On common eligible units, declaration refusals are 581 to 518, argument refusals
+0 to 422 and checked-view field gaps 0 to 194. Changed eligibility and moved first
 errors remain visible in the raw evidence. A view may add multiple field gaps across
 instantiations; these counts are diagnostic sites, not accepted syntax-node counts.
 
@@ -108,15 +128,14 @@ instantiations; these counts are diagnostic sites, not accepted syntax-node coun
 | namespaces | 1985 | 4530 | 255 | 1188 | 2129 | 23 | 1 | 0 |
 | nested | 2165 | 4530 | 256 | 1943 | 1809 | 23 | 0 | 0 |
 | cumulative | 1985 | 4530 | 255 | 1032 | 1983 | 25 | 1 | 0 |
-| predicates | 1650 | 4530 | 223 | 1005 | 2651 | 25 | 1 | 3 |
+| predicates | 1650 | 4530 | 223 | 1006 | 2673 | 25 | 1 | 0 |
 
-The after run records two refusal-scan panics: `builder.ts` (QualifiedName.Text)
-and `transformers/declarations/diagnostics.ts` (ComputedPropertyName.Text). Those
-scans stop at the panic, so later refusal syntax in those files is not exhaustively
-observed. Their top-level lowering attempts still run. The lowering panic is at
-`emitter.ts:685:1` (slice bound `[:-1]`). The ordinary unlocated parser no-symbol error
-is retained in outside_roots. All three panics and their unit/phase contexts are in
-the raw ledger. They were not erased or converted into proof/admission counts.
+The original three panics no longer occur anywhere in the full corpus. Every file's
+refusal scan completes, and no eligible unit panics. The emitter unit preserves its
+named generic-write refusal at `core.ts:288:33`. The ordinary unlocated parser
+no-symbol error is retained in outside_roots. Original panic stacks and reduced
+regressions remain in evidence/panics/; they are not erased from the historical
+before/after comparison.
 
 # Provenance
 
@@ -128,7 +147,7 @@ the raw ledger. They were not erased or converted into proof/admission counts.
 | namespaces | 5c65c6cae00a03a18e4f49c2fafff94001de1989 | 715ba94f3608a6500086b1076ce5cb7e51b836db | 8d550c837c90bd1805b047b7eeccc2baac2d5e7a |
 | nested | e5e7073ae6bcb4a13d22ea7536f30f6c3de6bc8f | 715ba94f3608a6500086b1076ce5cb7e51b836db | 8d550c837c90bd1805b047b7eeccc2baac2d5e7a |
 | cumulative | 9396f8c212bd68f72b291fbe60b7c751fbbd928c | 715ba94f3608a6500086b1076ce5cb7e51b836db | 8d550c837c90bd1805b047b7eeccc2baac2d5e7a |
-| predicates | b209456a2e7743bf2dca47a8cefa97e7b3a9c002 | 7945d102a6c18dd36adf9114a758ce646e8b2359 | d92d9bfee114c80be2c375d72edae966176e3a4f |
+| predicates | a9866f24ad9dfecaf5c97915e852ebaecf22c0d7 | 7945d102a6c18dd36adf9114a758ce646e8b2359 | d92d9bfee114c80be2c375d72edae966176e3a4f |
 
 REPORT.json also records every preparation/feature SHA, never-pushed branch,
 binary hash, overlay hashes and build/run duration. Source hashes are independent
@@ -157,6 +176,7 @@ python3 tools/audit_output_guards.py MAIN_SCRATCH OUTPUT/main-overlay NEW_TMP
 python3 tools/summarize.py OUTPUT ADAPTED
 python3 tools/audit_report.py ADAPTED
 python3 tools/audit_families.py
+python3 tools/audit_panic_delta.py
 ```
 
 The predicate-seam audit pins multiple independent refusal sites, a positive body
@@ -175,6 +195,5 @@ The full oracle/gate is not claimed green; the reproduced readiness failures rem
 The `.a` over-promising-declaration refusal mode remains a TODO hook, as ruled.
 Broader object/array/union checked-field contracts belong to the parallel lanes.
 Opaque/recursive and unsupported body shapes remain refused. Indirect checked
-predicate overload calls remain NotYet. The census panics need separate reduced
-reproductions before attributing them to production behavior on a checked program.
+predicate overload calls remain NotYet. The three census panic fixes have checker-valid reduced regressions.
 This measurement is a blocker observation ledger, not proof of native tsc execution.

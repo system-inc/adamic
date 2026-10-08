@@ -1,5 +1,6 @@
 // Packed number | undefined keys keep undefined separate from every present NaN.
 #include "adamic.h"
+#include "graph_regions.h"
 #include <string.h>
 
 bool adamic_map_maybe_key_equal(double left, double right) {
@@ -60,7 +61,7 @@ static const adamic_shape pair_shapes[] = {{2, pair_names, pair_references[0], N
 
 // These are ir.Type's scalar representations; all other accepted collection elements are counted.
 static bool collection_reference(int type) {
-	return type != 1 && type != 2 && type != 7;
+	return type != adamic_rep_number && type != adamic_rep_boolean && type != adamic_rep_maybe_number && type != adamic_rep_maybe_boolean;
 }
 
 static adamic_code_function collection_next;
@@ -78,15 +79,21 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 	adamic_value key, value;
 	bool present = adamic_map_iterator_next(iterator, &key, &value);
 	result->slots[0].boolean = !present;
-	adamic_object_field_types(result)[0] = 2;
-	adamic_object_field_types(result)[1] = reference ? (part == 3 ? 4 : (unsigned char)(part == 1 || set ? key_type : value_type)) : (unsigned char)(!present || (part == 1 || set ? key_type : value_type) != 2 ? 7 : 2);
+	adamic_object_field_types(result)[0] = adamic_rep_boolean;
+	adamic_object_field_types(result)[1] = reference ? (part == 3 ? adamic_rep_object : (unsigned char)(part == 1 || set ? key_type : value_type)) : (unsigned char)(!present || (part == 1 || set ? key_type : value_type) != adamic_rep_boolean ? adamic_rep_maybe_number : adamic_rep_boolean);
 	if (!present) {
 		if (!reference) {
-			result->slots[1].number = adamic_maybe_number_pack((adamic_maybe_number){false, 0});
+			if ((part == 1 || set ? key_type : value_type) == adamic_rep_boolean || (part == 1 || set ? key_type : value_type) == adamic_rep_maybe_boolean) {
+				result->slots[1].maybe_boolean = adamic_maybe_boolean_pack((adamic_maybe_boolean){false, false});
+				adamic_object_field_types(result)[1] = adamic_rep_maybe_boolean;
+			} else {result->slots[1].number = adamic_maybe_number_pack((adamic_maybe_number){false, 0});}
 		}
 		return (adamic_value){.reference = result};
 	}
+	if (!reference && (part == 1 || set ? key_type : value_type) == adamic_rep_maybe_boolean) {adamic_object_field_types(result)[1] = adamic_rep_maybe_boolean;}
+	if (!set && part != 2) { key = adamic_map_read_key(iterator->map, key, (unsigned char)key_type); }
 	if (set) { value = key; value_type = key_type; }
+	else if (part != 1) { value = adamic_map_read_value(iterator->map, value, (unsigned char)value_type); }
 	if (part == 3) {
 		int shape = (collection_reference(key_type) ? 2 : 0) + (collection_reference(value_type) ? 1 : 0);
 		adamic_object *pair = adamic_object_new(&pair_shapes[shape]);
@@ -94,14 +101,14 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 		pair->slots[1] = value;
 		adamic_object_field_types(pair)[0] = (unsigned char)key_type;
 		adamic_object_field_types(pair)[1] = (unsigned char)value_type;
-		if (collection_reference(key_type)) { adamic_retain(key.reference); }
-		if (collection_reference(value_type)) { adamic_retain(value.reference); }
+		if (set && collection_reference(key_type)) { adamic_retain(key.reference); }
+		if (set && collection_reference(value_type)) { adamic_retain(value.reference); }
 		result->slots[1].reference = pair;
 	} else {
 		int type = part == 1 || set ? key_type : value_type;
 		adamic_value element = part == 1 || set ? key : value;
-		if (reference) { adamic_retain(element.reference); }
-		if (type == 1) {
+		if (reference && set) { adamic_retain(element.reference); }
+		if (type == adamic_rep_number) {
 			// IteratorResult<number, undefined>.value reads the same packed word until narrowed.
 			element.number = adamic_maybe_number_pack((adamic_maybe_number){true, element.number});
 		}
@@ -117,9 +124,15 @@ adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int 
 	state->slots[2].number = key;
 	state->slots[3].number = value;
 	state->slots[4].boolean = set;
+	if (adamic_graph_is(collection)) { state = adamic_graph_adopt_owned(state, sizeof *state + state->shape->count * sizeof(adamic_value)); }
 	adamic_closure *next = adamic_closure_new(collection_next, 1);
 	next->cells[0] = adamic_cell_new((adamic_value){.reference = state}, true);
+	if (adamic_graph_is(collection)) {
+		next->cells[0] = adamic_graph_adopt_owned(next->cells[0], sizeof(adamic_cell));
+		next = adamic_graph_adopt_owned(next, sizeof *next + sizeof(adamic_cell *));
+	}
 	adamic_object *object = adamic_object_new(&iterator_shape);
 	object->slots[0].reference = next;
+	if (adamic_graph_is(collection)) { object = adamic_graph_adopt_owned(object, sizeof *object + sizeof(adamic_value)); }
 	return object;
 }

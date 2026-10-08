@@ -104,6 +104,9 @@ func (e *emitter) functionBody(function ir.Function) {
 			e.line("adamic_retain(%s);", e.localName(parameter))
 			e.hold(e.localName(parameter))
 		}
+		if e.program.Locals[parameter].Uninitialized && !e.program.Locals[parameter].Captured {
+			e.line("bool %s = true;", readyName(parameter))
+		}
 		if e.program.Locals[parameter].Captured {
 			// A closure captured this parameter: from here on it lives in a cell.
 			e.makeCell(parameter, e.localName(parameter), false)
@@ -290,6 +293,9 @@ func (e *emitter) arguments(call ir.Call) []string {
 // Method), the receiver's own function value or its class's method, found before the arguments are
 // evaluated, as JavaScript reads object.name first.
 func (e *emitter) callThrough(expression ir.CallClosure, closure string, receiver string) string {
+	if expression.CheckedDiscard {
+		return e.emitViewCallableDiscard(ir.Property{ViewContract: expression.DiscardContract, View: expression.DiscardView}, closure)
+	}
 	method := ""
 	exactCount := false
 	if receiver != "" {
@@ -298,6 +304,9 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			// Keep the interface adapter's borrowed-input convention and the same
 			// exception and result handling, but call its proven method directly.
 			method = e.methodThunk(function)
+			if property.View != "" && property.ViewContract != 0 && (e.program.ViewContracts[property.ViewContract-1].Result != 0 || e.program.ViewContracts[property.ViewContract-1].DiscardResult) {
+				e.emitViewCallableMethodCertificate(property, method, function)
+			}
 			exactCount = e.program.PackedCountNeeded(function)
 		} else {
 			method = e.temporary()
@@ -306,11 +315,24 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			} else {
 				e.line("adamic_method %s = NULL;", method)
 			}
-			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+			if property.View != "" {
+				closure = e.emitViewCallableRead(property, receiver, method)
+			} else {
+				closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+			}
 		}
 	}
-	packed, count := e.closureArguments(expression)
+	packed, count, raw := e.viewClosureArguments(expression)
 	call := e.packedClosureCall(expression, closure, packed, count)
+	invoke := "adamic_node_performance_invoke"
+	if closure != "" && expression.Direct == 0 {
+		invoke = e.viewCallableBoxedInvoke(expression, false)
+		if invoke != "adamic_node_performance_invoke" {
+			call = fmt.Sprintf("%s(%s, %s, %s, %t)", invoke, closure, raw, count, expression.Returns == 0)
+		} else if e.hostClosuresNeeded() {
+			call = fmt.Sprintf("adamic_node_performance_invoke(%s, %s, %s, %t)", closure, packed, count, expression.Returns == 0)
+		}
+	}
 	if expression.Direct > 0 {
 		target := expression.Direct - 1
 		extra := ""
@@ -345,6 +367,18 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 					methodCall = fmt.Sprintf("adamic_method_call(%s, %s, %s, %s)", method, receiver, packed, count)
 				} else {
 					methodCall = fmt.Sprintf("%s.code(%s, %s)", method, receiver, packed)
+				}
+			}
+			if invoke != "adamic_node_performance_invoke" {
+				ordinary := fmt.Sprintf("%s(%s, %s, %s, %t)", invoke, closure, raw, count, expression.Returns == 0)
+				call = ordinary
+				if e.program.ClosureReceiversNeeded() {
+					received := e.temporary()
+					e.line("adamic_value %s[(%s) + 1];", received, count)
+					e.line("%s[0].reference = %s;", received, receiver)
+					e.line("for (size_t i = 0; i < (%s); i++) %s[i + 1] = (%s)[i];", count, received, raw)
+					receivedInvoke := e.viewCallableBoxedInvoke(expression, true)
+					call = fmt.Sprintf("(%s->receiver ? %s(%s, %s, (%s) + 1, %t) : %s)", closure, receivedInvoke, closure, received, count, expression.Returns == 0, ordinary)
 				}
 			}
 			call = fmt.Sprintf("(%s != NULL ? %s : %s)", closure, call, methodCall)

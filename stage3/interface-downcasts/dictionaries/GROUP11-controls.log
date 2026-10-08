@@ -1,0 +1,137 @@
+=== RUN   TestCheckedViewDictionaryValuesEntries
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-string-good
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-string-wrong
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-string-empty
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-number-good
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-number-wrong
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-number-empty
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-object-good
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-object-wrong
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-object-empty
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-array-good
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-array-wrong
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-array-empty
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-string-good
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-string-wrong
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-string-empty
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-number-good
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-number-wrong
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-number-empty
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-object-good
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-object-wrong
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-object-empty
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-array-good
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-array-wrong
+=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-array-empty
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-string-good
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-string-wrong
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-string-empty
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-number-good
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-number-wrong
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-number-empty
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-object-good
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-object-wrong
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-object-empty
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-array-good
+    checked_view_dictionary_enumeration_test.go:106: uncredited array-entry consumer remains a named tuple refusal: result[element]: Adamic 0.1 refuses checked view read of field [element] with unsupported tuple contract; prove or implement the tuple contract before reading this field
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-array-wrong
+    checked_view_dictionary_enumeration_test.go:106: uncredited array-entry consumer remains a named tuple refusal: result[element]: Adamic 0.1 refuses checked view read of field [element] with unsupported tuple contract; prove or implement the tuple contract before reading this field
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-array-empty
+    checked_view_dictionary_enumeration_test.go:106: uncredited array-entry consumer remains a named tuple refusal: result[element]: Adamic 0.1 refuses checked view read of field [element] with unsupported tuple contract; prove or implement the tuple contract before reading this field
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-string-good
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-string-wrong
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-string-empty
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-number-good
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-number-wrong
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-number-empty
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-object-good
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-object-wrong
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-object-empty
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-array-good
+    checked_view_dictionary_enumeration_test.go:106: uncredited array-entry consumer remains a named tuple refusal: result[element]: Adamic 0.1 refuses checked view read of field [element] with unsupported tuple contract; prove or implement the tuple contract before reading this field
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-array-wrong
+    checked_view_dictionary_enumeration_test.go:106: uncredited array-entry consumer remains a named tuple refusal: result[element]: Adamic 0.1 refuses checked view read of field [element] with unsupported tuple contract; prove or implement the tuple contract before reading this field
+=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-array-empty
+    checked_view_dictionary_enumeration_test.go:106: uncredited array-entry consumer remains a named tuple refusal: result[element]: Adamic 0.1 refuses checked view read of field [element] with unsupported tuple contract; prove or implement the tuple contract before reading this field
+--- PASS: TestCheckedViewDictionaryValuesEntries (18.74s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-string-good (0.47s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-string-wrong (0.40s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-string-empty (0.42s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-number-good (0.41s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-number-wrong (0.41s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-number-empty (0.41s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-object-good (0.41s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-object-wrong (0.41s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-object-empty (0.43s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-array-good (0.42s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-array-wrong (0.42s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-array-empty (0.42s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-string-good (0.41s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-string-wrong (0.41s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-string-empty (0.41s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-number-good (0.40s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-number-wrong (0.41s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-number-empty (0.44s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-object-good (0.44s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-object-wrong (0.43s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-object-empty (0.42s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-array-good (0.42s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-array-wrong (0.42s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-array-empty (0.42s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-string-good (0.44s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-string-wrong (0.42s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-string-empty (0.43s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-number-good (0.45s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-number-wrong (0.44s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-number-empty (0.47s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-object-good (0.46s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-object-wrong (0.44s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-object-empty (0.44s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-array-good (0.13s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-array-wrong (0.13s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-array-empty (0.13s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-string-good (0.46s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-string-wrong (0.42s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-string-empty (0.42s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-number-good (0.44s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-number-wrong (0.43s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-number-empty (0.43s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-object-good (0.45s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-object-wrong (0.42s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-object-empty (0.42s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-array-good (0.13s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-array-wrong (0.13s)
+    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-array-empty (0.13s)
+=== RUN   TestCheckedViewDictionaryEnumerationMutants
+=== RUN   TestCheckedViewDictionaryEnumerationMutants/skip-element-check
+    checked_view_dictionary_enumeration_test.go:211: pinned enumeration control catches skip-element-check: exit=0 stdout="1\n"
+    checked_view_dictionary_enumeration_test.go:211: pinned enumeration control catches skip-element-check: exit=0 stdout="1\n"
+=== RUN   TestCheckedViewDictionaryEnumerationMutants/accept-wrong-shape
+    checked_view_dictionary_enumeration_test.go:211: pinned enumeration control catches accept-wrong-shape: exit=0 stdout="1\n"
+    checked_view_dictionary_enumeration_test.go:211: pinned enumeration control catches accept-wrong-shape: exit=0 stdout="1\n"
+=== RUN   TestCheckedViewDictionaryEnumerationMutants/drop-transitive-check
+    checked_view_dictionary_enumeration_test.go:211: pinned enumeration control catches drop-transitive-check: exit=0 stdout="1\n42\n"
+    checked_view_dictionary_enumeration_test.go:211: pinned enumeration control catches drop-transitive-check: exit=0 stdout="1\n42\n"
+--- PASS: TestCheckedViewDictionaryEnumerationMutants (1.00s)
+    --- PASS: TestCheckedViewDictionaryEnumerationMutants/skip-element-check (0.32s)
+    --- PASS: TestCheckedViewDictionaryEnumerationMutants/accept-wrong-shape (0.34s)
+    --- PASS: TestCheckedViewDictionaryEnumerationMutants/drop-transitive-check (0.34s)
+=== RUN   TestCheckedViewDictionaryArrayEntryCreationIsLazy
+=== RUN   TestCheckedViewDictionaryArrayEntryCreationIsLazy/fixed-good
+=== RUN   TestCheckedViewDictionaryArrayEntryCreationIsLazy/fixed-wrong
+=== RUN   TestCheckedViewDictionaryArrayEntryCreationIsLazy/fixed-empty
+=== RUN   TestCheckedViewDictionaryArrayEntryCreationIsLazy/producer-good
+=== RUN   TestCheckedViewDictionaryArrayEntryCreationIsLazy/producer-wrong
+=== RUN   TestCheckedViewDictionaryArrayEntryCreationIsLazy/producer-empty
+--- PASS: TestCheckedViewDictionaryArrayEntryCreationIsLazy (2.74s)
+    --- PASS: TestCheckedViewDictionaryArrayEntryCreationIsLazy/fixed-good (0.46s)
+    --- PASS: TestCheckedViewDictionaryArrayEntryCreationIsLazy/fixed-wrong (0.45s)
+    --- PASS: TestCheckedViewDictionaryArrayEntryCreationIsLazy/fixed-empty (0.51s)
+    --- PASS: TestCheckedViewDictionaryArrayEntryCreationIsLazy/producer-good (0.46s)
+    --- PASS: TestCheckedViewDictionaryArrayEntryCreationIsLazy/producer-wrong (0.44s)
+    --- PASS: TestCheckedViewDictionaryArrayEntryCreationIsLazy/producer-empty (0.42s)
+PASS
+gate cache: native hits=0 misses=34
+gate cache: node hits=0 misses=111
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	22.511s

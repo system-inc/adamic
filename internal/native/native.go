@@ -108,7 +108,7 @@ func Flags(options Options) []string {
 
 // Build compiles C source and the runtime into a native binary at output.
 func Build(source string, output string, options Options) error {
-	if err := ValidateOptions(options); err != nil {
+	if err := validateBuild(source, options); err != nil {
 		return err
 	}
 	if options.Target == "" && (options.Split || os.Getenv("ADAMIC_NATIVE_SPLIT") == "1") {

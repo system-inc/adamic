@@ -30,19 +30,33 @@ func TestNestedFunctionGapsAreLoud(t *testing.T) {
 	}
 }
 
-func TestNestedFunctionCycleIsRefused(t *testing.T) {
+func TestNestedFunctionCycleUsesRegions(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, `function make(): () => number {
+	program, err := lowerSource(t, `function make(): () => number {
  let saved: (() => number) | undefined = undefined;
  function read(): number { return saved === undefined ? 0 : saved(); }
  saved = read;
  return read;
 }
 console.log(String(make()()));`)
-	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") {
-		t.Fatalf("want cycle refusal, got %v", err)
+	if err != nil {
+		t.Fatal(err)
 	}
+	cells, closures := 0, 0
+	for _, local := range program.Locals {
+		if local.GraphCell {
+			cells++
+		}
+	}
+	for _, function := range program.Functions {
+		if function.GraphClosure {
+			closures++
+		}
+	}
+	if cells == 0 || closures == 0 {
+		t.Fatal("cyclic environment has no graph cells or closures")
+	}
+
 }
 
 func TestNestedEnvironmentHasOneAllocationSite(t *testing.T) {
@@ -81,7 +95,7 @@ func TestNestedEnvironmentHasOneAllocationSite(t *testing.T) {
 
 func TestNestedEnvironmentCycleIncludesDisjointSlots(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, `function make(): () => number {
+	program, err := lowerSource(t, `function make(): () => number {
  let saved: (() => number) | undefined = undefined;
  let count = 1;
  function read(): number { return count; }
@@ -90,10 +104,24 @@ func TestNestedEnvironmentCycleIncludesDisjointSlots(t *testing.T) {
  console.log(observe());
  return read;
 } const held = make(); console.log(String(held()));`)
-	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") {
-		t.Fatalf("want complete environment cycle refusal, got %v", err)
+	if err != nil {
+		t.Fatal(err)
 	}
+	cells, closures := 0, 0
+	for _, local := range program.Locals {
+		if local.GraphCell {
+			cells++
+		}
+	}
+	for _, function := range program.Functions {
+		if function.GraphClosure {
+			closures++
+		}
+	}
+	if cells == 0 || closures == 0 {
+		t.Fatal("cyclic environment has no graph cells or closures")
+	}
+
 }
 
 func TestNestedCapturedParametersAreOwned(t *testing.T) {

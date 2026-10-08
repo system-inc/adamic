@@ -17,6 +17,15 @@ func converted(from ir.Type, to ir.Type, value string) (string, bool) {
 		return maybe(to, value), false
 	case to == ir.Weak:
 		return fmt.Sprintf("adamic_weak_of(%s)", value), true
+	case from == ir.Union:
+		switch to {
+		case ir.Number:
+			return fmt.Sprintf("((const adamic_number_box *)%s)->number", value), false
+		case ir.Boolean:
+			return fmt.Sprintf("((const adamic_boolean_box *)%s)->boolean", value), false
+		default:
+			return fmt.Sprintf("((%s)%s)", cType(to), value), false
+		}
 	case to != ir.Union:
 		panic(fmt.Sprintf("native: no conversion from %d to %d", from, to))
 	case from == ir.Number:
@@ -46,8 +55,18 @@ func (e *emitter) box(value ir.Expression) string {
 // narrow emits a union the checker proved to be one member, as that member. A number or a boolean is
 // read out of its box now, as JavaScript reads the variable; a reference is the union's, borrowed.
 func (e *emitter) narrow(narrow ir.Narrow) string {
-	value := e.value(narrow.Value)
-	switch narrow.To {
+	if narrow.Undefined {
+		value := e.snapshot(ir.Object, fmt.Sprintf("((adamic_object *)%s)", e.value(narrow.Value)))
+		message := "undefined storage conversion failed: " + narrow.UndefinedWhere + " expected undefined, found present reference"
+		e.line("if (%s != NULL) adamic_panic(%s, %d);", value, cString(message), len(message))
+		return fmt.Sprintf("((%s)NULL)", cType(narrow.To))
+	}
+	return e.narrowValue(e.value(narrow.Value), narrow.To)
+}
+
+func (e *emitter) narrowValue(value string, to ir.Type) string {
+	value = e.snapshot(ir.Union, fmt.Sprintf("adamic_union_narrow(%s, %d)", value, to))
+	switch to {
 	case ir.Number:
 		return e.snapshot(ir.Number, fmt.Sprintf("((const adamic_number_box *)%s)->number", value))
 	case ir.Boolean:
@@ -57,7 +76,7 @@ func (e *emitter) narrow(narrow ir.Narrow) string {
 	case ir.MaybeBoolean:
 		return e.snapshot(ir.MaybeBoolean, fmt.Sprintf("%s == NULL ? %s : %s", value, zero(ir.MaybeBoolean), maybe(ir.MaybeBoolean, fmt.Sprintf("((const adamic_boolean_box *)%s)->boolean", value))))
 	}
-	return fmt.Sprintf("((%s)%s)", cType(narrow.To), value)
+	return fmt.Sprintf("((%s)%s)", cType(to), value)
 }
 
 // typeOf is the single native emission path for typeof, including comparisons and switches.
@@ -65,6 +84,9 @@ func (e *emitter) narrow(narrow ir.Narrow) string {
 func (e *emitter) typeOf(observation ir.TypeOf) string {
 	value := observation.Value
 	operand, null := e.typeOfReference(observation)
+	if value.Type() == ir.Union {
+		null = "false"
+	}
 	named := func(name string) string { return "&adamic_typeof_" + name }
 	if _, intrinsic := value.(ir.LibraryGlobal); intrinsic {
 		// Built-in identities are opaque headers, so JSON has no class metadata to inspect.

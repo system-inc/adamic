@@ -49,7 +49,7 @@ func (l *lowering) iterated(node *ast.Node) (ir.Expression, ir.Type, error) {
 			}
 		}
 	}
-	if l.checker.IsArrayType(l.checker.GetTypeAtLocation(node)) {
+	if l.viewArrayBase(l.phantomArrayView(l.checker.GetTypeAtLocation(node))) != nil {
 		element, err := l.elementType(node)
 		if err != nil {
 			return nil, 0, err
@@ -137,7 +137,7 @@ func (l *lowering) newMapFrom(node *ast.Node, source *ast.Node, key ir.Type, val
 	if element != ir.Object {
 		return nil, l.notYet(source, "new Map from something that isn't [key, value] pairs")
 	}
-	return ir.MapNew{Key: key, Value: value, Pairs: pairs}, nil
+	return l.mapProducer(node, ir.MapNew{Key: key, Value: value, Pairs: pairs}), nil
 }
 
 // pairTypes is how a source of [key, value] pairs holds its keys and values: an array of tuples by its
@@ -195,6 +195,12 @@ func (l *lowering) clearOrVisit(node *ast.Node, receiver *ast.Node, name string,
 	}
 	if err != nil {
 		return nil, true, err
+	}
+	if name == "forEach" && !set && !keyable(key) {
+		return nil, true, l.notYet(node, "a Map forEach callback with an unsupported key representation")
+	}
+	if name == "forEach" && !set && slotless(value) {
+		return nil, true, l.notYet(node, "a Map forEach callback with a slotless value representation")
 	}
 	collection, err := l.expression(receiver)
 	if err != nil {
@@ -308,6 +314,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 				return nil, l.notYet(binding, "destructuring past a tuple's end")
 			}
 			field, fieldType = strconv.Itoa(index), elementTypes[index]
+			absent = destructured.TargetTupleType().ElementFlags()[index] == checker.ElementFlagsOptional
 		} else {
 			// { x } reads x, and { x: other } reads x into other.
 			field = binding.Name().Text()
@@ -345,13 +352,28 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			return nil, err
 		}
 		of := l.result.Locals[local].Type
-		if element, isKnown := l.representation(fieldType); !isKnown || element != of || (slotless(of) && !(of == ir.Union && l.writable(fieldType))) {
+		if of == ir.Union {
+			if _, err := l.viewContract(binding, l.concrete(fieldType)); err != nil {
+				return nil, err
+			}
+		}
+		if element, isKnown := l.representation(fieldType); !isKnown || element != of || slotless(of) && !(of == ir.Union && l.writable(fieldType)) && !l.viewPrimitiveUnionRead(fieldType) {
 			return nil, l.notYet(binding, "a destructured name held otherwise than its field")
 		}
 		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent}
 		value.View = sourceExpression(binding) + " (field " + field + ")"
 		value.ViewType = l.checker.TypeToString(fieldType)
+		value.ViewTypeID = int(fieldType.Id())
+		value.ViewReceiverTypeID = int(destructured.Id())
+		value.ViewWhere = l.program.Where(binding)
+		l.prepareViewCallableProperty(binding, fieldType, &value)
 		value.ViewAllowed = l.viewLiterals(fieldType)
+		l.preparePrimitiveDestructuredRead(binding, destructured, fieldType, &value)
+		if !tuple {
+			if err := l.viewIntersectionBindingRead(binding, destructured, fieldType, &value); err != nil {
+				return nil, err
+			}
+		}
 		statements = append(statements, l.initializeLocal(local, value)...)
 	}
 	return statements, nil
@@ -375,7 +397,7 @@ func (l *lowering) optionalTupleElement(node *ast.Node, object ir.Expression, in
 	if !isKnown || (held != ir.Number && !held.IsReference()) || held == ir.Weak {
 		return nil, l.notYet(node, "?.[] to a tuple element of type "+l.checker.TypeToString(elements[position]))
 	}
-	return ir.Property{Object: object, Name: strconv.Itoa(position), Of: held, Optional: true}, nil
+	return ir.Property{Object: object, Name: strconv.Itoa(position), Of: held, Optional: true, Absent: tuple.TargetTupleType().ElementFlags()[position] == checker.ElementFlagsOptional}, nil
 }
 
 // everyKnown reports whether every type has a representation.

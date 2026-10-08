@@ -1,0 +1,48 @@
+=== RUN   TestCheckedViewLazyUnread
+=== RUN   TestCheckedViewLazyUnread/unread
+=== RUN   TestCheckedViewLazyUnread/unread-untagged
+=== RUN   TestCheckedViewLazyUnread/unread-mixed
+=== RUN   TestCheckedViewLazyUnread/optional-error
+=== RUN   TestCheckedViewLazyUnread/optional-error-fields
+--- PASS: TestCheckedViewLazyUnread (18.04s)
+    --- PASS: TestCheckedViewLazyUnread/unread (13.62s)
+    --- PASS: TestCheckedViewLazyUnread/unread-untagged (0.43s)
+    --- PASS: TestCheckedViewLazyUnread/unread-mixed (0.42s)
+    --- PASS: TestCheckedViewLazyUnread/optional-error (1.11s)
+    --- PASS: TestCheckedViewLazyUnread/optional-error-fields (2.46s)
+=== RUN   TestCheckedViewLazyHelperMutant
+=== RUN   TestCheckedViewLazyHelperMutant/helper
+    checked_views_lazy_test.go:52: caught helper mutant: /workspace/adamic/stage3/interface-downcasts/lazy/helper-mutant.a:9:72: Adamic 0.1 refuses checked view read of field opaque with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewLazyHelperMutant/generic
+    checked_views_lazy_test.go:52: caught helper mutant: /workspace/adamic/stage3/interface-downcasts/lazy/generic-mutant.a:9:85: Adamic 0.1 refuses checked view read of field opaque with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewLazyHelperMutant/callback
+    checked_views_lazy_test.go:52: caught helper mutant: /workspace/adamic/stage3/interface-downcasts/lazy/callback-mutant.a:9:72: Adamic 0.1 refuses checked view read of field opaque with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewLazyHelperMutant/field
+    checked_views_lazy_test.go:52: caught helper mutant: /workspace/adamic/stage3/interface-downcasts/lazy/field-mutant.a:9:72: Adamic 0.1 refuses checked view read of field opaque with unsupported callable contract; prove or implement the callable contract before reading this field
+--- PASS: TestCheckedViewLazyHelperMutant (0.14s)
+    --- PASS: TestCheckedViewLazyHelperMutant/helper (0.03s)
+    --- PASS: TestCheckedViewLazyHelperMutant/generic (0.04s)
+    --- PASS: TestCheckedViewLazyHelperMutant/callback (0.03s)
+    --- PASS: TestCheckedViewLazyHelperMutant/field (0.03s)
+=== RUN   TestCheckedViewLazyMissingNameMutant
+    checked_views_lazy_test.go:69: caught missing-name mutant: adamic: panic: field read failed: value.name is not initialized; expected string, found missing
+    checked_views_lazy_test.go:69: caught missing-name mutant: adamic: panic: field read failed: value.name is not initialized; expected string, found missing
+    checked_views_lazy_test.go:69: caught missing-name mutant: adamic: panic: field read failed: value.name is not initialized; expected string, found missing
+--- PASS: TestCheckedViewLazyMissingNameMutant (0.64s)
+=== RUN   TestCheckedViewLazyOptionalCodeMutants
+=== RUN   TestCheckedViewLazyOptionalCodeMutants/number
+    checked_views_lazy_test.go:91: caught optional number mutant: adamic: panic: field read failed: error.code is not a string | undefined; expected string | undefined, found number
+    checked_views_lazy_test.go:91: caught optional number mutant: adamic: panic: field read failed: error.code is not a string | undefined; expected string | undefined, found number
+    checked_views_lazy_test.go:91: caught optional number mutant: adamic: panic: field read failed: error.code is not a string | undefined; expected string | undefined, found number
+=== RUN   TestCheckedViewLazyOptionalCodeMutants/null
+    checked_views_lazy_test.go:91: caught optional null mutant: adamic: panic: field read failed: error.code is not a string | undefined; expected string | undefined, found null
+    checked_views_lazy_test.go:91: caught optional null mutant: adamic: panic: field read failed: error.code is not a string | undefined; expected string | undefined, found null
+    checked_views_lazy_test.go:91: caught optional null mutant: adamic: panic: field read failed: error.code is not a string | undefined; expected string | undefined, found null
+--- PASS: TestCheckedViewLazyOptionalCodeMutants (0.86s)
+    --- PASS: TestCheckedViewLazyOptionalCodeMutants/number (0.47s)
+    --- PASS: TestCheckedViewLazyOptionalCodeMutants/null (0.38s)
+PASS
+gate cache: native hits=0 misses=5
+gate cache: node hits=0 misses=16
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	19.692s

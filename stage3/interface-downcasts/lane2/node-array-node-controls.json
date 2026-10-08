@@ -1,0 +1,62 @@
+[
+  {
+    "probe": "node-array-lazy",
+    "stdout": "2:3\nfirst\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "probe": "node-array-missing-own",
+    "stdout": "undefined\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "probe": "node-array-own-mutation",
+    "stdout": "4:11:true\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "probe": "node-array-properties-copy",
+    "stdout": "3:12\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "probe": "node-array-reads",
+    "stdout": "2:3:9:true\nfirst\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "probe": "node-array-write-literal",
+    "stdout": "4\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "probe": "node-array-wrong-array",
+    "stdout": "undefined\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "probe": "node-array-wrong-field",
+    "stdout": "9\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "probe": "node-array-wrong-own",
+    "stdout": "wrong\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "probe": "node-array-wrong-element",
+    "stdout": "undefined\n",
+    "stderr": "",
+    "exit": 0
+  }
+]

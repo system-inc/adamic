@@ -1,0 +1,23 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.55s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/lexical-end/wrong-arity (0.42s)
+        checked_views_callable_later_ranked_test.go:61: gate cache node hit
+        checked_views_callable_later_ranked_test.go:81: gate cache node miss
+        checked_views_callable_later_ranked_test.go:101: backend2 exit 0 stdout "9\n" stderr "" want "endLexicalEnvironment" and "found function with arity 1"; sanitized exit 70 stderr "adamic: panic: field read failed: context.endLexicalEnvironment expected () => Statement[] | undefined, found function with arity 1\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/module-format/wrong-arity (0.36s)
+        checked_views_callable_later_ranked_test.go:61: gate cache node hit
+        checked_views_callable_later_ranked_test.go:81: gate cache node miss
+        checked_views_callable_later_ranked_test.go:101: backend2 exit 0 stdout "9\n" stderr "" want "getEmitModuleFormatOfFile" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: host.getEmitModuleFormatOfFile expected (sourceFile: SourceFile) => number, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/false/wrong-arity (0.38s)
+        checked_views_callable_later_ranked_test.go:61: gate cache node hit
+        checked_views_callable_later_ranked_test.go:81: gate cache node miss
+        checked_views_callable_later_ranked_test.go:101: backend2 exit 0 stdout "9\n" stderr "" want "createFalse" and "found function with arity 1"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createFalse expected () => FalseLiteral, found function with arity 1\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/parenthesized-type/wrong-arity (0.37s)
+        checked_views_callable_later_ranked_test.go:61: gate cache node hit
+        checked_views_callable_later_ranked_test.go:81: gate cache node miss
+        checked_views_callable_later_ranked_test.go:101: backend2 exit 0 stdout "9\n" stderr "" want "createParenthesizedType" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createParenthesizedType expected (type: TypeNode) => ParenthesizedTypeNode, found function with arity 0\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=4 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.556s
+FAIL

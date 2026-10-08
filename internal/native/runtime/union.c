@@ -5,7 +5,9 @@
 #include <math.h>
 #include <string.h>
 
-adamic_heap adamic_null = {0, adamic_kind_object, 0};
+
+static adamic_string adamic_string_null = ADAMIC_STRING("null");
+adamic_heap adamic_null = {0, adamic_kind_null, 0};
 
 adamic_boolean_box adamic_box_true = {{0, adamic_kind_boolean, 0}, true};
 adamic_boolean_box adamic_box_false = {{0, adamic_kind_boolean, 0}, false};
@@ -47,6 +49,8 @@ adamic_string *adamic_union_to_string(adamic_heap *value) {
 		return &adamic_string_undefined;
 	}
 	switch (value->kind) {
+	case adamic_kind_null:
+		return &adamic_string_null;
 	case adamic_kind_number:
 		return adamic_string_from_number(((adamic_number_box *)value)->number);
 	case adamic_kind_boolean:
@@ -188,4 +192,14 @@ adamic_heap *adamic_dynamic_property(adamic_heap *value, const char *name) {
 		return NULL;
 	}
 	adamic_panic("dynamic property read on an unsupported runtime value", sizeof "dynamic property read on an unsupported runtime value" - 1);
+}
+
+// A stale narrowing must trap before a payload is dereferenced or unboxed.
+adamic_heap *adamic_union_narrow(adamic_heap *value, unsigned char wanted) {
+ if (wanted == adamic_rep_union) return value;
+ if (value == NULL && (wanted == adamic_rep_maybe_number || wanted == adamic_rep_maybe_boolean)) return NULL;
+ enum adamic_kind kind = wanted == adamic_rep_number || wanted == adamic_rep_maybe_number ? adamic_kind_number : wanted == adamic_rep_boolean || wanted == adamic_rep_maybe_boolean ? adamic_kind_boolean : wanted == adamic_rep_string ? adamic_kind_string : wanted == adamic_rep_object ? adamic_kind_object : wanted == adamic_rep_array ? adamic_kind_array : wanted == adamic_rep_map ? adamic_kind_map : adamic_kind_closure;
+ if (value != NULL && value->kind == kind) return value;
+ static const char message[] = "a union value does not match its narrowed type";
+ adamic_panic(message, sizeof message - 1);
 }

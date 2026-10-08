@@ -1,6 +1,7 @@
 // array.c: arrays.
 
 #include "adamic.h"
+#include "graph_regions.h"
 
 #include <math.h>
 #include <stdio.h>
@@ -13,8 +14,11 @@ adamic_array *adamic_array_new(size_t capacity, bool references) {
 	array->length = 0;
 	array->capacity = capacity;
 	array->references = references;
+	array->element_kind = 0;
+	array->element_contract = 0;
 	array->elements = NULL;
 	array->properties = NULL;
+	array->sparse = NULL;
 	if (capacity > 0) {
 		array->elements = malloc(capacity * sizeof *array->elements);
 		if (array->elements == NULL) {
@@ -119,6 +123,8 @@ adamic_array *adamic_array_slice(const adamic_array *array, double start, double
 	}
 	size_t from = (size_t)start, to = end > start ? (size_t)end : from;
 	adamic_array *sliced = adamic_array_new(to - from, array->references);
+	sliced->element_kind = array->element_kind;
+	sliced->element_contract = array->element_contract;
 	for (size_t index = from; index < to; index++) {
 		adamic_value value = array->elements[index];
 		if (array->references) {
@@ -182,10 +188,12 @@ void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_
 		if (index < array->length) {
 			adamic_value old = array->elements[index];
 			array->elements[index] = work[index];
+			if (references) { adamic_graph_take(array, work[index].reference); }
 			if (references) {
-				adamic_release(old.reference);
+				if (adamic_graph_is(array)) { adamic_graph_drop(array, old.reference); } else { adamic_release(old.reference); }
 			}
 		} else {
+			if (references) { adamic_graph_take(array, work[index].reference); }
 			adamic_array_push(array, work[index]);
 		}
 	}
@@ -288,8 +296,13 @@ adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double 
 	for (size_t index = (size_t)start; (double)index < end; index++) {
 		if (array->references) {
 			// The new reference first: the value may be the one already there.
-			adamic_retain(value.reference);
-			adamic_release(array->elements[index].reference);
+			if (adamic_graph_is(array)) {
+				adamic_graph_hold(array, value.reference);
+				adamic_graph_drop(array, array->elements[index].reference);
+			} else {
+				adamic_retain(value.reference);
+				adamic_release(array->elements[index].reference);
+			}
 		}
 		array->elements[index] = value;
 	}
@@ -313,8 +326,11 @@ static void splice_into(adamic_array *array, double start, double count, bool ha
 	// The removed elements move to the result, their references with them, or are let go.
 	if (removed != NULL) {
 		*removed = adamic_array_new(removed_count, array->references);
+		(*removed)->element_kind = array->element_kind;
 		for (size_t index = 0; index < removed_count; index++) {
-			adamic_array_push(*removed, array->elements[from + index]);
+			adamic_value value = array->elements[from + index];
+			if (array->references) { adamic_graph_escape(array, value.reference); }
+			adamic_array_push(*removed, value);
 		}
 	}
 	// Let go of after the array is whole again, below: releasing one may free what releases another.
@@ -350,7 +366,7 @@ static void splice_into(adamic_array *array, double start, double count, bool ha
 	array->length = new_length;
 	if (dropped != NULL) {
 		for (size_t index = 0; index < removed_count; index++) {
-			adamic_release(dropped[index].reference);
+			if (adamic_graph_is(array)) { adamic_graph_drop(array, dropped[index].reference); } else { adamic_release(dropped[index].reference); }
 		}
 		free(dropped);
 	}
@@ -372,7 +388,7 @@ void adamic_array_append(adamic_array *array, const adamic_array *source) {
 	for (size_t index = 0; index < length; index++) {
 		adamic_value value = source->elements[index];
 		if (array->references) {
-			adamic_retain(value.reference);
+			adamic_graph_hold(array, value.reference);
 		}
 		adamic_array_push(array, value);
 	}
@@ -384,6 +400,7 @@ adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]) {
 		length += arrays[which]->length;
 	}
 	adamic_array *joined = adamic_array_new(length, arrays[0]->references);
+	joined->element_kind = arrays[0]->element_kind;
 	for (size_t which = 0; which < count; which++) {
 		for (size_t index = 0; index < arrays[which]->length; index++) {
 			adamic_value value = arrays[which]->elements[index];
@@ -410,7 +427,7 @@ void adamic_array_set(adamic_array *array, double index, adamic_value value) {
 	if (array->references) {
 		void *old = slot->reference;
 		slot->reference = value.reference;
-		adamic_release(old);
+		if (adamic_graph_is(array)) { adamic_graph_drop(array, old); } else { adamic_release(old); }
 		return;
 	}
 	*slot = value;

@@ -14,7 +14,7 @@ func TestExplainChecksOutput(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, fixture := range []string{"overload_some_empty", "overload_some_false_read", "overload_some_true_only", "overload_erased", "overload_assertion"} {
+	for _, fixture := range []string{"overload_some_empty", "overload_some_false_read", "overload_some_true_only", "overload_erased", "overload_assertion", "callback_parameter_read", "assert_defined_read", "ordinary_regions"} {
 		t.Run(fixture, func(t *testing.T) {
 			want, err := os.ReadFile("testdata/checks/" + fixture + ".txt")
 			if err != nil {

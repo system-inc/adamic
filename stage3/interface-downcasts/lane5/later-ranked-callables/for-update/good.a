@@ -1,0 +1,10 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface ForStatement {readonly value:number;}
+interface Expression {readonly kind:number;readonly value:number;}
+interface VariableDeclarationList {readonly kind:262;readonly value:number;}
+type ForInitializer=VariableDeclarationList|Expression;
+interface Statement {readonly value:number;}
+interface Base {readonly updateForStatement:unknown;}
+interface Target {updateForStatement(node: ForStatement, initializer: ForInitializer | undefined, condition: Expression | undefined, incrementor: Expression | undefined, statement: Statement): ForStatement;}
+function probe(value:Base):void {const context={factory:value as Target};const node:ForStatement={value:1};console.log(`${context.factory.updateForStatement(node,{kind:40,value:2},{kind:40,value:3},{kind:40,value:4},{value:5}).value}`);}
+probe({updateForStatement:(node:ForStatement,initializer:ForInitializer|undefined,condition:Expression|undefined,incrementor:Expression|undefined,statement:Statement):ForStatement=>({value:node.value+(initializer===undefined?0:initializer.value)+(condition===undefined?0:condition.value)+(incrementor===undefined?0:incrementor.value)+statement.value})});

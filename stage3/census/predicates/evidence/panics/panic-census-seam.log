@@ -1,0 +1,45 @@
+{
+  "continuing_predicate_refusals": "pass",
+  "positive_body_proof": "pass",
+  "argument_contract": "pass",
+  "diagnosed_body_boundary": "pass",
+  "output_guards": "pass",
+  "refusals": [
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/adamic-gate/latent-predicate-audit-2t51xaos/source/proof.a:1:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/tmp/adamic-gate/latent-predicate-audit-2t51xaos/source/proof.a:1:51",
+      "reason": "a type predicate whose return is not proven (true return narrows to unknown, not number)",
+      "text": "/tmp/adamic-gate/latent-predicate-audit-2t51xaos/source/proof.a:1:51: Adamic 0.1 refuses a type predicate whose return is not proven (true return narrows to unknown, not number); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/adamic-gate/latent-predicate-audit-2t51xaos/source/proof.a:2:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/tmp/adamic-gate/latent-predicate-audit-2t51xaos/source/proof.a:2:52",
+      "reason": "a type predicate whose return is not proven (return expression is not a trusted check on value)",
+      "text": "/tmp/adamic-gate/latent-predicate-audit-2t51xaos/source/proof.a:2:52: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on value); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/adamic-gate/latent-predicate-audit-2t51xaos/source/proof.a:5:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/tmp/adamic-gate/latent-predicate-audit-2t51xaos/source/proof.a:5:44",
+      "reason": "a type predicate whose return is not proven (true return narrows to number, not 1)",
+      "text": "/tmp/adamic-gate/latent-predicate-audit-2t51xaos/source/proof.a:5:44: Adamic 0.1 refuses a type predicate whose return is not proven (true return narrows to number, not 1); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/adamic-gate/latent-predicate-audit-2t51xaos/source/proof.a:6:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/tmp/adamic-gate/latent-predicate-audit-2t51xaos/source/proof.a:6:11",
+      "reason": "an unproven predicate argument for parameter callback (argument \"fake\")",
+      "text": "/tmp/adamic-gate/latent-predicate-audit-2t51xaos/source/proof.a:6:11: Adamic 0.1 refuses an unproven predicate argument for parameter callback (argument \"fake\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)"
+    }
+  ]
+}

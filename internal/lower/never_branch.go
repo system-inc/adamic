@@ -2,13 +2,8 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
-	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
-
-func (l *lowering) isNever(node *ast.Node) bool {
-	return l.concrete(l.checker.GetTypeAtLocation(node)).Flags()&checker.TypeFlagsNever != 0
-}
 
 // A never arm has effects but no value. The typed placeholder exists only to
 // satisfy the backend's branch ABI; the proven non-returning arm precedes it.

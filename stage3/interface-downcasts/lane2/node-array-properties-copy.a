@@ -1,0 +1,10 @@
+interface Base { readonly kind: 'block' | 'other'; }
+interface Statement { readonly text: string; }
+interface ReadonlyTextRange { readonly pos: number; readonly end: number; }
+interface NodeArray<T> extends ReadonlyArray<T>, ReadonlyTextRange { readonly hasTrailingComma: boolean; }
+interface Block extends Base { readonly kind: 'block'; readonly statements: NodeArray<Statement>; }
+function block(node: Base): Block { return node as Block; }
+const properties = {pos: 3, end: 9, hasTrailingComma: true};
+const raw = {kind: 'block' as const, statements: Object.assign([{text: 'first'}], properties)};
+properties.pos = 12;
+console.log(`${block(raw).statements.pos}:${properties.pos}`);

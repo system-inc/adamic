@@ -1,0 +1,67 @@
+=== RUN   TestCheckedViewDictionaryLookupBatch
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-string-good
+    checked_view_dictionary_lookup_test.go:20: gate cache node hit
+    checked_view_dictionary_lookup_test.go:25: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-string-missing
+    checked_view_dictionary_lookup_test.go:20: gate cache node hit
+    checked_view_dictionary_lookup_test.go:25: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-string-wrong
+    checked_view_dictionary_lookup_test.go:20: gate cache node hit
+    checked_view_dictionary_lookup_test.go:25: gate cache node miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-generic-good
+    checked_view_dictionary_lookup_test.go:20: gate cache node hit
+    checked_view_dictionary_lookup_test.go:24: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-3270295131/main.c:30:7: error: use of undeclared identifier 'adamic_ready_4'
+           30 |         if (!adamic_ready_4) {
+              |              ^
+        1 error generated.
+        
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-generic-missing
+    checked_view_dictionary_lookup_test.go:20: gate cache node hit
+    checked_view_dictionary_lookup_test.go:24: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-3367488087/main.c:30:7: error: use of undeclared identifier 'adamic_ready_4'
+           30 |         if (!adamic_ready_4) {
+              |              ^
+        1 error generated.
+        
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-generic-wrong
+    checked_view_dictionary_lookup_test.go:20: gate cache node hit
+    checked_view_dictionary_lookup_test.go:24: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-1534839934/main.c:29:7: error: use of undeclared identifier 'adamic_ready_4'
+           29 |         if (!adamic_ready_4) {
+              |              ^
+        1 error generated.
+        
+=== RUN   TestCheckedViewDictionaryLookupBatch/package-paths-good
+    checked_view_dictionary_lookup_test.go:20: gate cache node hit
+    checked_view_dictionary_lookup_test.go:25: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/package-paths-missing
+    checked_view_dictionary_lookup_test.go:20: gate cache node hit
+    checked_view_dictionary_lookup_test.go:25: gate cache node hit
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewDictionaryLookupBatch/package-paths-wrong
+    checked_view_dictionary_lookup_test.go:20: gate cache node hit
+    checked_view_dictionary_lookup_test.go:25: gate cache node hit
+=== RUN   TestCheckedViewDictionaryLookupBatch/package-paths-nested-wrong
+    checked_view_dictionary_lookup_test.go:20: gate cache node hit
+    checked_view_dictionary_lookup_test.go:25: gate cache node miss
+--- FAIL: TestCheckedViewDictionaryLookupBatch (3.01s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-string-good (0.53s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-string-missing (0.51s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-string-wrong (0.30s)
+    --- FAIL: TestCheckedViewDictionaryLookupBatch/map-generic-good (0.07s)
+    --- FAIL: TestCheckedViewDictionaryLookupBatch/map-generic-missing (0.07s)
+    --- FAIL: TestCheckedViewDictionaryLookupBatch/map-generic-wrong (0.07s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/package-paths-good (0.48s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/package-paths-missing (0.43s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/package-paths-wrong (0.26s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/package-paths-nested-wrong (0.29s)
+FAIL
+gate cache: native hits=0 misses=4
+gate cache: node hits=12 misses=5
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.016s
+FAIL

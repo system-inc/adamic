@@ -129,6 +129,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			source = e.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", source))
 		}
 		object := e.own(ir.Object, e.spreadCopy(literal, source))
+		e.adoptGraphObject(object, literal)
 		e.emptySpread(literal, source, object)
 		values := make([]string, 0, len(literal.Fields))
 		for _, field := range literal.Fields {
@@ -138,15 +139,12 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			slot := e.temporary()
 			cache := e.cache()
 			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
-			if e.fieldTypesNeeded() {
-				e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
-			}
-			if e.fieldReadinessNeeded(field.Name) {
-				e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
-			}
+			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, fieldInitialRepresentation(field))
+			e.line("adamic_object_contracts(%s)[%s.index] = %d;", object, cache, field.Contract)
+			e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
 			if field.Value.Type().IsReference() {
-				e.line("adamic_release(%s->reference);", slot)
-				e.line("%s->reference = %s;", slot, e.kept(values[index]))
+				e.dropIn(object, slot+"->reference")
+				e.line("%s->reference = %s;", slot, e.keptIn(object, values[index]))
 			} else {
 				e.line("%s->%s = %s;", slot, member(field.Value.Type()), slotted(field.Value.Type(), values[index]))
 			}
@@ -173,6 +171,10 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		object = e.regionValue(fmt.Sprintf("adamic_object_new_in(region, &%s)", e.literalShape(literal)))
 	} else {
 		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.literalShape(literal)))
+		e.adoptGraphObject(object, literal)
+	}
+	if literal.RealType != "" {
+		e.line("%s->real_type = %s;", object, cString(literal.RealType))
 	}
 	if len(literal.Fields) > 0 && e.dynamicProperties() {
 		e.line("adamic_register_shape_types(&%s_metadata);", e.literalShape(literal))
@@ -194,11 +196,11 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 				e.line("adamic_register_shape_types(&%s_metadata);", e.publicClassShape(class))
 			}
 		}
+		e.line("%s->real_type = %s;", object, cString(e.program.Classes[literal.Class-1].Name))
 	}
 	for index, field := range literal.Fields {
-		if e.fieldTypesNeeded() {
-			e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, field.Value.Type())
-		}
+		e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, fieldInitialRepresentation(field))
+		e.line("adamic_object_contracts(%s)[%d] = %d;", object, index, field.Contract)
 		if field.Uninitialized {
 			e.line("adamic_object_initialized(%s)[%d] = 0;", object, index)
 		}
@@ -209,7 +211,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			continue
 		}
 		if field.Value.Type().IsReference() {
-			value = e.kept(value)
+			value = e.keptIn(object, value)
 		}
 		e.line("%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), value))
 	}
@@ -460,4 +462,29 @@ func (e *emitter) fieldReadinessNeeded(name string) bool {
 		}
 	})
 	return needed
+}
+
+// Null and undefined share a null pointer physically, but an optional checked read
+// must accept only undefined. Keep that semantic distinction in the slot tag.
+func fieldRepresentation(value ir.Expression) int {
+	switch value.(type) {
+	case ir.Null:
+		return int(ir.NullRepresentation)
+	case ir.Undefined:
+		// Untagged recursive producer hook: explicit reference undefined is
+		// initialized semantic undefined, distinct from null and absent slots.
+		if value.Type().IsReference() {
+			return int(ir.UndefinedRepresentation)
+		}
+	}
+	return int(value.Type())
+}
+
+// Reserved boxed union slots retain their physical write representation. Their
+// readiness bit refuses reads; there is no initialized undefined payload yet.
+func fieldInitialRepresentation(field ir.Field) int {
+	if field.Uninitialized && field.Value.Type() == ir.Union {
+		return int(ir.Union)
+	}
+	return fieldRepresentation(field.Value)
 }

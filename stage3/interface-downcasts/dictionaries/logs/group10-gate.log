@@ -1,0 +1,804 @@
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/internal/ir	0.025s [no tests to run]
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/internal/flow	0.015s [no tests to run]
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/internal/fresh	0.015s [no tests to run]
+=== RUN   TestRecordForms
+=== PAUSE TestRecordForms
+=== RUN   TestRecordRefusals
+=== PAUSE TestRecordRefusals
+=== RUN   TestRecordPrototypeLiteralNames
+=== PAUSE TestRecordPrototypeLiteralNames
+=== RUN   TestViewDictionaryDescriptors
+=== PAUSE TestViewDictionaryDescriptors
+=== CONT  TestRecordForms
+=== CONT  TestRecordPrototypeLiteralNames
+=== CONT  TestViewDictionaryDescriptors
+=== CONT  TestRecordRefusals
+=== RUN   TestRecordForms/interface_R_{_[key:string]:_number_}_const_r:R={};_r['x']=1;_console.log(String(r['x']));
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['constructor']));
+=== RUN   TestViewDictionaryDescriptors/interface_Target_{_readonly_[key:string]:_boolean_|_undefined;_readonly_strict?:_boolean_}
+=== RUN   TestRecordRefusals/interface_R_{_[key:string]:number;_named:number_}_const_r:R={named:1};
+=== RUN   TestViewDictionaryDescriptors/interface_Child_{readonly_children:Target}_interface_Target_{readonly_[key:string]:Child_|_undefined}
+=== RUN   TestRecordForms/type_R=Record<string,string>;_const_r:R={x:'one'};_console.log(Object.keys(r).join(','));
+=== RUN   TestRecordRefusals/import_type_{Weak}_from_'adamic';_interface_Item_{name:string}_const_r:Record<string,Weak<Item>>={};
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('constructor'_in_r));
+--- PASS: TestViewDictionaryDescriptors (0.20s)
+    --- PASS: TestViewDictionaryDescriptors/interface_Target_{_readonly_[key:string]:_boolean_|_undefined;_readonly_strict?:_boolean_} (0.11s)
+    --- PASS: TestViewDictionaryDescriptors/interface_Child_{readonly_children:Target}_interface_Target_{readonly_[key:string]:Child_|_undefined} (0.06s)
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__defineGetter__']));
+=== RUN   TestRecordRefusals/function_show(r:Record<string,number>|null):void_{console.log(String(JSON.stringify(r)));}
+=== RUN   TestRecordForms/function_show(r:Record<string,number>|undefined):void_{console.log(String(JSON.stringify(r)));}_show(undefined);_show({x:1});
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__defineGetter__'_in_r));
+=== RUN   TestRecordRefusals/interface_R_{_readonly_[key:string]:number_}_const_r:R={};
+=== RUN   TestRecordForms/interface_MapLike<T>_{_[key:string]:T_}_const_r:MapLike<number>={};_console.log(String(delete_r['absent']));
+=== RUN   TestRecordRefusals/interface_R_{_[key:number]:number_}_const_r:R={};
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__defineSetter__']));
+=== RUN   TestRecordForms/const_r:Record<string,number>={};_for(const_k_in_r)_{_console.log(k);_}
+=== RUN   TestRecordRefusals/const_r:Record<string,()=>string>={};_console.log(r.toString());
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__defineSetter__'_in_r));
+=== RUN   TestRecordForms/interface_Node_{links:Record<string,Node>}_const_r:Record<string,Node>={};_r['fresh']={links:{}};
+=== RUN   TestRecordRefusals/const_r:Record<string,number>={};_console.log(String(r['toString']));
+--- PASS: TestRecordForms (0.82s)
+    --- PASS: TestRecordForms/interface_R_{_[key:string]:_number_}_const_r:R={};_r['x']=1;_console.log(String(r['x'])); (0.14s)
+    --- PASS: TestRecordForms/type_R=Record<string,string>;_const_r:R={x:'one'};_console.log(Object.keys(r).join(',')); (0.13s)
+    --- PASS: TestRecordForms/function_show(r:Record<string,number>|undefined):void_{console.log(String(JSON.stringify(r)));}_show(undefined);_show({x:1}); (0.09s)
+    --- PASS: TestRecordForms/interface_MapLike<T>_{_[key:string]:T_}_const_r:MapLike<number>={};_console.log(String(delete_r['absent'])); (0.13s)
+    --- PASS: TestRecordForms/const_r:Record<string,number>={};_for(const_k_in_r)_{_console.log(k);_} (0.19s)
+    --- PASS: TestRecordForms/interface_Node_{links:Record<string,Node>}_const_r:Record<string,Node>={};_r['fresh']={links:{}}; (0.13s)
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['hasOwnProperty']));
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('hasOwnProperty'_in_r));
+=== RUN   TestRecordRefusals/const_r:Record<string,number>={};_console.log(String('constructor'_in_r));
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__lookupGetter__']));
+=== RUN   TestRecordRefusals/interface_Animal_{name:string}_interface_Dog_{name:'dog'}_const_dogs:Record<string,Dog>={};_const_copy:Record<string,Animal>={...dogs};
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__lookupGetter__'_in_r));
+=== RUN   TestRecordRefusals/interface_Animal_{name:string}_interface_Dog_extends_Animal_{bark:string}_const_dogs:Record<string,Dog>={};_const_animals:Record<string,Animal>=dogs;
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__lookupSetter__']));
+=== RUN   TestRecordRefusals/function_view(r:Record<string,number>|{x:number}):{x?:number}_{return_r;}_const_r:Record<string,number>={};_console.log(String(view(r).x));
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__lookupSetter__'_in_r));
+=== RUN   TestRecordRefusals/const_records:Record<string,number>={};_const_view:{x?:number}=records;
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['isPrototypeOf']));
+=== RUN   TestRecordRefusals/const_inner:Record<string,number>={};_const_holder={inner};_const_view:{inner:{x?:number}}=holder;
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('isPrototypeOf'_in_r));
+=== RUN   TestRecordRefusals/type_R=Readonly<Record<string,number>>;_const_r:R={};_console.log(String(r['x']));
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['propertyIsEnumerable']));
+=== RUN   TestRecordRefusals/const_fixed={x:1};_const_r:Record<string,number>=fixed;
+=== RUN   TestRecordRefusals/interface_R_{[key:string]:R}_const_r:R={};_r['self']=r;
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('propertyIsEnumerable'_in_r));
+=== RUN   TestRecordRefusals/interface_Node_{links:Record<string,Node>}_const_a:Node={links:{}};_a.links['self']=a;
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['toString']));
+--- PASS: TestRecordRefusals (1.70s)
+    --- PASS: TestRecordRefusals/interface_R_{_[key:string]:number;_named:number_}_const_r:R={named:1}; (0.12s)
+    --- PASS: TestRecordRefusals/import_type_{Weak}_from_'adamic';_interface_Item_{name:string}_const_r:Record<string,Weak<Item>>={}; (0.07s)
+    --- PASS: TestRecordRefusals/function_show(r:Record<string,number>|null):void_{console.log(String(JSON.stringify(r)));} (0.13s)
+    --- PASS: TestRecordRefusals/interface_R_{_readonly_[key:string]:number_}_const_r:R={}; (0.08s)
+    --- PASS: TestRecordRefusals/interface_R_{_[key:number]:number_}_const_r:R={}; (0.21s)
+    --- PASS: TestRecordRefusals/const_r:Record<string,()=>string>={};_console.log(r.toString()); (0.09s)
+    --- PASS: TestRecordRefusals/const_r:Record<string,number>={};_console.log(String(r['toString'])); (0.12s)
+    --- PASS: TestRecordRefusals/const_r:Record<string,number>={};_console.log(String('constructor'_in_r)); (0.09s)
+    --- PASS: TestRecordRefusals/interface_Animal_{name:string}_interface_Dog_{name:'dog'}_const_dogs:Record<string,Dog>={};_const_copy:Record<string,Animal>={...dogs}; (0.10s)
+    --- PASS: TestRecordRefusals/interface_Animal_{name:string}_interface_Dog_extends_Animal_{bark:string}_const_dogs:Record<string,Dog>={};_const_animals:Record<string,Animal>=dogs; (0.09s)
+    --- PASS: TestRecordRefusals/function_view(r:Record<string,number>|{x:number}):{x?:number}_{return_r;}_const_r:Record<string,number>={};_console.log(String(view(r).x)); (0.07s)
+    --- PASS: TestRecordRefusals/const_records:Record<string,number>={};_const_view:{x?:number}=records; (0.08s)
+    --- PASS: TestRecordRefusals/const_inner:Record<string,number>={};_const_holder={inner};_const_view:{inner:{x?:number}}=holder; (0.09s)
+    --- PASS: TestRecordRefusals/type_R=Readonly<Record<string,number>>;_const_r:R={};_console.log(String(r['x'])); (0.09s)
+    --- PASS: TestRecordRefusals/const_fixed={x:1};_const_r:Record<string,number>=fixed; (0.07s)
+    --- PASS: TestRecordRefusals/interface_R_{[key:string]:R}_const_r:R={};_r['self']=r; (0.06s)
+    --- PASS: TestRecordRefusals/interface_Node_{links:Record<string,Node>}_const_a:Node={links:{}};_a.links['self']=a; (0.08s)
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('toString'_in_r));
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['valueOf']));
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('valueOf'_in_r));
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__proto__']));
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__proto__'_in_r));
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['toLocaleString']));
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('toLocaleString'_in_r));
+--- PASS: TestRecordPrototypeLiteralNames (2.09s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['constructor'])); (0.15s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('constructor'_in_r)); (0.06s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__defineGetter__'])); (0.11s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__defineGetter__'_in_r)); (0.11s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__defineSetter__'])); (0.21s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__defineSetter__'_in_r)); (0.15s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['hasOwnProperty'])); (0.04s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('hasOwnProperty'_in_r)); (0.10s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__lookupGetter__'])); (0.10s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__lookupGetter__'_in_r)); (0.06s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__lookupSetter__'])); (0.09s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__lookupSetter__'_in_r)); (0.06s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['isPrototypeOf'])); (0.11s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('isPrototypeOf'_in_r)); (0.08s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['propertyIsEnumerable'])); (0.11s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('propertyIsEnumerable'_in_r)); (0.09s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['toString'])); (0.05s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('toString'_in_r)); (0.06s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['valueOf'])); (0.03s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('valueOf'_in_r)); (0.06s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__proto__'])); (0.05s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__proto__'_in_r)); (0.06s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['toLocaleString'])); (0.06s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('toLocaleString'_in_r)); (0.07s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	2.129s
+=== RUN   TestRecordsAgainstNode
+=== PAUSE TestRecordsAgainstNode
+=== RUN   TestRecordMutants
+=== PAUSE TestRecordMutants
+=== RUN   TestRecordReadMutants
+=== PAUSE TestRecordReadMutants
+=== CONT  TestRecordsAgainstNode
+=== CONT  TestRecordReadMutants
+=== RUN   TestRecordReadMutants/prototype-membership-restored
+=== CONT  TestRecordMutants
+=== RUN   TestRecordMutants/indices-in-insertion-order
+=== NAME  TestRecordReadMutants/prototype-membership-restored
+    record_test.go:251: adamic: counts: allocations 3 frees 3 retains 0 releases 2 peak 3 regions 0
+    record_test.go:262: caught by exact diagnostic and exit check; forbidden result "1\n"
+=== RUN   TestRecordReadMutants/missing-read-silent
+=== RUN   TestRecordsAgainstNode/semantics
+    record_test.go:75: adamic: counts: allocations 91 frees 91 retains 129 releases 116 peak 25 regions 0
+=== RUN   TestRecordsAgainstNode/prototypes
+    record_test.go:75: adamic: counts: allocations 22 frees 22 retains 15 releases 39 peak 5 regions 0
+=== RUN   TestRecordsAgainstNode/reads
+    record_test.go:75: adamic: counts: allocations 27 frees 27 retains 3 releases 28 peak 5 regions 0
+=== RUN   TestRecordsAgainstNode/references
+=== NAME  TestRecordMutants/indices-in-insertion-order
+    record_test.go:213: adamic: counts: allocations 91 frees 91 retains 129 releases 116 peak 25 regions 0
+    record_test.go:220: caught by Node
+=== RUN   TestRecordMutants/uint32-max-as-index
+=== NAME  TestRecordsAgainstNode/references
+    record_test.go:75: adamic: counts: allocations 350024 frees 350024 retains 10005 releases 50025 peak 300000 regions 0
+=== RUN   TestRecordsAgainstNode/iteration
+    record_test.go:75: adamic: counts: allocations 19 frees 19 retains 10 releases 18 peak 12 regions 0
+=== RUN   TestRecordsAgainstNode/numeric
+    record_test.go:75: adamic: counts: allocations 350004 frees 350004 retains 100001 releases 350002 peak 100005 regions 0
+=== RUN   TestRecordsAgainstNode/workload-1000000
+    record_test.go:75: adamic: counts: allocations 3500004 frees 3500004 retains 500001 releases 3000002 peak 1000003 regions 0
+=== NAME  TestRecordReadMutants/missing-read-silent
+    record_test.go:251: adamic: counts: allocations 3 frees 3 retains 0 releases 2 peak 3 regions 0
+    record_test.go:262: caught by exact diagnostic and exit check; forbidden result "0\n"
+=== RUN   TestRecordReadMutants/own-read-checked-as-missing
+=== NAME  TestRecordMutants/uint32-max-as-index
+    record_test.go:213: adamic: counts: allocations 91 frees 91 retains 129 releases 116 peak 25 regions 0
+    record_test.go:220: caught by Node
+=== RUN   TestRecordMutants/deleted-key-iterated
+=== RUN   TestRecordsAgainstNode/bench-1000
+    record_test.go:75: adamic: counts: allocations 3504 frees 3504 retains 501 releases 3002 peak 1003 regions 0
+=== NAME  TestRecordsAgainstNode
+    record_test.go:89: Object.getOwnPropertyNames(Object.prototype) on Node v24.19.0: constructor, __defineGetter__, __defineSetter__, hasOwnProperty, __lookupGetter__, __lookupSetter__, isPrototypeOf, propertyIsEnumerable, toString, valueOf, __proto__, toLocaleString
+=== RUN   TestRecordsAgainstNode/missing-get/constructor
+=== RUN   TestRecordsAgainstNode/missing-has/constructor
+=== RUN   TestRecordsAgainstNode/missing-get/__defineGetter__
+=== RUN   TestRecordsAgainstNode/missing-has/__defineGetter__
+=== RUN   TestRecordsAgainstNode/missing-get/__defineSetter__
+=== RUN   TestRecordsAgainstNode/missing-has/__defineSetter__
+=== RUN   TestRecordsAgainstNode/missing-get/hasOwnProperty
+=== RUN   TestRecordsAgainstNode/missing-has/hasOwnProperty
+=== RUN   TestRecordsAgainstNode/missing-get/__lookupGetter__
+=== RUN   TestRecordsAgainstNode/missing-has/__lookupGetter__
+=== RUN   TestRecordsAgainstNode/missing-get/__lookupSetter__
+=== RUN   TestRecordsAgainstNode/missing-has/__lookupSetter__
+=== RUN   TestRecordsAgainstNode/missing-get/isPrototypeOf
+=== RUN   TestRecordsAgainstNode/missing-has/isPrototypeOf
+=== RUN   TestRecordsAgainstNode/missing-get/propertyIsEnumerable
+=== RUN   TestRecordsAgainstNode/missing-has/propertyIsEnumerable
+=== RUN   TestRecordsAgainstNode/missing-get/toString
+=== RUN   TestRecordsAgainstNode/missing-has/toString
+=== RUN   TestRecordsAgainstNode/missing-get/valueOf
+=== RUN   TestRecordsAgainstNode/missing-has/valueOf
+=== RUN   TestRecordsAgainstNode/missing-get/__proto__
+=== RUN   TestRecordsAgainstNode/missing-has/__proto__
+=== RUN   TestRecordsAgainstNode/missing-get/toLocaleString
+=== RUN   TestRecordsAgainstNode/missing-has/toLocaleString
+=== RUN   TestRecordsAgainstNode/proto-assignment
+--- PASS: TestRecordsAgainstNode (17.86s)
+    --- PASS: TestRecordsAgainstNode/semantics (0.05s)
+    --- PASS: TestRecordsAgainstNode/prototypes (0.04s)
+    --- PASS: TestRecordsAgainstNode/reads (0.03s)
+    --- PASS: TestRecordsAgainstNode/references (0.22s)
+    --- PASS: TestRecordsAgainstNode/iteration (0.06s)
+    --- PASS: TestRecordsAgainstNode/numeric (0.94s)
+    --- PASS: TestRecordsAgainstNode/workload-1000000 (7.77s)
+    --- PASS: TestRecordsAgainstNode/bench-1000 (0.04s)
+    --- PASS: TestRecordsAgainstNode/missing-get/constructor (0.01s)
+    --- PASS: TestRecordsAgainstNode/missing-has/constructor (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-get/__defineGetter__ (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/__defineGetter__ (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-get/__defineSetter__ (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/__defineSetter__ (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-get/hasOwnProperty (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/hasOwnProperty (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-get/__lookupGetter__ (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/__lookupGetter__ (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-get/__lookupSetter__ (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/__lookupSetter__ (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-get/isPrototypeOf (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/isPrototypeOf (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-get/propertyIsEnumerable (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/propertyIsEnumerable (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-get/toString (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/toString (0.01s)
+    --- PASS: TestRecordsAgainstNode/missing-get/valueOf (0.01s)
+    --- PASS: TestRecordsAgainstNode/missing-has/valueOf (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-get/__proto__ (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/__proto__ (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-get/toLocaleString (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/toLocaleString (0.00s)
+    --- PASS: TestRecordsAgainstNode/proto-assignment (0.00s)
+=== NAME  TestRecordReadMutants/own-read-checked-as-missing
+    record_test.go:244: caught by the own-hit fixture
+--- PASS: TestRecordReadMutants (25.60s)
+    --- PASS: TestRecordReadMutants/prototype-membership-restored (8.50s)
+    --- PASS: TestRecordReadMutants/missing-read-silent (8.71s)
+    --- PASS: TestRecordReadMutants/own-read-checked-as-missing (8.39s)
+=== NAME  TestRecordMutants/deleted-key-iterated
+    record_test.go:213: adamic: counts: allocations 21 frees 21 retains 10 releases 22 peak 12 regions 0
+    record_test.go:220: caught by Node
+=== RUN   TestRecordMutants/overwrite-key-leaked
+    record_test.go:220: caught by LeakSanitizer
+=== RUN   TestRecordMutants/stored-key-freed
+    record_test.go:220: caught by AddressSanitizer: heap-use-after-free
+=== RUN   TestRecordMutants/own-slot-null-read
+    record_test.go:220: caught by runtime error: member access within null pointer
+--- PASS: TestRecordMutants (50.63s)
+    --- PASS: TestRecordMutants/indices-in-insertion-order (8.72s)
+    --- PASS: TestRecordMutants/uint32-max-as-index (8.75s)
+    --- PASS: TestRecordMutants/deleted-key-iterated (8.25s)
+    --- PASS: TestRecordMutants/overwrite-key-leaked (9.20s)
+    --- PASS: TestRecordMutants/stored-key-freed (7.97s)
+    --- PASS: TestRecordMutants/own-slot-null-read (7.74s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	50.667s
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/internal/javascript	0.005s [no tests to run]
+=== RUN   TestCheckedViewDictionaryCommandOptions
+=== RUN   TestCheckedViewDictionaryCommandOptions/good
+=== RUN   TestCheckedViewDictionaryCommandOptions/wrong
+=== RUN   TestCheckedViewDictionaryCommandOptions/missing
+--- PASS: TestCheckedViewDictionaryCommandOptions (2.22s)
+    --- PASS: TestCheckedViewDictionaryCommandOptions/good (0.89s)
+    --- PASS: TestCheckedViewDictionaryCommandOptions/wrong (0.71s)
+    --- PASS: TestCheckedViewDictionaryCommandOptions/missing (0.62s)
+=== RUN   TestCheckedViewDictionaryContainerBatch
+=== RUN   TestCheckedViewDictionaryContainerBatch/wildcard-directories-good
+=== RUN   TestCheckedViewDictionaryContainerBatch/wildcard-directories-wrong
+=== RUN   TestCheckedViewDictionaryContainerBatch/wildcard-directories-missing
+=== RUN   TestCheckedViewDictionaryContainerBatch/watch-options-good
+=== RUN   TestCheckedViewDictionaryContainerBatch/watch-options-wrong
+=== RUN   TestCheckedViewDictionaryContainerBatch/watch-options-missing
+=== RUN   TestCheckedViewDictionaryContainerBatch/version-paths-good
+=== RUN   TestCheckedViewDictionaryContainerBatch/version-paths-wrong
+=== RUN   TestCheckedViewDictionaryContainerBatch/version-paths-missing
+=== RUN   TestCheckedViewDictionaryContainerBatch/incremental-multi-options-good
+=== RUN   TestCheckedViewDictionaryContainerBatch/incremental-multi-options-wrong
+=== RUN   TestCheckedViewDictionaryContainerBatch/incremental-multi-options-missing
+=== RUN   TestCheckedViewDictionaryContainerBatch/incremental-bundle-options-good
+=== RUN   TestCheckedViewDictionaryContainerBatch/incremental-bundle-options-wrong
+=== RUN   TestCheckedViewDictionaryContainerBatch/incremental-bundle-options-missing
+=== RUN   TestCheckedViewDictionaryContainerBatch/incremental-options-good
+=== RUN   TestCheckedViewDictionaryContainerBatch/incremental-options-wrong
+=== RUN   TestCheckedViewDictionaryContainerBatch/incremental-options-missing
+=== RUN   TestCheckedViewDictionaryContainerBatch/reusable-state-options-good
+=== RUN   TestCheckedViewDictionaryContainerBatch/reusable-state-options-wrong
+=== RUN   TestCheckedViewDictionaryContainerBatch/reusable-state-options-missing
+=== RUN   TestCheckedViewDictionaryContainerBatch/builder-state-options-good
+=== RUN   TestCheckedViewDictionaryContainerBatch/builder-state-options-wrong
+=== RUN   TestCheckedViewDictionaryContainerBatch/builder-state-options-missing
+--- PASS: TestCheckedViewDictionaryContainerBatch (10.85s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/wildcard-directories-good (0.43s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/wildcard-directories-wrong (0.47s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/wildcard-directories-missing (0.45s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/watch-options-good (0.40s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/watch-options-wrong (0.46s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/watch-options-missing (0.46s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/version-paths-good (0.46s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/version-paths-wrong (0.49s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/version-paths-missing (0.43s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/incremental-multi-options-good (0.44s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/incremental-multi-options-wrong (0.41s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/incremental-multi-options-missing (0.40s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/incremental-bundle-options-good (0.46s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/incremental-bundle-options-wrong (0.43s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/incremental-bundle-options-missing (0.41s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/incremental-options-good (0.51s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/incremental-options-wrong (0.50s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/incremental-options-missing (0.48s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/reusable-state-options-good (0.52s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/reusable-state-options-wrong (0.46s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/reusable-state-options-missing (0.45s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/builder-state-options-good (0.44s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/builder-state-options-wrong (0.41s)
+    --- PASS: TestCheckedViewDictionaryContainerBatch/builder-state-options-missing (0.47s)
+=== RUN   TestCheckedViewDictionaryContainerMutant
+    checked_view_dictionary_container_test.go:127: container bypass caught by pinned wrong-value control: exit=0 stdout="object\n"
+    checked_view_dictionary_container_test.go:127: container bypass caught by pinned wrong-value control: exit=0 stdout="number\n"
+--- PASS: TestCheckedViewDictionaryContainerMutant (0.17s)
+=== RUN   TestCheckedViewDictionaryKeys
+=== RUN   TestCheckedViewDictionaryKeys/fixed-good
+=== RUN   TestCheckedViewDictionaryKeys/fixed-empty
+=== RUN   TestCheckedViewDictionaryKeys/fixed-read-wrong
+=== RUN   TestCheckedViewDictionaryKeys/producer-good
+=== RUN   TestCheckedViewDictionaryKeys/producer-empty
+=== RUN   TestCheckedViewDictionaryKeys/producer-read-wrong
+--- PASS: TestCheckedViewDictionaryKeys (3.19s)
+    --- PASS: TestCheckedViewDictionaryKeys/fixed-good (0.49s)
+    --- PASS: TestCheckedViewDictionaryKeys/fixed-empty (0.52s)
+    --- PASS: TestCheckedViewDictionaryKeys/fixed-read-wrong (0.47s)
+    --- PASS: TestCheckedViewDictionaryKeys/producer-good (0.54s)
+    --- PASS: TestCheckedViewDictionaryKeys/producer-empty (0.57s)
+    --- PASS: TestCheckedViewDictionaryKeys/producer-read-wrong (0.59s)
+=== RUN   TestCheckedViewDictionaryKeysEagerMutant
+    checked_view_dictionary_enumeration_test.go:80: key-only control catches eager element mutant: exit=70 stderr="adamic: panic: field read failed: Object.keys[key]; expected string, found number\n"
+    checked_view_dictionary_enumeration_test.go:80: key-only control catches eager element mutant: exit=70 stderr="adamic: panic: field read failed: Object.keys[key]; expected string, found number\n"
+--- PASS: TestCheckedViewDictionaryKeysEagerMutant (0.45s)
+=== RUN   TestCheckedViewDictionaryFiniteKeys
+=== RUN   TestCheckedViewDictionaryFiniteKeys/indexed-cache-good
+=== RUN   TestCheckedViewDictionaryFiniteKeys/indexed-cache-wrong
+=== RUN   TestCheckedViewDictionaryFiniteKeys/indexed-cache-missing
+=== RUN   TestCheckedViewDictionaryFiniteKeys/indexed-cache-nested-wrong
+=== RUN   TestCheckedViewDictionaryFiniteKeys/indexed-cache-wrong-array
+=== RUN   TestCheckedViewDictionaryFiniteKeys/iteration-cache-good
+=== RUN   TestCheckedViewDictionaryFiniteKeys/iteration-cache-wrong
+=== RUN   TestCheckedViewDictionaryFiniteKeys/iteration-cache-missing
+=== RUN   TestCheckedViewDictionaryFiniteKeys/iteration-cache-nested-wrong
+=== RUN   TestCheckedViewDictionaryFiniteKeys/iteration-cache-wrong-array
+=== RUN   TestCheckedViewDictionaryFiniteKeys/iterable-cache-good
+=== RUN   TestCheckedViewDictionaryFiniteKeys/iterable-cache-wrong
+=== RUN   TestCheckedViewDictionaryFiniteKeys/iterable-cache-missing
+=== RUN   TestCheckedViewDictionaryFiniteKeys/iterable-cache-nested-wrong
+=== RUN   TestCheckedViewDictionaryFiniteKeys/iterable-cache-wrong-array
+=== RUN   TestCheckedViewDictionaryFiniteKeys/signature-cache-good
+=== RUN   TestCheckedViewDictionaryFiniteKeys/signature-cache-wrong
+=== RUN   TestCheckedViewDictionaryFiniteKeys/signature-cache-missing
+=== RUN   TestCheckedViewDictionaryFiniteKeys/signature-cache-nested-wrong
+=== RUN   TestCheckedViewDictionaryFiniteKeys/signature-cache-wrong-array
+--- PASS: TestCheckedViewDictionaryFiniteKeys (10.01s)
+    --- PASS: TestCheckedViewDictionaryFiniteKeys/indexed-cache-good (0.64s)
+    --- PASS: TestCheckedViewDictionaryFiniteKeys/indexed-cache-wrong (0.43s)
+    --- PASS: TestCheckedViewDictionaryFiniteKeys/indexed-cache-missing (0.51s)
+    --- PASS: TestCheckedViewDictionaryFiniteKeys/indexed-cache-nested-wrong (0.47s)
+    --- PASS: TestCheckedViewDictionaryFiniteKeys/indexed-cache-wrong-array (0.50s)
+    --- PASS: TestCheckedViewDictionaryFiniteKeys/iteration-cache-good (0.52s)
+    --- PASS: TestCheckedViewDictionaryFiniteKeys/iteration-cache-wrong (0.51s)
+    --- PASS: TestCheckedViewDictionaryFiniteKeys/iteration-cache-missing (0.46s)
+    --- PASS: TestCheckedViewDictionaryFiniteKeys/iteration-cache-nested-wrong (0.52s)
+    --- PASS: TestCheckedViewDictionaryFiniteKeys/iteration-cache-wrong-array (0.57s)
+    --- PASS: TestCheckedViewDictionaryFiniteKeys/iterable-cache-good (0.50s)
+    --- PASS: TestCheckedViewDictionaryFiniteKeys/iterable-cache-wrong (0.53s)
+    --- PASS: TestCheckedViewDictionaryFiniteKeys/iterable-cache-missing (0.44s)
+    --- PASS: TestCheckedViewDictionaryFiniteKeys/iterable-cache-nested-wrong (0.47s)
+    --- PASS: TestCheckedViewDictionaryFiniteKeys/iterable-cache-wrong-array (0.53s)
+    --- PASS: TestCheckedViewDictionaryFiniteKeys/signature-cache-good (0.48s)
+    --- PASS: TestCheckedViewDictionaryFiniteKeys/signature-cache-wrong (0.49s)
+    --- PASS: TestCheckedViewDictionaryFiniteKeys/signature-cache-missing (0.51s)
+    --- PASS: TestCheckedViewDictionaryFiniteKeys/signature-cache-nested-wrong (0.48s)
+    --- PASS: TestCheckedViewDictionaryFiniteKeys/signature-cache-wrong-array (0.44s)
+=== RUN   TestCheckedViewDictionaryFiniteMutants
+=== RUN   TestCheckedViewDictionaryFiniteMutants/skip-check
+    checked_view_dictionary_finite_test.go:89: pinned finite-key control catches skip-check: exit=0 stdout="object\n"
+    checked_view_dictionary_finite_test.go:89: pinned finite-key control catches skip-check: exit=0 stdout="object\n"
+=== RUN   TestCheckedViewDictionaryFiniteMutants/accept-wrong-shape
+    checked_view_dictionary_finite_test.go:89: pinned finite-key control catches accept-wrong-shape: exit=0 stdout="object\n"
+    checked_view_dictionary_finite_test.go:89: pinned finite-key control catches accept-wrong-shape: exit=0 stdout="object\n"
+=== RUN   TestCheckedViewDictionaryFiniteMutants/drop-transitive-check
+    checked_view_dictionary_finite_test.go:89: pinned finite-key control catches drop-transitive-check: exit=0 stdout="42\n"
+    checked_view_dictionary_finite_test.go:89: pinned finite-key control catches drop-transitive-check: exit=0 stdout="wrong\n"
+--- PASS: TestCheckedViewDictionaryFiniteMutants (0.49s)
+    --- PASS: TestCheckedViewDictionaryFiniteMutants/skip-check (0.15s)
+    --- PASS: TestCheckedViewDictionaryFiniteMutants/accept-wrong-shape (0.17s)
+    --- PASS: TestCheckedViewDictionaryFiniteMutants/drop-transitive-check (0.17s)
+=== RUN   TestCheckedViewDictionaryOptionalShortCircuitMutant
+    checked_view_dictionary_finite_test.go:130: Node absent-receiver control catches forced read: exit=70 stderr="adamic: panic: field read failed: view?.paths; expected MapLike<string[]> | undefined, found undefined\n"
+    checked_view_dictionary_finite_test.go:130: Node absent-receiver control catches forced read: exit=70 stderr="adamic: panic: field read failed: view?.paths; expected MapLike<string[]> | undefined, found undefined\n"
+--- PASS: TestCheckedViewDictionaryOptionalShortCircuitMutant (0.39s)
+=== RUN   TestCheckedViewDictionaryOptionalRequiredField
+=== RUN   TestCheckedViewDictionaryOptionalRequiredField/good
+=== RUN   TestCheckedViewDictionaryOptionalRequiredField/missing
+=== RUN   TestCheckedViewDictionaryOptionalRequiredField/receiver-missing
+=== RUN   TestCheckedViewDictionaryOptionalRequiredField/undefined
+--- PASS: TestCheckedViewDictionaryOptionalRequiredField (2.17s)
+    --- PASS: TestCheckedViewDictionaryOptionalRequiredField/good (0.55s)
+    --- PASS: TestCheckedViewDictionaryOptionalRequiredField/missing (0.46s)
+    --- PASS: TestCheckedViewDictionaryOptionalRequiredField/receiver-missing (0.48s)
+    --- PASS: TestCheckedViewDictionaryOptionalRequiredField/undefined (0.68s)
+=== RUN   TestCheckedViewDictionaryEnumMap
+=== RUN   TestCheckedViewDictionaryEnumMap/enum-map-good
+=== RUN   TestCheckedViewDictionaryEnumMap/enum-map-open-number
+=== RUN   TestCheckedViewDictionaryEnumMap/enum-map-wrong
+=== RUN   TestCheckedViewDictionaryEnumMap/enum-map-missing
+=== RUN   TestCheckedViewDictionaryEnumMap/enum-map-producer-good
+=== RUN   TestCheckedViewDictionaryEnumMap/enum-map-producer-open-number
+=== RUN   TestCheckedViewDictionaryEnumMap/enum-map-producer-wrong
+=== RUN   TestCheckedViewDictionaryEnumMap/enum-map-producer-missing
+--- PASS: TestCheckedViewDictionaryEnumMap (4.28s)
+    --- PASS: TestCheckedViewDictionaryEnumMap/enum-map-good (0.65s)
+    --- PASS: TestCheckedViewDictionaryEnumMap/enum-map-open-number (0.76s)
+    --- PASS: TestCheckedViewDictionaryEnumMap/enum-map-wrong (0.52s)
+    --- PASS: TestCheckedViewDictionaryEnumMap/enum-map-missing (0.50s)
+    --- PASS: TestCheckedViewDictionaryEnumMap/enum-map-producer-good (0.45s)
+    --- PASS: TestCheckedViewDictionaryEnumMap/enum-map-producer-open-number (0.48s)
+    --- PASS: TestCheckedViewDictionaryEnumMap/enum-map-producer-wrong (0.43s)
+    --- PASS: TestCheckedViewDictionaryEnumMap/enum-map-producer-missing (0.48s)
+=== RUN   TestCheckedViewDictionaryLookupBatch
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-string-good
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-string-producer-good
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-string-missing
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-string-producer-missing
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-string-wrong
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-string-producer-wrong
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-generic-good
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-generic-producer-good
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-generic-missing
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-generic-producer-missing
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-generic-wrong
+=== RUN   TestCheckedViewDictionaryLookupBatch/map-generic-producer-wrong
+=== RUN   TestCheckedViewDictionaryLookupBatch/package-paths-good
+=== RUN   TestCheckedViewDictionaryLookupBatch/package-paths-producer-good
+=== RUN   TestCheckedViewDictionaryLookupBatch/package-paths-missing
+=== RUN   TestCheckedViewDictionaryLookupBatch/package-paths-producer-missing
+=== RUN   TestCheckedViewDictionaryLookupBatch/package-paths-wrong
+=== RUN   TestCheckedViewDictionaryLookupBatch/package-paths-producer-wrong
+=== RUN   TestCheckedViewDictionaryLookupBatch/package-paths-nested-wrong
+=== RUN   TestCheckedViewDictionaryLookupBatch/package-paths-producer-nested-wrong
+--- PASS: TestCheckedViewDictionaryLookupBatch (9.12s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-string-good (0.44s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-string-producer-good (0.52s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-string-missing (0.47s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-string-producer-missing (0.44s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-string-wrong (0.44s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-string-producer-wrong (0.41s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-generic-good (0.49s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-generic-producer-good (0.45s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-generic-missing (0.42s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-generic-producer-missing (0.44s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-generic-wrong (0.44s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/map-generic-producer-wrong (0.42s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/package-paths-good (0.43s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/package-paths-producer-good (0.48s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/package-paths-missing (0.48s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/package-paths-producer-missing (0.50s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/package-paths-wrong (0.46s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/package-paths-producer-wrong (0.47s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/package-paths-nested-wrong (0.45s)
+    --- PASS: TestCheckedViewDictionaryLookupBatch/package-paths-producer-nested-wrong (0.45s)
+=== RUN   TestCheckedViewDictionaryLookupOriginMutant
+    checked_view_dictionary_lookup_test.go:83: origin mutant caught by named control: native loses field contract and reaches ordinary storage refusal
+    checked_view_dictionary_lookup_test.go:92: origin mutant caught by named control: JavaScript exit=0 stdout="42\n"
+--- PASS: TestCheckedViewDictionaryLookupOriginMutant (0.17s)
+=== RUN   TestCheckedViewDictionaryOptionalContainers
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-watch-good
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-watch-wrong
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-watch-missing
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-watch-receiver-missing
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-watch-undefined
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-options-good
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-options-wrong
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-options-missing
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-options-receiver-missing
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-options-undefined
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-wildcard-good
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-wildcard-wrong
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-wildcard-missing
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-wildcard-receiver-missing
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-wildcard-undefined
+--- PASS: TestCheckedViewDictionaryOptionalContainers (6.32s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-watch-good (0.51s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-watch-wrong (0.42s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-watch-missing (0.40s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-watch-receiver-missing (0.43s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-watch-undefined (0.41s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-options-good (0.47s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-options-wrong (0.41s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-options-missing (0.40s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-options-receiver-missing (0.39s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-options-undefined (0.40s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-wildcard-good (0.42s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-wildcard-wrong (0.39s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-wildcard-missing (0.42s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-wildcard-receiver-missing (0.43s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-wildcard-undefined (0.41s)
+=== RUN   TestCheckedViewDictionaryOptionalAbsenceMutant
+    checked_view_dictionary_optional_test.go:92: optional absence mutant caught by required-field control: exit=0 stdout="undefined\n"
+    checked_view_dictionary_optional_test.go:92: optional absence mutant caught by required-field control: exit=0 stdout="undefined\n"
+--- PASS: TestCheckedViewDictionaryOptionalAbsenceMutant (0.16s)
+=== RUN   TestCheckedViewDictionaryPropagation
+=== RUN   TestCheckedViewDictionaryPropagation/helper-good
+=== RUN   TestCheckedViewDictionaryPropagation/helper-wrong
+=== RUN   TestCheckedViewDictionaryPropagation/generic-good
+=== RUN   TestCheckedViewDictionaryPropagation/generic-wrong
+=== RUN   TestCheckedViewDictionaryPropagation/callback-good
+=== RUN   TestCheckedViewDictionaryPropagation/callback-wrong
+=== RUN   TestCheckedViewDictionaryPropagation/field-good
+=== RUN   TestCheckedViewDictionaryPropagation/field-wrong
+--- PASS: TestCheckedViewDictionaryPropagation (3.19s)
+    --- PASS: TestCheckedViewDictionaryPropagation/helper-good (0.43s)
+    --- PASS: TestCheckedViewDictionaryPropagation/helper-wrong (0.38s)
+    --- PASS: TestCheckedViewDictionaryPropagation/generic-good (0.38s)
+    --- PASS: TestCheckedViewDictionaryPropagation/generic-wrong (0.43s)
+    --- PASS: TestCheckedViewDictionaryPropagation/callback-good (0.39s)
+    --- PASS: TestCheckedViewDictionaryPropagation/callback-wrong (0.39s)
+    --- PASS: TestCheckedViewDictionaryPropagation/field-good (0.39s)
+    --- PASS: TestCheckedViewDictionaryPropagation/field-wrong (0.39s)
+=== RUN   TestCheckedViewDictionaryArrays
+=== RUN   TestCheckedViewDictionaryArrays/paths-producer-good
+=== RUN   TestCheckedViewDictionaryArrays/paths-good
+=== RUN   TestCheckedViewDictionaryArrays/paths-missing
+=== RUN   TestCheckedViewDictionaryArrays/paths-container-wrong
+    checked_view_dictionary_propagation_test.go:76: pinned exit 70: adamic: panic: field read failed: view.paths matches no member of MapLike<string[]> | undefined; expected MapLike<string[]> | undefined, found number
+    checked_view_dictionary_propagation_test.go:76: pinned exit 70: adamic: panic: field read failed: view.paths matches no member of MapLike<string[]> | undefined; expected MapLike<string[]> | undefined, found number
+    checked_view_dictionary_propagation_test.go:76: pinned exit 70: adamic: panic: field read failed: view.paths matches no member of MapLike<string[]> | undefined; expected MapLike<string[]> | undefined, found number
+=== RUN   TestCheckedViewDictionaryArrays/paths-wrong
+    checked_view_dictionary_propagation_test.go:76: pinned exit 70: adamic: panic: field read failed: table['item']; expected string[] | undefined, found number
+    checked_view_dictionary_propagation_test.go:76: pinned exit 70: adamic: panic: field read failed: table['item']; expected string[] | undefined, found number
+    checked_view_dictionary_propagation_test.go:76: pinned exit 70: adamic: panic: field read failed: table['item']; expected string[] | undefined, found number
+=== RUN   TestCheckedViewDictionaryArrays/paths-element-wrong
+    checked_view_dictionary_propagation_test.go:76: pinned exit 70: adamic: panic: element read failed: values[0] expected string, found number
+    checked_view_dictionary_propagation_test.go:76: pinned exit 70: adamic: panic: element read failed: values[0] expected string, found number
+    checked_view_dictionary_propagation_test.go:76: pinned exit 70: adamic: panic: element read failed: values[0] expected string, found number
+=== RUN   TestCheckedViewDictionaryArrays/paths-key-missing
+--- PASS: TestCheckedViewDictionaryArrays (2.73s)
+    --- PASS: TestCheckedViewDictionaryArrays/paths-producer-good (0.39s)
+    --- PASS: TestCheckedViewDictionaryArrays/paths-good (0.41s)
+    --- PASS: TestCheckedViewDictionaryArrays/paths-missing (0.39s)
+    --- PASS: TestCheckedViewDictionaryArrays/paths-container-wrong (0.36s)
+    --- PASS: TestCheckedViewDictionaryArrays/paths-wrong (0.41s)
+    --- PASS: TestCheckedViewDictionaryArrays/paths-element-wrong (0.39s)
+    --- PASS: TestCheckedViewDictionaryArrays/paths-key-missing (0.39s)
+=== RUN   TestCheckedViewDictionaryRoot
+=== RUN   TestCheckedViewDictionaryRoot/good
+=== RUN   TestCheckedViewDictionaryRoot/wrong
+--- PASS: TestCheckedViewDictionaryRoot (0.75s)
+    --- PASS: TestCheckedViewDictionaryRoot/good (0.40s)
+    --- PASS: TestCheckedViewDictionaryRoot/wrong (0.36s)
+=== RUN   TestCheckedViewDictionaryWriteGuard
+--- PASS: TestCheckedViewDictionaryWriteGuard (0.12s)
+=== RUN   TestCheckedViewDictionaryCompilerPaths
+=== RUN   TestCheckedViewDictionaryCompilerPaths/compiler-paths-good
+=== RUN   TestCheckedViewDictionaryCompilerPaths/compiler-paths-missing
+=== RUN   TestCheckedViewDictionaryCompilerPaths/compiler-paths-container-wrong
+    checked_view_dictionary_propagation_test.go:165: pinned exit 70: adamic: panic: field read failed: view.paths; expected MapLike<string[]> | undefined, found number
+    checked_view_dictionary_propagation_test.go:165: pinned exit 70: adamic: panic: field read failed: view.paths; expected MapLike<string[]> | undefined, found number
+    checked_view_dictionary_propagation_test.go:165: pinned exit 70: adamic: panic: field read failed: view.paths; expected MapLike<string[]> | undefined, found number
+=== RUN   TestCheckedViewDictionaryCompilerPaths/compiler-paths-wrong
+    checked_view_dictionary_propagation_test.go:165: pinned exit 70: adamic: panic: field read failed: table['item']; expected string[] | undefined, found number
+    checked_view_dictionary_propagation_test.go:165: pinned exit 70: adamic: panic: field read failed: table['item']; expected string[] | undefined, found number
+    checked_view_dictionary_propagation_test.go:165: pinned exit 70: adamic: panic: field read failed: table['item']; expected string[] | undefined, found number
+=== RUN   TestCheckedViewDictionaryCompilerPaths/compiler-paths-element-wrong
+    checked_view_dictionary_propagation_test.go:165: pinned exit 70: adamic: panic: element read failed: values[0] expected string, found number
+    checked_view_dictionary_propagation_test.go:165: pinned exit 70: adamic: panic: element read failed: values[0] expected string, found number
+    checked_view_dictionary_propagation_test.go:165: pinned exit 70: adamic: panic: element read failed: values[0] expected string, found number
+=== RUN   TestCheckedViewDictionaryCompilerPaths/compiler-paths-key-missing
+--- PASS: TestCheckedViewDictionaryCompilerPaths (2.26s)
+    --- PASS: TestCheckedViewDictionaryCompilerPaths/compiler-paths-good (0.39s)
+    --- PASS: TestCheckedViewDictionaryCompilerPaths/compiler-paths-missing (0.37s)
+    --- PASS: TestCheckedViewDictionaryCompilerPaths/compiler-paths-container-wrong (0.37s)
+    --- PASS: TestCheckedViewDictionaryCompilerPaths/compiler-paths-wrong (0.37s)
+    --- PASS: TestCheckedViewDictionaryCompilerPaths/compiler-paths-element-wrong (0.38s)
+    --- PASS: TestCheckedViewDictionaryCompilerPaths/compiler-paths-key-missing (0.38s)
+=== RUN   TestCheckedViewDictionaryOptionalPaths
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-once
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-receiver-missing
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-good
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-missing
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-container-wrong
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: field read failed: view?.paths; expected MapLike<string[]> | undefined, found number
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: field read failed: view?.paths; expected MapLike<string[]> | undefined, found number
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: field read failed: view?.paths; expected MapLike<string[]> | undefined, found number
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-wrong
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: field read failed: table['item']; expected string[] | undefined, found number
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: field read failed: table['item']; expected string[] | undefined, found number
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: field read failed: table['item']; expected string[] | undefined, found number
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-element-wrong
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: element read failed: values[0] expected string, found number
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: element read failed: values[0] expected string, found number
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: element read failed: values[0] expected string, found number
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-key-missing
+--- PASS: TestCheckedViewDictionaryOptionalPaths (3.17s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-once (0.40s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-receiver-missing (0.37s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-good (0.41s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-missing (0.38s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-container-wrong (0.38s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-wrong (0.42s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-element-wrong (0.41s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-key-missing (0.40s)
+=== RUN   TestCheckedViewDictionaryStringIndexing
+=== RUN   TestCheckedViewDictionaryStringIndexing/string-index-good
+=== RUN   TestCheckedViewDictionaryStringIndexing/string-index-surrogate
+=== RUN   TestCheckedViewDictionaryStringIndexing/string-index-missing
+=== RUN   TestCheckedViewDictionaryStringIndexing/string-index-negative
+=== RUN   TestCheckedViewDictionaryStringIndexing/string-index-wrong
+=== RUN   TestCheckedViewDictionaryStringIndexing/path-index-good
+=== RUN   TestCheckedViewDictionaryStringIndexing/path-index-surrogate
+=== RUN   TestCheckedViewDictionaryStringIndexing/path-index-missing
+=== RUN   TestCheckedViewDictionaryStringIndexing/path-index-negative
+=== RUN   TestCheckedViewDictionaryStringIndexing/path-index-wrong
+--- PASS: TestCheckedViewDictionaryStringIndexing (4.05s)
+    --- PASS: TestCheckedViewDictionaryStringIndexing/string-index-good (0.43s)
+    --- PASS: TestCheckedViewDictionaryStringIndexing/string-index-surrogate (0.40s)
+    --- PASS: TestCheckedViewDictionaryStringIndexing/string-index-missing (0.39s)
+    --- PASS: TestCheckedViewDictionaryStringIndexing/string-index-negative (0.40s)
+    --- PASS: TestCheckedViewDictionaryStringIndexing/string-index-wrong (0.38s)
+    --- PASS: TestCheckedViewDictionaryStringIndexing/path-index-good (0.40s)
+    --- PASS: TestCheckedViewDictionaryStringIndexing/path-index-surrogate (0.41s)
+    --- PASS: TestCheckedViewDictionaryStringIndexing/path-index-missing (0.42s)
+    --- PASS: TestCheckedViewDictionaryStringIndexing/path-index-negative (0.42s)
+    --- PASS: TestCheckedViewDictionaryStringIndexing/path-index-wrong (0.39s)
+=== RUN   TestCheckedViewDictionarySource
+=== RUN   TestCheckedViewDictionarySource/options-good
+=== RUN   TestCheckedViewDictionarySource/options-read-wrong
+=== RUN   TestCheckedViewDictionarySource/array-read-wrong
+=== RUN   TestCheckedViewDictionarySource/options-wrong
+=== RUN   TestCheckedViewDictionarySource/nested-good
+=== RUN   TestCheckedViewDictionarySource/nested-wrong
+=== RUN   TestCheckedViewDictionarySource/array-wrong
+--- PASS: TestCheckedViewDictionarySource (2.73s)
+    --- PASS: TestCheckedViewDictionarySource/options-good (0.40s)
+    --- PASS: TestCheckedViewDictionarySource/options-read-wrong (0.38s)
+    --- PASS: TestCheckedViewDictionarySource/array-read-wrong (0.39s)
+    --- PASS: TestCheckedViewDictionarySource/options-wrong (0.38s)
+    --- PASS: TestCheckedViewDictionarySource/nested-good (0.40s)
+    --- PASS: TestCheckedViewDictionarySource/nested-wrong (0.40s)
+    --- PASS: TestCheckedViewDictionarySource/array-wrong (0.39s)
+=== RUN   TestCheckedViewDictionarySourceMutants
+=== RUN   TestCheckedViewDictionarySourceMutants/skip-check
+    checked_view_dictionary_source_test.go:84: pinned source read catches skip-check: exit=0 stdout="object\n" stderr=""
+    checked_view_dictionary_source_test.go:84: pinned source read catches skip-check: exit=0 stdout="object\n" stderr=""
+=== RUN   TestCheckedViewDictionarySourceMutants/accept-wrong-shape
+    checked_view_dictionary_source_test.go:84: pinned source read catches accept-wrong-shape: exit=0 stdout="object\n" stderr=""
+    checked_view_dictionary_source_test.go:84: pinned source read catches accept-wrong-shape: exit=0 stdout="object\n" stderr=""
+=== RUN   TestCheckedViewDictionarySourceMutants/drop-transitive-check
+    checked_view_dictionary_source_test.go:84: pinned source read catches drop-transitive-check: exit=0 stdout="42\n" stderr=""
+    checked_view_dictionary_source_test.go:84: pinned source read catches drop-transitive-check: exit=0 stdout="42\n" stderr=""
+--- PASS: TestCheckedViewDictionarySourceMutants (0.71s)
+    --- PASS: TestCheckedViewDictionarySourceMutants/skip-check (0.21s)
+    --- PASS: TestCheckedViewDictionarySourceMutants/accept-wrong-shape (0.22s)
+    --- PASS: TestCheckedViewDictionarySourceMutants/drop-transitive-check (0.27s)
+=== RUN   TestCheckedViewDictionaryStorageMutants
+=== RUN   TestCheckedViewDictionaryStorageMutants/skip-check
+    checked_view_dictionary_source_test.go:126: pinned source read catches skip-check: exit=0 stdout="object\n" stderr=""
+    checked_view_dictionary_source_test.go:126: pinned source read catches skip-check: exit=0 stdout="object\n" stderr=""
+=== RUN   TestCheckedViewDictionaryStorageMutants/accept-wrong-shape
+    checked_view_dictionary_source_test.go:126: pinned source read catches accept-wrong-shape: exit=0 stdout="object\n" stderr=""
+    checked_view_dictionary_source_test.go:126: pinned source read catches accept-wrong-shape: exit=0 stdout="object\n" stderr=""
+=== RUN   TestCheckedViewDictionaryStorageMutants/drop-transitive-check
+    checked_view_dictionary_source_test.go:126: pinned source read catches drop-transitive-check: exit=0 stdout="42\n" stderr=""
+    checked_view_dictionary_source_test.go:126: pinned source read catches drop-transitive-check: exit=0 stdout="42\n" stderr=""
+--- PASS: TestCheckedViewDictionaryStorageMutants (0.64s)
+    --- PASS: TestCheckedViewDictionaryStorageMutants/skip-check (0.21s)
+    --- PASS: TestCheckedViewDictionaryStorageMutants/accept-wrong-shape (0.21s)
+    --- PASS: TestCheckedViewDictionaryStorageMutants/drop-transitive-check (0.22s)
+=== RUN   TestCheckedViewDictionaryStorage
+=== RUN   TestCheckedViewDictionaryStorage/mutable-good
+=== RUN   TestCheckedViewDictionaryStorage/mutable-wrong
+=== RUN   TestCheckedViewDictionaryStorage/array-shape-wrong
+=== RUN   TestCheckedViewDictionaryStorage/union-shape-wrong
+=== RUN   TestCheckedViewDictionaryStorage/number-good
+=== RUN   TestCheckedViewDictionaryStorage/number-wrong
+=== RUN   TestCheckedViewDictionaryStorage/boolean-good
+=== RUN   TestCheckedViewDictionaryStorage/boolean-wrong
+=== RUN   TestCheckedViewDictionaryStorage/string-good
+=== RUN   TestCheckedViewDictionaryStorage/union-good
+=== RUN   TestCheckedViewDictionaryStorage/partial-good
+=== RUN   TestCheckedViewDictionaryStorage/partial-wrong
+=== RUN   TestCheckedViewDictionaryStorage/object-good
+=== RUN   TestCheckedViewDictionaryStorage/object-wrong
+=== RUN   TestCheckedViewDictionaryStorage/array-good
+=== RUN   TestCheckedViewDictionaryStorage/array-wrong
+--- PASS: TestCheckedViewDictionaryStorage (6.33s)
+    --- PASS: TestCheckedViewDictionaryStorage/mutable-good (0.39s)
+    --- PASS: TestCheckedViewDictionaryStorage/mutable-wrong (0.37s)
+    --- PASS: TestCheckedViewDictionaryStorage/array-shape-wrong (0.38s)
+    --- PASS: TestCheckedViewDictionaryStorage/union-shape-wrong (0.39s)
+    --- PASS: TestCheckedViewDictionaryStorage/number-good (0.39s)
+    --- PASS: TestCheckedViewDictionaryStorage/number-wrong (0.41s)
+    --- PASS: TestCheckedViewDictionaryStorage/boolean-good (0.41s)
+    --- PASS: TestCheckedViewDictionaryStorage/boolean-wrong (0.37s)
+    --- PASS: TestCheckedViewDictionaryStorage/string-good (0.40s)
+    --- PASS: TestCheckedViewDictionaryStorage/union-good (0.38s)
+    --- PASS: TestCheckedViewDictionaryStorage/partial-good (0.39s)
+    --- PASS: TestCheckedViewDictionaryStorage/partial-wrong (0.38s)
+    --- PASS: TestCheckedViewDictionaryStorage/object-good (0.42s)
+    --- PASS: TestCheckedViewDictionaryStorage/object-wrong (0.43s)
+    --- PASS: TestCheckedViewDictionaryStorage/array-good (0.44s)
+    --- PASS: TestCheckedViewDictionaryStorage/array-wrong (0.38s)
+=== RUN   TestCheckedViewDictionaryProducerCertificateMutant
+    checked_view_dictionary_storage_test.go:83: wrong producer certificate caught only by record storage check, exit 70
+--- PASS: TestCheckedViewDictionaryProducerCertificateMutant (0.19s)
+=== RUN   TestCheckedViewDictionaryComponents
+=== PAUSE TestCheckedViewDictionaryComponents
+=== RUN   TestCheckedViewDictionaryComponentMutants
+=== PAUSE TestCheckedViewDictionaryComponentMutants
+=== RUN   TestCheckedViewDictionaryJavaScriptGuards
+=== PAUSE TestCheckedViewDictionaryJavaScriptGuards
+=== RUN   TestCheckedViewDictionaryNativeStorageGuard
+=== PAUSE TestCheckedViewDictionaryNativeStorageGuard
+=== RUN   TestCheckedViewLazyUnread
+=== RUN   TestCheckedViewLazyUnread/unread
+=== RUN   TestCheckedViewLazyUnread/unread-untagged
+=== RUN   TestCheckedViewLazyUnread/unread-mixed
+=== RUN   TestCheckedViewLazyUnread/optional-error
+=== RUN   TestCheckedViewLazyUnread/optional-error-fields
+--- PASS: TestCheckedViewLazyUnread (2.31s)
+    --- PASS: TestCheckedViewLazyUnread/unread (0.40s)
+    --- PASS: TestCheckedViewLazyUnread/unread-untagged (0.37s)
+    --- PASS: TestCheckedViewLazyUnread/unread-mixed (0.37s)
+    --- PASS: TestCheckedViewLazyUnread/optional-error (0.58s)
+    --- PASS: TestCheckedViewLazyUnread/optional-error-fields (0.59s)
+=== RUN   TestCheckedViewLazyHelperMutant
+=== RUN   TestCheckedViewLazyHelperMutant/helper
+=== RUN   TestCheckedViewLazyHelperMutant/generic
+=== RUN   TestCheckedViewLazyHelperMutant/callback
+=== RUN   TestCheckedViewLazyHelperMutant/field
+--- PASS: TestCheckedViewLazyHelperMutant (1.31s)
+    --- PASS: TestCheckedViewLazyHelperMutant/helper (0.31s)
+    --- PASS: TestCheckedViewLazyHelperMutant/generic (0.30s)
+    --- PASS: TestCheckedViewLazyHelperMutant/callback (0.38s)
+    --- PASS: TestCheckedViewLazyHelperMutant/field (0.31s)
+=== RUN   TestCheckedViewLazyMissingNameMutant
+    checked_views_lazy_test.go:78: caught missing-name mutant: adamic: panic: field read failed: value.name is not initialized; expected string, found missing
+    checked_views_lazy_test.go:78: caught missing-name mutant: adamic: panic: field read failed: value.name is not initialized; expected string, found missing
+    checked_views_lazy_test.go:78: caught missing-name mutant: adamic: panic: field read failed: value.name is not initialized; expected string, found missing
+--- PASS: TestCheckedViewLazyMissingNameMutant (0.38s)
+=== RUN   TestCheckedViewLazyOptionalCodeMutants
+=== RUN   TestCheckedViewLazyOptionalCodeMutants/number
+    checked_views_lazy_test.go:100: caught optional number mutant: adamic: panic: field read failed: error.code matches no member of string | undefined; expected string | undefined, found number
+    checked_views_lazy_test.go:100: caught optional number mutant: adamic: panic: field read failed: error.code matches no member of string | undefined; expected string | undefined, found number
+    checked_views_lazy_test.go:100: caught optional number mutant: adamic: panic: field read failed: error.code matches no member of string | undefined; expected string | undefined, found number
+=== RUN   TestCheckedViewLazyOptionalCodeMutants/null
+    checked_views_lazy_test.go:100: caught optional null mutant: adamic: panic: field read failed: error.code matches no member of string | undefined; expected string | undefined, found null
+    checked_views_lazy_test.go:100: caught optional null mutant: adamic: panic: field read failed: error.code matches no member of string | undefined; expected string | undefined, found null
+    checked_views_lazy_test.go:100: caught optional null mutant: adamic: panic: field read failed: error.code matches no member of string | undefined; expected string | undefined, found null
+--- PASS: TestCheckedViewLazyOptionalCodeMutants (0.78s)
+    --- PASS: TestCheckedViewLazyOptionalCodeMutants/number (0.36s)
+    --- PASS: TestCheckedViewLazyOptionalCodeMutants/null (0.41s)
+=== CONT  TestCheckedViewDictionaryComponents
+=== CONT  TestCheckedViewDictionaryComponentMutants
+=== CONT  TestCheckedViewDictionaryNativeStorageGuard
+=== CONT  TestCheckedViewDictionaryJavaScriptGuards
+=== RUN   TestCheckedViewDictionaryJavaScriptGuards/container
+=== RUN   TestCheckedViewDictionaryComponentMutants/skip-check
+=== RUN   TestCheckedViewDictionaryJavaScriptGuards/accessor
+=== NAME  TestCheckedViewDictionaryComponentMutants/skip-check
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="[object Object]\nundefined\n"
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="[object Object]\nundefined\n"
+=== RUN   TestCheckedViewDictionaryComponentMutants/accept-wrong-shape
+=== RUN   TestCheckedViewDictionaryJavaScriptGuards/missing-child
+=== RUN   TestCheckedViewDictionaryComponents/options-good
+--- PASS: TestCheckedViewDictionaryNativeStorageGuard (0.21s)
+=== RUN   TestCheckedViewDictionaryJavaScriptGuards/required-missing
+=== NAME  TestCheckedViewDictionaryComponentMutants/accept-wrong-shape
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="undefined\n"
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="undefined\n"
+=== RUN   TestCheckedViewDictionaryComponentMutants/drop-transitive-contract
+--- PASS: TestCheckedViewDictionaryJavaScriptGuards (0.31s)
+    --- PASS: TestCheckedViewDictionaryJavaScriptGuards/container (0.08s)
+    --- PASS: TestCheckedViewDictionaryJavaScriptGuards/accessor (0.08s)
+    --- PASS: TestCheckedViewDictionaryJavaScriptGuards/missing-child (0.08s)
+    --- PASS: TestCheckedViewDictionaryJavaScriptGuards/required-missing (0.07s)
+=== RUN   TestCheckedViewDictionaryComponents/options-wrong
+=== NAME  TestCheckedViewDictionaryComponentMutants/drop-transitive-contract
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="42\n"
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="42\n"
+--- PASS: TestCheckedViewDictionaryComponentMutants (0.36s)
+    --- PASS: TestCheckedViewDictionaryComponentMutants/skip-check (0.13s)
+    --- PASS: TestCheckedViewDictionaryComponentMutants/accept-wrong-shape (0.12s)
+    --- PASS: TestCheckedViewDictionaryComponentMutants/drop-transitive-contract (0.11s)
+=== RUN   TestCheckedViewDictionaryComponents/nested-good
+=== RUN   TestCheckedViewDictionaryComponents/nested-wrong
+=== RUN   TestCheckedViewDictionaryComponents/array-wrong
+--- PASS: TestCheckedViewDictionaryComponents (0.75s)
+    --- PASS: TestCheckedViewDictionaryComponents/options-good (0.13s)
+    --- PASS: TestCheckedViewDictionaryComponents/options-wrong (0.11s)
+    --- PASS: TestCheckedViewDictionaryComponents/nested-good (0.11s)
+    --- PASS: TestCheckedViewDictionaryComponents/nested-wrong (0.10s)
+    --- PASS: TestCheckedViewDictionaryComponents/array-wrong (0.11s)
+PASS
+gate cache: native hits=0 misses=94
+gate cache: node hits=0 misses=393
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	82.424s

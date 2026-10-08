@@ -118,7 +118,7 @@ func runtimeKey(files []runtimeFile, flags []string, compiler string, version st
 	hash := sha256.New()
 	// Length prefixes preserve flag boundaries, order and arbitrary source bytes.
 	part := func(value string) { fmt.Fprintf(hash, "%d:", len(value)); hash.Write([]byte(value)) }
-	part("adamic-runtime-v1")
+	part("adamic-runtime-v3-representation-table")
 	part(goruntime.GOOS)
 	part(goruntime.GOARCH)
 	part(compiler)

@@ -1,0 +1,404 @@
+{
+  "area_sha": "337aa466bf7b519ffdc50c6f16e976a330a4a4f5",
+  "views_sha": "432d4913d31daaa49d8ca4eb46f30f21f90da5ee",
+  "controls_only": true,
+  "merged_compiler_tested": false,
+  "build_command": "GOMAXPROCS=2 go build -trimpath -p=1 -buildvcs=false -o /tmp/area-views-{parent}-adamic ./cmd/adamic",
+  "compile": [
+    {
+      "parent": "area",
+      "file": "internal/oracle/testdata/taste_comma.a",
+      "source_sha256": "919d21ebe2e388fd9e02fd8ac2efe01e0754b319b089d49907ae98b20ac8a5ea",
+      "exit": 0,
+      "seconds": 0.069,
+      "diagnostic": "",
+      "stdout_bytes": 9488
+    },
+    {
+      "parent": "area",
+      "file": "internal/oracle/testdata/taste_void.a",
+      "source_sha256": "430516ad7551e6b9ca1789a8994b0eb1bb449c5bb2525104fc3550aa87b6073d",
+      "exit": 0,
+      "seconds": 0.064,
+      "diagnostic": "",
+      "stdout_bytes": 12966
+    },
+    {
+      "parent": "area",
+      "file": "internal/oracle/testdata/typed_arrays_uint8array.a",
+      "source_sha256": "7bbacd448d345c3909c86362669c4e9ed929b459f504804824aae13d65eb2afe",
+      "exit": 0,
+      "seconds": 0.064,
+      "diagnostic": "",
+      "stdout_bytes": 16811
+    },
+    {
+      "parent": "area",
+      "file": "internal/oracle/testdata/closure_convention_plain.a",
+      "source_sha256": "30795c222db2e3e7505530271270704d3c5cf79a35614cf5ef5cd3be35c49958",
+      "exit": 0,
+      "seconds": 0.066,
+      "diagnostic": "",
+      "stdout_bytes": 12223
+    },
+    {
+      "parent": "area",
+      "file": "internal/oracle/testdata/closure_convention_receiver_rest.a",
+      "source_sha256": "050ff3fa4cc58c104119676e865911d8a10cf2eab821a869ec11e6e5fe323173",
+      "exit": 0,
+      "seconds": 0.064,
+      "diagnostic": "",
+      "stdout_bytes": 8059
+    },
+    {
+      "parent": "area",
+      "file": "internal/oracle/testdata/arguments_length_callbacks.a",
+      "source_sha256": "06d893396019292c20cdb91227aa72d5be8d198a7e0ba1166e0117055fa30f73",
+      "exit": 0,
+      "seconds": 0.115,
+      "diagnostic": "",
+      "stdout_bytes": 23399
+    },
+    {
+      "parent": "area",
+      "file": "internal/oracle/testdata/nested_generic_capture.a",
+      "source_sha256": "c1e0cefb068140f66f02e09aa101cd206b7c6507b9357493770d85a10e483a44",
+      "exit": 0,
+      "seconds": 0.115,
+      "diagnostic": "",
+      "stdout_bytes": 8958
+    },
+    {
+      "parent": "area",
+      "file": "internal/oracle/testdata/regexp_null_narrowed.a",
+      "source_sha256": "691a4afae5803416ec4bd0b8fb142c5e3fad934f0060d4b49df1035f75c7f846",
+      "exit": 0,
+      "seconds": 0.067,
+      "diagnostic": "",
+      "stdout_bytes": 5011
+    },
+    {
+      "parent": "area",
+      "file": "internal/oracle/testdata/typeof_null.a",
+      "source_sha256": "f126b77816d300405baaef2eb1fb2adde2a0de50be7610593498412dfb1ffac8",
+      "exit": 0,
+      "seconds": 0.065,
+      "diagnostic": "",
+      "stdout_bytes": 2925
+    },
+    {
+      "parent": "area",
+      "file": "internal/oracle/testdata/records_scalars.a",
+      "source_sha256": "33ac0e71e6a287c96aeb1d14eca58f6e630c75e8a3fa5e8db25dfec115be5130",
+      "exit": 1,
+      "seconds": 0.065,
+      "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/records_scalars.a:2:1: stage 0 can't lower assigning an element of a value yet",
+      "stdout_bytes": 0
+    },
+    {
+      "parent": "area",
+      "file": "internal/oracle/testdata/never_call.a",
+      "source_sha256": "20843eb9ef6129b4d50f2108a183a565f36762630bf6ce72cb28d6ea1964054a",
+      "exit": 0,
+      "seconds": 0.068,
+      "diagnostic": "",
+      "stdout_bytes": 589
+    },
+    {
+      "parent": "area",
+      "file": "stage3/census/repro/r05/main.a",
+      "source_sha256": "0db429b6b10b1965d424748387276280ceb8776ae62258fe1a6fceade645c1f5",
+      "exit": 0,
+      "seconds": 0.064,
+      "diagnostic": "",
+      "stdout_bytes": 981
+    },
+    {
+      "parent": "area",
+      "file": "stage3/interface-downcasts/nullish/maps/entry-live-mutation.a",
+      "source_sha256": "d668f2959231604d808329ca101f52b7c1362fe060e4d5a539a7198f84f56bdd",
+      "exit": 1,
+      "seconds": 0.067,
+      "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/nullish/maps/entry-live-mutation.a:6:6: stage 0 can't lower checked view field value of type ReadonlyMap<string, string | number | null> | null yet",
+      "stdout_bytes": 0
+    },
+    {
+      "parent": "area",
+      "file": "stage3/interface-downcasts/dictionaries/source/values-fixed-object-good.a",
+      "source_sha256": "dae7a13ac1cdbaa6880f6b19a994ddfc5e281fa5568dfd297abed8d8ba771ad1",
+      "exit": 1,
+      "seconds": 0.064,
+      "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/source/values-fixed-object-good.a:1:22: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added",
+      "stdout_bytes": 0
+    },
+    {
+      "parent": "area",
+      "file": "stage3/interface-downcasts/tuples/rest-map-one.a",
+      "source_sha256": "c260ae8f93513f36936fb3124855388a480f2c8f3d02c44a885d0bc6db6f62ea",
+      "exit": 1,
+      "seconds": 0.064,
+      "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/tuples/rest-map-one.a:3:234: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "stdout_bytes": 0
+    },
+    {
+      "parent": "area",
+      "file": "internal/oracle/refusals/nested_cycle.a",
+      "source_sha256": "4547f44659e146d23db8816f0a3707cf4d103264b5e15ee204587b43180ccb89",
+      "exit": 1,
+      "seconds": 0.064,
+      "diagnostic": "adamic: /workspace/adamic/internal/oracle/refusals/nested_cycle.a:2:6: Adamic 0.1 refuses 'saved', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)",
+      "stdout_bytes": 0
+    },
+    {
+      "parent": "views",
+      "file": "internal/oracle/testdata/taste_comma.a",
+      "source_sha256": "919d21ebe2e388fd9e02fd8ac2efe01e0754b319b089d49907ae98b20ac8a5ea",
+      "exit": 1,
+      "seconds": 0.067,
+      "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/taste_comma.a:3:31: Adamic 0.1 refuses the comma operator; write each expression as its own statement",
+      "stdout_bytes": 0
+    },
+    {
+      "parent": "views",
+      "file": "internal/oracle/testdata/taste_void.a",
+      "source_sha256": "430516ad7551e6b9ca1789a8994b0eb1bb449c5bb2525104fc3550aa87b6073d",
+      "exit": 1,
+      "seconds": 0.115,
+      "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/taste_void.a:3:16: Adamic 0.1 refuses the void operator; evaluate the expression as a statement",
+      "stdout_bytes": 0
+    },
+    {
+      "parent": "views",
+      "file": "internal/oracle/testdata/typed_arrays_uint8array.a",
+      "source_sha256": "7bbacd448d345c3909c86362669c4e9ed929b459f504804824aae13d65eb2afe",
+      "exit": 1,
+      "seconds": 0.064,
+      "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/typed_arrays_uint8array.a:2:7: stage 0 can't lower a value of type Uint8Array<ArrayBuffer> yet",
+      "stdout_bytes": 0
+    },
+    {
+      "parent": "views",
+      "file": "internal/oracle/testdata/closure_convention_plain.a",
+      "source_sha256": "30795c222db2e3e7505530271270704d3c5cf79a35614cf5ef5cd3be35c49958",
+      "exit": 0,
+      "seconds": 0.065,
+      "diagnostic": "",
+      "stdout_bytes": 13038
+    },
+    {
+      "parent": "views",
+      "file": "internal/oracle/testdata/closure_convention_receiver_rest.a",
+      "source_sha256": "050ff3fa4cc58c104119676e865911d8a10cf2eab821a869ec11e6e5fe323173",
+      "exit": 1,
+      "seconds": 0.065,
+      "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/closure_convention_receiver_rest.a:2:107: Adamic 0.1 refuses arguments; name the parameters, or take a rest parameter",
+      "stdout_bytes": 0
+    },
+    {
+      "parent": "views",
+      "file": "internal/oracle/testdata/arguments_length_callbacks.a",
+      "source_sha256": "06d893396019292c20cdb91227aa72d5be8d198a7e0ba1166e0117055fa30f73",
+      "exit": 1,
+      "seconds": 0.065,
+      "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/arguments_length_callbacks.a:2:9: Adamic 0.1 refuses arguments; name the parameters, or take a rest parameter",
+      "stdout_bytes": 0
+    },
+    {
+      "parent": "views",
+      "file": "internal/oracle/testdata/nested_generic_capture.a",
+      "source_sha256": "c1e0cefb068140f66f02e09aa101cd206b7c6507b9357493770d85a10e483a44",
+      "exit": 1,
+      "seconds": 0.066,
+      "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/nested_generic_capture.a:3:2: stage 0 can't lower a generic or unnamed nested function declaration yet",
+      "stdout_bytes": 0
+    },
+    {
+      "parent": "views",
+      "file": "internal/oracle/testdata/regexp_null_narrowed.a",
+      "source_sha256": "691a4afae5803416ec4bd0b8fb142c5e3fad934f0060d4b49df1035f75c7f846",
+      "exit": 0,
+      "seconds": 0.066,
+      "diagnostic": "",
+      "stdout_bytes": 5033
+    },
+    {
+      "parent": "views",
+      "file": "internal/oracle/testdata/typeof_null.a",
+      "source_sha256": "f126b77816d300405baaef2eb1fb2adde2a0de50be7610593498412dfb1ffac8",
+      "exit": 0,
+      "seconds": 0.064,
+      "diagnostic": "",
+      "stdout_bytes": 2947
+    },
+    {
+      "parent": "views",
+      "file": "internal/oracle/testdata/records_scalars.a",
+      "source_sha256": "33ac0e71e6a287c96aeb1d14eca58f6e630c75e8a3fa5e8db25dfec115be5130",
+      "exit": 0,
+      "seconds": 0.064,
+      "diagnostic": "",
+      "stdout_bytes": 14370
+    },
+    {
+      "parent": "views",
+      "file": "internal/oracle/testdata/never_call.a",
+      "source_sha256": "20843eb9ef6129b4d50f2108a183a565f36762630bf6ce72cb28d6ea1964054a",
+      "exit": 0,
+      "seconds": 0.064,
+      "diagnostic": "",
+      "stdout_bytes": 1029
+    },
+    {
+      "parent": "views",
+      "file": "stage3/census/repro/r05/main.a",
+      "source_sha256": "0db429b6b10b1965d424748387276280ceb8776ae62258fe1a6fceade645c1f5",
+      "exit": 0,
+      "seconds": 0.064,
+      "diagnostic": "",
+      "stdout_bytes": 1003
+    },
+    {
+      "parent": "views",
+      "file": "stage3/interface-downcasts/nullish/maps/entry-live-mutation.a",
+      "source_sha256": "d668f2959231604d808329ca101f52b7c1362fe060e4d5a539a7198f84f56bdd",
+      "exit": 1,
+      "seconds": 0.065,
+      "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/nullish/maps/entry-live-mutation.a:5:69: stage 0 can't lower a Map forEach callback with a slotless value representation yet",
+      "stdout_bytes": 0
+    },
+    {
+      "parent": "views",
+      "file": "stage3/interface-downcasts/dictionaries/source/values-fixed-object-good.a",
+      "source_sha256": "dae7a13ac1cdbaa6880f6b19a994ddfc5e281fa5568dfd297abed8d8ba771ad1",
+      "exit": 0,
+      "seconds": 0.116,
+      "diagnostic": "",
+      "stdout_bytes": 8177
+    },
+    {
+      "parent": "views",
+      "file": "stage3/interface-downcasts/tuples/rest-map-one.a",
+      "source_sha256": "c260ae8f93513f36936fb3124855388a480f2c8f3d02c44a885d0bc6db6f62ea",
+      "exit": 0,
+      "seconds": 0.065,
+      "diagnostic": "",
+      "stdout_bytes": 8771
+    },
+    {
+      "parent": "views",
+      "file": "internal/oracle/refusals/nested_cycle.a",
+      "source_sha256": "4547f44659e146d23db8816f0a3707cf4d103264b5e15ee204587b43180ccb89",
+      "exit": 0,
+      "seconds": 0.066,
+      "diagnostic": "",
+      "stdout_bytes": 3580
+    }
+  ],
+  "node": [
+    {
+      "file": "internal/oracle/testdata/taste_comma.a",
+      "exit": 0,
+      "stdout": "next 1\nnext 2\n17 2\n4 4\n5 5\nleft\n23\nnext 3\nnext 4\nnext 5\nnext 6\nbuilt60\nnext 7\nnext 8\nbuilt80\nnext 9\nloop 0\nnext 10\nnext 11\nloop 1\nnext 12\nnext 13\nnext 14\ncomma throws\n",
+      "stderr": ""
+    },
+    {
+      "file": "internal/oracle/testdata/taste_void.a",
+      "exit": 0,
+      "stdout": "true 1\n2\nconsole 5\ntrue undefined 6\ntrue 7\n8\nvoid throws 9\nvoid finally\nside10\ntrue 14\n",
+      "stderr": ""
+    },
+    {
+      "file": "internal/oracle/testdata/closure_convention_receiver_rest.a",
+      "exit": 0,
+      "stdout": "3\n35\n45\n",
+      "stderr": ""
+    },
+    {
+      "file": "internal/oracle/testdata/arguments_length_callbacks.a",
+      "exit": 0,
+      "stdout": "3,3\n3,3\ntrue true\n8\n2\n1,2\n2\n1,2\n3:1\n3:2\n2,3\n",
+      "stderr": ""
+    },
+    {
+      "file": "stage3/census/repro/r05/main.a",
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    {
+      "file": "stage3/interface-downcasts/nullish/maps/entry-live-mutation.a",
+      "exit": 0,
+      "stdout": "number\n7\n0\n",
+      "stderr": ""
+    },
+    {
+      "file": "stage3/interface-downcasts/tuples/rest-map-one.a",
+      "exit": 0,
+      "stdout": "7\nstring\nundefined\n",
+      "stderr": ""
+    }
+  ],
+  "native": [
+    {
+      "parent": "area",
+      "file": "internal/oracle/testdata/taste_comma.a",
+      "build_exit": 0,
+      "run_exit": 0,
+      "node_agreement": true,
+      "stdout": "next 1\nnext 2\n17 2\n4 4\n5 5\nleft\n23\nnext 3\nnext 4\nnext 5\nnext 6\nbuilt60\nnext 7\nnext 8\nbuilt80\nnext 9\nloop 0\nnext 10\nnext 11\nloop 1\nnext 12\nnext 13\nnext 14\ncomma throws\n",
+      "stderr": ""
+    },
+    {
+      "parent": "area",
+      "file": "internal/oracle/testdata/taste_void.a",
+      "build_exit": 0,
+      "run_exit": 0,
+      "node_agreement": true,
+      "stdout": "true 1\n2\nconsole 5\ntrue undefined 6\ntrue 7\n8\nvoid throws 9\nvoid finally\nside10\ntrue 14\n",
+      "stderr": ""
+    },
+    {
+      "parent": "area",
+      "file": "internal/oracle/testdata/closure_convention_receiver_rest.a",
+      "build_exit": 0,
+      "run_exit": 0,
+      "node_agreement": true,
+      "stdout": "3\n35\n45\n",
+      "stderr": ""
+    },
+    {
+      "parent": "area",
+      "file": "internal/oracle/testdata/arguments_length_callbacks.a",
+      "build_exit": 0,
+      "run_exit": 0,
+      "node_agreement": true,
+      "stdout": "3,3\n3,3\ntrue true\n8\n2\n1,2\n2\n1,2\n3:1\n3:2\n2,3\n",
+      "stderr": ""
+    },
+    {
+      "parent": "views",
+      "file": "internal/oracle/testdata/taste_comma.a",
+      "build_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/taste_comma.a:3:31: Adamic 0.1 refuses the comma operator; write each expression as its own statement\n"
+    },
+    {
+      "parent": "views",
+      "file": "internal/oracle/testdata/taste_void.a",
+      "build_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/taste_void.a:3:16: Adamic 0.1 refuses the void operator; evaluate the expression as a statement\n"
+    },
+    {
+      "parent": "views",
+      "file": "internal/oracle/testdata/closure_convention_receiver_rest.a",
+      "build_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/closure_convention_receiver_rest.a:2:107: Adamic 0.1 refuses arguments; name the parameters, or take a rest parameter\n"
+    },
+    {
+      "parent": "views",
+      "file": "internal/oracle/testdata/arguments_length_callbacks.a",
+      "build_exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/arguments_length_callbacks.a:2:9: Adamic 0.1 refuses arguments; name the parameters, or take a rest parameter\n"
+    }
+  ],
+  "changed_existing_a_files": 2980
+}

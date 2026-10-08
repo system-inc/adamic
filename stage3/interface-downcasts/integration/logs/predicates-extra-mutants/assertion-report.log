@@ -1,0 +1,18 @@
+=== RUN   TestExplainChecksOutput
+=== RUN   TestExplainChecksOutput/assert_defined_read
+    checks_test.go:38: c explanation:
+        adamic: predicate checks: proven 0 checked 0 unobservable 0
+        
+        want:
+        internal/lower/testdata/predicates/assert_defined_read.a:16:5: predicate assertIsDefined
+          true: proven; implementation body proves this direction
+        internal/lower/testdata/predicates/assert_defined_read.a:24:5: predicate assertIsDefined
+          true: proven; implementation body proves this direction
+        internal/lower/testdata/predicates/assert_defined_read.a:7:5: predicate assertIsDefined
+          true: proven; implementation body proves this direction
+        adamic: predicate checks: proven 3 checked 0 unobservable 0
+--- FAIL: TestExplainChecksOutput (0.05s)
+    --- FAIL: TestExplainChecksOutput/assert_defined_read (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic	0.057s
+FAIL

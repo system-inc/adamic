@@ -1,0 +1,19 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.20s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/disallowed-comma/wrong-arity (0.45s)
+        checked_views_callable_later_ranked_test.go:19: gate cache node hit
+        checked_views_callable_later_ranked_test.go:39: gate cache node miss
+        checked_views_callable_later_ranked_test.go:59: backend2 exit 0 stdout "9\n" stderr "" want "parenthesizeExpressionForDisallowedComma" and "found function with arity 2"; sanitized exit 70 stderr "adamic: panic: field read failed: parenthesizerRules().parenthesizeExpressionForDisallowedComma expected (expression: Expression) => Expression, found function with arity 2\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/token-start/wrong-arity (0.39s)
+        checked_views_callable_later_ranked_test.go:19: gate cache node hit
+        checked_views_callable_later_ranked_test.go:39: gate cache node miss
+        checked_views_callable_later_ranked_test.go:59: backend2 exit 0 stdout "9\n" stderr "" want "getTokenStart" and "found function with arity 1"; sanitized exit 70 stderr "adamic: panic: field read failed: scanner.getTokenStart expected () => number, found function with arity 1\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/true/wrong-arity (0.35s)
+        checked_views_callable_later_ranked_test.go:19: gate cache node hit
+        checked_views_callable_later_ranked_test.go:39: gate cache node miss
+        checked_views_callable_later_ranked_test.go:59: backend2 exit 0 stdout "9\n" stderr "" want "createTrue" and "found function with arity 1"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createTrue expected () => TrueLiteral, found function with arity 1\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=3 misses=3
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.211s
+FAIL

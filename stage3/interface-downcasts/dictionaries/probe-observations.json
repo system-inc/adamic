@@ -1,0 +1,44 @@
+[
+  {
+    "fixture": "options-valid.a",
+    "source_node_exit": 0,
+    "source_node_stdout": "true\nundefined\n",
+    "source_support": "unclaimed",
+    "c": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/fixtures/options-valid.a:1:21: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added\n"
+    },
+    "js": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/fixtures/options-valid.a:1:21: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added\n"
+    }
+  },
+  {
+    "fixture": "options-wrong.a",
+    "source_node_exit": 0,
+    "source_node_stdout": "42\n",
+    "source_support": "unclaimed",
+    "c": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/fixtures/options-wrong.a:1:21: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added\n"
+    },
+    "js": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/fixtures/options-wrong.a:1:21: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added\n"
+    }
+  },
+  {
+    "fixture": "nested-wrong.a",
+    "source_node_exit": 0,
+    "source_node_stdout": "42\n",
+    "source_support": "unclaimed",
+    "c": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/fixtures/nested-wrong.a:2:19: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added\n"
+    },
+    "js": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/fixtures/nested-wrong.a:2:19: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added\n"
+    }
+  }
+]

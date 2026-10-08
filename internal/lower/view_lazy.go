@@ -1,0 +1,312 @@
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+// Unsupported contracts are descriptors, never certificates. Their users must
+// refuse at a demanded read. Cast admission does not inspect their payloads.
+func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
+	if l.result.ViewContractTypes == nil {
+		l.result.ViewContractTypes = map[int]ir.ViewContractID{}
+	}
+	if id := l.result.ViewContractTypes[int(target.Id())]; id != 0 {
+		return id, nil
+	}
+	if target.Flags()&checker.TypeFlagsUnion != 0 && (l.includesNull(target) || l.includesUndefined(target) && l.isLibraryType(l.checker.GetNonNullableType(target), "Map", "ReadonlyMap")) {
+		return l.nullishViewContract(node, target)
+	}
+	if l.isLibraryType(target, "Map", "ReadonlyMap") {
+		return l.mapViewContract(node, target)
+	}
+	if l.stringDictionary(target) || l.finitePartialRecordElement(target) != nil {
+		return viewDictionaryContractHook(l, node, target, func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) })
+	}
+	family := l.unsupportedViewFamily(target)
+	if family == "" {
+		id, err := l.strictViewContract(node, target)
+		if err == nil {
+			if family := l.viewIntersectionReadFamily(id, target); family != "" {
+				l.result.ViewContracts[id-1].Unsupported = family
+			}
+			return id, nil
+		}
+		family = "representation conversion"
+	}
+	// A failing family adapter may have reserved its recursive id already.
+	id := l.result.ViewContractTypes[int(target.Id())]
+	descriptor := ir.ViewContract{Kind: ir.ViewUnknown, Name: l.checker.TypeToString(target), Unsupported: family}
+	if id == 0 {
+		id = ir.ViewContractID(len(l.result.ViewContracts) + 1)
+		l.result.ViewContracts = append(l.result.ViewContracts, descriptor)
+		l.result.ViewContractTypes[int(target.Id())] = id
+	} else {
+		l.result.ViewContracts[id-1] = descriptor
+	}
+	return id, nil
+}
+
+func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
+	if l.phantomUndefined(target) {
+		return ""
+	}
+	if base := l.phantomBase(target); base != nil && interfaceScalar(base) {
+		return ""
+	}
+	if l.objectPrimitiveTupleMember(target) {
+		return "tuple union member"
+	}
+	if l.viewMutableArrayUnion(target) {
+		return "mutable array union"
+	}
+	if l.viewArrayBase(target) != nil {
+		return ""
+	}
+	flags := target.Flags()
+	switch {
+	case flags&checker.TypeFlagsAny != 0:
+		return "any"
+	case flags&checker.TypeFlagsUnknown != 0:
+		return "unknown"
+	case flags&checker.TypeFlagsNever != 0:
+		return "never"
+	case flags&checker.TypeFlagsTypeParameter != 0:
+		return "generic"
+	case flags&checker.TypeFlagsIntersection != 0:
+		if l.structuralViewIntersection(target) {
+			return ""
+		}
+		return "intersection"
+	case isClassInstance(target):
+		return "nominal class"
+	case l.isLibraryType(target, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
+		return "collection"
+	case checker.IsTupleType(target):
+		if supportedTupleArity(target) {
+			return ""
+		}
+		return "tuple"
+	case flags&checker.TypeFlagsObject != 0 && len(l.checker.GetIndexInfosOfType(target)) != 0 && !l.checker.IsArrayType(target):
+		return "dictionary"
+	}
+
+	return ""
+}
+
+// Demand uses the same allocations, joined arguments/results and projected
+// stores as shape certification. Unknown is never an empty proof of safety.
+func (l *lowering) checkLazyViewReads() error {
+	// Finish producer and descendant certificates before bounded admission.
+	l.certifyUntaggedCallableProducers()
+	l.completeUntaggedRecursiveContracts()
+	l.finishBoundedIntersections()
+	program := l.result
+	if len(program.ViewOrigins) == 0 {
+		return nil
+	}
+	if err := l.prepareViewCallableAggregateSchemas(); err != nil {
+		return err
+	}
+	assignAllocationSites(program)
+	graph := newAllocationFlowGraph(program)
+	viewed := map[int]bool{}
+	unknown := false
+	queue := []int{}
+	add := func(set ir.AllocationSet) {
+		unknown = unknown || set.Unknown
+		for _, site := range set.Sites {
+			if !viewed[site] {
+				viewed[site] = true
+				queue = append(queue, site)
+			}
+		}
+	}
+	for _, origin := range dictionaryEnumerationOrigins(program) {
+		add(graph.ReachingAllocations(origin))
+	}
+	index := graph.projectionIndex()
+	callResults := viewCallableAggregateResults(program)
+	l.addViewCallableAggregateResults(graph, callResults, viewed, unknown, add)
+	for len(queue) != 0 {
+		site := queue[len(queue)-1]
+		queue = queue[:len(queue)-1]
+		l.addViewCallableAggregateResults(graph, callResults, viewed, unknown, add)
+		if literal, ok := index.records[site]; ok {
+			for _, field := range literal.Fields {
+				if viewAggregate(field.Value) {
+					add(graph.ReachingAllocations(field.Value))
+				}
+			}
+			if literal.Spread != nil {
+				add(graph.ReachingAllocations(literal.Spread))
+			}
+		}
+		if literal, ok := index.arrays[site]; ok {
+			for _, element := range literal.Elements {
+				if viewAggregate(element) {
+					add(graph.ReachingAllocations(element))
+				}
+			}
+		}
+		for _, values := range index.stores[site] {
+			for _, value := range values {
+				if viewAggregate(value) {
+					add(graph.ReachingAllocations(value))
+				}
+			}
+		}
+	}
+	// Wider interfaces and instantiated helpers can give the same member a
+	// different checker type id. Field-name fallback retains the refusal until
+	// the receiver flow proves it cannot receive a viewed allocation.
+	unsupportedFields := map[string]string{}
+	for _, descriptor := range program.ViewContracts {
+		for _, field := range descriptor.Fields {
+			if family := program.ViewContracts[field.Contract-1].Unsupported; family != "" {
+				unsupportedFields[field.Name] = family
+			}
+		}
+	}
+	scopedFields, untrackedScope := l.scopedViewFieldFamilies(graph)
+	var refused error
+	inspect := func(node any) bool {
+		if refused != nil {
+			return false
+		}
+		var receiver ir.Expression
+		var typeID, receiverTypeID int
+		var selectedContract ir.ViewContractID
+		var field, where string
+		operationFamily := ""
+		nominalCheckedRead := false
+		arrayRead := func(array ir.Expression, read ir.ArrayViewRead) {
+			receiver, typeID, field, where = array, read.ViewTypeID, "[element]", read.View
+			nominalCheckedRead = ir.HasArrayViews(program) && (read.Element == ir.Object || read.Element == ir.Union)
+		}
+		switch read := node.(type) {
+		case ir.RecordCall:
+			if read.Method != "get" && read.Method != "values" && read.Method != "entries" {
+				return true
+			}
+			receiver, typeID, field, where = read.Arguments[0], read.ViewTypeID, "[dictionary element]", read.ViewWhere
+			if read.Method == "values" || read.Method == "entries" {
+				operationFamily = "dictionary enumeration"
+			} else if read.DictionaryRead == nil {
+				operationFamily = "dictionary read without a supported contract"
+			} else if read.DictionaryRead.DictionaryPrimitive && ir.PrimitiveDictionaryReadCertificate(program, *read.DictionaryRead) {
+				selectedContract = read.DictionaryRead.ViewContract
+			} else if id := program.ViewContractTypes[typeID]; id != 0 {
+				if _, ok := ir.DictionaryReadKinds(program, id); !ok {
+					operationFamily = "dictionary element"
+				}
+			}
+		case ir.Property:
+			if !program.CheckedFields[read.Name] {
+				return true
+			}
+			receiver, typeID, field, where = read.Object, read.ViewTypeID, read.Name, read.ViewWhere
+			receiverTypeID = read.ViewReceiverTypeID
+			nominalCheckedRead = true
+		case ir.ArrayIndex:
+			receiver, typeID, field, where = read.Array, read.ViewTypeID, "[element]", read.View
+			nominalCheckedRead = ir.HasArrayViews(program) && (read.Element == ir.Object || read.Element == ir.Union)
+		case ir.ArrayMap:
+			arrayRead(read.Array, read.ViewRead)
+		case ir.ArrayVisit:
+			arrayRead(read.Array, read.ViewRead)
+		case ir.ArrayReduce:
+			arrayRead(read.Array, read.ViewRead)
+		case ir.ArrayPop:
+			arrayRead(read.Array, read.ViewRead)
+		case ir.ArrayJoin:
+			arrayRead(read.Array, read.ViewRead)
+		case ir.ArraySearch:
+			arrayRead(read.Array, read.ViewRead)
+		case ir.ForOf:
+			arrayRead(read.Iterable, read.ViewRead)
+		default:
+			return true
+		}
+		contract := program.ViewContractTypes[typeID]
+		if selectedContract != 0 {
+			contract = selectedContract
+		}
+		family := operationFamily
+		// Dictionary entries carrying checked array children still lack the
+		// tuple consumer ownership proof. General tuple certificates do not
+		// discharge this producer-specific boundary.
+		if field == "[element]" && contract != 0 && program.ViewContracts[contract-1].FixedTuple && dictionaryEntryReadUnproven(program, graph, receiver) {
+			family = "tuple"
+		}
+		if contract != 0 {
+			if unsupported := program.ViewContracts[contract-1].Unsupported; unsupported != "" {
+				family = unsupported
+			}
+		}
+		if receiverContract := program.ViewContractTypes[receiverTypeID]; family == "" && receiverContract != 0 {
+			family = program.ViewContracts[receiverContract-1].Unsupported
+		}
+		if family == "" && !certifiedUntaggedCallableRead(program, contract) && !l.viewIntersectionReadChecks(contract) && !l.viewTuplePositionChecks(program.ViewContractTypes[receiverTypeID], field, contract) && !(contract != 0 && program.ViewContracts[contract-1].Kind == ir.ViewCallable && viewCallableConcreteReadContract(program, contract)) {
+			reaches := graph.ReachingAllocations(receiver)
+			if untrackedScope || unknown || reaches.Unknown {
+				family = unsupportedFields[field]
+			} else {
+				for _, site := range reaches.Sites {
+					if scopedFields[site]["*"] != "" {
+						family = scopedFields[site]["*"]
+						break
+					}
+					if scopedFields[site][field] != "" {
+						family = scopedFields[site][field]
+						break
+					}
+				}
+			}
+		}
+		if nominalCheckedRead && family == "nominal class" && (program.NominalReadContracts[typeID] != 0 || program.NominalReadContracts[receiverTypeID] != 0) {
+			// Both backends check the registered class identity at this field read,
+			// including helper receivers and array element extraction.
+			family = ""
+		}
+		if family == "" {
+			return true
+		}
+		reaches := graph.ReachingAllocations(receiver)
+		demanded := unknown || reaches.Unknown
+		for _, site := range reaches.Sites {
+			demanded = demanded || viewed[site]
+		}
+		if demanded {
+			refused = &Refused{Where: where, What: "checked view read of field " + field + " with unsupported " + family + " contract", Fix: "prove or implement the " + family + " contract before reading this field"}
+		}
+		return true
+	}
+	walk(program.Main, inspect)
+	for _, function := range program.Functions {
+		walk(function.Body, inspect)
+	}
+	return refused
+}
+
+func viewAggregate(value ir.Expression) bool {
+	if value == nil {
+		return false
+	}
+	// A nullish constant has reference-shaped storage but no object allocation.
+	// Following it as an aggregate falsely introduces an unknown producer.
+	switch value.(type) {
+	case ir.Null, ir.Undefined:
+		return false
+	}
+	switch value.Type() {
+	case ir.Object, ir.Record, ir.Array, ir.Map, ir.Union, ir.Closure:
+		return true
+	}
+	return false
+}
+
+func (l *lowering) lazyReadRefusal(node *ast.Node, field, family string) error {
+	return &Refused{Where: l.program.Where(node), What: "checked view read of field " + field + " with unsupported " + family + " contract", Fix: "prove or implement the " + family + " contract before reading this field"}
+}

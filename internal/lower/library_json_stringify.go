@@ -74,6 +74,18 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 	if n.Kind == ast.KindNullKeyword {
 		return ir.JSONNull{}, &ir.JSONSchema{Kind: "null"}, nil
 	}
+	if n.Kind == ast.KindObjectLiteralExpression && l.recordLiteralElement(n) != nil {
+		value, err := l.expression(n)
+		if err != nil {
+			return nil, nil, err
+		}
+		proven := l.checker.GetContextualType(n, checker.ContextFlagsNone)
+		if l.recordElement(proven) == nil {
+			proven = l.checker.GetTypeAtLocation(n)
+		}
+		schema, err := l.jsonType(node, proven, 0)
+		return value, schema, err
+	}
 	if n.Kind == ast.KindArrayLiteralExpression || n.Kind == ast.KindObjectLiteralExpression {
 		literal := ir.ObjectLiteral{Tuple: n.Kind == ast.KindArrayLiteralExpression}
 		schema := &ir.JSONSchema{Kind: "object"}
@@ -174,13 +186,44 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 		return nil, l.notYet(node, "JSON.stringify a value of type "+l.checker.TypeToString(t))
 	}
 	kinds := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Map: "map", ir.Closure: "function", ir.MaybeNumber: "maybe_number", ir.MaybeBoolean: "maybe_boolean", ir.Union: "union"}
+	if of == ir.Record {
+		child, err := l.jsonType(node, l.recordElement(l.checker.GetNonNullableType(t)), depth+1)
+		if err != nil {
+			return nil, err
+		}
+		if child.Kind == "function" || child.Kind == "union" {
+			return nil, l.notYet(node, "JSON.stringify record values that may provide a callable toJSON")
+		}
+		return &ir.JSONSchema{Kind: "record", Element: child}, nil
+	}
 	if of == ir.Array {
 		element := l.checker.GetElementTypeOfArrayType(l.checker.GetNonNullableType(t))
 		if element == nil {
 			return nil, l.notYet(node, "JSON.stringify an array without a proven element type")
 		}
+		element = l.concrete(element)
 		child, err := l.jsonType(node, element, depth+1)
-		return &ir.JSONSchema{Kind: "array", Element: child}, err
+		if err != nil {
+			return nil, err
+		}
+		schema := &ir.JSONSchema{Kind: "array", Element: child}
+		storage, known := l.representation(element)
+		if known {
+			id, contractError := l.viewContract(node, l.concrete(element))
+			primitive := contractError == nil && ir.PrimitiveArrayContract(l.result, id)
+			if (storage == ir.Union || storage == ir.MaybeBoolean) && !primitive {
+				return nil, l.notYet(node, "JSON.stringify a boxed array containing non-primitive members")
+			}
+			if primitive || storage == ir.Array || storage == ir.Map || storage == ir.Closure {
+				schema.ArrayRead = ir.ArrayViewRead{Element: storage, View: sourceExpression(node) + "[JSON element]", ViewType: l.checker.TypeToString(element), ViewContract: id, UndefinedAllowed: l.includesUndefined(element), ViewAllowed: l.viewContractLiterals(element)}
+			}
+			if storage == ir.Union || storage == ir.MaybeBoolean {
+				if _, err := l.viewContract(node, t); err != nil {
+					return nil, err
+				}
+			}
+		}
+		return schema, nil
 	}
 	if of == ir.Object || of == ir.Weak {
 		return nil, l.notYet(node, "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)")
@@ -191,7 +234,7 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 			if err != nil {
 				return nil, err
 			}
-			if of == ir.Union && (child.Kind == "array" || child.Kind == "object" || child.Kind == "tuple") {
+			if of == ir.Union && (child.Kind == "array" || child.Kind == "object" || child.Kind == "tuple" || child.Kind == "record") {
 				return nil, l.notYet(node, "JSON.stringify a union containing containers without runtime element metadata")
 			}
 		}

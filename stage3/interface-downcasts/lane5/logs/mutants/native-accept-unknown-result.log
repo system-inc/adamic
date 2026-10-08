@@ -1,0 +1,6 @@
+--- FAIL: TestViewCallableShapeNative (3.16s)
+    --- FAIL: TestViewCallableShapeNative/unknown-result (3.16s)
+        view_callables_contract_test.go:82: exit 0 stdout "8\n" stderr ""; want 70 "" "adamic: panic: field read failed: node.run expected function(number) -> number, found function with unknown signature\n"
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	3.171s
+FAIL

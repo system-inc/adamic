@@ -8,12 +8,40 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"initialized", "uninitialized", "uninitialized_field", "uninitialized_capture", "uninitialized_exception", "uninitialized_loop", "uninitialized_default", "uninitialized_const", "weak", "definite", "definite_local", "definite_field", "static_initialized", "static_uninitialized", "uninitialized_optional", "uninitialized_spread", "literal_return", "literal_assignment", "literal_statement", "uninitialized_iteration", "uninitialized_catch", "uninitialized_interface", "uninitialized_append", "uninitialized_map_entry", "lazy_initialized", "lazy_read", "lazy_field", "lazy_static", "lazy_default"} {
+	for _, probe := range []struct {
+		name    string
+		checked bool
+	}{
+		{"deinitialize_entries", true},
+		{"deinitialize_static", true},
+		{"deinitialize_shadowed", false},
+		{"deinitialize_initialized", false},
+		{"deinitialize_read", true},
+		{"deinitialize_field", true},
+		{"deinitialize_loop", false},
+		{"deinitialize_capture", true},
+		{"deinitialize_exception", true},
+		{"deinitialize_alias", true},
+		{"deinitialize_parameter", true},
+		{"deinitialize_values", true},
+		{"deinitialize_assign", false},
+		{"deinitialize_assign_read", true},
+		{"deinitialize_field_initialized", false},
+		{"deinitialize_store", true},
+		{"deinitialize_eager", true},
+	} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
 			checked bool
-		}{"internal/oracle/testdata/non_null_" + name + ".a", true, name != "initialized" && name != "definite" && name != "static_initialized" && name != "lazy_initialized"})
+		}{checkedViewFixturePath("internal/oracle/testdata/non_null_" + probe.name + ".a"), true, probe.checked})
+	}
+	for _, name := range []string{"initialized", "uninitialized", "uninitialized_field", "uninitialized_capture", "uninitialized_exception", "uninitialized_loop", "uninitialized_default", "uninitialized_const", "weak", "definite", "definite_local", "definite_field", "static_initialized", "static_uninitialized", "uninitialized_optional", "uninitialized_spread", "literal_return", "literal_assignment", "literal_statement", "uninitialized_iteration", "uninitialized_catch", "uninitialized_interface", "uninitialized_append", "uninitialized_map_entry", "lazy_initialized", "lazy_read", "lazy_field", "lazy_static", "lazy_default", "scanner_initialized", "scanner_var", "scanner_var_uninitialized"} {
+		fixtures = append(fixtures, struct {
+			path    string
+			lowers  bool
+			checked bool
+		}{checkedViewFixturePath("internal/oracle/testdata/non_null_" + name + ".a"), true, name != "initialized" && name != "definite" && name != "static_initialized" && name != "lazy_initialized" && name != "scanner_initialized" && name != "scanner_var"})
 	}
 }
 
@@ -22,6 +50,15 @@ func init() {
 func TestReadinessMutants(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, fixture, stdout, stderr string }{
+		{"scanner-var-capture", "scanner_var_uninitialized", "before\n", "read before assignment: variable 'tokenValue' in tokenValue"},
+		{"deinitialization-values", "deinitialize_values", "before\n", "read before assignment: field 'value' in Object.values(box)"},
+		{"deinitialization-entries", "deinitialize_entries", "before\n", "read before assignment: field 'value' in Object.entries(box)"},
+		{"deinitialization-assign-source", "deinitialize_assign_read", "before\n", "read before assignment: field 'value' in Object.assign(target, source)"},
+		{"deinitialization-field-alias", "deinitialize_alias", "before\n", "read before assignment: field 'value' in box.value"},
+		{"deinitialization-field-method", "deinitialize_field", "before\n", "read before assignment: field 'value' in this.value"},
+		{"keep-slot-proven-after-deinitialization", "deinitialize_read", "before\n", "read before assignment: variable 'value' in value"},
+		{"deinitialization-through-capture", "deinitialize_capture", "before\n", "read before assignment: variable 'value' in value"},
+		{"deinitialization-exception-path", "deinitialize_exception", "caught\n", "read before assignment: variable 'value' in value"},
 		{"drop-check", "uninitialized", "before\n", "read before assignment: variable 'value' in value"},
 		{"erase-without-proof", "uninitialized_loop", "", "read before assignment: variable 'value' in value"},
 		{"initialize-to-zero", "uninitialized", "before\n", "read before assignment: variable 'value' in value"},
@@ -32,7 +69,7 @@ func TestReadinessMutants(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_"+probe.fixture+".a"))
+			path, err := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "internal/oracle/testdata/non_null_"+probe.fixture+".a")))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -57,6 +94,18 @@ func TestReadinessMutants(t *testing.T) {
 						changes++
 						return value
 					}
+				case ir.ObjectCall:
+					if value.Readiness != "" {
+						value.Readiness = ""
+						changes++
+						return value
+					}
+				case ir.Property:
+					if probe.name != "initialize-to-zero" && probe.name != "weak-generic-message" && value.Readiness != "" {
+						value.Readiness = ""
+						changes++
+						return value
+					}
 				case ir.Declare:
 					if probe.name == "initialize-to-zero" && value.Uninitialized {
 						value.Uninitialized = false
@@ -76,6 +125,18 @@ func TestReadinessMutants(t *testing.T) {
 				program.Functions[i].Body = mutateReadiness(program.Functions[i].Body, func(node any) any {
 					switch value := node.(type) {
 					case ir.Read:
+						if probe.name != "initialize-to-zero" && probe.name != "weak-generic-message" && value.Readiness != "" {
+							value.Readiness = ""
+							changes++
+							return value
+						}
+					case ir.ObjectCall:
+						if value.Readiness != "" {
+							value.Readiness = ""
+							changes++
+							return value
+						}
+					case ir.Property:
 						if probe.name != "initialize-to-zero" && probe.name != "weak-generic-message" && value.Readiness != "" {
 							value.Readiness = ""
 							changes++
@@ -108,7 +169,7 @@ func TestReadinessMutants(t *testing.T) {
 
 func TestUninitializedIsNotNullishMutant(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_initialized.a"))
+	path, err := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "internal/oracle/testdata/non_null_initialized.ts")))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -182,7 +243,7 @@ func mutateReadiness(statements []ir.Statement, mutate func(any) any) []ir.State
 // Pin both observations, including this assertion's expression-specific native diagnostic.
 func TestNonNullWeakFreedNamesExpression(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_weak_freed.a"))
+	path, err := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "internal/oracle/testdata/non_null_weak_freed.ts")))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -222,7 +283,7 @@ func TestNonNullWeakFreedNamesExpression(t *testing.T) {
 
 func TestLazyInitializerIsNotEagerMutant(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_lazy_initialized.a"))
+	path, err := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "internal/oracle/testdata/non_null_lazy_initialized.ts")))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -266,4 +327,42 @@ func TestLazyInitializerIsNotEagerMutant(t *testing.T) {
 		t.Fatal("eager initializer survived Node comparison")
 	}
 	t.Logf("eager initializer caught by Node output: %s", mutant.stderr)
+}
+
+func TestDeinitializationIsNotOrdinaryStoreMutant(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "internal/oracle/testdata/non_null_deinitialize_store.ts")))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: read before assignment: variable 'text' in text\n"), exitCode: 70}
+	baseline, _ := nativelyUncached(t, program)
+	if difference := disagreement(want, baseline); difference != "" {
+		t.Fatal(difference)
+	}
+	if difference := disagreement(want, onJavaScriptBackend(t, program)); difference != "" {
+		t.Fatal(difference)
+	}
+	changes := 0
+	program.Main = mutateReadiness(program.Main, func(node any) any {
+		if assign, ok := node.(ir.Assign); ok && assign.Uninitialized {
+			assign.Uninitialized = false
+			changes++
+			return assign
+		}
+		return node
+	})
+	if changes != 1 {
+		t.Fatalf("ordinary store mutant changed %d assignments", changes)
+	}
+	mutant := onJavaScriptBackend(t, program)
+	node := onNode(t, path)
+	if mutant.exitCode != 0 || disagreement(node, mutant) != "" || disagreement(want, mutant) == "" {
+		t.Fatalf("ordinary undefined store survived pinned output: %#v", mutant)
+	}
+	t.Logf("ordinary undefined store caught by pinned output: exit %d stdout %q", mutant.exitCode, mutant.stdout)
 }

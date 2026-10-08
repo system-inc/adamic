@@ -1,0 +1,15 @@
+--- FAIL: TestCheckedViewCallableOptionalAggregates (1.04s)
+    --- FAIL: TestCheckedViewCallableOptionalAggregates/parameter-declaration/wrong-arity (0.55s)
+        checked_views_callable_optional_aggregates_test.go:38: gate cache node miss
+        checked_views_callable_optional_aggregates_test.go:61: gate cache node miss
+        checked_views_callable_optional_aggregates_test.go:81: backend0 exit 0 stdout "9\n" stderr "" want "createParameterDeclaration" and "found function with arity 1"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableOptionalAggregates/variable-statement/wrong-arity (0.49s)
+        checked_views_callable_optional_aggregates_test.go:38: gate cache node miss
+        checked_views_callable_optional_aggregates_test.go:61: gate cache node miss
+        checked_views_callable_optional_aggregates_test.go:81: backend0 exit 0 stdout "9\n" stderr "" want "createVariableStatement" and "found function with arity 1"; sanitized exit 0 stderr ""
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.049s
+FAIL

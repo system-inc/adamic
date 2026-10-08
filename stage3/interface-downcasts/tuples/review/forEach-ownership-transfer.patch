@@ -1,0 +1,123 @@
+--- a/internal/ir/view_arrays.go
++++ b/internal/ir/view_arrays.go
+@@ -19,6 +19,7 @@
+ // Metadata has no executable operands. It must not masquerade as an index
+ // expression in CFG, borrowing, reuse, or ownership traversals.
+ type ArrayViewRead struct {
++	TupleUnion       bool
+ 	View, ViewType   string
+ 	ViewAllowed      []ViewLiteral
+ 	ViewContract     ViewContractID
+@@ -29,5 +30,5 @@
+ }
+ 
+ func (read ArrayViewRead) Index() ArrayIndex {
+-	return ArrayIndex{View: read.View, ViewType: read.ViewType, ViewAllowed: read.ViewAllowed, ViewContract: read.ViewContract, ViewTypeID: read.ViewTypeID, Element: read.Element, Required: read.Required, UndefinedAllowed: read.UndefinedAllowed}
++	return ArrayIndex{TupleUnion: read.TupleUnion, View: read.View, ViewType: read.ViewType, ViewAllowed: read.ViewAllowed, ViewContract: read.ViewContract, ViewTypeID: read.ViewTypeID, Element: read.Element, Required: read.Required, UndefinedAllowed: read.UndefinedAllowed}
+ }
+--- a/internal/lower/view_arrays.go
++++ b/internal/lower/view_arrays.go
+@@ -85,7 +85,7 @@
+ 	if element == nil {
+ 		return ir.ArrayViewRead{}
+ 	}
+-	return ir.ArrayViewRead{UndefinedAllowed: l.includesUndefined(element), Element: of, View: sourceExpression(array) + "[element]", ViewType: l.checker.TypeToString(element), ViewTypeID: int(element.Id()), ViewAllowed: l.viewContractLiterals(element), Required: required && !l.includesUndefined(element)}
++	return ir.ArrayViewRead{TupleUnion: l.tupleScalarUnionType(element), UndefinedAllowed: l.includesUndefined(element), Element: of, View: sourceExpression(array) + "[element]", ViewType: l.checker.TypeToString(element), ViewTypeID: int(element.Id()), ViewAllowed: l.viewContractLiterals(element), Required: required && !l.includesUndefined(element)}
+ }
+ 
+ // Fail closed for consumers whose element extraction/conversion is not wired.
+@@ -105,7 +105,7 @@
+ 		if part.Kind == ast.KindCallExpression {
+ 			callee := ast.SkipParentheses(part.AsCallExpression().Expression)
+ 			if callee.Kind == ast.KindPropertyAccessExpression && l.viewArrayBase(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))) != nil {
+-				if l.tupleScalarUnionType(l.viewArrayElementType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))) {
++				if callee.Name().Text() != "forEach" && l.tupleScalarUnionType(l.viewArrayElementType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))) {
+ 					found = l.notYet(part, "tuple union array consumer requiring a certified ownership transfer")
+ 					return true
+ 				}
+@@ -140,7 +140,7 @@
+ 
+ func markProgramViewArrayUse(program *ir.Program, read ir.ArrayViewRead) ir.ArrayViewRead {
+ 	mapped := markProgramViewArrayRead(program, read.Index())
+-	read.View, read.ViewAllowed, read.ViewContract = mapped.View, mapped.ViewAllowed, mapped.ViewContract
++	read.View, read.ViewAllowed, read.ViewContract, read.TupleUnion = mapped.View, mapped.ViewAllowed, mapped.ViewContract, mapped.TupleUnion
+ 	return read
+ }
+ 
+--- a/internal/lower/view_tuples_optional_call.go
++++ b/internal/lower/view_tuples_optional_call.go
+@@ -17,7 +17,7 @@
+ 	receiver := callee.AsPropertyAccessExpression().Expression
+ 	present := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver))
+ 	element := l.viewArrayElementType(present)
+-	if element == nil || !fixedViewTuple(element) || l.includesNull(l.checker.GetTypeAtLocation(receiver)) {
++	if element == nil || (!fixedViewTuple(element) && !l.tupleScalarUnionType(element)) || l.includesNull(l.checker.GetTypeAtLocation(receiver)) {
+ 		return nil, false, nil
+ 	}
+ 	array, err := l.expression(receiver)
+--- a/internal/native/view_tuples_array_union.go
++++ b/internal/native/view_tuples_array_union.go
+@@ -51,14 +51,21 @@
+ 	return true
+ }
+ 
+-// Index reads own normalization until the existing statement cleanup. Callback
+-// and loop consumers remain refused until their distinct transfer is certified.
++// Index reads own normalization until existing statement cleanup. forEach
++// receives that count directly and releases it after the callback.
+ func (e *emitter) emitTupleArrayUnionIndex(read ir.ArrayIndex, array, index string) string {
++	return e.emitTupleArrayUnionSlot(read, array, index, true)
++}
++
++func (e *emitter) emitTupleArrayUnionSlot(read ir.ArrayIndex, array, index string, statementOwned bool) string {
+ 	e.declarations = append(e.declarations, "#include \"view_tuples.h\"")
+ 	snapshot, present, slot := e.temporary(), e.temporary(), e.temporary()
+ 	e.line("adamic_value %s;", snapshot)
+ 	e.line("bool %s = adamic_tuple_array_union_at(%s, %s, %t, %t, %s, %s, &%s);", present, array, index, read.Relative, read.UndefinedAllowed, cString(read.ViewType), cString(read.View), snapshot)
+-	value := e.own(ir.Union, snapshot+".reference")
++	value := snapshot + ".reference"
++	if statementOwned {
++		value = e.own(ir.Union, value)
++	}
+ 	if read.Required {
+ 		e.line("if (!%s) adamic_view_array_missing(%s, %s);", present, cString(read.View), cString(read.ViewType))
+ 	}
+--- a/internal/native/view_arrays.go
++++ b/internal/native/view_arrays.go
+@@ -97,7 +97,12 @@
+ }
+ 
+ func (e *emitter) viewArrayElementSlot(read ir.ArrayViewRead, array, index string) string {
+-	slot := e.emitViewArrayRead(read.Index(), array, index)
++	slot := ""
++	if read.TupleUnion {
++		slot = e.emitTupleArrayUnionSlot(read.Index(), array, index, false)
++	} else {
++		slot = e.emitViewArrayRead(read.Index(), array, index)
++	}
+ 	value := e.temporary()
+ 	fallback := "(adamic_value){.reference = NULL}"
+ 	if read.Element == ir.MaybeNumber {
+--- a/internal/native/emit_arrays.go
++++ b/internal/native/emit_arrays.go
+@@ -65,7 +65,7 @@
+ 	} else {
+ 		e.line("adamic_value %s = %s->elements[%s];", element, source, index)
+ 	}
+-	if references {
++	if references && !visit.ViewRead.TupleUnion {
+ 		e.line("adamic_retain(%s.reference);", element)
+ 	}
+ 	call := fmt.Sprintf("%s->code(%s, (adamic_value[]){%s, {.number = (double)%s}, {.reference = %s}}, 3)", callback, callback, element, index, source)
+--- a/internal/javascript/view_arrays.go
++++ b/internal/javascript/view_arrays.go
+@@ -140,6 +140,9 @@
+ }
+ 
+ func (e *emitter) viewArrayElementCheck(read ir.ArrayViewRead, value string) string {
++	if read.TupleUnion {
++		return e.tupleArrayUnionCheck(read.ViewContract, read.View, value)
++	}
+ 	literals := []string{}
+ 	for _, literal := range read.ViewAllowed {
+ 		switch literal.Of {

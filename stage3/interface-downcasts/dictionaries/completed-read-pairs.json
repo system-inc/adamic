@@ -1,0 +1,457 @@
+[
+  {
+    "type_id": 10957,
+    "field": "<dynamic-key>",
+    "type": "MapLike<string[]>",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryArrays",
+      "TestCheckedViewDictionaryPropagation",
+      "TestCheckedViewDictionaryStorage"
+    ],
+    "fixtures": [
+      "source/paths-good.a",
+      "source/paths-wrong.a",
+      "source/paths-element-wrong.a",
+      "source/paths-key-missing.a",
+      "source/storage-mutable-good.a",
+      "source/storage-mutable-wrong.a",
+      "source/storage-array-wrong.a"
+    ],
+    "scope": "Per-pair read contract over fixed source objects and the shared MapLike record producer, with transitive array extraction in both backends. Enumeration and uncertified writes remain demanded refusals."
+  },
+  {
+    "type_id": 10107,
+    "field": "options",
+    "type": "ParsedCommandLine",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryCommandOptions"
+    ],
+    "fixtures": [
+      "source/command-options-good.a",
+      "source/command-options-wrong.a",
+      "source/command-options-missing.a"
+    ],
+    "scope": "Required dictionary container read with unread rich union elements, including null and object/array alternatives. Representative read-contract fixture, not a copied CompilerOptions definition or certification of its dynamic element reads."
+  },
+  {
+    "type_id": 10107,
+    "field": "watchOptions",
+    "type": "ParsedCommandLine",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryContainerBatch",
+      "TestCheckedViewDictionaryContainerMutant"
+    ],
+    "fixtures": [
+      "source/watch-options-good.a",
+      "source/watch-options-wrong.a",
+      "source/watch-options-missing.a"
+    ],
+    "scope": "Representative field read-contract fixtures: container kind, presence, optional absence and lazy unread child contracts. Does not certify rich element union selection."
+  },
+  {
+    "type_id": 65886,
+    "field": "paths",
+    "type": "VersionPaths",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryContainerBatch",
+      "TestCheckedViewDictionaryContainerMutant"
+    ],
+    "fixtures": [
+      "source/version-paths-good.a",
+      "source/version-paths-wrong.a",
+      "source/version-paths-missing.a"
+    ],
+    "scope": "Representative field read-contract fixtures: container kind, presence, optional absence and lazy unread child contracts. Does not certify rich element union selection."
+  },
+  {
+    "type_id": 97922,
+    "field": "options",
+    "type": "IncrementalMultiFileEmitBuildInfo",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryContainerBatch",
+      "TestCheckedViewDictionaryContainerMutant"
+    ],
+    "fixtures": [
+      "source/incremental-multi-options-good.a",
+      "source/incremental-multi-options-wrong.a",
+      "source/incremental-multi-options-missing.a"
+    ],
+    "scope": "Representative field read-contract fixtures: container kind, presence, optional absence and lazy unread child contracts. Does not certify rich element union selection."
+  },
+  {
+    "type_id": 97934,
+    "field": "options",
+    "type": "IncrementalBundleEmitBuildInfo",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryContainerBatch",
+      "TestCheckedViewDictionaryContainerMutant"
+    ],
+    "fixtures": [
+      "source/incremental-bundle-options-good.a",
+      "source/incremental-bundle-options-wrong.a",
+      "source/incremental-bundle-options-missing.a"
+    ],
+    "scope": "Representative field read-contract fixtures: container kind, presence, optional absence and lazy unread child contracts. Does not certify rich element union selection."
+  },
+  {
+    "type_id": 97937,
+    "field": "options",
+    "type": "IncrementalBuildInfo",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryContainerBatch",
+      "TestCheckedViewDictionaryContainerMutant"
+    ],
+    "fixtures": [
+      "source/incremental-options-good.a",
+      "source/incremental-options-wrong.a",
+      "source/incremental-options-missing.a"
+    ],
+    "scope": "Representative field read-contract fixtures: container kind, presence, optional absence and lazy unread child contracts. Does not certify rich element union selection."
+  },
+  {
+    "type_id": 94257,
+    "field": "compilerOptions",
+    "type": "ReusableBuilderProgramState",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryContainerBatch",
+      "TestCheckedViewDictionaryContainerMutant"
+    ],
+    "fixtures": [
+      "source/reusable-state-options-good.a",
+      "source/reusable-state-options-wrong.a",
+      "source/reusable-state-options-missing.a"
+    ],
+    "scope": "Representative field read-contract fixtures: container kind, presence, optional absence and lazy unread child contracts. Does not certify rich element union selection."
+  },
+  {
+    "type_id": 97245,
+    "field": "compilerOptions",
+    "type": "BuilderProgramState",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryContainerBatch",
+      "TestCheckedViewDictionaryContainerMutant"
+    ],
+    "fixtures": [
+      "source/builder-state-options-good.a",
+      "source/builder-state-options-wrong.a",
+      "source/builder-state-options-missing.a"
+    ],
+    "scope": "Representative field read-contract fixtures: container kind, presence, optional absence and lazy unread child contracts. Does not certify rich element union selection."
+  },
+  {
+    "type_id": 10107,
+    "field": "wildcardDirectories",
+    "type": "ParsedCommandLine",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryContainerBatch",
+      "TestCheckedViewDictionaryContainerMutant"
+    ],
+    "fixtures": [
+      "source/wildcard-directories-good.a",
+      "source/wildcard-directories-wrong.a",
+      "source/wildcard-directories-missing.a"
+    ],
+    "scope": "Representative field read-contract fixtures: container kind, presence, optional absence and lazy unread child contracts. Does not certify rich element union selection."
+  },
+  {
+    "type_id": 9858,
+    "field": "paths",
+    "type": "CompilerOptions",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryCompilerPaths"
+    ],
+    "fixtures": [
+      "source/compiler-paths-good.a",
+      "source/compiler-paths-missing.a",
+      "source/compiler-paths-container-wrong.a",
+      "source/compiler-paths-wrong.a",
+      "source/compiler-paths-element-wrong.a",
+      "source/compiler-paths-key-missing.a"
+    ],
+    "scope": "Mixed named fields and string index signature: optional MapLike<string[]> container, absent key and transitive array-element checks. No rich dynamic element union reads credited."
+  },
+  {
+    "type_id": 11560,
+    "field": "watchOptions",
+    "type": "ParsedCommandLine | undefined",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryOptionalContainers",
+      "TestCheckedViewDictionaryOptionalAbsenceMutant"
+    ],
+    "fixtures": [
+      "source/optional-watch-good.a",
+      "source/optional-watch-wrong.a",
+      "source/optional-watch-missing.a",
+      "source/optional-watch-receiver-missing.a",
+      "source/optional-watch-undefined.a"
+    ],
+    "scope": "Guarded checked downcast feeds an optional receiver read: absent receiver short-circuits, present receiver checks required-field presence and runtime kind, optional property permits absence/undefined. Does not certify direct optional-base downcast admission."
+  },
+  {
+    "type_id": 94919,
+    "field": "options",
+    "type": "ParsedCommandLine | undefined",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryOptionalContainers",
+      "TestCheckedViewDictionaryOptionalAbsenceMutant"
+    ],
+    "fixtures": [
+      "source/optional-options-good.a",
+      "source/optional-options-wrong.a",
+      "source/optional-options-missing.a",
+      "source/optional-options-receiver-missing.a",
+      "source/optional-options-undefined.a"
+    ],
+    "scope": "Guarded checked downcast feeds an optional receiver read: absent receiver short-circuits, present receiver checks required-field presence and runtime kind, optional property permits absence/undefined. Does not certify direct optional-base downcast admission."
+  },
+  {
+    "type_id": 11560,
+    "field": "options",
+    "type": "ParsedCommandLine | undefined",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryOptionalContainers",
+      "TestCheckedViewDictionaryOptionalAbsenceMutant"
+    ],
+    "fixtures": [
+      "source/optional-options-good.a",
+      "source/optional-options-wrong.a",
+      "source/optional-options-missing.a",
+      "source/optional-options-receiver-missing.a",
+      "source/optional-options-undefined.a"
+    ],
+    "scope": "Guarded checked downcast feeds an optional receiver read: absent receiver short-circuits, present receiver checks required-field presence and runtime kind, optional property permits absence/undefined. Does not certify direct optional-base downcast admission."
+  },
+  {
+    "type_id": 11560,
+    "field": "wildcardDirectories",
+    "type": "ParsedCommandLine | undefined",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryOptionalContainers",
+      "TestCheckedViewDictionaryOptionalAbsenceMutant"
+    ],
+    "fixtures": [
+      "source/optional-wildcard-good.a",
+      "source/optional-wildcard-wrong.a",
+      "source/optional-wildcard-missing.a",
+      "source/optional-wildcard-receiver-missing.a",
+      "source/optional-wildcard-undefined.a"
+    ],
+    "scope": "Guarded checked downcast feeds an optional receiver read: absent receiver short-circuits, present receiver checks required-field presence and runtime kind, optional property permits absence/undefined. Does not certify direct optional-base downcast admission."
+  },
+  {
+    "type_id": 34464,
+    "field": "<dynamic-key>",
+    "type": "MapLike<string>",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryLookupBatch",
+      "TestCheckedViewDictionaryLookupOriginMutant"
+    ],
+    "fixtures": [
+      "source/map-string-good.a",
+      "source/map-string-wrong.a",
+      "source/map-string-missing.a",
+      "source/map-string-producer-good.a",
+      "source/map-string-producer-wrong.a",
+      "source/map-string-producer-missing.a"
+    ],
+    "scope": "Scalar and nested dictionary reads over fixed objects and genuine shared record producers. Generic MapLike<T> specializes T to string; existing generic object/array propagation controls supplement it. Unsupported unresolved/union element selection is not credited."
+  },
+  {
+    "type_id": 2413,
+    "field": "<dynamic-key>",
+    "type": "MapLike<T>",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryLookupBatch",
+      "TestCheckedViewDictionaryLookupOriginMutant"
+    ],
+    "fixtures": [
+      "source/map-generic-good.a",
+      "source/map-generic-wrong.a",
+      "source/map-generic-missing.a",
+      "source/map-generic-producer-good.a",
+      "source/map-generic-producer-wrong.a",
+      "source/map-generic-producer-missing.a"
+    ],
+    "scope": "Scalar and nested dictionary reads over fixed objects and genuine shared record producers. Generic MapLike<T> specializes T to string; existing generic object/array propagation controls supplement it. Unsupported unresolved/union element selection is not credited."
+  },
+  {
+    "type_id": 37516,
+    "field": "<dynamic-key>",
+    "type": "PackageJsonPathFields",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryLookupBatch",
+      "TestCheckedViewDictionaryLookupOriginMutant"
+    ],
+    "fixtures": [
+      "source/package-paths-good.a",
+      "source/package-paths-wrong.a",
+      "source/package-paths-missing.a",
+      "source/package-paths-nested-wrong.a",
+      "source/package-paths-producer-good.a",
+      "source/package-paths-producer-wrong.a",
+      "source/package-paths-producer-missing.a",
+      "source/package-paths-producer-nested-wrong.a"
+    ],
+    "scope": "Scalar and nested dictionary reads over fixed objects and genuine shared record producers. Generic MapLike<T> specializes T to string; existing generic object/array propagation controls supplement it. Unsupported unresolved/union element selection is not credited."
+  },
+  {
+    "type_id": 8590,
+    "field": "<dynamic-key>",
+    "type": "IndexedAccessType",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryFiniteKeys"
+    ],
+    "fixtures": [
+      "source/indexed-cache-good.a",
+      "source/indexed-cache-missing.a",
+      "source/indexed-cache-nested-wrong.a",
+      "source/indexed-cache-wrong-array.a",
+      "source/indexed-cache-wrong.a"
+    ],
+    "scope": "Original representative per-pair read contracts in sanitized C, release C and JavaScript held to Node. Named wrong-value refusals pinned. Finite-key reads retain transitive checks; optional receivers evaluate once and distinguish absent receiver from absent required field. Numeric enum maps reuse existing open numeric enum selection and shared record storage. Rich union selection and enumeration are not credited."
+  },
+  {
+    "type_id": 10820,
+    "field": "<dynamic-key>",
+    "type": "IterationTypes",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryFiniteKeys"
+    ],
+    "fixtures": [
+      "source/iteration-cache-good.a",
+      "source/iteration-cache-missing.a",
+      "source/iteration-cache-nested-wrong.a",
+      "source/iteration-cache-wrong-array.a",
+      "source/iteration-cache-wrong.a"
+    ],
+    "scope": "Original representative per-pair read contracts in sanitized C, release C and JavaScript held to Node. Named wrong-value refusals pinned. Finite-key reads retain transitive checks; optional receivers evaluate once and distinguish absent receiver from absent required field. Numeric enum maps reuse existing open numeric enum selection and shared record storage. Rich union selection and enumeration are not credited."
+  },
+  {
+    "type_id": 11225,
+    "field": "<dynamic-key>",
+    "type": "MapLike<WatchDirectoryFlags>",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryEnumMap"
+    ],
+    "fixtures": [
+      "source/enum-map-good.a",
+      "source/enum-map-missing.a",
+      "source/enum-map-open-number.a",
+      "source/enum-map-producer-good.a",
+      "source/enum-map-producer-missing.a",
+      "source/enum-map-producer-open-number.a",
+      "source/enum-map-producer-wrong.a",
+      "source/enum-map-wrong.a"
+    ],
+    "scope": "Original representative per-pair read contracts in sanitized C, release C and JavaScript held to Node. Named wrong-value refusals pinned. Finite-key reads retain transitive checks; optional receivers evaluate once and distinguish absent receiver from absent required field. Numeric enum maps reuse existing open numeric enum selection and shared record storage. Rich union selection and enumeration are not credited."
+  },
+  {
+    "type_id": 10821,
+    "field": "<dynamic-key>",
+    "type": "IterableOrIteratorType",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryFiniteKeys"
+    ],
+    "fixtures": [
+      "source/iterable-cache-good.a",
+      "source/iterable-cache-missing.a",
+      "source/iterable-cache-nested-wrong.a",
+      "source/iterable-cache-wrong-array.a",
+      "source/iterable-cache-wrong.a"
+    ],
+    "scope": "Original representative per-pair read contracts in sanitized C, release C and JavaScript held to Node. Named wrong-value refusals pinned. Finite-key reads retain transitive checks; optional receivers evaluate once and distinguish absent receiver from absent required field. Numeric enum maps reuse existing open numeric enum selection and shared record storage. Rich union selection and enumeration are not credited."
+  },
+  {
+    "type_id": 10863,
+    "field": "<dynamic-key>",
+    "type": "{ inner?: Signature | undefined; outer?: Signature | undefined; }",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryFiniteKeys"
+    ],
+    "fixtures": [
+      "source/signature-cache-good.a",
+      "source/signature-cache-missing.a",
+      "source/signature-cache-nested-wrong.a",
+      "source/signature-cache-wrong-array.a",
+      "source/signature-cache-wrong.a"
+    ],
+    "scope": "Original representative per-pair read contracts in sanitized C, release C and JavaScript held to Node. Named wrong-value refusals pinned. Finite-key reads retain transitive checks; optional receivers evaluate once and distinguish absent receiver from absent required field. Numeric enum maps reuse existing open numeric enum selection and shared record storage. Rich union selection and enumeration are not credited."
+  },
+  {
+    "type_id": 42421,
+    "field": "paths",
+    "type": "CompilerOptions | undefined",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryOptionalPaths"
+    ],
+    "fixtures": [
+      "source/optional-paths-container-wrong.a",
+      "source/optional-paths-element-wrong.a",
+      "source/optional-paths-good.a",
+      "source/optional-paths-key-missing.a",
+      "source/optional-paths-missing.a",
+      "source/optional-paths-once.a",
+      "source/optional-paths-receiver-missing.a",
+      "source/optional-paths-wrong.a"
+    ],
+    "scope": "Original representative per-pair read contracts in sanitized C, release C and JavaScript held to Node. Named wrong-value refusals pinned. Finite-key reads retain transitive checks; optional receivers evaluate once and distinguish absent receiver from absent required field. Numeric enum maps reuse existing open numeric enum selection and shared record storage. Rich union selection and enumeration are not credited."
+  },
+  {
+    "type_id": 14,
+    "field": "<dynamic-key>",
+    "type": "string",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryStringIndexing"
+    ],
+    "fixtures": [
+      "source/string-index-good.a",
+      "source/string-index-missing.a",
+      "source/string-index-negative.a",
+      "source/string-index-surrogate.a",
+      "source/string-index-wrong.a"
+    ],
+    "scope": "Numeric UTF-16 string indexing after checked field extraction through a shared helper: valid BMP/surrogate indices, negative/out-of-range absence, wrong number field. Path uses a void phantom brand and preserves its named diagnostic. Census dictionary-read classification is retained; no record representation is involved."
+  },
+  {
+    "type_id": 8572,
+    "field": "<dynamic-key>",
+    "type": "Path",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryStringIndexing"
+    ],
+    "fixtures": [
+      "source/path-index-good.a",
+      "source/path-index-missing.a",
+      "source/path-index-negative.a",
+      "source/path-index-surrogate.a",
+      "source/path-index-wrong.a"
+    ],
+    "scope": "Numeric UTF-16 string indexing after checked field extraction through a shared helper: valid BMP/surrogate indices, negative/out-of-range absence, wrong number field. Path uses a void phantom brand and preserves its named diagnostic. Census dictionary-read classification is retained; no record representation is involved."
+  }
+]

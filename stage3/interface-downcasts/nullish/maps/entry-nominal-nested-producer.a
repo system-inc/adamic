@@ -1,0 +1,10 @@
+class Named {readonly count:number=7;}
+interface Entry {readonly child:Named}
+interface Base {readonly kind:string}
+interface Target extends Base {readonly kind:'box';readonly value:ReadonlyMap<string,Entry>|null}
+const fake={count:7};const forged={child:fake};const item:Entry={child:new Named()};
+const source=new Map<string,Entry>([['key',item]]);source.set('second',item);
+const copy=new Map<string,Entry>(source);console.log(typeof copy);
+const raw={kind:'box',value:source};const base:Base=raw;
+function read(node:Target):void{console.log(typeof node.value);}
+read(base as Target);console.log(String(fake.count));console.log(typeof forged);

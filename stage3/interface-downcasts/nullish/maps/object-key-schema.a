@@ -1,0 +1,7 @@
+interface Key {readonly count:number}
+interface Base {readonly kind:string}
+interface Target extends Base {readonly kind:'box';readonly value:ReadonlyMap<Key,number>|null}
+const key={count:'seven'};const map=new Map<{readonly count:string},number>();map.set(key,8);
+const raw={kind:'box',value:map};const base:Base=raw;
+function read(node:Target,key:Key):void{const map=node.value;if(map!==null){console.log(String(map.get(key)??0));}}
+read(base as Target,{count:7});

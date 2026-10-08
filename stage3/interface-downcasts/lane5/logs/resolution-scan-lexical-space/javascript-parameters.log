@@ -1,0 +1,11 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (0.44s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/writer-space/wrong-members (0.43s)
+        checked_views_callable_later_ranked_test.go:76: gate cache node hit
+        checked_views_callable_later_ranked_test.go:96: gate cache node miss
+        checked_views_callable_later_ranked_test.go:116: backend2 exit 0 stdout "6\n" stderr "" want "writeSpace" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: writer.writeSpace expected (text: string) => void, found function with incompatible parameter representations\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.446s
+FAIL

@@ -3,6 +3,7 @@ package lower
 import (
 	"errors"
 	"reflect"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -19,6 +20,10 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 				return stored, nil
 			}
 		}
+		return ir.Number, nil
+	}
+	if l.isNever(node) {
+		// Storage only: evaluating never always traps.
 		return ir.Number, nil
 	}
 	if ast.IsIdentifier(node) && l.exactPlainObject(node) {
@@ -45,6 +50,12 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	if kind := l.typedArrayKind(proven); kind != 0 {
 		return kind, true
 	}
+	if l.viewArrayBase(proven) != nil {
+		return ir.Array, true
+	}
+	if l.phantomArrayBase(proven) != nil {
+		return ir.Array, true
+	}
 	flags := proven.Flags()
 	if flags&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {
 		return ir.Union, true
@@ -59,6 +70,29 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	if l.nodeBufferType(proven, "Buffer") {
 		return ir.Array, true
 	}
+	if l.finitePartialRecordElement(proven) != nil {
+		return ir.Record, true
+	}
+	if flags&checker.TypeFlagsObject != 0 && enumObjectSymbol(proven) == nil && len(l.checker.GetIndexInfosOfType(proven)) > 0 && !l.checker.IsArrayType(proven) && !checker.IsTupleType(proven) && !l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray") {
+		if l.recordElement(proven) != nil {
+			return ir.Record, true
+		}
+		regex := false
+		for _, info := range l.checker.GetIndexInfosOfType(proven) {
+			if declaration := info.Declaration(); declaration != nil {
+				file := ast.GetSourceFileOfNode(declaration)
+				if load.IsLibrary(file) && strings.Contains(string(file.AsSourceFile().FileName()), ".regexp.") {
+					regex = true
+				}
+			}
+		}
+		if !regex {
+			if l.stringDictionary(proven) {
+				return ir.Object, true
+			}
+			return 0, false
+		}
+	}
 	if flags&checker.TypeFlagsTypeParameter != 0 {
 		// Inside a generic class, a type parameter is what this instantiation made it.
 		substituted, isKnown := l.substitution[proven]
@@ -69,9 +103,20 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		if target := l.weakTarget(proven); target != nil {
 			return l.representation(target)
 		}
+		if primitive := l.phantomBase(proven); primitive != nil {
+			if l.phantomUndefined(proven) {
+				return ir.Object, true
+			}
+			return l.representation(primitive)
+		}
+		if l.structuralViewIntersection(proven) {
+			return ir.Object, true
+		}
 		return l.objectIntersection(proven)
 	}
 	switch {
+	case flags&checker.TypeFlagsNull != 0:
+		return ir.Union, true
 	case flags&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0:
 		return ir.Object, true
 	case flags&checker.TypeFlagsNumberLike != 0:
@@ -95,24 +140,26 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		// An object with call signatures is a function, held as a closure.
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
-		if l.includesNull(proven) && !dynamicObjectType(proven) {
-			// A nullable object reference uses NULL. Null and undefined together need distinct tags.
-			if l.includesUndefined(proven) {
-				return 0, false
-			}
+		if l.includesNull(proven) {
+			// Nullable values need distinct null and undefined identities. Keep the
+			// existing RegExp-only NULL representation for its specialized adapters.
+			regexOnly := !l.includesUndefined(proven)
 			for _, member := range proven.Types() {
 				if member.Flags()&checker.TypeFlagsNull == 0 {
-					of, known := l.representation(member)
-					if !known || !of.IsReference() || of == ir.String || of == ir.Union {
+					regexOnly = regexOnly && l.isLibraryType(member, "RegExpExecArray", "RegExpMatchArray")
+					if _, known := l.representation(member); member.Flags()&checker.TypeFlagsUndefined == 0 && !known {
 						return 0, false
 					}
 				}
+			}
+			if !regexOnly {
+				return ir.Union, true
 			}
 		}
 		var shared ir.Type
 		mixed, weak := false, false
 		for _, member := range proven.Types() {
-			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
+			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 || l.phantomUndefined(member) {
 				// undefined joins a union of references as a null pointer; it's checked below that
 				// the rest are references.
 				continue
@@ -167,10 +214,10 @@ func (l *lowering) isLibraryType(proven *checker.Type, names ...string) bool {
 
 func (l *lowering) includesUndefined(proven *checker.Type) bool {
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
-		return proven.Flags()&checker.TypeFlagsUndefined != 0
+		return proven.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(proven)
 	}
 	for _, member := range proven.Types() {
-		if member.Flags()&checker.TypeFlagsUndefined != 0 {
+		if member.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(member) {
 			return true
 		}
 	}
@@ -208,6 +255,13 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 				return nil, err
 			}
 		}
+		value = l.graphAllocation(value, node)
+		if node.Kind == ast.KindCallExpression {
+			l.recordOrdinaryPredicateChecks(node.AsCallExpression())
+		}
+	}
+	if l.isNever(node) {
+		return value, err
 	}
 	if err == nil && value.Type() != ir.Weak && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
 		if _, constant := value.(ir.Undefined); !constant {
@@ -274,6 +328,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 // and result of a function, Weak in both or in neither, all the way down.
 func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
 	from, to = l.present(from), l.present(to)
+	from, to = l.phantomArrayView(from), l.phantomArrayView(to)
 	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
 		return true
 	}
@@ -283,6 +338,9 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 	}
 	if !l.nodeBufferView(from, to) {
 		return false
+	}
+	if a, b := l.recordElement(from), l.recordElement(to); a != nil && b != nil {
+		return l.sameKeeping(a, b, visited)
 	}
 	same := func(inside, viewed *checker.Type) bool {
 		fromKept, _ := l.kept(inside)
@@ -451,7 +509,7 @@ func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
 // value lowers a value, as expression does, but leaves a Weak as it's kept.
 func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	if identity := l.enumNeverIdentity(node, map[*ast.Node]bool{}); identity != nil {
-		value, err := l.enumNeverValue(node)
+		value, err := l.uncheckedValue(node)
 		if err != nil {
 			return nil, err
 		}
@@ -461,7 +519,21 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
+	if value, known, err := l.nodeFSDirectoryValue(node); known {
+		return value, err
+	}
 	node = ast.SkipParentheses(node)
+	if l.isNever(node) && !l.isPanicCall(node) {
+		return l.neverExpression(node)
+	}
+	return l.uncheckedValue(node)
+}
+
+func (l *lowering) uncheckedValue(node *ast.Node) (ir.Expression, error) {
+	node = ast.SkipParentheses(node)
+	if value, known, err := l.processValue(node); known {
+		return value, err
+	}
 	if value, handled, err := l.typedArrayExpression(node); handled {
 		return value, err
 	}
@@ -475,6 +547,12 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		return l.readArgumentsCount(), nil
 	}
 	if value, known, err := l.enumExpression(node); known {
+		return value, err
+	}
+	if member, handled, err := l.phantomMember(node); handled {
+		return member, err
+	}
+	if value, handled, err := l.recordExpression(node); handled {
 		return value, err
 	}
 	if observed, known := l.libraryArrayObservation(node); known {
@@ -550,6 +628,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 						members = declared.Types()
 					}
 					for _, member := range members {
+						if member.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+							continue
+						}
 						if held, known := l.representation(member); known && held != narrowed && (held == ir.Object || held == ir.Array || held == ir.Map) {
 							return nil, l.notYet(node, "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables")
 						}
@@ -566,7 +647,7 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 				}
 				message := "union member where the checker narrowed it away: a call since the narrowing put it back"
 				b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
-				read = b.finish("narrowed_union_member", ir.Narrow{Value: held, To: narrowed})
+				read = b.finish("narrowed_union_member", ir.Narrow{Value: held, To: narrowed, Tuple: checker.IsTupleType(l.checker.GetTypeAtLocation(node))})
 				l.result.Functions[b.function].CheckedUnionNarrow = true
 			}
 		}
@@ -596,9 +677,14 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
+		// typeof observes the runtime tag. Unboxing a flow narrowing first can
+		// read an object's bytes as a boolean after a call invalidates that fact.
+		if narrowed, ok := operand.(ir.Narrow); ok && narrowed.Value.Type() == ir.Union {
+			operand = narrowed.Value
+		}
 		written := node.AsTypeOfExpression().Expression
 		null := l.typeOfNull(written)
-		if null && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
+		if null && operand.Type() != ir.Union && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
 			switch operand.(type) {
 			case ir.ArrayIndex, ir.MapGet, ir.ArrayPop:
 				// The lookup still has a presence slot, so typeof can distinguish null from undefined.
@@ -838,14 +924,13 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftNull {
 				value = right
 			}
-			if !value.Type().IsReference() {
-				return nil, l.notYet(node, "null comparison with a scalar")
-			}
 			operand := node.AsBinaryExpression().Left
 			if leftNull {
 				operand = node.AsBinaryExpression().Right
 			}
-			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: value.Type() != ir.Union && !l.includesNull(l.checker.GetTypeAtLocation(operand))})
+			// Scalars cannot hold null. IsNull still evaluates its operand, and a
+			// generic reference must consult this instantiation before erasing the test.
+			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !value.Type().IsReference() || !l.includesNull(l.concrete(l.checker.GetTypeAtLocation(operand)))})
 			if operator == ast.KindExclamationEqualsEqualsToken {
 				test = ir.Unary{Operator: ir.Not, Operand: test}
 			}
@@ -872,7 +957,8 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftUndefined {
 				operand = node.AsBinaryExpression().Right
 			}
-			if value.Type() != ir.Union && l.includesNull(l.checker.GetTypeAtLocation(operand)) {
+			concrete := l.concrete(l.checker.GetTypeAtLocation(operand))
+			if l.includesNull(concrete) && !l.includesUndefined(concrete) {
 				test = ir.IsNull{Value: value, AlwaysFalse: true}
 			}
 			if operator == ast.KindExclamationEqualsEqualsToken {
@@ -953,6 +1039,11 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 				return nil, l.notYet(span, "a template interpolating a union with an object, an array, a map or a function in it")
 			}
 			value = ir.UnionToString{Value: value}
+		case ir.Array:
+			value, err = l.viewArrayString(span.AsTemplateSpan().Expression, value)
+			if err != nil {
+				return nil, err
+			}
 		case ir.String:
 			value = l.spelled(span.AsTemplateSpan().Expression, value)
 		default:
@@ -1072,6 +1163,9 @@ func slotless(valueType ir.Type) bool {
 
 // call lowers a call to one of the module's functions, or to a function value.
 func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
+	if value, found, err := l.arrayLengthConstructor(node); found {
+		return value, err
+	}
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
 	if direct := l.nestedSibling(callee); direct >= 0 {
@@ -1116,6 +1210,11 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 			return ir.CallClosure{Closure: ir.MakeClosure{Function: instance}, Arguments: arguments, Returns: l.result.Functions[instance].Returns}, nil
 		}
 		return l.callFunction(call, instance)
+	}
+	// Host units get their builtin dispatch first. Refuse the remainder by the
+	// resolved member name rather than attempting a declaration-only function.
+	if module, member := l.nodeHostMember(callee); module != "" {
+		return nil, l.notYet(node, module+"."+member)
 	}
 	function, isFunction := l.functions[l.symbol(callee)]
 	if (!ast.IsIdentifier(callee) && !qualified) || !isFunction {
@@ -1210,12 +1309,8 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 		}
 		symbol = l.checker.GetExportSymbolOfSymbol(symbol)
 	}
-	if symbol != nil {
-		for _, declaration := range symbol.Declarations {
-			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {
-				return nil, l.notYet(node, "an overloaded function as a value")
-			}
-		}
+	if err := l.overloadedValue(node); err != nil {
+		return nil, err
 	}
 	if held, isMade := l.forwarders[target]; isMade {
 		return ir.Read{Local: held, Of: ir.Closure}, nil
@@ -1230,7 +1325,7 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 		return nil, l.notYet(node, "a function value returning "+typeName(callee.Returns))
 	}
 	index := len(l.result.Functions)
-	forwarder := ir.Function{Name: callee.Name + "_value", Closure: true, Returns: callee.Returns, RestElement: callee.RestElement, ForwardsArguments: target + 1}
+	forwarder := ir.Function{Name: callee.Name + "_value", Closure: true, Returns: callee.Returns, RestElement: callee.RestElement, ForwardsArguments: target + 1, CallableMasks: callee.CallableMasks}
 	arguments := []ir.Expression{}
 	for _, parameter := range callee.Parameters {
 		declared := l.result.Locals[parameter]
@@ -1283,11 +1378,20 @@ func (l *lowering) optionalCall(call *ast.Node) error {
 
 // callClosure lowers a call through a function value.
 func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
+	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+	if l.viewCallableDiscardedMarker(callee) {
+		source := callee.AsAsExpression().Expression
+		closure, err := l.expression(source)
+		if err != nil {
+			return nil, err
+		}
+		signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(source), checker.SignatureKindCall)
+		returns, _ := l.representation(l.checker.GetReturnTypeOfSignature(signatures[0]))
+		return ir.CallClosure{Closure: closure, Returns: returns}, nil
+	}
 	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall)
 	if len(signatures) == 1 && l.censusNeverRestSignature(signatures[0]) {
-		// never[] admits a zero-argument call in TypeScript. The erased slot does
-		// not retain a source signature to prove its required arguments or ABI.
-		return nil, l.notYet(node, "a call through an erased never-rest callable marker")
+		return l.viewCallableStoredMarkerCall(node, signatures[0])
 	}
 	closure, err := l.expression(node.AsCallExpression().Expression)
 	if err != nil {

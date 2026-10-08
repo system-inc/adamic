@@ -1,0 +1,19 @@
+--- FAIL: TestCheckedViewCallableRankedFamilies (1.36s)
+    --- FAIL: TestCheckedViewCallableRankedFamilies/block/wrong-members (0.49s)
+        checked_views_callable_ranked_test.go:25: gate cache node miss
+        checked_views_callable_ranked_test.go:49: gate cache node miss
+        checked_views_callable_ranked_test.go:69: backend0 exit -1 stdout "" stderr "" want "createBlock" and "found function with incompatible parameter representations"; sanitized exit 1 stderr "/home/agent/.cache/adamic/runtime/.build-4181549482/heap.c:242:28: runtime error: member access within misaligned address 0x000000000001 for type 'adamic_heap' (aka 'struct adamic_heap'), which requires 8 byte alignment\n0x000000000001: note: pointer points here\n<memory cannot be printed>\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-4181549482/heap.c:242:28 \n"
+    --- FAIL: TestCheckedViewCallableRankedFamilies/array-literal/wrong-members (0.43s)
+        checked_views_callable_ranked_test.go:25: gate cache node miss
+        checked_views_callable_ranked_test.go:49: gate cache node miss
+        checked_views_callable_ranked_test.go:69: backend0 exit 0 stdout "3\n" stderr "" want "createArrayLiteralExpression" and "found function with incompatible parameter representations"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableRankedFamilies/object-literal/wrong-members (0.44s)
+        checked_views_callable_ranked_test.go:25: gate cache node miss
+        checked_views_callable_ranked_test.go:49: gate cache node miss
+        checked_views_callable_ranked_test.go:69: backend0 exit 0 stdout "3\n" stderr "" want "createObjectLiteralExpression" and "found function with incompatible parameter representations"; sanitized exit 0 stderr ""
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.374s
+FAIL

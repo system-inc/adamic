@@ -73,10 +73,17 @@ func TestNodeLibraryDistinguishesReceiverOwners(t *testing.T) {
 	}
 }
 
+// A type assertion to a qualified name from the Node declarations reaches the as-const check in
+// refuseWidening, which once read a QualifiedName's Text and panicked. A cast the relation proves
+// lowers; unread optional fields are admitted lazily, without a crash.
 func TestNodeLibraryQualifiedTypeAssertion(t *testing.T) {
 	_, err := lowerSource(t, `import type {Stats} from 'node:fs'; const error=(new Error('plain') as NodeJS.ErrnoException); console.log('checked');`)
 	var refused *Refused
 	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/no-optional-widening") {
 		t.Fatalf("want the qualified name checked without inventing optional fields, got %v", err)
 	}
+	if _, err := lowerSource(t, `import type {Stats} from 'node:fs'; const make = (): NodeJS.ErrnoException => ({ name: 'E', message: 'm' }); const error = make() as NodeJS.ErrnoException; console.log(error === error ? 'checked' : 'no');`); err != nil {
+		t.Fatal(err)
+	}
+
 }

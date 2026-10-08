@@ -133,7 +133,7 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 			return nil, err
 		}
 		fs.nodeTypes = true
-		roots = append(roots, currentDirectory.ResolveFile(index))
+		roots = append(roots, currentDirectory.ResolveFile(index), currentDirectory.ResolveFile(nodeRequirePath))
 		fileSystem = cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
 		config = tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, currentDirectory, fileSystem.CaseSensitivity())
 		host = compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
@@ -153,6 +153,8 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 	for _, sourceFile := range program.GetSourceFiles() {
 		byPath[sourceFile.PathKey()] = sourceFile
 	}
+	// The Node declarations' index follows the prelude when the program imports node:*, so only
+	// the named paths are checked here.
 	for _, root := range roots[:len(paths)] {
 		sourceFile, isLoaded := byPath[fileSystem.CaseSensitivity().PathKey(root.AsPath())]
 		if !isLoaded {

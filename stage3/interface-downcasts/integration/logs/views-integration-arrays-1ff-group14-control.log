@@ -1,0 +1,141 @@
+=== RUN   TestCheckedViewRanked14ArrayContracts
+=== PAUSE TestCheckedViewRanked14ArrayContracts
+=== RUN   TestCheckedViewRanked14Frontiers
+=== PAUSE TestCheckedViewRanked14Frontiers
+=== CONT  TestCheckedViewRanked14ArrayContracts
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-circular-diagnostics
+=== CONT  TestCheckedViewRanked14Frontiers
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-circular-diagnostics
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-circular-diagnostics-wrong-message
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-circular-diagnostics-wrong-message
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-constructor-type
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-constructor-type
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-constructor-type-absent
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-constructor-type-absent
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-constructor-type-wrong-parameters
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-constructor-type-wrong-parameters
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-default-clause
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-default-clause
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-default-clause-wrong-tag
+=== RUN   TestCheckedViewRanked14Frontiers/ranked14-text-name-fallback
+=== PAUSE TestCheckedViewRanked14Frontiers/ranked14-text-name-fallback
+=== CONT  TestCheckedViewRanked14Frontiers/ranked14-text-name-fallback
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-default-clause-wrong-tag
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-emit-helpers
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-emit-helpers
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-emit-helpers-absent
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-emit-helpers-absent
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-emit-helpers-wrong-scoped
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-emit-helpers-wrong-scoped
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-enum-modifiers-absent
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-enum-modifiers-absent
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-enum-modifiers-wrong-array
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-enum-modifiers-wrong-array
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-export-assignment-modifiers
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-export-assignment-modifiers
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-interface-type
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-interface-type
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-interface-type-base-push
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-interface-type-base-push
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-interface-type-local-undefined
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-interface-type-local-undefined
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-interface-type-wrong-bases
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-interface-type-wrong-bases
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-interface-type-wrong-property
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-interface-type-wrong-property
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-jsdoc-signature-parameters
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-jsdoc-signature-parameters
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-jsdoc-signature-parameters-wrong-bracketed
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-jsdoc-signature-parameters-wrong-bracketed
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-jsx-fragment-children
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-jsx-fragment-children
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-jsx-fragment-children-wrong-nested
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-jsx-fragment-children-wrong-nested
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-method-signature-modifiers
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-method-signature-modifiers
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-namespace-export-modifiers
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-namespace-export-modifiers
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-property-signature-modifiers-wrong-tag
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-property-signature-modifiers-wrong-tag
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-token-source-map-ranges
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-token-source-map-ranges
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-token-source-map-ranges-wrong-element
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-token-source-map-ranges-wrong-element
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-transient-declarations
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-transient-declarations
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-transient-declarations-absent
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-transient-declarations-absent
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-union-type-types
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-union-type-types
+=== RUN   TestCheckedViewRanked14ArrayContracts/ranked14-union-type-types-wrong-element
+=== PAUSE TestCheckedViewRanked14ArrayContracts/ranked14-union-type-types-wrong-element
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-jsx-fragment-children-wrong-nested
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-jsx-fragment-children
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-token-source-map-ranges-wrong-element
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-circular-diagnostics
+--- PASS: TestCheckedViewRanked14Frontiers (0.00s)
+    --- PASS: TestCheckedViewRanked14Frontiers/ranked14-text-name-fallback (0.42s)
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-union-type-types
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-union-type-types-wrong-element
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-property-signature-modifiers-wrong-tag
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-token-source-map-ranges
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-enum-modifiers-absent
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-jsdoc-signature-parameters-wrong-bracketed
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-jsdoc-signature-parameters
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-interface-type-wrong-property
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-interface-type-wrong-bases
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-interface-type-local-undefined
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-interface-type-base-push
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-interface-type
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-export-assignment-modifiers
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-enum-modifiers-wrong-array
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-default-clause
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-emit-helpers-wrong-scoped
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-emit-helpers-absent
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-emit-helpers
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-default-clause-wrong-tag
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-transient-declarations-absent
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-transient-declarations
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-namespace-export-modifiers
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-method-signature-modifiers
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-constructor-type-absent
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-constructor-type-wrong-parameters
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-constructor-type
+=== CONT  TestCheckedViewRanked14ArrayContracts/ranked14-circular-diagnostics-wrong-message
+--- PASS: TestCheckedViewRanked14ArrayContracts (0.00s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-circular-diagnostics (0.83s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-token-source-map-ranges-wrong-element (0.93s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-jsx-fragment-children (0.97s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-jsx-fragment-children-wrong-nested (1.06s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-union-type-types (0.77s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-union-type-types-wrong-element (0.79s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-enum-modifiers-absent (0.72s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-token-source-map-ranges (0.82s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-property-signature-modifiers-wrong-tag (0.90s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-jsdoc-signature-parameters-wrong-bracketed (0.76s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-jsdoc-signature-parameters (0.79s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-interface-type-wrong-bases (0.72s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-interface-type-local-undefined (0.80s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-interface-type-wrong-property (0.85s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-interface-type-base-push (0.85s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-enum-modifiers-wrong-array (0.67s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-interface-type (0.93s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-export-assignment-modifiers (0.88s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-emit-helpers-wrong-scoped (0.69s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-default-clause (0.86s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-emit-helpers-absent (0.73s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-transient-declarations-absent (0.59s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-default-clause-wrong-tag (0.82s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-emit-helpers (0.88s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-transient-declarations (0.82s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-method-signature-modifiers (0.78s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-namespace-export-modifiers (0.90s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-constructor-type-wrong-parameters (0.74s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-constructor-type-absent (0.88s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-constructor-type (0.97s)
+    --- PASS: TestCheckedViewRanked14ArrayContracts/ranked14-circular-diagnostics-wrong-message (0.49s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=63
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	5.370s

@@ -9,14 +9,26 @@ import (
 // A lookup's slot distinguishes a missing element or entry from a present null reference. Keep
 // that presence until typeof has classified it, while sharing the ordinary value read's lookup.
 func (e *emitter) arrayIndexSlot(expression ir.ArrayIndex) string {
+	if _, primitive := ir.PrimitiveViewMembers(e.program, expression.ViewContract); primitive && !expression.TupleUnion && expression.Element == ir.Union && expression.View != "" {
+		value := e.emitPrimitiveArrayIndex(expression)
+		snapshot := e.temporary()
+		e.line("adamic_value %s = {.reference = %s};", snapshot, value)
+		return "(&" + snapshot + ")"
+	}
 	array := e.value(expression.Array)
 	index := e.value(expression.Index)
+	if expression.View != "" {
+		return e.emitViewArrayRead(expression, array, index)
+	}
 	slot := e.temporary()
 	lookup := "adamic_array_at"
 	if expression.Relative {
 		lookup = "adamic_array_at_relative"
 	} else if read, isRead := expression.Index.(ir.Read); isRead && e.program.Locals[read.Local].Counter {
 		lookup, index = "adamic_array_at_integer", e.localName(read.Local)
+	}
+	if e.hasArrayHoles() {
+		lookup = "adamic_array_holes_at"
 	}
 	e.line("adamic_value *%s = %s(%s, %s);", slot, lookup, array, index)
 	return slot
@@ -26,7 +38,11 @@ func (e *emitter) mapGetSlot(expression ir.MapGet) string {
 	object := e.value(expression.Map)
 	key := e.value(expression.Key)
 	slot := e.temporary()
-	e.line("adamic_value *%s = adamic_map_get(%s, %s);", slot, object, borrowed(expression.KeyType, key))
+	e.line("adamic_value *%s = adamic_map_get_as(%s, %s, %d);", slot, object, borrowed(expression.KeyType, key), expression.KeyType)
+	converted := e.temporary()
+	e.line("adamic_value %s = {.reference = NULL};", converted)
+	e.line("if (%s != NULL) %s = adamic_map_read_value(%s,*%s,%d);", slot, converted, object, slot, expression.ValueType)
+	e.line("%s = %s == NULL ? NULL : &%s;", slot, slot, converted)
 	return slot
 }
 
@@ -41,7 +57,7 @@ func (e *emitter) typeOfReference(observation ir.TypeOf) (string, string) {
 		case ir.ArrayIndex:
 			slot, of = e.arrayIndexSlot(value), value.Element
 		case ir.MapGet:
-			slot, of = e.mapGetSlot(value), value.ValueType
+			slot, of, retain = e.mapGetSlot(value), value.ValueType, false
 		case ir.ArrayPop:
 			array := e.snapshot(ir.Array, e.value(value.Array))
 			slot, of, retain = e.temporary(), value.Element, false

@@ -24,6 +24,9 @@ func (l *lowering) libraryArrayMethodArguments(node, receiver *ast.Node, name st
 	if err != nil {
 		return nil, true, err
 	}
+	if (element == ir.Union || element == ir.MaybeBoolean) && name != "join" && name != "indexOf" && name != "includes" && name != "lastIndexOf" {
+		return nil, true, l.notYet(node, "boxed primitive array consumer ."+name+" requiring storage conversion")
+	}
 	if name == "join" && element != ir.Array {
 		return l.arrayMethod(node, receiver, name)
 	}
@@ -92,7 +95,7 @@ func (l *lowering) libraryArrayMethodArguments(node, receiver *ast.Node, name st
 	if value.Type() != element {
 		return nil, true, l.notYet(node, name+" with a value of another type than the elements")
 	}
-	search := ir.ArraySearch{Array: array, Value: value, Element: element, Includes: name == "includes", Last: name == "lastIndexOf"}
+	search := l.viewArraySearch(node, receiver, array, value, element, name == "includes", name == "lastIndexOf")
 	if len(written) == 2 {
 		from, err := l.expression(written[1])
 		if err != nil {
@@ -629,5 +632,5 @@ func (l *lowering) libraryArrayJoin(node, receiver *ast.Node, array ir.Expressio
 			return nil, true, l.notYet(node, "join with a nonstring separator")
 		}
 	}
-	return ir.ArrayJoin{Array: array, Separator: separator, Element: element, Depth: depth}, true, nil
+	return ir.ArrayJoin{Array: array, Separator: separator, Element: element, Depth: depth, ViewRead: l.viewArrayUse(node, receiver, element, false)}, true, nil
 }

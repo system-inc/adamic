@@ -1,0 +1,17 @@
+[
+  {
+    "name": "key-presence",
+    "caught_by_behavior": true,
+    "log": "map-nested-key-key-presence-mutant.log.gz"
+  },
+  {
+    "name": "key-read-presence",
+    "caught_by_behavior": true,
+    "log": "map-nested-key-key-read-presence-mutant.log.gz"
+  },
+  {
+    "name": "nested-read-guard",
+    "caught_by_behavior": true,
+    "log": "map-nested-key-nested-read-guard-mutant.log.gz"
+  }
+]

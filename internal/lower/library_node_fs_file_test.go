@@ -68,6 +68,11 @@ func TestNodeFSFileQualifiedErrorType(t *testing.T) {
 	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/no-optional-widening") {
 		t.Fatalf("want optional host fields proven before the qualified cast, got %v", err)
 	}
+	// The area proves optional-field views. A compatible qualified type lowers;
+	// absent optional errno fields on a viewed plain Error read as undefined.
+	if _, err := lowerSource(t, `import type {Stats} from 'node:fs'; const make = (): NodeJS.ErrnoException => ({ name: 'E', message: 'm' }); const error = make() as NodeJS.ErrnoException; console.log(error.code ?? 'missing');`); err != nil {
+		t.Fatal(err)
+	}
 }
 
 func TestNodeFSFileKeepsDetachedMethodRefusal(t *testing.T) {
@@ -99,6 +104,7 @@ func TestNodeFSFileScratchOverloadsAreNamed(t *testing.T) {
 	for _, one := range []struct{ source, member string }{
 		{`import {mkdtempSync} from 'node:fs'; mkdtempSync('prefix','buffer');`, "mkdtempSync"},
 		{`import {rmSync} from 'node:fs'; rmSync('missing',{maxRetries:2});`, "rmSync"},
+		{`import {rmSync} from 'node:fs'; const options={maxRetries:2}; rmSync('missing',options);`, "rmSync"},
 		{`import {rmSync} from 'node:fs'; function flag():boolean {console.log('effect');return true;} rmSync('missing',{force:flag()});`, "rmSync"},
 	} {
 		_, err := lowerSource(t, one.source)

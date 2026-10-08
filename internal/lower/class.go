@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"path/filepath"
 	"sort"
 	"strings"
 	_ "unsafe"
@@ -335,6 +336,9 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 		return l.call(node)
 	}
 	class := method.Declarations[0].Parent
+	if class == nil || class.Kind != ast.KindClassDeclaration {
+		return l.call(node)
+	}
 	declaration, isClass := l.classes[l.symbol(class.Name())]
 	if !isClass {
 		return nil, l.notYet(node, "a method of a class stage 0 doesn't have")
@@ -409,6 +413,21 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 
 // setProperty lowers object.name = value, as a statement.
 func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+	nominalUnion := l.nominalUnionWriteTarget(target)
+	if nominalUnion {
+		l.optionalViewWriteField(l.fieldName(target.Name()))
+	}
+	if symbol := l.checker.GetSymbolAtLocation(target); symbol != nil && symbol.Flags&ast.SymbolFlagsOptional != 0 && (l.result.OptionalViewFields[l.fieldName(target.Name())] || freshOptionalReceiver(target.AsPropertyAccessExpression().Expression) || l.neverOptionalReceiver(target.AsPropertyAccessExpression().Expression)) {
+		if l.result.CheckedFields == nil {
+			l.result.CheckedFields = map[string]bool{}
+		}
+		l.result.CheckedFields[l.fieldName(target.Name())] = true
+		l.optionalViewWriteField(l.fieldName(target.Name()))
+	}
+	uninitialized := l.uninitializedInitializer(valueNode)
+	if member := l.checker.GetSymbolAtLocation(target.Name()); uninitialized && member != nil && accessorSymbol(member) {
+		return nil, l.notYet(target, "deinitializing an accessor property")
+	}
 	if call, handled, err := l.superAccessor(target, valueNode); handled {
 		if err != nil {
 			return nil, err
@@ -427,28 +446,71 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	if err != nil {
 		return nil, err
 	}
+	object = l.viewArrayOwnWriteReceiver(target, object)
 	if object.Type() != ir.Object {
 		return nil, l.notYet(target, "assigning a field of a "+typeName(object.Type()))
-	}
-	value, err := l.expression(valueNode)
-	if err != nil {
-		return nil, err
 	}
 	of, err := l.typeOf(target)
 	if field := l.checker.GetSymbolAtLocation(target.Name()); field != nil {
 		// What the field is declared to keep, not what the checker narrowed this write to.
 		of, err = l.typeOfSymbol(target, field)
 	}
-	if err != nil || censusFieldSlotless(of) || censusFieldSlotless(value.Type()) {
+	if err != nil || censusFieldSlotless(of) && !(of == ir.MaybeBoolean && l.result.OptionalViewFields[l.fieldName(target.Name())]) && !nominalUnion {
 		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
+	}
+	value := uninitializedValue(of)
+	if !uninitialized {
+		value, err = l.expression(valueNode)
+		if err != nil {
+			return nil, err
+		}
+	}
+	if censusFieldSlotless(value.Type()) && !(value.Type() == ir.MaybeBoolean && l.result.OptionalViewFields[l.fieldName(target.Name())]) && !nominalUnion {
+		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
+	}
+	writeContract := l.slotContract(valueNode, l.concrete(l.checker.GetTypeAtLocation(valueNode)))
+	// A null literal receives a certificate only with this nominal union adapter,
+	// which boxes the null sentinel before storage. Other families keep their
+	// existing conversion refusals.
+	if nominalUnion && l.concrete(l.checker.GetTypeAtLocation(valueNode)).Flags()&checker.TypeFlagsNull != 0 {
+		writeContract, err = l.viewContract(valueNode, l.concrete(l.checker.GetTypeAtLocation(valueNode)))
+		if err != nil {
+			return nil, err
+		}
+	}
+	rawValue := value
+	if nominalUnion && rawValue.Type() == ir.Object && l.includesNull(l.concrete(l.checker.GetTypeAtLocation(valueNode))) {
+		if _, literalNull := rawValue.(ir.Null); !literalNull {
+			return nil, l.notYet(valueNode, "writing a nullable nominal value from an unboxed reference; preserve null and undefined through the callable boundary")
+		}
 	}
 	// A field of number | undefined is given a packed word, whatever it's assigned.
 	value = fit(value, of)
-	if call, handled := l.privateStaticStore(target, object, value); handled {
+	if call, handled := l.privateStaticStore(target, object, value, uninitialized); handled {
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	}
 	// A #private field is stored under its name, # and all, which nothing else can spell.
-	return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
+	write := ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Uninitialized: uninitialized, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}
+	// Helpers can lower before a later view activates this field name. Keep the
+	// complete class source certificate so backend write checks cannot fall back
+	// to a physical object tag when that helper receives a viewed allocation.
+	if writeContract != 0 && rawValue.Type() == ir.Object && isClassInstance(l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(valueNode)))) {
+		write.WriteContract = writeContract
+		write.WriteWhere = strings.Join(strings.Split(filepath.Base(l.program.Where(target)), ":")[:2], ":")
+	}
+	if l.result.OptionalViewFields[write.Name] {
+		if writeContract == 0 {
+			return nil, l.notYet(target, "a checked write without a reifiable source-slot type certificate")
+		}
+		write.Value, write.WriteContract = rawValue, writeContract
+		if nominalUnion {
+			write.Value = fit(rawValue, ir.Union)
+		}
+		write.TargetContract = l.slotContract(target, l.concrete(l.checker.GetTypeOfSymbol(l.checker.GetSymbolAtLocation(target))))
+		write.WriteWhere = strings.Join(strings.Split(filepath.Base(l.program.Where(target)), ":")[:2], ":")
+	}
+	write = l.markViewArrayScalarSlotWrite(target, valueNode, write)
+	return []ir.Statement{write}, nil
 }
 
 // updateProperty lowers object.name op= value, and object.name++ and -- (a nil value, a step of 1).
@@ -460,6 +522,7 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 	if err != nil {
 		return nil, err
 	}
+	object = l.viewArrayOwnWriteReceiver(target, object)
 	if object.Type() != ir.Object {
 		return nil, l.notYet(target, "assigning a field of a "+typeName(object.Type()))
 	}
@@ -493,7 +556,17 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 	if err != nil {
 		return nil, err
 	}
-	statements = append(statements, ir.SetProperty{Object: object, Name: name, Value: updated, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)})
+	write := ir.SetProperty{Object: object, Name: name, Value: updated, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}
+	if l.result.OptionalViewFields[name] {
+		write.WriteContract = l.slotContract(node, l.concrete(l.checker.GetTypeAtLocation(node)))
+		if write.WriteContract == 0 {
+			return nil, l.notYet(target, "a checked compound write without a reifiable source-slot type certificate")
+		}
+		write.TargetContract = l.slotContract(target, l.concrete(l.checker.GetTypeOfSymbol(field)))
+		write.WriteWhere = strings.Join(strings.Split(filepath.Base(l.program.Where(target)), ":")[:2], ":")
+	}
+	write = l.markViewArrayScalarSlotWrite(node, node, write)
+	statements = append(statements, write)
 	if len(statements) == 1 {
 		return statements, nil
 	}

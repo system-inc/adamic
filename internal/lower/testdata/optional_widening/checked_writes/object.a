@@ -1,0 +1,1 @@
+const actual={x:1,y:{label:'before'}}; const source:{x:number}=actual; const wider:{x:number;y?:{label:string}}=source; wider.y={label:'after'}; console.log(actual.y.label);
