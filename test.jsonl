@@ -1,0 +1,10 @@
+{"Time":"2026-10-07T22:09:01.305690628-06:00","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-gate"}
+{"Time":"2026-10-07T22:09:01.314943362-06:00","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestKnownAffinitiesStayWhole"}
+{"Time":"2026-10-07T22:09:01.315241278-06:00","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestKnownAffinitiesStayWhole","Output":"=== RUN   TestKnownAffinitiesStayWhole\n","OutputType":"frame"}
+{"Time":"2026-10-07T22:09:01.315441521-06:00","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestKnownAffinitiesStayWhole","Output":"--- PASS: TestKnownAffinitiesStayWhole (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T22:09:01.315454551-06:00","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestKnownAffinitiesStayWhole","Elapsed":0}
+{"Time":"2026-10-07T22:09:01.315472087-06:00","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-07T22:09:01.316177249-06:00","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Elapsed":0.01}
+{"Time":"2026-10-07T22:09:01.510502971-06:00","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-gate"}
+{"Time":"2026-10-07T22:09:01.540892844-06:00","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestWASISDKResumeIdentity"}
+{"Time":"2026-10-07T22:09:01.541042047-06:00","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestWASISDKResumeIdentity","Output":"=== RUN   TestWASISDKResumeIdentity\n","OutputType":"frame"}
