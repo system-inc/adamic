@@ -132,7 +132,8 @@ no invented ownership annotations, unchecked casts, syntax extensions or GC.
 Construction buffers must not remain mutable aliases after sealing. The printer
 would need a separately owned normalization overlay keyed by base index, with
 appended indices in a disjoint range; mapped columns stay immutable. **Neither
-the typed-array ownership rules nor the overlay representation is ruled here.**
+the typed-array ownership rules nor the overlay representation was ruled in the
+first scout commit; the received rulings below now govern both.**
 
 The format stores exactly the present ParseNode fields. It does not invent Go
 context/binder flags, SourceFile metadata, JSDoc attachments, symbol links, source
@@ -140,7 +141,7 @@ bytes or diagnostics omitted by the tree transport. Production caches also need
 source identity, parser/format version, script mode, diagnostics and policy
 metadata. No zero-deserialization claim is made for a complete lint/checker cache.
 
-## Open questions for @system_adamic
+## Original questions for @system_adamic, now ruled below
 
 1. Will stage 0 support ordinary Uint32Array/Uint16Array/ArrayBuffer/DataView, including typed-array conversion, alignment, bounds and signed list sentinels? The exact smallest probe is gaps/typed_arrays.ts; Node prints 0, stage 0 returns lower.NotYet, What `new an Identifier`, at 1:15.
 2. What approved immutable TypeScript API can seal a backing buffer and borrow typed-array/string views without retaining on each node read? Readonly<Uint32Array> still exposes mutating methods; is a checked read-only view/library type needed? No invented syntax or erased interface dispatch is proposed.
@@ -150,8 +151,9 @@ metadata. No zero-deserialization claim is made for a complete lint/checker cach
 6. How is a persistent printer overlay owned and shared under immutable-by-default rules, including appended indices and aliasing during normalization? Existing mutation must be represented explicitly, not performed against mapped bytes.
 7. Can the existing type/lifetime proof establish a borrowed tree owner across recursive listeners and printer callbacks, including early exit and exceptions, so measured walk retains reach zero? This is a compiler proof question, not permission to remove retains manually.
 
-These are questions, not language decisions. Serialization field order and version
-are reference-tool choices only; native support still needs the answers above.
+These were open questions at the first scout commit. The follow-up rulings below
+supersede their open status. Serialization field order and version remain
+reference-tool choices, not an approved product ABI.
 
 ## Shared files needed, and where this scout stops
 
@@ -305,11 +307,125 @@ cross-language exact allocation-byte comparison.
 ## Next scout on this step
 
 Take this format, fixture manifests, exact reader mutants, native retain deltas,
-Node walk benchmark and shortest parser reductions. First obtain the typed-view,
-mapping-owner, string-view and borrow rulings from @system_adamic, and hand the
-clean-source reduction to the parser owner. Then implement a native scalar column
-reader in the approved APIs and prove zero retains across a read-only walk. The
+Node walk benchmark and shortest parser reductions. Use the received typed-view,
+mapping-owner, string-view and borrow rulings below, wait for runtime #4gkdjsz to
+land, and hand the clean-source reduction to the parser owner. Then implement a
+native scalar column reader in the approved APIs and prove zero retains across
+a read-only walk. The
 printer owner needs the overlay design before adoption. Expand the sampled
 public pins to Kirk's full quiet-hundred manifest, and run actual lint findings,
 fixes and formatting byte comparisons after the consumers can read flat trees.
 Do not claim the current public sample or reference tool is that completion.
+
+
+## Follow-up: the parser parity miss, step 25 handoff
+
+The mismatch is **the port's parser versus typescript-go**, not Babel's reading.
+Babel is only the repository from which the first real witness was extracted.
+Both runs take raw source directly through their parser drivers. No Babel parser,
+transform, dependency installation or project script participates.
+
+Shortest measured clean whole-file input: **`let a=([b=>c])` (14 bytes)**.
+The original object witness reduces to `let a=({b:c=>c})` (16 bytes); removing
+its property colon/name yields the smaller array form. Both hit the same
+speculation path. All fourteen single-character deletions were checked: ten have
+Go parse diagnostics; four are valid and agree with Node. This establishes
+single-deletion minimality, not an exhaustive proof over every possible program.
+
+The expected typescript-go tree, in testdata/parser-parity/shortest.go.txt, is:
+SourceFile -> VariableStatement -> VariableDeclarationList -> VariableDeclaration,
+with Identifier a and ParenthesizedExpression -> ArrayLiteralExpression ->
+ArrowFunction(Parameter b, EqualsGreaterThanToken, Identifier c), then EOF.
+Go emits no diagnostics. The port reports a missing comma at the interior arrow,
+then declaration/statement diagnostics, and returns a recovered wrong tree.
+The original object expected tree remains in testdata/reduced-recovery/02.go.txt.
+The reduced object, array and expression/assignment controls have complete Go
+and Node answers in testdata/parser-parity/.
+
+### Exact parser function and the divergent condition
+
+**Parser.arrowCandidate**, stage1/typescript/parser/parser.ts:1886, is the
+responsible acceptance function. It invokes **Parser.parameters** at :1069,
+which ignores `expect('CloseParenToken')`'s false result at :1074.
+arrowCandidate then accepts `EqualsGreaterThanToken` at :1907 without requiring
+a successfully closed parameter list. It rewinds the speculation, returns true,
+and the ordinary arrow parser reparses the parenthesized array/object as an
+arrow signature with recovery.
+
+The trace of the 14-byte input proves the sequence, without changing parser
+source or fixing grammar behavior:
+
+1. At OpenParenToken, pos 6, active contexts are `source, variables`.
+2. Speculative binding-array parsing reaches the **interior** `=>` at pos 9.
+3. recoverList('bindingArray') and recoverList('parameters') stop there. The
+   outer variables list deliberately treats `=>` as a recovery terminator;
+   see parser.ts:196 and recovery.ts:53.
+4. expect('CloseParenToken') returns false at that same token.
+5. arrowCandidate nevertheless returns true, after rewinding diagnostics.
+
+The corresponding Go guard is cohere/TypeScript/tsc/internal/parser/parser.go:4445:
+`if !p.parseExpected(ast.KindCloseParenToken) && !allowAmbiguity { return nil }`.
+tryParseParenthesizedArrowFunctionExpression at :4394 selects the strict,
+allowAmbiguity=false path for an uncertain head, then rewinds a nil result.
+The variables-list recovery terminator is also present in Go at :927; the
+recovery terminator itself is not the divergence. The missing successful-close
+requirement in the port is what lets an interior arrow certify an outer head.
+No repair is applied: this belongs to **step 25**.
+
+### Comparison with the parser census
+
+Attempted fetch of `parser-scout/census` failed because that remote ref was not
+pushed. A successful remote-head listing also found no `parser-scout/*` or
+parser census branch. Consequently no census SCOUT.md, SHA or actual census
+results can be quoted from that branch. The comparison here is explicitly to
+**the two census findings named in the brief**, not a claimed review of an
+unavailable artifact.
+
+- **Missing node flags:** this defect changes node kinds, child structure and
+  diagnostics before canonical flag selection. Adding missing node flags cannot
+  turn the incorrectly accepted ArrowFunction into the required parenthesized
+  array/object. This is an additional grammar/speculation defect, not a flag-only
+  mismatch. The existing canonical protocol does not inventory all Go flags.
+- **Entry points parsed outside a list context:** the failing input uses
+  Parser.file(), and the trace proves both source and variables contexts are
+  present. It is not a missing-list-context entry-point fixture. Context still
+  matters: `({b:c=>c})` parsed through Parser.expression() with an empty context
+  list returns ParenthesizedExpression with no diagnostics; as a complete file,
+  inside an array, or on an assignment's right side, the controls also agree
+  with Go. Active variables-list recovery exposes the missing speculative
+  close-paren guard. An outside-list census harness could therefore miss this
+  production whole-file defect. Keep both entry modes in step 25's corpus.
+
+trace.mjs wraps Node calls to the original parser methods only for observation;
+recorded trace JSON includes the failed close-paren and accepted-arrow events.
+Package tests replay the Go expected trees, Node boundaries, controls, traces and
+single-character deletions. Parser source, the shared harness and the other
+shared lanes remain untouched.
+
+## Rulings received from @system_adamic, steps 41 and 43
+
+The user supplied these rulings for the next piece. Step 41 questions are now
+answered; native work waits on the runtime area landing, **#4gkdjsz**.
+
+| Step 41 question | Ruling |
+| --- | --- |
+| Typed arrays | Runtime owns them; Uint8, Int32, Float64 and Uint16 are already built there. Step 41 waits for that area to land. The old probe still accurately records this branch's older stage 0. |
+| Sealed immutable views | Readonly typed-array views are admitted, with compile-time readonly and no writable alias into the same backing. |
+| Mapping lifetime | A mapped file is an owned resource. Every view and borrowed string retains the mapping; the last release unmaps it. |
+| Borrowed UTF-16 strings | Immutable strings retain their backing, with no copy and no early free. |
+| Disk layout | Little-endian and naturally aligned; a versioned header carries magic, version and endianness. Foreign/mismatched layouts are refused loudly. |
+| Printer overlay | The printer owns a store keyed by node index; the shared tree stays immutable. |
+| Zero-retain walks | Borrow inference proves reads that never store or return node references need no retain/release. The measured 101,529 pairs per 50,764 visits are the pass's acceptance target. |
+
+The prototype's manual Go mapping lifetime is a host-tool precondition, not the
+ruled product lifetime API. Its v1 header implies little-endian through the format
+version; the product revision must carry explicit endianness and reject foreign
+layouts. Those requirements are not retroactively claimed as implemented here.
+The next native piece follows the rulings once the runtime area lands; it must
+not emulate missing typed arrays or bypass backing-resource ownership.
+
+Related step 43 rulings, recorded for context: the scoreboard may remain Go host
+tooling, measuring Adamic binaries through stdout, exit code and timing without
+linking into the product. A snapshot without installed dependencies is a distinct
+labeled input and may only be compared with snapshots of that same kind. No
+scoreboard code or dependency snapshot is changed by this parser follow-up.

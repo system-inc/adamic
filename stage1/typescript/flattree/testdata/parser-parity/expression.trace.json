@@ -1,0 +1,182 @@
+{
+  "source": "({b:c=>c})",
+  "mode": "expression",
+  "root_kind": "ParenthesizedExpression",
+  "diagnostics": [],
+  "trace": [
+    {
+      "method": "expect",
+      "args": [
+        "CommaToken"
+      ],
+      "before": {
+        "token": "EqualsGreaterThanToken",
+        "position": 5,
+        "contexts": [
+          "parameters",
+          "bindingObject"
+        ],
+        "diagnostics": 0
+      },
+      "after": {
+        "token": "EqualsGreaterThanToken",
+        "position": 5,
+        "contexts": [
+          "parameters",
+          "bindingObject"
+        ],
+        "diagnostics": 1
+      },
+      "result": false
+    },
+    {
+      "method": "recoverList",
+      "args": [
+        "bindingObject"
+      ],
+      "before": {
+        "token": "EqualsGreaterThanToken",
+        "position": 5,
+        "contexts": [
+          "parameters",
+          "bindingObject"
+        ],
+        "diagnostics": 1
+      },
+      "after": {
+        "token": "Identifier",
+        "position": 7,
+        "contexts": [
+          "parameters",
+          "bindingObject"
+        ],
+        "diagnostics": 1
+      },
+      "result": false
+    },
+    {
+      "method": "parameter",
+      "args": [],
+      "before": {
+        "token": "OpenBraceToken",
+        "position": 1,
+        "contexts": [
+          "parameters"
+        ],
+        "diagnostics": 0
+      },
+      "after": {
+        "token": "CloseParenToken",
+        "position": 9,
+        "contexts": [
+          "parameters"
+        ],
+        "diagnostics": 1
+      },
+      "result": 6
+    },
+    {
+      "method": "parameters",
+      "args": [],
+      "before": {
+        "token": "OpenParenToken",
+        "position": 0,
+        "contexts": [],
+        "diagnostics": 0
+      },
+      "after": {
+        "token": "EndOfFile",
+        "position": 10,
+        "contexts": [],
+        "diagnostics": 1
+      },
+      "result": [
+        6
+      ]
+    },
+    {
+      "method": "arrowCandidate",
+      "args": [
+        true
+      ],
+      "before": {
+        "token": "OpenParenToken",
+        "position": 0,
+        "contexts": [],
+        "diagnostics": 0
+      },
+      "after": {
+        "token": "OpenParenToken",
+        "position": 0,
+        "contexts": [],
+        "diagnostics": 0
+      },
+      "result": false
+    },
+    {
+      "method": "arrowCandidate",
+      "args": [
+        true
+      ],
+      "before": {
+        "token": "OpenBraceToken",
+        "position": 1,
+        "contexts": [],
+        "diagnostics": 0
+      },
+      "after": {
+        "token": "OpenBraceToken",
+        "position": 1,
+        "contexts": [],
+        "diagnostics": 0
+      },
+      "result": false
+    },
+    {
+      "method": "arrowCandidate",
+      "args": [
+        true
+      ],
+      "before": {
+        "token": "Identifier",
+        "position": 4,
+        "contexts": [
+          "object"
+        ],
+        "diagnostics": 0
+      },
+      "after": {
+        "token": "Identifier",
+        "position": 4,
+        "contexts": [
+          "object"
+        ],
+        "diagnostics": 0
+      },
+      "result": false
+    },
+    {
+      "method": "arrowCandidate",
+      "args": [
+        true
+      ],
+      "before": {
+        "token": "Identifier",
+        "position": 7,
+        "contexts": [
+          "object"
+        ],
+        "diagnostics": 0
+      },
+      "after": {
+        "token": "Identifier",
+        "position": 7,
+        "contexts": [
+          "object"
+        ],
+        "diagnostics": 0
+      },
+      "result": false
+    }
+  ]
+}

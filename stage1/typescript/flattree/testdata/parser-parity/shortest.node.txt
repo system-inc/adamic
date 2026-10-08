@@ -1,0 +1,17 @@
+diagnostic 1005 9 2 1	',' expected.
+diagnostic 1005 12 1 1	',' expected.
+diagnostic 1134 13 1 1	Variable declaration expected.
+file
+0 SourceFile 0 14 0 0 -1 0 0				
+1 VariableStatement 0 14 0 0 -1 0 0				
+2 VariableDeclarationList 0 14 0 0 -1 0 0				1
+3 VariableDeclaration 3 12 0 0 -1 0 0				
+4 Identifier 3 5 0 0 -1 0 0		a		
+4 ArrowFunction 6 12 0 0 -1 0 0				
+5 Parameter 7 9 0 0 -1 0 0				
+6 ArrayBindingPattern 7 9 0 0 -1 0 0				
+7 BindingElement 8 9 0 0 -1 0 0				
+8 Identifier 8 9 0 0 -1 0 0		b		
+5 EqualsGreaterThanToken 9 11 0 0 -1 0 0				
+5 Identifier 11 12 0 0 -1 0 0		c		
+1 EndOfFile 14 14 0 0 -1 0 0				

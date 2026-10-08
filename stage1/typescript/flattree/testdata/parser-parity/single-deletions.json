@@ -1,0 +1,100 @@
+[
+  {
+    "deleted_index": 0,
+    "source": "et a=([b=>c])",
+    "go_clean": false,
+    "node_exit": 0,
+    "parity": null
+  },
+  {
+    "deleted_index": 1,
+    "source": "lt a=([b=>c])",
+    "go_clean": false,
+    "node_exit": 0,
+    "parity": null
+  },
+  {
+    "deleted_index": 2,
+    "source": "le a=([b=>c])",
+    "go_clean": false,
+    "node_exit": 0,
+    "parity": null
+  },
+  {
+    "deleted_index": 3,
+    "source": "leta=([b=>c])",
+    "go_clean": true,
+    "node_exit": 0,
+    "parity": true
+  },
+  {
+    "deleted_index": 4,
+    "source": "let =([b=>c])",
+    "go_clean": true,
+    "node_exit": 0,
+    "parity": true
+  },
+  {
+    "deleted_index": 5,
+    "source": "let a([b=>c])",
+    "go_clean": false,
+    "node_exit": 0,
+    "parity": null
+  },
+  {
+    "deleted_index": 6,
+    "source": "let a=[b=>c])",
+    "go_clean": false,
+    "node_exit": 0,
+    "parity": null
+  },
+  {
+    "deleted_index": 7,
+    "source": "let a=(b=>c])",
+    "go_clean": false,
+    "node_exit": 0,
+    "parity": null
+  },
+  {
+    "deleted_index": 8,
+    "source": "let a=([=>c])",
+    "go_clean": false,
+    "node_exit": 0,
+    "parity": null
+  },
+  {
+    "deleted_index": 9,
+    "source": "let a=([b>c])",
+    "go_clean": true,
+    "node_exit": 0,
+    "parity": true
+  },
+  {
+    "deleted_index": 10,
+    "source": "let a=([b=c])",
+    "go_clean": true,
+    "node_exit": 0,
+    "parity": true
+  },
+  {
+    "deleted_index": 11,
+    "source": "let a=([b=>])",
+    "go_clean": false,
+    "node_exit": 0,
+    "parity": null
+  },
+  {
+    "deleted_index": 12,
+    "source": "let a=([b=>c)",
+    "go_clean": false,
+    "node_exit": 0,
+    "parity": null
+  },
+  {
+    "deleted_index": 13,
+    "source": "let a=([b=>c]",
+    "go_clean": false,
+    "node_exit": 0,
+    "parity": null
+  }
+]

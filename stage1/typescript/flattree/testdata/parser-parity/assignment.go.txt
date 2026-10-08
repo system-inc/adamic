@@ -1,0 +1,16 @@
+file
+0 SourceFile 0 12 0 0 -1 0 0				
+1 ExpressionStatement 0 12 0 0 -1 0 0				
+2 BinaryExpression 0 12 0 0 -1 0 0				
+3 Identifier 0 1 0 0 -1 0 0		a		
+3 EqualsToken 1 2 0 0 -1 0 0				
+3 ParenthesizedExpression 2 12 0 0 -1 0 0				
+4 ObjectLiteralExpression 3 11 0 0 1 0 0				
+5 PropertyAssignment 4 10 0 0 -1 0 0				
+6 Identifier 4 5 0 0 -1 0 0		b		
+6 ArrowFunction 6 10 0 0 -1 0 0				
+7 Parameter 6 7 0 0 -1 0 0				
+8 Identifier 6 7 0 0 -1 0 0		c		
+7 EqualsGreaterThanToken 7 9 0 0 -1 0 0				
+7 Identifier 9 10 0 0 -1 0 0		c		
+1 EndOfFile 12 12 0 0 -1 0 0				

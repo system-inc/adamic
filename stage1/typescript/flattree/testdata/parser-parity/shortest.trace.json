@@ -1,0 +1,580 @@
+{
+  "source": "let a=([b=>c])",
+  "mode": "file",
+  "root_kind": "SourceFile",
+  "diagnostics": [
+    {
+      "code": 1005,
+      "start": 9,
+      "length": 2,
+      "message": "',' expected."
+    },
+    {
+      "code": 1005,
+      "start": 12,
+      "length": 1,
+      "message": "',' expected."
+    },
+    {
+      "code": 1134,
+      "start": 13,
+      "length": 1,
+      "message": "Variable declaration expected."
+    }
+  ],
+  "trace": [
+    {
+      "method": "expect",
+      "args": [
+        "CommaToken"
+      ],
+      "before": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters",
+          "bindingArray"
+        ],
+        "diagnostics": 0
+      },
+      "after": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters",
+          "bindingArray"
+        ],
+        "diagnostics": 1
+      },
+      "result": false
+    },
+    {
+      "method": "recoverList",
+      "args": [
+        "bindingArray"
+      ],
+      "before": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters",
+          "bindingArray"
+        ],
+        "diagnostics": 1
+      },
+      "after": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters",
+          "bindingArray"
+        ],
+        "diagnostics": 1
+      },
+      "result": true
+    },
+    {
+      "method": "expect",
+      "args": [
+        "CloseBracketToken"
+      ],
+      "before": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters"
+        ],
+        "diagnostics": 1
+      },
+      "after": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters"
+        ],
+        "diagnostics": 1
+      },
+      "result": false
+    },
+    {
+      "method": "parameter",
+      "args": [],
+      "before": {
+        "token": "OpenBracketToken",
+        "position": 7,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters"
+        ],
+        "diagnostics": 0
+      },
+      "after": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters"
+        ],
+        "diagnostics": 1
+      },
+      "result": 4
+    },
+    {
+      "method": "expect",
+      "args": [
+        "CommaToken"
+      ],
+      "before": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters"
+        ],
+        "diagnostics": 1
+      },
+      "after": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters"
+        ],
+        "diagnostics": 1
+      },
+      "result": false
+    },
+    {
+      "method": "recoverList",
+      "args": [
+        "parameters"
+      ],
+      "before": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters"
+        ],
+        "diagnostics": 1
+      },
+      "after": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters"
+        ],
+        "diagnostics": 1
+      },
+      "result": true
+    },
+    {
+      "method": "expect",
+      "args": [
+        "CloseParenToken"
+      ],
+      "before": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables"
+        ],
+        "diagnostics": 1
+      },
+      "after": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables"
+        ],
+        "diagnostics": 1
+      },
+      "result": false
+    },
+    {
+      "method": "parameters",
+      "args": [],
+      "before": {
+        "token": "OpenParenToken",
+        "position": 6,
+        "contexts": [
+          "source",
+          "variables"
+        ],
+        "diagnostics": 0
+      },
+      "after": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables"
+        ],
+        "diagnostics": 1
+      },
+      "result": [
+        4
+      ]
+    },
+    {
+      "method": "arrowCandidate",
+      "args": [
+        true
+      ],
+      "before": {
+        "token": "OpenParenToken",
+        "position": 6,
+        "contexts": [
+          "source",
+          "variables"
+        ],
+        "diagnostics": 0
+      },
+      "after": {
+        "token": "OpenParenToken",
+        "position": 6,
+        "contexts": [
+          "source",
+          "variables"
+        ],
+        "diagnostics": 0
+      },
+      "result": true
+    },
+    {
+      "method": "expect",
+      "args": [
+        "CommaToken"
+      ],
+      "before": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters",
+          "bindingArray"
+        ],
+        "diagnostics": 0
+      },
+      "after": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters",
+          "bindingArray"
+        ],
+        "diagnostics": 1
+      },
+      "result": false
+    },
+    {
+      "method": "recoverList",
+      "args": [
+        "bindingArray"
+      ],
+      "before": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters",
+          "bindingArray"
+        ],
+        "diagnostics": 1
+      },
+      "after": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters",
+          "bindingArray"
+        ],
+        "diagnostics": 1
+      },
+      "result": true
+    },
+    {
+      "method": "expect",
+      "args": [
+        "CloseBracketToken"
+      ],
+      "before": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters"
+        ],
+        "diagnostics": 1
+      },
+      "after": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters"
+        ],
+        "diagnostics": 1
+      },
+      "result": false
+    },
+    {
+      "method": "parameter",
+      "args": [],
+      "before": {
+        "token": "OpenBracketToken",
+        "position": 7,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters"
+        ],
+        "diagnostics": 0
+      },
+      "after": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters"
+        ],
+        "diagnostics": 1
+      },
+      "result": 4
+    },
+    {
+      "method": "expect",
+      "args": [
+        "CommaToken"
+      ],
+      "before": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters"
+        ],
+        "diagnostics": 1
+      },
+      "after": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters"
+        ],
+        "diagnostics": 1
+      },
+      "result": false
+    },
+    {
+      "method": "recoverList",
+      "args": [
+        "parameters"
+      ],
+      "before": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters"
+        ],
+        "diagnostics": 1
+      },
+      "after": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables",
+          "parameters"
+        ],
+        "diagnostics": 1
+      },
+      "result": true
+    },
+    {
+      "method": "expect",
+      "args": [
+        "CloseParenToken"
+      ],
+      "before": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables"
+        ],
+        "diagnostics": 1
+      },
+      "after": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables"
+        ],
+        "diagnostics": 1
+      },
+      "result": false
+    },
+    {
+      "method": "parameters",
+      "args": [],
+      "before": {
+        "token": "OpenParenToken",
+        "position": 6,
+        "contexts": [
+          "source",
+          "variables"
+        ],
+        "diagnostics": 0
+      },
+      "after": {
+        "token": "EqualsGreaterThanToken",
+        "position": 9,
+        "contexts": [
+          "source",
+          "variables"
+        ],
+        "diagnostics": 1
+      },
+      "result": [
+        4
+      ]
+    },
+    {
+      "method": "arrowCandidate",
+      "args": [
+        true
+      ],
+      "before": {
+        "token": "Identifier",
+        "position": 11,
+        "contexts": [
+          "source",
+          "variables"
+        ],
+        "diagnostics": 1
+      },
+      "after": {
+        "token": "Identifier",
+        "position": 11,
+        "contexts": [
+          "source",
+          "variables"
+        ],
+        "diagnostics": 1
+      },
+      "result": false
+    },
+    {
+      "method": "expect",
+      "args": [
+        "CommaToken"
+      ],
+      "before": {
+        "token": "CloseBracketToken",
+        "position": 12,
+        "contexts": [
+          "source",
+          "variables"
+        ],
+        "diagnostics": 1
+      },
+      "after": {
+        "token": "CloseBracketToken",
+        "position": 12,
+        "contexts": [
+          "source",
+          "variables"
+        ],
+        "diagnostics": 2
+      },
+      "result": false
+    },
+    {
+      "method": "recoverList",
+      "args": [
+        "variables"
+      ],
+      "before": {
+        "token": "CloseBracketToken",
+        "position": 12,
+        "contexts": [
+          "source",
+          "variables"
+        ],
+        "diagnostics": 2
+      },
+      "after": {
+        "token": "CloseParenToken",
+        "position": 13,
+        "contexts": [
+          "source",
+          "variables"
+        ],
+        "diagnostics": 2
+      },
+      "result": false
+    },
+    {
+      "method": "recoverList",
+      "args": [
+        "variables"
+      ],
+      "before": {
+        "token": "CloseParenToken",
+        "position": 13,
+        "contexts": [
+          "source",
+          "variables"
+        ],
+        "diagnostics": 2
+      },
+      "after": {
+        "token": "EndOfFile",
+        "position": 14,
+        "contexts": [
+          "source",
+          "variables"
+        ],
+        "diagnostics": 3
+      },
+      "result": false
+    }
+  ]
+}
