@@ -35,24 +35,24 @@ wrong carrier, overload adapter, omitted argument, omitted method and captured-c
 === NAME  TestNestedSiblingCycleMutantIsCaught
     nested_functions_test.go:92: sibling capture mutant caught only by the leak check:
         exit 1
-        
+
         =================================================================
         ==6554==ERROR: LeakSanitizer: detected memory leaks
-        
+
         Indirect leak of 176 byte(s) in 3 object(s) allocated from:
             #0 0x55fb43c90244 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
             #1 0x55fb43ce6b5f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-2617284180/heap.c:196:10
             #2 0x55fb43cd38fa in main /tmp/adamic-gate/adamic-build-3019233852/main.c:129:40
-        
+
         Indirect leak of 160 byte(s) in 4 object(s) allocated from:
             #0 0x55fb43c90244 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
             #1 0x55fb43ce6b5f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-2617284180/heap.c:196:10
-        
+
         Indirect leak of 112 byte(s) in 2 object(s) allocated from:
             #0 0x55fb43c90244 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
             #1 0x55fb43ce6b5f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-2617284180/heap.c:196:10
             #2 0x55fb43cd391f in main /tmp/adamic-gate/adamic-build-3019233852/main.c:132:40
-        
+
         SUMMARY: AddressSanitizer: 448 byte(s) leaked in 9 allocation(s).
 --- PASS: TestNestedSiblingCycleMutantIsCaught (1.20s)
 PASS
