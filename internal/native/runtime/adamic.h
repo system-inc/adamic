@@ -29,6 +29,7 @@ enum adamic_kind {
 	adamic_kind_boolean,
 	adamic_kind_weak,
 	adamic_kind_environment,
+	adamic_kind_null,
 };
 
 typedef struct adamic_heap {
@@ -40,6 +41,8 @@ typedef struct adamic_heap {
 } adamic_heap;
 
 // adamic_retain and adamic_release take any heap value. NULL (undefined) is left alone.
+extern adamic_heap adamic_null;
+adamic_heap *adamic_union_narrow(adamic_heap *value, unsigned char wanted);
 void *adamic_retain(void *value);
 void adamic_release(void *value);
 
@@ -244,7 +247,9 @@ void adamic_object_checked_write(adamic_object *object, const char *name, adamic
 
 adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression);
 adamic_value adamic_object_optional_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression, bool absent, bool optional);
+adamic_value adamic_object_optional_view_undefined(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression, bool absent, bool optional, bool undefined_member);
 adamic_value adamic_object_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);
+#include "view_intersections_recursive.h"
 void adamic_view_literal_failure(const char *expression, const char *expected, unsigned char type, adamic_value value);
 void adamic_object_view_write(adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);
 
@@ -384,6 +389,8 @@ typedef struct adamic_map_entry {
 
 typedef struct adamic_map {
 	adamic_heap heap;
+	unsigned int key_contract, value_contract;
+	const char *contract_name;
 	size_t count;
 	size_t used;
 	size_t capacity;

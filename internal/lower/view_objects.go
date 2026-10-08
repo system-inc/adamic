@@ -59,11 +59,11 @@ func (l *lowering) viewObjectFields(node *ast.Node, target *checker.Type, fields
 }
 
 func (l *lowering) viewDataType(target *checker.Type) bool {
-	if l.viewArrayBase(target) != nil {
+	if l.structuralViewIntersection(target) || l.viewArrayBase(target) != nil {
 		return true
 	}
 	if base := l.phantomBase(target); base != nil {
-		return interfaceScalar(base)
+		return interfaceScalar(base) || l.phantomUndefined(target)
 	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range target.Types() {
@@ -73,7 +73,7 @@ func (l *lowering) viewDataType(target *checker.Type) bool {
 		}
 		return true
 	}
-	return target.Flags()&checker.TypeFlagsUndefined != 0 || interfaceScalar(target) || target.Flags()&checker.TypeFlagsObject != 0
+	return target.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 || interfaceScalar(target) || target.Flags()&checker.TypeFlagsObject != 0
 }
 
 func viewInterfaceType(target *checker.Type) bool {

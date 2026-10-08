@@ -24,13 +24,27 @@ const adamicReadField = (object, name, expression, optional = false, allowAbsent
     return object[name];
 };
 const adamicViewTypeNames = Object.freeze({1: "number", 2: "boolean", 3: "string", 4: "object", 5: "array", 6: "Map"});
-const adamicViewField = (object, name, expression, type, expected = adamicViewTypeNames[type], allowed = [], absent = false, optional = false) => {
+const adamicViewField = (object, name, expression, type, expected = adamicViewTypeNames[type], allowed = [], absent = false, optional = false, undefinedMember = false) => {
     const value = adamicReadField(object, name, expression, optional, absent, expected);
-    if (value === undefined && (absent || optional || type === 7 || type === 9)) return undefined;
-    const valid = (type === 1 || type === 7) ? typeof value === "number" : (type === 2 || type === 9) ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? value !== null && typeof value === "object" && !Array.isArray(value) && !(value instanceof Map) : type === 5 ? Array.isArray(value) : type === 6 ? value instanceof Map : false;
-    if (!valid) panic("field read failed: " + expression + " is not a " + expected + "; expected " + expected + ", found " + (value === undefined ? "nullish" : value === null ? (absent ? "null" : "nullish") : Array.isArray(value) ? "array" : value instanceof Map ? "Map" : typeof value));
+    if (value === undefined && (absent || undefinedMember || type === 7 || type === 9 || optional && (object === undefined || object === null))) return undefined;
+    const valid = (type === 1 || type === 7) ? typeof value === "number" : (type === 2 || type === 9) ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? value !== null && typeof value === "object" && !Array.isArray(value) && !(value instanceof Map) : type === 5 ? Array.isArray(value) : type === 6 ? value instanceof Map : type === 8 ? value instanceof AdamicClosure || typeof value === "function" : false;
+    if (!valid) panic("field read failed: " + expression + " is not a " + expected + "; expected " + expected + ", found " + (value === undefined ? "nullish" : value === null ? (absent || undefinedMember ? "null" : "nullish") : Array.isArray(value) ? "array" : value instanceof Map ? "Map" : typeof value));
     if (allowed.length && !allowed.includes(value)) panic("field read failed: " + expression + " expected " + expected + ", found " + typeof value + " " + value);
     return value;
+};
+const adamicLogicalKind = value => value === undefined ? 13 : value === null ? 12 : typeof value === "number" ? 1 : typeof value === "boolean" ? 2 : typeof value === "string" ? 3 : value instanceof AdamicClosure ? 8 : Array.isArray(value) ? 5 : value instanceof Map ? 6 : typeof value === "object" ? 4 : 0;
+const adamicNarrow = (value, wanted) => {
+ const kind=adamicLogicalKind(value);
+ if (wanted === 10 || kind === wanted || (wanted === 7 && (kind === 1 || kind === 13)) || (wanted === 9 && (kind === 2 || kind === 13))) return value;
+ panic("a union value does not match its narrowed type");
+};
+const adamicViewNullish = (object, name, expression, expected, kinds, nullAllowed, undefinedAllowed, allowed, absent, optional) => {
+ const value=adamicReadField(object,name,expression,optional,absent,expected);
+ if (value === undefined && (optional && (object === undefined || object === null) || absent && !Object.hasOwn(object,name))) return undefined;
+ const kind=adamicLogicalKind(value);
+ const valid=kind === 12 ? nullAllowed : kind === 13 ? undefinedAllowed : (kinds & (1 << kind)) !== 0 && (!allowed.length || allowed.includes(value));
+ if (!valid) panic("field read failed: " + expression + " matches no member of " + expected + "; expected " + expected + ", found " + (kind === 12 ? "null" : kind === 13 ? "undefined" : kind === 5 ? "array" : kind === 6 ? "Map" : kind === 8 ? "function" : kind === 0 ? "unsupported representation" : typeof value));
+ return value;
 };
 const adamicCheckedViewCast = (object, field, type, allowed, message) => allowed.includes(adamicViewField(object, field, field, type)) ? object : panic(message);
 const adamicDefineField = (object, name, value, enumerable, ready, type) => { if (type !== undefined) adamicRecordFieldTypes(object, {[name]: type}); Object.defineProperty(object, name, {value, writable: true, enumerable, configurable: true}); if (ready) adamicFieldReadiness.get(object)?.delete(name); else { let fields = adamicFieldReadiness.get(object); if (!fields) adamicFieldReadiness.set(object, fields = new Set()); fields.add(name); } };
@@ -55,3 +69,9 @@ func (e *emitter) localReady(local int) string {
 	}
 	return readyName(local)
 }
+
+const mapCertificateRuntime = `
+const adamicMapCertificates = new WeakMap();
+function adamicMapProducer(map,key,value,name){adamicMapCertificates.set(map,[key,value,name || "uncertified Map"]);return map;}
+function adamicMapView(map,pairs,where,expected){if(map==null)return map;const c=adamicMapCertificates.get(map);if(c&&c[0]&&c[1]&&pairs.some(p=>p[0]===c[0]&&p[1]===c[1]))return map;panic('Map contract failed: '+where+'; expected '+expected+', found '+(c?c[2]:'uncertified Map'));}
+`

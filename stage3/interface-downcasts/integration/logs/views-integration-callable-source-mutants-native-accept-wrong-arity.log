@@ -1,0 +1,9 @@
+--- FAIL: TestCheckedViewCallableSourceContracts (14.27s)
+    --- FAIL: TestCheckedViewCallableSourceContracts/number-wrong-arity (14.27s)
+        checked_views_callable_source_test.go:41: backend0 got oracle.run{stdout:[]uint8{0x37, 0xa}, stderr:[]uint8{}, exitCode:0} want "adamic: panic: field read failed: read(input).run expected (value: number) => number, found function with arity 0\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	14.275s
+FAIL

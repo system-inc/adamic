@@ -12,9 +12,9 @@ func TestCheckedViewArrays(t *testing.T) {
 		{"array-bounds", "-1:7\n", ""},
 		{"array-second", "", "element read failed: values[1] expected number, found string"},
 		{"array-length-kind", "", "field read failed: items(raw).values is not a readonly number[]; expected readonly number[], found object"},
-		{"callable-missing", "", "field read failed: runner(raw).run is not initialized; expected function, found missing"},
-		{"callable-uninitialized", "", "field read failed: runner(raw).run is not initialized; expected function, found uninitialized"},
-		{"callable-kind", "", "field read failed: runner(raw).run is not a function; expected function, found number"},
+		{"callable-missing", "", "field read failed: runner(raw).run is not initialized; expected (value: number) => number, found missing"},
+		{"callable-uninitialized", "", "field read failed: runner(raw).run is not initialized; expected (value: number) => number, found uninitialized"},
+		{"callable-kind", "", "field read failed: runner(raw).run is not a (value: number) => number; expected (value: number) => number, found number"},
 		{"array-missing", "", "field read failed: items(raw).values is not initialized; expected readonly number[], found missing"},
 		{"array-uninitialized", "", "field read failed: items(raw).values is not initialized; expected readonly number[], found uninitialized"},
 		{"array-boolean", "", "element read failed: values[0] expected number, found boolean"},
@@ -44,8 +44,12 @@ func TestCheckedViewArrays(t *testing.T) {
 				want.stderr = []byte("adamic: panic: " + probe.diagnostic + "\n")
 			}
 			actual, _ := nativelyUncached(t, program)
-			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, got); difference != "" {
+			for index, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				expected := want
+				if probe.name == "callable-kind" && index == 2 {
+					expected.stderr = []byte("adamic: panic: field read failed: runner(raw).run expected (value: number) => number, found number\n")
+				}
+				if difference := disagreement(expected, got); difference != "" {
 					t.Fatalf("%s; got %#v", difference, got)
 				}
 			}

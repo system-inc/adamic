@@ -14,28 +14,44 @@ const (
 	ViewCallable
 	ViewNull
 	ViewUndefined
+	ViewNullable
+	ViewMap
 )
 
 // Contracts describe declared logical types, independently of physical layout ids.
 // Readiness remains the shared non-null state and is never implied by a contract.
 type ViewContract struct {
+	// Intersection marks conjunctive object members, distinct from union selection.
+	Intersection bool
+	// IntersectionTag selects disjoint object arms before validating their fields.
+	IntersectionTag       string
+	IntersectionRecursive bool
+	// ObjectPresent retains the canonical descriptor behind optional copies.
+	ObjectPresent ViewContractID
+
 	// Unsupported records the member family that must fail at a demanded read.
 	Unsupported string
 
-	NominalBases []string
-	Nominal      string
-	Undefined    bool
-	Kind         ViewKind
-	Name         string
-	Of           Type
-	Allowed      []ViewLiteral
-	Fields       []ViewFieldContract
-	Members      []ViewContractID
-	Element      ViewContractID
-	Tuple        []ViewContractID
-	Functions    []int
-	Parameters   []ViewContractID
-	Result       ViewContractID
+	NominalBases  []string
+	Nominal       string
+	Undefined     bool
+	Null          bool
+	Kind          ViewKind
+	Name          string
+	Of            Type
+	Allowed       []ViewLiteral
+	Fields        []ViewFieldContract
+	Members       []ViewContractID
+	Key           ViewContractID
+	MapReadonly   bool
+	ArrayReadonly bool
+	Element       ViewContractID
+	Tuple         []ViewContractID
+	Functions     []int
+	Parameters    []ViewContractID
+	Result        ViewContractID
+	// DiscardResult certifies an erased zero-argument marker; it cannot supply a valued result.
+	DiscardResult bool
 }
 
 type ViewFieldContract struct {

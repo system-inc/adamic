@@ -11,6 +11,7 @@ func TestCheckedViewNodeArrayRecords(t *testing.T) {
 		{"node-array-own-mutation", "4:11:true\n", ""},
 		{"node-array-missing-own", "", "field read failed: block(raw).statements.pos is not initialized; expected number, found missing"},
 		{"node-array-wrong-own", "", "field read failed: block(raw).statements.pos is not a number; expected number, found string"},
+		{"node-array-wrong-reference", "", "element read failed: statements[0] expected Statement, found string"},
 		{"node-array-wrong-element", "", "element read failed: statements[0] expected Statement, found number"},
 		{"node-array-wrong-field", "", "field read failed: statement.text is not a string; expected string, found number"},
 		{"node-array-wrong-array", "", "field read failed: block(raw).statements is not a NodeArray<Statement>; expected NodeArray<Statement>, found object"},
@@ -29,12 +30,13 @@ func TestCheckedViewNodeArrayRecords(t *testing.T) {
 				}
 			} else {
 				sourceOutput := map[string]string{
-					"node-array-missing-own":   "undefined\n",
-					"node-array-wrong-own":     "wrong\n",
-					"node-array-wrong-element": "undefined\n",
-					"node-array-wrong-field":   "9\n",
-					"node-array-wrong-array":   "undefined\n",
-					"node-array-write-literal": "4\n",
+					"node-array-missing-own":     "undefined\n",
+					"node-array-wrong-own":       "wrong\n",
+					"node-array-wrong-reference": "present\n",
+					"node-array-wrong-element":   "undefined\n",
+					"node-array-wrong-field":     "9\n",
+					"node-array-wrong-array":     "undefined\n",
+					"node-array-write-literal":   "4\n",
 				}[probe.name]
 				if source.exitCode != 0 || string(source.stdout) != sourceOutput || len(source.stderr) != 0 {
 					t.Fatalf("Node control: %#v", source)

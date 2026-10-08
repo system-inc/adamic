@@ -15,10 +15,19 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	if id := l.result.ViewContractTypes[int(target.Id())]; id != 0 {
 		return id, nil
 	}
+	if target.Flags()&checker.TypeFlagsUnion != 0 && (l.includesNull(target) || l.includesUndefined(target) && l.isLibraryType(l.checker.GetNonNullableType(target), "Map", "ReadonlyMap")) {
+		return l.nullishViewContract(node, target)
+	}
+	if l.isLibraryType(target, "Map", "ReadonlyMap") {
+		return l.mapViewContract(node, target)
+	}
 	family := l.unsupportedViewFamily(target)
 	if family == "" {
 		id, err := l.strictViewContract(node, target)
 		if err == nil {
+			if family := l.viewIntersectionReadFamily(id, target); family != "" {
+				l.result.ViewContracts[id-1].Unsupported = family
+			}
 			return id, nil
 		}
 		family = "representation conversion"
@@ -37,6 +46,9 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 }
 
 func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
+	if l.phantomUndefined(target) {
+		return ""
+	}
 	if base := l.phantomBase(target); base != nil && interfaceScalar(base) {
 		return ""
 	}
@@ -57,9 +69,10 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 	case flags&checker.TypeFlagsTypeParameter != 0:
 		return "generic"
 	case flags&checker.TypeFlagsIntersection != 0:
+		if l.structuralViewIntersection(target) {
+			return ""
+		}
 		return "intersection"
-	case flags&checker.TypeFlagsNull != 0:
-		return "nullish"
 	case isClassInstance(target):
 		return "nominal class"
 	case l.isLibraryType(target, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
@@ -182,7 +195,7 @@ func (l *lowering) checkLazyViewReads() error {
 		if receiverContract := program.ViewContractTypes[receiverTypeID]; family == "" && receiverContract != 0 {
 			family = program.ViewContracts[receiverContract-1].Unsupported
 		}
-		if family == "" {
+		if family == "" && !l.viewIntersectionReadChecks(contract) {
 			family = unsupportedFields[field]
 		}
 		if family == "" {

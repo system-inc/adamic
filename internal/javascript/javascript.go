@@ -50,7 +50,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// object that happens to have fields of those names.
 	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells, receiver = false) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t\tthis.receiver = receiver;\n\t}\n}\n")
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
-	builder.WriteString(fieldReadinessRuntime)
+	builder.WriteString(fieldReadinessRuntime + mapCertificateRuntime)
 	builder.WriteString(viewArraysRuntime)
 	builder.WriteString(viewArrayElementsRuntime)
 	builder.WriteString(viewArrayOperationsRuntime)
@@ -822,7 +822,13 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		}
 		return "(" + e.value(expression.Value) + ")" + operator + quote(expression.Name) + "]"
 	case ir.Property:
+		if expression.View != "" && expression.Of == ir.Union && !expression.Nullish {
+			return e.viewObjectPrimitive(expression)
+		}
 		if expression.View != "" {
+			if expression.Nullish {
+				return e.nullishViewField(expression)
+			}
 			if expression.Of == ir.Closure {
 				return e.emitViewCallableProperty(expression)
 			}
@@ -830,8 +836,11 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 			if expected == "" {
 				expected = map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}[expression.Of]
 			}
-			value := fmt.Sprintf("adamicViewField(%s, %s, %s, %d, %s, [%s], %t, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.View), expression.Of, quote(expected), e.values(expression.ViewAllowed), expression.Absent, expression.Optional)
-			return e.viewObjectUnion(expression, value)
+			value := fmt.Sprintf("adamicViewField(%s, %s, %s, %d, %s, [%s], %t, %t, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.View), expression.Of, quote(expected), e.values(expression.ViewAllowed), expression.Absent, expression.Optional, e.viewStringUndefined(expression))
+			if expression.Of == ir.Object {
+				value = e.viewObjectUnion(expression, value)
+			}
+			return e.mapViewCertificate(expression, value)
 		}
 		if expression.Readiness != "" {
 			return fmt.Sprintf("adamicReadField(%s, %s, %s, %t, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.Readiness), expression.Optional, expression.Absent)
@@ -943,7 +952,7 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 	case ir.WeakTarget:
 		return e.value(expression.Value)
 	case ir.Narrow:
-		return e.value(expression.Value)
+		return fmt.Sprintf("adamicNarrow(%s, %d)", e.value(expression.Value), expression.To)
 	case ir.TypeOf:
 		return "adamicTypeOf(" + e.value(expression.Value) + ")"
 	case ir.UnionToString:
@@ -1058,6 +1067,9 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		}
 		return fmt.Sprintf("new AdamicClosure(%s, [%s], %t)", functionName(e.program, expression.Function), strings.Join(cells, ", "), e.program.Functions[expression.Function].Receiver)
 	case ir.CallClosure:
+		if expression.CheckedDiscard {
+			return e.emitViewCallableDiscard(expression)
+		}
 		if expression.Direct > 0 {
 			return fmt.Sprintf("%s(self, [%s])", functionName(e.program, expression.Direct-1), e.values(expression.Arguments))
 		}
@@ -1100,9 +1112,9 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 			entries = append(entries, "["+e.value(entry[0])+", "+e.value(entry[1])+"]")
 		}
 		if expression.Pairs != nil {
-			return "new Map(" + e.value(expression.Pairs) + ")"
+			return fmt.Sprintf("adamicMapProducer(new Map(%s),%d,%d,%s)", e.value(expression.Pairs), expression.KeyContract, expression.ValueContract, quote(expression.ContractName))
 		}
-		return "new Map([" + strings.Join(entries, ", ") + "])"
+		return fmt.Sprintf("adamicMapProducer(new Map([%s]),%d,%d,%s)", strings.Join(entries, ", "), expression.KeyContract, expression.ValueContract, quote(expression.ContractName))
 	case ir.MapKeys:
 		return "[..." + e.value(expression.Map) + ".keys()]"
 	case ir.MapValues:

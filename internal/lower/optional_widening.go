@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"strings"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	_ "unsafe"
@@ -326,6 +328,14 @@ func (l *lowering) optionalValue(node *ast.Node, target *checker.Type) *optional
 // optionalAtSite uses the same relation sites as the other view rules, before lowering.
 // A leading spread is not proof of absence: it copies fields hidden by the source's type too.
 func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
+	// Only argument positions of a directly imported node:* call can use the host exemption.
+	if parent := node.Parent; parent != nil && parent.Kind == ast.KindCallExpression && l.optionalNodeHostCall(parent) {
+		for index, argument := range parent.AsCallExpression().Arguments.Nodes {
+			if argument == node && l.nodeHostConsumesArgument(parent, index) {
+				return nil
+			}
+		}
+	}
 	var found *optionalWidening
 	switch node.Kind {
 	case ast.KindAsExpression:
@@ -381,4 +391,25 @@ func (l *lowering) refuseOptionalWidening(node *ast.Node) error {
 	// aliases and descendant fields. A class conflict now requires a view, too.
 	_, err := l.view(node, nil, found.target)
 	return err
+}
+
+// Resolve the import binding rather than trusting the callee's spelling.
+func (l *lowering) optionalNodeHostCall(call *ast.Node) bool {
+	callee := ast.SkipParentheses(call.AsCallExpression().Expression)
+	if callee.Kind == ast.KindPropertyAccessExpression {
+		callee = ast.SkipParentheses(callee.AsPropertyAccessExpression().Expression)
+	}
+	symbol := l.checker.GetSymbolAtLocation(callee)
+	if symbol == nil {
+		return false
+	}
+	for _, declaration := range symbol.Declarations {
+		for ancestor := declaration; ancestor != nil; ancestor = ancestor.Parent {
+			if ancestor.Kind == ast.KindImportDeclaration {
+				specifier := ancestor.ModuleSpecifier()
+				return specifier != nil && strings.HasPrefix(specifier.Text(), "node:")
+			}
+		}
+	}
+	return false
 }

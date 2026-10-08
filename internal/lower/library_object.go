@@ -52,7 +52,12 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 			if err != nil {
 				return nil, true, err
 			}
-			call.Arguments = append(call.Arguments, fit(value, ir.Union))
+			boxed := fit(value, ir.Union)
+			if box, ok := boxed.(ir.Box); ok {
+				box.NullReference = l.includesNull(l.checker.GetTypeAtLocation(argument)) && value.Type().IsReference()
+				boxed = box
+			}
+			call.Arguments = append(call.Arguments, boxed)
 		}
 	case "isFrozen":
 		value, err := l.expression(written[0])

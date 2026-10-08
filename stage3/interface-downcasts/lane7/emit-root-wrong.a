@@ -1,0 +1,12 @@
+interface AutoGenerateInfo { readonly id: number; readonly prefix?: string }
+interface EmitNode { readonly flags: number }
+interface Identifier { readonly emitNode: object }
+interface GeneratedIdentifier extends Identifier { readonly emitNode: EmitNode & { readonly autoGenerate: AutoGenerateInfo } }
+function read(node: GeneratedIdentifier): string {
+ return `${node.emitNode.flags}:${node.emitNode.autoGenerate.id}:${node.emitNode.autoGenerate.prefix ?? 'none'}`;
+}
+const actual = { emitNode: { flags: true, autoGenerate: { id: 42, prefix: 'p' } } };
+const node: Identifier = actual;
+const generated = node as GeneratedIdentifier;
+const root = generated.emitNode;
+console.log(`${root === root}`);

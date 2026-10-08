@@ -1,0 +1,43 @@
+{
+  "basis": "lane2 static candidate inventory, not exact runtime reachability",
+  "exactReachability": null,
+  "groups": [
+    {
+      "name": "group1",
+      "type_id": 9918,
+      "type": "Program",
+      "fields": [
+        "getCurrentDirectory",
+        "getCommonSourceDirectory"
+      ],
+      "pairs": 2,
+      "candidateReads": 11,
+      "fixtureDirectory": "stage3/interface-downcasts/lane5/group1",
+      "productionProgramCertified": false
+    },
+    {
+      "name": "original-canonical",
+      "type_id": 9918,
+      "type": "Program",
+      "fields": [
+        "getCanonicalFileName"
+      ],
+      "pairs": 1,
+      "candidateReads": 8,
+      "fixtureDirectory": "stage3/interface-downcasts/lane5/canonical",
+      "productionProgramCertified": false
+    },
+    {
+      "name": "original-watcher",
+      "type_id": 13402,
+      "type": "FileWatcher",
+      "fields": [
+        "close"
+      ],
+      "pairs": 1,
+      "candidateReads": 15,
+      "fixtureDirectory": "stage3/interface-downcasts/lane5/watcher",
+      "productionProgramCertified": false
+    }
+  ]
+}

@@ -11,11 +11,12 @@ import "fmt"
 // Program is one compiled Adamic program.
 type Program struct {
 	// ViewOrigins are metadata for the shared may-flow graph, never executable IR.
-	ViewOrigins []Expression
+	ViewOrigins     []Expression
+	MapCertificates [][2]ViewContractID
 
-	// PredicateChecks counts overload-result directions, per emitted call site.
+	// PredicateChecks counts predicate directions, per emitted call site.
 	// Unobservable is included in Proven: no narrowed read consumes that region.
-	PredicateChecks struct{ Proven, Checked, Unobservable int }
+	PredicateChecks PredicateCheckCounts
 
 	// CheckedFields conservatively checks these field names at every object read.
 	OptionalViewFields map[string]bool
@@ -53,6 +54,23 @@ type Program struct {
 	// out, and the ones the runtime's loops make (map, the visits, reduce, Array.from, sort), whose
 	// callers test for it after each.
 	ClosuresMayThrow bool
+}
+
+// PredicateCheckCounts counts emitted predicate directions. Unobservable
+// directions are proven and are also counted separately so erasure is visible.
+type PredicateCheckCounts struct {
+	Proven, Checked, Unobservable int
+	Sites                         []PredicateCallCheck
+}
+
+type PredicateCallCheck struct {
+	Where, Function string
+	Overload        int // Zero for an ordinary predicate call.
+	Directions      []PredicateDirectionCheck
+}
+
+type PredicateDirectionCheck struct {
+	Direction, Status, Reason string
 }
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
@@ -342,6 +360,10 @@ type (
 	// number field read that way is number | undefined.
 	Property struct {
 		// View names a required field read whose presence, readiness and representation are checked.
+		Nullish            bool
+		NullAllowed        bool
+		UndefinedAllowed   bool
+		NullishKinds       uint32
 		ViewReceiverTypeID int
 		ViewWhere          string
 		View               string
@@ -469,7 +491,11 @@ type (
 	MaybeToString struct{ Value Expression }
 
 	// Box is Value where a Union goes: a number boxed, a boolean as its box, a reference as itself.
-	Box struct{ Value Expression }
+	Box struct {
+		Value Expression
+		// NullReference preserves legacy reference-null semantics when boxing.
+		NullReference bool
+	}
 
 	// Narrow is a Union the checker has proven to be one member (by typeof, ===, or assignment), as
 	// that member's type To, which may be a Maybe pair (number | undefined, out of string | number |
@@ -652,10 +678,14 @@ type (
 	// CallClosure calls a function value. Returns is its result type, 0 for void.
 	CallClosure struct {
 		// Direct is a sibling code target plus one, sharing Closure as its environment.
-		Direct    int
-		Closure   Expression
-		Arguments []Expression
-		Returns   Type
+		// CheckedDiscard releases the independently recorded producer result after a checked marker call.
+		CheckedDiscard  bool
+		DiscardContract ViewContractID
+		DiscardView     string
+		Direct          int
+		Closure         Expression
+		Arguments       []Expression
+		Returns         Type
 	}
 
 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the
@@ -711,9 +741,11 @@ type (
 
 	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.
 	MapNew struct {
-		GraphTypes []int
-		Key, Value Type
-		Entries    [][2]Expression
+		KeyContract, ValueContract ViewContractID
+		ContractName               string
+		GraphTypes                 []int
+		Key, Value                 Type
+		Entries                    [][2]Expression
 
 		// Pairs, when it's set, is an array of [key, value] tuples the map is made from instead, each
 		// set in order: new Map(pairs), or new Map(otherMap) through its entries.

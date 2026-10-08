@@ -1,6 +1,8 @@
 // object.c: plain objects, each carrying its shape.
 
 #include "adamic.h"
+#include "view_nullish.h"
+#include "view_unions_mixed.h"
 
 #include <string.h>
 #include <stdio.h>
@@ -152,6 +154,36 @@ static adamic_value *adamic_object_read_mode(const adamic_object *object, const 
 	return slot;
 }
 
+adamic_value *adamic_object_read_contract(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression, const char *expected, const adamic_object **owner) {
+ return adamic_object_read_mode(object,name,cache,expression,expected,owner);
+}
+
+// Lane 4 probe: preserve the actual storage owner's evidence and shared readiness.
+adamic_view_union_value adamic_object_view_union_snapshot(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression, const char *declared, bool absent) {
+    adamic_value *slot = object == NULL ? NULL : adamic_object_optional_field(object, name, cache);
+    if (object != NULL && slot == NULL && absent) {
+        return (adamic_view_union_value){adamic_view_union_undefined, {.reference = NULL}};
+    }
+    const adamic_object *owner = NULL;
+    slot = adamic_object_read_mode(object, name, cache, expression, declared, &owner);
+    unsigned char storage = adamic_object_field_types(owner)[cache->index];
+    adamic_view_union_value value = {adamic_view_union_unknown, *slot};
+    if (storage == 1) { value.kind = adamic_view_union_number; }
+    else if (storage == 2) { value.kind = adamic_view_union_boolean; }
+    else if (storage == 7) {
+        adamic_maybe_number number = adamic_maybe_number_unpack(slot->number);
+        value.kind = number.present ? adamic_view_union_number : adamic_view_union_undefined;
+        value.payload.number = number.number;
+    } else if (storage == 12) { value.kind = adamic_view_union_null; }
+    else if (storage == 13) { value.kind = adamic_view_union_undefined; }
+    else if ((storage >= 3 && storage <= 6) || storage == 8 || storage == 9 || storage == 10 || storage == 11) {
+        value = adamic_view_union_heap(slot->reference);
+        adamic_view_union_kind expected = storage == 3 ? adamic_view_union_string : storage == 4 || storage == 11 ? adamic_view_union_object : storage == 5 ? adamic_view_union_array : storage == 6 ? adamic_view_union_map : storage == 8 ? adamic_view_union_function : storage == 9 ? adamic_view_union_boolean : value.kind;
+        if (value.kind != adamic_view_union_undefined && value.kind != expected) { value.kind = adamic_view_union_unknown; }
+    }
+    return value;
+}
+
 adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression) {
 	return adamic_object_read_mode(object, name, cache, expression, NULL, NULL);
 }
@@ -194,7 +226,7 @@ adamic_value adamic_object_view(const adamic_object *object, const char *name, a
 	if (actual == 7 && !adamic_maybe_number_unpack(slot->number).present) { found = "nullish"; }
 	if (actual == 10) {
 		const adamic_heap *boxed = slot->reference;
-		found = boxed == NULL ? "nullish" : boxed->kind == adamic_kind_number ? "number" : boxed->kind == adamic_kind_boolean ? "boolean" : boxed->kind == adamic_kind_string ? "string" : boxed->kind == adamic_kind_object ? "object" : boxed->kind == adamic_kind_array ? "array" : boxed->kind == adamic_kind_map ? "Map" : "function";
+		found = boxed == NULL ? "nullish" : boxed->kind == adamic_kind_number ? "number" : boxed->kind == adamic_kind_boolean ? "boolean" : boxed->kind == adamic_kind_string ? "string" : boxed->kind == adamic_kind_object ? "object" : boxed->kind == adamic_kind_array ? "array" : boxed->kind == adamic_kind_map ? "Map" : boxed->kind == adamic_kind_null ? "null" : "function";
 	}
 	size_t capacity = strlen(expression) + 2 * strlen(type) + strlen(found) + 100;
 	char *message = malloc(capacity);
@@ -229,10 +261,10 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
 
 // Optional views share the required-field validator after proving presence. An
 // absent slot or undefined payload must never be interpreted as numeric bits.
-adamic_value adamic_object_optional_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression, bool absent, bool optional) {
+static adamic_value object_optional_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression, bool absent, bool optional, bool undefined_member) {
  adamic_value *slot = object == NULL ? NULL : adamic_object_optional_field(object, name, cache);
- bool missing = slot == NULL && (absent || optional);
- if (slot != NULL && adamic_object_initialized(object)[cache->index]) {
+ bool missing = (object == NULL && optional) || (object != NULL && slot == NULL && absent);
+ if (slot != NULL && (absent || undefined_member || wanted == 7 || wanted == 9) && adamic_object_initialized(object)[cache->index]) {
   unsigned char actual = adamic_object_field_types(object)[cache->index];
   missing = actual == 13 || (actual >= 3 && actual <= 6 && slot->reference == NULL) || (actual == 7 && !adamic_maybe_number_unpack(slot->number).present) || (actual == 10 && slot->reference == NULL);
  }
@@ -245,6 +277,15 @@ adamic_value adamic_object_optional_view(const adamic_object *object, const char
  if (wanted == 9) { result.reference = result.boolean ? &adamic_box_true : &adamic_box_false; }
  if (wanted == 7) { result.number = adamic_maybe_number_pack((adamic_maybe_number){true, result.number}); }
  return result;
+}
+
+adamic_value adamic_object_optional_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression, bool absent, bool optional) {
+ return object_optional_view(object, name, cache, wanted, type, expression, absent, optional, false);
+}
+
+// An undefined value member does not make a required property absent.
+adamic_value adamic_object_optional_view_undefined(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression, bool absent, bool optional, bool undefined_member) {
+ return object_optional_view(object, name, cache, wanted, type, expression, absent, optional, undefined_member);
 }
 
 // The write is admitted only by the real shape and its declared slot contract,

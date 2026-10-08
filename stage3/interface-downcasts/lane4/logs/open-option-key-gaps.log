@@ -1,0 +1,43 @@
+=== RUN   TestCheckedViewOpenCompilerOptionKeyGaps
+=== RUN   TestCheckedViewOpenCompilerOptionKeyGaps/9761/string
+    checked_views_primitive_pairs_test.go:168: gate cache node miss
+=== RUN   TestCheckedViewOpenCompilerOptionKeyGaps/9761/number
+    checked_views_primitive_pairs_test.go:168: gate cache node miss
+=== RUN   TestCheckedViewOpenCompilerOptionKeyGaps/9761/undefined
+    checked_views_primitive_pairs_test.go:168: gate cache node miss
+=== RUN   TestCheckedViewOpenCompilerOptionKeyGaps/9761/missing
+    checked_views_primitive_pairs_test.go:168: gate cache node miss
+=== RUN   TestCheckedViewOpenCompilerOptionKeyGaps/9761/wrong
+    checked_views_primitive_pairs_test.go:168: gate cache node miss
+=== RUN   TestCheckedViewOpenCompilerOptionKeyGaps/9761/null
+    checked_views_primitive_pairs_test.go:168: gate cache node miss
+=== RUN   TestCheckedViewOpenCompilerOptionKeyGaps/97180/string
+    checked_views_primitive_pairs_test.go:168: gate cache node miss
+=== RUN   TestCheckedViewOpenCompilerOptionKeyGaps/97180/number
+    checked_views_primitive_pairs_test.go:168: gate cache node miss
+=== RUN   TestCheckedViewOpenCompilerOptionKeyGaps/97180/undefined
+    checked_views_primitive_pairs_test.go:168: gate cache node miss
+=== RUN   TestCheckedViewOpenCompilerOptionKeyGaps/97180/missing
+    checked_views_primitive_pairs_test.go:168: gate cache node miss
+=== RUN   TestCheckedViewOpenCompilerOptionKeyGaps/97180/wrong
+    checked_views_primitive_pairs_test.go:168: gate cache node miss
+=== RUN   TestCheckedViewOpenCompilerOptionKeyGaps/97180/null
+    checked_views_primitive_pairs_test.go:168: gate cache node miss
+--- PASS: TestCheckedViewOpenCompilerOptionKeyGaps (3.70s)
+    --- PASS: TestCheckedViewOpenCompilerOptionKeyGaps/9761/string (0.46s)
+    --- PASS: TestCheckedViewOpenCompilerOptionKeyGaps/9761/number (0.21s)
+    --- PASS: TestCheckedViewOpenCompilerOptionKeyGaps/9761/undefined (0.31s)
+    --- PASS: TestCheckedViewOpenCompilerOptionKeyGaps/9761/missing (0.31s)
+    --- PASS: TestCheckedViewOpenCompilerOptionKeyGaps/9761/wrong (0.35s)
+    --- PASS: TestCheckedViewOpenCompilerOptionKeyGaps/9761/null (0.21s)
+    --- PASS: TestCheckedViewOpenCompilerOptionKeyGaps/97180/string (0.41s)
+    --- PASS: TestCheckedViewOpenCompilerOptionKeyGaps/97180/number (0.22s)
+    --- PASS: TestCheckedViewOpenCompilerOptionKeyGaps/97180/undefined (0.26s)
+    --- PASS: TestCheckedViewOpenCompilerOptionKeyGaps/97180/missing (0.24s)
+    --- PASS: TestCheckedViewOpenCompilerOptionKeyGaps/97180/wrong (0.37s)
+    --- PASS: TestCheckedViewOpenCompilerOptionKeyGaps/97180/null (0.36s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=12
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.721s

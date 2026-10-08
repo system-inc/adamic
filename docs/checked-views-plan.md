@@ -815,6 +815,93 @@ The initial October 9 estimate was revised after inspection of pending hooks.
 No integrated pair is complete at this territory checkpoint: 73 pairs and
 267 reads remain. Lazy-admission branch was not yet present on origin.
 
+### Lane 4b resumed on integrated lazy admission, October 7
+
+Merged integration ba59427ccc7afecae29a305c41e6e9c7867e5610. Superseding
+inventory: 42 candidate pairs / 181 candidate reads from lazy/census; exact
+production reachability remains unmeasured pending checker-clean TypeScript.
+The old 73/267 table remains historical. Ranked ledger and source controls are
+in lane4b/resume. No original tsc pair is yet marked complete.
+
+The lead now authorizes minimal shared hooks. This lane adds named dispatch to
+objectPrimitiveViewType in lower/object.go and lower/interface_cast.go, and
+viewObjectPrimitive in native/view_fields.go and javascript/javascript.go.
+The two admission guards allow one structural object plus scalar primitives
+and optional undefined; accessors remain refused. Backend dispatch preserves
+the shared union contract and descendant read obligations. New runtime files
+normalize concrete scalar and boxed slots, check presence/readiness, select
+literal primitive membership, and retain the single object alternative.
+Selection of that alternative is not a structural-conformance certificate:
+its fields remain lazy obligations and every reachable descendant read must
+use the shared view machinery. No object member is erased into Unknown.
+
+Production source controls cover reduced true|Node|undefined and string|Chain
+shapes, matching the first two ranked shapes (five candidate pairs / 43 reads).
+They are not original-pair coverage. Both backends pin outer and nested wrong
+values, and valid values; the optional shape also pins undefined. Independent
+release mutants remove outer selection, accept a wrong literal/nested scalar,
+and remove a transitive read check. Arrays, Map, callables, intersections,
+multiple object alternatives, indexed reads, inherited static slots and packed
+optional numeric/boolean storage remain outside this adapter checkpoint.
+
+Revised whole-family working date: October 16, 2026, 23:00 UTC. This includes
+remaining member adapters and original-pair witnesses; exact reachability will
+still require the checker-clean program. Only integration is merged, and the
+lead forwards this lane's tip to the integrator for hunk reconciliation.
+
+### Lane 4b scalar and array union checkpoint, October 8
+
+The next direct shape is string|number|PseudoBigInt (rank 4, 10 candidate reads).
+Rank 3 is an object union with an intersection and remains uncovered. Array
+alternatives now dispatch through the existing shared lazy element contract;
+source controls model string|NodeArray<JSDocComment>|undefined using a readonly
+array alias. Full NodeArray inherited metadata is not certified by this alias.
+These two added shapes bring reduced controls to 22 candidate pairs / 103 reads;
+20 candidate pairs / 78 reads have no reduced shape control. Original-pair
+witnesses remain pending for all 42 pairs / 181 reads, and exact production
+reachability remains unmeasured.
+
+Minimal added shared hook: lower/object.go calls objectPrimitiveBoxedField for
+ir.Union property initializers. The helper admits physical boxed storage only
+for scalar unions or the supported single object/array alternative, preserving
+runtime tags and source slots. It does not widen writes or prove payload types.
+Both positive source controls exercise boxed union field producers and both
+backends check the member at the read. Native sanitized/leak-checked runs pass.
+Independent outer removal, wrong-member acceptance, wrong nested-shape acceptance
+and dropped nested checks all fail pinned refusals in executable release code.
+
+Revised working whole-family date: October 13, 2026, 23:00 UTC, brought forward
+from October 16 after this production checkpoint. Remaining risks include true
+NodeArray representation/metadata, object intersections and unions, dynamic
+keys, tuple/element reads, callable alternatives and original-pair context
+witnesses. This is a delivery estimate, not completed production reachability.
+
+### Lane 4b original-pair witness checkpoint, October 8
+
+Original declarations are generated outside the repository from TypeScript pin
+050880ce59e30b356b686bd3144efe24f875ebc8 using original/prepare.cjs. No cohere
+code is copied. The generator rejects tracked source drift, audits every UTF-16
+read-site slice for the two leading pairs, emits declarations, and records their
+hashes and complete SourceFile/Node/Diagnostic/DiagnosticMessageChain field sets.
+The oracle binds type-only imports to those declarations, runs normal strict
+load diagnostics, and checks every root/member field name against the manifest.
+
+Certified standalone original field-contract pairs: SourceFile.externalModuleIndicator
+(20 candidate reads) and Diagnostic.messageText (15 candidate reads). These are
+complete original declarations, with valid/wrong/absent controls as applicable,
+both-backend refusal pins and independent semantic mutants. SourceFile also has
+generic, callback and stored-alias controls. Its optional missing field returns
+undefined; an uninitialized present slot still refuses. These are pair-contract
+witnesses and site provenance audits, not execution of the 35 whole-tsc contexts
+or exact production allocation reachability. Remaining: 40 candidate pairs /
+146 candidate reads. Whole-family working date remains October 13, 23:00 UTC.
+
+Only lane-owned emitter/runtime files changed for original optional admission:
+pass receiver optionality and field absence separately; allow a missing optional
+slot while retaining the shared readiness guard. Existing shared hook hunks remain
+those already listed. Original schemas retain all unread unsupported descendants
+as lazy obligations. No blanket shape certificate is claimed.
+
 ## Centralized checked-view integration
 
 The lead assigned Codex 01a11882-3830 on codex/views-integration to merge every
@@ -1011,6 +1098,188 @@ JavaScript package tests pass; lower retains the documented mixed-array adapter
 failure. The lane-owned component work, six executable mutants and exact blocker
 handoff are recorded in lane7/REPORT.txt. Rest pending integrated lazy admission.
 
+Lane 5 next group adds known-void signature metadata at the owned read adapter
+and runtime shape selection, including native method producer certificates.
+Void remains distinct from unknown and discarded-result contracts. Original
+FileWatcher.close witnesses pin this fixed zero-argument shape.
+
+
+Lane 7 integrated-lazy checkpoint, October 7: integration ba59427c includes this
+lane's earlier tip and merges by fast-forward. Do not merge individual lanes.
+The newer lazy census lists 45 intersection candidates / 769 reads across owners;
+lazy/REPORT.md explicitly leaves allocation-exact reachability UNMEASURED.
+Do not report these candidate counts as exact or subtract component fixtures.
+
+Concrete shared-hook handoff is lane7/shared-hooks.patch, generated without
+editing shared files by lane7/make-integration-overlay.py. The integrator owns
+four small hooks: view_lazy.go recognizes structural intersections; view_contracts.go
+routes them to internStructuralViewIntersection; view_objects.go admits their data
+representation; expression.go selects object storage without the old scalar-only
+field restriction. The lane-owned builder uses ViewObject plus Members as a
+conjunction and checker-combined Fields for duplicate names. This representation
+supports lazy structural field reads, rather than eager payload certification.
+It excludes callable, indexed, array, tuple, nominal and primitive constituents;
+phantom-only arms contribute no runtime fields. Unsupported descendants retain
+lazy obligations. The component all-members matcher is not used by this path.
+
+Source tests enable the handoff via ADAMIC_INTERSECTION_HOOKS=1 with the generated
+Go overlay. They cover the first directly structural declared intersection,
+GeneratedIdentifier.emitNode (4 candidate reads), with reduced contract fragments,
+shared-helper reads, a wrong first-arm scalar, a wrong second-arm nested scalar,
+and optional absence. Generic Named & Counted controls remain separate. These
+fixtures do not certify the full upstream interface pair or exact reachability.
+Production completions remain zero pending integrator hooks. Revised whole-family
+working date: October 12, 2026, 23:00 UTC, conditional on hooks landing promptly
+and remaining compound families being supported. This is an estimate, not a
+promise established by measured throughput.
+
+Lane 7 correctness review: the four-hook patch is INCOMPLETE and must not enable
+production admission. Native and JavaScript viewObjectUnion currently ignore
+Members when Kind is ViewObject. Thus metadata preserves obligations on later
+field reads but does not check all members at an intersection-valued root read.
+RootConjunctionProbe is an explicit red probe for this gap. Required fifth/sixth
+shared seams are native/view_unions.go and javascript/view_unions.go: recognize
+the conjunctive descriptor and call lane-owned all-member snapshot matchers.
+Do not certify a shape with only the heap tag or flattened field registration.
+Until this dispatch exists, the original unsupported intersection refusal stays
+active in the production tree. The overlay is experimental evidence only.
+
+
+Lane 7 production hook group, October 8, authorized by the shared-hook rule:
+shared lower/expression.go, view_lazy.go, view_contracts.go and view_objects.go
+now call structuralViewIntersection and internStructuralViewIntersection.
+IR views.go adds the named Intersection discriminator; union selection is kept
+separate. Native/view_unions.go and javascript/view_unions.go dispatch this flag
+to lane-owned viewObjectIntersection methods. These use checker-combined Fields
+to check all nonphantom member obligations, including duplicate-name child
+intersections, and preserve one snapshot per projected field. The existing
+presence/readiness and expected-type diagnostics are reused. Deferred unsupported
+descendants retain lazy read obligations; a recursive backedge retains checks on
+subsequent projected reads. Native and JavaScript code generation lives in the
+lane's owned view_intersections files. These seven named hooks supersede the
+incomplete overlay handoff. Production tests no longer skip or need an overlay.
+
+Candidate queue remains the lazy inventory, labeled candidate, across all owners.
+No exact counts are inferred. First production group verifies GeneratedIdentifier
+emitNode shape fragments, root-only reads, helper reads, optional absence,
+object phantom brands and duplicate-field nested intersections. Full upstream
+pair certification remains distinct from reduced fragments. Revised whole-family
+working date: October 11, 2026, 23:00 UTC. This estimate now has no shared-hook
+handoff dependency; compound union, recursive, array and callable intersections
+still require additional implementation and validation.
+
+Lane 7 conservative scope hook: view_lazy.go also calls the named
+viewIntersectionReadFamily classifier after descriptor construction. Read demand
+refuses union selection containing intersections, deep recursive payloads and
+supported compound child families that the finite object/scalar matcher cannot
+validate yet. Casts stay lazy, and already-unsupported descendants keep their
+own read obligations. This prevents the new general intersection classification
+from accidentally admitting unwired compound runtime paths. Until those adapters
+are implemented, these are explicitly pending candidate families.
+
+Lane 7 scoped candidate accounting: the 45 / 769 shared queue separates into
+15 explicit object-intersection candidates / 64 reads, 23 primitive-brand
+candidates / 692 reads delegated outside this lane, and 7 private builder/array
+alias overlaps / 13 reads whose ownership/runtime classification is unresolved.
+This partitions the static candidates, not allocation-exact reachability and
+not phantom-brand proof from display text. The object keys are preserved in
+lane7/lazy-pair-progress.json. Full upstream pairs certified remain zero;
+reduced source shapes are not subtracted. Recursive checker-type traversal also
+prevents optional recursive descriptor copies with temporarily empty Fields
+from bypassing the demanded-read refusal.
+
+
+Lane 7 selected-arm hook group, October 8: IR IntersectionTag and the native /
+JavaScript view_unions dispatch call lane-owned viewIntersectionUnion methods.
+view_lazy calls viewIntersectionReadFamily with the checker type. A finite
+object union with intersection arms, or a previously refused enum-tag alias,
+can select disjoint literal-tag arms and validate every selected field with one
+tag snapshot. Equal field obligations may be coalesced; overlapping unequal
+arms, recursive union payloads and untagged selection remain refused at demand.
+Existing supported plain union dispatch keeps its diagnostics. No protected
+emit.go, lower.go, native.go or oracle_test.go edits are needed.
+
+Original source witness metadata verifies 22 candidate pairs / 77 reads against
+pinned TypeScript git objects without copying upstream files. Builder declaration
+spans classify five overlap pairs / 11 reads as numeric-brand or array work;
+two overlap pairs / 2 reads involve FileInfo object intersections behind callback
+unions and remain in lane 7. The revised queue is 17 object candidates / 66 reads,
+28 delegated candidates / 703 reads, zero unclassified overlaps. Full upstream
+certifications still zero: finite declaration fragments do not cover complete
+tsc interfaces. Original-read-witnesses.json preserves exact UTF-16 spans and
+source hashes; overlap-classification.json records the declaration evidence.
+### Dictionary boxed-record helper checkpoint after ba59427c
+
+The dictionary lane supplies `runtime/view_dictionaries.c/.h` and
+`javascript.DictionaryRuntime()`. Native `adamic_view_dictionary_read` consumes
+only source-certified existing records whose table values use existing union
+boxes (`reference_values=true`). It classifies each selected box at the read,
+checks a logical-kind mask and returns a borrowed normalized value with the
+nonzero child contract on reference results. JavaScript's corresponding helper
+checks an own data property without invoking getters. Neither scans unread keys.
+Native null has no distinct boxed encoding yet and stays unsupported.
+
+Shared wiring remains required: a source-certified record producer, descriptor
+registration ahead of unsupportedViewFamily's dictionary fallback, record IR and
+indexed-read dispatch, and propagation of the result's child contract. Existing
+raw scalar records must keep their current representation; they cannot be passed
+as boxed_storage=true on the word of a target cast. Shared source dispatch must
+retain deferred refusals until the complete producer/read path exists.
+
+The lazy census reports 18 dictionary-contract pairs / 174 candidate reads and
+14 dictionary-read pairs / 66 candidate reads; their deduplicated union is 29
+pairs / 228 reads. This is a candidate table, not exact runtime reachability.
+ADAPTED-CENSUS.md explicitly says runtime reachability is unmeasured while
+checker diagnostics prevent production IR. Do not replace that Unknown with zero
+or claim exact pair completion from component evidence.
+
+`internal/lower/view_dictionaries.go` now declares viewDictionaryContractHook and
+prepares recursive index/named-field descriptors, rolling back new ids on failure.
+The root remains Unsupported dictionary source dispatch until shared source
+wiring is complete. New records are not created by this helper. It does not change
+refusals.go's unconditional index-signature rule or install a read dispatcher.
+The native helper currently supports broad kind membership on source-certified
+boxed tables; finite literals and full array/callable/union/null contracts require
+their complete owning adapters, never a kind-mask shortcut.
+
+Revised whole-family working date: October 19, 2026 at 23:00 UTC, conditional
+on source producer and shared dispatch handoffs by October 9. Group1.md records
+the proven helper paths and all unimplemented source obligations. Candidate
+progress remains 29 / 228, with exact production reachability unmeasured.
+
+### Shared-hook coordination amendment, October 8, 2026
+
+The user now authorizes each lane to add its own minimal shared-code hooks
+listed under that lane's plan section. This supersedes earlier owner-only
+wiring restrictions for those named hooks. The integration worker reconciles
+each overlapping hunk individually, preserving all refusals and Node agreements.
+Lanes still consume other lanes through codex/views-integration; a hook or
+component alone is not evidence of complete source admission.
+
+
+Lane 7 recursive hook group, October 8: IR IntersectionRecursive selects the
+lane-owned recursive object walker. ObjectPresent in optional descriptors points
+to their completed canonical object; view_contracts.go sets this link when copying
+a present object descriptor. Lane-owned IR RecursiveIntersectionObjects emits
+only the graph reachable from this read. Native/runtime/adamic.h includes the
+new owned view_intersections_recursive.h; its C walker reads each combined field
+through shared presence/readiness/physical-type validation, checks literals,
+recurses with a full field path and tracks (object, contract) active pairs.
+Paths are explicitly allocated and freed; successful native fixtures pass leak
+checks. JavaScript uses the same descriptor obligations and active-pair rule.
+
+Two further minimal shared hooks, native/view_nullish.go and
+javascript/view_nullish.go, call viewIntersectionNullishRead after physical
+nullish admission. A present optional or null-allowing intersection must retain
+its payload checks. The new optional-root test caught the former bypass in both
+backends. Null and undefined controls remain handled by their owning lane.
+
+Plain recursive object/scalar intersections are now supported. Recursive union,
+array, callable, nullable descendant and nominal payloads remain pending or lazy
+unsupported obligations at descendant reads. Cyclic allocated source programs
+are not claimed as covered. Reduced recursive fixtures do not decrement full
+upstream candidate counts: 17 pairs / 66 reads remain. Date remains October 11,
+2026, 23:00 UTC. Original leading tsc witness spans are in the prior group.
 ## Lane 2 native array hooks, October 8
 
 Under the lead's October 8 rule, lane 2 adds minimal shared hooks directly;
@@ -1112,3 +1381,185 @@ No new IR node, array header metadata, callable hook or element scan is added.
 The new oracle is TestCheckedViewRankedArrayUnionContracts, with Node controls,
 both backends and exact kind/tag failure pins. The separate
 TestCheckedViewMutableArrayUnionRefusal pins the unsupported read diagnostic.
+
+
+## Lane 5 source hooks on ba59427 (October 8)
+
+The user's hook rule supersedes the prior handoff-only restrictions. Lane 5
+merges integration only and owns these minimal named shared hooks:
+
+- lower/object.go: prepareViewCallableProperty attaches fixed scalar signature
+  descriptors at reads; casts remain lazy. lower/interface_cast.go recognizes
+  optional callable unions through callableViewContract.
+- native/view_fields.go: emitViewCallableCertificate runs after presence,
+  readiness and kind checks. native/emit_functions.go checks resolved viewed
+  method pointers through emitViewCallableMethodCertificate before calling.
+- Owned native and JavaScript view_callables files check dynamic method lookup
+  and ordinary closure fields. New native/view_callables_methods.go selects
+  independently recorded method signatures by actual thunk identity.
+- lower/invariance.go: viewCallableVoidMarker treats a discarded function result
+  as a value contract, while widenedProperties retains reverse writable-slot
+  checks. New lower/view_callables_marker.go validates immediate discarded,
+  zero-argument marker calls against their original scalar source signature.
+  lower/cast_proof.go and lower/expression.go use that narrowly named proof;
+  stored erased-marker calls retain their existing refusal.
+- oracle/checked_views_arrays_test.go updates callable signature diagnostic pins;
+  oracle/checked_views_lazy_test.go pins runtime refusal for now-supported scalar
+  helper reads. oracle/interface_cast_counts_test.go registers viewCallableCounts.
+  New callable source/count tests and lane5/group1 and lane5/marker fixtures are
+  lane 5 territory. counts.md records only the measured added fixture rows.
+
+Coverage ledger labels counts as candidates. Group1 covers the two Program
+string-directory contracts, 11 static candidate reads; 306 pairs / 1,492 static
+candidate reads remain. Actual corpus reachable-read certification is unmeasured.
+Higher-ranked intrinsic, optional/rest, overloaded and aggregate-return shapes
+remain unclaimed. Working family date: October 12, 2026, 18:00 UTC, subject to
+remeasurement after the checker-clean exact table and closure reconciliation.
+
+## Lane 5 stored marker calls and upstream witnesses (October 8)
+
+New minimal hooks: ir/views.go adds DiscardResult to callable contracts;
+ir/ir.go adds CheckedDiscard and its contract/label to CallClosure. lower/expression.go routes erased
+never-rest calls through lower/view_callables_marker.go, requiring a zero-argument
+call whose result is discarded. Native emit_functions.go dispatches that flag to
+owned view_callables_discard.go; it rechecks producer identity and arity and frees
+reference results according to the independently recorded result representation.
+Owned signature/read adapters recognize only this explicit discarded-result
+contract. Zero remains unknown; known void is separately recorded as metadata.
+Normal valued result contracts remain exact. javascript/javascript.go dispatches
+the same call flag to its owned view_callables_discard.go. No closure ABI is changed.
+
+Original candidate witnesses are verified against upstream TypeScript commit
+050880ce59e30b356b686bd3144efe24f875ebc8 in an independent source checkout, never
+by copying cohere files. Intrinsic and stored-callable evidence will be reported
+separately and counts remain candidates until exact reachability is measured.
+
+### Lane 4 named primitive read hooks under the direct-hook ruling
+
+The user now authorizes minimal named shared hooks per lane, reconciled by the
+integrator. Lane 4 adds viewStringUndefined(property) in its native and JavaScript
+view_unions_mixed.go files. Shared native viewField calls it to select the existing
+optional payload reader while retaining the required-field presence flags.
+Shared JavaScript Property dispatch supplies its result as undefinedMember to
+adamicViewField; the readiness helper accepts undefined payloads independently
+of optional absence and retains null rejection. Tagged object-union dispatch is
+restricted to object-valued fields. These are executable source-read hooks,
+not flow erasure or a second readiness state.
+
+Shared strictViewContract classifies phantomUndefined as ViewUndefined;
+unsupportedViewFamily permits that approved phantom erasure, and viewDataType
+recognizes it in read preflight. No other intersection, brand member, nominal,
+callable or dictionary contract is enabled by these hooks. The two leading
+candidate pairs are pinned by TestCheckedViewCompleteBrand and both backend
+undefined-admission overlay mutants. Integration consumes this lane tip through
+the user; no individual lane branch is merged.
+
+### Lane 4 staged boxed primitive probe
+
+Lane 4 owns the named adamic_view_union_heap normalizer in its mixed-union
+runtime and adamic_object_view_union_snapshot in shared object.c, declared in
+view_unions_mixed.h. The latter calls the existing readiness/static-owner resolver,
+then classifies only source storage evidence. Optional absence stays separate
+from present uninitialized storage. Unknown storage remains unknown. No cast
+admission or read dispatch is enabled by these probe-only changes. Dedicated
+release and sanitizer probes cover storage formats and inherited owners before
+source dispatch is enabled. The integrator reconciles these minimal named hooks.
+
+Lane 4 also owns internal/ir/view_primitives.go and its tests: the named
+PrimitiveViewMembers planner preserves literal/undefined alternatives and
+rejects missing, unsupported, object and recursive member graphs. It does not
+enable source admission or a second flow graph. The primitive array adapter
+remains an unapplied review artifact in lane4/primitive-array-adapter-review.patch,
+with its staged hooks and validation gate in lane4/ADAPTER-REVIEW.md. Automatic
+approval review rejected enabling that cross-layer work on memory-safety and
+silent-miscompile risk. Accepted probe work remains separately reviewable.
+
+Census correction: the reduced finite CompilerOptions key fixtures in 0bae12f8
+omitted tsc's string index signature and therefore did not complete either
+skippedOn pair. The corrected lane 4 candidate ledger has nine mixed primitive
+pairs / twenty-seven reads remaining. The __String family remains complete,
+fourteen candidate pairs / five hundred eleven reads. Candidate counts are not
+certified production reachability. The full key gaps inherit a library Record
+index signature and checker-validate a numeric keyof key without constructing
+runtime dictionary storage. They remain compile refusals, not completions.
+
+### Lane 4 dictionary scalar and nullish element selection
+
+Lane 6 GROUP4 at ce4eeaa4 hands lane 4 the scalar/nullish selection portion of
+CompilerOptions and BuildOptions dynamic element extraction, two candidate pairs /
+eleven reads. Lane 6 retains lookup, absence, enumeration and storage; lane 4b
+retains object/array alternatives and descendant contracts. The ranked lane 4
+ledger now has eleven pending scheduling pairs / thirty-eight candidate reads,
+including nine original mixed primitive pairs / twenty-seven reads. Full shared
+extraction remains pending; container certification is not child-read coverage.
+See stage3/interface-downcasts/lane4/DICTIONARY-HANDOFF.md. No new hook or second
+flow analysis is added by this scheduling checkpoint.
+
+Lane 4 integration reconciliation: lower/view_unions_mixed.go owns
+viewBrandedStringUndefined, called by lower/object.go to retain the scalar
+undefined-payload certificate for approved string/phantom-void contracts.
+Null-containing and ordinary nullable contracts retain the lazy owner's reader.
+Open-key reduced witnesses use that owner's now-present primitive member selector;
+they do not certify the full original CompilerOptions dictionary extraction.
+
+Lane 5 integration nullable-callable hook: native/view_nullish.go and
+javascript/view_nullish.go invoke owned viewCallableNullishCertificate helpers
+after the owner presence/readiness/kind checks. Non-null callable values retain
+the same signature check; permitted null/undefined preserve their identities.
+
+The nullable-callable reconciliation also attaches complete fixed signatures to
+boxed Union reads in prepareViewCallableProperty. Otherwise the new same-name
+proof exemption would admit nullable function reads without a signature check.
+TestCheckedViewNullishCallableSignatureMutant now pins the runtime wrong-result
+refusal in both backends rather than the older compile-time refusal.
+
+## Lane 5 non-predicate scalar witnesses (October 8)
+
+Lane 5 adds internal/oracle/checked_views_callable_scalar_witness_test.go and
+fixtures under lane5/scanner and lane5/performance. These preserve original tsc
+member signatures and call expressions with reduced receivers and implementations.
+No shared production hook is needed for these fixed scalar signatures. The lane
+counts helper adds these directories; candidate counts remain separate by census.
+
+Lane 5 also pins gaps/mixed-scalar-boxed-result.a against Node. It reproduces
+the predicates worker ABI boundary: a number-returning producer needs a boxed
+union result adapter. This adds no blanket callable admission. Aggregate callable
+results also need field-demand propagation before their shapes can be admitted.
+
+Lane 7 latest integration reconciliation: viewDataType retains both structural
+intersection recognition and viewArrayBase ancestry recognition; plan appends
+from both lanes are preserved. Central tip d50c1d37 is merged, never a peer tip.
+
+
+Lane 7 original-certification group: new files are
+internal/oracle/checked_views_intersections_original_test.go and
+stage3/interface-downcasts/lane7/original/*.a, prepare.cjs and run-mutants.py.
+They reference complete declarations emitted outside Adamic from pristine
+microsoft/TypeScript at 050880ce, using the integrated lane4b emission adapter.
+All emitted files are hash checked; complete original receiver, component and
+combined intersection field sets are asserted. No cohere file is copied.
+
+Named minimal hooks for this group: the owned intersection classifier admits
+ViewCallable child kind checks, and both owned field walkers retain callable
+presence/kind checks. Shared javascript/readiness.go adamicViewField recognizes
+representation 8 as a real function or AdamicClosure. Signature/body proof stays
+at the owning callable read/call boundary; a function tag is never that proof.
+Shared lower/view_lazy.go consults viewIntersectionReadChecks before the
+field-name fallback. A resolved supported conjunctive read keeps its emitted
+checks instead of inheriting a different wider carrier's unsupported descriptor.
+Unsupported or unresolved reads retain the existing conservative fallback.
+The original missing-optional control caught that fallback collision.
+
+
+Intersection integration presence hook: native object_optional_view separates
+required property presence, optional receiver presence and permitted undefined
+payloads. The explicit adamic_object_optional_view_undefined entry point and
+native viewField preserve the lane 4 branded-string undefined member flag.
+Finite and recursive intersection walkers pass field.Optional independently of
+child.Undefined; JavaScript uses the existing ninth undefinedMember argument.
+RequiredUndefinedPresence source controls refuse absent required fields while
+permitting explicitly initialized undefined values. Recursive tables carry both
+flags. This fixes an observed all-backend root-read gap without weakening any
+callable signature, Map certificate or lazy descendant obligation. Nullable
+intersection hooks handle direct conjunctions; the lazy owner's union selector
+already validates tagged intersection arms, so that dispatch is not duplicated.
