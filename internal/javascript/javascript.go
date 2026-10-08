@@ -717,6 +717,16 @@ func (e *emitter) value(expression ir.Expression) string {
 			return e.value(expression.Value) + "?.length"
 		}
 		return e.value(expression.Value) + ".length"
+	case ir.JSONParse:
+		callback := "undefined"
+		if expression.Reviver != nil {
+			callback = e.value(expression.Reviver)
+		}
+		ignored := "undefined"
+		if expression.IgnoredReviver != nil {
+			ignored = e.value(expression.IgnoredReviver)
+		}
+		return "adamicJSONParse(" + e.value(expression.Text) + ", " + callback + ", " + ignored + ", " + quote(expression.Mode) + ")"
 	case ir.JSONStringify:
 		value := e.value(expression.Value)
 		replacer, space := "undefined", "undefined"

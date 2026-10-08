@@ -1,0 +1,16 @@
+const zero: number = JSON.parse('-0');
+console.log(`${zero} ${1 / zero}`);
+const edge: number = JSON.parse('9007199254740993');
+console.log(`${edge}`);
+const tiny: number = JSON.parse('2.4703282292062327e-324');
+const above: number = JSON.parse('2.4703282292062328e-324');
+console.log(`${tiny} ${above}`);
+const largest: number = JSON.parse('1.7976931348623157e308');
+const overflow: number = JSON.parse('1.7976931348623159e308');
+console.log(`${largest} ${overflow}`);
+const bool: boolean = JSON.parse(' \ttrue\n');
+const text: string = JSON.parse('"a\\u0000\\ud800\\udfff\\ud83d\\ude00\\n"');
+console.log(`${bool} ${text.length} ${JSON.stringify(text) ?? 'u'}`);
+console.log(JSON.stringify(JSON.parse('{"a":1,"a":2,"2":20,"1":10,"__proto__":3,"k\\u0000":4,"01":5,"4294967294":6,"4294967295":7}')) ?? 'u');
+console.log(JSON.stringify(JSON.parse('{"a":{"orphan":1},"a":{"kept":2},"b":[1e400,-0,9007199254740993,"\\ud800",null,true]}')) ?? 'u');
+JSON.parse(' \n {"a": [true, false, null, "\\u0000"]} \r');

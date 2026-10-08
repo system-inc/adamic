@@ -55,5 +55,11 @@ func (e *emitter) jsonStringify(expression ir.JSONStringify) string {
 	}
 	replacerSchema := e.jsonSchema(expression.ReplacerSchema)
 	spaceSchema := e.jsonSchema(expression.SpaceSchema)
+	if expression.Schema.CallsUserCode() || expression.ReplacerSchema.CallsUserCode() {
+		result := e.temporary()
+		e.line("adamic_string *%s = adamic_json_stringify(%s, %s, %s, %s, %s, %s);", result, first, schema, replacer, replacerSchema, space, spaceSchema)
+		e.checkThrown()
+		return e.own(ir.String, result)
+	}
 	return e.own(ir.String, fmt.Sprintf("adamic_json_stringify(%s, %s, %s, %s, %s, %s)", first, schema, replacer, replacerSchema, space, spaceSchema))
 }

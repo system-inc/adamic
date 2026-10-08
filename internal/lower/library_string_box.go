@@ -165,6 +165,13 @@ func (l *lowering) stringBoxViewRefusal(node *ast.Node) error {
 			outer = outer.Parent
 		}
 		parent := outer.Parent
+		// JSON stringify consumes fresh intrinsic boxes using its proven primitive slot.
+		if parent != nil && parent.Kind == ast.KindCallExpression && node.Kind == ast.KindNewExpression {
+			callee := ast.SkipParentheses(parent.AsCallExpression().Expression)
+			if callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "stringify" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "JSON") {
+				return nil
+			}
+		}
 		if parent != nil && parent.Kind == ast.KindCallExpression && len(parent.AsCallExpression().Arguments.Nodes) > 0 && parent.AsCallExpression().Arguments.Nodes[0] == outer {
 			callee := ast.SkipParentheses(parent.AsCallExpression().Expression)
 			if l.isLibraryGlobal(callee, "String") {

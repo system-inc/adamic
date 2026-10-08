@@ -465,6 +465,11 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				throws = throws || method == "matchAll" || method == "replaceAll" || strings.HasSuffix(method, "Callback")
 			case reflect.TypeOf(ir.RegExpNew{}):
 				throws = throws || value.Interface().(ir.RegExpNew).Invalid
+			case reflect.TypeOf(ir.JSONStringify{}):
+				call := value.Interface().(ir.JSONStringify)
+				throws = throws || (call.Schema.CallsUserCode() || call.ReplacerSchema.CallsUserCode())
+			case reflect.TypeOf(ir.JSONParse{}):
+				throws = true
 			case callType:
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
 					throws = true

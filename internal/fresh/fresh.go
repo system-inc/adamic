@@ -1070,8 +1070,14 @@ func (a *analysis) value(expression ir.Expression) value {
 			return outsideValue()
 		}
 		return value{}
+	case ir.JSONParse:
+		return a.call(a.operands(expression), expression.Type())
 	case ir.JSONStringify:
-		// Lowering excludes toJSON and replacer callbacks; serialization only reads values.
+		// JSON callbacks can mutate captured objects. Expose their operands;
+		// other serialization reads values without calling user code.
+		if expression.Schema.CallsUserCode() || expression.ReplacerSchema.CallsUserCode() {
+			return a.call(a.operands(expression), expression.Type())
+		}
 		a.value(expression.Value)
 		a.value(expression.Replacer)
 		a.value(expression.Space)

@@ -78,6 +78,8 @@ IN THE SOFTWARE.
   - never-returning Array comparators (`internal/lower/library_array_sort.go` and
     `runtime/array.c`, after SortCompareUserFn in
     third_party/v8/builtins/array-sort.tq, V8 13.6.233.17);
+  - JSON parsing and diagnostics (`runtime/json_parse.c`, after src/json/json-parser.cc,
+    src/json/json-parser.h and src/common/message-template.h, V8 13.6.233.17);
   - exponentiation (`runtime/number.c`, after math::pow);
   - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own
     notice is below);

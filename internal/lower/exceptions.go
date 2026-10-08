@@ -165,7 +165,7 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			found = node.CodePoints
 		case ir.NodeFSFile:
 			found = found || node.MayThrow()
-		case ir.Throw:
+		case ir.Throw, ir.JSONParse:
 			found = true
 		case ir.NodeHostCall:
 			found = node.Throws
@@ -175,6 +175,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			found = found || node.Invalid
 		case ir.RegExpCall:
 			found = found || node.Method == "matchAll" || node.Method == "replaceAll" || strings.HasSuffix(node.Method, "Callback")
+		case ir.JSONStringify:
+			found = found || (node.Schema.CallsUserCode() || node.ReplacerSchema.CallsUserCode())
 		case ir.Call:
 			if l.result.CallMayThrow(node) {
 				found = true

@@ -105,6 +105,12 @@ static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) 
 	if (schema->null_reference && value.reference == NULL) {
 		return (json_scalar){adamic_json_null, value};
 	}
+    if (kind == adamic_json_parsed) {
+        const adamic_object *carrier = value.reference;
+        // A reviver can make the private parsed result undefined. Normalize before an
+        // object field emits its key; arrays then use the ordinary undefined-to-null path.
+        if (carrier->slots[0].reference == NULL) kind = adamic_json_undefined;
+    }
 	if (kind == adamic_json_maybe_number) {
 		adamic_maybe_number number = adamic_maybe_number_unpack(value.number);
 		kind = number.present ? adamic_json_number : adamic_json_undefined;
@@ -137,22 +143,60 @@ static void indent(json_writer *w, size_t depth) {
 		append(w, w->gap->bytes, w->gap->length, (size_t)adamic_string_length(w->gap));
 	}
 }
+// Lowering proves these callbacks take no parameters and their returns carry complete metadata.
+static bool resolve_to_json(adamic_value *value, const adamic_json_schema **schema) {
+    if ((*schema)->kind != adamic_json_toJSON) return false;
+    const adamic_object *object = value->reference;
+    for (size_t index = 0; index < (*schema)->count; index++) {
+        const adamic_json_field *field = &(*schema)->fields[index];
+        if (field->name->length == 6 && memcmp(field->name->bytes, "toJSON", 6) == 0) {
+            adamic_closure *callback = object->slots[field->slot].reference;
+            adamic_value arguments[1] = {{.reference = NULL}};
+            *value = callback->code(callback, arguments);
+            *schema = (*schema)->element;
+            return true;
+        }
+    }
+    static const char message[] = "JSON toJSON descriptor lacks its proven callback";
+    adamic_panic(message, sizeof message - 1);
+}
+static void release_json_return(adamic_value value, const adamic_json_schema *schema) {
+    if (schema->kind == adamic_json_string || schema->kind == adamic_json_array) adamic_release(value.reference);
+}
 static bool write_value(json_writer *w, adamic_value value, const adamic_json_schema *schema, size_t depth);
 static void write_field(json_writer *w, const adamic_object *object, const adamic_json_field *field, size_t depth, size_t *written) {
 	// Undefined and function-valued object fields are omitted, rather than becoming null.
-	json_scalar s = scalar(object->slots[field->slot], field->schema);
-	if (s.kind == adamic_json_undefined || s.kind == adamic_json_function) { return; }
+    if (adamic_thrown != NULL) return;
+    adamic_value value = object->slots[field->slot];
+    const adamic_json_schema *schema = field->schema;
+    bool owned = resolve_to_json(&value, &schema);
+    json_scalar s = scalar(value, schema);
+    if (adamic_thrown != NULL || s.kind == adamic_json_undefined || s.kind == adamic_json_function) { if (owned) release_json_return(value, schema); return; }
 	if ((*written)++ != 0) { ascii(w, ","); }
 	indent(w, depth + 1);
 	quote(w, field->name);
 	ascii(w, !w->pretty ? ":" : ": ");
-	(void)write_value(w, object->slots[field->slot], field->schema, depth + 1);
+	(void)write_value(w, value, schema, depth + 1);
+    if (owned) release_json_return(value, schema);
 }
 static bool write_value(json_writer *w, adamic_value value, const adamic_json_schema *schema, size_t depth) {
+    if (adamic_thrown != NULL) return false;
 	ADAMIC_CHECK_STACK();
+    if (schema->kind == adamic_json_toJSON) {
+        (void)resolve_to_json(&value, &schema);
+        bool present = adamic_thrown == NULL && write_value(w, value, schema, depth);
+        release_json_return(value, schema);
+        return present;
+    }
 	json_scalar s = scalar(value, schema);
 	switch (s.kind) {
 	case adamic_json_undefined: case adamic_json_function: return false;
+	case adamic_json_parsed: {
+		const adamic_object *carrier = value.reference;
+		const adamic_string *text = carrier->slots[0].reference;
+		append(w, text->bytes, text->length, (size_t)adamic_string_length(text));
+		return true;
+	}
 	case adamic_json_null: ascii(w, "null"); return true;
 	case adamic_json_number: {
 		if (!isfinite(s.value.number)) { ascii(w, "null"); return true; }
@@ -163,7 +207,7 @@ static bool write_value(json_writer *w, adamic_value value, const adamic_json_sc
 	}
 	case adamic_json_boolean: ascii(w, s.value.boolean ? "true" : "false"); return true;
 	case adamic_json_string: quote(w, s.value.reference); return true;
-	case adamic_json_map: ascii(w, "{}"); return true;
+	case adamic_json_map: case adamic_json_regexp: ascii(w, "{}"); return true;
 	case adamic_json_array: case adamic_json_tuple: {
 		bool tuple = s.kind == adamic_json_tuple;
 		const adamic_array *array = value.reference;
@@ -259,7 +303,20 @@ adamic_string *adamic_json_stringify(adamic_value value, const adamic_json_schem
 	}
 	json_writer writer = {json_memory(64), 0, 64, 0, gap, NULL, 0, false, pretty};
 	keys(&writer, replacer, replacer_schema);
-	bool present = write_value(&writer, value, schema, 0);
+    bool root_owned = resolve_to_json(&value, &schema);
+    adamic_value root_value = value;
+    const adamic_json_schema *root_schema = schema;
+    bool replaced = replacer_schema != NULL && replacer_schema->kind == adamic_json_root_replacer;
+    if (replaced && adamic_thrown == NULL) {
+        adamic_closure *callback = replacer.reference;
+        adamic_value arguments[2] = {{.reference = &empty}, value};
+        value = callback->code(callback, arguments);
+        schema = replacer_schema->element;
+    }
+    bool present = adamic_thrown == NULL && write_value(&writer, value, schema, 0);
+    if (replaced && adamic_thrown == NULL && schema->kind == adamic_json_string) adamic_release(value.reference);
+    if (root_owned) release_json_return(root_value, root_schema);
+    if (adamic_thrown != NULL) present = false;
 	adamic_string *result = NULL;
 	if (present) {
 		result = adamic_string_allocate(writer.length);

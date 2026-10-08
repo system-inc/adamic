@@ -1,0 +1,234 @@
+{
+  "test262": "/tmp/test262",
+  "commit": "c8c798898646638cd0c24879f8e0374e847e7d74",
+  "adapt": true,
+  "typescript": {
+    "version": "6.0.3",
+    "checks": 30,
+    "cacheHits": 0,
+    "milliseconds": 2250
+  },
+  "filters": [
+    {
+      "path": "built-ins/JSON",
+      "pass": 7,
+      "fail": 0,
+      "notTypescript": 26,
+      "refused": 69,
+      "crashed": 0,
+      "skipped": 63,
+      "total": 165,
+      "directories": [
+        {
+          "path": "built-ins/JSON",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 2,
+          "refused": 2,
+          "crashed": 0,
+          "skipped": 2,
+          "total": 6
+        },
+        {
+          "path": "built-ins/JSON/isRawJSON",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 6
+        },
+        {
+          "path": "built-ins/JSON/parse",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 7,
+          "refused": 50,
+          "crashed": 0,
+          "skipped": 20,
+          "total": 77
+        },
+        {
+          "path": "built-ins/JSON/rawJSON",
+          "pass": 0,
+          "fail": 0,
+          "notTypescript": 1,
+          "refused": 3,
+          "crashed": 0,
+          "skipped": 6,
+          "total": 10
+        },
+        {
+          "path": "built-ins/JSON/stringify",
+          "pass": 7,
+          "fail": 0,
+          "notTypescript": 16,
+          "refused": 13,
+          "crashed": 0,
+          "skipped": 30,
+          "total": 66
+        }
+      ],
+      "notTypescriptReasons": [
+        {
+          "reason": "TS7006",
+          "count": 9
+        },
+        {
+          "reason": "TS2345",
+          "count": 5
+        },
+        {
+          "reason": "TS2339",
+          "count": 4
+        },
+        {
+          "reason": "TS7005",
+          "count": 2
+        },
+        {
+          "reason": "TS7034",
+          "count": 2
+        },
+        {
+          "reason": "TS18048",
+          "count": 1
+        },
+        {
+          "reason": "TS2349",
+          "count": 1
+        },
+        {
+          "reason": "TS2351",
+          "count": 1
+        },
+        {
+          "reason": "TS2683",
+          "count": 1
+        }
+      ],
+      "refusalReasons": [
+        {
+          "reason": "refuses JSON.parse: its result's type can't be proven from the text",
+          "count": 33
+        },
+        {
+          "reason": "not yet: new an Identifier",
+          "count": 10
+        },
+        {
+          "reason": "not yet: JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+          "count": 6
+        },
+        {
+          "reason": "refuses var",
+          "count": 5
+        },
+        {
+          "reason": "refuses a method read as a value (toString would lose its object, and this with it)",
+          "count": 4
+        },
+        {
+          "reason": "error TS2550: Property '…' does not exist on type '…'. Do you need to change your target library? Try changing the '…' compiler option to '…' or later. (tsc: TS2339)",
+          "count": 2
+        },
+        {
+          "reason": "error TS2550: Property '…' does not exist on type '…'. Do you need to change your target library? Try changing the '…' compiler option to '…' or later. (tsc: TS2339,TS2345)",
+          "count": 2
+        },
+        {
+          "reason": "not yet: JSON as a value outside equality or typeof (overloaded calls and static properties need their own representation)",
+          "count": 2
+        },
+        {
+          "reason": "not yet: JSON.stringify a literal with toJSON semantics",
+          "count": 1
+        },
+        {
+          "reason": "not yet: JSON.stringify a spread or hole in a literal",
+          "count": 1
+        },
+        {
+          "reason": "not yet: JSON.stringify replacer functions (the callback must have a proven type for every visited value and its holder)",
+          "count": 1
+        },
+        {
+          "reason": "not yet: a value of type any",
+          "count": 1
+        },
+        {
+          "reason": "refuses delete",
+          "count": 1
+        }
+      ],
+      "skipReasons": [
+        {
+          "reason": "harness include propertyHelper.js",
+          "count": 19
+        },
+        {
+          "reason": "feature Proxy",
+          "count": 17
+        },
+        {
+          "reason": "feature BigInt",
+          "count": 6
+        },
+        {
+          "reason": "getters",
+          "count": 6
+        },
+        {
+          "reason": "feature Symbol",
+          "count": 4
+        },
+        {
+          "reason": "harness include isConstructor.js",
+          "count": 4
+        },
+        {
+          "reason": "Symbol",
+          "count": 2
+        },
+        {
+          "reason": "feature Reflect.construct",
+          "count": 2
+        },
+        {
+          "reason": "features BigInt, cross-realm",
+          "count": 1
+        },
+        {
+          "reason": "features Proxy, Symbol",
+          "count": 1
+        },
+        {
+          "reason": "features Proxy, cross-realm",
+          "count": 1
+        }
+      ],
+      "crashReasons": [],
+      "failReasons": [],
+      "passes": [
+        "built-ins/JSON/stringify/replacer-array-empty.js",
+        "built-ins/JSON/stringify/replacer-array-order.js",
+        "built-ins/JSON/stringify/value-function.js",
+        "built-ins/JSON/stringify/value-number-negative-zero.js",
+        "built-ins/JSON/stringify/value-number-non-finite.js",
+        "built-ins/JSON/stringify/value-primitive-top-level.js",
+        "built-ins/JSON/stringify/value-string-escape-unicode.js"
+      ],
+      "adaptations": [
+        {
+          "reason": "var-to-let",
+          "count": 80
+        },
+        {
+          "reason": "throw-error",
+          "count": 17
+        }
+      ]
+    }
+  ]
+}
