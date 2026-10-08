@@ -1,0 +1,8 @@
+import type { ModifierListView } from './modifier_view.a';
+export function HasExportModifier(modifiers: ModifierListView): boolean {
+    if(!modifiers.present) { return false; }
+    for(const tag of modifiers.tags) {
+        if(tag === 'export-keyword') { return true; }
+    }
+    return false;
+}

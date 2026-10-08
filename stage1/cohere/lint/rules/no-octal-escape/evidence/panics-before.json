@@ -1,0 +1,839 @@
+[
+  {
+    "index": 278,
+    "rule": "@typescript-eslint/method-signature-style",
+    "fixture_file": "repository/source/Thing.ts",
+    "source": "interface I",
+    "mode": "unsupported-recovery",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-278/repository/source/Thing.ts: ['{' expected.]; source=\"interface I\"\n\ngoroutine 1 [running]:\nmain.collect({0x3736eaacb1e0, 0x4c}, {0x3736ead42630, 0xb}, {0x3736ead68e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x3736eaacb1e0?, 0x3736eac2ba00?}, 0x0, 0x3736eac2ba00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 280,
+    "rule": "@typescript-eslint/method-signature-style",
+    "fixture_file": "repository/source/Thing.ts",
+    "source": "interface I { m(a: string): void;",
+    "mode": "unsupported-recovery",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-280/repository/source/Thing.ts: ['}' expected.]; source=\"interface I { m(a: string): void;\"\n\ngoroutine 1 [running]:\nmain.collect({0x191f376e31e0, 0x4c}, {0x191f377bd0e0, 0x21}, {0x191f37982e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x191f376e31e0?, 0x191f378459c0?}, 0x0, 0x191f378459c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 284,
+    "rule": "@typescript-eslint/method-signature-style",
+    "fixture_file": "repository/source/Thing.ts",
+    "source": "interface I { m<(a: string): void; }",
+    "mode": "unsupported-recovery",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-284/repository/source/Thing.ts: ['>' expected.]; source=\"interface I { m<(a: string): void; }\"\n\ngoroutine 1 [running]:\nmain.collect({0x19f07cd631e0, 0x4c}, {0x19f07ce3d0e0, 0x24}, {0x19f07d000e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x19f07cd631e0?, 0x19f07cec59c0?}, 0x0, 0x19f07cec59c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 285,
+    "rule": "@typescript-eslint/method-signature-style",
+    "fixture_file": "repository/source/Thing.ts",
+    "source": "interface I { m<T(a: T): T; }",
+    "mode": "unsupported-recovery",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-285/repository/source/Thing.ts: ['>' expected.]; source=\"interface I { m<T(a: T): T; }\"\n\ngoroutine 1 [running]:\nmain.collect({0x31912d0631e0, 0x4c}, {0x31912d221f00, 0x1d}, {0x31912d302e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x31912d0631e0?, 0x31912d1c59c0?}, 0x0, 0x31912d1c59c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 294,
+    "rule": "@typescript-eslint/method-signature-style",
+    "fixture_file": "repository/source/Thing.ts",
+    "source": "interface I",
+    "mode": "unsupported-recovery",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-294/repository/source/Thing.ts: ['{' expected.]; source=\"interface I\"\n\ngoroutine 1 [running]:\nmain.collect({0x11e5997231e0, 0x4c}, {0x11e59999a630, 0xb}, {0x11e5999bee70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x11e5997231e0?, 0x11e599883a00?}, 0x0, 0x11e599883a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 296,
+    "rule": "@typescript-eslint/method-signature-style",
+    "fixture_file": "repository/source/Thing.ts",
+    "source": "interface I { m(a: string): void;",
+    "mode": "unsupported-recovery",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-296/repository/source/Thing.ts: ['}' expected.]; source=\"interface I { m(a: string): void;\"\n\ngoroutine 1 [running]:\nmain.collect({0x17ab7a7631e0, 0x4c}, {0x17ab7a83d110, 0x21}, {0x17ab7aa02e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x17ab7a7631e0?, 0x17ab7a8c59c0?}, 0x0, 0x17ab7a8c59c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 298,
+    "rule": "@typescript-eslint/method-signature-style",
+    "fixture_file": "repository/source/Thing.ts",
+    "source": "interface I { m<(a: string): void; }",
+    "mode": "unsupported-recovery",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-298/repository/source/Thing.ts: ['>' expected.]; source=\"interface I { m<(a: string): void; }\"\n\ngoroutine 1 [running]:\nmain.collect({0x187d0dee71e0, 0x4c}, {0x187d0dfd9290, 0x24}, {0x187d0e1a4e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x187d0dee71e0?, 0x187d0e067a00?}, 0x0, 0x187d0e067a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 299,
+    "rule": "@typescript-eslint/method-signature-style",
+    "fixture_file": "repository/source/Thing.ts",
+    "source": "interface I { m<T(a: T): T; }",
+    "mode": "unsupported-recovery",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-299/repository/source/Thing.ts: ['>' expected.]; source=\"interface I { m<T(a: T): T; }\"\n\ngoroutine 1 [running]:\nmain.collect({0x10329c8771e0, 0x4c}, {0x10329cafe100, 0x1d}, {0x10329cb12e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x10329c8771e0?, 0x10329c9d7a00?}, 0x0, 0x10329c9d7a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1910,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "' \\01'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1910/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"' \\\\01'\"\n\ngoroutine 1 [running]:\nmain.collect({0x34cb72d8caf0, 0x53}, {0x34cb73116630, 0x6}, {0x34cb7313ce70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x34cb72d8caf0?, 0x34cb72fffa00?}, 0x0, 0x34cb72fffa00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1911,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "' \\1'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1911/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"' \\\\1'\"\n\ngoroutine 1 [running]:\nmain.collect({0x13ced6d84a10, 0x53}, {0x13ced70d6510, 0x5}, {0x13ced70fae00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x13ced6d84a10?, 0x13ced6fbd9c0?}, 0x0, 0x13ced6fbd9c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1919,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\\n\\1'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1919/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'\\\\\\n\\\\1'\"\n\ngoroutine 1 [running]:\nmain.collect({0x10e8d5e9caf0, 0x53}, {0x10e8d62a6630, 0x6}, {0x10e8d62cce70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x10e8d5e9caf0?, 0x10e8d618fa00?}, 0x0, 0x10e8d618fa00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1921,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\0 \\01'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1921/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'\\\\0 \\\\01'\"\n\ngoroutine 1 [running]:\nmain.collect({0xefd0edaaaf0, 0x53}, {0xefd0f1b4630, 0x8}, {0xefd0f1dae70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0xefd0edaaaf0?, 0xefd0f09da00?}, 0x0, 0xefd0f09da00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1922,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\0 \\1'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1922/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'\\\\0 \\\\1'\"\n\ngoroutine 1 [running]:\nmain.collect({0x342198a56af0, 0x53}, {0x342198e60630, 0x7}, {0x342198e84e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x342198a56af0?, 0x342198d49a00?}, 0x0, 0x342198d49a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1924,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\00'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1924/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x00'.]; source=\"'\\\\00'\"\n\ngoroutine 1 [running]:\nmain.collect({0x37ee9174aaf0, 0x53}, {0x37ee91b5c630, 0x5}, {0x37ee91b82e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x37ee9174aaf0?, 0x37ee91a45a00?}, 0x0, 0x37ee91a45a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1925,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\0000'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1925/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x00'.]; source=\"'\\\\0000'\"\n\ngoroutine 1 [running]:\nmain.collect({0x1c6a38292a10, 0x53}, {0x1c6a385de510, 0x7}, {0x1c6a38602e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x1c6a38292a10?, 0x1c6a384c59c0?}, 0x0, 0x1c6a384c59c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1926,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\01 '",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1926/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'\\\\01 '\"\n\ngoroutine 1 [running]:\nmain.collect({0x10bdb38aaaf0, 0x53}, {0x10bdb3cb4630, 0x6}, {0x10bdb3cd8e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x10bdb38aaaf0?, 0x10bdb3b9da00?}, 0x0, 0x10bdb3b9da00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1927,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\01'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1927/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'\\\\01'\"\n\ngoroutine 1 [running]:\nmain.collect({0x26b751654af0, 0x53}, {0x26b751a5e630, 0x5}, {0x26b751a82e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x26b751654af0?, 0x26b751947a00?}, 0x0, 0x26b751947a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1928,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\01\\02'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1928/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'. Octal escape sequences are not allowed. Use the syntax '\\x02'.]; source=\"'\\\\01\\\\02'\"\n\ngoroutine 1 [running]:\nmain.collect({0x2ddff7b12a10, 0x53}, {0x2ddff7e5e510, 0x8}, {0x2ddff7e82e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x2ddff7b12a10?, 0x2ddff7d459c0?}, 0x0, 0x2ddff7d459c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1929,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\01\\2'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1929/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'. Octal escape sequences are not allowed. Use the syntax '\\x02'.]; source=\"'\\\\01\\\\2'\"\n\ngoroutine 1 [running]:\nmain.collect({0x238d89112a10, 0x53}, {0x238d8945e510, 0x7}, {0x238d89480e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x238d89112a10?, 0x238d893459c0?}, 0x0, 0x238d893459c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1930,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\01a'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1930/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'\\\\01a'\"\n\ngoroutine 1 [running]:\nmain.collect({0x134050308af0, 0x53}, {0x134050692630, 0x6}, {0x1340506b8e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x134050308af0?, 0x13405057ba00?}, 0x0, 0x13405057ba00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1931,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\02'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1931/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x02'.]; source=\"'\\\\02'\"\n\ngoroutine 1 [running]:\nmain.collect({0xa866334caf0, 0x53}, {0xa8663756630, 0x5}, {0xa866377ce70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0xa866334caf0?, 0xa866363fa00?}, 0x0, 0xa866363fa00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1932,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\02\\01'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1932/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x02'. Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'\\\\02\\\\01'\"\n\ngoroutine 1 [running]:\nmain.collect({0x32f19d312af0, 0x53}, {0x32f19d71c630, 0x8}, {0x32f19d742e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x32f19d312af0?, 0x32f19d605a00?}, 0x0, 0x32f19d605a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1933,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\07'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1933/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x07'.]; source=\"'\\\\07'\"\n\ngoroutine 1 [running]:\nmain.collect({0x32e7aca30af0, 0x53}, {0x32e7ace3a630, 0x5}, {0x32e7ace60e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x32e7aca30af0?, 0x32e7acd23a00?}, 0x0, 0x32e7acd23a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1934,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\08'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1934/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x00'.]; source=\"'\\\\08'\"\n\ngoroutine 1 [running]:\nmain.collect({0x37f3cf312a10, 0x53}, {0x37f3cf65e510, 0x5}, {0x37f3cf680e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x37f3cf312a10?, 0x37f3cf5459c0?}, 0x0, 0x37f3cf5459c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1935,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\08\\1'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1935/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x00'. Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'\\\\08\\\\1'\"\n\ngoroutine 1 [running]:\nmain.collect({0xb80bea92a10, 0x53}, {0xb80bedde510, 0x7}, {0xb80bee02e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0xb80bea92a10?, 0xb80becc59c0?}, 0x0, 0xb80becc59c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1936,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\09'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1936/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x00'.]; source=\"'\\\\09'\"\n\ngoroutine 1 [running]:\nmain.collect({0x52320b84a10, 0x53}, {0x52320ed6510, 0x5}, {0x52320ef8e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x52320b84a10?, 0x52320dbd9c0?}, 0x0, 0x52320dbd9c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1937,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\0\\01'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1937/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'\\\\0\\\\01'\"\n\ngoroutine 1 [running]:\nmain.collect({0x395de3012a10, 0x53}, {0x395de335e510, 0x7}, {0x395de3382e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x395de3012a10?, 0x395de32459c0?}, 0x0, 0x395de32459c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1938,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\0\\08'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1938/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x00'.]; source=\"'\\\\0\\\\08'\"\n\ngoroutine 1 [running]:\nmain.collect({0x16834a498af0, 0x53}, {0x16834a8a2630, 0x7}, {0x16834a8c8e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x16834a498af0?, 0x16834a78ba00?}, 0x0, 0x16834a78ba00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1939,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\0\\1'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1939/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'\\\\0\\\\1'\"\n\ngoroutine 1 [running]:\nmain.collect({0x35ec18952af0, 0x53}, {0x35ec18d5c630, 0x6}, {0x35ec18d82e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x35ec18952af0?, 0x35ec18c45a00?}, 0x0, 0x35ec18c45a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1940,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\0\\8'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1940/repository/source/OctalEscape.ts: [Escape sequence '\\8' is not allowed.]; source=\"'\\\\0\\\\8'\"\n\ngoroutine 1 [running]:\nmain.collect({0x1b50cda2caf0, 0x53}, {0x1b50cde36630, 0x6}, {0x1b50cde5ce70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x1b50cda2caf0?, 0x1b50cdd1fa00?}, 0x0, 0x1b50cdd1fa00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1943,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\0a\\01'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1943/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'\\\\0a\\\\01'\"\n\ngoroutine 1 [running]:\nmain.collect({0x29f8f7d12a10, 0x53}, {0x29f8f805e510, 0x8}, {0x29f8f8082e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x29f8f7d12a10?, 0x29f8f7f459c0?}, 0x0, 0x29f8f7f459c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1944,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\0a\\1'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1944/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'\\\\0a\\\\1'\"\n\ngoroutine 1 [running]:\nmain.collect({0xbbe935eeaf0, 0x53}, {0xbbe93978630, 0x7}, {0xbbe9399ee70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0xbbe935eeaf0?, 0xbbe93861a00?}, 0x0, 0xbbe93861a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1945,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\1 '",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1945/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'\\\\1 '\"\n\ngoroutine 1 [running]:\nmain.collect({0x640d34ecaf0, 0x53}, {0x640d38f6630, 0x5}, {0x640d391ce70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x640d34ecaf0?, 0x640d37dfa00?}, 0x0, 0x640d37dfa00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1946,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\1'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1946/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'\\\\1'\"\n\ngoroutine 1 [running]:\nmain.collect({0x60c5ba4caf0, 0x53}, {0x60c5bdd660c, 0x4}, {0x60c5bdfae70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x60c5ba4caf0?, 0x60c5bcbfa00?}, 0x0, 0x60c5bcbfa00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1947,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\10'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1947/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x08'.]; source=\"'\\\\10'\"\n\ngoroutine 1 [running]:\nmain.collect({0x3000ccc8caf0, 0x53}, {0x3000cd096630, 0x5}, {0x3000cd0bce70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x3000ccc8caf0?, 0x3000ccf7fa00?}, 0x0, 0x3000ccf7fa00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1948,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\12'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1948/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x0a'.]; source=\"'\\\\12'\"\n\ngoroutine 1 [running]:\nmain.collect({0x3e076882aaf0, 0x53}, {0x3e0768c34630, 0x5}, {0x3e0768c5ae70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x3e076882aaf0?, 0x3e0768b1da00?}, 0x0, 0x3e0768b1da00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1949,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\1234'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1949/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x53'.]; source=\"'\\\\1234'\"\n\ngoroutine 1 [running]:\nmain.collect({0x1f8f9fa96a80, 0x53}, {0x1f8f9fe96630, 0x7}, {0x1f8f9febae70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x1f8f9fa96a80?, 0x1f8f9fd7da00?}, 0x0, 0x1f8f9fd7da00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1950,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\1\\2\\3'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1950/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'. Octal escape sequences are not allowed. Use the syntax '\\x02'. Octal escape sequences are not allowed. Use the syntax '\\x03'.]; source=\"'\\\\1\\\\2\\\\3'\"\n\ngoroutine 1 [running]:\nmain.collect({0x16950dc92a10, 0x53}, {0x16950dfde510, 0x8}, {0x16950e002e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x16950dc92a10?, 0x16950dec59c0?}, 0x0, 0x16950dec59c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1951,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\1a'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1951/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'\\\\1a'\"\n\ngoroutine 1 [running]:\nmain.collect({0x268384512a10, 0x53}, {0x26838485e510, 0x5}, {0x268384880e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x268384512a10?, 0x2683847459c0?}, 0x0, 0x2683847459c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1952,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\2'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1952/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x02'.]; source=\"'\\\\2'\"\n\ngoroutine 1 [running]:\nmain.collect({0x237079e12a10, 0x53}, {0x23707a15e4ec, 0x4}, {0x23707a182e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x237079e12a10?, 0x23707a0459c0?}, 0x0, 0x23707a0459c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1953,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\2\\01'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1953/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x02'. Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'\\\\2\\\\01'\"\n\ngoroutine 1 [running]:\nmain.collect({0x31bac4812a10, 0x53}, {0x31bac4b5e510, 0x7}, {0x31bac4b82e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x31bac4812a10?, 0x31bac4a459c0?}, 0x0, 0x31bac4a459c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1954,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\3777'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1954/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\xff'.]; source=\"'\\\\3777'\"\n\ngoroutine 1 [running]:\nmain.collect({0x1507a22eeaf0, 0x53}, {0x1507a26f8630, 0x7}, {0x1507a271ee70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x1507a22eeaf0?, 0x1507a25e1a00?}, 0x0, 0x1507a25e1a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1955,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\400'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1955/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x20'.]; source=\"'\\\\400'\"\n\ngoroutine 1 [running]:\nmain.collect({0x35881a1b2af0, 0x53}, {0x35881a5b4630, 0x6}, {0x35881a5dae70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x35881a1b2af0?, 0x35881a49da00?}, 0x0, 0x35881a49da00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1956,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\7'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1956/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x07'.]; source=\"'\\\\7'\"\n\ngoroutine 1 [running]:\nmain.collect({0x2ffcc6392a10, 0x53}, {0x2ffcc66e64ec, 0x4}, {0x2ffcc670ae00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x2ffcc6392a10?, 0x2ffcc65cd9c0?}, 0x0, 0x2ffcc65cd9c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1957,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\77'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1957/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x3f'.]; source=\"'\\\\77'\"\n\ngoroutine 1 [running]:\nmain.collect({0x21d034912a10, 0x53}, {0x21d034c5e510, 0x5}, {0x21d034c82e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x21d034912a10?, 0x21d034b459c0?}, 0x0, 0x21d034b459c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1958,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\7777'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1958/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x3f'.]; source=\"'\\\\7777'\"\n\ngoroutine 1 [running]:\nmain.collect({0x1474cf4af0, 0x53}, {0x14750fe630, 0x7}, {0x1475124e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x1474cf4af0?, 0x1474fe7a00?}, 0x0, 0x1474fe7a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1959,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\7a'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1959/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x07'.]; source=\"'\\\\7a'\"\n\ngoroutine 1 [running]:\nmain.collect({0xdbef5592a10, 0x53}, {0xdbef58de510, 0x5}, {0xdbef5902e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0xdbef5592a10?, 0xdbef57c59c0?}, 0x0, 0xdbef57c59c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1960,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\8'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1960/repository/source/OctalEscape.ts: [Escape sequence '\\8' is not allowed.]; source=\"'\\\\8'\"\n\ngoroutine 1 [running]:\nmain.collect({0x23f6a382aaf0, 0x53}, {0x23f6a3c3460c, 0x4}, {0x23f6a3c5ae70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x23f6a382aaf0?, 0x23f6a3b1da00?}, 0x0, 0x23f6a3b1da00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1961,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\80'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1961/repository/source/OctalEscape.ts: [Escape sequence '\\8' is not allowed.]; source=\"'\\\\80'\"\n\ngoroutine 1 [running]:\nmain.collect({0x24d3db792a10, 0x53}, {0x24d3dbade510, 0x5}, {0x24d3dbb02e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x24d3db792a10?, 0x24d3db9c59c0?}, 0x0, 0x24d3db9c59c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1962,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\81'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1962/repository/source/OctalEscape.ts: [Escape sequence '\\8' is not allowed.]; source=\"'\\\\81'\"\n\ngoroutine 1 [running]:\nmain.collect({0x16534090caf0, 0x53}, {0x165340d16630, 0x5}, {0x165340d3ce70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x16534090caf0?, 0x165340bffa00?}, 0x0, 0x165340bffa00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1963,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\8\\0'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1963/repository/source/OctalEscape.ts: [Escape sequence '\\8' is not allowed.]; source=\"'\\\\8\\\\0'\"\n\ngoroutine 1 [running]:\nmain.collect({0x8776b436af0, 0x53}, {0x8776b840630, 0x6}, {0x8776b866e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x8776b436af0?, 0x8776b7299c0?}, 0x0, 0x8776b7299c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1964,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\9'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1964/repository/source/OctalEscape.ts: [Escape sequence '\\9' is not allowed.]; source=\"'\\\\9'\"\n\ngoroutine 1 [running]:\nmain.collect({0x15fc52f22af0, 0x53}, {0x15fc5332c60c, 0x4}, {0x15fc53350e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x15fc52f22af0?, 0x15fc53215a00?}, 0x0, 0x15fc53215a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1972,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\\\\\01'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1972/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'\\\\\\\\\\\\01'\"\n\ngoroutine 1 [running]:\nmain.collect({0x25597930aaf0, 0x53}, {0x255979714630, 0x7}, {0x25597973ae70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x25597930aaf0?, 0x2559795fda00?}, 0x0, 0x2559795fda00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1973,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\\\\\08'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1973/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x00'.]; source=\"'\\\\\\\\\\\\08'\"\n\ngoroutine 1 [running]:\nmain.collect({0x1ebda088eaf0, 0x53}, {0x1ebda0c98630, 0x7}, {0x1ebda0cbee70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x1ebda088eaf0?, 0x1ebda0b81a00?}, 0x0, 0x1ebda0b81a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1974,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\\\\\1'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1974/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'\\\\\\\\\\\\1'\"\n\ngoroutine 1 [running]:\nmain.collect({0x3cbdde812a10, 0x53}, {0x3cbddeb5e510, 0x6}, {0x3cbddeb82e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x3cbdde812a10?, 0x3cbddea459c0?}, 0x0, 0x3cbddea459c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1975,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\\\\\8'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1975/repository/source/OctalEscape.ts: [Escape sequence '\\8' is not allowed.]; source=\"'\\\\\\\\\\\\8'\"\n\ngoroutine 1 [running]:\nmain.collect({0x1f3ad8db6af0, 0x53}, {0x1f3ad91c0630, 0x6}, {0x1f3ad91e6e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x1f3ad8db6af0?, 0x1f3ad90a9a00?}, 0x0, 0x1f3ad90a9a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1978,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\n\\01'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1978/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'\\\\n\\\\01'\"\n\ngoroutine 1 [running]:\nmain.collect({0x2efa0981ca10, 0x53}, {0x2efa09b5e510, 0x7}, {0x2efa09b82e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x2efa0981ca10?, 0x2efa09a45a00?}, 0x0, 0x2efa09a45a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1979,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\n\\08'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1979/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x00'.]; source=\"'\\\\n\\\\08'\"\n\ngoroutine 1 [running]:\nmain.collect({0x8e8b1a8eaf0, 0x53}, {0x8e8b1e18630, 0x7}, {0x8e8b1e3ee70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x8e8b1a8eaf0?, 0x8e8b1d01a00?}, 0x0, 0x8e8b1d01a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1980,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'\\n\\1'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1980/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'\\\\n\\\\1'\"\n\ngoroutine 1 [running]:\nmain.collect({0x31c6272faaf0, 0x53}, {0x31c6276fa630, 0x6}, {0x31c627728e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x31c6272faaf0?, 0x31c6275eda00?}, 0x0, 0x31c6275eda00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1982,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'a\\01'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1982/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'a\\\\01'\"\n\ngoroutine 1 [running]:\nmain.collect({0x389096582af0, 0x53}, {0x38909698c630, 0x6}, {0x3890969b0e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x389096582af0?, 0x389096875a00?}, 0x0, 0x389096875a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1983,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'a\\01a'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1983/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'a\\\\01a'\"\n\ngoroutine 1 [running]:\nmain.collect({0x2ba99c5aeaf0, 0x53}, {0x2ba99c9b8630, 0x7}, {0x2ba99c9dce70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x2ba99c5aeaf0?, 0x2ba99c8a1a00?}, 0x0, 0x2ba99c8a1a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1984,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'a\\08a'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1984/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x00'.]; source=\"'a\\\\08a'\"\n\ngoroutine 1 [running]:\nmain.collect({0x2a7943d92a10, 0x53}, {0x2a79440de510, 0x7}, {0x2a7944102e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x2a7943d92a10?, 0x2a7943fc59c0?}, 0x0, 0x2a7943fc59c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1985,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'a\\1'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1985/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'a\\\\1'\"\n\ngoroutine 1 [running]:\nmain.collect({0x33c27b4f2af0, 0x53}, {0x33c27b8fc630, 0x5}, {0x33c27b920e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x33c27b4f2af0?, 0x33c27b7e5a00?}, 0x0, 0x33c27b7e5a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1986,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'a\\1a'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1986/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"'a\\\\1a'\"\n\ngoroutine 1 [running]:\nmain.collect({0x15fa7c292a10, 0x53}, {0x15fa7c5de510, 0x6}, {0x15fa7c600e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x15fa7c292a10?, 0x15fa7c4c59c0?}, 0x0, 0x15fa7c4c59c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1987,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'a\\8a'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1987/repository/source/OctalEscape.ts: [Escape sequence '\\8' is not allowed.]; source=\"'a\\\\8a'\"\n\ngoroutine 1 [running]:\nmain.collect({0x622d1692a10, 0x53}, {0x622d19de510, 0x6}, {0x622d1a02e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x622d1692a10?, 0x622d18c59c0?}, 0x0, 0x622d18c59c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1988,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "'foo \\1 bar \\2'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1988/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'. Octal escape sequences are not allowed. Use the syntax '\\x02'.]; source=\"'foo \\\\1 bar \\\\2'\"\n\ngoroutine 1 [running]:\nmain.collect({0x2fa22074af0, 0x53}, {0x2fa2247e630, 0xf}, {0x2fa224a4e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x2fa22074af0?, 0x2fa22367a00?}, 0x0, 0x2fa22367a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1989,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "foo('\\251');",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1989/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\xa9'.]; source=\"foo('\\\\251');\"\n\ngoroutine 1 [running]:\nmain.collect({0x1f1fceac6af0, 0x53}, {0x1f1fceed0630, 0xc}, {0x1f1fceef6e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x1f1fceac6af0?, 0x1f1fcedb9a00?}, 0x0, 0x1f1fcedb9a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1990,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "var a = '\\1'; var b = '\\2';",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1990/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'. Octal escape sequences are not allowed. Use the syntax '\\x02'.]; source=\"var a = '\\\\1'; var b = '\\\\2';\"\n\ngoroutine 1 [running]:\nmain.collect({0x3cba48abcaf0, 0x53}, {0x3cba48ee8100, 0x1b}, {0x3cba48eeae70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x3cba48abcaf0?, 0x3cba48dafa00?}, 0x0, 0x3cba48dafa00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1991,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "var a = '\\1'; var b = '\\\\1';",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1991/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"var a = '\\\\1'; var b = '\\\\\\\\1';\"\n\ngoroutine 1 [running]:\nmain.collect({0x20dd43b96af0, 0x53}, {0x20dd43fc2100, 0x1c}, {0x20dd43fc4e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x20dd43b96af0?, 0x20dd43e89a00?}, 0x0, 0x20dd43e89a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1993,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "var foo = \"\\3s51\";",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1993/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x03'.]; source=\"var foo = \\\"\\\\3s51\\\";\"\n\ngoroutine 1 [running]:\nmain.collect({0x176954416000, 0x53}, {0x176954424000, 0x12}, {0x176954420000, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x176954416000?, 0x17695440e000?}, 0x0, 0x17695440e000, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1994,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "var foo = \"\\5a\";",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1994/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x05'.]; source=\"var foo = \\\"\\\\5a\\\";\"\n\ngoroutine 1 [running]:\nmain.collect({0x2651e1a84a10, 0x53}, {0x2651e1dd6510, 0x10}, {0x2651e1df8e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x2651e1a84a10?, 0x2651e1cbd9c0?}, 0x0, 0x2651e1cbd9c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1995,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "var foo = \"\\751\";",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1995/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x3d'.]; source=\"var foo = \\\"\\\\751\\\";\"\n\ngoroutine 1 [running]:\nmain.collect({0x34c91d312a10, 0x53}, {0x34c91d606408, 0x11}, {0x34c91d680e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x34c91d312a10?, 0x34c91d5459c0?}, 0x0, 0x34c91d5459c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1996,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "var foo = \"\\77\";",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1996/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x3f'.]; source=\"var foo = \\\"\\\\77\\\";\"\n\ngoroutine 1 [running]:\nmain.collect({0x302a1f292a10, 0x53}, {0x302a1f5de510, 0x10}, {0x302a1f602e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x302a1f292a10?, 0x302a1f4c59c0?}, 0x0, 0x302a1f4c59c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1997,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "var foo = \"\\78\";",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1997/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x07'.]; source=\"var foo = \\\"\\\\78\\\";\"\n\ngoroutine 1 [running]:\nmain.collect({0x294cd6e92a10, 0x53}, {0x294cd71de510, 0x10}, {0x294cd7202e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x294cd6e92a10?, 0x294cd70c59c0?}, 0x0, 0x294cd70c59c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1998,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "var foo = \"\\\\\\751\";",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1998/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x3d'.]; source=\"var foo = \\\"\\\\\\\\\\\\751\\\";\"\n\ngoroutine 1 [running]:\nmain.collect({0x229ab4612a10, 0x53}, {0x229ab4906408, 0x13}, {0x229ab4982e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x229ab4612a10?, 0x229ab48459c0?}, 0x0, 0x229ab48459c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 1999,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "var foo = \"\\t\\1\";",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-1999/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"var foo = \\\"\\\\t\\\\1\\\";\"\n\ngoroutine 1 [running]:\nmain.collect({0x7b49e018af0, 0x53}, {0x7b49e3c84b0, 0x11}, {0x7b49e448e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x7b49e018af0?, 0x7b49e30ba00?}, 0x0, 0x7b49e30ba00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 2001,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "var foo = \"foo \\000 bar\";",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-2001/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x00'.]; source=\"var foo = \\\"foo \\\\000 bar\\\";\"\n\ngoroutine 1 [running]:\nmain.collect({0x16ee93012a10, 0x53}, {0x16ee932a1f00, 0x19}, {0x16ee93380e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x16ee93012a10?, 0x16ee932459c0?}, 0x0, 0x16ee932459c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 2002,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "var foo = \"foo \\01 bar\";",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-2002/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"var foo = \\\"foo \\\\01 bar\\\";\"\n\ngoroutine 1 [running]:\nmain.collect({0x119869312a10, 0x53}, {0x119869606408, 0x18}, {0x119869682e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x119869312a10?, 0x1198695459c0?}, 0x0, 0x1198695459c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 2003,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "var foo = \"foo \\251 bar\";",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-2003/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\xa9'.]; source=\"var foo = \\\"foo \\\\251 bar\\\";\"\n\ngoroutine 1 [running]:\nmain.collect({0x26ddc8992a10, 0x53}, {0x26ddc8c21f00, 0x19}, {0x26ddc8d02e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x26ddc8992a10?, 0x26ddc8bc59c0?}, 0x0, 0x26ddc8bc59c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 2004,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "var foo = \"foo \\258 bar\";",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-2004/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x15'.]; source=\"var foo = \\\"foo \\\\258 bar\\\";\"\n\ngoroutine 1 [running]:\nmain.collect({0x265fa623caf0, 0x53}, {0x265fa6668100, 0x19}, {0x265fa666ae70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x265fa623caf0?, 0x265fa652fa00?}, 0x0, 0x265fa652fa00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 2005,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "var foo = \"foo \\25a bar\";",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-2005/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x15'.]; source=\"var foo = \\\"foo \\\\25a bar\\\";\"\n\ngoroutine 1 [running]:\nmain.collect({0x3f597212a10, 0x53}, {0x3f5974a1f00, 0x19}, {0x3f597580e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x3f597212a10?, 0x3f5974459c0?}, 0x0, 0x3f5974459c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 2006,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "var foo = \"foo \\377 bar\";",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-2006/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\xff'.]; source=\"var foo = \\\"foo \\\\377 bar\\\";\"\n\ngoroutine 1 [running]:\nmain.collect({0xc4664184a10, 0x53}, {0xc4664419f00, 0x19}, {0xc46644fae00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0xc4664184a10?, 0xc46643bd9c0?}, 0x0, 0xc46643bd9c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 2007,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "var foo = \"foo \\378 bar\";",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-2007/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x1f'.]; source=\"var foo = \\\"foo \\\\378 bar\\\";\"\n\ngoroutine 1 [running]:\nmain.collect({0x7694dcc8af0, 0x53}, {0x7694e0f4100, 0x19}, {0x7694e0f6e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x7694dcc8af0?, 0x7694dfbba00?}, 0x0, 0x7694dfbba00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 2008,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "var foo = \"foo \\37a bar\";",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-2008/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x1f'.]; source=\"var foo = \\\"foo \\\\37a bar\\\";\"\n\ngoroutine 1 [running]:\nmain.collect({0x2f1af0328af0, 0x53}, {0x2f1af074c100, 0x19}, {0x2f1af074ee70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x2f1af0328af0?, 0x2f1af0613a00?}, 0x0, 0x2f1af0613a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 2009,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "var foo = \"foo \\381 bar\";",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-2009/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x03'.]; source=\"var foo = \\\"foo \\\\381 bar\\\";\"\n\ngoroutine 1 [running]:\nmain.collect({0x18c4d6edca80, 0x53}, {0x18c4d7300100, 0x19}, {0x18c4d7302e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x18c4d6edca80?, 0x18c4d71c3a00?}, 0x0, 0x18c4d71c3a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 2010,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "var foo = \"foo \\3a1 bar\";",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-2010/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x03'.]; source=\"var foo = \\\"foo \\\\3a1 bar\\\";\"\n\ngoroutine 1 [running]:\nmain.collect({0x2cdd7e312a10, 0x53}, {0x2cdd7e5a1f00, 0x19}, {0x2cdd7e682e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x2cdd7e312a10?, 0x2cdd7e5459c0?}, 0x0, 0x2cdd7e5459c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 2011,
+    "rule": "no-octal-escape",
+    "fixture_file": "repository/source/OctalEscape.ts",
+    "source": "var foo = \"foo \\400 bar\";",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-2011/repository/source/OctalEscape.ts: [Octal escape sequences are not allowed. Use the syntax '\\x20'.]; source=\"var foo = \\\"foo \\\\400 bar\\\";\"\n\ngoroutine 1 [running]:\nmain.collect({0x80ca7912a10, 0x53}, {0x80ca7ba1f00, 0x19}, {0x80ca7c82e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x80ca7912a10?, 0x80ca7b459c0?}, 0x0, 0x80ca7b459c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 3475,
+    "rule": "prefer-template",
+    "fixture_file": "repository/source/PreferTemplate.tsx",
+    "source": "foo + '\\08'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-3475/repository/source/PreferTemplate.tsx: [Octal escape sequences are not allowed. Use the syntax '\\x00'.]; source=\"foo + '\\\\08'\"\n\ngoroutine 1 [running]:\nmain.collect({0x28e8785e0e00, 0x57}, {0x28e878760630, 0xb}, {0x28e878784e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x28e8785e0e00?, 0x28e878649a00?}, 0x0, 0x28e878649a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 3476,
+    "rule": "prefer-template",
+    "fixture_file": "repository/source/PreferTemplate.tsx",
+    "source": "foo + '\\0\\1'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-3476/repository/source/PreferTemplate.tsx: [Octal escape sequences are not allowed. Use the syntax '\\x01'.]; source=\"foo + '\\\\0\\\\1'\"\n\ngoroutine 1 [running]:\nmain.collect({0x223642f5cd80, 0x57}, {0x2236430de510, 0xc}, {0x223643102e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x223642f5cd80?, 0x223642fc59c0?}, 0x0, 0x223642fc59c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 3478,
+    "rule": "prefer-template",
+    "fixture_file": "repository/source/PreferTemplate.tsx",
+    "source": "foo + '\\n other text \\033'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-3478/repository/source/PreferTemplate.tsx: [Octal escape sequences are not allowed. Use the syntax '\\x1b'.]; source=\"foo + '\\\\n other text \\\\033'\"\n\ngoroutine 1 [running]:\nmain.collect({0x8bccc312e00, 0x57}, {0x8bccc4b6100, 0x1a}, {0x8bccc4b8e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x8bccc312e00?, 0x8bccc37ba00?}, 0x0, 0x8bccc37ba00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 3479,
+    "rule": "prefer-template",
+    "fixture_file": "repository/source/PreferTemplate.tsx",
+    "source": "foo + 'does not autofix non-octal decimal escape sequence' + '\\8'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-3479/repository/source/PreferTemplate.tsx: [Escape sequence '\\8' is not allowed.]; source=\"foo + 'does not autofix non-octal decimal escape sequence' + '\\\\8'\"\n\ngoroutine 1 [running]:\nmain.collect({0x67c1cfb6e00, 0x57}, {0x67c1cd21360, 0x41}, {0x67c1d15ce70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x67c1cfb6e00?, 0x67c1d01fa00?}, 0x0, 0x67c1d01fa00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 3480,
+    "rule": "prefer-template",
+    "fixture_file": "repository/source/PreferTemplate.tsx",
+    "source": "foo + 'does not autofix octal escape sequence' + '\\033'",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-3480/repository/source/PreferTemplate.tsx: [Octal escape sequences are not allowed. Use the syntax '\\x1b'.]; source=\"foo + 'does not autofix octal escape sequence' + '\\\\033'\"\n\ngoroutine 1 [running]:\nmain.collect({0x11dc9fa1ee00, 0x57}, {0x11dc9fa84a40, 0x37}, {0x11dc9fbc4e70, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x11dc9fa1ee00?, 0x11dc9fa87a00?}, 0x0, 0x11dc9fa87a00, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "index": 3597,
+    "rule": "react/jsx-no-comment-textnodes",
+    "fixture_file": "repository/source/JsxNoCommentTextnodes.tsx",
+    "source": "\n        <></* valid *//>\n      ",
+    "mode": "",
+    "exit": 2,
+    "full_stack": "panic: invalid corpus /workspace/scratch/octal-oracle/upstream/case-3597/repository/source/JsxNoCommentTextnodes.tsx: [Expected corresponding closing tag for JSX fragment. Expression expected.]; source=\"\\n        <></* valid *//>\\n      \"\n\ngoroutine 1 [running]:\nmain.collect({0x38abbc05c990, 0x5e}, {0x38abbc221f00, 0x20}, {0x38abbc302e00, 0x7, 0x7}, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x38abbc05c990?, 0x38abbc1c59c0?}, 0x0, 0x38abbc1c59c0, 0x0)\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  }
+]
