@@ -10,6 +10,9 @@ import (
 // Lowering must supply a complete runtime contract before using this for an admitted cast.
 func (e *emitter) viewField(property ir.Property) string {
 	of := property.Type()
+	if of == ir.Union {
+		return e.viewObjectPrimitive(property)
+	}
 	object := e.value(property.Object)
 	slot := e.temporary()
 	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map", ir.Closure: "function", ir.MaybeNumber: "number | undefined", ir.MaybeBoolean: "boolean | undefined"}

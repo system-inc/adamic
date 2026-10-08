@@ -1,0 +1,49 @@
+Cloning into '/workspace/adamic/cohere'...
+go version go1.27.1 linux/amd64
+setup: go ready (0.113s)
+v24.19.0
+setup: node ready (0.138s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.596s)
+
+added 3 packages in 412ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=0.707s
+setup: markdown dependencies ready (0.981s)
+From https://github.com/system-inc/cohere
+ * branch            715ba94f3608a6500086b1076ce5cb7e51b836db -> FETCH_HEAD
+Submodule path 'cohere': checked out '715ba94f3608a6500086b1076ce5cb7e51b836db'
+Submodule 'TypeScript' (https://github.com/kirkouimet/TypeScript.git) registered for path 'cohere/TypeScript'
+Cloning into '/workspace/adamic/cohere/TypeScript'...
+From https://github.com/kirkouimet/TypeScript
+ * branch            8d550c837c90bd1805b047b7eeccc2baac2d5e7a -> FETCH_HEAD
+Submodule path 'cohere/TypeScript': checked out '8d550c837c90bd1805b047b7eeccc2baac2d5e7a'
+setup: submodules ready (20.891s)
+# github.com/system-inc/adamic/bridge/tsgo/oracle
+bridge/tsgo/oracle/main.go:19:2: could not import github.com/microsoft/TypeScript/tsc/shim/tspath (open : no such file or directory)
+bridge/tsgo/oracle/main.go:43:76: not enough arguments in call to compiler.NewCachedFSCompilerHost
+	have (vfs.FS, string, nil, nil, nil)
+	want (string, vfs.FS, string, "github.com/microsoft/TypeScript/tsc/internal/tsoptions".ExtendedConfigCache, func(msg *diagnostics.Message, args ...any), contentmapper.Project)
+bridge/tsgo/oracle/main.go:44:143: cannot use fs (variable of interface type vfs.FS) as "github.com/microsoft/TypeScript/tsc/internal/tsoptions".ParseConfigHost value in argument to tsoptions.GetParsedCommandLineOfConfigFile: vfs.FS does not implement "github.com/microsoft/TypeScript/tsc/internal/tsoptions".ParseConfigHost (missing method FS)
+# github.com/system-inc/adamic/internal/load
+internal/load/source_fs.go:33:21: undefined: tspath.RootedFilePath
+internal/load/source_fs.go:38:43: undefined: tspath.RootedFilePath
+internal/load/source_fs.go:47:44: undefined: tspath.RootedFilePath
+internal/load/source_fs.go:54:43: undefined: tspath.RootedFilePath
+internal/load/source_fs.go:67:41: undefined: tspath.RootedFilePath
+internal/load/source_fs.go:83:48: undefined: tspath.RootedDirectoryPath
+internal/load/source_fs.go:87:37: undefined: tspath.RootedPath
+internal/load/load.go:186:57: undefined: tspath.RootedDirectoryPath
+internal/load/load.go:186:99: undefined: tspath.RootedFilePath
+internal/load/regexp_library.go:14:48: undefined: tspath.RootedFilePath
+internal/load/source_fs.go:87:37: too many errors
+# github.com/system-inc/adamic/bridge/tsgo/checker
+bridge/tsgo/checker/facts.go:13:2: could not import github.com/microsoft/TypeScript/tsc/shim/tspath (open : no such file or directory)
+bridge/tsgo/checker/facts.go:214:25: f.FileName().AsString undefined (type string has no field or method AsString)
+bridge/tsgo/checker/facts.go:346:27: f.FileName().AsString undefined (type string has no field or method AsString)
+bridge/tsgo/checker/metadata.go:21:30: source.FileName().AsString undefined (type string has no field or method AsString)
+bridge/tsgo/checker/metadata.go:23:56: source.PathKey undefined (type *"github.com/microsoft/TypeScript/tsc/internal/ast".SourceFile has no field or method PathKey)
+bridge/tsgo/checker/program.go:52:76: not enough arguments in call to compiler.NewCachedFSCompilerHost
+	have (*"github.com/microsoft/TypeScript/tsc/internal/vfs/cachedvfs".FS, string, nil, nil, nil)
+	want (string, vfs.FS, string, "github.com/microsoft/TypeScript/tsc/internal/tsoptions".ExtendedConfigCache, func(msg *diagnostics.Message, args ...any), contentmapper.Project)
+bridge/tsgo/checker/program.go:53:125: cannot use fs (variable of type *"github.com/microsoft/TypeScript/tsc/internal/vfs/cachedvfs".FS) as "github.com/microsoft/TypeScript/tsc/internal/tsoptions".ParseConfigHost value in argument to tsoptions.GetParsedCommandLineOfConfigFile: *"github.com/microsoft/TypeScript/tsc/internal/vfs/cachedvfs".FS does not implement "github.com/microsoft/TypeScript/tsc/internal/tsoptions".ParseConfigHost (missing method FS)
+bridge/tsgo/checker/program.go:84:37: declaration.AsString undefined (type string has no field or method AsString)

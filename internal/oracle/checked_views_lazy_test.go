@@ -7,11 +7,17 @@ import (
 )
 
 func TestCheckedViewLazyUnread(t *testing.T) {
-	for _, name := range []string{"unread", "unread-untagged", "unread-mixed"} {
+	for _, name := range []string{"unread", "unread-untagged", "unread-mixed", "optional-error", "optional-error-fields"} {
 		t.Run(name, func(t *testing.T) {
 			program, path := interfaceFixture(t, "lazy/"+name)
 			truth := onNode(t, path)
 			expected := "okok\n"
+			if name == "optional-error-fields" {
+				expected = "plain:missing\n"
+			}
+			if name == "optional-error" {
+				expected = "missing\n"
+			}
 			if name == "unread-mixed" {
 				expected = "true\n"
 			}
@@ -61,5 +67,29 @@ func TestCheckedViewLazyMissingNameMutant(t *testing.T) {
 			t.Fatalf("supported helper read ran on: %#v", got)
 		}
 		t.Logf("caught missing-name mutant: %s", message)
+	}
+}
+
+func TestCheckedViewLazyOptionalCodeMutants(t *testing.T) {
+	for _, kind := range []string{"number", "null"} {
+		t.Run(kind, func(t *testing.T) {
+			program, path := interfaceFixture(t, "lazy/optional-code-"+kind+"-mutant")
+			truth := onNode(t, path)
+			expected := "42\n"
+			if kind == "null" {
+				expected = "missing\n"
+			}
+			if truth.exitCode != 0 || string(truth.stdout) != expected {
+				t.Fatalf("Node mutant: %#v", truth)
+			}
+			sanitized, _ := nativelyUncached(t, program)
+			for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				message := string(got.stderr)
+				if got.exitCode != 70 || !strings.Contains(message, "code") || !strings.Contains(message, "string") || !strings.Contains(message, kind) {
+					t.Fatalf("optional read ran on: %#v", got)
+				}
+				t.Logf("caught optional %s mutant: %s", kind, message)
+			}
+		})
 	}
 }

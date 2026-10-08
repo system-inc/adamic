@@ -1,0 +1,334 @@
+{
+  "source_sha256": "729efae4f2e2dae64328ec30bce4908eee50e063f22e201f1bc99aea94044615",
+  "measurement": "Conservative Unknown-fallback demand, not proven reaching-view counts",
+  "pairs": 409,
+  "reads": 2256,
+  "completed_pairs": 0,
+  "completed_reads": 0,
+  "remaining_pairs": 409,
+  "remaining_reads": 2256,
+  "node_array_display_pairs": 330,
+  "node_array_display_reads": 1904,
+  "shapes": [
+    {
+      "shape": "NodeArray<ModifierLike> | undefined",
+      "pairs": 61,
+      "reads": 255
+    },
+    {
+      "shape": "NodeArray<ParameterDeclaration>",
+      "pairs": 46,
+      "reads": 238
+    },
+    {
+      "shape": "NodeArray<Statement>",
+      "pairs": 19,
+      "reads": 228
+    },
+    {
+      "shape": "CompilerOptions",
+      "pairs": 22,
+      "reads": 201
+    },
+    {
+      "shape": "NodeArray<Expression>",
+      "pairs": 11,
+      "reads": 163
+    },
+    {
+      "shape": "NodeArray<TypeNode> | undefined",
+      "pairs": 32,
+      "reads": 144
+    },
+    {
+      "shape": "NodeArray<TypeParameterDeclaration> | undefined",
+      "pairs": 38,
+      "reads": 136
+    },
+    {
+      "shape": "NodeArray<ClassElement>",
+      "pairs": 7,
+      "reads": 83
+    },
+    {
+      "shape": "NodeArray<VariableDeclaration>",
+      "pairs": 3,
+      "reads": 65
+    },
+    {
+      "shape": "string | NodeArray<JSDocComment> | undefined",
+      "pairs": 24,
+      "reads": 63
+    },
+    {
+      "shape": "NodeArray<ObjectLiteralElementLike>",
+      "pairs": 3,
+      "reads": 51
+    },
+    {
+      "shape": "NodeArray<HeritageClause> | undefined",
+      "pairs": 8,
+      "reads": 49
+    },
+    {
+      "shape": "NodeArray<Modifier> | undefined",
+      "pairs": 13,
+      "reads": 45
+    },
+    {
+      "shape": "WatchOptions | undefined",
+      "pairs": 12,
+      "reads": 37
+    },
+    {
+      "shape": "NodeArray<BindingElement> | NodeArray<ArrayBindingElement>",
+      "pairs": 2,
+      "reads": 36
+    },
+    {
+      "shape": "NodeArray<CaseOrDefaultClause>",
+      "pairs": 2,
+      "reads": 27
+    },
+    {
+      "shape": "NodeArray<JsxChild>",
+      "pairs": 5,
+      "reads": 25
+    },
+    {
+      "shape": "JSDocArray | undefined",
+      "pairs": 5,
+      "reads": 24
+    },
+    {
+      "shape": "NodeArray<JSDocTag> | undefined",
+      "pairs": 2,
+      "reads": 24
+    },
+    {
+      "shape": "NodeArray<TypeNode | NamedTupleMember>",
+      "pairs": 1,
+      "reads": 23
+    },
+    {
+      "shape": "NodeArray<Expression> | undefined",
+      "pairs": 3,
+      "reads": 22
+    },
+    {
+      "shape": "CompilerOptions | undefined",
+      "pairs": 7,
+      "reads": 20
+    },
+    {
+      "shape": "NodeArray<JsxAttributeLike>",
+      "pairs": 2,
+      "reads": 20
+    },
+    {
+      "shape": "NodeArray<ExpressionWithTypeArguments>",
+      "pairs": 3,
+      "reads": 19
+    },
+    {
+      "shape": "NodeArray<TypeElement>",
+      "pairs": 3,
+      "reads": 18
+    },
+    {
+      "shape": "NodeArray<TypeNode>",
+      "pairs": 4,
+      "reads": 18
+    },
+    {
+      "shape": "BuildOptions",
+      "pairs": 12,
+      "reads": 15
+    },
+    {
+      "shape": "NodeArray<EnumMember>",
+      "pairs": 2,
+      "reads": 15
+    },
+    {
+      "shape": "NodeArray<ImportSpecifier>",
+      "pairs": 2,
+      "reads": 14
+    },
+    {
+      "shape": "NodeArray<ExportSpecifier>",
+      "pairs": 3,
+      "reads": 13
+    },
+    {
+      "shape": "NodeArray<TemplateSpan>",
+      "pairs": 2,
+      "reads": 13
+    },
+    {
+      "shape": "TsConfigSourceFile | CompilerOptionsValue",
+      "pairs": 2,
+      "reads": 13
+    },
+    {
+      "shape": "NodeArray<ArrayBindingElement>",
+      "pairs": 2,
+      "reads": 11
+    },
+    {
+      "shape": "NodeArray<BindingElement>",
+      "pairs": 2,
+      "reads": 11
+    },
+    {
+      "shape": "NodeArray<ImportAttribute>",
+      "pairs": 3,
+      "reads": 11
+    },
+    {
+      "shape": "NodeArray<Modifier> | NodeArray<ModifierLike> | undefined",
+      "pairs": 3,
+      "reads": 11
+    },
+    {
+      "shape": "MapLike<string[]> | undefined",
+      "pairs": 2,
+      "reads": 10
+    },
+    {
+      "shape": "NodeArray<TypeParameterDeclaration>",
+      "pairs": 1,
+      "reads": 10
+    },
+    {
+      "shape": "NodeArray<JsonObjectExpressionStatement>",
+      "pairs": 2,
+      "reads": 9
+    },
+    {
+      "shape": "MapLike<string[]>",
+      "pairs": 2,
+      "reads": 8
+    },
+    {
+      "shape": "NodeArray<TemplateLiteralTypeSpan>",
+      "pairs": 1,
+      "reads": 8
+    },
+    {
+      "shape": "NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[]",
+      "pairs": 3,
+      "reads": 7
+    },
+    {
+      "shape": "NodeArray<TypeElement> | undefined",
+      "pairs": 1,
+      "reads": 6
+    },
+    {
+      "shape": "ProcessEnv",
+      "pairs": 1,
+      "reads": 6
+    },
+    {
+      "shape": "NodeArray<ImportSpecifier> | NodeArray<ExportSpecifier>",
+      "pairs": 2,
+      "reads": 4
+    },
+    {
+      "shape": "SortedArray<Canonicalized>",
+      "pairs": 2,
+      "reads": 4
+    },
+    {
+      "shape": "MapLike<WatchDirectoryFlags> | undefined",
+      "pairs": 2,
+      "reads": 3
+    },
+    {
+      "shape": "NodeArray<BindingElement> | NodeArray<ArrayBindingElement> | NodeArray<Expression>",
+      "pairs": 2,
+      "reads": 2
+    },
+    {
+      "shape": "NodeArray<TypeElement> | NodeArray<ClassElement>",
+      "pairs": 2,
+      "reads": 2
+    },
+    {
+      "shape": "SortedReadonlyArray<Diagnostic>",
+      "pairs": 1,
+      "reads": 2
+    },
+    {
+      "shape": "Args | undefined",
+      "pairs": 1,
+      "reads": 1
+    },
+    {
+      "shape": "CompilerOptionsValue",
+      "pairs": 1,
+      "reads": 1
+    },
+    {
+      "shape": "MapLike<string> | undefined",
+      "pairs": 1,
+      "reads": 1
+    },
+    {
+      "shape": "NodeArray<JsxAttributeLike> | NodeArray<ObjectLiteralElementLike>",
+      "pairs": 1,
+      "reads": 1
+    },
+    {
+      "shape": "NodeArray<ObjectLiteralElement>",
+      "pairs": 1,
+      "reads": 1
+    },
+    {
+      "shape": "NodeArray<TypeNode | NamedTupleMember> | NodeArray<Expression> | NodeArray<ImportSpecifier> | NodeArray<...>",
+      "pairs": 1,
+      "reads": 1
+    },
+    {
+      "shape": "NodeArray<TypeNode | TypeParameterDeclaration> | undefined",
+      "pairs": 1,
+      "reads": 1
+    },
+    {
+      "shape": "NodeArray<VariableDeclarationInitializedTo<RequireOrImportCall>>",
+      "pairs": 1,
+      "reads": 1
+    },
+    {
+      "shape": "OptionsBase",
+      "pairs": 1,
+      "reads": 1
+    },
+    {
+      "shape": "SortedArray<Canonicalized> | undefined",
+      "pairs": 1,
+      "reads": 1
+    },
+    {
+      "shape": "SortedReadonlyArray<SourceMappedPosition>",
+      "pairs": 1,
+      "reads": 1
+    },
+    {
+      "shape": "String",
+      "pairs": 1,
+      "reads": 1
+    },
+    {
+      "shape": "TypeAcquisition | undefined",
+      "pairs": 1,
+      "reads": 1
+    },
+    {
+      "shape": "typeof ModifierFlags",
+      "pairs": 1,
+      "reads": 1
+    }
+  ]
+}

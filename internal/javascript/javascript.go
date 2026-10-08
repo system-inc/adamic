@@ -825,6 +825,9 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 			kind := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[expression.Of]
 			return "((v) => { if (typeof v !== " + quote(kind) + ") panic(" + quote(expression.CheckMessage) + "); return v; })(" + e.value(expression.Object) + "[" + quote(expression.Name) + "])"
 		}
+		if expression.View != "" && expression.Of == ir.Union {
+			return e.viewObjectPrimitive(expression)
+		}
 		if expression.View != "" {
 			if expression.Of == ir.Closure {
 				return e.emitViewCallableProperty(expression)
