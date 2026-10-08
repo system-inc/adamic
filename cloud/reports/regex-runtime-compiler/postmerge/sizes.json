@@ -1,0 +1,72 @@
+[
+  {
+    "version": "before",
+    "name": "hello",
+    "target": "native",
+    "raw": 450752,
+    "brotli": 159682
+  },
+  {
+    "version": "before",
+    "name": "hello",
+    "target": "wasm32-wasi",
+    "raw": 288644,
+    "brotli": 84071
+  },
+  {
+    "version": "before",
+    "name": "request",
+    "target": "native",
+    "raw": 451480,
+    "brotli": 162642
+  },
+  {
+    "version": "before",
+    "name": "request",
+    "target": "wasm32-wasi",
+    "raw": 325240,
+    "brotli": 97552
+  },
+  {
+    "version": "after",
+    "name": "hello",
+    "target": "native",
+    "raw": 450984,
+    "brotli": 161783
+  },
+  {
+    "version": "after",
+    "name": "hello",
+    "target": "wasm32-wasi",
+    "raw": 288644,
+    "brotli": 84071
+  },
+  {
+    "version": "after",
+    "name": "request",
+    "target": "native",
+    "raw": 451720,
+    "brotli": 162561
+  },
+  {
+    "version": "after",
+    "name": "request",
+    "target": "wasm32-wasi",
+    "raw": 325240,
+    "brotli": 97552
+  },
+  {
+    "version": "after",
+    "name": "dynamic_gap",
+    "target": "native",
+    "raw": 1892096,
+    "brotli": 291059
+  },
+  {
+    "version": "after",
+    "name": "dynamic_gap",
+    "target": "wasm32-wasi",
+    "raw": 819371,
+    "brotli": 158900
+  }
+]

@@ -50,6 +50,6 @@ adamic_string *adamic_string_share(const adamic_string *string, size_t offset, s
 	shared->index = NULL;
 	shared->capacity = 0;
 	// A constant's bytes last as long as the program, and need no one held for them.
-	shared->owner = owner->heap.references == 0 ? NULL : adamic_retain((adamic_string *)owner);
+	shared->owner = adamic_reference_count(&owner->heap) == 0 ? NULL : adamic_retain((adamic_string *)owner);
 	return shared;
 }

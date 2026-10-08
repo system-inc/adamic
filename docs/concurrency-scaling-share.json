@@ -1,0 +1,322 @@
+{
+  "load_start": [
+    0.06982421875,
+    0.16259765625,
+    2.16357421875
+  ],
+  "samples": [
+    {
+      "round": 1,
+      "version": "before",
+      "threads": 1,
+      "share": 0.073723847,
+      "wall": 0.7996218019998196
+    },
+    {
+      "round": 1,
+      "version": "after",
+      "threads": 1,
+      "share": 0.000752989,
+      "wall": 0.7625642249986413
+    },
+    {
+      "round": 1,
+      "version": "before",
+      "threads": 2,
+      "share": 0.062698194,
+      "wall": 0.47340091099977144
+    },
+    {
+      "round": 1,
+      "version": "after",
+      "threads": 2,
+      "share": 0.000486492,
+      "wall": 0.4543676590001269
+    },
+    {
+      "round": 1,
+      "version": "before",
+      "threads": 4,
+      "share": 0.063915427,
+      "wall": 0.37808523800049443
+    },
+    {
+      "round": 1,
+      "version": "after",
+      "threads": 4,
+      "share": 0.000384697,
+      "wall": 0.25672959000075934
+    },
+    {
+      "round": 1,
+      "version": "before",
+      "threads": 5,
+      "share": 0.058045949,
+      "wall": 0.34026495600119233
+    },
+    {
+      "round": 1,
+      "version": "after",
+      "threads": 5,
+      "share": 0.00042723,
+      "wall": 0.27370181500009494
+    },
+    {
+      "round": 2,
+      "version": "after",
+      "threads": 1,
+      "share": 0.000395613,
+      "wall": 0.6848481460001494
+    },
+    {
+      "round": 2,
+      "version": "before",
+      "threads": 1,
+      "share": 0.058091005,
+      "wall": 0.7714907970002969
+    },
+    {
+      "round": 2,
+      "version": "after",
+      "threads": 2,
+      "share": 0.000443754,
+      "wall": 0.4670013220002147
+    },
+    {
+      "round": 2,
+      "version": "before",
+      "threads": 2,
+      "share": 0.062897657,
+      "wall": 0.4721282459995564
+    },
+    {
+      "round": 2,
+      "version": "after",
+      "threads": 4,
+      "share": 0.000449332,
+      "wall": 0.30179882499942323
+    },
+    {
+      "round": 2,
+      "version": "before",
+      "threads": 4,
+      "share": 0.069335232,
+      "wall": 0.3555743880006048
+    },
+    {
+      "round": 2,
+      "version": "after",
+      "threads": 5,
+      "share": 0.000819728,
+      "wall": 0.27659374500035483
+    },
+    {
+      "round": 2,
+      "version": "before",
+      "threads": 5,
+      "share": 0.076429689,
+      "wall": 0.3822817300006136
+    },
+    {
+      "round": 3,
+      "version": "before",
+      "threads": 1,
+      "share": 0.054339739,
+      "wall": 0.7753047800015338
+    },
+    {
+      "round": 3,
+      "version": "after",
+      "threads": 1,
+      "share": 0.000441931,
+      "wall": 0.6880685110008926
+    },
+    {
+      "round": 3,
+      "version": "before",
+      "threads": 2,
+      "share": 0.058123442,
+      "wall": 0.47189490199889406
+    },
+    {
+      "round": 3,
+      "version": "after",
+      "threads": 2,
+      "share": 0.000418847,
+      "wall": 0.46433395400163135
+    },
+    {
+      "round": 3,
+      "version": "before",
+      "threads": 4,
+      "share": 0.063399674,
+      "wall": 0.3892791779999243
+    },
+    {
+      "round": 3,
+      "version": "after",
+      "threads": 4,
+      "share": 0.000411707,
+      "wall": 0.26664206700115756
+    },
+    {
+      "round": 3,
+      "version": "before",
+      "threads": 5,
+      "share": 0.0641574,
+      "wall": 0.3443054649997066
+    },
+    {
+      "round": 3,
+      "version": "after",
+      "threads": 5,
+      "share": 0.000387791,
+      "wall": 0.2987218979997124
+    },
+    {
+      "round": 4,
+      "version": "after",
+      "threads": 1,
+      "share": 0.00040118,
+      "wall": 0.7477009659996838
+    },
+    {
+      "round": 4,
+      "version": "before",
+      "threads": 1,
+      "share": 0.067952539,
+      "wall": 0.8597345150010369
+    },
+    {
+      "round": 4,
+      "version": "after",
+      "threads": 2,
+      "share": 0.000399078,
+      "wall": 0.422607919001166
+    },
+    {
+      "round": 4,
+      "version": "before",
+      "threads": 2,
+      "share": 0.063765242,
+      "wall": 0.5812034449991188
+    },
+    {
+      "round": 4,
+      "version": "after",
+      "threads": 4,
+      "share": 0.000477594,
+      "wall": 0.2795908600000985
+    },
+    {
+      "round": 4,
+      "version": "before",
+      "threads": 4,
+      "share": 0.063133573,
+      "wall": 0.34626814399962313
+    },
+    {
+      "round": 4,
+      "version": "after",
+      "threads": 5,
+      "share": 0.00048205,
+      "wall": 0.3126187790003314
+    },
+    {
+      "round": 4,
+      "version": "before",
+      "threads": 5,
+      "share": 0.060887593,
+      "wall": 0.31405714900029125
+    },
+    {
+      "round": 5,
+      "version": "before",
+      "threads": 1,
+      "share": 0.059926247,
+      "wall": 0.8248457239988056
+    },
+    {
+      "round": 5,
+      "version": "after",
+      "threads": 1,
+      "share": 0.000402192,
+      "wall": 0.772811869999714
+    },
+    {
+      "round": 5,
+      "version": "before",
+      "threads": 2,
+      "share": 0.065684205,
+      "wall": 0.512082550998457
+    },
+    {
+      "round": 5,
+      "version": "after",
+      "threads": 2,
+      "share": 0.000374962,
+      "wall": 0.42641482100043504
+    },
+    {
+      "round": 5,
+      "version": "before",
+      "threads": 4,
+      "share": 0.060068832,
+      "wall": 0.35324479900009464
+    },
+    {
+      "round": 5,
+      "version": "after",
+      "threads": 4,
+      "share": 0.000374612,
+      "wall": 0.2813096569989284
+    },
+    {
+      "round": 5,
+      "version": "before",
+      "threads": 5,
+      "share": 0.059656044,
+      "wall": 0.3276250609997078
+    },
+    {
+      "round": 5,
+      "version": "after",
+      "threads": 5,
+      "share": 0.000377647,
+      "wall": 0.23932621400126664
+    }
+  ],
+  "rounds": 5,
+  "load_measurement_start": [
+    0.06982421875,
+    0.16259765625,
+    2.16357421875
+  ],
+  "load_end": [
+    0.40234375,
+    0.2333984375,
+    2.1435546875
+  ],
+  "best": [
+    {
+      "threads": 1,
+      "before": 0.054339739,
+      "after": 0.000395613
+    },
+    {
+      "threads": 2,
+      "before": 0.058123442,
+      "after": 0.000374962
+    },
+    {
+      "threads": 4,
+      "before": 0.060068832,
+      "after": 0.000374612
+    },
+    {
+      "threads": 5,
+      "before": 0.058045949,
+      "after": 0.000377647
+    }
+  ]
+}

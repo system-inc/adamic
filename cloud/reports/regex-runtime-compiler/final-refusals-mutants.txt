@@ -1,0 +1,12 @@
+=== RUN   TestDynamicRegExpRuntimeRefusals
+--- PASS: TestDynamicRegExpRuntimeRefusals (32.17s)
+=== RUN   TestDynamicRegExpConstructionMutants
+=== RUN   TestDynamicRegExpConstructionMutants/drop_compiled_storage_owner
+    regexp_dynamic_test.go:103: caught drop compiled storage owner: heap-use-after-free
+--- PASS: TestDynamicRegExpConstructionMutants (1.95s)
+    --- PASS: TestDynamicRegExpConstructionMutants/drop_compiled_storage_owner (1.92s)
+PASS
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	34.133s

@@ -138,8 +138,10 @@ static void compact(adamic_map *map) {
 	map->used = live;
 }
 
+// Shared maps are read-only publications. Closing an iterator must not rewrite
+// their entries while another worker can start or read an iterator.
 static void return_inline(adamic_map *map) {
-	if (map->iterating != 0 || map->count > 4) {
+	if (adamic_is_shared(&map->heap) || map->iterating != 0 || map->count > 4) {
 		return;
 	}
 	compact(map);

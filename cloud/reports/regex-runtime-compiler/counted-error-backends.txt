@@ -1,0 +1,13 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/flags_errors.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/flags_errors.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/flags_errors.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_dynamic/flags_errors.a (14.56s)
+PASS
+gate cache: native hits=0 misses=4
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	14.573s

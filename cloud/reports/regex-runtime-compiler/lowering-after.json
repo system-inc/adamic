@@ -1,0 +1,1018 @@
+{
+  "test262": "/tmp/regex-runtime-test262",
+  "commit": "7ab7fafa0003f73fc85c1b95d88094d33f7eb8bd",
+  "adapt": true,
+  "filters": [
+    {
+      "path": "built-ins/RegExp",
+      "pass": 56,
+      "fail": 0,
+      "refused": 421,
+      "crashed": 73,
+      "skipped": 1329,
+      "total": 1879,
+      "directories": [
+        {
+          "path": "built-ins/RegExp",
+          "pass": 42,
+          "fail": 0,
+          "refused": 280,
+          "crashed": 73,
+          "skipped": 93,
+          "total": 488
+        },
+        {
+          "path": "built-ins/RegExp/CharacterClassEscapes",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 12,
+          "total": 12
+        },
+        {
+          "path": "built-ins/RegExp/Symbol.species",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 4
+        },
+        {
+          "path": "built-ins/RegExp/dotall",
+          "pass": 2,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 2,
+          "total": 4
+        },
+        {
+          "path": "built-ins/RegExp/escape",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 20,
+          "total": 20
+        },
+        {
+          "path": "built-ins/RegExp/lookBehind",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 17,
+          "total": 17
+        },
+        {
+          "path": "built-ins/RegExp/match-indices",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 14,
+          "total": 14
+        },
+        {
+          "path": "built-ins/RegExp/named-groups",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 36,
+          "total": 36
+        },
+        {
+          "path": "built-ins/RegExp/property-escapes",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 144,
+          "total": 144
+        },
+        {
+          "path": "built-ins/RegExp/property-escapes/generated",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 441,
+          "total": 441
+        },
+        {
+          "path": "built-ins/RegExp/property-escapes/generated/strings",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 28,
+          "total": 28
+        },
+        {
+          "path": "built-ins/RegExp/prototype",
+          "pass": 0,
+          "fail": 0,
+          "refused": 8,
+          "crashed": 0,
+          "skipped": 2,
+          "total": 10
+        },
+        {
+          "path": "built-ins/RegExp/prototype/Symbol.match",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 53,
+          "total": 53
+        },
+        {
+          "path": "built-ins/RegExp/prototype/Symbol.matchAll",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 26,
+          "total": 26
+        },
+        {
+          "path": "built-ins/RegExp/prototype/Symbol.replace",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 70,
+          "total": 70
+        },
+        {
+          "path": "built-ins/RegExp/prototype/Symbol.search",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 23,
+          "total": 23
+        },
+        {
+          "path": "built-ins/RegExp/prototype/Symbol.split",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 44,
+          "total": 44
+        },
+        {
+          "path": "built-ins/RegExp/prototype/dotAll",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 8,
+          "total": 8
+        },
+        {
+          "path": "built-ins/RegExp/prototype/exec",
+          "pass": 3,
+          "fail": 0,
+          "refused": 70,
+          "crashed": 0,
+          "skipped": 6,
+          "total": 79
+        },
+        {
+          "path": "built-ins/RegExp/prototype/flags",
+          "pass": 0,
+          "fail": 0,
+          "refused": 1,
+          "crashed": 0,
+          "skipped": 15,
+          "total": 16
+        },
+        {
+          "path": "built-ins/RegExp/prototype/global",
+          "pass": 0,
+          "fail": 0,
+          "refused": 5,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 10
+        },
+        {
+          "path": "built-ins/RegExp/prototype/hasIndices",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 8,
+          "total": 8
+        },
+        {
+          "path": "built-ins/RegExp/prototype/ignoreCase",
+          "pass": 0,
+          "fail": 0,
+          "refused": 5,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 10
+        },
+        {
+          "path": "built-ins/RegExp/prototype/multiline",
+          "pass": 0,
+          "fail": 0,
+          "refused": 5,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 10
+        },
+        {
+          "path": "built-ins/RegExp/prototype/source",
+          "pass": 0,
+          "fail": 0,
+          "refused": 2,
+          "crashed": 0,
+          "skipped": 10,
+          "total": 12
+        },
+        {
+          "path": "built-ins/RegExp/prototype/sticky",
+          "pass": 1,
+          "fail": 0,
+          "refused": 3,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 8
+        },
+        {
+          "path": "built-ins/RegExp/prototype/test",
+          "pass": 7,
+          "fail": 0,
+          "refused": 35,
+          "crashed": 0,
+          "skipped": 3,
+          "total": 45
+        },
+        {
+          "path": "built-ins/RegExp/prototype/toString",
+          "pass": 0,
+          "fail": 0,
+          "refused": 4,
+          "crashed": 0,
+          "skipped": 5,
+          "total": 9
+        },
+        {
+          "path": "built-ins/RegExp/prototype/unicode",
+          "pass": 1,
+          "fail": 0,
+          "refused": 3,
+          "crashed": 0,
+          "skipped": 4,
+          "total": 8
+        },
+        {
+          "path": "built-ins/RegExp/prototype/unicodeSets",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 38,
+          "total": 38
+        },
+        {
+          "path": "built-ins/RegExp/regexp-modifiers",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 62,
+          "total": 62
+        },
+        {
+          "path": "built-ins/RegExp/regexp-modifiers/syntax/valid",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 8,
+          "total": 8
+        },
+        {
+          "path": "built-ins/RegExp/unicodeSets/generated",
+          "pass": 0,
+          "fail": 0,
+          "refused": 0,
+          "crashed": 0,
+          "skipped": 114,
+          "total": 114
+        }
+      ],
+      "refusalReasons": [
+        {
+          "reason": "error TS2551: Property '…' does not exist on type '…'. Did you mean '…'?",
+          "count": 225
+        },
+        {
+          "reason": "error TS2345: Argument of type '…' is not assignable to parameter of type '…'.",
+          "count": 39
+        },
+        {
+          "reason": "error TS2339: Property '…' does not exist on type '…'.",
+          "count": 25
+        },
+        {
+          "reason": "error TS2769: No overload matches this call.",
+          "count": 23
+        },
+        {
+          "reason": "error TS18048: '…' is possibly '…'.",
+          "count": 12
+        },
+        {
+          "reason": "refuses var",
+          "count": 8
+        },
+        {
+          "reason": "error TS2532: Object is possibly '…'.",
+          "count": 6
+        },
+        {
+          "reason": "error TS2704: The operand of a '…' operator cannot be a read-only property.",
+          "count": 6
+        },
+        {
+          "reason": "not yet: a BinaryExpression with a value and a string",
+          "count": 6
+        },
+        {
+          "reason": "error TS2554: Expected 1-2 arguments, but got 0.",
+          "count": 5
+        },
+        {
+          "reason": "not yet: dynamic RegExp argument other than a string or undefined",
+          "count": 5
+        },
+        {
+          "reason": "refuses a method read as a value (exec would lose its object, and this with it)",
+          "count": 5
+        },
+        {
+          "reason": "refuses a method read as a value (test would lose its object, and this with it)",
+          "count": 5
+        },
+        {
+          "reason": "error TS18047: '…' is possibly '…'.",
+          "count": 4
+        },
+        {
+          "reason": "error TS2322: Type '…' is not assignable to type '…'.",
+          "count": 4
+        },
+        {
+          "reason": "error TS7006: Parameter '…' implicitly has an '…' type.",
+          "count": 4
+        },
+        {
+          "reason": "not yet: an array of never",
+          "count": 4
+        },
+        {
+          "reason": "refuses inherited library member prototype read as an own field",
+          "count": 4
+        },
+        {
+          "reason": "error TS2351: This expression is not constructable.",
+          "count": 3
+        },
+        {
+          "reason": "error TS2531: Object is possibly '…'.",
+          "count": 3
+        },
+        {
+          "reason": "error TS2554: Expected 1 arguments, but got 0.",
+          "count": 3
+        },
+        {
+          "reason": "refuses a method read as a value (toString would lose its object, and this with it)",
+          "count": 3
+        },
+        {
+          "reason": "refuses a number as a condition",
+          "count": 3
+        },
+        {
+          "reason": "error TS2349: This expression is not callable.",
+          "count": 2
+        },
+        {
+          "reason": "not yet: hasOwnProperty on a function (its prototype property depends on whether it was declared or made as an arrow)",
+          "count": 2
+        },
+        {
+          "reason": "refuses Object.defineProperty",
+          "count": 2
+        },
+        {
+          "reason": "refuses isPrototypeOf",
+          "count": 2
+        },
+        {
+          "reason": "error TS2683: '…' implicitly has type '…' because it does not have a type annotation.",
+          "count": 1
+        },
+        {
+          "reason": "not yet: a BinaryExpression with a string and a number",
+          "count": 1
+        },
+        {
+          "reason": "not yet: a NewExpression as a statement",
+          "count": 1
+        },
+        {
+          "reason": "not yet: a PrefixUnaryExpression on a value",
+          "count": 1
+        },
+        {
+          "reason": "not yet: a function returning undefined",
+          "count": 1
+        },
+        {
+          "reason": "not yet: a value of type any",
+          "count": 1
+        },
+        {
+          "reason": "not yet: reading RegExp",
+          "count": 1
+        },
+        {
+          "reason": "refuses the void operator",
+          "count": 1
+        }
+      ],
+      "skipReasons": [
+        {
+          "reason": "harness include regExpUtils.js",
+          "count": 574
+        },
+        {
+          "reason": "negative parse or early error",
+          "count": 192
+        },
+        {
+          "reason": "feature regexp-modifiers",
+          "count": 147
+        },
+        {
+          "reason": "harness include propertyHelper.js",
+          "count": 67
+        },
+        {
+          "reason": "feature Symbol.replace",
+          "count": 55
+        },
+        {
+          "reason": "feature Symbol.match",
+          "count": 51
+        },
+        {
+          "reason": "feature regexp-named-groups",
+          "count": 22
+        },
+        {
+          "reason": "features Symbol.species, Symbol.split",
+          "count": 20
+        },
+        {
+          "reason": "feature Symbol.split",
+          "count": 19
+        },
+        {
+          "reason": "feature Symbol.search",
+          "count": 18
+        },
+        {
+          "reason": "feature regexp-lookbehind",
+          "count": 17
+        },
+        {
+          "reason": "feature RegExp.escape",
+          "count": 15
+        },
+        {
+          "reason": "feature Symbol",
+          "count": 12
+        },
+        {
+          "reason": "harness include isConstructor.js",
+          "count": 12
+        },
+        {
+          "reason": "feature regexp-duplicate-named-groups",
+          "count": 10
+        },
+        {
+          "reason": "feature Symbol.matchAll",
+          "count": 8
+        },
+        {
+          "reason": "feature regexp-match-indices",
+          "count": 8
+        },
+        {
+          "reason": "features Symbol.replace, regexp-named-groups",
+          "count": 8
+        },
+        {
+          "reason": "eval",
+          "count": 7
+        },
+        {
+          "reason": "harness includes compareIterator.js, regExpUtils.js",
+          "count": 7
+        },
+        {
+          "reason": "feature cross-realm",
+          "count": 6
+        },
+        {
+          "reason": "features Symbol, Symbol.match",
+          "count": 6
+        },
+        {
+          "reason": "feature regexp-dotall",
+          "count": 5
+        },
+        {
+          "reason": "features Symbol.matchAll, Symbol.species",
+          "count": 5
+        },
+        {
+          "reason": "feature regexp-v-flag",
+          "count": 4
+        },
+        {
+          "reason": "features regexp-dotall, regexp-match-indices",
+          "count": 4
+        },
+        {
+          "reason": "feature regexp-unicode-property-escapes",
+          "count": 2
+        },
+        {
+          "reason": "features Symbol, regexp-dotall",
+          "count": 2
+        },
+        {
+          "reason": "features Symbol, regexp-match-indices",
+          "count": 2
+        },
+        {
+          "reason": "features Symbol.match, Symbol.matchAll",
+          "count": 2
+        },
+        {
+          "reason": "features regexp-duplicate-named-groups, regexp-match-indices",
+          "count": 2
+        },
+        {
+          "reason": "features regexp-match-indices, regexp-named-groups",
+          "count": 2
+        },
+        {
+          "reason": "harness includes deepEqual.js, propertyHelper.js",
+          "count": 2
+        },
+        {
+          "reason": "feature Symbol.species",
+          "count": 1
+        },
+        {
+          "reason": "features Reflect, cross-realm",
+          "count": 1
+        },
+        {
+          "reason": "features RegExp.escape, cross-realm",
+          "count": 1
+        },
+        {
+          "reason": "features Symbol, Symbol.search",
+          "count": 1
+        },
+        {
+          "reason": "features Symbol, regexp-v-flag",
+          "count": 1
+        },
+        {
+          "reason": "features Symbol.iterator, Symbol.replace, regexp-named-groups",
+          "count": 1
+        },
+        {
+          "reason": "features Symbol.replace, Symbol.toPrimitive",
+          "count": 1
+        },
+        {
+          "reason": "features Symbol.species, Symbol.split, cross-realm",
+          "count": 1
+        },
+        {
+          "reason": "features cross-realm, regexp-dotall",
+          "count": 1
+        },
+        {
+          "reason": "features cross-realm, regexp-match-indices",
+          "count": 1
+        },
+        {
+          "reason": "features cross-realm, regexp-v-flag",
+          "count": 1
+        },
+        {
+          "reason": "features regexp-dotall, regexp-match-indices, regexp-v-flag",
+          "count": 1
+        },
+        {
+          "reason": "features regexp-lookbehind, regexp-named-groups",
+          "count": 1
+        },
+        {
+          "reason": "features regexp-unicode-property-escapes, regexp-v-flag",
+          "count": 1
+        },
+        {
+          "reason": "harness include compareIterator.js",
+          "count": 1
+        },
+        {
+          "reason": "noStrict (sloppy mode only; Adamic modules are always strict)",
+          "count": 1
+        }
+      ],
+      "crashReasons": [
+        {
+          "reason": "built-ins/RegExp/15.10.2.15-6-1.js: invalid RegExp: regexp: invalid character class range at byte 5",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/15.10.2.5-3-1.js: invalid RegExp: regexp: quantifier range out of order at byte 1",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/15.10.4.1-2.js: invalid RegExp: regexp: trailing escape at byte 1",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/15.10.4.1-3.js: invalid RegExp: regexp: invalid flag at byte 0",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.1_A1_T1.js: invalid RegExp: regexp: nothing to repeat at byte 2",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.1_A1_T10.js: invalid RegExp: regexp: nothing to repeat at byte 0",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.1_A1_T11.js: invalid RegExp: regexp: nothing to repeat at byte 0",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.1_A1_T12.js: invalid RegExp: regexp: nothing to repeat at byte 0",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.1_A1_T13.js: invalid RegExp: regexp: nothing to repeat at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.1_A1_T14.js: invalid RegExp: regexp: nothing to repeat at byte 6",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.1_A1_T15.js: invalid RegExp: regexp: nothing to repeat at byte 5",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.1_A1_T16.js: invalid RegExp: regexp: nothing to repeat at byte 6",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.1_A1_T2.js: invalid RegExp: regexp: nothing to repeat at byte 2",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.1_A1_T3.js: invalid RegExp: regexp: nothing to repeat at byte 2",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.1_A1_T4.js: invalid RegExp: regexp: nothing to repeat at byte 2",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.1_A1_T5.js: invalid RegExp: regexp: nothing to repeat at byte 3",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.1_A1_T6.js: invalid RegExp: regexp: nothing to repeat at byte 3",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.1_A1_T7.js: invalid RegExp: regexp: nothing to repeat at byte 0",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.1_A1_T8.js: invalid RegExp: regexp: nothing to repeat at byte 0",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.1_A1_T9.js: invalid RegExp: regexp: nothing to repeat at byte 0",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T1.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T10.js: invalid RegExp: regexp: invalid character class range at byte 7",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T11.js: invalid RegExp: regexp: invalid character class range at byte 6",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T12.js: invalid RegExp: regexp: invalid character class range at byte 6",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T13.js: invalid RegExp: regexp: invalid character class range at byte 6",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T14.js: invalid RegExp: regexp: invalid character class range at byte 6",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T15.js: invalid RegExp: regexp: invalid character class range at byte 6",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T16.js: invalid RegExp: regexp: invalid character class range at byte 6",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T17.js: invalid RegExp: regexp: invalid character class range at byte 6",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T18.js: invalid RegExp: regexp: invalid character class range at byte 10",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T19.js: invalid RegExp: regexp: invalid character class range at byte 10",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T2.js: invalid RegExp: regexp: invalid character class range at byte 7",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T20.js: invalid RegExp: regexp: invalid character class range at byte 10",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T21.js: invalid RegExp: regexp: invalid character class range at byte 6",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T22.js: invalid RegExp: regexp: invalid character class range at byte 7",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T23.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T24.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T25.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T26.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T27.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T28.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T29.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T3.js: invalid RegExp: regexp: invalid character class range at byte 6",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T30.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T31.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T32.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T33.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T34.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T35.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T36.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T37.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T38.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T39.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T4.js: invalid RegExp: regexp: invalid character class range at byte 6",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T40.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T41.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T5.js: invalid RegExp: regexp: invalid character class range at byte 6",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T6.js: invalid RegExp: regexp: invalid character class range at byte 6",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T7.js: invalid RegExp: regexp: invalid character class range at byte 6",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T8.js: invalid RegExp: regexp: invalid character class range at byte 6",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.2.15_A1_T9.js: invalid RegExp: regexp: invalid character class range at byte 6",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.4.1_A5_T4.js: invalid RegExp: regexp: invalid flag at byte 0",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.4.1_A9_T1.js: invalid RegExp: regexp: nothing to repeat at byte 0",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.4.1_A9_T2.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/S15.10.4.1_A9_T3.js: invalid RegExp: regexp: invalid character class range at byte 4",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/unicode_restricted_brackets.js: invalid RegExp: regexp: unterminated group at byte 1",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/unicode_restricted_character_class_escape.js: invalid RegExp: regexp: invalid character class range at byte 5",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/unicode_restricted_identity_escape_u.js: invalid RegExp: regexp: invalid hex escape at byte 0",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/unicode_restricted_identity_escape_x.js: invalid RegExp: regexp: invalid hex escape at byte 0",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/unicode_restricted_incomplete_quantifier.js: invalid RegExp: regexp: incomplete quantifier at byte 1",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/unicode_restricted_octal_escape.js: invalid RegExp: regexp: invalid decimal escape at byte 0",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/unicode_restricted_quantifiable_assertion.js: invalid RegExp: regexp: nothing to repeat at byte 5",
+          "count": 1
+        },
+        {
+          "reason": "built-ins/RegExp/unicode_restricted_quantifier_without_atom.js: invalid RegExp: regexp: nothing to repeat at byte 0",
+          "count": 1
+        }
+      ],
+      "failReasons": [],
+      "passes": [
+        "built-ins/RegExp/15.10.4.1-4.js",
+        "built-ins/RegExp/S15.10.2.10_A2.1_T1.js",
+        "built-ins/RegExp/S15.10.2.10_A2.1_T2.js",
+        "built-ins/RegExp/S15.10.2.13_A1_T1.js",
+        "built-ins/RegExp/S15.10.2.13_A1_T2.js",
+        "built-ins/RegExp/S15.10.2.13_A1_T7.js",
+        "built-ins/RegExp/S15.10.2.13_A2_T6.js",
+        "built-ins/RegExp/S15.10.2.3_A1_T5.js",
+        "built-ins/RegExp/S15.10.2.3_A1_T7.js",
+        "built-ins/RegExp/S15.10.2.6_A1_T1.js",
+        "built-ins/RegExp/S15.10.2.6_A2_T1.js",
+        "built-ins/RegExp/S15.10.2.6_A2_T7.js",
+        "built-ins/RegExp/S15.10.2.6_A2_T8.js",
+        "built-ins/RegExp/S15.10.2.6_A3_T13.js",
+        "built-ins/RegExp/S15.10.2.6_A3_T15.js",
+        "built-ins/RegExp/S15.10.2.6_A3_T3.js",
+        "built-ins/RegExp/S15.10.2.6_A3_T5.js",
+        "built-ins/RegExp/S15.10.2.6_A3_T9.js",
+        "built-ins/RegExp/S15.10.2.7_A1_T2.js",
+        "built-ins/RegExp/S15.10.2.7_A1_T9.js",
+        "built-ins/RegExp/S15.10.2.7_A2_T4.js",
+        "built-ins/RegExp/S15.10.2.7_A3_T10.js",
+        "built-ins/RegExp/S15.10.2.7_A3_T3.js",
+        "built-ins/RegExp/S15.10.2.7_A3_T4.js",
+        "built-ins/RegExp/S15.10.2.7_A4_T21.js",
+        "built-ins/RegExp/S15.10.2.7_A4_T8.js",
+        "built-ins/RegExp/S15.10.2.7_A5_T3.js",
+        "built-ins/RegExp/S15.10.2.7_A6_T2.js",
+        "built-ins/RegExp/S15.10.2.8_A1_T5.js",
+        "built-ins/RegExp/S15.10.2.8_A2_T3.js",
+        "built-ins/RegExp/S15.10.2.8_A2_T4.js",
+        "built-ins/RegExp/S15.10.2.8_A2_T8.js",
+        "built-ins/RegExp/S15.10.2.8_A3_T18.js",
+        "built-ins/RegExp/S15.10.2.8_A3_T3.js",
+        "built-ins/RegExp/S15.10.4.1_A8_T1.js",
+        "built-ins/RegExp/S15.10.4.1_A8_T2.js",
+        "built-ins/RegExp/character-class-escape-non-whitespace-u180e.js",
+        "built-ins/RegExp/dotall/without-dotall-unicode.js",
+        "built-ins/RegExp/dotall/without-dotall.js",
+        "built-ins/RegExp/prototype/exec/u-lastindex-value.js",
+        "built-ins/RegExp/prototype/exec/y-fail-lastindex.js",
+        "built-ins/RegExp/prototype/exec/y-set-lastindex.js",
+        "built-ins/RegExp/prototype/sticky/this-val-regexp.js",
+        "built-ins/RegExp/prototype/test/S15.10.6.3_A1_T1.js",
+        "built-ins/RegExp/prototype/test/S15.10.6.3_A1_T22.js",
+        "built-ins/RegExp/prototype/test/S15.10.6.3_A1_T6.js",
+        "built-ins/RegExp/prototype/test/y-fail-lastindex.js",
+        "built-ins/RegExp/prototype/test/y-fail-return.js",
+        "built-ins/RegExp/prototype/test/y-init-lastindex.js",
+        "built-ins/RegExp/prototype/test/y-set-lastindex.js",
+        "built-ins/RegExp/prototype/unicode/this-val-regexp.js",
+        "built-ins/RegExp/regexp-class-chars.js",
+        "built-ins/RegExp/u180e.js",
+        "built-ins/RegExp/unicode_character_class_backspace_escape.js",
+        "built-ins/RegExp/unicode_full_case_folding.js",
+        "built-ins/RegExp/unicode_identity_escape.js"
+      ],
+      "adaptations": [
+        {
+          "reason": "var-to-let",
+          "count": 1040
+        },
+        {
+          "reason": "throw-error",
+          "count": 142
+        }
+      ]
+    }
+  ]
+}
