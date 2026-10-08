@@ -1,0 +1,389 @@
+{
+  "typescript": "6.0.3",
+  "rules": [
+    {
+      "id": 1,
+      "reason": "Both getLeadingCommentRanges and getTrailingCommentRanges pass undefined. The body never reads state."
+    },
+    {
+      "id": 4,
+      "reason": "The existing StringConstructor library owns the function. Both feature-probe and fallback remain."
+    },
+    {
+      "id": 5,
+      "reason": "Only keyof this mapped type is consumed. The mapped value is never observed or instantiated."
+    },
+    {
+      "id": 6,
+      "reason": "AnyFunction is callable. Its existing Function name property is already a string; the feature test is retained."
+    },
+    {
+      "id": 7,
+      "reason": "ProgramHost constrains its generic to BuilderProgram. readFile does not depend on that generic."
+    },
+    {
+      "id": 8,
+      "reason": "Preserve the same builder family T carried by each caller and its createProgram callback; a broad BuilderProgram would violate callback variance."
+    },
+    {
+      "id": 9,
+      "reason": "Emit callbacks observe AST node arrays; Node is their actual common element bound."
+    },
+    {
+      "id": 10,
+      "reason": "Emit callbacks observe AST node arrays; Node is their actual common element bound."
+    },
+    {
+      "id": 11,
+      "reason": "The parameter denotes a pragma argument name and its declared bound is string."
+    },
+    {
+      "id": 12,
+      "reason": "The parameter denotes a pragma argument name and its declared bound is string."
+    }
+  ],
+  "sources": {
+    "src/compiler/_namespaces/ts.moduleSpecifiers.ts": {
+      "before": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e",
+      "after": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e"
+    },
+    "src/compiler/_namespaces/ts.performance.ts": {
+      "before": "e3d39c7ea64f27347b698a1951a76a014cd0c1c51565d6ed9182d7d4f064ddda",
+      "after": "e3d39c7ea64f27347b698a1951a76a014cd0c1c51565d6ed9182d7d4f064ddda"
+    },
+    "src/compiler/_namespaces/ts.ts": {
+      "before": "74b899b9d4a9c709b9daa248cb9107227a705f0189eee82271ee84d3bbfc482b",
+      "after": "74b899b9d4a9c709b9daa248cb9107227a705f0189eee82271ee84d3bbfc482b"
+    },
+    "src/compiler/binder.ts": {
+      "before": "8ff0292668cdbe20584f06f5ca54c0a9ae419b16bc099c8d6261b1bd595a2d39",
+      "after": "8ff0292668cdbe20584f06f5ca54c0a9ae419b16bc099c8d6261b1bd595a2d39"
+    },
+    "src/compiler/builder.ts": {
+      "before": "16f7d3712acb944b6007613979fc4606fd0e8cb6fc3524cfb1959f633fb6dd6c",
+      "after": "16f7d3712acb944b6007613979fc4606fd0e8cb6fc3524cfb1959f633fb6dd6c"
+    },
+    "src/compiler/builderPublic.ts": {
+      "before": "1c4590cf725470dec54734bdb4711c330540c6c3871e791f2feebd39d787f629",
+      "after": "1c4590cf725470dec54734bdb4711c330540c6c3871e791f2feebd39d787f629"
+    },
+    "src/compiler/builderState.ts": {
+      "before": "718fe1a92440b7bafbe9fb4bddfd35d5c77bf0408fcefab8edf21b38558c8d5a",
+      "after": "718fe1a92440b7bafbe9fb4bddfd35d5c77bf0408fcefab8edf21b38558c8d5a"
+    },
+    "src/compiler/builderStatePublic.ts": {
+      "before": "271f9512e20d7f04fe1d68394fbd8647ce022c9978bf80e6fab681dd453c52dc",
+      "after": "271f9512e20d7f04fe1d68394fbd8647ce022c9978bf80e6fab681dd453c52dc"
+    },
+    "src/compiler/checker.ts": {
+      "before": "938b2634f27cb57a202675254cf9af0935a891fecddb8f9d94a12d69cf0f93fb",
+      "after": "938b2634f27cb57a202675254cf9af0935a891fecddb8f9d94a12d69cf0f93fb"
+    },
+    "src/compiler/commandLineParser.ts": {
+      "before": "c6df29c7ad17642aba22380b7bf372b940490437f3ab5ed2aa4c160dd039acec",
+      "after": "c6df29c7ad17642aba22380b7bf372b940490437f3ab5ed2aa4c160dd039acec"
+    },
+    "src/compiler/core.ts": {
+      "before": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "after": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962"
+    },
+    "src/compiler/corePublic.ts": {
+      "before": "fc41b009e9d5e9e085278f5e9e126fcdaef52340d07aaae24208dee119dcff44",
+      "after": "fc41b009e9d5e9e085278f5e9e126fcdaef52340d07aaae24208dee119dcff44"
+    },
+    "src/compiler/debug.ts": {
+      "before": "ca255a522710019f5f852647b077cebc35d8771e966241e2f5fdc56f63f3a0a7",
+      "after": "deade166eee4b410c566775a5352d923a6422f6574b322ee9c8c19490d6f8a84"
+    },
+    "src/compiler/diagnosticInformationMap.generated.ts": {
+      "before": "0cfeabc14c72149bf65f0b5cb72f251adc45064edccebe30871b4efd73b97e89",
+      "after": "0cfeabc14c72149bf65f0b5cb72f251adc45064edccebe30871b4efd73b97e89"
+    },
+    "src/compiler/emitter.ts": {
+      "before": "59401938eda9af4ffc71d0e31a8e5b559475d85155a01163fa8b8f08811d8a19",
+      "after": "59401938eda9af4ffc71d0e31a8e5b559475d85155a01163fa8b8f08811d8a19"
+    },
+    "src/compiler/executeCommandLine.ts": {
+      "before": "fad881499aca4dab4659aafb6b3f56d1af7ffc7a5b5357885a266e4823df4ed9",
+      "after": "fad881499aca4dab4659aafb6b3f56d1af7ffc7a5b5357885a266e4823df4ed9"
+    },
+    "src/compiler/expressionToTypeNode.ts": {
+      "before": "0ec43231c051abbc554fd34154fd80b46f54771f67fe3675d5c24bbebd4f183b",
+      "after": "0ec43231c051abbc554fd34154fd80b46f54771f67fe3675d5c24bbebd4f183b"
+    },
+    "src/compiler/factory/baseNodeFactory.ts": {
+      "before": "df7514118add76c4eb81106635f9cd3f3e0fcb5e3b1fb6627fac717f537fc4d8",
+      "after": "df7514118add76c4eb81106635f9cd3f3e0fcb5e3b1fb6627fac717f537fc4d8"
+    },
+    "src/compiler/factory/emitHelpers.ts": {
+      "before": "38cea8a954b72931a4d245d5909faa27b33a1ab48862840248ed4ac40f84f8d7",
+      "after": "38cea8a954b72931a4d245d5909faa27b33a1ab48862840248ed4ac40f84f8d7"
+    },
+    "src/compiler/factory/emitNode.ts": {
+      "before": "528071d2a75956b4cc578b5d3a2344190d9a2ab5c31b56adfd84c10a2ce045cd",
+      "after": "528071d2a75956b4cc578b5d3a2344190d9a2ab5c31b56adfd84c10a2ce045cd"
+    },
+    "src/compiler/factory/nodeChildren.ts": {
+      "before": "bdca6c9b147ecfbe4ec11fc9c09ab5ceeba04e94626ee470d7256d5698c6cf86",
+      "after": "bdca6c9b147ecfbe4ec11fc9c09ab5ceeba04e94626ee470d7256d5698c6cf86"
+    },
+    "src/compiler/factory/nodeConverters.ts": {
+      "before": "0a602b0797c341c03a053276f778d7b245fc7cd8160c0a04e8c96fcf67ddcf19",
+      "after": "0a602b0797c341c03a053276f778d7b245fc7cd8160c0a04e8c96fcf67ddcf19"
+    },
+    "src/compiler/factory/nodeFactory.ts": {
+      "before": "6719964224eebda39ea2aea8447bdbbf1858e579430abe1f11555f0891d49ce3",
+      "after": "6719964224eebda39ea2aea8447bdbbf1858e579430abe1f11555f0891d49ce3"
+    },
+    "src/compiler/factory/nodeTests.ts": {
+      "before": "76e4df7ca846537338824b3e797f41bea972414342cc50af974143e6ff00dd9d",
+      "after": "76e4df7ca846537338824b3e797f41bea972414342cc50af974143e6ff00dd9d"
+    },
+    "src/compiler/factory/parenthesizerRules.ts": {
+      "before": "5da381eef0cade341e64da61e13adc45f5757234d0ad02c99a4f03047aa16c09",
+      "after": "5da381eef0cade341e64da61e13adc45f5757234d0ad02c99a4f03047aa16c09"
+    },
+    "src/compiler/factory/utilities.ts": {
+      "before": "9d914a1f8339cb44701fc5d8027820b25f1a132c94124a34f55ee40cf607296a",
+      "after": "9d914a1f8339cb44701fc5d8027820b25f1a132c94124a34f55ee40cf607296a"
+    },
+    "src/compiler/factory/utilitiesPublic.ts": {
+      "before": "c76d8d62b84fbd66bc900772b450dd80653dfe4e66791d5fb26c01f3ea636352",
+      "after": "c76d8d62b84fbd66bc900772b450dd80653dfe4e66791d5fb26c01f3ea636352"
+    },
+    "src/compiler/hostErrors.ts": {
+      "before": "f0a8cf7b832560e02d3d09db473e7af4d4585dee4289d6190ac66d05d7076faf",
+      "after": "f0a8cf7b832560e02d3d09db473e7af4d4585dee4289d6190ac66d05d7076faf"
+    },
+    "src/compiler/moduleNameResolver.ts": {
+      "before": "5228eb5be57621a3b3ba614fa3a24e6781492265a130b5d68d7f2ccbdf7c0128",
+      "after": "5228eb5be57621a3b3ba614fa3a24e6781492265a130b5d68d7f2ccbdf7c0128"
+    },
+    "src/compiler/moduleSpecifiers.ts": {
+      "before": "c47362305fba2170d24acf89f8e4ab97949639510fe4f4e9849a7a27ddeefccd",
+      "after": "c47362305fba2170d24acf89f8e4ab97949639510fe4f4e9849a7a27ddeefccd"
+    },
+    "src/compiler/parser.ts": {
+      "before": "9c8e41e143294677580750ada80e5ba18128645e280e7950b001e054b4ae0df4",
+      "after": "9c8e41e143294677580750ada80e5ba18128645e280e7950b001e054b4ae0df4"
+    },
+    "src/compiler/path.ts": {
+      "before": "b65d50d3fc8378ae7d9a2fc42501eefd70e234e5dabc5ec83fc9aef2a0995677",
+      "after": "b65d50d3fc8378ae7d9a2fc42501eefd70e234e5dabc5ec83fc9aef2a0995677"
+    },
+    "src/compiler/performance.ts": {
+      "before": "039c61441f42f71a5635372b188cec7c173d6a10adccd9ef44e7d8d2dc72b2e3",
+      "after": "039c61441f42f71a5635372b188cec7c173d6a10adccd9ef44e7d8d2dc72b2e3"
+    },
+    "src/compiler/performanceCore.ts": {
+      "before": "f3cb850798e2688e6c09747699242be8a8bcd026b750219d08a2183e29a3f242",
+      "after": "f3cb850798e2688e6c09747699242be8a8bcd026b750219d08a2183e29a3f242"
+    },
+    "src/compiler/program.ts": {
+      "before": "7aaf5804093401db924e8278b142db40fcb2b14cef0566081cfaf870477b5284",
+      "after": "f81de55479a29c3d099270d7de21393fb78acf457f4f687ec49a54bda6055ebc"
+    },
+    "src/compiler/programDiagnostics.ts": {
+      "before": "f21e11db92536734d00e4404d895424dc50ddc8cfa1b3a69038e5c331d104fda",
+      "after": "f21e11db92536734d00e4404d895424dc50ddc8cfa1b3a69038e5c331d104fda"
+    },
+    "src/compiler/resolutionCache.ts": {
+      "before": "03a1f222e852db26faf0564e8a2ff66f764b3c5c001771f59d94339868d90673",
+      "after": "03a1f222e852db26faf0564e8a2ff66f764b3c5c001771f59d94339868d90673"
+    },
+    "src/compiler/scanner.ts": {
+      "before": "2282eb9b4ef6a4380cee54433e76532efe019737382ce754f4dec093041b5750",
+      "after": "8f198325b227865b9142773e5ce10dc5a80dc593126e55a9fdf1605ca0a3dfe4"
+    },
+    "src/compiler/semver.ts": {
+      "before": "0a19b693308f3b71ea1dbb2054540e1d281e34bb321fbb0b20d78870640f49af",
+      "after": "0a19b693308f3b71ea1dbb2054540e1d281e34bb321fbb0b20d78870640f49af"
+    },
+    "src/compiler/sourcemap.ts": {
+      "before": "00e7dced942673d407f4fb7fdae4c48e1936aeb0e0aea95106e7c9e8e4e7d513",
+      "after": "00e7dced942673d407f4fb7fdae4c48e1936aeb0e0aea95106e7c9e8e4e7d513"
+    },
+    "src/compiler/symbolWalker.ts": {
+      "before": "e9c78f8c78e5f78e893c9dd371a91c8bfdd8c98d2951c4b6174aa37d41475216",
+      "after": "e9c78f8c78e5f78e893c9dd371a91c8bfdd8c98d2951c4b6174aa37d41475216"
+    },
+    "src/compiler/sys.ts": {
+      "before": "5bbf980334502ca7ffda097d91e551fb9d493aaab2d620ca25875afac5e5870c",
+      "after": "5bbf980334502ca7ffda097d91e551fb9d493aaab2d620ca25875afac5e5870c"
+    },
+    "src/compiler/tracing.ts": {
+      "before": "c93e0678045906b86323d834b005182a3a334355c89faebb6455cdbb26b67dd5",
+      "after": "c93e0678045906b86323d834b005182a3a334355c89faebb6455cdbb26b67dd5"
+    },
+    "src/compiler/transformer.ts": {
+      "before": "497fa463cff55a2f9a3cdadfb8bdddeba363ab36a6ede4ef6cf28c460455c72c",
+      "after": "497fa463cff55a2f9a3cdadfb8bdddeba363ab36a6ede4ef6cf28c460455c72c"
+    },
+    "src/compiler/transformers/classFields.ts": {
+      "before": "b25a7f871bb61b1031a2c3af24f0fefd5efd134ebe8fb566d50a108f7588b16c",
+      "after": "b25a7f871bb61b1031a2c3af24f0fefd5efd134ebe8fb566d50a108f7588b16c"
+    },
+    "src/compiler/transformers/classThis.ts": {
+      "before": "c5d8468a61bd39eae079782d57ef4d23653205e5c2c62ba7d7d70345c1e678fd",
+      "after": "c5d8468a61bd39eae079782d57ef4d23653205e5c2c62ba7d7d70345c1e678fd"
+    },
+    "src/compiler/transformers/declarations.ts": {
+      "before": "3b69b0e68abb0f4a0745d5dd45651f43c9c336fe5b72883fe8d4dde1f6c4d6ed",
+      "after": "3b69b0e68abb0f4a0745d5dd45651f43c9c336fe5b72883fe8d4dde1f6c4d6ed"
+    },
+    "src/compiler/transformers/declarations/diagnostics.ts": {
+      "before": "6cf16affa15878db3e25a03caa3aa9b568923eea7af8764d8299a3d6effbc34d",
+      "after": "6cf16affa15878db3e25a03caa3aa9b568923eea7af8764d8299a3d6effbc34d"
+    },
+    "src/compiler/transformers/destructuring.ts": {
+      "before": "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092",
+      "after": "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092"
+    },
+    "src/compiler/transformers/es2015.ts": {
+      "before": "81b6bd05f9558a566421b15eff0b98c3fc21ca288f951439e13035fb077366b4",
+      "after": "81b6bd05f9558a566421b15eff0b98c3fc21ca288f951439e13035fb077366b4"
+    },
+    "src/compiler/transformers/es2016.ts": {
+      "before": "8d1a1b41e2db124d01446b6eddd9c3eda62925cc550ab47c9e527f6aa0d217c7",
+      "after": "8d1a1b41e2db124d01446b6eddd9c3eda62925cc550ab47c9e527f6aa0d217c7"
+    },
+    "src/compiler/transformers/es2017.ts": {
+      "before": "a5ad5e9213c7af3f4f266f50553cdfc4e31296cbe54fe8464d6a792e4d2f2755",
+      "after": "a5ad5e9213c7af3f4f266f50553cdfc4e31296cbe54fe8464d6a792e4d2f2755"
+    },
+    "src/compiler/transformers/es2018.ts": {
+      "before": "85b478ff113c6dfa39fd489f0c81c654ceb24a0ee8ef82592c16264301ef7b88",
+      "after": "85b478ff113c6dfa39fd489f0c81c654ceb24a0ee8ef82592c16264301ef7b88"
+    },
+    "src/compiler/transformers/es2019.ts": {
+      "before": "ae15589fd2633e2767f722ddf80c74169a035b3e06cceafda6c97cd75e202293",
+      "after": "ae15589fd2633e2767f722ddf80c74169a035b3e06cceafda6c97cd75e202293"
+    },
+    "src/compiler/transformers/es2020.ts": {
+      "before": "664b313db73f4845247c950dbcdaf8c0a90d92cdd56d7f389f1b81a782a1dd4a",
+      "after": "664b313db73f4845247c950dbcdaf8c0a90d92cdd56d7f389f1b81a782a1dd4a"
+    },
+    "src/compiler/transformers/es2021.ts": {
+      "before": "e741ba5654e243cd2d94e4d9c000a8dbdc83f5cca6d1cad6a0d4cb8b75825684",
+      "after": "e741ba5654e243cd2d94e4d9c000a8dbdc83f5cca6d1cad6a0d4cb8b75825684"
+    },
+    "src/compiler/transformers/esDecorators.ts": {
+      "before": "3d77006c23ed173fb28a1399b0404a6cf51fe9976993747a22fb14d8a6059633",
+      "after": "3d77006c23ed173fb28a1399b0404a6cf51fe9976993747a22fb14d8a6059633"
+    },
+    "src/compiler/transformers/esnext.ts": {
+      "before": "b534f83ae6d5460fb12c313d9c1e5c1e50068e30b14cbe26ef452a9949635119",
+      "after": "b534f83ae6d5460fb12c313d9c1e5c1e50068e30b14cbe26ef452a9949635119"
+    },
+    "src/compiler/transformers/generators.ts": {
+      "before": "75ef4834f020bda555a8757a587af77a8f2e111f328e300666ccdcf30d4ccc79",
+      "after": "75ef4834f020bda555a8757a587af77a8f2e111f328e300666ccdcf30d4ccc79"
+    },
+    "src/compiler/transformers/jsx.ts": {
+      "before": "8f9884b8ecee51c0798ae00957eb6696161ab8941294da522bd4d85e1bdf9e01",
+      "after": "8f9884b8ecee51c0798ae00957eb6696161ab8941294da522bd4d85e1bdf9e01"
+    },
+    "src/compiler/transformers/legacyDecorators.ts": {
+      "before": "bf5969c47028f08ffbc4388dde8dbb3c949e0f495ec0bb468175ae4666c260b0",
+      "after": "bf5969c47028f08ffbc4388dde8dbb3c949e0f495ec0bb468175ae4666c260b0"
+    },
+    "src/compiler/transformers/module/esnextAnd2015.ts": {
+      "before": "06be9f0ad3f2147780603f321730c575ffe102257d19ed76c2c8710540808a71",
+      "after": "06be9f0ad3f2147780603f321730c575ffe102257d19ed76c2c8710540808a71"
+    },
+    "src/compiler/transformers/module/impliedNodeFormatDependent.ts": {
+      "before": "eb48d82834522a78c7b80cf768e0874e17a9f4dc819f673e5ec63c49fdb43d26",
+      "after": "eb48d82834522a78c7b80cf768e0874e17a9f4dc819f673e5ec63c49fdb43d26"
+    },
+    "src/compiler/transformers/module/module.ts": {
+      "before": "d1e29a4b33d1b7c31d8ed53e8c6321beffe682ffbdc4f81560dd190c191f3c6c",
+      "after": "d1e29a4b33d1b7c31d8ed53e8c6321beffe682ffbdc4f81560dd190c191f3c6c"
+    },
+    "src/compiler/transformers/module/system.ts": {
+      "before": "463c945a4ae593f43f3c291a3828b2a458bfa63f07d235cdacee1748073fd2a6",
+      "after": "463c945a4ae593f43f3c291a3828b2a458bfa63f07d235cdacee1748073fd2a6"
+    },
+    "src/compiler/transformers/namedEvaluation.ts": {
+      "before": "deafcefca9d2923da8a177dc0d47f898f5ba652b8c54bca512df91335c032950",
+      "after": "deafcefca9d2923da8a177dc0d47f898f5ba652b8c54bca512df91335c032950"
+    },
+    "src/compiler/transformers/taggedTemplate.ts": {
+      "before": "54dce15f9a14c4732701706abac28c4fc77ed2eab6496b931bf0429d1df22bdb",
+      "after": "54dce15f9a14c4732701706abac28c4fc77ed2eab6496b931bf0429d1df22bdb"
+    },
+    "src/compiler/transformers/ts.ts": {
+      "before": "60e8d254cb4f3049afd4dd913e289dd6eab75d227d2b90e4da003242e6d3c469",
+      "after": "60e8d254cb4f3049afd4dd913e289dd6eab75d227d2b90e4da003242e6d3c469"
+    },
+    "src/compiler/transformers/typeSerializer.ts": {
+      "before": "a75c306ae73a703900dac43f02767a40bd60dbae5f453af753406ea2169666dd",
+      "after": "a75c306ae73a703900dac43f02767a40bd60dbae5f453af753406ea2169666dd"
+    },
+    "src/compiler/transformers/utilities.ts": {
+      "before": "f839fdc1603f18a8b22e8a0bc8f02f373299d78a872938216573af92348c3dc3",
+      "after": "f839fdc1603f18a8b22e8a0bc8f02f373299d78a872938216573af92348c3dc3"
+    },
+    "src/compiler/tsbuild.ts": {
+      "before": "0bcbfbb3c4a9ed2dd502417150f730ed84704486982fed8b10b524206dcb716f",
+      "after": "0bcbfbb3c4a9ed2dd502417150f730ed84704486982fed8b10b524206dcb716f"
+    },
+    "src/compiler/tsbuildPublic.ts": {
+      "before": "e2c2bd1db5c720e1ae46fc93a8852e18ff993646822813687c4156ed6db24d88",
+      "after": "e2c2bd1db5c720e1ae46fc93a8852e18ff993646822813687c4156ed6db24d88"
+    },
+    "src/compiler/types.ts": {
+      "before": "e7386f9325015a3668b93e927751540186aea2e180454c5a2ca6aa8ac4b6dce0",
+      "after": "42a8a2a9147f02d6578c30e92c5c46058b06584ae7229003e4a91ede6c8989ff"
+    },
+    "src/compiler/utilities.ts": {
+      "before": "ef43309e71a5bff946d868de2753b73de6b3cae07e5f215e2a2f1281ef0406ef",
+      "after": "45d29f50d6cd98f184a5ff7048f5149b93e187c15aa4e98885ceaa69a16705eb"
+    },
+    "src/compiler/utilitiesPublic.ts": {
+      "before": "5cec72ffc4e4a90f651aae534f1edabde8b38868accb02a8b239a68403d4803f",
+      "after": "5cec72ffc4e4a90f651aae534f1edabde8b38868accb02a8b239a68403d4803f"
+    },
+    "src/compiler/visitorPublic.ts": {
+      "before": "ef2085cb0d14c6dbd475644daf7388cf7ec4f64c0b6a5570ba79dd2ffd72b8d5",
+      "after": "ef2085cb0d14c6dbd475644daf7388cf7ec4f64c0b6a5570ba79dd2ffd72b8d5"
+    },
+    "src/compiler/watch.ts": {
+      "before": "c002991223605d063f5339d68387b148686cdabcfe8192ac95d760adf7f9b7bf",
+      "after": "e5d9a85079a9cc08ba4919c594c92cc1ba6236a378cd4ac1293b750ce174084e"
+    },
+    "src/compiler/watchPublic.ts": {
+      "before": "910be16540440a997555a50edf380e074dbd0ee02fa994b83e2b914aa8ff1874",
+      "after": "910be16540440a997555a50edf380e074dbd0ee02fa994b83e2b914aa8ff1874"
+    },
+    "src/compiler/watchUtilities.ts": {
+      "before": "0b21eff41ad63e993f7b676f56ddf79bd4606fa232ce33d9cd68239a1f49bd93",
+      "after": "0b21eff41ad63e993f7b676f56ddf79bd4606fa232ce33d9cd68239a1f49bd93"
+    }
+  },
+  "emissions": {
+    "src/compiler/debug.ts": {
+      "bytes": 52569,
+      "sha256": "c33f35a4e54ecf0fc92b3e43a7ff9da5e989bb4dd89419f710247a8c32e78374"
+    },
+    "src/compiler/program.ts": {
+      "bytes": 230895,
+      "sha256": "4b3ae9d8eadd82655941bd11f61a313f50729856e098a3cd2a93cbd0c29a7b80"
+    },
+    "src/compiler/scanner.ts": {
+      "bytes": 205588,
+      "sha256": "4a942f304654a882ccd6488fd24f608878e0f18517c17eda7790d33d6e983fbf"
+    },
+    "src/compiler/types.ts": {
+      "bytes": 139659,
+      "sha256": "4839bedc439cad06969bad2a3d805a7c0b480f06df73fcff62d2cd0957009fc3"
+    },
+    "src/compiler/utilities.ts": {
+      "bytes": 423576,
+      "sha256": "c5bd8dfc727748991159c286afb95109e7cf1ac04210bb75979f10bff35e152e"
+    },
+    "src/compiler/watch.ts": {
+      "bytes": 36250,
+      "sha256": "4ad8b4bc7e3f4fedf526daaddc3c8cbc67bac2b4b4a08b39c9f96e281e57fdbd"
+    }
+  }
+}
