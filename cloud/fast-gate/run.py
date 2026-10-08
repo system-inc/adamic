@@ -35,6 +35,7 @@ import subprocess
 import sys
 import threading
 import time
+import datetime
 import traceback
 
 module = "github.com/system-inc/adamic"
@@ -1508,12 +1509,24 @@ class Gate:
             print(handle.read(), end="", flush=True)
 
 
+def eventTime(value):
+    """A test2json Time (RFC 3339, nanoseconds) as epoch seconds, or None."""
+    if not isinstance(value, str):
+        return None
+    try:
+        return datetime.datetime.fromisoformat(re.sub(r"(\.\d{6})\d+", r"\1", value.replace("Z", "+00:00"))).timestamp()
+    except ValueError:
+        return None
+
+
 def testUnits(path):
     """The test units in a go test -json log that passed or failed, as {(package, unit): (seconds, action)}. A
     test without subtests is one unit. A test with subtests is split: each subtest is a unit (recursively), and
-    so is the test's own time outside them, '<test> (setup)', its elapsed less its subtests' (none when they ran
-    in parallel). A missing log has no units."""
-    tests = {}
+    so is the test's own time outside them, '<test> (setup)': from its start to its first subtest's start, plus
+    from its last subtest's end to its own end, by the events' times (cohere, Oct 8: shards run in parallel, so a
+    build before them would hide inside 'elapsed less the subtests''). Without times, its elapsed less its
+    subtests'. A missing log has no units."""
+    tests, started, ended = {}, {}, {}
     try:
         with open(path) as handle:
             for line in handle:
@@ -1524,9 +1537,16 @@ def testUnits(path):
                 if not isinstance(event, dict):
                     continue
                 name, seconds = event.get("Test"), event.get("Elapsed")
-                if not isinstance(name, str) or not name or event.get("Action") not in ("pass", "fail") or not isinstance(seconds, (int, float)):
+                if not isinstance(name, str) or not name:
                     continue
-                tests[event.get("Package", ""), name] = (seconds, event["Action"])
+                key = (event.get("Package", ""), name)
+                if event.get("Action") == "run" and eventTime(event.get("Time")) is not None:
+                    started.setdefault(key, eventTime(event.get("Time")))
+                if event.get("Action") not in ("pass", "fail") or not isinstance(seconds, (int, float)):
+                    continue
+                tests[key] = (seconds, event["Action"])
+                if eventTime(event.get("Time")) is not None:
+                    ended[key] = eventTime(event.get("Time"))
     except OSError:
         return {}
     children = {}
@@ -1538,7 +1558,11 @@ def testUnits(path):
         if key not in children:
             units[key] = (seconds, action)
             continue
-        setup = seconds - sum(tests[child][0] for child in children[key])
+        kids = children[key]
+        if key in started and key in ended and all(child in started and child in ended for child in kids):
+            setup = (min(started[child] for child in kids) - started[key]) + (ended[key] - max(ended[child] for child in kids))
+        else:
+            setup = seconds - sum(tests[child][0] for child in kids)
         if setup > 0:
             units[key[0], key[1] + " (setup)"] = (round(setup, 2), action)
     return units

@@ -811,6 +811,27 @@ class LongTests(unittest.TestCase):
             self.assertEqual(run.testUnits(os.path.join(directory, "absent.jsonl")), {})
 
 
+class SetupByTime(unittest.TestCase):
+    def test_a_build_before_parallel_shards_is_the_test_s_setup(self):
+        # cohere, Oct 8: TestCSSNumbers builds, then runs 357 parallel shards; elapsed less the shards' sum is
+        # negative, which hid the build. By the events' times the build is the setup.
+        base = "2026-10-08T22:00:%02d.123456789Z"
+        events = [{"Action": "run", "Package": "p", "Test": "TestSplit", "Time": base % 0}]
+        for index in range(3):
+            events.append({"Action": "run", "Package": "p", "Test": "TestSplit/shard-%03d" % index, "Time": base % 40})
+        for index in range(3):
+            events.append({"Action": "pass", "Package": "p", "Test": "TestSplit/shard-%03d" % index, "Elapsed": 18.0, "Time": base % 58})
+        events.append({"Action": "pass", "Package": "p", "Test": "TestSplit", "Elapsed": 59.0, "Time": base % 59})
+        with tempfile.TemporaryDirectory() as directory:
+            path = os.path.join(directory, "test.jsonl")
+            with open(path, "w") as handle:
+                handle.writelines(json.dumps(event) + "\n" for event in events)
+            units = run.testUnits(path)
+        self.assertAlmostEqual(units[("p", "TestSplit (setup)")][0], 41.0, places=3)
+        self.assertEqual(units[("p", "TestSplit/shard-000")], (18.0, "pass"))
+        self.assertEqual(run.longTests(units), [("p", "TestSplit (setup)", units[("p", "TestSplit (setup)")][0], "pass")])
+
+
 class Budget(unittest.TestCase):
     """A new unit over the 30 s budget is red at 'budget'; an existing one is drift, and the burn-down holds the rest."""
 
