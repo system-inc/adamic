@@ -1041,6 +1041,93 @@
           "certification_basis": "complete original declaration/read spans; Node, release/sanitized native and JavaScript; leaks and arity/result mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "export-computed-source-diagnostic",
+      "pairs": 4,
+      "candidateReads": 68,
+      "members": [
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createExportDeclaration",
+          "declared_types": [
+            "(modifiers: readonly ModifierLike[] | undefined, isTypeOnly: boolean, exportClause: NamedExportBindings | undefined, moduleSpecifier?: Expression | undefined, attributes?: ImportAttributes | undefined) => ExportDeclaration"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 17,
+          "witness": {
+            "file": "src/compiler/factory/utilities.ts",
+            "line": 184,
+            "column": 12
+          },
+          "rank": 98,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "updateComputedPropertyName",
+          "declared_types": [
+            "(node: ComputedPropertyName, expression: Expression) => ComputedPropertyName"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 17,
+          "witness": {
+            "file": "src/compiler/visitorPublic.ts",
+            "line": 633,
+            "column": 16
+          },
+          "rank": 99,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "updateSourceFile",
+          "declared_types": [
+            "(node: SourceFile, statements: readonly Statement[], isDeclarationFile?: boolean | undefined, referencedFiles?: readonly FileReference[] | undefined, typeReferences?: readonly FileReference[] | undefined, hasNoDefaultLib?: boolean | undefined, libReferences?: readonly FileReference[] | undefined) => SourceFile"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 17,
+          "witness": {
+            "file": "src/compiler/parser.ts",
+            "line": 1936,
+            "column": 16
+          },
+          "rank": 100,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 10108,
+          "type": "TransformationContext",
+          "field": "addDiagnostic",
+          "declared_types": [
+            "(diag: DiagnosticWithLocation) => void"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 17,
+          "witness": {
+            "file": "src/compiler/transformers/declarations.ts",
+            "line": 320,
+            "column": 17
+          },
+          "rank": 101,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

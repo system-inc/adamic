@@ -8,6 +8,10 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"export-declaration", "createExportDeclaration", "3\n", "0\n14\n", "0", "exportClause.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"computed-name", "updateComputedPropertyName", "7\n", "", "0", "node.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"source-file-update", "updateSourceFile", "7\n", "7\n13\n", "0", "statement.value", "4\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"context-diagnostic", "addDiagnostic", "3\n", "", "0", "diag.value", "3\n", "", "good,wrong-value,wrong-arity,wrong-members,wrong-parameter-payload"},
 		{"token-end", "getTokenEnd", "3\n", "", "1", "", "", "bad\n", "good,wrong-value,wrong-arity,wrong-result"},
 		{"token-full-start", "getTokenFullStart", "3\n", "", "1", "", "", "bad\n", "good,wrong-value,wrong-arity,wrong-result"},
 		{"helper-factory", "getEmitHelperFactory", "3\n", "", "1", "value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-parameter-payload"},

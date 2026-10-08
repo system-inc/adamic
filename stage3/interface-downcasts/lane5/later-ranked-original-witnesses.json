@@ -716,6 +716,137 @@
       "declarationFile": "src/compiler/types.ts",
       "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
       "declarationLine": 9600
+    },
+    {
+      "rank": 109,
+      "type": "EmitTextWriter",
+      "field": "writeLine",
+      "candidateReads": 15,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 6469,
+        "column": 13
+      },
+      "read": "writer.writeLine",
+      "readKind": "property",
+      "call": "writer.writeLine()",
+      "utf16Start": 251614,
+      "utf16End": 251630,
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declaration": "writeLine(force?: boolean): void;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 5669,
+      "declarationOwner": "SymbolWriter",
+      "inheritancePath": [
+        "EmitTextWriter",
+        "SymbolWriter"
+      ]
+    },
+    {
+      "rank": 110,
+      "type": "FileWatcher",
+      "field": "close",
+      "candidateReads": 15,
+      "witness": {
+        "file": "src/compiler/sys.ts",
+        "line": 1237,
+        "column": 21
+      },
+      "read": "watcher.close",
+      "readKind": "property",
+      "call": "watcher.close()",
+      "utf16Start": 53136,
+      "utf16End": 53149,
+      "fileSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+      "declaration": "close(): void;",
+      "declarationFile": "src/compiler/sys.ts",
+      "declarationSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+      "declarationLine": 1454
+    },
+    {
+      "rank": 115,
+      "type": "NodeFactory",
+      "field": "createLogicalAnd",
+      "candidateReads": 15,
+      "witness": {
+        "file": "src/compiler/transformers/typeSerializer.ts",
+        "line": 559,
+        "column": 16
+      },
+      "read": "factory.createLogicalAnd",
+      "readKind": "property",
+      "call": "factory.createLogicalAnd(\r\n            factory.createStrictInequality(factory.createTypeOfExpression(left), factory.createStringLiteral(\"undefined\")),\r\n            right,\r\n        )",
+      "utf16Start": 25317,
+      "utf16End": 25341,
+      "fileSha256": "8219081416c67c9ea7f1f8da6125775652eb7d065e8897fd430f50d83dbac5d6",
+      "declaration": "createLogicalAnd(left: Expression, right: Expression): BinaryExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9322
+    },
+    {
+      "rank": 116,
+      "type": "NodeFactory",
+      "field": "createNamedExports",
+      "candidateReads": 15,
+      "witness": {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 184,
+        "column": 91
+      },
+      "read": "factory.createNamedExports",
+      "readKind": "property",
+      "call": "factory.createNamedExports([])",
+      "utf16Start": 4524,
+      "utf16End": 4550,
+      "fileSha256": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31",
+      "declaration": "createNamedExports(elements: readonly ExportSpecifier[]): NamedExports;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9122
+    },
+    {
+      "rank": 117,
+      "type": "Scanner",
+      "field": "getTokenText",
+      "candidateReads": 15,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 2675,
+        "column": 24
+      },
+      "read": "scanner.getTokenText",
+      "readKind": "property",
+      "call": "scanner.getTokenText()",
+      "utf16Start": 136868,
+      "utf16End": 136888,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "getTokenText(): string;",
+      "declarationFile": "src/compiler/scanner.ts",
+      "declarationSha256": "02f9e8f02e234b0e917e753a7b74f975c9b9b95f7f01ee4bc151081ed43dea49",
+      "declarationLine": 62
+    },
+    {
+      "rank": 118,
+      "type": "Scanner",
+      "field": "getTokenValue",
+      "candidateReads": 15,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 10575,
+        "column": 101
+      },
+      "read": "scanner.getTokenValue",
+      "readKind": "property",
+      "call": "scanner.getTokenValue()",
+      "utf16Start": 422142,
+      "utf16End": 422163,
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declaration": "getTokenValue(): string;",
+      "declarationFile": "src/compiler/scanner.ts",
+      "declarationSha256": "02f9e8f02e234b0e917e753a7b74f975c9b9b95f7f01ee4bc151081ed43dea49",
+      "declarationLine": 63
     }
   ]
 }

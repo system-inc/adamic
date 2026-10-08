@@ -11,7 +11,7 @@ const pairs = JSON.parse(fs.readFileSync(path.join(__dirname,'unknown-callable-p
 if(pairs.length!==ranks.size)throw Error("missing requested candidate rank");
 const rows = [];
 for (const pair of pairs) {
- const declarationFile=pair.type==='Scanner'?'src/compiler/scanner.ts':pair.type==='System'?'src/compiler/sys.ts':pair.type==='ResolutionCacheHost'?'src/compiler/resolutionCache.ts':pair.type.includes('ts.performance')?'src/compiler/performance.ts':'src/compiler/types.ts';
+ const declarationFile=pair.type==='Scanner'?'src/compiler/scanner.ts':(pair.type==='System'||pair.type==='FileWatcher')?'src/compiler/sys.ts':pair.type==='ResolutionCacheHost'?'src/compiler/resolutionCache.ts':pair.type.includes('ts.performance')?'src/compiler/performance.ts':'src/compiler/types.ts';
  const declarationBytes=fs.readFileSync(path.join(pin,declarationFile));
  const types=ts.createSourceFile(declarationFile,declarationBytes.toString('utf8'),ts.ScriptTarget.Latest,true);
  const w = pair.witness;
