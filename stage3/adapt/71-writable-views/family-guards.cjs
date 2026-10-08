@@ -40,12 +40,15 @@ for (const test of cases) {
         }
         visit(source);
         assert.equal(matches.length, 1);
-        const position = matches[0].getStart(source) + 1;
-        fs.writeFileSync(file, text.slice(0, position) + test.statement + text.slice(position));
+        const body = matches[0].getText(source);
+        const mutation = { file: owner.file, owner: test.owner, before: body,
+            after: '{' + test.statement + body.slice(1) };
         const before = hashes(scratch);
-        const result = child.spawnSync(process.execPath, [path.join(__dirname, 'adapt.cjs'), scratch], { encoding: 'utf8' });
+        // Mutate 71's proposed edits, not the input left by earlier adaptations.
+        const script = `require(${JSON.stringify(path.join(__dirname, test.family + '.json'))}).edits.push(${JSON.stringify(mutation)}); process.argv = [process.execPath, ${JSON.stringify(path.join(__dirname, 'adapt.cjs'))}, ${JSON.stringify(scratch)}]; require(process.argv[1]);`;
+        const result = child.spawnSync(process.execPath, ['-e', script], { encoding: 'utf8' });
         assert.equal(result.status, 1);
-        assert(result.stderr.includes(`reviewed runtime body changed: ${test.owner}`), result.stderr);
+        assert(result.stderr.includes(`adaptation changes runtime syntax:`), result.stderr);
         assert.deepEqual(hashes(scratch), before);
         console.log(JSON.stringify({ ...test, exit: result.status, source_unchanged_after_rejection: true }));
     }

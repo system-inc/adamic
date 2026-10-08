@@ -48,3 +48,7 @@ Commands run, with all test output redirected to logs:
 Logs, verdicts, guard results, idempotence audit, witness outputs and failed witness assertions are retained under evidence/. No compiler edits, full package confirmation runs, public API expansion or runtime source changes were made. This branch is a reviewable partial result, not completion of all Disposition=adaptation rows.
 
 The corrected diagnostic follow-up removes nine sites. The tuple and fresh-allocation follow-ups remove another 26 and 30. See [DIAGNOSTICS.md](DIAGNOSTICS.md) and [FOLLOWUP.md](FOLLOWUP.md) for current proofs, retained sites and evidence; the historical 75-row claim is withdrawn.
+
+Batch composition: runtime fingerprints are captured from the input after earlier numbered adaptations. The unchanged proposed-file guard compares 71's output to that input before writing any file. family-guards.cjs plants runtime edits in each plan family; plan-mutants.cjs also plants an array-copy runtime edit. Both must be refused without source writes. Historical pristine-body hashes in the specifications are provenance, not a composition gate.
+
+Batch 4 verification: full apply and landing lane pass (106366 passing, one sanctioned API failure, zero pending), matching main. All three family runtime-edit mutants and all four plan mutants are rejected before source writes. See evidence/batch4-composition.json. Public API bytes match main; the three emitted JavaScript differences come from adaptation 41's void rewrites, outside this guard fix.
