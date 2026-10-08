@@ -1,0 +1,20 @@
+function sorted<T>(values: readonly T[], comparer?: (a:T,b:T)=>number): T[] {return values.slice().sort(comparer);}
+const words=["owned:"+"c","owned:"+"a","owned:"+"b"];
+function reverse(a:string,b:string):number {return a < b ? 1 : a > b ? -1 : 0;}
+console.log(sorted(words).join(","));
+console.log(sorted(words,undefined).join(","));
+console.log(sorted(words,reverse).join(","));
+console.log(words.join(","));
+console.log(["10","2","1"].sort(undefined).join(","));
+let events="";
+function receiver():string[] {events+="r";return ["owned:"+"c","owned:"+"a"];} 
+function comparator(present:boolean):((a:string,b:string)=>number)|undefined {events+="c";return present ? reverse : undefined;}
+console.log(receiver().sort(comparator(false)).join(","));
+console.log(events);
+events="";
+console.log(receiver().sort(comparator(true)).join(","));
+console.log(events);
+events="";
+const empty:string[]=[];
+console.log(empty.sort(comparator(false)).length.toString());
+console.log(events);

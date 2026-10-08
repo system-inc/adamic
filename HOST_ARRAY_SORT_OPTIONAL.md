@@ -1,0 +1,9 @@
+# Optional string comparators, 2026-10-08 UTC
+
+Fixture 25 at 1108:66 passes optional Comparer<T> to sort inside toSorted<string>. Ask the checker for the comparator's nonnullable callable signature; check its element and numeric-result representations. Capture receiver and comparator once. Undefined selects the host's existing default string sorter (including its undefined/hole handling), present selects the callback. No new context or null representation. Non-string optional defaults retain a named NotYet; the helper does not extend the separate numeric-default policy.
+
+The array_sort_optional_comparator.a probe matches Node in both backends, uncached 1.092s. Cover omitted/explicit undefined generic comparator, supplied reverse comparator, source unchanged after slicing, lexical 1/10/2 order, effectful receiver/comparator factories, and an empty receiver whose comparator expression still runs. Counts alloc/free 29/29, retain/release 66/82, peak 10, regions 0. Focused lower controls passed 0.242s.
+
+Executed callback-selection mutant always chooses default order: both backends complete with wrong sorted stdout and the oracle fails. Executed evaluation mutant evaluates the comparator factory twice: both backends print rcc instead of rc (cc instead of c on the empty array), normal exit, and the oracle fails. Logs /tmp/array-sort-optional-callback-mutant.log and /tmp/array-sort-optional-evaluation-mutant.log. Both restored.
+
+Pinned fixture 25 next stops at 1094:19: its flatten parameter is a union of two array types whose element storage differs in the type language (/tmp/array-sort-optional-host25.log). No complete fixture 25 pass, no additional nullable kind migration claimed. Full scratch gates previously observed separate predicate-marker and virtual-call-target failures; this proof is focused. The base branch lacks the host default-string-sort machinery, so this change is in the scratch branch.

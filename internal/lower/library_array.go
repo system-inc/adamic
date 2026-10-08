@@ -31,6 +31,9 @@ func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir
 	written := node.AsCallExpression().Arguments.Nodes
 	switch name {
 	case "sort":
+		if value, handled, err := l.optionalStringSort(node, array, element); handled {
+			return value, true, err
+		}
 		if len(written) == 0 && element == ir.String {
 			return ir.ArraySort{Array: array, Element: element, Comparator: l.libraryArrayComparator(element), DefaultStrings: true}, true, nil
 		}
