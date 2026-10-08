@@ -4,9 +4,10 @@ import subprocess
 import sys
 
 tuple_mode = len(sys.argv) > 1 and sys.argv[1] == 'tuple'
+presence_mode = len(sys.argv) > 1 and sys.argv[1] == 'presence'
 source = Path('internal/lower/element_access_tuples.go' if tuple_mode else 'internal/lower/element_access_fields.go')
-fixture = 'element_access_tuple' if tuple_mode else 'element_access_reads'
-label = 'tuple' if tuple_mode else 'read'
+fixture = 'element_access_tuple' if tuple_mode else 'element_access_presence' if presence_mode else 'element_access_reads'
+label = 'tuple' if tuple_mode else 'presence' if presence_mode else 'read'
 original = source.read_text()
 mutants = {
  'wrong-dispatch': ('Operator: ir.Equal', 'Operator: ir.NotEqual'),
@@ -20,6 +21,8 @@ if tuple_mode:
   'out-of-range': ('b.finish("element_access_tuple", missing)', 'b.finish("element_access_tuple", fit(ir.Property{Object: heldObject, Name: "0", Of: stored[0]}, result))'),
   'repeated-receiver': ('[]ir.Expression{object, key}', '[]ir.Expression{object, key, object}'),
  }
+if presence_mode:
+ mutants = {'missing-presence-check': ('return l.computedFieldPresence(node, value), nil', 'return value, nil')}
 for name, (before, after) in mutants.items():
  assert before in original, name
  try:
