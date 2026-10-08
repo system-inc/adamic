@@ -1,0 +1,10 @@
+interface Expression { readonly text: string; readonly children: readonly string[]; }
+interface NumericLiteral { readonly kind: "number"; readonly value: number; }
+interface StringLiteralLike { readonly kind: "string"; readonly text: string; }
+interface MemberName { readonly kind: "member"; readonly text: string; }
+function member(kind: number): MemberName | (Expression & (NumericLiteral | StringLiteralLike)) {
+    if (kind === 0) return { kind: "member", text: ["mem", "ber"].join("") };
+    if (kind === 1) return { kind: "number", text: "12", children: ["number-child"], value: 12 };
+    return { kind: "string", text: ["str", "ing"].join(""), children: ["string-child"] };
+}
+console.log(`${member(0).kind}:${member(0).text} ${member(1).kind}:${member(1).text} ${member(2).kind}:${member(2).text}`);

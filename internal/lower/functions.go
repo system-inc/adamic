@@ -79,6 +79,9 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		neverArrow := returns.Flags()&checker.TypeFlagsNever != 0 && declaration.Body() != nil && declaration.Body().Kind != ast.KindBlock && declaration.Body().Kind != ast.KindCallExpression && !l.isPanicCall(declaration.Body())
 		if returns.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 || neverArrow {
 			valueType, isKnown := l.representation(returns)
+			if !isKnown {
+				valueType, isKnown = l.clockGenericReturnsT06(returns)
+			}
 			if returns.Flags()&checker.TypeFlagsUndefined != 0 {
 				valueType, isKnown = ir.Object, true
 			}

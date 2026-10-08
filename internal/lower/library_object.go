@@ -226,6 +226,9 @@ func (l *lowering) objectCanFreeze() bool {
 // objectIntersection represents tsc's intersection of plain object views. Every constituent must
 // be a plain, noncallable shape, and every resulting field must have a proven scalar type.
 func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool) {
+	if held, known := l.clockGenericReturnsT06(proven); known {
+		return held, true
+	}
 	for _, part := range proven.Types() {
 		if part.Flags()&checker.TypeFlagsObject == 0 || l.checker.IsArrayType(part) || checker.IsTupleType(part) || isClassInstance(part) || len(l.checker.GetSignaturesOfType(part, checker.SignatureKindCall)) != 0 {
 			return 0, false
