@@ -18,3 +18,17 @@ time,lane,running,floor,queued,brief,session,outcome
 2026-10-08T17:15:37.338586Z,runtime,4,8,0,,,queue_empty
 2026-10-08T17:15:41.876469Z,library,8,8,6,,,floor_met
 2026-10-08T17:16:00.823120Z,developer_tools,5,4,0,,,floor_met
+2026-10-08T17:18:37.270848Z,compiler,13,30,12,10-hidden-05-optional-node-callback.md,01a113e7-e19c-70f1-b07f-2330ae649014,sent
+2026-10-08T17:18:46.955931Z,compiler,14,30,11,10-hidden-06-generic-tnode.md,01a11411-6925-74c0-97ba-5a2836530026,sent
+2026-10-08T17:18:58.304311Z,compiler,15,30,10,10-hidden-08-never-array.md,01a1143b-f5d4-7771-a89d-5a351a636022,sent
+2026-10-08T17:18:58.309059Z,compiler,16,30,9,,,pass_cap
+2026-10-08T17:21:13.183187Z,cohere_adamic,22,30,56,000-no-empty-function.txt,01a113d9-fee9-76fd-be54-4b36c0966024,sent
+2026-10-08T17:21:24.786818Z,cohere_adamic,23,30,55,001-no-extra-boolean-cast.txt,01a11207-1191-70a8-a5c4-a696dba7701b,sent
+2026-10-08T17:21:36.479854Z,cohere_adamic,24,30,54,002-object-shorthand.txt,01a11206-c5cd-7311-89d7-77a3c2a2703c,sent
+2026-10-08T17:21:36.484850Z,cohere_adamic,25,30,53,,,pass_cap
+2026-10-08T17:21:57.982429Z,typescript,9,10,10,14-step24-nodearray.md,01a1140c-e8a3-7199-95a7-5b2f00153022,sent
+2026-10-08T17:22:21.343053Z,runtime,4,8,2,03-step22-prototype-links.md,01a11431-4432-7421-9353-50c70c0d8039,sent
+2026-10-08T17:22:38.585919Z,runtime,5,8,1,04-step22-to-primitive.md,01a11477-b1e8-7134-8ed7-8360ef421013,sent
+2026-10-08T17:22:43.339857Z,runtime,6,8,0,,,queue_empty
+2026-10-08T17:22:51.694938Z,library,9,8,5,,,floor_met
+2026-10-08T17:23:47.185015Z,developer_tools,5,4,0,,,floor_met
