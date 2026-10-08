@@ -318,3 +318,235 @@ Question registration and fleet migration remain outside this unit.
 
 Final evidence: checker-proof/adapter-final-lint.txt,
 checker-proof/adapter-final-inputs.txt and checker-proof/adapter-final-time.txt.
+
+## Performance remediation, October 8
+
+Code commit: d85b9e68b4f91ece59194014a9e40c0f755dc6f0. The acceptance
+run passed the entire lint package under `-timeout 60m`, without a filter.
+Go printed 2979.178s; monotonic command wall time was 2983.204s (49m43s).
+The exact merged area tip, 79f3e2868ffd2b91f8fac187a6cee3466222952b,
+passed in 3902.748s, wall 3908.597s (65m09s), on the same box. The target
+was area time plus at most 150s, while also passing the 60-minute limit.
+The candidate is 925.393s faster than area and 1688.145s faster than the
+original 4671.349s wall run. Both targets are met.
+
+Both runs used nproc=5, CPU quota 400000/100000 (four cores), GOMAXPROCS=4,
+GOFLAGS=-buildvcs=false, the same installed toolchain and compiler pin,
+and no competing gate. Median sampled one-minute load: area 1.281,
+after 1.312; ranges 0.557–5.129 and 0.938–5.592 respectively. Those are
+whole-run observations, not a claim of equal load at every instant. The
+original run did not record load, so its load cannot be reconstructed.
+
+An initial untouched-area run with `-timeout 60m` failed at 3600.090s
+inside profile snapshots. It is retained as a timeout, not green. Its
+3821.625s outer wall also includes cold Go compilation before package timing.
+The completed area timing benchmark used `-timeout 90m` solely to obtain
+all results. Two intervening attempts were killed by environment/tool
+session restarts, after 46 mutants and during the corpus respectively;
+neither is counted as completed. The final sequential benchmarks ran in a
+detached process with file-based logs, without overlapping their work.
+
+### Where the apparent extra 2100 seconds went
+
+The seat's approximately 2500s is not this box's measured baseline. On this
+box, untouched area took 3908.597s: about 1409s above that estimate. Original
+harness was 762.752s above this box's area wall time, or 760.108s in Go
+package time. Seat conditions were not supplied, so a more specific causal
+explanation of the seat-to-box difference would be speculation.
+
+The original mutant children totaled 8556.92 active seconds (75, mean
+114.09s); area totaled 5857.65 (74, mean 79.16s). These overlapping child
+times cannot be summed into package wall time. Area's measured sweep span
+was 1501.581s. The old log has no timestamps; accounting for its sequential
+reported durations and final parallel group estimates its sweep at roughly
+2180s. That inference attributes about 679s of the 760s package excess to
+mutant builds, with about 81s net in other tests and scheduling. It is an
+estimate, not an observed old sweep span. The new candidate's measured
+75-mutant sweep is 880.419s (mean child 44.56s), saving 621.162s against area.
+
+Measured additions and overlapping components:
+
+| Component | Observed cost |
+|---|---:|
+| 102 typed cases, all four runtimes combined | 65.779s |
+| Live Go program and lint within those cases | 7.558s |
+| Native program, lint and recording within those cases | 10.176s |
+| Node transcript replay within those cases | 39.657s |
+| Emitted JavaScript replay within those cases | 8.389s |
+| Own-branch no-program, replay and hash controls, combined | 13.68s |
+| Pending bridge refusal control on own branch | 0s, named pending skip |
+
+The component rows overlap the typed-case total; do not add them twice.
+The actual `TestRulesAgree` net increase over area is 13.93s because saved
+setup work offsets most of the new typed runtime work. Each captured typed
+case retains its own strict project: combining script files would introduce
+shared globals and change the upstream tests' meaning. Within each manifest,
+the native driver and the Go oracle already built one program before all
+rows; neither was opening a program per row. Those lifetimes were preserved.
+
+A separate paired build probe consumed identical saved generated C and
+unchanged sanitizer flags. Old monolithic BuildTSGo: 64.483s; new split cold:
+74.616s; identical warm split: 4.273s. All outputs matched the live Go oracle.
+Cold structural builds can regress: FactoryHooks is 213.73s after versus
+117.53s for area. The full tables retain this cost instead of hiding it.
+
+On the probe's one pilot project, native bridge load was 75.043ms, two asks
+0.271ms, and cohere's real program.Build was 41.333ms. Whole native process
+was 118.574ms, with recording 120.080ms; the 1.506ms difference is one noisy
+sample, not a stable recording benchmark. Node replay was 463.033ms and
+emitted replay 109.235ms. These micro measurements use the saved original C
+for an identical-C build comparison; the 102-case totals above measure the
+actual candidate. They show that program loading and recording are small
+compared with repeated compiler builds, without inventing an exact causal
+allocation of every second.
+
+### Fix and preserved checks
+
+The harness caches immutable generated C and JavaScript by the complete
+static import/export dependency contents and absolute paths, including
+type-only dependencies. Each distinct source is loaded and lowered once,
+and both outputs come from that same lowering. It no longer emits ordinary
+C before TSGoC emits it again. Mutants change the content key; rename and
+outside-module-copy controls retain path-sensitive invalidation.
+
+Checker builds use the already-landed native.BuildSplitTSGo runtime and
+object caches, with Jobs=1 per build under the existing four mutant workers.
+No compiler implementation changed. Sanitizer flags remain -O1 -g
+-fsanitize=address,undefined -fno-sanitize-recover=all, with the same strict
+C flags. Release/counted builds reuse the landed split cache; the profiling
+build retains its full -O2 -g compilation. Generated JavaScript is written
+to a fresh file per test so emitted-output mutants cannot poison the cache.
+Each mutant binary is cleaned up after its subtest rather than retaining
+75 checker-linked binaries that cannot be reused.
+
+Syntax-only rows no longer compute a source hash without recording/replay.
+Ordinary typed runs no longer construct transcript keys or store facts unless
+recording/replay needs them. Recording, replay, missing/unasked-entry guards,
+program/source hash binding, refusals, and fix-pass exclusion are unchanged.
+
+The entire package passed, including all 102 typed cases, 75 mutants,
+719 compiler/repository files, shards, options, registration, factory hooks,
+profiles and paused controls. Sanitized native comparisons had no findings;
+counted profile instrumentation reported 259 allocations and 259 frees.
+The allocator observation changed from 336/336 alongside removal of unused
+hash/transcript work; no release check was relaxed. Pending skip still
+names `awaits codex/tsgo-errors-as-values: tsgoInspect must return TSGoError
+from the C error buffer`; optional throughput tests were not requested.
+Question registration, fleet migration, and the full repository gate remain
+outside this unit. Library 6131c4c is not an ancestor of this branch.
+
+Commands, after sourcing /workspace/adamic-tools/env.sh:
+
+```sh
+python3 /tmp/checker-package-timed.py area-detached /workspace/checker-area-before 90m
+python3 /tmp/checker-package-timed.py harness-after /workspace/adamic 60m
+```
+
+The runner sets GOPROXY=https://proxy.golang.org|direct, GOMAXPROCS=4,
+GOFLAGS=-buildvcs=false and ADAMIC_TYPESCRIPT_SOURCE to the clean v6.0.3
+checkout at 050880ce59e30b356b686bd3144efe24f875ebc8. Each run gets a fresh
+single directory for both required profile inputs. It invokes
+`go test -json -count=1 -timeout <limit> ./stage1/cohere/lint` and writes
+stdout/stderr directly to a log. Go's final JSON event says 2979.181s;
+the 3ms difference from its printed package time is event delivery.
+
+### Original run: every top-level test
+
+The untimestamped original -v log supplies Go's reported own active times,
+which exclude t.Parallel pause time. Exact old run/pause/continue timestamps
+cannot be recovered from that log. TestMutants' 7.36s is its own body,
+excluding parallel child work; it is not the sweep's wall time.
+
+| Top-level test | Active time (s) | Paused | Result |
+|---|---:|:---:|---|
+| TestCheckerNoProgramCoverage | 4.79 | no | PASS |
+| TestCheckerBridgeRefusalPending | 0.00 | no | SKIP |
+| TestCheckerReplayEntryControl | 5.61 | no | PASS |
+| TestCheckerHashes | 0.52 | no | PASS |
+| TestNestedConstructorGap | 0.13 | no | PASS |
+| TestEmittedJavaScriptMismatch | 98.83 | no | PASS |
+| TestDotARename | 92.32 | no | PASS |
+| TestCompleteSuggestionSerialization | 137.72 | no | PASS |
+| TestSuggestionAlongsideAutomaticFix | 75.98 | no | PASS |
+| TestWitnessScriptKind | 14.52 | no | PASS |
+| TestJsxLintReleaseAndThroughput | 0.00 | no | SKIP |
+| TestJsxLintTrees | 44.20 | no | PASS |
+| TestRulesAgree | 136.50 | no | PASS |
+| TestCompilerAndStage1Agree | 546.55 | no | PASS |
+| TestLegacyMutants | 80.10 | no | PASS |
+| TestThroughput | 0.00 | no | SKIP |
+| TestNodeTableIsLinkOnly | 69.49 | no | PASS |
+| TestShardsAgree | 291.60 | no | PASS |
+| TestMutants | 7.36 | no | PASS |
+| TestProfileArtifacts | 81.35 | no | PASS |
+| TestProfileCompilation | 79.19 | no | PASS |
+| TestProfileSnapshotsAgree | 294.56 | no | PASS |
+| TestOwnedWitnesses | 31.83 | no | PASS |
+| TestRegistrationMutant | 69.15 | no | PASS |
+| TestFactoryHooks | 135.13 | no | PASS |
+| TestNestedOutsideModuleCopy | 0.86 | no | PASS |
+| TestDecodedOptionsAndMutant | 81.79 | no | PASS |
+| TestOptionAndComparatorGaps | 0.78 | yes | PASS |
+| TestCommentFoldMutant | 96.05 | yes | PASS |
+| TestCountGuardMutant | 103.01 | yes | PASS |
+| TestPositionIndexMutant | 108.47 | yes | PASS |
+| TestDecorationOptionMutant | 109.74 | yes | PASS |
+
+### Same-box area before and candidate after: every top-level test
+
+Active intervals are calculated from timestamped JSON events: run-to-pause
+plus continue-to-pass for paused tests. Go own durations are also shown;
+event delivery and cleanup can produce small differences. TestMutants'
+interval includes parallel children, so its own body and complete span are
+shown separately. Skips are explicitly skips; an absent area test is —.
+
+| Top-level test | Area Go own (s) | Area active intervals (s) | After Go own (s) | After active intervals (s) | After result |
+|---|---:|---:|---:|---:|---|
+| TestCheckerNoProgramCoverage | — | — | 4.79 | 4.79 | pass |
+| TestCheckerBridgeRefusalPending | — | — | 0.00 | 0.00 | skip |
+| TestCheckerReplayEntryControl | — | — | 8.24 | 8.24 | pass |
+| TestCheckerHashes | — | — | 0.65 | 0.65 | pass |
+| TestNestedConstructorGap | 0.19 | 0.19 | 0.15 | 0.15 | pass |
+| TestEmittedJavaScriptMismatch | 60.49 | 60.50 | 79.60 | 79.60 | pass |
+| TestDotARename | 113.61 | 113.61 | 21.90 | 21.89 | pass |
+| TestCompleteSuggestionSerialization | 112.54 | 112.54 | 83.73 | 83.73 | pass |
+| TestSuggestionAlongsideAutomaticFix | 61.26 | 61.26 | 16.84 | 16.84 | pass |
+| TestWitnessScriptKind | 56.62 | 56.62 | 9.55 | 9.56 | pass |
+| TestJsxLintReleaseAndThroughput | 0.00 | 0.00 | 0.00 | 0.00 | skip |
+| TestJsxLintTrees | 50.54 | 50.54 | 44.67 | 44.67 | pass |
+| TestRulesAgree | 102.15 | 102.14 | 116.08 | 116.08 | pass |
+| TestCompilerAndStage1Agree | 638.55 | 638.55 | 535.59 | 535.59 | pass |
+| TestLegacyMutants | 65.38 | 65.38 | 102.15 | 102.15 | pass |
+| TestThroughput | 0.00 | 0.00 | 0.00 | 0.00 | skip |
+| TestNodeTableIsLinkOnly | 44.25 | 44.26 | 79.10 | 79.10 | pass |
+| TestShardsAgree | 269.11 | 269.11 | 257.50 | 257.50 | pass |
+| TestMutants | 6.31 | 1501.58 | 7.41 | 880.42 | pass |
+| TestProfileArtifacts | 56.21 | 56.21 | 76.36 | 76.36 | pass |
+| TestProfileCompilation | 57.41 | 57.41 | 59.57 | 59.57 | pass |
+| TestProfileSnapshotsAgree | 265.60 | 265.60 | 286.88 | 286.88 | pass |
+| TestOwnedWitnesses | 80.05 | 80.05 | 27.83 | 27.83 | pass |
+| TestRegistrationMutant | 54.93 | 54.93 | 29.27 | 29.27 | pass |
+| TestFactoryHooks | 117.53 | 117.53 | 213.73 | 213.73 | pass |
+| TestNestedOutsideModuleCopy | 0.72 | 0.72 | 0.73 | 0.73 | pass |
+| TestDecodedOptionsAndMutant | 116.69 | 116.69 | 19.18 | 19.18 | pass |
+| TestOptionAndComparatorGaps | 0.96 | 0.97 | 0.88 | 0.89 | pass |
+| TestDecorationOptionMutant | 75.30 | 76.33 | 21.49 | 22.09 | pass |
+| TestCommentFoldMutant | 65.76 | 70.04 | 22.97 | 23.79 | pass |
+| TestCountGuardMutant | 77.30 | 77.30 | 23.80 | 24.43 | pass |
+| TestPositionIndexMutant | 70.05 | 76.26 | 23.56 | 23.55 | pass |
+
+Full event logs, load samples, failed 60m baseline, extraction scripts,
+paired build probe source/output and typed-runtime totals are in
+checker-proof/performance-*.txt and checker-proof/timing-*.txt.
+
+
+Refreshed library proof: scratch merge
+08ced317cfefaff83f1854be56fcba2e112e04d0 includes 6131c4c and code d85b9e68b,
+with the existing one-line bridge pass-through import. Required
+TestCheckerBridgeRefusalPending passed in 177.752s. The forced unsupported
+question produces the same refused wire line on native, Node replay and
+emitted replay. Removing the refusal handler at the same source path triggers
+a fresh compilation, and the wire comparator catches it on all three;
+restoring it passes again. This also proves the new content cache does not
+hide same-path edits. Only the scratch worktree contains library history.
+Evidence: checker-proof/performance-library-refusal.txt.
