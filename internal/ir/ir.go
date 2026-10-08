@@ -437,6 +437,12 @@ type (
 		Null bool
 	}
 
+	// KindIs checks a represented object kind before a union is narrowed. Value is a Union.
+	KindIs struct {
+		Value Expression
+		Of    Type
+	}
+
 	// MakeError is an Error with Message and an optional Name (nil means "Error").
 	MakeError struct{ Message, Name Expression }
 
@@ -836,6 +842,7 @@ func (m MaybeOf) Type() Type     { return m.Of }
 func (MaybeToString) Type() Type { return String }
 func (Box) Type() Type           { return Union }
 func (n Narrow) Type() Type      { return n.To }
+func (KindIs) Type() Type        { return Boolean }
 func (TypeOf) Type() Type        { return String }
 func (UnionToString) Type() Type { return String }
 func (WeakOf) Type() Type        { return Weak }

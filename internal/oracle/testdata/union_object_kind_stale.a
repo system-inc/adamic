@@ -1,0 +1,5 @@
+interface Named { readonly name: string; }
+let value: Named | readonly number[] = { name: ['before'].join('') };
+const replace = (): void => { value = [7, 8]; };
+replace();
+console.log(value.name);
