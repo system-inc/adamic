@@ -1,0 +1,87 @@
+{
+  "@typescript-eslint/no-mixed-enums": {
+    "blocker": "checker declarations and enum local symbols",
+    "goCall": "ctx.TypeChecker.GetSymbolAtLocation(name); node.LocalSymbol()",
+    "source": "cohere/internal/lint/rules/typescript/no_mixed_enums.go:259"
+  },
+  "nexus/correctness-no-collection-misuse": {
+    "blocker": "checker declaration/default-library facts",
+    "goCall": "ctx.TypeChecker.GetSymbolAtLocation(access.Name())",
+    "source": "cohere/internal/lint/rules/nexus/correctness_no_collection_misuse.go:430"
+  },
+  "nexus/correctness-no-discarded-outcome": {
+    "blocker": "checker type-symbol declaration trees and union ancestry",
+    "goCall": "checker.Type_symbol(constituent)",
+    "source": "cohere/internal/lint/rules/nexus/correctness_no_discarded_outcome.go:173"
+  },
+  "nexus/correctness-no-discarded-pure-result": {
+    "blocker": "checker method declarations, interface owners and library facts",
+    "goCall": "ctx.TypeChecker.GetSymbolAtLocation(name)",
+    "source": "cohere/internal/lint/rules/nexus/correctness_no_discarded_pure_result.go:153"
+  },
+  "nexus/correctness-no-process-exit-after-output": {
+    "blocker": "control-flow graph",
+    "goCall": "control_flow_graph.Build(root.node, control_flow_graph.Hooks[correctnessNoProcessExitAfterOutputEvent]{...})",
+    "source": "cohere/internal/lint/rules/nexus/correctness_no_process_exit_after_output.go:511"
+  },
+  "nexus/correctness-no-uncleared-race-timeout": {
+    "blocker": "checker declarations and shorthand binding identity",
+    "goCall": "ctx.TypeChecker.GetShorthandAssignmentValueSymbol(parent)",
+    "source": "cohere/internal/lint/rules/nexus/correctness_no_uncleared_race_timeout.go:337"
+  },
+  "nexus/correctness-require-blocking-standard-streams": {
+    "blocker": "control-flow graph and cross-file symbol facts",
+    "goCall": "control_flow_graph.Build(root, control_flow_graph.Hooks[event]{...})",
+    "source": "cohere/internal/lint/rules/nexus/correctness_require_blocking_standard_streams.go:840"
+  },
+  "no-obj-calls": {
+    "blocker": "checker binding/reference identities, including shorthand; reference tracker not supplied",
+    "goCall": "typeChecker.GetShorthandAssignmentValueSymbol(parent)",
+    "source": "cohere/internal/lint/ecmascript/reference/value.go:128"
+  },
+  "no-object-constructor": {
+    "blocker": "checker first symbol declaration and IsDeclarationFile",
+    "goCall": "ctx.TypeChecker.GetSymbolAtLocation(identifier)",
+    "source": "cohere/internal/lint/rules/core/no_new_native_nonconstructor.go:103"
+  },
+  "no-promise-executor-return": {
+    "blocker": "checker first symbol declaration and IsDeclarationFile",
+    "goCall": "ctx.TypeChecker.GetSymbolAtLocation(identifier)",
+    "source": "cohere/internal/lint/rules/core/no_new_native_nonconstructor.go:103"
+  },
+  "react-hooks/set-state-in-effect": {
+    "blocker": "React Compiler IR and graph transforms",
+    "goCall": "high_level_intermediate_representation.ForFunctionWithoutManualMemoization(ctx, functionNode)",
+    "source": "cohere/internal/lint/rules/react/set_state_in_effect.go:267"
+  },
+  "react-hooks/set-state-in-render": {
+    "blocker": "React Compiler IR, SSA and capture translation",
+    "goCall": "high_level_intermediate_representation.ForFunction(ctx, functionNode)",
+    "source": "cohere/internal/lint/rules/react/set_state_in_render.go:183"
+  },
+  "react-hooks/static-components": {
+    "blocker": "React Compiler IR, SSA and phi data",
+    "goCall": "high_level_intermediate_representation.ForFunction(ctx, functionNode)",
+    "source": "cohere/internal/lint/rules/react/static_components.go:120"
+  },
+  "react/jsx-fragments": {
+    "blocker": "checker import/binding/variable symbol declaration trees",
+    "goCall": "ctx.TypeChecker.GetSymbolAtLocation(identifier)",
+    "source": "cohere/internal/lint/rules/react/jsx_fragments.go:290"
+  },
+  "react/jsx-no-constructed-context-values": {
+    "blocker": "checker ordered declarations, binding identities and stability facts",
+    "goCall": "ctx.TypeChecker.GetSymbolAtLocation(identifier)",
+    "source": "cohere/internal/lint/rules/react/jsx_no_constructed_context_values_stability.go:125"
+  },
+  "react/jsx-no-undef": {
+    "blocker": "checker symbol presence and every declaration source identity",
+    "goCall": "ctx.TypeChecker.GetSymbolAtLocation(reference)",
+    "source": "cohere/internal/lint/rules/react/jsx_no_undef.go:101"
+  },
+  "react/style-prop-object": {
+    "blocker": "checker shorthand symbol and first ordered variable declaration",
+    "goCall": "ctx.TypeChecker.GetShorthandAssignmentValueSymbol(shorthand)",
+    "source": "cohere/internal/lint/rules/react/style_prop_object.go:205"
+  }
+}

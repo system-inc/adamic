@@ -1,0 +1,25 @@
+{
+  "mergeBase": "7f1942ede2c3553e6d069a4724cba9aacce99097",
+  "wave2Base": "95968dd93ad0876245f181af63931c3134e14b3d",
+  "areaMerged": "334509eea8a49b8085187e206c495cc6aa24c5c4",
+  "upstreamCohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "sourceSha256": {
+    "helpers.a": "289d777db4b824d8964ca8b4340bdc5e413577460c57d3919b8ccb14e6e6c674",
+    "initializer.a": "5012149b6a3f9940b60def4fddb09e519d83a5e287483712cfe385258347e568",
+    "messages.a": "603b214f21ab971cde6b4b4404d2d412000f393158ff3f5e5ed1cfb66d5404fe",
+    "mutant.json": "757285040bef5a0aee5cefcadfc1f0ae381194406141c124c270253995a5ad73",
+    "oracle.go": "5aabea9b7dfad04cc3d1e13048adc6012e253d81963f6eddf07bb4b2cf59de27",
+    "rule.a": "fe21394acb3ff15e68e894dfc8d299feb98f8ff37df4a674ae6ed9e1852b699c",
+    "rule.json": "ef3465249866dc0514c29e42a2de51e33763572e1bcbbfa80a4027de66ff6950",
+    "scope.a": "d0c0bbb93fdc11fc6fc969eac6100636513f23680237bd6b394059b308b2e9d8",
+    "testdata/join.ts.txt": "3b9cb106d2ff30c5e7fb8ca60f4a87282565584930ec4eaff944394d77294d9c",
+    "testdata/witness.ts.txt": "93d43e06854884ab880ced04f4cb8ae078ac292c25cafea9a6db5fd3c189e6bc"
+  },
+  "fullPackageInputs": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/wave21-typescript-603",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_LINT_PROFILE_DIR": "/workspace/wave21-unpark-profile",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/wave21-unpark-profile"
+  }
+}
