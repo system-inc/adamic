@@ -1,0 +1,2 @@
+function value(): number { return null!; }
+console.log(`${value()}`);
