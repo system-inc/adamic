@@ -16,7 +16,7 @@ import (
 
 // Register this unit without editing the shared oracle's compiler-owned fixture list.
 func init() {
-	for _, name := range []string{"catch_callback", "finally_callback", "rethrow", "finally_completion", "liveness", "dynamic", "region_payload", "dynamic_uncaught", "object_uncaught", "library_failures", "library_types", "library_host"} {
+	for _, name := range []string{"catch_callback", "finally_callback", "rethrow", "finally_completion", "liveness", "dynamic", "region_payload", "dynamic_uncaught", "object_uncaught", "library_failures", "library_types", "library_host", "error_subclasses"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -37,7 +37,6 @@ func TestStep21ProposalOutcomes(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, diagnostic, stdout string }{
 		{"saved_error", "throwing an Error that isn't made", "saved1\n"},
-		{"error_subclass", "base", "true\n"},
 		{"unknown_read", "TS18046", "unknown\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
@@ -276,5 +275,31 @@ func TestStep21TypeScriptExtension(t *testing.T) {
 	}
 	if report := leaks(t, program, binary); report != "" {
 		t.Fatal(report)
+	}
+}
+
+func TestStep21ErrorBoundaries(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		"class Failure extends Error {} const value = new Failure('failure'); console.log(value.stack ?? 'absent');",
+		"class Failure extends Error {} const value = new Failure('failure'); console.log(value['stack'] ?? 'absent');",
+		"class Failure extends Error {} const value = new Failure('failure'); console.log(`${Object.hasOwn(value, 'name')}`);",
+	} {
+		t.Run(source, func(t *testing.T) {
+			t.Parallel()
+			path := filepath.Join(t.TempDir(), "error.a")
+			if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+				t.Fatal(err)
+			}
+			loaded, err := load.Load([]string{path})
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = lower.Lower(context.Background(), loaded)
+			var notYet *lower.NotYet
+			if !errors.As(err, &notYet) {
+				t.Fatalf("want NotYet for unrepresented Error observation, got %v", err)
+			}
+		})
 	}
 }
