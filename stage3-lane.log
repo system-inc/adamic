@@ -1,0 +1,6 @@
+/home/ahra/fast-gate/tree-4-stage3-lane
+test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106360, 'failing': 2, 'pending': 0}
+reporter counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106360, 'failing': 2, 'pending': 0}
+failed test names: expected ['unittests:: Public APIs for typescript.d.ts should be acknowledged when they change'], observed ['compiler tests compiler tests for tests/cases/compiler/variableDeclarationInStrictMode1.ts "before all" hook for "Correct errors for tests/cases/compiler/variableDeclarationInStrictMode1.ts"', 'unittests:: Public APIs for typescript.d.ts should be acknowledged when they change']
+number of reported failure titles: expected 1, observed 2
+FAIL stage3 landing lane: test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106360, 'failing': 2, 'pending': 0}
