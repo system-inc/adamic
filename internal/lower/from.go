@@ -94,5 +94,5 @@ func (l *lowering) arrayFrom(node *ast.Node) (ir.Expression, bool, error) {
 			first = l.result.Locals[parameters[0]].Type
 		}
 	}
-	return ir.ArrayFrom{Length: length, Callback: mapped, Element: element, First: first}, true, nil
+	return ir.ArrayFrom{Length: length, Callback: mapped, Element: element, First: first, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(callback)).Id())}, true, nil
 }

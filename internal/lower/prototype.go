@@ -95,7 +95,10 @@ func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name s
 		return nil, true, l.notYet(node, name+" on Error (its prototype and non-enumerable own descriptors differ from plain objects)")
 	}
 	of, _ := l.representation(l.checker.GetTypeAtLocation(receiver))
-	if of == ir.Object {
+	if l.exactPlainObject(receiver) {
+		of = ir.Object
+	}
+	if of == ir.Object || of == ir.Union {
 		if reason := l.prototypeHazard(receiver, name); reason != "" {
 			return nil, true, l.notYet(node, name+" through an object view ("+reason+")")
 		}
@@ -143,7 +146,9 @@ func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name s
 		return nil, true, err
 	}
 	if name == "valueOf" {
-		if result, _ := l.representation(l.checker.GetTypeAtLocation(node)); result != of {
+		if result, _ := l.representation(l.checker.GetTypeAtLocation(node)); result == ir.Union && of == ir.Object {
+			return fit(value, result), true, nil
+		} else if result != of {
 			return nil, true, l.notYet(node, "valueOf whose library result type erases the "+typeName(of)+" representation to Object (keeping or returning that result needs a tagged object view)")
 		}
 		switch of {

@@ -182,7 +182,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 				}
 				meta.Methods[slot] = len(l.result.Functions)
 			}
-			l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_" + methodName})
+			l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_" + methodName, MethodName: methodName})
 		case ast.KindPropertyDeclaration, ast.KindConstructor, ast.KindClassStaticBlockDeclaration:
 		default:
 			return nil, l.notYet(member, describe(member)+" in a class")
@@ -390,20 +390,21 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	object = l.privateStaticReceiver(callee.Name(), object, false)
-	arguments := []ir.Expression{object}
-	for _, argument := range node.AsCallExpression().Arguments.Nodes {
-		value, err := l.expression(argument)
-		if err != nil {
-			return nil, err
-		}
-		arguments = append(arguments, value)
+	values, spread, err := l.callArguments(node.AsCallExpression().Arguments.Nodes)
+	if err != nil {
+		return nil, err
+	}
+	arguments := append([]ir.Expression{object}, values...)
+	if len(spread) > 0 {
+		spread = append([]bool{false}, spread...)
 	}
 	function := lowered.methods[l.fieldName(callee.Name())]
+	l.fitCallArguments(function, arguments, spread)
 	virtual := lowered.slots[l.fieldName(callee.Name())] + 1
 	if ast.SkipParentheses(receiver).Kind == ast.KindSuperKeyword {
 		virtual = 0
 	}
-	return ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns, Virtual: virtual}, nil
+	return ir.Call{Function: function, Arguments: arguments, Spread: spread, Returns: l.result.Functions[function].Returns, Virtual: virtual}, nil
 }
 
 // setProperty lowers object.name = value, as a statement.
@@ -416,6 +417,11 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	}
 	if member := l.checker.GetSymbolAtLocation(target); member != nil && member.Flags&ast.SymbolFlagsMethod != 0 {
 		return nil, l.notYet(target, "replacing a represented method at runtime")
+	}
+	if member := l.checker.GetSymbolAtLocation(target); member != nil && member.Flags&ast.SymbolFlagsOptional != 0 && !isClassInstance(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression)) {
+		if stored, _ := l.representation(l.checker.GetTypeOfSymbol(member)); stored == ir.Union {
+			return nil, l.notYet(target, "writing a possibly absent optional own field")
+		}
 	}
 	object, err := l.expression(target.AsPropertyAccessExpression().Expression)
 	if err != nil {
@@ -479,7 +485,7 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 		}
 	}
 	name := l.fieldName(target.Name())
-	current := ir.Expression(ir.Property{Object: object, Name: name, Of: of, Class: l.classOf(target)})
+	current := l.readObjectField(target, ir.Property{Object: object, Name: name, Of: of, Class: l.classOf(target)})
 	if operator == ast.KindPlusToken && valueNode != nil {
 		current, value = l.spelled(target, current), l.spelled(valueNode, value)
 	}
@@ -536,7 +542,7 @@ func nodesOf(list *ast.NodeList) []*ast.Node {
 func lastFieldAssignment(declaration *ast.Node, constructor *ast.Node) int {
 	unset := map[string]bool{}
 	for _, member := range declaration.Members() {
-		if member.Kind == ast.KindPropertyDeclaration && member.AsPropertyDeclaration().Initializer == nil && !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
+		if member.Kind == ast.KindPropertyDeclaration && member.AsPropertyDeclaration().Initializer == nil && !(member.PostfixToken() != nil && member.PostfixToken().Kind == ast.KindExclamationToken) && !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			unset[member.Name().Text()] = true
 		}
 	}

@@ -136,7 +136,14 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		}
 		for index, field := range literal.Fields {
 			slot := e.temporary()
-			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
+			cache := e.cache()
+			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
+			if e.fieldTypesNeeded() {
+				e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
+			}
+			if e.fieldReadinessNeeded(field.Name) {
+				e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
+			}
 			if field.Value.Type().IsReference() {
 				e.line("adamic_release(%s->reference);", slot)
 				e.line("%s->reference = %s;", slot, e.kept(values[index]))
@@ -167,10 +174,34 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	} else {
 		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.literalShape(literal)))
 	}
+	if len(literal.Fields) > 0 && e.dynamicProperties() {
+		e.line("adamic_register_shape_types(&%s_metadata);", e.literalShape(literal))
+	}
 	if literal.Class != 0 {
 		e.line("%s->class = &adamic_class_%d;", object, literal.Class)
+		if e.dynamicProperties() {
+			class := e.program.Classes[literal.Class-1]
+			public := len(class.PublicFields)
+			if !class.Literal {
+				public = 0
+				for _, field := range class.Fields {
+					if !field.Private {
+						public++
+					}
+				}
+			}
+			if public > 0 {
+				e.line("adamic_register_shape_types(&%s_metadata);", e.publicClassShape(class))
+			}
+		}
 	}
 	for index, field := range literal.Fields {
+		if e.fieldTypesNeeded() {
+			e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, field.Value.Type())
+		}
+		if field.Uninitialized {
+			e.line("adamic_object_initialized(%s)[%d] = 0;", object, index)
+		}
 		value := values[index]
 		if e.regionValues[value] {
 			// A value in the region is immortal while the region lives: held without a count.
@@ -217,13 +248,18 @@ func (e *emitter) shapeOf(fieldNames []string, fieldTypes []ir.Type) string {
 // shapeWith declares a layout by its field names and types, and a class's methods, each called
 // through a thunk that takes what a call through an interface gives (adamic_method).
 func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods []ir.Method) string {
-	names, references := []string{}, []string{}
+	names, references, kinds := []string{}, []string{}, []string{}
 	for index, name := range fieldNames {
 		names = append(names, cString(name))
+		kinds = append(kinds, strconv.Itoa(int(fieldTypes[index])))
 		references = append(references, strconv.FormatBool(fieldTypes[index].IsReference()))
 	}
 	fields := fieldNames
-	key := strings.Join(names, ",") + "|" + strings.Join(references, ",")
+	layout := references
+	if e.dynamicProperties() {
+		layout = kinds
+	}
+	key := strings.Join(names, ",") + "|" + strings.Join(layout, ",")
 	for _, method := range methods {
 		key += fmt.Sprintf("|%s=%d", method.Name, method.Function)
 	}
@@ -242,12 +278,20 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 			continue
 		}
 		methodNames = append(methodNames, cString(method.Name))
-		thunks = append(thunks, e.methodThunk(method.Function))
+		thunk := e.methodThunk(method.Function)
+		if e.program.ClosureConventionNeeded() {
+			field := "code"
+			if e.program.PackedCountNeeded(method.Function) {
+				field = "counted_code"
+			}
+			thunk = fmt.Sprintf("{.counted = %t, .%s = %s}", e.program.PackedCountNeeded(method.Function), field, thunk)
+		}
+		thunks = append(thunks, thunk)
 	}
 	if len(thunks) > 0 {
 		e.declarations = append(e.declarations,
 			fmt.Sprintf("static const char *const %s_method_names[] = {%s};", name, strings.Join(methodNames, ", ")),
-			fmt.Sprintf("static const adamic_method %s_method_code[] = {%s};", name, strings.Join(thunks, ", ")),
+			fmt.Sprintf("static const %s %s_method_code[] = {%s};", e.methodEntryType(), name, strings.Join(thunks, ", ")),
 			fmt.Sprintf("static const adamic_methods %s_methods = {%d, %s_method_names, %s_method_code};", name, len(thunks), name, name))
 		table = "&" + name + "_methods"
 	}
@@ -259,6 +303,11 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 			fmt.Sprintf("static const bool %s_references[] = {%s};", name, strings.Join(references, ", ")),
 			fmt.Sprintf("static const adamic_shape %s = {%d, %s_names, %s_references, %s};", name, len(fields), name, name, table))
 	}
+	if len(fields) > 0 && e.dynamicProperties() {
+		e.declarations = append(e.declarations,
+			fmt.Sprintf("static const int %s_types[] = {%s};", name, strings.Join(kinds, ", ")),
+			fmt.Sprintf("static adamic_shape_types %s_metadata = {&%s, %s_types, NULL};", name, name, name))
+	}
 	return name
 }
 
@@ -268,7 +317,25 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 // interface reaches it with one, and it's left out of its class's table.
 func (e *emitter) dispatchable(function int) bool {
 	method := e.program.Functions[function]
-	slotless := func(valueType ir.Type) bool { return valueType == ir.Union }
+	needed := e.program.StructuralMethodThunks[function]
+	if e.program.StructuralMethodThunks == nil {
+		walkExpressions(e.program, func(expression ir.Expression) {
+			call, ok := expression.(ir.CallClosure)
+			if !ok {
+				return
+			}
+			targets, resolved := e.program.FunctionTypeTargets[call.FunctionType]
+			if !resolved {
+				targets = e.program.ClosureTargets(call).Functions
+			}
+			for _, target := range targets {
+				if e.program.Functions[target].Name == method.Name {
+					needed = true
+				}
+			}
+		})
+	}
+	slotless := func(valueType ir.Type) bool { return valueType == ir.Union || valueType == ir.MaybeBoolean && !needed }
 	for index, parameter := range method.Parameters {
 		if index > 0 && slotless(e.program.Locals[parameter].Type) {
 			return false
@@ -291,21 +358,45 @@ func (e *emitter) methodThunk(function int) string {
 	}
 	e.thunks[function] = true
 	method := e.program.Functions[function]
-	lines := []string{fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments, size_t argument_count) {", name), "\t(void)arguments;", "\t(void)argument_count;"}
+	count := ""
+	if e.program.PackedCountNeeded(function) {
+		count = ", size_t argument_count"
+	}
+	shape := "adamic_method_function"
+	if e.program.PackedCountNeeded(function) {
+		shape = "adamic_counted_method_function"
+	}
+	lines := []string{fmt.Sprintf("static %s %s;", shape, name), fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments%s) {", name, count), "\t(void)arguments;"}
 	values := []string{}
 	for index, parameter := range method.Parameters {
 		local := e.program.Locals[parameter]
 		value := "self"
-		if index > 0 {
-			value = closureArgument(local.Type, index-1)
+		if method.RestElement != 0 && index == len(method.Parameters)-1 {
+			slot := e.program.RestArgumentSlots[ir.FunctionRestArguments(method)]
+			value = fmt.Sprintf("(adamic_array *)arguments[%d].reference", slot)
+		} else if index > 0 {
+			value = unslotted(local.Type, fmt.Sprintf("arguments[%d].%s", index-1, member(local.Type)))
+			if e.program.PackedCountNeeded(function) {
+				value = closureArgument(local.Type, index-1)
+			}
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
+			}
+			if e.program.PackedCountNeeded(function) && (local.Type.IsMaybe() || local.Type.IsReference()) {
+				value = fmt.Sprintf("(argument_count > %d ? %s : %s)", index-1, value, absent(local.Type))
 			}
 		}
 		if local.Type.IsReference() && e.reuse.consumed[parameter] {
 			value = fmt.Sprintf("adamic_retain(%s)", value)
 		}
 		values = append(values, value)
+	}
+	if method.ArgumentsCount != 0 {
+		count := "0"
+		if method.ReadsArguments {
+			count = "(double)argument_count"
+		}
+		values = append(values, count)
 	}
 	call := fmt.Sprintf("%s(%s)", e.functionName(function), strings.Join(values, ", "))
 	if method.Returns == 0 {
@@ -324,4 +415,49 @@ func (e *emitter) cache() string {
 	name := fmt.Sprintf("adamic_cache_%d", e.temporaries)
 	e.declarations = append(e.declarations, fmt.Sprintf("static adamic_slot_cache %s;", name))
 	return name
+}
+
+// Programs without reflection keep their original layouts and allocation code.
+func (e *emitter) dynamicProperties() bool {
+	found := false
+	walkExpressions(e.program, func(expression ir.Expression) {
+		if _, dynamic := expression.(ir.DynamicProperty); dynamic {
+			found = true
+		}
+	})
+	return found
+}
+
+func (e *emitter) methodEntryType() string {
+	if e.program.ClosureConventionNeeded() {
+		return "adamic_method_entry"
+	}
+	return "adamic_method"
+}
+
+func (e *emitter) fieldTypesNeeded() bool {
+	if len(e.program.CheckedFields) != 0 || e.dynamicProperties() {
+		return true
+	}
+	needed := false
+	walkExpressions(e.program, func(expression ir.Expression) {
+		if property, ok := expression.(ir.Property); ok && property.View != "" {
+			needed = true
+		}
+	})
+	return needed
+}
+
+// Hand-built IR can carry field contracts without the lowerer's summary maps.
+func (e *emitter) fieldReadinessNeeded(name string) bool {
+	if e.program.UninitializedFields[name] {
+		return true
+	}
+	needed := false
+	walkExpressions(e.program, func(expression ir.Expression) {
+		if property, ok := expression.(ir.Property); ok && property.Name == name && (property.Readiness != "" || property.View != "") {
+			needed = true
+		}
+	})
+	return needed
 }

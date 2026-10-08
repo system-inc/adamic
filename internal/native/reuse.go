@@ -142,7 +142,7 @@ func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
 		forEachInstruction(each.graph, func(instruction *flow.Instruction) {
 			walk(evaluated(instruction), func(expression ir.Expression) {
 				call, ok := expression.(ir.Call)
-				if !ok {
+				if !ok || program.CallExpandsArguments(call) {
 					return
 				}
 				for index, argument := range call.Arguments {
@@ -176,7 +176,7 @@ func (plan *reusePlan) reusable(program *ir.Program, function int, comparators m
 // by it.
 func (plan *reusePlan) owned(program *ir.Program, function int, comparators map[int]bool, instruction *flow.Instruction, live map[flow.DeclarationId]bool, source int, valueType ir.Type) bool {
 	local := program.Locals[source]
-	if local.Global || local.Captured || local.Type != valueType {
+	if local.Global || local.Captured || local.ExpressionAssigned || local.Type != valueType {
 		return false
 	}
 	if local.Function != function {
@@ -252,7 +252,7 @@ func (plan *reusePlan) readOnlyInside(instruction *flow.Instruction, source int)
 // parameter: nothing reads the variable's current value after.
 func (plan *reusePlan) movable(program *ir.Program, instruction *flow.Instruction, live map[flow.DeclarationId]bool, read ir.Read) bool {
 	local := program.Locals[read.Local]
-	if local.Captured || read.Checked || readsOf(evaluated(instruction), read.Local) != 1 {
+	if local.Captured || local.ExpressionAssigned || read.Checked || readsOf(evaluated(instruction), read.Local) != 1 {
 		return false
 	}
 	if plan.lending[read.Local] {
@@ -289,6 +289,10 @@ func (plan *reusePlan) movable(program *ir.Program, instruction *flow.Instructio
 				if touches(program, target, read.Local, map[int]bool{}) {
 					reached = true
 				}
+			}
+		case ir.RegExpCall:
+			if expression.Replacement != nil {
+				reached = true
 			}
 		case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort:
 			// A Map's or Set's forEach is void, so it's never in the value an assignment evaluates;
@@ -328,6 +332,10 @@ func touches(program *ir.Program, function int, global int, seen map[int]bool) b
 							found = true
 						}
 					}
+				case ir.RegExpCall:
+					if expression.Replacement != nil {
+						found = true
+					}
 				case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach:
 					found = true
 				}
@@ -353,6 +361,9 @@ func variableRead(expression ir.Expression) (ir.Read, bool) {
 // (a global's read retains one).
 func (e *emitter) variable(expression ir.Expression, read ir.Read) string {
 	name := e.localName(read.Local)
+	if read.Readiness != "" {
+		e.checkReadyRead(read.Local, read.Readiness)
+	}
 	if defined, ok := expression.(ir.Defined); ok {
 		e.checkDefined(name, defined.Message)
 	}
@@ -542,7 +553,14 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 	e.taking = outer
 	for index, field := range literal.Fields {
 		slot := e.temporary()
-		e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
+		cache := e.cache()
+		e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
+		if e.fieldTypesNeeded() {
+			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
+		}
+		if e.program.UninitializedFields[field.Name] {
+			e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
+		}
 		if field.Value.Type().IsReference() {
 			// A field moved out of a unique object left NULL behind, and releasing that is nothing.
 			e.line("adamic_release(%s->reference);", slot)
@@ -560,10 +578,14 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 // the source may be undefined and is, a new object with the source type's other fields and the
 // literal's own, as JavaScript's { ...undefined } is {} with the literal's fields written in.
 func (e *emitter) spreadCopy(literal ir.ObjectLiteral, source string) string {
-	if !literal.SpreadMaybeUndefined {
-		return fmt.Sprintf("adamic_object_copy(%s)", source)
+	copy := fmt.Sprintf("adamic_object_copy(%s)", source)
+	if literal.SpreadReadiness != "" {
+		copy = fmt.Sprintf("adamic_object_copy_checked(%s, %s)", source, cString(literal.SpreadReadiness))
 	}
-	return fmt.Sprintf("(%s != NULL ? adamic_object_copy(%s) : adamic_object_new(&%s))", source, source, e.shape(emptyFields(literal)))
+	if !literal.SpreadMaybeUndefined {
+		return copy
+	}
+	return fmt.Sprintf("(%s != NULL ? %s : adamic_object_new(&%s))", source, copy, e.shape(emptyFields(literal)))
 }
 
 // emptySpread gives the fields of the object spreadCopy made for an undefined source the value
@@ -698,7 +720,8 @@ func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
 	e.line("\t\tstatic const char message[] = \"map: the array shrank while it was being mapped\";")
 	e.line("\t\tadamic_panic(message, sizeof message - 1);")
 	e.line("\t}")
-	e.line("\tadamic_value %s = %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}}, 3);", result, callback, callback, source, index, index, source)
+	call := e.callbackCall(callback, expression.Callback, expression.CallbackType, fmt.Sprintf("%s->elements[%s]", source, index), fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
+	e.line("\tadamic_value %s = %s;", result, call)
 	e.line("\tif (%s) {", unique)
 	// The callback is done with the element it was handed: the result takes its place.
 	if expression.Element.IsReference() {

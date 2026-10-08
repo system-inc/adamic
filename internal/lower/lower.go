@@ -79,6 +79,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	if err := lowering.findCycles(modules); err != nil {
 		return nil, err
 	}
+	readiness(lowering.result)
 	borrow(lowering.result)
 	counters(lowering.result)
 	return lowering.result, nil
