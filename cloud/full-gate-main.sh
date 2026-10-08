@@ -13,7 +13,10 @@
 # processes starved whenever the slots were busy, and a 1 s node deadline went red on main.
 set -euo pipefail
 
-box=${ADAMIC_FULL_GATE_BOX:-threadripper}
+box=${ADAMIC_FULL_GATE_BOX:-home}
+# Home is the whole gate's own box, so it takes every CPU (all). On a box shared with the fast gate's
+# slots it takes the last quarter (quarter).
+share=${ADAMIC_FULL_GATE_SHARE:-all}
 # The last main whose full gate finished green: a red names the landings since, for bisecting.
 state=${ADAMIC_FULL_GATE_STATE:-${HOME}/.adamic-full-gate}
 mkdir -p "${state}"
@@ -43,9 +46,9 @@ run() {
   stamp=$(date -u +%Y%m%dT%H%M%SZ)
   out=full-gate/out/${sha:0:12}-${stamp}
   echo "$(date -u +%H:%M:%S) full gate of main ${sha} (tools ${tools}) on ${box}"
-  ssh "${box}" bash -s -- "${sha}" "${tools}" "${out}" <<'BOX'
+  ssh "${box}" bash -s -- "${sha}" "${tools}" "${out}" "${share}" <<'BOX'
 set -euo pipefail
-sha=$1 tools=$2 out=$3
+sha=$1 tools=$2 out=$3 share=${4:-all}
 mkdir -p ~/full-gate ~/"${out}"
 for directory in tools tree; do
   [ -d ~/full-gate/${directory} ] || git clone -q https://github.com/system-inc/adamic.git ~/full-gate/${directory}
@@ -59,7 +62,8 @@ git -C ~/full-gate/tools fetch -q origin "${tools}" && git -C ~/full-gate/tools 
 git -C ~/full-gate/tree fetch -q origin "${sha}" && git -C ~/full-gate/tree switch -q --detach "${sha}"
 git -C ~/full-gate/tree submodule update -q --init --recursive
 cpus=\$(nproc --all)
-taskset -c "\$((cpus * 3 / 4))-\$((cpus - 1))" python3 ~/full-gate/tools/cloud/fast-gate/run.py --full --tree ~/full-gate/tree --sha "${sha}" --base "${sha}" --tools ~/full-gate/tools --weights ~/full-gate/weights.txt --out ~/"${out}"
+first=\$([ "${share}" = quarter ] && echo \$((cpus * 3 / 4)) || echo 0)
+taskset -c "\$first-\$((cpus - 1))" python3 ~/full-gate/tools/cloud/fast-gate/run.py --full --tree ~/full-gate/tree --sha "${sha}" --base "${sha}" --tools ~/full-gate/tools --weights ~/full-gate/weights.txt --out ~/"${out}"
 RUN
 echo "running: full gate of ${sha}, waiting for the box" > ~/"${out}"/status.txt
 tmux new -d -s "full-${sha:0:12}" "bash ~/${out}/run.sh > ~/${out}/driver.log 2>&1"
