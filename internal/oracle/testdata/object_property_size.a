@@ -1,0 +1,19 @@
+let calls = 0;
+function receiver(present: boolean): Map<string, number> | undefined {
+    calls += 1;
+    return present ? new Map<string, number>([['x', 4], ['y', 8]]) : undefined;
+}
+function mapSize(value: Map<string, number> | undefined): string {
+    const size = value?.size;
+    return size === undefined ? 'missing' : `${size}`;
+}
+function setSize(value: ReadonlySet<number> | undefined): string {
+    const size = value?.size;
+    return size === undefined ? 'missing' : `${size}`;
+}
+console.log(mapSize(receiver(true)));
+console.log(mapSize(receiver(false)));
+console.log(mapSize(new Map<string, number>()));
+console.log(setSize(new Set<number>([1, 1, 2])));
+console.log(setSize(undefined));
+console.log(`${receiver(true)?.size ?? -1}/${receiver(false)?.size ?? -1}/${calls}`);
