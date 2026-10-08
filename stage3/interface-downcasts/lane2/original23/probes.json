@@ -1,0 +1,106 @@
+[
+  {
+    "name": "callbacks-good",
+    "source": "a\n",
+    "diagnostic": "",
+    "contracts": [
+      "FileWatcherWithModifiedTime"
+    ]
+  },
+  {
+    "name": "callbacks-lazy",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "FileWatcherWithModifiedTime"
+    ]
+  },
+  {
+    "name": "callbacks-wrong-array",
+    "source": "number\n",
+    "diagnostic": "field read failed: viewed.callbacks is not a FileWatcherCallback[]; expected FileWatcherCallback[], found number",
+    "contracts": [
+      "FileWatcherWithModifiedTime"
+    ]
+  },
+  {
+    "name": "callbacks-wrong-element",
+    "source": "number\n",
+    "diagnostic": "element read failed: viewed.callbacks[0] expected FileWatcherCallback, found number",
+    "contracts": [
+      "FileWatcherWithModifiedTime"
+    ]
+  },
+  {
+    "name": "callbacks-wrong-parameter",
+    "source": "function\n",
+    "diagnostic": "field read failed: viewed.callbacks[0] expected FileWatcherCallback, found function with incompatible parameter representations",
+    "contracts": [
+      "FileWatcherWithModifiedTime"
+    ]
+  },
+  {
+    "name": "callbacks-lazy-element",
+    "source": "a\n",
+    "diagnostic": "",
+    "contracts": [
+      "FileWatcherWithModifiedTime"
+    ]
+  },
+  {
+    "name": "callbacks-replace",
+    "source": "new:a\n",
+    "diagnostic": "",
+    "contracts": [
+      "FileWatcherWithModifiedTime"
+    ]
+  },
+  {
+    "name": "callbacks-map",
+    "source": "a\n",
+    "diagnostic": "",
+    "contracts": [
+      "FileWatcherWithModifiedTime"
+    ]
+  },
+  {
+    "name": "callbacks-short-arity",
+    "source": "a\n",
+    "diagnostic": "",
+    "contracts": [
+      "FileWatcherWithModifiedTime"
+    ]
+  },
+  {
+    "name": "callbacks-replace-source-arity",
+    "source": "new:a\n",
+    "diagnostic": "field read failed: <array write> expected (name: string, event: number) => void, found function with arity 3",
+    "contracts": [
+      "FileWatcherWithModifiedTime"
+    ]
+  },
+  {
+    "name": "callbacks-valued-void-producer",
+    "source": "a\n",
+    "diagnostic": "",
+    "contracts": [
+      "FileWatcherWithModifiedTime"
+    ]
+  },
+  {
+    "name": "callbacks-wrong-invoke",
+    "source": "a\n",
+    "diagnostic": "field read failed: viewed.callbacks[0] expected FileWatcherCallback, found function with incompatible parameter representations",
+    "contracts": [
+      "FileWatcherWithModifiedTime"
+    ]
+  },
+  {
+    "name": "callbacks-frontier",
+    "source": "a\n",
+    "diagnostic": "",
+    "contracts": [
+      "FileWatcherWithModifiedTime"
+    ]
+  }
+]

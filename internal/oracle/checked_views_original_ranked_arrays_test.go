@@ -40,6 +40,7 @@ func originalArrayFile(t *testing.T, declarations, directory, name string) strin
 		t.Fatal(err)
 	}
 	bound := strings.Replace(string(input), "'original-tsc-types'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(declarations, "compiler/types.d.ts"))), 1)
+	bound = strings.Replace(bound, "'original-tsc-watchers'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(declarations, "compiler/tsbuildPublic.d.ts"))), 1)
 	file := checkedViewFixtureCopyPath(filepath.Join(t.TempDir(), name+".a"), filepath.Join(directory, name+".a"))
 	if err := os.WriteFile(file, []byte(bound), 0600); err != nil {
 		t.Fatal(err)

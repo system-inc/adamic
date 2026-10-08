@@ -1,0 +1,8 @@
+import type { FileWatcherWithModifiedTime } from 'original-tsc-watchers';
+interface Base { readonly modifiedTime: Date | undefined; }
+function read(base: Base): void {
+ const viewed = base as FileWatcherWithModifiedTime;
+ console.log(typeof viewed.callbacks);
+}
+const raw = { modifiedTime: undefined, callbacks: 7 };
+read(raw);

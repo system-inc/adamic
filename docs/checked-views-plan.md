@@ -2749,3 +2749,7 @@ The original four-read lane 4c cast frontier is certified against Node in saniti
 ### Lane 2 IncrementalBuildInfo fileNames joint
 
 All four original fileNames reads are certified with complete union declarations against Node in both native modes and JavaScript. Common-array admission preserves aliases and checks source writable slots in every arm. Four mutants fail exact stopping oracles and finish with Node output without leaks. See stage3/interface-downcasts/lane2/joints/FILE-NAMES-REPORT.md. Lane 2 now has 183 pairs / 2899 reads certified, remaining 151 / 290; own fields remain 3 / 26 of 30 / 72. Ranked callbacks are next.
+
+### Lane 2 ranked group 23 callable arrays
+
+The full private watcher callback array is certified at four original reads. Indexed and consumer reads check producer signatures; writes preserve original source signatures. Void callbacks keep ignored extra arguments and discarded results, with value observation still a named refusal. Eight executed mutants cover stopping guards and adapters. See stage3/interface-downcasts/lane2/RANKED23-ARRAYS-REPORT.md. Lane 2 is now 184 pairs / 2903 reads certified, remaining 150 / 286. Next are the three-read ranked fields.
