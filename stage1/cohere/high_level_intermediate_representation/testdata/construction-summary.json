@@ -628,5 +628,241 @@
     "TypeCastExpression": 11,
     "UnaryExpression": 17,
     "UnsupportedNode": 6
-  }
+  },
+  "skippedGoTestGroups": [
+    {
+      "unit": 2,
+      "title": "Construction, SSA and postdominators",
+      "reach": "needed",
+      "rule": "static-components and other constructed-graph rules",
+      "reason": "COHERE_CORPUS_STRUCTURE is unset; private Structure checkout unavailable",
+      "tests": [
+        {
+          "test": "TestLowerRealCodebase",
+          "source": "lower_corpus_test.go:192"
+        },
+        {
+          "test": "TestLowerRealCodebaseIsDeterministic",
+          "source": "lower_corpus_test.go:301"
+        },
+        {
+          "test": "TestPostDominatorFrontiersMatchTheChainWalk/pinned_corpus",
+          "source": "postdominator_frontier_test.go:23"
+        },
+        {
+          "test": "TestConstructionIsIdempotent",
+          "source": "ssa_test.go:401"
+        },
+        {
+          "test": "TestSSAOverRealCodebase",
+          "source": "ssa_corpus_test.go:32"
+        }
+      ]
+    },
+    {
+      "unit": 5,
+      "title": "Disjoint sets",
+      "reach": "needed",
+      "rule": "preserve-manual-memoization",
+      "reason": "COHERE_CORPUS_STRUCTURE is unset; private Structure checkout unavailable",
+      "tests": [
+        {
+          "test": "TestDisjointClassSizesAreNotAllSingletons",
+          "source": "disjoint_test.go:1145"
+        }
+      ]
+    },
+    {
+      "unit": 6,
+      "title": "Scopes, alignment, merging and terminals",
+      "reach": "needed",
+      "rule": "preserve-manual-memoization",
+      "reason": "COHERE_CORPUS_STRUCTURE is unset; private Structure checkout unavailable",
+      "tests": [
+        {
+          "test": "TestMergeRegistersScopesFromTerminals",
+          "source": "merge_scopes_test.go:927"
+        },
+        {
+          "test": "TestMergeSortComparatorReachability",
+          "source": "merge_scopes_test.go:879"
+        },
+        {
+          "test": "TestMergeIsDeterministic",
+          "source": "merge_scopes_test.go:838"
+        },
+        {
+          "test": "TestMergeAssumesMonotoneEvaluationOrder",
+          "source": "merge_scopes_test.go:791"
+        },
+        {
+          "test": "TestMergeFunctionOperandSkipUpperBound",
+          "source": "merge_scopes_test.go:684"
+        },
+        {
+          "test": "TestMergeLeavesBlockScopeAlignmentUnclosed",
+          "source": "merge_scopes_test.go:649"
+        },
+        {
+          "test": "TestMergePreservesScopeWidthAndMembership",
+          "source": "merge_scopes_test.go:560"
+        },
+        {
+          "test": "TestMergeDrivesNonNestedOverlapToZero",
+          "source": "merge_scopes_test.go:508"
+        },
+        {
+          "test": "TestScopeMatchesTheDisjointSetPartition",
+          "source": "scopes_test.go:838"
+        },
+        {
+          "test": "TestScopeRangesSatisfyUpstreamsInvariant",
+          "source": "scopes_test.go:645"
+        },
+        {
+          "test": "TestScopeWidthAndMembershipAgree",
+          "source": "scopes_test.go:580"
+        },
+        {
+          "test": "TestScopeTerminalsRecoverEveryScopeFromTheGraph",
+          "source": "scope_terminals_test.go:603"
+        },
+        {
+          "test": "TestAlignIsDeterministic",
+          "source": "align_scopes_test.go:892"
+        },
+        {
+          "test": "TestAlignIsASingleSweep",
+          "source": "align_scopes_test.go:849"
+        },
+        {
+          "test": "TestReactReversePostorderClosesFallthroughSelfNesting",
+          "source": "align_scopes_test.go:805"
+        },
+        {
+          "test": "TestAlignVoidsTheMergesComparatorVerdicts",
+          "source": "align_scopes_test.go:723"
+        },
+        {
+          "test": "TestAlignPreservesScopeWidthAndMembership",
+          "source": "align_scopes_test.go:669"
+        },
+        {
+          "test": "TestAlignReDerivesMemberRanges",
+          "source": "align_scopes_test.go:621"
+        },
+        {
+          "test": "TestAlignFallthroughsAreUniqueOnceBranchesAreExcluded",
+          "source": "align_scopes_test.go:570"
+        },
+        {
+          "test": "TestAlignMustRunBeforeTheMerge",
+          "source": "align_scopes_test.go:233"
+        },
+        {
+          "test": "TestAlignClosesTheFullBlockNestingAssertion",
+          "source": "align_scopes_test.go:117"
+        },
+        {
+          "test": "TestAlignMethodCallScopesReachesTheCorpus",
+          "source": "align_method_calls_test.go:53"
+        }
+      ]
+    },
+    {
+      "unit": 7,
+      "title": "Dependencies, hoistability and invalidating types",
+      "reach": "needed",
+      "rule": "preserve-manual-memoization",
+      "reason": "COHERE_CORPUS_STRUCTURE is unset; private Structure checkout unavailable",
+      "tests": [
+        {
+          "test": "TestHoistableCorpusDistribution",
+          "source": "hoistable_test.go:396"
+        },
+        {
+          "test": "TestDeclarationOriginDiffersFromHoldingScope",
+          "source": "dependencies_test.go:662"
+        },
+        {
+          "test": "TestDependencyDistributionIsReal",
+          "source": "dependencies_test.go:561"
+        },
+        {
+          "test": "TestIsAlwaysInvalidatingTypeHandlesNodelessIdentifiers",
+          "source": "always_invalidating_test.go:123"
+        }
+      ]
+    },
+    {
+      "unit": 8,
+      "title": "Reactive tree, visitor and transform",
+      "reach": "needed",
+      "rule": "preserve-manual-memoization",
+      "reason": "COHERE_CORPUS_STRUCTURE is unset; private Structure checkout unavailable",
+      "tests": [
+        {
+          "test": "TestBuildReactiveFunctionCorpusConservation",
+          "source": "reactive_build_test.go:351"
+        },
+        {
+          "test": "TestReactiveVisitorCorpus",
+          "source": "reactive_visitor_test.go:196"
+        },
+        {
+          "test": "TestReactiveTransformCorpus",
+          "source": "reactive_transform_test.go:190"
+        }
+      ]
+    },
+    {
+      "unit": 9,
+      "title": "Pruning and invalidation merging",
+      "reach": "needed",
+      "rule": "preserve-manual-memoization",
+      "reason": "COHERE_CORPUS_STRUCTURE is unset; private Structure checkout unavailable",
+      "tests": [
+        {
+          "test": "TestMergeReactiveScopesRecordsAbsorbedIds",
+          "source": "merge_invalidating_test.go:650"
+        },
+        {
+          "test": "TestMergeReactiveScopesPreservesEveryStatement",
+          "source": "merge_invalidating_test.go:567"
+        },
+        {
+          "test": "TestFindLastUsageCorpus",
+          "source": "merge_invalidating_test.go:209"
+        },
+        {
+          "test": "TestPruneNonEscapingScopesPrunesAndKeeps",
+          "source": "prune_non_escaping_scopes_test.go:21"
+        },
+        {
+          "test": "TestPruneAlwaysInvalidatingPrunesSomethingAndKeepsSomething",
+          "source": "prune_always_invalidating_test.go:14"
+        },
+        {
+          "test": "TestPruneUnusedScopesPrunesSomethingAndKeepsSomething",
+          "source": "prune_unused_scopes_test.go:15"
+        },
+        {
+          "test": "TestPruneNonReactiveDependenciesKeepsAndPrunes",
+          "source": "prune_non_reactive_dependencies_test.go:17"
+        },
+        {
+          "test": "TestPruneNonEscapingScopesReportsWhatItReplaced",
+          "source": "prune_non_escaping_scopes_test.go:515"
+        },
+        {
+          "test": "TestPruneNonEscapingScopesIsDeterministic",
+          "source": "prune_non_escaping_scopes_test.go:238"
+        },
+        {
+          "test": "TestPruneNonEscapingScopesResolvesLoadLocalIndirection",
+          "source": "prune_non_escaping_scopes_test.go:300"
+        }
+      ]
+    }
+  ]
 }

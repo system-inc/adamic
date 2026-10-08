@@ -163,3 +163,16 @@ query-loop timer. This shorthand belongs only to the probes, not the C API.
 a program with `noImplicitThis` disabled: the special implicit-this diagnostic
 variants are not part of this strict-config port. Refusal is explicit before
 any finding is printed. The original six-rule runner is unaffected.
+
+### Symbol identity and declaration facts
+
+`symbol` accepts an exact AST selector and no suffix. After schema `1`, question
+`symbol`, it writes: opaque program-owned symbol ID (zero for absent), symbol
+name, declaration count; then, for each declaration in checker order: kind,
+same-source boolean, byte start/end, declaration name, property name, containing
+import's string module specifier (empty when absent). All fields use the existing
+UTF-16 length framing. IDs retain pointer equality within the resident program;
+they are not addresses and have no meaning across programs. Queries on shorthand
+property names select `GetShorthandAssignmentValueSymbol`, then fall back to
+`GetSymbolAtLocation` and the bound node symbol. Aliases remain alias symbols.
+The bridge exports compiler facts; the port decides local/global/import kinds.

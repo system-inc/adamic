@@ -203,6 +203,11 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "symbol":
+		if question != mode {
+			return "", fmt.Errorf("unexpected symbol suffix")
+		}
+		p.writeSymbol(out, c, source, node)
 	case "symbol-origin":
 		if question != mode {
 			return "", fmt.Errorf("unexpected symbol-origin suffix")

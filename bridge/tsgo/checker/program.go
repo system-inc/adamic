@@ -26,6 +26,7 @@ import (
 type Program struct {
 	Compiler    *compiler.Program
 	typeIDs     map[*checker.Type]uint64
+	symbolIDs   map[*ast.Symbol]uint64
 	typesByID   []*checker.Type
 	exactRanges map[*ast.SourceFile]map[nodeRange][]*ast.Node
 }

@@ -10,7 +10,7 @@ Every original Go HIR test runs through a test-file overlay that redirects its `
 
 The additional tagged fixture test visits **all 395 vendored upstream fixtures**. Forty Flow fixtures are explicitly excluded using cohere's `RequiresFlow` predicate; the 355 other inputs retain their original script extensions and use real programs with allowJs/JSX enabled. All function-like roots are lowered with the real checker, and nested IR functions are observed recursively. The upstream filenames remain in provenance even where no function can be constructed.
 
-Forty-five original Go tests skip under this environment. Their names are recorded in `testdata/construction-summary.json`; these include private corpus-dependent walks and tests that deliberately document upstream gaps. They are not silently counted as successes. A test building an IR by hand with no source node is a graph/pass test, not an AST construction input; it still runs, but contributes no source function to the construction denominator. The observer does not claim to export bodies of missing private corpora.
+Forty-five original Go tests skip under this environment. Their names and required units are recorded in [SKIPPED.md](SKIPPED.md) and `testdata/construction-summary.json`. All 45 require the absent private Structure corpus; none is outside the eight rules’ reach. They are not silently counted as successes. A test building an IR by hand with no source node is a graph/pass test, not an AST construction input; it still runs, but contributes no source function to the construction denominator. The observer does not claim to export bodies of missing private corpora.
 
 `testdata/construction-summary.json` records the corpus/probe counts, matched graph keys and caller spans, Flow exclusions, skipped Go tests and observed instruction kinds. The complete sources, dumps, per-function manifest and original Go test log are generated at test time under a temporary directory. Set `HIR_CENSUS_EXPORT=/tmp/hir-unit2-census` to retain them for diagnosis; absolute temporary paths are not part of the dump.
 
@@ -37,3 +37,33 @@ Eight semantic mutants are caught on both Node and native Adamic: literal boolea
 7. Port `react-hooks/static-components` into its own `stage1/cohere/lint/rules/<slug>/` directory, following docs/lint-registration.md: concrete listener/factory, exact messages, descriptor, tagged original Go rule/options adapter, raw finding witnesses and a caught rule mutant. Then regenerate the registry and run the discovered comparison harness to green. No shared registry lines or premature rule directory were added at this seam.
 
 The owner confirms mutation_aliasing arrives with tonight's lint-area pin bump; it is not needed for the remaining unit 2 or unit 3 work. No new blocking Adamic language gap was encountered in this seam.
+
+## Binding interface seam
+
+The resident checker now supports the generic `symbol` compiler-facts question:
+opaque program-owned identity, name and declaration/import AST metadata. It uses
+the shorthand value accessor before the ordinary symbol accessor and bound-node
+fallback, matching Go lower.go:1259. Alias symbols keep their identities; resolving
+an import to its export would lose the import declaration that lowering needs.
+`symbol.ts` owns the validated Adamic reader; `symbol_main.ts` is its independent
+compiler-fact witness driver. Facts are not HIR payloads or binding-kind answers.
+No production cohere files or gitlink change.
+
+This is a foundation inside the binding seam, **not completed binding lowering**.
+Construction remains 51/1,465 plus 9/9 probes. The next step is to export these facts
+from the original census checker contexts, wire parameter/local bindings and
+module/import classification into lowering, then admit those grammar paths and
+compare their hir-v1 dumps. Declarations, assignments/updates, captures and their
+mutants still follow before control flow, JSX, ForFunction and static-components.
+The symbol-identity-collapse mutant is an additional compiler-fact witness; it
+is not counted as a completed lowering-path mutant.
+
+Verification for this seam: `TestResidentSymbolFacts` passes **19 exact selectors**
+against independent resident symbol pointer identities (including two shadowed
+`value` bindings), across Go, live native Adamic and Node/native replay. Repeating
+each Go query preserves bytes and identity. Default, namespace and renamed imports
+are all exercised, as are shorthand resolution, absent globals and Unicode byte
+spans. Collapsing all nonzero symbol identities to one compiles and runs but changes
+the answer on Node and native. `go test ./bridge/tsgo/checker` passes. The complete
+construction census and original straight-line regression pass again, with all
+eight lowering mutants caught; no construction admission changes in this seam.
