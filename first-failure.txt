@@ -1,0 +1,7 @@
+FIRST FAILURE (tests, at 2155.6 s):
+github.com/system-inc/adamic/internal/fuzz TestParallelLeakCheckCatchesMutant/missing-results-release
+=== RUN   TestParallelLeakCheckCatchesMutant/missing-results-release
+    parallel_test.go:132: threads "": result graph mutant caught by shared leak check; heap values leaked: 17 (allocations 19, frees 2, in regions 0)
+    parallel_test.go:127: leak check missed task result graph: 
+--- FAIL: TestParallelLeakCheckCatchesMutant/missing-results-release (0.52s)
+
