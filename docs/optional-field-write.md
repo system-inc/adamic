@@ -238,3 +238,26 @@ literal-origin proof for annotated plain values; constructor views and unknown
 parameter origins retain their previous NotYet outcome. The empty interface
 literal and both alias directions still compile and agree with Node. Logs:
 /tmp/optional-alias-static-node.log and /tmp/optional-alias-static-native.log.
+
+Final follow-up validation: the complete uncached runtime checkpoint passed
+lower 65.609s, native 229.613s, oracle 332.083s, stage3 26.833s
+(/tmp/optional-alias-packages.log). After narrowing hasOwn to plain data literal
+origins, the complete final lower/oracle/stage3 packages passed 105.078s,
+122.415s and 53.978s respectively (/tmp/optional-alias-final-packages.log),
+using the permitted worker cache. Native production code was unchanged from its
+uncached pass. The final focused lower/oracle controls passed 1.002s/0.667s.
+
+The static-list mutant is caught only by Node stdout, release and sanitized,
+while exiting 0 with empty stderr. Two admission overlays are also caught:
+restoring unrestricted hasOwn admission fails the constructor/unknown-parameter
+NotYet assertions; substituting the names-only proof for the plain-data-origin
+proof fails the annotated-getter NotYet assertion. These are admission guards,
+not claimed sanitizer catches. Logs: /tmp/optional-alias-broad-hasown-mutant.log
+and /tmp/optional-alias-getter-origin-mutant.log. Final go vet ./..., formatting
+and whitespace checks passed (/tmp/optional-alias-{vet,format,whitespace}-final.log).
+Counts add only the two alias fixtures; all stage3 records remain unchanged.
+Implementation checkpoints 739d6e10, 83edd7ec and 173164be were pushed to the same
+own branch. No changes were made to protected emit.go, lower.go, native.go or
+oracle_test.go. General unknown-origin hasOwn, getter-own descriptors and
+constructor own-presence remain separate work; this unit admits the requested
+interface-annotated plain literal and its const aliases safely.
