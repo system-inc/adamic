@@ -1,1 +1,1 @@
-const keys = Object.getOwnPropertyNames({ x: 1 });
+const keys = new WeakMap<object, string>();

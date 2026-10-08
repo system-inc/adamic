@@ -18,20 +18,16 @@
 #include <unistd.h>
 #include "node_fs_wasi.h"
 
-static const char *const error_fields[] = {"name", "message", "code"};
-static const bool error_refs[] = {true, true, true};
-static const adamic_shape error_shape = {3, error_fields, error_refs, NULL};
-
 static adamic_string *text(const char *bytes) {
     return adamic_decode_utf8((const unsigned char *)bytes, strlen(bytes));
 }
 
 static void raise_error(const char *name, const char *code, const char *message) {
-    adamic_object *error = adamic_object_new(&error_shape);
-    error->slots[0].reference = text(name);
-    error->slots[1].reference = text(message);
-    error->slots[2].reference = text(code);
-    adamic_thrown = error;
+    adamic_string *label = text(name), *detail = text(message), *identifier = text(code);
+    adamic_node_error(label, detail, identifier);
+    adamic_release(label);
+    adamic_release(detail);
+    adamic_release(identifier);
 }
 
 static void system_error(int error, const char *operation, const char *path) {

@@ -1,0 +1,11 @@
+const re = new RegExp('a/b\n', 'mig');
+re.lastIndex = 7;
+console.log(re.toString());
+console.log('left:' + re);
+console.log(re + ':right');
+console.log(`${re.lastIndex}`);
+console.log(new RegExp('').toString());
+function before(): string { console.log('before'); return 'diagnostic:'; }
+try { console.log(before() + new RegExp('a**')); } catch (error) {
+ if (error instanceof Error) console.log(`${error instanceof SyntaxError}:${error.constructor === SyntaxError}`);
+} finally { console.log('finally'); }

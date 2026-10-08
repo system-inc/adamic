@@ -1,0 +1,19 @@
+{
+  "version": "6.0.3",
+  "results": [
+    {
+      "path": "RegExp.prototype[Symbol.replace].call string replacement",
+      "adamic": "excluded",
+      "stockCodes": [
+        "TS2345"
+      ]
+    },
+    {
+      "path": "String.matchAll structural custom hook",
+      "adamic": "excluded",
+      "stockCodes": [
+        "TS2345"
+      ]
+    }
+  ]
+}

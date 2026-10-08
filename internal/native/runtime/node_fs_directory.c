@@ -17,11 +17,6 @@
 #include <time.h>
 #include "node_fs_wasi.h"
 
-static const char *const error_names[] = {"name", "message", "code"};
-static const bool error_refs[] = {true, true, true};
-static const adamic_shape error_shape = {3, error_names, error_refs, NULL};
-static adamic_string error_name = ADAMIC_STRING("Error");
-static adamic_string type_error_name = ADAMIC_STRING("TypeError");
 static void *allocate(size_t size) {
 	void *result = malloc(size);
 	if (result == NULL) {
@@ -111,12 +106,12 @@ void adamic_node_fs_raise(const adamic_string *path, int error,
 	static adamic_string colon = ADAMIC_STRING(": "),
 						 comma = ADAMIC_STRING(", "),
 						 quote = ADAMIC_STRING(" '"), end = ADAMIC_STRING("'");
-	adamic_object *thrown = adamic_object_new(&error_shape);
-	thrown->slots[0].reference = &error_name;
-	thrown->slots[1].reference = adamic_string_concat(
+	adamic_string *message = adamic_string_concat(
 		path == NULL ? 5 : 8,
 		(adamic_string *const[]){before, &colon, detail, &comma, syscall,
 								 &quote, (adamic_string *)path, &end});
+	adamic_object *thrown = adamic_builtin_error_new(0, message);
+	adamic_release(message);
 	thrown->slots[2].reference = before;
 	adamic_release(detail);
 	adamic_release(syscall);
@@ -196,10 +191,9 @@ static bool valid(const adamic_string *path) {
 		shown = adamic_string_concat(2, (adamic_string *const[]){cut, &dots});
 		adamic_release(cut);
 	}
-	adamic_object *thrown = adamic_object_new(&error_shape);
-	thrown->slots[0].reference = &type_error_name;
-	thrown->slots[1].reference =
-		adamic_string_concat(2, (adamic_string *const[]){&before, shown});
+	adamic_string *message = adamic_string_concat(2, (adamic_string *const[]){&before, shown});
+	adamic_object *thrown = adamic_builtin_error_new(1, message);
+	adamic_release(message);
 	thrown->slots[2].reference = &code;
 	adamic_release(shown);
 	adamic_thrown = thrown;

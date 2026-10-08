@@ -1883,6 +1883,17 @@ func (p *parser) rewriteEquals() {
 }
 
 func (p *parser) rewriteThrows() {
+	// Keep the expected constructor consistent with the existing throw rewrite.
+	// classify retains the original Node program for this adaptation.
+	if len(p.throws) > 0 {
+		for i := 0; i+5 < len(p.toks); i++ {
+			t := p.toks[i : i+6]
+			if t[0].text == "assert" && t[1].text == "." && t[2].text == "throws" && t[3].text == "(" && t[4].text == "Test262Error" && t[5].text == "," {
+				p.edits = append(p.edits, edit{start: t[4].start, end: t[4].end, text: "Error"})
+				p.counts["throw-error-constructor"]++
+			}
+		}
+	}
 	for _, throw := range p.throws {
 		p.edits = append(p.edits, edit{start: throw.start, end: throw.end, text: "Error"})
 		p.counts[adaptThrowError]++

@@ -1,0 +1,170 @@
+built-ins/RegExp 50/1879 pass=30 fail=0 refused=20 crashed=0 skipped=0
+built-ins/RegExp 100/1879 pass=60 fail=0 refused=40 crashed=0 skipped=0
+built-ins/RegExp 150/1879 pass=85 fail=0 refused=65 crashed=0 skipped=0
+built-ins/RegExp 200/1879 pass=135 fail=0 refused=65 crashed=0 skipped=0
+built-ins/RegExp 250/1879 pass=185 fail=0 refused=65 crashed=0 skipped=0
+built-ins/RegExp 300/1879 pass=224 fail=0 refused=76 crashed=0 skipped=0
+built-ins/RegExp 350/1879 pass=241 fail=0 refused=109 crashed=0 skipped=0
+built-ins/RegExp 400/1879 pass=252 fail=0 refused=140 crashed=0 skipped=8
+built-ins/RegExp 450/1879 pass=252 fail=0 refused=178 crashed=0 skipped=20
+built-ins/RegExp 500/1879 pass=275 fail=0 refused=194 crashed=0 skipped=31
+built-ins/RegExp 550/1879 pass=287 fail=0 refused=212 crashed=0 skipped=51
+built-ins/RegExp 600/1879 pass=337 fail=0 refused=212 crashed=0 skipped=51
+built-ins/RegExp 650/1879 pass=387 fail=0 refused=212 crashed=0 skipped=51
+built-ins/RegExp 700/1879 pass=437 fail=0 refused=212 crashed=0 skipped=51
+built-ins/RegExp 750/1879 pass=487 fail=0 refused=212 crashed=0 skipped=51
+built-ins/RegExp 800/1879 pass=537 fail=0 refused=212 crashed=0 skipped=51
+built-ins/RegExp 850/1879 pass=587 fail=0 refused=212 crashed=0 skipped=51
+built-ins/RegExp 900/1879 pass=637 fail=0 refused=212 crashed=0 skipped=51
+built-ins/RegExp 950/1879 pass=687 fail=0 refused=212 crashed=0 skipped=51
+built-ins/RegExp 1000/1879 pass=722 fail=0 refused=212 crashed=0 skipped=66
+built-ins/RegExp 1050/1879 pass=725 fail=0 refused=212 crashed=0 skipped=113
+built-ins/RegExp 1100/1879 pass=726 fail=0 refused=212 crashed=0 skipped=162
+built-ins/RegExp 1150/1879 pass=726 fail=0 refused=219 crashed=0 skipped=205
+built-ins/RegExp 1200/1879 pass=726 fail=0 refused=219 crashed=0 skipped=255
+built-ins/RegExp 1250/1879 pass=726 fail=0 refused=219 crashed=0 skipped=305
+built-ins/RegExp 1300/1879 pass=726 fail=0 refused=219 crashed=0 skipped=355
+built-ins/RegExp 1350/1879 pass=726 fail=0 refused=219 crashed=0 skipped=405
+built-ins/RegExp 1400/1879 pass=727 fail=0 refused=252 crashed=0 skipped=421
+built-ins/RegExp 1450/1879 pass=733 fail=0 refused=291 crashed=0 skipped=426
+built-ins/RegExp 1500/1879 pass=736 fail=0 refused=308 crashed=0 skipped=456
+built-ins/RegExp 1550/1879 pass=740 fail=0 refused=339 crashed=0 skipped=471
+built-ins/RegExp 1600/1879 pass=745 fail=0 refused=357 crashed=0 skipped=498
+built-ins/RegExp 1650/1879 pass=773 fail=0 refused=361 crashed=0 skipped=516
+built-ins/RegExp 1700/1879 pass=817 fail=0 refused=367 crashed=0 skipped=516
+built-ins/RegExp 1750/1879 pass=818 fail=0 refused=416 crashed=0 skipped=516
+built-ins/RegExp 1800/1879 pass=868 fail=0 refused=416 crashed=0 skipped=516
+built-ins/RegExp 1850/1879 pass=918 fail=0 refused=416 crashed=0 skipped=516
+built-ins/RegExp 1879/1879 pass=936 fail=0 refused=427 crashed=0 skipped=516
+test262 7ab7fafa0003f73fc85c1b95d88094d33f7eb8bd
+adapt on
+
+built-ins/RegExp
+pass 936   fail 0   refused 427   crashed 0   skipped 516   total 1879
+
+directory                                              pass    fail   refused   crashed   skipped
+built-ins/RegExp                                        244       0       230         0        14
+built-ins/RegExp/CharacterClassEscapes                   12       0         0         0         0
+built-ins/RegExp/Symbol.species                           0       0         0         0         4
+built-ins/RegExp/dotall                                   4       0         0         0         0
+built-ins/RegExp/escape                                   0       0        15         0         5
+built-ins/RegExp/lookBehind                              17       0         0         0         0
+built-ins/RegExp/match-indices                            0       0         7         0         7
+built-ins/RegExp/named-groups                             5       0        27         0         4
+built-ins/RegExp/property-escapes                         2       0         0         0       142
+built-ins/RegExp/property-escapes/generated             441       0         0         0         0
+built-ins/RegExp/property-escapes/generated/strings       7       0         0         0        21
+built-ins/RegExp/prototype                                0       0         8         0         2
+built-ins/RegExp/prototype/Symbol.match                   0       0         0         0        53
+built-ins/RegExp/prototype/Symbol.matchAll                0       0         0         0        26
+built-ins/RegExp/prototype/Symbol.replace                 0       0         0         0        70
+built-ins/RegExp/prototype/Symbol.search                  0       0         0         0        23
+built-ins/RegExp/prototype/Symbol.split                   0       0         0         0        44
+built-ins/RegExp/prototype/dotAll                         1       0         2         0         5
+built-ins/RegExp/prototype/exec                           6       0        70         0         3
+built-ins/RegExp/prototype/flags                          2       0         1         0        13
+built-ins/RegExp/prototype/global                         0       0         5         0         5
+built-ins/RegExp/prototype/hasIndices                     1       0         2         0         5
+built-ins/RegExp/prototype/ignoreCase                     0       0         5         0         5
+built-ins/RegExp/prototype/multiline                      0       0         5         0         5
+built-ins/RegExp/prototype/source                         0       0         2         0        10
+built-ins/RegExp/prototype/sticky                         1       0         3         0         4
+built-ins/RegExp/prototype/test                           7       0        35         0         3
+built-ins/RegExp/prototype/toString                       0       0         4         0         5
+built-ins/RegExp/prototype/unicode                        1       0         3         0         4
+built-ins/RegExp/prototype/unicodeSets                    1       0         3         0        34
+built-ins/RegExp/regexp-modifiers                        62       0         0         0         0
+built-ins/RegExp/regexp-modifiers/syntax/valid            8       0         0         0         0
+built-ins/RegExp/unicodeSets/generated                  114       0         0         0         0
+
+refusal reasons
+  94  not yet: constructor-identity assertion in RegExp harness
+  47  error TS2345: Argument of type '…' is not assignable to parameter of type '…'.
+  41  not yet: a BinaryExpression with a string and a value
+  36  error TS2551: Property '…' does not exist on type '…'. Did you mean '…'?
+  25  error TS2339: Property '…' does not exist on type '…'.
+  24  error TS2769: No overload matches this call.
+  23  error TS2532: Object is possibly '…'.
+  14  error TS2550: Property '…' does not exist on type '…'. Do you need to change your target library? Try changing the '…' compiler option to '…' or later.
+  11  not yet: RegExp with nonconstant flags: the native runtime has no ECMAScript pattern compiler
+  10  error TS2531: Object is possibly '…'.
+   8  error TS18048: '…' is possibly '…'.
+   8  refuses var
+   6  error TS18047: '…' is possibly '…'.
+   6  error TS2704: The operand of a '…' operator cannot be a read-only property.
+   6  not yet: a BinaryExpression with a value and a string
+  ... and 26 more
+
+skip reasons
+  192  negative parse or early error
+   67  harness include propertyHelper.js
+   63  feature Symbol.replace
+   51  feature Symbol.match
+   20  features Symbol.species, Symbol.split
+   19  feature Symbol.split
+   18  feature Symbol.search
+   17  feature Symbol
+   12  harness include isConstructor.js
+   10  feature cross-realm
+    8  feature Symbol.matchAll
+    8  harness include compareIterator.js
+    7  eval
+    6  features Symbol, Symbol.match
+    5  features Symbol.matchAll, Symbol.species
+  ... and 10 more
+
+adaptations
+  4762  regex-literal-constructor
+  1214  var-to-let
+   934  regex-checked-match-read
+   188  regex-expected-metadata
+   142  throw-error
+    68  regex-null-assert
+    12  regex-checked-code-point
+    12  regex-string-collector
+     6  regex-harness-optional-field
+     2  strict-eq
+
+passes (936)
+  built-ins/RegExp/15.10.4.1-1.js
+  built-ins/RegExp/15.10.4.1-4.js
+  built-ins/RegExp/CharacterClassEscapes/character-class-digit-class-escape-negative-cases.js
+  built-ins/RegExp/CharacterClassEscapes/character-class-digit-class-escape-positive-cases.js
+  built-ins/RegExp/CharacterClassEscapes/character-class-non-digit-class-escape-negative-cases.js
+  built-ins/RegExp/CharacterClassEscapes/character-class-non-digit-class-escape-positive-cases.js
+  built-ins/RegExp/CharacterClassEscapes/character-class-non-whitespace-class-escape-negative-cases.js
+  built-ins/RegExp/CharacterClassEscapes/character-class-non-whitespace-class-escape-positive-cases.js
+  built-ins/RegExp/CharacterClassEscapes/character-class-non-word-class-escape-negative-cases.js
+  built-ins/RegExp/CharacterClassEscapes/character-class-non-word-class-escape-positive-cases.js
+  built-ins/RegExp/CharacterClassEscapes/character-class-whitespace-class-escape-negative-cases.js
+  built-ins/RegExp/CharacterClassEscapes/character-class-whitespace-class-escape-positive-cases.js
+  built-ins/RegExp/CharacterClassEscapes/character-class-word-class-escape-negative-cases.js
+  built-ins/RegExp/CharacterClassEscapes/character-class-word-class-escape-positive-cases.js
+  built-ins/RegExp/S15.10.1_A1_T1.js
+  built-ins/RegExp/S15.10.1_A1_T10.js
+  built-ins/RegExp/S15.10.1_A1_T11.js
+  built-ins/RegExp/S15.10.1_A1_T12.js
+  built-ins/RegExp/S15.10.1_A1_T13.js
+  built-ins/RegExp/S15.10.1_A1_T14.js
+  built-ins/RegExp/S15.10.1_A1_T15.js
+  built-ins/RegExp/S15.10.1_A1_T16.js
+  built-ins/RegExp/S15.10.1_A1_T2.js
+  built-ins/RegExp/S15.10.1_A1_T3.js
+  built-ins/RegExp/S15.10.1_A1_T4.js
+  built-ins/RegExp/S15.10.1_A1_T5.js
+  built-ins/RegExp/S15.10.1_A1_T6.js
+  built-ins/RegExp/S15.10.1_A1_T7.js
+  built-ins/RegExp/S15.10.1_A1_T8.js
+  built-ins/RegExp/S15.10.1_A1_T9.js
+  built-ins/RegExp/S15.10.2.12_A3_T5.js
+  built-ins/RegExp/S15.10.2.12_A4_T5.js
+  built-ins/RegExp/S15.10.2.13_A1_T1.js
+  built-ins/RegExp/S15.10.2.13_A1_T10.js
+  built-ins/RegExp/S15.10.2.13_A1_T11.js
+  built-ins/RegExp/S15.10.2.13_A1_T12.js
+  built-ins/RegExp/S15.10.2.13_A1_T13.js
+  built-ins/RegExp/S15.10.2.13_A1_T14.js
+  built-ins/RegExp/S15.10.2.13_A1_T15.js
+  built-ins/RegExp/S15.10.2.13_A1_T17.js
+  ... and 896 more
+

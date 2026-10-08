@@ -155,7 +155,7 @@ func changes(program *ir.Program, changing map[int]bool, list []ir.Statement) bo
 // function that doesn't change any. The walk still checks every operand, including an Error's message.
 func unchanging(program *ir.Program, changing map[int]bool, expression ir.Expression) bool {
 	switch expression := expression.(type) {
-	case ir.ObjectLiteral, ir.ArrayPush, ir.MakeClosure, ir.MakeError, ir.Defined:
+	case ir.ObjectLiteral, ir.ArrayPush, ir.MakeClosure, ir.MakeError, ir.BuiltinError, ir.ErrorIs, ir.Defined:
 		return true
 	case ir.ArrayLiteral:
 		for _, spread := range expression.Spread {

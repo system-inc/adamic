@@ -1,0 +1,3 @@
+program	reason
+RegExp.prototype[Symbol.replace].call(/a/, "za", "$1!")	TS2345: stock TypeScript types .call using the last overload, which requires a replacement callback
+const hook = { [Symbol.matchAll]: (text: string) => /a/g[Symbol.matchAll](text) }; "a".matchAll(hook)	TS2740: stock TypeScript String.matchAll accepts RegExp, not a structural custom hook

@@ -1,0 +1,6 @@
+=== RUN   TestRegExpNativeRefusals
+    regexp_test.go:27: expected loud NotYet for let pattern = 'a'; pattern = 'b'; new RegExp(pattern).test('a');: <nil>
+--- FAIL: TestRegExpNativeRefusals (1.06s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	1.095s
+FAIL

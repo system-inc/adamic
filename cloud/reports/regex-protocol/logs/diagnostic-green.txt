@@ -1,0 +1,12 @@
+=== RUN   TestRegExpUncaughtDiagnosticsRefuse
+--- PASS: TestRegExpUncaughtDiagnosticsRefuse (0.13s)
+=== RUN   TestRegExpProtocolRefusals
+--- PASS: TestRegExpProtocolRefusals (0.17s)
+=== RUN   TestRegExpProtocolOverrideRefusals
+--- PASS: TestRegExpProtocolOverrideRefusals (0.31s)
+=== RUN   TestRegExpNativeRefusals
+--- PASS: TestRegExpNativeRefusals (0.39s)
+=== RUN   TestRegExpSourceNode
+--- PASS: TestRegExpSourceNode (0.05s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.055s

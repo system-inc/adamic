@@ -28,5 +28,8 @@ func (s *regexpLibraryFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
 		text = strings.ReplaceAll(text, "[Symbol.split](string: string, limit?: number): string[]", "[Symbol.split](string: string, limit?: number): (string | undefined)[]")
 		text = strings.ReplaceAll(text, "split(splitter: { [Symbol.split](string: string, limit?: number): (string | undefined)[]; }, limit?: number): string[];", "split(splitter: { [Symbol.split](string: string, limit?: number): (string | undefined)[]; }, limit?: number): (string | undefined)[];")
 	}
+	if strings.HasSuffix(path.AsString(), "/lib.es2022.regexp.d.ts") {
+		text = strings.ReplaceAll(text, "[key: string]: [number, number]", "[key: string]: [number, number] | undefined")
+	}
 	return text, ok
 }

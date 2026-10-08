@@ -584,8 +584,17 @@ func (e *emitter) value(expression ir.Expression) string {
 		r := e.program.Regexps[expression.Index]
 		return "new RegExp(" + quote(r.Pattern) + ", " + quote(r.Flags) + ")"
 	case ir.RegExpCall:
+		if strings.HasPrefix(expression.Method, "symbol:") {
+			if strings.HasSuffix(expression.Method, "Callback") {
+				return e.value(expression.Value) + "[Symbol.replace](" + e.value(expression.Arguments[0]) + ", ((callback) => (whole) => adamicCall(callback, [whole]))(" + e.value(expression.Arguments[1]) + "))"
+			}
+			return e.value(expression.Value) + "[Symbol." + strings.TrimSuffix(strings.TrimPrefix(expression.Method, "symbol:"), "Callback") + "](" + e.values(expression.Arguments) + ")"
+		}
 		if expression.Method == "iteratorDone" {
 			return e.value(expression.Value) + ".done"
+		}
+		if strings.HasSuffix(expression.Method, "Callback") {
+			return e.value(expression.Value) + "." + strings.TrimSuffix(expression.Method, "Callback") + "(" + e.value(expression.Arguments[0]) + ", ((callback) => (whole) => adamicCall(callback, [whole]))(" + e.value(expression.Arguments[1]) + "))"
 		}
 		return e.value(expression.Value) + "." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.RegExpGroup:
@@ -782,6 +791,15 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Value)
 	case ir.Box:
 		return e.value(expression.Value)
+	case ir.BuiltinError:
+		name := []string{"Error", "TypeError", "SyntaxError", "RangeError", "ReferenceError", "EvalError", "URIError"}[expression.Kind]
+		return "new " + name + "(" + e.value(expression.Message) + ")"
+	case ir.ErrorIs:
+		name := []string{"Error", "TypeError", "SyntaxError", "RangeError", "ReferenceError", "EvalError", "URIError"}[expression.Kind]
+		if expression.Exact {
+			return "(" + e.value(expression.Value) + ".constructor === " + name + ")"
+		}
+		return "(" + e.value(expression.Value) + " instanceof " + name + ")"
 	case ir.MakeError:
 		if expression.Name != nil {
 			return "Object.assign(new Error(" + e.value(expression.Message) + "), {name: " + e.value(expression.Name) + "})"

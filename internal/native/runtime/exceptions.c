@@ -11,14 +11,36 @@ adamic_object *adamic_thrown;
 
 static const char *const error_names[] = {"name", "message", "code"};
 static const bool error_references[] = {true, true, true};
-static const adamic_shape error_shape = {3, error_names, error_references, NULL};
-static adamic_string error_name = ADAMIC_STRING("Error");
+// Distinct immutable shapes carry constructor identity; name remains writable.
+// The last two are host SystemError and DOMException, both inheriting Error.
+static const adamic_shape error_shapes[] = {
+	{3, error_names, error_references, NULL}, {3, error_names, error_references, NULL},
+	{3, error_names, error_references, NULL}, {3, error_names, error_references, NULL},
+	{3, error_names, error_references, NULL}, {3, error_names, error_references, NULL},
+	{3, error_names, error_references, NULL}, {3, error_names, error_references, NULL}, {3, error_names, error_references, NULL}
+};
+static adamic_string error_labels[] = {
+	ADAMIC_STRING("Error"), ADAMIC_STRING("TypeError"), ADAMIC_STRING("SyntaxError"),
+	ADAMIC_STRING("RangeError"), ADAMIC_STRING("ReferenceError"), ADAMIC_STRING("EvalError"), ADAMIC_STRING("URIError"), ADAMIC_STRING("SystemError"), ADAMIC_STRING("SyntaxError")
+};
 
-adamic_object *adamic_error_new(adamic_string *message) {
-	adamic_object *error = adamic_object_new(&error_shape);
-	error->slots[0].reference = adamic_retain(&error_name);
+bool adamic_error_is(const adamic_object *error, int kind, bool exact) {
+	if (error == NULL) return false;
+	for (int actual = 0; actual < 9; actual++) {
+		if (error->shape == &error_shapes[actual]) return actual == kind || (!exact && kind == 0);
+	}
+	return false;
+}
+
+adamic_object *adamic_builtin_error_new(int kind, adamic_string *message) {
+	adamic_object *error = adamic_object_new(&error_shapes[kind]);
+	error->slots[0].reference = adamic_retain(&error_labels[kind]);
 	error->slots[1].reference = adamic_retain(message);
 	return error;
+}
+
+adamic_object *adamic_error_new(adamic_string *message) {
+	return adamic_builtin_error_new(0, message);
 }
 
 _Noreturn void adamic_uncaught(void) {

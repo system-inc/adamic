@@ -1,0 +1,28 @@
+reason	before	after
+Pass	914	936
+Stock TypeScript rejection (audit separately)	223	223
+negative parse or early error	192	192
+Symbol protocol/species classifier skip	160	160
+Constant constructor SyntaxError not implemented	157	0
+Other compiler refusal	53	94
+Runner constructor guard (native and adapted Node succeeded)	0	94
+harness include propertyHelper.js	67	67
+features Symbol.species, Symbol.split	20	20
+feature Symbol	17	17
+harness include isConstructor.js	12	12
+Runtime flags explicitly refused	11	11
+feature cross-realm	10	10
+harness include compareIterator.js	8	8
+eval	7	7
+features Symbol, Symbol.match	6	6
+Runtime pattern explicitly refused	5	5
+features Symbol.matchAll, Symbol.species	5	5
+features Symbol.match, Symbol.matchAll	2	2
+getters	2	2
+harness includes deepEqual.js, propertyHelper.js	2	2
+features Reflect, cross-realm	1	1
+features Symbol, Symbol.search	1	1
+features Symbol.iterator, Symbol.replace	1	1
+features Symbol.replace, Symbol.toPrimitive	1	1
+features Symbol.species, Symbol.split, cross-realm	1	1
+noStrict (sloppy mode only; Adamic modules are always strict)	1	1

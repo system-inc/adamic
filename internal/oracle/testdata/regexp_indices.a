@@ -1,0 +1,19 @@
+const match = /(?<first>a)(?<missing>b)?/d.exec('za');
+if (match !== null) {
+ const indices = match.indices;
+ if (indices !== undefined) {
+  const whole = indices[0];
+  const first = indices[1];
+  if (whole !== undefined && first !== undefined) console.log(`${whole[0]}:${whole[1]}:${first[0]}:${first[1]}:${whole.length}`);
+  console.log(`${indices.length}:${indices[2] === undefined}`);
+  const groups = indices.groups;
+  if (groups !== undefined) console.log(`${groups.first === indices[1]}:${groups.missing === undefined}:${groups.absent === undefined}`);
+ }
+}
+const emoji = /(?<world>🌍)/du.exec('a🌍');
+if (emoji !== null && emoji.indices !== undefined) {
+ const span = emoji.indices[1];
+ if (span !== undefined) console.log(`${span[0]}:${span[1]}`);
+}
+const absent = /a/.exec('a');
+if (absent !== null) console.log(`${absent.indices === undefined}`);

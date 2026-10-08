@@ -19,3 +19,7 @@ process.stdout.write('raw \ud800 \0 héllo 🌍');
 process.stdout.write('\x1B[2J\x1B[3J\x1B[H');
 console.error('error');
 process.stdout.write('after\n');
+
+try { process.chdir('l2-identity-missing-directory'); } catch (error) {
+    if (error instanceof Error) console.log(`chdir identity ${error.constructor === Error} ${error instanceof TypeError}`);
+}

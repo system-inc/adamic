@@ -1,0 +1,22 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_errors.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_errors.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_errors.a
+    oracle_test.go:559: gate cache node hit
+    oracle_test.go:559: gate cache node hit
+    oracle_test.go:448: gate cache native miss
+    oracle_test.go:441: gate cache native miss
+    oracle_test.go:580: stdout differs
+        node:   exit 0, stdout "true:false:false\ntrue:false:true\ntrue:false:1\ntrue:true\ntrue:false:RangeError\ntrue:false:ReferenceError\ntrue:false:EvalError\ntrue:false:URIError\n", stderr ""
+        native: exit 0, stdout "true:false:true\ntrue:false:true\ntrue:false:1\ntrue:false\ntrue:true:RangeError\ntrue:true:ReferenceError\ntrue:true:EvalError\ntrue:true:URIError\n", stderr ""
+    oracle_test.go:455: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_errors.a (75.72s)
+FAIL
+gate cache: native hits=1 misses=2
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	75.823s
+FAIL

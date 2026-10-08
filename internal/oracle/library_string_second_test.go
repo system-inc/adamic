@@ -74,11 +74,13 @@ func TestLibraryStringSecondMutants(t *testing.T) {
 						changed = true
 						return node
 					}
-				case ir.StringConstant:
-					if test.name == "nullReceiver" && program.Strings[node.Index] == "TypeError" {
-						program.Strings[node.Index] = "RangeError"
+				case ir.BuiltinError:
+					if test.name == "nullReceiver" && node.Kind == 1 {
+						node.Kind = 3
 						changed = true
+						return node
 					}
+				case ir.StringConstant:
 					if test.name == "mapConversion" && program.Strings[node.Index] == "[object Map]" {
 						program.Strings[node.Index] = "[object Set]"
 						changed = true

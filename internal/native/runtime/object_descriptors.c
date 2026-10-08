@@ -199,8 +199,5 @@ void adamic_object_descriptors_free(adamic_object *object, void (*release)(void 
  }
 }
 adamic_object *adamic_object_type_error(adamic_string *message) {
- static adamic_string name = ADAMIC_STRING("TypeError");
- adamic_object *error = adamic_error_new(message);
- error->slots[0].reference = &name;
- return error;
+ return adamic_builtin_error_new(1, message);
 }

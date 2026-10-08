@@ -1,0 +1,30 @@
+Landing means preparing and pushing only codex/regex-protocol-land for @system_adamic to merge into area/library. Never push main, never force-push. Only @system_adamic_integration moves main.
+Original branch origin/codex/regex-protocol remains ffb3ae0b1c25797d29d7b8c30edbceafafbe4508.
+Base origin/main: e011f8f60899586d6373a5ccb07335ad82cfbf3c. Replayed the three protocol-unit commits after matcher tip 50a1dc8, excluding matcher history assigned to library seat 1.
+Resolved lowering constructor conflicts in favor of protocol semantics while retaining main's constantPattern surrogate-string join. Runtime header conflict keeps only the new toString declaration, not inherited regular-engine declarations. The counts conflict is resolved by full Linux regeneration.
+Main's regex ownership proof is retained: extend its closed whitelist for intrinsic protocols/toString, and give callbacks ordinary escape/clobber effects. The future-method refusal remains closed. Operand-cycle tests cover all added method names.
+Required small dependencies are carried from the original protocol ancestry: regexp_constants.go and discarded RegExp expression evaluation in statements.go. No other matcher feature or commit is replayed. Main's conditional-super lowering is retained.
+The matcher-owned runner adaptation test and literal-freshness README update are not replayed. A portable TestRegExpProtocolHarnessConstructors preserves this unit's actual constructor test, independently of runner adapter dependencies. Correct TypeError is admitted, Error when TypeError is required fails. No runner verdict/classification change.
+Node v24.19.0, Linux x64; existing configured toolchain reused. Test output redirected directly to evidence logs.
+Commands:
+source /workspace/adamic-tools/env.sh
+go test ./internal/lower ./internal/fresh ./internal/flow ./internal/javascript ./internal/load ./internal/ir ./cmd/adamic-test262 ./internal/native -timeout 30m -count=1 > packages-final.txt 2>&1
+The first lower run exposed discarded-RegExp dependency and is superseded by lower-resolved.txt; all other packages in this log are the complete gates.
+go test ./internal/lower -timeout 30m -count=1 > lower-resolved.txt 2>&1
+go test ./cmd/adamic-test262 -run TestRegExpProtocolHarnessConstructors -timeout 10m -count=1 -v > harness.txt 2>&1
+go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(regexp|sweeps/regexp)' -timeout 30m -count=1 -v > oracle-final.txt 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -timeout 30m -count=1 -args -update-counts > counts-final.txt 2>&1
+go vet ./internal/lower ./internal/fresh ./internal/flow ./internal/javascript ./internal/load ./internal/ir ./internal/native ./cmd/adamic-test262 > vet-final.txt 2>&1
+Initial compile failures from absent inherited constant-source helpers, and initial lower failures from discarded construction, are retained as diagnostic history, not counted green.
+Ownership mutant in /tmp/regex-protocol-land-mutant: return immediately from the proven symbol:match operation before evaluating its operands; run TestRegexOperandsStillJudgeCycleWrites. Expected semantic failure: lost cycle-closing operand write. Original live branch never mutated. First isolated attempt lacked the submodule; linked the existing unchanged cohere checkout and reran. No setup failure counted as a mutant catch.
+The old branch's feature mutants and Node-held survey remain historical evidence, not a new survey of current main. Full uncached repository gate not run; touched packages and all regex fixtures re-greened instead.
+
+Current-main refresh: origin/main advanced during checks to e8ba3d5d81de4d3773c723914fccd4c76248b965. Rebased the unpublished landing branch again; original branch untouched. Main's call-target/devirtualization changes merged cleanly.
+The complete first native gate exposed TestThrowElementBorrowPlan: new ErrorIs was conservatively considered array-changing. Extend only element_borrow.go's unchanging operation list for ErrorIs/BuiltinError, retaining the recursive operand walk and main's call-target handling. The check now preserves benign borrows without admitting message/catch mutations.
+After this resolution the regex and borrowed-element oracle passes (2.113s); complete Linux counts pass (28.624s). Then current-main checks supersede those baseline gates:
+go test ./internal/lower ./internal/fresh ./internal/flow ./internal/javascript ./internal/load ./internal/ir ./cmd/adamic-test262 ./internal/native -timeout 30m -count=1 > packages-current-main.txt 2>&1
+go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(regexp|sweeps/regexp|borrow_element|call_targets|devirtualize)' -timeout 30m -count=1 -v > oracle-current-main.txt 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -timeout 30m -count=1 -args -update-counts > counts-current-main.txt 2>&1
+go vet ./internal/lower ./internal/fresh ./internal/flow ./internal/javascript ./internal/load ./internal/ir ./internal/native ./cmd/adamic-test262 > vet-current-main.txt 2>&1
+Final results on e8ba3d5: lower PASS 29.293s; fresh PASS 100.298s; flow PASS 160.458s; load PASS 5.316s; runner PASS 162.380s; native complete gate PASS 208.367s; JavaScript/IR production packages have no ordinary package tests except IR's guards. IR guard initially rejected raw ArraySort.Comparator in regexpDiagnosticLeaves. Replaced it with ClosureTargets, preserving Unknown fallback; complete IR PASS 26.681s and lower rerun PASS 29.293s. Latest Node oracle passes (oracle-call-targets-resolved.txt); whole Linux counts regenerated PASS 61.423s, then recorded counts checked once more after the guard fix. Vet exit 0. The combined package command's IR failure is superseded by the complete IR/lower rerun, not hidden.
+Operand mutant: valid build, fails TestRegexOperandsStillJudgeCycleWrites with lost cycle-closing operand write; no compile/sanitizer failure counted as a semantic catch.

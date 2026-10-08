@@ -739,6 +739,8 @@ bool adamic_weak_held(const void *target);
 // Error(message), and adamic_uncaught the panic of an error nothing caught.
 extern adamic_object *adamic_thrown;
 adamic_object *adamic_error_new(adamic_string *message);
+adamic_object *adamic_builtin_error_new(int kind, adamic_string *message);
+bool adamic_error_is(const adamic_object *error, int kind, bool exact);
 _Noreturn void adamic_uncaught(void);
 
 // adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail

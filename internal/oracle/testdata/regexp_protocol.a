@@ -1,0 +1,50 @@
+function matchText(match: RegExpMatchArray | null): string {
+ if (match === null) return 'null';
+ return `${match.index}:${match[0]}:${match[1]}`;
+}
+const re = /(a)(b)?/d;
+console.log(matchText(re[Symbol.match]('za')));
+console.log(matchText('za'.match(re)));
+console.log(re[Symbol.replace]('za', '$2:$1:$&'));
+console.log('za'.replace(re, '$2:$1:$&'));
+re.lastIndex = -0;
+console.log(`${re[Symbol.search]('za')}:${1 / re.lastIndex}`);
+console.log(`${RegExp.prototype[Symbol.search].call(re, 'za')}:${1 / re.lastIndex}`);
+console.log(re[Symbol.split]('za!a', 4).join('|'));
+console.log('za!a'.split(re, 4).join('|'));
+const once = re[Symbol.matchAll]('a a');
+console.log(`${once.next().done}:${once.next().done}:${re.lastIndex}`);
+const many = /(?:)/gu[Symbol.matchAll]('🌍');
+for (const found of many) console.log(`${found.index}:${found[0]}`);
+function stringMatchAll(): void { 'a'.matchAll(/a/); }
+try { stringMatchAll(); } catch (error) {
+ if (error instanceof Error) console.log(`${error.constructor === TypeError}:${error.message}`);
+}
+try { 'a'.replaceAll(/a/, 'b'); } catch (error) {
+ if (error instanceof Error) console.log(`${error.constructor === TypeError}:${error.message}`);
+}
+console.log(matchText(RegExp.prototype[Symbol.match].call(re, 'za')));
+console.log(RegExp.prototype[Symbol.split].call(re, 'za!a', 3).join('|'));
+const prototypeOnce = RegExp.prototype[Symbol.matchAll].call(re, 'a a');
+console.log(`${prototypeOnce.next().done}:${prototypeOnce.next().done}`);
+console.log(/(?<word>a)(?<missing>b)?/[Symbol.replace]('za', '$<missing>:$<word>'));
+function receiver(): RegExp { console.log('receiver'); return re; }
+function input(): string { console.log('input'); return 'za'; }
+console.log(`${receiver()[Symbol.search](input())}`);
+console.log(`${RegExp.prototype[Symbol.search].call(receiver(), input())}`);
+console.log(`${input().search(receiver())}`);
+
+function splitUnits(parts: (string | undefined)[]): string {
+ let result = '';
+ for (const part of parts) {
+  if (part === undefined) { result += 'undefined|'; }
+  else {
+   for (let index = 0; index < part.length; index++) result += `${part.charCodeAt(index)},`;
+   result += '|';
+  }
+ }
+ return result;
+}
+console.log(splitUnits(/(?!\W)/u[Symbol.split]('🌍')));
+console.log(splitUnits(/(?!\W)/u[Symbol.split]('🌍', 4)));
+console.log(splitUnits(/(?!\W)/u[Symbol.split]('🌍', 4.5)));

@@ -96,14 +96,9 @@ adamic_string *adamic_string_from_code_points(size_t count, const double values[
 		if (!(value >= 0 && value <= 0x10ffff && value == trunc(value))) {
 			free(buffer.bytes);
 			static adamic_string prefix = ADAMIC_STRING("Invalid code point ");
-			static adamic_string name = ADAMIC_STRING("RangeError");
 			adamic_string *written = adamic_string_from_number(value);
 			adamic_string *message = adamic_string_concat(2, (adamic_string *const[]){&prefix, written});
-			adamic_thrown = adamic_error_new(message);
-			static adamic_slot_cache name_cache;
-			adamic_value *slot = adamic_object_field(adamic_thrown, "name", &name_cache);
-			adamic_release(slot->reference);
-			slot->reference = adamic_retain(&name);
+			adamic_thrown = adamic_builtin_error_new(3, message);
 			adamic_release(message);
 			adamic_release(written);
 			return NULL;

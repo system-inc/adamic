@@ -6,9 +6,9 @@ function failure(error: Error): void {
 }
 import { openSync, closeSync, writeSync } from 'node:fs';
 const fd=openSync(root + '/out','w'); closeSync(fd);
-try { closeSync(fd); } catch(error) { if (error instanceof Error) { failure(error); } }
-try { writeSync(fd,'closed'); } catch(error) { if (error instanceof Error) { failure(error); } }
-try { closeSync(-1); } catch(error) { if (error instanceof Error) { failure(error); } }
+try { closeSync(fd); } catch(error) { if (error instanceof Error) { console.log(`identity ${error.constructor === Error} ${error.constructor === RangeError} ${error instanceof RangeError}`); failure(error); } }
+try { writeSync(fd,'closed'); } catch(error) { if (error instanceof Error) { console.log(`identity ${error.constructor === Error} ${error.constructor === RangeError} ${error instanceof RangeError}`); failure(error); } }
+try { closeSync(-1); } catch(error) { if (error instanceof Error) { console.log(`identity ${error.constructor === Error} ${error.constructor === RangeError} ${error instanceof RangeError}`); failure(error); } }
 
 const plain: NodeJS.ErrnoException=new Error('plain');
 console.log(`plain-code=${plain.code ?? 'missing'}`);

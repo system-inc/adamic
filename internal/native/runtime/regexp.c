@@ -806,14 +806,19 @@ adamic_array *adamic_regex_match(adamic_string *input, adamic_object *regex) {
 static const char *const iterator_names[] = {"regex", "input", "done"};
 static const bool iterator_references[] = {true, true, false};
 static const adamic_shape iterator_shape = {3, iterator_names, iterator_references, NULL};
-static void regex_require_global(const adamic_regex_program *p, const char *message) {
-	if (!(p->flags & 8))
-		adamic_panic(message, strlen(message));
+static bool regex_require_global(const adamic_regex_program *p, adamic_string *message) {
+ if (p->flags & 8) return true;
+ adamic_thrown = adamic_builtin_error_new(1, message);
+ return false;
 }
 adamic_object *adamic_regex_match_all(adamic_string *input, adamic_object *regex) {
-	const adamic_regex_program *p = regex_program(regex);
-	regex_require_global(
-		p, "TypeError: String.prototype.matchAll called with a non-global RegExp argument");
+ const adamic_regex_program *p = regex_program(regex);
+ static adamic_string message = ADAMIC_STRING("String.prototype.matchAll called with a non-global RegExp argument");
+ if (!regex_require_global(p, &message)) return NULL;
+ return adamic_regex_symbol_match_all(input, regex);
+}
+adamic_object *adamic_regex_symbol_match_all(adamic_string *input, adamic_object *regex) {
+ const adamic_regex_program *p = regex_program(regex);
 	adamic_object *copy = adamic_regex_new(p, regex->slots[2].reference, regex->slots[3].reference);
 	copy->slots[1].number = (double)regex_to_length(regex->slots[1].number);
 	adamic_object *iterator = adamic_object_new(&iterator_shape);
@@ -829,7 +834,9 @@ adamic_array *adamic_regex_iterator_step(adamic_object *iterator) {
 	adamic_array *result = adamic_regex_exec(regex, input);
 	if (result == NULL)
 		iterator->slots[2].boolean = true;
-	else {
+	else if (!(regex_program(regex)->flags & 8)) {
+		iterator->slots[2].boolean = true;
+	} else {
 		adamic_string *whole = result->elements[0].reference;
 		if (adamic_string_length(whole) == 0) {
 			size_t length;
@@ -1027,9 +1034,8 @@ static void regex_substitution(adamic_array *pieces, adamic_string *input, size_
 adamic_string *adamic_regex_replace(adamic_string *input, adamic_object *regex,
 									adamic_string *replacement, bool require_global) {
 	const adamic_regex_program *p = regex_program(regex);
-	if (require_global)
-		regex_require_global(
-			p, "TypeError: String.prototype.replaceAll called with a non-global RegExp argument");
+	static adamic_string message = ADAMIC_STRING("String.prototype.replaceAll called with a non-global RegExp argument");
+	if (require_global && !regex_require_global(p, &message)) return NULL;
 	bool global = (p->flags & 8) != 0;
 	if (global)
 		regex->slots[1].number = 0;
@@ -1060,4 +1066,57 @@ adamic_string *adamic_regex_replace(adamic_string *input, adamic_object *regex,
 	regex_input_free(replacement, text);
 	regex_input_free(input, units);
 	return result;
+}
+
+// Symbol.replace collects every match before invoking a functional replacer.
+// Its mutations of lastIndex must not change the collected match sequence.
+adamic_string *adamic_regex_replace_callback(adamic_string *input, adamic_object *regex,
+											  adamic_closure *replacement, bool require_global) {
+	const adamic_regex_program *p = regex_program(regex);
+	static adamic_string message = ADAMIC_STRING("String.prototype.replaceAll called with a non-global RegExp argument");
+	if (require_global && !regex_require_global(p, &message)) return NULL;
+	bool global = (p->flags & 8) != 0;
+	if (global) regex->slots[1].number = 0;
+	adamic_array *matches = adamic_array_new(0, true);
+	size_t length;
+	const uint16_t *units = regex_input(input, &length);
+	for (;;) {
+		adamic_array *match = adamic_regex_exec(regex, input);
+		if (match == NULL) break;
+		adamic_array_push(matches, (adamic_value){.reference = match});
+		if (!global) break;
+		if (adamic_string_length(match->elements[0].reference) == 0)
+			regex->slots[1].number = (double)regex_advance(units, length, regex_to_length(regex->slots[1].number), p->flags & 4);
+	}
+	regex_input_free(input, units);
+	adamic_array *pieces = adamic_array_new(0, true);
+	size_t previous = 0;
+	for (size_t k = 0; k < matches->length; k++) {
+		adamic_array *match = matches->elements[k].reference;
+		adamic_string *whole = match->elements[0].reference;
+		size_t start = (size_t)match->properties->slots[0].number;
+		adamic_value replaced = replacement->code(replacement, (adamic_value[]){ {.reference = whole} });
+		if (adamic_thrown != NULL) {
+			adamic_release(replaced.reference);
+			adamic_release(pieces);
+			adamic_release(matches);
+			return NULL;
+		}
+		regex_piece(pieces, input, previous, start);
+		adamic_array_push(pieces, replaced);
+		previous = start + (size_t)adamic_string_length(whole);
+	}
+	regex_piece(pieces, input, previous, length);
+	adamic_string *result = adamic_array_join(pieces, &adamic_string_empty, adamic_join_strings);
+	adamic_release(pieces);
+	adamic_release(matches);
+	return result;
+}
+
+// The proven intrinsic object has immutable source/flags and no custom hooks.
+adamic_string *adamic_regex_to_string(adamic_object *regex) {
+	static adamic_string slash = ADAMIC_STRING("/");
+	return adamic_string_concat(4, (adamic_string *const[]){
+		&slash, regex->slots[2].reference, &slash, regex->slots[3].reference
+	});
 }

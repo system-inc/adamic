@@ -1,0 +1,22 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replacement_callback.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replacement_callback.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replacement_callback.a
+    oracle_test.go:559: gate cache node miss
+    oracle_test.go:559: gate cache node miss
+    oracle_test.go:448: gate cache native miss
+    oracle_test.go:441: gate cache native miss
+    oracle_test.go:580: stdout differs
+        node:   exit 0, stdout "0:0:a\n1:17:a\nA_A\n2:17\nXbX\na!ba\nAbA\n-🌍-\ntrue:a\nfinally\ntrue:String.prototype.replaceAll called with a non-global RegExp argument\nz\n-🌍\n", stderr ""
+        native: exit 0, stdout "0:0:a\n1:0:a\nA_A\n2:17\nXbX\na!ba\nAbA\n-🌍-\ntrue:a\nfinally\ntrue:String.prototype.replaceAll called with a non-global RegExp argument\nz\n-🌍\n", stderr ""
+    oracle_test.go:455: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replacement_callback.a (19.24s)
+FAIL
+gate cache: native hits=1 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	19.271s
+FAIL

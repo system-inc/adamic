@@ -33,8 +33,7 @@ func (l *lowering) libraryArrayMapOversized(node *ast.Node, written []*ast.Node)
 	b := l.libraryArrayBuilder(arguments)
 	local := b.local("range_error", ir.Object)
 	b.body = append(b.body,
-		ir.Declare{Local: local, Value: ir.MakeError{Message: ir.StringConstant{Index: l.constant("Invalid array length")}}},
-		ir.SetProperty{Object: b.read(local), Name: "name", Value: ir.StringConstant{Index: l.constant("RangeError")}, Site: l.libraryArraySyntheticWriteSite(node)},
+		ir.Declare{Local: local, Value: ir.BuiltinError{Message: ir.StringConstant{Index: l.constant("Invalid array length")}, Kind: 3}},
 		ir.Throw{Value: b.read(local)},
 	)
 	return b.finish("array_map_oversized", ir.Undefined{}), nil

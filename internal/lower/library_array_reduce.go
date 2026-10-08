@@ -108,8 +108,7 @@ func (b *libraryArrayBuilder) typeError(node *ast.Node, message string) []ir.Sta
 func (b *libraryArrayBuilder) typeErrorMessage(node *ast.Node, message ir.Expression) []ir.Statement {
 	local := b.local("type_error", ir.Object)
 	return []ir.Statement{
-		ir.Declare{Local: local, Value: ir.MakeError{Message: message}},
-		ir.SetProperty{Object: b.read(local), Name: "name", Value: ir.StringConstant{Index: b.l.constant("TypeError")}, Site: b.l.libraryArraySyntheticWriteSite(node)},
+		ir.Declare{Local: local, Value: ir.BuiltinError{Message: message, Kind: 1}},
 		ir.Throw{Value: b.read(local)},
 	}
 }

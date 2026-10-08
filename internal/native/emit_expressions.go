@@ -24,6 +24,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		for _, argument := range expression.Arguments {
 			e.value(argument)
 		}
+		if expression.Invalid {
+			e.line("adamic_thrown = adamic_builtin_error_new(2, &adamic_string_%d);", expression.Failure)
+			e.checkThrown()
+			return "NULL"
+		}
 		return e.own(ir.Object, fmt.Sprintf("adamic_regex_new(&adamic_regex_%d, &adamic_string_%d, &adamic_string_%d)", expression.Index, expression.Source, expression.Flags))
 	case ir.RegExpCall:
 		return e.regexCall(expression)
@@ -198,6 +203,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.maybeToString(expression.Value)
 	case ir.Box:
 		return e.box(expression.Value)
+	case ir.BuiltinError:
+		return e.own(ir.Object, fmt.Sprintf("adamic_builtin_error_new(%d, %s)", expression.Kind, e.value(expression.Message)))
+	case ir.ErrorIs:
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_error_is(%s, %d, %t)", e.value(expression.Value), expression.Kind, expression.Exact))
 	case ir.MakeError:
 		return e.makeError(expression)
 	case ir.WeakOf:

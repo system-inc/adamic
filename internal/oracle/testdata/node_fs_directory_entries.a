@@ -12,3 +12,13 @@ for (const path of ['', 'walking/missing', 'reading/hello.txt/child', 'reading/h
 
 try { throw new Error('ordinary'); }
 catch (error) { if (error instanceof Error) { const failure: NodeJS.ErrnoException = error; console.log(`${failure.code ?? 'no code'} ${error.message}`); } }
+
+for (const path of ['walking/missing', '\0']) {
+    try { readdirSync(path); } catch (error) {
+        if (error instanceof Error) {
+            console.log(`identity ${error.constructor === Error} ${error.constructor === TypeError} ${error instanceof TypeError}`);
+            error.name = 'RangeError';
+            console.log(`renamed ${error.constructor === Error} ${error.constructor === TypeError} ${error instanceof RangeError}`);
+        }
+    }
+}

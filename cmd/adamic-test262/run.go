@@ -400,14 +400,6 @@ func (e *engine) attempt(test classified) result {
 	})
 	base.Kind = decided.Kind
 	base.Reason = decided.Reason
-	// The existing generic harness checks Error ancestry, not constructor
-	// identity. Independent Node success cannot prove that missing native check.
-	// Do not award a RegExp pass until exact constructor checks are supported.
-	if base.Kind == outcomePass && test.ConstructorAssertion {
-		base.Kind = outcomeRefused
-		base.Reason = "not yet: constructor-identity assertion in RegExp harness"
-		return base
-	}
 	if base.Kind == outcomePass && test.Original != "" {
 		original := e.originalRegExp(test)
 		if crashedExecution(original) {

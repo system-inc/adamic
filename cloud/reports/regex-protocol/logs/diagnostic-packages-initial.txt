@@ -1,0 +1,6 @@
+--- FAIL: TestRegExpHandledDiagnosticsAccepted (0.13s)
+    regexp_diagnostics_test.go:29: Load: /tmp/adamic-gate/TestRegExpHandledDiagnosticsAccepted822569750/001/main.a:1:54: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	20.859s
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	56.394s
+FAIL
