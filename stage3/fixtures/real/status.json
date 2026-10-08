@@ -13,8 +13,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/real/type-predicate/main.a:8:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on node); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -49,8 +49,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/real/function-without-body/main.a:8:1: stage 0 can't lower a function without a body yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -67,8 +67,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/real/prefix-unary-value/main.a:7:13: stage 0 can't lower a PrefixUnaryExpression on a value yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -104,7 +104,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/real/generic-optional-return/main.a:4:17: stage 0 can't lower a function returning T | undefined yet"
+      "what": "stage3/fixtures/real/generic-optional-return/main.a:7:68: stage 0 can't lower an array of never yet"
     }
   },
   {
@@ -121,8 +121,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/real/value-condition/main.a:6:12: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -139,8 +139,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/real/binary-value-value/main.a:10:41: stage 0 can't lower a BinaryExpression with a value and a value yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -175,8 +175,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/real/optional-boolean-field/main.a:6:12: stage 0 can't lower a field of type boolean | undefined yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   }
 ]
