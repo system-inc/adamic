@@ -1,0 +1,17 @@
+=== RUN   TestNodeProcessDirectoryRuntime
+=== PAUSE TestNodeProcessDirectoryRuntime
+=== CONT  TestNodeProcessDirectoryRuntime
+    node_process_directory_test.go:54: gate cache node miss
+    oracle_test.go:493: gate cache native miss
+=== RUN   TestNodeProcessDirectoryRuntime/cache_invalidation
+    node_process_directory_test.go:86: clean runtime mutant caught by Node stdout comparison
+=== RUN   TestNodeProcessDirectoryRuntime/error_code
+    node_process_directory_test.go:86: clean runtime mutant caught by Node stdout comparison
+--- PASS: TestNodeProcessDirectoryRuntime (0.90s)
+    --- PASS: TestNodeProcessDirectoryRuntime/cache_invalidation (0.22s)
+    --- PASS: TestNodeProcessDirectoryRuntime/error_code (0.24s)
+PASS
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.909s

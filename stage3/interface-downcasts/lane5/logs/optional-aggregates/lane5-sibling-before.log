@@ -1,0 +1,93 @@
+--- FAIL: TestCheckedViewCallableDestructuredSiblingRefusal (0.18s)
+    checked_views_callable_optional_aggregates_test.go:99: gate cache node miss
+panic: Unhandled case in Node.Text: *ast.BindingPattern [recovered, repanicked]
+
+goroutine 21 [running]:
+testing.tRunner.func1.2({0x1d9c778, 0x14c356a94e10})
+	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+panic({0x1d9c778?, 0x14c356a94e10?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text(0x0?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:308 +0x42c
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses.func1(0x14c3569be820)
+	/workspace/adamic/internal/lower/view_callables.go:74 +0x1ca
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclarationList).ForEachChild(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1774
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x0?, 0x14c355f29fe0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8742 +0x3084
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses.func1(0x14c356d37780)
+	/workspace/adamic/internal/lower/view_callables.go:105 +0x4bc
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableStatement).ForEachChild(0x14c356f1eaf0?, 0x14c355f29fe0?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1679 +0x62
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x14c3571412b8?, 0x14c355f29fe0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8738 +0x1032
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses.func1(0x14c356a9d2c0)
+	/workspace/adamic/internal/lower/view_callables.go:105 +0x4bc
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0x14c356f28e08, 0x14c355f29fe0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:2783 +0x9b
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x14c356273200?, 0x14c355f29fe0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9002 +0x1ec5
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses(0x14c356273200, 0x14c356a7cdc0, 0x14c3563b7800, 0x14c356f29c68)
+	/workspace/adamic/internal/lower/view_callables.go:109 +0x1ee
+github.com/system-inc/adamic/internal/lower.(*lowering).strictViewContract(0x14c356273200, 0x14c356a7cdc0, 0x14c3563b7800)
+	/workspace/adamic/internal/lower/view_contracts.go:120 +0x1056
+github.com/system-inc/adamic/internal/lower.(*lowering).viewContract(0x14c356273200, 0x14c356a7cdc0, 0x14c3563b7800)
+	/workspace/adamic/internal/lower/view_lazy.go:23 +0x107
+github.com/system-inc/adamic/internal/lower.(*lowering).viewSchema(0x14c356273200, 0x14c356a7cdc0, 0x0?)
+	/workspace/adamic/internal/lower/interface_cast.go:336 +0x32
+github.com/system-inc/adamic/internal/lower.(*lowering).view(0x14c356273200, 0x14c3563b7800?, {0x1e58218, 0x14c35606f950}, 0x0?)
+	/workspace/adamic/internal/lower/interface_cast.go:39 +0x3d
+github.com/system-inc/adamic/internal/lower.(*lowering).structuralViewCast(0x14c356273200, 0x14c356a7cdc0, {0x1e58218, 0x14c35606f950}, 0x14c3563b7680, 0x14c3563b7800)
+	/workspace/adamic/internal/lower/view_objects.go:98 +0x2f0
+github.com/system-inc/adamic/internal/lower.(*lowering).deferredViewCast(0x14c356273200, 0x14c356a7cdc0, {0x1e58218, 0x14c35606f950}, 0x14c3563b7680, 0x14c3563b7800)
+	/workspace/adamic/internal/lower/view_cast_preflight.go:100 +0x179
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerDeferredCast(0x14c356598008?, 0x80?, 0x14c35606f920?, {0x1e58218?, 0x14c35606f950?}, 0x0?, 0x0?)
+	/workspace/adamic/internal/lower/view_cast_preflight.go:52 +0x56
+github.com/system-inc/adamic/internal/lower.(*lowering).cast(0x14c356273200, 0x14c356a7cdc0)
+	/workspace/adamic/internal/lower/cast.go:31 +0x648
+github.com/system-inc/adamic/internal/lower.(*lowering).uncheckedValue(0x14c356273200, 0x14c356a7cdc0?)
+	/workspace/adamic/internal/lower/expression.go:640 +0x1649
+github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0x14c356273200, 0x14c356a7cdc0)
+	/workspace/adamic/internal/lower/expression.go:445 +0x6b
+github.com/system-inc/adamic/internal/lower.(*lowering).value(0x14c356273200, 0x14c356a7cdc0)
+	/workspace/adamic/internal/lower/expression.go:434 +0x127
+github.com/system-inc/adamic/internal/lower.(*lowering).expression(0x14c356273200, 0x14c356a7cdc0)
+	/workspace/adamic/internal/lower/expression.go:194 +0x8c
+github.com/system-inc/adamic/internal/lower.(*lowering).variables(0x14c356273200, 0x14c356d377c0)
+	/workspace/adamic/internal/lower/locals.go:75 +0x68c
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x14c356273200, 0x14c356a9d310)
+	/workspace/adamic/internal/lower/statements.go:59 +0x125
+github.com/system-inc/adamic/internal/lower.(*lowering).statements(0x14c356273200, {0x14c356a7cd30, 0x2, 0x14c355f2b640?})
+	/workspace/adamic/internal/lower/statements.go:17 +0xd0
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerBody(0x14c356273200, 0x0, 0x14c356c88c60, 0xffffffffffffffff, {0x1f49d00, 0x0, 0x14c355f2baf0?}, {0x1f49d00, 0x0, 0x0})
+	/workspace/adamic/internal/lower/functions.go:232 +0x1565
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction(0x14c356273200, 0x0, 0x14c356c88c60, 0xffffffffffffffff)
+	/workspace/adamic/internal/lower/functions.go:55 +0x17e
+github.com/system-inc/adamic/internal/lower.(*lowering).functionBody(0x14c356273200, 0x14c356c88c60)
+	/workspace/adamic/internal/lower/functions.go:12 +0x65
+github.com/system-inc/adamic/internal/lower.(*lowering).declareModule(0x14c356273200, {0x14c35606f5f0, 0x5, 0x14c356f28e08?})
+	/workspace/adamic/internal/lower/modules.go:174 +0xa88
+github.com/system-inc/adamic/internal/lower.Lower({0x1e5ae48?, 0x1f49d00?}, 0x14c356ecb9b0)
+	/workspace/adamic/internal/lower/lower.go:52 +0x4c5
+github.com/system-inc/adamic/internal/oracle.lowered(0x14c356238d88, {0x14c35602f630, 0x4e})
+	/workspace/adamic/internal/oracle/oracle_test.go:622 +0x18b
+github.com/system-inc/adamic/internal/oracle.TestCheckedViewCallableDestructuredSiblingRefusal(0x14c356238d88)
+	/workspace/adamic/internal/oracle/checked_views_callable_optional_aggregates_test.go:103 +0x1a6
+testing.tRunner(0x14c356238d88, 0x1e65388)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/internal/oracle	0.192s
+FAIL

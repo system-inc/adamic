@@ -1,0 +1,3 @@
+const values = new Set<number>();
+values.add(1);
+values.forEach((value:number|string):void => {console.log(`${value}`);});

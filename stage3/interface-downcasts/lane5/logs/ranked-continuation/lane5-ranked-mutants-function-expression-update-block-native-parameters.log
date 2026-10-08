@@ -1,0 +1,15 @@
+--- FAIL: TestCheckedViewCallableRankedFamilies (0.96s)
+    --- FAIL: TestCheckedViewCallableRankedFamilies/function-expression/wrong-members (0.50s)
+        checked_views_callable_ranked_test.go:22: gate cache node miss
+        checked_views_callable_ranked_test.go:42: gate cache node miss
+        checked_views_callable_ranked_test.go:62: backend0 exit 70 stdout "" stderr "adamic: panic: a union value does not match its narrowed type\n" want "createFunctionExpression" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: a union value does not match its narrowed type\n"
+    --- FAIL: TestCheckedViewCallableRankedFamilies/update-block/wrong-members (0.46s)
+        checked_views_callable_ranked_test.go:22: gate cache node miss
+        checked_views_callable_ranked_test.go:42: gate cache node miss
+        checked_views_callable_ranked_test.go:62: backend0 exit 0 stdout "8\n" stderr "" want "updateBlock" and "found function with incompatible parameter representations"; sanitized exit 0 stderr ""
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.971s
+FAIL

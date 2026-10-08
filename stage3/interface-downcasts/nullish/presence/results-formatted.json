@@ -1,0 +1,78 @@
+[
+  {
+    "fixture": "exact",
+    "command": [
+      "node",
+      "/tmp/nullish-presence/exact-node.cjs"
+    ],
+    "label": "Node",
+    "exit": 0,
+    "stdout": "true\n[first]\ntrue\n",
+    "stderr": ""
+  },
+  {
+    "fixture": "exact",
+    "command": [
+      "/tmp/nullish-presence/adamic",
+      "build",
+      "/tmp/nullish-presence/exact.a",
+      "-o",
+      "/tmp/nullish-presence/exact",
+      "--sanitize"
+    ],
+    "label": "native build",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "/tmp/nullish-presence/exact.a:3:1: error TS2412: Type 'undefined' is not assignable to type 'number' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n"
+  },
+  {
+    "fixture": "exact",
+    "command": [
+      "/tmp/nullish-presence/adamic",
+      "js",
+      "/tmp/nullish-presence/exact.a"
+    ],
+    "label": "JavaScript build",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "/tmp/nullish-presence/exact.a:3:1: error TS2412: Type 'undefined' is not assignable to type 'number' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n"
+  },
+  {
+    "fixture": "explicit",
+    "command": [
+      "node",
+      "/tmp/nullish-presence/explicit-node.cjs"
+    ],
+    "label": "Node",
+    "exit": 0,
+    "stdout": "false\n[]\nfalse\ntrue\n[first]\ntrue\n",
+    "stderr": ""
+  },
+  {
+    "fixture": "explicit",
+    "command": [
+      "/tmp/nullish-presence/adamic",
+      "build",
+      "/tmp/nullish-presence/explicit.a",
+      "-o",
+      "/tmp/nullish-presence/explicit",
+      "--sanitize"
+    ],
+    "label": "native build",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /tmp/nullish-presence/explicit.a:5:34: stage 0 can't lower Object.hasOwn on a shape not proven by a plain literal or its const binding yet\n"
+  },
+  {
+    "fixture": "explicit",
+    "command": [
+      "/tmp/nullish-presence/adamic",
+      "js",
+      "/tmp/nullish-presence/explicit.a"
+    ],
+    "label": "JavaScript build",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /tmp/nullish-presence/explicit.a:5:34: stage 0 can't lower Object.hasOwn on a shape not proven by a plain literal or its const binding yet\n"
+  }
+]

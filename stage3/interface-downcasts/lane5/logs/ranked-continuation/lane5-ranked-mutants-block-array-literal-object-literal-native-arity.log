@@ -1,0 +1,19 @@
+--- FAIL: TestCheckedViewCallableRankedFamilies (1.42s)
+    --- FAIL: TestCheckedViewCallableRankedFamilies/block/wrong-arity (0.50s)
+        checked_views_callable_ranked_test.go:25: gate cache node miss
+        checked_views_callable_ranked_test.go:49: gate cache node miss
+        checked_views_callable_ranked_test.go:69: backend0 exit 0 stdout "9\n" stderr "" want "createBlock" and "found function with arity 1"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableRankedFamilies/array-literal/wrong-arity (0.45s)
+        checked_views_callable_ranked_test.go:25: gate cache node miss
+        checked_views_callable_ranked_test.go:49: gate cache node miss
+        checked_views_callable_ranked_test.go:69: backend0 exit 0 stdout "9\n" stderr "" want "createArrayLiteralExpression" and "found function with arity 1"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableRankedFamilies/object-literal/wrong-arity (0.46s)
+        checked_views_callable_ranked_test.go:25: gate cache node miss
+        checked_views_callable_ranked_test.go:49: gate cache node miss
+        checked_views_callable_ranked_test.go:69: backend0 exit 0 stdout "9\n" stderr "" want "createObjectLiteralExpression" and "found function with arity 1"; sanitized exit 0 stderr ""
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.424s
+FAIL

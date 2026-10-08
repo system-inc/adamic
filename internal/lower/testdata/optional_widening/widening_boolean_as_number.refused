@@ -1,0 +1,1 @@
+testdata/optional_widening/widening_boolean_as_number.a:3:42: Adamic 0.1 refuses optional property y in { x: number; y?: number; } absent from structural source { x: number; }, which can hide fields; declare y on the source type, or build a fresh object with known fields (adamic/no-optional-widening)

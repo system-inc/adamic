@@ -1,0 +1,16 @@
+ok  	github.com/system-inc/adamic/internal/ir	16.432s
+ok  	github.com/system-inc/adamic/internal/lower	0.550s
+--- FAIL: TestGraphClosureEnvironment (6.56s)
+    graph_regions_test.go:158: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-3605960094/main.c:10:47: error: incompatible function pointer types passing 'adamic_value (adamic_closure *, adamic_value *)' (aka 'union adamic_value (struct adamic_closure *, union adamic_value *)') to parameter of type 'adamic_code' (aka 'union adamic_value (*)(struct adamic_closure *, union adamic_value *, unsigned long)') [-Wincompatible-function-pointer-types]
+           10 |  adamic_closure *closure = adamic_closure_new(code, 1);
+              |                                               ^~~~
+        /home/agent/.cache/adamic/runtime/c12a472d8a8c95a415746c07dbf66ac5dc4ca59ac104772e0640c6fc73d95fd2/adamic.h:117:48: note: passing argument to parameter 'code' here
+          117 | adamic_closure *adamic_closure_new(adamic_code code, size_t count);
+              |                                                ^
+        1 error generated.
+        
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	23.078s
+ok  	github.com/system-inc/adamic/internal/javascript	0.820s
+FAIL

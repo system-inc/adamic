@@ -1,0 +1,40 @@
+// Independently written selector projection for candidate 140; unread compiler payloads are not copied.
+interface CandidatePayload {readonly label:string;}
+interface CandidateMember0 {readonly kind:number; readonly payload:CandidatePayload; readonly opaque0:any;}
+interface CandidateMember1 {readonly kind:188; readonly payload:CandidatePayload; readonly opaque1:any;}
+interface CandidateMember2 {readonly kind:265; readonly payload:CandidatePayload; readonly opaque2:any;}
+interface CandidateMember3 {readonly kind:264; readonly payload:CandidatePayload; readonly opaque3:any;}
+interface CandidateMember4 {readonly kind:232; readonly payload:CandidatePayload; readonly opaque4:any;}
+interface CandidateMember5 {readonly kind:211; readonly payload:CandidatePayload; readonly opaque5:any;}
+type CandidateTarget = CandidateMember0 | CandidateMember1 | CandidateMember2 | CandidateMember3 | CandidateMember4 | CandidateMember5;
+interface ReadReceiver {readonly kind:'Receiver'; readonly parent:CandidateTarget;}
+const raw0={kind:'Receiver' as const,parent:{kind:0,payload:{label:'ok'}}};
+const base0:{readonly kind:'Receiver'}=raw0;
+const view0=base0 as ReadReceiver;
+const value0=view0.parent;
+console.log(`${value0!==undefined}`);
+const raw1={kind:'Receiver' as const,parent:{kind:188,payload:{label:'ok'}}};
+const base1:{readonly kind:'Receiver'}=raw1;
+const view1=base1 as ReadReceiver;
+const value1=view1.parent;
+console.log(`${value1!==undefined}`);
+const raw2={kind:'Receiver' as const,parent:{kind:265,payload:{label:'ok'}}};
+const base2:{readonly kind:'Receiver'}=raw2;
+const view2=base2 as ReadReceiver;
+const value2=view2.parent;
+console.log(`${value2!==undefined}`);
+const raw3={kind:'Receiver' as const,parent:{kind:264,payload:{label:'ok'}}};
+const base3:{readonly kind:'Receiver'}=raw3;
+const view3=base3 as ReadReceiver;
+const value3=view3.parent;
+console.log(`${value3!==undefined}`);
+const raw4={kind:'Receiver' as const,parent:{kind:232,payload:{label:'ok'}}};
+const base4:{readonly kind:'Receiver'}=raw4;
+const view4=base4 as ReadReceiver;
+const value4=view4.parent;
+console.log(`${value4!==undefined}`);
+const raw5={kind:'Receiver' as const,parent:{kind:211,payload:{label:'ok'}}};
+const base5:{readonly kind:'Receiver'}=raw5;
+const view5=base5 as ReadReceiver;
+const value5=view5.parent;
+console.log(`${value5!==undefined}`);

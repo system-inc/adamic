@@ -1,0 +1,156 @@
+=== RUN   TestCheckedViewDictionaryComponents
+=== PAUSE TestCheckedViewDictionaryComponents
+=== RUN   TestCheckedViewDictionaryComponentMutants
+=== PAUSE TestCheckedViewDictionaryComponentMutants
+=== RUN   TestCheckedViewPrimitiveArraySafety
+=== RUN   TestCheckedViewPrimitiveArraySafety/ordinary
+=== RUN   TestCheckedViewPrimitiveArraySafety/alias
+=== RUN   TestCheckedViewPrimitiveArraySafety/index
+=== RUN   TestCheckedViewPrimitiveArraySafety/typeof
+=== RUN   TestCheckedViewPrimitiveArraySafety/sparse
+=== RUN   TestCheckedViewPrimitiveArraySafety/negative
+=== RUN   TestCheckedViewPrimitiveArraySafety/fraction
+=== RUN   TestCheckedViewPrimitiveArraySafety/optional
+=== RUN   TestCheckedViewPrimitiveArraySafety/finite-good
+=== RUN   TestCheckedViewPrimitiveArraySafety/finite-wrong
+--- PASS: TestCheckedViewPrimitiveArraySafety (9.19s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/ordinary (1.25s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/alias (1.02s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/index (0.97s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/typeof (1.21s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/sparse (0.85s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/negative (0.55s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/fraction (0.61s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/optional (1.05s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/finite-good (1.16s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/finite-wrong (0.52s)
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/string
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/number
+    checked_views_primitive_dictionaries_test.go:88: untested dictionary first member caught by Node control
+    checked_views_primitive_dictionaries_test.go:88: untested dictionary first member caught by Node control
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/boolean
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/null
+    checked_views_primitive_dictionaries_test.go:91: null/undefined erasure mutant caught by Node null control
+    checked_views_primitive_dictionaries_test.go:91: null/undefined erasure mutant caught by Node null control
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/undefined
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/missing
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/wrong
+    checked_views_primitive_dictionaries_test.go:85: actual function-member admission mutant caught by named read pin
+    checked_views_primitive_dictionaries_test.go:85: actual function-member admission mutant caught by named read pin
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/wrong-array
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/wrong-object
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/string
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/number
+    checked_views_primitive_dictionaries_test.go:88: untested dictionary first member caught by Node control
+    checked_views_primitive_dictionaries_test.go:88: untested dictionary first member caught by Node control
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/boolean
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/null
+    checked_views_primitive_dictionaries_test.go:91: null/undefined erasure mutant caught by Node null control
+    checked_views_primitive_dictionaries_test.go:91: null/undefined erasure mutant caught by Node null control
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/undefined
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/missing
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/wrong
+    checked_views_primitive_dictionaries_test.go:72: stderr differs: oracle.run{stdout:[]uint8{}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x20, 0x72, 0x65, 0x61, 0x64, 0x20, 0x66, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x3a, 0x20, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x5b, 0x6b, 0x65, 0x79, 0x5d, 0x3b, 0x20, 0x65, 0x78, 0x70, 0x65, 0x63, 0x74, 0x65, 0x64, 0x20, 0x54, 0x73, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x46, 0x69, 0x6c, 0x65, 0x20, 0x7c, 0x20, 0x43, 0x6f, 0x6d, 0x70, 0x69, 0x6c, 0x65, 0x72, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x2c, 0x20, 0x66, 0x6f, 0x75, 0x6e, 0x64, 0x20, 0x66, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0xa}, exitCode:70}
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/wrong-array
+    checked_views_primitive_dictionaries_test.go:72: stderr differs: oracle.run{stdout:[]uint8{}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x20, 0x72, 0x65, 0x61, 0x64, 0x20, 0x66, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x3a, 0x20, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x5b, 0x6b, 0x65, 0x79, 0x5d, 0x3b, 0x20, 0x65, 0x78, 0x70, 0x65, 0x63, 0x74, 0x65, 0x64, 0x20, 0x54, 0x73, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x46, 0x69, 0x6c, 0x65, 0x20, 0x7c, 0x20, 0x43, 0x6f, 0x6d, 0x70, 0x69, 0x6c, 0x65, 0x72, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x2c, 0x20, 0x66, 0x6f, 0x75, 0x6e, 0x64, 0x20, 0x61, 0x72, 0x72, 0x61, 0x79, 0xa}, exitCode:70}
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/wrong-object
+    checked_views_primitive_dictionaries_test.go:72: stderr differs: oracle.run{stdout:[]uint8{}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x20, 0x72, 0x65, 0x61, 0x64, 0x20, 0x66, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x3a, 0x20, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x5b, 0x6b, 0x65, 0x79, 0x5d, 0x3b, 0x20, 0x65, 0x78, 0x70, 0x65, 0x63, 0x74, 0x65, 0x64, 0x20, 0x54, 0x73, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x46, 0x69, 0x6c, 0x65, 0x20, 0x7c, 0x20, 0x43, 0x6f, 0x6d, 0x70, 0x69, 0x6c, 0x65, 0x72, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x2c, 0x20, 0x66, 0x6f, 0x75, 0x6e, 0x64, 0x20, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0xa}, exitCode:70}
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/string
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/number
+    checked_views_primitive_dictionaries_test.go:88: untested dictionary first member caught by Node control
+    checked_views_primitive_dictionaries_test.go:88: untested dictionary first member caught by Node control
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/boolean
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/null
+    checked_views_primitive_dictionaries_test.go:91: null/undefined erasure mutant caught by Node null control
+    checked_views_primitive_dictionaries_test.go:91: null/undefined erasure mutant caught by Node null control
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/undefined
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/missing
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/wrong
+    checked_views_primitive_dictionaries_test.go:85: actual function-member admission mutant caught by named read pin
+    checked_views_primitive_dictionaries_test.go:85: actual function-member admission mutant caught by named read pin
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/wrong-array
+=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/wrong-object
+--- FAIL: TestCheckedViewOriginalDictionaryPrimitiveComponents (61.00s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/string (3.07s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/number (2.90s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/boolean (2.79s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/null (3.50s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/undefined (2.57s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/missing (3.24s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/wrong (2.62s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/wrong-array (2.34s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/wrong-object (2.68s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/string (2.69s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/number (2.75s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/boolean (2.37s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/null (2.92s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/undefined (2.71s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/missing (2.74s)
+    --- FAIL: TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/wrong (2.15s)
+    --- FAIL: TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/wrong-array (2.45s)
+    --- FAIL: TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/wrong-object (2.22s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/string (1.41s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/number (1.73s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/boolean (1.44s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/null (1.80s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/undefined (1.68s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/missing (1.27s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/wrong (1.09s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/wrong-array (0.87s)
+    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/wrong-object (1.00s)
+=== RUN   TestCheckedViewPrimitiveDictionarySelector
+=== RUN   TestCheckedViewPrimitiveDictionarySelector/string
+=== RUN   TestCheckedViewPrimitiveDictionarySelector/number
+    checked_views_primitive_dictionaries_test.go:126: untested dictionary first member caught by Node control
+    checked_views_primitive_dictionaries_test.go:126: untested dictionary first member caught by Node control
+=== RUN   TestCheckedViewPrimitiveDictionarySelector/boolean
+=== RUN   TestCheckedViewPrimitiveDictionarySelector/null
+    checked_views_primitive_dictionaries_test.go:129: null/undefined erasure mutant caught by Node null control
+    checked_views_primitive_dictionaries_test.go:129: null/undefined erasure mutant caught by Node null control
+=== RUN   TestCheckedViewPrimitiveDictionarySelector/undefined
+=== RUN   TestCheckedViewPrimitiveDictionarySelector/missing
+=== RUN   TestCheckedViewPrimitiveDictionarySelector/wrong
+    checked_views_primitive_dictionaries_test.go:133: actual function-member admission mutant caught by named read pin
+    checked_views_primitive_dictionaries_test.go:133: actual function-member admission mutant caught by named read pin
+--- PASS: TestCheckedViewPrimitiveDictionarySelector (6.44s)
+    --- PASS: TestCheckedViewPrimitiveDictionarySelector/string (0.99s)
+    --- PASS: TestCheckedViewPrimitiveDictionarySelector/number (0.99s)
+    --- PASS: TestCheckedViewPrimitiveDictionarySelector/boolean (0.79s)
+    --- PASS: TestCheckedViewPrimitiveDictionarySelector/null (1.10s)
+    --- PASS: TestCheckedViewPrimitiveDictionarySelector/undefined (1.04s)
+    --- PASS: TestCheckedViewPrimitiveDictionarySelector/missing (0.78s)
+    --- PASS: TestCheckedViewPrimitiveDictionarySelector/wrong (0.75s)
+=== CONT  TestCheckedViewDictionaryComponents
+=== CONT  TestCheckedViewDictionaryComponentMutants
+=== RUN   TestCheckedViewDictionaryComponentMutants/skip-check
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="[object Object]\nundefined\n"
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="[object Object]\nundefined\n"
+=== RUN   TestCheckedViewDictionaryComponentMutants/accept-wrong-shape
+=== RUN   TestCheckedViewDictionaryComponents/options-good
+=== NAME  TestCheckedViewDictionaryComponentMutants/accept-wrong-shape
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="undefined\n"
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="undefined\n"
+=== RUN   TestCheckedViewDictionaryComponentMutants/drop-transitive-contract
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="42\n"
+    checked_views_dictionaries_test.go:96: pinned exit-70 diagnostic catches mutant: exit=0 stdout="42\n"
+--- PASS: TestCheckedViewDictionaryComponentMutants (0.83s)
+    --- PASS: TestCheckedViewDictionaryComponentMutants/skip-check (0.35s)
+    --- PASS: TestCheckedViewDictionaryComponentMutants/accept-wrong-shape (0.23s)
+    --- PASS: TestCheckedViewDictionaryComponentMutants/drop-transitive-contract (0.24s)
+=== RUN   TestCheckedViewDictionaryComponents/options-wrong
+=== RUN   TestCheckedViewDictionaryComponents/nested-good
+=== RUN   TestCheckedViewDictionaryComponents/nested-wrong
+=== RUN   TestCheckedViewDictionaryComponents/array-wrong
+--- PASS: TestCheckedViewDictionaryComponents (1.95s)
+    --- PASS: TestCheckedViewDictionaryComponents/options-good (0.34s)
+    --- PASS: TestCheckedViewDictionaryComponents/options-wrong (0.29s)
+    --- PASS: TestCheckedViewDictionaryComponents/nested-good (0.29s)
+    --- PASS: TestCheckedViewDictionaryComponents/nested-wrong (0.23s)
+    --- PASS: TestCheckedViewDictionaryComponents/array-wrong (0.23s)
+FAIL
+gate cache: native hits=0 misses=30
+gate cache: node hits=0 misses=112
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	78.612s
+FAIL

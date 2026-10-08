@@ -1,0 +1,8 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface EntityName {readonly value:number;}
+interface TypeNode {readonly value:number;}
+interface TypeReferenceNode {readonly value:number;}
+interface Base {readonly createTypeReferenceNode:unknown;}
+interface Target {createTypeReferenceNode(typeName: string | EntityName, typeArguments?: readonly TypeNode[]): TypeReferenceNode;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createTypeReferenceNode("abc").value}`);console.log(`${factory.createTypeReferenceNode({value:3},undefined).value}`);console.log(`${factory.createTypeReferenceNode({value:3},[{value:5}]).value}`);console.log(`${factory.createTypeReferenceNode("abc",[{value:5}]).value}`);}
+probe({createTypeReferenceNode:(typeName:string|EntityName,typeArguments?:readonly TypeNode[]):TypeReferenceNode=>{const typeNode=typeArguments===undefined?undefined:typeArguments[0];return {value:(typeof typeName==="string"?typeName.length:typeName.value)+(typeNode===undefined?0:typeNode.value)};}});

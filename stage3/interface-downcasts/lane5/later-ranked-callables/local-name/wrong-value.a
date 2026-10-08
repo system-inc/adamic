@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Declaration {readonly value:number;}
+interface Identifier {readonly value:number;}
+interface Base {readonly getLocalName:unknown;}
+interface Target {getLocalName(node: Declaration, allowComments?: boolean, allowSourceMaps?: boolean, ignoreAssignedName?: boolean): Identifier;}
+function probe(value:Base):void {const factory=value as Target;const node:Declaration={value:3};console.log(`${factory.getLocalName(node,false,false).value}`);}
+probe({getLocalName:4});

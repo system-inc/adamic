@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Diagnostic {readonly value:number;}
+interface Base {readonly addConfigDiagnostic:unknown;}
+interface Target {addConfigDiagnostic(diag: Diagnostic): void;}
+function probe(value:Base):void {const programDiagnostics=value as Target;const Diagnostics={Option_incremental_can_only_be_specified_using_tsconfig_emitting_to_single_file_or_when_option_tsBuildInfoFile_is_specified:3};function createCompilerDiagnostic(message:number):Diagnostic{return {value:message};}programDiagnostics.addConfigDiagnostic(createCompilerDiagnostic(Diagnostics.Option_incremental_can_only_be_specified_using_tsconfig_emitting_to_single_file_or_when_option_tsBuildInfoFile_is_specified));}
+probe({addConfigDiagnostic:(diag:Diagnostic):void=>{console.log(`${diag.value}`);}});

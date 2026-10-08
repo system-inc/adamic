@@ -1,0 +1,23 @@
+=== RUN   TestCheckedViewObjectPrimitiveFixCounts
+=== RUN   TestCheckedViewObjectPrimitiveFixCounts/fixes-graph
+    checked_views_object_primitive_counts_test.go:109: | stage3/interface-downcasts/lane4b/fixtures/fixes-graph.a | 3 | 3 | 3 | 7 | 3 | 0 | 0 | 0 |
+=== RUN   TestCheckedViewObjectPrimitiveFixCounts/fixes-tuple-unread
+    checked_views_object_primitive_counts_test.go:109: | stage3/interface-downcasts/lane4b/fixtures/fixes-tuple-unread.a | 1 | 1 | 3 | 6 | 1 | 0 | 0 | 0 |
+--- PASS: TestCheckedViewObjectPrimitiveFixCounts (0.26s)
+    --- PASS: TestCheckedViewObjectPrimitiveFixCounts/fixes-graph (0.16s)
+    --- PASS: TestCheckedViewObjectPrimitiveFixCounts/fixes-tuple-unread (0.10s)
+=== RUN   TestCheckedViewObjectPrimitiveFixes
+=== RUN   TestCheckedViewObjectPrimitiveFixes/graph
+=== RUN   TestCheckedViewObjectPrimitiveFixes/tuple-unread
+=== RUN   TestCheckedViewObjectPrimitiveFixes/tuple
+=== RUN   TestCheckedViewObjectPrimitiveFixes/long-message
+--- PASS: TestCheckedViewObjectPrimitiveFixes (1.19s)
+    --- PASS: TestCheckedViewObjectPrimitiveFixes/graph (0.37s)
+    --- PASS: TestCheckedViewObjectPrimitiveFixes/tuple-unread (0.37s)
+    --- PASS: TestCheckedViewObjectPrimitiveFixes/tuple (0.13s)
+    --- PASS: TestCheckedViewObjectPrimitiveFixes/long-message (0.32s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.461s

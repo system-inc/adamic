@@ -1,0 +1,6 @@
+import type { Identifier, PrivateIdentifier } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function helper(value: Identifier | PrivateIdentifier): void { console.log(String(value.escapedText)); }
+const raw = { kind: 81 };
+const base: Base = raw;
+helper(base as PrivateIdentifier);

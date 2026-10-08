@@ -1,0 +1,17 @@
+import type { ConditionalType } from 'original-tsc-types';
+interface Base { readonly flags: number; }
+function read(type: ConditionalType): string {
+ const member = type.resolvedConstraintOfDistributive;
+ if (member === undefined) return 'absent';
+ if (typeof member === 'boolean') return `${member}`;
+ return `${member.flags}`;
+}
+const plain = { flags: 1, resolvedConstraintOfDistributive: false };
+const nested = { flags: 1, resolvedConstraintOfDistributive: { flags: 2 } };
+const absent = { flags: 1 };
+const plainBase: Base = plain;
+const nestedBase: Base = nested;
+const absentBase: Base = absent;
+console.log(read(plainBase as ConditionalType));
+console.log(read(nestedBase as ConditionalType));
+console.log(read(absentBase as ConditionalType));

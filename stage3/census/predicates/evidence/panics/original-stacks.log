@@ -1,0 +1,279 @@
+/tmp/predicate-latent-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts 1 0 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/_namespaces/ts.performance.ts 1 0 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/_namespaces/ts.ts 77 0 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/binder.ts 16 17 measured on a checker-rejected program
+PANIC /tmp/predicate-latent-adapted/src/compiler/builder.ts:2229:1: Unhandled case in Node.Text: *ast.QualifiedName
+goroutine 1 [running]:
+runtime/debug.Stack()
+	/workspace/adamic-tools/go/src/runtime/debug/stack.go:26 +0x5e
+github.com/system-inc/adamic/internal/lower.Latent.func2.1()
+	/tmp/predicate-latent-trees/predicates/internal/lower/latent_hook.go:180 +0x4c
+panic({0x18f2438?, 0x3fdd5b1fa690?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text(0x5c9311?)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast.go:308 +0x42c
+github.com/system-inc/adamic/internal/lower.(*lowering).castProof(0x3fdd5f172800, 0x3fdd5341d540)
+	/tmp/predicate-latent-trees/predicates/internal/lower/cast_proof.go:99 +0x9e
+github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse.func1(0x3fdd5341d540)
+	/tmp/predicate-latent-trees/predicates/internal/lower/refusals.go:258 +0x3d5
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*ConditionalExpression).ForEachChild(0x3fdd53998b48, 0x3fdd7163f650)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:4126 +0x94
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x3fdd5f172800?, 0x3fdd7163f650)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8826 +0xca5
+github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse.func1(0x3fdd53998b48)
+	/tmp/predicate-latent-trees/predicates/internal/lower/refusals.go:369 +0x11ec
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*ConditionalExpression).ForEachChild(0x3fdd53998ba8, 0x3fdd7163f650)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:4128 +0xf1
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x3fdd5f172800?, 0x3fdd7163f650)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8826 +0xca5
+github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse.func1(0x3fdd53998ba8)
+	/tmp/predicate-latent-trees/predicates/internal/lower/refusals.go:369 +0x11ec
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*ReturnStatement).ForEachChild(...)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1163
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x3fdd5f172800?, 0x3fdd7163f650)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8716 +0x1262
+github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse.func1(0x3fdd5347d3b8)
+	/tmp/predicate-latent-trees/predicates/internal/lower/refusals.go:369 +0x11ec
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild(...)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1634
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x3fdd5f172800?, 0x3fdd7163f650)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8736 +0x3262
+github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse.func1(0x3fdd539eb3e8)
+	/tmp/predicate-latent-trees/predicates/internal/lower/refusals.go:369 +0x11ec
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionDeclaration).ForEachChild(0x3fdd539f16e8, 0x3fdd7163f650)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:2028 +0x18a
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x3fdd5f172800?, 0x3fdd7163f650)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8752 +0x14b2
+github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse.func1(0x3fdd539f16e8)
+	/tmp/predicate-latent-trees/predicates/internal/lower/refusals.go:369 +0x11ec
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0x3fdd53982388, 0x3fdd7163f650)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast.go:2783 +0x9b
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x4ecbf8?, 0x3fdd7163f650)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9002 +0x1ec5
+github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse(0x3fdd5f172800, 0x3fdd53982388)
+	/tmp/predicate-latent-trees/predicates/internal/lower/refusals.go:372 +0x53f
+github.com/system-inc/adamic/internal/lower.Latent.func2(0x3fdd5905f800?, 0x3fdd53982388, 0x1a7d4c0?)
+	/tmp/predicate-latent-trees/predicates/internal/lower/latent_hook.go:184 +0x56
+github.com/system-inc/adamic/internal/lower.Latent({0x1997e50, 0x1a7d4c0}, 0x3fdd5905f800, 0x3fdd7163fe68)
+	/tmp/predicate-latent-trees/predicates/internal/lower/latent_hook.go:185 +0x25d
+main.main()
+	/tmp/predicate-latent-trees/predicates/stage3/census/latent/tool/main.go:59 +0x4e8
+
+/tmp/predicate-latent-adapted/src/compiler/builder.ts 85 67 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/builderPublic.ts 16 9 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/builderState.ts 5 7 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/builderStatePublic.ts 3 0 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/checker.ts 51 34 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/commandLineParser.ts 166 162 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/core.ts 259 209 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/corePublic.ts 9 1 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/debug.ts 5 83 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/diagnosticInformationMap.generated.ts 3 0 measured on a checker-rejected program
+PANIC /tmp/predicate-latent-adapted/src/compiler/emitter.ts:685:1: runtime error: slice bounds out of range [:-1]
+goroutine 1 [running]:
+runtime/debug.Stack()
+	/workspace/adamic-tools/go/src/runtime/debug/stack.go:26 +0x5e
+github.com/system-inc/adamic/internal/lower.Latent.func3.1()
+	/tmp/predicate-latent-trees/predicates/internal/lower/latent_hook.go:206 +0x5d
+panic({0x1969e88?, 0x3fdd52edf668?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/system-inc/adamic/internal/lower.(*lowering).closure(0x3fdd65f8a400, 0x3fdd53907720)
+	/tmp/predicate-latent-trees/predicates/internal/lower/expression.go:1086 +0x466
+github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0x3fdd65f8a400, 0x3fdd61bb4020?)
+	/tmp/predicate-latent-trees/predicates/internal/lower/expression.go:590 +0xe3b
+github.com/system-inc/adamic/internal/lower.(*lowering).value(0x3fdd65f8a400, 0x3fdd53907720)
+	/tmp/predicate-latent-trees/predicates/internal/lower/expression.go:398 +0x127
+github.com/system-inc/adamic/internal/lower.(*lowering).expression(0x3fdd65f8a400, 0x3fdd53907720)
+	/tmp/predicate-latent-trees/predicates/internal/lower/expression.go:171 +0x6e
+github.com/system-inc/adamic/internal/lower.(*lowering).callFunction(0x3fdd65f8a400, 0x3fdd53cf6488, 0x149)
+	/tmp/predicate-latent-trees/predicates/internal/lower/expression.go:1030 +0x119
+github.com/system-inc/adamic/internal/lower.(*lowering).call(0x3fdd65f8a400, 0x3fdd53cf6488)
+	/tmp/predicate-latent-trees/predicates/internal/lower/expression.go:1018 +0x21e
+github.com/system-inc/adamic/internal/lower.(*lowering).callOrMethod(0x3fdd65f8a400, 0x3fdd53cf6488)
+	/tmp/predicate-latent-trees/predicates/internal/lower/class.go:321 +0x62f
+github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0x3fdd65f8a400, 0x3fdd61bb4aa0?)
+	/tmp/predicate-latent-trees/predicates/internal/lower/expression.go:614 +0xd05
+github.com/system-inc/adamic/internal/lower.(*lowering).value(0x3fdd65f8a400, 0x3fdd53cf6488)
+	/tmp/predicate-latent-trees/predicates/internal/lower/expression.go:398 +0x127
+github.com/system-inc/adamic/internal/lower.(*lowering).expression(0x3fdd65f8a400, 0x3fdd53cf6488)
+	/tmp/predicate-latent-trees/predicates/internal/lower/expression.go:171 +0x6e
+github.com/system-inc/adamic/internal/lower.(*lowering).returnStatement(0x3fdd65f8a400, 0x2?)
+	/tmp/predicate-latent-trees/predicates/internal/lower/statements.go:199 +0x13a
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x3fdd65f8a400, 0x3fdd538bdc68)
+	/tmp/predicate-latent-trees/predicates/internal/lower/statements.go:57 +0x2d8
+github.com/system-inc/adamic/internal/lower.(*lowering).statements(0x3fdd65f8a400, {0x3fdd53ce6c68, 0x1, 0x11?})
+	/tmp/predicate-latent-trees/predicates/internal/lower/statements.go:17 +0xd0
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerBody(0x3fdd65f8a400, 0x14b, 0x3fdd53cec428, 0xffffffffffffffff, {0x1a7d4c0, 0x0, 0x3fdd5a896b10?}, {0x3fdd600b8990, 0x1, 0x1})
+	/tmp/predicate-latent-trees/predicates/internal/lower/functions.go:252 +0x17a5
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction(0x3fdd65f8a400, 0x14b, 0x3fdd53cec428, 0xffffffffffffffff)
+	/tmp/predicate-latent-trees/predicates/internal/lower/functions.go:56 +0x23b
+github.com/system-inc/adamic/internal/lower.Latent.func3(0x3fdd5905f800?, 0x3fdd5905f800, 0x3fdd53cec428, 0x3fdd53d52a88?)
+	/tmp/predicate-latent-trees/predicates/internal/lower/latent_hook.go:230 +0x4b6
+github.com/system-inc/adamic/internal/lower.Latent({0x1997e50, 0x1a7d4c0}, 0x3fdd5905f800, 0x3fdd61bb5e68)
+	/tmp/predicate-latent-trees/predicates/internal/lower/latent_hook.go:236 +0x5ea
+main.main()
+	/tmp/predicate-latent-trees/predicates/stage3/census/latent/tool/main.go:59 +0x4e8
+
+/tmp/predicate-latent-adapted/src/compiler/emitter.ts 50 27 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/executeCommandLine.ts 50 46 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/expressionToTypeNode.ts 9 4 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/factory/baseNodeFactory.ts 3 1 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/factory/emitHelpers.ts 45 3 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/factory/emitNode.ts 41 33 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/factory/nodeChildren.ts 6 6 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/factory/nodeConverters.ts 3 55 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/factory/nodeFactory.ts 26 13 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/factory/nodeTests.ts 228 227 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/factory/parenthesizerRules.ts 3 53 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/factory/utilities.ts 108 216 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/factory/utilitiesPublic.ts 4 3 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/moduleNameResolver.ts 163 135 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/moduleSpecifiers.ts 49 64 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/parser.ts 75 253 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/path.ts 81 39 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/performance.ts 24 7 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/performanceCore.ts 11 3 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/program.ts 84 68 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/programDiagnostics.ts 5 0 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/resolutionCache.ts 31 23 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/scanner.ts 84 35 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/semver.ts 29 8 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/sourcemap.ts 31 27 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/symbolWalker.ts 2 19 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/sys.ts 57 49 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/tracing.ts 7 18 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformer.ts 17 10 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/classFields.ts 23 7 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/classThis.ts 7 7 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/declarations.ts 14 5 measured on a checker-rejected program
+PANIC /tmp/predicate-latent-adapted/src/compiler/transformers/declarations/diagnostics.ts:606:1: Unhandled case in Node.Text: *ast.ComputedPropertyName
+goroutine 1 [running]:
+runtime/debug.Stack()
+	/workspace/adamic-tools/go/src/runtime/debug/stack.go:26 +0x5e
+github.com/system-inc/adamic/internal/lower.Latent.func2.1()
+	/tmp/predicate-latent-trees/predicates/internal/lower/latent_hook.go:180 +0x4c
+panic({0x18f2438?, 0x3fdd63199c30?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text(0x7a7bbc?)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast.go:308 +0x42c
+github.com/system-inc/adamic/internal/lower.relationFieldExpression(0x3fdd62fc5600?, {0x3fdd5e746290, 0x3})
+	/tmp/predicate-latent-trees/predicates/internal/lower/proven_relations.go:176 +0x97
+github.com/system-inc/adamic/internal/lower.(*lowering).optionalRelationFailure(0x3fdd62fc5600, 0x3fdd5d35f200, 0x3fdd65cfba00, 0x3fdd54126410, 0x3fdd86a4de58)
+	/tmp/predicate-latent-trees/predicates/internal/lower/proven_relations.go:157 +0xbf9
+github.com/system-inc/adamic/internal/lower.(*lowering).provenRelation(0x3fdd62fc5600, 0x3fdd541300c0, 0x3fdd54126410, 0x3fdd65cfba00)
+	/tmp/predicate-latent-trees/predicates/internal/lower/proven_relations.go:22 +0x1b7
+github.com/system-inc/adamic/internal/lower.(*lowering).refuseWidening(0x3fdd62fc5600, 0x3fdd541300c0)
+	/tmp/predicate-latent-trees/predicates/internal/lower/invariance.go:419 +0x305
+github.com/system-inc/adamic/internal/lower.(*lowering).refuseStringWidening(0x3fdd62fc5600, 0x3fdd541300c0)
+	/tmp/predicate-latent-trees/predicates/internal/lower/library_string.go:355 +0x3d
+github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse.func1(0x3fdd541300c0)
+	/tmp/predicate-latent-trees/predicates/internal/lower/refusals.go:354 +0x10b7
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclaration).ForEachChild(0x3fdd540feed8, 0x3fdd86a4f650)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1729 +0xc2
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x3fdd62fc5600?, 0x3fdd86a4f650)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8740 +0x1438
+github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse.func1(0x3fdd540feed8)
+	/tmp/predicate-latent-trees/predicates/internal/lower/refusals.go:369 +0x11ec
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclarationList).ForEachChild(...)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1774
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x3fdd62fc5600?, 0x3fdd86a4f650)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8742 +0x3084
+github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse.func1(0x3fdd54031080)
+	/tmp/predicate-latent-trees/predicates/internal/lower/refusals.go:369 +0x11ec
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableStatement).ForEachChild(0xa6abbb?, 0x3fdd86a4ea08?)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1679 +0x62
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x3fdd62fc5600?, 0x3fdd86a4f650)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8738 +0x1032
+github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse.func1(0x3fdd5345dc28)
+	/tmp/predicate-latent-trees/predicates/internal/lower/refusals.go:369 +0x11ec
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild(...)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1634
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x3fdd62fc5600?, 0x3fdd86a4f650)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8736 +0x3262
+github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse.func1(0x3fdd5414e308)
+	/tmp/predicate-latent-trees/predicates/internal/lower/refusals.go:369 +0x11ec
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionDeclaration).ForEachChild(0x3fdd54007f08, 0x3fdd86a4f650)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:2028 +0x18a
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x3fdd62fc5600?, 0x3fdd86a4f650)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8752 +0x14b2
+github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse.func1(0x3fdd54007f08)
+	/tmp/predicate-latent-trees/predicates/internal/lower/refusals.go:369 +0x11ec
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0x3fdd540ff188, 0x3fdd86a4f650)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast.go:2783 +0x9b
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x4ecbf8?, 0x3fdd86a4f650)
+	/tmp/predicate-latent-trees/predicates/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9002 +0x1ec5
+github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse(0x3fdd62fc5600, 0x3fdd540ff188)
+	/tmp/predicate-latent-trees/predicates/internal/lower/refusals.go:372 +0x53f
+github.com/system-inc/adamic/internal/lower.Latent.func2(0x3fdd5905f800?, 0x3fdd540ff188, 0x1a7d4c0?)
+	/tmp/predicate-latent-trees/predicates/internal/lower/latent_hook.go:184 +0x56
+github.com/system-inc/adamic/internal/lower.Latent({0x1997e50, 0x1a7d4c0}, 0x3fdd5905f800, 0x3fdd86a4fe68)
+	/tmp/predicate-latent-trees/predicates/internal/lower/latent_hook.go:185 +0x25d
+main.main()
+	/tmp/predicate-latent-trees/predicates/stage3/census/latent/tool/main.go:59 +0x4e8
+
+/tmp/predicate-latent-adapted/src/compiler/transformers/declarations/diagnostics.ts 8 24 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/destructuring.ts 22 45 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/es2015.ts 13 0 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/es2016.ts 2 16 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/es2017.ts 6 1 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/es2018.ts 4 0 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/es2019.ts 2 3 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/es2020.ts 2 0 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/es2021.ts 2 3 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/esDecorators.ts 9 0 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/esnext.ts 9 1 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/generators.ts 16 0 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/jsx.ts 3 0 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/legacyDecorators.ts 2 54 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/module/esnextAnd2015.ts 2 0 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts 2 4 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/module/module.ts 3 0 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/module/system.ts 2 0 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/namedEvaluation.ts 21 38 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/taggedTemplate.ts 5 11 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/ts.ts 5 0 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/typeSerializer.ts 6 0 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/transformers/utilities.ts 50 98 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/tsbuild.ts 5 3 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/tsbuildPublic.ts 106 156 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/types.ts 875 7 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/utilities.ts 892 1025 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/utilitiesPublic.ts 251 299 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/visitorPublic.ts 41 362 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/watch.ts 46 80 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/watchPublic.ts 25 14 measured on a checker-rejected program
+/tmp/predicate-latent-adapted/src/compiler/watchUtilities.ts 26 18 measured on a checker-rejected program

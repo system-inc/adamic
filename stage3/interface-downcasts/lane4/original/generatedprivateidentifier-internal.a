@@ -1,0 +1,6 @@
+import type { GeneratedPrivateIdentifier } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function helper(value: GeneratedPrivateIdentifier): void { console.log(String(value.escapedText)); }
+const raw = { kind: 81, escapedText: '__importAttributes' };
+const base: Base = raw;
+helper(base as GeneratedPrivateIdentifier);

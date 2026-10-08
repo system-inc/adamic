@@ -1,0 +1,50 @@
+[
+  {
+    "mutant": "non-brand-result-accepted",
+    "test": "TestPhantomOverloadLiteralResultRefused",
+    "exit": 1,
+    "assertion_failed": true
+  },
+  {
+    "mutant": "ordinary-result-proof-skipped",
+    "test": "TestPhantomOverloadLiteralResultRefused",
+    "exit": 1,
+    "assertion_failed": true
+  },
+  {
+    "mutant": "branded-literal-accepted",
+    "test": "TestPhantomOverloadBrandLiteralConstraintRefused",
+    "exit": 1,
+    "assertion_failed": true
+  },
+  {
+    "mutant": "runtime-brand-result",
+    "test": "TestPhantomOverloadResultCastsAreErased",
+    "exit": 1,
+    "assertion_failed": true
+  },
+  {
+    "mutant": "overload-parameter-proof-skipped",
+    "test": "TestPhantomOverloadParameterProof",
+    "exit": 1,
+    "assertion_failed": true
+  },
+  {
+    "mutant": "overload-value-accepted",
+    "test": "TestPhantomOverloadFunctionValueNotYet",
+    "exit": 1,
+    "assertion_failed": true
+  },
+  {
+    "mutant": "overload-header-kept",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/phantom_overload_results.a",
+    "exit": 1,
+    "assertion_failed": true
+  },
+  {
+    "mutant": "any-brand-accepted",
+    "test": "TestPhantomOverloadAnyBrandRefused",
+    "exit": 1,
+    "assertion_failed": true
+  }
+]

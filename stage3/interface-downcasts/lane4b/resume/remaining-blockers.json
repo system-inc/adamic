@@ -1,0 +1,202 @@
+{
+  "basis": "observed original-declaration probe failures; group mapping is an inference, not runtime certification",
+  "integration_sha": "213c43771bd2f3a3dd9abd69ea088bf13e4c629e",
+  "certified_pairs": 26,
+  "certified_reads": 113,
+  "remaining_pairs": 16,
+  "remaining_reads": 68,
+  "groups": [
+    {
+      "dependency": "union intersection",
+      "pairs": 7,
+      "candidate_reads": 45,
+      "rows": [
+        {
+          "rank": 3,
+          "type_id": 9474,
+          "type": "BindableStaticAccessExpression",
+          "field": "expression",
+          "candidate_reads": 11
+        },
+        {
+          "rank": 5,
+          "type_id": 7642,
+          "type": "JSDoc",
+          "field": "parent",
+          "candidate_reads": 10
+        },
+        {
+          "rank": 7,
+          "type_id": 9476,
+          "type": "BindableStaticPropertyAssignmentExpression",
+          "field": "left",
+          "candidate_reads": 9
+        },
+        {
+          "rank": 8,
+          "type_id": 9485,
+          "type": "BindablePropertyAssignmentExpression",
+          "field": "left",
+          "candidate_reads": 9
+        },
+        {
+          "rank": 17,
+          "type_id": 9475,
+          "type": "BindableAccessExpression",
+          "field": "expression",
+          "candidate_reads": 4
+        },
+        {
+          "rank": 29,
+          "type_id": 7644,
+          "type": "JSDoc | JSDocTypeLiteral",
+          "field": "parent",
+          "candidate_reads": 1
+        },
+        {
+          "rank": 35,
+          "type_id": 36241,
+          "type": "JSDoc | undefined",
+          "field": "parent",
+          "candidate_reads": 1
+        }
+      ],
+      "probes": [
+        "bindable-expression-frontier",
+        "bindable-static-left-probe",
+        "bindable-left-probe",
+        "jsdoc-parent-probe",
+        "jsdoc-parent-union-frontier",
+        "jsdoc-parent-optional-frontier"
+      ]
+    },
+    {
+      "dependency": "dictionary admission",
+      "pairs": 2,
+      "candidate_reads": 11,
+      "rows": [
+        {
+          "rank": 6,
+          "type_id": 9858,
+          "type": "CompilerOptions",
+          "field": "<dynamic-key>",
+          "candidate_reads": 10
+        },
+        {
+          "rank": 36,
+          "type_id": 64997,
+          "type": "BuildOptions",
+          "field": "<dynamic-key>",
+          "candidate_reads": 1
+        }
+      ],
+      "probes": [
+        "compiler-options-key-probe",
+        "build-options-key-frontier"
+      ]
+    },
+    {
+      "dependency": "tuple admission and positional contract",
+      "pairs": 1,
+      "candidate_reads": 4,
+      "rows": [
+        {
+          "rank": 18,
+          "type_id": 97898,
+          "type": "[fileId: IncrementalBuildInfoFileId, signature: [] | EmitSignature]",
+          "field": "<element>",
+          "candidate_reads": 4
+        }
+      ],
+      "probes": [
+        "incremental-tuple-element-frontier"
+      ]
+    },
+    {
+      "dependency": "callable member",
+      "pairs": 1,
+      "candidate_reads": 3,
+      "rows": [
+        {
+          "rank": 21,
+          "type_id": 11591,
+          "type": "EmitHelper",
+          "field": "text",
+          "candidate_reads": 3
+        }
+      ],
+      "probes": [
+        "emit-helper-frontier"
+      ]
+    },
+    {
+      "dependency": "branded tuple array element",
+      "pairs": 2,
+      "candidate_reads": 2,
+      "rows": [
+        {
+          "rank": 38,
+          "type_id": 97913,
+          "type": "readonly IncrementalBuildInfoRoot[]",
+          "field": "<element>",
+          "candidate_reads": 1
+        },
+        {
+          "rank": 39,
+          "type_id": 97931,
+          "type": "readonly IncrementalBuildInfoEmitSignature[] | undefined",
+          "field": "forEach",
+          "candidate_reads": 1
+        }
+      ],
+      "probes": [
+        "incremental-root-frontier",
+        "incremental-signature-frontier",
+        "incremental-signature-each-frontier"
+      ]
+    },
+    {
+      "dependency": "tuple union member",
+      "pairs": 1,
+      "candidate_reads": 1,
+      "rows": [
+        {
+          "rank": 40,
+          "type_id": 97934,
+          "type": "IncrementalBundleEmitBuildInfo",
+          "field": "outSignature",
+          "candidate_reads": 1
+        }
+      ],
+      "probes": [
+        "incremental-out-signature-frontier"
+      ]
+    },
+    {
+      "dependency": "object plus primitive array consumer",
+      "pairs": 2,
+      "candidate_reads": 2,
+      "rows": [
+        {
+          "rank": 41,
+          "type_id": 97935,
+          "type": "readonly IncrementalBundleEmitBuildInfoFileInfo[]",
+          "field": "forEach",
+          "candidate_reads": 1
+        },
+        {
+          "rank": 42,
+          "type_id": 98493,
+          "type": "readonly IncrementalMultiFileEmitBuildInfoFileInfo[] | readonly IncrementalBundleEmitBuildInfoFileInfo[]",
+          "field": "forEach",
+          "candidate_reads": 1
+        }
+      ],
+      "probes": [
+        "incremental-bundle-each-frontier",
+        "incremental-multi-each-frontier",
+        "incremental-union-each-frontier"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+=== RUN   TestCheckedViewPrimitiveArrayPairs
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-zero/number
+    checked_views_primitive_arrays_test.go:89: untested first-member mutant caught by Node control
+    checked_views_primitive_arrays_test.go:89: untested first-member mutant caught by Node control
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-zero/string
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-zero/wrong
+    checked_views_primitive_arrays_test.go:78: actual-value member-check mutant caught by named refusal
+    checked_views_primitive_arrays_test.go:78: actual-value member-check mutant caught by named refusal
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-zero/missing
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-one/number
+    checked_views_primitive_arrays_test.go:89: untested first-member mutant caught by Node control
+    checked_views_primitive_arrays_test.go:89: untested first-member mutant caught by Node control
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-one/string
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-one/wrong
+    checked_views_primitive_arrays_test.go:78: actual-value member-check mutant caught by named refusal
+    checked_views_primitive_arrays_test.go:78: actual-value member-check mutant caught by named refusal
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-one/missing
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-two/number
+    checked_views_primitive_arrays_test.go:89: untested first-member mutant caught by Node control
+    checked_views_primitive_arrays_test.go:89: untested first-member mutant caught by Node control
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-two/string
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-two/wrong
+    checked_views_primitive_arrays_test.go:78: actual-value member-check mutant caught by named refusal
+    checked_views_primitive_arrays_test.go:78: actual-value member-check mutant caught by named refusal
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-two/missing
+=== RUN   TestCheckedViewPrimitiveArrayPairs/diagnostic-arguments/number
+    checked_views_primitive_arrays_test.go:89: untested first-member mutant caught by Node control
+    checked_views_primitive_arrays_test.go:89: untested first-member mutant caught by Node control
+=== RUN   TestCheckedViewPrimitiveArrayPairs/diagnostic-arguments/string
+=== RUN   TestCheckedViewPrimitiveArrayPairs/diagnostic-arguments/wrong
+    checked_views_primitive_arrays_test.go:78: actual-value member-check mutant caught by named refusal
+    checked_views_primitive_arrays_test.go:78: actual-value member-check mutant caught by named refusal
+=== RUN   TestCheckedViewPrimitiveArrayPairs/diagnostic-arguments/missing
+--- PASS: TestCheckedViewPrimitiveArrayPairs (52.45s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-zero/number (36.34s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-zero/string (0.83s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-zero/wrong (0.73s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-zero/missing (0.50s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-one/number (1.48s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-one/string (0.85s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-one/wrong (0.72s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-one/missing (0.47s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-two/number (1.23s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-two/string (0.94s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-two/wrong (0.85s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-two/missing (0.58s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/diagnostic-arguments/number (1.58s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/diagnostic-arguments/string (1.37s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/diagnostic-arguments/wrong (2.08s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/diagnostic-arguments/missing (1.86s)
+=== RUN   TestCheckedViewPrimitiveArraySafety
+=== RUN   TestCheckedViewPrimitiveArraySafety/ordinary
+=== RUN   TestCheckedViewPrimitiveArraySafety/alias
+=== RUN   TestCheckedViewPrimitiveArraySafety/index
+    checked_views_primitive_arrays_test.go:127: Load: /workspace/adamic/stage3/interface-downcasts/lane4/primitive-original/array-safety-index.a:10:13: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+=== RUN   TestCheckedViewPrimitiveArraySafety/typeof
+=== RUN   TestCheckedViewPrimitiveArraySafety/sparse
+    checked_views_primitive_arrays_test.go:127: array-safety-sparse.a: stage 0 can't lower ir.UnionToString in a program that may contain holey arrays yet
+=== RUN   TestCheckedViewPrimitiveArraySafety/negative
+=== RUN   TestCheckedViewPrimitiveArraySafety/fraction
+=== RUN   TestCheckedViewPrimitiveArraySafety/optional
+    checked_views_primitive_arrays_test.go:127: array-safety-optional.a: stage 0 can't lower ir.UnionToString in a program that may contain holey arrays yet
+=== RUN   TestCheckedViewPrimitiveArraySafety/finite-good
+=== RUN   TestCheckedViewPrimitiveArraySafety/finite-wrong
+--- FAIL: TestCheckedViewPrimitiveArraySafety (80.96s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/ordinary (1.31s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/alias (9.05s)
+    --- FAIL: TestCheckedViewPrimitiveArraySafety/index (0.27s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/typeof (12.02s)
+    --- FAIL: TestCheckedViewPrimitiveArraySafety/sparse (0.73s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/negative (11.37s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/fraction (7.18s)
+    --- FAIL: TestCheckedViewPrimitiveArraySafety/optional (1.54s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/finite-good (23.10s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/finite-wrong (14.37s)
+FAIL
+gate cache: native hits=0 misses=12
+gate cache: node hits=0 misses=54
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	133.500s
+FAIL

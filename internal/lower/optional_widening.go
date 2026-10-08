@@ -5,17 +5,32 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	_ "unsafe"
 )
+
+// Use the checker through its submodule, as the existing instantiation bridges do.
+// The generated shim does not yet expose this normalization entry point.
+//
+//go:linkname reducedOptionalSource github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getReducedType
+func reducedOptionalSource(receiver *checker.Checker, source *checker.Type) *checker.Type
 
 // optionalWidening names the relation whose optional field could be hidden by a structural view.
 // This is independent of mutable invariance: even a readonly optional field can lie on a read.
 type optionalWidening struct {
 	property       string
+	conflict       *checker.Type
+	declaration    *ast.Node
 	source, target *checker.Type
 }
 
 func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string]bool, visited map[[2]*checker.Type]bool) *optionalWidening {
 	if source == nil || target == nil {
+		return nil
+	}
+	// An impossible relation constituent cannot hide an optional property. This
+	// reduction says nothing about whether the outer expression is unreachable.
+	source = reducedOptionalSource(l.checker, source)
+	if source.Flags()&checker.TypeFlagsNever != 0 {
 		return nil
 	}
 	if weak := l.weakTarget(source); weak != nil {
@@ -83,8 +98,16 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 		}
 		declared := l.checker.GetPropertyOfType(source, property.Name)
 		if declared == nil {
-			if property.Flags&ast.SymbolFlagsOptional != 0 && !isClassInstance(source) {
-				return &optionalWidening{property: property.Name, source: source, target: target}
+			if property.Flags&ast.SymbolFlagsOptional != 0 {
+				l.optionalViewWriteField(property.Name)
+				found := &optionalWidening{property: property.Name, source: source, target: target}
+				if !isClassInstance(source) {
+					return found
+				}
+				if conflict, declaration := l.optionalClassConflict(source, property); conflict != nil {
+					found.conflict, found.declaration = conflict, declaration
+					return found
+				}
 			}
 			continue
 		}
@@ -106,6 +129,182 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 		}
 	}
 	return nil
+}
+
+// Adamic compiles the whole program together: this closed world includes every runtime
+// subclass, even class expressions. Separate compilation must revisit this exemption.
+func (l *lowering) optionalClassConflict(source *checker.Type, property *ast.Symbol) (*checker.Type, *ast.Node) {
+	// The standalone census has no loaded program and inventories structural relations only.
+	if l.program == nil {
+		return nil, nil
+	}
+	seenFiles := map[*ast.SourceFile]bool{}
+	var conflict *checker.Type
+	var declaration *ast.Node
+	for _, root := range l.program.Files() {
+		modules, err := l.moduleOrder(root)
+		if err != nil {
+			// Import cycles are refused by module ordering before the relation pass.
+			continue
+		}
+		for _, file := range modules {
+			if seenFiles[file] {
+				continue
+			}
+			seenFiles[file] = true
+			var visit ast.Visitor
+			visit = func(node *ast.Node) bool {
+				if conflict != nil {
+					return true
+				}
+				if node.Kind == ast.KindClassDeclaration || node.Kind == ast.KindClassExpression {
+					var candidate *checker.Type
+					if node.Kind == ast.KindClassDeclaration && node.Name() != nil {
+						candidate = l.checker.GetTypeAtLocation(node.Name())
+					} else {
+						signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindConstruct)
+						if len(signatures) > 0 {
+							candidate = l.checker.GetReturnTypeOfSignature(signatures[0])
+						}
+					}
+					if candidate != nil {
+						base := l.optionalClassBase(candidate, source.Symbol(), map[*ast.Symbol]bool{})
+						if base == nil {
+							return node.ForEachChild(visit)
+						}
+						patterns, actual := l.checker.GetTypeArguments(base), l.checker.GetTypeArguments(source)
+						bindings := map[*checker.Type]*checker.Type{}
+						possible := len(patterns) == len(actual)
+						for index := range patterns {
+							if !possible || !l.optionalClassArguments(patterns[index], actual[index], bindings) {
+								possible = false
+								break
+							}
+						}
+						if !possible {
+							return node.ForEachChild(visit)
+						}
+						if len(bindings) > 0 {
+							from, to := []*checker.Type{}, []*checker.Type{}
+							for parameter, argument := range bindings {
+								from = append(from, parameter)
+								to = append(to, argument)
+							}
+							candidate = instantiateType(l.checker, candidate, newTypeMapper(from, to))
+						}
+						field := l.checker.GetPropertyOfType(candidate, property.Name)
+						if field != nil && !l.checker.IsTypeAssignableTo(l.checker.GetTypeOfSymbol(field), l.checker.GetTypeOfSymbol(property)) {
+							conflict = candidate
+							if len(field.Declarations) > 0 {
+								declaration = field.Declarations[0]
+							}
+							return true
+						}
+					}
+				}
+				return node.ForEachChild(visit)
+			}
+			file.AsNode().ForEachChild(visit)
+			if conflict != nil {
+				return conflict, declaration
+			}
+		}
+	}
+	return nil, nil
+}
+
+func (l *lowering) optionalClassBase(candidate *checker.Type, source *ast.Symbol, seen map[*ast.Symbol]bool) *checker.Type {
+	if candidate.Symbol() == source {
+		return candidate
+	}
+	if seen[candidate.Symbol()] {
+		return nil
+	}
+	seen[candidate.Symbol()] = true
+	for _, base := range l.classBases(candidate) {
+		if found := l.optionalClassBase(base, source, seen); found != nil {
+			return found
+		}
+	}
+	return nil
+}
+
+// Class type arguments are invariant. Solve inherited type parameters before checking a
+// descendant's property, so Derived<T> extends Base<T> is judged as Derived<number>
+// for a Base<number> source, and a Base<string> descendant cannot poison that view.
+func (l *lowering) optionalClassArguments(pattern, actual *checker.Type, bindings map[*checker.Type]*checker.Type) bool {
+	if pattern.Flags()&checker.TypeFlagsTypeParameter != 0 {
+		if prior := bindings[pattern]; prior != nil {
+			return l.checker.IsTypeAssignableTo(prior, actual) && l.checker.IsTypeAssignableTo(actual, prior)
+		}
+		if constraint := l.checker.GetBaseConstraintOfType(pattern); constraint != nil && !l.checker.IsTypeAssignableTo(actual, constraint) {
+			return false
+		}
+		bindings[pattern] = actual
+		return true
+	}
+	if pattern.ObjectFlags()&checker.ObjectFlagsReference != 0 && actual.ObjectFlags()&checker.ObjectFlagsReference != 0 && pattern.Target() == actual.Target() {
+		from, to := l.checker.GetTypeArguments(pattern), l.checker.GetTypeArguments(actual)
+		if len(from) != len(to) {
+			return false
+		}
+		for index := range from {
+			if !l.optionalClassArguments(from[index], to[index], bindings) {
+				return false
+			}
+		}
+		return true
+	}
+	// An unresolved compound generic argument cannot prove that a descendant is impossible.
+	// Include it conservatively; an unproven property type then refuses the exemption.
+	if l.optionalUnresolvedArgument(pattern, map[*checker.Type]bool{}) {
+		return true
+	}
+	return l.checker.IsTypeAssignableTo(pattern, actual) && l.checker.IsTypeAssignableTo(actual, pattern)
+}
+
+func (l *lowering) optionalUnresolvedArgument(proven *checker.Type, seen map[*checker.Type]bool) bool {
+	if seen[proven] {
+		return false
+	}
+	seen[proven] = true
+	if proven.Flags()&(checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess|checker.TypeFlagsConditional|checker.TypeFlagsSubstitution|checker.TypeFlagsIndex|checker.TypeFlagsTemplateLiteral|checker.TypeFlagsStringMapping) != 0 {
+		return true
+	}
+	if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range proven.Types() {
+			if l.optionalUnresolvedArgument(member, seen) {
+				return true
+			}
+		}
+	}
+	if proven.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+		for _, argument := range l.checker.GetTypeArguments(proven) {
+			if l.optionalUnresolvedArgument(argument, seen) {
+				return true
+			}
+		}
+	}
+	if proven.Flags()&checker.TypeFlagsObject != 0 {
+		for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
+			for _, signature := range l.checker.GetSignaturesOfType(proven, kind) {
+				if l.optionalUnresolvedArgument(l.checker.GetReturnTypeOfSignature(signature), seen) {
+					return true
+				}
+				for _, parameter := range signature.Parameters() {
+					if l.optionalUnresolvedArgument(l.checker.GetTypeOfSymbol(parameter), seen) {
+						return true
+					}
+				}
+			}
+		}
+		for _, property := range l.checker.GetPropertiesOfType(proven) {
+			if l.optionalUnresolvedArgument(l.checker.GetTypeOfSymbol(property), seen) {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 func (l *lowering) optionalValue(node *ast.Node, target *checker.Type) *optionalWidening {
@@ -188,9 +387,10 @@ func (l *lowering) refuseOptionalWidening(node *ast.Node) error {
 	if found == nil {
 		return nil
 	}
-	return &Refused{Where: l.program.Where(node),
-		What: "optional property " + found.property + " in " + l.checker.TypeToString(found.target) + " absent from structural source " + l.checker.TypeToString(found.source) + ", which can hide fields",
-		Fix:  "declare " + found.property + " on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
+	// The same view machinery used by interface downcasts preserves checks through
+	// aliases and descendant fields. A class conflict now requires a view, too.
+	_, err := l.view(node, nil, found.target)
+	return err
 }
 
 // Resolve the import binding rather than trusting the callee's spelling.

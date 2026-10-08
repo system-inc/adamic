@@ -1,0 +1,6 @@
+interface Base { readonly kind: 'box' | 'other' }
+interface VersionPaths { readonly version: string; readonly paths: { readonly [key: string]: string[] } }
+interface Box extends Base { readonly kind: 'box'; readonly payload: false | VersionPaths | undefined }
+function read(node: Base): void { const view = node as Box; const value = view.payload; console.log(value === undefined || value === false ? String(value) : `${value.version}:${String(value.paths['*'])}`); }
+const sample0 = {kind:'box' as const, payload:{version:'bad', paths:{'*':42}}};
+read(sample0);
