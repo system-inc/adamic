@@ -176,3 +176,6 @@ they are not addresses and have no meaning across programs. Queries on shorthand
 property names select `GetShorthandAssignmentValueSymbol`, then fall back to
 `GetSymbolAtLocation` and the bound node symbol. Aliases remain alias symbols.
 The bridge exports compiler facts; the port decides local/global/import kinds.
+
+Non-text declaration/property names (for example computed names and binding
+patterns) have empty name fields; their AST kind and span remain available.

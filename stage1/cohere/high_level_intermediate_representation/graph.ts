@@ -23,13 +23,19 @@ export const hirGraph: GraphInterface<HIRFunction, BasicBlock, PlaceInterface> =
     instructionCount: (_fn, block) => block.instructions.length,
     eachInstructionPlace: function(fn, block, index, visit) {
         const instruction = fn.instructions[block.instructions[index] ?? panic('missing instruction id')] ?? panic('missing instruction');
+        instruction.lvalue = visit(instruction.lvalue, 'Define');
         if(instruction.value.kind === 'LoadLocal') { instruction.value.place = visit(instruction.value.place, 'Use'); }
         if(instruction.value.kind === 'UnaryExpression') { instruction.value.value = visit(instruction.value.value, 'Use'); }
         if(instruction.value.kind === 'BinaryExpression') {
             instruction.value.left = visit(instruction.value.left, 'Use');
             instruction.value.right = visit(instruction.value.right, 'Use');
         }
-        instruction.lvalue = visit(instruction.lvalue, 'Define');
+        const value = instruction.value;
+        if(value.kind === 'StoreGlobal' || value.kind === 'StoreLocal' || value.kind === 'PrefixUpdate' || value.kind === 'PostfixUpdate' || value.kind === 'PropertyStore' || value.kind === 'ComputedStore') { value.value = visit(value.value, 'Use'); }
+        if(value.kind === 'PropertyLoad' || value.kind === 'ComputedLoad' || value.kind === 'PropertyStore' || value.kind === 'ComputedStore') { value.object = visit(value.object, 'Use'); }
+        if(value.kind === 'ComputedLoad' || value.kind === 'ComputedStore') { value.property = visit(value.property, 'Use'); }
+        if(value.kind === 'DeclareLocal' || value.kind === 'StoreLocal' || value.kind === 'PrefixUpdate' || value.kind === 'PostfixUpdate') { value.lvalue = visit(value.lvalue, 'Define'); }
+
     },
     isContextStore: (_fn, _block, _index) => false,
     contextStoreDefines: (_fn, _block, _index, _place) => false,

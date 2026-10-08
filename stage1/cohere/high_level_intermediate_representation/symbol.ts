@@ -1,6 +1,5 @@
 // Resident compiler facts needed by lower.go:1259; no lexical binding surrogate.
 import { panic } from 'adamic';
-import type { Checker } from '../lint/checker.a';
 import { Frames, header } from '../typeaware/frames.ts';
 
 export type SymbolDeclarationType = {
@@ -31,7 +30,18 @@ export class SymbolFacts {
         this.declarations = declarations;
     }
 }
-export function readSymbol(checker: Checker, node: number): SymbolFacts {
-    const answer = checker.ask(node, 'symbol');
-    return new SymbolFacts(answer.value ?? panic(`HIR symbol query refused: ${answer.reason}`));
+export class SymbolSnapshot {
+    readonly symbols: Map<string, SymbolFacts> = new Map<string, SymbolFacts>();
+    constructor(wire: string) {
+        const frames = new Frames(wire);
+        const count = frames.natural();
+        for(let index = 0; index < count; index++) {
+            const start = frames.natural(); const end = frames.natural();
+            this.symbols.set(`${start}:${end}`, new SymbolFacts(frames.field()));
+        }
+        frames.end();
+    }
+    read(start: number, end: number): SymbolFacts {
+        return this.symbols.get(`${start}:${end}`) ?? panic(`missing exact HIR symbol ${start}:${end}`);
+    }
 }

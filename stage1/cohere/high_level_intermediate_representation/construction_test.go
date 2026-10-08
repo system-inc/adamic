@@ -184,7 +184,15 @@ var constructionMutants = []constructionMutant{
 	{"unary operator becomes plus", "lower.ts", "{ kind: 'UnaryExpression', operator, value }", "{ kind: 'UnaryExpression', operator: '+', value }"},
 	{"comma returns left operand", "lower.ts", "if(operator === 'CommaToken') { return right; }", "if(operator === 'CommaToken') { return left; }"},
 	{"literal boolean flips", "lower.ts", "return 'bool:true';", "return 'bool:false';"},
-	{"parameter becomes capture", "lower.ts", "fn.params.push(fn.named(", "fn.context.push(fn.named("},
+	{"parameter becomes capture", "lower.ts", "fn.params.push(builder.bind(id));", "fn.context.push(builder.bind(id));"},
+	{"symbol local read loses binding", "lower.ts", "const local = this.locals.get(this.identity(id));", "const local = this.locals.get(-1);"},
+	{"import classification loses module", "lower.ts", "source = declaration.module;", "source = '';"},
+	{"declaration kind becomes const", "lower.ts", "const declarationKind = list.semantic === '2' ? 0 : 1;", "const declarationKind = 0;"},
+	{"assignment result loses RHS", "lower.ts", "return this.assign(node.children[0] ?? -1, this.expression(node.children[2] ?? -1));", "const rhs = this.expression(node.children[2] ?? -1); this.assign(node.children[0] ?? -1, rhs); return this.emit({ kind: 'Primitive', literal: 'nil' }, id, undefined);"},
+	{"compound assignment uses plus", "lower.ts", "left, operator: compound, right", "left, operator: '-', right"},
+	{"update operation flips", "lower.ts", "node.operator === 'PlusPlusToken' ? '++' : '--'", "node.operator === 'PlusPlusToken' ? '--' : '++'"},
+	{"property load loses name", "lower.ts", "return this.emit({ kind: 'PropertyLoad', object, property: this.parser.node(node.children[1] ?? -1).text }", "return this.emit({ kind: 'PropertyLoad', object, property: '' }"},
+	{"computed load loses key", "lower.ts", "{ kind: 'ComputedLoad', object, property: this.expression(node.children[1] ?? -1) }", "{ kind: 'ComputedLoad', object, property: object }"},
 }
 
 func checkConstructionMutants(t *testing.T, root, lane, input string, want []byte, census bool) {

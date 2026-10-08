@@ -96,4 +96,4 @@ Native compilation feedback during this slice was on port expressions, not an un
 
 ## Unit 2 continuation
 
-See [PROGRESS.md](PROGRESS.md) for the current clean seam and exact remaining construction/rule work. Its executed-test census supersedes the first landing's source-text selector for unit 2 coverage: 51/1,465 corpus functions, plus 9/9 path probes. Unit 2 and static-components remain unfinished. The owner confirms mutation_aliasing is scheduled for tonight's area pin bump and is not required before unit 4.
+See [PROGRESS.md](PROGRESS.md) for the current clean seam and exact remaining construction/rule work. Its executed-test census supersedes the first landing's source-text selector for unit 2 coverage: 100/1,465 raw corpus functions (23 explicitly excluded Flow graphs; active denominator 1,442), plus 14/14 path probes. Unit 2 and static-components remain unfinished. The owner confirms mutation_aliasing is scheduled for tonight's area pin bump and is not required before unit 4.

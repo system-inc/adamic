@@ -1,10 +1,10 @@
-# Unit 2 clean seam: complete oracle census, straight-line expression lowering
+# Unit 2 clean seam: checker-backed statements and expressions
 
 Unit 2 and static-components are **not complete**. This landing extends the first slice and builds the construction denominator from executed Go tests instead of a source-text sample. Static-components has not been registered or claimed green.
 
 ## Construction corpus and coverage
 
-At cohere 7945d102a6c18dd36adf9114a758ce646e8b2359, the executed construction census contains **1,465 corpus function graphs; 51 match byte for byte on Node and native Adamic**. Nine additional path probes also match: 60/1,474 with probes included. Function graphs are distinct by source bytes, byte span, checker mode and constructed dump. Equal inputs/results reached by several tests are deduplicated and retain all caller provenance. Nested functions are recorded individually, as well as retained in their parent's dump. A parent is not certified by matching only its nested functions.
+At cohere 7945d102a6c18dd36adf9114a758ce646e8b2359, the executed construction census contains **1,465 corpus function graphs; 100 match byte for byte on Node and native Adamic**. Fourteen additional path probes also match: 114/1,479 with probes included. Function graphs are distinct by source bytes, byte span, checker mode and constructed dump. Equal inputs/results reached by several tests are deduplicated and retain all caller provenance. Nested functions are recorded individually, as well as retained in their parent's dump. A parent is not certified by matching only its nested functions.
 
 Every original Go HIR test runs through a test-file overlay that redirects its `Lower`, `ForFunction` and `ForFunctionWithoutManualMemoization` calls to observers. The original production implementations are called unchanged, their return values are returned unchanged, and the observer constructs/dumps a deep clone. For the memo-erased entry, a separate original Lower is observed because the erased result is not the construction oracle. Production files, test files on disk, and the cohere gitlink are untouched. This captures generated test inputs and their actual checker contexts, including multi-file programs, rather than approximating them by extracting raw strings.
 
@@ -16,7 +16,7 @@ Forty-five original Go tests skip under this environment. Their names and requir
 
 ## What now lowers
 
-Function declarations, function expressions and block/concise arrows with simple unused identifier parameters; inferred names for anonymous functions assigned directly to variables; numeric, bigint, string, non-substitution template, bool and null literals; parentheses; prefix unary operators, typeof and void; non-short-circuit binary operators; comma expressions; expression and empty statements; terminal returns. Other syntax is declined. Typed/optional/rest/destructured parameters, binding reads and nested function creation remain outside this seam.
+Function declarations, function expressions and block/concise arrows with simple identifier parameters; inferred names for anonymous functions assigned directly to variables; numeric, bigint, string, non-substitution template, bool and null literals; parentheses; prefix unary operators, typeof and void; non-short-circuit binary operators; comma expressions; expression and empty statements; terminal returns; resident-symbol parameter/local reads, let/const/var declarations, assignments and compound assignments, prefix/postfix updates, global/module/import loads, global stores and property/computed loads and stores. Other syntax is declined. Typed/optional/rest/destructured parameters and nested function creation remain outside this seam.
 
 Literal strings use the parser's deterministic UTF-16 `written` escape alphabet, including newlines, backslashes and surrogate pairs. Source positions are converted from the port parser's UTF-16 indexes to Go's UTF-8 byte positions before becoming places or instruction spans. Concise arrows return the expression place directly; block returns copy into the shared returns place, matching Go. Identifiers/declarations and parameter versions come from the imported SSA implementation, not a local replacement.
 
@@ -29,8 +29,8 @@ Eight semantic mutants are caught on both Node and native Adamic: literal boolea
 ## Remaining unit 2 work
 
 1. Complete core variants and graph terminal/edge visitors beyond the one-block adapter. Emit all owned instruction-table entries, including unreachable/orphan instructions, in the oracle before admitting paths that create them. The current dump covers instructions reachable through blocks; its existing complete identifier table already exposes unreachable allocations.
-2. Bind locals and captures through the resident checker, including module/import classification and checker-less test behavior. No lexical-only approximation has been introduced. `stage1/cohere/lint/context.ts` already provides `context.checker`; its `Checker.ask` bridge must support the symbol identity/binding queries needed by Go lower.go:1245 onward, rather than inventing local IDs independently of checker resolution.
-3. Lower declarations, assignment/update/destructuring, globals/properties/computed accesses, calls/new/spread, object/array/template/regex/type-cast/await/yield forms, JSX, nested function tables, context identifiers, and optional-chain control flow. Give each major path a caught native/Node mutant and an exact corpus dump comparison.
+2. Complete captures and contextual binding reads/writes through the resident checker. Local/parameter reads, versioned declarations, module/import classification and checker-less test behavior now match the admitted census. No lexical-only approximation has been introduced. `stage1/cohere/lint/context.ts` already provides `context.checker`; its `Checker.ask` bridge must support the symbol identity/binding queries needed by Go lower.go:1245 onward, rather than inventing local IDs independently of checker resolution.
+3. Lower destructuring, calls/new/spread, object/array/template/regex/type-cast/await/yield forms, JSX, nested function tables, context identifiers, and optional-chain control flow. Give each major path a caught native/Node mutant and an exact corpus dump comparison.
 4. Add branches/short-circuit/ternaries, switch, loops/iterators, break/continue/labels and exception/finally terminals. Finish the adapter using the imported SSA graph and construct modules. Keep structural fallthrough separate from real predecessors.
 5. Implement the actual rule-context `ForFunction` cache and cheap spelling gate, clone/full visitors, and postdominator/control-dominator analyses. Construct each cached function exactly once and preserve source/checker handles for rule consumers.
 6. Reach 1,465/1,465 (or the freshly exported count after a pin/input change), with all declines eliminated or specifically escalated as language/source gaps. Supply private corpora to eliminate relevant environment skips; resolve Flow through the agreed parser boundary rather than claiming it was tested.
@@ -67,3 +67,43 @@ spans. Collapsing all nonzero symbol identities to one compiles and runs but cha
 the answer on Node and native. `go test ./bridge/tsgo/checker` passes. The complete
 construction census and original straight-line regression pass again, with all
 eight lowering mutants caught; no construction admission changes in this seam.
+
+## Statement and expression lowering seam
+
+**100/1,465 corpus functions match Go on Node and native Adamic, up from 51**.
+Fourteen path probes match as well (114/1,479 raw census graphs). Sixteen semantic
+lowering mutants compile, run successfully and disagree on both runtimes. The
+prior twelve straight-line regression cases still match. The symbol-facts witness
+now covers 22 selectors, including computed declaration names, and its independent
+identity-collapse mutant is caught.
+
+This seam wires symbol identity into parameter/local reads, declaration versions,
+let/const/var declarations, assignments, compound assignments and prefix/postfix
+updates. It lowers global/module/import reads, global stores, and named/computed
+property reads/stores. Assignments lower their RHS before evaluating a property
+receiver; instruction temporaries remain distinct from named binding definitions.
+All renaming continues through imported SSA. No lexical binding resolver is used.
+The census preserves the actual original multi-file checker context by exporting
+compiler-fact snapshots independently of the IR; absent facts refuse exact spans.
+The live checker adapter is separate from the pure snapshot reader, so replay does
+not link unused checker-library calls.
+
+Eight new lowering mutants cover local-symbol resolution, import provenance,
+declaration kind, assignment result, compound operator, update operation, named
+property load and computed key. Five probes supplement real corpus paths. General
+payload strings now use Go encoding/json-compatible escaping, including HTML
+characters, control bytes and U+2028/U+2029.
+
+The original Go score/pruning tests reload Flow fixtures outside the fixture loader:
+**23 Flow graph records** were present in the existing denominator, but none was
+previously matched. They now carry explicit `excluded: Flow` metadata and full
+provenance in construction-summary.json. The original 40 fixture-loader exclusions
+stay unchanged. For continuity we retain the raw 1,465 denominator; the active
+non-Flow denominator is **1,442**. This is the agreed Flow exclusion, not a parser
+failure converted to successful coverage. `summarize_census.py` regenerates evidence
+after the complete comparison passes.
+
+Still ahead: structured control flow and its complete table dump; calls/new,
+arrays/objects/templates/casts, destructuring, closures/context bindings, optional
+chains, JSX, ForFunction integration and static-components. This is a landable
+partial statement/expression seam, not a claim that unit 2 or any rule is complete.

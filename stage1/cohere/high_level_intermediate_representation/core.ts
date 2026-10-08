@@ -16,7 +16,16 @@ export interface IdentifierInterface {
 // The slice admits only these variants; unsupported syntax is declined before lowering.
 export type ValueType = { readonly kind: 'Primitive'; readonly literal: string } | { readonly kind: 'LoadLocal'; place: PlaceInterface }
     | { readonly kind: 'UnaryExpression'; readonly operator: string; value: PlaceInterface }
-    | { readonly kind: 'BinaryExpression'; left: PlaceInterface; readonly operator: string; right: PlaceInterface };
+    | { readonly kind: 'BinaryExpression'; left: PlaceInterface; readonly operator: string; right: PlaceInterface }
+    | { readonly kind: 'LoadGlobal'; readonly name: string; readonly bindingKind: number; readonly source: string; readonly imported: string }
+    | { readonly kind: 'StoreGlobal'; readonly name: string; value: PlaceInterface }
+    | { readonly kind: 'DeclareLocal'; lvalue: PlaceInterface; readonly declarationKind: number }
+    | { readonly kind: 'StoreLocal'; lvalue: PlaceInterface; value: PlaceInterface; readonly declarationKind: number }
+    | { readonly kind: 'PrefixUpdate' | 'PostfixUpdate'; lvalue: PlaceInterface; readonly operation: string; value: PlaceInterface }
+    | { readonly kind: 'PropertyLoad'; object: PlaceInterface; readonly property: string }
+    | { readonly kind: 'ComputedLoad'; object: PlaceInterface; property: PlaceInterface }
+    | { readonly kind: 'PropertyStore'; object: PlaceInterface; readonly property: string; value: PlaceInterface }
+    | { readonly kind: 'ComputedStore'; object: PlaceInterface; property: PlaceInterface; value: PlaceInterface };
 export class Instruction {
     readonly id: number;
     order: EvaluationOrderType = 0;
@@ -57,9 +66,9 @@ export class HIRFunction {
         this.blocks = [new BasicBlock(1, this.returns)];
         this.identifiers.push({ id: 0, declaration: 1, name: '' });
     }
-    named(name: string, start: number, end: number): PlaceInterface {
+    named(name: string, start: number, end: number, declaration: number = 0): PlaceInterface {
         const id = this.identifiers.length;
-        this.identifiers.push({ id, declaration: id + 1, name });
+        this.identifiers.push({ id, declaration: declaration === 0 ? id + 1 : declaration, name });
         return { identifier: id, effect: '<unknown>', reactive: false, start, end };
     }
     temporary(start: number, end: number): PlaceInterface {

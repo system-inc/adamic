@@ -46,10 +46,10 @@ func (p *Program) writeSymbol(out *fields, c *checker.Checker, source *ast.Sourc
 		out.number(uint64(declaration.Pos()))
 		out.number(uint64(declaration.End()))
 		name, property, module := "", "", ""
-		if n := declaration.Name(); n != nil {
+		if n := declaration.Name(); n != nil && (n.Kind == ast.KindIdentifier || n.Kind == ast.KindPrivateIdentifier || ast.IsStringLiteralLike(n) || n.Kind == ast.KindNumericLiteral) {
 			name = n.Text()
 		}
-		if n := declaration.PropertyName(); n != nil {
+		if n := declaration.PropertyName(); n != nil && (n.Kind == ast.KindIdentifier || n.Kind == ast.KindPrivateIdentifier || ast.IsStringLiteralLike(n) || n.Kind == ast.KindNumericLiteral) {
 			property = n.Text()
 		}
 		switch declaration.Kind {

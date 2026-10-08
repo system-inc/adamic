@@ -3,7 +3,8 @@ import { panic, programArguments, readTextFile } from 'adamic';
 import { Parser } from '../../typescript/parser/parser.ts';
 import { written } from '../../typescript/parser/nodes.ts';
 import { Checker, openProgram, releaseProgram } from '../lint/checker.a';
-import { SymbolFacts, readSymbol } from './symbol.ts';
+import { SymbolFacts } from './symbol.ts';
+import { readSymbol } from './symbol_live.ts';
 function read(path: string): string {
     const result = readTextFile(path);
     if(result.kind === 'Error') { panic(result.message); }

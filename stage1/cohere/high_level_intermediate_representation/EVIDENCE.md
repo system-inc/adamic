@@ -44,3 +44,13 @@ checks, live native bridge, Node/native replay, caught identity-collapse mutant)
 9/9 probes, hence **51/1,465 corpus functions**; eight lowering mutants caught.
 All 45 original environment skips are assigned to required units in SKIPPED.md.
 Symbol compiler-fact witnesses do not increase construction coverage.
+
+## Statement and expression lowering
+
+Full construction comparison: **100/1,465** raw corpus functions, **14/14** probes,
+Node/native byte-identical to Go; 16 lowering mutants caught on both runtimes.
+Twenty-three Flow graphs reloaded by original Go tests are explicitly catalogued;
+active non-Flow coverage is 100/1,442. The fixture-loader's 40 exclusions and all
+45 classified private-corpus skips remain. Prior straight-line regression: 12
+functions match. Resident symbol witness: 22 exact selectors, live native and
+Node/native replay; identity-collapse mutant caught.

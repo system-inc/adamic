@@ -1,9 +1,9 @@
 {
   "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
   "constructionCorpusFunctions": 1465,
-  "constructionCorpusFunctionsMatched": 51,
-  "pathProbes": 9,
-  "pathProbesMatched": 9,
+  "constructionCorpusFunctionsMatched": 100,
+  "pathProbes": 14,
+  "pathProbesMatched": 14,
   "upstreamFixtures": 395,
   "flowExcludedFixtures": [
     "error.bug-context-variable-catch-in-lambda.js",
@@ -96,12 +96,39 @@
   ],
   "matchedFunctions": [
     {
+      "key": "045e78e1b6ed01ff96a527b817efb9228fb6b964375c6cb70527a9fe2441dd7f",
+      "start": 32,
+      "end": 69,
+      "checker": true,
+      "calls": [
+        "lower_global_test.go:39"
+      ]
+    },
+    {
+      "key": "052156bdbb7fbe05cc5300270b0e9457e5da3be54de6478ab6a1fe159ac78ace",
+      "start": 0,
+      "end": 61,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "0c9a7a38603f926ed047ee27fb5e277aeec307047565b26cc1e79034ee36b6fe",
       "start": 215,
       "end": 224,
       "checker": true,
       "calls": [
         "upstream:error.todo-kitchensink.js/nested"
+      ]
+    },
+    {
+      "key": "0d427b5f6d0c66205506615e90387a3acee9633da9b6a45163b2e5b0a6620fec",
+      "start": 87,
+      "end": 106,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38/nested"
       ]
     },
     {
@@ -119,12 +146,47 @@
       ]
     },
     {
+      "key": "1022fbfe001c56b8a5e1ea1553f606d2cf331677a1ade2d9fe66462ce1ecda06",
+      "start": 314,
+      "end": 354,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:error.validate-object-values-mutation.js/nested"
+      ]
+    },
+    {
+      "key": "14ace93c10b46bbe92d6989f72c54ece273c3b4b2c850ff57e4cafa79e6feb3e",
+      "start": 0,
+      "end": 89,
+      "checker": true,
+      "calls": [
+        "upstream:new-mutability/error.mutate-hook-argument.js"
+      ]
+    },
+    {
       "key": "18cda18affeb87c6351061ed7d55a02df2e591d24f8fb6c0f0b0f5069f174f7c",
       "start": 82,
       "end": 90,
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "1a0624b7f205b17f018b9e46af2204bfae11515d8a7e39c34f36961afb3b7e12",
+      "start": 274,
+      "end": 289,
+      "checker": true,
+      "calls": [
+        "cache_test.go:130/nested/nested",
+        "cache_test.go:136/nested/nested",
+        "cache_test.go:179/nested/nested",
+        "cache_test.go:221/nested/nested",
+        "cache_test.go:79/nested/nested",
+        "cache_test.go:83/nested/nested"
       ]
     },
     {
@@ -137,12 +199,30 @@
       ]
     },
     {
+      "key": "1fed3bbb46405f7ff4e736ce2900f1fad4e006e9a02fbcf18c410a8a22739ef9",
+      "start": 0,
+      "end": 51,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "236cda9f45c98a34a5bf544b17782221fa0a5eb21b033474a204717fcd5db227",
       "start": 93,
       "end": 101,
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "24f504fd7f1a50d3111163c298e05a96d6811fa4b9ac59f22cb4b469fda75d20",
+      "start": 71,
+      "end": 169,
+      "checker": true,
+      "calls": [
+        "upstream:new-mutability/error.reassignment-to-global-indirect.js/nested"
       ]
     },
     {
@@ -155,12 +235,30 @@
       ]
     },
     {
+      "key": "2814bd529c4913c276f126be0208b56a42f35454e0822bfec88412b3c5d0acc0",
+      "start": 0,
+      "end": 139,
+      "checker": true,
+      "calls": [
+        "upstream:new-mutability/error.reassignment-to-global.js"
+      ]
+    },
+    {
       "key": "2b6044fce6a2c99d94b491844d7a40bc94a42712ea8ed3e1236ea3d0fcbf585d",
       "start": 39,
       "end": 77,
       "checker": true,
       "calls": [
         "upstream:error.todo-hoist-function-decls.js/nested"
+      ]
+    },
+    {
+      "key": "2dade829c4d6f8a39166297fa52b3267a92b5ff927ba35dccc8eab64d1139d73",
+      "start": 162,
+      "end": 197,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-global-reassignment-indirect.js/nested"
       ]
     },
     {
@@ -176,6 +274,62 @@
       ]
     },
     {
+      "key": "2f8da19c38d62489fcde071dac078fcbe72569a1ee53f55b531ad5e0f6398271",
+      "start": 516,
+      "end": 534,
+      "checker": true,
+      "calls": [
+        "clone_test.go:50/nested/nested",
+        "clone_test.go:55/nested/nested",
+        "clone_test.go:72/nested/nested"
+      ]
+    },
+    {
+      "key": "305712385068e8fe5a5d1f5f4d773cff13c9c2171499d510de3d4e2addbc0e83",
+      "start": 53,
+      "end": 59,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40/nested"
+      ]
+    },
+    {
+      "key": "30e93f7ac4485564fcf6fa50821932f2146d5e45d0d0283217f9f332fd8ce38a",
+      "start": 0,
+      "end": 53,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
+      ]
+    },
+    {
+      "key": "39371cb309e5c5f9e09e83846fa44b43687f95eea7a30ac20a2cda44b1ee996f",
+      "start": 16,
+      "end": 53,
+      "checker": true,
+      "calls": [
+        "lower_global_test.go:39"
+      ]
+    },
+    {
+      "key": "39a4a70522fb4be0a90c0e7fdac003fc6133469f721b6e2df7e09dea8a582036",
+      "start": 35,
+      "end": 72,
+      "checker": true,
+      "calls": [
+        "lower_global_test.go:39"
+      ]
+    },
+    {
+      "key": "417fb5f0baafe47c0bcf95bf0ed09a61b7979374fef7ffadf07a45e9516cfb6d",
+      "start": 66,
+      "end": 82,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53/nested"
+      ]
+    },
+    {
       "key": "437009a3c204c1846ea29417934a8c115ccf51400d3bfc61a8902ad6ba9ad29b",
       "start": 180,
       "end": 189,
@@ -187,6 +341,15 @@
         "prune_non_escaping_scopes_test.go:445/nested",
         "scope_oracle_test.go:200/nested",
         "upstream:ref-like-name-in-useCallback.js/nested"
+      ]
+    },
+    {
+      "key": "46fb1754e400aba4608b14b381e8be983a7502559de89a3ec176cb9cc9f17a8c",
+      "start": 0,
+      "end": 62,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -208,6 +371,29 @@
       ]
     },
     {
+      "key": "4a910f50c0d92b5526c5065b2061276b85049f5fdbe637161ec167689f81f17d",
+      "start": 0,
+      "end": 68,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "53e8d845a3b92d9bd2aedc6ac19fd5cf17f445bfe29066abc708ac7ca52e4f31",
+      "start": 235,
+      "end": 275,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested",
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "scope_oracle_test.go:200/nested",
+        "upstream:allow-global-mutation-in-effect-indirect-usecallback.js/nested"
+      ]
+    },
+    {
       "key": "5dd1d62ac14b217eb06b23a774f14dd2ea9905a2b29b74c351d2eee9afd70693",
       "start": 91,
       "end": 99,
@@ -223,6 +409,15 @@
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "643b1003cc530887354f383f5f4b44a7b80c42b09bae0cd8634d5db22deb90ae",
+      "start": 0,
+      "end": 49,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -246,6 +441,15 @@
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "6b1fb091ef16b3d06a3cf8ab046e1681ec528e8713492ea27315aa48642ffa4d",
+      "start": 0,
+      "end": 51,
+      "checker": false,
+      "calls": [
+        "postdominator_frontier_test.go:91"
       ]
     },
     {
@@ -330,12 +534,39 @@
       ]
     },
     {
+      "key": "8705c1c699be5050bdb308dfb69672bb1f743a072b195fd209931e317ca2189c",
+      "start": 36,
+      "end": 71,
+      "checker": true,
+      "calls": [
+        "upstream:error.assign-global-in-jsx-children.js/nested"
+      ]
+    },
+    {
       "key": "871bc7ed3fb5383afd0af9255a6774ff7b05cff526881d2cf6c335b6a7e70db5",
       "start": 79,
       "end": 87,
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "8865f8fcb6ed4320389df10fa949b43173b69d591491290f99e60a126b8b9e5c",
+      "start": 36,
+      "end": 134,
+      "checker": true,
+      "calls": [
+        "upstream:error.reassignment-to-global-indirect.js/nested"
+      ]
+    },
+    {
+      "key": "898449944ac18d9782dcd6b914a54c6296b0ee56fc7f7f72a1d9f20b25f46e09",
+      "start": 0,
+      "end": 52,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
       ]
     },
     {
@@ -357,6 +588,15 @@
       ]
     },
     {
+      "key": "90a3924e18e072aea3582d52fc79c93c155006711e1bc31b3165e0481d416635",
+      "start": 39,
+      "end": 72,
+      "checker": true,
+      "calls": [
+        "upstream:error.function-expression-references-variable-its-assigned-to.js/nested"
+      ]
+    },
+    {
       "key": "95c00db51bf77c6ae95ad5a770ef3e8473c2c5b2532d42a88f7080cd248bf2e4",
       "start": 87,
       "end": 95,
@@ -375,6 +615,15 @@
       ]
     },
     {
+      "key": "a17bbb9f165f2270554fcb61964a78f7d0ef3b3cf9d7b4c4a6c7f17c5f043a31",
+      "start": 52,
+      "end": 91,
+      "checker": true,
+      "calls": [
+        "upstream:error.not-useEffect-external-mutate.js/nested"
+      ]
+    },
+    {
       "key": "a5f846d6ed230ee31d3400761365ae0b4ab67ed162391e643e65864f9f6b8382",
       "start": 68,
       "end": 167,
@@ -384,12 +633,66 @@
       ]
     },
     {
+      "key": "a6a201ecd96ae563f453ef922738888ee7e579fc04b934a91f46b34fc3efd765",
+      "start": 13,
+      "end": 63,
+      "checker": true,
+      "calls": [
+        "upstream:error.store-property-in-global.js"
+      ]
+    },
+    {
+      "key": "a6a7c8a5d5710ebea41a471fd122e6c4bead8bcfae75d0d11924dbc97e8b5e4c",
+      "start": 44,
+      "end": 81,
+      "checker": true,
+      "calls": [
+        "lower_global_test.go:39"
+      ]
+    },
+    {
       "key": "a79294bf6f334f4bf02b9ff78d5fac75e211428ba9cd48a9c7b322c155ed9085",
       "start": 143,
       "end": 151,
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "a7ed87fe22bc0d671847bfc23f0dd67c0e56b34da5ca26a5b8b2e9a78c0f4b31",
+      "start": 0,
+      "end": 104,
+      "checker": true,
+      "calls": [
+        "upstream:error.reassignment-to-global.js"
+      ]
+    },
+    {
+      "key": "a925c17ba6001636bfdf82ceaf2beae075a2524417c82b2a193814f6d9cc6257",
+      "start": 0,
+      "end": 36,
+      "checker": true,
+      "calls": [
+        "lower_global_test.go:39"
+      ]
+    },
+    {
+      "key": "ac6187dc6a0748aeb39f74f0ef7bb1fe99b98528fec5eb2092bd1cce55e86ebe",
+      "start": 58,
+      "end": 81,
+      "checker": true,
+      "calls": [
+        "upstream:error.reassign-global-fn-arg.js/nested"
+      ]
+    },
+    {
+      "key": "af9af02470452710a41d685f811650c6f9237e36480b3d5ad284799ccd0e3422",
+      "start": 178,
+      "end": 212,
+      "checker": true,
+      "calls": [
+        "effects_react_state_test.go:176/nested"
       ]
     },
     {
@@ -414,6 +717,42 @@
       ]
     },
     {
+      "key": "b104b98666c87bb51d5383f1e69b9df1b885d2f7ac66aee242636f48a372fcf7",
+      "start": 34,
+      "end": 73,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_pruned_test.go:64"
+      ]
+    },
+    {
+      "key": "b5bfbd48d5feb816da9a2e8d201104c6a785e40b573d6bacf227e9598447e1c0",
+      "start": 30,
+      "end": 67,
+      "checker": true,
+      "calls": [
+        "lower_global_test.go:39"
+      ]
+    },
+    {
+      "key": "b7d38c16c20e574f92d0a659d458e340068622f618d81b5e9793740900988c80",
+      "start": 135,
+      "end": 173,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-access-ref-in-reducer-init.js/nested"
+      ]
+    },
+    {
+      "key": "b90030d628cc692ee932fb35b7a21e7adf30bb30a0bbc10b66cc633544d226bb",
+      "start": 36,
+      "end": 71,
+      "checker": true,
+      "calls": [
+        "upstream:error.assign-global-in-component-tag-function.js/nested"
+      ]
+    },
+    {
       "key": "bb0c2fda812b926b4b328203595cd6288cab05d94215e1ff8d50a88431ecf5df",
       "start": 92,
       "end": 100,
@@ -429,6 +768,42 @@
       "checker": true,
       "calls": [
         "upstream:error.todo-valid-functiondecl-hoisting.tsx/nested"
+      ]
+    },
+    {
+      "key": "c0c8c57a9e1ee91952511d2dfb2ba2a8d2b6a7ff4a6859ff124c1add4298d23e",
+      "start": 0,
+      "end": 48,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-const.js"
+      ]
+    },
+    {
+      "key": "c47587d154997d98ff0cad91168cefae7fa2b8fa54ca693fc4f0309b6e4f1408",
+      "start": 87,
+      "end": 126,
+      "checker": true,
+      "calls": [
+        "upstream:new-mutability/error.not-useEffect-external-mutate.js/nested"
+      ]
+    },
+    {
+      "key": "c62418d6e4cca7772482755497c9a587c6b638d68b2a62a5a2103ce92c8a81ac",
+      "start": 0,
+      "end": 48,
+      "checker": true,
+      "calls": [
+        "prune_non_escaping_scopes_test.go:207"
+      ]
+    },
+    {
+      "key": "c77f0a70d5381a57342620f155509c84b6e404969b8044215bf1af65d4f98283",
+      "start": 20,
+      "end": 84,
+      "checker": true,
+      "calls": [
+        "upstream:error.update-global-should-bailout.tsx"
       ]
     },
     {
@@ -453,12 +828,39 @@
       ]
     },
     {
+      "key": "cc2ba16a80d765649b0c796e167c149ce7d6e87d348db9383921233123a40d77",
+      "start": 21,
+      "end": 58,
+      "checker": true,
+      "calls": [
+        "upstream:error.hoisting-simple-function-declaration.js/nested"
+      ]
+    },
+    {
+      "key": "d139b8cd727253baad81765248267a22f5963394d15b3e514321e99a84e21aa7",
+      "start": 0,
+      "end": 54,
+      "checker": true,
+      "calls": [
+        "upstream:error.mutate-hook-argument.js"
+      ]
+    },
+    {
       "key": "d1d2048b59ca968e084ac33a1da0c562fa03121efba88f8bf311881b01c3e660",
       "start": 102,
       "end": 123,
       "checker": true,
       "calls": [
         "upstream:error.reassign-global-fn-arg.js"
+      ]
+    },
+    {
+      "key": "d29f1822fb97935244a33bfce8b98ff237cf4fd1d3a0ea43592f3996912bcd06",
+      "start": 0,
+      "end": 56,
+      "checker": true,
+      "calls": [
+        "upstream:error.mutate-props.js"
       ]
     },
     {
@@ -483,12 +885,30 @@
       ]
     },
     {
+      "key": "d7752a43602768b8d2ad5c07b21d0528f4f68a400c5ec511ed6c29ce9f0d1c8f",
+      "start": 0,
+      "end": 35,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
       "key": "d825fe2baea8422ee9d2d288c4646152dff8ef2f78fee07f91691b5b28e8fbe9",
       "start": 0,
       "end": 20,
       "checker": true,
       "calls": [
         "upstream:error.hook-property-load-local-hook.js"
+      ]
+    },
+    {
+      "key": "dff0f3d05a469570445846cd588647f143a1cc670c5cd6857059a0bfd8003ed1",
+      "start": 0,
+      "end": 40,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -507,6 +927,15 @@
       "checker": true,
       "calls": [
         "upstream:error.todo-function-expression-references-later-variable-declaration.js/nested/nested"
+      ]
+    },
+    {
+      "key": "e7a9cbd845816d496eb97fd557d82ea5f2841e7d1965bc5028e039bbef4fb6df",
+      "start": 21,
+      "end": 156,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-hoisting-simple-var-declaration.js/nested"
       ]
     },
     {
@@ -546,6 +975,24 @@
       ]
     },
     {
+      "key": "f4af2d33a57482249d010d8eac5d26f973ec680c3d7ab9cda4f0d480fad49280",
+      "start": 199,
+      "end": 213,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38/nested"
+      ]
+    },
+    {
+      "key": "f4fbdac68f69cd96abdeaa0b870be20d2eb29f2e202c1008fb6866467d44ec83",
+      "start": 831,
+      "end": 846,
+      "checker": false,
+      "calls": [
+        "postdominator_frontier_test.go:91/nested/nested"
+      ]
+    },
+    {
       "key": "f85742482a2b8ca6fd4bb45606de2163807e383cdf49ebada1f7715d13bfa90f",
       "start": 582,
       "end": 591,
@@ -564,6 +1011,18 @@
       "checker": true,
       "calls": [
         "reactive_stable_hooks_test.go:85/nested"
+      ]
+    },
+    {
+      "key": "f9b978378869dc597ac98735710f306ece7669c516fa349564e14acf3995b8c9",
+      "start": 244,
+      "end": 254,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested/nested",
+        "preserve_manual_memoization_score_test.go:552/nested/nested",
+        "prune_non_escaping_scopes_test.go:445/nested/nested",
+        "upstream:preserve-use-memo-unused-state.js/nested/nested"
       ]
     },
     {
@@ -589,45 +1048,45 @@
     }
   ],
   "instructionKinds": {
-    "ArrayExpression": 594,
-    "Await": 7,
-    "BinaryExpression": 359,
-    "CallExpression": 998,
+    "ArrayExpression": 724,
+    "Await": 12,
+    "BinaryExpression": 457,
+    "CallExpression": 1193,
     "ComputedDelete": 1,
-    "ComputedLoad": 20,
+    "ComputedLoad": 25,
     "ComputedStore": 5,
-    "DeclareLocal": 33,
-    "Destructure": 232,
-    "FunctionExpression": 584,
+    "DeclareLocal": 34,
+    "Destructure": 241,
+    "FunctionExpression": 642,
     "GetIterator": 45,
     "IteratorNext": 45,
-    "JsxExpression": 246,
+    "JsxExpression": 270,
     "JsxFragment": 5,
     "JsxText": 18,
-    "LoadContext": 548,
-    "LoadGlobal": 1393,
-    "LoadLocal": 3419,
+    "LoadContext": 1151,
+    "LoadGlobal": 1613,
+    "LoadLocal": 3929,
     "MetaProperty": 1,
-    "MethodCall": 378,
-    "NewExpression": 34,
+    "MethodCall": 531,
+    "NewExpression": 58,
     "NextPropertyOf": 3,
-    "ObjectExpression": 197,
-    "ObjectMethod": 8,
-    "PostfixUpdate": 25,
+    "ObjectExpression": 248,
+    "ObjectMethod": 13,
+    "PostfixUpdate": 27,
     "PrefixUpdate": 4,
-    "Primitive": 1492,
+    "Primitive": 1873,
     "PropertyDelete": 3,
-    "PropertyLoad": 858,
-    "PropertyStore": 96,
+    "PropertyLoad": 1163,
+    "PropertyStore": 133,
     "RegExpLiteral": 5,
-    "StoreContext": 47,
-    "StoreGlobal": 35,
-    "StoreLocal": 1472,
+    "StoreContext": 73,
+    "StoreGlobal": 46,
+    "StoreLocal": 1665,
     "TaggedTemplateExpression": 3,
-    "TemplateLiteral": 5,
+    "TemplateLiteral": 7,
     "TypeCastExpression": 11,
-    "UnaryExpression": 17,
-    "UnsupportedNode": 6
+    "UnaryExpression": 19,
+    "UnsupportedNode": 7
   },
   "skippedGoTestGroups": [
     {
@@ -863,6 +1322,229 @@
           "source": "prune_non_escaping_scopes_test.go:300"
         }
       ]
+    }
+  ],
+  "constructionActiveCorpusFunctions": 1442,
+  "flowExcludedCorpusGraphs": [
+    {
+      "key": "0f3657ced850cb9d3a7595189653a6e55ee5c69a540be340d862bcb597911916",
+      "start": 306,
+      "end": 326,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "17ffa0e7034857c871e6a0e0c82ca1050c601aa14288c14e8801605d92f8c1e9",
+      "start": 915,
+      "end": 947,
+      "calls": [
+        "prune_non_escaping_scopes_test.go:445"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "26ce01be9c86f9a63e1f8f92e7ead8cdc9d78d4d20078342154a4d65a3285249",
+      "start": 198,
+      "end": 233,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "3587d38b456e3a9907c84e3a363c069948ec08f93bc7548aed85748af46a036f",
+      "start": 173,
+      "end": 209,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "3ef2fe55a7c0b06a8072a542ee0bc5584f61890b2f02f5ce496a6a709b4326a1",
+      "start": 401,
+      "end": 431,
+      "calls": [
+        "prune_non_escaping_scopes_test.go:445/nested"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "4c2fd1e02ec66614f796b750e7f1f102d39999ea0e099e21b775cbdfbf0a4b1a",
+      "start": 542,
+      "end": 830,
+      "calls": [
+        "prune_non_escaping_scopes_test.go:445"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "4cbb5f90dc0275a02bf3bdd52c0d9b3d2f225e3310b00f10206e201116889d49",
+      "start": 421,
+      "end": 436,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "4df3882a023c03d83f284c9bdf1d24c7adadffb2bb0c2b31e28d0f2e0d245f00",
+      "start": 905,
+      "end": 925,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "518bc110a70826b70cfd79444cf98326963b072ca1a269ed2531bc1dbb608658",
+      "start": 202,
+      "end": 238,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "549e2e4ab30bdc3114d1c36a95bb4f762d305260c73b87cddb4af1a25d3e5ec4",
+      "start": 166,
+      "end": 765,
+      "calls": [
+        "prune_non_escaping_scopes_test.go:445"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "73a257d234b5af2d69f004e876e4f92e60837ca93e96774ff146a128fdc17136",
+      "start": 251,
+      "end": 269,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "8390961b334d421b13789573ffe639f46a8e39bcf61e1cd23c5ca9c7ba4e91e1",
+      "start": 737,
+      "end": 786,
+      "calls": [
+        "prune_non_escaping_scopes_test.go:445"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "879220ca8d420e8e07aa55822c8495020ea0fdab5079417a91d5ab81eb83af0c",
+      "start": 787,
+      "end": 799,
+      "calls": [
+        "prune_non_escaping_scopes_test.go:445/nested"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "aac5140c0913808eb8a15f2212d7edf02a8d31c7f9662546213280f84475f9c7",
+      "start": 504,
+      "end": 524,
+      "calls": [
+        "prune_non_escaping_scopes_test.go:445"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "aeea798133ae86bd2969e1c579f07e6dc2358d90ba13b369f24bdebf868baafe",
+      "start": 351,
+      "end": 371,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "b1727f63c17a6ed78edc284fc4e300658345946cad9a41bd312fc1df5bd17603",
+      "start": 130,
+      "end": 504,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "c5a8b705ff31220c4bc570c79b5598dd39800fc3bd09efb0e2d16acbb5011b91",
+      "start": 202,
+      "end": 273,
+      "calls": [
+        "prune_non_escaping_scopes_test.go:445"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "d3a4c113a175a720ba9f9074737344421767ddaa0c6c4c9326c31cd148673e61",
+      "start": 349,
+      "end": 466,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "d606024c7df026e4aaaf35034020c85bff5b4e349037e1e81977299d56d000c7",
+      "start": 402,
+      "end": 440,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "e03d14b3cd0f5fe54f57b9e2fdcca784527e102d827e58923a7a8d0170180452",
+      "start": 401,
+      "end": 484,
+      "calls": [
+        "prune_non_escaping_scopes_test.go:445"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "e28e4699132b41c300180e90c7b02a493b187490287d9fd7ae4af949f1d96faf",
+      "start": 158,
+      "end": 189,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "e2bf5510c3b7c33c2a982223a52f379828dbc02ec49bf0675a13c9849b0c1708",
+      "start": 289,
+      "end": 380,
+      "calls": [
+        "prune_non_escaping_scopes_test.go:445"
+      ],
+      "reason": "Flow"
+    },
+    {
+      "key": "e43320b220a0d6f80cc2800b78a1b03af8e1187f55f2b0ec7e4a02d5499e4265",
+      "start": 127,
+      "end": 137,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445"
+      ],
+      "reason": "Flow"
     }
   ]
 }

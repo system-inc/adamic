@@ -14,6 +14,7 @@ import (
 	"strings"
 	"sync"
 	"testing"
+	"unicode/utf16"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -32,6 +33,8 @@ type constructionRecord struct {
 	Functions int      `json:"functions"`
 	Eligible  bool     `json:"eligible"`
 	Calls     []string `json:"calls"`
+	Symbols   string   `json:"symbols"`
+	Excluded  string   `json:"excluded"`
 }
 
 var constructionRecords = map[string]*constructionRecord{}
@@ -42,7 +45,7 @@ func constructionExpression(n *ast.Node) bool {
 		return false
 	}
 	switch n.Kind {
-	case ast.KindNumericLiteral, ast.KindStringLiteral, ast.KindBigIntLiteral, ast.KindNoSubstitutionTemplateLiteral, ast.KindTrueKeyword, ast.KindFalseKeyword, ast.KindNullKeyword:
+	case ast.KindIdentifier, ast.KindNumericLiteral, ast.KindStringLiteral, ast.KindBigIntLiteral, ast.KindNoSubstitutionTemplateLiteral, ast.KindTrueKeyword, ast.KindFalseKeyword, ast.KindNullKeyword:
 		return true
 	case ast.KindParenthesizedExpression:
 		return constructionExpression(n.AsParenthesizedExpression().Expression)
@@ -50,12 +53,26 @@ func constructionExpression(n *ast.Node) bool {
 		return constructionExpression(n.AsTypeOfExpression().Expression)
 	case ast.KindVoidExpression:
 		return constructionExpression(n.AsVoidExpression().Expression)
+	case ast.KindPropertyAccessExpression:
+		x := n.AsPropertyAccessExpression()
+		return x.QuestionDotToken == nil && constructionExpression(x.Expression)
+	case ast.KindElementAccessExpression:
+		x := n.AsElementAccessExpression()
+		return x.QuestionDotToken == nil && constructionExpression(x.Expression) && constructionExpression(x.ArgumentExpression)
+	case ast.KindPostfixUnaryExpression:
+		return constructionTarget(n.AsPostfixUnaryExpression().Operand)
 	case ast.KindPrefixUnaryExpression:
 		x := n.AsPrefixUnaryExpression()
-		return x.Operator != ast.KindPlusPlusToken && x.Operator != ast.KindMinusMinusToken && constructionExpression(x.Operand)
+		if x.Operator == ast.KindPlusPlusToken || x.Operator == ast.KindMinusMinusToken {
+			return constructionTarget(x.Operand)
+		}
+		return constructionExpression(x.Operand)
 	case ast.KindBinaryExpression:
 		x := n.AsBinaryExpression()
 		op := x.OperatorToken.Kind
+		if op == ast.KindEqualsToken || isCompoundAssignment(op) {
+			return constructionTarget(x.Left) && constructionExpression(x.Right)
+		}
 		return op != ast.KindAmpersandAmpersandToken && op != ast.KindBarBarToken && op != ast.KindQuestionQuestionToken && op != ast.KindEqualsToken && !isCompoundAssignment(op) && constructionExpression(x.Left) && constructionExpression(x.Right)
 	}
 	return false
@@ -92,6 +109,14 @@ func constructionEligible(node *ast.Node) bool {
 	if statements != nil {
 		for index, statement := range statements.Nodes {
 			switch statement.Kind {
+			case ast.KindVariableStatement:
+				list := statement.AsVariableStatement().DeclarationList.AsVariableDeclarationList()
+				for _, decl := range list.Declarations.Nodes {
+					d := decl.AsVariableDeclaration()
+					if d.Name().Kind != ast.KindIdentifier || d.Type != nil || (d.Initializer != nil && !constructionExpression(d.Initializer)) {
+						return false
+					}
+				}
 			case ast.KindEmptyStatement:
 			case ast.KindExpressionStatement:
 				if !constructionExpression(statement.AsExpressionStatement().Expression) {
@@ -112,7 +137,7 @@ func constructionEligible(node *ast.Node) bool {
 	return true
 }
 
-func constructionObserve(f *Function, checked bool, caller string, constructed bool) {
+func constructionObserve(f *Function, typeChecker *checker.Checker, caller string, constructed bool) {
 	if f == nil || f.Node == nil {
 		return
 	}
@@ -124,38 +149,42 @@ func constructionObserve(f *Function, checked bool, caller string, constructed b
 	if !constructed {
 		Construct(clone)
 	}
-	constructionStore(clone, checked, caller)
+	constructionStore(clone, typeChecker != nil, constructionSymbols(source, typeChecker), caller)
 }
-func constructionStore(clone *Function, checked bool, caller string) {
+func constructionStore(clone *Function, checked bool, symbols string, caller string) {
 	source := ast.GetSourceFileOfNode(clone.Node)
 	if source == nil {
 		return
 	}
 	f := clone
+	excluded := ""
+	if (react_conformance.Fixture{Source: source.Text()}).RequiresFlow() {
+		excluded = "Flow"
+	}
 	dump := oracleDump(clone)
 	key := fmt.Sprintf("%x", sha256.Sum256([]byte(fmt.Sprintf("%s:%d:%d:%t:%s", source.Text(), f.Node.Pos(), f.Node.End(), checked, dump))))
 	constructionMutex.Lock()
 	if old := constructionRecords[key]; old != nil {
 		old.Calls = append(old.Calls, caller)
 	} else {
-		constructionRecords[key] = &constructionRecord{Key: key, Source: source.Text(), Start: f.Node.Pos(), End: f.Node.End(), Checker: checked, Dump: dump, Functions: 1, Eligible: constructionEligible(f.Node), Calls: []string{caller}}
+		constructionRecords[key] = &constructionRecord{Key: key, Source: source.Text(), Start: f.Node.Pos(), End: f.Node.End(), Checker: checked, Dump: dump, Functions: 1, Eligible: excluded == "" && constructionEligible(f.Node) && len(f.Context) == 0, Calls: []string{caller}, Symbols: symbols, Excluded: excluded}
 	}
 	constructionMutex.Unlock()
 	for _, nested := range clone.Functions {
-		constructionStore(nested, checked, caller+"/nested")
+		constructionStore(nested, checked, symbols, caller+"/nested")
 	}
 }
 
 func stage1ObservedLower(node *ast.Node, checker *checker.Checker) *Function {
 	f := Lower(node, checker)
 	_, file, line, _ := runtime.Caller(1)
-	constructionObserve(f, checker != nil, fmt.Sprintf("%s:%d", filepath.Base(file), line), false)
+	constructionObserve(f, checker, fmt.Sprintf("%s:%d", filepath.Base(file), line), false)
 	return f
 }
 func stage1ObservedForFunction(ctx rule.Context, node *ast.Node) *Function {
 	f := ForFunction(ctx, node)
 	_, file, line, _ := runtime.Caller(1)
-	constructionObserve(f, ctx.TypeChecker != nil, fmt.Sprintf("%s:%d", filepath.Base(file), line), true)
+	constructionObserve(f, ctx.TypeChecker, fmt.Sprintf("%s:%d", filepath.Base(file), line), true)
 	return f
 }
 
@@ -163,7 +192,7 @@ func stage1ObservedForFunctionWithoutManualMemoization(ctx rule.Context, node *a
 	f := ForFunctionWithoutManualMemoization(ctx, node)
 	_, file, line, _ := runtime.Caller(1)
 	if ctx.TypeChecker != nil {
-		constructionObserve(Lower(node, ctx.TypeChecker), true, fmt.Sprintf("%s:%d", filepath.Base(file), line), false)
+		constructionObserve(Lower(node, ctx.TypeChecker), ctx.TypeChecker, fmt.Sprintf("%s:%d", filepath.Base(file), line), false)
 	}
 	return f
 }
@@ -186,7 +215,7 @@ func TestStage1AllConstructionFixtures(t *testing.T) {
 			return rule.Listeners{ast.KindSourceFile: func(node *ast.Node) {
 				forEachFunctionLike(node, func(n *ast.Node) {
 					f := Lower(n, ctx.TypeChecker)
-					constructionObserve(f, true, "upstream:"+fixture.Name, false)
+					constructionObserve(f, ctx.TypeChecker, "upstream:"+fixture.Name, false)
 				})
 			}}
 		}}
@@ -219,13 +248,17 @@ func TestMain(m *testing.M) {
 			r.Calls = uniqueConstructionCalls(r.Calls)
 			sourcePath := filepath.Join(destination, key+".tsx")
 			dumpPath := filepath.Join(destination, key+".dump")
+			symbolsPath := filepath.Join(destination, key+".symbols")
+			if err := os.WriteFile(symbolsPath, []byte(r.Symbols), 0600); err != nil {
+				panic(err)
+			}
 			if err := os.WriteFile(sourcePath, []byte(r.Source), 0600); err != nil {
 				panic(err)
 			}
 			if err := os.WriteFile(dumpPath, []byte(r.Dump), 0600); err != nil {
 				panic(err)
 			}
-			fmt.Fprintf(&manifest, "%s\t%s\t%d\t%d\t%t\t%s\t%d\t%t\n", key, sourcePath, r.Start, r.End, r.Checker, dumpPath, r.Functions, r.Eligible)
+			fmt.Fprintf(&manifest, "%s\t%s\t%d\t%d\t%t\t%s\t%d\t%t\t%s\t%s\n", key, sourcePath, r.Start, r.End, r.Checker, dumpPath, r.Functions, r.Eligible, symbolsPath, r.Excluded)
 			total += r.Functions
 			if r.Eligible {
 				eligible += r.Functions
@@ -264,6 +297,11 @@ func uniqueConstructionCalls(values []string) []string {
 
 func TestStage1ConstructionPathProbes(t *testing.T) {
 	sources := []string{
+		"function Binding(value) { let local = value; local = 2; return local; }",
+		"function Declaration() { let local; local = 3; return local; }",
+		"function Updates(value) { ++value; value--; value += 2; return value; }",
+		"import Default from './missing'; import * as Namespace from './missing'; import {x as Named} from './missing'; const local = 1; function Globals() { Default; Namespace; Named; local; unknown = 2; return unknown; }",
+		"function Properties(object, key) { object.name = 1; object[key] = 2; return object.name + object[key]; }",
 		"function Arithmetic(unused) { 1 + 2 * 3; return 4; }",
 		"function Unary() { typeof 1; void 2; +3; ~4; return !false; }",
 		"function Comma() { return (1, 2); }",
@@ -278,10 +316,89 @@ func TestStage1ConstructionPathProbes(t *testing.T) {
 		probe := rule.Rule{Name: "stage1-path-probe", NeedsTypeChecker: true, Run: func(ctx rule.Context, _ any) rule.Listeners {
 			return rule.Listeners{ast.KindSourceFile: func(node *ast.Node) {
 				forEachFunctionLike(node, func(n *ast.Node) {
-					constructionObserve(Lower(n, ctx.TypeChecker), true, fmt.Sprintf("probe:%d", index), false)
+					constructionObserve(Lower(n, ctx.TypeChecker), ctx.TypeChecker, fmt.Sprintf("probe:%d", index), false)
 				})
 			}}
 		}}
 		rule_testing.RunTyped(t, probe, fmt.Sprintf("probe-%d.tsx", index), source)
 	}
+}
+
+// This adapter snapshots compiler facts, independently of the constructed graph.
+// IDs reflect real checker symbol equality; no lexical lookup or HIR-derived binding facts.
+func constructionTarget(n *ast.Node) bool {
+	if n == nil {
+		return false
+	}
+	if n.Kind == ast.KindParenthesizedExpression {
+		return constructionTarget(n.Expression())
+	}
+	return n.Kind == ast.KindIdentifier || (n.Kind == ast.KindPropertyAccessExpression || n.Kind == ast.KindElementAccessExpression) && constructionExpression(n)
+}
+func constructionFrame(s string) string {
+	return fmt.Sprintf("%d\n%s", len(utf16.Encode([]rune(s))), s)
+}
+func constructionSymbols(source *ast.SourceFile, c *checker.Checker) string {
+	if c == nil {
+		return ""
+	}
+	ids := map[*ast.Symbol]int{}
+	var records []string
+	var walk func(*ast.Node)
+	walk = func(node *ast.Node) {
+		if node.Kind == ast.KindIdentifier {
+			var symbol *ast.Symbol
+			if parent := node.Parent; parent != nil && parent.Kind == ast.KindShorthandPropertyAssignment && parent.Name() == node {
+				symbol = c.GetShorthandAssignmentValueSymbol(parent)
+			}
+			if symbol == nil {
+				symbol = c.GetSymbolAtLocation(node)
+			}
+			if symbol == nil {
+				symbol = node.Symbol()
+			}
+			fields := []string{"1", "symbol", "0", "", "0"}
+			if symbol != nil {
+				id := ids[symbol]
+				if id == 0 {
+					id = len(ids) + 1
+					ids[symbol] = id
+				}
+				fields[2], fields[3], fields[4] = fmt.Sprint(id), symbol.Name, fmt.Sprint(len(symbol.Declarations))
+				for _, d := range symbol.Declarations {
+					same := "0"
+					if ast.GetSourceFileOfNode(d) == source {
+						same = "1"
+					}
+					name, property, module := "", "", ""
+					if n := d.Name(); n != nil && (n.Kind == ast.KindIdentifier || n.Kind == ast.KindPrivateIdentifier || ast.IsStringLiteralLike(n) || n.Kind == ast.KindNumericLiteral) {
+						name = n.Text()
+					}
+					if n := d.PropertyName(); n != nil && (n.Kind == ast.KindIdentifier || n.Kind == ast.KindPrivateIdentifier || ast.IsStringLiteralLike(n) || n.Kind == ast.KindNumericLiteral) {
+						property = n.Text()
+					}
+					switch d.Kind {
+					case ast.KindImportSpecifier, ast.KindImportClause, ast.KindNamespaceImport:
+						for parent := d.Parent; parent != nil; parent = parent.Parent {
+							if parent.Kind == ast.KindImportDeclaration {
+								if m := parent.AsImportDeclaration().ModuleSpecifier; m != nil && ast.IsStringLiteralLike(m) {
+									module = m.Text()
+								}
+								break
+							}
+						}
+					}
+					fields = append(fields, strings.TrimPrefix(d.Kind.String(), "Kind"), same, fmt.Sprint(d.Pos()), fmt.Sprint(d.End()), name, property, module)
+				}
+			}
+			var wire strings.Builder
+			for _, f := range fields {
+				wire.WriteString(constructionFrame(f))
+			}
+			records = append(records, constructionFrame(fmt.Sprint(node.Pos()))+constructionFrame(fmt.Sprint(node.End()))+constructionFrame(wire.String()))
+		}
+		node.ForEachChild(func(child *ast.Node) bool { walk(child); return false })
+	}
+	walk(source.AsNode())
+	return constructionFrame(fmt.Sprint(len(records))) + strings.Join(records, "")
 }

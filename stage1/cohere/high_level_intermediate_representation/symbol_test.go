@@ -54,6 +54,7 @@ function Component(value) {
   value;
   { let value = 2; value; }
   const object = { value };
+  const computed = { [text]: value };
   return value + moduleLocal + Default + Namespace + Renamed + unknownGlobal;
 }
 `
@@ -173,7 +174,7 @@ function Component(value) {
 		t.Fatal(err)
 	}
 	defer os.RemoveAll(mutant)
-	for _, name := range []string{"symbol.ts", "symbol_main.ts"} {
+	for _, name := range []string{"symbol.ts", "symbol_main.ts", "symbol_live.ts"} {
 		data, err := os.ReadFile(filepath.Join(lane, name))
 		if err != nil {
 			t.Fatal(err)
