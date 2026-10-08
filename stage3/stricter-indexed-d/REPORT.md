@@ -52,3 +52,12 @@ Setup completed successfully in 502.808s: Go 0.044s, Node 0.024s, clang 0.226s,
 markdown dependencies 1.785s, submodules 295.588s, Go build 502.683s, cache warm
 502.780s. nproc=5, cpu.max=400000 100000. Environment sourced from
 `/workspace/adamic-tools/env.sh`. Go 1.27.1, Node 24.19.0, clang 20.1.8.
+
+Group 1 commit: 8f28caf6, pushed to codex/stricter-indexed-d.
+Group 2 adds D172, D173, D174, D175 and D184: present and absent proofs pass in
+all modes; all five erase-panic mutants build and exit 0, caught by the required
+named stop. Their hole variants all produce undefined on Node and the same
+constructor refusal natively. Total: 7 dense reads proven, 3 record rows blocked,
+14 remaining. Filtered group command uses
+`-run 'TestLedgerWitnesses/(D172|D173|D174|D175|D184)$'`; exit 0, package 13.101s,
+log `/tmp/stricter-indexed-d-group2.log`.

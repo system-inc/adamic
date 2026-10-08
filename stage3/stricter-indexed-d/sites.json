@@ -63,5 +63,70 @@
     "present": "[{ name: \"7\" }]",
     "absent": "[]",
     "blocked": false
+  },
+  {
+    "id": "D172",
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 3046,
+    "expression": "declarations[0]",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "declarations[0]",
+    "receiver": "array of object",
+    "source": "interface Item { readonly pos: number }\nconst declarations: Item[] = @VALUES@;\nconst value: Item = declarations[0];\nconsole.log(value === undefined ? 'undefined' : `${value.pos}`);\n",
+    "present": "[{ pos: 7 }]",
+    "absent": "[]",
+    "blocked": false
+  },
+  {
+    "id": "D173",
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 4437,
+    "expression": "funcStatements[classBodyStart]",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "funcStatements[classBodyStart]",
+    "receiver": "NodeArray of object",
+    "source": "interface Item { readonly kind: number }\nconst funcStatements: readonly Item[] = @VALUES@; const classBodyStart = 0;\nconst value: Item = funcStatements[classBodyStart];\nconsole.log(value === undefined ? 'undefined' : `${value.kind}`);\n",
+    "present": "[{ kind: 7 }]",
+    "absent": "[]",
+    "blocked": false
+  },
+  {
+    "id": "D174",
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 4691,
+    "expression": "segments[0]",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "segments[0]",
+    "receiver": "array of object",
+    "source": "interface Item { readonly kind: number; readonly expression: string }\nconst segments: Item[] = @VALUES@;\nconst value: Item = segments[0];\nconsole.log(value === undefined ? 'undefined' : `${value.kind}`);\n",
+    "present": "[{ kind: 7, expression: \"7\" }]",
+    "absent": "[]",
+    "blocked": false
+  },
+  {
+    "id": "D175",
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 4693,
+    "expression": "segments[0]",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "segments[0]",
+    "receiver": "array of object",
+    "source": "interface Item { readonly kind: number; readonly expression: string }\nconst segments: Item[] = @VALUES@;\nconst value: Item = segments[0];\nconsole.log(value === undefined ? 'undefined' : `${value.kind}`);\n",
+    "present": "[{ kind: 7, expression: \"7\" }]",
+    "absent": "[]",
+    "blocked": false
+  },
+  {
+    "id": "D184",
+    "file": "src/compiler/transformers/esDecorators.ts",
+    "line": 1164,
+    "expression": "statementsIn[superStatementIndex]",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "superPath[superPathDepth]",
+    "receiver": "readonly array of number",
+    "source": "const superPath: readonly number[] = @VALUES@; const superPathDepth = 0;\nconst value: number = superPath[superPathDepth];\nconsole.log(`${value}`);\n",
+    "present": "[7]",
+    "absent": "[]",
+    "blocked": false
   }
 ]
