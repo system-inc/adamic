@@ -1,0 +1,17 @@
+// nexus/shouting.go:155; "`[^`]*`"
+import { observe } from '../observe.a';
+import { programArguments } from 'adamic';
+const argumentsList = programArguments();
+const pattern = argumentsList[0] ?? '';
+const flags = argumentsList[1] ?? '';
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "``", 4);
+observe(regex, "x``", 5);
+observe(regex, "``\n", 6);
+observe(regex, "// `export import x = mod.x` being treated as instantiated:", 7);
+observe(regex, "/** May store more in future. For now, this will simply be `true` to indicate when a diagnostic is an unused-identifier diagnostic. */", 8);
+observe(regex, "//       order in the generated program (see `getDefaultLibFilePriority` in program.ts). This", 9);

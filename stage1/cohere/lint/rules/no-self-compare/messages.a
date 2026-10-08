@@ -1,0 +1,2 @@
+export const comparingToSelf =
+    'Both sides of this comparison are written identically, so the answer does not depend on the data: it is true, or it is false, every time. The two shapes this is almost always hiding are a typo in one operand, and a deliberate `x !== x` reaching for a NaN check, which `Number.isNaN(x)` says out loud instead.';
