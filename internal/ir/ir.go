@@ -83,6 +83,7 @@ type PredicateDirectionCheck struct {
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
 type Class struct {
+	BuiltinError string // built-in nominal ancestor for the shared name/message prefix
 	// Definition is the erased source identity, shared by distinct native layouts.
 	Definition   int
 	Name         string
