@@ -1,0 +1,4 @@
+interface EvaluatorResult<T> { readonly value: T; }
+function evaluate(value: string): EvaluatorResult<string | undefined>;
+function evaluate(value: string | number): EvaluatorResult<string | number | undefined> { return { value: 7 }; }
+console.log(evaluate('node').value ?? 'missing');

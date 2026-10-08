@@ -1,0 +1,5 @@
+=== RUN   TestHiddenBoundaryEvaluatorOverloadResultNegative
+    hidden_boundary_evaluator_overload_result_test.go:47: /workspace/adamic/internal/load/testdata/0.1/refuse/hidden_boundary_evaluator_overload_result.a:2:1: Adamic 0.1 refuses overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined>; make the implementation result covariant with every overload result
+--- PASS: TestHiddenBoundaryEvaluatorOverloadResultNegative (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.042s
