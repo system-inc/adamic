@@ -1,0 +1,58 @@
+{
+  "pin": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "calls": {
+    "applyQuantifier": 235,
+    "braceQuantifierEnd": 367,
+    "consumeDigits": 434,
+    "decodeRune": 56240,
+    "emit": 3587,
+    "emitAndQuantify": 2107,
+    "extendOctalEscape": 1100,
+    "groupPrologueEnd": 224,
+    "isAsciiLetter": 258,
+    "kindFromSource": 1238,
+    "octalEscapeValue": 18,
+    "quantifierAt": 2354
+  },
+  "inputSets": {
+    "core": {
+      "applyQuantifier": 13,
+      "braceQuantifierEnd": 7,
+      "consumeDigits": 7,
+      "decodeRune": 625,
+      "emit": 748,
+      "emitAndQuantify": 654,
+      "extendOctalEscape": 45,
+      "groupPrologueEnd": 7,
+      "kindFromSource": 135,
+      "quantifierAt": 688
+    },
+    "regexpattern": {
+      "applyQuantifier": 222,
+      "braceQuantifierEnd": 360,
+      "consumeDigits": 427,
+      "decodeRune": 55615,
+      "emit": 2839,
+      "emitAndQuantify": 1453,
+      "extendOctalEscape": 1055,
+      "groupPrologueEnd": 217,
+      "isAsciiLetter": 258,
+      "kindFromSource": 1103,
+      "octalEscapeValue": 18,
+      "quantifierAt": 1666
+    }
+  },
+  "consumerFixtures": {
+    "no-control-regex": 19,
+    "no-regex-spaces": 126
+  },
+  "blocked": [
+    "Walk",
+    "walker.run",
+    "walker.walkClass",
+    "walker.readEscape",
+    "escapeValue",
+    "unicodeEscapeValue"
+  ],
+  "dependency": "ecmascript/regexsyntax"
+}

@@ -1,0 +1,16 @@
+export class Rune {
+ readonly value: number;
+ readonly width: number;
+ constructor(value: number, width: number) { this.value = value; this.width = width; } }
+// Preserve Go UTF-8 decoding, including one-byte RuneError for invalid sequences.
+export function decodeRune(text: number[], index: number): Rune {
+ const a = (text[index] ?? 0); if(a < 128) { return new Rune(a, 1); }
+ let width = 0; let value = 0; let low = 128; let high = 191;
+ if(a >= 194 && a <= 223) { width = 2; value = a - 192; }
+ else if(a >= 224 && a <= 239) { width = 3; value = a - 224; if(a === 224) { low = 160; } if(a === 237) { high = 159; } }
+ else if(a >= 240 && a <= 244) { width = 4; value = a - 240; if(a === 240) { low = 144; } if(a === 244) { high = 143; } }
+ else { return new Rune(65533, 1); }
+ if(index + width > text.length || (text[index + 1] ?? 0) < low || (text[index + 1] ?? 0) > high) { return new Rune(65533, 1); }
+ for(let n = 1; n < width; n++) { const b = (text[index + n] ?? 0); if(b < 128 || b > 191) { return new Rune(65533, 1); } value = value * 64 + b - 128; }
+ return new Rune(value, width);
+}

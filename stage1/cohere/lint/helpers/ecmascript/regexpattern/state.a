@@ -1,0 +1,19 @@
+export class Character {
+
+ readonly value: number;
+ readonly kind: number;
+ readonly start: number;
+ readonly end: number;
+ readonly quantifierDepth: number;
+ readonly classDepth: number;
+ constructor(value: number, kind: number, start: number, end: number, quantifierDepth: number, classDepth: number) { this.value = value; this.kind = kind; this.start = start; this.end = end; this.quantifierDepth = quantifierDepth; this.classDepth = classDepth; }
+}
+export class WalkerState {
+ stopped = false;
+
+ readonly pattern: number[];
+ quantifierDepth: number;
+ classDepth: number;
+ readonly callback: (character: Character) => boolean;
+ constructor(pattern: number[], quantifierDepth: number, classDepth: number, callback: (character: Character) => boolean) { this.pattern = pattern; this.quantifierDepth = quantifierDepth; this.classDepth = classDepth; this.callback = callback; }
+}

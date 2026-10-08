@@ -1,0 +1,62 @@
+[
+  {
+    "symbol": "ecmascript/regexpattern.consumeDigits",
+    "file": "stage1/cohere/lint/helpers/ecmascript/regexpattern/consume_digits.a",
+    "go": "cohere/internal/lint/ecmascript/regexpattern/escape.go:200"
+  },
+  {
+    "symbol": "ecmascript/regexpattern.braceQuantifierEnd",
+    "file": "stage1/cohere/lint/helpers/ecmascript/regexpattern/brace_quantifier_end.a",
+    "go": "cohere/internal/lint/ecmascript/regexpattern/escape.go:176"
+  },
+  {
+    "symbol": "ecmascript/regexpattern.isAsciiLetter",
+    "file": "stage1/cohere/lint/helpers/ecmascript/regexpattern/is_ascii_letter.a",
+    "go": "cohere/internal/lint/ecmascript/regexpattern/escape.go:209"
+  },
+  {
+    "symbol": "ecmascript/regexpattern.octalEscapeValue",
+    "file": "stage1/cohere/lint/helpers/ecmascript/regexpattern/octal_escape_value.a",
+    "go": "cohere/internal/lint/ecmascript/regexpattern/escape.go:112"
+  },
+  {
+    "symbol": "ecmascript/regexpattern.extendOctalEscape",
+    "file": "stage1/cohere/lint/helpers/ecmascript/regexpattern/extend_octal_escape.a",
+    "go": "cohere/internal/lint/ecmascript/regexpattern/escape.go:140"
+  },
+  {
+    "symbol": "ecmascript/regexpattern.groupPrologueEnd",
+    "file": "stage1/cohere/lint/helpers/ecmascript/regexpattern/group_prologue_end.a",
+    "go": "cohere/internal/lint/ecmascript/regexpattern/walk.go:131"
+  },
+  {
+    "symbol": "ecmascript/regexpattern.decodeRune",
+    "file": "stage1/cohere/lint/helpers/ecmascript/regexpattern/decode_rune.a",
+    "go": "cohere/internal/lint/ecmascript/regexpattern/walk.go:375"
+  },
+  {
+    "symbol": "ecmascript/regexpattern.quantifierAt",
+    "file": "stage1/cohere/lint/helpers/ecmascript/regexpattern/quantifier_at.a",
+    "go": "cohere/internal/lint/ecmascript/regexpattern/walk.go:179"
+  },
+  {
+    "symbol": "ecmascript/regexpattern.*walker.applyQuantifier",
+    "file": "stage1/cohere/lint/helpers/ecmascript/regexpattern/apply_quantifier.a",
+    "go": "cohere/internal/lint/ecmascript/regexpattern/walk.go:213"
+  },
+  {
+    "symbol": "ecmascript/regexpattern.*walker.kindFromSource",
+    "file": "stage1/cohere/lint/helpers/ecmascript/regexpattern/kind_from_source.a",
+    "go": "cohere/internal/lint/ecmascript/regexpattern/walk.go:289"
+  },
+  {
+    "symbol": "ecmascript/regexpattern.*walker.emit",
+    "file": "stage1/cohere/lint/helpers/ecmascript/regexpattern/emit.a",
+    "go": "cohere/internal/lint/ecmascript/regexpattern/walk.go:159"
+  },
+  {
+    "symbol": "ecmascript/regexpattern.*walker.emitAndQuantify",
+    "file": "stage1/cohere/lint/helpers/ecmascript/regexpattern/emit_and_quantify.a",
+    "go": "cohere/internal/lint/ecmascript/regexpattern/walk.go:111"
+  }
+]

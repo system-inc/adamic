@@ -1,0 +1,74 @@
+[
+  {
+    "Symbol": "consumeDigits",
+    "File": "consume_digits.a",
+    "From": "<= 57",
+    "To": "< 57"
+  },
+  {
+    "Symbol": "braceQuantifierEnd",
+    "File": "brace_quantifier_end.a",
+    "From": "index + 1, true",
+    "To": "index, true"
+  },
+  {
+    "Symbol": "isAsciiLetter",
+    "File": "is_ascii_letter.a",
+    "From": "<= 122",
+    "To": "< 122"
+  },
+  {
+    "Symbol": "octalEscapeValue",
+    "File": "octal_escape_value.a",
+    "From": "value > 255",
+    "To": "value > 254"
+  },
+  {
+    "Symbol": "extendOctalEscape",
+    "File": "extend_octal_escape.a",
+    "From": "> 255",
+    "To": "> 254"
+  },
+  {
+    "Symbol": "groupPrologueEnd",
+    "File": "group_prologue_end.a",
+    "From": "return index + 3",
+    "To": "return index + 2"
+  },
+  {
+    "Symbol": "decodeRune",
+    "File": "decode_rune.a",
+    "From": "new Rune(65533, 1)",
+    "To": "new Rune(65532, 1)"
+  },
+  {
+    "Symbol": "quantifierAt",
+    "File": "quantifier_at.a",
+    "From": "new QuantifierEnd(index, true)",
+    "To": "new QuantifierEnd(index, false)"
+  },
+  {
+    "Symbol": "applyQuantifier",
+    "File": "apply_quantifier.a",
+    "From": "quantifierAt(w.pattern, index).end",
+    "To": "index"
+  },
+  {
+    "Symbol": "kindFromSource",
+    "File": "kind_from_source.a",
+    "From": "case 120: return 3",
+    "To": "case 120: return 4"
+  },
+  {
+    "Symbol": "emit",
+    "File": "emit.a",
+    "From": "w.stopped = true",
+    "To": "w.stopped = false"
+  },
+  {
+    "Symbol": "emitAndQuantify",
+    "File": "emit_and_quantify.a",
+    "From": "w.quantifierDepth++",
+    "To": "w.quantifierDepth += 2"
+  }
+]
