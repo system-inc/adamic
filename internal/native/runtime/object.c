@@ -174,11 +174,15 @@ adamic_view_union_value adamic_object_view_union_snapshot(const adamic_object *o
         adamic_maybe_number number = adamic_maybe_number_unpack(slot->number);
         value.kind = number.present ? adamic_view_union_number : adamic_view_union_undefined;
         value.payload.number = number.number;
+    } else if (storage == 9) {
+        adamic_maybe_boolean boolean = adamic_maybe_boolean_unpack(slot->maybe_boolean);
+        value.kind = boolean.present ? adamic_view_union_boolean : adamic_view_union_undefined;
+        value.payload.boolean = boolean.boolean;
     } else if (storage == 12) { value.kind = adamic_view_union_null; }
     else if (storage == 13) { value.kind = adamic_view_union_undefined; }
-    else if ((storage >= 3 && storage <= 6) || storage == 8 || storage == 9 || storage == 10 || storage == 11) {
+    else if ((storage >= 3 && storage <= 6) || storage == 8 || storage == 10 || storage == 11) {
         value = adamic_view_union_heap(slot->reference);
-        adamic_view_union_kind expected = storage == 3 ? adamic_view_union_string : storage == 4 || storage == 11 ? adamic_view_union_object : storage == 5 ? adamic_view_union_array : storage == 6 ? adamic_view_union_map : storage == 8 ? adamic_view_union_function : storage == 9 ? adamic_view_union_boolean : value.kind;
+        adamic_view_union_kind expected = storage == 3 ? adamic_view_union_string : storage == 4 || storage == 11 ? adamic_view_union_object : storage == 5 ? adamic_view_union_array : storage == 6 ? adamic_view_union_map : storage == 8 ? adamic_view_union_function : value.kind;
         if (value.kind != adamic_view_union_undefined && value.kind != expected) { value.kind = adamic_view_union_unknown; }
     }
     return value;
@@ -216,15 +220,20 @@ adamic_value adamic_object_view(const adamic_object *object, const char *name, a
 		adamic_maybe_number unpacked = adamic_maybe_number_unpack(slot->number);
 		if (unpacked.present) { return (adamic_value){.number = unpacked.number}; }
 	}
+    if (actual == 9 && wanted == 2) {
+        adamic_maybe_boolean boolean = adamic_maybe_boolean_unpack(slot->maybe_boolean);
+        if (boolean.present) { return (adamic_value){.boolean = boolean.boolean}; }
+    }
 	if ((actual == wanted || (actual == 14 && wanted == 4)) && ((wanted >= 1 && wanted <= 6) || wanted == 8)) {
 		if (wanted <= 2) { return *slot; }
 		const adamic_heap *reference = slot->reference;
 		enum adamic_kind kind = wanted == 3 ? adamic_kind_string : wanted == 4 ? adamic_kind_object : wanted == 5 ? adamic_kind_array : wanted == 8 ? adamic_kind_closure : adamic_kind_map;
 		if (reference != NULL && reference->kind == kind) { return *slot; }
 	}
-	const char *found = actual == 1 ? "number" : actual == 2 ? "boolean" : actual == 3 ? "string" : (actual == 4 || actual == 14) ? "object" : actual == 5 ? "array" : actual == 6 ? "Map" : actual == 7 ? "number" : actual == 8 ? "function" : actual == 11 ? "object" : actual == 12 ? "null" : actual == 13 ? "nullish" : "unsupported representation";
+	const char *found = actual == 1 ? "number" : actual == 2 ? "boolean" : actual == 3 ? "string" : (actual == 4 || actual == 14) ? "object" : actual == 5 ? "array" : actual == 6 ? "Map" : actual == 7 ? "number" : actual == 9 ? "boolean" : actual == 8 ? "function" : actual == 11 ? "object" : actual == 12 ? "null" : actual == 13 ? "nullish" : "unsupported representation";
 	if (actual >= 3 && actual <= 6 && slot->reference == NULL) { found = "nullish"; }
 	if (actual == 7 && !adamic_maybe_number_unpack(slot->number).present) { found = "nullish"; }
+	if (actual == 9 && !adamic_maybe_boolean_unpack(slot->maybe_boolean).present) { found = "nullish"; }
 	if (actual == 10) {
 		const adamic_heap *boxed = slot->reference;
 		found = boxed == NULL ? "nullish" : boxed->kind == adamic_kind_number ? "number" : boxed->kind == adamic_kind_boolean ? "boolean" : boxed->kind == adamic_kind_string ? "string" : boxed->kind == adamic_kind_object ? "object" : boxed->kind == adamic_kind_array ? "array" : boxed->kind == adamic_kind_map ? "Map" : boxed->kind == adamic_kind_null ? "null" : "function";
@@ -268,7 +277,7 @@ static adamic_value object_optional_view(const adamic_object *object, const char
  bool missing = (object == NULL && optional) || (object != NULL && slot == NULL && absent);
  if (slot != NULL && (absent || undefined_member || wanted == 7 || wanted == 9) && adamic_object_initialized(object)[cache->index]) {
   unsigned char actual = adamic_object_field_types(object)[cache->index];
-  missing = actual == 13 || (actual >= 3 && actual <= 6 && slot->reference == NULL) || (actual == 7 && !adamic_maybe_number_unpack(slot->number).present) || (actual == 10 && slot->reference == NULL);
+  missing = actual == 13 || (actual >= 3 && actual <= 6 && slot->reference == NULL) || (actual == 7 && !adamic_maybe_number_unpack(slot->number).present) || (actual == 9 && !adamic_maybe_boolean_unpack(slot->maybe_boolean).present) || (actual == 10 && slot->reference == NULL);
  }
  if (missing) {
   if (wanted == 7) { return (adamic_value){.number = adamic_maybe_number_pack((adamic_maybe_number){false, 0.0})}; }
