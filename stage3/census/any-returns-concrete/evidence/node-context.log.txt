@@ -1,0 +1,4 @@
+/tmp/any-returns-adapted/src/compiler/sys.ts:1471:34: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/any-returns-adapted/src/compiler/sys.ts:1471:42: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/any-returns-adapted/src/compiler/sys.ts:1630:49: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+/tmp/any-returns-adapted/src/compiler/sys.ts:1673:47: error TS2591: Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.

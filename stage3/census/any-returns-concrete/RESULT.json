@@ -1,0 +1,124 @@
+{
+  "before": {
+    "boundaries": 2060,
+    "hidden_bytes": 89627
+  },
+  "after": {
+    "boundaries": 15,
+    "hidden_bytes": 7290
+  },
+  "remaining_callees": {
+    "convertConfigFileToObject": {
+      "declaration": "commandLineParser.ts:2437",
+      "stock_return": "any",
+      "source_reason": "explicit any return annotation",
+      "boundaries": 2,
+      "bytes": 1545,
+      "reason": "source any contract: explicit any return annotation"
+    },
+    "convertToObject": {
+      "declaration": "commandLineParser.ts:2467",
+      "stock_return": "any",
+      "source_reason": "explicit any return annotation",
+      "boundaries": 1,
+      "bytes": 150,
+      "reason": "source any contract: explicit any return annotation"
+    },
+    "convertToJson": {
+      "declaration": "commandLineParser.ts:2478",
+      "stock_return": "any",
+      "source_reason": "explicit any return annotation",
+      "boundaries": 2,
+      "bytes": 4862,
+      "reason": "source any contract: explicit any return annotation"
+    },
+    "convertToJson.convertObjectLiteralExpressionToJson": {
+      "declaration": "commandLineParser.ts:2491",
+      "stock_return": "any",
+      "source_reason": "explicit any return annotation",
+      "boundaries": 1,
+      "bytes": 0,
+      "reason": "source any contract: explicit any return annotation"
+    },
+    "convertToJson.convertPropertyValueToJson": {
+      "declaration": "commandLineParser.ts:2538",
+      "stock_return": "any",
+      "source_reason": "explicit any return annotation",
+      "boundaries": 1,
+      "bytes": 0,
+      "reason": "source any contract: explicit any return annotation"
+    },
+    "setTimeout": {
+      "declaration": "sys.ts:51",
+      "stock_return": "any",
+      "source_reason": "explicit any return annotation",
+      "boundaries": 1,
+      "bytes": 89,
+      "reason": "source any contract: explicit any return annotation"
+    },
+    "getNodeSystem.statSync": {
+      "declaration": "sys.ts:1630",
+      "stock_return": "Stats | undefined",
+      "source_reason": "stock return is not any; latent checker/substitution/context disagreement",
+      "boundaries": 1,
+      "bytes": 0,
+      "reason": "legacy Node fs/inspector import types unresolved in measurement loader (TS2591); refusal retained"
+    },
+    "getNodeSystem.cleanupPaths": {
+      "declaration": "sys.ts:1673",
+      "stock_return": "Profile",
+      "source_reason": "stock return is not any; latent checker/substitution/context disagreement",
+      "boundaries": 1,
+      "bytes": 0,
+      "reason": "legacy Node fs/inspector import types unresolved in measurement loader (TS2591); refusal retained"
+    },
+    "getNodeSystem.fsWatchWorker": {
+      "declaration": "sys.ts:1773",
+      "stock_return": "FSWatcher",
+      "source_reason": "stock return is not any; latent checker/substitution/context disagreement",
+      "boundaries": 1,
+      "bytes": 0,
+      "reason": "legacy Node fs/inspector import types unresolved in measurement loader (TS2591); refusal retained"
+    },
+    "getNodeSystem.getModifiedTime": {
+      "declaration": "sys.ts:1927",
+      "stock_return": "Date | undefined",
+      "source_reason": "stock return is not any; latent checker/substitution/context disagreement",
+      "boundaries": 1,
+      "bytes": 0,
+      "reason": "legacy Node fs/inspector import types unresolved in measurement loader (TS2591); refusal retained"
+    },
+    "getNodeSystem.deleteFile": {
+      "declaration": "sys.ts:1940",
+      "stock_return": "void",
+      "source_reason": "stock return is not any; latent checker/substitution/context disagreement",
+      "boundaries": 1,
+      "bytes": 0,
+      "reason": "legacy Node fs/inspector import types unresolved in measurement loader (TS2591); refusal retained"
+    },
+    "tryParseJson": {
+      "declaration": "utilities.ts:7809",
+      "stock_return": "any",
+      "source_reason": "explicit any return annotation",
+      "boundaries": 1,
+      "bytes": 104,
+      "reason": "source any contract: explicit any return annotation"
+    },
+    "objectAllocator.getNodeConstructor": {
+      "declaration": "utilities.ts:8553",
+      "stock_return": "any",
+      "source_reason": "inferred or contextual any return; see return-expression evidence",
+      "boundaries": 1,
+      "bytes": 540,
+      "reason": "source any contract: inferred or contextual any return; see return-expression evidence"
+    }
+  },
+  "provenance": {
+    "compiler_base": "784b577a7488ddd0ce4cb2b82a96fa6535395896",
+    "correction": "resolved checker returns and preserved mapper identity",
+    "production_branch_is_not_measured": false,
+    "compiler_commit": "a64f77ee0e9f0591ef1a4ed005de7a9213b7ce85",
+    "ledger_sha256": "a35e609ecc3cf7284e9acc7eee8679414967ea00d4b11b2bf93a50eb7f12f0a7",
+    "verified_source_files": 82
+  }
+}

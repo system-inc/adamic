@@ -38,12 +38,17 @@ for entry in remaining:
  name, line, column = location.rsplit(':',2)
  matched = next((c for c in original['ranked_callees'] if c['declaration'].rsplit(':',2)[:2]==['src/compiler/'+name,line]),None)
  key = matched['callee'] if matched else name+':'+line
- stats = callees.setdefault(key,{'declaration':name+':'+line,'stock_return':matched['stock_return'] if matched else None,'boundaries':set(),'bytes':0})
+ stats = callees.setdefault(key,{'declaration':name+':'+line,'stock_return':matched['stock_return'] if matched else None,'source_reason':matched['any_explanation'] if matched else None,'boundaries':set(),'bytes':0})
  stats['boundaries'].add((entry['file'],entry['start'],entry['end']))
  stats['bytes'] += entry['attributed_hidden_bytes']
-for stats in callees.values():
+for callee, stats in callees.items():
  stats['boundaries']=len(stats['boundaries'])
- stats['reason']='source any contract' if stats['stock_return']=='any' else 'checker or measurement state unresolved; non-any stock declaration'
+ if stats['stock_return']=='any':
+  stats['reason']='source any contract: '+stats['source_reason']
+ elif callee in {'getNodeSystem.statSync','getNodeSystem.cleanupPaths','getNodeSystem.fsWatchWorker','getNodeSystem.getModifiedTime','getNodeSystem.deleteFile'}:
+  stats['reason']='legacy Node fs/inspector import types unresolved in measurement loader (TS2591); refusal retained'
+ else:
+  stats['reason']='checker or measurement state unresolved; non-any stock declaration'
 summary = {'before':{'boundaries':original['boundaries'],'hidden_bytes':original['hidden_bytes']},'after':{'boundaries':len({(entry['file'],entry['start'],entry['end']) for entry in remaining}),'hidden_bytes':sum(row['bytes_revealed_if_fixed_alone'] for row in matching)},'remaining_callees':callees,'provenance':{'compiler_base':'784b577a7488ddd0ce4cb2b82a96fa6535395896' if len(sys.argv)>5 else 'ed6e29751ee47d86fad450cd1674139883bc0f70','correction':'resolved checker returns and preserved mapper identity' if len(sys.argv)>5 else 'checker mapper identity preserved in measurement snapshots','production_branch_is_not_measured':len(sys.argv)<6,'compiler_commit':sys.argv[5] if len(sys.argv)>5 else None,'ledger_sha256':hashlib.sha256(ledger.read_bytes()).hexdigest(),'verified_source_files':len(stock)}}
 output.write_text(json.dumps(summary,indent=2)+'\n')
 print(json.dumps(summary['after']))
