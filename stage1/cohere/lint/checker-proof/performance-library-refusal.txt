@@ -1,0 +1,19 @@
+=== RUN   TestCheckerBridgeRefusalPending
+    checker_pending_test.go:61: checker compilation phases: load=378.655486ms lower=4.928184109s C=708.660567ms JavaScript=39.213672ms
+    checker_pending_test.go:61: checker native build: 1m18.754284626s
+    checker_pending_test.go:75: bridge refusal matches native, Node and emitted JavaScript: case 0
+        refused @typescript-eslint/no-unnecessary-boolean-literal-compare /tmp/adamic-gate/TestCheckerBridgeRefusalPending1153642521/002/no-unnecessary-boolean-literal-compare-0.ts 0 45 unsupported checker question: pending-refusal-control
+        /tmp/adamic-gate/TestCheckerBridgeRefusalPending1153642521/002/no-unnecessary-boolean-literal-compare-0.ts:1:31
+          @typescript-eslint/no-unnecessary-boolean-literal-compare  This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.
+        
+        range 30 40 direct fix	b		30 40
+        fixed	declare const b: boolean; if (b) {}\u000a
+    checker_pending_test.go:90: checker compilation phases: load=196.166337ms lower=3.82201165s C=612.794971ms JavaScript=28.996552ms
+    checker_pending_test.go:90: checker native build: 1m20.548761682s
+    checker_pending_test.go:97: native refusal handling mutant builds and runs, caught by wire comparison
+    checker_pending_test.go:97: Node refusal handling mutant builds and runs, caught by wire comparison
+    checker_pending_test.go:97: emitted JavaScript refusal handling mutant builds and runs, caught by wire comparison
+    checker_pending_test.go:111: restoring refusal handling passes all three runtime wire comparisons
+--- PASS: TestCheckerBridgeRefusalPending (177.61s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	177.752s

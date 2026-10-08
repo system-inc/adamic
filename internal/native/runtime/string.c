@@ -19,7 +19,7 @@
 #include <string.h>
 
 // Private UTF-16 cache access, kept in string_index.c with its lifetime.
-const uint16_t *adamic_string_bmp_view(const adamic_string *string);
+const uint16_t *adamic_string_unit_view(const adamic_string *string);
 
 static size_t sequence(unsigned char lead);
 static unsigned decode(const unsigned char *bytes, size_t size);
