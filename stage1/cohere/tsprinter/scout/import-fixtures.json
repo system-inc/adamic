@@ -1,0 +1,551 @@
+[
+  {
+    "Label": "default-0",
+    "Source": "import x from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import x from 'x';\n",
+    "Prettier": "import x from 'x';\n"
+  },
+  {
+    "Label": "default-1",
+    "Source": "import type from \"x\"",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import type from 'x';\n",
+    "Prettier": "import type from 'x';\n"
+  },
+  {
+    "Label": "default-2",
+    "Source": "import from from \"x\"",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import from from 'x';\n",
+    "Prettier": "import from from 'x';\n"
+  },
+  {
+    "Label": "default-3",
+    "Source": "import defer from \"x\"",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import defer from 'x';\n",
+    "Prettier": "import defer from 'x';\n"
+  },
+  {
+    "Label": "namespace-0",
+    "Source": "import * as x from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import * as x from 'x';\n",
+    "Prettier": "import * as x from 'x';\n"
+  },
+  {
+    "Label": "namespace-1",
+    "Source": "import x,* as y from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import x, * as y from 'x';\n",
+    "Prettier": "import x, * as y from 'x';\n"
+  },
+  {
+    "Label": "namespace-2",
+    "Source": "import type * as x from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import type * as x from 'x';\n",
+    "Prettier": "import type * as x from 'x';\n"
+  },
+  {
+    "Label": "named-0",
+    "Source": "import {x} from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import { x } from 'x';\n",
+    "Prettier": "import { x } from 'x';\n"
+  },
+  {
+    "Label": "named-1",
+    "Source": "import {} from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import {} from 'x';\n",
+    "Prettier": "import {} from 'x';\n"
+  },
+  {
+    "Label": "named-2",
+    "Source": "import {x as x} from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import { x as x } from 'x';\n",
+    "Prettier": "import { x as x } from 'x';\n"
+  },
+  {
+    "Label": "named-3",
+    "Source": "import {x as y,z} from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import { x as y, z } from 'x';\n",
+    "Prettier": "import { x as y, z } from 'x';\n"
+  },
+  {
+    "Label": "named-4",
+    "Source": "import {\"x-y\" as x} from \"x\"",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import { 'x-y' as x } from 'x';\n",
+    "Prettier": "import { 'x-y' as x } from 'x';\n"
+  },
+  {
+    "Label": "named-5",
+    "Source": "import x,{y} from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import x, { y } from 'x';\n",
+    "Prettier": "import x, { y } from 'x';\n"
+  },
+  {
+    "Label": "named-6",
+    "Source": "import x,{} from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import x from 'x';\n",
+    "Prettier": "import x from 'x';\n"
+  },
+  {
+    "Label": "named-7",
+    "Source": "import {\n x,\n y,\n} from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import { x, y } from 'x';\n",
+    "Prettier": "import { x, y } from 'x';\n"
+  },
+  {
+    "Label": "type-0",
+    "Source": "import type x from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import type x from 'x';\n",
+    "Prettier": "import type x from 'x';\n"
+  },
+  {
+    "Label": "type-1",
+    "Source": "import type {x} from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import type { x } from 'x';\n",
+    "Prettier": "import type { x } from 'x';\n"
+  },
+  {
+    "Label": "type-2",
+    "Source": "import type {} from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import type {} from 'x';\n",
+    "Prettier": "import type {} from 'x';\n"
+  },
+  {
+    "Label": "type-3",
+    "Source": "import {type x,y} from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import { type x, y } from 'x';\n",
+    "Prettier": "import { type x, y } from 'x';\n"
+  },
+  {
+    "Label": "type-4",
+    "Source": "import {type as x} from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import { type as x } from 'x';\n",
+    "Prettier": "import { type as x } from 'x';\n"
+  },
+  {
+    "Label": "type-5",
+    "Source": "import {type type as x} from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import { type type as x } from 'x';\n",
+    "Prettier": "import { type type as x } from 'x';\n"
+  },
+  {
+    "Label": "attributes-0",
+    "Source": "import 'x' with {}",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import 'x' with {};\n",
+    "Prettier": "import 'x' with {};\n"
+  },
+  {
+    "Label": "attributes-1",
+    "Source": "import x from 'x' with {type:'json'}",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import x from 'x' with { type: 'json' };\n",
+    "Prettier": "import x from 'x' with { type: 'json' };\n"
+  },
+  {
+    "Label": "go-cohere-own-module-import-prefix",
+    "Source": "import Default, { a, type B, c as d } from './module';\nimport type { E } from \"./types\";\n",
+    "Path": "witness.ts",
+    "Origin": "cohere@7945d102a6c18dd36adf9114a758ce646e8b2359:internal/format/javascript/format_test.go:71 exact first two import lines",
+    "Reason": "",
+    "Go": "import Default, { a, type B, c as d } from './module';\nimport type { E } from './types';\n",
+    "Prettier": "import Default, { a, type B, c as d } from './module';\nimport type { E } from './types';\n"
+  },
+  {
+    "Label": "attributes-3",
+    "Source": "import type {x} from 'x' with {'resolution-mode':'import'}",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import type { x } from 'x' with { 'resolution-mode': 'import' };\n",
+    "Prettier": "import type { x } from 'x' with { 'resolution-mode': 'import' };\n"
+  },
+  {
+    "Label": "attributes-4",
+    "Source": "import 'x' with {\n type:'json'\n}",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import 'x' with { type: 'json' };\n",
+    "Prettier": "import 'x' with { type: 'json' };\n"
+  },
+  {
+    "Label": "attributes-5",
+    "Source": "import 'x' with {\n 'type':'json'\n}",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import 'x' with { type: 'json' };\n",
+    "Prettier": "import 'x' with { type: 'json' };\n"
+  },
+  {
+    "Label": "attributes-6",
+    "Source": "import 'x' with {a:'x',b:'y'}",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import 'x' with { a: 'x', b: 'y' };\n",
+    "Prettier": "import 'x' with { a: 'x', b: 'y' };\n"
+  },
+  {
+    "Label": "attributes-7",
+    "Source": "import 'x' with {\n a:'x',b:'y'\n}",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import 'x' with {\n    a: 'x',\n    b: 'y',\n};\n",
+    "Prettier": "import 'x' with {\n    a: 'x',\n    b: 'y',\n};\n"
+  },
+  {
+    "Label": "defer-0",
+    "Source": "import defer * as x from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import defer * as x from 'x';\n",
+    "Prettier": "import defer * as x from 'x';\n"
+  },
+  {
+    "Label": "default-width-30",
+    "Source": "import xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx from 'x';\n",
+    "Prettier": "import xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx from 'x';\n"
+  },
+  {
+    "Label": "namespace-width-31",
+    "Source": "import * as xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import * as xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx from 'x';\n",
+    "Prettier": "import * as xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx from 'x';\n"
+  },
+  {
+    "Label": "named-width-32",
+    "Source": "import {xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx} from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import { xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx } from 'x';\n",
+    "Prettier": "import { xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx } from 'x';\n"
+  },
+  {
+    "Label": "named-width-33",
+    "Source": "import {name0xxxxxxxxxxxxxxxxxx,name1xxxxxxxxxxxxxxxxxx,name2xxxxxxxxxxxxxxxxxx,name3xxxxxxxxxxxxxxxxxx,name4xxxxxxxxxxxxxxxxxx,name5xxxxxxxxxxxxxxxxxx,name6xxxxxxxxxxxxxxxxxx,name7xxxxxxxxxxxxxxxxxx} from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import {\n    name0xxxxxxxxxxxxxxxxxx,\n    name1xxxxxxxxxxxxxxxxxx,\n    name2xxxxxxxxxxxxxxxxxx,\n    name3xxxxxxxxxxxxxxxxxx,\n    name4xxxxxxxxxxxxxxxxxx,\n    name5xxxxxxxxxxxxxxxxxx,\n    name6xxxxxxxxxxxxxxxxxx,\n    name7xxxxxxxxxxxxxxxxxx,\n} from 'x';\n",
+    "Prettier": "import {\n    name0xxxxxxxxxxxxxxxxxx,\n    name1xxxxxxxxxxxxxxxxxx,\n    name2xxxxxxxxxxxxxxxxxx,\n    name3xxxxxxxxxxxxxxxxxx,\n    name4xxxxxxxxxxxxxxxxxx,\n    name5xxxxxxxxxxxxxxxxxx,\n    name6xxxxxxxxxxxxxxxxxx,\n    name7xxxxxxxxxxxxxxxxxx,\n} from 'x';\n"
+  },
+  {
+    "Label": "named-width-34",
+    "Source": "import x,{yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy} from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import x, {\n    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy,\n} from 'x';\n",
+    "Prettier": "import x, {\n    yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy,\n} from 'x';\n"
+  },
+  {
+    "Label": "type-width-35",
+    "Source": "import {type xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,y} from 'x'",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import {\n    type xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,\n    y,\n} from 'x';\n",
+    "Prettier": "import {\n    type xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,\n    y,\n} from 'x';\n"
+  },
+  {
+    "Label": "attributes-width-36",
+    "Source": "import 'x' with {type:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'}",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import 'x' with { type: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' };\n",
+    "Prettier": "import 'x' with { type: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' };\n"
+  },
+  {
+    "Label": "attributes-width-37",
+    "Source": "import 'x' with {a:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',b:'y'}",
+    "Path": "witness.ts",
+    "Origin": "shortest reduction / Go print_module.go:19,166,317",
+    "Reason": "",
+    "Go": "import 'x' with {\n    a: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',\n    b: 'y',\n};\n",
+    "Prettier": "import 'x' with {\n    a: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',\n    b: 'y',\n};\n"
+  },
+  {
+    "Label": "public-default-0",
+    "Source": "import fs from 'node:fs';\n",
+    "Path": "witness.ts",
+    "Origin": "actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:bin/__tests__/validate-publish-imports.test.ts:1",
+    "Reason": "",
+    "Go": "import fs from 'node:fs';\n",
+    "Prettier": "import fs from 'node:fs';\n"
+  },
+  {
+    "Label": "public-default-1",
+    "Source": "import InlineWorker from './browser-worker?worker&inline';\n",
+    "Path": "witness.ts",
+    "Origin": "actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/api/index.browser.ts:5",
+    "Reason": "",
+    "Go": "import InlineWorker from './browser-worker?worker&inline';\n",
+    "Prettier": "import InlineWorker from './browser-worker?worker&inline';\n"
+  },
+  {
+    "Label": "public-default-2",
+    "Source": "import path from 'path';\n",
+    "Path": "witness.ts",
+    "Origin": "actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/ci-actions/bin/check-migrations.ts:19",
+    "Reason": "",
+    "Go": "import path from 'path';\n",
+    "Prettier": "import path from 'path';\n"
+  },
+  {
+    "Label": "public-namespace-0",
+    "Source": "import * as connection from '@actual-app/core/platform/server/connection';\n",
+    "Path": "witness.ts",
+    "Origin": "actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/api/browser-worker.ts:8",
+    "Reason": "",
+    "Go": "import * as connection from '@actual-app/core/platform/server/connection';\n",
+    "Prettier": "import * as connection from '@actual-app/core/platform/server/connection';\n"
+  },
+  {
+    "Label": "public-namespace-1",
+    "Source": "import * as api from '@actual-app/api';\n",
+    "Path": "witness.ts",
+    "Origin": "actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/api/e2e/consumer/main.ts:5",
+    "Reason": "",
+    "Go": "import * as api from '@actual-app/api';\n",
+    "Prettier": "import * as api from '@actual-app/api';\n"
+  },
+  {
+    "Label": "public-namespace-2",
+    "Source": "import * as fs from 'fs/promises';\n",
+    "Path": "witness.ts",
+    "Origin": "actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/api/methods.test.ts:1",
+    "Reason": "",
+    "Go": "import * as fs from 'fs/promises';\n",
+    "Prettier": "import * as fs from 'fs/promises';\n"
+  },
+  {
+    "Label": "public-named-0",
+    "Source": "import { afterEach, beforeEach, describe, expect, it } from 'vitest';\n",
+    "Path": "witness.ts",
+    "Origin": "actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:bin/__tests__/validate-publish-imports.test.ts:5",
+    "Reason": "",
+    "Go": "import { afterEach, beforeEach, describe, expect, it } from 'vitest';\n",
+    "Prettier": "import { afterEach, beforeEach, describe, expect, it } from 'vitest';\n"
+  },
+  {
+    "Label": "public-named-1",
+    "Source": "import { setWasmBinary } from '@actual-app/core/platform/server/sqlite';\n",
+    "Path": "witness.ts",
+    "Origin": "actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/api/browser-worker.ts:9",
+    "Reason": "",
+    "Go": "import { setWasmBinary } from '@actual-app/core/platform/server/sqlite';\n",
+    "Prettier": "import { setWasmBinary } from '@actual-app/core/platform/server/sqlite';\n"
+  },
+  {
+    "Label": "public-named-2",
+    "Source": "import { expect, test } from '@playwright/test';\n",
+    "Path": "witness.ts",
+    "Origin": "actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/api/e2e/browser.test.ts:1",
+    "Reason": "",
+    "Go": "import { expect, test } from '@playwright/test';\n",
+    "Prettier": "import { expect, test } from '@playwright/test';\n"
+  },
+  {
+    "Label": "public-type-0",
+    "Source": "import type { WithRequired } from '@actual-app/core/types/util';\n",
+    "Path": "witness.ts",
+    "Origin": "actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/api/app/query.ts:5",
+    "Reason": "",
+    "Go": "import type { WithRequired } from '@actual-app/core/types/util';\n",
+    "Prettier": "import type { WithRequired } from '@actual-app/core/types/util';\n"
+  },
+  {
+    "Label": "public-type-1",
+    "Source": "import type { InitConfig } from '@actual-app/core/server/main';\n",
+    "Path": "witness.ts",
+    "Origin": "actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/api/browser-worker.ts:11",
+    "Reason": "",
+    "Go": "import type { InitConfig } from '@actual-app/core/server/main';\n",
+    "Prettier": "import type { InitConfig } from '@actual-app/core/server/main';\n"
+  },
+  {
+    "Label": "public-type-2",
+    "Source": "import type { InitConfig } from '@actual-app/core/server/main';\n",
+    "Path": "witness.ts",
+    "Origin": "actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/api/index.browser.ts:3",
+    "Reason": "",
+    "Go": "import type { InitConfig } from '@actual-app/core/server/main';\n",
+    "Prettier": "import type { InitConfig } from '@actual-app/core/server/main';\n"
+  },
+  {
+    "Label": "public-attributes-0",
+    "Source": "import ERRORS_NAV_DATA from '../../../content/reference/errors/routes.json' with {type: 'json'};\n",
+    "Path": "witness.ts",
+    "Origin": "angular/angular@c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5:adev/src/app/routing/navigation-entries/index.ts:13",
+    "Reason": "",
+    "Go": "import ERRORS_NAV_DATA from '../../../content/reference/errors/routes.json' with { type: 'json' };\n",
+    "Prettier": "import ERRORS_NAV_DATA from '../../../content/reference/errors/routes.json' with { type: 'json' };\n"
+  },
+  {
+    "Label": "public-attributes-1",
+    "Source": "import packageJson from \"./package.json\" with { type: \"json\" };\n",
+    "Path": "witness.ts",
+    "Origin": "babel/babel@f67453d563918a1ea4a1dcb1d7af01d4a528d99b:babel.config.ts:14",
+    "Reason": "",
+    "Go": "import packageJson from './package.json' with { type: 'json' };\n",
+    "Prettier": "import packageJson from './package.json' with { type: 'json' };\n"
+  },
+  {
+    "Label": "public-attributes-2",
+    "Source": "import pluginsCompatData from \"@babel/compat-data/plugins\" with { type: \"json\" };\n",
+    "Path": "witness.ts",
+    "Origin": "babel/babel@f67453d563918a1ea4a1dcb1d7af01d4a528d99b:packages/babel-helper-compilation-targets/src/filter-items.ts:3",
+    "Reason": "",
+    "Go": "import pluginsCompatData from '@babel/compat-data/plugins' with { type: 'json' };\n",
+    "Prettier": "import pluginsCompatData from '@babel/compat-data/plugins' with { type: 'json' };\n"
+  },
+  {
+    "Label": "typescript-importAttributes-0",
+    "Source": "import './0' with { type: \"json\" }\n",
+    "Path": "witness.ts",
+    "Origin": "TypeScript@050880ce59e30b356b686bd3144efe24f875ebc8:tests/cases/conformance/importAttributes/importAttributes1.ts:10",
+    "Reason": "",
+    "Go": "import './0' with { type: 'json' };\n",
+    "Prettier": "import './0' with { type: 'json' };\n"
+  },
+  {
+    "Label": "typescript-importAttributes-1",
+    "Source": "import type { I } from './0'  with { type: \"json\" }\n",
+    "Path": "witness.ts",
+    "Origin": "TypeScript@050880ce59e30b356b686bd3144efe24f875ebc8:tests/cases/conformance/importAttributes/importAttributes3.ts:13",
+    "Reason": "",
+    "Go": "import type { I } from './0' with { type: 'json' };\n",
+    "Prettier": "import type { I } from './0' with { type: 'json' };\n"
+  },
+  {
+    "Label": "typescript-importAssertion-0",
+    "Source": "import './0' with { type: \"json\" }\n",
+    "Path": "witness.ts",
+    "Origin": "TypeScript@050880ce59e30b356b686bd3144efe24f875ebc8:tests/cases/conformance/importAssertion/importAssertion1.ts:10",
+    "Reason": "",
+    "Go": "import './0' with { type: 'json' };\n",
+    "Prettier": "import './0' with { type: 'json' };\n"
+  },
+  {
+    "Label": "typescript-importAssertion-1",
+    "Source": "import type { I } from './0'  with { type: \"json\" }\n",
+    "Path": "witness.ts",
+    "Origin": "TypeScript@050880ce59e30b356b686bd3144efe24f875ebc8:tests/cases/conformance/importAssertion/importAssertion3.ts:13",
+    "Reason": "",
+    "Go": "import type { I } from './0' with { type: 'json' };\n",
+    "Prettier": "import type { I } from './0' with { type: 'json' };\n"
+  },
+  {
+    "Label": "typescript-externalModules-0",
+    "Source": "import type { A } from './a';\n",
+    "Path": "witness.ts",
+    "Origin": "TypeScript@050880ce59e30b356b686bd3144efe24f875ebc8:tests/cases/conformance/externalModules/typeOnly/ambient.ts:7",
+    "Reason": "",
+    "Go": "import type { A } from './a';\n",
+    "Prettier": "import type { A } from './a';\n"
+  },
+  {
+    "Label": "typescript-externalModules-1",
+    "Source": "import type { C } from './b';\n",
+    "Path": "witness.ts",
+    "Origin": "TypeScript@050880ce59e30b356b686bd3144efe24f875ebc8:tests/cases/conformance/externalModules/typeOnly/chained.ts:13",
+    "Reason": "",
+    "Go": "import type { C } from './b';\n",
+    "Prettier": "import type { C } from './b';\n"
+  },
+  {
+    "Label": "typescript-importDefer-0",
+    "Source": "import defer from \"./a.js\";\n",
+    "Path": "witness.ts",
+    "Origin": "TypeScript@050880ce59e30b356b686bd3144efe24f875ebc8:tests/cases/conformance/importDefer/importBindingDefer.ts:8",
+    "Reason": "",
+    "Go": "import defer from './a.js';\n",
+    "Prettier": "import defer from './a.js';\n"
+  },
+  {
+    "Label": "typescript-importDefer-1",
+    "Source": "import defer from \"a\";\n",
+    "Path": "witness.ts",
+    "Origin": "TypeScript@050880ce59e30b356b686bd3144efe24f875ebc8:tests/cases/conformance/importDefer/importDefaultBindingDefer.ts:9",
+    "Reason": "",
+    "Go": "import defer from 'a';\n",
+    "Prettier": "import defer from 'a';\n"
+  }
+]

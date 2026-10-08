@@ -3,25 +3,27 @@
     "Label": "computed-method",
     "Source": "({[z](){return z;}})",
     "Path": "witness.ts",
-    "NodeExpressionDriver": "notyet\texpression-file",
+    "NodeExpressionDriver": "ok\t({\\n    [z]() {\\n        return z;\\n    },\\n});\\n",
     "Go": "({\n    [z]() {\n        return z;\n    },\n});\n",
     "Prettier": "({\n    [z]() {\n        return z;\n    },\n});\n",
     "NodeFileDriver": {
       "kind": "Ok",
       "text": "({\n    [z]() {\n        return z;\n    },\n});\n"
-    }
+    },
+    "BeforeNodeExpressionDriver": "notyet\texpression-file"
   },
   {
     "Label": "returning-object-method",
     "Source": "({resolve(){return {foo:100};}})",
     "Path": "witness.ts",
-    "NodeExpressionDriver": "notyet\texpression-file",
+    "NodeExpressionDriver": "ok\t({\\n    resolve() {\\n        return { foo: 100 };\\n    },\\n});\\n",
     "Go": "({\n    resolve() {\n        return { foo: 100 };\n    },\n});\n",
     "Prettier": "({\n    resolve() {\n        return { foo: 100 };\n    },\n});\n",
     "NodeFileDriver": {
       "kind": "Ok",
       "text": "({\n    resolve() {\n        return { foo: 100 };\n    },\n});\n"
-    }
+    },
+    "BeforeNodeExpressionDriver": "notyet\texpression-file"
   },
   {
     "Label": "export-default-abstract",
@@ -33,7 +35,8 @@
     "NodeFileDriver": {
       "kind": "Ok",
       "text": "abstract;\n"
-    }
+    },
+    "BeforeNodeExpressionDriver": "notyet\texpression-file"
   },
   {
     "Label": "comment-nbsp",
@@ -45,6 +48,7 @@
     "NodeFileDriver": {
       "kind": "NotYet",
       "reason": "comment-attachment"
-    }
+    },
+    "BeforeNodeExpressionDriver": "notyet\tcomment-attachment"
   }
 ]

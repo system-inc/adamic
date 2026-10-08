@@ -511,20 +511,20 @@
   },
   {
     "Label": "import-boundary-6",
-    "Source": "import '☃'",
+    "Source": "import '\u2603'",
     "Path": "witness.ts",
     "Origin": "Go print_module.go:19 and print_literal.go:13",
     "After": {
       "kind": "Ok",
-      "text": "import '☃';\n"
+      "text": "import '\u2603';\n"
     },
     "Before": {
       "kind": "Ok",
-      "text": "import '☃';\n"
+      "text": "import '\u2603';\n"
     },
     "Reason": "",
-    "Go": "import '☃';\n",
-    "Prettier": "import '☃';\n"
+    "Go": "import '\u2603';\n",
+    "Prettier": "import '\u2603';\n"
   },
   {
     "Label": "import-boundary-7",
@@ -532,14 +532,14 @@
     "Path": "witness.ts",
     "Origin": "Go print_module.go:19 and print_literal.go:13",
     "After": {
-      "kind": "NotYet",
-      "reason": "ImportDeclaration"
+      "kind": "Ok",
+      "text": "import 'x' with { type: 'json' };\n"
     },
     "Before": {
       "kind": "NotYet",
       "reason": "ImportDeclaration"
     },
-    "Reason": "ImportDeclaration",
+    "Reason": "",
     "Go": "import 'x' with { type: 'json' };\n",
     "Prettier": "import 'x' with { type: 'json' };\n"
   },
@@ -549,14 +549,14 @@
     "Path": "witness.ts",
     "Origin": "Go print_module.go:19 and print_literal.go:13",
     "After": {
-      "kind": "NotYet",
-      "reason": "ImportDeclaration"
+      "kind": "Ok",
+      "text": "import x from 'x';\n"
     },
     "Before": {
       "kind": "NotYet",
       "reason": "ImportDeclaration"
     },
-    "Reason": "ImportDeclaration",
+    "Reason": "",
     "Go": "import x from 'x';\n",
     "Prettier": "import x from 'x';\n"
   },
@@ -566,14 +566,14 @@
     "Path": "witness.ts",
     "Origin": "Go print_module.go:19 and print_literal.go:13",
     "After": {
-      "kind": "NotYet",
-      "reason": "ImportDeclaration"
+      "kind": "Ok",
+      "text": "import { x } from 'x';\n"
     },
     "Before": {
       "kind": "NotYet",
       "reason": "ImportDeclaration"
     },
-    "Reason": "ImportDeclaration",
+    "Reason": "",
     "Go": "import { x } from 'x';\n",
     "Prettier": "import { x } from 'x';\n"
   },
@@ -583,14 +583,14 @@
     "Path": "witness.ts",
     "Origin": "Go print_module.go:19 and print_literal.go:13",
     "After": {
-      "kind": "NotYet",
-      "reason": "ImportDeclaration"
+      "kind": "Ok",
+      "text": "import type { T } from 'x';\n"
     },
     "Before": {
       "kind": "NotYet",
       "reason": "ImportDeclaration"
     },
-    "Reason": "ImportDeclaration",
+    "Reason": "",
     "Go": "import type { T } from 'x';\n",
     "Prettier": "import type { T } from 'x';\n"
   },
@@ -1162,9 +1162,9 @@
     "Origin": "cohere@7945d102:internal/format/javascript/format_test.go:71 exact source prefix",
     "After": {
       "kind": "NotYet",
-      "reason": "ImportDeclaration"
+      "reason": "ExportDeclaration"
     },
-    "Reason": "ImportDeclaration",
+    "Reason": "ExportDeclaration",
     "Before": {
       "kind": "NotYet",
       "reason": "ImportDeclaration"

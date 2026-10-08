@@ -369,6 +369,6 @@ origin/devtools/stage1-leaks (f6eef5df). This branch does not merge that develop
 replace the helper with local ASan option switching. Named oracle skips now cite
 #xq2ecw6 (setup --gate-inputs), the work that installs the pins and removes the skips.
 
-## Step 26 side-effect imports
+## Step 26 imports
 
-Bare side-effect imports are supported through the existing literal and document printers. Clauses, specifiers, phases and attributes still return ImportDeclaration. The 23-public-pin census ranks import declarations first at 109,305 files and 557,705 sites; exact whole-file Go matches rise from 73 to 114. [SCOUT.md](SCOUT.md) and scout/validation.txt retain all refusals, existing disagreements, the green 69-fixture import slice and the full package's two unchanged expression/parser failures. No shared parser fix or ignore was added.
+Side-effect, default, namespace, named and type-only imports, including type specifiers and `with` attributes, compose with the supported statement printer. The method-shorthand source-context fix (`06c6e7cbf`) closes both prior expression regressions. The same 152,660-file corpus has 140 whole-file Go matches (114 before clauses), nine prior text differences and 21 acceptance conflicts, including four newly exposed invalid import-local parser cases. All 61 new fixtures match Go and Prettier, with seven successful-output mutants; retained side-effect and source-context mutants remain independent. [SCOUT.md](SCOUT.md) records exact counts, evidence, shared parser handoffs and current validation. Comments, trivia, exports, import-equals and general type printing remain gaps. Legacy `assert` is refused as it is by the pinned Go parser.

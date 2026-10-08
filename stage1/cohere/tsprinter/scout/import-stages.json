@@ -1,0 +1,2972 @@
+{
+  "denominator": 152660,
+  "definition": "complete-file output SHA-256 equals pinned Go output; all input paths and source SHA-256 must equal the side-effect census",
+  "capability_ablations": [
+    "default",
+    "namespace",
+    "named"
+  ],
+  "stages": {
+    "merged": {
+      "counts": {
+        "comment-attachment": 94437,
+        "ExportDeclaration": 1457,
+        "ModuleDeclaration": 103,
+        "source-trivia": 52602,
+        "variable-modifiers": 1780,
+        "EnumDeclaration": 238,
+        "accepted": 140,
+        "function-types": 265,
+        "TypeAliasDeclaration": 839,
+        "InterfaceDeclaration": 185,
+        "ImportDeclaration": 154,
+        "type-arguments": 15,
+        "ClassDeclaration": 210,
+        "parameter-pattern": 12,
+        "ExpressionWithTypeArguments": 5,
+        "node-exit-70:adamic: panic: missing variable declaration": 1,
+        "assignment-pattern": 16,
+        "AsExpression": 14,
+        "TypeAssertionExpression": 19,
+        "ForOfStatement": 2,
+        "SatisfiesExpression": 1,
+        "ClassExpression": 5,
+        "variable-types": 67,
+        "variable-pattern": 9,
+        "NamespaceExportDeclaration": 1,
+        "ExportAssignment": 32,
+        "ImportEqualsDeclaration": 21,
+        "ForStatement": 3,
+        "MissingDeclaration": 2,
+        "node-exit-70:adamic: panic: JSX expected name at 10 in packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/jsx-opening-element/input.tsx": 1,
+        "IfStatement": 3,
+        "tag-type-arguments": 3,
+        "TryStatement": 1,
+        "JsxSelfClosingElement": 1,
+        "ImportKeyword": 1,
+        "input-not-utf8": 15
+      },
+      "byte_identical": 114,
+      "output_differences": [
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-await-using-declaration-with-initializer/input.ts",
+          "sha256": "407a62eb6d1a93d2026a1cad462baf000850851167645921f703d039fddcb6c6",
+          "outcome": "accepted",
+          "answer": "declare;\nawait using basic = null;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-await-using-declaration/input.ts",
+          "sha256": "056197f8dc5fdc4af63189726ef3cf75b216cf7d9efb84afefb5a1030693d2dd",
+          "outcome": "accepted",
+          "answer": "declare;\nawait using basic;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-using-declaration-with-initializer/input.ts",
+          "sha256": "7e01b8cdef165c212c142b0ca2916453d2b02814c20d66d4720b02859262fba1",
+          "outcome": "accepted",
+          "answer": "declare;\nusing basic = null;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-using-declaration/input.ts",
+          "sha256": "90925ae070440ccda7adb369da4bed4182e531adf2fcbb8a5d886dac7f231033",
+          "outcome": "accepted",
+          "answer": "declare;\nusing basic;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/function/empty-type-parameters/input.ts",
+          "sha256": "8cf7293c5bc69e9ac6e8bb8f6081459c870b5036f4fa38af729c6ff73f652346",
+          "outcome": "accepted",
+          "answer": "function foo() {}\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/call-expression/input.ts",
+          "sha256": "4191fad6df84fcf69ac5ce811c44e8022de8b398e66cd2379285679ab39d2d18",
+          "outcome": "accepted",
+          "answer": "f << T > v;\nT;\nvoid  > ;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/new-expression/input.ts",
+          "sha256": "c9dcb373330c810406e536daae908e30c942ee66871ea1418c3a0179fdbb715b",
+          "outcome": "accepted",
+          "answer": "new f() << T > v;\nT;\nvoid  > ;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments/empty-function/input.ts",
+          "sha256": "f6b5ca85a7626db0b86984a899a2d74aab2c75392095018d19992d993d59419a",
+          "outcome": "accepted",
+          "answer": "foo();\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments/empty-new/input.ts",
+          "sha256": "681a2a45d6b3cbfb6f5206d9422044b5326686f643f4c6bf6f6535696e9167eb",
+          "outcome": "accepted",
+          "answer": "new A();\n"
+        }
+      ],
+      "acceptance_conflicts": [
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/placeholders/typescript/export-namespace/input.ts",
+          "sha256": "1d85e8c7451e8f54d55f4212f502fc8df11df2fcc3909de8b69c7562c91bebf7",
+          "outcome": "accepted",
+          "answer": "(((namespace % ) % foo) % ) % {};\n",
+          "go_error": "parse error at 0: Declaration or statement expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-definite-pattern-assignment-using/input.ts",
+          "sha256": "bfa1d9b4f8957b7bb8901ebd760d0197c53765bb0d2bef56c75063a0f659b4c3",
+          "outcome": "accepted",
+          "answer": "{\n    declare;\n    using;\n    {\n    }\n    !;\n    {\n    }\n}\n",
+          "go_error": "parse error at 20: ',' expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/exponentiation/await-non-null-before-exponential/input.ts",
+          "sha256": "0e16d147d831e497103e406ada4af9d7f638cba41c46b85b8a3069a2d6348914",
+          "outcome": "accepted",
+          "answer": "async (a) => (await a!) ** 6;\n",
+          "go_error": "parse error at 13: An unary expression with the 'await' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/exponentiation/unary-non-null-before-exponential/input.ts",
+          "sha256": "ba610f1bfe0d581a2a9fc413fec5fe9206d624a982ec92c09fc7037143c8336c",
+          "outcome": "accepted",
+          "answer": "(a) => (+a!) ** 6;\n",
+          "go_error": "parse error at 7: An unary expression with the '+' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/export/declare-invalid/input.ts",
+          "sha256": "c8a2756186273ba095a4a0e9885db1675b0f5d57bfd4e6dcd2ff75f9dbd1cb42",
+          "outcome": "accepted",
+          "answer": "declare;\nfoo;\n",
+          "go_error": "parse error at 0: Declaration or statement expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/interface/export-default/input.ts",
+          "sha256": "fd9cbe44fdf592e313c59043303497abb882e8848083c5fe85be871924ca4421",
+          "outcome": "accepted",
+          "answer": "interface;\n{\n}\n",
+          "go_error": "parse error at 25: Identifier expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/interface/invalid-abstract-interface/input.ts",
+          "sha256": "1156aee7501cfeef839fc9d31c0daa997ae8206fb81a81f1935b927d539ad0ba",
+          "outcome": "accepted",
+          "answer": "abstract;\ninterface;\nFoo;\n{\n}\n",
+          "go_error": "parse error at 0: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/interface/new-line-error/input.ts",
+          "sha256": "3ff6e54d7d711bdef30ba4cdf1adbdb30783972012fabcebb6a17d735a1c61f6",
+          "outcome": "accepted",
+          "answer": "interface;\nF;\n{\n}\n",
+          "go_error": "parse error at 10: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/invalid-declare-module-number/input.ts",
+          "sha256": "7ea922d2437155bce28c345fbe1e1770b18189a6ce3d855e46ef5709748bc6ca",
+          "outcome": "accepted",
+          "answer": "declare;\nmodule;\n0;\n{\n}\n",
+          "go_error": "parse error at 15: Namespace name cannot be '0'."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/invalid-declare-module-without-name/input.ts",
+          "sha256": "f266684d9b861274ce7bad6613c1387697d0d9d7423aa55085fd9f6dc657837b",
+          "outcome": "accepted",
+          "answer": "declare;\nmodule;\n{\n}\n",
+          "go_error": "parse error at 15: Namespace must be given a name."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/module-new-line-error/input.ts",
+          "sha256": "52436094513e0cddcef10b54797f0fc3c20e33ebf46a21dbe5be0bb56853ea3c",
+          "outcome": "accepted",
+          "answer": "module;\nFoo;\n{\n}\n",
+          "go_error": "parse error at 7: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/namespace-new-line-error/input.ts",
+          "sha256": "0fec3bcef7cefba03417fb2a87599f2823b6924af4fa86d3245a8f48cfaddc84",
+          "outcome": "accepted",
+          "answer": "namespace;\nFoo;\n{\n}\n",
+          "go_error": "parse error at 10: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-alias/declare-new-line/input.ts",
+          "sha256": "60d2545aea8328a4c6b479060d2bc369a27386a626a3065e37369a711c069ffd",
+          "outcome": "accepted",
+          "answer": "type;\nT = number;\n",
+          "go_error": "parse error at 13: Line break not permitted here."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments/call-optional-chain-invalid/input.ts",
+          "sha256": "dcb3bc29527d92f5a592e05df46e2ab8a32d4a085d613a6a908498f0decd40b0",
+          "outcome": "accepted",
+          "answer": "f?.[1];\n",
+          "go_error": "parse error at 3: Identifier expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/variable-declarator/invalid-definite-like-not-eq/input.ts",
+          "sha256": "1ed53edaaae84b03b3050130be2e9890675c56a93b9c09d8e61a436118f74460",
+          "outcome": "accepted",
+          "answer": "var w;\n != null;\n",
+          "go_error": "parse error at 5: ',' expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/variable-declarator/invalid-definite-pattern-assignment-using/input.ts",
+          "sha256": "9741f5229114340e1261ff318bbbd65c463a2c1a0f6224aa0a21cbc73e9d16dc",
+          "outcome": "accepted",
+          "answer": "{\n    using;\n    {\n    }\n    !;\n    {\n    }\n}\n",
+          "go_error": "parse error at 12: ',' expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-spread/test/fixtures/call-context/flow-type-cast/input.ts",
+          "sha256": "c803926dd3a658944086aaa1ebb68df6d9067527012197e103c6c4722d897891",
+          "outcome": "accepted",
+          "answer": "a.b;\nany;\n(...args) => ;\n",
+          "go_error": "parse error at 4: ')' expected."
+        }
+      ],
+      "changes_from_previous": []
+    },
+    "default": {
+      "counts": {
+        "comment-attachment": 94437,
+        "ExportDeclaration": 1467,
+        "ModuleDeclaration": 103,
+        "source-trivia": 52602,
+        "variable-modifiers": 1833,
+        "EnumDeclaration": 240,
+        "accepted": 142,
+        "function-types": 270,
+        "TypeAliasDeclaration": 845,
+        "InterfaceDeclaration": 188,
+        "ClassDeclaration": 234,
+        "ImportDeclaration": 29,
+        "type-arguments": 15,
+        "parameter-pattern": 14,
+        "ExpressionWithTypeArguments": 5,
+        "node-exit-70:adamic: panic: missing variable declaration": 1,
+        "assignment-pattern": 16,
+        "AsExpression": 14,
+        "TypeAssertionExpression": 19,
+        "ForOfStatement": 2,
+        "SatisfiesExpression": 1,
+        "ClassExpression": 5,
+        "variable-types": 74,
+        "variable-pattern": 9,
+        "NamespaceExportDeclaration": 1,
+        "ExportAssignment": 37,
+        "ImportEqualsDeclaration": 21,
+        "ForStatement": 3,
+        "MissingDeclaration": 2,
+        "node-exit-70:adamic: panic: JSX expected name at 10 in packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/jsx-opening-element/input.tsx": 1,
+        "IfStatement": 3,
+        "tag-type-arguments": 3,
+        "TryStatement": 1,
+        "JsxSelfClosingElement": 1,
+        "ImportKeyword": 1,
+        "JsxElement": 1,
+        "FunctionExpression": 5,
+        "input-not-utf8": 15
+      },
+      "byte_identical": 116,
+      "output_differences": [
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-await-using-declaration-with-initializer/input.ts",
+          "sha256": "407a62eb6d1a93d2026a1cad462baf000850851167645921f703d039fddcb6c6",
+          "outcome": "accepted",
+          "answer": "declare;\nawait using basic = null;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-await-using-declaration/input.ts",
+          "sha256": "056197f8dc5fdc4af63189726ef3cf75b216cf7d9efb84afefb5a1030693d2dd",
+          "outcome": "accepted",
+          "answer": "declare;\nawait using basic;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-using-declaration-with-initializer/input.ts",
+          "sha256": "7e01b8cdef165c212c142b0ca2916453d2b02814c20d66d4720b02859262fba1",
+          "outcome": "accepted",
+          "answer": "declare;\nusing basic = null;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-using-declaration/input.ts",
+          "sha256": "90925ae070440ccda7adb369da4bed4182e531adf2fcbb8a5d886dac7f231033",
+          "outcome": "accepted",
+          "answer": "declare;\nusing basic;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/function/empty-type-parameters/input.ts",
+          "sha256": "8cf7293c5bc69e9ac6e8bb8f6081459c870b5036f4fa38af729c6ff73f652346",
+          "outcome": "accepted",
+          "answer": "function foo() {}\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/call-expression/input.ts",
+          "sha256": "4191fad6df84fcf69ac5ce811c44e8022de8b398e66cd2379285679ab39d2d18",
+          "outcome": "accepted",
+          "answer": "f << T > v;\nT;\nvoid  > ;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/new-expression/input.ts",
+          "sha256": "c9dcb373330c810406e536daae908e30c942ee66871ea1418c3a0179fdbb715b",
+          "outcome": "accepted",
+          "answer": "new f() << T > v;\nT;\nvoid  > ;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments/empty-function/input.ts",
+          "sha256": "f6b5ca85a7626db0b86984a899a2d74aab2c75392095018d19992d993d59419a",
+          "outcome": "accepted",
+          "answer": "foo();\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments/empty-new/input.ts",
+          "sha256": "681a2a45d6b3cbfb6f5206d9422044b5326686f643f4c6bf6f6535696e9167eb",
+          "outcome": "accepted",
+          "answer": "new A();\n"
+        }
+      ],
+      "acceptance_conflicts": [
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/placeholders/typescript/export-namespace/input.ts",
+          "sha256": "1d85e8c7451e8f54d55f4212f502fc8df11df2fcc3909de8b69c7562c91bebf7",
+          "outcome": "accepted",
+          "answer": "(((namespace % ) % foo) % ) % {};\n",
+          "go_error": "parse error at 0: Declaration or statement expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-definite-pattern-assignment-using/input.ts",
+          "sha256": "bfa1d9b4f8957b7bb8901ebd760d0197c53765bb0d2bef56c75063a0f659b4c3",
+          "outcome": "accepted",
+          "answer": "{\n    declare;\n    using;\n    {\n    }\n    !;\n    {\n    }\n}\n",
+          "go_error": "parse error at 20: ',' expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/exponentiation/await-non-null-before-exponential/input.ts",
+          "sha256": "0e16d147d831e497103e406ada4af9d7f638cba41c46b85b8a3069a2d6348914",
+          "outcome": "accepted",
+          "answer": "async (a) => (await a!) ** 6;\n",
+          "go_error": "parse error at 13: An unary expression with the 'await' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/exponentiation/unary-non-null-before-exponential/input.ts",
+          "sha256": "ba610f1bfe0d581a2a9fc413fec5fe9206d624a982ec92c09fc7037143c8336c",
+          "outcome": "accepted",
+          "answer": "(a) => (+a!) ** 6;\n",
+          "go_error": "parse error at 7: An unary expression with the '+' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/export/declare-invalid/input.ts",
+          "sha256": "c8a2756186273ba095a4a0e9885db1675b0f5d57bfd4e6dcd2ff75f9dbd1cb42",
+          "outcome": "accepted",
+          "answer": "declare;\nfoo;\n",
+          "go_error": "parse error at 0: Declaration or statement expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/interface/export-default/input.ts",
+          "sha256": "fd9cbe44fdf592e313c59043303497abb882e8848083c5fe85be871924ca4421",
+          "outcome": "accepted",
+          "answer": "interface;\n{\n}\n",
+          "go_error": "parse error at 25: Identifier expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/interface/invalid-abstract-interface/input.ts",
+          "sha256": "1156aee7501cfeef839fc9d31c0daa997ae8206fb81a81f1935b927d539ad0ba",
+          "outcome": "accepted",
+          "answer": "abstract;\ninterface;\nFoo;\n{\n}\n",
+          "go_error": "parse error at 0: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/interface/new-line-error/input.ts",
+          "sha256": "3ff6e54d7d711bdef30ba4cdf1adbdb30783972012fabcebb6a17d735a1c61f6",
+          "outcome": "accepted",
+          "answer": "interface;\nF;\n{\n}\n",
+          "go_error": "parse error at 10: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/invalid-declare-module-number/input.ts",
+          "sha256": "7ea922d2437155bce28c345fbe1e1770b18189a6ce3d855e46ef5709748bc6ca",
+          "outcome": "accepted",
+          "answer": "declare;\nmodule;\n0;\n{\n}\n",
+          "go_error": "parse error at 15: Namespace name cannot be '0'."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/invalid-declare-module-without-name/input.ts",
+          "sha256": "f266684d9b861274ce7bad6613c1387697d0d9d7423aa55085fd9f6dc657837b",
+          "outcome": "accepted",
+          "answer": "declare;\nmodule;\n{\n}\n",
+          "go_error": "parse error at 15: Namespace must be given a name."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/module-new-line-error/input.ts",
+          "sha256": "52436094513e0cddcef10b54797f0fc3c20e33ebf46a21dbe5be0bb56853ea3c",
+          "outcome": "accepted",
+          "answer": "module;\nFoo;\n{\n}\n",
+          "go_error": "parse error at 7: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/namespace-new-line-error/input.ts",
+          "sha256": "0fec3bcef7cefba03417fb2a87599f2823b6924af4fa86d3245a8f48cfaddc84",
+          "outcome": "accepted",
+          "answer": "namespace;\nFoo;\n{\n}\n",
+          "go_error": "parse error at 10: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-alias/declare-new-line/input.ts",
+          "sha256": "60d2545aea8328a4c6b479060d2bc369a27386a626a3065e37369a711c069ffd",
+          "outcome": "accepted",
+          "answer": "type;\nT = number;\n",
+          "go_error": "parse error at 13: Line break not permitted here."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments/call-optional-chain-invalid/input.ts",
+          "sha256": "dcb3bc29527d92f5a592e05df46e2ab8a32d4a085d613a6a908498f0decd40b0",
+          "outcome": "accepted",
+          "answer": "f?.[1];\n",
+          "go_error": "parse error at 3: Identifier expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/variable-declarator/invalid-definite-like-not-eq/input.ts",
+          "sha256": "1ed53edaaae84b03b3050130be2e9890675c56a93b9c09d8e61a436118f74460",
+          "outcome": "accepted",
+          "answer": "var w;\n != null;\n",
+          "go_error": "parse error at 5: ',' expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/variable-declarator/invalid-definite-pattern-assignment-using/input.ts",
+          "sha256": "9741f5229114340e1261ff318bbbd65c463a2c1a0f6224aa0a21cbc73e9d16dc",
+          "outcome": "accepted",
+          "answer": "{\n    using;\n    {\n    }\n    !;\n    {\n    }\n}\n",
+          "go_error": "parse error at 12: ',' expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-spread/test/fixtures/call-context/flow-type-cast/input.ts",
+          "sha256": "c803926dd3a658944086aaa1ebb68df6d9067527012197e103c6c4722d897891",
+          "outcome": "accepted",
+          "answer": "a.b;\nany;\n(...args) => ;\n",
+          "go_error": "parse error at 4: ')' expected."
+        }
+      ],
+      "changes_from_previous": [
+        {
+          "repo": "angular/angular",
+          "pin": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+          "path": "adev/src/content/tutorials/first-app/steps/11-details-page/src/app/app.ts",
+          "sha256": "cf25910d28632f4a1014b1bf8ee065f389e1f6ce2b4017ce85296b006aaceeea",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "angular/angular",
+          "pin": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+          "path": "integration/legacy-animations-async/src/app/app.component.ts",
+          "sha256": "ad7f3a47669d988e62955b637c4b0dbf86af830c6ef8e0be1ec1cc2bfe528af6",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "angular/angular",
+          "pin": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+          "path": "integration/legacy-animations/src/app/app.component.ts",
+          "sha256": "ad7f3a47669d988e62955b637c4b0dbf86af830c6ef8e0be1ec1cc2bfe528af6",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "angular/angular",
+          "pin": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+          "path": "packages/compiler-cli/test/compliance/test_cases/r3_compiler_compliance/components_and_directives/value_composition/inline_object_literal_access_isolated.golden.d.ts",
+          "sha256": "ea399bd1cae31c3c910b21c7fe525e3b155ef1a8b83360f5fbadfe78a71073ca",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "angular/angular",
+          "pin": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+          "path": "packages/compiler-cli/test/compliance/test_cases/r3_compiler_compliance/components_and_directives/value_composition/regular_expression_with_sticky_flag_isolated.golden.d.ts",
+          "sha256": "31cd3d45afcfdc6b5e61eeb771bd332c363af6a7af3dcebf432b090c0265b78c",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "angular/angular",
+          "pin": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+          "path": "packages/compiler-cli/test/compliance/test_cases/r3_view_compiler_bindings/host_bindings/sanitization_isolated.golden.d.ts",
+          "sha256": "31c2dad962e413988e8d4537626da8dacdd463fd88ffeb688872dcbd8783a55d",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "angular/angular",
+          "pin": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+          "path": "packages/compiler-cli/test/compliance/test_cases/r3_view_compiler_boundaries/basic_isolated.golden.d.ts",
+          "sha256": "0d66e8b4c6e2acfad49f41acb7df7b584e16367031d700764e4e8895515e6474",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "angular/angular",
+          "pin": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+          "path": "packages/compiler-cli/test/compliance/test_cases/r3_view_compiler_boundaries/error_declaration_isolated.golden.d.ts",
+          "sha256": "0d66e8b4c6e2acfad49f41acb7df7b584e16367031d700764e4e8895515e6474",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "angular/angular",
+          "pin": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+          "path": "packages/compiler-cli/test/compliance/test_cases/r3_view_compiler_boundaries/multiple_error_blocks_isolated.golden.d.ts",
+          "sha256": "0d66e8b4c6e2acfad49f41acb7df7b584e16367031d700764e4e8895515e6474",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "angular/angular",
+          "pin": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+          "path": "packages/compiler-cli/test/compliance/test_cases/r3_view_compiler_boundaries/nested_isolated.golden.d.ts",
+          "sha256": "0d66e8b4c6e2acfad49f41acb7df7b584e16367031d700764e4e8895515e6474",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "angular/angular",
+          "pin": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+          "path": "packages/compiler-cli/test/compliance/test_cases/r3_view_compiler_boundaries/retry_alias_isolated.golden.d.ts",
+          "sha256": "0d66e8b4c6e2acfad49f41acb7df7b584e16367031d700764e4e8895515e6474",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "angular/angular",
+          "pin": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+          "path": "packages/compiler-cli/test/compliance/test_cases/r3_view_compiler_boundaries/retry_implicit_isolated.golden.d.ts",
+          "sha256": "0d66e8b4c6e2acfad49f41acb7df7b584e16367031d700764e4e8895515e6474",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "angular/angular",
+          "pin": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+          "path": "packages/compiler-cli/test/compliance/test_cases/r3_view_compiler_boundaries/when_condition_isolated.golden.d.ts",
+          "sha256": "0d66e8b4c6e2acfad49f41acb7df7b584e16367031d700764e4e8895515e6474",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "angular/angular",
+          "pin": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+          "path": "packages/compiler-cli/test/compliance/test_cases/r3_view_compiler_deferred/defer_extends_clause_deps_isolated.golden.d.ts",
+          "sha256": "3627008f33cae1aa4b828b2f0a8c37bd700ed9224626cbe4198cfbffd2e6b30a",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "angular/angular",
+          "pin": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+          "path": "packages/compiler-cli/test/compliance/test_cases/r3_view_compiler_deferred/defer_extends_clause_isolated.golden.d.ts",
+          "sha256": "1d34828c136b1d1d83986f56bdfa177ed3e676470f717cc301f5271ddf7dba5c",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "angular/angular",
+          "pin": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+          "path": "packages/compiler-cli/test/compliance/test_cases/r3_view_compiler_i18n/many_i18n_attributes_isolated.golden.d.ts",
+          "sha256": "2e00790c08690b382c8a9ad077205b41ea8b436a4fb87d349b1bc7eb5756b24e",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "angular/angular",
+          "pin": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+          "path": "packages/compiler-cli/test/compliance/test_cases/r3_view_compiler_i18n/many_i18n_elements_isolated.golden.d.ts",
+          "sha256": "2e00790c08690b382c8a9ad077205b41ea8b436a4fb87d349b1bc7eb5756b24e",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "angular/angular",
+          "pin": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+          "path": "packages/compiler-cli/test/compliance/test_cases/r3_view_compiler_listener/host_listener_property_isolated.golden.d.ts",
+          "sha256": "c061681eb9373a0bca48ffa3ce73fbce1680356ba85a50acfe212d7c48139482",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-generator/test/fixtures/typescript/import-type-empty-object/input.ts",
+          "sha256": "630b6466128adfeaba5a0a875be3be069317a3fad72e0f4fa62aebef7927492a",
+          "outcome": "ExportDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/core/sourcetype-unambiguous/typescript-type-only/input.ts",
+          "sha256": "1a681362ee466033dc781f71bb43b1548e5df0ea726a2d2829ee6062cd660579",
+          "outcome": "ExportDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/import/import-default-id-type/input.ts",
+          "sha256": "df306dcb4dc5f4ac75e511590e7b79e97542d5b79bf7c0e12444bd6122aa2c25",
+          "outcome": "accepted",
+          "answer": "import type from 'foo';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-type-only-and-export/input.ts",
+          "sha256": "3dfc78388f09d12e97264c52a8bf7b4365c180434bebf2b4a33cc46b7dd84b29",
+          "outcome": "ExportDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-typescript/test/fixtures/imports/elide-preact/input.ts",
+          "sha256": "14ba6a889ff2137ea8937b22a9add82cba9f253904281cfa377e905d4ad9c35f",
+          "outcome": "variable-types",
+          "answer": null
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-typescript/test/fixtures/imports/elide-react/input.ts",
+          "sha256": "88b69a601c377617076c7f3e874f1465ae78cc9b3d702d9c64e6f77bb1511ffb",
+          "outcome": "variable-types",
+          "answer": null
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-typescript/test/fixtures/imports/elide-typeof/input.ts",
+          "sha256": "954fa441f6e961e0de6edf27531a23161f5ac9dc935e60e7c9e31726585c7495",
+          "outcome": "variable-types",
+          "answer": null
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-typescript/test/fixtures/imports/elision-export-type/input.ts",
+          "sha256": "2a8a8aa6e190522a6c125075f20a340bda1af939d64dbb2fba527634a47e7b36",
+          "outcome": "ExportDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-typescript/test/fixtures/imports/elision-qualifiedname/input.ts",
+          "sha256": "81b13fb3576f65417d95857e1f7c5b42227e47a49384d6afbcb0c4fdaf88a133",
+          "outcome": "variable-types",
+          "answer": null
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-typescript/test/fixtures/imports/elision-rename/input.ts",
+          "sha256": "32c57430650fff29bb2b835bbc62a320b8a563093d41e3977b621b616d164b81",
+          "outcome": "variable-types",
+          "answer": null
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-typescript/test/fixtures/imports/elision/input.ts",
+          "sha256": "fb6a6bf935778417af2b1d7ae5105edc0c36cf552e2ac095b9c28f22468ecce1",
+          "outcome": "variable-types",
+          "answer": null
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-typescript/test/fixtures/imports/enum-id/input.ts",
+          "sha256": "8fdcc11912e438459699957fb8c7490a25fcdf0b38a3ee8f1421dd8934197a57",
+          "outcome": "EnumDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-typescript/test/fixtures/imports/enum-value/input.ts",
+          "sha256": "3553f8d6be65a87be95d200bd9fff2c2fb1f3de7337a955c96471d8cf7817e19",
+          "outcome": "EnumDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-typescript/test/fixtures/imports/import-named-type/input.ts",
+          "sha256": "df306dcb4dc5f4ac75e511590e7b79e97542d5b79bf7c0e12444bd6122aa2c25",
+          "outcome": "accepted",
+          "answer": "import type from 'foo';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-typescript/test/fixtures/imports/property-signature/input.ts",
+          "sha256": "b2b700cd8ea23cf7fa1a480b0f25f865ebd4c8e0f3c8c4f06d75f3d29e6f3562",
+          "outcome": "variable-types",
+          "answer": null
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-typescript/test/fixtures/imports/type-only-export-specifier-1/input.ts",
+          "sha256": "e51a1563d48f87d3dad0a406823a958997b4fc105a1136ab95884f5dadcab997",
+          "outcome": "ExportDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-typescript/test/fixtures/imports/type-only-export-specifier-2/input.ts",
+          "sha256": "e51a1563d48f87d3dad0a406823a958997b4fc105a1136ab95884f5dadcab997",
+          "outcome": "ExportDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-typescript/test/fixtures/imports/type-only-import-specifier-3/input.ts",
+          "sha256": "31f93fd4d1036456c7cb4833d408f1506e7c7fa0a8b15aa4305024438806636f",
+          "outcome": "ExportDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "calcom/cal.diy",
+          "pin": "54343aa685ae8f33159d2f485ec4a57bad5c574a",
+          "path": "apps/web/modules/bookings/components/__mocks__/AvailableTimeSlots.tsx",
+          "sha256": "8b4a34f206c9cbc9f1be9c0dd6e86b41d05afcf15d78aa04efbf7b2f719c0d05",
+          "outcome": "parameter-pattern",
+          "answer": null
+        },
+        {
+          "repo": "calcom/cal.diy",
+          "pin": "54343aa685ae8f33159d2f485ec4a57bad5c574a",
+          "path": "apps/web/modules/bookings/components/__mocks__/DatePicker.tsx",
+          "sha256": "9065eee22fee826aa6b971b0a48e3cb38969dbbafa0a6b28f4f2437604552568",
+          "outcome": "JsxElement",
+          "answer": null
+        },
+        {
+          "repo": "calcom/cal.diy",
+          "pin": "54343aa685ae8f33159d2f485ec4a57bad5c574a",
+          "path": "apps/web/modules/bookings/components/__mocks__/DryRunMessage.tsx",
+          "sha256": "2ec5f5f59711ff6a6b7c041e369e760b769ff82d0e0c0863a9b0e71fd67f3fa7",
+          "outcome": "parameter-pattern",
+          "answer": null
+        },
+        {
+          "repo": "date-fns/date-fns",
+          "pin": "717ce0a807ea4c6b540d015b5c408723175b2838",
+          "path": "pkgs/core/docs/config.d.ts",
+          "sha256": "e19d1b53a496d23fa16c94e364ebbbda72edd9986d3c9479b0be0b11c04e6db5",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "grafana/grafana",
+          "pin": "c7a7b797c1980a886efdd01b433a8d92b7ae7166",
+          "path": "public/app/features/transformers/editors/SeriesToRowsTransformerEditor.tsx",
+          "sha256": "7c86c420776a620bbee4e8bdf619281baf969b117df432cd08cc74a3a7470cc4",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "grafana/grafana",
+          "pin": "c7a7b797c1980a886efdd01b433a8d92b7ae7166",
+          "path": "public/app/plugins/datasource/cloudwatch/mocks/cloudwatch-logs-sql-test-data/singleLineFullQuery.ts",
+          "sha256": "20ccffce9b8049826f0d8e9774bbe96f6f0fbcb104e6e9251db1858497fd8f5d",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "n8n-io/n8n",
+          "pin": "e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073",
+          "path": "packages/@n8n/typeorm/test/github-issues/1780/entity/User.ts",
+          "sha256": "15dc556dcaba21c27207596da062bd0b504e89fe152bce4380e7ef1380b90760",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "n8n-io/n8n",
+          "pin": "e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073",
+          "path": "packages/@n8n/typeorm/test/github-issues/3047/entity/User.ts",
+          "sha256": "15dc556dcaba21c27207596da062bd0b504e89fe152bce4380e7ef1380b90760",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "n8n-io/n8n",
+          "pin": "e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073",
+          "path": "packages/frontend/@n8n/design-system/src/components/N8nActionDropdown/index.ts",
+          "sha256": "00ba881efb60ade3f50795b49b0a330eb1ce61afba1f8ad7f7dfa37784f2525b",
+          "outcome": "ExportAssignment",
+          "answer": null
+        },
+        {
+          "repo": "n8n-io/n8n",
+          "pin": "e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073",
+          "path": "packages/frontend/@n8n/design-system/src/components/N8nBreadcrumbs/index.ts",
+          "sha256": "c14874cb2c27472081a8820c18a1b6c3fa0621c5ae531d1d5bce1d293cb74288",
+          "outcome": "ExportAssignment",
+          "answer": null
+        },
+        {
+          "repo": "n8n-io/n8n",
+          "pin": "e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073",
+          "path": "packages/frontend/@n8n/design-system/src/components/N8nCallout/index.ts",
+          "sha256": "3b998390e08d178ba6a7df30b16d4a07d566fe9bd0b263cdbe45578afbc9e53d",
+          "outcome": "ExportDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "n8n-io/n8n",
+          "pin": "e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073",
+          "path": "packages/frontend/@n8n/design-system/src/components/N8nIconPicker/index.ts",
+          "sha256": "1ac753fafb2c952f768412a58807194d739e68cd86fa10c82a6c3fe7e35e5094",
+          "outcome": "ExportAssignment",
+          "answer": null
+        },
+        {
+          "repo": "n8n-io/n8n",
+          "pin": "e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073",
+          "path": "packages/frontend/@n8n/design-system/src/components/N8nRoute/index.ts",
+          "sha256": "40e9f4147b82c7474754497275fcb5b908298abf56d13bdf02dcf1d122d629fb",
+          "outcome": "ExportAssignment",
+          "answer": null
+        },
+        {
+          "repo": "n8n-io/n8n",
+          "pin": "e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073",
+          "path": "packages/frontend/editor-ui/src/__tests__/server/fixtures/tags.ts",
+          "sha256": "f1597ace8422076118e57167999dfc5ff9460bf41f25feac2d6290d81bddae30",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "supabase/supabase",
+          "pin": "87681812a0b4aef538d18ea78a78e5ab6257952e",
+          "path": "apps/www/components/Panel/index.tsx",
+          "sha256": "280acf0d36713d969261ccf4243b6c3707ddeb418ee6880d484ba88b58e88d87",
+          "outcome": "ExportAssignment",
+          "answer": null
+        },
+        {
+          "repo": "tldraw/tldraw",
+          "pin": "db1c86ea7857483c47aa333cf4e92abf455a67cf",
+          "path": "apps/docs/scripts/check-broken-links.ts",
+          "sha256": "f55aab06378fa82510a6ea37f508a25927481e865dac59916d256d831990d6bb",
+          "outcome": "FunctionExpression",
+          "answer": null
+        },
+        {
+          "repo": "tldraw/tldraw",
+          "pin": "db1c86ea7857483c47aa333cf4e92abf455a67cf",
+          "path": "apps/docs/scripts/check-external-links.ts",
+          "sha256": "4b2d7adbd2925a9bf133c109a81ce89a9a7ab395181a9fc7cea3c83d0598cba7",
+          "outcome": "FunctionExpression",
+          "answer": null
+        },
+        {
+          "repo": "tldraw/tldraw",
+          "pin": "db1c86ea7857483c47aa333cf4e92abf455a67cf",
+          "path": "apps/docs/scripts/create-api-markdown.ts",
+          "sha256": "ecca8cc428e019fb209ef64ed2244d2ddf42b58bb29b3608efa911f4bf9e3c7a",
+          "outcome": "FunctionExpression",
+          "answer": null
+        },
+        {
+          "repo": "tldraw/tldraw",
+          "pin": "db1c86ea7857483c47aa333cf4e92abf455a67cf",
+          "path": "apps/docs/scripts/fetch-api-source.ts",
+          "sha256": "6980f3d960598178fa6d3f6e5433d4eeb0a80db433123149e1b749311649e231",
+          "outcome": "FunctionExpression",
+          "answer": null
+        },
+        {
+          "repo": "tldraw/tldraw",
+          "pin": "db1c86ea7857483c47aa333cf4e92abf455a67cf",
+          "path": "apps/docs/scripts/refresh-content.ts",
+          "sha256": "46373b2b95b976c4ac483ad64964068cc673fdc244f8c10a85a3f39e024875e2",
+          "outcome": "FunctionExpression",
+          "answer": null
+        },
+        {
+          "repo": "tldraw/tldraw",
+          "pin": "db1c86ea7857483c47aa333cf4e92abf455a67cf",
+          "path": "packages/assets/imports.d.ts",
+          "sha256": "3f704439ef47b7150a0406087113e8f3508ba9a48eb7ebd6139ef9178d99679a",
+          "outcome": "function-types",
+          "answer": null
+        },
+        {
+          "repo": "tldraw/tldraw",
+          "pin": "db1c86ea7857483c47aa333cf4e92abf455a67cf",
+          "path": "packages/assets/imports.vite.d.ts",
+          "sha256": "3f704439ef47b7150a0406087113e8f3508ba9a48eb7ebd6139ef9178d99679a",
+          "outcome": "function-types",
+          "answer": null
+        },
+        {
+          "repo": "tldraw/tldraw",
+          "pin": "db1c86ea7857483c47aa333cf4e92abf455a67cf",
+          "path": "packages/assets/selfHosted.d.ts",
+          "sha256": "2f29e05587063fa4de158f85e345a93f63f3181ce952951dba6cdcda8ee16597",
+          "outcome": "function-types",
+          "answer": null
+        },
+        {
+          "repo": "tldraw/tldraw",
+          "pin": "db1c86ea7857483c47aa333cf4e92abf455a67cf",
+          "path": "packages/assets/urls.d.ts",
+          "sha256": "08ae30d2acf97628b9e0d7aaf914d8a85ff354d8001f5220df1da0f9abd89352",
+          "outcome": "function-types",
+          "answer": null
+        },
+        {
+          "repo": "tldraw/tldraw",
+          "pin": "db1c86ea7857483c47aa333cf4e92abf455a67cf",
+          "path": "packages/assets/utils.d.ts",
+          "sha256": "fcba132bb0762369c8c9e3d2c6fa78b4ae61671d6b23bdb70509fef48f0fd4a2",
+          "outcome": "function-types",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/activities/states/canCreateActivityState.ts",
+          "sha256": "8bc7eb4841341afd40158d0f2ce8ecb7c79c0731e2d06214b9f948f31bf488c3",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/activities/states/isActivityInCreateModeState.ts",
+          "sha256": "038a8cca96347456d9e8ce973d6b5364dc7cfc6f736035b981e45e593847a697",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/activities/states/isCreatingActivityInDBState.ts",
+          "sha256": "9978dfed9c78be3be5512cc0b543c120dbf693cc041329a2a581df57ac1f4b2d",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/app/states/isAppEffectRedirectEnabledState.ts",
+          "sha256": "d7b6f83e5c1795347b7de6f7fe8fe3fa94d1b5875d93384fc6eb1d212fccdfc9",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/auth/states/isCurrentUserLoadedState.ts",
+          "sha256": "adc1f22511b57b7a51683e00a01b08c36fefe2b468039399aff9cc0daa347dc4",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/captcha/states/captchaTokenState.ts",
+          "sha256": "784284bb979e872c53b1e37b6b6b4d90785404030fcda525478361a31530fc2d",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/captcha/states/isCaptchaScriptLoadedState.ts",
+          "sha256": "8aa7667d8a7f29fba96558606f6c90a2d202fef3e2fe6cf480a8ab5ebacffc8d",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/captcha/states/isRequestingCaptchaTokenState.ts",
+          "sha256": "5ee98cfe0d10361f415f2a8c394327d98067e211715b20d2c8a78b23a7662302",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/client-config/states/canManageFeatureFlagsState.ts",
+          "sha256": "16cb7c5e80201f0e711f6c076c0a692da6572878cf697cd37b635d93954e2dfd",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/client-config/states/isAnalyticsEnabledState.ts",
+          "sha256": "30997c1cb0ad4dc444b1f3c2bac24b7348b76b9b3decc4090864ebbfba765ec5",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/client-config/states/isConfigVariablesInDbEnabledState.ts",
+          "sha256": "4105197d3052ade2396fa6d423ab394c439fa7988fc76e8ff9b73060b2e5e478",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/client-config/states/isDeveloperDefaultSignInPrefilledState.ts",
+          "sha256": "e196d674fa35c33cc270ad433aa3500e6f1cf63c434dce06afc409eb8ee193e5",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/client-config/states/isEmailVerificationRequiredState.ts",
+          "sha256": "6d44ab0111c34850139ac37e0323e7b295dc37498e3ec873080f23f3deb5b086",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/client-config/states/isGoogleCalendarEnabledState.ts",
+          "sha256": "3a0eb8aad7af6787be80ac2adb3feb1cc393b1e0bcb305817b99d8bd14236f04",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/client-config/states/isGoogleMessagingEnabledState.ts",
+          "sha256": "4210dba43f5f26a9061c9e4ead0108e443facdc1e2a9e22f159a70b1b74c2800",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/client-config/states/isMicrosoftCalendarEnabledState.ts",
+          "sha256": "9d3c52b70bb1727a10200374550dc8a8c651130c2d617d4b372e9237d509022a",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/client-config/states/isMicrosoftMessagingEnabledState.ts",
+          "sha256": "6233f5afb02bd5a6bd4fdb408eb5da68bffbbd3f7e3be483a6816fd203ff2f69",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/client-config/states/isMultiWorkspaceEnabledState.ts",
+          "sha256": "166b5da7a3425f53326f042ab333bbfeccd55cce52158769b71bda8499a62435",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/navigation-menu-item/display/hooks/useIsNavigationMenuItemEditHighlighted.ts",
+          "sha256": "21dae4a0cb1f29b9db6dadbc02052c6063b7c14eaf211f18cb7acae7d4710416",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/object-metadata/utils/getIconForObjectType.ts",
+          "sha256": "1e8eafd1f4f6c5778536b0e144609bba267914f4a05bf29e2c461d15c1d62f8f",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/object-record/cache/utils/computePossibleMorphGqlFieldForFieldName.ts",
+          "sha256": "9405d0c0db333cf05daddeb6e5d83f5c4f98323660f8a9cb7fab44d9c413cf59",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/object-record/cache/utils/getObjectTypename.ts",
+          "sha256": "6313b7b9e799d194711f6bd0e238170472279c31db4797fd861ec65f25e83d86",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/object-record/record-field/ui/types/RecordChipData.ts",
+          "sha256": "7873a82427ed9cd8b87ca1a6c913b4c435075d22418a73a680c73673ce5d7cf8",
+          "outcome": "TypeAliasDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/object-record/record-table/record-table-footer/types/RecordTableColumnAggregateFooterDropdownContextValue.ts",
+          "sha256": "d826725a7c583c9bc5494d2572ef940f3392adf7b1fee70fcfa59590b0f6d66b",
+          "outcome": "TypeAliasDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/object-record/types/ObjectRecordIdentifier.ts",
+          "sha256": "6aec9aa8cd2ef4a202c06caff1b09cd270d93481d945b8a68a8feb144d2a056b",
+          "outcome": "TypeAliasDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/object-record/utils/getAggregateQueryName.ts",
+          "sha256": "6e1d372b119ba9fe22363c5e7d78d85d59b3a61d1ac69278c9ca5f0715a9d5ad",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/object-record/utils/getCreateManyRecordsMutationResponseField.ts",
+          "sha256": "8edc8e24550d7176cae1a76f12ba7fb1f94c13c7ea1fe14075b476cd594b7346",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/object-record/utils/getCreateOneRecordMutationResponseField.ts",
+          "sha256": "9c350411362a96185a1c6884501bb1917075852b3be1902b8af1b7ac97744929",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/object-record/utils/getDeleteManyRecordsMutationResponseField.ts",
+          "sha256": "4075aa8f83aa8276325711b6e9f935f71256f8f1663121ec16d119b88c99ccab",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/object-record/utils/getDeleteOneRecordMutationResponseField.ts",
+          "sha256": "02e29ceda1178883f2cc06cfd7dba7dd9f001e34f80f720cc2ed147bc2631b29",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/object-record/utils/getDestroyManyRecordsMutationResponseField.ts",
+          "sha256": "40798a87f3a393478eab7929c531b86a5a137e1f314f1c6780ae22b855c0385c",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/object-record/utils/getDestroyOneRecordMutationResponseField.ts",
+          "sha256": "fb11e28f1c9201ad5244c5198a1b5e89d702a93f315cfb653593ddf9571719fd",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/object-record/utils/getRestoreManyRecordsMutationResponseField.ts",
+          "sha256": "b68105c177eb8e30c65036d0837b0a836b70ce1f006be74b6adfdbf65167e577",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/object-record/utils/getUpdateOneRecordMutationResponseField.ts",
+          "sha256": "63572d2ee8f8e470e7333b83dee34e66119db9dc539b0cfb5927235d30e1e8f1",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/settings/data-model/constants/SettingsFieldCurrencyCodes.ts",
+          "sha256": "30efbf6f6e0f6cceccd5f3eaa760900cc5fe03acda495b1a043c2185444c48c7",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/settings/mcp-and-apis/constants/SettingsPlaygroundFormSchemaSelectOptions.ts",
+          "sha256": "116a0a761c17c66bbd6c6b294dda3e829c6ad18334d0f57432bd20406475a0d4",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/side-panel/states/hasUserSelectedSidePanelListItemState.ts",
+          "sha256": "5f959a1eebf53c0ee4878888cea2954ccfd31adf50a5739644c8cc08584d8035",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/side-panel/states/isSidePanelClosingState.ts",
+          "sha256": "e1ba5e1f886ef60526b2d6ed621fb0b6e72109d655b6346d01469ab1478b6767",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/side-panel/states/sidePanelSearchState.ts",
+          "sha256": "c48c2b7d949b30a2915393653d2342d6ce716ff5fe562e4628b6bc0b185fae2e",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/ui/input/types/SelectCallToActionButton.ts",
+          "sha256": "7ab47617b73cae2e059566dcd22987ade73c89d7e3985ff0e6a2b9d030fc780e",
+          "outcome": "TypeAliasDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/ui/input/types/SelectProps.ts",
+          "sha256": "5e22dbd2ca4a0a4d24d225da9ba8e6dda4ce281fc2798e2290d1042fae518247",
+          "outcome": "TypeAliasDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/modules/ui/navigation/states/navigationMemorizedUrlState.ts",
+          "sha256": "1088d622aa76e34ba973ed5ac5a7ef048e61cb58dadb7afa4b4d41e9840f17e1",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-front/src/pages/settings/data-model/states/updatedObjectNamePluralState.ts",
+          "sha256": "aae868f46943e4a3020c9f48d215412ca48878062b14f9781039472ca1eed4b9",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-server/src/engine/core-modules/i18n/types/i18n-context.type.ts",
+          "sha256": "bb1ef66562f4ab5c45ed82f8f1964c8d967734045ee4d29531037367b9bbbc1c",
+          "outcome": "TypeAliasDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-server/src/engine/metadata-modules/field-metadata/utils/is-composite-field-metadata-type.util.ts",
+          "sha256": "eb4979911d7cb534086681e965e024e25586fad192098c11f0767719ef19a7e6",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-server/src/modules/workflow/workflow-builder/workflow-schema/constants/default-iterator-current-item.const.ts",
+          "sha256": "48f6ffb7f3f22dcc16f574eb05f24820d56658e900b4be03f293b84c4c6d7473",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-server/src/utils/camel-to-title-case.ts",
+          "sha256": "6b747bad41a1c4f76ea8dca6ae8d5c26a5069ac1f04fc5dc539ed6b516ec62f8",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-server/test/integration/billing/utils/create-mock-stripe-entitlement-updated-data.util.ts",
+          "sha256": "41249fe5631beb222c74556370b21bf7f82e3cc65abf81aea835fb6f7ee099f2",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-server/test/integration/billing/utils/create-mock-stripe-price-created-data.util.ts",
+          "sha256": "f99ef6a5b87727726a1683853e5c27c285df6f7a97d2e5f08aeea6e930d2c7cc",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-ui/design-tokens/accent.ts",
+          "sha256": "8173b93359383a5aa3d8219a87a35e83b25caed95700f6753816ee8171db5016",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-ui/design-tokens/code.ts",
+          "sha256": "6252b4c18b35177e5e7b5a80c9765cdfda7af5e76fc55d45be582d0509735f4d",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-ui/design-tokens/font.ts",
+          "sha256": "c37d27be075bdf92cc713dba6c7e2b8b9829d22a5aa6bf074710351cd9638f0d",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-ui/design-tokens/illustrationIcon.ts",
+          "sha256": "74ed9fd584973e8c4d9810e61a87bd81c9e5fae1db73aaccaaf3600f5fa512a6",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-ui/design-tokens/snackBar.ts",
+          "sha256": "06ec02a40d0c77b0757c5eede6c03fb23ae67becb034690a5a79a165ad5ac146",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "twentyhq/twenty",
+          "pin": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+          "path": "packages/twenty-ui/design-tokens/tag.ts",
+          "sha256": "68a60a991360ccf17c6e840cd52dd20869859a73f7af4ebf7c94451cdf881b92",
+          "outcome": "variable-modifiers",
+          "answer": null
+        },
+        {
+          "repo": "typeorm/typeorm",
+          "pin": "c64a1f052fc39f6688b6b73b83d065d7147ba8bb",
+          "path": "packages/typeorm/test/github-issues/1780/entity/User.ts",
+          "sha256": "be6b1dff2c24981530817f6cfef451a70025c9cccd85d15b6fef2084f3596012",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "typeorm/typeorm",
+          "pin": "c64a1f052fc39f6688b6b73b83d065d7147ba8bb",
+          "path": "packages/typeorm/test/github-issues/3047/entity/User.ts",
+          "sha256": "100ea417de5ba9311de22086ab536f8981ff0f3c388927b52b5034f442748a6e",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "microsoft/TypeScript",
+          "pin": "50d70a3f5f453a79a4323b263165da51f656a4e3",
+          "path": "packages/typescript/vendor/vscode-jsonrpc/lib/browser/main.d.ts",
+          "sha256": "fbbdb0baaade3505088d8eeaee2e57468ccd5fb08189cb5dfc58ec9c571f3191",
+          "outcome": "ExportDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "microsoft/TypeScript",
+          "pin": "50d70a3f5f453a79a4323b263165da51f656a4e3",
+          "path": "packages/typescript/vendor/vscode-jsonrpc/lib/browser/ril.d.ts",
+          "sha256": "fbfcd7c063556aca0f88a89414d5168d531fe4ecac5b172a0b39d193cfec0846",
+          "outcome": "InterfaceDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "microsoft/TypeScript",
+          "pin": "50d70a3f5f453a79a4323b263165da51f656a4e3",
+          "path": "packages/typescript/vendor/vscode-jsonrpc/lib/common/encoding.d.ts",
+          "sha256": "e445daedeac3005da51d0a3e3258be16096e1c0116701e8979272aaf7aba5fb4",
+          "outcome": "InterfaceDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "microsoft/TypeScript",
+          "pin": "50d70a3f5f453a79a4323b263165da51f656a4e3",
+          "path": "packages/typescript/vendor/vscode-jsonrpc/lib/common/messageBuffer.d.ts",
+          "sha256": "4962729121c2cb97a4481cdb06dfc720a79a3bc2fc9330ff2bcf604cfc541177",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "microsoft/TypeScript",
+          "pin": "50d70a3f5f453a79a4323b263165da51f656a4e3",
+          "path": "packages/typescript/vendor/vscode-jsonrpc/lib/common/sharedArrayCancellation.d.ts",
+          "sha256": "13ec544ab0a3a7ff96afac1016f55b264c812428e37d595dc33b688296435469",
+          "outcome": "ClassDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "microsoft/TypeScript",
+          "pin": "50d70a3f5f453a79a4323b263165da51f656a4e3",
+          "path": "packages/typescript/vendor/vscode-jsonrpc/lib/node/main.d.ts",
+          "sha256": "9fa6d0cba5093edfc07799a4fbe8f7609d106e992b84a6763613c17ba6bad6d6",
+          "outcome": "ExportDeclaration",
+          "answer": null
+        },
+        {
+          "repo": "microsoft/TypeScript",
+          "pin": "50d70a3f5f453a79a4323b263165da51f656a4e3",
+          "path": "packages/typescript/vendor/vscode-jsonrpc/lib/node/ril.d.ts",
+          "sha256": "8c4c4c0580961b284c2196e9abbfd6f456249a4710aecf88a8c3b53f1ed98244",
+          "outcome": "InterfaceDeclaration",
+          "answer": null
+        }
+      ]
+    },
+    "namespace": {
+      "counts": {
+        "comment-attachment": 94437,
+        "ExportDeclaration": 1467,
+        "ModuleDeclaration": 103,
+        "source-trivia": 52602,
+        "variable-modifiers": 1833,
+        "EnumDeclaration": 240,
+        "accepted": 143,
+        "function-types": 270,
+        "TypeAliasDeclaration": 845,
+        "InterfaceDeclaration": 188,
+        "ClassDeclaration": 234,
+        "ImportDeclaration": 28,
+        "type-arguments": 15,
+        "parameter-pattern": 14,
+        "ExpressionWithTypeArguments": 5,
+        "node-exit-70:adamic: panic: missing variable declaration": 1,
+        "assignment-pattern": 16,
+        "AsExpression": 14,
+        "TypeAssertionExpression": 19,
+        "ForOfStatement": 2,
+        "SatisfiesExpression": 1,
+        "ClassExpression": 5,
+        "variable-types": 74,
+        "variable-pattern": 9,
+        "NamespaceExportDeclaration": 1,
+        "ExportAssignment": 37,
+        "ImportEqualsDeclaration": 21,
+        "ForStatement": 3,
+        "MissingDeclaration": 2,
+        "node-exit-70:adamic: panic: JSX expected name at 10 in packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/jsx-opening-element/input.tsx": 1,
+        "IfStatement": 3,
+        "tag-type-arguments": 3,
+        "TryStatement": 1,
+        "JsxSelfClosingElement": 1,
+        "ImportKeyword": 1,
+        "JsxElement": 1,
+        "FunctionExpression": 5,
+        "input-not-utf8": 15
+      },
+      "byte_identical": 117,
+      "output_differences": [
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-await-using-declaration-with-initializer/input.ts",
+          "sha256": "407a62eb6d1a93d2026a1cad462baf000850851167645921f703d039fddcb6c6",
+          "outcome": "accepted",
+          "answer": "declare;\nawait using basic = null;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-await-using-declaration/input.ts",
+          "sha256": "056197f8dc5fdc4af63189726ef3cf75b216cf7d9efb84afefb5a1030693d2dd",
+          "outcome": "accepted",
+          "answer": "declare;\nawait using basic;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-using-declaration-with-initializer/input.ts",
+          "sha256": "7e01b8cdef165c212c142b0ca2916453d2b02814c20d66d4720b02859262fba1",
+          "outcome": "accepted",
+          "answer": "declare;\nusing basic = null;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-using-declaration/input.ts",
+          "sha256": "90925ae070440ccda7adb369da4bed4182e531adf2fcbb8a5d886dac7f231033",
+          "outcome": "accepted",
+          "answer": "declare;\nusing basic;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/function/empty-type-parameters/input.ts",
+          "sha256": "8cf7293c5bc69e9ac6e8bb8f6081459c870b5036f4fa38af729c6ff73f652346",
+          "outcome": "accepted",
+          "answer": "function foo() {}\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/call-expression/input.ts",
+          "sha256": "4191fad6df84fcf69ac5ce811c44e8022de8b398e66cd2379285679ab39d2d18",
+          "outcome": "accepted",
+          "answer": "f << T > v;\nT;\nvoid  > ;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/new-expression/input.ts",
+          "sha256": "c9dcb373330c810406e536daae908e30c942ee66871ea1418c3a0179fdbb715b",
+          "outcome": "accepted",
+          "answer": "new f() << T > v;\nT;\nvoid  > ;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments/empty-function/input.ts",
+          "sha256": "f6b5ca85a7626db0b86984a899a2d74aab2c75392095018d19992d993d59419a",
+          "outcome": "accepted",
+          "answer": "foo();\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments/empty-new/input.ts",
+          "sha256": "681a2a45d6b3cbfb6f5206d9422044b5326686f643f4c6bf6f6535696e9167eb",
+          "outcome": "accepted",
+          "answer": "new A();\n"
+        }
+      ],
+      "acceptance_conflicts": [
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/placeholders/typescript/export-namespace/input.ts",
+          "sha256": "1d85e8c7451e8f54d55f4212f502fc8df11df2fcc3909de8b69c7562c91bebf7",
+          "outcome": "accepted",
+          "answer": "(((namespace % ) % foo) % ) % {};\n",
+          "go_error": "parse error at 0: Declaration or statement expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-definite-pattern-assignment-using/input.ts",
+          "sha256": "bfa1d9b4f8957b7bb8901ebd760d0197c53765bb0d2bef56c75063a0f659b4c3",
+          "outcome": "accepted",
+          "answer": "{\n    declare;\n    using;\n    {\n    }\n    !;\n    {\n    }\n}\n",
+          "go_error": "parse error at 20: ',' expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/exponentiation/await-non-null-before-exponential/input.ts",
+          "sha256": "0e16d147d831e497103e406ada4af9d7f638cba41c46b85b8a3069a2d6348914",
+          "outcome": "accepted",
+          "answer": "async (a) => (await a!) ** 6;\n",
+          "go_error": "parse error at 13: An unary expression with the 'await' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/exponentiation/unary-non-null-before-exponential/input.ts",
+          "sha256": "ba610f1bfe0d581a2a9fc413fec5fe9206d624a982ec92c09fc7037143c8336c",
+          "outcome": "accepted",
+          "answer": "(a) => (+a!) ** 6;\n",
+          "go_error": "parse error at 7: An unary expression with the '+' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/export/declare-invalid/input.ts",
+          "sha256": "c8a2756186273ba095a4a0e9885db1675b0f5d57bfd4e6dcd2ff75f9dbd1cb42",
+          "outcome": "accepted",
+          "answer": "declare;\nfoo;\n",
+          "go_error": "parse error at 0: Declaration or statement expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/interface/export-default/input.ts",
+          "sha256": "fd9cbe44fdf592e313c59043303497abb882e8848083c5fe85be871924ca4421",
+          "outcome": "accepted",
+          "answer": "interface;\n{\n}\n",
+          "go_error": "parse error at 25: Identifier expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/interface/invalid-abstract-interface/input.ts",
+          "sha256": "1156aee7501cfeef839fc9d31c0daa997ae8206fb81a81f1935b927d539ad0ba",
+          "outcome": "accepted",
+          "answer": "abstract;\ninterface;\nFoo;\n{\n}\n",
+          "go_error": "parse error at 0: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/interface/new-line-error/input.ts",
+          "sha256": "3ff6e54d7d711bdef30ba4cdf1adbdb30783972012fabcebb6a17d735a1c61f6",
+          "outcome": "accepted",
+          "answer": "interface;\nF;\n{\n}\n",
+          "go_error": "parse error at 10: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/invalid-declare-module-number/input.ts",
+          "sha256": "7ea922d2437155bce28c345fbe1e1770b18189a6ce3d855e46ef5709748bc6ca",
+          "outcome": "accepted",
+          "answer": "declare;\nmodule;\n0;\n{\n}\n",
+          "go_error": "parse error at 15: Namespace name cannot be '0'."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/invalid-declare-module-without-name/input.ts",
+          "sha256": "f266684d9b861274ce7bad6613c1387697d0d9d7423aa55085fd9f6dc657837b",
+          "outcome": "accepted",
+          "answer": "declare;\nmodule;\n{\n}\n",
+          "go_error": "parse error at 15: Namespace must be given a name."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/module-new-line-error/input.ts",
+          "sha256": "52436094513e0cddcef10b54797f0fc3c20e33ebf46a21dbe5be0bb56853ea3c",
+          "outcome": "accepted",
+          "answer": "module;\nFoo;\n{\n}\n",
+          "go_error": "parse error at 7: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/namespace-new-line-error/input.ts",
+          "sha256": "0fec3bcef7cefba03417fb2a87599f2823b6924af4fa86d3245a8f48cfaddc84",
+          "outcome": "accepted",
+          "answer": "namespace;\nFoo;\n{\n}\n",
+          "go_error": "parse error at 10: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-alias/declare-new-line/input.ts",
+          "sha256": "60d2545aea8328a4c6b479060d2bc369a27386a626a3065e37369a711c069ffd",
+          "outcome": "accepted",
+          "answer": "type;\nT = number;\n",
+          "go_error": "parse error at 13: Line break not permitted here."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments/call-optional-chain-invalid/input.ts",
+          "sha256": "dcb3bc29527d92f5a592e05df46e2ab8a32d4a085d613a6a908498f0decd40b0",
+          "outcome": "accepted",
+          "answer": "f?.[1];\n",
+          "go_error": "parse error at 3: Identifier expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/variable-declarator/invalid-definite-like-not-eq/input.ts",
+          "sha256": "1ed53edaaae84b03b3050130be2e9890675c56a93b9c09d8e61a436118f74460",
+          "outcome": "accepted",
+          "answer": "var w;\n != null;\n",
+          "go_error": "parse error at 5: ',' expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/variable-declarator/invalid-definite-pattern-assignment-using/input.ts",
+          "sha256": "9741f5229114340e1261ff318bbbd65c463a2c1a0f6224aa0a21cbc73e9d16dc",
+          "outcome": "accepted",
+          "answer": "{\n    using;\n    {\n    }\n    !;\n    {\n    }\n}\n",
+          "go_error": "parse error at 12: ',' expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-spread/test/fixtures/call-context/flow-type-cast/input.ts",
+          "sha256": "c803926dd3a658944086aaa1ebb68df6d9067527012197e103c6c4722d897891",
+          "outcome": "accepted",
+          "answer": "a.b;\nany;\n(...args) => ;\n",
+          "go_error": "parse error at 4: ')' expected."
+        }
+      ],
+      "changes_from_previous": [
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/import/import-star-as/input.ts",
+          "sha256": "436bb80c498c058a9d5d817349da03d1b28c02ac7bbd5158ef57d126f793890d",
+          "outcome": "accepted",
+          "answer": "import * as a from 'a';\n"
+        }
+      ]
+    },
+    "named": {
+      "counts": {
+        "comment-attachment": 94437,
+        "ExportDeclaration": 1467,
+        "ModuleDeclaration": 103,
+        "source-trivia": 52602,
+        "variable-modifiers": 1833,
+        "EnumDeclaration": 240,
+        "accepted": 151,
+        "function-types": 270,
+        "TypeAliasDeclaration": 845,
+        "InterfaceDeclaration": 188,
+        "ClassDeclaration": 234,
+        "ImportDeclaration": 20,
+        "type-arguments": 15,
+        "parameter-pattern": 14,
+        "ExpressionWithTypeArguments": 5,
+        "node-exit-70:adamic: panic: missing variable declaration": 1,
+        "assignment-pattern": 16,
+        "AsExpression": 14,
+        "TypeAssertionExpression": 19,
+        "ForOfStatement": 2,
+        "SatisfiesExpression": 1,
+        "ClassExpression": 5,
+        "variable-types": 74,
+        "variable-pattern": 9,
+        "NamespaceExportDeclaration": 1,
+        "ExportAssignment": 37,
+        "ImportEqualsDeclaration": 21,
+        "ForStatement": 3,
+        "MissingDeclaration": 2,
+        "node-exit-70:adamic: panic: JSX expected name at 10 in packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/jsx-opening-element/input.tsx": 1,
+        "IfStatement": 3,
+        "tag-type-arguments": 3,
+        "TryStatement": 1,
+        "JsxSelfClosingElement": 1,
+        "ImportKeyword": 1,
+        "JsxElement": 1,
+        "FunctionExpression": 5,
+        "input-not-utf8": 15
+      },
+      "byte_identical": 124,
+      "output_differences": [
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-await-using-declaration-with-initializer/input.ts",
+          "sha256": "407a62eb6d1a93d2026a1cad462baf000850851167645921f703d039fddcb6c6",
+          "outcome": "accepted",
+          "answer": "declare;\nawait using basic = null;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-await-using-declaration/input.ts",
+          "sha256": "056197f8dc5fdc4af63189726ef3cf75b216cf7d9efb84afefb5a1030693d2dd",
+          "outcome": "accepted",
+          "answer": "declare;\nawait using basic;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-using-declaration-with-initializer/input.ts",
+          "sha256": "7e01b8cdef165c212c142b0ca2916453d2b02814c20d66d4720b02859262fba1",
+          "outcome": "accepted",
+          "answer": "declare;\nusing basic = null;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-using-declaration/input.ts",
+          "sha256": "90925ae070440ccda7adb369da4bed4182e531adf2fcbb8a5d886dac7f231033",
+          "outcome": "accepted",
+          "answer": "declare;\nusing basic;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/function/empty-type-parameters/input.ts",
+          "sha256": "8cf7293c5bc69e9ac6e8bb8f6081459c870b5036f4fa38af729c6ff73f652346",
+          "outcome": "accepted",
+          "answer": "function foo() {}\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/call-expression/input.ts",
+          "sha256": "4191fad6df84fcf69ac5ce811c44e8022de8b398e66cd2379285679ab39d2d18",
+          "outcome": "accepted",
+          "answer": "f << T > v;\nT;\nvoid  > ;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/new-expression/input.ts",
+          "sha256": "c9dcb373330c810406e536daae908e30c942ee66871ea1418c3a0179fdbb715b",
+          "outcome": "accepted",
+          "answer": "new f() << T > v;\nT;\nvoid  > ;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments/empty-function/input.ts",
+          "sha256": "f6b5ca85a7626db0b86984a899a2d74aab2c75392095018d19992d993d59419a",
+          "outcome": "accepted",
+          "answer": "foo();\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments/empty-new/input.ts",
+          "sha256": "681a2a45d6b3cbfb6f5206d9422044b5326686f643f4c6bf6f6535696e9167eb",
+          "outcome": "accepted",
+          "answer": "new A();\n"
+        }
+      ],
+      "acceptance_conflicts": [
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/placeholders/typescript/export-namespace/input.ts",
+          "sha256": "1d85e8c7451e8f54d55f4212f502fc8df11df2fcc3909de8b69c7562c91bebf7",
+          "outcome": "accepted",
+          "answer": "(((namespace % ) % foo) % ) % {};\n",
+          "go_error": "parse error at 0: Declaration or statement expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-definite-pattern-assignment-using/input.ts",
+          "sha256": "bfa1d9b4f8957b7bb8901ebd760d0197c53765bb0d2bef56c75063a0f659b4c3",
+          "outcome": "accepted",
+          "answer": "{\n    declare;\n    using;\n    {\n    }\n    !;\n    {\n    }\n}\n",
+          "go_error": "parse error at 20: ',' expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/exponentiation/await-non-null-before-exponential/input.ts",
+          "sha256": "0e16d147d831e497103e406ada4af9d7f638cba41c46b85b8a3069a2d6348914",
+          "outcome": "accepted",
+          "answer": "async (a) => (await a!) ** 6;\n",
+          "go_error": "parse error at 13: An unary expression with the 'await' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/exponentiation/unary-non-null-before-exponential/input.ts",
+          "sha256": "ba610f1bfe0d581a2a9fc413fec5fe9206d624a982ec92c09fc7037143c8336c",
+          "outcome": "accepted",
+          "answer": "(a) => (+a!) ** 6;\n",
+          "go_error": "parse error at 7: An unary expression with the '+' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/export/declare-invalid/input.ts",
+          "sha256": "c8a2756186273ba095a4a0e9885db1675b0f5d57bfd4e6dcd2ff75f9dbd1cb42",
+          "outcome": "accepted",
+          "answer": "declare;\nfoo;\n",
+          "go_error": "parse error at 0: Declaration or statement expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/interface/export-default/input.ts",
+          "sha256": "fd9cbe44fdf592e313c59043303497abb882e8848083c5fe85be871924ca4421",
+          "outcome": "accepted",
+          "answer": "interface;\n{\n}\n",
+          "go_error": "parse error at 25: Identifier expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/interface/invalid-abstract-interface/input.ts",
+          "sha256": "1156aee7501cfeef839fc9d31c0daa997ae8206fb81a81f1935b927d539ad0ba",
+          "outcome": "accepted",
+          "answer": "abstract;\ninterface;\nFoo;\n{\n}\n",
+          "go_error": "parse error at 0: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/interface/new-line-error/input.ts",
+          "sha256": "3ff6e54d7d711bdef30ba4cdf1adbdb30783972012fabcebb6a17d735a1c61f6",
+          "outcome": "accepted",
+          "answer": "interface;\nF;\n{\n}\n",
+          "go_error": "parse error at 10: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/invalid-declare-module-number/input.ts",
+          "sha256": "7ea922d2437155bce28c345fbe1e1770b18189a6ce3d855e46ef5709748bc6ca",
+          "outcome": "accepted",
+          "answer": "declare;\nmodule;\n0;\n{\n}\n",
+          "go_error": "parse error at 15: Namespace name cannot be '0'."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/invalid-declare-module-without-name/input.ts",
+          "sha256": "f266684d9b861274ce7bad6613c1387697d0d9d7423aa55085fd9f6dc657837b",
+          "outcome": "accepted",
+          "answer": "declare;\nmodule;\n{\n}\n",
+          "go_error": "parse error at 15: Namespace must be given a name."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/module-new-line-error/input.ts",
+          "sha256": "52436094513e0cddcef10b54797f0fc3c20e33ebf46a21dbe5be0bb56853ea3c",
+          "outcome": "accepted",
+          "answer": "module;\nFoo;\n{\n}\n",
+          "go_error": "parse error at 7: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/namespace-new-line-error/input.ts",
+          "sha256": "0fec3bcef7cefba03417fb2a87599f2823b6924af4fa86d3245a8f48cfaddc84",
+          "outcome": "accepted",
+          "answer": "namespace;\nFoo;\n{\n}\n",
+          "go_error": "parse error at 10: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-alias/declare-new-line/input.ts",
+          "sha256": "60d2545aea8328a4c6b479060d2bc369a27386a626a3065e37369a711c069ffd",
+          "outcome": "accepted",
+          "answer": "type;\nT = number;\n",
+          "go_error": "parse error at 13: Line break not permitted here."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments/call-optional-chain-invalid/input.ts",
+          "sha256": "dcb3bc29527d92f5a592e05df46e2ab8a32d4a085d613a6a908498f0decd40b0",
+          "outcome": "accepted",
+          "answer": "f?.[1];\n",
+          "go_error": "parse error at 3: Identifier expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-invalid-named-type-as-keyword/input.ts",
+          "sha256": "a1737c47d8d072661b1096a27d26b095277c90230f2e774c52b3c883c5bce873",
+          "outcome": "accepted",
+          "answer": "import { type as if } from 'mod';\n",
+          "go_error": "parse error at 17: Identifier expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/variable-declarator/invalid-definite-like-not-eq/input.ts",
+          "sha256": "1ed53edaaae84b03b3050130be2e9890675c56a93b9c09d8e61a436118f74460",
+          "outcome": "accepted",
+          "answer": "var w;\n != null;\n",
+          "go_error": "parse error at 5: ',' expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/variable-declarator/invalid-definite-pattern-assignment-using/input.ts",
+          "sha256": "9741f5229114340e1261ff318bbbd65c463a2c1a0f6224aa0a21cbc73e9d16dc",
+          "outcome": "accepted",
+          "answer": "{\n    using;\n    {\n    }\n    !;\n    {\n    }\n}\n",
+          "go_error": "parse error at 12: ',' expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-spread/test/fixtures/call-context/flow-type-cast/input.ts",
+          "sha256": "c803926dd3a658944086aaa1ebb68df6d9067527012197e103c6c4722d897891",
+          "outcome": "accepted",
+          "answer": "a.b;\nany;\n(...args) => ;\n",
+          "go_error": "parse error at 4: ')' expected."
+        }
+      ],
+      "changes_from_previous": [
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/core/sourcetype-unambiguous/typescript-value-import/input.ts",
+          "sha256": "c972de627381cab34bf4fd42e03eeb6a111176d6be39ef494ccd645043923d42",
+          "outcome": "accepted",
+          "answer": "import { Foo } from 'bar';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/import/import-default-and-named-id-type/input.ts",
+          "sha256": "9b3a61d1d24655437dcf88d56f37d577f98a3d29bff75c39c828f3daa616cc50",
+          "outcome": "accepted",
+          "answer": "import type, { bar } from 'foo';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/import/import-named/input.ts",
+          "sha256": "e1077f1ef5ef869326517cbec93b05e18b95751742d1d6d8e2d7a222734277f7",
+          "outcome": "accepted",
+          "answer": "import { foo } from 'bar';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-invalid-named-type-as-keyword/input.ts",
+          "sha256": "a1737c47d8d072661b1096a27d26b095277c90230f2e774c52b3c883c5bce873",
+          "outcome": "accepted",
+          "answer": "import { type as if } from 'mod';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-named-type-as-as/input.ts",
+          "sha256": "9f89615ab40a7f917030033faf7f442327008b756c8458478051881bb2efcc38",
+          "outcome": "accepted",
+          "answer": "import { type as as } from './mod.js';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-named-type/input.ts",
+          "sha256": "515e862de958c7f07d9834efa68623b58bec161a6cff42eb9cfafefe213a51db",
+          "outcome": "accepted",
+          "answer": "import { type } from './mod.js';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-typescript/test/fixtures/imports/elide-no-import-specifiers/input.ts",
+          "sha256": "b0081bdd2663c247e6c654a6f193a4e2d37b96f8d114a71ff8368ca18be34a29",
+          "outcome": "accepted",
+          "answer": "import {} from 'a';\nimport 'b';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-typescript/test/fixtures/imports/import-named-type-default-and-named/input.ts",
+          "sha256": "9b3a61d1d24655437dcf88d56f37d577f98a3d29bff75c39c828f3daa616cc50",
+          "outcome": "accepted",
+          "answer": "import type, { bar } from 'foo';\n"
+        }
+      ]
+    },
+    "type": {
+      "counts": {
+        "comment-attachment": 94437,
+        "ExportDeclaration": 1467,
+        "ModuleDeclaration": 103,
+        "source-trivia": 52602,
+        "variable-modifiers": 1833,
+        "EnumDeclaration": 240,
+        "accepted": 170,
+        "function-types": 270,
+        "TypeAliasDeclaration": 845,
+        "InterfaceDeclaration": 188,
+        "ClassDeclaration": 234,
+        "ImportDeclaration": 1,
+        "type-arguments": 15,
+        "parameter-pattern": 14,
+        "ExpressionWithTypeArguments": 5,
+        "node-exit-70:adamic: panic: missing variable declaration": 1,
+        "assignment-pattern": 16,
+        "AsExpression": 14,
+        "TypeAssertionExpression": 19,
+        "ForOfStatement": 2,
+        "SatisfiesExpression": 1,
+        "ClassExpression": 5,
+        "variable-types": 74,
+        "variable-pattern": 9,
+        "NamespaceExportDeclaration": 1,
+        "ExportAssignment": 37,
+        "ImportEqualsDeclaration": 21,
+        "ForStatement": 3,
+        "MissingDeclaration": 2,
+        "node-exit-70:adamic: panic: JSX expected name at 10 in packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/jsx-opening-element/input.tsx": 1,
+        "IfStatement": 3,
+        "tag-type-arguments": 3,
+        "TryStatement": 1,
+        "JsxSelfClosingElement": 1,
+        "ImportKeyword": 1,
+        "JsxElement": 1,
+        "FunctionExpression": 5,
+        "input-not-utf8": 15
+      },
+      "byte_identical": 140,
+      "output_differences": [
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-await-using-declaration-with-initializer/input.ts",
+          "sha256": "407a62eb6d1a93d2026a1cad462baf000850851167645921f703d039fddcb6c6",
+          "outcome": "accepted",
+          "answer": "declare;\nawait using basic = null;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-await-using-declaration/input.ts",
+          "sha256": "056197f8dc5fdc4af63189726ef3cf75b216cf7d9efb84afefb5a1030693d2dd",
+          "outcome": "accepted",
+          "answer": "declare;\nawait using basic;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-using-declaration-with-initializer/input.ts",
+          "sha256": "7e01b8cdef165c212c142b0ca2916453d2b02814c20d66d4720b02859262fba1",
+          "outcome": "accepted",
+          "answer": "declare;\nusing basic = null;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-using-declaration/input.ts",
+          "sha256": "90925ae070440ccda7adb369da4bed4182e531adf2fcbb8a5d886dac7f231033",
+          "outcome": "accepted",
+          "answer": "declare;\nusing basic;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/function/empty-type-parameters/input.ts",
+          "sha256": "8cf7293c5bc69e9ac6e8bb8f6081459c870b5036f4fa38af729c6ff73f652346",
+          "outcome": "accepted",
+          "answer": "function foo() {}\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/call-expression/input.ts",
+          "sha256": "4191fad6df84fcf69ac5ce811c44e8022de8b398e66cd2379285679ab39d2d18",
+          "outcome": "accepted",
+          "answer": "f << T > v;\nT;\nvoid  > ;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/new-expression/input.ts",
+          "sha256": "c9dcb373330c810406e536daae908e30c942ee66871ea1418c3a0179fdbb715b",
+          "outcome": "accepted",
+          "answer": "new f() << T > v;\nT;\nvoid  > ;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments/empty-function/input.ts",
+          "sha256": "f6b5ca85a7626db0b86984a899a2d74aab2c75392095018d19992d993d59419a",
+          "outcome": "accepted",
+          "answer": "foo();\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments/empty-new/input.ts",
+          "sha256": "681a2a45d6b3cbfb6f5206d9422044b5326686f643f4c6bf6f6535696e9167eb",
+          "outcome": "accepted",
+          "answer": "new A();\n"
+        }
+      ],
+      "acceptance_conflicts": [
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/placeholders/typescript/export-namespace/input.ts",
+          "sha256": "1d85e8c7451e8f54d55f4212f502fc8df11df2fcc3909de8b69c7562c91bebf7",
+          "outcome": "accepted",
+          "answer": "(((namespace % ) % foo) % ) % {};\n",
+          "go_error": "parse error at 0: Declaration or statement expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-definite-pattern-assignment-using/input.ts",
+          "sha256": "bfa1d9b4f8957b7bb8901ebd760d0197c53765bb0d2bef56c75063a0f659b4c3",
+          "outcome": "accepted",
+          "answer": "{\n    declare;\n    using;\n    {\n    }\n    !;\n    {\n    }\n}\n",
+          "go_error": "parse error at 20: ',' expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/exponentiation/await-non-null-before-exponential/input.ts",
+          "sha256": "0e16d147d831e497103e406ada4af9d7f638cba41c46b85b8a3069a2d6348914",
+          "outcome": "accepted",
+          "answer": "async (a) => (await a!) ** 6;\n",
+          "go_error": "parse error at 13: An unary expression with the 'await' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/exponentiation/unary-non-null-before-exponential/input.ts",
+          "sha256": "ba610f1bfe0d581a2a9fc413fec5fe9206d624a982ec92c09fc7037143c8336c",
+          "outcome": "accepted",
+          "answer": "(a) => (+a!) ** 6;\n",
+          "go_error": "parse error at 7: An unary expression with the '+' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/export/declare-invalid/input.ts",
+          "sha256": "c8a2756186273ba095a4a0e9885db1675b0f5d57bfd4e6dcd2ff75f9dbd1cb42",
+          "outcome": "accepted",
+          "answer": "declare;\nfoo;\n",
+          "go_error": "parse error at 0: Declaration or statement expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/interface/export-default/input.ts",
+          "sha256": "fd9cbe44fdf592e313c59043303497abb882e8848083c5fe85be871924ca4421",
+          "outcome": "accepted",
+          "answer": "interface;\n{\n}\n",
+          "go_error": "parse error at 25: Identifier expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/interface/invalid-abstract-interface/input.ts",
+          "sha256": "1156aee7501cfeef839fc9d31c0daa997ae8206fb81a81f1935b927d539ad0ba",
+          "outcome": "accepted",
+          "answer": "abstract;\ninterface;\nFoo;\n{\n}\n",
+          "go_error": "parse error at 0: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/interface/new-line-error/input.ts",
+          "sha256": "3ff6e54d7d711bdef30ba4cdf1adbdb30783972012fabcebb6a17d735a1c61f6",
+          "outcome": "accepted",
+          "answer": "interface;\nF;\n{\n}\n",
+          "go_error": "parse error at 10: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/invalid-declare-module-number/input.ts",
+          "sha256": "7ea922d2437155bce28c345fbe1e1770b18189a6ce3d855e46ef5709748bc6ca",
+          "outcome": "accepted",
+          "answer": "declare;\nmodule;\n0;\n{\n}\n",
+          "go_error": "parse error at 15: Namespace name cannot be '0'."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/invalid-declare-module-without-name/input.ts",
+          "sha256": "f266684d9b861274ce7bad6613c1387697d0d9d7423aa55085fd9f6dc657837b",
+          "outcome": "accepted",
+          "answer": "declare;\nmodule;\n{\n}\n",
+          "go_error": "parse error at 15: Namespace must be given a name."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/module-new-line-error/input.ts",
+          "sha256": "52436094513e0cddcef10b54797f0fc3c20e33ebf46a21dbe5be0bb56853ea3c",
+          "outcome": "accepted",
+          "answer": "module;\nFoo;\n{\n}\n",
+          "go_error": "parse error at 7: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/namespace-new-line-error/input.ts",
+          "sha256": "0fec3bcef7cefba03417fb2a87599f2823b6924af4fa86d3245a8f48cfaddc84",
+          "outcome": "accepted",
+          "answer": "namespace;\nFoo;\n{\n}\n",
+          "go_error": "parse error at 10: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-alias/declare-new-line/input.ts",
+          "sha256": "60d2545aea8328a4c6b479060d2bc369a27386a626a3065e37369a711c069ffd",
+          "outcome": "accepted",
+          "answer": "type;\nT = number;\n",
+          "go_error": "parse error at 13: Line break not permitted here."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments/call-optional-chain-invalid/input.ts",
+          "sha256": "dcb3bc29527d92f5a592e05df46e2ab8a32d4a085d613a6a908498f0decd40b0",
+          "outcome": "accepted",
+          "answer": "f?.[1];\n",
+          "go_error": "parse error at 3: Identifier expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-invalid-named-type-as-keyword/input.ts",
+          "sha256": "a1737c47d8d072661b1096a27d26b095277c90230f2e774c52b3c883c5bce873",
+          "outcome": "accepted",
+          "answer": "import { type as if } from 'mod';\n",
+          "go_error": "parse error at 17: Identifier expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-invalid-type-named-keywords/input.ts",
+          "sha256": "66a9843263767e23786fd928152e2ef8bfd8d50868640093ed61509db2b6e41c",
+          "outcome": "accepted",
+          "answer": "import { type if } from './mod.js';\n",
+          "go_error": "parse error at 14: Identifier expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-invalid-type-only-as-as-keyword/input.ts",
+          "sha256": "fb4fa97651054dfb2def30ea8ec2c1703e3ea556f6d993899e1835c15cc5bef2",
+          "outcome": "accepted",
+          "answer": "import { type as as if } from 'mod';\n",
+          "go_error": "parse error at 20: Identifier expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-invalid-type-only-as-string/input.ts",
+          "sha256": "d42bdff31ed22ceef89dea2f4b4695b81825549a5a160b466c918170f3e9922d",
+          "outcome": "accepted",
+          "answer": "import { type foo as 'bar' } from 'mod';\n",
+          "go_error": "parse error at 21: Identifier expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/variable-declarator/invalid-definite-like-not-eq/input.ts",
+          "sha256": "1ed53edaaae84b03b3050130be2e9890675c56a93b9c09d8e61a436118f74460",
+          "outcome": "accepted",
+          "answer": "var w;\n != null;\n",
+          "go_error": "parse error at 5: ',' expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/variable-declarator/invalid-definite-pattern-assignment-using/input.ts",
+          "sha256": "9741f5229114340e1261ff318bbbd65c463a2c1a0f6224aa0a21cbc73e9d16dc",
+          "outcome": "accepted",
+          "answer": "{\n    using;\n    {\n    }\n    !;\n    {\n    }\n}\n",
+          "go_error": "parse error at 12: ',' expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-spread/test/fixtures/call-context/flow-type-cast/input.ts",
+          "sha256": "c803926dd3a658944086aaa1ebb68df6d9067527012197e103c6c4722d897891",
+          "outcome": "accepted",
+          "answer": "a.b;\nany;\n(...args) => ;\n",
+          "go_error": "parse error at 4: ')' expected."
+        }
+      ],
+      "changes_from_previous": [
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-generator/test/fixtures/sourcemaps/multi-line-import/input.ts",
+          "sha256": "e8d7a426d7ca6bccbe4baa7b285046485a11fdc079b93d65f20447196e9d91c0",
+          "outcome": "accepted",
+          "answer": "import type { RecordAndTuplePluginOptions, PipelineOperatorPluginOptions } from '@babel/parser';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/scope/redeclaration-import-type-import/input.ts",
+          "sha256": "d00cdf8ccb1add2d4b50df877b614e61e6b2406395800d2eca894904e18a728a",
+          "outcome": "accepted",
+          "answer": "import type { Context } from 'react';\nimport { Context } from 'react';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-basic/input.ts",
+          "sha256": "9566de1c020ef25421dad7b088f2d023bfc66e3e2fbdc3e234f574166bc5447c",
+          "outcome": "accepted",
+          "answer": "import { type A, type B, type C } from 'foo';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-invalid-escaped-type-only/input.ts",
+          "sha256": "d1c2f029f54da75b26509aa00bde49320d9af69209bea8f55e3bbc8987bb37d0",
+          "outcome": "accepted",
+          "answer": "import { type as } from 'x';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-invalid-type-in-type/input.ts",
+          "sha256": "c1d1251615e5dee58f92526224eefc65dfe068065fb7522c11f74bb4488fc4b7",
+          "outcome": "accepted",
+          "answer": "import type { type foo } from 'foo';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-invalid-type-named-keywords/input.ts",
+          "sha256": "66a9843263767e23786fd928152e2ef8bfd8d50868640093ed61509db2b6e41c",
+          "outcome": "accepted",
+          "answer": "import { type if } from './mod.js';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-invalid-type-only-as-as-keyword/input.ts",
+          "sha256": "fb4fa97651054dfb2def30ea8ec2c1703e3ea556f6d993899e1835c15cc5bef2",
+          "outcome": "accepted",
+          "answer": "import { type as as if } from 'mod';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-invalid-type-only-as-string/input.ts",
+          "sha256": "d42bdff31ed22ceef89dea2f4b4695b81825549a5a160b466c918170f3e9922d",
+          "outcome": "accepted",
+          "answer": "import { type foo as 'bar' } from 'mod';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-named-and-named-type/input.ts",
+          "sha256": "23d046d4022d8f0d493e7e258e72a997603f60a6b94b03b7792e51318fa9a8db",
+          "outcome": "accepted",
+          "answer": "import { Component, type ComponentProps } from './exports.js';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-type-only-named-as/input.ts",
+          "sha256": "ac4174daa362fa1d76b508e95a8f12711181979791104cf3e5890d4e7c4e5820",
+          "outcome": "accepted",
+          "answer": "import { type as } from './mod.js';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-type-only-named-keywords-as/input.ts",
+          "sha256": "aa028cadc3b9853e07c23c363c09e2e0ff6bd7bb27cac234f576f0304e056d88",
+          "outcome": "accepted",
+          "answer": "import { type default as a, type if as b } from './mod.js';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/types/import-type-declaration-error/input.ts",
+          "sha256": "ca19f4e281ee5821e59aa3313dc969a4c5dd58ff4c49250006599bc55a887ad8",
+          "outcome": "accepted",
+          "answer": "import type FooDefault, { Bar, Baz } from 'module';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/types/import-type-declaration/input.ts",
+          "sha256": "4063b094c928ed4b756433d710184cdfb76f165125620acf543ab13ba91b7584",
+          "outcome": "accepted",
+          "answer": "import type T from './mod';\nimport type { A, B } from './mod';\nimport type * as Types from './mod';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/types/import-type-escaped-error/input.ts",
+          "sha256": "d9fc0771bbbeb65bef13b55398f819f5b88cfd5b3f48480ec9a6acadaa3050de",
+          "outcome": "accepted",
+          "answer": "import type typescript from 'typescript';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-typescript/test/fixtures/imports/import-type-func-with-duplicate-name/input.ts",
+          "sha256": "0e67e2652059525982b6e3ee84f1395bc30c6fb747030a4f34061240aa729a94",
+          "outcome": "accepted",
+          "answer": "import type { Foo } from 'foo';\nimport { type Foo2 } from 'foo';\nfunction Foo() {}\nfunction Foo2() {}\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-typescript/test/fixtures/imports/import-type/input.ts",
+          "sha256": "3a484e73a56eb72e5854842fdcd0a90e7f404482de40a292d44b2b69fe359fad",
+          "outcome": "accepted",
+          "answer": "import type T from './mod';\nimport type { A, B } from './mod';\nimport type * as Types from './mod';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-typescript/test/fixtures/imports/type-only-import-specifier-1/input.ts",
+          "sha256": "b71ead36c98b0dd4bb4822c27c2023afb03c14254ad79b6212b7329d5c48f2cc",
+          "outcome": "accepted",
+          "answer": "import { Foo1, type Foo2 } from 'Foo';\nFoo1;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-typescript/test/fixtures/imports/type-only-import-specifier-2/input.ts",
+          "sha256": "82f11a4646ccc709367107fa49dcdcb205ebb2e1780b1fed4eecd2a1d59114ef",
+          "outcome": "accepted",
+          "answer": "import { type Foo1, type Foo2 } from 'Foo';\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-typescript/test/fixtures/imports/type-only-import-specifier-4/input.ts",
+          "sha256": "7333af86526c0d23e8efe365583c8eb64cc2ece311aff07f180c58e7dfb2d9b5",
+          "outcome": "accepted",
+          "answer": "import { type A } from 'x';\n"
+        }
+      ]
+    },
+    "attributes": {
+      "counts": {
+        "comment-attachment": 94437,
+        "ExportDeclaration": 1467,
+        "ModuleDeclaration": 103,
+        "source-trivia": 52602,
+        "variable-modifiers": 1833,
+        "EnumDeclaration": 240,
+        "accepted": 170,
+        "function-types": 270,
+        "TypeAliasDeclaration": 845,
+        "InterfaceDeclaration": 188,
+        "ClassDeclaration": 234,
+        "ImportDeclaration": 1,
+        "type-arguments": 15,
+        "parameter-pattern": 14,
+        "ExpressionWithTypeArguments": 5,
+        "node-exit-70:adamic: panic: missing variable declaration": 1,
+        "assignment-pattern": 16,
+        "AsExpression": 14,
+        "TypeAssertionExpression": 19,
+        "ForOfStatement": 2,
+        "SatisfiesExpression": 1,
+        "ClassExpression": 5,
+        "variable-types": 74,
+        "variable-pattern": 9,
+        "NamespaceExportDeclaration": 1,
+        "ExportAssignment": 37,
+        "ImportEqualsDeclaration": 21,
+        "ForStatement": 3,
+        "MissingDeclaration": 2,
+        "node-exit-70:adamic: panic: JSX expected name at 10 in packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/jsx-opening-element/input.tsx": 1,
+        "IfStatement": 3,
+        "tag-type-arguments": 3,
+        "TryStatement": 1,
+        "JsxSelfClosingElement": 1,
+        "ImportKeyword": 1,
+        "JsxElement": 1,
+        "FunctionExpression": 5,
+        "input-not-utf8": 15
+      },
+      "byte_identical": 140,
+      "output_differences": [
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-await-using-declaration-with-initializer/input.ts",
+          "sha256": "407a62eb6d1a93d2026a1cad462baf000850851167645921f703d039fddcb6c6",
+          "outcome": "accepted",
+          "answer": "declare;\nawait using basic = null;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-await-using-declaration/input.ts",
+          "sha256": "056197f8dc5fdc4af63189726ef3cf75b216cf7d9efb84afefb5a1030693d2dd",
+          "outcome": "accepted",
+          "answer": "declare;\nawait using basic;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-using-declaration-with-initializer/input.ts",
+          "sha256": "7e01b8cdef165c212c142b0ca2916453d2b02814c20d66d4720b02859262fba1",
+          "outcome": "accepted",
+          "answer": "declare;\nusing basic = null;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-using-declaration/input.ts",
+          "sha256": "90925ae070440ccda7adb369da4bed4182e531adf2fcbb8a5d886dac7f231033",
+          "outcome": "accepted",
+          "answer": "declare;\nusing basic;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/function/empty-type-parameters/input.ts",
+          "sha256": "8cf7293c5bc69e9ac6e8bb8f6081459c870b5036f4fa38af729c6ff73f652346",
+          "outcome": "accepted",
+          "answer": "function foo() {}\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/call-expression/input.ts",
+          "sha256": "4191fad6df84fcf69ac5ce811c44e8022de8b398e66cd2379285679ab39d2d18",
+          "outcome": "accepted",
+          "answer": "f << T > v;\nT;\nvoid  > ;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/new-expression/input.ts",
+          "sha256": "c9dcb373330c810406e536daae908e30c942ee66871ea1418c3a0179fdbb715b",
+          "outcome": "accepted",
+          "answer": "new f() << T > v;\nT;\nvoid  > ;\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments/empty-function/input.ts",
+          "sha256": "f6b5ca85a7626db0b86984a899a2d74aab2c75392095018d19992d993d59419a",
+          "outcome": "accepted",
+          "answer": "foo();\n"
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments/empty-new/input.ts",
+          "sha256": "681a2a45d6b3cbfb6f5206d9422044b5326686f643f4c6bf6f6535696e9167eb",
+          "outcome": "accepted",
+          "answer": "new A();\n"
+        }
+      ],
+      "acceptance_conflicts": [
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/placeholders/typescript/export-namespace/input.ts",
+          "sha256": "1d85e8c7451e8f54d55f4212f502fc8df11df2fcc3909de8b69c7562c91bebf7",
+          "outcome": "accepted",
+          "answer": "(((namespace % ) % foo) % ) % {};\n",
+          "go_error": "parse error at 0: Declaration or statement expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/declare/invalid-definite-pattern-assignment-using/input.ts",
+          "sha256": "bfa1d9b4f8957b7bb8901ebd760d0197c53765bb0d2bef56c75063a0f659b4c3",
+          "outcome": "accepted",
+          "answer": "{\n    declare;\n    using;\n    {\n    }\n    !;\n    {\n    }\n}\n",
+          "go_error": "parse error at 20: ',' expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/exponentiation/await-non-null-before-exponential/input.ts",
+          "sha256": "0e16d147d831e497103e406ada4af9d7f638cba41c46b85b8a3069a2d6348914",
+          "outcome": "accepted",
+          "answer": "async (a) => (await a!) ** 6;\n",
+          "go_error": "parse error at 13: An unary expression with the 'await' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/exponentiation/unary-non-null-before-exponential/input.ts",
+          "sha256": "ba610f1bfe0d581a2a9fc413fec5fe9206d624a982ec92c09fc7037143c8336c",
+          "outcome": "accepted",
+          "answer": "(a) => (+a!) ** 6;\n",
+          "go_error": "parse error at 7: An unary expression with the '+' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/export/declare-invalid/input.ts",
+          "sha256": "c8a2756186273ba095a4a0e9885db1675b0f5d57bfd4e6dcd2ff75f9dbd1cb42",
+          "outcome": "accepted",
+          "answer": "declare;\nfoo;\n",
+          "go_error": "parse error at 0: Declaration or statement expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/interface/export-default/input.ts",
+          "sha256": "fd9cbe44fdf592e313c59043303497abb882e8848083c5fe85be871924ca4421",
+          "outcome": "accepted",
+          "answer": "interface;\n{\n}\n",
+          "go_error": "parse error at 25: Identifier expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/interface/invalid-abstract-interface/input.ts",
+          "sha256": "1156aee7501cfeef839fc9d31c0daa997ae8206fb81a81f1935b927d539ad0ba",
+          "outcome": "accepted",
+          "answer": "abstract;\ninterface;\nFoo;\n{\n}\n",
+          "go_error": "parse error at 0: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/interface/new-line-error/input.ts",
+          "sha256": "3ff6e54d7d711bdef30ba4cdf1adbdb30783972012fabcebb6a17d735a1c61f6",
+          "outcome": "accepted",
+          "answer": "interface;\nF;\n{\n}\n",
+          "go_error": "parse error at 10: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/invalid-declare-module-number/input.ts",
+          "sha256": "7ea922d2437155bce28c345fbe1e1770b18189a6ce3d855e46ef5709748bc6ca",
+          "outcome": "accepted",
+          "answer": "declare;\nmodule;\n0;\n{\n}\n",
+          "go_error": "parse error at 15: Namespace name cannot be '0'."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/invalid-declare-module-without-name/input.ts",
+          "sha256": "f266684d9b861274ce7bad6613c1387697d0d9d7423aa55085fd9f6dc657837b",
+          "outcome": "accepted",
+          "answer": "declare;\nmodule;\n{\n}\n",
+          "go_error": "parse error at 15: Namespace must be given a name."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/module-new-line-error/input.ts",
+          "sha256": "52436094513e0cddcef10b54797f0fc3c20e33ebf46a21dbe5be0bb56853ea3c",
+          "outcome": "accepted",
+          "answer": "module;\nFoo;\n{\n}\n",
+          "go_error": "parse error at 7: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/module-namespace/namespace-new-line-error/input.ts",
+          "sha256": "0fec3bcef7cefba03417fb2a87599f2823b6924af4fa86d3245a8f48cfaddc84",
+          "outcome": "accepted",
+          "answer": "namespace;\nFoo;\n{\n}\n",
+          "go_error": "parse error at 10: Unexpected keyword or identifier."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-alias/declare-new-line/input.ts",
+          "sha256": "60d2545aea8328a4c6b479060d2bc369a27386a626a3065e37369a711c069ffd",
+          "outcome": "accepted",
+          "answer": "type;\nT = number;\n",
+          "go_error": "parse error at 13: Line break not permitted here."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-arguments/call-optional-chain-invalid/input.ts",
+          "sha256": "dcb3bc29527d92f5a592e05df46e2ab8a32d4a085d613a6a908498f0decd40b0",
+          "outcome": "accepted",
+          "answer": "f?.[1];\n",
+          "go_error": "parse error at 3: Identifier expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-invalid-named-type-as-keyword/input.ts",
+          "sha256": "a1737c47d8d072661b1096a27d26b095277c90230f2e774c52b3c883c5bce873",
+          "outcome": "accepted",
+          "answer": "import { type as if } from 'mod';\n",
+          "go_error": "parse error at 17: Identifier expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-invalid-type-named-keywords/input.ts",
+          "sha256": "66a9843263767e23786fd928152e2ef8bfd8d50868640093ed61509db2b6e41c",
+          "outcome": "accepted",
+          "answer": "import { type if } from './mod.js';\n",
+          "go_error": "parse error at 14: Identifier expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-invalid-type-only-as-as-keyword/input.ts",
+          "sha256": "fb4fa97651054dfb2def30ea8ec2c1703e3ea556f6d993899e1835c15cc5bef2",
+          "outcome": "accepted",
+          "answer": "import { type as as if } from 'mod';\n",
+          "go_error": "parse error at 20: Identifier expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/type-only-import-export-specifiers/import-invalid-type-only-as-string/input.ts",
+          "sha256": "d42bdff31ed22ceef89dea2f4b4695b81825549a5a160b466c918170f3e9922d",
+          "outcome": "accepted",
+          "answer": "import { type foo as 'bar' } from 'mod';\n",
+          "go_error": "parse error at 21: Identifier expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/variable-declarator/invalid-definite-like-not-eq/input.ts",
+          "sha256": "1ed53edaaae84b03b3050130be2e9890675c56a93b9c09d8e61a436118f74460",
+          "outcome": "accepted",
+          "answer": "var w;\n != null;\n",
+          "go_error": "parse error at 5: ',' expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-parser/test/fixtures/typescript/variable-declarator/invalid-definite-pattern-assignment-using/input.ts",
+          "sha256": "9741f5229114340e1261ff318bbbd65c463a2c1a0f6224aa0a21cbc73e9d16dc",
+          "outcome": "accepted",
+          "answer": "{\n    using;\n    {\n    }\n    !;\n    {\n    }\n}\n",
+          "go_error": "parse error at 12: ',' expected."
+        },
+        {
+          "repo": "babel/babel",
+          "pin": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+          "path": "packages/babel-plugin-transform-spread/test/fixtures/call-context/flow-type-cast/input.ts",
+          "sha256": "c803926dd3a658944086aaa1ebb68df6d9067527012197e103c6c4722d897891",
+          "outcome": "accepted",
+          "answer": "a.b;\nany;\n(...args) => ;\n",
+          "go_error": "parse error at 4: ')' expected."
+        }
+      ],
+      "changes_from_previous": []
+    }
+  },
+  "port_source_sha256": {
+    "stage1/cohere/tsprinter/doc.ts": "dcdf639b12eef39aee0accba981e9fe66209d2df1f88ab7b75cc66a7d7f92b48",
+    "stage1/cohere/tsprinter/docMain.ts": "f7b07d016ccea4c2db061e3b43f69080b04cf9de5a1268db49eb870028ddaf1b",
+    "stage1/cohere/tsprinter/expressions.ts": "e1608b9a042f825ddfc7ee2b685402ebf96da3c41462285d423f2fca55322c83",
+    "stage1/cohere/tsprinter/files.ts": "a8b418e6da927f5a74a5760cdd3cd9d284cc7a676380e617664ed962abd4afe7",
+    "stage1/cohere/tsprinter/keys.ts": "ccbdf1c90497b66a553eada0472418eb88b8028cde309647561d78a97b401bd2",
+    "stage1/cohere/tsprinter/literals.ts": "298d8459c9a38c235ec9d9139c9a4cfb7bcaf0600d7f8f7b26f359034c99a34d",
+    "stage1/cohere/tsprinter/main.ts": "c8b1124bcbcd74a72292cbabc6a7012e30ff579d94fe7c67ca9553f5031d4148",
+    "stage1/cohere/tsprinter/parentheses.ts": "66868b0e1ca7e2a2c54f439d0c36c672aaf07c7a4512d463102216d4da958623",
+    "stage1/cohere/tsprinter/scoutMain.ts": "603f58de9031d44f1ffe86a922912faeb8eddb627f943593461ff3b04f4ccf43",
+    "stage1/cohere/tsprinter/statementsMain.ts": "ee9194158a51c0b5e11f775a4bc60fe72a966b0331e76485d3d9f6a3e48e32de",
+    "stage1/cohere/tsprinter/syntax.ts": "9298e4ce0718a9451fe9c591e8366ec1562168cd65cf437217989ea784ea2747",
+    "stage1/cohere/tsprinter/transport.ts": "928f1f9c102a71bf11bcb8507c30c0392a739d9223c9f5338e593690fef7b6e1",
+    "stage1/cohere/tsprinter/width.ts": "1df62a41aff3e7b5e8c04be8b5173ccc81808b10166f49d5c7ba7b6ed14d8df5",
+    "stage1/cohere/tsprinter/widthTables.ts": "bdb4ad9379bf7af903643edbc5346ae7cdc9d81872ccc8bddc1215b763ca5bd7"
+  }
+}

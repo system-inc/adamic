@@ -1,10 +1,10 @@
-# Step 26: imports lead the unmasked formatter census; side-effect imports are the independent first piece
+# Step 26 (#35e525f): import clauses and attributes ported; both expression regressions closed
 
-109,305 public files contain unported import declarations (557,705 AST sites).
-The first raw comment refusal affects 94,437 files; it hides imports rather than ranking ahead of them by AST presence.
-Across 152,660 pinned public TS/TSX files, whole-file byte identity rises from 73 to 114 with side-effect imports.
-69 fixtures include 30 complete pinned public sources and exact Go/TypeScript test excerpts; four output/refusal mutants qualify.
-The scoped piece is green; the full package has existing expression/parser failures, so the requested fully green package is blocked.
+Default, namespace, named and type clauses, plus `with` attributes, use the existing indexed parser and document engine.
+The source-context merge closes both reported object-method regressions, with their shortest retained inputs checked independently.
+Whole-file Go identity over the same 152,660 pinned files rises 114 → 116 → 117 → 124 → 140; attributes retain 140.
+61 new import fixtures match Go and Prettier; seven new import mutants, four retained import mutants and a context mutant require normal completion.
+The full package is green with zero skips; nine prior byte differences remain and four invalid Babel imports raise acceptance conflicts 17 → 21.
 
 ## Pins, input contract and reproducibility
 
@@ -12,7 +12,7 @@ Base: origin/area/stage1-lint `9156bf5c579a44d687c9955d13e44f9ad8bbb6f8` (main `
 Go cohere: `7945d102a6c18dd36adf9114a758ce646e8b2359`; its TypeScript submodule: `d92d9bfee114c80be2c375d72edae966176e3a4f`.
 npm Prettier 3.9.6 is independent. TypeScript 6.0.3 source pin: `050880ce59e30b356b686bd3144efe24f875ebc8`.
 
-The quiet hundred lives on Kirk's Mac. This audit uses **all 23 public pins supplied by Kirk**, not the private remainder: 127,288 `.ts` and 25,372 `.tsx` files.
+The quiet hundred lives on Kirk's Mac. The corpus for this brief is **all 23 public pins supplied by Kirk**: 127,288 `.ts` and 25,372 `.tsx` files.
 Each repository was shallow-fetched at its SHA into scratch, without installing or running its code. Scratch materialization was made sparse to TS/TSX; tracked paths and HEAD pins were checked, and every measured source has a SHA-256.
 The npm oracle installation and the Adamic/Go test runners are separate from corpus code.
 TypeScript compiler tests, malformed Babel fixtures and declarations remain in the denominator. Fifteen non-UTF-8 files and two isolated Node panics are recorded, not skipped.
@@ -31,47 +31,61 @@ Batch paths are unique to their report. Every process failure was replayed on it
 
 ## Whole-file evidence
 
-Go accepts 150,363 files and refuses 2,297. Before the piece, Node accepts 99: 73 match Go bytes, nine differ, and 17 are accepted despite Go refusing.
-After the piece, Node accepts 140: 114 match Go bytes, the same nine differ, and the same 17 conflict with Go acceptance.
-All 41 newly accepted whole files match Go, without an exemption. The existing 26 disagreements are preserved; this is not 140 byte-identical files.
-The primary refusal count remains 94,437 comment-marker hits and 52,602 source-trivia refusals.
+Go accepts 150,363 files and refuses 2,297. The original scout accepted 99 on Node: 73 matched Go bytes, nine differed, and 17 conflicted with Go acceptance. Side-effect imports raised identity to 114 (140 accepted). The method-shorthand merge leaves those whole-file counts unchanged.
+
+| Cumulative import capability | Files accepted by Node | Whole files identical to Go | Output differences | Go refuses, Node accepts |
+| --- | ---: | ---: | ---: | ---: |
+| Side effects + merged expression context | 140 | 114 | 9 | 17 |
+| Default | 142 | 116 | 9 | 17 |
+| Namespace | 143 | 117 | 9 | 17 |
+| Named | 151 | 124 | 9 | 18 |
+| Type clauses and specifiers | 170 | 140 | 9 | 21 |
+| Import attributes | 170 | 140 | 9 | 21 |
+
+The default/namespace/named rows are explicit capability ablations of the final printer on source Node (`scout/stages.mjs`), not claims of separate implementation commits. Each runs all 152,660 files. The type row is the actual pre-attributes census; the attributes row is the actual final census. `scout/compare-stages.py` checks identical path sets and source SHA-256 for every row before comparing output hashes to Go. `scout/import-stages.json` retains every reason count, difference, conflict and change between rows; `side-effect.json.gz` and final `after.json.gz` retain the complete outcomes. All 26 newly Go-identical whole files are present, without exemptions.
+
+Attributes add no accepted whole file in this corpus: their containing files meet another existing refusal. The 61-fixture gate independently covers their output, including exact public and TypeScript test excerpts. A green fixture is never counted as a green complete source file.
+
+The raw-marker and source-trivia gates still account for 94,437 and 52,602 files. Fifteen non-UTF-8 files and both Node panics stay in the denominator. The final total of 170 accepted files is **140 identical + 9 differing + 21 acceptance conflicts**, not 170 identical.
 
 First refusal is a disjoint execution classification; AST presence below is overlapping and unmasks constructs behind earlier gates. Neither is a percentage of implemented TypeScript.
 
 ### Refusals by exact reason
 
-| Reason | Before files | After files |
+| Reason | Original scout before | Current after clauses/attributes |
 | --- | ---: | ---: |
 | `comment-attachment` | 94437 | 94437 |
 | `source-trivia` | 52602 | 52602 |
-| `variable-modifiers` | 1780 | 1780 |
-| `ExportDeclaration` | 1457 | 1457 |
-| `TypeAliasDeclaration` | 839 | 839 |
-| `function-types` | 265 | 265 |
-| `EnumDeclaration` | 238 | 238 |
-| `ClassDeclaration` | 210 | 210 |
-| `ImportDeclaration` | 195 | 154 |
-| `InterfaceDeclaration` | 185 | 185 |
+| `variable-modifiers` | 1780 | 1833 |
+| `ExportDeclaration` | 1457 | 1467 |
+| `TypeAliasDeclaration` | 839 | 845 |
+| `function-types` | 265 | 270 |
+| `EnumDeclaration` | 238 | 240 |
+| `ClassDeclaration` | 210 | 234 |
+| `InterfaceDeclaration` | 185 | 188 |
+| `accepted` | 99 | 170 |
 | `ModuleDeclaration` | 103 | 103 |
-| `accepted` | 99 | 140 |
-| `variable-types` | 67 | 67 |
-| `ExportAssignment` | 32 | 32 |
+| `variable-types` | 67 | 74 |
+| `ExportAssignment` | 32 | 37 |
 | `ImportEqualsDeclaration` | 21 | 21 |
 | `TypeAssertionExpression` | 19 | 19 |
 | `assignment-pattern` | 16 | 16 |
 | `input-not-utf8` | 15 | 15 |
 | `type-arguments` | 15 | 15 |
 | `AsExpression` | 14 | 14 |
-| `parameter-pattern` | 12 | 12 |
+| `parameter-pattern` | 12 | 14 |
 | `variable-pattern` | 9 | 9 |
 | `ClassExpression` | 5 | 5 |
 | `ExpressionWithTypeArguments` | 5 | 5 |
+| `FunctionExpression` | 0 | 5 |
 | `ForStatement` | 3 | 3 |
 | `IfStatement` | 3 | 3 |
 | `tag-type-arguments` | 3 | 3 |
 | `ForOfStatement` | 2 | 2 |
 | `MissingDeclaration` | 2 | 2 |
+| `ImportDeclaration` | 195 | 1 |
 | `ImportKeyword` | 1 | 1 |
+| `JsxElement` | 0 | 1 |
 | `JsxSelfClosingElement` | 1 | 1 |
 | `NamespaceExportDeclaration` | 1 | 1 |
 | `SatisfiesExpression` | 1 | 1 |
@@ -79,11 +93,12 @@ First refusal is a disjoint execution classification; AST presence below is over
 | `node-exit-70:adamic: panic: JSX expected name at 10 in packages/babel-parser/test/fixtures/typescript/type-arguments-bit-shift-left-like/jsx-opening-element/input.tsx` | 1 | 1 |
 | `node-exit-70:adamic: panic: missing variable declaration` | 1 | 1 |
 
-### Unported AST constructs ranked by files affected
+### Original unported AST constructs ranked by files affected
 
 | Construct | Files | Sites |
 | --- | ---: | ---: |
 | ImportDeclaration | 109305 | 557705 |
+| TypeReference | 95267 | 1331478 |
 | IfStatement | 41259 | 315114 |
 | ClassDeclaration | 31134 | 57410 |
 | AsExpression | 27548 | 169742 |
@@ -108,7 +123,7 @@ First refusal is a disjoint execution classification; AST presence below is over
 | DoStatement | 508 | 873 |
 | LabeledStatement | 309 | 1156 |
 
-After this piece imports remain unported beyond bare side-effect declarations. `TypeReference` itself occurs in 95,267 files; type printing is also absent.
+This table records the initial import ranking that selected this step. Import clauses and attributes are now ported; source comments/trivia still mask them. `TypeReference` itself occurs in 95,267 files; type printing is also absent.
 All original AST-kind presence/site counts are retained in summary.json, not just this declaration/statement/JSX shortlist.
 
 ## Entire Go formatter surface
@@ -155,7 +170,7 @@ Port physical TypeScript source counts (excludes testdata/gaps/scout; not semant
 
 | Slice | Files | Lines |
 | --- | ---: | ---: |
-| stage1/cohere/tsprinter | 14 | 5437 |
+| stage1/cohere/tsprinter | 14 | 5601 |
 | stage1/cohere/estree | 34 | 9027 |
 | stage1/cohere/markdownblocks | 49 | 10322 |
 | stage1/cohere/markdowninline | 3 | 327 |
@@ -211,7 +226,7 @@ These are partial family mappings, never whole-file coverage credits. Literal, o
 | `internal/format/javascript/print_member.go:1` | 78 | Partial: tsprinter expressions/syntax/parentheses |
 | `internal/format/javascript/print_member_chain.go:1` | 473 | Partial: tsprinter expressions/syntax/parentheses |
 | `internal/format/javascript/print_miscellaneous.go:1` | 158 | Partial: tsprinter expressions/syntax/parentheses |
-| `internal/format/javascript/print_module.go:1` | 378 | Side-effect imports only (this piece); clauses/specifiers/attributes/exports remain unported |
+| `internal/format/javascript/print_module.go:1` | 378 | Side-effect/default/namespace/named/type imports and with attributes; exports and comment/trivia composition remain unported |
 | `internal/format/javascript/print_module_declaration.go:1` | 27 | Unported |
 | `internal/format/javascript/print_object.go:1` | 184 | Partial: tsprinter expressions/syntax/parentheses |
 | `internal/format/javascript/print_statements.go:1` | 278 | Partial: tsprinter expressions/syntax/parentheses |
@@ -246,36 +261,36 @@ Other-language printer entry/functions and their exact source lines are enumerat
 Internal option declarations are retained verbatim with file:line in surface.json, including printing.Options, doc.Options, parser/schema/compose/group options. Parser/filepath/parentParser are derived adapter state rather than config fields. `printing/printer.go:103` supports embeddedLanguageFormatting auto/off; standalone Go routes set auto while the Markdown port's contract is off. Markdown `format.go:59` fixes proseWrap preserve; test-only helpers cover always/never. These do not appear in the ten-field resolver.
 Go's config walk, house-tier enforcement, stale Prettier-config refusal, ignore/ignorePatterns and caching live in formatoptions/resolve.go and formatfiles/enumerate.go. There is no corresponding composed port option resolver.
 
-## First independent piece and design
+## Original side-effect piece and design (bb8eb916)
 
 `cohere/internal/format/javascript/print_module.go:19` prints keyword, phase/kind, specifiers, source, attributes and optional semicolon; :151 supplies the side-effect source's space. `print_literal.go:13` and utility_text.go select/canonicalize quotes.
-`stage1/cohere/tsprinter/syntax.ts:481` now admits an ImportDeclaration only when it has exactly one StringLiteral child, then applies the existing literal refusal check.
-`stage1/cohere/tsprinter/expressions.ts:631` emits `import `, the existing non-directive string printer, and `;` through the existing indexed document arena. SourceFile already ends directive mode when it sees a non-expression statement.
-No token text is passed through as a file result. Clauses, phases, import attributes and comments remain explicit refusals.
+At `bb8eb916`, `stage1/cohere/tsprinter/syntax.ts:481` admitted an ImportDeclaration only when it has exactly one StringLiteral child, then applied the existing literal refusal check.
+At that commit, `stage1/cohere/tsprinter/expressions.ts:631` emitted `import `, the existing non-directive string printer, and `;` through the existing indexed document arena. SourceFile already ends directive mode when it sees a non-expression statement.
+At that first increment, clauses, phases, attributes and comments were explicit refusals. The current clause/attribute design below replaces the first three boundaries.
 
 The source contains no new side-effect import execution: the formatted user import is data. This does not add side-effect module loading to Adamic.
 This uses existing valid TypeScript switch cases, checked numeric child indexes, readonly settings and existing literal/doc objects. It adds no syntax, reference ownership cycle, GC dependency, parser adaptation or language-gap workaround.
 The optional filename parameter preserves `.tsx` mode without editing the parser.
-A general import slice should next port import clauses/specifiers (default, namespace, named/type), phase/type flags, attributes, width-dependent groups and blank-line/comment decisions from print_module.go, using numeric node links and the existing doc algebra.
+The follow-up now ports clauses/specifiers, phase/type flags, attributes and width-dependent groups using the same numeric node links and doc algebra. Blank-line/comment decisions remain for the next slice.
 Every newly encountered lowering/ownership question must become an open @system_adamic question rather than a source rewrite around a language gap.
 
 ## Hard boundaries and shortest inputs
 
 `import 'x'` now matches Go and npm byte-for-byte: `import 'x';\n`.
-`import {x} from 'x'`, `import type {T} from 'x'`, and `import 'x' with {type:'json'}` remain `ImportDeclaration` refusals: specifiers/types/attributes are unported.
+`import {x} from 'x'`, `import type {T} from 'x'`, and `import 'x' with {type:'json'}` now match Go and npm. Legacy `assert` remains `ImportDeclaration`: the pinned Go parser rejects it (`cohere/TypeScript/tsc/internal/parser/parser.go:2573`), rather than formatting it.
 `import 'http://x'` remains `comment-attachment` because files.ts tests raw markers even inside literals.
 `// x` is still refused. A separate investigation proved comment-only files are independent, but that piece was discarded because the complete AST census ranked imports first.
 `// x\t\u00a0` demonstrates a real upstream difference: Go retains the trailing tab/NBSP, npm removes them. Go `estree/postprocess.go:200` returns after testing the last UTF-8 continuation byte, before considering the multibyte whitespace. No exception was added to accepted imports.
 `export default abstract;` is shortened from Babel's class/abstract-false-positive fixture. The shared parser collects export/default modifiers (`statements.ts:1210`) then falls through to an expression and loses them (:1295). Go retains the export. A broader leading-comment/body wrapper exposed this, so body composition was stopped.
-`({[z](){return z;}})` and `({resolve(){return {foo:100};}})` return `expression-file` on unchanged main.ts; Go formats them. The full package's two concrete corpus failures are 103_circularReferenceInReturnType2 and 193_capturedParametersInInitializers1. Resolving their parsing needs investigation in shared parser expressions/object-method lookahead; this scout does not edit it or add an accepted-corpus ignore.
+Neither reported regression remains after merging `06c6e7cbf46e6d53d575c292e2a11733e36547c4`. Their shortest retained inputs are `({resolve(){return {foo:100};}})` (103_circularReferenceInReturnType2.ts:1078) and `({[z](){return z;}})` (193_capturedParametersInInitializers1.ts:857). Both now print Go's exact bytes on Node, native and emitted JavaScript. The responsible entry point is `expressions.ts:1882`; the fix opens the source list at :1894 and closes it at :1896. The old entry point called expression() with no source context, letting speculative arrow recovery consume the method body. `TestScoutSourceContext` removes that context as a mutant; it must compile and exit normally before the differing refusal counts as a kill. The full broad expression and focused tsc gates pass after the merge; no shared parser edit was needed.
 `scout/parser-blockers.json` retains live Go/npm bytes and the Node expression-driver outcomes for these shortest blockers and the NBSP input.
 The two isolated public Node panics and all existing malformed-input acceptance disagreements are retained in summary.json. They are not converted to NotYet or hidden behind a selector.
 
-## Open questions and stop boundary
+## Ruling and stop boundary
 
-No language ruling is needed for side-effect imports.
-For @system_adamic before generalized printer-hook composition: what representation will preserve a concrete class method's receiver/prototype origin through a readonly function-property interface? The existing `gaps/classInterfaceMethod.ts.txt:1` is the shortest retained package proof, Node prints 17 and stage 0 records NotYet. This is open; no callback wrapper/workaround is introduced here.
-Parser-lane handoff (implementation, not a new language decision): preserve export/default modifiers on the fallback at `stage1/typescript/parser/statements.ts:1295`, and investigate expression/object-method lookahead for the two shortest method inputs above. Those shared files must be owned and changed by that lane. This scout stops before those changes.
+No language ruling is needed for these import clauses or attributes. They introduce no Adamic syntax, runtime/compiler change or ownership workaround.
+@system_adamic resolved the method-origin question under the method-value ruling **#bw3xg7c**: a method passed through a readonly callback interface is the same method value, never a copy, so its prototype origin is preserved. A method that does not read `this` is a plain value. A method that reads `this` keeps its receiver only when bound. An unbound `this`-reading method is refused in `.a`; in `.ts` it follows Node, including TypeError. This is the supplied language ruling, not a decision by this scout. The existing `gaps/classInterfaceMethod.ts.txt:1` remains the shortest implementation proof (Node prints 17; stage 0 currently records NotYet). Compiler implementation is a separate lane; no compiler/runtime change or wrapper is introduced here. **No open language questions remain for this import piece.**
+Parser-lane handoff (implementation, not a new language decision): preserve export/default modifiers on the fallback at `stage1/typescript/parser/statements.ts:1295`. The method regressions are closed by the authorized printer-only merge. Import-local validation remains a parser-lane handoff at `statements.ts:322`, :332, :342 and :348: propertyName() accepts reserved words and string literals in the local binding slot, while Go distinguishes imported names from local identifiers (`cohere/TypeScript/tsc/internal/parser/parser.go:2482`, :2547). Those shared files must be owned and changed by that lane. This scout stops before those changes.
 
 ## Fixture list and validation
 
@@ -314,10 +329,10 @@ All 69 inputs, exact Go/npm bytes, before/after Node outcomes and source provena
 | import-boundary-4 | Go print_module.go:19 and print_literal.go:13 | byte-identical accepted |
 | import-boundary-5 | Go print_module.go:19 and print_literal.go:13 | byte-identical accepted |
 | import-boundary-6 | Go print_module.go:19 and print_literal.go:13 | byte-identical accepted |
-| import-boundary-7 | Go print_module.go:19 and print_literal.go:13 | ImportDeclaration |
-| import-boundary-8 | Go print_module.go:19 and print_literal.go:13 | ImportDeclaration |
-| import-boundary-9 | Go print_module.go:19 and print_literal.go:13 | ImportDeclaration |
-| import-boundary-10 | Go print_module.go:19 and print_literal.go:13 | ImportDeclaration |
+| import-boundary-7 | Go print_module.go:19 and print_literal.go:13 | byte-identical accepted |
+| import-boundary-8 | Go print_module.go:19 and print_literal.go:13 | byte-identical accepted |
+| import-boundary-9 | Go print_module.go:19 and print_literal.go:13 | byte-identical accepted |
+| import-boundary-10 | Go print_module.go:19 and print_literal.go:13 | byte-identical accepted |
 | import-boundary-11 | Go print_module.go:19 and print_literal.go:13 | comment-attachment |
 | import-boundary-12 | Go print_module.go:19 and print_literal.go:13 | source-trivia |
 | real-source-0 | actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/desktop-client/src/globals.ts | byte-identical accepted |
@@ -351,9 +366,9 @@ All 69 inputs, exact Go/npm bytes, before/after Node outcomes and source provena
 | real-source-28 | prisma/prisma@c882b03377e70c090d7bbe05cf85bf04fe9e33b2:packages/3-targets/6-adapters/postgres-codec-testkit/test/setup-temporal.ts | byte-identical accepted |
 | real-source-29 | prisma/prisma@c882b03377e70c090d7bbe05cf85bf04fe9e33b2:packages/3-targets/6-adapters/postgres/test/setup-temporal.ts | byte-identical accepted |
 | typescript-corpus-imports | microsoft/TypeScript@050880ce59e30b356b686bd3144efe24f875ebc8:tests/cases/compiler/sideEffectImports1.ts:5 | byte-identical accepted |
-| go-cohere-own-module-test | cohere@7945d102:internal/format/javascript/format_test.go:71 exact source prefix | ImportDeclaration |
+| go-cohere-own-module-test | cohere@7945d102:internal/format/javascript/format_test.go:71 exact source prefix | ExportDeclaration |
 
-Four mutants change import keyword, its separating space, the semicolon, or the attribute guard. Every mutant must compile, exit zero with empty stderr on Node and sanitized native, then fail exact bytes/refusal output; build failures do not kill mutants.
+Four retained mutants change the import keyword, separating space, semicolon or attribute document emission. Every mutant must compile, exit zero with empty stderr on Node and sanitized native, then fail exact bytes/refusal output; build failures do not kill mutants.
 Tests compare live Go, fresh pinned npm output, source Node, sanitized native, emitted JavaScript and successful-run LeakSanitizer. New top-level Go tests call t.Parallel. All externally gated inputs are configured, with no scout skips.
 
 ```sh
@@ -364,9 +379,98 @@ go vet ./stage1/cohere/tsprinter
 gofmt -l stage1/cohere/tsprinter
 ```
 
-The first scoped run (67 fixtures) passed all oracles and all four mutants. The final run with 69 fixtures also passed: 40 accepted cases, 30 complete public sources, both exact corpus excerpts and all four mutants. The final package finished with zero skips: only TestExpressionsAgainstGoAndPrettier and TestTSCCorpusAgreement/expressions failed on the existing two expression fragments; the final 69-fixture scout test and all its mutants passed. Release build, vet and gofmt pass. Results are recorded in scout/validation.txt and scout/evidence/package.log. The full package cannot be claimed green while the unchanged expression/parser regressions remain; this is an explicit unmet requirement, not an approval request.
+The earlier side-effect-only gate had 69 fixtures / 40 accepted and a red package. Current fixtures retain all 69 sources; 44 now print exact bytes and the remaining reasons are refreshed. The new 61-fixture import gate passes Go/npm/Node/sanitized native/backend and leaks; every fixture is accepted and matches both printers. Its seven mutants and the four retained import mutants finish normally and die on byte mismatches. The full current package passes with zero skips, including both original regression gates, all 12 scoped successful-run mutants and all existing mutants. Its live broad oracles cover 171,146 expression fragments and 58,398 statement/program fragments. Native release build, vet, gofmt and git diff --check are clean. The final gate uses `-parallel=5`; all externally gated inputs are configured. Logs preserve substantive output and omit indentation on otherwise blank lines; they are retained in `scout/evidence/followup-package.log`, with focused merge/context/body-mutant and native build/vet/gofmt logs alongside it.
 No shared lint harness, parser, bridge, runtime, compiler or submodule source file is changed. The Go oracle drivers are overlays from this package.
+
+## Import design and Go evidence
+
+`cohere/internal/format/javascript/print_module.go:19` composes keyword, phase/kind, specifiers, source, attributes and semicolon. :166 separates default/namespace docs from grouped named docs, preserves source order, and allows a named group to break only with multiple named items or a standalone binding. :151 emits `from`; :338 preserves aliases, including explicit `x as x`. The adapter distinguishes clause `type` and per-specifier `type` at `cohere/internal/format/estree/convert.go:2045`; defer is an existing parser phase and follows the same composition. The port counterparts are `expressions.ts:594` (specifier), :608 (clause) and :666 (declaration), guarded by `syntax.ts:473`. The parser's existing ImportClause children and semantic phase are consumed directly (`stage1/typescript/parser/statements.ts:409`, :488); no type-expression printer is required for a type-only import's identifier names.
+
+Attributes follow Go `print_module.go:317`, `print_object.go:36` and `print_assignment.go:139`: ordinary object spacing, source-driven breaks, trailing commas only when broken, and values staying with keys. A sole string-valued `type` attribute has its lines removed even if the source brace is multiline or its value exceeds width (:289). `expressions.ts:639` implements this with the existing document arena and property-key/string printers. `syntax.ts:494` refuses other attribute shapes and legacy assertions. A single long named specifier stays flat; multiple named specifiers or a default-plus-named group may wrap. Quoted imported names remain quoted. Attribute string keys reuse the established safe unquoting rule. Nothing sorts imports or passes raw source through.
+
+All new state is local arrays of numeric document links. The document arena owns docs and the parser owns indexed nodes; no ownership cycle, callback/interface dispatch, new syntax or collector is introduced. Native lowering, sanitizer and leak checks validate this composition. The supplied #bw3xg7c method-value ruling resolves the prior method-origin interface question; this implementation does not use that representation.
+
+## Four new malformed-import acceptance conflicts
+
+These are complete pinned Babel negative tests, not accepted parity fixtures. Go emits `Identifier expected.`; Node currently prints them. They stay in `import-stages.json` and final `summary.json`, with no exception or suppressing selector. The parser lane must own the shared repair; this scout stops before changing it.
+
+| Shortest retained input | Shared port site | Go parser distinction |
+| --- | --- | --- |
+| `import { type as if } from "mod";` | statements.ts:332 | local reserved word, parser.go:2547 |
+| `import { type if } from "./mod.js";` | statements.ts:342 | local reserved word, parser.go:2547 |
+| `import { type as as if } from "mod";` | statements.ts:322 | local reserved word, parser.go:2547 |
+| `import { type foo as "bar" } from "mod";` | statements.ts:348 | string local binding, parser.go:2474 |
+
+## New fixture list
+
+Every source, exact Go/npm byte pair and provenance is retained in `scout/import-fixtures.json`. Public/TypeScript entries are exact lines at their pins; the Go entry is its exact two-import prefix. Layout boundaries are reductions, labelled separately.
+
+| Fixture | Source provenance |
+| --- | --- |
+| default-0 | shortest reduction / Go print_module.go:19,166,317 |
+| default-1 | shortest reduction / Go print_module.go:19,166,317 |
+| default-2 | shortest reduction / Go print_module.go:19,166,317 |
+| default-3 | shortest reduction / Go print_module.go:19,166,317 |
+| namespace-0 | shortest reduction / Go print_module.go:19,166,317 |
+| namespace-1 | shortest reduction / Go print_module.go:19,166,317 |
+| namespace-2 | shortest reduction / Go print_module.go:19,166,317 |
+| named-0 | shortest reduction / Go print_module.go:19,166,317 |
+| named-1 | shortest reduction / Go print_module.go:19,166,317 |
+| named-2 | shortest reduction / Go print_module.go:19,166,317 |
+| named-3 | shortest reduction / Go print_module.go:19,166,317 |
+| named-4 | shortest reduction / Go print_module.go:19,166,317 |
+| named-5 | shortest reduction / Go print_module.go:19,166,317 |
+| named-6 | shortest reduction / Go print_module.go:19,166,317 |
+| named-7 | shortest reduction / Go print_module.go:19,166,317 |
+| type-0 | shortest reduction / Go print_module.go:19,166,317 |
+| type-1 | shortest reduction / Go print_module.go:19,166,317 |
+| type-2 | shortest reduction / Go print_module.go:19,166,317 |
+| type-3 | shortest reduction / Go print_module.go:19,166,317 |
+| type-4 | shortest reduction / Go print_module.go:19,166,317 |
+| type-5 | shortest reduction / Go print_module.go:19,166,317 |
+| attributes-0 | shortest reduction / Go print_module.go:19,166,317 |
+| attributes-1 | shortest reduction / Go print_module.go:19,166,317 |
+| go-cohere-own-module-import-prefix | cohere@7945d102a6c18dd36adf9114a758ce646e8b2359:internal/format/javascript/format_test.go:71 exact first two import lines |
+| attributes-3 | shortest reduction / Go print_module.go:19,166,317 |
+| attributes-4 | shortest reduction / Go print_module.go:19,166,317 |
+| attributes-5 | shortest reduction / Go print_module.go:19,166,317 |
+| attributes-6 | shortest reduction / Go print_module.go:19,166,317 |
+| attributes-7 | shortest reduction / Go print_module.go:19,166,317 |
+| defer-0 | shortest reduction / Go print_module.go:19,166,317 |
+| default-width-30 | shortest reduction / Go print_module.go:19,166,317 |
+| namespace-width-31 | shortest reduction / Go print_module.go:19,166,317 |
+| named-width-32 | shortest reduction / Go print_module.go:19,166,317 |
+| named-width-33 | shortest reduction / Go print_module.go:19,166,317 |
+| named-width-34 | shortest reduction / Go print_module.go:19,166,317 |
+| type-width-35 | shortest reduction / Go print_module.go:19,166,317 |
+| attributes-width-36 | shortest reduction / Go print_module.go:19,166,317 |
+| attributes-width-37 | shortest reduction / Go print_module.go:19,166,317 |
+| public-default-0 | actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:bin/__tests__/validate-publish-imports.test.ts:1 |
+| public-default-1 | actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/api/index.browser.ts:5 |
+| public-default-2 | actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/ci-actions/bin/check-migrations.ts:19 |
+| public-namespace-0 | actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/api/browser-worker.ts:8 |
+| public-namespace-1 | actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/api/e2e/consumer/main.ts:5 |
+| public-namespace-2 | actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/api/methods.test.ts:1 |
+| public-named-0 | actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:bin/__tests__/validate-publish-imports.test.ts:5 |
+| public-named-1 | actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/api/browser-worker.ts:9 |
+| public-named-2 | actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/api/e2e/browser.test.ts:1 |
+| public-type-0 | actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/api/app/query.ts:5 |
+| public-type-1 | actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/api/browser-worker.ts:11 |
+| public-type-2 | actualbudget/actual@9732a4463aac2909ac2aad1627085e0eb7a207b5:packages/api/index.browser.ts:3 |
+| public-attributes-0 | angular/angular@c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5:adev/src/app/routing/navigation-entries/index.ts:13 |
+| public-attributes-1 | babel/babel@f67453d563918a1ea4a1dcb1d7af01d4a528d99b:babel.config.ts:14 |
+| public-attributes-2 | babel/babel@f67453d563918a1ea4a1dcb1d7af01d4a528d99b:packages/babel-helper-compilation-targets/src/filter-items.ts:3 |
+| typescript-importAttributes-0 | TypeScript@050880ce59e30b356b686bd3144efe24f875ebc8:tests/cases/conformance/importAttributes/importAttributes1.ts:10 |
+| typescript-importAttributes-1 | TypeScript@050880ce59e30b356b686bd3144efe24f875ebc8:tests/cases/conformance/importAttributes/importAttributes3.ts:13 |
+| typescript-importAssertion-0 | TypeScript@050880ce59e30b356b686bd3144efe24f875ebc8:tests/cases/conformance/importAssertion/importAssertion1.ts:10 |
+| typescript-importAssertion-1 | TypeScript@050880ce59e30b356b686bd3144efe24f875ebc8:tests/cases/conformance/importAssertion/importAssertion3.ts:13 |
+| typescript-externalModules-0 | TypeScript@050880ce59e30b356b686bd3144efe24f875ebc8:tests/cases/conformance/externalModules/typeOnly/ambient.ts:7 |
+| typescript-externalModules-1 | TypeScript@050880ce59e30b356b686bd3144efe24f875ebc8:tests/cases/conformance/externalModules/typeOnly/chained.ts:13 |
+| typescript-importDefer-0 | TypeScript@050880ce59e30b356b686bd3144efe24f875ebc8:tests/cases/conformance/importDefer/importBindingDefer.ts:8 |
+| typescript-importDefer-1 | TypeScript@050880ce59e30b356b686bd3144efe24f875ebc8:tests/cases/conformance/importDefer/importDefaultBindingDefer.ts:9 |
+
+The existing body-brace mutant selector was narrowed to the original block-body line because a new import group shared its shorter search string; its semantic mutation and corpus remain the same. All existing mutation targets are unique. New mutants cover default binding, namespace alias, named alias, clause type, specifier type, attribute value and single-type flattening. Each must compile and finish normally on Node and native before a mismatch kills it. Retained side-effect mutants separately cover keyword, separator, semicolon and dropping attributes. The source-context mutant separately proves both shortest regression checks can fail. New top-level Go tests call t.Parallel.
 
 ## Next scout
 
-Take the ranked ImportDeclaration family: default/namespace/named/type clauses, then attributes, held to the 23 pins and the live print_module.go oracle. Keep first-refusal and unmasked AST rankings distinct. The parser lane must first close the documented loss/regressions so the complete package can be green. Carry forward the exact nine output mismatches, 17 acceptance conflicts, two Node panics and 15 raw-encoding exclusions; none grants formatter exceptions.
+Take the ranked type-printing family next: TypeReference affects 95,267 files / 1,331,478 sites. Preserve import comment/trivia and export boundaries as explicit follow-up work. First hand the four invalid import-local cases and `export default abstract;` loss to the parser lane; these are implementation handoffs, not language rulings. Carry all nine output differences, 21 acceptance conflicts, two Node panics and 15 encoding exclusions forward without exceptions. Carry the supplied #bw3xg7c method-value ruling above into future callback composition. No open language questions remain for this piece.

@@ -2,7 +2,7 @@
 import argparse,collections,hashlib,json,subprocess
 from pathlib import Path
 root=Path(__file__).resolve().parents[4]
-p=argparse.ArgumentParser();p.add_argument('manifest',type=Path);p.add_argument('output',type=Path);p.add_argument('--before',action='store_true');a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('manifest',type=Path);p.add_argument('output',type=Path);p.add_argument('--before',action='store_true');p.add_argument('--import-stage',choices=['default','namespace','named','type','attributes']);a=p.parse_args()
 manifest=json.loads(a.manifest.read_text());records=[];counts=collections.Counter();escape=lambda s:s.replace('\\','\\\\').replace('\n','\\n').replace('\r','\\r').replace('\t','\\t')
 for repo in manifest:
  if 'error' in repo: raise RuntimeError(repo)
@@ -26,7 +26,7 @@ for repo in manifest:
   while pending:
    batch.write_text(json.dumps(pending_inputs))
    try:
-    result=subprocess.run(['node','--disable-warning=ExperimentalWarning',str(root/'oracle/node.mjs'),str(root/('stage1/cohere/tsprinter/scout/before.mjs' if a.before else 'stage1/cohere/tsprinter/scout/measure.mjs')),str(batch)],cwd=root,capture_output=True,text=True,timeout=120)
+    result=subprocess.run(['node','--disable-warning=ExperimentalWarning',str(root/'oracle/node.mjs'),str(root/('stage1/cohere/tsprinter/scout/stages.mjs' if a.import_stage else 'stage1/cohere/tsprinter/scout/before.mjs' if a.before else 'stage1/cohere/tsprinter/scout/measure.mjs')),str(batch),*( [a.import_stage] if a.import_stage else [] )],cwd=root,capture_output=True,text=True,timeout=120)
     answers=result.stdout.splitlines()
     failure='node-exit-'+str(result.returncode)+':'+(result.stderr.splitlines()[0] if result.stderr else 'no-stderr') if result.returncode else ''
    except subprocess.TimeoutExpired as error:
@@ -43,7 +43,7 @@ for repo in manifest:
     f,source=pending[consumed]
     batch.write_text(json.dumps(pending_inputs[consumed:consumed+1]))
     try:
-     isolated=subprocess.run(['node','--disable-warning=ExperimentalWarning',str(root/'oracle/node.mjs'),str(root/('stage1/cohere/tsprinter/scout/before.mjs' if a.before else 'stage1/cohere/tsprinter/scout/measure.mjs')),str(batch)],cwd=root,capture_output=True,text=True,timeout=120)
+     isolated=subprocess.run(['node','--disable-warning=ExperimentalWarning',str(root/'oracle/node.mjs'),str(root/('stage1/cohere/tsprinter/scout/stages.mjs' if a.import_stage else 'stage1/cohere/tsprinter/scout/before.mjs' if a.before else 'stage1/cohere/tsprinter/scout/measure.mjs')),str(batch),*( [a.import_stage] if a.import_stage else [] )],cwd=root,capture_output=True,text=True,timeout=120)
      if isolated.returncode==0:
       recovered=json.loads(isolated.stdout);outcome=recovered.get('reason','accepted');counts[outcome]+=1
       records.append(dict(repo=repo['repo'],pin=actual,path=f,sha256=hashlib.sha256(source).hexdigest(),outcome=outcome,answer=recovered.get('text')));consumed+=1
@@ -55,5 +55,5 @@ for repo in manifest:
     records.append(dict(repo=repo['repo'],pin=actual,path=f,sha256=hashlib.sha256(source).hexdigest(),outcome=failure,answer=None));consumed+=1
    pending=pending[consumed:];pending_inputs=pending_inputs[consumed:]
  print(repo['repo'],len(selected),dict(counts),flush=True)
- a.output.write_text(json.dumps(dict(corpus='23 public pinned repositories supplied by user; not private quiet-hundred remainder',counts=counts,files=records),indent=2)+'\n')
+ a.output.write_text(json.dumps(dict(corpus='23 public pinned repositories supplied by user',counts=counts,files=records),indent=2)+'\n')
 print('complete',len(records),dict(counts),flush=True)

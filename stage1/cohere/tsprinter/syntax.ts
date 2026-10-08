@@ -468,6 +468,76 @@ export function unsupported(parser: Parser, source: string, index: number): stri
     return '';
 }
 
+// Module children are structural wrappers, not expression syntax. Refuse every
+// unexpected shape before the printer reads it (including declaration modifiers).
+export function importUnsupported(parser: Parser, source: string, index: number): string {
+    const node = syntaxNode(parser, index);
+    if(node.kind === 'ImportDeclaration') {
+        let offset = 0;
+        if(node.children.length > 0 && syntaxNode(parser, syntaxChild(parser, index, 0)).kind === 'ImportClause') {
+            const reason = importUnsupported(parser, source, syntaxChild(parser, index, 0));
+            if(reason !== '') return reason;
+            offset = 1;
+        }
+        if(node.children.length < offset + 1 || node.children.length > offset + 2) return 'ImportDeclaration';
+        if(node.children.length === offset + 2) {
+            const attributes = syntaxChild(parser, index, offset + 1);
+            if(syntaxNode(parser, attributes).kind !== 'ImportAttributes') return 'ImportDeclaration';
+            const reason = importUnsupported(parser, source, attributes);
+            if(reason !== '') return reason;
+        }
+        const module = syntaxChild(parser, index, offset);
+        if(syntaxNode(parser, module).kind !== 'StringLiteral') return 'ImportDeclaration';
+        return unsupported(parser, source, module);
+    }
+    if(node.kind === 'ImportAttributes') {
+        if(node.operator !== 'WithKeyword') return 'ImportDeclaration';
+        for(const child of node.children) {
+            if(syntaxNode(parser, child).kind !== 'ImportAttribute') return 'ImportDeclaration';
+            const attribute = syntaxNode(parser, child);
+            if(attribute.children.length !== 2) return 'ImportDeclaration';
+            const key = syntaxChild(parser, child, 0);
+            const value = syntaxChild(parser, child, 1);
+            if(!['Identifier', 'StringLiteral'].includes(syntaxNode(parser, key).kind) ||
+                syntaxNode(parser, value).kind !== 'StringLiteral') return 'ImportDeclaration';
+            const keyReason = unsupported(parser, source, key);
+            if(keyReason !== '') return keyReason;
+            const valueReason = unsupported(parser, source, value);
+            if(valueReason !== '') return valueReason;
+        }
+        return '';
+    }
+    if(node.kind === 'ImportClause') {
+        if(!['Unknown', 'TypeKeyword', 'DeferKeyword'].includes(node.semantic)) return 'ImportDeclaration';
+        if(node.children.length < 1 || node.children.length > 2) return 'ImportDeclaration';
+        for(const child of node.children) {
+            const kind = syntaxNode(parser, child).kind;
+            if(!['Identifier', 'NamedImports', 'NamespaceImport'].includes(kind)) return 'ImportDeclaration';
+            const reason = importUnsupported(parser, source, child);
+            if(reason !== '') return reason;
+        }
+        return '';
+    }
+    if(node.kind === 'NamedImports') {
+        for(const child of node.children) {
+            if(syntaxNode(parser, child).kind !== 'ImportSpecifier') return 'ImportDeclaration';
+            const reason = importUnsupported(parser, source, child);
+            if(reason !== '') return reason;
+        }
+        return '';
+    }
+    if(node.kind === 'NamespaceImport' || node.kind === 'ImportSpecifier') {
+        if(node.children.length < 1 || node.children.length > 2) return 'ImportDeclaration';
+        for(const child of node.children) {
+            if(!['Identifier', 'StringLiteral'].includes(syntaxNode(parser, child).kind)) return 'ImportDeclaration';
+            const reason = unsupported(parser, source, child);
+            if(reason !== '') return reason;
+        }
+        return '';
+    }
+    return unsupported(parser, source, index);
+}
+
 export function statementUnsupported(parser: Parser, source: string, index: number): string {
     const node = syntaxNode(parser, index);
     switch(node.kind) {
@@ -479,10 +549,7 @@ export function statementUnsupported(parser: Parser, source: string, index: numb
             }
             return '';
         case 'ImportDeclaration':
-            if(node.children.length !== 1) return 'ImportDeclaration';
-            if(syntaxNode(parser, node.children[0] ?? panic('missing import source')).kind !== 'StringLiteral')
-                return 'ImportDeclaration';
-            return unsupported(parser, source, node.children[0] ?? panic('missing import source'));
+            return importUnsupported(parser, source, index);
         case 'FunctionDeclaration':
             return functionUnsupported(parser, source, index);
         case 'VariableStatement': {

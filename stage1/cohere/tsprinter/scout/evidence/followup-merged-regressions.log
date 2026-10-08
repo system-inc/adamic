@@ -1,0 +1,45 @@
+=== RUN   TestExpressionsAgainstGoAndPrettier
+    expressions_test.go:61: corpus root bench: 6 git-tracked .ts files
+    expressions_test.go:61: corpus root bridge: 1 git-tracked .ts files
+    expressions_test.go:61: corpus root cmd: 5 git-tracked .ts files
+    expressions_test.go:61: corpus root internal: 18 git-tracked .ts files
+    expressions_test.go:61: corpus root stage1: 481 git-tracked .ts files
+    expressions_test.go:61: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    expressions_test.go:61: corpus root src/compiler: 77 git-tracked .ts files
+    expressions_test.go:61: === RUN   TestAdamicExpressionCorpus
+            adamic_expressions_test.go:508: 888 files, 1 full-file parse refusals, 171015 supported maximal expression fragments
+        --- PASS: TestAdamicExpressionCorpus (3.32s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	3.340s
+
+    expressions_test.go:61: cases: 171015 cases in 5 largest-first processes
+    expressions_test.go:81: Prettier: 171015 cases; 2 exact upstream text differences, 13 exact parser refusals, all other bytes match Go
+    expressions_test.go:84: embedded Prettier: 171015 cases; 2 exact upstream text differences, 13 exact parser refusals, all other bytes match Go
+    expressions_test.go:120: 15 unported shapes return NotYet on native, Node and backend; Go and Prettier format every proving input
+    expressions_test.go:121: 171015 expression fragments byte-identical
+--- PASS: TestExpressionsAgainstGoAndPrettier (85.02s)
+=== RUN   TestTSCCorpusAgreement
+    tsc_corpus_test.go:21: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+=== RUN   TestTSCCorpusAgreement/expressions
+    tsc_corpus_test.go:57: === RUN   TestAdamicExpressionCorpus
+            adamic_expressions_test.go:508: 300 files, 1 full-file parse refusals, 34790 supported maximal expression fragments
+        --- PASS: TestAdamicExpressionCorpus (0.87s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.879s
+
+    tsc_corpus_test.go:89: tsc-cases: 1729 cases in 5 largest-first processes
+    tsc_corpus_test.go:138: expressions: 1729 tsc corpus fragments, 0 disagreements
+=== RUN   TestTSCCorpusAgreement/statements
+    tsc_corpus_test.go:57: === RUN   TestAdamicStatementCorpus
+            adamic_statements_test.go:144: 300 files, 1 parse failures, 1164 supported statement/program fragments, 0 complete files
+        --- PASS: TestAdamicStatementCorpus (0.07s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.075s
+
+    tsc_corpus_test.go:89: tsc-cases: 874 cases in 5 largest-first processes
+    tsc_corpus_test.go:138: statements: 874 tsc corpus fragments, 0 disagreements
+--- PASS: TestTSCCorpusAgreement (39.85s)
+    --- PASS: TestTSCCorpusAgreement/expressions (19.98s)
+    --- PASS: TestTSCCorpusAgreement/statements (19.87s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/tsprinter	124.888s

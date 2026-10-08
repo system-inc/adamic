@@ -1,10 +1,16 @@
-Final release build: PASS
-Final go vet ./stage1/cohere/tsprinter: PASS (empty output)
-Final gofmt -l stage1/cohere/tsprinter: PASS (empty output)
-Final TestScoutSideEffectImports: PASS, 69 fixtures, 40 accepted, 30 pinned complete public files, exact TypeScript/Go excerpts, all four mutants killed on Node and native.
-All external inputs set; zero skips.
-Final full package: FAIL; TestExpressionsAgainstGoAndPrettier and TestTSCCorpusAgreement/expressions fail on the unchanged object-method expression parser boundary. Statement, document, upstream, gap, scout and mutant checks passed.
-Shared parser untouched: fully green package requirement is blocked, explicitly reported in SCOUT.md.
-Public Go corpus: PASS, 152660 files, exact source hashes and original AST census.
-Public Node before/after: complete, each 152660 file outcomes; 73 -> 114 Go-identical outputs; 9 existing output differences and 17 existing acceptance conflicts retained.
-Logs: scout/evidence/.
+Step 26 import follow-up: PASS
+Merged 06c6e7cbf46e6d53d575c292e2a11733e36547c4; both original object-method regressions close.
+Final full package: PASS, exit zero, zero skips; ADAMIC_TS_PRETTIER and ADAMIC_TYPESCRIPT_SOURCE set to pinned inputs, parallel=5.
+Live broad gates: 171146 expression fragments; 58398 statement/program fragments.
+Retained fixture gate: 69 fixtures, 44 accepted, 30 complete pinned public sources; all four output mutants qualify on Node and native.
+New imports gate: 61 fixtures, all accepted and byte-identical to live Go and Prettier 3.9.6 on Node, sanitized native and emitted JavaScript, with leak checks; seven output mutants qualify on Node and native.
+Shortest source-context gate: both retained inputs match Go on Node/native/backend; removing matched begin/end context qualifies as a normal-completion mutant on Node and native.
+Existing body-brace mutant selector narrowed to its original block target; all existing mutation targets unique, and all existing mutants pass.
+Native release build: PASS. go vet: PASS. gofmt: PASS. git diff --check: PASS.
+All new top-level Go tests call t.Parallel. Shared parser/bridge/runtime/compiler/lint harness unchanged.
+Pinned corpus: same 152660 files, all paths and source hashes verified at every stage.
+Whole-file identity: merged 114, default 116, namespace 117, named 124, type 140, attributes 140.
+Final Node accepts 170: 140 Go-identical, nine existing output differences, 21 acceptance conflicts (17 prior + four invalid Babel import locals).
+Go accepts 150363 and refuses 2297; both Node panics and 15 non-UTF-8 inputs remain in the denominator.
+#bw3xg7c ruling supplied by @system_adamic recorded in SCOUT.md; no open language questions remain.
+Logs: scout/evidence/followup-*.log; corpus details: import-stages.json, side-effect.json.gz and final after.json.gz.

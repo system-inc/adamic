@@ -1,0 +1,41 @@
+=== RUN   TestMutants
+=== PAUSE TestMutants
+=== CONT  TestMutants
+    mutants_test.go:82: docs: 5072 cases in 5 largest-first processes
+    mutants_test.go:83: corpus root bench: 6 git-tracked .ts files
+    mutants_test.go:83: corpus root bridge: 1 git-tracked .ts files
+    mutants_test.go:83: corpus root cmd: 5 git-tracked .ts files
+    mutants_test.go:83: corpus root internal: 18 git-tracked .ts files
+    mutants_test.go:83: corpus root stage1: 481 git-tracked .ts files
+    mutants_test.go:83: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    mutants_test.go:83: corpus root src/compiler: 77 git-tracked .ts files
+    mutants_test.go:83: === RUN   TestAdamicExpressionCorpus
+            adamic_expressions_test.go:508: 888 files, 1 full-file parse refusals, 171146 supported maximal expression fragments
+        --- PASS: TestAdamicExpressionCorpus (12.07s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	12.134s
+
+    mutants_test.go:83: cases: 171146 cases in 5 largest-first processes
+    mutants_test.go:87: corpus root bench: 6 git-tracked .ts files
+    mutants_test.go:87: corpus root bridge: 1 git-tracked .ts files
+    mutants_test.go:87: corpus root cmd: 5 git-tracked .ts files
+    mutants_test.go:87: corpus root internal: 18 git-tracked .ts files
+    mutants_test.go:87: corpus root stage1: 481 git-tracked .ts files
+    mutants_test.go:87: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    mutants_test.go:87: corpus root src/compiler: 77 git-tracked .ts files
+    mutants_test.go:87: === RUN   TestAdamicStatementCorpus
+            adamic_statements_test.go:144: 888 files, 1 parse failures, 58398 supported statement/program fragments, 13 complete files
+        --- PASS: TestAdamicStatementCorpus (3.56s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	3.604s
+
+    mutants_test.go:87: cases: 58398 cases in 5 largest-first processes
+=== RUN   TestMutants/body_loses_its_opening_brace
+=== PAUSE TestMutants/body_loses_its_opening_brace
+=== CONT  TestMutants/body_loses_its_opening_brace
+    mutants_test.go:131: Node caught by successful-run output mismatch: /workspace/adamic/internal/load/testdata/0.1/compile/04_closures.ts:80:KindArrowFunction: line 1: "ok\t() => [\\n    count += 1;\\n    return count;\\n};\\n", Go cohere "ok\t() => {\\n    count += 1;\\n    return count;\\n};\\n"
+    mutants_test.go:131: native caught by successful-run output mismatch: /workspace/adamic/internal/load/testdata/0.1/compile/04_closures.ts:80:KindArrowFunction: line 1: "ok\t() => [\\n    count += 1;\\n    return count;\\n};\\n", Go cohere "ok\t() => {\\n    count += 1;\\n    return count;\\n};\\n"
+--- PASS: TestMutants (27.79s)
+    --- PASS: TestMutants/body_loses_its_opening_brace (52.80s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/tsprinter	80.624s

@@ -225,6 +225,6 @@ The deliberate tsc-driver corpus gate and its complete disagreement audit are do
 [TSC_CORPUS.md](TSC_CORPUS.md). Its focused test reports every differing fragment with the originating
 file, on source Node, sanitized native and emitted JavaScript. Go cohere remains the formatting oracle.
 
-## Step 26 scout
+## Step 26 imports
 
-Bare side-effect import declarations now compose with supported statements at the house defaults. Import clauses, attributes and comment attachment remain explicit gaps. [SCOUT.md](SCOUT.md) records the complete formatter/options inventory, all 23 public pins, whole-file and unmasked AST measurements, fixtures/mutants and the shared-parser regressions blocking a fully green package.
+Side-effect, default, namespace, named and type-only imports, including type specifiers and `with` attributes, compose with the supported statement printer. The method-shorthand source-context fix (`06c6e7cbf`) closes both prior expression regressions. The same 152,660-file corpus has 140 whole-file Go matches (114 before clauses), nine prior text differences and 21 acceptance conflicts, including four newly exposed invalid import-local parser cases. All 61 new fixtures match Go and Prettier, with seven successful-output mutants; retained side-effect and source-context mutants remain independent. [SCOUT.md](SCOUT.md) records exact counts, evidence, shared parser handoffs and current validation. Comments, trivia, exports, import-equals and general type printing remain gaps. Legacy `assert` is refused as it is by the pinned Go parser.

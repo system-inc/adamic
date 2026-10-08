@@ -1,0 +1,8 @@
+=== RUN   TestScoutSourceContext
+=== PAUSE TestScoutSourceContext
+=== CONT  TestScoutSourceContext
+    scout_test.go:194: Node killed by bytes: line 1: "notyet\texpression-file", Go cohere "ok\t({\\n    [z]() {\\n        return z;\\n    },\\n});\\n"
+    scout_test.go:194: native killed by bytes: line 1: "notyet\texpression-file", Go cohere "ok\t({\\n    [z]() {\\n        return z;\\n    },\\n});\\n"
+--- PASS: TestScoutSourceContext (50.07s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/tsprinter	50.080s
