@@ -8,8 +8,10 @@ Push target for every delivery: compiler/area-stack only. The base includes the 
 | 1b | skipped | no stricter-options admission | checked-view presence dependency, as ruled; no 173 scheduled / 0 errors claim |
 | 2 follow-up | 0a167e089fc1aaa5fcfff97ca155c2a4842fad49 | statics through current counted dispatch, earlier conditions retained | logical accessor positive fails; method and binary resolutions held; computed-name destructuring needs views |
 | 3 follow-up | c6ae12df474d5ab0d750f2c0119e217e5de3cf8d | boxed callable unions, closed constructor caches, library-small current callback protocol; earlier overloads/statements/element access/syntax retained | exact positive refusal failures, checked-view dependencies and three review-blocked proposals are listed in REPORT.md |
-| 4 follow-up | final report commit | empty-array destination layout, debugger and Source representation boundary proof; earlier devirtualization retained | generic topic needs stricter options; iterator fixture needs views; memoize needs graph regions; Error positive operations conflict with retained refusals; landing/presence need views |
+| 4 follow-up | 8e6626ef158e5885ab1f9a09906550ceb6935a91 | empty-array destination layout, debugger and Source representation boundary proof; earlier devirtualization retained | generic topic needs stricter options; iterator fixture needs views; memoize needs graph regions; Error positive operations conflict with retained refusals; landing/presence need views |
 
 Required packages, own Node fixtures in both backends, own mutants and regenerated counts passed for each delivered follow-up. Each group's catalog caught all 11 applicable undo mutants; five historical nonapplicable entries remain skipped. Every group's report distinguishes admitted, failed and dependency-only topics and retains raw compressed evidence.
 
 Pending namespace rulings are in PARSER-REVIEW.md. METHOD-VALUES-PROPOSAL.md, REPORT.md and REMAINING-PROPOSALS.md contain the other pending implementation proposals. No pending proposal was silently admitted.
+
+The additional generic-return clock follow-up replays only 210f6ead2. Its finite optional object/refinement proof and four mutants pass; reports distinguish its narrow admission from the earlier held generic-returns-t topic.

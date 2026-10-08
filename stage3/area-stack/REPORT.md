@@ -1,3 +1,17 @@
+# Group 4 generic-return clock follow-up
+
+Built the finite optional generic plain-object intersection result proof from clock-15-20-generic-returns-t-01.
+Commits: 1cdc3439c replays the topic's sole own commit 210f6ead2; 78fad25de and 8fc662bb6 strengthen null and index proof tests without changing production lowering.
+Checks: lower 50.957s, IR 25.109s, flow 171.055s; JavaScript has no tests. Delivery Node oracle and output mutant pass (0.763s); counts refresh passes (82.073s); strengthened proof tests pass (0.282s).
+Mutants: present-as-undefined is caught by clean Node stdout disagreement in both backends; finite-shape bypass is caught by kind and direct index proof assertions; null erasure is caught by the direct checked-signature assertion; removing dispatch is caught by the positive readonly shape's NotYet.
+Not covered: the real AST root remains NotYet at its void brand field; zero census roots are claimed cleared. The earlier whole generic-returns-t topic and checked-view lanes remain out.
+
+The only production insertion calls clockGenericReturnsT01 after the stack's normal representation, undefined-result and regex callback result handling have failed. Its proof retains every checked constituent and field. It accepts only the owned generic object/refinement pair plus undefined, with finite primitive/nested object fields and string arrays. Callable, constructable, indexed, container intersection, nested callable and distinct null shapes remain refused. No views implementation, worker merge or ABI replacement was imported. Counts were the only conflict: existing rows were retained, one disjoint row was added, then the table was regenerated.
+
+The original null negative test let a null-erasure source mutant survive because an independent later lowering refusal still rejected the program. The original indexed probe similarly hid a finite-shape bypass. Two checked-signature tests now assert the proof's refusal before any body or call lowering. The rerun catches both mutants at those assertions. Production guard code was not relaxed or changed.
+
+Exact commands: go test ./internal/lower ./internal/ir ./internal/flow ./internal/javascript; go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/clock_generic_returns_t_01|TestClockGenericReturnsT01Mutant' -count=1 -v; go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts; go test ./internal/lower -run '^TestClockGenericReturnsT01' -count=1 -v; python3 stage3/area-stack/clock-generic-mutants.py. All output went directly to retained logs. The source mutants use Go overlays and never edit production files.
+
 # Group 4 host delivery
 
 Catalog on c9cc35939dac2509ed2b08dd8c730123a4122495: exit 0, 238.959s; all 11 applicable undo patches were caught. The same five historical entries remain nonapplicable. No undo patch drifted. Controls, mutant failures and results are retained under evidence/group4-host/catalog.
