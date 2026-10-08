@@ -10,10 +10,10 @@ AddressSanitizer:DEADLYSIGNAL
     #4 0x56227abb6430 in _start (/tmp/union_variance+0x4e430)
 
 ==17574==Register values:
-rax = 0x0802800000000001  rbx = 0x00007ffccdddf600  rcx = 0x00000ac44f6dd360  rdx = 0x0000000000000000  
-rdi = 0x4014000000000008  rsi = 0x4014000000000000  rbp = 0x00007ffccdddf680  rsp = 0x00007ffccdddf5f0  
- r8 = 0x0000000000000001   r9 = 0x00007fffffffff01  r10 = 0x00007fffffffff01  r11 = 0xafffff00000fff01  
-r12 = 0x00007b92fd900040  r13 = 0x00007b92fd900060  r14 = 0x00007b92fd900040  r15 = 0x00007bd2fede0010  
+rax = 0x0802800000000001  rbx = 0x00007ffccdddf600  rcx = 0x00000ac44f6dd360  rdx = 0x0000000000000000
+rdi = 0x4014000000000008  rsi = 0x4014000000000000  rbp = 0x00007ffccdddf680  rsp = 0x00007ffccdddf5f0
+ r8 = 0x0000000000000001   r9 = 0x00007fffffffff01  r10 = 0x00007fffffffff01  r11 = 0xafffff00000fff01
+r12 = 0x00007b92fd900040  r13 = 0x00007b92fd900060  r14 = 0x00007b92fd900040  r15 = 0x00007bd2fede0010
 AddressSanitizer can not provide additional info.
 SUMMARY: AddressSanitizer: SEGV /home/agent/.cache/adamic/runtime/.build-1461551208/union.c:46:17 in adamic_union_to_string
 ==17574==ABORTING

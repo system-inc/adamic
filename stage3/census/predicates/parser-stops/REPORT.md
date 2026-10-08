@@ -1,5 +1,5 @@
 Built: callback and generic NonNullable assertion admission, plus ordinary call direction reporting in --explain-checks.
-Commits: prior work pushed through 0f722679dd7ddd16933c86d88880076cfc7a8418; ordinary reporting is 37161988d3eaaf5f18b6120c9c37fef35b871b2e; ABI evidence is in the containing commit, with follow-up pushes blocked.
+Commits: prior work pushed through 0f722679dd7ddd16933c86d88880076cfc7a8418; ordinary reporting is 37161988d3eaaf5f18b6120c9c37fef35b871b2e; ABI evidence is 1191e3f74b1e60a62aa1eb947b0bc45136522ffc; both follow-up commits are pushed.
 Commands/results: complete lower, CLI, IR and load packages pass; uncached filtered predicate/generic/regex oracle passes; vet, formatting and diff checks pass.
 Mutants: prior six compiler mutants caught; this follow-up catches ordinary-report erasure, assertion-report erasure, and unsafe union admission.
 Limits: mixed-union callable variance still needs adapters and remains NotYet; the full repository gate is not covered.
@@ -239,11 +239,15 @@ and missing/defaulted arguments need their incoming representation. This exceeds
 the small ABI relaxation investigated here. Captured union slots and plain mixed
 union `.toString()` are also outside this follow-up.
 
-Both commits could not be pushed: ordinary git has no HTTPS credential helper;
-using the existing GH_TOKEN through GitHub CLI yields “Invalid username or token”.
-A fetch of current main failed for the same credential issue, so only the previously
-fetched main f4efdd2369311d1420aa53fdf5c1a55bdda811d4 is verified as an ancestor.
-A format-patch of both follow-up commits is supplied outside the repository.
+Initial pushes failed because ordinary git had no HTTPS credential helper, and
+an initial GitHub CLI helper attempt reported an invalid token. The later helper
+retry succeeded, pushing both follow-up commits to codex/proven-predicates-2.
+A subsequent fetch with that helper also succeeded: current origin/main is
+f4efdd2369311d1420aa53fdf5c1a55bdda811d4 and is already an ancestor of this branch.
+No additional main merge or format-patch is needed. Final logs are
+`evidence/followup-push-final.log` and `evidence/followup-fetch-final.log`.
+The staged whitespace check detected trailing spaces in ASan's register dump;
+those spaces were stripped from the evidence log without changing its contents.
 
 Final follow-up validation (after restoring production ABI refusal):
 
