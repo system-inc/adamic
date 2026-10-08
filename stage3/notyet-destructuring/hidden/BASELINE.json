@@ -1,0 +1,48 @@
+{
+  "source_commit": "388096e6",
+  "compiler_commit": "ed6e29751ee47d86fad450cd1674139883bc0f70",
+  "files": {
+    "visitorPublic.ts": {
+      "bytes": 88114,
+      "sha256": "ef2085cb0d14c6dbd475644daf7388cf7ec4f64c0b6a5570ba79dd2ffd72b8d5"
+    },
+    "parser.ts": {
+      "bytes": 541260,
+      "sha256": "9c8e41e143294677580750ada80e5ba18128645e280e7950b001e054b4ae0df4"
+    }
+  },
+  "largest_regions": [
+    {
+      "file": "visitorPublic.ts",
+      "start": 27155,
+      "end": 87829,
+      "bytes": 60674,
+      "causes": [
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/visitorPublic.ts:624:5: stage 0 can't lower a computed field name yet",
+          "visitorPublic.ts:623:1"
+        ]
+      ],
+      "start_line": 619,
+      "end_line": 1798
+    },
+    {
+      "file": "parser.ts",
+      "start": 15302,
+      "end": 64545,
+      "bytes": 49243,
+      "causes": [
+        [
+          "Boundary",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "/tmp/hidden-adapted/src/compiler/parser.ts:506:5: stage 0 can't lower a computed field name yet",
+          "parser.ts:505:1"
+        ]
+      ],
+      "start_line": 504,
+      "end_line": 1136
+    }
+  ]
+}

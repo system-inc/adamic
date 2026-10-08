@@ -385,11 +385,14 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			absent = property.Flags&ast.SymbolFlagsOptional != 0
 		}
 		of, known := l.representation(fieldType)
-		if !known || censusFieldSlotless(of) && of != ir.Union {
+		if !known || destructuringFieldSlotless(of) && of != ir.Union {
 			return nil, l.notYet(binding, "a destructured name held otherwise than its field")
 		}
 		if absent {
 			of = ir.Maybe(of)
+		}
+		if l.destructuringSlotView(field, of) {
+			return nil, l.notYet(binding, "destructuring a field through a view that needs checked storage")
 		}
 		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent}
 		declaredStatements, err := l.declareDestructured(binding, fieldType, value)

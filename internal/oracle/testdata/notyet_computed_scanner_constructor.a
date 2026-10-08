@@ -1,0 +1,3 @@
+const keywords = { ["" + "constructor"]: 1 };
+console.log("ok");
+console.log(Object.keys(keywords).join(","));

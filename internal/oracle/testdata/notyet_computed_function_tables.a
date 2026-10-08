@@ -1,0 +1,17 @@
+const enum Kind { QualifiedName = 166, ComputedPropertyName = 167 }
+interface Input { readonly value: number; }
+const parserTable = {
+    [Kind.QualifiedName]: function child(node: Input, callback: (value: number) => number): number { return callback(node.value); },
+    [Kind.ComputedPropertyName]: function computed(node: Input, callback: (value: number) => number): number { return callback(node.value + 1); }
+};
+const visitorTable = {
+    [Kind.QualifiedName]: function visit(node: Input, visitor: (value: number) => number): number { return visitor(node.value) + 10; },
+    [Kind.ComputedPropertyName]: function visitComputed(node: Input, visitor: (value: number) => number): number { return visitor(node.value + 1) + 10; }
+};
+function double(value: number): number { return value * 2; }
+const input = { value: 3 };
+const { [Kind.QualifiedName]: child, [Kind.ComputedPropertyName]: computed } = parserTable;
+const { [Kind.QualifiedName]: visit, [Kind.ComputedPropertyName]: visitComputed } = visitorTable;
+console.log(Object.keys(parserTable).join(","));
+console.log(Object.keys(visitorTable).join(","));
+console.log(`${child(input, double)} ${computed(input, double)} ${visit(input, double)} ${visitComputed(input, double)}`);

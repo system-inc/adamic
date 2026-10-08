@@ -23,7 +23,7 @@ func (l *lowering) destructuredTupleTarget(target *ast.Node, held int, source []
 		return nil, l.notYet(target, "a destructuring member target outside its tuple")
 	}
 	of, known := l.representation(elements[offset])
-	if !known || censusFieldSlotless(of) && of != ir.Union {
+	if !known || destructuringFieldSlotless(of) && of != ir.Union {
 		return nil, l.notYet(target, "a destructuring member target without a field representation")
 	}
 	receiver, err := l.expression(access.Expression)

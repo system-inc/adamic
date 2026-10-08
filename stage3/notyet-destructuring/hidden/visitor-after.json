@@ -1,0 +1,2756 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "kind": "KindVariableStatement",
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "top": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:625:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:625:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:625:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:625:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 27536,
+      "end": 27781
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:633:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:633:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:633:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:633:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 27946,
+      "end": 28123
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:641:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:641:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:641:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:641:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 28311,
+      "end": 28675
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:651:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:651:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:651:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:651:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 28827,
+      "end": 29421
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:663:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:663:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:663:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:663:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 29564,
+      "end": 29730
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:671:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:671:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:671:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:671:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 29909,
+      "end": 30314
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:681:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:681:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:681:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:681:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 30475,
+      "end": 31113
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:693:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:693:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:693:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:693:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 31266,
+      "end": 31820
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:705:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:705:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:705:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:705:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 31977,
+      "end": 32741
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:719:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:719:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:719:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:719:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 32898,
+      "end": 33216
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:728:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:728:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:728:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:728:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 33373,
+      "end": 33831
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:739:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:739:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:739:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:739:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 33988,
+      "end": 34388
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:749:9",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:749:9: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:749:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:749:9: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 34567,
+      "end": 34611
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:750:9",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:750:9: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:750:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:750:9: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 34611,
+      "end": 34657
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:751:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:751:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:751:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:751:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 34657,
+      "end": 34829
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:758:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:758:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:758:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:758:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 34990,
+      "end": 35283
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:767:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:767:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:767:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:767:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 35454,
+      "end": 35752
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:776:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:776:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:776:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:776:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 35915,
+      "end": 36212
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:786:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:786:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:786:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:786:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 36381,
+      "end": 36705
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:795:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:795:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:795:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:795:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 36859,
+      "end": 37099
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:803:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:803:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:803:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:803:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 37251,
+      "end": 37567
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:812:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:812:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:812:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:812:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 37725,
+      "end": 38108
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:822:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:822:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:822:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:822:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 38254,
+      "end": 38490
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:830:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:830:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:830:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:830:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 38641,
+      "end": 38792
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:837:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:837:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:837:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:837:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 38939,
+      "end": 39108
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:844:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:844:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:844:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:844:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 39255,
+      "end": 39402
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:851:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:851:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:851:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:851:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 39555,
+      "end": 39720
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:858:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:858:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:858:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:858:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 39865,
+      "end": 40026
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:865:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:865:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:865:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:865:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 40173,
+      "end": 40317
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:872:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:872:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:872:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:872:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 40478,
+      "end": 40629
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:879:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:879:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:879:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:879:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 40788,
+      "end": 41211
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:889:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:889:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:889:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:889:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 41358,
+      "end": 41545
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:896:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:896:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:896:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:896:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 41693,
+      "end": 42093
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:907:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:907:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:907:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:907:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 42274,
+      "end": 42492
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:915:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:915:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:915:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:915:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 42648,
+      "end": 43122
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:925:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:925:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:925:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:925:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 43281,
+      "end": 43447
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:932:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:932:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:932:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:932:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 43600,
+      "end": 43765
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:939:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:939:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:939:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:939:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 43924,
+      "end": 44183
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:947:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:947:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:947:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:947:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 44326,
+      "end": 44958
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:959:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:959:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:959:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:959:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 45109,
+      "end": 45286
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:966:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:966:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:966:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:966:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 45448,
+      "end": 45703
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:974:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:974:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:974:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:974:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 45874,
+      "end": 46147
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:983:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:983:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:983:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:983:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 46337,
+      "end": 46497
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:990:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:990:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:990:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:990:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 46660,
+      "end": 46824
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:997:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:997:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:997:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:997:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 46976,
+      "end": 47395
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1008:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1008:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1008:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1008:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 47583,
+      "end": 47741
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1015:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1015:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1015:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1015:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 47912,
+      "end": 48087
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1023:13",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1023:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1022:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1023:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 48259,
+      "end": 48975
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1038:13",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1038:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1037:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1038:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 49145,
+      "end": 49886
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1053:13",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1053:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1052:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1053:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 50037,
+      "end": 50839
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1069:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1069:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1069:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1069:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 50989,
+      "end": 51293
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1078:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1078:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1078:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1078:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 51465,
+      "end": 51796
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1087:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1087:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1087:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1087:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 51967,
+      "end": 52215
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1095:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1095:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1095:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1095:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 52386,
+      "end": 52566
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1102:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1102:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1102:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1102:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 52725,
+      "end": 53350
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1115:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1115:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1115:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1115:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 53499,
+      "end": 54106
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1127:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1127:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1127:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1127:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 54263,
+      "end": 54436
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1134:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1134:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1134:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1134:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 54593,
+      "end": 54766
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1141:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1141:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1141:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1141:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 54919,
+      "end": 55090
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1148:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1148:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1148:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1148:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 55245,
+      "end": 55417
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1155:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1155:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1155:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1155:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 55584,
+      "end": 55759
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1162:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1162:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1162:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1162:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 55928,
+      "end": 56104
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1169:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1169:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1169:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1169:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 56260,
+      "end": 56647
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1178:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1178:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1178:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1178:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 56813,
+      "end": 57416
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1189:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1189:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1189:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1189:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 57576,
+      "end": 57819
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1197:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1197:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1197:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1197:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 57973,
+      "end": 58238
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1205:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1205:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1205:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1205:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 58389,
+      "end": 58559
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1212:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1212:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1212:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1212:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 58713,
+      "end": 59154
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1223:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1223:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1223:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1223:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 59332,
+      "end": 59584
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1231:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1231:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1231:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1231:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 59733,
+      "end": 59980
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1239:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1239:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1239:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1239:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 60143,
+      "end": 60397
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1248:13",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1248:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1247:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1248:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 60556,
+      "end": 60958
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1259:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1259:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1259:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1259:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 61107,
+      "end": 61270
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1267:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1267:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1267:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1267:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 61432,
+      "end": 61702
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1276:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1276:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1276:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1276:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 61853,
+      "end": 61995
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1283:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1283:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1283:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1283:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 62153,
+      "end": 62413
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1291:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1291:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1291:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1291:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 62576,
+      "end": 62752
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1298:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1298:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1298:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1298:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 62899,
+      "end": 63281
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1307:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1307:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1307:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1307:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 63428,
+      "end": 63676
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1315:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1315:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1315:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1315:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 63829,
+      "end": 64080
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1323:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1323:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1323:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1323:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 64229,
+      "end": 64595
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1333:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1333:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1333:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1333:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 64748,
+      "end": 65090
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1342:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1342:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1342:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1342:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 65242,
+      "end": 65696
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1352:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1352:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1352:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1352:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 65855,
+      "end": 66004
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1359:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1359:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1359:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1359:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 66157,
+      "end": 66303
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1366:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1366:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1366:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1366:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 66458,
+      "end": 66610
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1373:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1373:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1373:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1373:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 66761,
+      "end": 67044
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1381:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1381:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1381:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1381:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 67199,
+      "end": 67455
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1389:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1389:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1389:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1389:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 67612,
+      "end": 67893
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1397:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1397:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1397:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1397:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 68046,
+      "end": 68217
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1404:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1404:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1404:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1404:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 68366,
+      "end": 68659
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1413:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1413:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1413:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1413:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 68821,
+      "end": 69239
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1423:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1423:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1423:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1423:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 69410,
+      "end": 69582
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1430:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1430:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1430:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1430:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 69743,
+      "end": 70369
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1443:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1443:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1443:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1443:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 70525,
+      "end": 70967
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1454:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1454:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1454:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1454:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 71131,
+      "end": 71596
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1465:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1465:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1465:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1465:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 71760,
+      "end": 72162
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1475:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1475:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1475:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1475:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 72316,
+      "end": 72614
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1484:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1484:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1484:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1484:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 72772,
+      "end": 73068
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1493:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1493:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1493:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1493:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 73215,
+      "end": 73363
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1500:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1500:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1500:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1500:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 73506,
+      "end": 73659
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1507:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1507:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1507:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1507:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 73836,
+      "end": 74013
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1514:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1514:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1514:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1514:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 74183,
+      "end": 74551
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1524:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1524:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1524:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1524:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 74709,
+      "end": 75098
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1534:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1534:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1534:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1534:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 75255,
+      "end": 75441
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1542:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1542:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1542:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1542:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 75596,
+      "end": 75852
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1550:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1550:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1550:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1550:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 76001,
+      "end": 76255
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1559:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1559:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1559:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1559:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 76410,
+      "end": 76576
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1566:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1566:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1566:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1566:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 76731,
+      "end": 76897
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1573:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1573:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1573:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1573:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 77046,
+      "end": 77199
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1580:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1580:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1580:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1580:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 77354,
+      "end": 77624
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1589:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1589:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1589:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1589:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 77780,
+      "end": 78021
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1597:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1597:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1597:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1597:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 78179,
+      "end": 78585
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1608:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1608:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1608:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1608:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 78734,
+      "end": 78887
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1615:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1615:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1615:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1615:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 79042,
+      "end": 79318
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1625:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1625:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1625:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1625:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 79515,
+      "end": 79695
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1633:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1633:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1633:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1633:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 79851,
+      "end": 80189
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1642:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1642:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1642:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1642:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 80355,
+      "end": 80697
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1651:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1651:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1651:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1651:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 80855,
+      "end": 81193
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1660:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1660:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1660:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1660:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 81352,
+      "end": 81533
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1667:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1667:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1667:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1667:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 81690,
+      "end": 81943
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1675:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1675:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1675:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1675:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 82089,
+      "end": 82432
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1684:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1684:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1684:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1684:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 82581,
+      "end": 82835
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1692:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1692:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1692:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1692:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 82986,
+      "end": 83143
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1699:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1699:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1699:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1699:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 83304,
+      "end": 83479
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1706:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1706:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1706:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1706:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 83630,
+      "end": 83780
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1714:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1714:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1714:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1714:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 83940,
+      "end": 84173
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1722:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1722:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1722:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1722:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 84324,
+      "end": 84474
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1729:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1729:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1729:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1729:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 84627,
+      "end": 84791
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1736:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1736:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1736:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1736:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 84938,
+      "end": 85180
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1745:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1745:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1745:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1745:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 85370,
+      "end": 85628
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1753:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1753:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1753:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1753:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 85807,
+      "end": 86068
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1761:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1761:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1761:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1761:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 86225,
+      "end": 86398
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1769:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1769:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1769:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1769:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 86556,
+      "end": 86786
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1778:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1778:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1778:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1778:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 86956,
+      "end": 87110
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1786:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1786:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1786:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1786:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 87316,
+      "end": 87499
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1793:16",
+      "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1793:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1793:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:1793:16: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+      "start": 87662,
+      "end": 87817
+    }
+  ]
+}

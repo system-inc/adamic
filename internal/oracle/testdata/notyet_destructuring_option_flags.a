@@ -1,0 +1,22 @@
+interface Options { first?: boolean | undefined; second?: boolean | undefined; }
+let evaluations = 0;
+function options(first: boolean | undefined, second: boolean | undefined): Options {
+    evaluations += 1;
+    return { first: first, second: second };
+}
+const { first, second } = options(true, false);
+console.log(`${first} ${second} ${evaluations}`);
+const { first: absent, second: present } = options(undefined, true);
+console.log(`${absent} ${present} ${evaluations}`);
+let defaults = 0;
+function fallback(): boolean { defaults += 1; return false; }
+const { first: missing = fallback(), second: kept = fallback() } = options(undefined, false);
+console.log(`${missing} ${kept} ${defaults} ${evaluations}`);
+const emptyOptions: Options = {};
+const { first: missingField } = emptyOptions;
+console.log(`${missingField}`);
+let flagCalls = 0;
+function produced(): boolean | undefined { flagCalls += 1; return true; }
+const onceFlags: Options = { first: produced() };
+const { first: one } = onceFlags;
+console.log(`${one} ${flagCalls}`);

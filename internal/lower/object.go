@@ -93,11 +93,11 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
 				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
 			}
-			if declared := l.declaredField(node, fieldName); declared != 0 && (!censusFieldSlotless(declared) || declared == ir.Union) {
+			if declared := l.declaredField(node, fieldName); declared != 0 && (!destructuringFieldSlotless(declared) || declared == ir.Union) {
 				// Store the value as the member's slot holds it, rather than the initializer's type.
 				value = fit(value, declared)
 			}
-			if censusFieldSlotless(value.Type()) && value.Type() != ir.Union {
+			if destructuringFieldSlotless(value.Type()) && value.Type() != ir.Union {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
 			if key != nil {
@@ -1806,7 +1806,7 @@ func (l *lowering) tupleLiteral(node *ast.Node, tuple *checker.Type) (ir.Express
 	missing := []ir.Field{}
 	for index := len(items); index < len(elements); index++ {
 		of, isKnown := l.representation(elements[index])
-		if !isKnown || (censusFieldSlotless(of) && of != ir.Union) || !l.includesUndefined(elements[index]) || !(of.IsMaybe() || of.IsReference()) {
+		if !isKnown || (destructuringFieldSlotless(of) && of != ir.Union) || !l.includesUndefined(elements[index]) || !(of.IsMaybe() || of.IsReference()) {
 			return nil, l.notYet(node, "a tuple literal leaving out an element of type "+l.checker.TypeToString(elements[index]))
 		}
 		missing = append(missing, ir.Field{Name: strconv.Itoa(index), Value: fit(ir.Undefined{}, of)})
@@ -1816,7 +1816,7 @@ func (l *lowering) tupleLiteral(node *ast.Node, tuple *checker.Type) (ir.Express
 			return nil, l.notYet(item, describe(item)+" in a tuple literal")
 		}
 		of, isKnown := l.representation(elements[index])
-		if !isKnown || (censusFieldSlotless(of) && of != ir.Union) {
+		if !isKnown || (destructuringFieldSlotless(of) && of != ir.Union) {
 			return nil, l.notYet(item, "a tuple element of type "+l.checker.TypeToString(elements[index]))
 		}
 		value, err := l.expression(item)

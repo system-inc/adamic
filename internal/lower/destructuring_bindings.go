@@ -114,3 +114,7 @@ func (l *lowering) declareDestructured(binding *ast.Node, fieldType *checker.Typ
 	}
 	return append(statements, ir.Declare{Local: local, Value: value}), nil
 }
+
+// Field slots pack optional booleans; arbitrary unions are boxed explicitly at
+// their construction and checked at their reads by this destructuring unit.
+func destructuringFieldSlotless(of ir.Type) bool { return slotless(of) && of != ir.MaybeBoolean }

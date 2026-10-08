@@ -1,0 +1,36 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "kind": "KindVariableStatement",
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "top": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:624:5",
+      "reason": "a computed field name",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:624:5: stage 0 can't lower a computed field name yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:623:1",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/destructuring-adapted/src/compiler/visitorPublic.ts:624:5: stage 0 can't lower a computed field name yet",
+      "start": 27155,
+      "end": 87829
+    }
+  ]
+}

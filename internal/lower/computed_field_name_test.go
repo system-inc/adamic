@@ -43,3 +43,20 @@ func TestComputedFieldStorageNamesStayExplicit(t *testing.T) {
 		})
 	}
 }
+
+func TestDestructuringSlotViewsStayExplicit(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source string }{
+		{"optional-boolean", "const original = { enabled: true }; const viewed: { readonly enabled?: boolean } = original; const { enabled } = viewed; console.log(`${enabled}`);"},
+		{"boxed-union", "const original = { value: 3 }; const viewed: { readonly value: string | number } = original; const { value } = viewed; console.log(`${value}`);"},
+		{"tuple-assignment", "const original: readonly [boolean] = [true]; const viewed: readonly [boolean | undefined] = original; let flag: boolean | undefined; [flag] = viewed; console.log(`${flag}`);"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			_, err := lowerSource(t, probe.source)
+			var gap *NotYet
+			if !errors.As(err, &gap) || gap.What != "destructuring a field through a view that needs checked storage" {
+				t.Fatalf("got %v, want the checked-slot-view gap", err)
+			}
+		})
+	}
+}
