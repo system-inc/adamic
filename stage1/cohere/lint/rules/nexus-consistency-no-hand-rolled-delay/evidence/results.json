@@ -1,0 +1,27 @@
+{
+  "branch": "lint-rules/wave1-13-unparked",
+  "base": "95968dd93ad0876245f181af63931c3134e14b3d",
+  "test_counts_including_subtests": {
+    "pass": 161,
+    "skip": 1,
+    "fail": 0
+  },
+  "top_level_test_counts": {
+    "pass": 42,
+    "skip": 1,
+    "fail": 0
+  },
+  "owned": [
+    "wave13_worker_test.go:73: OWNED default-case-last: 38 upstream cases; witnesses and all upstream cases agree on all three modes; mutant caught on all three",
+    "wave13_worker_test.go:73: OWNED for-direction: 46 upstream cases; witnesses and all upstream cases agree on all three modes; mutant caught on all three",
+    "wave13_worker_test.go:73: OWNED guard-for-in: 20 upstream cases; witnesses and all upstream cases agree on all three modes; mutant caught on all three",
+    "wave13_worker_test.go:73: OWNED nexus/consistency-no-hand-rolled-delay: 48 upstream cases; witnesses and all upstream cases agree on all three modes; mutant caught on all three",
+    "wave13_worker_test.go:73: OWNED no-constructor-return: 53 upstream cases; witnesses and all upstream cases agree on all three modes; mutant caught on all three",
+    "wave13_worker_test.go:73: OWNED no-delete-var: 25 upstream cases; witnesses and all upstream cases agree on all three modes; mutant caught on all three",
+    "wave13_worker_test.go:73: OWNED no-eq-null: 14 upstream cases; witnesses and all upstream cases agree on all three modes; mutant caught on all three"
+  ],
+  "skip": "TestCheckerBridgeRefusalPending: awaits codex/tsgo-errors-as-values; TSGoError is absent",
+  "blocked_rule": "nexus/consistency-no-return-void",
+  "blocked_upstream_cases": 23,
+  "blocked_go_call": "regexp.MustCompile(`^return\\s+void\\s+` + regexp.QuoteMeta(operandText) + `\\s*;$`)"
+}

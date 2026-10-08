@@ -1,0 +1,6 @@
+{
+  "name": "no-delete-var-semantic-mutant",
+  "file": "rule.a",
+  "from": "context.node(context.unwrap(operand)).kind",
+  "to": "context.node(operand).kind"
+}

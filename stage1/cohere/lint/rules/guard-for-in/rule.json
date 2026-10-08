@@ -1,0 +1,13 @@
+{
+  "name": "guard-for-in",
+  "kinds": [
+    "ForInStatement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleGuardForIn",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestGuardForIn",
+  "node": true
+}

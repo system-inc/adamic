@@ -1,0 +1,30 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    bareContinue(index: number): boolean {
+        const node = this.context.node(index);
+        if(node.kind === 'ContinueStatement') return true;
+        return node.kind === 'Block' && node.children.length === 1 &&
+            this.context.node(node.children[0] ?? panic('missing consequent')).kind === 'ContinueStatement';
+    }
+    guarded(index: number): boolean {
+        const node = this.context.node(index);
+        if(node.kind === 'EmptyStatement' || node.kind === 'IfStatement') return true;
+        if(node.kind !== 'Block') return false;
+        if(node.children.length === 0) return true;
+        const first = node.children[0] ?? panic('missing first statement');
+        if(this.context.node(first).kind !== 'IfStatement') return false;
+        if(node.children.length === 1) return true;
+        return this.bareContinue(this.context.node(first).children[1] ?? panic('if without consequent'));
+    }
+    visit(node: ParseNode, index: number): void {
+        const body = node.children[node.children.length - 1] ?? panic('for-in without body');
+        if(!this.guarded(body)) this.context.report(index, 'guard-for-in', 'wrap', message, '', '', '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

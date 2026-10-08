@@ -1,0 +1,1 @@
+{"name":"delay-resolve-name-ignored","file":"rule.a","from":"this.resolves(callback, resolve)","to":"this.resolves(callback, 'wrongResolve')"}

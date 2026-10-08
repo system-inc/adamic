@@ -1,0 +1,76 @@
+package lint
+
+import (
+	"bytes"
+	"encoding/json"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+// This supplemental worker test is supplied through a Go overlay. It leaves the
+// shared harness untouched and proves every owned mutant on sanitized native,
+// in addition to the unified harness's Node and emitted JavaScript checks.
+func TestWave13OwnedNativeMutants(t *testing.T) {
+	owned := map[string]bool{
+		"default-case-last": true, "for-direction": true, "guard-for-in": true,
+		"no-constructor-return": true, "no-delete-var": true, "no-eq-null": true,
+		"nexus/consistency-no-hand-rolled-delay": true,
+	}
+	oracle := goOracle(t)
+	upstreamRows := upstream(t)
+	binary := buildPort(t, ".", true)
+	for _, descriptor := range prepareRegistry(t, ".") {
+		if !owned[descriptor.Name] {
+			continue
+		}
+		t.Run(descriptor.Slug, func(t *testing.T) {
+			var rows []string
+			for _, row := range upstreamRows {
+				fields := strings.Split(row, "\t")
+				if len(fields) > 1 && fields[1] == descriptor.Name {
+					if strings.HasSuffix(row, "\tunsupported-recovery") {
+						t.Fatal("owned upstream case is still excluded", row)
+					}
+					rows = append(rows, row)
+				}
+			}
+			count := len(rows)
+			if count == 0 {
+				t.Fatal("no captured upstream cases")
+			}
+			rows = append(rows, ownedWitnessRows(t, ".", descriptor)...)
+			path := manifest(t, recoveryRows(t, oracle, rows))
+			compare(t, oracle, binary, ".", path)
+			var change struct{ Name, File, From, To string }
+			data, err := os.ReadFile(filepath.Join("rules", descriptor.Slug, "mutant.json"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if err := json.Unmarshal(data, &change); err != nil {
+				t.Fatal(err)
+			}
+			if change.File == "" {
+				change.File = descriptor.Module
+			}
+			directory := mutant(t, change.From, change.To, filepath.Join("rules", descriptor.Slug, change.File))
+			mutatedBinary := buildMutantPort(t, directory)
+			want := execute(t, "", oracle, "--manifest", path).output
+			for _, side := range []struct {
+				name string
+				run  execution
+			}{
+				{"Node", node(t, directory, path, false)},
+				{"emitted JavaScript", emittedNode(t, directory, path, false)},
+				{"sanitized native", execute(t, "", mutatedBinary, "--manifest", path)},
+			} {
+				if bytes.Equal(side.run.output, want) {
+					t.Fatalf("%s survived on %s", change.Name, side.name)
+				}
+				t.Logf("%s caught on %s: %s", change.Name, side.name, difference(side.run.output, want))
+			}
+			t.Logf("OWNED %s: %d upstream cases; witnesses and all upstream cases agree on all three modes; mutant caught on all three", descriptor.Name, count)
+		})
+	}
+}
