@@ -1,0 +1,478 @@
+=== RUN   TestDetachedOwnInheritedMutant
+=== PAUSE TestDetachedOwnInheritedMutant
+=== RUN   TestDetachedOwnReadinessMutant
+=== PAUSE TestDetachedOwnReadinessMutant
+=== RUN   TestErrorCaptureMutants
+=== PAUSE TestErrorCaptureMutants
+=== RUN   TestRecordObservationGuardMutants
+=== PAUSE TestRecordObservationGuardMutants
+=== RUN   TestRecordCensusComparisonBuckets
+=== PAUSE TestRecordCensusComparisonBuckets
+=== RUN   TestRecordHostEnvironmentObservation
+    records_observation_test.go:124: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+--- FAIL: TestRecordHostEnvironmentObservation (2.59s)
+=== RUN   TestPartialRecordJavaScriptAgreesWithNode
+=== RUN   TestPartialRecordJavaScriptAgreesWithNode/parser
+    records_partial_test.go:28: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+=== RUN   TestPartialRecordJavaScriptAgreesWithNode/views
+    records_partial_test.go:28: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+=== RUN   TestPartialRecordJavaScriptAgreesWithNode/undefined
+    records_partial_test.go:28: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+--- FAIL: TestPartialRecordJavaScriptAgreesWithNode (0.34s)
+    --- FAIL: TestPartialRecordJavaScriptAgreesWithNode/parser (0.11s)
+    --- FAIL: TestPartialRecordJavaScriptAgreesWithNode/views (0.11s)
+    --- FAIL: TestPartialRecordJavaScriptAgreesWithNode/undefined (0.12s)
+=== RUN   TestPartialRecordAbsentEntryMutant
+    records_partial_test.go:66: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+--- FAIL: TestPartialRecordAbsentEntryMutant (0.10s)
+=== RUN   TestRecordJavaScriptAgreesWithNode
+=== RUN   TestRecordJavaScriptAgreesWithNode/operations
+    records_test.go:41: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+=== RUN   TestRecordJavaScriptAgreesWithNode/ownership
+    records_test.go:41: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+=== RUN   TestRecordJavaScriptAgreesWithNode/for_in
+    records_test.go:41: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+=== RUN   TestRecordJavaScriptAgreesWithNode/census
+    records_test.go:41: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+=== RUN   TestRecordJavaScriptAgreesWithNode/scalars
+    records_test.go:41: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+=== RUN   TestRecordJavaScriptAgreesWithNode/optional
+    records_test.go:41: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+--- FAIL: TestRecordJavaScriptAgreesWithNode (0.65s)
+    --- FAIL: TestRecordJavaScriptAgreesWithNode/operations (0.09s)
+    --- FAIL: TestRecordJavaScriptAgreesWithNode/ownership (0.10s)
+    --- FAIL: TestRecordJavaScriptAgreesWithNode/for_in (0.09s)
+    --- FAIL: TestRecordJavaScriptAgreesWithNode/census (0.09s)
+    --- FAIL: TestRecordJavaScriptAgreesWithNode/scalars (0.16s)
+    --- FAIL: TestRecordJavaScriptAgreesWithNode/optional (0.11s)
+=== RUN   TestRecordOperationMutants
+=== PAUSE TestRecordOperationMutants
+=== RUN   TestRecordPrototypeMutant
+=== PAUSE TestRecordPrototypeMutant
+=== RUN   TestRecordOwnershipMutant
+=== PAUSE TestRecordOwnershipMutant
+=== RUN   TestRecordCoalesceMutant
+=== PAUSE TestRecordCoalesceMutant
+=== RUN   TestRecordNarrowingMutant
+=== PAUSE TestRecordNarrowingMutant
+=== CONT  TestDetachedOwnInheritedMutant
+=== RUN   TestDetachedOwnInheritedMutant/records
+=== CONT  TestRecordCensusComparisonBuckets
+=== RUN   TestRecordCensusComparisonBuckets/17_compare_missing_object
+=== CONT  TestRecordCoalesceMutant
+=== CONT  TestRecordObservationGuardMutants
+=== RUN   TestRecordObservationGuardMutants/discarded
+=== PAUSE TestRecordObservationGuardMutants/discarded
+=== RUN   TestRecordObservationGuardMutants/guarded_snapshot
+=== PAUSE TestRecordObservationGuardMutants/guarded_snapshot
+=== RUN   TestRecordObservationGuardMutants/compare_missing_scalar
+=== PAUSE TestRecordObservationGuardMutants/compare_missing_scalar
+=== CONT  TestRecordOwnershipMutant
+=== CONT  TestRecordOperationMutants
+=== RUN   TestRecordOperationMutants/read
+=== PAUSE TestRecordOperationMutants/read
+=== RUN   TestRecordOperationMutants/write
+=== PAUSE TestRecordOperationMutants/write
+=== RUN   TestRecordOperationMutants/delete
+=== PAUSE TestRecordOperationMutants/delete
+=== RUN   TestRecordOperationMutants/in
+=== PAUSE TestRecordOperationMutants/in
+=== RUN   TestRecordOperationMutants/has_own
+=== PAUSE TestRecordOperationMutants/has_own
+=== RUN   TestRecordOperationMutants/keys
+=== PAUSE TestRecordOperationMutants/keys
+=== RUN   TestRecordOperationMutants/values
+=== PAUSE TestRecordOperationMutants/values
+=== RUN   TestRecordOperationMutants/entries
+=== PAUSE TestRecordOperationMutants/entries
+=== RUN   TestRecordOperationMutants/spread
+=== PAUSE TestRecordOperationMutants/spread
+=== RUN   TestRecordOperationMutants/for_in
+=== PAUSE TestRecordOperationMutants/for_in
+=== RUN   TestRecordOperationMutants/stringify
+=== PAUSE TestRecordOperationMutants/stringify
+=== CONT  TestRecordPrototypeMutant
+=== NAME  TestRecordCoalesceMutant
+    records_test.go:177: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+--- FAIL: TestRecordCoalesceMutant (0.21s)
+=== CONT  TestRecordNarrowingMutant
+=== NAME  TestDetachedOwnInheritedMutant/records
+    detached_own_test.go:44: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+=== RUN   TestDetachedOwnInheritedMutant/objects
+=== NAME  TestRecordPrototypeMutant
+    records_test.go:117: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+--- FAIL: TestRecordPrototypeMutant (0.24s)
+=== CONT  TestRecordObservationGuardMutants/discarded
+=== NAME  TestRecordNarrowingMutant
+    records_test.go:203: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+--- FAIL: TestRecordNarrowingMutant (0.10s)
+=== CONT  TestErrorCaptureMutants
+=== RUN   TestErrorCaptureMutants/capture_does_not_set_stack
+=== PAUSE TestErrorCaptureMutants/capture_does_not_set_stack
+=== RUN   TestErrorCaptureMutants/stack_limit_write_ignored
+=== PAUSE TestErrorCaptureMutants/stack_limit_write_ignored
+=== CONT  TestDetachedOwnReadinessMutant
+=== NAME  TestDetachedOwnInheritedMutant/objects
+    detached_own_test.go:44: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+--- FAIL: TestDetachedOwnInheritedMutant (0.33s)
+    --- FAIL: TestDetachedOwnInheritedMutant/records (0.21s)
+    --- FAIL: TestDetachedOwnInheritedMutant/objects (0.12s)
+=== CONT  TestRecordObservationGuardMutants/compare_missing_scalar
+=== NAME  TestRecordCensusComparisonBuckets/17_compare_missing_object
+    records_observation_test.go:114: /tmp/adamic-gate/TestRecordCensusComparisonBuckets17_compare_missing_object62633037/002/bucket.a:3:36: stage 0 can't lower a value of type any yet
+=== RUN   TestRecordCensusComparisonBuckets/18_compare_missing_scalar
+=== NAME  TestDetachedOwnReadinessMutant
+    detached_own_test.go:88: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+--- FAIL: TestDetachedOwnReadinessMutant (0.08s)
+=== CONT  TestRecordObservationGuardMutants/guarded_snapshot
+=== NAME  TestRecordCensusComparisonBuckets/18_compare_missing_scalar
+    records_observation_test.go:114: /tmp/adamic-gate/TestRecordCensusComparisonBuckets18_compare_missing_scalar11977209/002/bucket.a:3:36: stage 0 can't lower a value of type any yet
+=== RUN   TestRecordCensusComparisonBuckets/19_compare_empty_objects
+    records_observation_test.go:114: /tmp/adamic-gate/TestRecordCensusComparisonBuckets19_compare_empty_objects1041927970/002/bucket.a:3:36: stage 0 can't lower a value of type any yet
+--- PASS: TestRecordCensusComparisonBuckets (0.65s)
+    --- PASS: TestRecordCensusComparisonBuckets/17_compare_missing_object (0.36s)
+    --- PASS: TestRecordCensusComparisonBuckets/18_compare_missing_scalar (0.17s)
+    --- PASS: TestRecordCensusComparisonBuckets/19_compare_empty_objects (0.12s)
+=== CONT  TestRecordOperationMutants/read
+=== NAME  TestRecordOwnershipMutant
+    records_test.go:145: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-2895192728/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-2895192728/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+--- FAIL: TestRecordOwnershipMutant (2.17s)
+=== CONT  TestRecordOperationMutants/stringify
+=== NAME  TestRecordObservationGuardMutants/discarded
+    records_observation_test.go:49: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-2691116417/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-2691116417/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+=== CONT  TestRecordOperationMutants/for_in
+=== NAME  TestRecordObservationGuardMutants/guarded_snapshot
+    records_observation_test.go:49: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-1229688573/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-1229688573/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+=== CONT  TestRecordOperationMutants/spread
+=== NAME  TestRecordObservationGuardMutants/compare_missing_scalar
+    records_observation_test.go:49: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-2876280982/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-2876280982/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+--- FAIL: TestRecordObservationGuardMutants (0.00s)
+    --- FAIL: TestRecordObservationGuardMutants/discarded (3.58s)
+    --- FAIL: TestRecordObservationGuardMutants/guarded_snapshot (5.23s)
+    --- FAIL: TestRecordObservationGuardMutants/compare_missing_scalar (7.03s)
+=== CONT  TestRecordOperationMutants/entries
+=== NAME  TestRecordOperationMutants/read
+    records_test.go:84: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-493383324/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-493383324/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+=== CONT  TestRecordOperationMutants/values
+=== NAME  TestRecordOperationMutants/stringify
+    records_test.go:84: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-476246884/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-476246884/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+=== CONT  TestRecordOperationMutants/keys
+=== NAME  TestRecordOperationMutants/for_in
+    records_test.go:84: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-2564355194/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-2564355194/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+=== CONT  TestRecordOperationMutants/has_own
+=== NAME  TestRecordOperationMutants/spread
+    records_test.go:84: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3252420898/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3252420898/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+=== CONT  TestRecordOperationMutants/in
+=== NAME  TestRecordOperationMutants/entries
+    records_test.go:84: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-4282873999/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-4282873999/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+=== CONT  TestRecordOperationMutants/delete
+=== NAME  TestRecordOperationMutants/values
+    records_test.go:84: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-1931133104/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-1931133104/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+=== CONT  TestRecordOperationMutants/write
+=== NAME  TestRecordOperationMutants/keys
+    records_test.go:84: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-1342073529/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-1342073529/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+=== CONT  TestErrorCaptureMutants/capture_does_not_set_stack
+    library_error_capture_test.go:60: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+=== CONT  TestErrorCaptureMutants/stack_limit_write_ignored
+    library_error_capture_test.go:60: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3297368311/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+--- FAIL: TestErrorCaptureMutants (0.00s)
+    --- FAIL: TestErrorCaptureMutants/capture_does_not_set_stack (0.04s)
+    --- FAIL: TestErrorCaptureMutants/stack_limit_write_ignored (0.05s)
+=== NAME  TestRecordOperationMutants/has_own
+    records_test.go:84: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3449371760/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3449371760/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+=== NAME  TestRecordOperationMutants/in
+    records_test.go:84: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-3662388222/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-3662388222/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+=== NAME  TestRecordOperationMutants/delete
+    records_test.go:84: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-4221193127/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-4221193127/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+=== NAME  TestRecordOperationMutants/write
+    records_test.go:84: native: compiling runtime json_stringify.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-2404632329/json_stringify.c:194:37: error: incompatible integer to pointer conversion passing 'const enum adamic_json_kind' to parameter of type 'const adamic_json_schema *' (aka 'const struct adamic_json_schema *') [-Wint-conversion]
+          194 |                         json_scalar item = scalar(*slot, schema->element->kind);
+              |                                                          ^~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/.build-2404632329/json_stringify.c:103:73: note: passing argument to parameter 'schema' here
+          103 | static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) {
+              |                                                                         ^
+        1 error generated.
+
+--- FAIL: TestRecordOperationMutants (0.00s)
+    --- FAIL: TestRecordOperationMutants/read (8.41s)
+    --- FAIL: TestRecordOperationMutants/stringify (8.57s)
+    --- FAIL: TestRecordOperationMutants/for_in (8.80s)
+    --- FAIL: TestRecordOperationMutants/spread (8.78s)
+    --- FAIL: TestRecordOperationMutants/entries (8.79s)
+    --- FAIL: TestRecordOperationMutants/values (9.06s)
+    --- FAIL: TestRecordOperationMutants/keys (9.38s)
+    --- FAIL: TestRecordOperationMutants/has_own (9.64s)
+    --- FAIL: TestRecordOperationMutants/in (9.92s)
+    --- FAIL: TestRecordOperationMutants/delete (10.15s)
+    --- FAIL: TestRecordOperationMutants/write (10.31s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	32.113s
+FAIL

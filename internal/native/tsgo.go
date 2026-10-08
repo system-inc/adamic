@@ -127,5 +127,5 @@ func BuildTSGo(source, output, archive string, options Options) error {
 // before main.c's own #defines, so the program's features come as flags, as they do for the runtime
 // library.
 func tsgoFlags(source string, options Options) []string {
-	return append(append(Flags(options), featureFlags(source)...), "-DADAMIC_TSGO")
+	return append(sourceFlags(source, options), "-DADAMIC_TSGO")
 }

@@ -1,0 +1,809 @@
+{
+  "configs": [
+    {
+      "name": "/tmp/tsc-entry-mode-final-adapted/src/tsc/tsconfig.json",
+      "roots": [
+        "/tmp/tsc-entry-mode-final-adapted/src/tsc/tsc.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/tsc/_namespaces/ts.ts"
+      ],
+      "options": {
+        "rootDir": "/tmp/tsc-entry-mode-final-adapted/src",
+        "outDir": "/tmp/tsc-entry-mode-final-adapted/built/local",
+        "pretty": true,
+        "lib": [
+          "lib.es2020.d.ts"
+        ],
+        "target": 7,
+        "module": 199,
+        "moduleResolution": 99,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "composite": true,
+        "emitDeclarationOnly": true,
+        "isolatedDeclarations": true,
+        "strict": true,
+        "strictBindCallApply": false,
+        "useUnknownInCatchVariables": false,
+        "noImplicitOverride": true,
+        "skipLibCheck": true,
+        "alwaysStrict": true,
+        "preserveConstEnums": true,
+        "newLine": 1,
+        "types": [],
+        "configFilePath": "/tmp/tsc-entry-mode-final-adapted/src/tsc/tsconfig.json"
+      }
+    },
+    {
+      "name": "/tmp/tsc-entry-mode-final-adapted/src/compiler/tsconfig.json",
+      "roots": [
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/binder.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/builder.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/builderPublic.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/builderState.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/builderStatePublic.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/checker.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/commandLineParser.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/core.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/corePublic.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/debug.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/diagnosticInformationMap.generated.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/emitter.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/executeCommandLine.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/expressionToTypeNode.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/hostErrors.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/moduleNameResolver.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/moduleSpecifiers.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/parser.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/path.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/performance.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/performanceCore.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/program.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/programDiagnostics.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/resolutionCache.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/scanner.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/semver.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/sourcemap.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/symbolWalker.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/tracing.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformer.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/tsbuild.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/tsbuildPublic.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/types.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/utilities.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/utilitiesPublic.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/visitorPublic.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/watch.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/watchPublic.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/watchUtilities.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/_namespaces/ts.performance.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/_namespaces/ts.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/baseNodeFactory.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/emitHelpers.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/emitNode.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/nodeChildren.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/nodeConverters.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/nodeFactory.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/nodeTests.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/parenthesizerRules.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/utilities.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/utilitiesPublic.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/classFields.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/classThis.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/declarations.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/destructuring.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/es2015.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/es2016.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/es2017.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/es2018.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/es2019.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/es2020.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/es2021.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/esDecorators.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/esnext.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/generators.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/jsx.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/legacyDecorators.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/namedEvaluation.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/taggedTemplate.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/ts.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/typeSerializer.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/utilities.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/declarations/diagnostics.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/module/esnextAnd2015.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/module/module.ts",
+        "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/module/system.ts"
+      ],
+      "options": {
+        "rootDir": "/tmp/tsc-entry-mode-final-adapted/src",
+        "outDir": "/tmp/tsc-entry-mode-final-adapted/built/local",
+        "pretty": true,
+        "lib": [
+          "lib.es2020.d.ts"
+        ],
+        "target": 7,
+        "module": 199,
+        "moduleResolution": 99,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "composite": true,
+        "emitDeclarationOnly": true,
+        "isolatedDeclarations": true,
+        "strict": true,
+        "strictBindCallApply": false,
+        "useUnknownInCatchVariables": false,
+        "noImplicitOverride": true,
+        "skipLibCheck": true,
+        "alwaysStrict": true,
+        "preserveConstEnums": true,
+        "newLine": 1,
+        "types": [
+          "node"
+        ],
+        "configFilePath": "/tmp/tsc-entry-mode-final-adapted/src/compiler/tsconfig.json"
+      }
+    }
+  ],
+  "roots": [
+    "/tmp/tsc-entry-mode-final-adapted/src/tsc/tsc.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/tsc/_namespaces/ts.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/binder.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/builder.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/builderPublic.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/builderState.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/builderStatePublic.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/checker.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/commandLineParser.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/core.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/corePublic.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/debug.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/diagnosticInformationMap.generated.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/emitter.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/executeCommandLine.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/expressionToTypeNode.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/hostErrors.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/moduleNameResolver.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/moduleSpecifiers.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/parser.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/path.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/performance.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/performanceCore.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/program.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/programDiagnostics.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/resolutionCache.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/scanner.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/semver.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/sourcemap.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/symbolWalker.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/tracing.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformer.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/tsbuild.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/tsbuildPublic.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/types.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/utilities.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/utilitiesPublic.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/visitorPublic.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/watch.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/watchPublic.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/watchUtilities.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/_namespaces/ts.performance.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/_namespaces/ts.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/baseNodeFactory.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/emitHelpers.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/emitNode.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/nodeChildren.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/nodeConverters.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/nodeFactory.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/nodeTests.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/parenthesizerRules.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/utilities.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/utilitiesPublic.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/classFields.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/classThis.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/declarations.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/destructuring.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/es2015.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/es2016.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/es2017.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/es2018.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/es2019.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/es2020.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/es2021.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/esDecorators.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/esnext.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/generators.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/jsx.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/legacyDecorators.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/namedEvaluation.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/taggedTemplate.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/ts.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/typeSerializer.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/utilities.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/declarations/diagnostics.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/module/esnextAnd2015.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/module/module.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/module/system.ts"
+  ],
+  "options": {
+    "rootDir": "/tmp/tsc-entry-mode-final-adapted/src",
+    "outDir": "/tmp/tsc-entry-mode-final-adapted/built/local",
+    "pretty": true,
+    "lib": [
+      "lib.es2020.d.ts"
+    ],
+    "target": 7,
+    "module": 199,
+    "moduleResolution": 99,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "isolatedDeclarations": true,
+    "strict": true,
+    "strictBindCallApply": false,
+    "useUnknownInCatchVariables": false,
+    "noImplicitOverride": true,
+    "skipLibCheck": true,
+    "alwaysStrict": true,
+    "preserveConstEnums": true,
+    "newLine": 1,
+    "types": [],
+    "configFilePath": "/tmp/tsc-entry-mode-final-adapted/src/tsc/tsconfig.json",
+    "noEmit": true
+  },
+  "sources": [
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/corePublic.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/core.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/debug.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/semver.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/performanceCore.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/performance.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/_namespaces/ts.performance.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/hostErrors.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/tracing.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/types.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/path.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/diagnosticInformationMap.generated.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/scanner.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/utilitiesPublic.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/utilities.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/baseNodeFactory.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/parenthesizerRules.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/nodeConverters.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/nodeFactory.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/emitNode.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/emitHelpers.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/nodeTests.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/nodeChildren.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/utilities.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/factory/utilitiesPublic.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/parser.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/commandLineParser.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/moduleNameResolver.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/binder.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/symbolWalker.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/moduleSpecifiers.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/checker.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/visitorPublic.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/sourcemap.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/utilities.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/destructuring.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/classThis.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/namedEvaluation.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/taggedTemplate.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/ts.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/classFields.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/typeSerializer.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/legacyDecorators.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/esDecorators.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/es2017.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/es2018.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/es2019.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/es2020.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/es2021.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/esnext.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/jsx.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/es2016.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/es2015.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/generators.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/module/module.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/module/system.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/module/esnextAnd2015.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/declarations/diagnostics.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformers/declarations.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/transformer.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/emitter.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/watchUtilities.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/program.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/programDiagnostics.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/builderStatePublic.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/builderState.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/builder.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/builderPublic.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/resolutionCache.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/watch.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/watchPublic.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/tsbuild.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/tsbuildPublic.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/executeCommandLine.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/expressionToTypeNode.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/compiler/_namespaces/ts.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/tsc/_namespaces/ts.ts",
+    "/tmp/tsc-entry-mode-final-adapted/src/tsc/tsc.ts"
+  ],
+  "diagnostics": [
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/debug.ts",
+      "line": 200,
+      "column": 19,
+      "code": 2339,
+      "message": "Property 'captureStackTrace' does not exist on type 'ErrorConstructor'."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/debug.ts",
+      "line": 201,
+      "column": 19,
+      "code": 2339,
+      "message": "Property 'captureStackTrace' does not exist on type 'ErrorConstructor'."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/debug.ts",
+      "line": 865,
+      "column": 16,
+      "code": 2584,
+      "message": "Cannot find name 'console'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/performanceCore.ts",
+      "line": 35,
+      "column": 37,
+      "code": 2591,
+      "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/performanceCore.ts",
+      "line": 35,
+      "column": 84,
+      "code": 2591,
+      "message": "Cannot find name 'perf_hooks'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 76,
+      "column": 15,
+      "code": 2339,
+      "message": "Property 'stackTraceLimit' does not exist on type 'ErrorConstructor'."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 77,
+      "column": 15,
+      "code": 2339,
+      "message": "Property 'stackTraceLimit' does not exist on type 'ErrorConstructor'."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1471,
+      "column": 34,
+      "code": 2591,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1471,
+      "column": 42,
+      "code": 2591,
+      "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1472,
+      "column": 36,
+      "code": 2591,
+      "message": "Cannot find name 'path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1472,
+      "column": 46,
+      "code": 2591,
+      "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1473,
+      "column": 21,
+      "code": 2591,
+      "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1475,
+      "column": 36,
+      "code": 2591,
+      "message": "Cannot find name 'crypto'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1477,
+      "column": 23,
+      "code": 2591,
+      "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1482,
+      "column": 35,
+      "code": 2591,
+      "message": "Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1485,
+      "column": 25,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1486,
+      "column": 32,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1492,
+      "column": 56,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1499,
+      "column": 35,
+      "code": 2304,
+      "message": "Cannot find name '__filename'."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1499,
+      "column": 92,
+      "code": 2304,
+      "message": "Cannot find name '__dirname'."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1499,
+      "column": 121,
+      "code": 2304,
+      "message": "Cannot find name '__filename'."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1501,
+      "column": 44,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1502,
+      "column": 51,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1517,
+      "column": 27,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1518,
+      "column": 38,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1519,
+      "column": 32,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1525,
+      "column": 19,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1529,
+      "column": 17,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1532,
+      "column": 24,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1535,
+      "column": 24,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1567,
+      "column": 24,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1576,
+      "column": 21,
+      "code": 2304,
+      "message": "Cannot find name 'global'."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1577,
+      "column": 21,
+      "code": 2304,
+      "message": "Cannot find name 'global'."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1579,
+      "column": 24,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1589,
+      "column": 42,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1593,
+      "column": 68,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1593,
+      "column": 112,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1595,
+      "column": 26,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1595,
+      "column": 62,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1595,
+      "column": 107,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1595,
+      "column": 180,
+      "code": 2345,
+      "message": "Argument of type 'unknown' is not assignable to parameter of type 'string'."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1595,
+      "column": 192,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1598,
+      "column": 22,
+      "code": 2591,
+      "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1607,
+      "column": 17,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1610,
+      "column": 33,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1615,
+      "column": 36,
+      "code": 2591,
+      "message": "Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1616,
+      "column": 36,
+      "code": 2591,
+      "message": "Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1620,
+      "column": 38,
+      "code": 2591,
+      "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1630,
+      "column": 49,
+      "code": 2591,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1651,
+      "column": 44,
+      "code": 2591,
+      "message": "Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1651,
+      "column": 59,
+      "code": 2591,
+      "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1673,
+      "column": 47,
+      "code": 2591,
+      "message": "Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1697,
+      "column": 54,
+      "code": 7006,
+      "message": "Parameter 'err' implicitly has an 'any' type."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1697,
+      "column": 61,
+      "code": 7031,
+      "message": "Binding element 'profile' implicitly has an 'any' type."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1700,
+      "column": 120,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1729,
+      "column": 41,
+      "code": 2304,
+      "message": "Cannot find name '__filename'."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1747,
+      "column": 47,
+      "code": 2591,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1747,
+      "column": 73,
+      "code": 2591,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1789,
+      "column": 25,
+      "code": 2591,
+      "message": "Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1854,
+      "column": 38,
+      "code": 2591,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1854,
+      "column": 59,
+      "code": 2591,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/sys.ts",
+      "line": 1884,
+      "column": 96,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/tracing.ts",
+      "line": 41,
+      "column": 27,
+      "code": 2591,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/tracing.ts",
+      "line": 64,
+      "column": 22,
+      "code": 2591,
+      "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/tracing.ts",
+      "line": 83,
+      "column": 50,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "file": "/tmp/tsc-entry-mode-final-adapted/src/compiler/tracing.ts",
+      "line": 84,
+      "column": 39,
+      "code": 2591,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  ]
+}
