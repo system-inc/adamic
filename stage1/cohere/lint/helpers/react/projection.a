@@ -1,0 +1,16 @@
+import { panic } from 'adamic';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { HelperNode } from './nodes.a';
+// Preserve parser identities; only named Go AST fields are projected.
+export function project(nodes: readonly ParseNode[]): HelperNode[] {
+ const result: HelperNode[] = [];
+ for(const node of nodes) {
+  let expression = -1; let name = -1; const heritage: number[] = []; const types: number[] = [];
+  if(['CallExpression','PropertyAccessExpression','ParenthesizedExpression','ExpressionWithTypeArguments'].includes(node.kind)) {expression = node.children[0] ?? -1;}
+  if(node.kind === 'PropertyAccessExpression') {name = node.children[1] ?? -1;}
+  if(node.kind === 'ClassDeclaration' || node.kind === 'ClassExpression') {for(const child of node.children) {if((nodes[child] ?? panic('missing projection child')).kind === 'HeritageClause') {heritage.push(child);}}}
+  if(node.kind === 'HeritageClause') {for(const child of node.children) {types.push(child);}}
+  result.push({kind: node.kind, text: node.text, expression, name, heritage, types});
+ }
+ return result;
+}

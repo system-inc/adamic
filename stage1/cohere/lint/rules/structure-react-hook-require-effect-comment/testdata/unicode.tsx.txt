@@ -1,0 +1,12 @@
+import React from 'react';
+export function Panel() {
+    // 🌍 Effect to sync
+    React.useEffect(() => {}, []);
+    // ﻿Effect to sync
+    React.useEffect(() => {}, []);
+    /*
+     ** Effect to log
+     */
+    const unused = (React.useEffect)(() => {}, []);
+    return null;
+}

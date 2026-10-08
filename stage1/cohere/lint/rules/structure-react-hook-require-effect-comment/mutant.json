@@ -1,0 +1,5 @@
+{
+  "name": "effect-comment-claim-inverted",
+  "from": "name==='useEffect'",
+  "to": "name!=='useEffect'"
+}

@@ -20,3 +20,18 @@ and sanitized native, and catch one running mutant per helper on all three.
 Prove the consuming rule in its own directory. Push claim before code, fetch
 again, and yield to any earlier competing package claim. Finish with complete
 helpers and lint gates using all required inputs and one implementation push.
+
+Post-push fetch: only this package claim, 017bc6c1b (12:56:49Z).
+Rule prerequisite files are reused without ownership changes: FileContextFor from
+origin/lint-helpers/structure (2079ada9), and IsNamespacedMember, its identifier
+predicate and AST projection from origin/lint-helpers/react (ee4069f5). These
+previously certified files are extracted individually, not whole-branch merges.
+Both missing comment helper bodies are fresh; no retained partial exists.
+
+Finished validation: all helpers/... packages pass with zero skips. The comments
+package matches 33,331 Go output rows across three runtimes; seven helper mutants
+are caught on each. The proof rule matches all 22 upstream cases and both
+witnesses with its mutant caught on each. Full lint passes (4,598 captured
+source/rule/options combinations; 84 rule mutants), with all corpus, benchmark
+and profile inputs supplied. Its sole existing TSGoError-dependent test remains
+skipped, as documented in comments/README.md; no new helper or rule is stopped.

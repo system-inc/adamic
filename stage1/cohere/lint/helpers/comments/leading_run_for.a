@@ -1,0 +1,36 @@
+import { utf8Length } from 'adamic';
+import type { Parser } from '../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import type { Comment } from './comment.ts';
+import { forFile } from './for_file.ts';
+import type { FileCommentCache } from './for_file.ts';
+import { isAdjacentGap } from './is_adjacent_gap.a';
+
+// One immutable file and its shared scan. The parser supplies the node's trivia
+// position; the public comment values and the adjacency helper use byte offsets.
+export function leadingRunFor(parser: Parser | undefined, root: number, node: number,
+    cache: FileCommentCache | undefined): Comment[] {
+    if(node < 0 || parser === undefined) { return []; }
+    const comments = forFile(parser, root, cache);
+    if(comments.length === 0) { return []; }
+    const scanner = new Scanner(parser.scanner.text);
+    scanner.pos = parser.node(node).pos;
+    scanner.scan();
+    const start = utf8Length(parser.scanner.text.slice(0, scanner.start));
+    let last = -1;
+    for(let index = 0; index < comments.length; index++) {
+        if((comments[index]?.end ?? 0) <= start) { last = index; }
+        else { break; }
+    }
+    if(last < 0 || !isAdjacentGap(parser.scanner.text, comments[last]?.end ?? 0, start)) { return []; }
+    let first = last;
+    while(first > 0) {
+        const previous = comments[first - 1];
+        const current = comments[first];
+        if(previous === undefined || current === undefined) { break; }
+        if(previous.isBlock || current.isBlock) { break; }
+        if(!isAdjacentGap(parser.scanner.text, previous.end, current.start)) { break; }
+        first--;
+    }
+    return comments.slice(first, last + 1);
+}
