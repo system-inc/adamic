@@ -590,8 +590,8 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		return lowered, true, err
 	}
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
-	// The global parseInt and parseFloat are Number's, the same functions.
-	if l.isLibraryGlobal(callee, "parseInt") || l.isLibraryGlobal(callee, "parseFloat") {
+	// Global parsers are Number's functions; isNaN and isFinite agree for checked number arguments.
+	if l.isLibraryGlobal(callee, "parseInt") || l.isLibraryGlobal(callee, "parseFloat") || l.isLibraryGlobal(callee, "isNaN") || l.isLibraryGlobal(callee, "isFinite") {
 		return l.numberCall(node, callee.Text())
 	}
 	if callee.Kind != ast.KindPropertyAccessExpression {
