@@ -19,7 +19,6 @@ type refusal struct {
 // refusals by syntax kind. Each is checked before lowering, so a program learns it has written
 // something 0.1 refuses for good, never that stage 0 hasn't got to it yet.
 var refusals = map[ast.Kind]refusal{
-	ast.KindAwaitExpression:   {"await", "0.1 has no async; it arrives with the concurrency model"},
 	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
@@ -36,7 +35,6 @@ var refusals = map[ast.Kind]refusal{
 var refusedOperators = map[ast.Kind]refusal{
 	ast.KindEqualsEqualsToken:             {"==", "use ===, which doesn't coerce"},
 	ast.KindExclamationEqualsToken:        {"!=", "use !==, which doesn't coerce"},
-	ast.KindInKeyword:                     {"in", "an object's shape is known; use a discriminant, or a Map"},
 	ast.KindCommaToken:                    {"the comma operator", "write each expression as its own statement"},
 	ast.KindAmpersandAmpersandEqualsToken: {"&&=", "write the if"},
 	ast.KindBarBarEqualsToken:             {"||=", "write the if"},
@@ -63,13 +61,31 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: "@" + pragma.Name + " checking pragma", Fix: "remove it and fix any type errors"}
 		}
 	}
+	if err := l.parallelPreflight(module); err != nil {
+		return err
+	}
 	var found error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		if found != nil {
 			return true
 		}
-		if refused, isRefused := refusals[node.Kind]; isRefused {
+		if err := l.errorStackSyntaxRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		if err := l.nodeLibraryRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		if node.Kind == ast.KindUnionType {
+			proven := l.checker.GetTypeAtLocation(node)
+			if l.includesNull(proven) && l.includesUndefined(proven) {
+				found = l.notYet(node, nullableTagReason)
+				return true
+			}
+		}
+		if refused, isRefused := refusals[node.Kind]; isRefused && !l.nodeProcessEnvironmentDelete(node) {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}
@@ -84,7 +100,9 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return true
 		}
 		checkedCast := false
-		if node.Kind == ast.KindAsExpression {
+		// A cast on a process path (process.stdout as {...}) is never lowered as a cast: processPath
+		// reads through it, and processValue lowers the complete path or refuses it.
+		if node.Kind == ast.KindAsExpression && l.processPath(node.AsAsExpression().Expression) == "" && !(node.Parent != nil && l.errorCaptureRead(node.Parent)) {
 			proof, err := l.castProof(node)
 			if err != nil {
 				found = err
@@ -124,10 +142,9 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"}
 			return true
 		}
-		if ast.IsFunctionLike(node) && ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {
-			found = &Refused{Where: l.program.Where(node), What: "an async function", Fix: "0.1 has no async; it arrives with the concurrency model"}
-			return true
-		}
+		// Covered async syntax is lowered by async.go. Unsupported lifecycle and Promise
+		// operations get specific NotYet there; permanent refusals above still apply.
+
 		if node.Kind == ast.KindIdentifier && node.Text() == "arguments" {
 			// JavaScript's arguments object, not a variable the program named arguments.
 			if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && len(symbol.Declarations) == 0 {
@@ -135,7 +152,13 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
-		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) {
+		if (node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression) && !called(node) {
+			if err := l.nodeBufferUnsupportedUse(node); err != nil {
+				found = err
+				return true
+			}
+		}
+		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.nodeProcessMethodObservation(node) && !l.errorCaptureRead(node) && !truthinessUse(node) && !l.methodComparisonUse(node) {
 			// A method read as a value loses its object: this is undefined when it's called.
 			access := node.AsPropertyAccessExpression()
 			if access.Name().Text() == "isPrototypeOf" && l.libraryMember(node) {

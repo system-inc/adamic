@@ -10,11 +10,12 @@ import (
 func TestLibraryStringRefusals(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, reason string }{
+		{"box", "const box = new String('x');", "String internal slots"},
+		{"hidden primitive", "function f(object: { readonly marker: number }): string { return String(object); }", "hidden by the object view"},
+		{"mixed collection", "function f(value: Map<string, number> | Set<number>): string { return String(value); }", "mixed Map and Set"},
 		{"detached", "const trim = String.prototype.trim;\nconsole.log(trim());\n", "method read as a value"},
-		{"null receiver", "String.prototype.trim.call(null);\n", "null or undefined"},
-		{"undefined receiver", "String.prototype.trim.call(undefined);\n", "null or undefined"},
 		{"String internal slot", "String.prototype.valueOf.call(42);\n", "requires a String internal slot"},
-		{"object conversion", "console.log(String({ value: 1 }));\n", "ToPrimitive is not lowered"},
+		{"object conversion", "console.log(String(() => 1));\n", "ToPrimitive is not lowered"},
 		{"collation", "console.log(`${'Z'.localeCompare('a')}`);\n", "locale collation"},
 		{"loose inequality", "function different(left: string, right: string): boolean { return left != right; }\nconsole.log(`${different('a', 'b')}`);\n", "refuses !="},
 		{"first class constructor", "const convert = String;\nconsole.log(convert(42));\n", "String as a value outside equality or typeof"},
@@ -27,5 +28,26 @@ func TestLibraryStringRefusals(t *testing.T) {
 				t.Fatalf("want refusal containing %q, got %v", probe.reason, err)
 			}
 		})
+	}
+}
+
+func TestLibraryStringRangeErrorsLower(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		"try { String.fromCodePoint(-1); } catch {}",
+		"try { String.fromCodePoint(0x110000); } catch {}",
+		"try { String.fromCodePoint(0.5); } catch {}",
+		"try { String.fromCodePoint(NaN); } catch {}",
+		"try { String.fromCodePoint(Infinity); } catch {}",
+		"function f(): string { return String.fromCodePoint(-1); } try { f(); } catch {}",
+		"const f = () => String.fromCodePoint(-1); try { f(); } catch {}",
+		"const codes = [65]; try { String.fromCodePoint(...codes); } catch {}",
+	} {
+		if _, err := lowerSource(t, source); err != nil {
+			t.Fatalf("want catchable RangeError lowering for %q, got %v", source, err)
+		}
+	}
+	if _, err := lowerSource(t, "try { String.fromCodePoint(0, 0x10ffff); } catch {}"); err != nil {
+		t.Fatal(err)
 	}
 }

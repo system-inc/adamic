@@ -5,7 +5,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-static uint64_t regex_step_limit;
+// The test/embedding budget may be changed while workers match.
+static _Atomic uint64_t regex_step_limit;
+static _Atomic int regex_regular_mode = 1;
+void adamic_regex_set_regular_enabled(bool enabled) { regex_regular_mode = enabled ? 1 : 0; }
+void adamic_regex_set_regular_mode(int mode) { regex_regular_mode = mode; }
 void adamic_regex_set_step_limit(uint64_t limit) { regex_step_limit = limit; }
 static void *regex_memory(size_t size) {
 	void *memory = malloc(size == 0 ? 1 : size);
@@ -19,6 +23,8 @@ static bool high(uint16_t c) { return c >= 0xd800 && c <= 0xdbff; }
 static bool low(uint16_t c) { return c >= 0xdc00 && c <= 0xdfff; }
 static bool regex_read(const uint16_t *input, size_t length, ptrdiff_t at, int direction,
 					   bool unicode, uint32_t *point, ptrdiff_t *next) {
+	if (unicode && at > 0 && (size_t)at < length && high(input[at - 1]) && low(input[at]))
+		return false;
 	if (direction > 0) {
 		if ((size_t)at >= length)
 			return false;
@@ -80,6 +86,17 @@ static bool regex_contains(const adamic_regex_instruction *i, uint32_t c) {
 			end = mid;
 	}
 	return first < i->range_count && i->ranges[first].first <= c;
+}
+// Keep the VM's helpers local so clang can specialize them. The regular
+// engine shares their semantics through these out-of-line entry points.
+bool adamic_regex_read(const uint16_t *input, size_t length, ptrdiff_t at, int direction,
+					   bool unicode, uint32_t *point, ptrdiff_t *next) {
+	return regex_read(input, length, at, direction, unicode, point, next);
+}
+uint32_t adamic_regex_canonical(uint32_t c, unsigned flags) { return regex_canonical(c, flags); }
+bool adamic_regex_word(uint32_t c, unsigned flags) { return regex_word(c, flags); }
+bool adamic_regex_contains(const adamic_regex_instruction *i, uint32_t c) {
+	return regex_contains(i, c);
 }
 typedef struct {
 	uint64_t count;
@@ -184,7 +201,8 @@ static bool regex_run(const adamic_regex_program *p, const uint16_t *input, size
 	regex_state *stack = NULL;
 	bool matched = false;
 	for (;;) {
-		if (regex_step_limit && *steps >= regex_step_limit) {
+		uint64_t limit = regex_step_limit;
+		if (limit != 0 && *steps >= limit) {
 			static const char message[] = "regexp: instruction step limit exceeded";
 			adamic_panic(message, sizeof message - 1);
 		}
@@ -248,6 +266,13 @@ static bool regex_run(const adamic_regex_program *p, const uint16_t *input, size
 				}
 				positions[j] = value;
 			}
+			// A class is a set: equal endpoints are one alternative, including strings
+			// equal after Canonicalize. Repeating duplicate choices is exponential.
+			size_t unique = 0;
+			for (size_t k = 0; k < count; k++)
+				if (unique == 0 || positions[k] != positions[unique - 1])
+					positions[unique++] = positions[k];
+			count = unique;
 			if (count == 0)
 				failed = true;
 			else {
@@ -418,6 +443,35 @@ adamic_object *adamic_regex_new(const adamic_regex_program *program, adamic_stri
 	result->slots[7].boolean = (program->flags & 4) != 0 && !(program->flags & 64);
 	return result;
 }
+#ifdef ADAMIC_REGEXP_RUNTIME_OWNER
+/* Private counted storage keeps dynamic instructions and group shapes alive,
+ * including across matchAll/split clones and escaped named-group dictionaries. */
+static const char *const regex_owned_names[] = {"__program","lastIndex","source","flags","global","ignoreCase","multiline","unicode","sticky","hasIndices","unicodeSets","dotAll","#compiler"};
+static const bool regex_owned_references[] = {false,false,true,true,false,false,false,false,false,false,false,false,true};
+static const adamic_shape regex_owned_shape = {13,regex_owned_names,regex_owned_references,NULL};
+adamic_object *adamic_regex_new_owned(const adamic_regex_program *program,adamic_string *source,adamic_string *flags,adamic_array *storage) {
+    adamic_object *plain=adamic_regex_new(program,source,flags);
+    adamic_object *result=adamic_object_new(&regex_owned_shape);
+    memcpy(result->slots,plain->slots,12*sizeof(*result->slots));
+    result->slots[2].reference=adamic_retain(source);result->slots[3].reference=adamic_retain(flags);
+    result->slots[12].reference=adamic_retain(storage);adamic_release(plain);return result;
+}
+static adamic_array *regex_storage(const adamic_object *regex) {
+    return regex->shape==&regex_owned_shape ? regex->slots[12].reference : NULL;
+}
+static adamic_object *regex_copy_object(adamic_object *regex) {
+    const adamic_regex_program *program=regex->slots[0].reference;
+    adamic_array *storage=regex_storage(regex);
+    return storage==NULL ? adamic_regex_new(program,regex->slots[2].reference,regex->slots[3].reference) : adamic_regex_new_owned(program,regex->slots[2].reference,regex->slots[3].reference,storage);
+}
+#define REGEX_STORAGE_PARAMETER , adamic_array *storage
+#define REGEX_STORAGE_ARGUMENT(regex) , regex_storage(regex)
+#define REGEX_GROUP_STORAGE , storage
+#else
+#define REGEX_STORAGE_PARAMETER
+#define REGEX_STORAGE_ARGUMENT(regex)
+#define REGEX_GROUP_STORAGE
+#endif
 static const adamic_regex_program *regex_program(adamic_object *regex) {
 	return regex->slots[0].reference;
 }
@@ -426,10 +480,23 @@ static size_t regex_to_length(double value) {
 		return 0;
 	return (size_t)fmin(trunc(value), 9007199254740991.0);
 }
-static uint16_t *regex_input(adamic_string *input, size_t *length) {
+static const uint16_t *regex_input(adamic_string *input, size_t *length) {
+	const uint16_t *cached = adamic_string_utf16_view(input);
+	if (cached != NULL) {
+		*length = adamic_string_units(input);
+		return cached;
+	}
 	// Decode immutable WTF-8 once, preserving lone surrogates and pair halves.
 	// Repeated charCodeAt calls otherwise redo UTF-16-to-byte index lookups.
 	uint16_t *units = regex_memory(input->length * sizeof *units);
+	// Cached ASCII strings need only widening, not a branch at every byte. This
+	// loop can be vectorized; the general WTF-8 decoder remains below.
+	if (input->units == input->length + 1) {
+		for (size_t at = 0; at < input->length; at++)
+			units[at] = (unsigned char)input->bytes[at];
+		*length = input->length;
+		return units;
+	}
 	*length = 0;
 	for (size_t at = 0; at < input->length;) {
 		uint32_t point = (unsigned char)input->bytes[at++];
@@ -447,8 +514,14 @@ static uint16_t *regex_input(adamic_string *input, size_t *length) {
 	}
 	return units;
 }
-static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, size_t length,
-								bool force_sticky, uint64_t *steps) {
+static void regex_input_free(adamic_string *input, const uint16_t *units) {
+	if (units != adamic_string_utf16_view(input))
+		free((void *)units);
+}
+static size_t regex_advance(const uint16_t *units, size_t length, size_t at, bool unicode);
+static inline __attribute__((always_inline)) ptrdiff_t *
+regex_execute_kernel(adamic_object *regex, const uint16_t *input, size_t length, bool force_sticky,
+					 uint64_t *steps, bool enhanced) {
 	const adamic_regex_program *p = regex_program(regex);
 	regex_workspace workspace;
 	workspace.free_frames = NULL;
@@ -456,18 +529,53 @@ static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, siz
 	ADAMIC_CHECK_STACK();
 	bool stateful = (p->flags & 24) != 0 || force_sticky;
 	size_t start = stateful ? regex_to_length(regex->slots[1].number) : 0;
+	size_t requested = start;
+	// V8 rewinds an initial pair interior, then permits assertion-only paths
+	// at that UTF-16 position if the rewound attempt failed. ECMA-262
+	// 22.2.2.2/22.2.7.2 instead describe a code-point Input with no interior.
+	if ((p->flags & 4) && start > 0 && start < length && high(input[start - 1]) && low(input[start]))
+		start--;
 	ptrdiff_t *captures = regex_memory(2 * (p->captures + 1) * sizeof *captures);
 	while (start <= length) {
 		ptrdiff_t at = (ptrdiff_t)start;
-		if ((p->flags & 4) && at > 0 && (size_t)at < length && high(input[at - 1]) &&
-			low(input[at]))
-			at--;
 		if (p->anchored && at != 0)
 			break;
+		bool regular = enhanced && p->regular != NULL && regex_step_limit == 0 &&
+					   regex_regular_mode != 0 &&
+					   (regex_regular_mode == 2 || (length >= 2048 && p->fast_ascii == NULL));
+		if (regular) {
+			at = adamic_regex_regular_find(p, input, length, (size_t)at,
+										   (p->flags & 16) || force_sticky);
+			if (at < 0)
+				break;
+		}
+		if (enhanced && p->before_count != 0 && !((p->flags & 16) || force_sticky)) {
+			size_t scan = (size_t)at > p->before_count ? (size_t)at - p->before_count : 0;
+			bool found_context = false;
+			while (scan + p->before_count <= length) {
+				const unsigned char *base = (const unsigned char *)(input + scan);
+				const unsigned char *hit =
+					memchr(base, (unsigned char)p->before[0], (length - scan) * sizeof *input);
+				if (hit == NULL)
+					break;
+				scan += (size_t)(hit - base) / sizeof *input;
+				if (scan + p->before_count <= length &&
+					memcmp(input + scan, p->before, p->before_count * sizeof *input) == 0 &&
+					scan + p->before_count >= (size_t)at) {
+					at = (ptrdiff_t)(scan + p->before_count);
+					found_context = true;
+					break;
+				}
+				scan++;
+			}
+			if (!found_context)
+				break;
+		}
 		for (size_t k = 0; k < 2 * (p->captures + 1); k++)
 			captures[k] = -1;
 		captures[0] = at;
-		if (!p->anchored && !((p->flags & 16) || force_sticky)) {
+		if (!regular && (!enhanced || p->before_count == 0) && !p->anchored &&
+			!((p->flags & 16) || force_sticky)) {
 			while ((size_t)at < length) {
 				uint16_t c = input[at];
 				bool possible = !p->filter_first || c >= 128 ||
@@ -489,10 +597,7 @@ static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, siz
 					}
 					at += 1 + (ptrdiff_t)((found - base) / sizeof *input);
 				} else {
-					uint32_t point;
-					ptrdiff_t next;
-					regex_read(input, length, at, 1, p->flags & 4, &point, &next);
-					at = next;
+					at = (ptrdiff_t)regex_advance(input, length, (size_t)at, (p->flags & 4) != 0);
 				}
 			}
 			captures[0] = at;
@@ -506,13 +611,14 @@ static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, siz
 			regex_workspace_destroy(&workspace);
 			return captures;
 		}
-		if (p->anchored || (p->flags & 16) || force_sticky)
+		if ((size_t)at >= length)
 			break;
-		uint32_t c;
-		ptrdiff_t next;
-		if (!regex_read(input, length, at, 1, p->flags & 4, &c, &next))
+		if (p->anchored || (((p->flags & 16) || force_sticky) && start >= requested))
 			break;
-		start = (size_t)next;
+		// Irregexp can accept \B or (?!\W) inside a pair. Unlike the
+		// code-point walk in 22.2.7.3 AdvanceStringIndex, try each code unit;
+		// regex_read still rejects consuming a half of a Unicode pair.
+		start = (size_t)at + 1;
 	}
 	if (stateful)
 		regex->slots[1].number = 0;
@@ -520,13 +626,36 @@ static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, siz
 	regex_workspace_destroy(&workspace);
 	return NULL;
 }
+// Compile separate kernels so short VM searches have no regular-engine or
+// lookbehind-filter checks inside their per-candidate loop.
+static __attribute__((noinline)) ptrdiff_t *regex_execute_vm(adamic_object *regex,
+															 const uint16_t *input, size_t length,
+															 bool force_sticky, uint64_t *steps) {
+	return regex_execute_kernel(regex, input, length, force_sticky, steps, false);
+}
+static __attribute__((noinline)) ptrdiff_t *regex_execute_enhanced(adamic_object *regex,
+																   const uint16_t *input,
+																   size_t length, bool force_sticky,
+																   uint64_t *steps) {
+	return regex_execute_kernel(regex, input, length, force_sticky, steps, true);
+}
+static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, size_t length,
+								bool force_sticky, uint64_t *steps) {
+	if (regex_step_limit == 0 && (length >= 2048 || regex_regular_mode == 2))
+		return regex_execute_enhanced(regex, input, length, force_sticky, steps);
+	return regex_execute_vm(regex, input, length, force_sticky, steps);
+}
 static const char *const match_names[] = {"index", "input", "groups", "indices"};
 static const bool match_references[] = {false, true, true, true};
 static const adamic_shape match_shape = {4, match_names, match_references, NULL};
-static adamic_object *regex_groups(const adamic_regex_program *p, adamic_array *captures) {
+static adamic_object *regex_groups(const adamic_regex_program *p, adamic_array *captures REGEX_STORAGE_PARAMETER) {
 	if (p->group_count == 0)
 		return NULL;
 	adamic_object *groups = adamic_object_new(p->group_shape);
+
+#ifdef ADAMIC_REGEXP_RUNTIME_OWNER
+ if(storage!=NULL)groups->slots[p->group_count].reference=adamic_retain(storage);
+#endif
 	for (size_t k = 0; k < p->group_count; k++) {
 		for (size_t j = 0; j < p->groups[k].count; j++) {
 			void *value = captures->elements[p->groups[k].captures[j]].reference;
@@ -542,7 +671,7 @@ static const char *const pair_names[] = {"0", "1"};
 static const bool pair_references[] = {false, false};
 static const adamic_shape pair_shape = {2, pair_names, pair_references, NULL};
 static adamic_array *regex_result(const adamic_regex_program *p, adamic_string *input,
-								  const ptrdiff_t *spans) {
+								  const ptrdiff_t *spans REGEX_STORAGE_PARAMETER) {
 	adamic_array *result = adamic_array_new(p->captures + 1, true);
 	for (size_t k = 0; k <= p->captures; k++) {
 		adamic_string *value =
@@ -554,7 +683,7 @@ static adamic_array *regex_result(const adamic_regex_program *p, adamic_string *
 	result->properties = adamic_object_new(&match_shape);
 	result->properties->slots[0].number = (double)spans[0];
 	result->properties->slots[1].reference = adamic_retain(input);
-	result->properties->slots[2].reference = regex_groups(p, result);
+	result->properties->slots[2].reference = regex_groups(p, result REGEX_GROUP_STORAGE);
 	if (p->flags & 32) {
 		adamic_array *indices = adamic_array_new(p->captures + 1, true);
 		for (size_t k = 0; k <= p->captures; k++) {
@@ -567,7 +696,7 @@ static adamic_array *regex_result(const adamic_regex_program *p, adamic_string *
 			adamic_array_push(indices, (adamic_value){.reference = pair});
 		}
 		indices->properties = adamic_object_new(&match_shape);
-		indices->properties->slots[2].reference = regex_groups(p, indices);
+		indices->properties->slots[2].reference = regex_groups(p, indices REGEX_GROUP_STORAGE);
 		result->properties->slots[3].reference = indices;
 	}
 	return result;
@@ -589,6 +718,10 @@ void *adamic_regex_group_lookup(adamic_object *object, const char *name, bool op
 		static const char message[] = "undefined named-group dictionary";
 		adamic_panic(message, sizeof message - 1);
 	}
+#ifdef ADAMIC_REGEXP_RUNTIME_OWNER
+ // Capture identifiers cannot begin with #. Private ownership is not a group.
+ if(name[0]=='#')return NULL;
+#endif
 	for (size_t k = 0; k < object->shape->count; k++)
 		if (strcmp(name, object->shape->names[k]) == 0)
 			return object->slots[k].reference;
@@ -608,64 +741,75 @@ adamic_value adamic_regex_property(adamic_array *array, const char *name) {
 }
 adamic_array *adamic_regex_exec(adamic_object *regex, adamic_string *input) {
 	size_t length;
-	uint16_t *units = regex_input(input, &length);
+	const uint16_t *units = regex_input(input, &length);
 	uint64_t steps = 0;
 	ptrdiff_t *spans = regex_execute(regex, units, length, false, &steps);
-	free(units);
+	regex_input_free(input, units);
 	if (spans == NULL)
 		return NULL;
-	adamic_array *result = regex_result(regex_program(regex), input, spans);
+	adamic_array *result = regex_result(regex_program(regex), input, spans REGEX_STORAGE_ARGUMENT(regex));
 	free(spans);
 	return result;
 }
-bool adamic_regex_test(adamic_object *regex, adamic_string *input) {
+static __attribute__((noinline)) bool regex_test_general(adamic_object *regex, adamic_string *input,
+														 size_t ascii_length) {
 	const adamic_regex_program *p = regex_program(regex);
-	size_t ascii_length = (size_t)adamic_string_length(input);
-	if (p->fast_ascii != NULL && p->captures < 16 && regex_step_limit == 0 &&
+	ptrdiff_t first = -2;
+	if (p->first_ascii_position != NULL && !(p->flags & 16) && regex_step_limit == 0 &&
 		input->units == input->length + 1) {
-		bool stateful = (p->flags & 24) != 0;
-		size_t start = stateful ? regex_to_length(regex->slots[1].number) : 0;
-		const unsigned char *bytes = (const unsigned char *)input->bytes;
-		ptrdiff_t captures[32];
-		uint64_t steps = 0;
-		while (start <= ascii_length) {
-			if (p->anchored && start != 0)
-				break;
-			if (!p->anchored && !(p->flags & 16)) {
-				if (p->prefix_count != 0) {
-					const unsigned char *found =
-						memchr(bytes + start, (unsigned char)p->prefix[0], ascii_length - start);
-					if (found == NULL)
-						break;
-					start = (size_t)(found - bytes);
-				} else if (p->filter_first) {
-					while (start < ascii_length && !(p->first_ascii[bytes[start] / 64] &
-													 (UINT64_C(1) << (bytes[start] % 64))))
-						start++;
-				}
-			}
-			ptrdiff_t at = (ptrdiff_t)start;
-			if (p->fast_ascii(bytes, ascii_length, &at, captures, &steps)) {
-				if (stateful)
-					regex->slots[1].number = (double)at;
-				return true;
-			}
-			if (p->anchored || (p->flags & 16))
-				break;
-			start++;
+		size_t start = (p->flags & 8) ? regex_to_length(regex->slots[1].number) : 0;
+		first = p->first_ascii_position((const unsigned char *)input->bytes, ascii_length, start);
+		if (first < 0) {
+			if (p->flags & 8)
+				regex->slots[1].number = 0;
+			return false;
 		}
-		if (stateful)
-			regex->slots[1].number = 0;
-		return false;
+	}
+
+	if (p->regular != NULL && (p->fast_ascii == NULL || regex_regular_mode == 2) &&
+		!(p->flags & 24) && regex_step_limit == 0 && regex_regular_mode != 0 &&
+		(regex_regular_mode == 2 || ascii_length >= 2048) && input->units == input->length + 1) {
+		int result =
+			adamic_regex_regular_ascii(p, (const unsigned char *)input->bytes, ascii_length);
+		if (result >= 0)
+			return result != 0;
 	}
 	size_t length;
-	uint16_t *units = regex_input(input, &length);
+	const uint16_t *units = regex_input(input, &length);
 	uint64_t steps = 0;
 	ptrdiff_t *spans = regex_execute(regex, units, length, false, &steps);
 	bool result = spans != NULL;
 	free(spans);
-	free(units);
+	regex_input_free(input, units);
 	return result;
+}
+bool adamic_regex_test(adamic_object *regex, adamic_string *input) {
+	const adamic_regex_program *p = regex_program(regex);
+	size_t ascii_length = input->units != 0 ? input->units - 1 : adamic_string_units(input);
+	if (p->test_ascii != NULL && regex_step_limit == 0 && input->units == input->length + 1) {
+		bool stateful = (p->flags & 24) != 0;
+		ptrdiff_t at = stateful ? (ptrdiff_t)regex_to_length(regex->slots[1].number) : 0;
+		// Reject absent prefixes before the indirect callback. Most literal
+		// searches fail here, so they need no per-pattern call at all.
+		if (p->test_prefix) {
+			const unsigned char *bytes = (const unsigned char *)input->bytes;
+			const unsigned char *found =
+				(size_t)at > ascii_length
+					? NULL
+					: memchr(bytes + at, (unsigned char)p->prefix[0], ascii_length - (size_t)at);
+			if (found == NULL) {
+				if (stateful)
+					regex->slots[1].number = 0;
+				return false;
+			}
+			at = (ptrdiff_t)(found - bytes);
+		}
+		bool matched = p->test_ascii((const unsigned char *)input->bytes, ascii_length, &at);
+		if (stateful)
+			regex->slots[1].number = matched ? (double)at : 0;
+		return matched;
+	}
+	return regex_test_general(regex, input, ascii_length);
 }
 static size_t regex_advance(const uint16_t *units, size_t length, size_t at, bool unicode) {
 	return unicode && at + 1 < length && high(units[at]) && low(units[at + 1]) ? at + 2 : at + 1;
@@ -677,7 +821,7 @@ adamic_array *adamic_regex_match(adamic_string *input, adamic_object *regex) {
 	regex->slots[1].number = 0;
 	adamic_array *result = adamic_array_new(0, true);
 	size_t length;
-	uint16_t *units = regex_input(input, &length);
+	const uint16_t *units = regex_input(input, &length);
 	uint64_t steps = 0;
 	for (;;) {
 		ptrdiff_t *spans = regex_execute(regex, units, length, false, &steps);
@@ -691,7 +835,7 @@ adamic_array *adamic_regex_match(adamic_string *input, adamic_object *regex) {
 				units, length, regex_to_length(regex->slots[1].number), p->flags & 4);
 		free(spans);
 	}
-	free(units);
+	regex_input_free(input, units);
 	if (result->length == 0) {
 		adamic_release(result);
 		return NULL;
@@ -709,7 +853,11 @@ adamic_object *adamic_regex_match_all(adamic_string *input, adamic_object *regex
 	const adamic_regex_program *p = regex_program(regex);
 	regex_require_global(
 		p, "TypeError: String.prototype.matchAll called with a non-global RegExp argument");
-	adamic_object *copy = adamic_regex_new(p, regex->slots[2].reference, regex->slots[3].reference);
+	#ifdef ADAMIC_REGEXP_RUNTIME_OWNER
+ adamic_object *copy = regex_copy_object(regex);
+#else
+ adamic_object *copy = adamic_regex_new(p, regex->slots[2].reference, regex->slots[3].reference);
+#endif
 	copy->slots[1].number = (double)regex_to_length(regex->slots[1].number);
 	adamic_object *iterator = adamic_object_new(&iterator_shape);
 	iterator->slots[0].reference = copy;
@@ -728,11 +876,11 @@ adamic_array *adamic_regex_iterator_step(adamic_object *iterator) {
 		adamic_string *whole = result->elements[0].reference;
 		if (adamic_string_length(whole) == 0) {
 			size_t length;
-			uint16_t *units = regex_input(input, &length);
+			const uint16_t *units = regex_input(input, &length);
 			regex->slots[1].number =
 				(double)regex_advance(units, length, regex_to_length(regex->slots[1].number),
 									  regex_program(regex)->flags & 4);
-			free(units);
+			regex_input_free(input, units);
 		}
 	}
 	return result;
@@ -751,24 +899,28 @@ double adamic_regex_search(adamic_string *input, adamic_object *regex) {
 	double previous = regex->slots[1].number;
 	regex->slots[1].number = 0;
 	size_t length;
-	uint16_t *units = regex_input(input, &length);
+	const uint16_t *units = regex_input(input, &length);
 	uint64_t steps = 0;
 	ptrdiff_t *spans = regex_execute(regex, units, length, false, &steps);
 	double result = spans == NULL ? -1 : (double)spans[0];
 	free(spans);
-	free(units);
+	regex_input_free(input, units);
 	regex->slots[1].number = previous;
 	return result;
 }
-adamic_array *adamic_regex_split(adamic_string *input, adamic_object *regex, double limit_value) {
+adamic_array *adamic_regex_split(adamic_string *input, adamic_object *regex, double limit_value, bool default_limit) {
 	adamic_array *result = adamic_array_new(0, true);
 	uint32_t limit = (uint32_t)adamic_shift_right_unsigned(limit_value, 0);
 	if (limit == 0)
 		return result;
 	const adamic_regex_program *p = regex_program(regex);
-	adamic_object *copy = adamic_regex_new(p, regex->slots[2].reference, regex->slots[3].reference);
+	#ifdef ADAMIC_REGEXP_RUNTIME_OWNER
+ adamic_object *copy = regex_copy_object(regex);
+#else
+ adamic_object *copy = adamic_regex_new(p, regex->slots[2].reference, regex->slots[3].reference);
+#endif
 	size_t length;
-	uint16_t *units = regex_input(input, &length);
+	const uint16_t *units = regex_input(input, &length);
 	uint64_t steps = 0;
 	size_t previous = 0, at = 0;
 	if (length == 0) {
@@ -782,7 +934,11 @@ adamic_array *adamic_regex_split(adamic_string *input, adamic_object *regex, dou
 		copy->slots[1].number = (double)at;
 		ptrdiff_t *spans = regex_execute(copy, units, length, true, &steps);
 		if (spans == NULL) {
-			at = regex_advance(units, length, at, p->flags & 4);
+			// V8's split fast path scans UTF-16 candidates, unlike ECMA-262
+			// 22.2.6.14's AdvanceStringIndex. A HeapNumber limit uses its generic
+			// path under u; v retains code-unit candidate scanning there too.
+			at = default_limit || (p->flags & 64) ? at + 1
+				: regex_advance(units, length, at, p->flags & 4);
 			continue;
 		}
 		size_t end = (size_t)spans[1];
@@ -816,7 +972,7 @@ adamic_array *adamic_regex_split(adamic_string *input, adamic_object *regex, dou
 	adamic_array_push(result, (adamic_value){.reference = adamic_string_slice(
 												 input, (double)previous, (double)length, true)});
 finished_split:
-	free(units);
+	regex_input_free(input, units);
 	adamic_release(copy);
 	return result;
 }
@@ -925,7 +1081,7 @@ adamic_string *adamic_regex_replace(adamic_string *input, adamic_object *regex,
 	if (global)
 		regex->slots[1].number = 0;
 	size_t length, replacement_length;
-	uint16_t *units = regex_input(input, &length),
+	const uint16_t *units = regex_input(input, &length),
 			 *text = regex_input(replacement, &replacement_length);
 	uint64_t steps = 0;
 	adamic_array *pieces = adamic_array_new(0, true);
@@ -948,7 +1104,7 @@ adamic_string *adamic_regex_replace(adamic_string *input, adamic_object *regex,
 	regex_piece(pieces, input, previous, length);
 	adamic_string *result = adamic_array_join(pieces, &adamic_string_empty, adamic_join_strings);
 	adamic_release(pieces);
-	free(text);
-	free(units);
+	regex_input_free(replacement, text);
+	regex_input_free(input, units);
 	return result;
 }

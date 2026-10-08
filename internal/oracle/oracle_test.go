@@ -13,6 +13,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strconv"
+	"strings"
 	"syscall"
 	"testing"
 	"time"
@@ -38,6 +39,13 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/process_exit_code.a", true, false},
+	{"internal/oracle/testdata/process_exit.a", true, false},
+	{"internal/oracle/testdata/process_exit_default.a", true, false},
+	{"internal/oracle/testdata/process_exit_uncaught.a", true, false},
+	{"internal/oracle/testdata/process_bad_code.a", true, false},
+	{"internal/oracle/testdata/process_observations.a", true, false},
+	{"internal/oracle/testdata/process_shadow.a", true, false},
 	{"internal/oracle/testdata/typeof_null.a", true, false},
 	{"internal/oracle/testdata/route_targets_callbacks.a", true, false},
 	{"internal/oracle/testdata/route_targets_virtual_fresh.a", true, false},
@@ -91,6 +99,20 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/borrow_chain_reassigned.a", true, false},
 	{"internal/oracle/testdata/borrow_chain_capture.a", true, false},
 	{"internal/oracle/testdata/borrow_chain_store.a", true, false},
+	{"internal/oracle/testdata/moves/accepted/objects.a", true, false},
+	{"internal/oracle/testdata/async_plain.a", true, false},
+	{"internal/oracle/testdata/async_coverage_unions.a", true, false},
+	{"internal/oracle/testdata/async_coverage_reject_empty.a", true, false},
+	{"internal/oracle/testdata/async_coverage_parameters.a", true, false},
+	{"internal/oracle/testdata/async_coverage_typeof.a", true, false},
+	{"internal/oracle/testdata/async_coverage_values.a", true, false},
+	{"internal/oracle/testdata/async_coverage_discard.a", true, false},
+	{"internal/oracle/testdata/async_coverage_reject_eager.a", true, false},
+	{"internal/oracle/testdata/async_coverage_reject_nested.a", true, false},
+	{"internal/oracle/testdata/async_typeof.a", true, false},
+	{"internal/oracle/testdata/async_three.a", true, false},
+	{"internal/oracle/testdata/async_nested.a", true, false},
+	{"internal/oracle/testdata/async_throw.a", true, false},
 	{"internal/oracle/testdata/call_targets_element.a", true, false},
 	{"internal/oracle/testdata/call_targets_region.a", true, false},
 	{"internal/oracle/testdata/call_targets_reuse.a", true, false},
@@ -486,6 +508,16 @@ func execute(t *testing.T, name string, arguments ...string) run {
 // name wins, so a sanitizer setting here can't be overridden by one inherited from the shell.
 func executeWith(t *testing.T, environment []string, name string, arguments ...string) run {
 	t.Helper()
+	// These large corpora also run with sanitizers and leak checks in the
+	// parallel oracle. Bound their CPU like long backtracking, rather than
+	// mistaking scheduler delay for failure. The dedicated release timing
+	// test still enforces its three-second CPU budget.
+	for _, component := range strings.Split(t.Name(), "/") {
+		switch component {
+		case "regexp_native_quadratic_exec.a", "regexp_native_quadratic_matchall.a", "regexp_native_quadratic_test.a":
+			return longRegExpRun(t, environment, name, arguments...)
+		}
+	}
 	command := bounded(t, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
@@ -554,6 +586,17 @@ func lowered(t *testing.T, path string) (*ir.Program, error) {
 	return lower.Lower(context.Background(), program)
 }
 
+// nativeVariant is a native build a fixture runs as, each with its own runtime library (identity's
+// libraries, in this order) and its own cached result.
+type nativeVariant int
+
+const (
+	sanitizedBuild nativeVariant = iota
+	releaseBuild
+	countedBuild
+	slabsBuild
+)
+
 // natively builds a lowered program under the sanitizers and runs it. It returns the binary too, so
 // the leak check on Linux can run the same one again.
 //
@@ -566,21 +609,33 @@ func released(t *testing.T, program *ir.Program) run {
 		identity(t).cache.misses[nativeResults].Add(1)
 		return releasedUncached(t, program)
 	}
-	return cachedNative(t, program, true).Run.run()
+	return cachedNative(t, program, releaseBuild).Run.run()
+}
+
+// slabbed builds a lowered program under the sanitizers with the size-class allocator kept on (heap.c),
+// and runs it. The release build runs the classes too, but with nothing to catch a slot read past its
+// class or a class index past the table; here ASan and UBSan watch them. A leak into a chunk can't be
+// seen here (the chunk stays reachable), which is why the comparison build stays on malloc.
+func slabbed(t *testing.T, program *ir.Program) run {
+	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
+		identity(t).cache.misses[nativeResults].Add(1)
+		return slabbedUncached(t, program)
+	}
+	return cachedNative(t, program, slabsBuild).Run.run()
 }
 func natively(t *testing.T, program *ir.Program) (run, string) {
 	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
 		identity(t).cache.misses[nativeResults].Add(1)
 		return nativelyUncached(t, program)
 	}
-	return cachedNative(t, program, false).Run.run(), ""
+	return cachedNative(t, program, sanitizedBuild).Run.run(), ""
 }
 func leaks(t *testing.T, program *ir.Program, sanitized string) string {
 	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
 		identity(t).cache.misses[nativeResults].Add(1)
 		return leaksUncached(t, program, sanitized)
 	}
-	return string(cachedNative(t, program, false).LeakReport)
+	return string(cachedNative(t, program, sanitizedBuild).LeakReport)
 }
 
 func releasedUncached(t *testing.T, program *ir.Program) run {
@@ -590,6 +645,19 @@ func releasedUncached(t *testing.T, program *ir.Program) run {
 		t.Fatal(err)
 	}
 	return execute(t, binary)
+}
+
+func slabbedUncached(t *testing.T, program *ir.Program) run {
+	t.Helper()
+	binary := filepath.Join(t.TempDir(), "slabs")
+	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true, Slabs: true}); err != nil {
+		t.Fatal(err)
+	}
+	var environment []string
+	if runtime.GOOS == "linux" {
+		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
+	}
+	return executeWith(t, environment, binary)
 }
 
 func nativelyUncached(t *testing.T, program *ir.Program) (run, string) {
@@ -727,12 +795,24 @@ func TestNativeAgreesWithNode(t *testing.T) {
 				t.Fatalf("Lower: %v", err)
 			}
 			oracle, backend := onNode(t, path), onJavaScriptBackend(t, program)
+			if usesParallelMap(program) {
+				if difference := disagreement(oracle, backend); difference != "" {
+					t.Fatalf("JavaScript backend: %s", difference)
+				}
+				checkParallelVariants(t, program, oracle)
+				return
+			}
 			native, sanitized := natively(t, program)
 			// The build a user gets (clang -O2, no sanitizers, heap values from the size-class
 			// allocator rather than malloc) must say exactly what the sanitized one did.
 			if released := released(t, program); disagreement(native, released) != "" {
 				t.Errorf("the release build: %s\nsanitized: exit %d, stdout %q, stderr %q\nrelease:   exit %d, stdout %q, stderr %q",
 					disagreement(native, released), native.exitCode, native.stdout, native.stderr, released.exitCode, released.stdout, released.stderr)
+			}
+			// The size classes under the sanitizers must say exactly what malloc did too.
+			if slabbed := slabbed(t, program); disagreement(native, slabbed) != "" {
+				t.Errorf("the sanitized build with the size classes: %s\nsanitized: exit %d, stdout %q, stderr %q\nslabs:     exit %d, stdout %q, stderr %q",
+					disagreement(native, slabbed), native.exitCode, native.stdout, native.stderr, slabbed.exitCode, slabbed.stdout, slabbed.stderr)
 			}
 			if fixture.checked {
 				// The check fires, so the source on Node goes on where Adamic stops: hold native to the
@@ -746,7 +826,7 @@ func TestNativeAgreesWithNode(t *testing.T) {
 				}
 				return
 			}
-			if difference := disagreement(oracle, native); difference != "" {
+			if difference := disagreement(oracle, native); difference != "" && !contractionExplains(t, program, oracle) {
 				t.Errorf("%s\nnode:   exit %d, stdout %q, stderr %q\nnative: exit %d, stdout %q, stderr %q",
 					difference, oracle.exitCode, oracle.stdout, oracle.stderr, native.exitCode, native.stdout, native.stderr)
 			}

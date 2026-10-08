@@ -521,7 +521,7 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 	unique := e.temporary()
 	// Checked before any field's value is evaluated, which can't make anything else hold it: the plan
 	// saw that nothing in this instruction but the literal reads the source, and only its fields.
-	held := fmt.Sprintf("(%s && !%s->frozen)", uniquelyHeld(source), source)
+	held := fmt.Sprintf("(%s && !%s->frozen && !%s->nonextensible && !%s->has_captured_stack)", uniquelyHeld(source), source, source, source)
 	if literal.SpreadMaybeUndefined {
 		// Undefined is nothing to take over: the object is made as JavaScript's {} is (spreadCopy).
 		held = fmt.Sprintf("(%s != NULL && %s)", source, held)
@@ -748,7 +748,7 @@ func (e *emitter) spreadArray(literal ir.ArrayLiteral) (string, bool) {
 // at it. A Weak doesn't count, so a count of 1 alone leaves the Weak's holder able to read or write
 // the value while it's being taken over, and to find the new value at the old one's place after.
 func uniquelyHeld(value string) string {
-	return fmt.Sprintf("(%s->heap.references == 1 && !adamic_weak_held(%s))", value, value)
+	return fmt.Sprintf("(adamic_reference_count(&%s->heap) == 1 && !adamic_weak_held(%s))", value, value)
 }
 
 // callConsumes requires a count to be handed over at this position for every

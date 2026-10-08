@@ -1,0 +1,7 @@
+import { programArguments } from 'adamic';
+const term = programArguments()[0] ?? 'TODO';
+const decoration = programArguments()[1] ?? '[*!]';
+const terms = new RegExp('\\b' + term + '\\b', 'u');
+const decorations = new RegExp('^\\s*(?:' + decoration + ')+', 'u');
+console.log(`${terms.test(' TODO: implement')} ${terms.test('TODOS')}`);
+console.log(`${decorations.test(' ** TODO')} ${decorations.test(' plain')}`);

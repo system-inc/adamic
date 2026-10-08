@@ -73,6 +73,21 @@ func TestThePortParsesAsGoCohereDoes(t *testing.T) {
 			}
 		}
 		agreed := !t.Failed()
+		if agreed && os.Getenv("ADAMIC_CONFIG_TIMING") != "" {
+			binary := filepath.Join(t.TempDir(), "timed")
+			if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+				t.Fatal(err)
+			}
+			for round := 0; round < 3; round++ {
+				started := time.Now()
+				result := execute(t, nil, binary, casesPath)
+				elapsed := time.Since(started)
+				if result.exitCode != 0 || string(result.stdout) != goAnswers {
+					t.Fatal("timed formatter enumeration differs")
+				}
+				t.Logf("formatter native round %d: %.6fs, %.0f files offered/s", round, elapsed.Seconds(), float64(strings.Count(goAnswers, "\nfile "))/elapsed.Seconds())
+			}
+		}
 		if leaked := leaks(t, program, sanitized, casesPath); leaked != "" {
 			t.Errorf("leaks:\n%s", leaked)
 		}
@@ -129,6 +144,11 @@ type mutant struct {
 }
 
 var mutants = []mutant{
+	{name: "lint ignores never match", file: "enumerate.ts", from: "if (glob.matches(fromSettings))", to: "if (false)"},
+	{name: "a file glob pruning a matching directory", file: "enumerate.ts",
+		from: "if (directory && pattern !== '**' && !pattern.endsWith('/**'))", to: "if (false)"},
+	{name: "lint globs relative to the walk instead of settings", file: "enumerate.ts",
+		from: "const fromSettings = rel(layer.from, join(root, relative));", to: "const fromSettings = relative;"},
 	{
 		name: "Adamic files declined instead of held back",
 		file: "enumerate.ts",
@@ -288,11 +308,13 @@ func cohereSide(t *testing.T, request map[string]any) {
 	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
 		t.Fatal(err)
 	}
-	command := bounded(t, "go", "test", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/format/formatfiles")
+	command := bounded(t, "go", "test", "-count=1", "-overlay="+overlayPath, "-v", "-run=^TestAdamicPortCases$", "./internal/format/formatfiles")
 	command.Dir = cohere
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("cohere's side: %v\n%s", err, output)
+	} else {
+		t.Logf("%s", output)
 	}
 }
 
@@ -303,10 +325,18 @@ func portDirectory(t *testing.T, applied *mutant) string {
 	directory := t.TempDir()
 	port := filepath.Join(directory, "formatfiles")
 	gitignore := filepath.Join(directory, "gitignore")
-	for _, made := range []string{port, gitignore} {
+	config := filepath.Join(directory, "config")
+	for _, made := range []string{port, gitignore, config} {
 		if err := os.Mkdir(made, 0o755); err != nil {
 			t.Fatal(err)
 		}
+	}
+	contents, err := os.ReadFile("../config/glob.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(config, "glob.ts"), contents, 0644); err != nil {
+		t.Fatal(err)
 	}
 	for _, name := range gitignoreFiles {
 		contents, err := os.ReadFile(filepath.Join("..", "gitignore", name))

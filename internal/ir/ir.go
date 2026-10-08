@@ -10,6 +10,8 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	Async *AsyncProgram
+
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
 
@@ -729,6 +731,19 @@ type (
 		Depth     int
 	}
 
+	// ParallelMap is structured fork-join; the callback takes item then index.
+	// Its proof belongs to lowering and its native scheduling belongs to the runtime.
+	ParallelMap struct {
+		// Moved is set by lowering only after proving exclusive, disjoint item
+		// graphs and consuming the source binding. Native skips item/result sharing.
+		Moved       bool
+		Items, Work Expression
+		// Shared includes immutable reference globals read by the task's call graph.
+		// They are marking roots, not extra evaluations in the sequential witness.
+		Shared []Expression
+		Result Type
+	}
+
 	// ReadTextFile is readTextFile(Path) from 'adamic': the file's bytes decoded as UTF-8 the way
 	// Node's readFileSync(path, 'utf8') decodes them, in { kind: 'Ok', text }, or what went wrong in
 	// { kind: 'Error', message }, a message in Adamic's own words.
@@ -757,6 +772,9 @@ type (
 	// and size of what Path names, a symbolic link followed, and whether Path is itself one, or
 	// { kind: 'Error', message }.
 	FileStatus struct{ Path Expression }
+
+	// RealPath is realPath(Path): canonical filesystem path, or an error value.
+	RealPath struct{ Path Expression }
 )
 
 // Field is one field of an object literal.
@@ -888,7 +906,7 @@ func (c StringCall) Type() Type {
 		return MaybeNumber
 	case "indexOf", "lastIndexOf":
 		return Number
-	case "includes", "startsWith", "endsWith":
+	case "includes", "startsWith", "endsWith", "isWellFormed":
 		return Boolean
 	case "split":
 		return Array
@@ -902,6 +920,7 @@ func (Utf8At) Type() Type           { return Number }
 func (WriteTextFile) Type() Type    { return Object }
 func (ReadDirectory) Type() Type    { return Object }
 func (FileStatus) Type() Type       { return Object }
+func (RealPath) Type() Type         { return Object }
 
 func (MapNew) Type() Type     { return Map }
 func (MapKeys) Type() Type    { return Array }
@@ -1150,3 +1169,5 @@ func (p *Program) HasInheritance() bool {
 	}
 	return false
 }
+
+func (ParallelMap) Type() Type { return Array }

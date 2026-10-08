@@ -130,6 +130,9 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				l.staticStorage(statement)
 			}
 		case ast.KindFunctionDeclaration:
+			if nodeCryptoAmbientHashDeclaration(statement) {
+				continue
+			}
 			symbol := l.symbol(statement.Name())
 			if len(statement.TypeParameters()) > 0 {
 				// A generic function is lowered once per instantiation, where it's called (generic.go).

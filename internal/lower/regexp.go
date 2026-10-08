@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"errors"
 	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -33,17 +34,36 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 			return nil, l.notYet(node, "RegExp with more than two arguments")
 		}
 		if len(args) > 0 {
-			var ok bool
-			pattern, ok = l.constantPattern(args[0], 0)
-			if !ok {
-				return nil, l.notYet(args[0], "RegExp with a nonconstant pattern")
+			if l.constantUndefined(args[0], 0) {
+				pattern = ""
+			} else if l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(args[0])), "RegExp") {
+				var ok bool
+				pattern, flags, ok = l.constantRegExp(args[0], 0)
+				if !ok {
+					return nil, l.notYet(args[0], "RegExp with a nonconstant RegExp source")
+				}
+				// RegExp(re) preserves identity; new RegExp(re) makes a fresh
+				// object. Only an intrinsic undefined can be omitted without
+				// evaluating a second argument (including its possible TDZ).
+				if node.Kind == ast.KindCallExpression && (len(args) == 1 || l.intrinsicUndefined(args[1])) {
+					return l.expression(args[0])
+				}
+				if node.Kind == ast.KindCallExpression && len(args) == 2 && l.checker.GetTypeAtLocation(args[1]).Flags()&checker.TypeFlagsUndefined != 0 {
+					return nil, l.notYet(node, "RegExp identity construction with an evaluated undefined flag")
+				}
+			} else {
+				var ok bool
+				pattern, ok = l.constantPattern(args[0], 0)
+				if !ok {
+					return l.dynamicRegExp(node, args)
+				}
 			}
 		}
-		if len(args) > 1 {
+		if len(args) > 1 && !l.constantUndefined(args[1], 0) {
 			var ok bool
 			flags, ok = l.constantPattern(args[1], 0)
 			if !ok {
-				return nil, l.notYet(args[1], "RegExp with nonconstant flags")
+				return l.dynamicRegExp(node, args)
 			}
 		}
 		for _, arg := range args {
@@ -56,7 +76,11 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 	}
 	program, err := regex.Compile(pattern, flags)
 	if err != nil {
-		return nil, fmt.Errorf("%s: invalid RegExp: %w", l.program.Where(node), err)
+		var divergence *regex.V8DivergenceError
+		if errors.As(err, &divergence) {
+			return nil, l.notYet(node, divergence.Error())
+		}
+		return nil, l.notYet(node, "a RegExp constructor that throws SyntaxError: "+err.Error())
 	}
 	index := len(l.result.Regexps)
 	declarations, err := program.NativeDeclarations(fmt.Sprintf("adamic_regex_%d", index))
@@ -82,13 +106,10 @@ func (l *lowering) constantPattern(node *ast.Node, depth int) (string, bool) {
 	case ast.KindStringLiteral, ast.KindNoSubstitutionTemplateLiteral:
 		return node.Text(), true
 	case ast.KindIdentifier:
-		if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
-			return "", true
-		}
 		symbol := l.symbol(node)
 		if symbol != nil && len(symbol.Declarations) == 1 {
 			declaration := symbol.Declarations[0]
-			if declaration.Kind == ast.KindVariableDeclaration && declaration.Parent != nil && declaration.Parent.Flags&ast.NodeFlagsConst != 0 && declaration.AsVariableDeclaration().Initializer != nil {
+			if declaration.Kind == ast.KindVariableDeclaration && declaration.Parent != nil && declaration.AsVariableDeclaration().Initializer != nil && l.regexStableBinding(symbol, declaration) {
 				return l.constantPattern(declaration.AsVariableDeclaration().Initializer, depth+1)
 			}
 		}
@@ -193,19 +214,18 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	if name == "split" {
 		if len(arguments) == 1 {
-			arguments = append(arguments, ir.NumberConstant{Value: 4294967295})
+			arguments = append(arguments, ir.Undefined{})
 		}
+		undefined := false
 		if len(arguments) == 2 {
-			if _, undefined := arguments[1].(ir.Undefined); undefined {
-				arguments[1] = ir.NumberConstant{Value: 4294967295}
-			}
-			if arguments[1].Type() == ir.MaybeNumber {
-				arguments[1] = ir.Coalesce{Value: arguments[1], Fallback: ir.NumberConstant{Value: 4294967295}, Of: ir.Number}
-			}
+			_, undefined = arguments[1].(ir.Undefined)
 		}
-		if len(arguments) != 2 || arguments[1].Type() != ir.Number {
+		if len(arguments) != 2 || !undefined && arguments[1].Type() != ir.Number && arguments[1].Type() != ir.MaybeNumber {
 			return nil, true, l.notYet(node, "regex split limit other than a number")
 		}
+	}
+	if name == "split" && !l.regexSplitLimitProven(args[0], arguments[1]) {
+		return nil, true, l.notYet(node, "RegExp split numeric limit with unproved V8 Smi representation at a Unicode assertion")
 	}
 	if callee.AsPropertyAccessExpression().QuestionDotToken != nil {
 		return nil, true, l.notYet(node, "an optional RegExp call")
@@ -296,9 +316,14 @@ func (l *lowering) regexUnsupportedUse(node *ast.Node) error {
 	if parent.Kind == ast.KindSpreadAssignment {
 		return l.notYet(parent, "spreading a RegExp or its iterator")
 	}
-	if parent.Kind == ast.KindPropertyAccessExpression && parent.Parent != nil && parent.Parent.Kind == ast.KindBinaryExpression {
+	if (parent.Kind == ast.KindPropertyAccessExpression || parent.Kind == ast.KindElementAccessExpression) && parent.Parent != nil && parent.Parent.Kind == ast.KindBinaryExpression {
 		assignment := parent.Parent.AsBinaryExpression()
-		if assignment.Left == parent && assignment.OperatorToken.Kind == ast.KindEqualsToken && (parent.Name().Text() != "lastIndex" || l.regexGroups(node)) {
+		lastIndex := parent.Kind == ast.KindPropertyAccessExpression && parent.Name().Text() == "lastIndex"
+		if parent.Kind == ast.KindElementAccessExpression {
+			key := ast.SkipParentheses(parent.AsElementAccessExpression().ArgumentExpression)
+			lastIndex = key.Kind == ast.KindStringLiteral && key.Text() == "lastIndex"
+		}
+		if assignment.Left == parent && ast.IsAssignmentOperator(assignment.OperatorToken.Kind) && (!lastIndex || l.regexGroups(node)) {
 			return l.notYet(parent, "overriding a RegExp or iterator property")
 		}
 	}

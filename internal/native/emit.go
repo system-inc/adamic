@@ -20,6 +20,9 @@ import (
 // retain and a release on every assignment for that simplicity; removing them where they cancel is
 // the memory model's work, measured against this.
 func C(program *ir.Program) string {
+	if program.Async != nil {
+		return asyncC(program)
+	}
 	return cProgram(program, -1)
 }
 
@@ -81,7 +84,7 @@ func cProgram(program *ir.Program, handler int) string {
 		emitter.releaseGlobals()
 	}
 	bodies.WriteString(emitter.out.String())
-	bodies.WriteString("\treturn 0;\n}\n")
+	bodies.WriteString("\treturn adamic_process_status();\n}\n")
 	if handler >= 0 {
 		bodies.WriteString(emitter.requestABI(handler))
 	}

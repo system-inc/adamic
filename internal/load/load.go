@@ -1,5 +1,7 @@
 // Package load turns Adamic source files into a checked program: every file parsed, bound and
-// type-checked by typescript-go in this process, under the one set of options Adamic 0.1 allows.
+// type-checked by typescript-go in this process. Adamic sources use its defaults;
+// TypeScript project roots use their project's checking options and libraries,
+// with source-extension imports enabled and TypeScript emission disabled.
 //
 // A program either loads clean or Load returns an error naming every diagnostic. There is no
 // half-loaded state, because a compiler that lowers a program the checker rejected is lowering a
@@ -41,6 +43,9 @@ type Program struct {
 
 	// files is the program's own source, in the order Load was given it: no prelude, no lib.
 	files []*ast.SourceFile
+
+	// A configured TypeScript check reports only the explicitly requested files.
+	requestedDiagnostics bool
 }
 
 // CheckError is a program the checker rejected, with every diagnostic it gave.
@@ -52,8 +57,7 @@ func (e *CheckError) Error() string {
 	return strings.Join(e.Diagnostics, "\n")
 }
 
-// compilerOptions is the one configuration every Adamic 0.1 program is checked under, set here
-// rather than read from a tsconfig.json, which could leave any of them out (docs/0.1.md).
+// compilerOptions supplies standalone Adamic defaults, including unconfigured inputs.
 func compilerOptions() *core.CompilerOptions {
 	return &core.CompilerOptions{
 		Strict:                     core.TSTrue,
@@ -111,12 +115,47 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		}
 		roots = append(roots, root)
 	}
-	roots = append(roots, preludePath)
+	userRoots := roots
 
 	// bundled.WrapFS lays the embedded lib.*.d.ts files over the source view, and cachedvfs memoizes
 	// the stats module resolution repeats.
-	fileSystem := cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
-	config := tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, currentDirectory, fileSystem.CaseSensitivity())
+	fileSystem := cachedvfs.From(&regexpLibraryFS{FS: &nodeLibraryFS{FS: bundled.WrapFS(fs)}})
+	config, project, err := projectConfig(fs, currentDirectory, paths)
+	if err != nil {
+		return nil, err
+	}
+	fs.projectConsole = config != nil
+	if config == nil {
+		config = tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, currentDirectory, fileSystem.CaseSensitivity())
+	} else {
+		// Composite membership is a property of the whole project, even when a
+		// census asks for diagnostics from only one file. Keep explicit ambient
+		// roots too, and deduplicate the embedded prelude and Node declarations.
+		seen := make(map[tspath.RootedFilePath]bool, len(roots))
+		for _, name := range roots {
+			seen[name] = true
+		}
+		for _, name := range config.FileNames() {
+			if name.IsDeclarationFile() {
+				text, _ := fs.ReadFile(name)
+				if text == prelude || callerNodeTypes(name.AsString()) {
+					continue
+				}
+			}
+			if strings.HasSuffix(name.AsString(), ".a") {
+				name = name.AppendSuffix(".ts")
+			}
+			if !seen[name] {
+				roots = append(roots, name)
+				seen[name] = true
+			}
+		}
+	}
+	roots = append(roots, preludePath)
+	if !project {
+		roots = append(roots, setPreludePath)
+	}
+	config = config.WithFileNames(roots)
 	host := compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
 	program := compiler.NewProgram(compiler.ProgramOptions{
 		Config:         config,
@@ -127,22 +166,57 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		return nil, errors.New("load: the compiler built no program")
 	}
 
-	loaded := &Program{compiler: program, fs: fs}
-	if diagnostics := loaded.diagnostics(context.Background()); len(diagnostics) > 0 {
-		return nil, &CheckError{Diagnostics: diagnostics}
+	if usesNodeModules(program) {
+		index, err := nodeTypesIndex()
+		if err != nil {
+			return nil, err
+		}
+		fs.nodeTypes = true
+		roots = append(roots, index)
+		options := *config.CompilerOptions()
+		// Preserve the project's other type roots, including the checker's
+		// default ancestor search when no explicit typeRoots was supplied.
+		if options.TypeRoots == nil {
+			directory := workingDirectory
+			if options.ConfigFilePath != "" {
+				directory = filepath.Dir(options.ConfigFilePath.AsString())
+			}
+			for {
+				options.TypeRoots = append(options.TypeRoots, tspath.RootedDirectoryPathFromAbsolute(filepath.Join(directory, "node_modules", "@types")))
+				parent := filepath.Dir(directory)
+				if parent == directory {
+					break
+				}
+				directory = parent
+			}
+		}
+		options.TypeRoots = append([]tspath.RootedDirectoryPath{tspath.RootedDirectoryPathFromNormalized(nodeTypesRoot)}, options.TypeRoots...)
+		config.SetCompilerOptions(&options)
+		fileSystem = cachedvfs.From(&regexpLibraryFS{FS: &nodeLibraryFS{FS: bundled.WrapFS(fs)}})
+		config = config.WithFileNames(roots)
+		host = compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
+		program = compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host, SingleThreaded: core.TSTrue})
+		if program == nil {
+			return nil, errors.New("load: the compiler built no Node program")
+		}
 	}
+
+	loaded := &Program{compiler: program, fs: fs, requestedDiagnostics: fs.projectConsole}
 
 	// Every root must be in the program. One that is not would be a file silently left unchecked.
 	byPath := make(map[tspath.PathKey]*ast.SourceFile)
 	for _, sourceFile := range program.GetSourceFiles() {
 		byPath[sourceFile.PathKey()] = sourceFile
 	}
-	for _, root := range roots[:len(roots)-1] {
+	for _, root := range userRoots {
 		sourceFile, isLoaded := byPath[fileSystem.CaseSensitivity().PathKey(root.AsPath())]
 		if !isLoaded {
 			return nil, fmt.Errorf("load: %s was named but the compiler did not load it", fs.displayName(root))
 		}
 		loaded.files = append(loaded.files, sourceFile)
+	}
+	if diagnostics := loaded.diagnostics(context.Background()); len(diagnostics) > 0 {
+		return nil, &CheckError{Diagnostics: diagnostics}
 	}
 	return loaded, nil
 }
@@ -173,7 +247,7 @@ func (p *Program) Where(node *ast.Node) string {
 // IsPrelude reports whether a declaration comes from Adamic's prelude rather than from the program,
 // so a local named console is never mistaken for the real one.
 func IsPrelude(sourceFile *ast.SourceFile) bool {
-	return sourceFile != nil && sourceFile.FileName() == preludePath
+	return sourceFile != nil && (sourceFile.FileName() == preludePath || sourceFile.FileName() == setPreludePath)
 }
 
 // IsLibrary reports whether a declaration comes from TypeScript's bundled library (lib.es2024.d.ts and
@@ -208,13 +282,39 @@ func rootFileName(fs *sourceFS, currentDirectory tspath.RootedDirectoryPath, pat
 // Syntax first, and only syntax when there is any: a file that doesn't parse produces cascades from
 // the later phases that bury the real error.
 func (p *Program) diagnostics(ctx context.Context) []string {
-	all := p.compiler.GetSyntacticDiagnostics(ctx, nil)
+	// Unconfigured inputs still check their entire import graph. Configured
+	// project inputs retain that graph but select diagnostics by requested file.
+	collect := func(get func(context.Context, *ast.SourceFile) []*ast.Diagnostic) []*ast.Diagnostic {
+		if !p.requestedDiagnostics {
+			return get(ctx, nil)
+		}
+		var result []*ast.Diagnostic
+		for _, file := range p.files {
+			result = append(result, get(ctx, file)...)
+		}
+		return result
+	}
+	all := collect(p.compiler.GetSyntacticDiagnostics)
 	if len(all) == 0 {
 		all = append(all, p.compiler.GetConfigFileParsingDiagnostics()...)
-		all = append(all, p.compiler.GetProgramDiagnostics()...)
+		for _, diagnostic := range p.compiler.GetProgramDiagnostics() {
+			if p.requestedDiagnostics && diagnostic.File() != nil {
+				requested := false
+				for _, file := range p.files {
+					requested = requested || diagnostic.File() == file
+				}
+				if !requested {
+					continue
+				}
+			}
+			all = append(all, diagnostic)
+		}
 		all = append(all, p.compiler.GetGlobalDiagnostics(ctx)...)
-		all = append(all, p.compiler.GetBindDiagnostics(ctx, nil)...)
-		all = append(all, p.compiler.GetSemanticDiagnostics(ctx, nil)...)
+		all = append(all, collect(p.compiler.GetBindDiagnostics)...)
+		all = append(all, collect(p.compiler.GetSemanticDiagnostics)...)
+		if len(all) == 0 && p.compiler.Options().GetEmitDeclarations() {
+			all = append(all, collect(p.compiler.GetDeclarationDiagnostics)...)
+		}
 	}
 	formatted := make([]string, 0, len(all))
 	for _, diagnostic := range all {

@@ -9,6 +9,7 @@ import (
 	"path"
 	"path/filepath"
 	goruntime "runtime"
+	"slices"
 	"strings"
 	"sync"
 )
@@ -26,6 +27,10 @@ var runtimeBuilds sync.Map
 // uses the embedded runtime; the fuzzer supplies another checkout's runtime directory instead.
 // Sources and headers are snapshotted together, so the key and the compiled bytes cannot disagree.
 func RuntimeLibrary(directory string, options Options) (string, error) {
+	return runtimeLibrary(directory, options, nil)
+}
+
+func runtimeLibrary(directory string, options Options, extraFlags []string) (string, error) {
 	if err := ValidateOptions(options); err != nil {
 		return "", err
 	}
@@ -50,7 +55,14 @@ func RuntimeLibrary(directory string, options Options) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("native: cache directory: %w", err)
 	}
-	return cachedRuntime(files, Flags(options), compiler, string(version), filepath.Join(cache, "adamic", "runtime"))
+	flags := Flags(options)
+	if options.FusedRuntime {
+		// As Node's V8 is built on macOS arm64: clang's default contraction, within an expression, with
+		// the runtime's FP_CONTRACT OFF pragmas lifted. The later -ffp-contract wins, and the key holds
+		// every flag, so this is a library of its own.
+		flags = append(slices.Clone(flags), "-ffp-contract=on", "-DADAMIC_FUSED_RUNTIME")
+	}
+	return cachedRuntime(files, append(flags, extraFlags...), compiler, string(version), filepath.Join(cache, "adamic", "runtime"))
 }
 
 func readRuntime(sources fs.FS, root string) ([]runtimeFile, error) {
