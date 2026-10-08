@@ -1,0 +1,35 @@
+// semver's '=' and undefined labels select the same body.
+function comparator(operator: string | undefined): string {
+    switch (operator) {
+        case '>': return 'greater';
+        case '=':
+        case undefined: return 'equal';
+        default: return 'other';
+    }
+}
+console.log(comparator('='));
+console.log(comparator(undefined));
+console.log(comparator('>'));
+console.log(comparator(''));
+// An undefined case after default still participates before default is chosen.
+function numeric(value: number | undefined): string {
+    switch (value) {
+        case 0: return 'zero';
+        default: return 'other';
+        case undefined: return 'missing';
+    }
+}
+console.log(numeric(undefined));
+console.log(numeric(0));
+console.log(numeric(1));
+console.log(numeric(NaN));
+function boolean(value: boolean | undefined): string {
+    switch (value) {
+        case false: return 'false';
+        case undefined: return 'missing';
+        default: return 'true';
+    }
+}
+console.log(boolean(undefined));
+console.log(boolean(false));
+console.log(boolean(true));
