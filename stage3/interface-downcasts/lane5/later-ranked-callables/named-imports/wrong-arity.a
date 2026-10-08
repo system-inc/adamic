@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface ImportSpecifier {readonly value:number;}
+interface NamedImports {readonly value:number;}
+interface Base {readonly createNamedImports:unknown;}
+interface Target {createNamedImports(elements: readonly ImportSpecifier[]): NamedImports;}
+function probe(value:Base):void {const nodeFactory=value as Target;console.log(`${nodeFactory.createNamedImports([{value:3}]).value}`);}
+probe({createNamedImports:():NamedImports=>({value:9})});

@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Node {readonly value:number;}
+interface NotEmittedStatement {readonly value:number;}
+interface Base {readonly createNotEmittedStatement:unknown;}
+interface Target {createNotEmittedStatement(original: Node): NotEmittedStatement;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createNotEmittedStatement({value:3}).value}`);}
+probe({createNotEmittedStatement:(original:number):NotEmittedStatement=>({value:3})});

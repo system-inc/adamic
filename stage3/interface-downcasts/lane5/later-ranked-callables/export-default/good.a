@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Expression {readonly value:number;}
+interface ExportAssignment {readonly value:number;}
+interface Base {readonly createExportDefault:unknown;}
+interface Target {createExportDefault(expression: Expression): ExportAssignment;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createExportDefault({value:3}).value}`);}
+probe({createExportDefault:(expression:Expression):ExportAssignment=>({value:expression.value})});

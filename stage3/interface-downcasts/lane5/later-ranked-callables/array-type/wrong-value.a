@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface TypeNode {readonly value:number;}
+interface ArrayTypeNode {readonly value:number;}
+interface Base {readonly createArrayTypeNode:unknown;}
+interface Target {createArrayTypeNode(elementType: TypeNode): ArrayTypeNode;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createArrayTypeNode({value:3}).value}`);}
+probe({createArrayTypeNode:3});

@@ -8,6 +8,13 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"array-type", "createArrayTypeNode", "3\n", "", "0", "elementType.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"export-default", "createExportDefault", "3\n", "", "0", "expression.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"not-emitted", "createNotEmittedStatement", "3\n", "", "0", "original.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"spread-element", "createSpreadElement", "3\n", "", "0", "expression.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"bundle", "createBundle", "3\n", "0\n3\n", "0", "element.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"named-imports", "createNamedImports", "3\n", "0\n3\n", "0", "element.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"type-literal", "createTypeLiteralNode", "3\n", "0\n0\n3\n", "0", "element.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"class-expression-update", "updateClassExpression", "21\n", "1\n7\n21\n", "0", "member.value", "6\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"constructor-update", "updateConstructorDeclaration", "10\n", "1\n4\n10\n", "0", "parameter.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"tagged-template-update", "updateTaggedTemplateExpression", "10\n", "7\n7\n10\n10\n", "0", "template.value", "4\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},

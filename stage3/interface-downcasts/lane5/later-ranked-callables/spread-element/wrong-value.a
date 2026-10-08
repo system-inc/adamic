@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Expression {readonly value:number;}
+interface SpreadElement {readonly value:number;}
+interface Base {readonly createSpreadElement:unknown;}
+interface Target {createSpreadElement(expression: Expression): SpreadElement;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createSpreadElement({value:3}).value}`);}
+probe({createSpreadElement:3});

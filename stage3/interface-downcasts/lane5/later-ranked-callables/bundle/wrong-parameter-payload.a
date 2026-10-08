@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface SourceFile {readonly value:number;}
+interface Bundle {readonly value:number;}
+interface Base {readonly createBundle:unknown;}
+interface Target {createBundle(sourceFiles: readonly SourceFile[]): Bundle;}
+function probe(value:Base):void {const context={factory:value as Target};console.log(`${context.factory.createBundle([{value:3}]).value}`);}
+probe({createBundle:(sourceFiles:readonly {readonly value:string}[] )=>{const element=sourceFiles[0];return {value:element===undefined?0:element.value};}});

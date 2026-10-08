@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface TypeElement {readonly value:number;}
+interface TypeLiteralNode {readonly value:number;}
+interface Base {readonly createTypeLiteralNode:unknown;}
+interface Target {createTypeLiteralNode(members: readonly TypeElement[] | undefined): TypeLiteralNode;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createTypeLiteralNode([{value:3}]).value}`);}
+probe({createTypeLiteralNode:3});
