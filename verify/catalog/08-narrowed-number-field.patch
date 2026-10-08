@@ -1,6 +1,6 @@
 --- a/internal/lower/object.go
 +++ b/internal/lower/object.go
-@@ -458,20 +458,6 @@
+@@ -458,20 +458,6 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
  			return nil, err
  		}
  		optional := access.QuestionDotToken != nil
@@ -8,11 +8,11 @@
 -			if stored, known := l.representation(l.checker.GetTypeOfSymbol(field)); known && stored.IsMaybe() && of == stored.Present() {
 -				// Read the declared representation before trusting the narrowing. A call or an
 -				// alias write may have restored undefined, just as for a narrowed variable.
--				if slotless(stored) {
+-				if censusFieldSlotless(stored) {
 -					return nil, l.notYet(node, "a narrowed boolean | undefined field; copy the field into a local and narrow that local instead")
 -				}
 -				read := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: stored, Optional: optional, Class: l.classOf(node)})
--				if comparedWithUndefined(node) {
+-				if l.acceptsUndefined(node) {
 -					return read, nil
 -				}
 -				return ir.Unwrap{Value: read}, nil

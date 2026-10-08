@@ -158,7 +158,7 @@ export function renderTree(tree: Tree, index: number): string {
             value = Number.isNaN(number) ? 'null' : `${number}`;
         }
         else if(node.booleans.has(key)) {
-            value = node.booleans.get(key) === true ? 'true' : 'false';
+            value = node.booleans.get(key) ? 'true' : 'false';
         }
         else if(node.objects.has(key)) {
             value = renderTree(tree, node.object(key));

@@ -75,6 +75,10 @@ func (l *lowering) prototypeRead(node *ast.Node, name string) error {
 }
 
 func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+	return l.objectPrototypeCallArguments(node, receiver, name, node.AsCallExpression().Arguments.Nodes)
+}
+
+func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	if !l.libraryMember(callee) {
 		return nil, false, nil
@@ -113,16 +117,16 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 	}
 	if name == "hasOwnProperty" || name == "propertyIsEnumerable" {
 		if of != ir.Object {
-			return l.nonObjectOwnProperty(node, receiver, name, of)
+			return l.nonObjectOwnPropertyArguments(node, receiver, name, of, written)
 		}
 		if checker.IsTupleType(l.checker.GetTypeAtLocation(receiver)) {
 			return nil, true, l.notYet(node, name+" on a tuple (its representation includes absent optional slots and no length descriptor)")
 		}
 		// Every own field of a plain object or a class instance is enumerable. Methods are on its
 		// prototype, absent from its shape, and defineProperty is refused.
-		return l.hasOwnProperty(node, receiver)
+		return l.hasOwnPropertyArguments(node, receiver, written)
 	}
-	if len(node.AsCallExpression().Arguments.Nodes) != 0 {
+	if len(written) != 0 {
 		return nil, true, l.notYet(node, name+" with arguments")
 	}
 	if checker.IsTupleType(l.checker.GetTypeAtLocation(receiver)) {
@@ -153,7 +157,7 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 	case ir.Boolean:
 		return ir.BooleanToString{Value: value}, true, nil
 	case ir.Array:
-		return l.arrayMethod(node, receiver, "join")
+		return l.arrayMethodArguments(node, receiver, "join", written)
 	case ir.Object, ir.Map:
 		tag := "[object Object]"
 		if of == ir.Map {

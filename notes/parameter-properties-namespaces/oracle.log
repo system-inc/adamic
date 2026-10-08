@@ -1,0 +1,37 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_order.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_order.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_values.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_values.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_callbacks.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_callbacks.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_dotted.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_dotted.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_types.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_types.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_overrides.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_overrides.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_shared/main.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_shared/main.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_order.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_types.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_shared/main.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_callbacks.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_overrides.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_dotted.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_values.a
+--- PASS: TestNativeAgreesWithNode (0.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_types.a (2.64s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_callbacks.a (3.71s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_order.a (3.83s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_overrides.a (4.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_shared/main.a (4.20s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_dotted.a (2.54s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_values.a (2.42s)
+PASS
+gate cache: native hits=0 misses=21
+gate cache: node hits=0 misses=14
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	6.203s
