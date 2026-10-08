@@ -59,6 +59,22 @@ class FeedbackTests(unittest.TestCase):
         self.assertEqual(self.diff(base, candidate)[0], '3 outcomes moved (1 pass->absent, 2 pass->fail)')
         self.assertEqual(self.failing, ['T/f.a'])
 
+    def test_vanished_and_what_a_landing_declares(self):
+        base = run({'Action': 'pass', 'Test': 'T/a.a/native'}, {'Action': 'pass', 'Test': 'T/a.a'},
+                   {'Action': 'pass', 'Test': 'T/b.a'}, {'Action': 'pass', 'Test': 'T/c.a'}, {'Action': 'fail', 'Test': 'T/d.a'})
+        candidate = run({'Action': 'pass', 'Test': 'T/c.a'})
+        with tempfile.TemporaryDirectory() as tmp:
+            Path(tmp, 'b').write_text(base)
+            Path(tmp, 'c').write_text(candidate)
+            feedback.main.__globals__['sys'].argv = ['x', str(Path(tmp, 'b')), str(Path(tmp, 'c')), tmp]
+            feedback.main()
+            vanished = Path(tmp, 'vanished.txt').read_text()
+        # A failing test going absent isn't a vanished pass.
+        self.assertEqual(vanished, '%s T/a.a\n%s T/a.a/native\n%s T/b.a\n' % (P, P, P))
+        self.assertEqual(feedback.undeclared(vanished, 'T/a.a -> T/moved/a.a\n# T/b.a -> removed\n'), ['%s T/b.a' % P])
+        self.assertEqual(feedback.undeclared(vanished, 'T/a.a -> x\nT/b.a -> removed\n'), [])
+        self.assertEqual(feedback.undeclared(vanished, 'T/a -> x\n'), vanished.splitlines())
+
     def test_nothing_moved(self):
         same = run({'Action': 'pass', 'Test': 'T/a'}, {'Action': 'pass'})
         self.assertEqual(self.diff(same, same)[0], '0 outcomes moved')

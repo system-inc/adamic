@@ -21,9 +21,11 @@ mkdir -p "${state}"
 
 # One candidate: prints the summary line, leaves the published directory in ${state}/last.
 feedback() {
-  local branch=$1 sha=$2 base host out started stamp tree commit index gitDirectory logBranch
-  git -C "${here}" fetch -q origin "${sha}" "+refs/heads/main:refs/remotes/origin/main" || { echo "void: could not fetch ${sha}"; return 2; }
-  base=$(git -C "${here}" merge-base "${sha}" refs/remotes/origin/main) || { echo "void: no merge base for ${sha}"; return 2; }
+  local branch=$1 sha=$2 main base host out started stamp tree commit index gitDirectory logBranch
+  # By sha, writing no refs: the watcher fetches main into this checkout too, and a ref lock race would void a landing.
+  main=$(git -C "${here}" ls-remote origin refs/heads/main | cut -f1)
+  git -C "${here}" fetch -q origin "${sha}" "${main}" || { echo "void: could not fetch ${sha}"; return 2; }
+  base=$(git -C "${here}" merge-base "${sha}" "${main}") || { echo "void: no merge base for ${sha}"; return 2; }
   out=$(mktemp -d)
   started=$(date -u +%s)
   for host in ${hosts}; do
@@ -121,8 +123,9 @@ while true; do
     grep -qxF "${branch} ${sha}" "${state}/seen" && continue
     echo "${branch} ${sha}" >> "${state}/seen"
     # Already landed: nothing to tell.
-    git -C "${here}" fetch -q origin "${sha}" "+refs/heads/main:refs/remotes/origin/main" 2> /dev/null
-    git -C "${here}" merge-base --is-ancestor "${sha}" refs/remotes/origin/main 2> /dev/null && continue
+    main=$(git -C "${here}" ls-remote origin refs/heads/main | cut -f1)
+    git -C "${here}" fetch -q origin "${sha}" "${main}" 2> /dev/null
+    git -C "${here}" merge-base --is-ancestor "${sha}" "${main}" 2> /dev/null && continue
     echo "$(date -u +%H:%M:%S) feedback for ${branch} ${sha}"
     line=$(feedback "${branch}" "${sha}")
     code=$?

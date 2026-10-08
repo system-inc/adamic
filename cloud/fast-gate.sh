@@ -61,7 +61,7 @@ echo "fast gate: ${sha} against ${baseName} ${base}, tools ${tools}, on ${box}, 
 darwinLog=""
 if [[ ${branch} == cloud/land-* || ${branch} == area/* ]]; then
   darwinLog=$(mktemp)
-  bash "${here}/cloud/darwin-leg.sh" "${sha}" > "${darwinLog}" 2>&1 &
+  bash "${here}/cloud/darwin-leg.sh" "${sha}" "${branch}" > "${darwinLog}" 2>&1 &
   darwinPid=$!
 fi
 set +e

@@ -2,11 +2,17 @@
 """The outcomes that moved between two `go test -json` runs, for cloud/darwin-feedback.sh.
 
     cloud/darwin-feedback.py <base.jsonl> <candidate.jsonl> <out dir>
+    cloud/darwin-feedback.py --undeclared <vanished.txt> <declarations>
 
 Writes moved.txt (one "base -> candidate  package test" line per moved outcome, then each newly failing
 test's last output lines) and summary.txt (one line), and prints the summary. A test's outcome is its
 last pass, fail or skip; a package with no test outcome but a fail (a build failure) is keyed by the
-package alone. A test only one side ran counts as moved from or to "absent".
+package alone. A test only one side ran counts as moved from or to "absent". vanished.txt lists the
+tests that passed on the base and are absent from the candidate, one "package test" a line.
+
+--undeclared prints the vanished tests a landing doesn't name as moved on purpose (the witness's rule,
+@system_adamic Oct 8): declarations are "<old> -> <new or removed>" lines, from 'Moved-result:'
+trailers or stage3/fixtures/moved-results.txt, and naming a test covers its subtests.
 """
 import json
 import sys
@@ -51,7 +57,23 @@ def summary(changes):
     return '%d outcomes moved (%s)' % (len(changes), ', '.join('%d %s' % (n, kind) for kind, n in sorted(counts.items())))
 
 
+def undeclared(vanished, declarations):
+    """The vanished "package test" lines no declaration covers."""
+    named = [line.split('->', 1)[0].strip() for line in declarations.splitlines()
+             if '->' in line and not line.lstrip().startswith('#')]
+    left = []
+    for line in vanished.splitlines():
+        test = line.split(' ', 1)[-1]
+        if line.strip() and not any(test == old or test.startswith(old + '/') for old in named):
+            left.append(line)
+    return left
+
+
 def main():
+    if sys.argv[1] == '--undeclared':
+        for line in undeclared(Path(sys.argv[2]).read_text(), Path(sys.argv[3]).read_text()):
+            print(line)
+        return
     basePath, candidatePath, out = sys.argv[1:4]
     base, _ = outcomes(basePath)
     candidate, candidateOutput = outcomes(candidatePath)
@@ -68,6 +90,8 @@ def main():
     leaves = [test or package for (package, test), _, after in changes
               if after == 'fail' and not (test and any(name.startswith(test + '/') for name in failing))]
     Path(out, 'failing.txt').write_text(''.join(leaf + '\n' for leaf in leaves))
+    Path(out, 'vanished.txt').write_text(''.join('%s %s\n' % key for key, before, after in changes
+                                                 if before == 'pass' and after == 'absent' and key[1]))
     text = summary(changes)
     Path(out, 'summary.txt').write_text(text + '\n')
     print(text)
