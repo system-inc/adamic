@@ -159,7 +159,14 @@ func TestStage1ProfileStalenessAndDeterminism(t *testing.T) {
 		t.Fatal(err)
 	}
 	checkCommands(false, true)
-	first, second := filepath.Join(directory, "first"), filepath.Join(directory, "second")
+	// One file name in two directories: on macOS the linker's ad-hoc signature names the binary by
+	// its file name, so two names would differ in that identifier and the UUID that covers it.
+	first, second := filepath.Join(directory, "first", "binary"), filepath.Join(directory, "second", "binary")
+	for _, output := range []string{first, second} {
+		if err = os.Mkdir(filepath.Dir(output), 0o755); err != nil {
+			t.Fatal(err)
+		}
+	}
 	reset()
 	if err = Build(source, first, options); err != nil {
 		t.Fatal(err)

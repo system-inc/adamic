@@ -119,7 +119,8 @@ func Flags(options Options) []string {
 			flags = append(flags, "-fprofile-instr-generate")
 		}
 		if options.Profile != "" {
-			flags = append(flags, "-fprofile-use="+options.Profile, "-Wno-profile-instr-out-of-date")
+			// A runtime file training never reached has no profile, which Apple clang warns about.
+			flags = append(flags, "-fprofile-use="+options.Profile, "-Wno-profile-instr-out-of-date", "-Wno-profile-instr-unprofiled")
 		}
 	}
 	return flags
