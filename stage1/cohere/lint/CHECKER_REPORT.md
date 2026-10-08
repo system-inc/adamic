@@ -550,3 +550,40 @@ a fresh compilation, and the wire comparator catches it on all three;
 restoring it passes again. This also proves the new content cache does not
 hide same-path edits. Only the scratch worktree contains library history.
 Evidence: checker-proof/performance-library-refusal.txt.
+
+## Merge and cache-input audit, October 8
+
+Merged area commit `679af4dfe11f7495ae5e17596deeb743851117dd` into the checker branch, without rebasing. The merge commit is `9de097476`.
+
+Conflict resolutions:
+
+| File / hunk | Resolution and retained checks |
+| --- | --- |
+| lint_test.go / buildPort | Keep the checker-aware, source-content-keyed compilation and native binary helpers. They share unchanged builds for both the package and scratch copies, include TSGo linking, and keep sanitizer options in the binary key. The area's syntax-only buildPortTo replacement cannot link the checker. |
+| lint_test.go / upstreamFrom | Use the area's run-shared capture helper, moving our typed program.go capture overlay into captureUpstream beside the syntax overlay. Keep both exact overlay-anchor checks, case filenames and directories, options, recovery classifications, deduplication and minimum-case guard. |
+| lint_test.go / TestMutants | Keep every native, Node and emitted-JavaScript mutant comparison, typed project setup and transcript replay. Keep the area's native JSX canary presence guard and native-versus-mutated-Node comparison. Restore the four-build bound that the area removed. |
+| lint_test.go / emittedJavaScript | Keep the shared content-keyed compiler bundle, writing its emitted bytes to a fresh file per caller. This also prevents the backend mismatch control from modifying a shared artifact. |
+| registration_test.go / TestMain | Initialize the area's run-owned shared directory before m.Run; after it, clean both checker build directories and the shared directory. Keep descriptor validation before filtered tests. |
+
+Git also merged removal of native checks without conflicts. Restored native comparisons in TestLegacyMutants, TestDecorationOptionMutant, TestCountGuardMutant, TestCommentFoldMutant and TestPositionIndexMutant, while retaining the area's added emitted-JavaScript checks.
+
+Removed work in the performance change, exhaustively for hashing and transcripts:
+
+| Removed computation / allocation | Why no check lost an input |
+| --- | --- |
+| Source SHA and row-header string when neither recording nor replaying | No transcript is written or compared in that mode. Recording and replay still compute and use the exact row path and source SHA. The run header still contains the tsconfig path and SHA and replay compares it. |
+| Framed ask key when neither recording nor replaying | The live bridge still receives the same path, UTF-8 span, kind and question. Recording and replay still construct the complete key; replay compares it on every ask. |
+| Value entries accumulated during a non-recording run | That unused array was never written or compared. Native recording still writes every value. Replay still consumes and compares the recorded entries and checks for leftover entries. Recording and replay are mutually exclusive. |
+| Error entries accumulated during a non-recording run | The refusal is still accumulated separately and emitted on the wire. Recording still writes the exact Error outcome and C reason; replay reproduces it. The pending control remains named for the unlanded library error path. |
+
+No cache-key hash was removed. Also removed a discarded ordinary native.C emission immediately before emitting TSGoC from the same lowered program; no test, transcript, cache or executable consumed that discarded string.
+
+Cache keys and scopes:
+
+* The in-process compiler bundle hashes absolute module paths and complete file bytes, with length prefixes, following static imports and exports including type-only imports. Registry generation precedes hashing. Compiler and embedded prelude are fixed for that Go test process; no lowered bundle persists between processes.
+* The in-process native binary key is SHA-256 of complete generated C, checker archive path, and sanitizer mode. Checker archives are immutable, fresh run-owned artifacts, one per instrumentation mode; Go's build cache tracks their actual Go/C dependencies. Mutant binaries remain separately built and executed, with bounded workers.
+* The landed persistent runtime cache hashes its schema, OS/architecture, clang path and complete version output, ordered compiler flags, and every snapshotted runtime filename and byte. The TSGo ABI header and ADAMIC_TSGO flag are included.
+* The landed persistent object cache preprocesses every unit on every lookup, then hashes the full preprocessed source including transitive headers, ordered flags, compiler identity/version, platform and unit-cache schema. The bytes hashed are the bytes compiled. Linking uses the current object set and checker archive.
+* The area's run-shared oracle and upstream capture apply only to the immutable package directory; scratch directories get their own oracle/capture. They cache build artifacts and asserted input rows, not test verdicts. Every comparison executes again.
+
+TestCheckerCacheSourceByte warms the actual compilation, native binary, runtime and object caches, then changes exactly one byte (A to B in an owned diagnostic message) in a scratch copy at the same pathname, without clearing caches. It requires generated C and emitted JavaScript to change and requires rebuilt native, Node and emitted findings to match the changed message and differ from the independent Go oracle. Restoring the byte must restore the original findings and reuse the original compiler bundle. Its output hashes are recorded in the package log.
