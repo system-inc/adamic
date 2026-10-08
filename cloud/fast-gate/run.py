@@ -25,6 +25,7 @@ import subprocess
 import sys
 import threading
 import time
+import traceback
 
 module = "github.com/system-inc/adamic"
 # What the whole gate sets: no cached results, and the gate inputs' lanes on (see cloud/setup.sh --gate-inputs).
@@ -54,6 +55,8 @@ def main():
     gate = Gate(arguments)
     try:
         gate.run()
+    except BaseException:
+        gate.fail("runner", traceback.format_exc())
     finally:
         gate.finish()
     sys.exit(0 if gate.failure is None else 1)
@@ -70,6 +73,10 @@ class Gate:
         self.counts = {"pass": 0, "fail": 0, "skip": 0}
         self.skipped = []
         self.census = {"required_input": [], "unclassified": []}
+        # Fail closed: green needs every planned stage to have recorded exit 0, not just no failure,
+        # so a stage that died without reporting (an exception, a process that never started) is red.
+        self.exits = {}
+        self.planned = ["build", "vet", "tests", "wasi", "census"] if arguments.full else ["build", "vet", "tests", "smoke", "census"]
         self.result = {
             "sha": arguments.sha,
             "branch": arguments.branch,
@@ -109,14 +116,15 @@ class Gate:
             "smoke_list_blob": git(smokeSource["root"], "hash-object", os.path.join(smokeSource["root"], "cloud/fast-gate/smoke.txt")),
             "smoke_fixtures": smoke,
         })
+        if not smoke:
+            self.fail("smoke", "no smoke list in the gated tree or the tools checkout")
+            return
         # Everything starts at once: the tests compile what they need through the same build cache,
         # and the first failure of any step still stops all of them.
         log = open(os.path.join(self.arguments.out, "test.jsonl"), "w")
-        threads = [threading.Thread(target=self.build), threading.Thread(target=self.vet)]
-        if packages:
-            threads.append(threading.Thread(target=self.testSplit, args=(packages, log)))
-        if smoke and module + "/internal/oracle" not in packages:
-            threads.append(threading.Thread(target=self.test, args=("smoke", ["go", "test", "-count=1", "-failfast", "-json", "-timeout", "30m", "-run", smokePattern(smoke), "./internal/oracle"], log)))
+        threads = [self.guarded("build", self.build), self.guarded("vet", self.vet),
+                   self.guarded("tests", self.testSplit, packages, log),
+                   self.guarded("smoke", self.test, "smoke", ["go", "test", "-count=1", "-failfast", "-json", "-timeout", "30m", "-run", smokePattern(smoke), "./internal/oracle"], log)]
         for thread in threads:
             thread.start()
         for thread in threads:
@@ -135,20 +143,36 @@ class Gate:
             order = [name for _, name in sorted(weighed, key=lambda row: -float(row[0])) if name in listing]
         packages = order + [name for name in listing if name not in order]
         self.result.update({"packages": "all", "package_list": packages})
-        self.result["build_ok"] = self.step("build", ["go", "build", "./..."])
+        try:
+            self.result["build_ok"] = self.step("build", ["go", "build", "./..."])
+        except BaseException:
+            self.fail("build", traceback.format_exc())
         log = open(os.path.join(self.arguments.out, "test.jsonl"), "w")
         wasi = None
         if os.environ.get("WASI_SYSROOT"):
             wasi = {"PATH": os.path.join(os.path.dirname(os.path.dirname(os.environ["WASI_SYSROOT"])), "bin") + os.pathsep + os.environ["PATH"]}
-        threads = [threading.Thread(target=self.vet),
-                   threading.Thread(target=self.test, args=("tests", ["go", "test", "-count=1", "-json", "-timeout", "60m", "-p", str(self.arguments.parallel), "-skip", "^TestWASI$"] + packages, log)),
-                   threading.Thread(target=self.test, args=("wasi", ["go", "test", "-count=1", "-json", "-timeout", "60m", "-run", "^TestWASI$", "./internal/native"], log, wasi))]
+        threads = [self.guarded("vet", self.vet),
+                   self.guarded("tests", self.test, "tests", ["go", "test", "-count=1", "-json", "-timeout", "60m", "-p", str(self.arguments.parallel), "-skip", "^TestWASI$"] + packages, log),
+                   self.guarded("wasi", self.test, "wasi", ["go", "test", "-count=1", "-json", "-timeout", "60m", "-run", "^TestWASI$", "./internal/native"], log, wasi)]
         for thread in threads:
             thread.start()
         for thread in threads:
             thread.join()
         log.close()
-        self.checkCensus()
+        try:
+            self.checkCensus()
+        except BaseException:
+            self.fail("census", traceback.format_exc())
+
+    def guarded(self, stage, target, *arguments):
+        """A thread whose any exception (a process that can't start for want of file descriptors, a
+        missing binary, a bug here) fails the gate at that stage instead of vanishing with the thread."""
+        def body():
+            try:
+                target(*arguments)
+            except BaseException:
+                self.fail(stage, traceback.format_exc())
+        return threading.Thread(target=body)
 
     def deferredList(self):
         """Tests the landing gate leaves to the full gate on main (cloud/fast-gate/deferred.txt, by
@@ -213,6 +237,7 @@ class Gate:
             process = self.spawn(command, output)
             code = process.wait()
         self.steps[name] = round(time.monotonic() - started, 1)
+        self.exits[name] = code
         if code != 0 and self.failure is None:
             with open(os.path.join(self.arguments.out, name + ".log")) as handle:
                 self.fail(name, handle.read()[-4000:])
@@ -233,6 +258,9 @@ class Gate:
         os.makedirs(binaries, exist_ok=True)
         slots = threading.Semaphore(self.arguments.parallel)
         threads = []
+        # Every package compiled and listed, and every test process it planned exited 0: counted, so a
+        # process that never ran can't pass for one that did.
+        tally = {"packages": 0, "planned": 0, "passed": 0}
 
         def runPackage(importPath):
             binary = os.path.join(binaries, importPath.replace("/", "_") + ".test")
@@ -242,6 +270,8 @@ class Gate:
                 listing = self.capture([binary, "-test.list", "."], self.packageDirectories[importPath])
             if listing is None:
                 return
+            with self.lock:
+                tally["packages"] += 1
             names = [line for line in listing.splitlines() if line.startswith(("Test", "Example", "Fuzz"))]
             deferred = sorted(set(names) & self.deferred.get(importPath, set()))
             if deferred:
@@ -249,25 +279,30 @@ class Gate:
                     self.result.setdefault("deferred_to_full_gate", []).extend(importPath + " " + name for name in deferred)
                 names = [name for name in names if name not in deferred]
             self.result.setdefault("split_tests", {})[importPath] = len(names)
+            with self.lock:
+                tally["planned"] += len(names)
             tests = []
             for name in names:
                 command = ["go", "tool", "test2json", "-t", "-p", importPath, binary, "-test.v=test2json", "-test.paniconexit0",
                            "-test.count=1", "-test.failfast", "-test.timeout=30m", "-test.run", "^%s$" % name]
-                thread = threading.Thread(target=lambda command=command, name=name: self.slotted(slots, command, log, importPath, name))
+                thread = self.guarded("tests", self.slotted, slots, command, log, importPath, name, tally)
                 thread.start()
                 tests.append(thread)
             for thread in tests:
                 thread.join()
 
         for importPath in packages:
-            thread = threading.Thread(target=runPackage, args=(importPath,))
+            thread = self.guarded("tests", runPackage, importPath)
             thread.start()
             threads.append(thread)
         for thread in threads:
             thread.join()
         self.steps["tests"] = round(time.monotonic() - started, 1)
+        complete = tally["packages"] == len(packages) and tally["passed"] == tally["planned"]
+        self.exits["tests"] = 0 if complete and self.failure is None else 1
+        self.result["split_tally"] = dict(tally, touched=len(packages))
 
-    def slotted(self, slots, command, log, importPath, name):
+    def slotted(self, slots, command, log, importPath, name, tally):
         with slots:
             if self.failure is not None:
                 return
@@ -275,7 +310,9 @@ class Gate:
             if name == "TestWASI" and os.environ.get("WASI_SYSROOT"):
                 # As the whole gate runs it: the WASI SDK's clang first, so wasm-ld finds the wasm32 builtins.
                 environment = {"PATH": os.path.join(os.path.dirname(os.path.dirname(os.environ["WASI_SYSROOT"])), "bin") + os.pathsep + os.environ["PATH"]}
-            self.stream("tests", command, log, self.packageDirectories[importPath], environment)
+            if self.stream("tests", command, log, self.packageDirectories[importPath], environment) == 0:
+                with self.lock:
+                    tally["passed"] += 1
 
     def capture(self, command, directory):
         process = self.spawn(command, subprocess.PIPE, subprocess.PIPE, directory)
@@ -287,7 +324,8 @@ class Gate:
 
     def test(self, name, command, log, environment=None):
         started = time.monotonic()
-        self.stream(name, command, log, None, environment)
+        code = self.stream(name, command, log, None, environment)
+        self.exits[name] = 1 if code is None else code
         self.steps[name] = round(time.monotonic() - started, 1)
 
     def stream(self, name, command, log, directory=None, environment=None):
@@ -327,19 +365,21 @@ class Gate:
     def checkCensus(self):
         started = time.monotonic()
         tools = self.arguments.tools
-        process = subprocess.run(["go", "run", "./internal/skipcensus/cmd", "-root", tools, os.path.join(os.path.abspath(self.arguments.out), "test.jsonl")],
-                                 cwd=tools, capture_output=True, text=True, env=dict(os.environ, GOWORK="off"))
+        process = self.spawn(["go", "run", "./internal/skipcensus/cmd", "-root", tools, os.path.join(os.path.abspath(self.arguments.out), "test.jsonl")],
+                             subprocess.PIPE, subprocess.PIPE, tools, {"GOWORK": "off"})
+        stdout, stderr = process.communicate()
         with open(os.path.join(self.arguments.out, "census.log"), "w") as handle:
-            handle.write(process.stdout + process.stderr)
+            handle.write(stdout + stderr)
         self.steps["census"] = round(time.monotonic() - started, 1)
-        for line in process.stdout.splitlines():
+        self.exits["census"] = process.returncode
+        for line in stdout.splitlines():
             fields = line.split("\t")
             if len(fields) == 3 and fields[0] == "required-input":
                 self.census["required_input"].append(fields[1] + " " + fields[2])
             if len(fields) == 3 and fields[0] in ("unknown", "unclassified"):
                 self.census["unclassified"].append(fields[1] + " " + fields[2])
         if process.returncode != 0:
-            self.fail("census", (process.stdout + process.stderr)[-4000:])
+            self.fail("census", (stdout + stderr)[-4000:])
 
     def spawn(self, command, stdout, stderr=subprocess.STDOUT, directory=None, environment=None):
         with self.lock:
@@ -376,7 +416,10 @@ class Gate:
 
     def finish(self):
         wall = round(time.monotonic() - self.started, 1)
-        green = self.failure is None
+        unfinished = [stage for stage in self.planned if self.exits.get(stage) != 0]
+        if unfinished and self.failure is None:
+            self.fail(unfinished[0], "planned stages without a recorded exit 0: %s (exits %s)" % (", ".join(unfinished), self.exits))
+        green = self.failure is None and not unfinished
         self.result.update({
             "wall_seconds": wall,
             "steps_seconds": self.steps,
@@ -386,6 +429,8 @@ class Gate:
             "required_input_skips": self.census["required_input"],
             "unclassified_skips": self.census["unclassified"],
             "failure": self.failure,
+            "planned_stages": self.planned,
+            "stages_exit": self.exits,
             "finished": True,
         })
         with open(os.path.join(self.arguments.out, self.kind + ".json"), "w") as handle:
