@@ -1,0 +1,83 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { CoreArena, CoreNode } from './nodes.a';
+import { tokenSignature } from './token_signature.a';
+import { memberAccessObject } from './member_access_object.a';
+import { idDenylistIsImportAttributeKey } from './id_denylist_is_import_attribute_key.a';
+import { hasSameTokens } from './has_same_tokens.a';
+import { isEmptyBracketLiteral } from './is_empty_bracket_literal.a';
+import { switchStatementExits } from './switch_statement_exits.a';
+import { idDenylistIsImportOptionsObject } from './id_denylist_is_import_options_object.a';
+import { isSeparateEvaluationContext } from './is_separate_evaluation_context.a';
+import { consistentReturnIsGenerator } from './consistent_return_is_generator.a';
+import { idDenylistIsDestructuringTarget } from './id_denylist_is_destructuring_target.a';
+import { isNullOrUndefined } from './is_null_or_undefined.a';
+import { appendNodeSignature } from './append_node_signature.a';
+import { numericLiteralSign } from './numeric_literal_sign.a';
+import { tryStatementExits } from './try_statement_exits.a';
+import { noRestrictedExportsNameText } from './no_restricted_exports_name_text.a';
+import { bodyDefinitelyExits } from './body_definitely_exits.a';
+import { appendTokensBetween } from './append_tokens_between.a';
+function read(path: string): string { const v = readTextFile(path); if(v.kind === 'Error') { return panic(v.message); } return v.text; }
+const data = new OptionsJson(read(programArguments()[0] ?? panic('input path'))); const root = data.parse();
+function text(index: number, key: string): string { const v = data.field(index, key); return v < 0 ? '' : data.node(v).text; }
+function number(index: number, key: string, fallback = -1): number { const v = data.field(index, key); return v < 0 ? fallback : data.node(v).number; }
+function list(index: number, key: string): number[] { const v = data.field(index, key); const out: number[] = []; if(v >= 0) { for(const item of data.node(v).children) { out.push(data.node(item).number); } } return out; }
+const arenas: CoreArena[] = [];
+for(const frame of data.node(data.field(root, 'frames')).children) {
+    const nodes: CoreNode[] = [];
+    for(const record of data.node(data.field(frame, 'nodes')).children) {
+        const node = new CoreNode();
+        node.kind = text(record, 'kind');
+        node.text = text(record, 'text');
+        node.operator = text(record, 'operator');
+        node.kindNumber = number(record, 'kindNumber');
+        node.start = number(record, 'start');
+        node.end = number(record, 'end');
+        node.parent = number(record, 'parent');
+        node.expression = number(record, 'expression');
+        node.left = number(record, 'left');
+        node.right = number(record, 'right');
+        node.name = number(record, 'name');
+        node.initializer = number(record, 'initializer');
+        node.thenNode = number(record, 'thenNode');
+        node.elseNode = number(record, 'elseNode');
+        node.body = number(record, 'body');
+        node.tryBlock = number(record, 'tryBlock');
+        node.catchBlock = number(record, 'catchBlock');
+        node.finallyBlock = number(record, 'finallyBlock');
+        node.statement = number(record, 'statement');
+        node.children = list(record, 'children');
+        node.clauses = list(record, 'clauses');
+        node.statements = list(record, 'statements');
+        node.elements = list(record, 'elements');
+        node.args = list(record, 'args');
+        node.generator = text(record, 'generator') === 'true'; nodes.push(node);
+    }
+    arenas.push(new CoreArena(text(frame, 'source'), nodes));
+}
+for(const call of data.node(data.field(root, 'calls')).children) {
+    const arena = arenas[number(call, 'frame')] ?? panic('missing frame');
+    const args = list(call, 'args'); const first = args[0] ?? -1; let output = '';
+    switch(text(call, 'helper')) {
+        case 'tokenSignature': output = tokenSignature(arena, first); break;
+        case 'memberAccessObject': output = memberAccessObject(arena, first).toString(); break;
+        case 'idDenylistIsImportAttributeKey': output = idDenylistIsImportAttributeKey(arena, first) ? 'true' : 'false'; break;
+        case 'hasSameTokens': output = hasSameTokens(arena, first, args[1] ?? -1) ? 'true' : 'false'; break;
+        case 'isEmptyBracketLiteral': output = isEmptyBracketLiteral(arena, first) ? 'true' : 'false'; break;
+        case 'switchStatementExits': output = switchStatementExits(arena, first) ? 'true' : 'false'; break;
+        case 'idDenylistIsImportOptionsObject': output = idDenylistIsImportOptionsObject(arena, first) ? 'true' : 'false'; break;
+        case 'isSeparateEvaluationContext': output = isSeparateEvaluationContext(arena, first) ? 'true' : 'false'; break;
+        case 'consistentReturnIsGenerator': output = consistentReturnIsGenerator(arena, first) ? 'true' : 'false'; break;
+        case 'idDenylistIsDestructuringTarget': output = idDenylistIsDestructuringTarget(arena, first) ? 'true' : 'false'; break;
+        case 'isNullOrUndefined': output = isNullOrUndefined(arena, first) ? 'true' : 'false'; break;
+        case 'appendNodeSignature': output = appendNodeSignature(arena, first); break;
+        case 'numericLiteralSign': output = numericLiteralSign(text(call, 'extra')).toString(); break;
+        case 'tryStatementExits': output = tryStatementExits(arena, first) ? 'true' : 'false'; break;
+        case 'noRestrictedExportsNameText': output = noRestrictedExportsNameText(arena, first); break;
+        case 'bodyDefinitelyExits': output = bodyDefinitelyExits(arena, first) ? 'true' : 'false'; break;
+        case 'appendTokensBetween': output = appendTokensBetween(arena.source, list(call, 'extra')[0] ?? -1, list(call, 'extra')[1] ?? -1); break;
+        default: panic('unknown helper');
+    }
+    console.log(output);
+}
