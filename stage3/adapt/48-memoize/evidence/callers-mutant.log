@@ -1,0 +1,1507 @@
+node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+... Skipped lines
+
+  [
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/sys.ts',
+      line: 1502,
+      source: 'memoize(() => process.cwd())',
++     type: '() => unknown'
+-     type: '() => string'
+    },
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => ScriptTargetFeatures' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/utilities.ts',
+      line: 1384,
+      source: 'memoize((): ScriptTargetFeatures =>\r\n' +
+        '    new Map(Object.entries({\r\n' +
+        '        Array: new Map(Object.entries({\r\n' +
+...
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => ParenthesizerRules' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/factory/nodeFactory.ts',
+      line: 496,
+      source: 'memoize(() => flags & NodeFactoryFlags.NoParenthesizerRules ? nullParenthesizerRules : createParenthesizerRules(factory))',
++     type: '() => unknown'
+-     type: '() => ParenthesizerRules'
+    },
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => NodeConverters' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/factory/nodeFactory.ts',
+      line: 497,
+      source: 'memoize(() => flags & NodeFactoryFlags.NoNodeConverters ? nullNodeConverters : createNodeConverters(factory))',
++     type: '() => unknown'
+-     type: '() => NodeConverters'
+    },
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => TrueLiteral' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/factory/emitHelpers.ts',
+      line: 150,
+      source: 'memoize(() => setInternalEmitFlags(factory.createTrue(), InternalEmitFlags.Immutable))',
++     type: '() => unknown'
+-     type: '() => TrueLiteral'
+    },
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => FalseLiteral' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/factory/emitHelpers.ts',
+      line: 151,
+      source: 'memoize(() => setInternalEmitFlags(factory.createFalse(), InternalEmitFlags.Immutable))',
++     type: '() => unknown'
+-     type: '() => FalseLiteral'
+    },
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => EmitHelperFactory' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/transformer.ts',
+      line: 276,
+      source: 'memoize(() => createEmitHelperFactory(context))',
+      type: '() => EmitHelperFactory'
+    },
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/emitter.ts',
+      line: 701,
+      source: 'memoize(() => getCommonSourceDirectoryOfConfig(configFile, ignoreCase))',
++     type: '() => unknown'
+-     type: '() => string'
+    },
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/emitter.ts',
+      line: 730,
+      source: 'memoize(() => getCommonSourceDirectoryOfConfig(configFile, ignoreCase))',
++     type: '() => unknown'
+-     type: '() => string'
+    },
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => ts.Printer' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/emitter.ts',
+      line: 1200,
+      source: 'memoize(() => createPrinter({}))',
+      type: '() => Printer'
+    },
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => ts.Printer' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/emitter.ts',
+      line: 1203,
+      source: 'memoize(() => createPrinter({ removeComments: true }))',
+      type: '() => Printer'
+    },
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => ts.Printer' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/emitter.ts',
+      line: 1206,
+      source: 'memoize(() => createPrinter({ removeComments: true, neverAsciiEscape: true }))',
+      type: '() => Printer'
+    },
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => ts.Printer' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/emitter.ts',
+      line: 1209,
+      source: 'memoize(() => createPrinter({ removeComments: true, omitTrailingSemicolon: true }))',
+      type: '() => Printer'
+    },
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/program.ts',
+      line: 481,
+      source: 'memoize(() => system.getCurrentDirectory())',
+      type: '() => string'
+    },
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => void' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/program.ts',
+      line: 1531,
+      source: 'memoize(() => createOptionValueDiagnostic("ignoreDeprecations", Diagnostics.Invalid_value_for_ignoreDeprecations))',
++     type: '() => unknown'
+-     type: '() => void'
+    },
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/program.ts',
+      line: 1580,
+      source: 'memoize(() => host.getDefaultLibFileName(options))',
++     type: '() => unknown'
+-     type: '() => string'
+    },
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/program.ts',
+      line: 1769,
+      source: 'memoize(() => getCommonSourceDirectoryOfConfig(parsedRef.commandLine, !host.useCaseSensitiveFileNames()))',
++     type: '() => unknown'
+-     type: '() => string'
+    },
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/program.ts',
+      line: 4051,
+      source: 'memoize(() => getCommonSourceDirectoryOfConfig(resolvedRef.commandLine, !host.useCaseSensitiveFileNames()))',
++     type: '() => unknown'
+-     type: '() => string'
+    },
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/resolutionCache.ts',
+      line: 598,
+      source: 'memoize(() => resolutionHost.getCurrentDirectory!())',
++     type: '() => unknown'
+-     type: '() => string'
+    },
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/watch.ts',
+      line: 768,
+      source: 'memoize(() => host.getCurrentDirectory())',
+      type: '() => string'
+    },
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/watch.ts',
+      line: 844,
+      source: 'memoize(() => getDirectoryPath(normalizePath(system.getExecutingFilePath())))',
++     type: '() => unknown'
+-     type: '() => string'
+    },
+    {
++     diagnostics: [
++       {
++         code: 2345,
++         message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
++       }
++     ],
+-     diagnostics: [],
+      file: 'src/compiler/watch.ts',
+      line: 848,
+      source: 'memoize(() => system.getCurrentDirectory())',
+      type: '() => string'
+    }
+
+    at Object.<anonymous> (/workspace/adamic/stage3/adapt/48-memoize/check-callers.cjs:51:8)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [
+    {
+      file: 'src/compiler/sys.ts',
+      line: 1502,
+      source: 'memoize(() => process.cwd())',
+      type: '() => unknown',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      file: 'src/compiler/utilities.ts',
+      line: 1384,
+      source: 'memoize((): ScriptTargetFeatures =>\r\n' +
+        '    new Map(Object.entries({\r\n' +
+        '        Array: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "find",\r\n' +
+        '                "findIndex",\r\n' +
+        '                "fill",\r\n' +
+        '                "copyWithin",\r\n' +
+        '                "entries",\r\n' +
+        '                "keys",\r\n' +
+        '                "values",\r\n' +
+        '            ],\r\n' +
+        '            es2016: [\r\n' +
+        '                "includes",\r\n' +
+        '            ],\r\n' +
+        '            es2019: [\r\n' +
+        '                "flat",\r\n' +
+        '                "flatMap",\r\n' +
+        '            ],\r\n' +
+        '            es2022: [\r\n' +
+        '                "at",\r\n' +
+        '            ],\r\n' +
+        '            es2023: [\r\n' +
+        '                "findLastIndex",\r\n' +
+        '                "findLast",\r\n' +
+        '                "toReversed",\r\n' +
+        '                "toSorted",\r\n' +
+        '                "toSpliced",\r\n' +
+        '                "with",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        Iterator: new Map(Object.entries({\r\n' +
+        '            es2015: emptyArray,\r\n' +
+        '        })),\r\n' +
+        '        AsyncIterator: new Map(Object.entries({\r\n' +
+        '            es2015: emptyArray,\r\n' +
+        '        })),\r\n' +
+        '        ArrayBuffer: new Map(Object.entries({\r\n' +
+        '            es2024: [\r\n' +
+        '                "maxByteLength",\r\n' +
+        '                "resizable",\r\n' +
+        '                "resize",\r\n' +
+        '                "detached",\r\n' +
+        '                "transfer",\r\n' +
+        '                "transferToFixedLength",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        Atomics: new Map(Object.entries({\r\n' +
+        '            es2017: [\r\n' +
+        '                "add",\r\n' +
+        '                "and",\r\n' +
+        '                "compareExchange",\r\n' +
+        '                "exchange",\r\n' +
+        '                "isLockFree",\r\n' +
+        '                "load",\r\n' +
+        '                "or",\r\n' +
+        '                "store",\r\n' +
+        '                "sub",\r\n' +
+        '                "wait",\r\n' +
+        '                "notify",\r\n' +
+        '                "xor",\r\n' +
+        '            ],\r\n' +
+        '            es2024: [\r\n' +
+        '                "waitAsync",\r\n' +
+        '            ],\r\n' +
+        '            esnext: [\r\n' +
+        '                "pause",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        SharedArrayBuffer: new Map(Object.entries({\r\n' +
+        '            es2017: [\r\n' +
+        '                "byteLength",\r\n' +
+        '                "slice",\r\n' +
+        '            ],\r\n' +
+        '            es2024: [\r\n' +
+        '                "growable",\r\n' +
+        '                "maxByteLength",\r\n' +
+        '                "grow",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        AsyncIterable: new Map(Object.entries({\r\n' +
+        '            es2018: emptyArray,\r\n' +
+        '        })),\r\n' +
+        '        AsyncIterableIterator: new Map(Object.entries({\r\n' +
+        '            es2018: emptyArray,\r\n' +
+        '        })),\r\n' +
+        '        AsyncGenerator: new Map(Object.entries({\r\n' +
+        '            es2018: emptyArray,\r\n' +
+        '        })),\r\n' +
+        '        AsyncGeneratorFunction: new Map(Object.entries({\r\n' +
+        '            es2018: emptyArray,\r\n' +
+        '        })),\r\n' +
+        '        RegExp: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "flags",\r\n' +
+        '                "sticky",\r\n' +
+        '                "unicode",\r\n' +
+        '            ],\r\n' +
+        '            es2018: [\r\n' +
+        '                "dotAll",\r\n' +
+        '            ],\r\n' +
+        '            es2024: [\r\n' +
+        '                "unicodeSets",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        RegExpConstructor: new Map(Object.entries({\r\n' +
+        '            es2025: [\r\n' +
+        '                "escape",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        Reflect: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "apply",\r\n' +
+        '                "construct",\r\n' +
+        '                "defineProperty",\r\n' +
+        '                "deleteProperty",\r\n' +
+        '                "get",\r\n' +
+        '                "getOwnPropertyDescriptor",\r\n' +
+        '                "getPrototypeOf",\r\n' +
+        '                "has",\r\n' +
+        '                "isExtensible",\r\n' +
+        '                "ownKeys",\r\n' +
+        '                "preventExtensions",\r\n' +
+        '                "set",\r\n' +
+        '                "setPrototypeOf",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        ArrayConstructor: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "from",\r\n' +
+        '                "of",\r\n' +
+        '            ],\r\n' +
+        '            esnext: [\r\n' +
+        '                "fromAsync",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        ObjectConstructor: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "assign",\r\n' +
+        '                "getOwnPropertySymbols",\r\n' +
+        '                "keys",\r\n' +
+        '                "is",\r\n' +
+        '                "setPrototypeOf",\r\n' +
+        '            ],\r\n' +
+        '            es2017: [\r\n' +
+        '                "values",\r\n' +
+        '                "entries",\r\n' +
+        '                "getOwnPropertyDescriptors",\r\n' +
+        '            ],\r\n' +
+        '            es2019: [\r\n' +
+        '                "fromEntries",\r\n' +
+        '            ],\r\n' +
+        '            es2022: [\r\n' +
+        '                "hasOwn",\r\n' +
+        '            ],\r\n' +
+        '            es2024: [\r\n' +
+        '                "groupBy",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        NumberConstructor: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "isFinite",\r\n' +
+        '                "isInteger",\r\n' +
+        '                "isNaN",\r\n' +
+        '                "isSafeInteger",\r\n' +
+        '                "parseFloat",\r\n' +
+        '                "parseInt",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        Math: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "clz32",\r\n' +
+        '                "imul",\r\n' +
+        '                "sign",\r\n' +
+        '                "log10",\r\n' +
+        '                "log2",\r\n' +
+        '                "log1p",\r\n' +
+        '                "expm1",\r\n' +
+        '                "cosh",\r\n' +
+        '                "sinh",\r\n' +
+        '                "tanh",\r\n' +
+        '                "acosh",\r\n' +
+        '                "asinh",\r\n' +
+        '                "atanh",\r\n' +
+        '                "hypot",\r\n' +
+        '                "trunc",\r\n' +
+        '                "fround",\r\n' +
+        '                "cbrt",\r\n' +
+        '            ],\r\n' +
+        '            es2025: [\r\n' +
+        '                "f16round",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        Map: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "entries",\r\n' +
+        '                "keys",\r\n' +
+        '                "values",\r\n' +
+        '            ],\r\n' +
+        '            esnext: [\r\n' +
+        '                "getOrInsert",\r\n' +
+        '                "getOrInsertComputed",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        MapConstructor: new Map(Object.entries({\r\n' +
+        '            es2024: [\r\n' +
+        '                "groupBy",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        Set: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "entries",\r\n' +
+        '                "keys",\r\n' +
+        '                "values",\r\n' +
+        '            ],\r\n' +
+        '            es2025: [\r\n' +
+        '                "union",\r\n' +
+        '                "intersection",\r\n' +
+        '                "difference",\r\n' +
+        '                "symmetricDifference",\r\n' +
+        '                "isSubsetOf",\r\n' +
+        '                "isSupersetOf",\r\n' +
+        '                "isDisjointFrom",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        PromiseConstructor: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "all",\r\n' +
+        '                "race",\r\n' +
+        '                "reject",\r\n' +
+        '                "resolve",\r\n' +
+        '            ],\r\n' +
+        '            es2020: [\r\n' +
+        '                "allSettled",\r\n' +
+        '            ],\r\n' +
+        '            es2021: [\r\n' +
+        '                "any",\r\n' +
+        '            ],\r\n' +
+        '            es2024: [\r\n' +
+        '                "withResolvers",\r\n' +
+        '            ],\r\n' +
+        '            es2025: [\r\n' +
+        '                "try",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        Symbol: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "for",\r\n' +
+        '                "keyFor",\r\n' +
+        '            ],\r\n' +
+        '            es2019: [\r\n' +
+        '                "description",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        WeakMap: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "entries",\r\n' +
+        '                "keys",\r\n' +
+        '                "values",\r\n' +
+        '            ],\r\n' +
+        '            esnext: [\r\n' +
+        '                "getOrInsert",\r\n' +
+        '                "getOrInsertComputed",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        WeakSet: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "entries",\r\n' +
+        '                "keys",\r\n' +
+        '                "values",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        String: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "codePointAt",\r\n' +
+        '                "includes",\r\n' +
+        '                "endsWith",\r\n' +
+        '                "normalize",\r\n' +
+        '                "repeat",\r\n' +
+        '                "startsWith",\r\n' +
+        '                "anchor",\r\n' +
+        '                "big",\r\n' +
+        '                "blink",\r\n' +
+        '                "bold",\r\n' +
+        '                "fixed",\r\n' +
+        '                "fontcolor",\r\n' +
+        '                "fontsize",\r\n' +
+        '                "italics",\r\n' +
+        '                "link",\r\n' +
+        '                "small",\r\n' +
+        '                "strike",\r\n' +
+        '                "sub",\r\n' +
+        '                "sup",\r\n' +
+        '            ],\r\n' +
+        '            es2017: [\r\n' +
+        '                "padStart",\r\n' +
+        '                "padEnd",\r\n' +
+        '            ],\r\n' +
+        '            es2019: [\r\n' +
+        '                "trimStart",\r\n' +
+        '                "trimEnd",\r\n' +
+        '                "trimLeft",\r\n' +
+        '                "trimRight",\r\n' +
+        '            ],\r\n' +
+        '            es2020: [\r\n' +
+        '                "matchAll",\r\n' +
+        '            ],\r\n' +
+        '            es2021: [\r\n' +
+        '                "replaceAll",\r\n' +
+        '            ],\r\n' +
+        '            es2022: [\r\n' +
+        '                "at",\r\n' +
+        '            ],\r\n' +
+        '            es2024: [\r\n' +
+        '                "isWellFormed",\r\n' +
+        '                "toWellFormed",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        StringConstructor: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "fromCodePoint",\r\n' +
+        '                "raw",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        DateTimeFormat: new Map(Object.entries({\r\n' +
+        '            es2017: [\r\n' +
+        '                "formatToParts",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        Promise: new Map(Object.entries({\r\n' +
+        '            es2015: emptyArray,\r\n' +
+        '            es2018: [\r\n' +
+        '                "finally",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        RegExpMatchArray: new Map(Object.entries({\r\n' +
+        '            es2018: [\r\n' +
+        '                "groups",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        RegExpExecArray: new Map(Object.entries({\r\n' +
+        '            es2018: [\r\n' +
+        '                "groups",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        Intl: new Map(Object.entries({\r\n' +
+        '            es2018: [\r\n' +
+        '                "PluralRules",\r\n' +
+        '            ],\r\n' +
+        '            es2020: [\r\n' +
+        '                "RelativeTimeFormat",\r\n' +
+        '                "Locale",\r\n' +
+        '                "DisplayNames",\r\n' +
+        '            ],\r\n' +
+        '            es2021: [\r\n' +
+        '                "ListFormat",\r\n' +
+        '                "DateTimeFormat",\r\n' +
+        '            ],\r\n' +
+        '            es2022: [\r\n' +
+        '                "Segmenter",\r\n' +
+        '            ],\r\n' +
+        '            es2025: [\r\n' +
+        '                "DurationFormat",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        NumberFormat: new Map(Object.entries({\r\n' +
+        '            es2018: [\r\n' +
+        '                "formatToParts",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        SymbolConstructor: new Map(Object.entries({\r\n' +
+        '            es2020: [\r\n' +
+        '                "matchAll",\r\n' +
+        '            ],\r\n' +
+        '            esnext: [\r\n' +
+        '                "metadata",\r\n' +
+        '                "dispose",\r\n' +
+        '                "asyncDispose",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        DataView'... 5437 more characters,
+      type: '() => ScriptTargetFeatures',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => ScriptTargetFeatures' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      file: 'src/compiler/factory/nodeFactory.ts',
+      line: 496,
+      source: 'memoize(() => flags & NodeFactoryFlags.NoParenthesizerRules ? nullParenthesizerRules : createParenthesizerRules(factory))',
+      type: '() => unknown',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => ParenthesizerRules' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      file: 'src/compiler/factory/nodeFactory.ts',
+      line: 497,
+      source: 'memoize(() => flags & NodeFactoryFlags.NoNodeConverters ? nullNodeConverters : createNodeConverters(factory))',
+      type: '() => unknown',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => NodeConverters' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      file: 'src/compiler/factory/emitHelpers.ts',
+      line: 150,
+      source: 'memoize(() => setInternalEmitFlags(factory.createTrue(), InternalEmitFlags.Immutable))',
+      type: '() => unknown',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => TrueLiteral' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      file: 'src/compiler/factory/emitHelpers.ts',
+      line: 151,
+      source: 'memoize(() => setInternalEmitFlags(factory.createFalse(), InternalEmitFlags.Immutable))',
+      type: '() => unknown',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => FalseLiteral' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      file: 'src/compiler/transformer.ts',
+      line: 276,
+      source: 'memoize(() => createEmitHelperFactory(context))',
+      type: '() => EmitHelperFactory',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => EmitHelperFactory' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      file: 'src/compiler/emitter.ts',
+      line: 701,
+      source: 'memoize(() => getCommonSourceDirectoryOfConfig(configFile, ignoreCase))',
+      type: '() => unknown',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      file: 'src/compiler/emitter.ts',
+      line: 730,
+      source: 'memoize(() => getCommonSourceDirectoryOfConfig(configFile, ignoreCase))',
+      type: '() => unknown',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      file: 'src/compiler/emitter.ts',
+      line: 1200,
+      source: 'memoize(() => createPrinter({}))',
+      type: '() => Printer',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => ts.Printer' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      file: 'src/compiler/emitter.ts',
+      line: 1203,
+      source: 'memoize(() => createPrinter({ removeComments: true }))',
+      type: '() => Printer',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => ts.Printer' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      file: 'src/compiler/emitter.ts',
+      line: 1206,
+      source: 'memoize(() => createPrinter({ removeComments: true, neverAsciiEscape: true }))',
+      type: '() => Printer',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => ts.Printer' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      file: 'src/compiler/emitter.ts',
+      line: 1209,
+      source: 'memoize(() => createPrinter({ removeComments: true, omitTrailingSemicolon: true }))',
+      type: '() => Printer',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => ts.Printer' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      file: 'src/compiler/program.ts',
+      line: 481,
+      source: 'memoize(() => system.getCurrentDirectory())',
+      type: '() => string',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      file: 'src/compiler/program.ts',
+      line: 1531,
+      source: 'memoize(() => createOptionValueDiagnostic("ignoreDeprecations", Diagnostics.Invalid_value_for_ignoreDeprecations))',
+      type: '() => unknown',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => void' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      file: 'src/compiler/program.ts',
+      line: 1580,
+      source: 'memoize(() => host.getDefaultLibFileName(options))',
+      type: '() => unknown',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      file: 'src/compiler/program.ts',
+      line: 1769,
+      source: 'memoize(() => getCommonSourceDirectoryOfConfig(parsedRef.commandLine, !host.useCaseSensitiveFileNames()))',
+      type: '() => unknown',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      file: 'src/compiler/program.ts',
+      line: 4051,
+      source: 'memoize(() => getCommonSourceDirectoryOfConfig(resolvedRef.commandLine, !host.useCaseSensitiveFileNames()))',
+      type: '() => unknown',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      file: 'src/compiler/resolutionCache.ts',
+      line: 598,
+      source: 'memoize(() => resolutionHost.getCurrentDirectory!())',
+      type: '() => unknown',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      file: 'src/compiler/watch.ts',
+      line: 768,
+      source: 'memoize(() => host.getCurrentDirectory())',
+      type: '() => string',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      file: 'src/compiler/watch.ts',
+      line: 844,
+      source: 'memoize(() => getDirectoryPath(normalizePath(system.getExecutingFilePath())))',
+      type: '() => unknown',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
+        }
+      ]
+    },
+    {
+      file: 'src/compiler/watch.ts',
+      line: 848,
+      source: 'memoize(() => system.getCurrentDirectory())',
+      type: '() => string',
+      diagnostics: [
+        {
+          code: 2345,
+          message: "Argument of type '() => string' is not assignable to parameter of type 'string'."
+        }
+      ]
+    }
+  ],
+  expected: [
+    {
+      file: 'src/compiler/sys.ts',
+      line: 1502,
+      source: 'memoize(() => process.cwd())',
+      type: '() => string',
+      diagnostics: []
+    },
+    {
+      file: 'src/compiler/utilities.ts',
+      line: 1384,
+      source: 'memoize((): ScriptTargetFeatures =>\r\n' +
+        '    new Map(Object.entries({\r\n' +
+        '        Array: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "find",\r\n' +
+        '                "findIndex",\r\n' +
+        '                "fill",\r\n' +
+        '                "copyWithin",\r\n' +
+        '                "entries",\r\n' +
+        '                "keys",\r\n' +
+        '                "values",\r\n' +
+        '            ],\r\n' +
+        '            es2016: [\r\n' +
+        '                "includes",\r\n' +
+        '            ],\r\n' +
+        '            es2019: [\r\n' +
+        '                "flat",\r\n' +
+        '                "flatMap",\r\n' +
+        '            ],\r\n' +
+        '            es2022: [\r\n' +
+        '                "at",\r\n' +
+        '            ],\r\n' +
+        '            es2023: [\r\n' +
+        '                "findLastIndex",\r\n' +
+        '                "findLast",\r\n' +
+        '                "toReversed",\r\n' +
+        '                "toSorted",\r\n' +
+        '                "toSpliced",\r\n' +
+        '                "with",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        Iterator: new Map(Object.entries({\r\n' +
+        '            es2015: emptyArray,\r\n' +
+        '        })),\r\n' +
+        '        AsyncIterator: new Map(Object.entries({\r\n' +
+        '            es2015: emptyArray,\r\n' +
+        '        })),\r\n' +
+        '        ArrayBuffer: new Map(Object.entries({\r\n' +
+        '            es2024: [\r\n' +
+        '                "maxByteLength",\r\n' +
+        '                "resizable",\r\n' +
+        '                "resize",\r\n' +
+        '                "detached",\r\n' +
+        '                "transfer",\r\n' +
+        '                "transferToFixedLength",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        Atomics: new Map(Object.entries({\r\n' +
+        '            es2017: [\r\n' +
+        '                "add",\r\n' +
+        '                "and",\r\n' +
+        '                "compareExchange",\r\n' +
+        '                "exchange",\r\n' +
+        '                "isLockFree",\r\n' +
+        '                "load",\r\n' +
+        '                "or",\r\n' +
+        '                "store",\r\n' +
+        '                "sub",\r\n' +
+        '                "wait",\r\n' +
+        '                "notify",\r\n' +
+        '                "xor",\r\n' +
+        '            ],\r\n' +
+        '            es2024: [\r\n' +
+        '                "waitAsync",\r\n' +
+        '            ],\r\n' +
+        '            esnext: [\r\n' +
+        '                "pause",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        SharedArrayBuffer: new Map(Object.entries({\r\n' +
+        '            es2017: [\r\n' +
+        '                "byteLength",\r\n' +
+        '                "slice",\r\n' +
+        '            ],\r\n' +
+        '            es2024: [\r\n' +
+        '                "growable",\r\n' +
+        '                "maxByteLength",\r\n' +
+        '                "grow",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        AsyncIterable: new Map(Object.entries({\r\n' +
+        '            es2018: emptyArray,\r\n' +
+        '        })),\r\n' +
+        '        AsyncIterableIterator: new Map(Object.entries({\r\n' +
+        '            es2018: emptyArray,\r\n' +
+        '        })),\r\n' +
+        '        AsyncGenerator: new Map(Object.entries({\r\n' +
+        '            es2018: emptyArray,\r\n' +
+        '        })),\r\n' +
+        '        AsyncGeneratorFunction: new Map(Object.entries({\r\n' +
+        '            es2018: emptyArray,\r\n' +
+        '        })),\r\n' +
+        '        RegExp: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "flags",\r\n' +
+        '                "sticky",\r\n' +
+        '                "unicode",\r\n' +
+        '            ],\r\n' +
+        '            es2018: [\r\n' +
+        '                "dotAll",\r\n' +
+        '            ],\r\n' +
+        '            es2024: [\r\n' +
+        '                "unicodeSets",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        RegExpConstructor: new Map(Object.entries({\r\n' +
+        '            es2025: [\r\n' +
+        '                "escape",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        Reflect: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "apply",\r\n' +
+        '                "construct",\r\n' +
+        '                "defineProperty",\r\n' +
+        '                "deleteProperty",\r\n' +
+        '                "get",\r\n' +
+        '                "getOwnPropertyDescriptor",\r\n' +
+        '                "getPrototypeOf",\r\n' +
+        '                "has",\r\n' +
+        '                "isExtensible",\r\n' +
+        '                "ownKeys",\r\n' +
+        '                "preventExtensions",\r\n' +
+        '                "set",\r\n' +
+        '                "setPrototypeOf",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        ArrayConstructor: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "from",\r\n' +
+        '                "of",\r\n' +
+        '            ],\r\n' +
+        '            esnext: [\r\n' +
+        '                "fromAsync",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        ObjectConstructor: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "assign",\r\n' +
+        '                "getOwnPropertySymbols",\r\n' +
+        '                "keys",\r\n' +
+        '                "is",\r\n' +
+        '                "setPrototypeOf",\r\n' +
+        '            ],\r\n' +
+        '            es2017: [\r\n' +
+        '                "values",\r\n' +
+        '                "entries",\r\n' +
+        '                "getOwnPropertyDescriptors",\r\n' +
+        '            ],\r\n' +
+        '            es2019: [\r\n' +
+        '                "fromEntries",\r\n' +
+        '            ],\r\n' +
+        '            es2022: [\r\n' +
+        '                "hasOwn",\r\n' +
+        '            ],\r\n' +
+        '            es2024: [\r\n' +
+        '                "groupBy",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        NumberConstructor: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "isFinite",\r\n' +
+        '                "isInteger",\r\n' +
+        '                "isNaN",\r\n' +
+        '                "isSafeInteger",\r\n' +
+        '                "parseFloat",\r\n' +
+        '                "parseInt",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        Math: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "clz32",\r\n' +
+        '                "imul",\r\n' +
+        '                "sign",\r\n' +
+        '                "log10",\r\n' +
+        '                "log2",\r\n' +
+        '                "log1p",\r\n' +
+        '                "expm1",\r\n' +
+        '                "cosh",\r\n' +
+        '                "sinh",\r\n' +
+        '                "tanh",\r\n' +
+        '                "acosh",\r\n' +
+        '                "asinh",\r\n' +
+        '                "atanh",\r\n' +
+        '                "hypot",\r\n' +
+        '                "trunc",\r\n' +
+        '                "fround",\r\n' +
+        '                "cbrt",\r\n' +
+        '            ],\r\n' +
+        '            es2025: [\r\n' +
+        '                "f16round",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        Map: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "entries",\r\n' +
+        '                "keys",\r\n' +
+        '                "values",\r\n' +
+        '            ],\r\n' +
+        '            esnext: [\r\n' +
+        '                "getOrInsert",\r\n' +
+        '                "getOrInsertComputed",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        MapConstructor: new Map(Object.entries({\r\n' +
+        '            es2024: [\r\n' +
+        '                "groupBy",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        Set: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "entries",\r\n' +
+        '                "keys",\r\n' +
+        '                "values",\r\n' +
+        '            ],\r\n' +
+        '            es2025: [\r\n' +
+        '                "union",\r\n' +
+        '                "intersection",\r\n' +
+        '                "difference",\r\n' +
+        '                "symmetricDifference",\r\n' +
+        '                "isSubsetOf",\r\n' +
+        '                "isSupersetOf",\r\n' +
+        '                "isDisjointFrom",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        PromiseConstructor: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "all",\r\n' +
+        '                "race",\r\n' +
+        '                "reject",\r\n' +
+        '                "resolve",\r\n' +
+        '            ],\r\n' +
+        '            es2020: [\r\n' +
+        '                "allSettled",\r\n' +
+        '            ],\r\n' +
+        '            es2021: [\r\n' +
+        '                "any",\r\n' +
+        '            ],\r\n' +
+        '            es2024: [\r\n' +
+        '                "withResolvers",\r\n' +
+        '            ],\r\n' +
+        '            es2025: [\r\n' +
+        '                "try",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        Symbol: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "for",\r\n' +
+        '                "keyFor",\r\n' +
+        '            ],\r\n' +
+        '            es2019: [\r\n' +
+        '                "description",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        WeakMap: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "entries",\r\n' +
+        '                "keys",\r\n' +
+        '                "values",\r\n' +
+        '            ],\r\n' +
+        '            esnext: [\r\n' +
+        '                "getOrInsert",\r\n' +
+        '                "getOrInsertComputed",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        WeakSet: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "entries",\r\n' +
+        '                "keys",\r\n' +
+        '                "values",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        String: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "codePointAt",\r\n' +
+        '                "includes",\r\n' +
+        '                "endsWith",\r\n' +
+        '                "normalize",\r\n' +
+        '                "repeat",\r\n' +
+        '                "startsWith",\r\n' +
+        '                "anchor",\r\n' +
+        '                "big",\r\n' +
+        '                "blink",\r\n' +
+        '                "bold",\r\n' +
+        '                "fixed",\r\n' +
+        '                "fontcolor",\r\n' +
+        '                "fontsize",\r\n' +
+        '                "italics",\r\n' +
+        '                "link",\r\n' +
+        '                "small",\r\n' +
+        '                "strike",\r\n' +
+        '                "sub",\r\n' +
+        '                "sup",\r\n' +
+        '            ],\r\n' +
+        '            es2017: [\r\n' +
+        '                "padStart",\r\n' +
+        '                "padEnd",\r\n' +
+        '            ],\r\n' +
+        '            es2019: [\r\n' +
+        '                "trimStart",\r\n' +
+        '                "trimEnd",\r\n' +
+        '                "trimLeft",\r\n' +
+        '                "trimRight",\r\n' +
+        '            ],\r\n' +
+        '            es2020: [\r\n' +
+        '                "matchAll",\r\n' +
+        '            ],\r\n' +
+        '            es2021: [\r\n' +
+        '                "replaceAll",\r\n' +
+        '            ],\r\n' +
+        '            es2022: [\r\n' +
+        '                "at",\r\n' +
+        '            ],\r\n' +
+        '            es2024: [\r\n' +
+        '                "isWellFormed",\r\n' +
+        '                "toWellFormed",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        StringConstructor: new Map(Object.entries({\r\n' +
+        '            es2015: [\r\n' +
+        '                "fromCodePoint",\r\n' +
+        '                "raw",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        DateTimeFormat: new Map(Object.entries({\r\n' +
+        '            es2017: [\r\n' +
+        '                "formatToParts",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        Promise: new Map(Object.entries({\r\n' +
+        '            es2015: emptyArray,\r\n' +
+        '            es2018: [\r\n' +
+        '                "finally",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        RegExpMatchArray: new Map(Object.entries({\r\n' +
+        '            es2018: [\r\n' +
+        '                "groups",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        RegExpExecArray: new Map(Object.entries({\r\n' +
+        '            es2018: [\r\n' +
+        '                "groups",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        Intl: new Map(Object.entries({\r\n' +
+        '            es2018: [\r\n' +
+        '                "PluralRules",\r\n' +
+        '            ],\r\n' +
+        '            es2020: [\r\n' +
+        '                "RelativeTimeFormat",\r\n' +
+        '                "Locale",\r\n' +
+        '                "DisplayNames",\r\n' +
+        '            ],\r\n' +
+        '            es2021: [\r\n' +
+        '                "ListFormat",\r\n' +
+        '                "DateTimeFormat",\r\n' +
+        '            ],\r\n' +
+        '            es2022: [\r\n' +
+        '                "Segmenter",\r\n' +
+        '            ],\r\n' +
+        '            es2025: [\r\n' +
+        '                "DurationFormat",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        NumberFormat: new Map(Object.entries({\r\n' +
+        '            es2018: [\r\n' +
+        '                "formatToParts",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        SymbolConstructor: new Map(Object.entries({\r\n' +
+        '            es2020: [\r\n' +
+        '                "matchAll",\r\n' +
+        '            ],\r\n' +
+        '            esnext: [\r\n' +
+        '                "metadata",\r\n' +
+        '                "dispose",\r\n' +
+        '                "asyncDispose",\r\n' +
+        '            ],\r\n' +
+        '        })),\r\n' +
+        '        DataView'... 5437 more characters,
+      type: '() => ScriptTargetFeatures',
+      diagnostics: []
+    },
+    {
+      file: 'src/compiler/factory/nodeFactory.ts',
+      line: 496,
+      source: 'memoize(() => flags & NodeFactoryFlags.NoParenthesizerRules ? nullParenthesizerRules : createParenthesizerRules(factory))',
+      type: '() => ParenthesizerRules',
+      diagnostics: []
+    },
+    {
+      file: 'src/compiler/factory/nodeFactory.ts',
+      line: 497,
+      source: 'memoize(() => flags & NodeFactoryFlags.NoNodeConverters ? nullNodeConverters : createNodeConverters(factory))',
+      type: '() => NodeConverters',
+      diagnostics: []
+    },
+    {
+      file: 'src/compiler/factory/emitHelpers.ts',
+      line: 150,
+      source: 'memoize(() => setInternalEmitFlags(factory.createTrue(), InternalEmitFlags.Immutable))',
+      type: '() => TrueLiteral',
+      diagnostics: []
+    },
+    {
+      file: 'src/compiler/factory/emitHelpers.ts',
+      line: 151,
+      source: 'memoize(() => setInternalEmitFlags(factory.createFalse(), InternalEmitFlags.Immutable))',
+      type: '() => FalseLiteral',
+      diagnostics: []
+    },
+    {
+      file: 'src/compiler/transformer.ts',
+      line: 276,
+      source: 'memoize(() => createEmitHelperFactory(context))',
+      type: '() => EmitHelperFactory',
+      diagnostics: []
+    },
+    {
+      file: 'src/compiler/emitter.ts',
+      line: 701,
+      source: 'memoize(() => getCommonSourceDirectoryOfConfig(configFile, ignoreCase))',
+      type: '() => string',
+      diagnostics: []
+    },
+    {
+      file: 'src/compiler/emitter.ts',
+      line: 730,
+      source: 'memoize(() => getCommonSourceDirectoryOfConfig(configFile, ignoreCase))',
+      type: '() => string',
+      diagnostics: []
+    },
+    {
+      file: 'src/compiler/emitter.ts',
+      line: 1200,
+      source: 'memoize(() => createPrinter({}))',
+      type: '() => Printer',
+      diagnostics: []
+    },
+    {
+      file: 'src/compiler/emitter.ts',
+      line: 1203,
+      source: 'memoize(() => createPrinter({ removeComments: true }))',
+      type: '() => Printer',
+      diagnostics: []
+    },
+    {
+      file: 'src/compiler/emitter.ts',
+      line: 1206,
+      source: 'memoize(() => createPrinter({ removeComments: true, neverAsciiEscape: true }))',
+      type: '() => Printer',
+      diagnostics: []
+    },
+    {
+      file: 'src/compiler/emitter.ts',
+      line: 1209,
+      source: 'memoize(() => createPrinter({ removeComments: true, omitTrailingSemicolon: true }))',
+      type: '() => Printer',
+      diagnostics: []
+    },
+    {
+      file: 'src/compiler/program.ts',
+      line: 481,
+      source: 'memoize(() => system.getCurrentDirectory())',
+      type: '() => string',
+      diagnostics: []
+    },
+    {
+      file: 'src/compiler/program.ts',
+      line: 1531,
+      source: 'memoize(() => createOptionValueDiagnostic("ignoreDeprecations", Diagnostics.Invalid_value_for_ignoreDeprecations))',
+      type: '() => void',
+      diagnostics: []
+    },
+    {
+      file: 'src/compiler/program.ts',
+      line: 1580,
+      source: 'memoize(() => host.getDefaultLibFileName(options))',
+      type: '() => string',
+      diagnostics: []
+    },
+    {
+      file: 'src/compiler/program.ts',
+      line: 1769,
+      source: 'memoize(() => getCommonSourceDirectoryOfConfig(parsedRef.commandLine, !host.useCaseSensitiveFileNames()))',
+      type: '() => string',
+      diagnostics: []
+    },
+    {
+      file: 'src/compiler/program.ts',
+      line: 4051,
+      source: 'memoize(() => getCommonSourceDirectoryOfConfig(resolvedRef.commandLine, !host.useCaseSensitiveFileNames()))',
+      type: '() => string',
+      diagnostics: []
+    },
+    {
+      file: 'src/compiler/resolutionCache.ts',
+      line: 598,
+      source: 'memoize(() => resolutionHost.getCurrentDirectory!())',
+      type: '() => string',
+      diagnostics: []
+    },
+    {
+      file: 'src/compiler/watch.ts',
+      line: 768,
+      source: 'memoize(() => host.getCurrentDirectory())',
+      type: '() => string',
+      diagnostics: []
+    },
+    {
+      file: 'src/compiler/watch.ts',
+      line: 844,
+      source: 'memoize(() => getDirectoryPath(normalizePath(system.getExecutingFilePath())))',
+      type: '() => string',
+      diagnostics: []
+    },
+    {
+      file: 'src/compiler/watch.ts',
+      line: 848,
+      source: 'memoize(() => system.getCurrentDirectory())',
+      type: '() => string',
+      diagnostics: []
+    }
+  ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

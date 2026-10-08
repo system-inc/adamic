@@ -1,0 +1,2 @@
+declare const base: Omit<Set<string>, 'union' | 'intersection' | 'difference' | 'symmetricDifference' | 'isSubsetOf' | 'isSupersetOf' | 'isDisjointFrom'>;
+const result: Set<string> = base;

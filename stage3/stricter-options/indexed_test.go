@@ -33,6 +33,15 @@ func TestIndexedPresenceRuntime(t *testing.T) {
 		name, typed, node, want string
 		absent                  bool
 	}{
+		{"hole-compound", `const values: number[] = new Array<number>(2); values[0] |= 1; console.log('done');`, `const values = new Array(2); console.log(String(values[0]));`, "undefined\n", true},
+		{"hole-integer-loop", `const values: number[] = new Array<number>(2); for (let index = 0; index < values.length; index++) { const value: number = values[index]; console.log(` + "`${value}`" + `); }`, `const values = new Array(2); for (let index = 0; index < values.length; index++) { console.log(String(values[index])); break; }`, "undefined\n", true},
+		{"hole-reference-write", `const values: string[] = new Array<string>(2); const alias = values; alias[1] = 'a'.repeat(2); const value: string = values[1]; console.log(value);`, `const values = new Array(2); const alias = values; alias[1] = 'a'.repeat(2); const value = values[1]; console.log(value);`, "aa\n", false},
+		{"hole-number", `const values: number[] = new Array<number>(2); const value: number = values[0]; console.log(` + "`${value}`" + `);`, `const values = new Array(2); const value = values[0]; console.log(String(value));`, "undefined\n", true},
+		{"hole-string", `const values: string[] = new Array<string>(2); const value: string = values[1]; console.log(value);`, `const values = new Array(2); const value = values[1]; console.log(value);`, "undefined\n", true},
+		{"hole-partial-fill", `const values: number[] = new Array<number>(3); const alias = values; alias.fill(7, 1, 2); const value: number = values[0]; console.log(` + "`${value}`" + `);`, `const values = new Array(3); const alias = values; alias.fill(7, 1, 2); const value = values[0]; console.log(String(value));`, "undefined\n", true},
+		{"hole-alias-write", `const values: number[] = new Array<number>(2); const alias = values; alias[1] = 7; const value: number = values[1]; console.log(` + "`${value}`" + `);`, `const values = new Array(2); const alias = values; alias[1] = 7; const value = values[1]; console.log(String(value));`, "7\n", false},
+		{"hole-filled", `const values: number[] = new Array<number>(3); values.fill(7, 1, 2); const value: number = values[1]; console.log(` + "`${value}`" + `);`, `const values = new Array(3); values.fill(7, 1, 2); const value = values[1]; console.log(String(value));`, "7\n", false},
+		{"observed-hole", `const values: number[] = new Array<number>(2); console.log(` + "`${values[0]}`" + `);`, `const values = new Array(2); console.log(String(values[0]));`, "undefined\n", false},
 		{"number", `const values: number[] = []; const value: number = values[3]; console.log(` + "`${value}`" + `);`, `const values = []; const value = values[3]; console.log(String(value));`, "undefined\n", true},
 		{"boolean", `const values: boolean[] = []; const value: boolean = values[0]; console.log(` + "`${value}`" + `);`, `const values = []; const value = values[0]; console.log(String(value));`, "undefined\n", true},
 		{"string-array", `const values: string[] = []; const value: string = values[0]; console.log(value);`, `const values = []; const value = values[0]; console.log(value);`, "undefined\n", true},
@@ -81,7 +90,11 @@ func TestIndexedPresenceRuntime(t *testing.T) {
 			if strings.Contains(fixture.typed, "[]") {
 				lookup = "adamic_array_at("
 			}
-			if count := strings.Count(c, lookup); count != 1 {
+			count := strings.Count(c, lookup)
+			if lookup == "adamic_array_at(" {
+				count += strings.Count(c, "adamic_array_at_integer(")
+			}
+			if count != 1 {
 				t.Fatalf("presence guard duplicated the lookup/bounds check: %s count %d", lookup, count)
 			}
 			binary := filepath.Join(directory, "native")
