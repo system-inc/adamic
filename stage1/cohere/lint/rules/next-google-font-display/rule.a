@@ -1,0 +1,34 @@
+import { urlQueryValue } from '../../helpers/next/url_query_value.a';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import { decode } from './entities.a';
+import { missing, discouraged } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(node: ParseNode, index: number): void {
+        const children = node.children;
+        const tag = children[0] ?? -1;
+        if(tag < 0 || this.context.node(tag).kind !== 'Identifier' || this.context.node(tag).text !== 'link') { return; }
+        const attributes = children.find(child => this.context.node(child).kind === 'JsxAttributes') ?? -1;
+        if(attributes < 0) { return; }
+        let reference = '';
+        for(const property of this.context.node(attributes).children) {
+            if(this.context.node(property).kind !== 'JsxAttribute') { continue; }
+            const parts = this.context.node(property).children;
+            const name = parts[0] ?? -1;
+            if(name < 0 || this.context.node(name).kind !== 'Identifier' || this.context.node(name).text.toLowerCase() !== 'href') { continue; }
+            const value = parts[1] ?? -1;
+            if(value < 0 || this.context.node(value).kind !== 'StringLiteral') { return; }
+            reference = decode(this.context.node(value).text);
+            break;
+        }
+        if(!reference.startsWith('https://fonts.googleapis.com/css')) { return; }
+        const query = urlQueryValue(reference, 'display');
+        const found = query.present;
+        const display = query.value;
+        if(!found) { this.context.report(index, '@next/next/google-font-display', 'googleFontDisplayMissing', missing, '', '', ''); }
+        else if(['auto', 'block', 'fallback'].includes(display)) { this.context.report(index, '@next/next/google-font-display', 'googleFontDisplayNotRecommended', discouraged, '', '', ''); }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

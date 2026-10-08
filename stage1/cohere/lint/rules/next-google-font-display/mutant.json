@@ -1,0 +1,5 @@
+{
+  "name": "next-google-font-display-discouraged-value-lost",
+  "from": "['auto', 'block', 'fallback'].includes(display)",
+  "to": "['auto', 'fallback'].includes(display)"
+}

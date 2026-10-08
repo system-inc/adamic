@@ -1,0 +1,11 @@
+export function urlQueryValue(url: string, key: string): {value: string, present: boolean} {
+    if(!url.startsWith('http://') && !url.startsWith('https://')) { return {value: '', present: false}; }
+    const question = url.indexOf('?');
+    if(question < 0) { return {value: '', present: false}; }
+    for(const pair of url.slice(question + 1).split('&')) {
+        const equal = pair.indexOf('=');
+        if(equal < 0) { continue; }
+        if(pair.slice(0, equal) === key) { return {value: pair.slice(equal + 1), present: true}; }
+    }
+    return {value: '', present: false};
+}
