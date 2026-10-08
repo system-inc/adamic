@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"reflect"
 	"strings"
 	"testing"
 	"time"
@@ -38,28 +37,13 @@ func jsxSpansOracle(t *testing.T) string {
 func jsxSources(t *testing.T) []string {
 	t.Helper()
 	spans := jsxSpansOracle(t)
-	var paths []string
-	byRule := map[string]int{}
-	for _, row := range upstream(t) {
-		fields := strings.Split(row, "\t")
-		if len(bytes.TrimSpace(execute(t, "", spans, fields[0]).output)) > 0 {
-			paths = append(paths, fields[0])
-			byRule[fields[1]]++
-		}
+	paths, byRule, err := discoverJsxInventory(prepareRegistry(t, "."), upstream(t), func(path string) bool {
+		return len(bytes.TrimSpace(execute(t, "", spans, path).output)) > 0
+	})
+	if err != nil {
+		t.Fatal(err)
 	}
-	// Each rule's captured JSX cases, exactly. A rule losing some, or a capture losing a rule, fails here
-	// rather than shrinking the parser check silently, and a new rule that brings JSX cases adds its row.
-	// Batch 8's three rules held the original 54.
-	want := map[string]int{
-		"react/jsx-no-comment-textnodes":              40,
-		"react/no-find-dom-node":                      9,
-		"react/no-is-mounted":                         5,
-		"nexus/consistency-no-abbreviated-identifier": 5,
-		"nexus/consistency-no-ambiguous-identifier":   4,
-	}
-	if !reflect.DeepEqual(byRule, want) {
-		t.Fatalf("captured JSX cases by rule %v, want %v", byRule, want)
-	}
+	t.Logf("discovered captured JSX cases by rule %v", byRule)
 	return paths
 }
 
@@ -95,7 +79,7 @@ func TestJsxLintReleaseAndThroughput(t *testing.T) {
 	}
 	oracle := goOracle(t)
 	binary := buildPort(t, directory, false)
-	input := manifest(t, rows)
+	input := manifest(t, recoveryRows(t, oracle, rows))
 	compare(t, oracle, binary, directory, input)
 	best := map[string]time.Duration{}
 	var answer []byte

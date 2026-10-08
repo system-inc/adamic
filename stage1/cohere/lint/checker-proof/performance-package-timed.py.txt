@@ -1,0 +1,15 @@
+import os,sys,time,subprocess,json,pathlib
+label=sys.argv[1]; cwd=sys.argv[2]; limit=sys.argv[3]
+profile=pathlib.Path('/workspace/checker-'+label+'-profiles'); profile.mkdir()
+env=os.environ.copy(); env.update(ADAMIC_TYPESCRIPT_SOURCE='/workspace/typescript-wave08-corpus',ADAMIC_LINT_PROFILE_DIR=str(profile),ADAMIC_LINT_PROFILE_SNAPSHOTS=str(profile),GOMAXPROCS='4',GOFLAGS='-buildvcs=false',GOPROXY='https://proxy.golang.org|direct')
+start=time.monotonic(); samples=[]
+with open('/tmp/checker-'+label+'.jsonl','w') as log:
+ proc=subprocess.Popen(['go','test','-json','-count=1','-timeout',limit,'./stage1/cohere/lint'],cwd=cwd,env=env,stdout=log,stderr=subprocess.STDOUT)
+ while True:
+  samples.append({'seconds':time.monotonic()-start,'load':os.getloadavg()})
+  try: proc.wait(timeout=10); break
+  except subprocess.TimeoutExpired: pass
+result={'wall_seconds':time.monotonic()-start,'exit':proc.returncode,'nproc':subprocess.check_output(['nproc'],text=True).strip(),'profile':str(profile),'loads':samples}
+pathlib.Path('/tmp/checker-'+label+'-time.json').write_text(json.dumps(result,indent=2))
+print(json.dumps({k:v for k,v in result.items() if k!='loads'}))
+sys.exit(proc.returncode)

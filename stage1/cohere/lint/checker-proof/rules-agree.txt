@@ -1,0 +1,160 @@
+=== RUN   TestRulesAgree
+    lint_test.go:426: cohere cases: 3879 unique source/rule/options combinations
+    lint_test.go:495: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3678415574/019/case-278/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:496: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:496: explicit unsupported recovery: /tmp/adamic-gate/adamic-lint-native-1061423939/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree3678415574/019/case-278/repository/source/Thing.ts
+    lint_test.go:496: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree3678415574/019/case-278/repository/source/Thing.ts
+    lint_test.go:495: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3678415574/019/case-280/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:496: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:496: explicit unsupported recovery: /tmp/adamic-gate/adamic-lint-native-1061423939/scanner: timeout=true: signal: killed: 
+    lint_test.go:496: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:495: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3678415574/019/case-284/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:496: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:496: explicit unsupported recovery: /tmp/adamic-gate/adamic-lint-native-1061423939/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree3678415574/019/case-284/repository/source/Thing.ts
+    lint_test.go:496: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree3678415574/019/case-284/repository/source/Thing.ts
+    lint_test.go:495: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3678415574/019/case-285/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:496: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:496: explicit unsupported recovery: /tmp/adamic-gate/adamic-lint-native-1061423939/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree3678415574/019/case-285/repository/source/Thing.ts
+    lint_test.go:496: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree3678415574/019/case-285/repository/source/Thing.ts
+    lint_test.go:495: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3678415574/019/case-294/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:496: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:496: explicit unsupported recovery: /tmp/adamic-gate/adamic-lint-native-1061423939/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree3678415574/019/case-294/repository/source/Thing.ts
+    lint_test.go:496: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree3678415574/019/case-294/repository/source/Thing.ts
+    lint_test.go:495: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3678415574/019/case-296/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:496: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree3678415574/019/case-296/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 33 errorMethod fix	m: (a: string) => void;		14 33
+        recovery findings only
+    lint_test.go:496: explicit unsupported recovery: /tmp/adamic-gate/adamic-lint-native-1061423939/scanner: timeout=true: signal: killed: 
+    lint_test.go:496: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:495: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3678415574/019/case-298/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:496: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree3678415574/019/case-298/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 34 errorMethod fix	m: (a: string) => void;		14 34
+        recovery findings only
+    lint_test.go:496: explicit unsupported recovery: /tmp/adamic-gate/adamic-lint-native-1061423939/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree3678415574/019/case-298/repository/source/Thing.ts
+    lint_test.go:496: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree3678415574/019/case-298/repository/source/Thing.ts
+    lint_test.go:495: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3678415574/019/case-299/repository/source/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:496: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree3678415574/019/case-299/repository/source/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 27 errorMethod 			14 27
+        recovery findings only
+    lint_test.go:496: explicit unsupported recovery: /tmp/adamic-gate/adamic-lint-native-1061423939/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree3678415574/019/case-299/repository/source/Thing.ts
+    lint_test.go:496: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree3678415574/019/case-299/repository/source/Thing.ts
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 37 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 37 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 177 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 497 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 477 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 470 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 136 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 151 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 145 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 352 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 447 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 460 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 68 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 81 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 85 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 84 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 391 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 377 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 413 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 385 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 377 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 371 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 377 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 71 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 377 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 413 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 375 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 81 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 392 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 68 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 68 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 435 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 424 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 433 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 413 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 406 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 440 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 411 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 413 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 411 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 446 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 104 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 106 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 114 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 106 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 73 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 73 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 78 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 77 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 401 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 129 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 399 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 427 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 427 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 427 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 433 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 427 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 410 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 405 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 438 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 348 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 383 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 62 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 339 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 76 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 93 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 542 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 81 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 62 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 179 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 626 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 628 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 114 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 666 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 604 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 563 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 528 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 541 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 180 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 617 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 115 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 531 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 574 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 553 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 532 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 545 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 561 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 516 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 516 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 534 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 530 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 532 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 529 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 555 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 620 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 613 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 577 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 588 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 618 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 531 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 561 bytes
+    lint_test.go:493: live Go, native, Node and emitted JavaScript replay identical: 60 bytes
+    lint_test.go:501: Go, Node, emitted JavaScript, native identical: 13746146 bytes
+--- PASS: TestRulesAgree (244.05s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	244.103s

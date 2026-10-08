@@ -1,0 +1,18 @@
+{
+  "name": "@typescript-eslint/no-unnecessary-boolean-literal-compare",
+  "typed": true,
+  "programReads": [
+    "ReadsCompilerOptions"
+  ],
+  "node": true,
+  "kinds": [
+    "BinaryExpression"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoUnnecessaryBooleanLiteralCompare",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoUnnecessaryBooleanLiteralCompare"
+}
