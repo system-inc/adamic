@@ -184,7 +184,15 @@ cohere through the existing submodule, with no copied code. Go's VCS stamping
 was disabled for that scratch build because of the linked submodule. The merged
 fixtures were separately held to uncached Node in both backends. Counts added,
 removed and changed are all listed in evidence/counts-delta.json; predicate rows
-are unchanged. The String.raw generated-C diff is retained as evidence/raw.diff.
+are unchanged. The String.raw generated-C diff is retained as evidence/raw.diff.gz.
 
 Only codex/records-maplike-next is pushed, once, without force. Neither parent is
 rewritten, and no main or area branch is merged into or pushed.
+
+Merge commit: 7a2a4132ac763f18445da17c76ebdd1f6488aa63, with the two requested
+parents. A following evidence-only commit compresses the generated-C diff and
+records this validation note. Go formatting and vet are clean. The full merge
+diff's whitespace check reports inherited raw sanitizer/patch/fixture evidence
+from 506441dd; those bytes were retained. The records delta against 506441dd
+passes its whitespace check. The generated-C context diff is compressed so its
+intentional diff prefixes do not appear as source indentation warnings.
