@@ -1,5 +1,35 @@
 # Scanner blockers
 
+## October 8: native unit 3, library merged and front-3 skipped
+
+Scratch compiler b05a9306 includes main efe9f404 and library's 2bf78f6a /
+0ab7c2bd fixes. front-3 a36d1c04 conflicted in 23 files and was aborted and
+skipped as requested. No compiler or adaptation edit was made.
+
+Both ADAMIC_NATIVE_SPLIT=0 and split=1 with five jobs stop at
+corePublic.ts:9:5, refusing the MapLike index signature. Both slice Node streams
+match the complete full-tree reference byte for byte: 509,014 skipped-trivia
+tokens, 860,418 retained-trivia tokens and 466 errors. Both end mutants fail diff.
+
+[The ordered report](evidence/native3/REPORT.md) records fifteen successive
+observations, throwing discovery placeholders, and a small successful Node
+program that reproduces each diagnostic. Observation 14 depends on replacing
+Debug's namespace with an object of functions. None of the behind-placeholder
+results constitutes a native scanner proof.
+
+**Gone in the isolated control:** the missing captureStackTrace static method.
+Typed capture-stack-marker-control.a builds and prints ok on both Node and
+native; a one-byte native-control output mutant fails diff. The marker-bearing
+probe separately fails TS2769 because {} is not Function. The real scanner
+stops earlier, so no scanner native-output mutant or timing is claimed.
+
+**Historical retirement status unavailable:** the referenced October 8 list
+is absent from BLOCKERS.md at all three fetched refs. Existing October 7 notes
+remain intact; no unseen fifteen-item list is marked closed by inference.
+All hashes, conflicts, raw diagnostics, witnesses and setup timings are in
+[evidence/native3](evidence/native3/REPORT.md). No new oracle fixture was added.
+
+
 ## October 7: developer-tools split compile on and off
 
 Merged area/developer-tools 2adf65c2 without conflicts into scratch 64d47034,

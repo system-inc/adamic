@@ -1,0 +1,19 @@
+v24.19.0
+setup: node ready (0.248s)
+go version go1.27.1 linux/amd64
+setup: go ready (0.267s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.890s)
+
+added 3 packages in 972ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=1.952s
+setup: markdown dependencies ready (2.474s)
+submodule cache: restored cohere 7945d102a6c18dd36adf9114a758ce646e8b2359
+setup: submodules ready (23.994s)
+setup: go build ready (285.795s)
+setup: test binaries deferred (use --warm-tests) (285.960s)
+setup: build cache warm (285.962s)
+setup: build-flags commit=efe9f4042049234e5a52639fe77b47c311fd530c nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=0.05 0.01 0.00 1/135 719 load-after=11.49 7.00 2.93 4/172 3926
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (286.021s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.MMRHXt
