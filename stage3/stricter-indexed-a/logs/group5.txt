@@ -1,0 +1,58 @@
+=== RUN   TestAssignedLedgerIsCovered
+--- PASS: TestAssignedLedgerIsCovered (0.01s)
+=== RUN   TestCheckerIndexedWitnesses
+=== RUN   TestCheckerIndexedWitnesses/D071
+=== RUN   TestCheckerIndexedWitnesses/D071/absent=false
+    witness_test.go:105: BLOCKED [D071] receiver=returned readonly object array, three-element destructuring: /tmp/adamic-gate/TestCheckerIndexedWitnessesD071absent=false1536374881/001/main.ts:5:7: stage 0 can't lower destructuring anything but a tuple into [names] yet; source Node observations passed; CLI refuses and does not count a check
+=== RUN   TestCheckerIndexedWitnesses/D071/absent=true
+    witness_test.go:105: BLOCKED [D071] receiver=returned readonly object array, three-element destructuring: /tmp/adamic-gate/TestCheckerIndexedWitnessesD071absent=true3697249877/001/main.ts:5:7: stage 0 can't lower destructuring anything but a tuple into [names] yet; source Node observations passed; CLI refuses and does not count a check
+=== RUN   TestCheckerIndexedWitnesses/D072
+=== RUN   TestCheckerIndexedWitnesses/D072/absent=false
+    witness_test.go:105: BLOCKED [D072] receiver=returned readonly object array, three-element destructuring: /tmp/adamic-gate/TestCheckerIndexedWitnessesD072absent=false4234672559/001/main.ts:5:7: stage 0 can't lower destructuring anything but a tuple into [names] yet; source Node observations passed; CLI refuses and does not count a check
+=== RUN   TestCheckerIndexedWitnesses/D072/absent=true
+    witness_test.go:105: BLOCKED [D072] receiver=returned readonly object array, three-element destructuring: /tmp/adamic-gate/TestCheckerIndexedWitnessesD072absent=true2557663938/001/main.ts:5:7: stage 0 can't lower destructuring anything but a tuple into [names] yet; source Node observations passed; CLI refuses and does not count a check
+=== RUN   TestCheckerIndexedWitnesses/D073
+=== RUN   TestCheckerIndexedWitnesses/D073/absent=false
+    witness_test.go:105: BLOCKED [D073] receiver=returned readonly object array, one-element destructuring: /tmp/adamic-gate/TestCheckerIndexedWitnessesD073absent=false2528976303/001/main.ts:5:7: stage 0 can't lower destructuring anything but a tuple into [names] yet; source Node observations passed; CLI refuses and does not count a check
+=== RUN   TestCheckerIndexedWitnesses/D073/absent=true
+    witness_test.go:105: BLOCKED [D073] receiver=returned readonly object array, one-element destructuring: /tmp/adamic-gate/TestCheckerIndexedWitnessesD073absent=true945772654/001/main.ts:5:7: stage 0 can't lower destructuring anything but a tuple into [names] yet; source Node observations passed; CLI refuses and does not count a check
+=== RUN   TestCheckerIndexedWitnesses/D092
+=== RUN   TestCheckerIndexedWitnesses/D092/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D092/absent=true
+    witness_test.go:164: [D092] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D093
+=== RUN   TestCheckerIndexedWitnesses/D093/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D093/absent=true
+    witness_test.go:164: [D093] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D094
+=== RUN   TestCheckerIndexedWitnesses/D094/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D094/absent=true
+    witness_test.go:164: [D094] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D095
+=== RUN   TestCheckerIndexedWitnesses/D095/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D095/absent=true
+    witness_test.go:164: [D095] receiver=mutable object array, property index Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+--- PASS: TestCheckerIndexedWitnesses (25.86s)
+    --- PASS: TestCheckerIndexedWitnesses/D071 (2.34s)
+        --- PASS: TestCheckerIndexedWitnesses/D071/absent=false (1.08s)
+        --- PASS: TestCheckerIndexedWitnesses/D071/absent=true (1.26s)
+    --- PASS: TestCheckerIndexedWitnesses/D072 (2.32s)
+        --- PASS: TestCheckerIndexedWitnesses/D072/absent=false (1.08s)
+        --- PASS: TestCheckerIndexedWitnesses/D072/absent=true (1.24s)
+    --- PASS: TestCheckerIndexedWitnesses/D073 (2.14s)
+        --- PASS: TestCheckerIndexedWitnesses/D073/absent=false (0.98s)
+        --- PASS: TestCheckerIndexedWitnesses/D073/absent=true (1.16s)
+    --- PASS: TestCheckerIndexedWitnesses/D092 (3.79s)
+        --- PASS: TestCheckerIndexedWitnesses/D092/absent=false (1.72s)
+        --- PASS: TestCheckerIndexedWitnesses/D092/absent=true (2.07s)
+    --- PASS: TestCheckerIndexedWitnesses/D093 (3.41s)
+        --- PASS: TestCheckerIndexedWitnesses/D093/absent=false (1.63s)
+        --- PASS: TestCheckerIndexedWitnesses/D093/absent=true (1.78s)
+    --- PASS: TestCheckerIndexedWitnesses/D094 (3.68s)
+        --- PASS: TestCheckerIndexedWitnesses/D094/absent=false (1.68s)
+        --- PASS: TestCheckerIndexedWitnesses/D094/absent=true (1.99s)
+    --- PASS: TestCheckerIndexedWitnesses/D095 (3.36s)
+        --- PASS: TestCheckerIndexedWitnesses/D095/absent=false (1.48s)
+        --- PASS: TestCheckerIndexedWitnesses/D095/absent=true (1.87s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-a	25.886s

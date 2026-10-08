@@ -1,0 +1,8 @@
+{
+  "ids": [
+    "D095"
+  ],
+  "read": "mergedSymbols[symbol.mergeId]",
+  "receiver": "mutable object array, property index",
+  "source": "interface Type { readonly flags: number; }\nconst absent = ABSENT;\nconst mergedSymbols: Type[] = absent ? [] : [{ flags: 0 }, { flags: 7 }];\nconst symbol: { readonly mergeId: number } = { mergeId: 1 };\nconst value: Type = mergedSymbols[symbol.mergeId];\nconsole.log(value === undefined ? \"undefined\" : `${value.flags}`);\n"
+}
