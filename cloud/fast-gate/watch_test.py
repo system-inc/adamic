@@ -121,6 +121,7 @@ fi
             extra['ADAMIC_FAST_GATE_GOOD_TREE'] = str(self.root / 'good')
         env = dict(os.environ, **extra, PATH=str(self.bin) + ':' + os.environ['PATH'],
                    TEST_ROOT=str(self.root), ADAMIC_FAST_GATE_WATCH_STATE=str(self.state),
+                   ADAMIC_FULL_GATE_REQUESTS=str(self.root / 'requests'),
                    ADAMIC_FAST_GATE_AHRA_DIR=str(self.root))
         self.output = open(self.root / 'output', 'w')
         self.proc = subprocess.Popen([os.environ.get('WATCH_TEST_BASH', 'bash'), str(cloud / 'fast-gate-watch.sh')], env=env,
@@ -583,6 +584,38 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: [x for x in w.read('starts').splitlines() if x.startswith('codex/side ')][-1].endswith(' other'))
         self.assertEqual((w.state / 'star-boxes').read_text(), 'server\n')
         self.assertNotIn('void codex/side', w.read('output'))
+
+    def test_a_second_star_tip_takes_the_box_with_the_lowest_ranked_work_when_server_is_the_star_s(self):
+        # @system_adamic, Oct 8 22:50Z: train-3 builds held Server while the bottom slice's tip (b1d058d8) waited.
+        w = self.reservation('server B\nworkshop B\nother B\n', [('cloud/land-train-3-v2', 'B'), ('codex/side', 'B'), ('cloud/land-lint', 'B')], release=False)
+        (w.state / 'front').write_text('cloud/land-train-*\n')
+        w.put('initial', 'pass')
+        w.wait(lambda: len([x for x in w.read('starts').splitlines() if not x.startswith('canary/')]) == 3)
+        boxes = {x.split()[0]: x.split()[-1] for x in w.read('starts').splitlines()}
+        self.assertEqual(boxes['cloud/land-train-3-v2'], 'server')
+        side, lint = boxes['codex/side'], boxes['cloud/land-lint']
+        bottom = 'e' * 40
+        w.put('requests', '9' * 40 + '\n' + bottom + '\n')
+        w.tips.append(('cloud/land-train-2-v1', bottom))
+        w.put('tips', ''.join(f'{sha}\trefs/heads/{b}\n' for b, sha in w.tips))
+        # The worker's tip ranks below the landing: its box is the one preempted.
+        w.wait(lambda: 'preempted codex/side' in w.read('output'))
+        self.assertNotIn('preempted cloud/land-lint', w.read('output'))
+        w.wait(lambda: any(x.startswith('cloud/land-train-2-v1 ') for x in w.read('starts').splitlines()))
+        start = [x for x in w.read('starts').splitlines() if x.startswith('cloud/land-train-2-v1 ')][0]
+        self.assertTrue(start.endswith(' B ' + side), start)
+        self.assertIn('cloud/land-train-2-v1', w.read('whole'))
+        self.assertEqual(sorted((w.state / 'star-boxes').read_text().split()), sorted(['server', side]))
+        # A third star tip finds the cap: two star boxes, so it waits.
+        third = 'f' * 40
+        with (w.root / 'requests').open('a') as handle:
+            handle.write(third + '\n')
+        w.tips.append(('cloud/land-train-4-v3', third))
+        w.put('tips', ''.join(f'{sha}\trefs/heads/{b}\n' for b, sha in w.tips))
+        w.wait(lambda: 'queued cloud/land-train-4-v3' in w.read('output'))
+        time.sleep(.3)
+        self.assertNotIn('preempted cloud/land-lint', w.read('output'))
+        self.assertNotIn('cloud/land-train-4-v3 ', w.read('starts'))
 
     def test_a_box_running_the_star_takes_no_other_gate(self):
         # No Server in the table: the star runs wherever a big slot is free, and that box is then its own.

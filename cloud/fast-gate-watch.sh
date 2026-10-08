@@ -179,6 +179,7 @@ reservedBranch() {
 }
 slotReserved() {
   local branch=$1 box=$2 slot=$3 b c glob
+  [ "${slot}" = B ] && [ "$(starSecondBox "${branch}")" = "${box}" ] && return 0
   while read -r b c glob; do
     [ "${b}" = "${box}" ] && [ "${c}" = "${slot}" ] || continue
     if [ -n "${glob}" ]; then
@@ -351,6 +352,7 @@ isFront() {
 # this watcher (Loom's pilot) reads it and stays off them.
 writeStarBoxes() {
   local runningBranch runningSha runningSlot runningBox rest class queued branch sha
+  assignStarBoxes
   {
     cat "${state}"/running/* 2> /dev/null | while read -r runningBranch runningSha runningSlot runningBox rest; do
       isFront "${runningBranch}" && echo "${runningBox:-threadripper}"
@@ -360,6 +362,65 @@ writeStarBoxes() {
     done < "${state}/queue"
   } | sort -u > "${state}/star-boxes.tmp"
   mv "${state}/star-boxes.tmp" "${state}/star-boxes"
+}
+# A second box for the star (@system_adamic, Oct 8 22:50Z: "a star tip queued with every slot busy preempts at once"):
+# while another star tip holds Server, a queued star tip that integration's requests file still lists (a live slice,
+# bottom first; superseded slices leave it) takes the big slot of another box, whole, preempting what runs there:
+# an idle box first, else the one running the lowest-ranked work. At most two star boxes, so stale slices can't take
+# the farm. Assigned once a pass, as "branch box" lines in starSeconds.
+requests=${ADAMIC_FULL_GATE_REQUESTS:-${HOME}/.adamic-full-gate/requests}
+assignStarBoxes() {
+  local starRunning count sha branch box
+  starSeconds=""
+  [ -s "${requests}" ] || return 0
+  starRunning=$(cat "${state}"/running/* 2> /dev/null | while read -r runningBranch runningSha runningSlot runningBox rest; do
+    isFront "${runningBranch}" && echo "${runningBox:-threadripper}"
+  done | sort -u)
+  echo "${starRunning}" | grep -qx server || return 0
+  count=$(echo "${starRunning}" | grep -c .)
+  while read -r sha; do
+    [ "${count}" -ge 2 ] && break
+    branch=$(awk -v s="${sha}" '$4 == s {print $3; exit}' "${state}/queue")
+    [ -n "${branch}" ] && isFront "${branch}" || continue
+    box=$(pickStarBox "${starRunning}")
+    [ -n "${box}" ] || break
+    starSeconds="${starSeconds}${branch} ${box}
+"
+    starRunning="${starRunning}
+${box}"
+    count=$((count + 1))
+  done < "${requests}"
+}
+# The box with a big slot, not Server and not the star's already, that the star costs least: idle first, else the
+# one whose best-ranked running gate ranks lowest (position * 100 + kind, as the queue ranks).
+pickStarBox() {
+  local taken=$1 box slot worst rank best="" bestRank=-1
+  while read -r box slot _; do
+    [ "${slot}" = B ] && [ "${box}" != server ] || continue
+    echo "${taken}" | grep -qx "${box}" && continue
+    worst=100000
+    while read -r runningBranch runningSha runningSlot runningBox rest; do
+      [ "${runningBox:-threadripper}" = "${box}" ] || continue
+      rank=$(gateRank "${runningBranch}")
+      [ "${rank}" -lt "${worst}" ] && worst=${rank}
+    done < <(cat "${state}"/running/* 2> /dev/null)
+    [ "${worst}" -gt "${bestRank}" ] && { best=${box} bestRank=${worst}; }
+  done < "${state}/slots"
+  echo "${best}"
+}
+gateRank() {
+  local branch=$1 rank
+  if [[ ${branch} == cloud/land-* ]]; then rank=1
+  elif [[ ${branch} == area/* ]]; then rank=2
+  elif [[ ${branch} == devtools/* ]]; then rank=3
+  else rank=4; fi
+  echo $(( $(stepPosition "${branch}") * 100 + rank ))
+}
+starSecondBox() {
+  local branch box
+  while read -r branch box; do
+    [ "${branch}" = "$1" ] && { echo "${box}"; return; }
+  done <<< "${starSeconds:-}"
 }
 # Every other gate on a star box is stopped on purpose and queued again, so the star never shares CPU or waits
 # out a drain (Oct 8 21:47Z: other gates on Workshop held its load at 51 to 64 of 64 while the star sat in
@@ -555,7 +616,9 @@ drainingBoxes() {
 # The boxes with a slot of this class reserved for this branch. A tip that has one runs only there: it
 # waits out the drain for the whole box rather than borrowing a share of another.
 reservedBoxes() {
-  local branch=$1 class=$2 b c glob
+  local branch=$1 class=$2 b c glob second
+  second=$(starSecondBox "${branch}")
+  [ -n "${second}" ] && { echo "${second}"; return; }
   while read -r b c glob; do
     [ "${c}" = "${class}" ] && slotReserved "${branch}" "${b}" "${c}" && echo "${b}"
   done < "${state}/slots"
