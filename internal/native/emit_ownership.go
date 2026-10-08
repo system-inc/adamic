@@ -32,6 +32,12 @@ func (e *emitter) hold(name string) {
 // end releases what the statement just emitted owned.
 func (e *emitter) end() {
 	for index := len(e.owned) - 1; index >= 0; index-- {
+		if e.mostlyNull[e.owned[index]] {
+			e.line("if (%s != NULL) {", e.owned[index])
+			e.line("\tadamic_release(%s);", e.owned[index])
+			e.line("}")
+			continue
+		}
 		e.line("adamic_release(%s);", e.owned[index])
 	}
 	e.owned = nil

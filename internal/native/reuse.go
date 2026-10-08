@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"reflect"
 	"slices"
+	"strings"
 
 	"github.com/system-inc/adamic/internal/flow"
 	"github.com/system-inc/adamic/internal/ir"
@@ -96,7 +97,7 @@ func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
 					plan.spreads[instruction.At] = map[int]bool{}
 				}
 				plan.spreads[instruction.At][source.Local] = true
-				if program.Locals[source.Local].Borrowed {
+				if isParameter(program, source.Local) {
 					plan.consumed[source.Local] = true
 				}
 			}
@@ -109,34 +110,11 @@ func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
 					plan.arrays[instruction.At] = map[int]bool{}
 				}
 				plan.arrays[instruction.At][source] = true
-				if program.Locals[source].Borrowed {
+				if isParameter(program, source) {
 					plan.consumed[source] = true
 				}
 			}
 		})
-	}
-	// Virtual implementations share an ownership convention. If one consumes a position,
-	// every implementation takes a count, including those that only read and then release it.
-	for changed := true; changed; {
-		changed = false
-		for signature, targets := range program.MethodTargets {
-			for position, parameter := range program.Functions[signature].Parameters {
-				consumed := plan.consumed[parameter]
-				for _, target := range targets {
-					consumed = consumed || plan.consumed[program.Functions[target].Parameters[position]]
-				}
-				if !consumed {
-					continue
-				}
-				for _, target := range append([]int{signature}, targets...) {
-					local := program.Functions[target].Parameters[position]
-					if !plan.consumed[local] {
-						plan.consumed[local] = true
-						changed = true
-					}
-				}
-			}
-		}
 	}
 	for _, each := range functions {
 		forEachInstruction(each.graph, func(instruction *flow.Instruction) {
@@ -176,7 +154,7 @@ func (plan *reusePlan) reusable(program *ir.Program, function int, comparators m
 // by it.
 func (plan *reusePlan) owned(program *ir.Program, function int, comparators map[int]bool, instruction *flow.Instruction, live map[flow.DeclarationId]bool, source int, valueType ir.Type) bool {
 	local := program.Locals[source]
-	if local.Global || local.Captured || local.Type != valueType {
+	if local.Global || local.Captured || local.ExpressionAssigned || local.Type != valueType {
 		return false
 	}
 	if local.Function != function {
@@ -186,7 +164,7 @@ func (plan *reusePlan) owned(program *ir.Program, function int, comparators map[
 	if isParameter(program, source) {
 		// Only a parameter nothing assigns, of a named function its callers call directly, can be
 		// handed over: a closure is called from runtime loops, and a comparator from the sort.
-		if !local.Borrowed || program.Functions[function].Closure || comparators[function] {
+		if local.Captured || assignedLocals(program.Functions[function].Body)[source] || program.Functions[function].Closure || comparators[function] {
 			return false
 		}
 	} else if local.Borrowed {
@@ -252,7 +230,7 @@ func (plan *reusePlan) readOnlyInside(instruction *flow.Instruction, source int)
 // parameter: nothing reads the variable's current value after.
 func (plan *reusePlan) movable(program *ir.Program, instruction *flow.Instruction, live map[flow.DeclarationId]bool, read ir.Read) bool {
 	local := program.Locals[read.Local]
-	if local.Captured || read.Checked || readsOf(evaluated(instruction), read.Local) != 1 {
+	if local.Captured || local.ExpressionAssigned || read.Checked || readsOf(evaluated(instruction), read.Local) != 1 {
 		return false
 	}
 	if plan.lending[read.Local] {
@@ -353,17 +331,29 @@ func variableRead(expression ir.Expression) (ir.Read, bool) {
 // (a global's read retains one).
 func (e *emitter) variable(expression ir.Expression, read ir.Read) string {
 	name := e.localName(read.Local)
+	if read.Readiness != "" {
+		e.checkReadyRead(read.Local, read.Readiness)
+	}
 	if defined, ok := expression.(ir.Defined); ok {
 		e.checkDefined(name, defined.Message)
 	}
 	return name
 }
 
-// checkDefined emits ir.Defined's check of a value: NULL panics with the message.
+// checkDefined emits the failed read as a catchable TypeError, or an invariant panic.
 func (e *emitter) checkDefined(value string, message string) {
 	e.line("if (%s == NULL) {", value)
-	e.line("\tstatic const char message[] = %s;", cString(message))
-	e.line("\tadamic_panic(message, sizeof message - 1);")
+	if (ir.Defined{Message: message}).Throws() {
+		e.line("\tstatic adamic_string error_message = ADAMIC_STRING(%s);", cString(strings.TrimPrefix(message, "TypeError: ")))
+		e.line("\tstatic adamic_string error_name = ADAMIC_STRING(\"TypeError\");")
+		e.line("\tadamic_thrown = adamic_error_new(&error_message);")
+		e.line("\tadamic_release(adamic_thrown->slots[0].reference);")
+		e.line("\tadamic_thrown->slots[0].reference = adamic_retain(&error_name);")
+		e.checkThrown()
+	} else {
+		e.line("\tstatic const char message[] = %s;", cString(message))
+		e.line("\tadamic_panic(message, sizeof message - 1);")
+	}
 	e.line("}")
 }
 
@@ -542,7 +532,7 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 	e.taking = outer
 	for index, field := range literal.Fields {
 		slot := e.temporary()
-		e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
+		e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
 		if field.Value.Type().IsReference() {
 			// A field moved out of a unique object left NULL behind, and releasing that is nothing.
 			e.line("adamic_release(%s->reference);", slot)
@@ -560,10 +550,19 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 // the source may be undefined and is, a new object with the source type's other fields and the
 // literal's own, as JavaScript's { ...undefined } is {} with the literal's fields written in.
 func (e *emitter) spreadCopy(literal ir.ObjectLiteral, source string) string {
-	if !literal.SpreadMaybeUndefined {
-		return fmt.Sprintf("adamic_object_copy(%s)", source)
+	copy := fmt.Sprintf("adamic_object_copy(%s)", source)
+	if literal.SpreadReadiness != "" {
+		copy = fmt.Sprintf("adamic_object_copy_checked(%s, %s)", source, cString(literal.SpreadReadiness))
 	}
-	return fmt.Sprintf("(%s != NULL ? adamic_object_copy(%s) : adamic_object_new(&%s))", source, source, e.shape(emptyFields(literal)))
+	if !literal.SpreadMaybeUndefined {
+		return copy
+	}
+	empty := emptyFields(literal)
+	shape := e.shape(empty)
+	if len(empty) > 0 && e.dynamicProperties() {
+		e.line("adamic_register_shape_types(&%s_metadata);", shape)
+	}
+	return fmt.Sprintf("(%s != NULL ? %s : adamic_object_new(&%s))", source, copy, shape)
 }
 
 // emptySpread gives the fields of the object spreadCopy made for an undefined source the value
@@ -573,7 +572,15 @@ func (e *emitter) emptySpread(literal ir.ObjectLiteral, source string, object st
 		return
 	}
 	lines := []string{}
-	for index, field := range literal.Empty {
+	own := map[string]bool{}
+	for _, field := range literal.Fields {
+		own[field.Name] = true
+	}
+	for index, field := range emptyFields(literal) {
+		if own[field.Name] {
+			continue
+		}
+		lines = append(lines, fmt.Sprintf("\tadamic_object_absent(%s, %d);", object, index))
 		if !field.Value.Type().IsReference() {
 			lines = append(lines, fmt.Sprintf("\t%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), e.value(field.Value))))
 		}
@@ -591,7 +598,18 @@ func (e *emitter) emptySpread(literal ir.ObjectLiteral, source string, object st
 // emptyFields is the layout of the object an undefined spread makes: the source type's fields the
 // literal doesn't give, then the literal's own, which are written by name after.
 func emptyFields(literal ir.ObjectLiteral) []ir.Field {
-	return append(slices.Clone(literal.Empty), literal.Fields...)
+	fields := append(slices.Clone(literal.Empty), literal.Fields...)
+	given := map[string]bool{}
+	for _, field := range fields {
+		given[field.Name] = true
+	}
+	for _, field := range literal.Missing {
+		if !given[field.Name] {
+			fields = append(fields, field)
+			given[field.Name] = true
+		}
+	}
+	return fields
 }
 
 // take emits a read of a field a reused spread replaces: moved out of the object when it's unique,
@@ -698,7 +716,7 @@ func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
 	e.line("\t\tstatic const char message[] = \"map: the array shrank while it was being mapped\";")
 	e.line("\t\tadamic_panic(message, sizeof message - 1);")
 	e.line("\t}")
-	e.line("\tadamic_value %s = %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}});", result, callback, callback, source, index, index, source)
+	e.line("\tadamic_value %s = %s->code(%s, 3, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}});", result, callback, callback, source, index, index, source)
 	e.line("\tif (%s) {", unique)
 	// The callback is done with the element it was handed: the result takes its place.
 	if expression.Element.IsReference() {
@@ -751,9 +769,12 @@ func uniquelyHeld(value string) string {
 	return fmt.Sprintf("(%s->heap.references == 1 && !adamic_weak_held(%s))", value, value)
 }
 
-// callConsumes requires a count to be handed over at this position for every
-// implementation. MethodTargets joins conventions before moves are planned.
+// Virtual adapters borrow inputs and acquire a count only for the implementation
+// that consumes it. Direct calls can hand their count over without an adapter.
 func (plan *reusePlan) callConsumes(program *ir.Program, call ir.Call, position int) bool {
+	if call.Virtual != 0 {
+		return false
+	}
 	for _, target := range program.CallTargets(call) {
 		parameters := program.Functions[target].Parameters
 		if position >= len(parameters) || !plan.consumed[parameters[position]] {

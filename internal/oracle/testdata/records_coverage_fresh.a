@@ -1,0 +1,16 @@
+interface Item {name: string; children: Record<string, Item>}
+function make(name: string): Item {return {name, children: {}};}
+const root = make(['ro', 'ot'].join(''));
+root.children['first'] = make(['fir', 'st'].join(''));
+root.children['second'] = make(['sec', 'ond'].join(''));
+const child = root.children['first'];
+if (child !== undefined) child.children['leaf'] = make('leaf');
+const values = Object.values(root.children);
+const copy: Record<string, Item> = {...root.children};
+delete root.children['first'];
+console.log(values.map(item => item.name).join(','));
+const saved = copy['first'];
+if (saved !== undefined) {
+ const leaf = saved.children['leaf'];
+ if (leaf !== undefined) console.log(leaf.name);
+}

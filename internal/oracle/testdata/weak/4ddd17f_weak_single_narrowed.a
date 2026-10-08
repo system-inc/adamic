@@ -1,0 +1,18 @@
+import type { Weak } from 'adamic';
+
+// The single-interface control for the union read: the checked read must happen before
+// keeping the local, even though the later use reads through that local.
+interface Named {
+	readonly name: string;
+}
+interface Holder {
+	kept: Weak<Named>;
+}
+let strong: Named | undefined = { name: 'n'.repeat(2) };
+const holder: Holder = { kept: strong };
+if (holder.kept !== undefined) {
+	console.log('before');
+	strong = undefined;
+	const seen = holder.kept;
+	console.log(`after: ${seen.name}`);
+}

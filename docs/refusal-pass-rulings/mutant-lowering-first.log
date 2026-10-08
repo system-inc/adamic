@@ -1,0 +1,28 @@
+--- FAIL: TestRefusalPassRulings (0.00s)
+    --- FAIL: TestRefusalPassRulings/any-order.a (0.07s)
+        refusal_pass_test.go:31: got /tmp/adamic-gate/TestRefusalPassRulingsany-order.a193844761/001/main.a:2:5: stage 0 can't lower a value of type any yet, want Refused
+    --- FAIL: TestRefusalPassRulings/expando-index.a (0.09s)
+        refusal_pass_test.go:31: got /tmp/adamic-gate/TestRefusalPassRulingsexpando-index.a1526404802/001/main.a:1:21: stage 0 can't lower assigning an element of a value yet, want Refused
+    --- FAIL: TestRefusalPassRulings/class-namespace-first.a (0.09s)
+        refusal_pass_test.go:31: got /tmp/adamic-gate/TestRefusalPassRulingsclass-namespace-first.a693392761/001/main.a:1:1: stage 0 can't lower a ModuleDeclaration yet, want Refused
+    --- FAIL: TestRefusalPassRulings/new-function.a (0.11s)
+        refusal_pass_test.go:31: got /tmp/adamic-gate/TestRefusalPassRulingsnew-function.a1596721134/001/main.a:1:15: stage 0 can't lower new an Identifier yet, want Refused
+    --- FAIL: TestRefusalPassRulings/new-function-order.a (0.07s)
+        refusal_pass_test.go:31: got /tmp/adamic-gate/TestRefusalPassRulingsnew-function-order.a1686926396/001/main.a:1:26: stage 0 can't lower a function inside a function (a closure) yet, want Refused
+    --- FAIL: TestRefusalPassRulings/expando.a (0.09s)
+        refusal_pass_test.go:31: got /tmp/adamic-gate/TestRefusalPassRulingsexpando.a2491675033/001/main.a:1:21: stage 0 can't lower assigning a field of a value yet, want Refused
+    --- FAIL: TestRefusalPassRulings/eval.a (0.07s)
+        refusal_pass_test.go:31: got /tmp/adamic-gate/TestRefusalPassRulingseval.a3896610421/001/main.a:1:1: stage 0 can't lower reading eval yet, want Refused
+    --- FAIL: TestRefusalPassRulings/eval-order.a (0.08s)
+        refusal_pass_test.go:31: got /tmp/adamic-gate/TestRefusalPassRulingseval-order.a514732701/001/main.a:1:26: stage 0 can't lower a function inside a function (a closure) yet, want Refused
+    --- FAIL: TestRefusalPassRulings/observe-function.a (0.07s)
+        refusal_pass_test.go:31: got /tmp/adamic-gate/TestRefusalPassRulingsobserve-function.a2657335596/001/main.a:1:55: stage 0 can't lower a call to an Identifier yet, want Refused
+    --- FAIL: TestRefusalPassRulings/class-namespace.a (0.06s)
+        refusal_pass_test.go:31: got /tmp/adamic-gate/TestRefusalPassRulingsclass-namespace.a2133119088/001/main.a:1:22: stage 0 can't lower a ModuleDeclaration yet, want Refused
+    --- FAIL: TestRefusalPassRulings/any.a (0.07s)
+        refusal_pass_test.go:31: got /tmp/adamic-gate/TestRefusalPassRulingsany.a4170131252/001/main.a:1:5: stage 0 can't lower a value of type any yet, want Refused
+    --- FAIL: TestRefusalPassRulings/expando-order.a (0.07s)
+        refusal_pass_test.go:31: got /tmp/adamic-gate/TestRefusalPassRulingsexpando-order.a125261468/001/main.a:1:26: stage 0 can't lower a function inside a function (a closure) yet, want Refused
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.454s
+FAIL

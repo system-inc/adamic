@@ -1,0 +1,5 @@
+interface Tester { test(text: string): boolean; }
+function run(tester: Tester): boolean { return tester.test('xa'); }
+const patterns: readonly RegExp[] = [/a/];
+const testers: readonly Tester[] = patterns;
+console.log(`${testers.length}`);

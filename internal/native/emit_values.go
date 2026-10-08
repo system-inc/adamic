@@ -12,6 +12,8 @@ func cType(valueType ir.Type) string {
 		return "double"
 	case ir.Boolean:
 		return "bool"
+	case ir.Record:
+		return "adamic_record *"
 	case ir.Object:
 		return "adamic_object *"
 	case ir.Array:
@@ -37,7 +39,7 @@ func member(valueType ir.Type) string {
 	switch valueType {
 	case ir.Number, ir.MaybeNumber:
 		return "number"
-	case ir.Boolean:
+	case ir.Boolean, ir.MaybeBoolean:
 		return "boolean"
 	}
 	return "reference"
@@ -73,4 +75,28 @@ func cNumber(value float64) string {
 		return "(-HUGE_VAL)"
 	}
 	return "(" + strconv.FormatFloat(value, 'x', -1, 64) + ")"
+}
+
+// absent is an omitted argument, distinct from an uninitialized local's placeholder.
+// References use NULL; scalar optionals carry their explicit absence bit.
+func absent(valueType ir.Type) string {
+	if valueType.IsMaybe() {
+		return zero(valueType)
+	}
+	if valueType.IsReference() {
+		return "NULL"
+	}
+	panic("native: omitted argument has no undefined representation")
+}
+
+// zeroInitializer is zero at static storage, where C requires an initializer list
+// rather than a compound literal for an aggregate.
+func zeroInitializer(valueType ir.Type) string {
+	switch valueType {
+	case ir.MaybeNumber:
+		return "{false, 0.0}"
+	case ir.MaybeBoolean:
+		return "{false, false}"
+	}
+	return zero(valueType)
 }

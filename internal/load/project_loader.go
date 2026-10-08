@@ -63,15 +63,7 @@ func projectOptionsForRoots(fs *sourceFS, roots []tspath.RootedFilePath) (*core.
 	if config == nil {
 		return nil, "", fmt.Errorf("load: %s parsed to no project", project)
 	}
-	included := make(map[tspath.RootedFilePath]bool)
-	for _, file := range config.FileNames() {
-		included[file] = true
-	}
-	for _, root := range roots {
-		if !included[root] {
-			return nil, "", fmt.Errorf("load: %s is outside its project's root files; option attribution for explicit extra roots is not implemented yet", root)
-		}
-	}
+	// Explicit extra roots are audited together with the configured roots in loadInput.
 	options := config.CompilerOptions().Clone()
 	// Undefined and callback variance must retain their meaning in Adamic's
 	// representations even when a project disables these soundness rules.

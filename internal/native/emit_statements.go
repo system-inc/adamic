@@ -8,9 +8,13 @@ import (
 )
 
 type loop struct {
-	depth     int
-	label     string
-	continued bool
+	sourceName string
+	breakLabel string
+	broken     bool
+	iteration  *loop
+	depth      int
+	label      string
+	continued  bool
 }
 
 // A break to an outer target uses a goto, emitted only when needed, after the target's loop.
@@ -67,7 +71,20 @@ func (e *emitter) statement(statement ir.Statement) {
 		value := e.value(statement.Value)
 		e.line("adamic_write_line(%s, %s);", stream, value)
 		e.end()
+	case ir.AllocateEnvironment:
+		// Emitted at function entry before captured parameters are initialized.
 	case ir.Declare:
+		if statement.Uninitialized && !e.program.Locals[statement.Local].Uninitialized {
+			if e.program.Locals[statement.Local].EnvironmentCell {
+				return
+			}
+			local := e.program.Locals[statement.Local]
+			if local.Captured {
+				e.makeCell(statement.Local, zero(local.Type), true)
+				e.line("%s->ready = false;", e.cellReference(statement.Local))
+			}
+			return
+		}
 		if e.elementBorrows[e.at] {
 			e.borrowElement(statement)
 			return
@@ -81,10 +98,20 @@ func (e *emitter) statement(statement ir.Statement) {
 		owned := e.taken(value)
 		if local.Global {
 			e.store(statement.Local, value, owned)
-			e.line("%s = true;", readyName(statement.Local))
+			e.line("%s = %t;", readyName(statement.Local), !statement.Uninitialized)
+			if local.Uninitialized {
+				e.line("%s_declared = true;", readyName(statement.Local))
+			}
 			e.initialized = append(e.initialized, statement.Local)
 		} else {
 			e.declareLocal(statement.Local, value, owned)
+			if local.Uninitialized {
+				if local.Captured {
+					e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
+				} else {
+					e.line("bool %s = %t; (void)%s;", readyName(statement.Local), !statement.Uninitialized, readyName(statement.Local))
+				}
+			}
 		}
 		e.end()
 	case ir.Assign:
@@ -109,6 +136,12 @@ func (e *emitter) statement(statement ir.Statement) {
 			break
 		}
 		value := e.value(statement.Value)
+		if e.program.Locals[statement.Local].Uninitialized && e.program.Locals[statement.Local].Global && !e.program.Locals[statement.Local].Hoisted {
+			e.line("if (!%s_declared) {", readyName(statement.Local))
+			message := "ReferenceError: Cannot access '" + e.program.Locals[statement.Local].Name + "' before initialization"
+			e.line("\tadamic_panic(%s, %d);", cString(message), len(message))
+			e.line("}")
+		}
 		if statement.Checked {
 			// After the value, as JavaScript does: the right side runs, then the write throws.
 			e.checkReady(statement.Local)
@@ -116,6 +149,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		// The store is the statement's last write: nothing after it can assign the variable again
 		// while the statement still reads the value, so what the statement owns, the variable takes.
 		e.store(statement.Local, value, e.taken(value))
+		if e.program.Locals[statement.Local].Uninitialized {
+			e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
+		}
 		e.end()
 	case ir.Evaluate:
 		if splice, isSplice := statement.Value.(ir.ArraySplice); isSplice {
@@ -170,6 +206,8 @@ func (e *emitter) statement(statement ir.Statement) {
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
 		}
+		// Direct field stores must update readiness just like the runtime write path.
+		e.line("adamic_object_set_initialized(%s, %s, %t);", object, cString(statement.Name), !statement.Uninitialized)
 		e.end()
 	case ir.Panic:
 		// The program ends here, so nothing it holds needs letting go.
@@ -185,6 +223,8 @@ func (e *emitter) statement(statement ir.Statement) {
 			e.nested(statement.Else, nil)
 		}
 		e.line("}")
+	case ir.Labeled:
+		e.labeled(statement)
 	case ir.Block:
 		e.line("{")
 		e.nested(statement.Body, nil)
@@ -196,6 +236,10 @@ func (e *emitter) statement(statement ir.Statement) {
 	case ir.Switch:
 		e.switchStatement(statement)
 	case ir.Break:
+		if statement.Label != "" {
+			e.labeledJump(statement.Label, false)
+			break
+		}
 		target := e.breakables[len(e.breakables)-1-statement.Depth]
 		e.finallies(e.innerHandlers(target.depth))
 		e.releaseScopes(target.depth)
@@ -206,7 +250,20 @@ func (e *emitter) statement(statement ir.Statement) {
 			e.line("goto %s;", target.label)
 		}
 	case ir.Continue:
-		current := e.loops[len(e.loops)-1]
+		if statement.Label != "" {
+			e.labeledJump(statement.Label, true)
+			break
+		}
+		var current *loop
+		for index := len(e.loops) - 1; index >= 0; index-- {
+			if e.loops[index].sourceName == "" {
+				current = e.loops[index]
+				break
+			}
+		}
+		if current == nil {
+			panic("native: continue outside a loop")
+		}
 		current.continued = true
 		e.finallies(e.innerHandlers(current.depth))
 		e.releaseScopes(current.depth)
@@ -249,6 +306,7 @@ func (e *emitter) loop(statement ir.Loop) {
 	saved := e.out
 	e.out = strings.Builder{}
 	current.depth = len(e.scopes)
+	e.linkLabels(statement.Labels, current)
 	e.loops = append(e.loops, current)
 	target := &breakable{depth: current.depth, label: e.temporary()}
 	e.breakables = append(e.breakables, target)
@@ -273,6 +331,7 @@ func (e *emitter) loop(statement ir.Loop) {
 		cell := e.cellName(local)
 		fresh := e.temporary()
 		e.line("adamic_cell *%s = adamic_cell_new(%s->value, %s->references);", fresh, cell, cell)
+		e.line("%s->ready = %s->ready;", fresh, cell)
 		e.line("if (%s->references) {", fresh)
 		e.line("\tadamic_retain(%s->value.reference);", fresh)
 		e.line("}")
@@ -305,15 +364,16 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	overString := statement.Iterable.Type() == ir.String
 	overMap := statement.MapPart != ""
 	overRegex := statement.RegexIterator
+	borrowLoop := e.elementBorrows[e.at]
 	if overMap {
 		e.line("adamic_map_iterator *%s = adamic_map_iterate(%s);", held, iterable)
-	} else if e.elementBorrows[e.at] {
+	} else if borrowLoop {
 		// The same proof lends both the element and the array. Neither owns a count here.
 		e.line("%s %s = %s;", cType(statement.Iterable.Type()), held, iterable)
 	} else {
 		e.line("%s %s = %s;", cType(statement.Iterable.Type()), held, e.kept(iterable))
 	}
-	if !e.elementBorrows[e.at] {
+	if !borrowLoop {
 		e.hold(held)
 	}
 	e.end()
@@ -339,6 +399,7 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	saved := e.out
 	e.out = strings.Builder{}
 	current.depth = len(e.scopes)
+	e.linkLabels(statement.Labels, current)
 	e.loops = append(e.loops, current)
 	target := &breakable{depth: current.depth, label: e.temporary()}
 	e.breakables = append(e.breakables, target)
@@ -388,7 +449,7 @@ func (e *emitter) forOf(statement ir.ForOf) {
 		if statement.Element.IsReference() {
 			element = fmt.Sprintf("(%s)%s", cType(statement.Element), element)
 		}
-		if e.elementBorrows[e.at] {
+		if borrowLoop {
 			e.line("%s %s = %s;", cType(statement.Element), e.localName(statement.Local), element)
 		} else {
 			e.declareLocal(statement.Local, element, false)
@@ -441,11 +502,8 @@ func (e *emitter) switchStatement(statement ir.Switch) {
 	e.breakables = append(e.breakables, target)
 	depth := 0
 	for _, matched := range statement.Cases {
-		tests := []string{}
-		for _, test := range matched.Tests {
-			tests = append(tests, e.binary(ir.Equal, statement.Value.Type(), held, e.value(test)))
-		}
-		e.line("if (%s) {", unwrap(strings.Join(tests, " || ")))
+		condition := e.switchTests(statement.Value.Type(), held, matched.Tests)
+		e.line("if (%s) {", condition)
 		e.nested(matched.Body, nil)
 		e.line("} else {")
 		e.indent++

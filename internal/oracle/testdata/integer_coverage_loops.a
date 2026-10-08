@@ -1,0 +1,19 @@
+// Recurrences cross int32 and safe-integer boundaries without narrowing number arithmetic.
+for (const start of [2147483647, -2147483648, -0, 0.5, -1.5, 9007199254740992, NaN, Infinity, -Infinity]) {
+	let value = start;
+	let bits = start;
+	let remainder = start;
+	for (let index = 0; index < 4; index++) {
+		value += index % 2 === 0 ? 1 : 0.5;
+		bits = ((bits + value * 7) ^ (index << 31)) >>> (index * 32);
+		remainder = (remainder * 3 + value) % (index % 2 === 0 ? -7 : 2.5);
+		console.log(`${value} ${bits} ${remainder} ${Object.is(remainder, -0)}`);
+	}
+	value = start;
+	let index = 0;
+	while (index < 3) {
+		value -= 1;
+		console.log(`${value} ${value | 0} ${value >>> 0} ${value % 3}`);
+		index++;
+	}
+}

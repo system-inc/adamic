@@ -50,6 +50,10 @@ var stricterOptionNames = []string{
 // out of option attribution. The production loader still refuses these sites
 // until their checks have a backend and runtime witness.
 func AuditProjectOptions(ctx context.Context, configName string) (*ProjectOptionReport, error) {
+	return auditProjectRoots(ctx, configName, nil)
+}
+
+func auditProjectRoots(ctx context.Context, configName string, extraRoots []tspath.RootedFilePath) (*ProjectOptionReport, error) {
 	absolute, err := filepath.Abs(configName)
 	if err != nil {
 		return nil, err
@@ -74,10 +78,21 @@ func AuditProjectOptions(ctx context.Context, configName string) (*ProjectOption
 	if config == nil {
 		return nil, fmt.Errorf("load: %s parsed to no project", absolute)
 	}
+	roots := append([]tspath.RootedFilePath(nil), config.FileNames()...)
+	included := make(map[tspath.RootedFilePath]bool)
+	for _, root := range roots {
+		included[root] = true
+	}
+	for _, root := range extraRoots {
+		if !included[root] {
+			roots = append(roots, root)
+			included[root] = true
+		}
+	}
 	base := config.CompilerOptions().Clone()
 	directory := tspath.RootedDirectoryPathFromAbsolute(filepath.Dir(absolute))
 	run := func(options *core.CompilerOptions) ([]*ast.Diagnostic, error) {
-		parsed := tsoptions.NewParsedCommandLine(options, config.FileNames(), config.ProjectReferences(), directory, fs.CaseSensitivity())
+		parsed := tsoptions.NewParsedCommandLine(options, roots, config.ProjectReferences(), directory, fs.CaseSensitivity())
 		parsed.ConfigFile = config.ConfigFile
 		host := compiler.NewCachedFSCompilerHost(fs, bundled.LibPath(), nil, nil, nil)
 		program := compiler.NewProgram(compiler.ProgramOptions{Config: parsed, Host: host, SingleThreaded: core.TSTrue})

@@ -1,0 +1,9 @@
+function make(seed: number): () => number {
+ let count = seed;
+ function factory(offset: number): () => number { return (): number => offset + later(); }
+ function later(): number { count++; return count; }
+ return factory(10);
+}
+const run = make(2);
+console.log(String(run()));
+console.log(String(run()));
