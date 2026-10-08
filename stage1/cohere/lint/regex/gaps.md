@@ -27,6 +27,11 @@ the required RegExp path on native. Their full finding migrations were not made.
 
 ## Raw option dialect is not Go regexp
 
+Cohere commit c2e39b75 now compiles user-option patterns through JavaScript
+regexp. The old cohere RE2 option-dialect departure is closed; Adamic's dynamic
+RegExp lowering blocker above remains. This witness compares the two raw
+libraries, not the current cohere option implementation.
+
 Run `TestOptionDialectGap`. Every listed Go pattern is accepted by Go regexp.
 
 | Pattern | Input | Go | `new RegExp(pattern, 'u')` on Node |

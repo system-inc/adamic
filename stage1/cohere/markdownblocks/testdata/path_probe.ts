@@ -9,7 +9,8 @@ const input = readTextFile(args[0] ?? panic('usage: path_probe.ts <AST cases>'))
 if(input.kind === 'Error') panic(input.message);
 let arena = new AstArena();
 
-const output: string[] = [];
+// Emit one encoded context at a time, with the same line endings on every backend.
+let wrote = false;
 for(const line of input.text.split('\n')) {
     const fields = line.split('\t');
     if(fields[0] === 'A') {
@@ -41,8 +42,9 @@ for(const line of input.text.split('\n')) {
             next.push(-1);
             rows.push(arena.node(path.node()).children.length > 0 ? observePath(path) : pathSnapshot(path));
         }
-        output.push(encode(rows.join('\n')));
+        console.log(encode(rows.join('\n')));
+        wrote = true;
     }
     else if(line !== '') panic('unknown path fixture');
 }
-console.log(output.join('\n'));
+if(!wrote) console.log('');

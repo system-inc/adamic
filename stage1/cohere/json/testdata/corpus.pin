@@ -1,14 +1,14 @@
 {
-  "count": 1094,
-  "sha256": "3d987e9a388d0e354db2ee0dc5b6ce8a780f39a3e30d41e52bedc9973fc1e000",
+  "count": 1108,
+  "sha256": "32575a4e9e2c8be8928a43632a93c8761b4bdb7152bae4a4f045db86299f20f1",
   "groups": {
     "TypeScript": {
       "count": 203,
       "sha256": "46baec96d44c3d34a35a408d8de1f52474c8b42c0e52766fd2bfd1e1b971971b"
     },
     "cohere": {
-      "count": 839,
-      "sha256": "f96f53d1a186bc305fe73f8028ecd492fd70ce03df41b491276d74f405849a47"
+      "count": 853,
+      "sha256": "6766506bf693bc01b24bb622b83957e4dfd17ccb2a9d3494a4a9a2082ffe6c88"
     },
     "generated": {
       "count": 34,
@@ -3597,12 +3597,24 @@
       "sha256": "a35e31b283c2ac134598639e1b24f575c34754e9ae7d2536cdd441b655d436d2"
     },
     {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/descriptor_context_public.json",
+      "sha256": "74fe559ada1ff16e944ef2b7d433dc41cf32c21248c6f5248ebdf0afa244bdbd"
+    },
+    {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/descriptor_fixtures.json",
       "sha256": "2f3d19e1cf7db88640fcd3902b9d1298876d2e2f7590e8d293799ee4e2d9c4df"
     },
     {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/descriptor_fixtures_public.json",
+      "sha256": "6346061e1c194d4de87154215e069f5226824837e003696a60a3099e6a63c56a"
+    },
+    {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/descriptor_table.json",
       "sha256": "bcfa03870f8534fe1822fc7fd4713b46fa55b1e97957c5549526f6e9fb9d066b"
+    },
+    {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/descriptor_table_public.json",
+      "sha256": "e865377f17094bb246ee9d4b481a7631f9e368d08398fe355c2f6eef9a2625cc"
     },
     {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/functional_fixtures.json",
@@ -3621,8 +3633,16 @@
       "sha256": "8cc28e9ef5a0e352290d0f182ddbbc50564ff0452727b748a9976e579c9e346e"
     },
     {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/theme_fixtures_public.json",
+      "sha256": "0db711afa7faee39fd17d3801ea7da3cbfbbe4ab88c0e220d0bec38e0b694aa5"
+    },
+    {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/utility_fixtures.json",
       "sha256": "e3e5c811596bd9c7382b844f6996db399f8a7ace99c78b66b1b2808a7f2dcd8d"
+    },
+    {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/utility_fixtures_public.json",
+      "sha256": "46982b2ad4b2a74c5e9a543faad17c0211224640e73281b4c6ce45da82a20580"
     },
     {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/valueparser_fixtures.json",
@@ -3637,24 +3657,60 @@
       "sha256": "0e9bfd10d63aebf7e1c457728410fada8aa6f91ef831879d2ef0d2017907d27d"
     },
     {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave1_fixtures_public.json",
+      "sha256": "50f553316c6218fc0f227414dcc7169a9886d5c0cb5b0f0581032a4828cb28d5"
+    },
+    {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave2b_fixtures.json",
       "sha256": "d08b7ba2e90fced49aa023937a58f565665146c7322b1cc94dd43b6391e4a545"
+    },
+    {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave2b_fixtures_public.json",
+      "sha256": "1435e48fa8c9baa942bc51f9fa21865c8ebf5afcea0198457ec71b4d928b75c7"
     },
     {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave2c_fixtures.json",
       "sha256": "143c0c2ea3896c9e33e89fa3d18d7f610d0a5162034163eb058d7d103d0ba50c"
     },
     {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave2c_fixtures_public.json",
+      "sha256": "f00879aeac30c556e7e4c61b83c843ba2c6d43bffc4bd6a91432ccc35d66844e"
+    },
+    {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave3_fixtures.json",
-      "sha256": "779f92fb11d2855b79676c64ff1d4ade1ba1472a4fb0b9992b9855751e4206f1"
+      "sha256": "5dfbfdb3fecdf5db4354beb63ddeee747d215e932c8795865ac06453b71f7374"
+    },
+    {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave3_fixtures_public.json",
+      "sha256": "54d6000412ad7daeb79ad4d7699cb1622a235b8f4f8893f48a4f66c3f547160c"
     },
     {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave4_fixtures.json",
       "sha256": "a5f134fda5999388163b90e8748bdc5652ab76fd58bce7e1f5c08dbe15d21433"
     },
     {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave4_fixtures_public.json",
+      "sha256": "9392acd8b612f5a2c8eafc21d6bc3f1a054cf102b520f682fc2249c7e193fb6e"
+    },
+    {
       "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave5_fixtures.json",
       "sha256": "62e6971b0a98ba59dca9d8805a87ae75480b5269f4f8ef207cd183f3f6b52a65"
+    },
+    {
+      "path": "cohere/internal/lint/rules/tailwind/collapse/testdata/wave5_fixtures_public.json",
+      "sha256": "8dbdcb4669d3ce1fcdc1c3f99cf11d4d311d393ba4e3a3802ec178bdb7555a53"
+    },
+    {
+      "path": "cohere/internal/lint/rules/tailwind/default_selectors.json",
+      "sha256": "4e06e97d3cc921e119639fe9cae416ac807838224ce33f4fa06d4a7e74669ff7"
+    },
+    {
+      "path": "cohere/internal/lint/rules/tailwind/testdata/class_literals/cases.json",
+      "sha256": "320a6ea08f8ae9cad5b70e79565adb3c1b6557393aca46cbdd4bd009117a587f"
+    },
+    {
+      "path": "cohere/internal/lint/rules/tailwind/testdata/class_literals/upstream.json",
+      "sha256": "77f6bc22c9f9fd73ce1745c6d9011415b7512a62d751794d375932427de9f6ad"
     },
     {
       "path": "cohere/internal/lint/rules/tailwind/testdata/strict_variants.json",

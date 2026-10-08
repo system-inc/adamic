@@ -1,0 +1,18 @@
+case 0
+/workspace/scratch/lint-c2e39b75-case108/generated-10.ts:1:1
+  no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODO: fix this xxx". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+
+range 0 21 unexpectedComment 			0 21
+/workspace/scratch/lint-c2e39b75-case108/generated-10.ts:2:79
+  no-warning-comments  This comment opens with `fixme`, which marks the code as knowingly unfinished: "FIXME". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+
+range 100 111 unexpectedComment 			100 111
+/workspace/scratch/lint-c2e39b75-case108/generated-10.ts:3:1
+  no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODOé and fixme". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+
+range 170 189 unexpectedComment 			170 189
+/workspace/scratch/lint-c2e39b75-case108/generated-10.ts:4:37
+  no-warning-comments  This comment opens with `fixme`, which marks the code as knowingly unfinished: "FIXME trailing comma". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+
+range 226 249 unexpectedComment 			226 249
+fixed	// TODO: fix this xxx\u000aconst url='http://todo'; const fake=/[/*]TODO/; const template=`// TODO ${f() /* FIXME */} /* XXX */`; /* eslint no-warning-comments: error todo */\u000a// TODO\u00e9 and fixme\u000a/** TODO decorated */ const arr=[1, // FIXME trailing comma\u000a]; import data from 'data' with {/* TODO attributes */}; type Empty=import('data', {with:{/* TODO import type */}});

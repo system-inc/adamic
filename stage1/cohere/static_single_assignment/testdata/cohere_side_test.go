@@ -330,7 +330,8 @@ func runOracleFunction(out *strings.Builder, f *oracleFunction) {
 	}
 	line("table %s", strings.Join(found, " "))
 	line("identifiers %d", len(f.identifiers))
-	kinds := map[ssa.SSAViolationKind]string{ssa.SSAViolationMultipleDefinitions: "MultipleDefinitions", ssa.SSAViolationUseNotDominated: "UseNotDominated"}
+	kinds := map[ssa.SSAViolationKind]string{ssa.SSAViolationMultipleDefinitions: "MultipleDefinitions", ssa.SSAViolationUseNotDominated: "UseNotDominated",
+		ssa.SSAViolationEntryHasPredecessors: "EntryHasPredecessors"}
 	for _, violation := range ssa.VerifySSA(graph, f) {
 		line("violation %s %d %d %s", kinds[violation.Kind], violation.Identifier, violation.Block, violation.Detail)
 	}
@@ -737,9 +738,10 @@ func generatedFunction(name string, random *rand.Rand) *oracleFunction {
 	if random.Intn(15) == 0 {
 		f.entry = ids[random.Intn(len(ids))]
 	}
-	// No edge enters the entry, in either real IR, and the passes rely on it: a lookup that walks a
-	// cycle of single-predecessor blocks through an entry with predecessors never ends, in Go's
-	// valueAt as in the port's.
+	// No edge enters the entry, in either real IR, and construction relies on it: it refuses a function
+	// whose entry has predecessors, where its lookup around a cycle of single-predecessor blocks through
+	// the entry would never end. So only a function the finalizer alone runs on, which the verifier
+	// judges, may have an edge into its entry.
 	target := func() ssa.BlockId {
 		for {
 			var id ssa.BlockId
@@ -751,7 +753,7 @@ func generatedFunction(name string, random *rand.Rand) *oracleFunction {
 			default:
 				id = ids[random.Intn(len(ids))]
 			}
-			if id != f.entry {
+			if id != f.entry || f.passes == "finalize" {
 				return id
 			}
 		}

@@ -38,7 +38,9 @@ batch protocol; it returns `ok` with escaped formatting, or `notyet` with its re
 
 The initial printer branch started at scanner/parser commit `ed2477e538f54e772c62593de9bab4ddeca0d4ab`.
 That slice used cohere `715ba94f3608a6500086b1076ce5cb7e51b836db`; the tsc-corpus repair uses
-`7945d102a6c18dd36adf9114a758ce646e8b2359`. Both embed Prettier **3.9.6**.
+`7945d102a6c18dd36adf9114a758ce646e8b2359`. Both embed Prettier **3.9.6**. The current cohere pin is
+`f5d1934a2d7bebe706210cb1cfd01aebff4f8ca7`; its bundled Prettier files are unchanged
+from the tsc-corpus repair pin.
 The TypeScript source pin is 6.0.3, `050880ce59e30b356b686bd3144efe24f875ebc8`.
 Install upstream Prettier in a scratch directory and point the test at it:
 
