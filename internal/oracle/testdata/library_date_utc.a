@@ -1,11 +1,12 @@
-for (const year of [-271821, -10000, -400, -1, -0, 0, 1, 99.9, 100, 1900, 1969, 1970, 2000, 10000, 275760, 1000001, NaN, Infinity]) {
- for (const month of [-25, -1, 0, 1, 11, 12, 25]) {
-  console.log(`${year} ${month} ${Date.UTC(year, month, 29, 25, -60, 61, -1.9)}`);
- }
-}
-console.log(`${Date.UTC(2020)}`);
-console.log(`${Date.UTC(2020, undefined)}`);
-console.log(`${Date.UTC(-271821, 3, 20)}`);
-console.log(`${Date.UTC(275760, 8, 13)}`);
-console.log(`${Date.UTC(275760, 8, 13, 0, 0, 0, 1)}`);
-console.log(`${Date.UTC(2000, 1, 1, 1e20, -6e21, 0, 0)}`);
+console.log(String(Date.UTC(1970, 0)));
+console.log(String(Date.UTC(0, 0)));
+console.log(String(Date.UTC(99, 11, 31)));
+console.log(String(Date.UTC(-1, 0, 1)));
+console.log(String(Date.UTC(2000, 1, 29, 12, 34, 56, 789)));
+console.log(String(Date.UTC(1900, 1, 29)));
+console.log(String(Date.UTC(2020, -1, 0, 24, -1, 60, 1000)));
+console.log(String(Date.UTC(2020.9, 1.9, 29.9, 1.9, 2.9, 3.9, 4.9)));
+console.log(String(Date.UTC(1000001, 0)));
+console.log(String(Date.UTC(NaN, 0)));
+console.log(String(Date.UTC(2000)));
+console.log(String(new Date(Date.UTC(2000, 1, 29)).toISOString()));

@@ -3,38 +3,35 @@ package oracle
 import (
 	"os"
 	"path/filepath"
-	"strings"
+	"reflect"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// These mutants remain valid C, finish normally, and change only answers. Sanitizers and the
-// compiler cannot reject them: the source run on Node has to catch the wrong result.
-func TestDateOracleCatchesMutants(t *testing.T) {
-	t.Parallel()
-	mutants := []struct{ name, fixture, before, after string }{
-		{"own_property", "own", "adamic_date_has_own(", "!adamic_date_has_own("},
-		{"nullable_typeof", "json", "adamic_union_typeof(", "date_mutant_typeof("},
-		{"nullable_number", "json", "adamic_temporary_10 = (0x0p+00);", "adamic_temporary_10 = NAN;"},
-		{"nullable_stringify", "json", "adamic_json_stringify(", "date_mutant_stringify("},
-		{"date_stringify", "json", "adamic_json_date", "adamic_json_map"},
-		{"toJSON", "json", "adamic_date_json(", "date_mutant_json("},
-		{"dynamic_parse", "dynamic_parse", "adamic_date_parse_iso(", "1 + adamic_date_parse_iso("},
-		{"constructor_clip", "construct", "adamic_date_new(", "adamic_date_new(1 + "},
-		{"UTC", "utc", "adamic_date_utc(", "1 + adamic_date_utc("},
-		{"invalid_NaN", "get", "adamic_date_get(", "date_mutant_get("},
-		{"getters", "get", "adamic_date_get(", "1 + adamic_date_get("},
-		{"setters", "set", "adamic_date_set(", "1 + adamic_date_set("},
-		{"iso_format", "iso", "adamic_date_iso(", "date_mutant_iso("},
-		{"format", "format", "adamic_date_new(", "adamic_date_new(86400000 + "},
-		{"parse", "parse", "adamic_date_parse_iso(", "1 + adamic_date_parse_iso("},
+func init() {
+	for _, name := range []string{"epoch", "utc", "getters", "format", "parse", "clock", "own", "invalid_iso"} {
+		fixtures = append(fixtures, struct {
+			path            string
+			lowers, checked bool
+		}{"internal/oracle/testdata/library_date_" + name + ".a", true, false})
 	}
-	for _, mutant := range mutants {
-		t.Run(mutant.name, func(t *testing.T) {
-			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_date_"+mutant.fixture+".a"))
+}
+
+func TestDateNodeOnlyMutants(t *testing.T) {
+	for _, probe := range []struct{ fixture, operation, replacement string }{
+		{"epoch", "date_time", "date_getUTCSeconds"},
+		{"utc", "date_UTC", ""},
+		{"getters", "date_getUTCMonth", "date_getUTCDate"},
+		{"format", "date_toISOString", "date_toUTCString"},
+		{"parse", "date_parse", ""},
+		{"clock", "date_now", ""},
+		{"own", "date_constructor_own", "date_prototype_own"},
+		{"invalid_iso", "date_toISOString", "date_toUTCString"},
+	} {
+		t.Run(probe.fixture, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_date_"+probe.fixture+".a"))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -42,68 +39,93 @@ func TestDateOracleCatchesMutants(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			source := native.C(program)
-			if !strings.Contains(source, mutant.before) {
-				t.Fatalf("mutant target %q absent", mutant.before)
-			}
-			source = strings.ReplaceAll(source, mutant.before, mutant.after)
-			if mutant.name == "nullable_typeof" {
-				source = "#include \"adamic.h\"\nstatic adamic_string *date_mutant_typeof(const adamic_heap *value, bool nullable) { return value == NULL && nullable ? &adamic_typeof_undefined : adamic_union_typeof(value, nullable); }\n" + source
-			}
-			if mutant.name == "nullable_stringify" {
-				source = "#include \"adamic.h\"\n#include \"json_stringify.h\"\n#include <string.h>\nstatic adamic_string *date_mutant_stringify(adamic_value value, const adamic_json_schema *schema, adamic_value replacer, const adamic_json_schema *replacer_schema, adamic_value space, const adamic_json_schema *space_schema) { adamic_string *text = adamic_json_stringify(value, schema, replacer, replacer_schema, space, space_schema); if (text != NULL && text->length == 4 && memcmp(text->bytes, \"null\", 4) == 0) { adamic_release(text); static adamic_string wrong = ADAMIC_STRING(\"undefined\"); return adamic_retain(&wrong); } return text; }\n" + source
-			}
-			if mutant.name == "toJSON" {
-				source = "#include \"adamic.h\"\nstatic adamic_string *date_mutant_json(const adamic_object *date) { return isnan(adamic_date_value(date)) ? adamic_date_format(date, 0) : adamic_date_iso(date); }\n" + source
-			}
-			if mutant.name == "iso_format" {
-				source = "#include \"adamic.h\"\nstatic adamic_string *date_mutant_iso(const adamic_object *date) { adamic_string *text = adamic_date_iso(date); ((char *)text->bytes)[text->length - 2] = '0'; return text; }\n" + source
-			}
-			if mutant.name == "invalid_NaN" {
-				source = "#include \"adamic.h\"\nstatic double date_mutant_get(const adamic_object *date, int field) { double result = adamic_date_get(date, field); return isnan(result) ? 0 : result; }\n" + source
-			}
-			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
-			}
-			result := execute(t, binary)
-			if result.exitCode != 0 || len(result.stderr) != 0 {
-				t.Fatalf("mutant must finish cleanly: exit %d, stderr %q", result.exitCode, result.stderr)
-			}
-			if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {
-				t.Fatalf("got %q, want stdout differs", difference)
-			}
-			if mutant.name == "own_property" {
-				if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
-					result := onWASI(t, source)
-					if result.exitCode != 0 || len(result.stderr) != 0 {
-						t.Fatalf("WASI mutant must finish cleanly: %s", result.stderr)
-					}
-					if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {
-						t.Fatalf("WASI Node comparison: %s", difference)
-					}
+			changed := 0
+			mutate := func(value ir.Expression) ir.Expression {
+				call, ok := value.(ir.NodeFSFile)
+				if !ok || call.Operation != probe.operation {
+					return value
 				}
-				script := filepath.Join(t.TempDir(), "mutant.mjs")
-				text := strings.ReplaceAll(javascript.JavaScript(program), "Date.prototype.hasOwnProperty(", "!Date.prototype.hasOwnProperty(")
-				if err := os.WriteFile(script, []byte(text), 0644); err != nil {
-					t.Fatal(err)
+				changed++
+				if probe.replacement != "" {
+					call.Operation = probe.replacement
+					return call
 				}
-				result := execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), script)
-				if result.exitCode != 0 || len(result.stderr) != 0 {
-					t.Fatalf("JavaScript mutant must finish cleanly: %s", result.stderr)
-				}
-				if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {
-					t.Fatalf("JavaScript Node comparison: %s", difference)
-				}
+				return ir.Binary{Operator: ir.Add, Left: call, Right: ir.NumberConstant{Value: 0.25}}
 			}
-			t.Log("Node caught the mutant: stdout differs; sanitizer clean")
+			mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), mutate)
+			for index := range program.Functions {
+				mutateStringExpressions(reflect.ValueOf(&program.Functions[index].Body).Elem(), mutate)
+			}
+			if changed == 0 {
+				t.Fatal("no mutation")
+			}
+			truth := onNode(t, path)
+			actual, binary := natively(t, program)
+			if report := leaks(t, program, binary); report != "" {
+				t.Fatal(report)
+			}
+			results := map[string]run{"native": actual, "JavaScript": onJavaScriptBackend(t, program)}
+			if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
+				results["WASI"] = onWASI(t, native.C(program))
+			}
+			for backend, result := range results {
+				if result.exitCode != 0 || len(result.stderr) != 0 || disagreement(truth, result) == "" {
+					t.Fatalf("%s: mutant must finish cleanly and differ only in the Node comparison: %+v", backend, result)
+				}
+				t.Logf("%s: clean mutant caught only by Node (%s)", backend, disagreement(truth, result))
+			}
 		})
 	}
 }
 
-// Pin before parallel tests lower fixtures or launch children, including counted and leak runs.
-func init() {
-	if err := os.Setenv("TZ", "UTC"); err != nil {
-		panic(err)
+func TestDateWASIAgreesWithNode(t *testing.T) {
+	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
+		t.Skip("set ADAMIC_ORACLE_WASI=1")
+	}
+	for _, name := range []string{"epoch", "utc", "getters", "format", "parse", "clock", "own", "invalid_iso"} {
+		t.Run(name, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_date_"+name+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			expected, actual := onNode(t, path), onWASI(t, native.C(program))
+			if difference := disagreement(expected, actual); difference != "" {
+				t.Fatalf("WASI: %s: %+v", difference, actual)
+			}
+		})
+	}
+}
+
+func TestDateFormsIgnoreHostTimezone(t *testing.T) {
+	t.Setenv("TZ", "Asia/Kathmandu")
+	for _, name := range []string{"format", "parse", "getters"} {
+		t.Run(name, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_date_"+name+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			expected := onNode(t, path)
+			actual, binary := natively(t, program)
+			if report := leaks(t, program, binary); report != "" {
+				t.Fatal(report)
+			}
+			results := map[string]run{"native": actual, "JavaScript": onJavaScriptBackend(t, program)}
+			if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
+				results["WASI"] = onWASI(t, native.C(program))
+			}
+			for backend, result := range results {
+				if diff := disagreement(expected, result); diff != "" {
+					t.Fatalf("%s under TZ=Asia/Kathmandu: %s", backend, diff)
+				}
+			}
+		})
 	}
 }

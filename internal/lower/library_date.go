@@ -1,7 +1,7 @@
 package lower
 
 import (
-	"os"
+	"regexp"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -9,118 +9,236 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func (l *lowering) dateClock(node *ast.Node, what string) error {
-	return &Refused{Where: l.program.Where(node), What: what, Fix: "the wall clock is nondeterministic, so the oracle cannot compare it with Node; pass an explicit timestamp"}
+const dateRuling = "ruling 10, roadmap step 29: Date admits only UTC and ISO forms, never locale- or timezone-dependent forms"
+
+var dateISOGrammar = regexp.MustCompile(`^(?:[0-9]{4}|[+-][0-9]{6})(?:-[0-9]{2}(?:-[0-9]{2})?)?(?:[Tt][0-9]{2}:[0-9]{2}(?::[0-9]{2}(?:\.[0-9]+)?)?(?:[Zz]|[+-][0-9]{2}:?[0-9]{2}))?$`)
+var dateUTCGetters = map[string]bool{"getUTCFullYear": true, "getUTCMonth": true, "getUTCDate": true, "getUTCDay": true, "getUTCHours": true, "getUTCMinutes": true, "getUTCSeconds": true, "getUTCMilliseconds": true}
+
+func (l *lowering) dateForbidden(node *ast.Node, name string) error {
+	return &Refused{Where: l.program.Where(node), What: name, Fix: dateRuling + "; use epoch milliseconds or an explicit UTC/ISO operation"}
+}
+func (l *lowering) datePrototype(node *ast.Node) bool {
+	node = ast.SkipParentheses(node)
+	return node.Kind == ast.KindPropertyAccessExpression && node.Name().Text() == "prototype" && l.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, "Date")
+}
+func (l *lowering) dateMethodRead(node *ast.Node) bool {
+	if node.Kind != ast.KindPropertyAccessExpression {
+		return false
+	}
+	access := node.AsPropertyAccessExpression()
+	if l.isLibraryGlobal(access.Expression, "Date") && node.Name().Text() == "now" {
+		return true
+	}
+	if !l.datePrototype(access.Expression) {
+		return false
+	}
+	parent := node.Parent
+	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+		parent = parent.Parent
+	}
+	return parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.Name().Text() == "call" && called(parent)
 }
 func (l *lowering) dateRefusal(node *ast.Node) error {
-	if node.Kind == ast.KindPropertyAccessExpression && l.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, "Date") && node.Name().Text() == "now" {
-		return l.dateClock(node, "Date.now")
+	if node.Kind == ast.KindCallExpression {
+		call := node.AsCallExpression()
+		callee := ast.SkipParentheses(call.Expression)
+		if callee.Kind == ast.KindPropertyAccessExpression && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Date") && callee.Name().Text() == "parse" && len(call.Arguments.Nodes) == 1 && !l.dateISOArgument(call.Arguments.Nodes[0], 0) {
+			return l.dateForbidden(node, "Date.parse without a proven ISO grammar and explicit date-time zone")
+		}
 	}
-	if node.Kind == ast.KindNewExpression && l.isLibraryGlobal(node.AsNewExpression().Expression, "Date") && (node.AsNewExpression().Arguments == nil || len(node.AsNewExpression().Arguments.Nodes) == 0) {
-		return l.dateClock(node, "new Date() without arguments")
+
+	if node.Kind == ast.KindBinaryExpression && ast.IsAssignmentOperator(node.AsBinaryExpression().OperatorToken.Kind) {
+		target := ast.SkipParentheses(node.AsBinaryExpression().Left)
+		var receiver *ast.Node
+		if target.Kind == ast.KindPropertyAccessExpression {
+			receiver = target.AsPropertyAccessExpression().Expression
+		}
+		if target.Kind == ast.KindElementAccessExpression {
+			receiver = target.AsElementAccessExpression().Expression
+		}
+		if receiver != nil && (l.isLibraryGlobal(receiver, "Date") || l.datePrototype(receiver) || l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)), "Date")) {
+			return l.notYet(node, "Date method/prototype overrides and expandos (intrinsic operations require unmodified internal-slot receivers)")
+		}
+	}
+
+	if node.Kind == ast.KindNewExpression && l.isLibraryGlobal(node.AsNewExpression().Expression, "Date") {
+		arguments := node.AsNewExpression().Arguments
+		if arguments != nil && len(arguments.Nodes) > 1 {
+			return l.dateForbidden(node, "new Date with local-time components")
+		}
+		if arguments != nil && len(arguments.Nodes) == 1 {
+			if held, _ := l.representation(l.checker.GetTypeAtLocation(arguments.Nodes[0])); held == ir.String && !l.dateISOArgument(arguments.Nodes[0], 0) {
+				return l.dateForbidden(node, "new Date with a non-ISO or unproven string")
+			}
+		}
+	}
+	if node.Kind == ast.KindTemplateSpan && l.isLibraryType(l.checker.GetTypeAtLocation(node.AsTemplateSpan().Expression), "Date") {
+		return l.dateForbidden(node, "Date string interpolation (local toString)")
+	}
+	if node.Kind == ast.KindCallExpression && l.isLibraryGlobal(node.AsCallExpression().Expression, "String") {
+		args := node.AsCallExpression().Arguments.Nodes
+		if len(args) == 1 && l.isLibraryType(l.checker.GetTypeAtLocation(args[0]), "Date") {
+			return l.dateForbidden(node, "String(Date) (local toString)")
+		}
+	}
+	if node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression {
+		var receiver *ast.Node
+		name := ""
+		if node.Kind == ast.KindPropertyAccessExpression {
+			receiver = node.AsPropertyAccessExpression().Expression
+			name = node.Name().Text()
+		} else {
+			access := node.AsElementAccessExpression()
+			receiver = access.Expression
+			if access.ArgumentExpression.Kind == ast.KindStringLiteral {
+				name = access.ArgumentExpression.Text()
+			}
+		}
+		if l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)), "Date") || l.datePrototype(receiver) {
+			if name == "toString" || name == "toDateString" || name == "toTimeString" || strings.HasPrefix(name, "toLocale") || name == "getTimezoneOffset" || (strings.HasPrefix(name, "get") && name != "getTime" && !strings.HasPrefix(name, "getUTC")) || (strings.HasPrefix(name, "set") && name != "setTime" && !strings.HasPrefix(name, "setUTC")) {
+				return l.dateForbidden(node, "Date."+name)
+			}
+		}
 	}
 	if node.Kind == ast.KindCallExpression && l.isLibraryGlobal(node.AsCallExpression().Expression, "Date") {
-		return l.dateClock(node, "Date()")
+		return l.dateForbidden(node, "Date() (the local-time string form)")
 	}
 	return nil
 }
 
-// Dynamic strings can select local legacy forms, so all parsing uses the explicit UTC contract.
-func (l *lowering) dateString(node *ast.Node) (ir.Expression, error) {
-	if os.Getenv("TZ") != "UTC" {
-		return nil, l.notYet(node, "Date parsing without TZ=UTC fixed for native and Node")
+// A literal type or all members of its union prove the grammar. Generic strings may
+// select legacy or local-time forms, and are refused even when the build uses TZ=UTC.
+func dateISOType(proven *checker.Type) bool {
+	if proven.Flags()&checker.TypeFlagsStringLiteral != 0 {
+		text, ok := proven.AsLiteralType().Value().(string)
+		return ok && dateISOGrammar.MatchString(text) && !strings.HasPrefix(text, "-000000")
 	}
-	return l.stringConversion(node)
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, part := range proven.Types() {
+			if !dateISOType(part) {
+				return false
+			}
+		}
+		return len(proven.Types()) > 0
+	}
+	return false
 }
-func (l *lowering) dateArguments(node *ast.Node, written []*ast.Node) ([]ir.Expression, error) {
-	var args []ir.Expression
-	for _, arg := range written {
-		if arg.Kind == ast.KindSpreadElement {
-			return nil, l.notYet(node, "Date arguments with spread")
-		}
-		value, err := l.libraryNumber(arg)
-		if err != nil {
-			return nil, err
-		}
-		args = append(args, value)
+func (l *lowering) dateISOArgument(node *ast.Node, depth int) bool {
+	if depth > 16 {
+		return false
 	}
-	return args, nil
+	if dateISOType(l.checker.GetTypeAtLocation(node)) {
+		return true
+	}
+	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindCallExpression {
+		call := node.AsCallExpression()
+		callee := ast.SkipParentheses(call.Expression)
+		if callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "toISOString" && l.libraryMember(callee) && len(call.Arguments.Nodes) == 0 && l.isLibraryType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression), "Date") {
+			return true
+		}
+	}
+	if ast.IsIdentifier(node) {
+		symbol := l.symbol(node)
+		if symbol != nil && len(symbol.Declarations) == 1 {
+			declaration := symbol.Declarations[0]
+			if declaration.Kind == ast.KindVariableDeclaration && declaration.Parent.Flags&ast.NodeFlagsConst != 0 && declaration.AsVariableDeclaration().Initializer != nil {
+				return l.dateISOArgument(declaration.AsVariableDeclaration().Initializer, depth+1)
+			}
+		}
+	}
+	return false
+}
+func (l *lowering) dateISOString(node *ast.Node) (ir.Expression, error) {
+	if !l.dateISOArgument(node, 0) {
+		return nil, l.dateForbidden(node, "Date string parsing without a proven ISO grammar and explicit date-time zone")
+	}
+	return l.expression(node)
 }
 func (l *lowering) newDate(node *ast.Node) (ir.Expression, error) {
-	written := node.AsNewExpression().Arguments.Nodes
-	if len(written) == 1 {
-		if l.isLibraryType(l.checker.GetTypeAtLocation(written[0]), "Date") {
-			value, err := l.expression(written[0])
-			return ir.DateCall{Method: "copy", Receiver: value, Returns: ir.Object}, err
-		}
-		of, _ := l.representation(l.checker.GetTypeAtLocation(written[0]))
-		if of == ir.String {
-			value, err := l.dateString(written[0])
-			return ir.DateCall{Method: "newString", Arguments: []ir.Expression{value}, Returns: ir.Object}, err
-		}
-		value, err := l.libraryNumber(written[0])
-		return ir.DateCall{Method: "new", Arguments: []ir.Expression{value}, Returns: ir.Object}, err
+	written := node.AsNewExpression().Arguments
+	if written == nil || len(written.Nodes) == 0 {
+		return ir.NodeFSFile{Operation: "date_new_now", Of: ir.Object}, nil
 	}
-	if os.Getenv("TZ") != "UTC" {
-		return nil, l.notYet(node, "local Date construction without TZ=UTC fixed for native and Node")
+	if len(written.Nodes) != 1 || written.Nodes[0].Kind == ast.KindSpreadElement {
+		return nil, l.dateForbidden(node, "new Date with local-time components or spread")
 	}
-	args, err := l.dateArguments(node, written)
-	if err != nil {
-		return nil, err
+	argument := written.Nodes[0]
+	if l.isLibraryType(l.checker.GetTypeAtLocation(argument), "Date") {
+		value, err := l.expression(argument)
+		return ir.NodeFSFile{Operation: "date_copy", Arguments: []ir.Expression{value}, Of: ir.Object}, err
 	}
-	return ir.DateCall{Method: "components", Arguments: args, Returns: ir.Object}, nil
+	if held, _ := l.representation(l.checker.GetTypeAtLocation(argument)); held == ir.String {
+		value, err := l.dateISOString(argument)
+		return ir.NodeFSFile{Operation: "date_new_iso", Arguments: []ir.Expression{value}, Of: ir.Object}, err
+	}
+	if held, _ := l.representation(l.checker.GetTypeAtLocation(argument)); held == ir.Union {
+		return nil, l.notYet(node, "new Date of a string/number union needs constructor dispatch")
+	}
+	value, err := l.libraryNumber(argument)
+	return ir.NodeFSFile{Operation: "date_new", Arguments: []ir.Expression{value}, Of: ir.Object}, err
 }
-
-var dateGetters = map[string]int{"getFullYear": 0, "getMonth": 1, "getDate": 2, "getDay": 3, "getHours": 4, "getMinutes": 5, "getSeconds": 6, "getMilliseconds": 7, "getTimezoneOffset": 8, "getYear": 9}
-var dateSetters = map[string]int{"setFullYear": 0, "setMonth": 1, "setDate": 2, "setHours": 4, "setMinutes": 5, "setSeconds": 6, "setMilliseconds": 7, "setYear": 9, "setTime": 10}
-
-func dateLocalName(name string) string { return strings.Replace(name, "UTC", "", 1) }
 func (l *lowering) libraryDateCall(node *ast.Node) (ir.Expression, bool, error) {
-	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+	call := node.AsCallExpression()
+	callee := ast.SkipParentheses(call.Expression)
 	if callee.Kind != ast.KindPropertyAccessExpression {
 		return nil, false, nil
 	}
 	receiver, name := callee.AsPropertyAccessExpression().Expression, callee.Name().Text()
-	written := node.AsCallExpression().Arguments.Nodes
+	written := call.Arguments.Nodes
 	if name == "hasOwnProperty" && (l.datePrototype(receiver) || l.isLibraryGlobal(receiver, "Date")) {
 		if len(written) != 1 || hasSpread(node) {
-			return nil, true, l.notYet(node, "Date hasOwnProperty with missing, extra or spread arguments")
+			return nil, true, l.notYet(node, "Date.hasOwnProperty with other than one string key")
 		}
-		key, err := l.stringConversion(written[0])
-		method := "constructorHasOwn"
+		key, err := l.expression(written[0])
+		if err != nil {
+			return nil, true, err
+		}
+		if key.Type() != ir.String {
+			return nil, true, l.notYet(node, "Date.hasOwnProperty with a non-string key")
+		}
+		operation := "date_constructor_own"
 		if l.datePrototype(receiver) {
-			method = "prototypeHasOwn"
+			operation = "date_prototype_own"
 		}
-		return ir.DateCall{Method: method, Arguments: []ir.Expression{key}, Returns: ir.Boolean}, true, err
+		return ir.NodeFSFile{Operation: operation, Arguments: []ir.Expression{key}, Of: ir.Boolean}, true, nil
 	}
-	if value, known, err := l.dateStringMethod(node); known {
-		return value, true, err
-	}
-	// Explicit .call binds the intrinsic's this without materializing Date.prototype.
 	if name == "call" {
 		method := ast.SkipParentheses(receiver)
 		if method.Kind == ast.KindPropertyAccessExpression && l.datePrototype(method.AsPropertyAccessExpression().Expression) {
 			if len(written) == 0 || !l.isLibraryType(l.checker.GetTypeAtLocation(written[0]), "Date") {
-				if method.Name().Text() == "toJSON" {
-					return nil, true, l.notYet(node, "Date.toJSON on a generic receiver (ToPrimitive and dynamic toISOString lookup are not built)")
-				}
-				return nil, true, l.notYet(node, "Date prototype method requires a Date internal slot")
+				return nil, true, l.notYet(node, "Date prototype call requires a Date internal slot")
 			}
-			name = method.Name().Text()
-			receiver = written[0]
+			receiver, name = written[0], method.Name().Text()
 			written = written[1:]
 		}
 	}
 	if l.isLibraryGlobal(receiver, "Date") {
-		if name == "UTC" {
-			args, err := l.dateArguments(node, written)
-			return ir.DateCall{Method: "UTC", Arguments: args, Returns: ir.Number}, true, err
+		switch name {
+		case "now":
+			if len(written) == 0 {
+				return ir.NodeFSFile{Operation: "date_now", Of: ir.Number}, true, nil
+			}
+		case "parse":
+			if len(written) == 1 && !hasSpread(node) {
+				value, err := l.dateISOString(written[0])
+				return ir.NodeFSFile{Operation: "date_parse", Arguments: []ir.Expression{value}, Of: ir.Number}, true, err
+			}
+		case "UTC":
+			if hasSpread(node) {
+				return nil, true, l.notYet(node, "Date.UTC with spread arguments")
+			}
+			args := []ir.Expression{}
+			for _, argument := range written {
+				value, err := l.libraryNumber(argument)
+				if err != nil {
+					return nil, true, err
+				}
+				args = append(args, value)
+			}
+			return ir.NodeFSFile{Operation: "date_UTC", Arguments: args, Of: ir.Number}, true, nil
 		}
-		if name == "parse" && len(written) == 1 {
-			value, err := l.dateString(written[0])
-			return ir.DateCall{Method: "parse", Arguments: []ir.Expression{value}, Returns: ir.Number}, true, err
-		}
-		return nil, true, l.notYet(node, "Date."+name)
+		return nil, true, l.notYet(node, "Date."+name+" with these arguments")
 	}
 	if !l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)), "Date") || !l.libraryMember(callee) {
 		return nil, false, nil
@@ -129,110 +247,38 @@ func (l *lowering) libraryDateCall(node *ast.Node) (ir.Expression, bool, error) 
 	if err != nil {
 		return nil, true, err
 	}
-	local := dateLocalName(name)
-	if _, ok := dateGetters[local]; ok {
-		if !strings.Contains(name, "UTC") && os.Getenv("TZ") != "UTC" {
-			return nil, true, l.notYet(node, "local Date method without TZ=UTC fixed for native and Node")
-		}
-		args, err := l.dateArguments(node, written)
-		return ir.DateCall{Receiver: value, Method: name, Arguments: args, Returns: ir.Number}, true, err
-	}
-	if _, ok := dateSetters[local]; ok {
-		if !strings.Contains(name, "UTC") && name != "setTime" && os.Getenv("TZ") != "UTC" {
-			return nil, true, l.notYet(node, "local Date method without TZ=UTC fixed for native and Node")
-		}
-		args, err := l.dateArguments(node, written)
-		return ir.DateCall{Receiver: value, Method: name, Arguments: args, Returns: ir.Number}, true, err
-	}
-	if name == "getTime" || name == "valueOf" {
-		args, err := l.dateArguments(node, written)
-		return ir.DateCall{Receiver: value, Method: name, Arguments: args, Returns: ir.Number}, true, err
-	}
-	if name == "toISOString" && len(written) == 0 {
-		return ir.DateCall{Receiver: value, Method: name, Returns: ir.String}, true, nil
-	}
-	if name == "toString" || name == "toUTCString" || name == "toDateString" || name == "toTimeString" {
-		if name != "toUTCString" && os.Getenv("TZ") != "UTC" {
-			return nil, true, l.notYet(node, "local Date formatting without TZ=UTC fixed for native and Node")
-		}
-		args, err := l.dateArguments(node, written)
-		return ir.DateCall{Receiver: value, Method: name, Arguments: args, Returns: ir.String}, true, err
-	}
 	if name == "toJSON" {
 		args := []ir.Expression{}
 		for _, argument := range written {
 			if argument.Kind == ast.KindSpreadElement {
 				return nil, true, l.notYet(node, "Date.toJSON spread arguments")
 			}
-			evaluated, err := l.expression(argument)
+			value, err := l.expression(argument)
 			if err != nil {
 				return nil, true, err
 			}
-			args = append(args, evaluated)
+			args = append(args, value)
 		}
 		return ir.DateCall{Receiver: value, Method: name, Arguments: args, Returns: ir.String}, true, nil
 	}
-	return nil, true, l.notYet(node, "Date."+name)
-}
-
-// Date is nominal at every structural boundary because its scalar internal slot is not an own field.
-func (l *lowering) dateViewsMatch(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
-	from, to = l.present(from), l.present(to)
-	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
-		return true
-	}
-	visited[[2]*checker.Type{from, to}] = true
-	// Date internal slots cannot be supplied by structural objects or lost through a method interface.
-	if l.isLibraryType(from, "Date") != l.isLibraryType(to, "Date") {
-		return false
-	}
-	same := func(inside, viewed *checker.Type) bool {
-		return l.dateViewsMatch(inside, viewed, visited)
-	}
-	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
-	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
-	switch {
-	case len(fromSignatures) > 0 && len(toSignatures) > 0:
-		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
-		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
-			if !same(l.checker.GetTypeOfSymbol(fromParameters[index]), l.checker.GetTypeOfSymbol(toParameters[index])) {
-				return false
-			}
-		}
-		return same(l.checker.GetReturnTypeOfSignature(fromSignatures[0]), l.checker.GetReturnTypeOfSignature(toSignatures[0]))
-	case from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.checker.IsArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")):
-		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
-		for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
-			if !same(fromArguments[index], toArguments[index]) {
-				return false
-			}
-		}
-	default:
-		for _, viewed := range l.checker.GetPropertiesOfType(to) {
-			if viewed.Flags&ast.SymbolFlagsMethod != 0 {
-				continue
-			}
-			if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && !same(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
-				return false
-			}
+	if name == "setTime" || strings.HasPrefix(name, "setUTC") {
+		if _, known := dateSetters[strings.Replace(name, "UTC", "", 1)]; known {
+			args, err := l.dateArguments(node, written)
+			return ir.DateCall{Receiver: value, Method: name, Arguments: args, Returns: ir.Number}, true, err
 		}
 	}
-	return true
-}
-
-func (l *lowering) datePrototype(node *ast.Node) bool {
-	node = ast.SkipParentheses(node)
-	return node.Kind == ast.KindPropertyAccessExpression && node.Name().Text() == "prototype" && l.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, "Date")
-}
-func (l *lowering) libraryDateBoundMethod(node *ast.Node) bool {
-	if !l.datePrototype(node.AsPropertyAccessExpression().Expression) {
-		return false
+	if len(written) != 0 {
+		return nil, true, l.notYet(node, "Date."+name+" with arguments")
 	}
-	parent := node.Parent
-	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
-		parent = parent.Parent
+	operation, of := "date_"+name, ir.Number
+	if name == "getTime" || name == "valueOf" {
+		operation = "date_time"
+	} else if name == "toISOString" || name == "toUTCString" {
+		of = ir.String
+	} else if !dateUTCGetters[name] {
+		return nil, true, l.notYet(node, "Date."+name+" is not built in the UTC/ISO surface")
 	}
-	return parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.Name().Text() == "call" && called(parent)
+	return ir.NodeFSFile{Operation: operation, Arguments: []ir.Expression{value}, Of: of}, true, nil
 }
 
 // Null strings use the existing reference null pointer, but never the undefined union tag.
@@ -252,3 +298,20 @@ func (l *lowering) dateTypeKey(proven *checker.Type, held ir.Type) string {
 	}
 	return typeName(held)
 }
+
+func (l *lowering) dateArguments(node *ast.Node, written []*ast.Node) ([]ir.Expression, error) {
+	var args []ir.Expression
+	for _, arg := range written {
+		if arg.Kind == ast.KindSpreadElement {
+			return nil, l.notYet(node, "Date arguments with spread")
+		}
+		value, err := l.libraryNumber(arg)
+		if err != nil {
+			return nil, err
+		}
+		args = append(args, value)
+	}
+	return args, nil
+}
+
+var dateSetters = map[string]int{"setFullYear": 0, "setMonth": 1, "setDate": 2, "setHours": 4, "setMinutes": 5, "setSeconds": 6, "setMilliseconds": 7, "setTime": 10}

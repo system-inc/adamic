@@ -1,0 +1,7 @@
+function query(key: string): void {
+ console.log(`${key}:${Date.hasOwnProperty(key)}:${Date.prototype.hasOwnProperty(key)}`);
+}
+for (const key of ['length', 'name', 'prototype', 'now', 'parse', 'UTC', 'constructor', 'toString', 'toDateString', 'toTimeString', 'toISOString', 'toUTCString', 'toGMTString', 'getDate', 'setDate', 'getDay', 'getFullYear', 'setFullYear', 'getHours', 'setHours', 'getMilliseconds', 'setMilliseconds', 'getMinutes', 'setMinutes', 'getMonth', 'setMonth', 'getSeconds', 'setSeconds', 'getTime', 'setTime', 'getTimezoneOffset', 'getUTCDate', 'setUTCDate', 'getUTCDay', 'getUTCFullYear', 'setUTCFullYear', 'getUTCHours', 'setUTCHours', 'getUTCMilliseconds', 'setUTCMilliseconds', 'getUTCMinutes', 'setUTCMinutes', 'getUTCMonth', 'setUTCMonth', 'getUTCSeconds', 'setUTCSeconds', 'valueOf', 'getYear', 'setYear', 'toJSON', 'toLocaleString', 'toLocaleDateString', 'toLocaleTimeString', 'missing', 'hasOwnProperty', '__proto__', 'Symbol.toPrimitive', 'getTime\0']) query(key);
+let calls = 0;
+function key(): string { calls++; return 'getTime'; }
+console.log(`${Date.prototype.hasOwnProperty(key())}:${calls}`);

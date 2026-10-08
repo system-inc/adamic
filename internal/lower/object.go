@@ -295,6 +295,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 
 // property lowers object.name, array.length, and Math's constants.
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+	if node.Name().Text() == "now" && l.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, "Date") {
+		return ir.NodeFSFile{Operation: "date_now_function", Of: ir.Closure}, nil
+	}
 	if err := l.staticProperty(node); err != nil {
 		return nil, err
 	}
@@ -586,6 +589,9 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+	if value, known, err := l.libraryDateCall(node); known {
+		return value, true, err
+	}
 	if value, handled, err := l.libraryNodeBuffer(node); handled {
 		return value, true, err
 	}

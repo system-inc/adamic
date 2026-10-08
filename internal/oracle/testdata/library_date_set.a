@@ -8,15 +8,7 @@ for (const time of [-8640000000000000, -1, 0, 951782400123, 8640000000000000, Na
  console.log(`${date.setUTCSeconds(-1, -1)} ${date.getTime()}`);
  console.log(`${date.setUTCMilliseconds(-1.9)} ${date.getTime()}`);
  console.log(`${date.setTime(-0)} ${1 / date.valueOf()}`);
- console.log(`${date.setFullYear(99, -1, 0)}`);
- console.log(`${date.setMonth(12, 0)}`);
- console.log(`${date.setDate(32)}`);
- console.log(`${date.setHours(-1, 61, -1, 999)}`);
- console.log(`${date.setMinutes(-1, -1, -1)}`);
- console.log(`${date.setSeconds(-1, 1000)}`);
- console.log(`${date.setMilliseconds(NaN)}`);
  console.log(`${date.setUTCMonth(0)}`);
- console.log(`${date.setFullYear(2000)}`);
 }
 const ordered = new Date(0);
 console.log(`${ordered.setUTCSeconds(ordered.setTime(1234))} ${ordered.getTime()}`);

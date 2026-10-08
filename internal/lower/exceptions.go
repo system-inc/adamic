@@ -228,6 +228,12 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 		case ir.DateCall:
 			if node.Method == "toISOString" {
 				failing = "Date.toISOString validation"
+
+			}
+		case ir.NodeFSFile:
+			if node.Operation == "date_toISOString" {
+				failing = "Date.toISOString validation (catchable RangeError descriptors are not represented)"
+
 			}
 		case ir.ObjectCall:
 			if node.Method == "assign" && l.objectCanFreeze() {

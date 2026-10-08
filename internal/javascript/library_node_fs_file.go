@@ -1,8 +1,14 @@
 package javascript
 
-import "github.com/system-inc/adamic/internal/ir"
+import (
+	"github.com/system-inc/adamic/internal/ir"
+	"strings"
+)
 
 func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
+	if strings.HasPrefix(call.Operation, "date_") {
+		return e.dateHostCall(call)
+	}
 	args := make([]string, len(call.Arguments))
 	for i, arg := range call.Arguments {
 		args[i] = e.value(arg)

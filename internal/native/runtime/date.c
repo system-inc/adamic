@@ -1,7 +1,12 @@
-// date.c: proleptic Gregorian arithmetic in milliseconds, independent of libc time_t.
+// Copyright 2012 the V8 project authors. All rights reserved.
+// BSD license in THIRD_PARTY_NOTICES.md.
+// UTC portions of Node 24.19.0's V8 date.cc/dateparser-inl.h/builtins-date.cc.
+#define _POSIX_C_SOURCE 200809L
+#define _DARWIN_C_SOURCE
 #include "adamic.h"
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 static const adamic_shape date_shape = {0, NULL, NULL, NULL};
 static double time_clip(double time) {
@@ -23,33 +28,40 @@ static int64_t floor_div(int64_t value, int64_t divisor) {
  int64_t quotient = value / divisor;
  return quotient - (value % divisor < 0);
 }
-static int64_t civil_day(int64_t year, int month, int day) {
- year -= month <= 2;
- int64_t era = floor_div(year, 400);
- int64_t within = year - era * 400;
- int shifted = month + (month > 2 ? -3 : 9);
- int64_t ordinal = (153 * shifted + 2) / 5 + day - 1;
- return era * 146097 + within * 365 + within / 4 - within / 100 + ordinal - 719468;
-}
+// DateCache::YearMonthDayFromDays, without the cache or local-time adjustment.
 static void civil_parts(int64_t day, double *parts) {
- int64_t shifted = day + 719468;
- int64_t era = floor_div(shifted, 146097);
- int64_t ordinal = shifted - era * 146097;
- int64_t within = (ordinal - ordinal / 1460 + ordinal / 36524 - ordinal / 146096) / 365;
- int64_t year = within + era * 400;
- int64_t year_day = ordinal - (365 * within + within / 4 - within / 100);
- int64_t month = (5 * year_day + 2) / 153;
- parts[2] = (double)(year_day - (153 * month + 2) / 5 + 1);
- month += month < 10 ? 3 : -9;
- year += month <= 2;
- parts[0] = (double)year; parts[1] = (double)(month - 1);
+ static const int months[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+ int64_t days = day + 1005 * 146097 - (30 * 365 + 7);
+ int64_t year = 400 * (days / 146097) - 400000;
+ days %= 146097;
+ days--;
+ int64_t centuries = days / 36524; days %= 36524; year += 100 * centuries;
+ days++;
+ int64_t fours = days / 1461; days %= 1461; year += 4 * fours;
+ days--;
+ int64_t years = days / 365; days %= 365; year += years;
+ bool leap = (!centuries || fours) && !years;
+ days += leap;
+ int month = 0;
+ while (month < 11) {
+  int length = months[month] + (month == 1 && leap ? 1 : 0);
+  if (days < length) break;
+  days -= length; month++;
+ }
+ parts[0] = (double)year; parts[1] = month; parts[2] = (double)days + 1;
 }
+// MakeDay: truncation precedes month normalization, and bounds precede integer conversion.
 static double make_day(double year, double month, double day) {
- // V8 uses these conservative bounds before normalizing the month.
  if (!isfinite(year) || !isfinite(month) || !isfinite(day) || year < -1000000 || year > 1000000 || month < -10000000 || month > 10000000) return NAN;
  int64_t y = (int64_t)trunc(year), m = (int64_t)trunc(month);
- y += floor_div(m, 12); m -= floor_div(m, 12) * 12;
- return (double)civil_day(y, (int)m + 1, 1) + trunc(day) - 1;
+ y += floor_div(m,12); m -= floor_div(m,12) * 12;
+ const int64_t delta = 399999;
+ const int64_t base = 365 * (1970 + delta) + (1970 + delta) / 4 - (1970 + delta) / 100 + (1970 + delta) / 400;
+ int64_t days = 365 * (y + delta) + (y + delta) / 4 - (y + delta) / 100 + (y + delta) / 400 - base;
+ static const int ordinary[] = {0,31,59,90,120,151,181,212,243,273,304,334};
+ static const int leap[] = {0,31,60,91,121,152,182,213,244,274,305,335};
+ days += (y % 4 != 0 || (y % 100 == 0 && y % 400 != 0)) ? ordinary[m] : leap[m];
+ return (double)(days - 1) + trunc(day);
 }
 static double make_time(const double *parts) {
  for (int i = 0; i < 4; i++) if (!isfinite(parts[i])) return NAN;
@@ -81,10 +93,68 @@ double adamic_date_get(const adamic_object *date, int field) {
  if (isnan(time)) return NAN;
  double parts[7]; split_time(time, parts);
  if (field == 3) { int64_t day = (int64_t)floor(time / 86400000); return (double)(day - floor_div(day + 4, 7) * 7 + 4); }
- if (field == 8) return 0;
- if (field == 9) return parts[0] - 1900;
  return parts[field < 3 ? field : field - 1];
 }
+adamic_string *adamic_date_iso(const adamic_object *date) {
+ double time = adamic_date_value(date);
+ if (isnan(time)) { static const char message[] = "RangeError: Invalid time value"; adamic_panic(message, sizeof message - 1); }
+ double parts[7]; split_time(time, parts);
+ char text[32]; int year = (int)parts[0];
+ int length;
+ if (year >= 0 && year <= 9999) {
+  length = snprintf(text, sizeof text, "%04d-%02d-%02dT%02d:%02d:%02d.%03dZ", year, (int)parts[1]+1, (int)parts[2], (int)parts[3], (int)parts[4], (int)parts[5], (int)parts[6]);
+ } else {
+  length = snprintf(text, sizeof text, "%c%06d-%02d-%02dT%02d:%02d:%02d.%03dZ", year < 0 ? '-' : '+', year < 0 ? -year : year, (int)parts[1]+1, (int)parts[2], (int)parts[3], (int)parts[4], (int)parts[5], (int)parts[6]);
+ }
+ adamic_string *result = adamic_string_allocate((size_t)length);
+ memcpy((char *)result->bytes, text, (size_t)length);
+ return result;
+}
+// V8 bootstrapper.cc's Date installation. Mutation/expando writes stay refused.
+bool adamic_date_has_own(const adamic_string *key, bool prototype) {
+ static const char *const constructor_names[] = {"length", "name", "prototype", "now", "parse", "UTC"};
+ static const char *const prototype_names[] = {"constructor", "toString", "toDateString", "toTimeString", "toISOString", "toUTCString", "toGMTString", "getDate", "setDate", "getDay", "getFullYear", "setFullYear", "getHours", "setHours", "getMilliseconds", "setMilliseconds", "getMinutes", "setMinutes", "getMonth", "setMonth", "getSeconds", "setSeconds", "getTime", "setTime", "getTimezoneOffset", "getUTCDate", "setUTCDate", "getUTCDay", "getUTCFullYear", "setUTCFullYear", "getUTCHours", "setUTCHours", "getUTCMilliseconds", "setUTCMilliseconds", "getUTCMinutes", "setUTCMinutes", "getUTCMonth", "setUTCMonth", "getUTCSeconds", "setUTCSeconds", "valueOf", "getYear", "setYear", "toJSON", "toLocaleString", "toLocaleDateString", "toLocaleTimeString"};
+ const char *const *names = prototype ? prototype_names : constructor_names;
+ size_t count = prototype ? sizeof prototype_names / sizeof *prototype_names : sizeof constructor_names / sizeof *constructor_names;
+ for (size_t i = 0; i < count; i++) {
+  if (key->length == strlen(names[i]) && memcmp(key->bytes, names[i], key->length) == 0) return true;
+ }
+ return false;
+}
+
+// Node's CurrentTimeValue floors its system clock to whole epoch milliseconds.
+// clock_gettime(CLOCK_REALTIME) is provided by macOS, Linux and wasi-libc.
+double adamic_date_now(void) {
+ struct timespec time;
+ if (clock_gettime(CLOCK_REALTIME, &time) != 0) {
+  static const char message[] = "Date.now: CLOCK_REALTIME is unavailable";
+  adamic_panic(message, sizeof message - 1);
+ }
+ return (double)time.tv_sec * 1000.0 + (double)(time.tv_nsec / 1000000);
+}
+static adamic_value date_now_method(adamic_closure *self, adamic_value *arguments) {
+ (void)self; (void)arguments;
+ return (adamic_value){.number = adamic_date_now()};
+}
+static adamic_closure date_now_closure = {{0, adamic_kind_closure, 0}, date_now_method, 0};
+adamic_closure *adamic_date_now_function(void) { return &date_now_closure; }
+
+adamic_string *adamic_date_utc_string(const adamic_object *date) {
+ static const char *const days[] = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
+ static const char *const months[] = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+ double time = adamic_date_value(date);
+ if (isnan(time)) { static adamic_string invalid = ADAMIC_STRING("Invalid Date"); return &invalid; }
+ double parts[7]; split_time(time,parts);
+ char text[64]; int year = (int)parts[0];
+ int length = snprintf(text,sizeof text,year < 0 ? "%s, %02d %s %05d %02d:%02d:%02d GMT" : "%s, %02d %s %04d %02d:%02d:%02d GMT",
+  days[(int)adamic_date_get(date,3)],(int)parts[2],months[(int)parts[1]],year,(int)parts[3],(int)parts[4],(int)parts[5]);
+ adamic_string *result = adamic_string_allocate((size_t)length);
+ memcpy((char *)result->bytes,text,(size_t)length);
+ return result;
+}
+
+#include "date_iso_parse_impl.h"
+
 double adamic_date_set(adamic_object *date, int field, size_t count, const double *arguments) {
  double time = adamic_date_value(date);
  double first = count == 0 ? NAN : arguments[0];
@@ -103,28 +173,12 @@ double adamic_date_set(adamic_object *date, int field, size_t count, const doubl
  date->slots[0].number = make_date(parts);
  return date->slots[0].number;
 }
-adamic_string *adamic_date_iso(const adamic_object *date) {
- double time = adamic_date_value(date);
- if (isnan(time)) { static const char message[] = "RangeError: Invalid time value"; adamic_panic(message, sizeof message - 1); }
- double parts[7]; split_time(time, parts);
- char text[32]; int year = (int)parts[0];
- int length;
- if (year >= 0 && year <= 9999) {
-  length = snprintf(text, sizeof text, "%04d-%02d-%02dT%02d:%02d:%02d.%03dZ", year, (int)parts[1]+1, (int)parts[2], (int)parts[3], (int)parts[4], (int)parts[5], (int)parts[6]);
- } else {
-  length = snprintf(text, sizeof text, "%c%06d-%02d-%02dT%02d:%02d:%02d.%03dZ", year < 0 ? '-' : '+', year < 0 ? -year : year, (int)parts[1]+1, (int)parts[2], (int)parts[3], (int)parts[4], (int)parts[5], (int)parts[6]);
- }
- adamic_string *result = adamic_string_allocate((size_t)length);
- memcpy((char *)result->bytes, text, (size_t)length);
- return result;
-}
+
 adamic_string *adamic_date_json(const adamic_object *date) {
  return isnan(adamic_date_value(date)) ? NULL : adamic_date_iso(date);
 }
 
-#include "date_parse_impl.h"
 
-// Stable UTC renderings use V8's English month/day names, with the oracle's fixed TZ=UTC.
 adamic_string *adamic_date_format(const adamic_object *date, int style) {
  static const char *const days[] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
  static const char *const months[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
@@ -152,16 +206,4 @@ adamic_string *adamic_date_format(const adamic_object *date, int style) {
  adamic_string *result = adamic_string_allocate(length);
  memcpy((char *)result->bytes, text, length);
  return result;
-}
-
-// V8 bootstrapper.cc's Date installation. Mutation/expando writes stay refused.
-bool adamic_date_has_own(const adamic_string *key, bool prototype) {
- static const char *const constructor_names[] = {"length", "name", "prototype", "now", "parse", "UTC"};
- static const char *const prototype_names[] = {"constructor", "toString", "toDateString", "toTimeString", "toISOString", "toUTCString", "toGMTString", "getDate", "setDate", "getDay", "getFullYear", "setFullYear", "getHours", "setHours", "getMilliseconds", "setMilliseconds", "getMinutes", "setMinutes", "getMonth", "setMonth", "getSeconds", "setSeconds", "getTime", "setTime", "getTimezoneOffset", "getUTCDate", "setUTCDate", "getUTCDay", "getUTCFullYear", "setUTCFullYear", "getUTCHours", "setUTCHours", "getUTCMilliseconds", "setUTCMilliseconds", "getUTCMinutes", "setUTCMinutes", "getUTCMonth", "setUTCMonth", "getUTCSeconds", "setUTCSeconds", "valueOf", "getYear", "setYear", "toJSON", "toLocaleString", "toLocaleDateString", "toLocaleTimeString"};
- const char *const *names = prototype ? prototype_names : constructor_names;
- size_t count = prototype ? sizeof prototype_names / sizeof *prototype_names : sizeof constructor_names / sizeof *constructor_names;
- for (size_t i = 0; i < count; i++) {
-  if (key->length == strlen(names[i]) && memcmp(key->bytes, names[i], key->length) == 0) return true;
- }
- return false;
 }

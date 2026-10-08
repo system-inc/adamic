@@ -13,26 +13,7 @@ func (l *lowering) dateStringConversion(node *ast.Node, value ir.Expression) (ir
 	if !l.isLibraryType(l.checker.GetNonNullableType(proven), "Date") {
 		return nil, false, nil
 	}
-	if value.Type() != ir.Object && value.Type() != ir.Union {
-		return nil, true, l.notYet(node, "Date string conversion without a represented Date internal slot")
-	}
-	if value.Type() == ir.Object && l.includesNull(proven) && l.includesUndefined(proven) {
-		return nil, true, l.notYet(node, "Date string conversion holding null and undefined without distinct tags")
-	}
-	function, reads := l.stringHelper("date", []ir.Expression{value})
-	read := reads[0]
-	result := ir.Expression(ir.NodeFSFile{Operation: "date_string", Arguments: []ir.Expression{read}, Of: ir.String})
-	if value.Type() == ir.Union {
-		result = ir.NodeFSFile{Operation: "date_string", Arguments: []ir.Expression{ir.Narrow{Value: read, To: ir.Object}}, Of: ir.String}
-	}
-	if l.includesUndefined(proven) {
-		result = ir.Conditional{Condition: ir.IsUndefined{Value: read}, WhenTrue: ir.StringConstant{Index: l.constant("undefined")}, WhenNot: result}
-	}
-	if l.includesNull(proven) {
-		result = ir.Conditional{Condition: ir.IsNull{Value: read}, WhenTrue: ir.StringConstant{Index: l.constant("null")}, WhenNot: result}
-	}
-	l.result.Functions[function].Body = []ir.Statement{ir.Return{Value: result}}
-	return ir.Call{Function: function, Arguments: []ir.Expression{value}, Returns: ir.String}, true, nil
+	return nil, true, l.dateForbidden(node, "Date string conversion (local toString)")
 }
 
 func (l *lowering) dateStringAddition(node *ast.Node, left, right ir.Expression) (ir.Expression, bool, error) {

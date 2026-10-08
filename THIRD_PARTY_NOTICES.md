@@ -49,6 +49,9 @@ IN THE SOFTWARE.
     `src/date/date.cc` and `src/builtins/builtins-date.cc`), and Date own-name queries
     in that file, after the Date installation in `src/init/bootstrapper.cc` as
     vendored by Node.js v24.19.0;
+  - Strict ISO Date parsing (`internal/native/runtime/date_iso_parse_impl.h`, after
+    V8 src/date/dateparser-inl.h, src/date/dateparser.cc and src/date/dateparser.h
+    as vendored in Node v24.19.0);
   - Map and Set number hashing (`runtime/map_set.c`, after Object::GetSimpleHash in
     src/objects/objects-inl.h and ComputeUnseededHash/ComputeLongHash in src/utils/utils.h,
     V8 13.6.233.17);
