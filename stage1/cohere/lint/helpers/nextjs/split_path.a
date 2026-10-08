@@ -1,0 +1,13 @@
+import { utf8Length } from 'adamic';
+import { lastSeparator } from './last_separator.a';
+export type PathParts = { baseName: string; parentName: string };
+export function splitPath(path: string): PathParts {
+ let baseName=path; let parentName=''; const index=lastSeparator(path);
+ if(index>=0) {
+  let offset=0; while(offset<path.length && utf8Length(path.slice(0,offset))<index) { offset++; }
+  baseName=path.slice(offset+1); const parent=path.slice(0,offset); parentName=parent;
+  const parentIndex=lastSeparator(parent);
+  if(parentIndex>=0) { let start=0; while(start<parent.length && utf8Length(parent.slice(0,start))<parentIndex) { start++; } parentName=parent.slice(start+1); }
+ }
+ return {baseName,parentName};
+}

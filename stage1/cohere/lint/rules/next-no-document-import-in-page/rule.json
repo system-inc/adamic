@@ -1,0 +1,14 @@
+{
+  "name": "@next/next/no-document-import-in-page",
+  "kinds": [
+    "ImportDeclaration"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNextNoDocumentImportInPage",
+  "upstreamPackage": "next",
+  "upstreamTest": "TestNoDocumentImportInPage",
+  "parent": false,
+  "node": true
+}
