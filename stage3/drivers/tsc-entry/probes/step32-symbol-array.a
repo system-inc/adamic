@@ -1,0 +1,6 @@
+// a-check: type error TS2345
+interface Symbol { readonly name: string }
+function accept(symbols: Symbol[]): void { console.log(String(symbols.length)); }
+const members = new Map<string, Symbol | undefined>();
+members.set("member", undefined);
+accept(Array.from(members.values()));

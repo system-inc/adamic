@@ -1,0 +1,10 @@
+{
+  "file": "/tmp/step32-walk-final/src/compiler/checker.ts",
+  "line": 10263,
+  "column": 83,
+  "function": "<anonymous>",
+  "start": 592039,
+  "end": 592056,
+  "original": "!isHashPrivate(s)",
+  "replacement": "{ throw new Error(\"tsc-entry scratch placeholder\"); }"
+}
