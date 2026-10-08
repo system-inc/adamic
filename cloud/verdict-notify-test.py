@@ -15,6 +15,8 @@ def route(branch):
     return ('compiler' if branch.startswith('codex/compiler-') else 'nowhere'), 'prefix'
 def areaNames():
     return {'compiler', 'stage3'}
+def fleetArea(fleet):
+    return {'compiler': 'compiler', 'stage3': 'stage3'}.get(fleet)
 '''
 
 
@@ -29,12 +31,13 @@ class VerdictTests(unittest.TestCase):
             (root / 'bin/ahra').write_text('#!/bin/bash\nprintf "%s|%s\\n" "$3" "$4" >> "$SENDS"\n')
             (root / 'bin/ahra').chmod(0o755)
             (root / 'state').mkdir()
+            (root / 'roster.json').write_text('[{"label": "scout-map-keys", "fleet": "compiler"}, {"label": "scout-x", "fleet": "stage1-scouts"}]')
             if toIntegration:
                 (root / 'state/verdicts-to-integration').touch()
             (root / 'gate.log').write_text(log)
             env = dict(os.environ, PATH=str(root / 'bin') + ':' + os.environ['PATH'], SENDS=str(root / 'sends'),
                        ADAMIC_VERDICT_ROUTES_DIR=str(root / 'routes'), ADAMIC_FAST_GATE_WATCH_STATE=str(root / 'state'),
-                       ADAMIC_FAST_GATE_AHRA_DIR=tmp)
+                       ADAMIC_FAST_GATE_AHRA_DIR=tmp, ADAMIC_FLEET_ROSTER=str(root / 'roster.json'))
             subprocess.run(['python3', str(script), branch, SHA, str(root / 'gate.log')], env=env, check=True, capture_output=True)
             sends = root / 'sends'
             return [line.split('|', 1) for line in sends.read_text().splitlines()] if sends.exists() else []
@@ -62,6 +65,11 @@ class VerdictTests(unittest.TestCase):
         self.assertEqual([name for name, _ in sends], ['system_adamic_integration', 'system_adamic_compiler'])
         self.assertIn('Routed to integration: area-routes.tsv holds codex/held-*', sends[0][1])
         self.assertEqual([name for name, _ in self.send('codex/other', self.red)], ['system_adamic_integration'])
+
+    def test_unrouted_branch_routes_by_its_session_label(self):
+        self.assertEqual([name for name, _ in self.send('codex/scout-map-keys', self.red)], ['system_adamic_compiler'])
+        self.assertEqual([name for name, _ in self.send('codex/scout-x', self.red)], ['system_adamic_integration'])
+        self.assertEqual([name for name, _ in self.send('codex/held-views', self.red)][0], 'system_adamic_integration')
 
     def test_switch_copies_integration_and_void_says_nothing(self):
         self.assertEqual([name for name, _ in self.send('codex/compiler-x', self.red, toIntegration=True)],

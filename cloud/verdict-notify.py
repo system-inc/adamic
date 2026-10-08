@@ -16,6 +16,7 @@ file named verdicts-to-integration. The message: green or red, the base it was g
 failure's step and its package and test, the gate-logs ref, and the worker's session when the gate knew it.
 Green or red only: a void gate isn't a verdict, and the watcher reports those itself.
 """
+import json
 import os
 from pathlib import Path
 import re
@@ -61,12 +62,26 @@ def owners(directory):
     return {row[0]: row[1] for row in rows if len(row) > 1}
 
 
-def route(branch, directory):
-    """(area, why) from integration's router, exactly as auto-area-merge loads it."""
+def router(directory):
+    """Integration's router module, loaded exactly as auto-area-merge loads it."""
     source = directory / 'area-route.py'
     module = {'__file__': str(source), '__name__': 'trusted_area_route'}
     exec(compile(source.read_text(), str(source), 'exec'), module)
-    return module['route'](branch)
+    return module
+
+
+def labelArea(branch, module):
+    """The area of the fleet whose session is labeled as the branch is named (codex/<label>), through
+    integration's fleet-areas.tsv. A verdict often lands before any reply naming the branch is fetched,
+    so the router's own fleet lookup can't see it yet; a scout's label is its branch's name."""
+    label = branch.split('/', 1)[1]
+    try:
+        roster = json.loads(Path(os.environ.get('ADAMIC_FLEET_ROSTER', str(ahra / 'modules/ai/data/fleet-roster.json'))).read_text())
+    except (OSError, ValueError):
+        return None
+    fleets = {member.get('fleet') for member in roster if member.get('label') == label and member.get('fleet')}
+    areas = {module['fleetArea'](fleet) for fleet in fleets} - {None}
+    return areas.pop() if len(areas) == 1 else None
 
 
 def recipients(branch, sha):
@@ -89,7 +104,12 @@ def recipients(branch, sha):
                         names.append(areaOwners[area])
                         break
             else:
-                area, why = route(branch, directory)
+                module = router(directory)
+                area, why = module['route'](branch)
+                if area != 'hold' and area not in areaOwners:
+                    labeled = labelArea(branch, module)
+                    if labeled in areaOwners:
+                        area, why = labeled, 'its session label'
                 if area == 'hold' or area not in areaOwners:
                     # Integration keeps the hold; the Circles its note names hear the verdict too.
                     names.append(integration)
