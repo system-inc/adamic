@@ -54,9 +54,7 @@ if (!isfinite(value.number)) { ascii(builder,"null");return; }`},
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				t.Fatalf("caught outside byte oracle: exit %d stderr %s", got.exitCode, got.stderr)
 			}
-			if diff := disagreement(onNode(t, path), got); diff != "stdout differs" {
-				t.Fatalf("mutant survived or wrong check caught it: %s", diff)
-			}
+			requireJSONMutantCaught(t, onNode(t, path), got)
 			t.Logf("%s: compiled, exit 0, leak-free; caught only by Node stdout", test.name)
 		})
 	}
