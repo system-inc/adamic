@@ -133,6 +133,11 @@ func (l *lowering) acceptsUndefined(node *ast.Node) bool {
 			if access.Expression == node && access.QuestionDotToken != nil {
 				return true
 			}
+		case ast.KindCallExpression:
+			call := parent.AsCallExpression()
+			if call.Expression == node && call.QuestionDotToken != nil {
+				return true
+			}
 		case ast.KindElementAccessExpression:
 			access := parent.AsElementAccessExpression()
 			if access.Expression == node && access.QuestionDotToken != nil {
