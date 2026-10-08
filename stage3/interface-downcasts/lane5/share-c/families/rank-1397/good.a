@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface SourceFile {readonly value:number;readonly kind:308;}
+interface Base {readonly shouldTransformImportCall:unknown;}
+interface Target {shouldTransformImportCall(sourceFile: SourceFile): boolean;}
+function probe(value:Base):void {const host=value as Target;const result=host.shouldTransformImportCall({value:3,kind:308});console.log("completed");}
+probe({shouldTransformImportCall:(sourceFile: SourceFile):boolean=>(true)});

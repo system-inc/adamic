@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface ImportEqualsDeclaration {readonly value:number;readonly kind:272;}
+interface Base {readonly isTopLevelValueImportEqualsWithEntityName:unknown;}
+interface Target {isTopLevelValueImportEqualsWithEntityName(node: ImportEqualsDeclaration): boolean;}
+function probe(value:Base):void {const resolver=value as Target;const result=resolver.isTopLevelValueImportEqualsWithEntityName({value:3,kind:272});console.log("completed");}
+probe({isTopLevelValueImportEqualsWithEntityName:(): boolean=>(true)});

@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly isSourceOfProjectReferenceRedirect:unknown;}
+interface Target {isSourceOfProjectReferenceRedirect(fileName: string): boolean;}
+function probe(value:Base):void {const host=value as Target;const result=host.isSourceOfProjectReferenceRedirect("abc");console.log("completed");}
+probe({isSourceOfProjectReferenceRedirect:(fileName: string):boolean=>(true)});

@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly hasTrailingWhitespace:unknown;}
+interface Target {hasTrailingWhitespace(): boolean;}
+function probe(value:Base):void {const writer=value as Target;const result=writer.hasTrailingWhitespace();console.log("completed");}
+probe({hasTrailingWhitespace:(extra:number): boolean=>(true)});

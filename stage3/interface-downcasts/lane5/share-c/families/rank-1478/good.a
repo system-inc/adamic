@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly getLineCount:unknown;}
+interface Target {getLineCount(): number;}
+function probe(value:Base):void {const lineInfo=value as Target;const result=lineInfo.getLineCount();console.log("completed");}
+probe({getLineCount:():number=>(3)});

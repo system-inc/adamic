@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Expression {readonly value:number;}
+interface Base {readonly createSpreadArrayHelper:unknown;}
+interface Target {createSpreadArrayHelper(to: Expression, from: Expression, packFrom: boolean): Expression;}
+function probe(value:Base):void {const helpers=value as Target;const result=helpers.createSpreadArrayHelper({value:3},{value:3},true);console.log("completed");}
+probe({createSpreadArrayHelper:(): Expression=>({value:3})});

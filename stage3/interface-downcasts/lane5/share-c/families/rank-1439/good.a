@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Expression {readonly value:number;}
+interface Base {readonly emitExpression:unknown;}
+interface Target {emitExpression: (value: Expression) => void;}
+function probe(value:Base):void {const flattenContext=value as Target;flattenContext.emitExpression({value:3});console.log("completed");}
+probe({emitExpression:(value: Expression):void=>{}});

@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface BuildInfo {readonly value:number;}
+interface Base {readonly getBuildInfo:unknown;}
+interface Target {getBuildInfo(): BuildInfo | undefined;}
+function probe(value:Base):void {const host=value as Target;const result=host.getBuildInfo();console.log("completed");}
+probe({getBuildInfo:(extra:number): BuildInfo | undefined=>({value:3})});

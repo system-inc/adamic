@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly size:unknown;}
+interface Target {size(): number;}
+function probe(value:Base):void {const seenNamesInFile=value as Target;const result=seenNamesInFile.size();console.log("completed");}
+probe({size:(extra:number): number=>(3)});

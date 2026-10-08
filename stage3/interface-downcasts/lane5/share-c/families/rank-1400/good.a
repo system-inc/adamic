@@ -1,0 +1,11 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface VariableDeclaration {readonly value:number;readonly kind:261;}
+interface PropertyDeclaration {readonly value:number;readonly kind:173;}
+interface PropertySignature {readonly value:number;readonly kind:172;}
+interface ParameterDeclaration {readonly value:number;readonly kind:170;}
+interface SymbolTracker {readonly value:number;}
+interface Expression {readonly value:number;}
+interface Base {readonly createLiteralConstValue:unknown;}
+interface Target {createLiteralConstValue(node: VariableDeclaration | PropertyDeclaration | PropertySignature | ParameterDeclaration, tracker: SymbolTracker): Expression;}
+function probe(value:Base):void {const resolver=value as Target;const result=resolver.createLiteralConstValue({value:3,kind:261},{value:3});console.log("completed");}
+probe({createLiteralConstValue:(node: VariableDeclaration | PropertyDeclaration | PropertySignature | ParameterDeclaration,tracker: SymbolTracker):Expression=>({value:3})});

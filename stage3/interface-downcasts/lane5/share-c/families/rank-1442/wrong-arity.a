@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly toString:unknown;}
+interface Target {toString(): string;}
+function probe(value:Base):void {const Function={prototype:value as Target};const result=Function.prototype.toString();console.log("completed");}
+probe({toString:(extra:number): string=>("abc")});
