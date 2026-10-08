@@ -205,6 +205,20 @@ func (l *lowering) overloadMembership(node *ast.Node, value ir.Expression, sourc
 // is kept until its contract is proven or checked, then converted for the caller.
 func (l *lowering) overloadSpecialization(call *ast.CallExpression, value ir.Expression, implementation, overload *ast.Node, ordinal int, produced, promised *checker.Type) (ir.Expression, error) {
 	invoked, direct := value.(ir.Call)
+	var closure *ir.CallClosure
+	if candidate, known := value.(ir.CallClosure); known {
+		function := candidate.Direct - 1
+		if function < 0 {
+			if maker, known := candidate.Closure.(ir.MakeClosure); known {
+				function = maker.Function
+			}
+		}
+		if function >= 0 {
+			closure = &candidate
+			invoked = ir.Call{Function: function, Arguments: candidate.Arguments, Spread: candidate.Spread, Returns: candidate.Returns}
+			direct = true
+		}
+	}
 	if !direct || len(invoked.Spread) > 0 {
 		return nil, l.notYet(call.AsNode(), "an overload result boundary on an indirect or spread call")
 	}
@@ -230,7 +244,8 @@ func (l *lowering) overloadSpecialization(call *ast.CallExpression, value ir.Exp
 			return nil, &Refused{Where: l.program.Where(call.AsNode()), What: fmt.Sprintf("overload %d of %s parameter %d cannot be served by implementation parameter %s", ordinal, implementation.Name().Text(), position+1, l.checker.TypeToString(takes)), Fix: "call with an argument contract the implementation accepts, without mutable widening or bivariance"}
 		}
 	}
-	if !l.overloadCheckableResult(implementation, produced, promised) && !l.censusRelated(produced, promised) && !l.overloadStructuralProof(implementation, overload) {
+	field := l.overloadFieldHatch(call.AsNode(), produced, promised)
+	if field == "" && !l.overloadCheckableResult(implementation, produced, promised) && !l.censusRelated(produced, promised) && !l.overloadStructuralProof(implementation, overload) {
 		return nil, &Refused{Where: l.program.Where(call.AsNode()), What: fmt.Sprintf("overload %d of %s result %s cannot be served by implementation result %s", ordinal, implementation.Name().Text(), l.checker.TypeToString(promised), l.checker.TypeToString(produced)), Fix: "return a proven member, or a fresh scalar record with a reifiable result contract"}
 	}
 	of, known := l.representation(promised)
@@ -239,6 +254,12 @@ func (l *lowering) overloadSpecialization(call *ast.CallExpression, value ir.Exp
 	}
 	key := fmt.Sprintf("overload-result:%d:%d:%s", invoked.Function, ordinal, l.genericTypeKey(promised))
 	key += ":" + l.genericTypeKey(produced)
+	if closure != nil {
+		key += ":closure"
+	}
+	if field != "" {
+		key += ":" + l.program.Where(call.AsNode())
+	}
 	for _, parameter := range resolved.Parameters() {
 		key += ":" + l.genericTypeKey(l.concrete(l.checker.GetTypeOfSymbol(parameter)))
 	}
@@ -246,8 +267,11 @@ func (l *lowering) overloadSpecialization(call *ast.CallExpression, value ir.Exp
 		key += fmt.Sprintf(":%d", argument.Type())
 	}
 	if existing, known := l.genericInstances[key]; known {
-		for i, parameter := range l.result.Functions[existing].Parameters {
+		for i, parameter := range l.result.Functions[existing].Parameters[:len(invoked.Arguments)] {
 			invoked.Arguments[i] = fit(invoked.Arguments[i], l.result.Locals[parameter].Type)
+		}
+		if closure != nil {
+			invoked.Arguments = append(invoked.Arguments, closure.Closure)
 		}
 		return ir.Call{Function: existing, Arguments: invoked.Arguments, Returns: of}, nil
 	}
@@ -294,13 +318,35 @@ func (l *lowering) overloadSpecialization(call *ast.CallExpression, value ir.Exp
 			checked.Arguments[position] = fit(argument, held)
 		}
 	}
-	body = append(body, ir.Declare{Local: result, Value: checked})
+	var implementationCall ir.Expression = checked
+	if closure != nil {
+		carrier := local("callee", ir.Closure)
+		l.result.Functions[wrapper].Parameters = append(l.result.Functions[wrapper].Parameters, carrier)
+		invoked.Arguments = append(invoked.Arguments, closure.Closure)
+		implementationCall = ir.CallClosure{Closure: ir.Read{Local: carrier, Of: ir.Closure}, Direct: closure.Direct, Arguments: checked.Arguments, Returns: checked.Returns, FunctionType: closure.FunctionType}
+	}
+	body = append(body, ir.Declare{Local: result, Value: implementationCall})
 	if !l.censusProveOverloadResult(implementation, overload) && !l.censusRelated(produced, promised) {
-		setup, test, err := l.overloadMembership(overload, read, produced, promised, local)
+		var setup []ir.Statement
+		var test ir.Expression
+		var err error
+		if field != "" {
+			property := l.checker.GetPropertyOfType(promised, field)
+			stored := local("checked_"+field, ir.Union)
+			setup = append(setup, ir.Declare{Local: stored, Value: ir.DynamicProperty{Object: fit(read, ir.Union), Name: field}})
+			extra, matches, failure := l.predicateMembership(call.AsNode(), ir.Read{Local: stored, Of: ir.Union}, l.checker.GetUnknownType(), l.checker.GetTypeOfSymbol(property), local, 0)
+			setup, test, err = append(setup, extra...), matches, failure
+		} else {
+			setup, test, err = l.overloadMembership(overload, read, produced, promised, local)
+		}
 		if err != nil {
 			return nil, err
 		}
 		message := fmt.Sprintf("overload %d of %s result %s cannot be served by implementation result %s", ordinal, implementation.Name().Text(), l.checker.TypeToString(promised), l.checker.TypeToString(produced))
+		if field != "" {
+			message = l.overloadFieldMessage(call, implementation, ordinal, field, produced, promised)
+			l.recordOverloadFieldCheck(call, implementation, ordinal, field, message)
+		}
 		body = append(body, setup...)
 		body = append(body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: test}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
 	}
