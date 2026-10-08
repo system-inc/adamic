@@ -1,0 +1,3 @@
+declare namespace NodeJS { interface Process { exit(code?: number): never; } }
+declare var process: NodeJS.Process;
+console.log("done"); process.exit(0);

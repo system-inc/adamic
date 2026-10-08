@@ -17,7 +17,7 @@ const roots = [
     'ClassStaticBlockDeclaration',
 ];
 const consoleMethods = ['log', 'info', 'debug', 'warn', 'error', 'trace', 'table', 'dir', 'dirxml'];
-export function loadRules(program: number, path: string): Rules {
+export function loadRules(program: number, path: string, origin: Rules | undefined = undefined): Rules {
     const source = readTextFile(path);
     if(source.kind === 'Error') {
         panic(source.message);
@@ -28,6 +28,14 @@ export function loadRules(program: number, path: string): Rules {
     const unary = new UnaryMinus(program, path, parser, scanner, offsets);
     const rules = new Rules(program, path, parser, scanner, offsets, unary);
     const root = parser.file();
+    if(origin !== undefined && origin.inspectLocation !== undefined) {
+        const inspect = origin.inspectLocation;
+        rules.inspectLocation = inspect;
+        rules.inspect = (index, question) => {
+            const node = parser.node(index);
+            return inspect(path, offsets[node.pos] ?? panic('foreign start outside source'), offsets[node.end] ?? panic('foreign end outside source'), node.kind, question);
+        };
+    }
     for(let at = 0; at < parser.nodes.length; at++) {
         rules.parents.push(-1);
     }
@@ -231,7 +239,7 @@ export class OutputIdentity {
         let rules = this.rules;
         if(callee.file !== rules.path) {
             if(!this.files.has(callee.file)) {
-                this.files.set(callee.file, loadRules(rules.program, callee.file));
+                this.files.set(callee.file, loadRules(rules.program, callee.file, rules));
             }
             rules = this.files.get(callee.file) ?? panic('missing foreign body');
         }

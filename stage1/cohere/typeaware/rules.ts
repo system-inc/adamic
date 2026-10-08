@@ -63,6 +63,8 @@ export function unsafeAssignment(
 }
 
 export class Rules {
+    inspectLocation: ((path: string, start: number, end: number, kind: string, question: string) => string) | undefined = undefined;
+    inspect: ((index: number, question: string) => string) | undefined = undefined;
     readonly program: number;
     readonly path: string;
     readonly parser: Parser;
@@ -99,6 +101,7 @@ export class Rules {
         return this.scanner.text.slice(this.start(node), node.end);
     }
     ask(index: number, question: string): string {
+        if(this.inspect !== undefined) { return this.inspect(index, question); }
         const node = this.parser.node(index);
         this.queries++;
         return tsgoInspect(this.program, this.path, this.byte(node.pos), this.byte(node.end), node.kind, question);

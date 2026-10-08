@@ -1,0 +1,32 @@
+import { Frames, header } from '../../../typeaware/frames.ts';
+import type { Rules } from '../../../typeaware/rules.ts';
+export class DeclarationOrigins {
+    readonly directory: string;
+    readonly files: string[] = [];
+    readonly libraries: boolean[] = [];
+    readonly modules: string[] = [];
+    constructor(rules: Rules, index: number, type: number) {
+        const frames = new Frames(rules.ask(index, `type-declaration-origins\n${type}`));
+        header(frames, 'type-declaration-origins');
+        this.directory = frames.field();
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            this.files.push(frames.field()); this.libraries.push(frames.yes()); this.modules.push(frames.field());
+        }
+        frames.end();
+    }
+    absolute(path: string): string {
+        const pieces: string[] = [];
+        const rooted = path.startsWith('/') ? path : `${this.directory}/${path}`;
+        for(const piece of rooted.split('/')) {
+            if(piece === '..') { pieces.pop(); }
+            else if(piece !== '' && piece !== '.') { pieces.push(piece); }
+        }
+        return '/' + pieces.join('/');
+    }
+    file(path: string): boolean {
+        return path === '' ? this.files.some((file) => file.startsWith(this.directory)) : this.files.includes(this.absolute(path));
+    }
+    library(): boolean { return this.files.length === 0 || this.libraries.some((library) => library); }
+    package(name: string): boolean { return this.modules.includes(name); }
+}

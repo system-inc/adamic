@@ -1,0 +1,52 @@
+import { otherFile } from './other_file.a';
+// Compatibility for the existing rule algorithms, using the area's one checker.
+import { panic } from 'adamic';
+import { FileQuestion } from '../../checker.a';
+import type { RuleContext } from '../../context.ts';
+import { Suggestion, SuggestionEdit } from '../../suggestions.a';
+import { Context, Node } from '../../../typeaware/wave_05_core/context.a';
+import { Rules } from '../../../typeaware/rules.ts';
+import { UnaryMinus } from '../../../typeaware/unary_minus.ts';
+import type { Diagnostic } from '../../../typeaware/diagnostic.ts';
+export function core(context: RuleContext): Context {
+    const checker = context.checker ?? panic('typed wave 05 rule without checker');
+    const nodes: Node[] = [];
+    for(let index = 0; index < context.parser.nodes.length; index++) {
+        nodes.push(new Node(index, context.parser.node(index), context.start(index)));
+    }
+    return new Context(context.scanner, checker.program, checker.path, context.source, nodes, context.parents, checker.offsets, (index, question) => checker.ask(index, question).value ?? panic('shared checker refused wave 05 question'));
+}
+export function publish(context: RuleContext, diagnostics: readonly Diagnostic[]): void {
+    const offsets = context.checker?.offsets ?? panic('typed wave 05 findings without checker');
+    for(const diagnostic of diagnostics) {
+        const edits: SuggestionEdit[] = [];
+        if(diagnostic.fixStart >= 0) {
+            edits.push(new SuggestionEdit(offsets.indexOf(diagnostic.fixStart), offsets.indexOf(diagnostic.fixEnd), diagnostic.replacement));
+        }
+        for(const edit of diagnostic.repairs) {
+            edits.push(new SuggestionEdit(offsets.indexOf(edit.start), offsets.indexOf(edit.end), edit.text));
+        }
+        const suggestions: Suggestion[] = [];
+        for(const suggestion of diagnostic.suggestions) {
+            const changes: SuggestionEdit[] = [];
+            for(const edit of suggestion.repairs) {
+                changes.push(new SuggestionEdit(offsets.indexOf(edit.start), offsets.indexOf(edit.end), edit.text));
+            }
+            suggestions.push(new Suggestion(suggestion.id, suggestion.message, changes));
+        }
+        context.reportRange(offsets.indexOf(diagnostic.start), offsets.indexOf(diagnostic.end), diagnostic.rule, diagnostic.id, diagnostic.message, edits, suggestions);
+    }
+}
+
+export function legacy(context: RuleContext): Rules {
+    const checker = context.checker ?? panic('typed wave 05 rule without checker');
+    const unary = new UnaryMinus(checker.program, checker.path, context.parser, context.scanner, checker.offsets);
+    const rules = new Rules(checker.program, checker.path, context.parser, context.scanner, checker.offsets, unary);
+    rules.inspectLocation = (path, start, end, kind, question) => otherFile(context, path, start, end, kind, question);
+    rules.inspect = (index, question) => {
+        const answer = question === 'runtime-modules' ? checker.askFile(new FileQuestion('ReadsOtherFiles', question)) : checker.ask(index, question);
+        return answer.value ?? panic('shared checker refused wave 05 question');
+    };
+    for(const parent of context.parents) { rules.parents.push(parent); }
+    return rules;
+}

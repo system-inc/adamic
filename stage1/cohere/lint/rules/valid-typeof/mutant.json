@@ -1,0 +1,6 @@
+{
+  "name": "wave05 valid-typeof verdict inversion",
+  "file": "algorithm.a",
+  "from": "!results.includes(operand.text)",
+  "to": "results.includes(operand.text)"
+}

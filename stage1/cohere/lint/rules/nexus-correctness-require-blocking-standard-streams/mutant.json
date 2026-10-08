@@ -1,0 +1,6 @@
+{
+  "name": "wave05 nexus-correctness-require-blocking-standard-streams verdict inversion",
+  "file": "algorithm.a",
+  "from": "state.length > 0 && !result.exits.includes(block.index)",
+  "to": "state.length === 0 && !result.exits.includes(block.index)"
+}

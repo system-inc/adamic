@@ -1,0 +1,232 @@
+{
+  "gate_counts": {
+    "all_pass": 913,
+    "top_pass": 28,
+    "all_skip": 1,
+    "top_skip": 1,
+    "all_fail": 10,
+    "top_fail": 7
+  },
+  "failures": [
+    "TestJsxLintReleaseAndThroughput",
+    "TestJsxLintTrees",
+    "TestRulesAgree",
+    "TestNodeTableIsLinkOnly",
+    "TestShardsAgree",
+    "TestProfileSnapshotsAgree",
+    "TestWave05OriginalProgramsAgree/nexus-correctness-require-blocking-standard-streams/41",
+    "TestWave05OriginalProgramsAgree/@typescript-eslint-no-unnecessary-type-parameters/187",
+    "TestWave05OriginalProgramsAgree/nexus-correctness-require-blocking-standard-streams/49",
+    "TestWave05OriginalProgramsAgree"
+  ],
+  "skips": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "registry_mutants": [
+    "TestMutants/wave05_nexus-correctness-no-process-exit-after-output_verdict_inversion",
+    "TestMutants/self-comparison-equality-reversed",
+    "TestMutants/debugger_fix_suppressed",
+    "TestMutants/wave05_no-useless-assignment_verdict_inversion",
+    "TestMutants/no-useless-catch_finally_repair_range_reversed",
+    "TestMutants/and-left-undefined-ignored",
+    "TestMutants/finally_continue_incorrectly_absorbed_by_switch",
+    "TestMutants/boolean_inverse_changed",
+    "TestMutants/empty_placeholder_reported",
+    "TestMutants/concat_substituted_template_ignored",
+    "TestMutants/comma_chain_reports_inner",
+    "TestMutants/ordering-relations-ignored",
+    "TestMutants/directive_prefix_ignored",
+    "TestMutants/wave05_valid-typeof_verdict_inversion",
+    "TestMutants/constructor-property-name-ignored",
+    "TestMutants/wave05_symbol-description_verdict_inversion",
+    "TestMutants/destructuring_hole_reported",
+    "TestMutants/wave05_require-await_verdict_inversion",
+    "TestMutants/prefer-destructuring-object-fix",
+    "TestMutants/comment_self_directive_exemption_removed",
+    "TestMutants/interface_accepts_type_suffix",
+    "TestMutants/bom_removes_two_marks",
+    "TestMutants/nested_generator_owns_outer_yield",
+    "TestMutants/JSDoc_replacement_text_corrupted",
+    "TestMutants/shouting_fourth_token_omitted",
+    "TestMutants/with_statement_underlined_whole",
+    "TestMutants/nexus_long_line_comment_configured_threshold_ignored",
+    "TestMutants/nexus-for-in-message",
+    "TestMutants/enum_reported_at_its_declaration_rather_than_its_name",
+    "TestMutants/ambiguous-identifier-span",
+    "TestMutants/nexus-stuttering-name-equality",
+    "TestMutants/nexus-abbreviated-identifier_whole-word_finding_suppressed",
+    "TestMutants/callback_at_the_limit_is_reported",
+    "TestMutants/one_excess_class_is_silently_allowed",
+    "TestMutants/pagination_bad_name_accepted",
+    "TestMutants/declared_BaseError_constructor_ignored",
+    "TestMutants/multiline-arrow-single-line-exemption-removed",
+    "TestMutants/console_receiver_widened",
+    "TestMutants/global_container_name_judgement_reversed",
+    "TestMutants/wave05_typescript-restrict-template-expressions_verdict_inversion",
+    "TestMutants/enum_bitwise_option_ignored",
+    "TestMutants/wave05_typescript-no-unnecessary-type-parameters_verdict_inversion",
+    "TestMutants/max-depth-keyword-span",
+    "TestMutants/boolean_type_verdict_inverted",
+    "TestMutants/method_listener_lost",
+    "TestMutants/init_declarations_always_span_includes_annotation",
+    "TestMutants/predicate_finding_widened_to_its_owner",
+    "TestMutants/adjacent_overload_separation_ignored",
+    "TestMutants/react-no-redundant-should-component-update_mutant_from_batch_8",
+    "TestMutants/wrapper_Number_ignored",
+    "TestMutants/react-no-is-mounted_mutant_from_batch_8",
+    "TestMutants/react-no-find-dom-node_mutant_from_batch_8",
+    "TestMutants/react-forward-ref-uses-ref_mutant_from_batch_8",
+    "TestMutants/react-jsx-no-comment-textnodes_mutant_from_batch_8",
+    "TestMutants/prefer-template_mutant_from_batch_8",
+    "TestMutants/parenthesized_alias_lost",
+    "TestMutants/no-useless-constructor_mutant_from_batch_8",
+    "TestMutants/no-unused-private-class-members_mutant_from_batch_8",
+    "TestMutants/no-unexpected-multiline_mutant_from_batch_8",
+    "TestMutants/no-octal-escape_mutant_from_batch_8",
+    "TestMutants/duplicate_case_suppressed",
+    "TestMutants/var_declaration_suppressed",
+    "TestMutants/empty_function_body_reported",
+    "TestMutants/no-script-url-case-fold",
+    "TestMutants/return_parentheses_option_reversed",
+    "TestMutants/for_update_option_ignored",
+    "TestMutants/condition_polarity_reversed",
+    "TestMutants/suggestion_applied_as_fix",
+    "TestMutants/no-multi-assign-option-reversed",
+    "TestMutants/label_option_widened",
+    "TestMutants/no-iterator-static-key",
+    "TestMutants/miss-postfix-writes",
+    "TestMutants/no-empty-pattern_reports_real_bindings",
+    "TestMutants/proto_accessor_suppressed",
+    "TestMutants/parentheses_around_a_discarded_construction_not_seen_through",
+    "TestMutants/empty_character_class_silenced",
+    "TestMutants/regex_fix_eats_extra_byte",
+    "TestMutants/int32_hint_option_ignored",
+    "TestMutants/comment_exemption_removed",
+    "TestMutants/no-caller-property",
+    "TestMutants/wave05_nexus-correctness-require-blocking-standard-streams_verdict_inversion",
+    "TestMutants/wave05_nexus-correctness-no-uncleared-race-timeout_verdict_inversion",
+    "TestMutants/continue_finding_stops_before_its_semicolon",
+    "TestMutants/await_crosses_function_boundary"
+  ],
+  "original_programs": {
+    "no-useless-assignment": {
+      "pass": 261
+    },
+    "@typescript-eslint-restrict-template-expressions": {
+      "pass": 100
+    },
+    "nexus-correctness-no-uncleared-race-timeout": {
+      "pass": 21
+    },
+    "@typescript-eslint-no-unnecessary-type-parameters": {
+      "pass": 224,
+      "fail": 1
+    },
+    "require-await": {
+      "pass": 15
+    },
+    "valid-typeof": {
+      "pass": 36
+    },
+    "nexus-correctness-require-blocking-standard-streams": {
+      "pass": 50,
+      "fail": 2
+    },
+    "nexus-correctness-no-process-exit-after-output": {
+      "pass": 56
+    },
+    "symbol-description": {
+      "pass": 34
+    }
+  },
+  "runtime_median_ms": {
+    "no-useless-assignment": {
+      "Go": 20.654917,
+      "native": 37.517119,
+      "Node": 317.82790300000005,
+      "emitted JavaScript": 75.438924
+    },
+    "@typescript-eslint-restrict-template-expressions": {
+      "Go": 19.849407499999998,
+      "native": 36.634147,
+      "Node": 311.85947000000004,
+      "emitted JavaScript": 71.91078449999999
+    },
+    "nexus-correctness-no-uncleared-race-timeout": {
+      "Go": 20.256858,
+      "native": 37.38294,
+      "Node": 308.865694,
+      "emitted JavaScript": 75.257451
+    },
+    "@typescript-eslint-no-unnecessary-type-parameters": {
+      "Go": 20.227176,
+      "native": 35.9915135,
+      "Node": 315.4888485,
+      "emitted JavaScript": 72.76296
+    },
+    "require-await": {
+      "Go": 22.632194,
+      "native": 45.085155,
+      "Node": 329.839973,
+      "emitted JavaScript": 77.630363
+    },
+    "valid-typeof": {
+      "Go": 20.0708405,
+      "native": 36.2710975,
+      "Node": 323.66191249999997,
+      "emitted JavaScript": 73.3722635
+    },
+    "nexus-correctness-require-blocking-standard-streams": {
+      "Go": 21.730919,
+      "native": 39.965591999999994,
+      "Node": 324.54368300000004,
+      "emitted JavaScript": 76.1502345
+    },
+    "nexus-correctness-no-process-exit-after-output": {
+      "Go": 58.889797,
+      "native": 80.6476945,
+      "Node": 321.2864015,
+      "emitted JavaScript": 81.050941
+    },
+    "symbol-description": {
+      "Go": 19.041055500000002,
+      "native": 34.53142100000001,
+      "Node": 306.36861550000003,
+      "emitted JavaScript": 71.50286950000002
+    }
+  },
+  "wall_seconds": 2410.8558699140003,
+  "nproc": 5,
+  "load_1m": {
+    "min": 0.05,
+    "median": 1.7149999999999999,
+    "max": 5.7,
+    "final": 3.35
+  },
+  "source_only": {
+    "adjacent-overload-signatures": 107,
+    "require-await": 88,
+    "symbol-description": 30,
+    "valid-typeof": 51
+  },
+  "source_only_metrics": {
+    "exit": 0,
+    "wall": 207.3334141129999,
+    "nproc": 5,
+    "load": [
+      5.71240234375,
+      3.8935546875,
+      3.064453125
+    ]
+  },
+  "bridge_metrics": {
+    "exit": 0,
+    "wall": 111.09629300699999
+  },
+  "native_cache_move": {
+    "pause_seconds": 11.047392118999596,
+    "processes": 4,
+    "source": "/home/agent/.cache/adamic",
+    "destination": "/tmp/wave05-native-cache"
+  }
+}

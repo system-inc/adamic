@@ -1,0 +1,20 @@
+{
+  "name": "nexus/correctness-no-uncleared-race-timeout",
+  "typed": true,
+  "programReads": [
+    "ReadsCompilerOptions",
+    "ReadsDefaultLibrary"
+  ],
+  "node": true,
+  "kinds": [
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "finish": "finish",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave05NoUnclearedRaceTimeout",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "TestCorrectnessNoUnclearedRaceTimeout"
+}

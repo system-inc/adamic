@@ -1,0 +1,22 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { core, publish } from './compatibility.a';
+import type { Context } from '../../../typeaware/wave_05_core/context.a';
+import { visit } from './algorithm.a';
+export class Rule {
+    readonly context: RuleContext;
+    view: Context | undefined = undefined;
+    constructor(context: RuleContext) { this.context = context; }
+    prepare(root: number): void {
+        this.view = core(this.context);
+        this.view.requireStringLiterals = this.context.settings.read('requirestringliterals', 'false') === 'true';
+    }
+    visit(node: ParseNode, index: number): void {
+        const view = this.view;
+        if(view === undefined) { return; }
+        const start = view.findings.length;
+        visit(view, view.node(index));
+        publish(this.context, view.findings.slice(start));
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

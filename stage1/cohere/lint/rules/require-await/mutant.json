@@ -1,0 +1,6 @@
+{
+  "name": "wave05 require-await verdict inversion",
+  "file": "algorithm.a",
+  "from": "context.findings.push(result);",
+  "to": "if(false) { context.findings.push(result); }"
+}

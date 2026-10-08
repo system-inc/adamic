@@ -1,0 +1,159 @@
+import { DeclarationOrigins } from './type_declaration_origins.a';
+import { Settings } from '../../settings.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+// Production default options. The checker returns types and declaration origins.
+import type { Rules } from '../../../typeaware/rules.ts';
+import type { Types } from '../../../typeaware/types.ts';
+import type { TypeFact } from '../../../typeaware/type_fact.ts';
+import { types } from '../../../typeaware/facts.ts';
+import { Frames, header } from '../../../typeaware/frames.ts';
+import { unionFlag, intersectionFlag, stringLike, numberLike, bigintLike, booleanLike, nullish } from '../../../typeaware/flags.ts';
+
+class TemplateSymbol {
+    readonly present: boolean;
+    readonly name: string;
+    readonly declarations: number;
+    readonly library: boolean;
+    constructor(present: boolean, name: string, declarations: number, library: boolean) {
+        this.present = present;
+        this.name = name;
+        this.declarations = declarations;
+        this.library = library;
+    }
+}
+// Pinned typescript-go SyntaxKind values for the shared kind-indexed driver.
+export const listenerKinds: readonly number[] = [229];
+export class RestrictTemplateExpressions {
+    readonly rules: Rules;
+    readonly settings: Settings;
+    constructor(rules: Rules, settings: Settings) {
+        this.rules = rules;
+        this.settings = settings;
+    }
+    symbol(frames: Frames): TemplateSymbol {
+        const present = frames.yes();
+        if(!present) {
+            return new TemplateSymbol(false, '', 0, false);
+        }
+        frames.natural();
+        frames.natural();
+        const name = frames.field();
+        const count = frames.natural();
+        let library = false;
+        for(let at = 0; at < count; at++) {
+            frames.field();
+            frames.field();
+            frames.natural();
+            frames.natural();
+            frames.yes();
+            library = frames.yes() || library;
+            frames.field();
+            frames.field();
+            frames.natural();
+            frames.natural();
+            const tags = frames.natural();
+            for(let tag = 0; tag < tags; tag++) {
+                frames.field();
+                frames.field();
+                frames.natural();
+                frames.natural();
+                frames.field();
+            }
+            const parameters = frames.natural();
+            for(let parameter = 0; parameter < parameters; parameter++) {
+                frames.field();
+            }
+        }
+        return new TemplateSymbol(true, name, count, library);
+    }
+    listed(index: number, subject: TypeFact, seen: number[]): boolean {
+        if(seen.includes(subject.id)) {
+            return false;
+        }
+        seen.push(subject.id);
+        const frames = new Frames(this.rules.ask(index, `type-symbol-details\n${subject.id}`));
+        header(frames, 'type-symbol-details');
+        const own = this.symbol(frames);
+        const alias = this.symbol(frames);
+        frames.end();
+        const name = alias.present ? alias.name : own.present ? own.name : (subject.flags & 393983) !== 0 ? subject.name : '';
+        const declarations = own.present ? own : alias;
+        if(
+            !subject.error &&
+            this.listedName(name, new DeclarationOrigins(this.rules, index, subject.id))
+        ) {
+            return true;
+        }
+        const bases = types(this.rules.ask(index, `base-shapes\n${subject.id}`), 'base-shapes');
+        for(const id of bases.roots) {
+            if(this.listed(index, bases.type(id), seen)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    listedName(name: string, origins: DeclarationOrigins): boolean {
+        const entries = this.settings.list('allow', this.settings.text.includes('"AllowInline":') ? [] : ['{"from":"lib","name":["Error","URL","URLSearchParams"]}']);
+        // Captured Go options distinguish wire specifiers and bare names.
+        if(this.settings.text.includes('"AllowInline":') && this.settings.list('allowinline', []).includes(name)) { return true; }
+        for(const text of entries) {
+            if(!text.trimStart().startsWith('{')) { if(text === name) { return true; } continue; }
+            const specifier = new Settings(); specifier.load(text);
+            if(!specifier.list('name', []).includes(name)) { continue; }
+            const origin = specifier.read('from', 'file');
+            const from = origin === '0' ? 'file' : origin === '1' ? 'lib' : origin === '2' ? 'package' : origin;
+            if(from === 'lib' && origins.library()) { return true; }
+            if(from === 'file' && origins.file(specifier.read('path', ''))) { return true; }
+            if(from === 'package' && origins.package(specifier.read('package', ''))) { return true; }
+        }
+        return false;
+    }
+    enabled(name: string, fallback: boolean): boolean { return this.settings.read(name, fallback ? 'true' : 'false') === 'true'; }
+    allowed(index: number, facts: Types, subject: TypeFact): boolean {
+        if((subject.flags & unionFlag) !== 0) {
+            return subject.parts.every((id) => this.allowed(index, facts, facts.type(id)));
+        }
+        if((subject.flags & intersectionFlag) !== 0) {
+            return subject.parts.some((id) => this.allowed(index, facts, facts.type(id)));
+        }
+        if((subject.flags & stringLike) !== 0) {
+            return true;
+        }
+        if(this.listed(index, subject, [])) {
+            return true;
+        }
+        if((subject.flags & 1) !== 0) { return this.enabled('allowany', true); }
+        if((subject.flags & booleanLike) !== 0) { return this.enabled('allowboolean', true); }
+        if((subject.flags & nullish) !== 0) { return this.enabled('allownullish', true); }
+        if((subject.flags & (numberLike | bigintLike)) !== 0) { return this.enabled('allownumber', true); }
+        if((subject.flags & 262144) !== 0) { return this.enabled('allownever', false); }
+        if(this.rules.name(subject, index) === 'RegExp') { return this.enabled('allowregexp', true); }
+        if(this.enabled('allowarray', false) && (subject.array || subject.tuple >= 0)) {
+            const projection = new Frames(this.rules.ask(index, `type-projection\n${subject.id}\nindex`));
+            header(projection, 'type-projection');
+            const elements = projection.ids(); projection.end();
+            const element = elements[0] ?? 0;
+            if(element === 0) { return true; }
+            const graph = types(this.rules.ask(index, `reference-shape\n${element}`), 'reference-shape');
+            return this.allowed(index, graph, graph.root());
+        }
+        return false;
+    }
+    check(index: number, node: ParseNode): void {        const parent = this.rules.parents[index] ?? -1;
+        if(parent >= 0 && this.rules.parser.node(parent).kind === 'TaggedTemplateExpression') {
+            return;
+        }
+        for(const span of node.children.slice(1)) {
+            const expression = this.rules.parser.node(span).children[0] ?? -1;
+            const facts = types(this.rules.ask(expression, 'type'), 'type');
+            if(!this.allowed(expression, facts, facts.root())) {
+                this.rules.add(
+                    'restrict-template-expressions',
+                    'invalidType',
+                    `Invalid type "${this.rules.name(facts.root(), expression)}" of template literal expression.`,
+                    expression,
+                );
+            }
+        }
+    }
+}

@@ -2,6 +2,7 @@ package checker
 
 import (
 	"context"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -28,7 +29,7 @@ func TestUsageShapeFactsAndRefusals(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	sf := p.Compiler.GetSourceFile(file)
+	sf := p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file))
 	owner := sf.Statements.Nodes[0]
 	wire, err := p.Inspect(file, uint64(owner.Pos()), uint64(owner.End()), "FunctionDeclaration", "usage-shape")
 	if err != nil {

@@ -1,0 +1,27 @@
+{
+  "name": "@typescript-eslint/no-unnecessary-type-parameters",
+  "typed": true,
+  "programReads": [],
+  "node": true,
+  "kinds": [
+    "ArrowFunction",
+    "FunctionDeclaration",
+    "FunctionExpression",
+    "CallSignature",
+    "ConstructSignature",
+    "ConstructorType",
+    "FunctionType",
+    "MethodSignature",
+    "MethodDeclaration",
+    "ClassDeclaration",
+    "ClassExpression"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "finish": "finish",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave05NoUnnecessaryTypeParameters",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoUnnecessaryTypeParameters"
+}

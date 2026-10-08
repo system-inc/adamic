@@ -1,0 +1,19 @@
+{
+  "name": "nexus/correctness-no-process-exit-after-output",
+  "typed": true,
+  "programReads": [
+    "ReadsOtherFiles"
+  ],
+  "node": true,
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "finish": "finish",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave05NoProcessExitAfterOutput",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "TestCorrectnessNoProcessExitAfterOutput"
+}

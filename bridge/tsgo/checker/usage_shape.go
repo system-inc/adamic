@@ -118,7 +118,7 @@ func (g *usageGraph) add(t *checker.Type) int {
 			if d.Kind == ast.KindTypeParameter {
 				r.declarationStart = uint64(d.Pos())
 				r.declarationEnd = uint64(d.End())
-				r.declarationFile = ast.GetSourceFileOfNode(d).FileName()
+				r.declarationFile = ast.GetSourceFileOfNode(d).FileName().AsString()
 				data := d.AsTypeParameterDeclaration()
 				if data.Constraint != nil {
 					r.constraint = g.add(g.c.GetTypeAtLocation(data.Constraint))

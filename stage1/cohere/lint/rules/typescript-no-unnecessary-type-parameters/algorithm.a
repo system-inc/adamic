@@ -1,0 +1,381 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Rules } from '../../../typeaware/rules.ts';
+import { Bindings } from '../../../typeaware/bindings.ts';
+import { UsageShape } from '../../../typeaware/usage_shape.a';
+import { Suggestion } from '../../../typeaware/suggestion.ts';
+import { unionFlag, intersectionFlag } from '../../../typeaware/flags.ts';
+
+const owners = [
+    'ArrowFunction',
+    'FunctionDeclaration',
+    'FunctionExpression',
+    'CallSignature',
+    'ConstructSignature',
+    'ConstructorType',
+    'FunctionType',
+    'MethodSignature',
+    'MethodDeclaration',
+    'ClassDeclaration',
+    'ClassExpression',
+];
+
+// Pinned typescript-go SyntaxKind values for the shared kind-indexed driver.
+export const listenerKinds: readonly number[] = [220, 263, 219, 180, 181, 186, 185, 174, 175, 264, 232];
+export class NoUnnecessaryTypeParameters {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    readonly counts = new Map<number, number>();
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.bindings = new Bindings(rules);
+    }
+    typePosition(index: number): boolean {
+        const parent = this.bindings.parent(index);
+        if(parent < 0) {
+            return false;
+        }
+        const node = this.rules.parser.node(parent);
+        return (
+            ['TypeReference', 'QualifiedName', 'ExpressionWithTypeArguments'].includes(node.kind) &&
+            node.children[0] === index
+        );
+    }
+    body(index: number): number {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'ArrowFunction') {
+            return node.children[node.children.length - 1] ?? -1;
+        }
+        return node.children.find((child) => this.rules.parser.node(child).kind === 'Block') ?? -1;
+    }
+    annotation(index: number): number {
+        const node = this.rules.parser.node(index);
+        const name = this.bindings.shape.name(index);
+        const body = this.body(index);
+        for(const child of node.children) {
+            const kind = this.rules.parser.node(child).kind;
+            if(
+                child !== name &&
+                child !== body &&
+                !kind.endsWith('Keyword') &&
+                !['TypeParameter', 'Parameter', 'Decorator', 'QuestionToken', 'AsteriskToken'].includes(kind)
+            ) {
+                return child;
+            }
+        }
+        // Primitive return annotations are keyword nodes too.
+        for(const child of node.children) {
+            if(
+                [
+                    'AnyKeyword',
+                    'UnknownKeyword',
+                    'VoidKeyword',
+                    'NeverKeyword',
+                    'StringKeyword',
+                    'NumberKeyword',
+                    'BooleanKeyword',
+                    'ObjectKeyword',
+                    'UndefinedKeyword',
+                ].includes(this.rules.parser.node(child).kind)
+            ) {
+                return child;
+            }
+        }
+        return -1;
+    }
+    references(owner: number, parameter: number): number[] {
+        const name = this.bindings.shape.name(parameter);
+        if(name < 0) {
+            return [];
+        }
+        const result: number[] = [];
+        const span = this.rules.parser.node(owner);
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            const node = this.rules.parser.node(at);
+            if(
+                this.bindings.parent(at) >= 0 &&
+                at !== name &&
+                node.kind === 'Identifier' &&
+                node.text === this.rules.parser.node(name).text &&
+                node.pos >= span.pos &&
+                node.end <= span.end &&
+                this.bindings.declarations(at).includes(parameter)
+            ) {
+                result.push(at);
+            }
+        }
+        return result;
+    }
+    repeated(owner: number, parameter: number, refs: readonly number[]): boolean {
+        const body = this.body(owner);
+        const annotation = this.annotation(owner);
+        const cutoff =
+            body >= 0
+                ? this.rules.parser.node(body).pos
+                : annotation >= 0
+                  ? this.rules.parser.node(annotation).end
+                  : 9007199254740991;
+        const span = this.rules.parser.node(parameter);
+        let count = 0;
+        for(const ref of refs) {
+            const node = this.rules.parser.node(ref);
+            if((node.pos < span.end && node.end > span.pos) || node.pos > cutoff || !this.typePosition(ref)) {
+                continue;
+            }
+            let container = this.bindings.parent(this.bindings.parent(ref));
+            while(
+                container >= 0 &&
+                ['UnionType', 'IntersectionType'].includes(this.rules.parser.node(container).kind)
+            ) {
+                container = this.bindings.parent(container);
+            }
+            if(container >= 0) {
+                const outer = this.rules.parser.node(container);
+                const reference = this.bindings.parent(ref);
+                // Match Go's direct list membership even when a union was skipped upward.
+                if(outer.list > 0 && outer.children.slice(-outer.list).includes(reference)) {
+                    const n =
+                        outer.kind === 'TypeReference' ? this.rules.parser.node(outer.children[0] ?? -1).text : '';
+                    if(n !== 'Array' && n !== 'ReadonlyArray') {
+                        return true;
+                    }
+                }
+            }
+            count++;
+            if(count >= 2) {
+                return true;
+            }
+        }
+        return false;
+    }
+    noValue(index: number): boolean {
+        let current = index;
+        while(
+            [
+                'ParenthesizedExpression',
+                'AsExpression',
+                'TypeAssertionExpression',
+                'NonNullExpression',
+                'SatisfiesExpression',
+            ].includes(this.rules.parser.node(current).kind)
+        ) {
+            const node = this.rules.parser.node(current);
+            current = node.children[node.kind === 'TypeAssertionExpression' ? 1 : 0] ?? -1;
+        }
+        const node = this.rules.parser.node(current);
+        return (
+            node.kind === 'NullKeyword' ||
+            node.kind === 'VoidExpression' ||
+            (node.kind === 'Identifier' && node.text === 'undefined')
+        );
+    }
+    yieldsValue(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        if(owners.includes(node.kind) || ['GetAccessor', 'SetAccessor', 'Constructor'].includes(node.kind)) {
+            return false;
+        }
+        if(node.kind === 'ReturnStatement') {
+            return node.children.length > 0 && !this.noValue(node.children[0] ?? -1);
+        }
+        return node.children.some((child) => this.yieldsValue(child));
+    }
+    exempt(owner: number, refs: readonly number[], classLike: boolean): boolean {
+        const node = this.rules.parser.node(owner);
+        if(classLike) {
+            for(const member of node.children) {
+                const item = this.rules.parser.node(member);
+                if(
+                    item.kind !== 'PropertyDeclaration' ||
+                    !item.children.some((c) => this.rules.parser.node(c).kind === 'DeclareKeyword')
+                ) {
+                    continue;
+                }
+                const annotation = this.rules.annotation(member);
+                if(annotation >= 0 && refs.some((r) => this.bindings.contains(annotation, r) && this.typePosition(r))) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        if(
+            ['MethodDeclaration', 'MethodSignature'].includes(node.kind) ||
+            node.children.some((c) => this.rules.parser.node(c).kind === 'Parameter')
+        ) {
+            return false;
+        }
+        const body = this.body(owner);
+        if(
+            body >= 0 &&
+            (this.rules.parser.node(body).kind === 'Block' ? this.yieldsValue(body) : !this.noValue(body))
+        ) {
+            return false;
+        }
+        const annotation = this.annotation(owner);
+        if(annotation < 0) {
+            return false;
+        }
+        let inside = false;
+        for(const ref of refs) {
+            if(body >= 0 && this.bindings.contains(body, ref)) {
+                continue;
+            }
+            if(this.bindings.contains(annotation, ref)) {
+                inside = true;
+            }
+            else {
+                return false;
+            }
+        }
+        return inside;
+    }
+    enqueue(pending: number[], id: number, multiple: number, returned: number): void {
+        pending.push(id);
+        pending.push(multiple);
+        pending.push(returned);
+    }
+    collect(index: number, classLike: boolean): void {
+        const shape = new UsageShape(this.rules.ask(index, 'usage-shape'));
+        const visits = new Map<number, number>();
+        const constraints: number[] = [];
+        const propertyLists: number[] = [];
+        let visitedDefault = false;
+        const pending: number[] = [shape.root, 0, 0];
+        while(pending.length > 0) {
+            const returned = pending.pop() ?? 0;
+            const multiple = pending.pop() ?? 0;
+            const id = pending.pop() ?? 0;
+            if(id === 0) {
+                continue;
+            }
+            const seen = (visits.get(id) ?? 0) + 1;
+            visits.set(id, seen);
+            if(seen > 9) {
+                continue;
+            }
+            const type = shape.type(id);
+            if((type.flags & 524288) !== 0) {
+                if(type.file === this.rules.path) {
+                    const declaration = this.bindings.spans.get(`TypeParameter:${type.start}:${type.end}`) ?? -1;
+                    if(declaration >= 0) {
+                        this.counts.set(declaration, (this.counts.get(declaration) ?? 0) + (multiple === 1 ? 2 : 1));
+                    }
+                }
+                if(type.defaultType !== 0 && !visitedDefault) {
+                    visitedDefault = true;
+                    this.enqueue(pending, type.defaultType, 0, 0);
+                }
+                if(type.constraint !== 0 && !constraints.includes(type.constraint)) {
+                    constraints.push(type.constraint);
+                    this.enqueue(pending, type.constraint, 0, 0);
+                }
+                continue;
+            }
+            if(type.alias.length > 0) {
+                for(let at = type.alias.length - 1; at >= 0; at--) {
+                    this.enqueue(pending, type.alias[at] ?? 0, 1, 0);
+                }
+                continue;
+            }
+            if((type.flags & (unionFlag | intersectionFlag | 33554432 | 4194304 | 67108864 | 2097152)) !== 0) {
+                for(let at = type.parts.length - 1; at >= 0; at--) {
+                    this.enqueue(pending, type.parts[at] ?? 0, multiple, 0);
+                }
+                continue;
+            }
+            if((type.objects & 4) !== 0) {
+                const assume =
+                    classLike ||
+                    multiple === 1 ||
+                    (type.tuple
+                        ? returned === 1 && !type.readonly_
+                        : type.array
+                          ? returned === 1 && type.name === 'Array'
+                          : true);
+                for(let at = type.arguments_.length - 1; at >= 0; at--) {
+                    this.enqueue(pending, type.arguments_[at] ?? 0, assume ? 1 : 0, returned);
+                }
+                continue;
+            }
+            // Signature records have zero flags and preserve receiver/parameter order.
+            if(type.flags === 0) {
+                for(const id_ of type.returns) {
+                    this.enqueue(pending, id_, 0, 1);
+                }
+                for(let at = type.typeParameters.length - 1; at >= 0; at--) {
+                    this.enqueue(pending, type.typeParameters[at] ?? 0, 0, 0);
+                }
+                for(let at = type.parameters.length - 1; at >= 0; at--) {
+                    this.enqueue(pending, type.parameters[at] ?? 0, 0, 0);
+                }
+                continue;
+            }
+            if((type.flags & 1048576) !== 0) {
+                for(let at = type.signatures.length - 1; at >= 0; at--) {
+                    this.enqueue(pending, type.signatures[at] ?? 0, 0, 0);
+                }
+                for(let at = type.indexes.length - 1; at >= 0; at--) {
+                    this.enqueue(pending, type.indexes[at] ?? 0, 1, 0);
+                }
+                if(!propertyLists.includes(id)) {
+                    propertyLists.push(id);
+                    for(let at = type.properties.length - 1; at >= 0; at--) {
+                        this.enqueue(pending, type.properties[at] ?? 0, 0, 0);
+                    }
+                }
+            }
+        }
+    }
+    check(index: number, node: ParseNode): void {        const parameters = node.children.filter((c) => this.rules.parser.node(c).kind === 'TypeParameter');
+        if(parameters.length === 0) {
+            return;
+        }
+        const classLike = ['ClassDeclaration', 'ClassExpression'].includes(node.kind);
+        let collected = false;
+        for(const parameter of parameters) {
+            const refs = this.references(index, parameter);
+            if(this.repeated(index, parameter, refs)) {
+                continue;
+            }
+            if(!collected) {
+                this.counts.clear();
+                if(classLike) {
+                    for(const child of node.children) {
+                        if(
+                            this.rules.parser.node(child).kind === 'TypeParameter' ||
+                            [
+                                'PropertyDeclaration',
+                                'MethodDeclaration',
+                                'GetAccessor',
+                                'SetAccessor',
+                                'Constructor',
+                            ].includes(this.rules.parser.node(child).kind)
+                        ) {
+                            this.collect(child, true);
+                        }
+                    }
+                }
+                else {
+                    this.collect(index, false);
+                }
+                collected = true;
+            }
+            const count = this.counts.get(parameter) ?? 0;
+            if(count === 0 || count > 2 || this.exempt(index, refs, classLike)) {
+                continue;
+            }
+            const name = this.rules.parser.node(this.bindings.shape.name(parameter)).text;
+            const finding = this.rules.add(
+                'no-unnecessary-type-parameters',
+                'sole',
+                `Type parameter ${name} is ${count === 1 ? 'never used' : 'used only once'} in the ${classLike ? 'class' : 'function'} signature.`,
+                parameter,
+            );
+            finding.suggestions.push(
+                new Suggestion(
+                    'replaceUsagesWithConstraint',
+                    'Replace all usages of type parameter with its constraint.',
+                    [],
+                ),
+            );
+        }
+    }
+}

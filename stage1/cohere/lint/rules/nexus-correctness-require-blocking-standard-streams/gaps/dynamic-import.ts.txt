@@ -1,0 +1,12 @@
+const [cohereBinaryPath, ...filePaths] = argumentsList.slice(2);
+if(cohereBinaryPath === undefined || filePaths.length === 0) {
+    console.error('Usage: StructureLintEngineParity.ts <cohere binary> <file> [file...]');
+    process.exit(1);
+}
+const projectConfigurationModule: unknown = await import(output);
+if(projectConfigurationModule === undefined) {
+    console.error('LintConfiguration.ts exports ProjectLintEngineDifferenceReasons, and it is not a record.');
+    process.exit(1);
+}
+for(const line of filePaths) console.log(line);
+process.exit(flag ? 0 : 1);

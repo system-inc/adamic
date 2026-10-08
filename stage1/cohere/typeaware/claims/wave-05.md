@@ -159,3 +159,18 @@ Latest landing: all nine completed ports are rebased and revalidated on
 area d3a37422, including main b6b1538b. No ranked name is unclaimed;
 the three React analysis claims remain PARKED. Exact filtered-gate scope
 and outputs are in `../wave_05_core/AREA_5_REPORT.md`.
+
+
+## Shared checker merge landing
+
+Merged area c4bdc23fa through 7b908dc74, preserving both sides' checks.
+Nine unified node descriptors now use RuleContext.checker and its recording /
+replay stream, including same-program foreign-file requests. No private
+checker is created by these unified descriptors. Seven ports pass all original
+typed programs and witnesses across all four runtimes. Type parameters and
+blocking streams retain three exact parser failures. All nine mutants are
+caught. The full supplied-input lint gate remains red on retained parser / JSX
+inventory failures, plus the named TSGoError dependency skip. React claims
+remain PARKED for reference-write / HIR / capture analysis; JSX is no longer
+their blocker. See ../wave_05_core/CHECKER_LANDING_REPORT.md and its evidence.
+No additional reservation is made.

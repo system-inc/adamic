@@ -1,0 +1,285 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Rules } from '../../../typeaware/rules.ts';
+import { Bindings } from '../../../typeaware/bindings.ts';
+import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+import { SymbolAncestry } from '../../../typeaware/wave_05_next/symbol_ancestry.a';
+
+const timerMessage =
+    'This `setTimeout` arms the losing side of a `Promise.race`, and its handle is thrown away, so nothing can ever clear it. When the work wins the race, the timer stays armed for its whole duration: in Node it holds the process open (a batch that finished its last item sits until the timeout elapses), and its callback still runs, rejecting a promise nobody is waiting on. Keep the handle (`timer = setTimeout(...)`) and `clearTimeout(timer)` in a `finally` around the race.';
+// Pinned typescript-go SyntaxKind values for the shared kind-indexed driver.
+export const listenerKinds: readonly number[] = [214];
+export class NoUnclearedRaceTimeout {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    readonly cache = new Map<number, SymbolAncestry>();
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.bindings = new Bindings(rules);
+    }
+    symbol(index: number): SymbolAncestry {
+        if(!this.cache.has(index)) {
+            this.cache.set(index, new SymbolAncestry(this.rules, index, false));
+        }
+        return this.cache.get(index) ?? new SymbolAncestry(this.rules, index, false);
+    }
+    args(index: number): number[] {
+        const node = this.rules.parser.node(index);
+        return node.list > 0 ? node.children.slice(node.children.length - node.list) : [];
+    }
+    outer(index: number): number {
+        let current = index;
+        let parent = this.bindings.parent(current);
+        while(parent >= 0 && this.rules.parser.node(parent).kind === 'ParenthesizedExpression') {
+            current = parent;
+            parent = this.bindings.parent(current);
+        }
+        return current;
+    }
+    assignmentTarget(index: number): boolean {
+        const outer = this.outer(index);
+        const parent = this.bindings.parent(outer);
+        if(parent < 0) {
+            return false;
+        }
+        const node = this.rules.parser.node(parent);
+        return (
+            node.kind === 'BinaryExpression' &&
+            node.children[0] === outer &&
+            this.rules.parser.node(node.children[1] ?? -1).kind === 'EqualsToken'
+        );
+    }
+    neverRead(index: number): boolean {
+        const symbol = this.symbol(index);
+        if(!symbol.present || symbol.declarations.length !== 1) {
+            return false;
+        }
+        const declaration = symbol.declarations[0];
+        if(
+            declaration === undefined ||
+            declaration.file !== this.rules.path ||
+            declaration.kind !== 'VariableDeclaration'
+        ) {
+            return false;
+        }
+        const declared = this.bindings.declarations(index);
+        if(declared.length !== 1) {
+            return false;
+        }
+        const name = this.bindings.shape.name(declared[0] ?? -1);
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            const node = this.rules.parser.node(at);
+            if(
+                at === name ||
+                this.bindings.parent(at) < 0 ||
+                node.kind !== 'Identifier' ||
+                node.text !== this.rules.parser.node(index).text
+            ) {
+                continue;
+            }
+            // The existing binding question resolves shorthand references to their value symbol.
+            if(this.bindings.declarations(at).includes(declared[0] ?? -1) && !this.assignmentTarget(at)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    lost(executor: number, index: number): boolean {
+        const outer = this.outer(index);
+        const parent = this.bindings.parent(outer);
+        if(parent < 0) {
+            return false;
+        }
+        const node = this.rules.parser.node(parent);
+        if(node.kind === 'ExpressionStatement' || node.kind === 'VoidExpression' || parent === executor) {
+            return true;
+        }
+        if(node.kind === 'VariableDeclaration' && this.bindings.shape.initializer(parent) === outer) {
+            const name = this.bindings.shape.name(parent);
+            return name >= 0 && this.rules.parser.node(name).kind === 'Identifier' && this.neverRead(name);
+        }
+        if(
+            node.kind === 'BinaryExpression' &&
+            node.children[2] === outer &&
+            this.rules.parser.node(node.children[1] ?? -1).kind === 'EqualsToken'
+        ) {
+            const target = this.rules.skip(node.children[0] ?? -1);
+            const owner = this.bindings.parent(this.outer(parent));
+            return (
+                target >= 0 &&
+                this.rules.parser.node(target).kind === 'Identifier' &&
+                owner >= 0 &&
+                this.rules.parser.node(owner).kind === 'ExpressionStatement' &&
+                this.neverRead(target)
+            );
+        }
+        return false;
+    }
+    globalTimer(index: number): boolean {
+        const callee = this.rules.skip(this.rules.parser.node(index).children[0] ?? -1);
+        const node = this.rules.parser.node(callee);
+        let name = callee;
+        if(node.kind === 'PropertyAccessExpression') {
+            const receiver = this.rules.skip(node.children[0] ?? -1);
+            const object = this.rules.parser.node(receiver);
+            if(object.kind !== 'Identifier' || !['globalThis', 'window'].includes(object.text)) {
+                return false;
+            }
+            name = node.children[node.children.length - 1] ?? -1;
+        }
+        else if(node.kind !== 'Identifier') {
+            return false;
+        }
+        if(
+            name < 0 ||
+            this.rules.parser.node(name).kind !== 'Identifier' ||
+            this.rules.parser.node(name).text !== 'setTimeout'
+        ) {
+            return false;
+        }
+        const symbol = this.symbol(name);
+        if(!symbol.present || symbol.declarations.length === 0) {
+            return false;
+        }
+        return symbol.declarations.every((declaration) => {
+            if(!declaration.declarationFile) {
+                return false;
+            }
+            const parent = declaration.parents[0];
+            if(parent === undefined) {
+                return false;
+            }
+            if(parent.kind === 'SourceFile') {
+                return !declaration.external;
+            }
+            if(parent.kind === 'ModuleBlock') {
+                return (
+                    declaration.parents[1]?.kind === 'ModuleDeclaration' &&
+                    declaration.parents[1]?.keyword === 'GlobalKeyword'
+                );
+            }
+            return (
+                parent.kind === 'InterfaceDeclaration' &&
+                parent.name === 'WindowOrWorkerGlobalScope' &&
+                declaration.library
+            );
+        });
+    }
+    visit(executor: number, index: number): void {
+        if(index < 0) {
+            return;
+        }
+        const node = this.rules.parser.node(index);
+        if(this.bindings.functionKind(node.kind) || ['ClassDeclaration', 'ClassExpression'].includes(node.kind)) {
+            return;
+        }
+        if(node.kind === 'CallExpression' && this.globalTimer(index) && this.lost(executor, index)) {
+            this.rules.findings.push(
+                new Diagnostic(
+                    'nexus/correctness-no-uncleared-race-timeout',
+                    'unclearedRaceTimeout',
+                    timerMessage,
+                    this.rules.byte(this.rules.start(node)),
+                    this.rules.byte(node.end),
+                    '',
+                ),
+            );
+        }
+        for(const child of node.children) {
+            this.visit(executor, child);
+        }
+    }
+    promise(index: number): number {
+        let element = this.rules.skip(index);
+        if(this.rules.parser.node(element).kind === 'Identifier') {
+            const symbol = this.symbol(element);
+            if(
+                symbol.declarations.length !== 1 ||
+                symbol.declarations[0]?.file !== this.rules.path ||
+                symbol.declarations[0]?.kind !== 'VariableDeclaration'
+            ) {
+                return -1;
+            }
+            const declaration = this.bindings.declarations(element)[0] ?? -1;
+            const parent = this.bindings.parent(declaration);
+            if(
+                parent < 0 ||
+                this.rules.parser.node(parent).kind !== 'VariableDeclarationList' ||
+                (Number.parseInt(this.rules.parser.node(parent).semantic, 10) & 2) === 0
+            ) {
+                return -1;
+            }
+            const initializer = this.bindings.shape.initializer(declaration);
+            if(initializer < 0) {
+                return -1;
+            }
+            element = this.rules.skip(initializer);
+        }
+        const node = this.rules.parser.node(element);
+        if(node.kind !== 'NewExpression') {
+            return -1;
+        }
+        const constructor = this.rules.skip(node.children[0] ?? -1);
+        const name = this.rules.parser.node(constructor);
+        if(name.kind !== 'Identifier' || name.text !== 'Promise') {
+            return -1;
+        }
+        const symbol = this.symbol(constructor);
+        return symbol.present &&
+            symbol.declarations.length > 0 &&
+            symbol.declarations.some((declaration) => declaration.library)
+            ? element
+            : -1;
+    }
+    check(index: number, node: ParseNode): void {
+        if(this.bindings.parent(index) < 0) {
+            return;
+        }
+        const callee = this.rules.skip(node.children[0] ?? -1);
+        const access = this.rules.parser.node(callee);
+        if(access.kind !== 'PropertyAccessExpression') {
+            return;
+        }
+        const name = access.children[access.children.length - 1] ?? -1;
+        if(name < 0 || this.rules.parser.node(name).text !== 'race') {
+            return;
+        }
+        const symbol = this.symbol(name);
+        if(
+            !symbol.present ||
+            symbol.declarations.length === 0 ||
+            !symbol.declarations.every(
+                (declaration) =>
+                    declaration.library &&
+                    declaration.parents[0]?.kind === 'InterfaceDeclaration' &&
+                    declaration.parents[0]?.name === 'PromiseConstructor',
+            )
+        ) {
+            return;
+        }
+        const argument = this.args(index)[0] ?? -1;
+        if(argument < 0) {
+            return;
+        }
+        const array = this.rules.skip(argument);
+        if(this.rules.parser.node(array).kind !== 'ArrayLiteralExpression') {
+            return;
+        }
+        for(const element of this.rules.parser.node(array).children) {
+            const promise = this.promise(element);
+            if(promise < 0) {
+                continue;
+            }
+            const argument = this.args(promise)[0] ?? -1;
+            if(argument < 0) {
+                continue;
+            }
+            const executor = this.rules.skip(argument);
+            const fn = this.rules.parser.node(executor);
+            if(!['ArrowFunction', 'FunctionExpression'].includes(fn.kind)) {
+                continue;
+            }
+            const body = fn.children[fn.children.length - 1] ?? -1;
+            this.visit(executor, body);
+        }
+    }
+}

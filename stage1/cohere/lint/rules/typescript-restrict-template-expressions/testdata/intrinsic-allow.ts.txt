@@ -1,0 +1,3 @@
+declare const allowed: any;
+const rejected = {};
+`${allowed}${rejected}`;

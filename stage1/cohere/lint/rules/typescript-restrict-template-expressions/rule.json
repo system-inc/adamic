@@ -1,0 +1,20 @@
+{
+  "name": "@typescript-eslint/restrict-template-expressions",
+  "typed": true,
+  "programReads": [
+    "ReadsCompilerOptions",
+    "ReadsDefaultLibrary"
+  ],
+  "node": true,
+  "kinds": [
+    "TemplateExpression"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "finish": "finish",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave05RestrictTemplateExpressions",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestRestrictTemplateExpressions"
+}

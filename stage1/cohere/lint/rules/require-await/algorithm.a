@@ -1,0 +1,535 @@
+import type { Context, Node } from '../../../typeaware/wave_05_core/context.a';
+import {
+    ArrayLiteralExpression,
+    ArrowFunction,
+    AsteriskToken,
+    AsyncKeyword,
+    AwaitExpression,
+    AwaitKeyword,
+    BarBarToken,
+    BinaryExpression,
+    Block,
+    BreakKeyword,
+    CallExpression,
+    ClassDeclaration,
+    ClassExpression,
+    ComputedPropertyName,
+    ConditionalExpression,
+    Constructor,
+    DeclareKeyword,
+    DefaultKeyword,
+    EqualsGreaterThanToken,
+    ExportKeyword,
+    EqualsToken,
+    ExpressionStatement,
+    ExpressionWithTypeArguments,
+    ForOfStatement,
+    FunctionDeclaration,
+    FunctionExpression,
+    GetAccessor,
+    HeritageClause,
+    Identifier,
+    MethodDeclaration,
+    NewExpression,
+    NoSubstitutionTemplateLiteral,
+    NumericLiteral,
+    ObjectLiteralExpression,
+    OfKeyword,
+    Parameter,
+    ParenthesizedExpression,
+    PrivateIdentifier,
+    PropertyAssignment,
+    PropertyDeclaration,
+    QuestionQuestionToken,
+    QuestionToken,
+    ReturnStatement,
+    SetAccessor,
+    SourceFile,
+    SpreadElement,
+    StaticKeyword,
+    StringLiteral,
+    TypeParameter,
+    VariableDeclarationList,
+    VariableStatement,
+} from '../../../typeaware/wave_05_core/kinds.a';
+import { types } from '../../../typeaware/facts.ts';
+import { Suggestion } from '../../../typeaware/suggestion.ts';
+import { Repair } from '../../../typeaware/repair.ts';
+import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+import { DeclaredCallSignature } from '../../../typeaware/wave_05_core/declared_call_signature.a';
+import { project, signatures, heritage } from '../../../typeaware/wave_05_core/type_projection.a';
+
+const emptyIDs: readonly number[] = [];
+const functions = [
+    FunctionDeclaration,
+    FunctionExpression,
+    ArrowFunction,
+    MethodDeclaration,
+    GetAccessor,
+    SetAccessor,
+    Constructor,
+];
+const boundaries = [
+    FunctionDeclaration,
+    FunctionExpression,
+    ArrowFunction,
+    MethodDeclaration,
+    GetAccessor,
+    SetAccessor,
+    Constructor,
+    ClassDeclaration,
+    ClassExpression,
+];
+const nameKinds = [
+    Identifier,
+    PrivateIdentifier,
+    StringLiteral,
+    NoSubstitutionTemplateLiteral,
+    NumericLiteral,
+    ComputedPropertyName,
+];
+function has(context: Context, node: Node, kind: number): boolean {
+    return node.children.some((i) => context.node(i).kind === kind);
+}
+function nameOf(context: Context, node: Node): Node | undefined {
+    const index = node.children.find((i) => nameKinds.includes(context.node(i).kind));
+    return index === undefined ? undefined : context.node(index);
+}
+function bodyOf(context: Context, node: Node): Node | undefined {
+    const index = node.children.find((i) => context.node(i).kind === Block);
+    if(index !== undefined) {
+        return context.node(index);
+    }
+    return node.kind === ArrowFunction ? context.node(node.children[node.children.length - 1] ?? -1) : undefined;
+}
+function awaiting(context: Context, node: Node, root: boolean): boolean {
+    if(!root && boundaries.includes(node.kind)) {
+        return false;
+    }
+    if(
+        node.kind === AwaitExpression ||
+        (node.kind === ForOfStatement && has(context, node, AwaitKeyword)) ||
+        (node.kind === VariableDeclarationList && node.semantic === '6')
+    ) {
+        return true;
+    }
+    return node.children.some((i) => awaiting(context, context.node(i), false));
+}
+function expand(
+    context: Context,
+    node: Node,
+    ids: readonly number[],
+    substitutions: ReadonlyMap<number, readonly number[]>,
+): number[] {
+    const result: number[] = [];
+    for(const id of ids) {
+        if(id === 0) {
+            continue;
+        }
+        const graph = types(context.ask(node, `reference-shape\n${id}`), 'reference-shape');
+        for(const part of graph.parts(graph.root())) {
+            const standIns = substitutions.get(part);
+            if(standIns === undefined) {
+                result.push(part);
+            }
+            else {
+                for(const standIn of standIns) {
+                    const replacement = types(context.ask(node, `reference-shape\n${standIn}`), 'reference-shape');
+                    for(const replacementPart of replacement.parts(replacement.root())) {
+                        result.push(replacementPart);
+                    }
+                }
+            }
+        }
+    }
+    return result;
+}
+function thenable(context: Context, node: Node, id: number): boolean {
+    const apparent = types(context.ask(node, `apparent-shape\n${id}`), 'apparent-shape');
+    for(const part of apparent.parts(apparent.root())) {
+        const then = project(context, node, part, 'property\nthen')[0] ?? 0;
+        if(then === 0) {
+            continue;
+        }
+        for(const member of expand(context, node, [then], new Map<number, readonly number[]>())) {
+            for(const sig of signatures(context, node, member)) {
+                const first = sig.parameters[0] ?? 0;
+                if(first === 0) {
+                    continue;
+                }
+                const callback = types(context.ask(node, `apparent-shape\n${first}`), 'apparent-shape');
+                let value = callback.root().id;
+                if(sig.rest && sig.parameters.length === 1) {
+                    value = project(context, node, value, 'index')[0] ?? 0;
+                }
+                for(const branch of expand(context, node, [value], new Map<number, readonly number[]>())) {
+                    if(signatures(context, node, branch).length > 0) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+function demands(
+    context: Context,
+    node: Node,
+    ids: readonly number[],
+    substitutions: ReadonlyMap<number, readonly number[]>,
+): boolean {
+    let seen = false;
+    for(const part of expand(context, node, ids, substitutions)) {
+        for(const sig of signatures(context, node, part)) {
+            seen = true;
+            for(const result of expand(context, node, [sig.returns], substitutions)) {
+                if(!thenable(context, node, result)) {
+                    return false;
+                }
+            }
+        }
+    }
+    return seen;
+}
+class Step {
+    readonly kind: number;
+    readonly name: string;
+    readonly index: number;
+    constructor(kind: number, name = '', index = -1) {
+        this.kind = kind;
+        this.name = name;
+        this.index = index;
+    }
+}
+function genericDemand(context: Context, node: Node): boolean | undefined {
+    const steps: Step[] = [];
+    let current = node;
+    if(node.kind === MethodDeclaration) {
+        const object = context.parent(node);
+        const name = nameOf(context, node);
+        if(
+            object === undefined ||
+            object.kind !== ObjectLiteralExpression ||
+            name === undefined ||
+            name.kind === ComputedPropertyName
+        ) {
+            return undefined;
+        }
+        steps.push(new Step(0, name.text));
+        current = object;
+    }
+    while(true) {
+        let parent = context.parent(current);
+        if(parent === undefined) {
+            return undefined;
+        }
+        if(parent.kind === ParenthesizedExpression) {
+        }
+        else if(parent.kind === ConditionalExpression) {
+            if(parent.children[0] === current.index) {
+                return undefined;
+            }
+        }
+        else if(parent.kind === BinaryExpression) {
+            if(![BarBarToken, QuestionQuestionToken].includes(context.node(parent.children[1] ?? -1).kind)) {
+                return undefined;
+            }
+        }
+        else if(parent.kind === PropertyAssignment) {
+            if(parent.children[parent.children.length - 1] !== current.index) {
+                return undefined;
+            }
+            const name = nameOf(context, parent);
+            if(name === undefined || name.kind === ComputedPropertyName) {
+                return undefined;
+            }
+            steps.push(new Step(0, name.text));
+            const object = context.parent(parent);
+            if(object === undefined) {
+                return undefined;
+            }
+            parent = object;
+        }
+        else if(parent.kind === ArrayLiteralExpression) {
+            const index = parent.children.indexOf(current.index);
+            if(index < 0 || parent.children.slice(0, index).some((i) => context.node(i).kind === SpreadElement)) {
+                return undefined;
+            }
+            steps.push(new Step(1, '', index));
+        }
+        else if(parent.kind === ReturnStatement || parent.kind === ArrowFunction) {
+            let owner = parent;
+            if(parent.kind === ReturnStatement) {
+                let found = context.parent(parent);
+                while(found !== undefined && !functions.includes(found.kind)) {
+                    found = context.parent(found);
+                }
+                if(found === undefined) {
+                    return undefined;
+                }
+                owner = found;
+            }
+            const body = bodyOf(context, owner);
+            if(
+                ![FunctionExpression, ArrowFunction].includes(owner.kind) ||
+                has(context, owner, AsyncKeyword) ||
+                has(context, owner, AsteriskToken) ||
+                owner.children.some((i) => {
+                    const child = context.node(i);
+                    return (
+                        body?.index !== i &&
+                        !nameKinds.includes(child.kind) &&
+                        ![Parameter, TypeParameter, EqualsGreaterThanToken].includes(child.kind) &&
+                        !(child.kind >= BreakKeyword && child.kind <= OfKeyword)
+                    );
+                })
+            ) {
+                return undefined;
+            }
+            steps.push(new Step(2));
+            parent = owner;
+        }
+        else if([CallExpression, NewExpression].includes(parent.kind)) {
+            const args: readonly number[] =
+                parent.list > 0 ? parent.children.slice(parent.children.length - parent.list) : emptyIDs;
+            const index = args.indexOf(current.index);
+            if(
+                index < 0 ||
+                args.slice(0, index).some((i) => context.node(i).kind === SpreadElement) ||
+                parent.children.length > args.length + 1
+            ) {
+                return undefined;
+            }
+            const declared = new DeclaredCallSignature(context, parent);
+            if(!declared.present) {
+                return undefined;
+            }
+            let parameter = declared.parameters[index] ?? 0;
+            if(declared.rest && index >= declared.parameters.length - 1) {
+                parameter =
+                    project(context, node, declared.parameters[declared.parameters.length - 1] ?? 0, 'index')[0] ?? 0;
+            }
+            if(parameter === 0) {
+                return undefined;
+            }
+            const substitutions = new Map<number, readonly number[]>();
+            for(let at = 0; at < args.length; at++) {
+                const p = declared.parameters[at] ?? 0;
+                const value = declared.instantiated[at] ?? 0;
+                if(
+                    at !== index &&
+                    p !== 0 &&
+                    value !== 0 &&
+                    declared.typeParameters.includes(p) &&
+                    (!declared.rest || at < declared.parameters.length - 1)
+                ) {
+                    const values = (substitutions.get(p) ?? emptyIDs).slice();
+                    values.push(value);
+                    substitutions.set(p, values);
+                }
+            }
+            if(declared.typeParameters.includes(declared.returns) && declared.contextual !== 0) {
+                const values = (substitutions.get(declared.returns) ?? emptyIDs).slice();
+                values.push(declared.contextual);
+                substitutions.set(declared.returns, values);
+            }
+            let ids: number[] = [parameter];
+            for(let at = steps.length - 1; at >= 0; at--) {
+                const step = steps[at];
+                if(step === undefined) {
+                    continue;
+                }
+                const next: number[] = [];
+                for(const part of expand(context, node, ids, substitutions)) {
+                    if(step.kind === 0) {
+                        const props = project(context, node, part, `property\n${step.name}`);
+                        const member = props[0] ?? 0;
+                        const value = member === 0 ? (props[1] ?? 0) : member;
+                        if(value !== 0) {
+                            next.push(value);
+                        }
+                    }
+                    else if(step.kind === 1) {
+                        const graph = types(context.ask(node, `reference-shape\n${part}`), 'reference-shape');
+                        const root = graph.root();
+                        const value =
+                            root.tuple >= 0
+                                ? (root.arguments[step.index] ?? 0)
+                                : (project(context, node, part, 'index')[0] ?? 0);
+                        if(value !== 0) {
+                            next.push(value);
+                        }
+                    }
+                    else {
+                        for(const sig of signatures(context, node, part)) {
+                            next.push(sig.returns);
+                        }
+                    }
+                }
+                ids = next;
+            }
+            return demands(context, node, ids, substitutions);
+        }
+        else {
+            return undefined;
+        }
+        current = parent;
+    }
+}
+function contract(context: Context, node: Node): boolean {
+    const generic = genericDemand(context, node);
+    if(generic !== undefined) {
+        return generic;
+    }
+    const contextual = types(context.ask(node, 'contextual-shape'), 'contextual-shape');
+    if(contextual.present) {
+        return demands(context, node, contextual.roots, new Map<number, readonly number[]>());
+    }
+    if(node.kind !== MethodDeclaration || has(context, node, StaticKeyword)) {
+        return false;
+    }
+    const owner = context.parent(node);
+    const name = nameOf(context, node);
+    if(owner === undefined || ![ClassDeclaration, ClassExpression].includes(owner.kind) || name?.kind !== Identifier) {
+        return false;
+    }
+    for(const inherited of heritage(context, owner)) {
+        const member = project(context, node, inherited, `property\n${name.text}`)[0] ?? 0;
+        if(member !== 0) {
+            return demands(context, node, [member], new Map<number, readonly number[]>());
+        }
+    }
+    return false;
+}
+function describe(context: Context, node: Node): string {
+    if(node.kind === ArrowFunction) {
+        return 'Async arrow function';
+    }
+    if(node.kind === Constructor) {
+        return "Async method 'constructor'";
+    }
+    let method = [MethodDeclaration, GetAccessor, SetAccessor].includes(node.kind);
+    let holder = node;
+    const parent = context.parent(node);
+    if(parent?.kind === PropertyAssignment && parent.children[parent.children.length - 1] === node.index) {
+        method = true;
+        holder = parent;
+    }
+    const name = nameOf(context, holder);
+    const kind = method ? 'method' : 'function';
+    return name !== undefined && name.kind !== ComputedPropertyName ? `Async ${kind} '${name.text}'` : `Async ${kind}`;
+}
+function parametersStart(context: Context, node: Node, start: number): number {
+    const at = context.text.indexOf('(', start);
+    return at >= 0 && at < node.end ? at : start;
+}
+function previous(context: Context, node: Node): Node | undefined {
+    let subject = node;
+    while(true) {
+        const parent = context.parent(subject);
+        if(parent === undefined) {
+            return undefined;
+        }
+        if([ClassDeclaration, ClassExpression, Block, SourceFile].includes(parent.kind)) {
+            const siblings = parent.children.filter((i) => {
+                const kind = context.node(i).kind;
+                return kind !== Identifier && kind !== HeritageClause && !(kind >= BreakKeyword && kind <= OfKeyword);
+            });
+            const index = siblings.indexOf(subject.index);
+            return index > 0 ? context.node(siblings[index - 1] ?? -1) : undefined;
+        }
+        subject = parent;
+    }
+}
+export function visit(context: Context, node: Node): void {
+    const asyncIndex = node.children.find((i) => context.node(i).kind === AsyncKeyword);
+    if(asyncIndex === undefined || has(context, node, AsteriskToken)) {
+        return;
+    }
+    const body = bodyOf(context, node);
+    if(
+        body === undefined ||
+        (body.kind === Block && body.children.length === 0) ||
+        awaiting(context, body, true) ||
+        contract(context, node)
+    ) {
+        return;
+    }
+    const parent = context.parent(node);
+    let start = node.start;
+    let end = start;
+    if(parent !== undefined && [PropertyAssignment, PropertyDeclaration].includes(parent.kind)) {
+        start = parent.start;
+        end = parametersStart(context, node, start);
+    }
+    else if(node.kind === ArrowFunction) {
+        const arrow = node.children.find((i) => context.node(i).kind === EqualsGreaterThanToken);
+        if(arrow !== undefined) {
+            const token = context.node(arrow);
+            start = token.start;
+            end = token.end;
+        }
+    }
+    else {
+        for(const i of node.children) {
+            const modifier = context.node(i);
+            if([ExportKeyword, DefaultKeyword, DeclareKeyword].includes(modifier.kind)) {
+                start = modifier.end;
+            }
+            else {
+                break;
+            }
+        }
+        while(' \t\r\n'.includes(context.text[start] ?? '') && start < context.text.length) {
+            start++;
+        }
+        const name = nameOf(context, node);
+        end = name?.end ?? parametersStart(context, node, start);
+        if(end <= start) {
+            end = start + 5;
+        }
+    }
+    const finding = context.add(
+        'require-await',
+        'missingAwait',
+        `${describe(context, node)} has no \`await\` expression. The \`async\` keyword wraps the return value in a promise and obliges every caller to await it or handle a floating promise, so a function that never awaits pays that cost for nothing and tells the reader there is asynchrony here to find. Remove \`async\`, or await what this was waiting for.`,
+        node,
+    );
+    // ReportRange uses a separate span from the whole function node.
+    context.findings.pop();
+    const result = new Diagnostic(
+        'require-await',
+        finding.id,
+        finding.message,
+        context.byte(start),
+        context.byte(end),
+        '',
+    );
+    context.findings.push(result);
+    const keyword = context.node(asyncIndex);
+    let asyncEnd = keyword.end;
+    while(asyncEnd < context.text.length && ' \t\r\n'.includes(context.text[asyncEnd] ?? '')) {
+        asyncEnd++;
+    }
+    let replacement = '';
+    const rest = context.text.slice(asyncEnd);
+    const continues = rest.startsWith('[') || rest.startsWith('(') || /^(in|instanceof)(?![A-Za-z0-9_$])/.test(rest);
+    const prior = previous(context, node);
+    if(
+        continues &&
+        prior !== undefined &&
+        ([ExpressionStatement, VariableStatement].includes(prior.kind) ||
+            (prior.kind === PropertyDeclaration &&
+                context.hasToken(nameOf(context, prior)?.end ?? prior.start, prior.end, EqualsToken))) &&
+        !context.text.slice(0, prior.end).trimEnd().endsWith(';')
+    ) {
+        replacement = ';';
+    }
+    result.suggestions.push(
+        new Suggestion(
+            'removeAsync',
+            "Remove `async`. This changes the function's return type from a promise to the value itself, so every caller has to stop awaiting it, which is why it is offered rather than applied.",
+            [new Repair(context.byte(keyword.start), context.byte(asyncEnd), replacement)],
+        ),
+    );
+}

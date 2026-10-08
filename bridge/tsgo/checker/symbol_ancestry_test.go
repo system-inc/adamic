@@ -1,6 +1,7 @@
 package checker
 
 import (
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"os"
 	"path/filepath"
 	"slices"
@@ -43,7 +44,7 @@ func TestSymbolAncestryAndAliasModes(t *testing.T) {
 		n.ForEachChild(visit)
 		return false
 	}
-	visit(p.Compiler.GetSourceFile(file).AsNode())
+	visit(p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file)).AsNode())
 	if clock == nil || alias == nil {
 		t.Fatal("missing probe names")
 	}

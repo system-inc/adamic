@@ -88,7 +88,7 @@ export class RequireBlockingStandardStreams {
         let rules = this.rules;
         if(file !== rules.path) {
             if(!this.foreign.has(file)) {
-                this.foreign.set(file, loadRules(rules.program, file));
+                this.foreign.set(file, loadRules(rules.program, file, rules));
             }
             rules = this.foreign.get(file) ?? panic('missing foreign blocking source');
         }

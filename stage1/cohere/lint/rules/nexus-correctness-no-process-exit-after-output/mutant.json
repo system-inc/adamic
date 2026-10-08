@@ -1,0 +1,6 @@
+{
+  "name": "wave05 nexus-correctness-no-process-exit-after-output verdict inversion",
+  "file": "algorithm.a",
+  "from": "state.length > 0 && !reported.includes(block.index)",
+  "to": "state.length === 0 && !reported.includes(block.index)"
+}

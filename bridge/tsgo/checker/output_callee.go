@@ -26,7 +26,7 @@ func (p *Program) outputCallee(c *checker.Checker, node *ast.Node, question stri
 		if file == nil {
 			return "", fmt.Errorf("resolved declaration has no source")
 		}
-		out.text(file.FileName())
+		out.text(file.FileName().AsString())
 		out.text(strings.TrimPrefix(declaration.Kind.String(), "Kind"))
 		out.number(uint64(declaration.Pos()))
 		out.number(uint64(declaration.End()))

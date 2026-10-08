@@ -1,0 +1,6 @@
+{
+  "name": "wave05 typescript-restrict-template-expressions verdict inversion",
+  "file": "algorithm.a",
+  "from": "if((subject.flags & stringLike) !== 0)",
+  "to": "if((subject.flags & (stringLike | 1048576)) !== 0)"
+}

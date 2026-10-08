@@ -1,0 +1,7 @@
+import { panic } from 'adamic';
+import { FileQuestion } from '../../checker.a';
+import type { RuleContext } from '../../context.ts';
+export function otherFile(context: RuleContext, path: string, start: number, end: number, kind: string, question: string): string {
+    const checker = context.checker ?? panic('foreign source without shared checker');
+    return checker.askFile(new FileQuestion('ReadsOtherFiles', `other-file\n${path}\n${start}\n${end}\n${kind}\n${question}`)).value ?? panic('shared checker refused foreign source question');
+}

@@ -1,0 +1,24 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { legacy, publish } from '../require-await/compatibility.a';
+import type { Rules } from '../../../typeaware/rules.ts';
+import { RequireBlockingStandardStreams } from './algorithm.a';
+import { Bindings } from '../../../typeaware/bindings.ts';
+import { OutputIdentity } from '../../../typeaware/wave_05_next/output_identity.a';
+import { RuntimeModules } from '../../../typeaware/wave_05_next/runtime_modules.a';
+import { blockingCandidate } from './algorithm.a';
+export class Rule {
+    readonly context: RuleContext;
+    view: Rules | undefined = undefined;
+    rule: RequireBlockingStandardStreams | undefined = undefined;
+    constructor(context: RuleContext) { this.context = context; }
+    prepare(root: number): void {
+        const rules = legacy(this.context); this.view = rules;
+        const bindings = new Bindings(rules); const identity = new OutputIdentity(rules, bindings); if(blockingCandidate(rules, bindings, identity)) { this.rule = new RequireBlockingStandardStreams(rules, bindings, identity, new RuntimeModules(rules, root)); }
+    }
+    visit(node: ParseNode, index: number): void { if(this.rule !== undefined) { this.rule.run(index); } }
+    finish(root: number): void {
+        if(this.view !== undefined) { publish(this.context, this.view.findings); }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

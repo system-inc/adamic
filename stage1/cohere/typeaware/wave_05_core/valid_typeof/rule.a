@@ -58,11 +58,14 @@ export function visit(context: Context, node: Node): void {
         operand.text === 'undefined' &&
         !context.declarations(operand).some((ambient) => !ambient)
     ) {
-        const finding = context.add('valid-typeof', 'invalidTypeofValue', nonString('undefined'), operand);
+        const finding = context.add('valid-typeof', context.requireStringLiterals ? 'notString' : 'invalidTypeofValue', context.requireStringLiterals ? 'Typeof comparisons should be to string literals. A literal is the one operand the rule can check against the eight strings typeof produces, so with requireStringLiterals on, anything else, a variable or a template with substitutions, is reported rather than trusted.' : nonString('undefined'), operand);
         finding.suggestions.push(
             new Suggestion('suggestString', 'Use `"undefined"` instead of `undefined`.', [
                 new Repair(context.byte(operand.start), context.byte(operand.end), '"undefined"'),
             ]),
         );
+    }
+    else if(context.requireStringLiterals && operand.kind !== TypeOfExpression) {
+        context.add('valid-typeof', 'notString', 'Typeof comparisons should be to string literals. A literal is the one operand the rule can check against the eight strings typeof produces, so with requireStringLiterals on, anything else, a variable or a template with substitutions, is reported rather than trusted.', operand);
     }
 }

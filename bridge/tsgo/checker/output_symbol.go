@@ -30,13 +30,13 @@ func (p *Program) outputSymbol(c *checker.Checker, node *ast.Node, question stri
 			if f == nil {
 				return "", fmt.Errorf("symbol declaration has no source")
 			}
-			out.text(f.FileName())
+			out.text(f.FileName().AsString())
 			out.text(strings.TrimPrefix(d.Kind.String(), "Kind"))
 			out.number(uint64(d.Pos()))
 			out.number(uint64(d.End()))
 			out.number(uint64(d.Flags))
 			out.yes(f.IsDeclarationFile)
-			out.yes(p.Compiler.IsSourceFileDefaultLibrary(f.Path()))
+			out.yes(p.Compiler.IsSourceFileDefaultLibrary(f.PathKey()))
 			out.yes(ast.IsExternalModule(f))
 			var parents []*ast.Node
 			for parent := d.Parent; parent != nil; parent = parent.Parent {

@@ -1,0 +1,4 @@
+class Allowed {}
+const allowed = new Allowed();
+const rejected = {};
+`${allowed}${rejected}`;

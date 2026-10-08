@@ -197,6 +197,9 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	if err != nil {
 		return "", err
 	}
+	if strings.HasPrefix(question, "other-file\n") {
+		return p.otherFile(node, question)
+	}
 	c, release := p.Compiler.GetTypeCheckerForFile(context.Background(), source)
 	defer release()
 	out := &fields{}
@@ -204,13 +207,22 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
-	case "declared-call-signature": return p.declaredCallSignature(c, node, question)
-	case "type-projection": return p.typeProjection(c, node, question)
-	case "runtime-modules": return p.runtimeModules(node, question)
-	case "output-symbol": return p.outputSymbol(c, node, question)
-	case "output-callee": return p.outputCallee(c, node, question)
-	case "symbol-ancestry": return p.symbolAncestry(c, node, question)
-	case "usage-shape": return p.usageShape(c, node, question)
+	case "type-declaration-origins":
+		return p.typeDeclarationOrigins(question)
+	case "declared-call-signature":
+		return p.declaredCallSignature(c, node, question)
+	case "type-projection":
+		return p.typeProjection(c, node, question)
+	case "runtime-modules":
+		return p.runtimeModules(node, question)
+	case "output-symbol":
+		return p.outputSymbol(c, node, question)
+	case "output-callee":
+		return p.outputCallee(c, node, question)
+	case "symbol-ancestry":
+		return p.symbolAncestry(c, node, question)
+	case "usage-shape":
+		return p.usageShape(c, node, question)
 	case "node-symbol-details", "declaration-details", "type-symbol-details", "property-declarations":
 		if err := p.declarationFacts(out, c, node, mode, question); err != nil {
 			return "", err
@@ -291,7 +303,7 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 				if f == nil {
 					return "", fmt.Errorf("binding declaration has no source")
 				}
-				out.text(f.FileName())
+				out.text(f.FileName().AsString())
 				out.text(strings.TrimPrefix(declaration.Kind.String(), "Kind"))
 				out.number(uint64(declaration.Pos()))
 				out.number(uint64(declaration.End()))

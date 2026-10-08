@@ -1,0 +1,17 @@
+import type { Context, Node } from '../../../typeaware/wave_05_core/context.a';
+import { Identifier } from '../../../typeaware/wave_05_core/kinds.a';
+const message =
+    'This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one.';
+export function visit(context: Context, node: Node): void {
+    if(node.list > 0) {
+        return;
+    }
+    const callee = context.skip(context.node(node.children[0] ?? -1));
+    if(callee.kind !== Identifier || callee.text !== 'Symbol') {
+        return;
+    }
+    const declarations = context.declarations(callee);
+    if(declarations[0] === true) {
+        context.add('symbol-description', 'expected', message, node);
+    }
+}

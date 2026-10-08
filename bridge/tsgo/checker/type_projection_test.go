@@ -1,6 +1,7 @@
 package checker
 
 import (
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"os"
 	"path/filepath"
 	"strings"
@@ -41,7 +42,7 @@ func TestWave05CoreProjectionFacts(t *testing.T) {
 		n.ForEachChild(walk)
 		return false
 	}
-	walk(p.Compiler.GetSourceFile(file).AsNode())
+	walk(p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file)).AsNode())
 	if call == nil || class == nil || array == nil {
 		t.Fatal("missing fixture nodes")
 	}

@@ -1,0 +1,21 @@
+{
+  "name": "require-await",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "FunctionDeclaration",
+    "FunctionExpression",
+    "ArrowFunction",
+    "MethodDeclaration",
+    "GetAccessor",
+    "SetAccessor",
+    "Constructor"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave05RequireAwait",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestRequireAwait"
+}

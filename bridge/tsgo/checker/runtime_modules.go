@@ -18,7 +18,7 @@ func (p *Program) runtimeModules(node *ast.Node, question string) (string, error
 	files := p.Compiler.SourceFiles()
 	out.number(uint64(len(files)))
 	for _, file := range files {
-		out.text(file.FileName())
+		out.text(file.FileName().AsString())
 		out.yes(file.IsDeclarationFile)
 		var edges []string
 		computed := false
@@ -30,9 +30,9 @@ func (p *Program) runtimeModules(node *ast.Node, question string) (string, error
 			if resolved == nil || !resolved.IsResolved() {
 				return
 			}
-			target := p.Compiler.GetSourceFileForResolvedModule(resolved.ResolvedFileName)
+			target := p.Compiler.GetSourceFileForResolvedModule(resolved)
 			if target != nil && target != file {
-				edges = append(edges, target.FileName())
+				edges = append(edges, target.FileName().AsString())
 			}
 		}
 		if !file.IsDeclarationFile {

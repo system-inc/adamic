@@ -1,0 +1,20 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { legacy, publish } from '../require-await/compatibility.a';
+import type { Rules } from '../../../typeaware/rules.ts';
+import { RestrictTemplateExpressions } from './algorithm.a';
+export class Rule {
+    readonly context: RuleContext;
+    view: Rules | undefined = undefined;
+    rule: RestrictTemplateExpressions | undefined = undefined;
+    constructor(context: RuleContext) { this.context = context; }
+    prepare(root: number): void {
+        const rules = legacy(this.context); this.view = rules;
+        this.rule = new RestrictTemplateExpressions(rules, this.context.settings);
+    }
+    visit(node: ParseNode, index: number): void { if(this.rule !== undefined) { this.rule.check(index, node); } }
+    finish(root: number): void {
+        if(this.view !== undefined) { publish(this.context, this.view.findings); }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
