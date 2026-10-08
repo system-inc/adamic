@@ -7,3 +7,5 @@ class Child extends Base { override run(): string { return 'child'; } }
 const base = new Base();
 const child = new Child();
 console.log(`${base.run()}/${child.run()}`);
+
+// touched by the a-check probe
