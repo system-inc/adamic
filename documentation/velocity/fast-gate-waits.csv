@@ -1,4 +1,4 @@
-sha,branch,class,queued_utc,started_utc,waited_seconds
+sha,branch,class,queued_utc,started_utc,waited_seconds,outcome
 5a5d4436392d01ddab79258266a3c15314e846ec,devtools/fast-gate-stage3-good,S,2026-10-08T03:40:08Z,2026-10-08T03:44:04Z,236
 afdaea3bcab9448841e89f05818d073cb87c02b3,area/library,B,2026-10-08T03:43:14Z,2026-10-08T03:45:16Z,122
 71b01052fab7bc7523fbb9403de3c2c676d6bc6d,devtools/fast-gate-kill-stage3-2,S,2026-10-08T03:40:05Z,2026-10-08T03:47:00Z,415
@@ -163,3 +163,4 @@ b410340dc8f889b5799c3bc519117c63def3aa24,area/compiler,B,2026-10-08T08:39:30Z,20
 dc30d0fef12f1e6470e1c3d3aee46706c44e9a80,devtools/saturated-fix,S,2026-10-08T09:08:38Z,2026-10-08T09:08:38Z,0
 ef3141e9b1152ab51b51497f8ce3a2799449c8a3,area/stage1-format,B,2026-10-08T09:09:46Z,2026-10-08T09:12:12Z,146
 1d132564c17472c22f630ce7e36912b0560b7662,codex/idle-jobs,S,2026-10-08T09:19:40Z,2026-10-08T09:19:40Z,0
+c8f6d74f5387df926ae12d8babd2780564b60097,area/stage1-lint,B,2026-10-08T09:13:04Z,2026-10-08T09:37:13Z,1449,started
