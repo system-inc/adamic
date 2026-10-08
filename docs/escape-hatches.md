@@ -1418,3 +1418,25 @@ report without importing front-3's predicate implementation or readiness state.
 The area's class, field, static, optional-read and definite-assignment behavior is
 unchanged. The area's `var` refusal still rejects the original var initializer
 control; a separate let control exercises eager checking on this base.
+
+The clean `d577dd0d` comparison is recorded in
+`docs/verification/non-null-area-port.json`, including every added test name and
+the empty changed and removed lists. Lower, IR and flow pass on both sides: all
+2,768 existing named cases retain their results, with 68 new cases passing. The
+uncached non-null, optional, narrow and class oracle retains all 65 existing
+fixture results and passes seven new checked fixtures. The original no-check and
+representation-changing narrowing mutants are caught by runtime output and an
+IR return assertion, respectively. Historical TypeScript literal assertions pin
+the inserted check, diagnostic and explain count; Adamic controls pin refusal.
+Command tests, vet and the complete count-table check pass. Counts add seven rows;
+every existing row retains its measurements.
+
+Setup was run with `/workspace/adamic-tools` and printed Go ready at 0.029s,
+Node at 0.030s, markdown dependencies at 0.109s and clang at 0.216s, with nproc 5.
+It stopped with `expected submodule path 'cohere' not to be a symbolic link`.
+Both checkouts use the matching pinned submodule 7945d102 through a local symlink;
+`GOFLAGS=-buildvcs=false` avoids Go's VCS-stamping error in both comparison runs.
+No submodule change is committed. Root disk exhaustion initially interrupted the
+checkout; an isolated worktree kept the baseline intact. Only reproducible build
+cache artifacts were moved or discarded through task scratch paths to finish
+verification. The complete repository gate, census and scanner slice were not run.
