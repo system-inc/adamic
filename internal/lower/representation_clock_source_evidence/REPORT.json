@@ -1,0 +1,31 @@
+{
+  "kind": "a value of type Source",
+  "disposition": "cancelled: census-only unresolved generic signature echo; production admission unchanged",
+  "site": "/tmp/notyet-representations-adapted/src/compiler/checker.ts:27040:71",
+  "baseline": "2f024dda2787de4168550bdd6bc419536dc6a924",
+  "original_compiler_sha": "3cead3fdfeaf8dca6920d748f016a0b0ef1823f2",
+  "input_archive_sha": "9d534d3a31814f1a192a528e701f6c2ea7c910bc",
+  "input_verification": "81 original source byte lengths and SHA-256 hashes verified; no adapted source edits",
+  "replay_tooling": "Original compiler SHA guarded replay tools, in an isolated baseline worktree; production Lower disabled by measurement overlay",
+  "replay_command": "go run ./stage3/census/latent/replay -project /tmp/notyet-representations-adapted/src/tsc/tsc.ts -where /tmp/notyet-representations-adapted/src/compiler/checker.ts:27040:71 -kind NotYet -reason 'a value of type Source' > /tmp/clock-source.json 2> /tmp/clock-source.log",
+  "replay_result": "exit 0; same NotYet reproduced at generic signature/prologue; no later stop claimed",
+  "abi_evidence": "Checker accepts CallableType extending CompilerType, while representation is Closure versus Object for CompilerType. Required structural fields do not exclude callable subtypes. The upstream Type constraint is likewise structural: flags, id, checker, symbol and optional cache fields do not exclude a subtype with a call signature. Length-only independently admits Array and String.",
+  "assumption": "Use the brief's explicit census-only cancellation option when the isolated generic signature lacks a consistent object ABI and its concrete reduction already compiles. Do not admit all structural constraints or special-case the spelling Source/Type.",
+  "production_reduction": "Node exit 0, stdout 7:source, empty stderr; production C generation exit 0; registered JavaScript and sanitized native agreement passed; leak checks passed; recorded counts 4 allocations and 4 frees",
+  "mutants": {
+    "clock-source-ignore-payload": "replace describe specialization with 7:mutant; native and JavaScript stdout kill; native exits 0 without leaks",
+    "compiler-type-as-object": "scratch production representation overlay killed by source checked-type assertion (exit 1)",
+    "length-only-as-object": "scratch production representation overlay killed by lengthSource checked-type assertion (exit 1)"
+  },
+  "tests": [
+    "go test ./internal/lower -run TestRepresentationClockSource -v",
+    "go test ./internal/oracle -run TestRepresentationClockSource|TestNativeAgreesWithNode/internal/oracle/testdata/representation_clock_source -v",
+    "go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts"
+  ],
+  "new_admission_guards": [],
+  "new_separate_runtime_helpers": [],
+  "ownership": "Checked git log --remotes=origin/codex/notyet-* -- internal/lower/expression.go; no lowering helper edited; representation worker ownership preserved",
+  "outside_representation_files": [
+    "internal/oracle/counts.md"
+  ]
+}
