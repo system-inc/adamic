@@ -97,6 +97,7 @@ func plainDataLiteral(node *ast.Node) bool {
 }
 
 func (p *Program) OptionalLiteralSite(node *ast.Node) bool {
-	return len(p.optionalLiterals[p.Where(node)]) > 0
+	_, view := p.optionalViews[p.Where(node)]
+	return view || len(p.optionalLiterals[p.Where(node)]) > 0
 }
 func (p *Program) RecordOptionalLiteral(node *ast.Node) { p.checkedOptions[p.Where(node)] = true }

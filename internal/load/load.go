@@ -45,6 +45,7 @@ type Program struct {
 	optionalChecks    map[string]OptionSite
 	optionalRelations map[string]OptionSite
 	optionalLiterals  map[string][]OptionSite
+	optionalViews     map[string]OptionalViewContract
 	checkedOptions    map[string]bool
 }
 
@@ -265,7 +266,7 @@ func loadInput(paths []string, overlay map[string]string, requestedProject strin
 	diagnostics := loaded.diagnostics(context.Background())
 	scheduled := []OptionSite{}
 	for _, site := range sites {
-		if !loaded.acceptOptionalWrite(site) && !loaded.acceptOptionalRelation(site) && !loaded.acceptOptionalLiteral(site) {
+		if !loaded.acceptOptionalWrite(site) && !loaded.acceptOptionalRelation(site) && !loaded.acceptOptionalLiteral(site) && !loaded.acceptOptionalView(site) {
 			diagnostics = append(diagnostics, site.Message)
 		} else {
 			scheduled = append(scheduled, site)

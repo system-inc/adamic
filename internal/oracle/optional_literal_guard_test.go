@@ -18,6 +18,9 @@ func TestOptionalLiteralGuard(t *testing.T) {
 func TestOptionalConditionalGuard(t *testing.T) {
 	testOptionalConstruction(t, "optional_conditional_guard.a", false)
 }
+func TestOptionalRequiredViewGuard(t *testing.T) {
+	testOptionalConstruction(t, "optional_required_view_guard.a", false)
+}
 func TestOptionalSpreadGuard(t *testing.T) {
 	testOptionalConstruction(t, "optional_spread_guard.a", true)
 }
@@ -48,7 +51,7 @@ func testOptionalConstruction(t *testing.T, fixtureName string, spread bool) {
 		t.Fatal(err)
 	}
 	checks := program.ExplainedOptionalChecks()
-	if len(checks) != 1 || (!strings.Contains(checks[0], "checked TS2375") && !strings.Contains(checks[0], "checked TS2322")) {
+	if len(checks) != 1 || (!strings.Contains(checks[0], "checked TS2375") && !strings.Contains(checks[0], "checked TS2322") && !strings.Contains(checks[0], "checked TS2379")) {
 		t.Fatalf("want one emitted construction check, got %v", checks)
 	}
 	expected := onNode(t, fixture)

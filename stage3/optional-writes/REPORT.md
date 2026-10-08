@@ -190,3 +190,21 @@ Focused oracle and all 17 mutants pass in 14.446s. Setup finished in 29.964s wit
 nproc 5; Go ready 0.024s, Node 0.028s, submodules 0.064s, markdown 0.075s, clang
 0.174s, Go build 29.819s. Full affected packages and count regeneration are
 checked separately. Provisional all-67 date remains October 10 UTC.
+
+Required-field view batch: checker.ts:43740 now schedules a presence check at
+the interface argument. The optional parameter includes undefined, but the
+actual source object has a required value field. The source is evaluated once,
+its own presence is checked, and its value is preserved, including undefined.
+The optional-parameter fixture matches Node for in, read, keys and hasOwn in
+both backends with ASan/UBSan and explicit leak checks. An absent-allocation
+mutant compiles and stops at the field-presence guard with exit 70. The ledger
+now schedules 55 of 67, emits zero whole-program checks, and retains 206 errors:
+90 production declaration diagnostics, 104 other flag contracts, 12 optional
+contracts. There are now 18 run mutants. Fixture pass: 0.719s. Focused load/lower/
+command tests: 3.429s, 0.942s, 0.009s.
+
+The complete affected package gate for cleanup passed: native 146.446s, lower
+56.967s, load 32.533s, commands 2.383s, JavaScript has no package tests. Count
+regeneration passed in 46.454s and updated nine existing rows, preserving their
+allocation/free balance. The shared Effects rule changes measured retain/release
+counts and releases the optional-join holder earlier. Date remains October 10 UTC.

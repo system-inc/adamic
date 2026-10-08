@@ -55,6 +55,10 @@ func (p *Program) RecordOptionalWrite(target *ast.Node) { p.checkedOptions[p.Whe
 func (p *Program) ExplainedOptionalChecks() []string {
 	result := []string{}
 	for where := range p.checkedOptions {
+		if view, ok := p.optionalViews[where]; ok {
+			result = append(result, fmt.Sprintf("%s: checked TS%d exactOptionalPropertyTypes: required fields preserve own presence through optional view", where, view.Site.Code))
+			continue
+		}
 		if literals, ok := p.optionalLiterals[where]; ok {
 			for _, literal := range literals {
 				result = append(result, fmt.Sprintf("%s: checked TS%d exactOptionalPropertyTypes: object construction preserves own presence", where, literal.Code))

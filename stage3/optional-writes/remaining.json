@@ -22,17 +22,6 @@
     ]
   },
   {
-    "position": 2572864,
-    "file": "src/compiler/checker.ts",
-    "line": 43740,
-    "column": 86,
-    "code": 2379,
-    "message": "src/compiler/checker.ts:43740:86: error TS2379: Argument of type '{ value: Type | undefined; }' is not assignable to parameter of type '{ value?: Type; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'value' are incompatible.\n    Type 'Type | undefined' is not assignable to type 'Type'.\n      Type 'undefined' is not assignable to type 'Type'.",
-    "options": [
-      "exactOptionalPropertyTypes"
-    ]
-  },
-  {
     "position": 2703362,
     "file": "src/compiler/checker.ts",
     "line": 46159,
