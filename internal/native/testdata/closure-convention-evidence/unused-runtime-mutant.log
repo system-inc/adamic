@@ -1,6 +1,0 @@
-=== RUN   TestClosureConventionRuntimeFeaturesIgnoreLiterals
-    closure_convention_test.go:94: a source literal selected unused runtime support: #define ADAMIC_REGEXP_REPLACE_CALLBACK 1
---- FAIL: TestClosureConventionRuntimeFeaturesIgnoreLiterals (0.02s)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/native	0.026s
-FAIL

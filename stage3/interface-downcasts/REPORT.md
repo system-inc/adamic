@@ -61,7 +61,7 @@ The proposal in [escape-hatches.md](../../docs/escape-hatches.md#cast-appendix-b
 
 The assertions input is `origin/codex/stage3-fixtures-assertions` 5b173f3920ab2c5b7058f0a9fe4b8e4a91f52523, `stage3/fixtures/assertions/ledger-summary.json`: 4,101 as sites, partitioned as 208 upcasts, 16 as const, 136 tagged union downcasts, 1,178 structural interface downcasts without a tag, 10 as unknown as nodes, 2,553 other. Of other, 1,842 are tagged narrowings outside a partitioned union, a candidate bucket rather than an exact base-interface count. Class downcasts are not separately counted. This unit did not remeasure or reclassify cast forms.
 
-The follow-up refinement of only those 2,553 other sites is reproduced by [refine-other.cjs](refine-other.cjs), with [summary](other-summary.json) and [all locations](other-locations.tsv). Stock TypeScript 6.0.3 reports zero diagnostics; original source hashes, expression offsets/text, type strings (normalizing checkout paths only) and both assignability directions are checked against the shared ledger. Nested assertions are matched by both start and end offsets.
+The follow-up refinement of only those 2,553 other sites is reproduced by [refine-other.cjs](refine-other.cjs), with summary (external run evidence) and all locations (external run evidence). Stock TypeScript 6.0.3 reports zero diagnostics; original source hashes, expression offsets/text, type strings (normalizing checkout paths only) and both assignability directions are checked against the shared ledger. Nested assertions are matched by both start and end offsets.
 
 | Other refinement | Sites |
 | --- | ---: |
@@ -86,7 +86,7 @@ NODE_PATH=/tmp/interface-downcasts-api/node_modules node stage3/interface-downca
 
 The predicates input is `origin/codex/stage3-fixtures-predicates` e42eaf9854563617734ff13987cc27e4e09f78b1, `stage3/fixtures/predicates/ledger.json`: 651 predicate syntax nodes and 11 fixtures. Its categories describe bodies, not verified contracts. Both kinds of narrowing need a construction certificate; negative guard branches additionally need a body test equivalent to target membership. Empty, disabled, bodyless and generic assertions remain separate proof obligations.
 
-Construction observations use the compiler corpus in `cohere/TypeScript/tsc/testdata/fixtures/compiler`, through cohere 715ba94f3608a6500086b1076ce5cb7e51b836db and TypeScript Go 8d550c837c90bd1805b047b7eeccc2baac2d5e7a. No cohere code was copied. [constructions.py](constructions.py) reads that checkout in place; [constructions.json](constructions.json) pins hashes and locations. Its lexical discovery found 108 direct generic base allocations and 203 interfaces explicitly declaring a kind. These are construction observations, not cast counts or completeness certificates.
+Construction observations use the compiler corpus in `cohere/TypeScript/tsc/testdata/fixtures/compiler`, through cohere 715ba94f3608a6500086b1076ce5cb7e51b836db and TypeScript Go 8d550c837c90bd1805b047b7eeccc2baac2d5e7a. No cohere code was copied. [constructions.py](constructions.py) reads that checkout in place; constructions.json (external run evidence) pins hashes and locations. Its lexical discovery found 108 direct generic base allocations and 203 interfaces explicitly declaring a kind. These are construction observations, not cast counts or completeness certificates.
 
 The Identifier base constructor does not initialize escapedText; createBaseIdentifier initializes it later. Common parent and required symbol are initialized with undefined!, and interface brands are absent. Kind is shared with stricter Identifier variants. Allocators are replaceable and cloneNode copies dynamically. Therefore "every allocation with this kind already has the entire declared interface" is false. The assertions ledger's independent genuine-factory mutation witness prints true and undefined on Node with zero TypeScript diagnostics. Publication conventions may explain ordinary visitors, but proving them needs initialization and escape analysis across callbacks, clones, overrides and writes. This unit does not certify every tsc construction site.
 
@@ -131,7 +131,7 @@ Commands (all test output redirected directly to logs, never piped):
 bash cloud/setup.sh > /tmp/interface-downcasts-setup.log 2>&1
 source /workspace/adamic-tools/env.sh
 nproc
-python3 stage3/interface-downcasts/constructions.py > stage3/interface-downcasts/constructions.json
+python3 stage3/interface-downcasts/constructions.py > /workspace/interface-downcast-constructions.json
 go test ./internal/lower -run '^TestInterfaceConstruction' -v -count=1 > /tmp/interface-downcasts-proof.log 2>&1
 go test ./internal/lower ./internal/load -count=1 > /tmp/interface-downcasts-packages.log 2>&1
 ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInterfaceCast' -v -count=1 -timeout 30m > /tmp/interface-downcasts-oracle.log 2>&1
@@ -155,12 +155,12 @@ than relying on it for fixture coverage.
 
 ```sh
 source /workspace/adamic-tools/env.sh
-go test ./internal/ir ./internal/javascript ./internal/native ./internal/lower -count=1 -timeout 30m > stage3/interface-downcasts/logs/primitive-packages.log 2>&1
-ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run TestRequiredViewField -count=1 -v -timeout 30m > stage3/interface-downcasts/logs/primitive-final.log 2>&1
-ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(non_null|library_object|borrow_element|call_targets|devirtualize|class_as_interface)' -count=1 -v -timeout 30m > stage3/interface-downcasts/logs/primitive-source-node.log 2>&1
-ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts > stage3/interface-downcasts/logs/primitive-counts.log 2>&1
-go vet ./internal/ir ./internal/javascript ./internal/native ./internal/lower ./internal/oracle > stage3/interface-downcasts/logs/primitive-vet.log 2>&1
-python3 stage3/interface-downcasts/primitive-mutants.py > stage3/interface-downcasts/logs/primitive-mutants.log 2>&1
+go test ./internal/ir ./internal/javascript ./internal/native ./internal/lower -count=1 -timeout 30m > /workspace/interface-downcast-logs/primitive-packages.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run TestRequiredViewField -count=1 -v -timeout 30m > /workspace/interface-downcast-logs/primitive-final.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(non_null|library_object|borrow_element|call_targets|devirtualize|class_as_interface)' -count=1 -v -timeout 30m > /workspace/interface-downcast-logs/primitive-source-node.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts > /workspace/interface-downcast-logs/primitive-counts.log 2>&1
+go vet ./internal/ir ./internal/javascript ./internal/native ./internal/lower ./internal/oracle > /workspace/interface-downcast-logs/primitive-vet.log 2>&1
+python3 stage3/interface-downcasts/primitive-mutants.py > /workspace/interface-downcast-logs/primitive-mutants.log 2>&1
 ```
 
 Standalone source Node oracle: PASS, 9.020s, native 0 hits/88 misses, Node 0 hits/66
@@ -311,7 +311,7 @@ ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestDefaultTaggedSourceVi
 python3 stage3/interface-downcasts/primitive-mutants.py > /tmp/interface-default-mutants.log 2>&1
 go vet ./internal/lower ./internal/ir ./internal/javascript ./internal/native ./internal/oracle > /tmp/interface-default-vet.log 2>&1
 go test ./internal/oracle -run 'TestDefaultTaggedSourceViews|TestCountsAreRecorded' -count=1 -timeout 30m > /tmp/interface-default-counts-check.log 2>&1
-NODE_PATH=/tmp/interface-downcasts-api/node_modules node stage3/interface-downcasts/default-contract-audit.cjs /tmp/interface-downcasts-typescript stage3/fixtures/assertions/ledger.json stage3/interface-downcasts/other-locations.tsv stage3/interface-downcasts > /tmp/interface-default-contract-audit.log 2>&1
+NODE_PATH=/tmp/interface-downcasts-api/node_modules node stage3/interface-downcasts/default-contract-audit.cjs /tmp/interface-downcasts-typescript stage3/fixtures/assertions/ledger.json /workspace/interface-downcast-audit/other-locations.tsv /workspace/interface-downcast-audit > /tmp/interface-default-contract-audit.log 2>&1
 ```
 
 Restored-source final oracle/count check: PASS 20.667s. No additional count row changed.

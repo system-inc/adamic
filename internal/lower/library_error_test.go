@@ -14,7 +14,7 @@ func TestErrorCaptureBoundaries(t *testing.T) {
 		{`import type {Stats} from 'node:fs'; const error=new Error(); console.log('stack' in error ? 'yes' : 'no');`, "stack presence receiver"},
 		{`import type {Stats} from 'node:fs'; const error=new Error(); const {stack}=error; console.log(typeof stack);`, "stack destructuring"},
 		{`import type {Stats} from 'node:fs'; const error=new Error(); read(); Error.captureStackTrace(error); function read():void { console.log(typeof error.stack); }`, "without a preceding captureStackTrace"},
-		{`const source={stack:3}; const target:{}=source; Error.captureStackTrace(target);`, "target shape"},
+		{`const source={stack:3}; const target:{}=source; Error.captureStackTrace(target);`, "present native object"},
 		{`Error.stackTraceLimit += 1;`, "evaluation-order proof"},
 		{`import type {Stats} from 'node:fs'; const error=new Error('uncaptured'); const view:{stack?:string}=error; console.log(typeof view.stack);`, "known plain object"},
 		{`Error.captureStackTrace([1]);`, "present native object"},

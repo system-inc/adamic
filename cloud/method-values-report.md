@@ -128,7 +128,7 @@ go run ./cmd/adamic-test262 -adapt -json -test262 /workspace/scratch/test262 -wo
 
 The sole new pass is `built-ins/Object/prototype/toString/Object.prototype.toString.call-null.js`. No pass was lost. Both pre-existing failures remain `native failed where node passed (node 0, native 70)`, in String/fromCodePoint and Object/is. The eight Array compiler crashes and one String compiler crash are also unchanged. These are observations from the main baseline, not newly introduced regressions and not claimed fixed by this unit.
 
-The complete machine-readable artifacts are [before](method-values-before.json) and [after](method-values-after.json), including per-directory counts, refusal/skip/crash/failure reasons and every passing path. The survey totals include skipped tests; neither command limited the attempted cases.
+The complete machine-readable artifacts are before (external run evidence) and after (external run evidence), including per-directory counts, refusal/skip/crash/failure reasons and every passing path. The survey totals include skipped tests; neither command limited the attempted cases.
 
 Output-file creation-to-final-write intervals were approximately 392 seconds before and 881 seconds after, including startup. The after run overlapped the full uncached repository gate. These artifact timestamps measure the runs' elapsed time under different load, not a compiler speed comparison.
 

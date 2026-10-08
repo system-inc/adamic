@@ -4,8 +4,9 @@ import os
 import subprocess
 
 root = Path(__file__).resolve().parents[2]
-logs = root / 'stage3/interface-downcasts/logs'
-logs.mkdir(exist_ok=True)
+logs = Path(os.environ.get('ADAMIC_INTERFACE_MUTANT_LOGS', '/workspace/interface-downcast-primitive-mutants')).resolve()
+assert logs != root and root not in logs.parents, 'run output must stay outside the checkout'
+logs.mkdir(parents=True, exist_ok=True)
 mutants = [
  ('drop-view-read', 'internal/native/emit_expressions.go', '\t\tif expression.View != "" {\n\t\t\treturn e.viewField(expression)\n\t\t}\n', '', 'TestRequiredViewFieldPrimitive/wrong_type', 'exit codes differ'),
  ('drop-view-initialization', 'internal/native/runtime/object.c', 'slot == NULL || !adamic_object_initialized(object)[cache->index]', 'slot == NULL', 'TestRequiredViewFieldPrimitive/uninitialized', 'exit codes differ'),

@@ -1,6 +1,7 @@
 package yaml
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"os"

@@ -217,6 +217,11 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
+		// Preserve the library optional-field explanation before the mutable-view check.
+		if err := l.refuseOptionalWidening(node); err != nil {
+			found = err
+			return true
+		}
 		// Prefer the writable-slot explanation when both a mutable view and nominal ancestry fail.
 		// A checked cast relates only members selected by its tag, not excluded source members.
 		if !checkedCast {
@@ -224,10 +229,6 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				found = err
 				return true
 			}
-		}
-		if err := l.refuseOptionalWidening(node); err != nil {
-			found = err
-			return true
 		}
 		if err := l.classViewRefusal(node); err != nil {
 			found = err

@@ -6,11 +6,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / 'internal/lower/interface_cast.go'
-LOGS = ROOT / 'stage3/interface-downcasts/logs'
+LOGS = Path(os.environ.get('ADAMIC_INTERFACE_MUTANT_LOGS', '/workspace/interface-downcast-mutants')).resolve()
+assert LOGS != ROOT and ROOT not in LOGS.parents, 'run output must stay outside the checkout'
 
 
 def main():
-    LOGS.mkdir(exist_ok=True)
+    LOGS.mkdir(parents=True, exist_ok=True)
     original = SOURCE.read_text()
     tests = [
         ('tag-only', 'if err := l.interfaceConstructions(node, target, field, literal); err != nil {', 'if err := error(nil); err != nil {', './internal/oracle', '^TestInterfaceCastRefusesMalformed$', 'construction check must refuse', 'accepted mutant emitted and built valid C'),
@@ -29,7 +30,7 @@ def main():
             text = log.read_text()
             if result.returncode == 0 or expected not in text or detail not in text or '[build failed]' in text or 'Sanitizer' in text:
                 raise RuntimeError(f'{name}: mutant was not killed by its intended semantic assertion; inspect {log}')
-            print(f'{name}: caught by intended assertion, go test exit {result.returncode}; {log.relative_to(ROOT)}', flush=True)
+            print(f'{name}: caught by intended assertion, go test exit {result.returncode}; {log}', flush=True)
             SOURCE.write_text(original)
     finally:
         SOURCE.write_text(original)

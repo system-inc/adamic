@@ -472,7 +472,7 @@ func (l *lowering) nodeFSFileReadOnlyArgument(node *ast.Node) bool {
 	default:
 		return false
 	}
-	return len(call.Arguments.Nodes) > index && call.Arguments.Nodes[index] == outer
+	return len(call.Arguments.Nodes) > index && call.Arguments.Nodes[index] == outer && l.nodeHostConsumesArgument(outer.Parent, index)
 }
 
 func init() {

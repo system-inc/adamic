@@ -343,6 +343,19 @@ _Static_assert(__atomic_always_lock_free(sizeof(uint64_t), 0), "slot cache requi
 // slot indices are simply not cached; shape addresses outside 48 bits are refused.
 void adamic_slot_cache_store(adamic_slot_cache *cache, const adamic_shape *shape, size_t index);
 
+
+// Captured stack storage is outside the physical shape and has a fixed string representation.
+static inline unsigned char adamic_object_slot_type(const adamic_object *object, const adamic_value *slot) {
+ if (slot == &object->captured_stack) { return 3; }
+ return adamic_object_field_types(object)[(size_t)(slot - object->slots)];
+}
+static inline void adamic_object_set_slot_type(adamic_object *object, const adamic_value *slot, unsigned char type) {
+ if (slot != &object->captured_stack) { adamic_object_field_types(object)[(size_t)(slot - object->slots)] = type; }
+}
+static inline void adamic_object_set_slot_initialized(adamic_object *object, const adamic_value *slot, bool initialized) {
+ if (slot != &object->captured_stack) { adamic_object_initialized(object)[(size_t)(slot - object->slots)] = initialized; }
+}
+
 adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression);
 adamic_value adamic_object_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);
 void adamic_view_literal_failure(const char *expression, const char *expected, unsigned char type, adamic_value value);

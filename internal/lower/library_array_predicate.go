@@ -32,6 +32,10 @@ func (l *lowering) arrayIsArray(node *ast.Node) (ir.Expression, bool, error) {
 	if static {
 		return l.libraryArrayIsArray(node)
 	}
+	proven := l.checker.GetTypeAtLocation(argument)
+	if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsUnknown|checker.TypeFlagsAny|checker.TypeFlagsTypeParameter) == 0 && (l.checker.IsArrayType(proven) || proven.Flags()&(checker.TypeFlagsNumberLike|checker.TypeFlagsStringLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 || l.libraryArrayExactShape(argument)) {
+		return l.libraryArrayIsArray(node)
+	}
 
 	if !l.arrayPredicateDomain(l.checker.GetTypeAtLocation(argument)) && !l.exactObject(argument, 0) {
 		return nil, true, l.notYet(argument, "Array.isArray on a tuple or an erased object/any/unknown view")

@@ -1,9 +1,0 @@
-=== RUN   TestRequiredViewFieldOperandOnce
-    view_fields_test.go:114: operand evaluated more than once: stdout differs; got oracle.run{stdout:[]uint8{0x37, 0xa, 0x32, 0xa}, stderr:[]uint8{}, exitCode:0}
---- FAIL: TestRequiredViewFieldOperandOnce (0.40s)
-FAIL
-gate cache: native hits=0 misses=0
-gate cache: node hits=0 misses=2
-gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	0.407s
-FAIL

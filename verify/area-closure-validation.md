@@ -93,6 +93,6 @@ bash verify/catalog/check.sh 5c104a61e1156aa7a3cc14844df4f32d0fa76ee4 -jobs 1
 Exit 0, 283.391s. All eleven active entries report
 `applies-and-fails-as-recorded`; the five historical skips are not reassessed.
 The full per-entry timing/status manifest is
-[catalog/logs/compiler-area-closure-results.json](catalog/logs/compiler-area-closure-results.json).
+catalog/logs/compiler-area-closure-results.json (external run evidence).
 The catalog's exact named commands, expected failing subtests and diagnostics
 remain in catalog.json. No compiler production code changed in this refresh.

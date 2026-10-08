@@ -196,7 +196,7 @@ adamic_value *adamic_object_read(const adamic_object *object, const char *name, 
 void adamic_object_set_initialized(adamic_object *object, const char *name, bool initialized) {
 	adamic_slot_cache cache = {0};
 	adamic_value *slot = adamic_object_field(object, name, &cache);
-	adamic_object_initialized(object)[(size_t)(slot - object->slots)] = initialized;
+	adamic_object_set_slot_initialized(object, slot, initialized);
 }
 
 // Required-field contract checks use the shared readiness bitmap. Representation evidence is
@@ -258,7 +258,7 @@ void adamic_view_literal_failure(const char *expression, const char *expected, u
 void adamic_object_view_write(adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression) {
 	adamic_value *slot = adamic_object_optional_field(object, name, cache);
 	if (slot != NULL) {
-		unsigned char actual = adamic_object_field_types(object)[(size_t)(slot - object->slots)];
+		unsigned char actual = adamic_object_slot_type(object, slot);
 		if (actual == wanted || (actual == 10 && wanted <= 2) || (actual == 7 && wanted == 1)) { return; }
 	}
 	(void)adamic_object_view(object, name, cache, wanted, type, expression);

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build each input.c mutant in scratch; never mutate the checkout."""
-import json, pathlib, shutil, subprocess
-root=pathlib.Path.cwd(); scratch=pathlib.Path('/tmp/decode-ascii/mutants');scratch.mkdir(parents=True,exist_ok=True)
+import json, os, pathlib, shutil, subprocess
+root=pathlib.Path.cwd(); scratch=pathlib.Path(os.environ.get('ADAMIC_DECODE_MUTANT_OUTPUT', '/workspace/decode-ascii-mutants')).resolve(); assert scratch != root and root.resolve() not in scratch.parents; scratch.mkdir(parents=True,exist_ok=True)
 runtime=root/'internal/native/runtime'; text=(runtime/'input.c').read_text()
 mutants={
  'byte-80-ascii':text.replace('bytes[offset] < 0x80','bytes[offset] <= 0x80'),
@@ -29,4 +29,4 @@ for name,mutant in mutants.items():
  assert result.returncode!=0 and catcher in output,(name,result.returncode,output)
  if name!='word-past-end':assert 'AddressSanitizer' not in output,output
  results.append(dict(mutant=name,exit=result.returncode,catcher=catcher,log=str(directory/'run.log')));print(results[-1])
-(root/'cloud/reports/decode-ascii/cache-mutants.json').write_text(json.dumps(results,indent=2)+'\n')
+(scratch/'cache-mutants.json').write_text(json.dumps(results,indent=2)+'\n')

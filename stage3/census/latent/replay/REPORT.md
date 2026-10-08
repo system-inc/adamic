@@ -22,7 +22,7 @@ kind and reason. The worker always checks the no-output loader and lowerer guard
 ## Observed results
 
 All 81 entry-reach source hashes matched
-`stage3/meter/runs/20261008T035244Z.latent-full/tsc/source-manifest.json` after
+the external latent-full source manifest after
 `bash stage3/apply.sh /tmp/census-replay-adapted` completed. The checker retained
 324 diagnostics. No source reduction or binding/declaration deletion was used.
 
@@ -40,7 +40,7 @@ Each command was `go run ./stage3/census/latent/replay -project
 measured around the entire subprocess, including the outer Go invocation,
 overlay generation and worker compilation. The first invocation rebuilt the
 worker; the later ones reused Go's cache. These are single observations, not
-statistical benchmarks. [timings.json](evidence/timings.json) preserves the exact
+statistical benchmarks. timings.json (external run evidence) preserves the exact
 argument arrays and printed durations.
 
 The full run used the existing entry overlay and the same sources:
@@ -59,7 +59,7 @@ The parent then asserted that each replay's complete findings array equals the
 unfiltered census's findings for its selected unit, with the same order and
 measurement labels. All three comparisons passed. The complete census observations
 remain at `/tmp/census-replay-full.jsonl`; the committed
-[measurement log](evidence/measurement.log.txt) records these assertions and times.
+measurement log (external run evidence) records these assertions and times.
 
 ## Tests and mutant
 
@@ -89,8 +89,8 @@ The counts check printed `ok github.com/system-inc/adamic/internal/oracle
 65.443s`, exit 0. `counts.md` did not change; the synthetic measurement inputs are
 created under a temporary directory and are not oracle fixtures. Focused vet,
 `gofmt -l` for the two `.go` entries, and `git diff --check` produced no output.
-Raw [test](evidence/tests.log.txt), [mutant](evidence/parent-sibling-mutant.log.txt)
-and [counts](evidence/counts.log.txt) output is committed.
+Raw test (external run evidence), mutant (external run evidence)
+and counts (external run evidence) output is committed.
 
 ## Setup and limits
 
@@ -100,7 +100,7 @@ markdown dependencies installed step 0.655s and ready 0.736s, submodules ready
 147.171s, Go build ready 453.980s, test binaries deferred 454.369s, build cache
 warm 454.371s, done 454.431s. `nproc` was 5, with a four-CPU cgroup quota.
 The printed `/workspace/adamic-tools/env.sh` was sourced for builds and tests.
-No setup workaround was needed. [setup.log.txt](evidence/setup.log.txt) retains
+No setup workaround was needed. setup.log.txt (external run evidence) retains
 all timing lines and tool versions.
 
 Replay is an observation command. Scan-only findings and a finding observed in a

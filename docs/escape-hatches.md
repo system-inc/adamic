@@ -1156,7 +1156,7 @@ The pinned assertions ledger target audit yields zero eligible complete contract
 19 of 1,758 tagged targets have callable members, and 1,739 need broader field
 contracts; 71 of 1,178 untagged targets have callable members, 1,106 need broader
 contracts, and one otherwise scalar target still needs untagged admission. Exact
-locations, fields and types are in `stage3/interface-downcasts/default-contracts.json`.
+locations, fields and types are emitted by the contract audit to external run output.
 This is an outside-checker rejection upper bound, not an observation of compiling
 all tsc source files. It establishes 0/1,758 and 0/1,178 supported complete contracts;
 positive lowering coverage would require actual lowerer probes. No checked-read
@@ -1178,7 +1178,7 @@ kind; diagnostic type names are allocated once for the program. These are primit
 costs, not the requested post-erasure counts or release timings for tsc slices.
 
 The exact 69 cumulative latent refusals from `70456b7` are audited separately in
-`stage3/interface-downcasts/latent-targets.json`: 44 object targets without direct
+the external latent-target audit: 44 object targets without direct
 callable members, 18 unions, 3 objects with direct callable members, 2 type parameters,
 1 array and 1 scalar/other target. Inherited array/string methods are separated from
 callable object contracts. This is the baseline on a checker-rejected program, not
