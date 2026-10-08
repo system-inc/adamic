@@ -6,6 +6,8 @@ import { importProjection } from './bindings.a';
 import { bindingsOf } from '../../helpers/imports/bindings_of.a';
 import { importedNameOf } from '../../helpers/imports/imported_name_of.a';
 
+const defaultEntries: Deprecation[] = deprecations('React');
+
 function asciiSpace(code: number): boolean { return code === 32 || (code >= 9 && code <= 13); }
 function identifier(name: string): boolean {
     if(name === '') { return false; }
@@ -45,9 +47,11 @@ function moduleName(source: string): string {
 function baseName(name: string): boolean { return name === 'Component' || name === 'PureComponent'; }
 export class Rule {
     readonly context: RuleContext;
-    entries: Deprecation[] = [];
+    entries: Deprecation[] = defaultEntries;
     constructor(context: RuleContext) { this.context = context; }
     prepare(root: number): void {
+        // No annotation can exist without its marker, including in comments.
+        if(!this.context.source.includes('@jsx')) { return; }
         let pragma = 'React';
         for(const comment of fileComments(this.context, this.context.node(root))) {
             let text = comment.text.slice(2);
@@ -57,7 +61,7 @@ export class Rule {
             pragma = identifier(candidate) ? candidate : 'React';
             break;
         }
-        this.entries = deprecations(pragma);
+        this.entries = pragma === 'React' ? defaultEntries : deprecations(pragma);
     }
     report(index: number, name: string): void {
         for(const entry of this.entries) {
