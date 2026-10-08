@@ -1,0 +1,54 @@
+{
+  "top_level": {
+    "pass": 32,
+    "skip": 1,
+    "fail": 2
+  },
+  "registry_mutants": 75,
+  "native_owned_suites": {
+    "TestWave11AgreementAndMutants": {
+      "seconds": 120.16,
+      "log": "owned.log"
+    },
+    "TestWave11ThirdAgreementAndMutants": {
+      "seconds": 128.13,
+      "log": "owned.log"
+    },
+    "TestWave11FifthAgreementAndMutants": {
+      "seconds": 215.25,
+      "log": "owned-retry.log"
+    },
+    "TestWave11FourthAgreementAndMutants": {
+      "seconds": 133.56,
+      "log": "owned-retry.log"
+    },
+    "TestWave11EighthAgreementAndMutants": {
+      "seconds": 144.11,
+      "log": "owned-final.log"
+    },
+    "TestWave11ListenerDeclarationsAndMutants": {
+      "seconds": 83.82,
+      "log": "remaining.log"
+    },
+    "TestWave11NextAgreementAndMutants": {
+      "seconds": 556.82,
+      "log": "last-two.log"
+    },
+    "TestWave11SeventhAgreementAndMutants": {
+      "seconds": 89.63,
+      "log": "last-two.log"
+    }
+  },
+  "implemented_native_rules": 21,
+  "parked_native_rules": 4,
+  "legacy_node_javascript_certified": false,
+  "benchmark_retries": {
+    "TestThroughput": "PASS 109.97s",
+    "TestJsxLintReleaseAndThroughput": "PASS 130.49s"
+  },
+  "skip": "TestCheckerBridgeRefusalPending",
+  "failures": [
+    "TestJsxLintReleaseAndThroughput",
+    "TestThroughput"
+  ]
+}

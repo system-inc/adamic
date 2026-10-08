@@ -1,0 +1,1 @@
+const rx = /x/; rx.test('x'); for (const key in [1]) {}
