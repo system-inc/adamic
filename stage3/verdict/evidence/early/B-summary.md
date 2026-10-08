@@ -4,7 +4,7 @@
 |---|---:|---:|---:|---:|
 | acceptance | 300 | 1 | 0 | 0 |
 | tiny | 0 | 1 | 0 | 0 |
-| baselines | 6261 | 1 | 6182 | 0 |
+| baselines | 39 | 1 | 6539 | 5865 |
 
 Acceptance includes tiny; the separate tiny row repeats that project.
 

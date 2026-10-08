@@ -10,7 +10,7 @@
       "failed": 0,
       "excluded": 0,
       "failures": [],
-      "seconds": 53.387
+      "seconds": 79.186
     },
     "tiny": {
       "total": 1,
@@ -18,21 +18,21 @@
       "failed": 0,
       "excluded": 0,
       "failures": [],
-      "seconds": 0.318
+      "seconds": 0.907
     },
     "baselines": {
-      "total": 6262,
-      "passed": 6262,
+      "total": 40,
+      "passed": 40,
       "failed": 0,
-      "excluded": 6182,
-      "deferred": 0,
+      "excluded": 6539,
+      "deferred": 5865,
       "census_total": 12444,
       "exclusion_reasons": {
         "TS18027 is an emit-resolver diagnostic outside noEmit": 1,
         "declaration diagnostics require emit, outside noEmit subset": 1034,
-        "diagnostics outside the single source require virtual host paths": 2,
         "filename: virtual units and root-file selection are not implemented": 1488,
-        "global or non-file diagnostics: CLI configuration context differs": 78,
+        "global or non-file diagnostics: CLI configuration context differs": 74,
+        "initial scope bound: more than 80 lines or 8192 bytes": 425,
         "non-UTF8 source encoding outside materializer scope": 7,
         "option variants @allowimportingtsextensions: true,false": 1,
         "option variants @alwaysstrict: true, false": 48,
@@ -135,9 +135,9 @@
         "option variants @target: esnext,es2022,es2017,es2015,es5": 12,
         "option variants @target: esnext,es5": 1,
         "option variants @useunknownincatchvariables: true,false": 1,
-        "references or external module specifiers require host resolution": 240,
+        "references or external module specifiers require host resolution": 205,
         "stock parser syntax errors: API and CLI diagnostic collection differ": 11,
-        "syntax diagnostic baseline: API collects errors that CLI suppresses": 960,
+        "syntax diagnostic baseline: API collects errors that CLI suppresses": 933,
         "unsupported directive @allowarbitraryextensions: true": 2,
         "unsupported directive @allowarbitraryextensions: true,false": 2,
         "unsupported directive @baseurl: /": 2,
@@ -235,7 +235,7 @@
         "unsupported directive @usecasesensitivefilenames: true": 3
       },
       "failures": [],
-      "seconds": 1107.062
+      "seconds": 15.243
     }
   },
   "harness_errors": []

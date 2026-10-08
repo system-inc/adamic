@@ -29,10 +29,12 @@ def first_difference(expected, actual):
             'actual_context': repr(actual[start:offset + 80])}
 
 
-def compare(folder, expected):
+def compare(folder, expected, actual_overrides=None):
     differences = {}
     for stream, wanted in expected.items():
-        actual = (folder / ('actual.' + stream)).read_bytes()
+        actual = (actual_overrides or {}).get(stream)
+        if actual is None:
+            actual = (folder / ('actual.' + stream)).read_bytes()
         if wanted != actual:
             differences[stream] = first_difference(wanted, actual)
     return differences
@@ -83,12 +85,27 @@ def upstream_tree(output):
     return tree
 
 
+def baseline_diagnostics(stdout, folder):
+    # Upstream removeTestPathPrefixes strips /.src/ everywhere in the summary.
+    # Map only this case's equivalent real root; preserve all other path bytes.
+    return stdout.replace((str(folder) + '/').encode(), b'')
+
+
+def validate_manifest(manifest):
+    rows = manifest['cases'] + manifest['exclusions']
+    if (manifest['upstream_commit'] != PIN
+            or manifest['selected'] != len(manifest['cases'])
+            or manifest['excluded'] != len(manifest['exclusions'])
+            or manifest['total'] != len(rows)
+            or len({row['source'] for row in rows}) != len(rows)):
+        raise RuntimeError('invalid baseline census')
+
+
 def baseline_suite(binary, tree, output, limit):
     started = time.monotonic()
     output.mkdir()
     manifest = json.loads((ROOT / 'selection.json').read_text())
-    if manifest['upstream_commit'] != PIN or manifest['total'] != manifest['selected'] + manifest['excluded']:
-        raise RuntimeError('invalid baseline census')
+    validate_manifest(manifest)
     rows = manifest['cases'] if limit is None else manifest['cases'][:limit]
     if not rows:
         raise RuntimeError('empty baseline suite')
@@ -131,7 +148,9 @@ def baseline_suite(binary, tree, output, limit):
         wanted = {'stdout': expected, 'stderr': b'', 'exit': b'2\n' if expected else b'0\n'}
         for suffix, value in wanted.items():
             (folder / ('expected.' + suffix)).write_bytes(value)
-        differences = compare(folder, wanted)
+        diagnostics = baseline_diagnostics((folder / 'actual.stdout').read_bytes(), folder)
+        (folder / 'actual.diagnostics').write_bytes(diagnostics)
+        differences = compare(folder, wanted, {'stdout': diagnostics})
         if timed_out:
             differences['timeout'] = {'seconds': float(os.environ.get('TSC_TIMEOUT', '60'))}
         return {'case': row['source'], 'capture': folder.name, 'differences': differences} if differences else None

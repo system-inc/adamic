@@ -1,38 +1,64 @@
 {
   "schema_version": 1,
-  "tsc": "/workspace/adamic/stage3/verdict/standins/node.sh",
+  "tsc": "/workspace/adamic/stage3/verdict/standins/mutant.sh",
   "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
-  "success": true,
+  "success": false,
   "suites": {
     "acceptance": {
       "total": 301,
-      "passed": 301,
-      "failed": 0,
+      "passed": 300,
+      "failed": 1,
       "excluded": 0,
-      "failures": [],
-      "seconds": 53.387
+      "failures": [
+        {
+          "case": "tiny",
+          "differences": {
+            "stdout": {
+              "byte_offset": 18,
+              "expected_size": 192,
+              "actual_size": 192,
+              "expected_context": "b\"argument.ts(2,6): error TS2345: Argument of type 'string' is not assignable to parameter of type '\"",
+              "actual_context": "b\"argument.ts(2,6): Error TS2345: Argument of type 'string' is not assignable to parameter of type '\""
+            }
+          }
+        }
+      ],
+      "seconds": 118.396
     },
     "tiny": {
       "total": 1,
-      "passed": 1,
-      "failed": 0,
+      "passed": 0,
+      "failed": 1,
       "excluded": 0,
-      "failures": [],
-      "seconds": 0.318
+      "failures": [
+        {
+          "case": "tiny",
+          "differences": {
+            "stdout": {
+              "byte_offset": 18,
+              "expected_size": 192,
+              "actual_size": 192,
+              "expected_context": "b\"argument.ts(2,6): error TS2345: Argument of type 'string' is not assignable to parameter of type '\"",
+              "actual_context": "b\"argument.ts(2,6): Error TS2345: Argument of type 'string' is not assignable to parameter of type '\""
+            }
+          }
+        }
+      ],
+      "seconds": 1.145
     },
     "baselines": {
-      "total": 6262,
-      "passed": 6262,
-      "failed": 0,
-      "excluded": 6182,
-      "deferred": 0,
+      "total": 40,
+      "passed": 39,
+      "failed": 1,
+      "excluded": 6539,
+      "deferred": 5865,
       "census_total": 12444,
       "exclusion_reasons": {
         "TS18027 is an emit-resolver diagnostic outside noEmit": 1,
         "declaration diagnostics require emit, outside noEmit subset": 1034,
-        "diagnostics outside the single source require virtual host paths": 2,
         "filename: virtual units and root-file selection are not implemented": 1488,
-        "global or non-file diagnostics: CLI configuration context differs": 78,
+        "global or non-file diagnostics: CLI configuration context differs": 74,
+        "initial scope bound: more than 80 lines or 8192 bytes": 425,
         "non-UTF8 source encoding outside materializer scope": 7,
         "option variants @allowimportingtsextensions: true,false": 1,
         "option variants @alwaysstrict: true, false": 48,
@@ -135,9 +161,9 @@
         "option variants @target: esnext,es2022,es2017,es2015,es5": 12,
         "option variants @target: esnext,es5": 1,
         "option variants @useunknownincatchvariables: true,false": 1,
-        "references or external module specifiers require host resolution": 240,
+        "references or external module specifiers require host resolution": 205,
         "stock parser syntax errors: API and CLI diagnostic collection differ": 11,
-        "syntax diagnostic baseline: API collects errors that CLI suppresses": 960,
+        "syntax diagnostic baseline: API collects errors that CLI suppresses": 933,
         "unsupported directive @allowarbitraryextensions: true": 2,
         "unsupported directive @allowarbitraryextensions: true,false": 2,
         "unsupported directive @baseurl: /": 2,
@@ -234,8 +260,22 @@
         "unsupported directive @usecasesensitivefilenames: false": 2,
         "unsupported directive @usecasesensitivefilenames: true": 3
       },
-      "failures": [],
-      "seconds": 1107.062
+      "failures": [
+        {
+          "case": "tests/cases/compiler/ArrowFunctionExpression1.ts",
+          "capture": "00002_ArrowFunctionExpression1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 35,
+              "expected_size": 119,
+              "actual_size": 119,
+              "expected_context": "b'ArrowFunctionExpression1.ts(1,10): error TS2369: A parameter property is only allowed in a constructor implementati'",
+              "actual_context": "b'ArrowFunctionExpression1.ts(1,10): Error TS2369: A parameter property is only allowed in a constructor implementati'"
+            }
+          }
+        }
+      ],
+      "seconds": 15.648
     }
   },
   "harness_errors": []

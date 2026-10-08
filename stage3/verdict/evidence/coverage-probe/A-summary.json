@@ -2,7 +2,7 @@
   "schema_version": 1,
   "tsc": "/workspace/adamic/stage3/verdict/standins/node.sh",
   "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
-  "success": true,
+  "success": false,
   "suites": {
     "acceptance": {
       "total": 301,
@@ -10,7 +10,7 @@
       "failed": 0,
       "excluded": 0,
       "failures": [],
-      "seconds": 53.387
+      "seconds": 50.873
     },
     "tiny": {
       "total": 1,
@@ -18,19 +18,18 @@
       "failed": 0,
       "excluded": 0,
       "failures": [],
-      "seconds": 0.318
+      "seconds": 0.366
     },
     "baselines": {
-      "total": 6262,
+      "total": 6264,
       "passed": 6262,
-      "failed": 0,
-      "excluded": 6182,
+      "failed": 2,
+      "excluded": 6180,
       "deferred": 0,
       "census_total": 12444,
       "exclusion_reasons": {
         "TS18027 is an emit-resolver diagnostic outside noEmit": 1,
         "declaration diagnostics require emit, outside noEmit subset": 1034,
-        "diagnostics outside the single source require virtual host paths": 2,
         "filename: virtual units and root-file selection are not implemented": 1488,
         "global or non-file diagnostics: CLI configuration context differs": 78,
         "non-UTF8 source encoding outside materializer scope": 7,
@@ -234,8 +233,35 @@
         "unsupported directive @usecasesensitivefilenames: false": 2,
         "unsupported directive @usecasesensitivefilenames: true": 3
       },
-      "failures": [],
-      "seconds": 1107.062
+      "failures": [
+        {
+          "case": "tests/cases/conformance/types/members/duplicateNumericIndexers.ts",
+          "capture": "05710_duplicateNumericIndexers",
+          "differences": {
+            "stdout": {
+              "byte_offset": 0,
+              "expected_size": 1285,
+              "actual_size": 1380,
+              "expected_context": "b'duplicateNumericIndexers.ts(4,5): error TS2374: Duplicate index signature for ty'",
+              "actual_context": "b'../../../../stage3-verdict-adapted/built/local/lib.es5.d.ts(529,5): error TS2374'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/conformance/types/members/objectTypeHidingMembersOfExtendedObject.ts",
+          "capture": "05712_objectTypeHidingMembersOfExtendedObject",
+          "differences": {
+            "stdout": {
+              "byte_offset": 0,
+              "expected_size": 1113,
+              "actual_size": 1442,
+              "expected_context": "b\"objectTypeHidingMembersOfExtendedObject.ts(10,5): error TS2411: Property 'data' \"",
+              "actual_context": "b'../../../../stage3-verdict-adapted/built/local/lib.es5.d.ts(123,5): error TS2411'"
+            }
+          }
+        }
+      ],
+      "seconds": 1045.665
     }
   },
   "harness_errors": []

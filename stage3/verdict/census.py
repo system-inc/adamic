@@ -14,6 +14,13 @@ sys.path.insert(0, str(DRIVER))
 from corpus import PIN, HEADER, CANONICAL, METADATA, materialize, baseline_output
 
 
+DIAGNOSTIC_SOURCES = re.compile(rb'^([^\n]+?)\((?:\d+|--),(?:\d+|--)\):', re.M)
+
+
+def diagnostic_sources(summary):
+    return [name.decode() for name in DIAGNOSTIC_SOURCES.findall(summary)]
+
+
 def digest(raw):
     return hashlib.sha256(raw).hexdigest()
 
@@ -55,8 +62,6 @@ def select(tree, api):
                 break
         if reason is None and source.stem.lower() in variants:
             reason = 'variant errors baselines: configuration expansion is not implemented'
-        if reason is None and (len(raw) > 8192 or len(raw.splitlines()) > 80):
-            reason = 'initial scope bound: more than 80 lines or 8192 bytes'
         try:
             content, options = materialize(raw) if reason is None else ('', {})
         except ValueError as error:
@@ -71,8 +76,8 @@ def select(tree, api):
                 expected = baseline_output(baseline.read_bytes())
             except ValueError:
                 reason = 'global or non-file diagnostics: CLI configuration context differs'
-            names = re.findall(rb'^([^\n]+?)\(\d+,\d+\):', expected, re.M)
-            if any(name.decode() != source.name for name in names):
+            names = diagnostic_sources(expected)
+            if any(name != source.name for name in names):
                 reason = 'diagnostics outside the single source require virtual host paths'
             codes = list(map(int, re.findall(rb'error TS(\d+):', expected)))
             if any(code < 2000 for code in codes):

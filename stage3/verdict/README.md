@@ -40,10 +40,12 @@ expected streams as well. A timeout fails even if its partial output matches.
 `selection.json` enumerates every `.ts` and `.tsx` compiler/conformance case,
 recursively, at the pin. It records selected inputs and every excluded filename
 with its reason and source SHA256. Each run copies the exclusions and selection
-into `baselines/`. Exclusions are scope decisions, never compiler passes.
+into `baselines/`. Counts are input files; excluded option variants are not
+expanded into separate configurations. Exclusions are scope decisions, never
+compiler passes.
 Selection uses stock TypeScript's parser for syntax eligibility, never the tested
-binary's diagnostic results. The first version bounds sources to 80 lines and
-8192 bytes to make the first runnable measurement affordable.
+binary's diagnostic results. There is no source size bound. The early version
+bounded sources to 80 lines and 8192 bytes; that bound was removed after its runnable smoke proof was pushed.
 
 Supported single-valued compiler directives are the existing driver's
 `corpus.CANONICAL` allowlist. `materialize` follows upstream
@@ -59,7 +61,12 @@ binary's installation; missing or wrong libraries are observable failures.
 The upstream harness uses `getPreEmitDiagnostics` and emit diagnostics, and its
 `.errors.txt` also includes annotated source. We compare its initial diagnostic
 summary block, with only reference CRLF converted to Linux LF and one final
-newline. Actual output is never normalized. An absent baseline means clean,
+newline. Raw stdout is retained byte for byte. For this baseline suite only,
+`actual.diagnostics` removes the exact case scratch directory prefix, matching
+upstream `src/harness/util.ts:removeTestPathPrefixes`, which removes `/.src/`
+from the summary, including quoted module names. No other paths, filenames,
+locations, codes, text, spacing or actual newlines are normalized. Acceptance
+and tiny still compare entirely raw bytes. An absent baseline means clean,
 following upstream convention. Locations, diagnostic codes, message chains,
 ordering and spacing must match. Baseline exit is 0 when clean, 2 on diagnostics.
 
@@ -67,8 +74,9 @@ The first version excludes virtual `@filename` units, all external module
 specifiers and triple-slash references, option variants, unsupported directives
 (including symlinks, currentDirectory, baselineFile and captureSuggestions),
 declaration emit, syntax-error inputs, non-file/global diagnostic summaries,
-diagnostics outside the single source, TS18027 emit-resolver errors, non-UTF8
-sources, and the explicit size bound. These exclusions avoid claiming CLI
+diagnostics outside the single source (including standard-library `(--,--)`
+placeholders), TS18027 emit-resolver errors, non-UTF8
+sources. These exclusions avoid claiming CLI
 faithfulness for the API/virtual-host scenarios not implemented here. It does
 not compare annotated source, emitted JS, types/symbols, suggestions or traces.
 `--baseline-limit N` is an explicit smoke mode; it reports eligible but unrun
@@ -111,4 +119,13 @@ PYTHONDONTWRITEBYTECODE=1 python3 stage3/verdict/test_verdict.py > /tmp/verdict-
 ```
 
 These independently mutate stdout, stderr and exit, and exercise differences at
-EOF. No Adamic oracle fixtures are added, so its counts table is unchanged.
+EOF. Census mutants change the pin, selected/excluded counts and source uniqueness;
+each is rejected. Artifact-pin mutants append a byte to a source and a baseline
+in a disposable checkout, prove the SHA256 guard rejects them, and restore them:
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 python3 stage3/verdict/audit_mutants.py /absolute/disposable-pinned-tree > /tmp/pin-mutants.log 2>&1
+```
+
+Use a separate checkout for these mutants, never a tree serving another run.
+No Adamic oracle fixtures are added, so its counts table is unchanged.
