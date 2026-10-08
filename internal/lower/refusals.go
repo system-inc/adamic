@@ -188,8 +188,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if node.Kind == ast.KindIdentifier && node.Text() == "arguments" {
 			// JavaScript's arguments object, not a variable the program named arguments.
 			if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && len(symbol.Declarations) == 0 {
-				found = &Refused{Where: l.program.Where(node), What: "arguments", Fix: "name the parameters, or take a rest parameter"}
-				return true
+				if err := l.argumentsRefusal(node); err != nil {
+					found = err
+					return true
+				}
 			}
 		}
 		if (node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression) && !called(node) {

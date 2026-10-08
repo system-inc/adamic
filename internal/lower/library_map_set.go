@@ -205,7 +205,7 @@ func (l *lowering) libraryForEachThisArg(node, receiver *ast.Node, set bool) (ir
 	if slotless(returns) {
 		return nil, true, l.notYet(node, "forEach with a callback result held in more than one word")
 	}
-	function.Body = []ir.Statement{ir.Evaluate{Value: ir.MapForEach{Map: ir.Read{Local: function.Parameters[0], Of: ir.Map}, Callback: ir.Read{Local: function.Parameters[1], Of: ir.Closure}, Key: key, Value: value, Set: set, Returns: returns}}}
+	function.Body = []ir.Statement{ir.Evaluate{Value: ir.MapForEach{Map: ir.Read{Local: function.Parameters[0], Of: ir.Map}, Callback: ir.Read{Local: function.Parameters[1], Of: ir.Closure}, Key: key, Value: value, Set: set, Returns: returns, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())}}}
 	l.result.Functions = append(l.result.Functions, function)
 	return ir.Call{Function: index, Arguments: values}, true, nil
 }

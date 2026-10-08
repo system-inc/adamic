@@ -493,6 +493,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	if value, known, err := l.processValue(node); known {
 		return value, err
 	}
+	if l.isArgumentsLength(node) {
+		return l.readArgumentsCount(), nil
+	}
 	if value, known, err := l.enumExpression(node); known {
 		return value, err
 	}
@@ -1093,21 +1096,12 @@ func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expr
 	if rest := l.censusRestDeclaration(function); rest != nil {
 		return l.censusRestCall(call, function, rest)
 	}
-
-	arguments := []ir.Expression{}
-	for _, argument := range call.Arguments.Nodes {
-		lowered, err := l.expression(argument)
-		if err != nil {
-			return nil, err
-		}
-		arguments = append(arguments, lowered)
+	arguments, spread, err := l.callArguments(call.Arguments.Nodes)
+	if err != nil {
+		return nil, err
 	}
-	for index, parameter := range l.result.Functions[function].Parameters {
-		if index < len(arguments) && l.result.Locals[parameter].Type == ir.Union {
-			arguments[index] = fit(arguments[index], ir.Union)
-		}
-	}
-	return l.censusOverloadResult(call, ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns})
+	l.fitCallArguments(function, arguments, spread)
+	return l.censusOverloadResult(call, ir.Call{Function: function, Arguments: arguments, Spread: spread, Returns: l.result.Functions[function].Returns})
 }
 
 // coalesce lowers value ?? fallback, and value ?? panic('why'), evaluating the right side only when
@@ -1171,10 +1165,9 @@ func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 	return ir.MakeClosure{Function: index}, nil
 }
 
-// functionValue lowers a module function read as a value rather than called: a function value whose
-// code forwards its arguments to the function, made once for each function read so, before the
-// program runs. Its closure receives omitted arguments as undefined before forwarding them;
-// the declared function retains its ordinary default-parameter prologue.
+// functionValue makes one stable adapter per named function. It binds optional
+// and rest parameters and forwards the original count, even though its ordinary
+// parameters have been padded or collected before reaching the target.
 func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {
 	symbol := l.symbol(node)
 	if node.Kind == ast.KindShorthandPropertyAssignment {
@@ -1194,21 +1187,12 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 	if held, isMade := l.forwarders[target]; isMade {
 		return ir.Read{Local: held, Of: ir.Closure}, nil
 	}
-	for _, parameter := range symbol.Declarations[0].Parameters() {
-		if parameter.Name().Text() == "this" {
-			return nil, l.notYet(parameter, "a function with a this parameter used as a value; pass the receiver explicitly or use an arrow")
-		}
-		declared := parameter.AsParameterDeclaration()
-		if declared.DotDotDotToken != nil {
-			return nil, l.notYet(node, "a function with a rest parameter, as a value")
-		}
-	}
 	callee := l.result.Functions[target]
 	if censusCallableSlotless(callee.Returns) {
 		return nil, l.notYet(node, "a function value returning "+typeName(callee.Returns))
 	}
 	index := len(l.result.Functions)
-	forwarder := ir.Function{Name: callee.Name + "_value", Closure: true, Returns: callee.Returns}
+	forwarder := ir.Function{Name: callee.Name + "_value", Closure: true, Returns: callee.Returns, RestElement: callee.RestElement, ForwardsArguments: target + 1}
 	arguments := []ir.Expression{}
 	for _, parameter := range callee.Parameters {
 		declared := l.result.Locals[parameter]
@@ -1220,13 +1204,14 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 		forwarder.Parameters = append(forwarder.Parameters, local)
 		arguments = append(arguments, ir.Read{Local: local, Of: declared.Type})
 	}
-	call := ir.Call{Function: target, Arguments: arguments, Returns: callee.Returns}
+	call := ir.Call{Function: target, Arguments: arguments, Returns: callee.Returns, ForwardCount: true, RestPacked: true}
 	if callee.Returns == 0 {
 		forwarder.Body = []ir.Statement{ir.Evaluate{Value: call}}
 	} else {
 		forwarder.Body = []ir.Statement{ir.Return{Value: call}}
 	}
 	l.result.Functions = append(l.result.Functions, forwarder)
+	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node)), function: index, node: node})
 	// One function value for the function, made before anything runs and held by a global of its
 	// own, so reading the function twice gives the same value, === as JavaScript's.
 	held := len(l.result.Locals)
@@ -1276,13 +1261,9 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		property.Method = true
 		closure = property
 	}
-	arguments := []ir.Expression{}
-	for _, argument := range node.AsCallExpression().Arguments.Nodes {
-		lowered, err := l.expression(argument)
-		if err != nil {
-			return nil, err
-		}
-		arguments = append(arguments, lowered)
+	arguments, spread, err := l.callArguments(node.AsCallExpression().Arguments.Nodes)
+	if err != nil {
+		return nil, err
 	}
 	var returns ir.Type
 	if result := l.checker.GetTypeAtLocation(node); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
@@ -1294,18 +1275,38 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	// Each argument is made what the function value takes: a number or undefined where it takes
 	// number | undefined is packed as one.
 	if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall); len(signatures) == 1 {
-		for index, parameter := range signatures[0].Parameters() {
-			takes, isKnown := l.censusCallableParameter(parameter)
-			if !isKnown {
-				return nil, l.notYet(node, "a function value parameter without a runtime representation")
+		parameters := signatures[0].Parameters()
+		position := 0
+		expanded := false
+		for index := range arguments {
+			if len(spread) > index && spread[index] {
+				expanded = true
+				continue
 			}
-			if index >= len(arguments) {
-				// The checker accepted an omitted optional argument. A native closure reads every
-				// declared parameter slot, so absence must be supplied as typed undefined.
-				arguments = append(arguments, fit(ir.Undefined{}, takes))
-			} else {
+			if len(parameters) == 0 {
+				break
+			}
+			parameter := parameters[min(position, len(parameters)-1)]
+			rest := len(parameter.Declarations) > 0 && parameter.Declarations[0].Kind == ast.KindParameter && parameter.Declarations[0].AsParameterDeclaration().DotDotDotToken != nil
+			proven := l.checker.GetTypeOfSymbol(parameter)
+			if rest {
+				elements := l.checker.GetTypeArguments(proven)
+				if len(elements) == 1 {
+					proven = elements[0]
+				}
+			} else if expanded || position >= len(parameters) {
+				position++
+				continue
+			}
+			if takes, known := l.representation(proven); known {
+				// The checker describes a defaulted parameter by its present type,
+				// but its incoming slot must preserve undefined until the body runs.
+				if !rest && len(parameter.Declarations) > 0 && parameter.Declarations[0].Kind == ast.KindParameter && parameter.Declarations[0].AsParameterDeclaration().Initializer != nil {
+					takes = ir.Maybe(takes)
+				}
 				arguments[index] = fit(arguments[index], takes)
 			}
+			position++
 		}
 	}
 	for _, argument := range arguments {
@@ -1316,5 +1317,5 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	if censusCallableSlotless(returns) {
 		return nil, l.notYet(node, "a function value returning "+typeName(returns))
 	}
-	return ir.CallClosure{Closure: closure, Arguments: arguments, Returns: returns}, nil
+	return ir.CallClosure{Closure: closure, Arguments: arguments, Spread: spread, FunctionType: int(l.concrete(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)).Id()), Returns: returns}, nil
 }

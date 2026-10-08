@@ -25,9 +25,14 @@ func (e *emitter) accessorDeclarations(builder *strings.Builder, classID int, cl
 				self = "adamic_retain(object)"
 			}
 			if function.Closure {
-				fmt.Fprintf(builder, "\tadamic_slot_cache cache = {NULL, 0};\n\tadamic_closure *closure = adamic_object_field(object, %s, &cache)->reference;\n\treturn %s(closure, (adamic_value[]){{.reference = %s}}, 1);\n", cString(fmt.Sprintf("#accessor:%d", accessor.Getter)), e.functionName(accessor.Getter), self)
+				packed := e.closureSlots(ir.CallClosure{Closure: ir.MakeClosure{Function: accessor.Getter}}, []string{fmt.Sprintf("{.reference = %s}", self)}, "", "1")
+				fmt.Fprintf(builder, "\tadamic_slot_cache cache = {NULL, 0};\n\tadamic_closure *closure = adamic_object_field(object, %s, &cache)->reference;\n\treturn %s(closure, %s);\n", cString(fmt.Sprintf("#accessor:%d", accessor.Getter)), e.functionName(accessor.Getter), packed)
 			} else {
-				code := fmt.Sprintf("%s(%s)", e.functionName(accessor.Getter), self)
+				count := ""
+				if function.ArgumentsCount != 0 {
+					count = ", 0"
+				}
+				code := fmt.Sprintf("%s(%s%s)", e.functionName(accessor.Getter), self, count)
 				fmt.Fprintf(builder, "\treturn (adamic_value){.%s = %s};\n", member(of), slotted(of, code))
 			}
 			builder.WriteString("}\n")
@@ -60,9 +65,14 @@ func (e *emitter) accessorDeclarations(builder *strings.Builder, classID int, cl
 				}
 			}
 			if function.Closure {
-				fmt.Fprintf(builder, "\tadamic_slot_cache cache = {NULL, 0};\n\tadamic_closure *closure = adamic_object_field(object, %s, &cache)->reference;\n\t(void)%s(closure, (adamic_value[]){{.reference = %s}, {.%s = %s}}, 2);\n", cString(fmt.Sprintf("#accessor:%d", accessor.Setter)), e.functionName(accessor.Setter), self, member(input), slotted(input, argument))
+				packed := e.closureSlots(ir.CallClosure{Closure: ir.MakeClosure{Function: accessor.Setter}}, []string{fmt.Sprintf("{.reference = %s}", self), fmt.Sprintf("{.%s = %s}", member(input), slotted(input, argument))}, "", "2")
+				fmt.Fprintf(builder, "\tadamic_slot_cache cache = {NULL, 0};\n\tadamic_closure *closure = adamic_object_field(object, %s, &cache)->reference;\n\t(void)%s(closure, %s);\n", cString(fmt.Sprintf("#accessor:%d", accessor.Setter)), e.functionName(accessor.Setter), packed)
 			} else {
-				fmt.Fprintf(builder, "\t%s(%s, %s);\n", e.functionName(accessor.Setter), self, argument)
+				count := ""
+				if function.ArgumentsCount != 0 {
+					count = ", 1"
+				}
+				fmt.Fprintf(builder, "\t%s(%s, %s%s);\n", e.functionName(accessor.Setter), self, argument, count)
 			}
 			if fresh && !consumed {
 				fmt.Fprintf(builder, "\tif (type == %d) { adamic_release(incoming); }\n", ir.Number)

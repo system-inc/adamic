@@ -59,7 +59,16 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString(collectionIteratorRuntime)
 	builder.WriteString(jsonStringifyRuntime)
 	builder.WriteString(recordRuntime)
+	counted := false
+	for _, function := range program.Functions {
+		counted = counted || function.ArgumentsCount != 0
+	}
+	if counted {
+		builder.WriteString("const adamicDirect = (fn, values, count = values.length - (fn.adamicReceiver ? 1 : 0)) => fn(...(fn.adamicCount ? [count] : []), ...values);\n")
+	}
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
+	// object.name(...) through an interface: the object's own function value, or else its class's
+	// method (on the prototype its constructor gave it), called with the object as this.
 	// object.name(...) through an interface: the object's own function value, or else its class's
 	// method (on the prototype its constructor gave it), called with the object as this.
 	builder.WriteString("const adamicCallee = (object, name) => { if (object === performance || object === process.stdout._handle) return { code: (closure, values) => object[name](...values) }; if (!Object.hasOwn(object, name)) return { code: (closure, values) => object[name](object, ...values) }; const callee = object[name]; return callee.receiver ? { code: (closure, values) => adamicCall(callee, [object, ...values]) } : callee; };\n")
@@ -84,8 +93,8 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("const adamicCast = (object, field, allowed, message) => allowed.includes(object[field]) ? object : panic(message);\n")
 	builder.WriteString("const adamicUnready = (name) => { throw new ReferenceError(`Cannot access '${name}' before initialization`); };\n\n")
 	if len(program.Classes) > 0 {
-		builder.WriteString("const adamicClassIdentities = new WeakMap();\nconst adamicClass = (value, id) => { const metadata = adamicClasses[id - 1]; if (metadata.literal) { const result = {}; for (const name of metadata.publicKeys) { const descriptor = metadata.accessors[name]; if (descriptor) Object.defineProperty(result, name, {enumerable: true, get: descriptor.get === undefined ? undefined : () => adamicGetAccessor(result, name), set: descriptor.set === undefined ? undefined : (next) => adamicSetAccessor(result, name, next)}); else result[name] = value[name]; } for (const name of metadata.privateFields) Object.defineProperty(result, name, {value: value[name], enumerable: false}); value = result; } else for (const name of metadata.privateFields) Object.defineProperty(value, name, {enumerable: false}); if (metadata.static) { const storage = value; value = function () {}; if (metadata.parent) Object.setPrototypeOf(value, storage[metadata.parent]); for (const name of metadata.privateFields) Object.defineProperty(value, name, {value: storage[name], writable: true, configurable: true}); } adamicClassIdentities.set(value, id); return value; };\nconst adamicInstanceOf = (value, wanted) => { for (let id = adamicClassIdentities.get(value); id; id = adamicClasses[id - 1].base) { if (id === wanted || (adamicClasses[wanted - 1].definition && adamicClasses[id - 1].definition === adamicClasses[wanted - 1].definition)) return true; } return false; };\nconst adamicVirtual = (value, slot, ...args) => adamicClasses[adamicClassIdentities.get(value) - 1].methods[slot](value, ...args);\n")
-		builder.WriteString("const adamicFindAccessor = (value, name) => { for (let id = adamicClassIdentities.get(value); id; id = adamicClasses[id - 1].base) { const found = adamicClasses[id - 1].accessors[name]; if (found) return found; } };\nconst adamicGetAccessor = (value, name) => { const get = adamicFindAccessor(value, name).get; return typeof get === 'string' ? adamicCall(value[get], [value]) : get(value); };\nconst adamicSetAccessor = (value, name, next) => { const set = adamicFindAccessor(value, name).set; return typeof set === 'string' ? adamicCall(value[set], [value, next]) : set(value, next); };\n")
+		builder.WriteString(classCountRuntime("const adamicClassIdentities = new WeakMap();\nconst adamicClass = (value, id) => { const metadata = adamicClasses[id - 1]; if (metadata.literal) { const result = {}; for (const name of metadata.publicKeys) { const descriptor = metadata.accessors[name]; if (descriptor) Object.defineProperty(result, name, {enumerable: true, get: descriptor.get === undefined ? undefined : () => adamicGetAccessor(result, name), set: descriptor.set === undefined ? undefined : (next) => adamicSetAccessor(result, name, next)}); else result[name] = value[name]; } for (const name of metadata.privateFields) Object.defineProperty(result, name, {value: value[name], enumerable: false}); value = result; } else for (const name of metadata.privateFields) Object.defineProperty(value, name, {enumerable: false}); if (metadata.static) { const storage = value; value = function () {}; if (metadata.parent) Object.setPrototypeOf(value, storage[metadata.parent]); for (const name of metadata.privateFields) Object.defineProperty(value, name, {value: storage[name], writable: true, configurable: true}); } adamicClassIdentities.set(value, id); return value; };\nconst adamicInstanceOf = (value, wanted) => { for (let id = adamicClassIdentities.get(value); id; id = adamicClasses[id - 1].base) { if (id === wanted || (adamicClasses[wanted - 1].definition && adamicClasses[id - 1].definition === adamicClasses[wanted - 1].definition)) return true; } return false; };\nconst adamicVirtual = (value, slot, ...args) => adamicDirect(adamicClasses[adamicClassIdentities.get(value) - 1].methods[slot], [value, ...args]);\n", counted))
+		builder.WriteString(classCountRuntime("const adamicFindAccessor = (value, name) => { for (let id = adamicClassIdentities.get(value); id; id = adamicClasses[id - 1].base) { const found = adamicClasses[id - 1].accessors[name]; if (found) return found; } };\nconst adamicGetAccessor = (value, name) => { const get = adamicFindAccessor(value, name).get; return typeof get === 'string' ? adamicCall(value[get], [value]) : adamicDirect(get, [value]); };\nconst adamicSetAccessor = (value, name, next) => { const set = adamicFindAccessor(value, name).set; return typeof set === 'string' ? adamicCall(value[set], [value, next]) : adamicDirect(set, [value, next]); };\n", counted))
 		classes := []string{}
 		for _, class := range program.Classes {
 			methods := []string{}
@@ -143,13 +152,31 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 			parameters = []string{"self", "values"}
 		} else {
 			for _, parameter := range function.Parameters {
-				parameters = append(parameters, emitter.name(parameter))
+				name := emitter.name(parameter)
+				if function.RestElement != 0 && parameter == function.Parameters[len(function.Parameters)-1] {
+					name = "..." + name
+				}
+				parameters = append(parameters, name)
 			}
+		}
+		if function.ArgumentsCount != 0 && !function.Closure {
+			parameters = append([]string{emitter.name(function.ArgumentsCount - 1)}, parameters...)
 		}
 		fmt.Fprintf(&builder, "\nfunction %s(%s) {\n", functionName(program, index), strings.Join(parameters, ", "))
 		if function.Closure {
+			if function.ArgumentsCount != 0 {
+				count := "values.length"
+				if function.Receiver {
+					count += " - 1"
+				}
+				emitter.line("let %s = %s;", emitter.name(function.ArgumentsCount-1), count)
+			}
 			for position, parameter := range function.Parameters {
-				emitter.line("let %s = values[%d];", emitter.name(parameter), position)
+				if function.RestElement != 0 && position == len(function.Parameters)-1 {
+					emitter.line("let %s = values.slice(%d);", emitter.name(parameter), position)
+				} else {
+					emitter.line("let %s = values[%d];", emitter.name(parameter), position)
+				}
 			}
 		}
 		for _, parameter := range function.Parameters {
@@ -179,6 +206,14 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	emitter.function = nil
 	emitter.indent = 0
 	builder.WriteString("\n")
+	for index, function := range program.Functions {
+		if function.ArgumentsCount != 0 && !function.Closure {
+			fmt.Fprintf(&builder, "%s.adamicCount = true;\n", functionName(program, index))
+		}
+		if function.Receiver && function.ArgumentsCount != 0 {
+			fmt.Fprintf(&builder, "%s.adamicReceiver = true;\n", functionName(program, index))
+		}
+	}
 	// Each class's methods, the prototype of the objects its constructor makes, declared before the
 	// program runs; a class's methods are functions, hoisted, so each is there to name.
 	for _, prototype := range emitter.prototypes {
@@ -191,6 +226,16 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		code = "import * as adamicNodeFSFile from 'node:fs';\n" + code
 	}
 	return code
+}
+
+// Only compiler runtime text is rewritten; source literals are emitted later.
+func classCountRuntime(runtime string, counted bool) string {
+	if counted {
+		return runtime
+	}
+	runtime = strings.ReplaceAll(runtime, "adamicDirect(adamicClasses[adamicClassIdentities.get(value) - 1].methods[slot], [value, ...args])", "adamicClasses[adamicClassIdentities.get(value) - 1].methods[slot](value, ...args)")
+	runtime = strings.ReplaceAll(runtime, "adamicDirect(get, [value])", "get(value)")
+	return strings.ReplaceAll(runtime, "adamicDirect(set, [value, next])", "set(value, next)")
 }
 
 type emitter struct {
@@ -746,14 +791,33 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 			}
 			return "adamicGetAccessor(" + object + ", " + quote(expression.Accessor) + ")"
 		}
-		if expression.Virtual != 0 {
-			arguments := []string{e.value(expression.Arguments[0]), strconv.Itoa(expression.Virtual - 1)}
-			for _, argument := range expression.Arguments[1:] {
-				arguments = append(arguments, e.value(argument))
-			}
-			return "adamicVirtual(" + strings.Join(arguments, ", ") + ")"
+		values := e.callValues(expression.Arguments, expression.Spread)
+		if expression.RestPacked && e.program.Functions[expression.Function].RestElement != 0 && len(expression.Arguments) > 0 {
+			flags := make([]bool, len(expression.Arguments))
+			flags[len(flags)-1] = true
+			values = e.callValues(expression.Arguments, flags)
 		}
-		return functionName(e.program, expression.Function) + "(" + e.values(expression.Arguments) + ")"
+		count := ""
+		if expression.ArgumentCount != nil {
+			count = ", " + e.value(expression.ArgumentCount)
+		}
+		if expression.ForwardCount && e.function.ArgumentsCount != 0 {
+			count = ", " + e.name(e.function.ArgumentsCount-1)
+		}
+		if expression.Virtual != 0 {
+			if len(expression.Spread) == 0 {
+				arguments := []string{e.value(expression.Arguments[0]), strconv.Itoa(expression.Virtual - 1)}
+				for _, argument := range expression.Arguments[1:] {
+					arguments = append(arguments, e.value(argument))
+				}
+				return "adamicVirtual(" + strings.Join(arguments, ", ") + ")"
+			}
+			return "adamicVirtual(" + e.value(expression.Arguments[0]) + ", " + strconv.Itoa(expression.Virtual-1) + ", ...[" + e.callValues(expression.Arguments[1:], tailSpreads(expression.Spread)) + "])"
+		}
+		if e.program.Functions[expression.Function].ArgumentsCount != 0 {
+			return "adamicDirect(" + functionName(e.program, expression.Function) + ", [" + values + "]" + count + ")"
+		}
+		return functionName(e.program, expression.Function) + "(" + values + ")"
 	case ir.NumberToString:
 		return "String(" + e.value(expression.Value) + ")"
 	case ir.BooleanToString:
@@ -1075,11 +1139,11 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		if property, isProperty := expression.Closure.(ir.Property); isProperty && property.Method {
 			if property.Optional {
 				// object?.name(...): undefined, with nothing looked up or evaluated, where the object is.
-				return "adamicOptionalCall(" + e.value(property.Object) + ", " + quote(property.Name) + ", () => [" + e.values(expression.Arguments) + "])"
+				return "adamicOptionalCall(" + e.value(property.Object) + ", " + quote(property.Name) + ", () => [" + e.callValues(expression.Arguments, expression.Spread) + "])"
 			}
-			return "adamicCall(adamicCallee(" + e.value(property.Object) + ", " + quote(property.Name) + "), [" + e.values(expression.Arguments) + "])"
+			return "adamicCall(adamicCallee(" + e.value(property.Object) + ", " + quote(property.Name) + "), [" + e.callValues(expression.Arguments, expression.Spread) + "])"
 		}
-		return "adamicCall(" + e.value(expression.Closure) + ", [" + e.values(expression.Arguments) + "])"
+		return "adamicCall(" + e.value(expression.Closure) + ", [" + e.callValues(expression.Arguments, expression.Spread) + "])"
 	case ir.ArrayMap:
 		if expression.ViewRead.View != "" {
 			return "adamicViewMap(" + e.value(expression.Array) + ", " + e.value(expression.Callback) + ", " + e.viewArrayChecker(expression.ViewRead) + ")"
@@ -1166,6 +1230,9 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 	case ir.ArraySort:
 		if expression.Callback != nil {
 			return "adamicSort(" + e.value(expression.Array) + ", " + e.value(expression.Callback) + ")"
+		}
+		if e.program.Functions[expression.Comparator].ArgumentsCount != 0 {
+			return e.value(expression.Array) + ".sort((left, right) => adamicDirect(" + functionName(e.program, expression.Comparator) + ", [left, right]))"
 		}
 		return e.value(expression.Array) + ".sort(" + functionName(e.program, expression.Comparator) + ")"
 	}

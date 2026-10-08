@@ -111,7 +111,7 @@ func ProveWrites(program *ir.Program) []Write {
 func directlyCalled(program *ir.Program) map[int]bool {
 	direct := map[int]bool{}
 	for index, function := range program.Functions {
-		if function.Closure {
+		if function.Closure || function.RestElement != 0 {
 			continue
 		}
 		direct[index] = true
@@ -1478,7 +1478,7 @@ func (a *analysis) value(expression ir.Expression) value {
 		for _, argument := range expression.Arguments {
 			operands = append(operands, a.value(argument))
 		}
-		if a.proof.top {
+		if a.proof.top || a.proof.program.CallExpandsArguments(expression) {
 			return a.call(operands, expression.Returns)
 		}
 		before := a.state.copy()

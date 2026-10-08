@@ -91,3 +91,26 @@ func (p *Program) ClosureMayThrow(call Expression) bool {
 	}
 	return false
 }
+
+// ClosureReadsArgumentsCount includes every function the program can make of the
+// call's function type. Missing type evidence uses bounded closure targets,
+// falling back to the entire program only when those targets are unknown.
+func (p *Program) ClosureReadsArgumentsCount(call CallClosure) bool {
+	return p.ClosureArgumentLayout(call).Count
+}
+
+// CallExpandsArguments means source positions do not match parameter positions.
+// Analyses must not replay a positional summary across this adapter boundary.
+func (p *Program) CallExpandsArguments(call Call) bool {
+	if len(call.Spread) != 0 {
+		return true
+	}
+	if !call.RestPacked {
+		for _, target := range p.CallTargets(call) {
+			if p.Functions[target].RestElement != 0 {
+				return true
+			}
+		}
+	}
+	return false
+}

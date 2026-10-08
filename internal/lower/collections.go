@@ -231,7 +231,7 @@ func (l *lowering) clearOrVisit(node *ast.Node, receiver *ast.Node, name string,
 			return nil, true, l.notYet(arguments[0], "forEach with a callback returning "+l.checker.TypeToString(result))
 		}
 	}
-	return ir.MapForEach{Map: collection, Callback: callback, Key: key, Value: value, Set: set, Returns: returns}, true, nil
+	return ir.MapForEach{Map: collection, Callback: callback, Key: key, Value: value, Set: set, Returns: returns, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())}, true, nil
 }
 
 // tupleLength is tuple.length for a tuple of fixed length: its type's count, which the checker gives

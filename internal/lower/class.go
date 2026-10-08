@@ -182,7 +182,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 				}
 				meta.Methods[slot] = len(l.result.Functions)
 			}
-			l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_" + methodName})
+			l.result.Functions = append(l.result.Functions, ir.Function{Name: name + "_" + methodName, MethodName: methodName})
 		case ast.KindPropertyDeclaration, ast.KindConstructor, ast.KindClassStaticBlockDeclaration:
 		default:
 			return nil, l.notYet(member, describe(member)+" in a class")
@@ -388,20 +388,21 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	object = l.privateStaticReceiver(callee.Name(), object, false)
-	arguments := []ir.Expression{object}
-	for _, argument := range node.AsCallExpression().Arguments.Nodes {
-		value, err := l.expression(argument)
-		if err != nil {
-			return nil, err
-		}
-		arguments = append(arguments, value)
+	values, spread, err := l.callArguments(node.AsCallExpression().Arguments.Nodes)
+	if err != nil {
+		return nil, err
+	}
+	arguments := append([]ir.Expression{object}, values...)
+	if len(spread) > 0 {
+		spread = append([]bool{false}, spread...)
 	}
 	function := lowered.methods[l.fieldName(callee.Name())]
+	l.fitCallArguments(function, arguments, spread)
 	virtual := lowered.slots[l.fieldName(callee.Name())] + 1
 	if ast.SkipParentheses(receiver).Kind == ast.KindSuperKeyword {
 		virtual = 0
 	}
-	return ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns, Virtual: virtual}, nil
+	return ir.Call{Function: function, Arguments: arguments, Spread: spread, Returns: l.result.Functions[function].Returns, Virtual: virtual}, nil
 }
 
 // setProperty lowers object.name = value, as a statement.

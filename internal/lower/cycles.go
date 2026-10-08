@@ -117,6 +117,7 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 			}
 		}
 	}
+	l.resolveCountTypes(modules)
 	return nil
 }
 

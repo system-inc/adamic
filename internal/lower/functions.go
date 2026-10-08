@@ -68,6 +68,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	if this >= 0 && declaration.Kind != ast.KindConstructor {
 		// A method receives this; a constructor makes it.
 		function.Parameters = append(function.Parameters, this)
+		function.Receiver = true
 	}
 	if declaration.Kind != ast.KindConstructor {
 		signature := l.checker.GetSignatureFromDeclaration(declaration)
@@ -128,6 +129,18 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			parameters := l.checker.GetSignatureFromDeclaration(declaration).Parameters()
 			l.locals[parameters[position]] = local
 		}
+		if declared.DotDotDotToken != nil {
+			proven := l.concrete(l.checker.GetTypeAtLocation(parameter.Name()))
+			elements := l.checker.GetTypeArguments(proven)
+			if !l.checker.IsArrayType(proven) || len(elements) != 1 {
+				return l.notYet(parameter, "a rest parameter that isn't an array")
+			}
+			element, known := l.representation(elements[0])
+			if !known || slotless(element) {
+				return l.notYet(parameter, "a rest parameter whose elements cannot be packed")
+			}
+			function.RestElement = element
+		}
 		if function.Closure && censusCallableSlotless(l.result.Locals[local].Type) {
 			// Its arguments are each one adamic_value.
 			return l.notYet(parameter, "a function value taking "+l.checker.TypeToString(l.checker.GetTypeAtLocation(parameter.Name())))
@@ -153,6 +166,9 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		return l.notYet(declaration, "a function without a body")
 	}
 	l.result.Functions[index] = function
+	if !function.Closure && declaration.Kind != ast.KindConstructor && declaration.Name() != nil {
+		l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(declaration.Name())), function: index, node: declaration})
+	}
 	if l.signed == nil {
 		l.signed = map[int]signed{}
 	}

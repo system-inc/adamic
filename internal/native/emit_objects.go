@@ -334,7 +334,10 @@ func (e *emitter) methodThunk(function int) string {
 	for index, parameter := range method.Parameters {
 		local := e.program.Locals[parameter]
 		value := "self"
-		if index > 0 {
+		if method.RestElement != 0 && index == len(method.Parameters)-1 {
+			slot := e.program.RestArgumentSlots[ir.FunctionRestArguments(method)]
+			value = fmt.Sprintf("(adamic_array *)arguments[%d].reference", slot)
+		} else if index > 0 {
 			value = closureArgument(local.Type, index-1)
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
@@ -344,6 +347,13 @@ func (e *emitter) methodThunk(function int) string {
 			value = fmt.Sprintf("adamic_retain(%s)", value)
 		}
 		values = append(values, value)
+	}
+	if method.ArgumentsCount != 0 {
+		count := "0"
+		if method.ReadsArguments {
+			count = fmt.Sprintf("arguments[%d].number", e.program.ArgumentCountSlot)
+		}
+		values = append(values, count)
 	}
 	call := fmt.Sprintf("%s(%s)", e.functionName(function), strings.Join(values, ", "))
 	if method.Returns == 0 {
