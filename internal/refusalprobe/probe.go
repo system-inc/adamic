@@ -129,19 +129,22 @@ func ValidateCatalog(root string) error {
 		}
 		return false
 	}
-	// Error-returning helpers called by the pass must have an explicit catalog owner too.
+	// Helpers called by refusal branches in the pass must have an explicit catalog owner too.
 	helpers := map[string][]string{
-		"nodeLibraryRefusal":     {"node-library"},
-		"typedArrayUnsupported":  {"typed-array-unsupported"},
-		"predicateArguments":     {"predicate-argument"},
-		"namespaceRefusal":       {"namespace"},
-		"checkOverrides":         {"method-override"},
-		"refuseStringWidening":   {"mutable-variance"},
-		"classViewRefusal":       {"nominal-class"},
-		"prototypeRead":          {"prototype-read"},
-		"provePredicate":         {"unproven-predicate"},
-		"enumRefusal":            {"enum-tag", "enum-object-view", "enum-string-object-view", "enum-object-write", "enum-prototype-name", "enum-nonfinite-name", "enum-nested", "enum-merged", "enum-ambient", "parameter-properties"},
-		"refuseOptionalWidening": {"optional-widening"},
+		"argumentsRefusal":         {"arguments-index"},
+		"nodeBufferUnsupportedUse": {"node-buffer-read"},
+		"libraryMethod":            {"library-method-object"},
+		"nodeLibraryRefusal":       {"node-library"},
+		"typedArrayUnsupported":    {"typed-array-unsupported"},
+		"predicateArguments":       {"predicate-argument"},
+		"namespaceRefusal":         {"namespace"},
+		"checkOverrides":           {"method-override"},
+		"refuseStringWidening":     {"mutable-variance"},
+		"classViewRefusal":         {"nominal-class"},
+		"prototypeRead":            {"prototype-read"},
+		"provePredicate":           {"unproven-predicate"},
+		"enumRefusal":              {"enum-tag", "enum-object-view", "enum-string-object-view", "enum-object-write", "enum-prototype-name", "enum-nonfinite-name", "enum-nested", "enum-merged", "enum-ambient", "parameter-properties"},
+		"refuseOptionalWidening":   {"optional-widening"},
 	}
 	ast.Inspect(file, func(node ast.Node) bool {
 		conditional, ok := node.(*ast.IfStmt)

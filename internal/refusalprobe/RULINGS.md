@@ -249,11 +249,26 @@ These are reachable contracts, not new language rulings. The two NotYet entries
 stay outside the permanent-refusal generator; tests demand their exact diagnostic
 and compile their neighbors. No skips are added.
 
-The complete package suite still fails independently of these four contracts:
-the audit also lacks `argumentsRefusal`, `nodeBufferUnsupportedUse`, and
-`libraryMethod`. Existing negative probes `definite-local`, `definite-field`,
-`void`, `in`, `comma`, `and-assign`, `or-assign`, `arguments`, `truthiness`, and
-`parameter-properties` now compile. The strict-diagnostic regression also uses
-the accepted definite-local program. Are these accepted constructs intended
-support or missing refusals? This follow-up records the observation without
-changing their language contracts or weakening the failing checks.
+The initial follow-up found three more unmapped helpers and ten accepted legacy
+negative probes. The parent clarified that main's acceptances are intended except
+for the six permanent refusals above. None of those ten probes is in that list.
+`definite-local`, `definite-field`, `void`, `in`, `comma`, `and-assign`, `or-assign`,
+`arguments`, `truthiness`, and `parameter-properties` are now accepted pairs.
+Their original programs and neighbors are both compiled under varied surroundings;
+this includes definite assignment before use inside a generic function. The six
+compiler-work boundaries above remain unchanged, and the empty Record remains accepted.
+
+The remaining helper contracts are now covered:
+
+- `argumentsRefusal`: `function count(): void { console.log(`${arguments[0]}`); } count();`
+  returns Refused `arguments other than a read of arguments.length`. Its neighbor
+  reads `arguments.length` and compiles.
+- `nodeBufferUnsupportedUse`: `import {Buffer} from 'node:buffer'; console.log(`${Buffer.from('abc').byteOffset}`);`
+  returns NotYet `Buffer.byteOffset outside the census value reads`. Reading
+  `length` instead compiles.
+- `libraryMethod` is a classifier, not an error-returning helper. Its shorthand
+  object-field refusal branch is reachable: `const method = Number.parseInt; const object = {method};`
+  returns NotYet `a library method value outside a const alias (an object field erases its receiver and callable ABI); use an arrow`.
+  The neighbor `const method = (text: string): number => Number.parseInt(text); const object = {method};` compiles.
+
+No new regressions were identified among the ten reclassified inputs.

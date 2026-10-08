@@ -51,7 +51,7 @@ var refusals = map[int]refusal{1: {"a newly refused construct", "fix"}}
 }
 
 func TestWrongDiagnosticIsAFinding(t *testing.T) {
-	program, err := GenerateEntries(1, 0, []string{"definite-local"})
+	program, err := GenerateEntries(1, 0, []string{"optional-widening"})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -102,7 +102,7 @@ func TestNeighborFailureIsNotACompilerHole(t *testing.T) {
 }
 
 func TestStrictDiagnosticWithRealLowering(t *testing.T) {
-	p, err := GenerateEntries(1, 0, []string{"definite-local"})
+	p, err := GenerateEntries(1, 0, []string{"optional-widening"})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -206,17 +206,19 @@ func TestAcceptedCatalogPairs(t *testing.T) {
 			if _, err := GenerateEntries(1, 0, []string{entry.Name}); err == nil {
 				t.Fatal("accepted pair entered forbidden generator")
 			}
-			t.Log("empty Record and Map neighbor: compiled")
+			t.Log("accepted input and neighbor: compiled")
 		})
 	}
-	if !seen["record"] {
-		t.Fatal("missing accepted Record pair")
+	for _, name := range []string{"record", "definite-local", "definite-field", "void", "in", "comma", "and-assign", "or-assign", "arguments", "truthiness", "parameter-properties"} {
+		if !seen[name] {
+			t.Errorf("missing accepted pair %s", name)
+		}
 	}
 }
 
 // Isolate these helper contracts from unrelated catalog drift on merged main.
 func TestStep04HelperCoverage(t *testing.T) {
-	for _, helper := range []string{"nodeLibraryRefusal", "typedArrayUnsupported", "predicateArguments", "namespaceRefusal"} {
+	for _, helper := range []string{"nodeLibraryRefusal", "typedArrayUnsupported", "predicateArguments", "namespaceRefusal", "argumentsRefusal", "nodeBufferUnsupportedUse", "libraryMethod"} {
 		t.Run(helper, func(t *testing.T) {
 			directory := t.TempDir()
 			path := filepath.Join(directory, "internal/lower")
