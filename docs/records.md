@@ -459,7 +459,7 @@ objects remain unsupported.
 
 ## Runtime implementation
 
-# Runtime records
+### Runtime table
 
 Records are the runtime half of string index signatures and `Record<string, T>`.
 The compiler owns lowering, including distinguishing a record view from a fixed
