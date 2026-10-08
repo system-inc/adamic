@@ -1,0 +1,4 @@
+export function unknown(name: string): string { return `Unknown property '${name}' found`; }
+export function standard(name: string, wanted: string): string { return `Unknown property '${name}' found, use '${wanted}' instead`; }
+export function invalidTag(name: string, tag: string, allowed: readonly string[]): string { return `Invalid property '${name}' found on tag '${tag}', but it is only allowed on: ${allowed.join(', ')}`; }
+export function dataLowercase(name: string): string { return `React does not recognize data-* props with uppercase characters on a DOM element. Found '${name}', use '${name.toLowerCase()}' instead`; }
