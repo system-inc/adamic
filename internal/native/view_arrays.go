@@ -61,6 +61,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 }
 
 func (e *emitter) emitViewArrayRead(read ir.ArrayIndex, array, index string) string {
+	if read.TupleUnion {
+		return e.emitTupleArrayUnionIndex(read, array, index)
+	}
 	snapshot, slot := e.temporary(), e.temporary()
 	e.line("adamic_value %s;", snapshot)
 	e.line("adamic_value *%s = adamic_view_array_at(%s, %s, %t, %t, %d, %s, %s, &%s);", slot, array, index, read.Relative, read.UndefinedAllowed, read.Element, cString(read.ViewType), cString(read.View), snapshot)

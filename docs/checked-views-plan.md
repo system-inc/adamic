@@ -1678,3 +1678,10 @@ dispatch is not admitted. The review patch and approval-review blocker are in
 stage3/interface-downcasts/tuples/REPORT.md. Optional/rest metadata observations
 remain separate from runtime certification. Lane 4b frontier checks are queued
 after this unit and overlap its existing production census.
+
+Approved tuple array index hook: ArrayIndex.TupleUnion records the lowering
+predicate and the finalized tuple/scalar contract plan. Both backends dispatch
+only on this flag. Native normalization owns its snapshot through the existing
+statement cleanup. Callback/loop transfer remains refused. Four original Root
+index fixtures, two semantic mutants, and lane 4/lane 2 array regressions certify
+this boundary. The previous unapplied review patch is archival.

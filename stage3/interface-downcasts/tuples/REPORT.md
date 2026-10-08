@@ -1,3 +1,54 @@
+Built: certified original Root array index pair 97913; total 4 pairs / 4 reads, with explicitly flagged dispatch.
+Commits: prior 6fefeeeea61c9e433604855645a86d43b4d2b7a5; Root pair commit recorded in git history.
+Checks: Root index PASS 3.754s; lane 4/lane 2 array regressions PASS 27.314s; gap controls PASS 0.977s; counts refreshed PASS 32.451s.
+Mutants: dropped required presence guard returns undefined/exit 0; scalar-as-tuple refuses a valid number/exit 70; both caught by JS and both native modes.
+Remaining: 6 primary pairs / 11 reads, optional/rest forms, and two overlapping lane 4b frontier checks.
+
+The user approved dispatch with changes. ArrayIndex.TupleUnion is set by
+lowering's tupleScalarUnionType and confirmed against TupleViewMembers after
+contract binding. Native and JavaScript dispatch use that flag exclusively;
+Element == Union alone never selects the tuple adapter. The normalizer keeps
+source storage and retains/boxes the selected slot. The emitted index owns
+its snapshot through existing statement cleanup. Callback and loop consumers
+still refuse pending their distinct ownership transfer.
+
+Four original IncrementalBuildInfoRoot fixtures cover a tuple, a scalar,
+bounds, and a missing required index. Source Node prints object, number,
+undefined, undefined. The frontend's ordinary index is optional; the required
+fixture explicitly sets the existing IR Required consumer promise on its one
+flagged read, then pins the named exit-70 missing refusal. This is a required
+backend contract control, not a claim that source typeof requires presence.
+Both native builds and JavaScript match; finishing native programs pass the
+shared leak checker. The earlier normalizer probe additionally releases the
+source array before consuming the retained result.
+
+Commands (source /workspace/adamic-tools/env.sh):
+ADAMIC_TUPLE_ORIGINAL_DECLS=/tmp/views-tuples-original-declarations
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'^TestCheckedViewTupleOriginalRootIndex$' -count=1 -v
+(/tmp/views-tuples-index-final.log): PASS 3.754s.
+ADAMIC_TUPLE_INDEX_MUTANT=presence with .../root-index-required-missing:
+FAIL 0.624s (/tmp/views-tuples-index-mutant-presence.log).
+ADAMIC_TUPLE_INDEX_MUTANT=scalar with .../root-index-scalar:
+FAIL 0.627s (/tmp/views-tuples-index-mutant-scalar.log).
+Both mutants reach executable valid code and fail semantic exit assertions.
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'^(TestCheckedViewArrays|TestCheckedViewNativeArrays|TestCheckedViewRankedArrayContracts|TestCheckedViewRankedArrayUnionContracts|TestCheckedViewRankedParserArrayContracts|TestCheckedViewObjectPrimitiveSource|TestCheckedViewMixedSelection)$'
+-count=1 -v -timeout 6m (/tmp/views-tuples-array-regressions.log): PASS 27.314s,
+209 uncached Node observations, including lane 4b comment arrays.
+go test ./internal/oracle -run
+'^(TestCheckedViewPrimitiveArrayPairGap|TestCheckedViewMutableArrayUnionRefusal)$'
+-count=1 -v (/tmp/views-tuples-lane4-array-gap.log): PASS 0.977s. Lane 4's
+mixed scalar array adapter is absent from this branch; its existing six
+named refusal witnesses remain refused. No lane 4 work was imported.
+Scoped compile probes in IR/lower/native/JavaScript PASS; gofmt applied.
+Original tuple counts update passes 32.451s, recording all 29 fixture rows
+(/tmp/views-tuples-index-counts.log). Integrator failures remain named below.
+The old review patch below is archival; the implemented narrowed dispatch
+supersedes it and its previous approval blocker is resolved.
+
+---
+
 Built: staged tuple-array normalization and selectors with semantic probes; certified total remains 3 pairs / 3 reads.
 Commits: certified tip 0a6edef2d89f5241f7dbeb392b607fec9fc4acff; probe checkpoint recorded in git history.
 Checks: combined original oracles and normalizer PASS 25.226s; selector probes PASS; optional/rest layout probe PASS 0.307s.

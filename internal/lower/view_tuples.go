@@ -39,3 +39,27 @@ func (l *lowering) viewTuplePositionChecks(receiver ir.ViewContractID, field str
 	}
 	return false
 }
+
+// Only scalar carriers and existing fixed tuple certificates are planned here.
+func (l *lowering) tupleScalarUnionType(target *checker.Type) bool {
+	if target == nil || target.Flags()&checker.TypeFlagsUnion == 0 {
+		return false
+	}
+	tuples := 0
+	for _, member := range target.Types() {
+		if member.Flags()&checker.TypeFlagsUndefined != 0 {
+			continue
+		}
+		if fixedViewTuple(member) {
+			tuples++
+			continue
+		}
+		if base := l.phantomBase(member); base != nil {
+			member = base
+		}
+		if !interfaceScalar(member) {
+			return false
+		}
+	}
+	return tuples > 0
+}

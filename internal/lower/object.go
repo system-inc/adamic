@@ -321,7 +321,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		return of, nil
 	}
 	valueType, isKnown := l.kept(element)
-	if !isKnown || slotless(valueType) {
+	if !isKnown || slotless(valueType) && !(valueType == ir.Union && l.tupleScalarUnionType(element)) {
 		// An element is one adamic_value, and number | undefined needs two words.
 		return 0, l.notYet(node, "an array of "+l.checker.TypeToString(element))
 	}

@@ -49,6 +49,13 @@ const adamicViewArrayElement = (value, expression, type, expected, allowed, requ
 
 func (e *emitter) emitViewArrayRead(read ir.ArrayIndex) string {
 	array, index := e.value(read.Array), e.value(read.Index)
+	if read.TupleUnion {
+		checked := fmt.Sprintf("adamicViewArrayIndex(%s, %s, %t, (value) => %s)", array, index, read.Relative, e.tupleArrayUnionCheck(read.ViewContract, read.View, "value"))
+		if read.Required {
+			return "((value) => { if (value === undefined) panic(" + quote("element read failed: "+read.View+" expected "+read.ViewType+", found undefined") + "); return value;})(" + checked + ")"
+		}
+		return checked
+	}
 	allowed := []string{}
 	for _, literal := range read.ViewAllowed {
 		switch literal.Of {

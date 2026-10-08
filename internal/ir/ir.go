@@ -588,6 +588,7 @@ type (
 	// null reference, or a Maybe pair). Relative is array.at(index), where a negative index counts
 	// from the end and a fraction truncates.
 	ArrayIndex struct {
+		TupleUnion       bool // Selected read has the lowering tuple/scalar union plan.
 		Required         bool
 		UndefinedAllowed bool
 		View, ViewType   string
