@@ -6,7 +6,6 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -95,18 +94,11 @@ func TestArrayHolesRefusals(t *testing.T) {
 
 // Array fixtures need no host capabilities. Compare real WASI commands with Node
 // without treating target refusals or traps as successful observations.
-func TestArrayHolesWasmtime(t *testing.T) {
+func TestArrayHolesWASI(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	runner := os.Getenv("ADAMIC_WASMTIME")
-	if runner == "" {
-		var err error
-		runner, err = exec.LookPath("wasmtime")
-		if err != nil {
-			t.Fatal(err)
-		}
-	}
+	runner := filepath.Join(repository, "oracle", "wasi.mjs")
 	count := 0
 	for _, fixture := range fixtures {
 		if !strings.Contains(fixture.path, "library_array_holes_") {
@@ -127,11 +119,11 @@ func TestArrayHolesWasmtime(t *testing.T) {
 				t.Fatal(err)
 			}
 			truth := onNode(t, path)
-			actual := execute(t, runner, "run", binary)
+			actual := execute(t, "node", "--disable-warning=ExperimentalWarning", runner, binary)
 			if difference := disagreement(truth, actual); difference != "" {
-				t.Fatalf("%s: Node exit %d stdout %q stderr %q; wasmtime exit %d stdout %q stderr %q", difference, truth.exitCode, truth.stdout, truth.stderr, actual.exitCode, actual.stdout, actual.stderr)
+				t.Fatalf("%s: Node exit %d stdout %q stderr %q; WASI exit %d stdout %q stderr %q", difference, truth.exitCode, truth.stdout, truth.stderr, actual.exitCode, actual.stdout, actual.stderr)
 			}
-			t.Logf("Node and wasmtime stdout: %s", truth.stdout)
+			t.Logf("Node and WASI stdout: %s", truth.stdout)
 		})
 	}
 	if count != 10 {
@@ -139,18 +131,11 @@ func TestArrayHolesWasmtime(t *testing.T) {
 	}
 }
 
-func TestArrayHolesWasmtimeRunnerMutants(t *testing.T) {
+func TestArrayHolesWASIRunnerMutants(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	runner := os.Getenv("ADAMIC_WASMTIME")
-	if runner == "" {
-		var err error
-		runner, err = exec.LookPath("wasmtime")
-		if err != nil {
-			t.Fatal(err)
-		}
-	}
+	runner := filepath.Join(repository, "oracle", "wasi.mjs")
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_array_holes_scanner_probe.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -166,7 +151,7 @@ func TestArrayHolesWasmtimeRunnerMutants(t *testing.T) {
 			if err := native.Build(probe.source, binary, native.Options{Target: "wasm32-wasi"}); err != nil {
 				t.Fatal(err)
 			}
-			if difference := disagreement(truth, execute(t, runner, "run", binary)); difference != probe.difference {
+			if difference := disagreement(truth, execute(t, "node", "--disable-warning=ExperimentalWarning", runner, binary)); difference != probe.difference {
 				t.Fatalf("want %q, got %q", probe.difference, difference)
 			}
 		})
