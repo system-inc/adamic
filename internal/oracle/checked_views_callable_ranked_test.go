@@ -7,6 +7,11 @@ import (
 
 func TestCheckedViewCallableRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut string }{
+		{"block", "createBlock", "4\n", "3\n3\n4\n", "1", "statements[0]!.value", "3\n"},
+		{"array-literal", "createArrayLiteralExpression", "3\n", "0\n3\n3\n4\n", "1", "elements[0]!.value", "3\n"},
+		{"object-literal", "createObjectLiteralExpression", "3\n", "0\n3\n3\n4\n", "1", "properties[0]!.value", "3\n"},
+		{"function-expression", "createFunctionExpression", "3\n", "3\n8\n8\n", "1", "body.value", "3\n"},
+		{"update-block", "updateBlock", "8\n", "", "1", "statements[0]!.value", "5\n"},
 		{"emit-notification", "enableEmitNotification", "5\n", "", "2", "", ""},
 		{"substitution", "enableSubstitution", "5\n", "", "2", "", ""},
 		{"return-statement", "createReturnStatement", "3\n", "7\n7\n3\n", "2", "expression.value", "3\n"},
@@ -26,6 +31,10 @@ func TestCheckedViewCallableRankedFamilies(t *testing.T) {
 					out = "9\n"
 				case "wrong-result":
 					out = "undefined\n"
+				case "wrong-members":
+					if family.directory == "block" {
+						out = "3\n"
+					}
 				case "wrong-parameter-payload":
 					out = family.payloadOut
 				}

@@ -2,7 +2,7 @@ const fs=require('fs');
 const path=require('path');
 const ts=require(path.join(process.argv[2],'lib/typescript.js'));
 const evidence=JSON.parse(fs.readFileSync(path.join(__dirname,'ranked-next-original-witnesses.json'),'utf8'));
-const directories=new Map([[44,'return-statement'],[54,'emit-notification'],[60,'substitution'],[62,'update-block']]);
+const directories=new Map([[14,'block'],[34,'array-literal'],[39,'object-literal'],[44,'return-statement'],[58,'function-expression'],[54,'emit-notification'],[60,'substitution'],[62,'update-block']]);
 const ranks=new Set(process.argv[3].split(',').map(Number));
 const normalized=text=>text.replace(/\s+/g,'');
 let count=0;

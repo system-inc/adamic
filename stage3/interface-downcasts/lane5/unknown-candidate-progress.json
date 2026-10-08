@@ -438,6 +438,113 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers; Node, native release/sanitized and JavaScript; executable callable check mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "aggregates",
+      "pairs": 5,
+      "candidateReads": 227,
+      "members": [
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createBlock",
+          "declared_types": [
+            "(statements: readonly Statement[], multiLine?: boolean | undefined) => Block"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 88,
+          "witness": {
+            "file": "src/compiler/factory/nodeConverters.ts",
+            "line": 58,
+            "column": 22
+          },
+          "rank": 14,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers; Node, native release/sanitized and JavaScript; executable callable check mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createArrayLiteralExpression",
+          "declared_types": [
+            "(elements?: readonly Expression[] | undefined, multiLine?: boolean | undefined) => ArrayLiteralExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 44,
+          "witness": {
+            "file": "src/compiler/factory/nodeConverters.ts",
+            "line": 164,
+            "column": 21
+          },
+          "rank": 34,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers; Node, native release/sanitized and JavaScript; executable callable check mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createObjectLiteralExpression",
+          "declared_types": [
+            "(properties?: readonly ObjectLiteralElementLike[] | undefined, multiLine?: boolean | undefined) => ObjectLiteralExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 41,
+          "witness": {
+            "file": "src/compiler/factory/nodeConverters.ts",
+            "line": 151,
+            "column": 21
+          },
+          "rank": 39,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers; Node, native release/sanitized and JavaScript; executable callable check mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createFunctionExpression",
+          "declared_types": [
+            "(modifiers: readonly Modifier[] | undefined, asteriskToken: AsteriskToken | undefined, name: string | Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[] | undefined, type: TypeNode | undefined, body: Block) => FunctionExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 28,
+          "witness": {
+            "file": "src/compiler/factory/nodeConverters.ts",
+            "line": 65,
+            "column": 25
+          },
+          "rank": 58,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers; Node, native release/sanitized and JavaScript; executable callable check mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "updateBlock",
+          "declared_types": [
+            "(node: Block, statements: readonly Statement[]) => Block"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 26,
+          "witness": {
+            "file": "src/compiler/visitorPublic.ts",
+            "line": 532,
+            "column": 16
+          },
+          "rank": 62,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers; Node, native release/sanitized and JavaScript; executable callable check mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }
