@@ -48,9 +48,12 @@ heartbeat() {
 # and a whole gate takes it back first: the line "<box> B" comes out of the watcher's slot table, any
 # fast gate still on the box is stopped (the watcher sees it void and runs it again elsewhere), and the
 # run waits for that slot's lock. Lent again when the run's verdict is published, and on every idle minute.
+# A no-lend file beside the slot table keeps the box out of the watcher's hands between runs, so it can be given
+# to other work (Loom's pilot, @system_adamic, Oct 8 21:47Z).
 slots=${ADAMIC_FAST_GATE_WATCH_STATE:-${HOME}/.adamic-fast-gate-watch}/slots
 lend() {
   [ -f "${slots}" ] || return 0
+  [ -f "$(dirname "${slots}")/no-lend" ] && return 0
   grep -qx "${box} B" "${slots}" || echo "${box} B" >> "${slots}"
 }
 reclaim() {

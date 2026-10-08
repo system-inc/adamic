@@ -199,20 +199,11 @@ sameReservedFamily() {
   done < "${state}/slots"
   return 1
 }
-# Stops one running gate on its box: run.py reads the reason from beside its out directory on SIGTERM,
-# publishes what it had and exits (a red with its failures, or void before any).
+# Stops one running gate on its box (cloud/stop-gate.sh, which refuses any sha but a whole one): run.py reads
+# the reason from beside its out directory on SIGTERM, publishes what it had and exits.
 stopGate() {
   local pid=$1 branch=$2 sha=$3 box=$4 reason=$5
-  if ssh "${box}" bash -s -- "$(printf '%q ' "${sha}" "${reason}")" <<'STOP'
-set -eu
-sha=$1 reason=$2
-for out in ~/fast-gate/out/"${sha:0:12}"-*; do
-  [ -d "${out}" ] || continue
-  printf '%s\n' "${reason}" > "${out}.stop-reason"
-done
-pkill -TERM -f "run.py .*--sha ${sha}"
-STOP
-  then
+  if bash "${here}/cloud/stop-gate.sh" "${box}" "${sha}" "${reason}"; then
     touch "${state}/stopped-running/${pid}"
     return 0
   fi
@@ -335,7 +326,56 @@ pruneQueue() {
   rm -f "${state}/queue.verdicts"
 }
 # ${state}/front (a glob per line, # comments) puts a tip ahead of every roadmap step, behind only a reserved
-# landing: a fix the parent ruled lands first, such as Oct 8's cloud/land-gate-speed.
+# landing: a fix the parent ruled lands first, such as Oct 8's cloud/land-gate-speed. A front tip is the star,
+# and the star owns its box (@system_adamic, Oct 8 21:47Z): it runs big, on Server's reserved area slot, and a
+# box running or awaiting it takes no other gate.
+frontGlobs() {
+  [ -f "${state}/front" ] || return 0
+  awk '$1 !~ /^#/ && NF {print $1}' "${state}/front"
+}
+isFront() {
+  local glob
+  for glob in ${frontList[@]+"${frontList[@]}"}; do
+    [[ $1 == ${glob} ]] && return 0
+  done
+  return 1
+}
+# ${state}/star-boxes, rewritten every pass: the boxes the star runs on or waits for, one per line. Work outside
+# this watcher (Loom's pilot) reads it and stays off them.
+writeStarBoxes() {
+  local runningBranch runningSha runningSlot runningBox rest class queued branch sha
+  {
+    cat "${state}"/running/* 2> /dev/null | while read -r runningBranch runningSha runningSlot runningBox rest; do
+      isFront "${runningBranch}" && echo "${runningBox:-threadripper}"
+    done
+    while read -r class queued branch sha; do
+      isFront "${branch}" && reservedBoxes "${branch}" B
+    done < "${state}/queue"
+  } | sort -u > "${state}/star-boxes.tmp"
+  mv "${state}/star-boxes.tmp" "${state}/star-boxes"
+}
+# Every other gate on a star box is stopped on purpose and queued again, so the star never shares CPU or waits
+# out a drain (Oct 8 21:47Z: other gates on Workshop held its load at 51 to 64 of 64 while the star sat in
+# typeaware and lint). The deploy canary is left to finish: nothing dispatches until it has a verdict.
+preemptForStar() {
+  local file pid runningBranch runningSha runningSlot runningBox rest
+  [ -s "${state}/star-boxes" ] || return 0
+  for file in "${state}"/running/*; do
+    [ -f "${file}" ] || continue
+    pid=$(basename "${file}")
+    [ -f "${state}/stopped-running/${pid}" ] && continue
+    kill -0 "${pid}" 2> /dev/null || continue
+    read -r runningBranch runningSha runningSlot runningBox rest < "${file}"
+    runningBox=${runningBox:-threadripper}
+    grep -qxF "${runningBox}" "${state}/star-boxes" || continue
+    [ "${runningBranch}" = canary/main ] && continue
+    isFront "${runningBranch}" && continue
+    if stopGate "${pid}" "${runningBranch}" "${runningSha}" "${runningBox}" "preempted: the star takes ${runningBox} alone; queued again"; then
+      touch "${state}/preempted/${pid}"
+      echo "$(date -u +%H:%M:%S) preempted ${runningBranch} ${runningSha} on ${runningBox} for the star"
+    fi
+  done
+}
 stepPosition() {
   local branch=$1 glob index
   for glob in ${frontList[@]+"${frontList[@]}"}; do
@@ -353,9 +393,7 @@ loadRanking() {
   local glob position
   reservationList=() frontList=() stepGlobList=() stepPositions=() priorityList=()
   while read -r glob; do [ -n "${glob}" ] && reservationList+=("${glob}"); done <<< "$(reservationGlobs)"
-  if [ -f "${state}/front" ]; then
-    while read -r glob _; do [ -n "${glob}" ] && [[ ${glob} != \#* ]] && frontList+=("${glob}"); done < "${state}/front"
-  fi
+  while read -r glob; do [ -n "${glob}" ] && frontList+=("${glob}"); done <<< "$(frontGlobs)"
   while read -r position glob; do
     [ -n "${glob}" ] && { stepPositions+=("${position}"); stepGlobList+=("${glob}"); }
   done < "${state}/step-globs.poll"
@@ -381,6 +419,7 @@ rankQueue() {
   local class queued branch sha rank position reserved name
   while read -r class queued branch sha; do
     reserved=no
+    isFront "${branch}" && class=B
     if matchesReservation "${branch}"; then reserved=yes rank=0
     elif [[ ${branch} == cloud/land-* ]]; then rank=1
     elif [[ ${branch} == area/* ]]; then rank=2
@@ -455,6 +494,8 @@ usableSlots() {
   while read -r runningBranch runningSha runningSlot runningBox rest; do
     [ -n "${runningBranch}" ] || continue
     slotReserved "${runningBranch}" "${runningBox:-threadripper}" "${runningSlot}" && held="${held}${runningBox:-threadripper} "
+    # The star holds whatever box it runs on, reserved there or not.
+    isFront "${runningBranch}" && held="${held}${runningBox:-threadripper} "
   done < "${state}/running.tmp"
   while read -r box slot; do
     blocked=no
@@ -493,6 +534,8 @@ usableSlots() {
 drainingBoxes() {
   local class queued branch sha
   while read -r class queued branch sha; do
+    # The star runs big whatever it was queued as (rankQueue), so it drains a big slot's box.
+    isFront "${branch}" && class=B
     matchesReservation "${branch}" && reservedBoxes "${branch}" "${class}"
   done < "${state}/queue" | sort -u
 }
@@ -538,7 +581,7 @@ clearStaleSlotLock start
 watchStart=$(date -u +%s)
 touch "${state}/gated" "${state}/queue"
 # Running gates are pid files (macOS bash 3.2 has no associative arrays).
-mkdir -p "${state}/running" "${state}/logs" "${state}/reserved-running" "${state}/running-started" "${state}/stopped-running" "${state}/early-red"
+mkdir -p "${state}/running" "${state}/logs" "${state}/reserved-running" "${state}/running-started" "${state}/stopped-running" "${state}/early-red" "${state}/preempted"
 echo "$(date -u +%H:%M:%S) watching codex/*, area/*, devtools/*, cloud/land-* (tools $(git -C "${here}" rev-parse --short HEAD))"
 toolsHead=$(git -C "${here}" rev-parse HEAD)
 canaryToken=${toolsHead}:$$
@@ -558,7 +601,13 @@ while true; do
     firstStepPid=$!
     firstStepRefresh=${now}
   fi
-  cat "${state}/first-step-globs" > "${state}/first-step-globs.poll" 2>/dev/null || true
+  # The star owns Server (@system_adamic, Oct 8 21:47Z, and integration for the views train): while the front
+  # file names any tip, Server's area slot is reserved for the front instead of the roadmap's first step.
+  if [ -n "$(frontGlobs)" ]; then
+    frontGlobs > "${state}/first-step-globs.poll"
+  else
+    cat "${state}/first-step-globs" > "${state}/first-step-globs.poll" 2>/dev/null || true
+  fi
   cat "${state}/step-globs" > "${state}/step-globs.poll" 2>/dev/null || true
   currentHead=$(git -C "${here}" rev-parse HEAD)
   if [ "${currentHead}" != "${toolsHead}" ]; then
@@ -587,9 +636,10 @@ while true; do
   for file in "${state}"/running/*; do
     [ -e "${file}" ] || continue
     kill -0 "$(basename "${file}")" 2>/dev/null && continue
-    stoppedOnPurpose=no
+    stoppedOnPurpose=no preempted=no
     [ -f "${state}/stopped-running/$(basename "${file}")" ] && stoppedOnPurpose=yes
-    rm -f "${state}/reserved-running/$(basename "${file}")" "${state}/running-started/$(basename "${file}")" "${state}/stopped-running/$(basename "${file}")" "${state}/early-red/$(basename "${file}")"
+    [ -f "${state}/preempted/$(basename "${file}")" ] && preempted=yes
+    rm -f "${state}/reserved-running/$(basename "${file}")" "${state}/running-started/$(basename "${file}")" "${state}/stopped-running/$(basename "${file}")" "${state}/early-red/$(basename "${file}")" "${state}/preempted/$(basename "${file}")"
     read -r branch sha class box original testedHead gateLog < "${file}"
     # Merge claims are not gate verdicts: a crashed dispatcher/SSH must never queue area-merge/*.
     if [[ ${branch} == area-merge/* ]]; then rm "${file}"; continue; fi
@@ -598,6 +648,13 @@ while true; do
     class=${original:-${class}}
     rm "${file}"
     gateLog=${gateLog:-${state}/logs/${sha:0:12}.log}
+    # A gate stopped for the star never ran whole, whatever it had so far: it goes back to the queue, no void.
+    if [ "${preempted}" = yes ]; then
+      grep -vx "${sha}" "${state}/gated" > "${state}/gated.tmp"; mv "${state}/gated.tmp" "${state}/gated"
+      echo "${class} $(date -u +%s) ${branch} ${sha}" >> "${state}/queue"
+      echo "$(date -u +%H:%M:%S) preempted ${branch} ${sha} stopped for the star, queued again"
+      continue
+    fi
     cause=$(voidCause "${gateLog}")
     if [ "${branch}" = canary/main ]; then
       if [ -n "${cause}" ]; then
@@ -688,6 +745,8 @@ while true; do
     fi
   fi
   pruneQueue
+  writeStarBoxes
+  preemptForStar
   rankQueue
   while [ "${canaryRequired}" = 0 ] && [ ! -f "${state}/storm" ] && [ -s "${state}/queue" ]; do
     touch "${state}/priority"

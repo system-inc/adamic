@@ -20,7 +20,7 @@ class Watcher:
         self.repo = self.root / 'repo'
         cloud = self.repo / 'cloud'
         cloud.mkdir(parents=True)
-        for name in ('fast-gate-watch.sh', 'fast-gate-classify.sh', 'first-step-branches.sh'):
+        for name in ('fast-gate-watch.sh', 'fast-gate-classify.sh', 'first-step-branches.sh', 'stop-gate.sh'):
             shutil.copy(ROOT / 'cloud' / name, cloud / name)
         self.state = self.root / 'state'
         self.state.mkdir()
@@ -555,6 +555,59 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: len([x for x in w.read('starts').splitlines() if not x.startswith('canary/')]) == 2)
         self.assertEqual([x.split()[0] for x in w.read('starts').splitlines() if not x.startswith('canary/')],
                          ['cloud/land-gate-speed', 'codex/step-b-x'])
+
+    def test_the_star_preempts_side_work_on_server_and_runs_there_whole(self):
+        # @system_adamic, Oct 8 21:47Z: the star owns its box. A side gate already on Server is stopped on purpose
+        # and queued again (not a void), the star runs big and whole on Server even though it was queued small,
+        # and the side gate finds another box.
+        w = self.reservation('server B\nserver S\nother S\n', [('codex/side', 'S')], release=False)
+        (w.state / 'front').write_text('# the star\ncloud/land-train-*\n')
+        w.put('initial', 'pass')
+        w.wait(lambda: any(x.startswith('codex/side ') for x in w.read('starts').splitlines()))
+        side = w.tips[0][1]
+        self.assertTrue([x for x in w.read('starts').splitlines() if x.startswith('codex/side ')][0].endswith(' server'))
+        star = 'c' * 40
+        w.tips.append(('cloud/land-train-1-views-slice1', star))
+        w.put('tips', ''.join(f'{sha}\trefs/heads/{b}\n' for b, sha in w.tips))
+        w.wait(lambda: f'preempted codex/side {side} on server for the star' in w.read('output'))
+        self.assertIn(f'server bash -s -- {side} ', w.read('stops'))
+        w.wait(lambda: f'preempted codex/side {side} stopped for the star, queued again' in w.read('output'))
+        w.wait(lambda: any(x.startswith('cloud/land-train-1-views-slice1 ') for x in w.read('starts').splitlines()))
+        starStart = [x for x in w.read('starts').splitlines() if x.startswith('cloud/land-train-1-views-slice1 ')][0]
+        self.assertTrue(starStart.endswith(' B server'), starStart)
+        self.assertIn('cloud/land-train-1-views-slice1', w.read('whole'))
+        w.wait(lambda: [x for x in w.read('starts').splitlines() if x.startswith('codex/side ')][-1].endswith(' other'))
+        self.assertEqual((w.state / 'star-boxes').read_text(), 'server\n')
+        self.assertNotIn('void codex/side', w.read('output'))
+
+    def test_a_box_running_the_star_takes_no_other_gate(self):
+        # No Server in the table: the star runs wherever a big slot is free, and that box is then its own.
+        w = self.reservation('workshop B\nworkshop S\n',
+                             [('cloud/land-train-1-views-slice1', 'B'), ('codex/side', 'S')], release=False)
+        (w.state / 'front').write_text('cloud/land-train-*\n')
+        w.put('initial', 'pass')
+        w.wait(lambda: any(x.startswith('cloud/land-train-1-views-slice1 ') for x in w.read('starts').splitlines()))
+        time.sleep(.3)
+        self.assertNotIn('codex/side', w.read('starts'))
+        self.assertEqual((w.state / 'star-boxes').read_text(), 'workshop\n')
+        w.put('mode', 'pass')
+        w.wait(lambda: 'codex/side' in w.read('starts'))
+
+    def test_stop_gate_refuses_anything_but_a_whole_sha(self):
+        w = self.start(0)
+        for sha in ('', 'abc', 'g' * 40, 'a' * 39, 'A' * 40):
+            result = subprocess.run(['bash', str(w.repo / 'cloud' / 'stop-gate.sh'), 'workshop', sha, 'by hand'],
+                                    env=dict(os.environ, PATH=str(w.bin) + ':' + os.environ['PATH'], TEST_ROOT=str(w.root)),
+                                    capture_output=True, text=True)
+            self.assertEqual(result.returncode, 2, sha)
+        self.assertEqual(w.read('stops'), '')
+        result = subprocess.run(['bash', str(w.repo / 'cloud' / 'stop-gate.sh'), 'workshop', 'b' * 40, 'by hand'],
+                                env=dict(os.environ, PATH=str(w.bin) + ':' + os.environ['PATH'], TEST_ROOT=str(w.root)),
+                                capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('workshop bash -s -- ' + 'b' * 40, w.read('stops'))
+        # The box side refuses too, so a caller that skips the script can't widen the match.
+        self.assertIn('is not 40 hex digits', w.read('stop-command'))
 
     def test_staged_tools_run_on_the_canary_box_until_a_real_green_promotes_them(self):
         # Tips, queue and slots are in place before the watcher starts: with no deploy barrier to hold it,
