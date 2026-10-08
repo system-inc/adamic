@@ -1,0 +1,49 @@
+{
+  "source_area": "b61e70642652a7f23af113278ce2fc357d7b4646",
+  "source_pin": {
+    "repository": "https://github.com/microsoft/TypeScript.git",
+    "tag": "v6.0.3",
+    "commit": "050880ce59e30b356b686bd3144efe24f875ebc8"
+  },
+  "summary": {
+    "typescript": "6.0.3",
+    "tree": "/workspace/scratch/parser-front25-adapted",
+    "entries": [
+      "src/compiler/parser.ts:createSourceFile",
+      "src/compiler/parser.ts:forEachChild",
+      "src/compiler/program.ts:flattenDiagnosticMessageText",
+      "src/compiler/utilitiesPublic.ts:unescapeLeadingUnderscores",
+      "src/compiler/types.ts:ScriptKind",
+      "src/compiler/types.ts:ScriptTarget",
+      "src/compiler/types.ts:SyntaxKind"
+    ],
+    "declarations": 2068,
+    "copied_spans": 2080,
+    "namespace_wrapper_spans": 12,
+    "value_declarations": 1403,
+    "type_declarations": 665,
+    "files": 79,
+    "declaration_files": 27,
+    "code_declarations": 1991,
+    "export_facade_records": 77,
+    "evaluation_only_files": 52,
+    "preserves_evaluation": true,
+    "declaration_lines": 41853,
+    "declaration_bytes": 2358440,
+    "rewritten_import_lines": 236
+  },
+  "archive_sha256": "700528e3a5570926c18c22d6959b0d1f078962b64167e17bbd2b7a2fe8bd105e",
+  "temporary_adaptations_retained": [
+    60,
+    61,
+    62,
+    63,
+    64,
+    65
+  ],
+  "temporary_adaptations_dropped": [],
+  "retired_scanner_temporary_80": "absent from current area and not reapplied",
+  "dump_reference": "../reference.json",
+  "case_reference": "../cases-reference.json",
+  "warning": "Artifact uses every current area adaptation plus still-required 65 before gathering; declarations are verbatim relative to that adapted source, not pristine TypeScript."
+}

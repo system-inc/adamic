@@ -1,3 +1,87 @@
+# Re-cut parser slice: Node green, scratch function-value count miscompile
+
+A silent miscompile is detected in the unpushed scratch integration. The minimal
+native-arguments-length-value.a prints `9\n` natively instead of Node's `1\n`;
+both runs exit 0 with empty stderr, build exits 0, and cmp exits 1. This is a
+function value forwarding arguments.length, not a native parser result. The
+larger uncached arguments oracle also finds release wrong-output results in
+value_count (last line 0 instead of 3) and reduce_left (last calls 2/undefined
+instead of 12/112), plus clang ABI/packing failures and sanitizer/exit failures.
+The scratch is unsafe for native acceptance pending the closure-convention fix.
+No compiler merge or implementation is pushed.
+
+Source is current origin/area/stage3 b61e7064, containing requested 234ab1aa.
+Fresh apply carries isArray(value: unknown), void brands and Error adaptations.
+It has no adaptation 48 directory and retains memoize's original body; the
+assumption is to use this exact tip, without inventing the missing adaptation.
+Temporary 80 is absent and not reintroduced. All parser temporaries 60–65 remain:
+removing 60/61 separately restores TS2412, 62 TS2769, and 63/64 TS2345. The current
+area still contains `(process as any).browser` and its older local process
+contract, so 65 was applied before gathering with its existing stock-JavaScript
+byte-identity guard. Its original cast probe refuses independently; removing 65
+in the whole slice is masked by the earlier callback predicate refusal.
+None of the new source makes a parser temporary unnecessary; none is dropped.
+
+The extended-driver slice has 27 declaration files and 1,991 code declarations,
+plus 77 facade records and 12 namespace-wrapper spans (2,080 copied spans,
+41,853 copied-span lines). The preserved runtime graph has 79 modules, 52
+without reached declarations. The scanner-owned verifier passes all 2,080 source
+span hashes and 79 ordered import lists. No discovery stub is in this slice.
+The published payload is slices/current.tar.gz with summary/hash in current.json;
+recut.sh reproduces it using the scanner-owned tool. TypeScript license included.
+
+Full-tree Node and slice Node each match the fixed 81-file reference byte for
+byte: 36,429,231 bytes, SHA-256
+`686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615`.
+Inputs are the same pinned 81-file corpus; the newly adapted tree is the parser
+implementation, not a replacement corpus. All 10,406 case records also equal the
+existing manifest byte for byte (manifest SHA-256
+`eaeca6000e53262767c67b9bedcb4ac94c4af1b5add518bd34b79b56cccaa6de`):
+1,996 parse diagnostic rows, 34 JSDoc diagnostic rows, 1,323,111 nodes. Full and
+slice output is equal case by case. The slice's node-end, dropped-tags and JSDoc
+diagnostic mutants are caught. The full runner hit a disk-full error while
+copying unrelated upstream tests for its JSDoc mutant; its successful baseline
+and end mutation are retained. After deleting only that failed disposable copy,
+the JSDoc checks pass on byte-identical full compiler sources without those tests.
+
+Merged debugger-statement 7d2cbc89 and arguments-length 9534e8ab into unpushed
+scratch 33bf53ac. Both split modes on this validated slice now stop at
+core.ts:616:97: `a type predicate whose return is not proven (there is no body
+proving this parameter)` in cast's callback type. The former arguments.length
+stop and isArray(any) stop clear. Unsplit, split and repeated split attempts exit
+1 in 0.867, 0.921 and 0.920 seconds, before C. Those are build-attempt times,
+not clang measurements; repeat has no warm cache. The existing callback
+signature minimal program reproduces this diagnostic family.
+
+The original eleven probes are 10/11 green, with all ten native-output byte
+mutants caught. native-arguments-length.a now matches Node `false\ntrue\n`,
+both exits 0, equal empty stderr, cmp 0, mutant cmp 1. The remaining original
+cast probe is superseded in the actual slice by temporary 65. This small probe
+count does not imply the arguments feature or scratch integration is green.
+Focused arguments lowering tests pass in 0.710 seconds; debugger flow passes in
+0.009 seconds. The lower debugger regex selected no tests, so no lower debugger
+pass is claimed. The uncached arguments/debugger oracle exits 1 in 10.887 seconds;
+its full failures, including wrong-output cases, are retained separately.
+
+Lowering merge conflicts touched expression dispatch, argument lowering,
+function/receiver metadata and checked array views. Existing Node/host paths,
+overload-result checks and view reads were retained while incoming count-aware
+metadata was combined. The scratch already has three-argument host/runtime
+closures; the arguments branch explicitly keeps its legacy two-argument packing
+convention. The preserved host dispatch does not populate its packed count slot,
+consistent with the reproduced 9-versus-1 failure. This is an integration
+inference, not a claim that the upstream arguments branch fails in isolation.
+The exact resolution patch and scripts are retained for the forthcoming closure
+fix. No compiler bypass or attempt to hide failed expectations.
+
+No parser C or binary was emitted, so native 81-file/case comparisons, parser
+output mutant, C size, clang split/unsplit/warm time, binary size and native
+best-of-three time remain unavailable. nproc is 5; previous Node user time is
+6.162 seconds. No full gate, counts gate, complete oracle or WASI run claimed.
+[Evidence](evidence/front25/report.json) and [slice](slices/current.json).
+
+---
+
 # Memoized namespace rerun: arguments.length first, ten stops behind stubs
 
 Merged namespaces-tsc 47a6fabe into unpushed scratch a0aa1e69, yielding
