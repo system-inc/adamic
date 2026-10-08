@@ -116,6 +116,26 @@ Per the new standing policy, this checkpoint is local until unit 2 is complete.
 
 ## Blocking closure compiler refusal — @system_adamic
 
+Go type: `Function.Functions []*Function`
+(`high_level_intermediate_representation.go:233`).
+Adamic type written: `readonly functions: HIRFunction[] = []` (`core.ts:74`);
+the property is readonly, and its owned array is mutable.
+
+Smallest reproducer tested (three lines), saved as `cycle_repro.ts`:
+
+```typescript
+class HIRFunction { readonly functions: HIRFunction[] = []; }
+function append(parent: HIRFunction, child: HIRFunction): void { parent.functions.push(child); }
+append(new HIRFunction(), new HIRFunction());
+```
+
+Reproducer compiler output, verbatim:
+
+```text
+adamic: /workspace/adamic/stage1/cohere/high_level_intermediate_representation/cycle_repro.ts:1:21: Adamic 0.1 refuses HIRFunction[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/high_level_intermediate_representation/cycle_repro.ts:2:66 may close one (the value written may reach what it's written into, where append is called from the top level); declare the elements weak, Weak<HIRFunction>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly HIRFunction[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+exit status 1
+```
+
 Production Go:
 `cohere/internal/lint/ecmascript/high_level_intermediate_representation/lower_expression.go:699`
 (`b.function.Functions = append(b.function.Functions, nested)`), also `lower.go:1219`.
