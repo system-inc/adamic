@@ -1,4 +1,4 @@
-// a-check: type error TS2591
+// a-check: checked
 // Control: same visible behavior, without the optional constructor marker.
 import type {} from 'node:util';
 Error.captureStackTrace(new Error());

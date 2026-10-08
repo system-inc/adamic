@@ -26,3 +26,11 @@ driver paths are checked in place. [batch5b-headers.json](batch5b-headers.json)
 records actual reasons and unchanged body hashes; its 29 wrong-header and
 29 removed-header mutants are all caught by the unchanged pinned predicate.
 [batch5b-header-mutants.json](batch5b-header-mutants.json) records these 58 catches.
+
+Batch 5b on area-next checks 491 new, changed and retained batch programs
+in place. All pass a-check: 407 checked (including 113 NotYet), 64 refused
+and 20 checker errors. It refreshes 72 headers only, preserving every program
+body byte. [on-next-headers.json](on-next-headers.json) retains actual reasons
+and body hashes. The pinned predicate rejects 72 wrong-header mutants and
+45 removed-error-header mutants; [on-next-header-mutants.json](on-next-header-mutants.json)
+records all 117 catches. Compiler source and fixture Node records are untouched.

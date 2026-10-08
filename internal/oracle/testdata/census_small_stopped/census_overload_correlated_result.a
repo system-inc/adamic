@@ -1,3 +1,4 @@
+// a-check: refused the non-null assertion !
 // Original signatures and complete body: tsc core.ts:316.
 export function map<T, U>(array: readonly T[], f: (x: T, i: number) => U): U[];
 /** @internal */

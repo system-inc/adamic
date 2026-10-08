@@ -1,4 +1,4 @@
-// a-check: type error TS2591
+// a-check: refused 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free
 // From TypeScript 6.0.3, src/compiler/core.ts:1891; adapted line 1891; stage3 83a79ca5aec1f805037a0746927d8267c507b095
 // Adaptations: 48-memoize (A applied)
 // From TypeScript 6.0.3, src/compiler/sys.ts:1501; adapted line 1502

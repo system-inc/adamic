@@ -1,3 +1,4 @@
+// a-check: refused optional property errno in ErrnoException absent from structural source Error, which can hide fields
 import { programArguments } from 'adamic';
 import { Buffer } from 'node:buffer';
 import { openSync, readSync, closeSync } from 'node:fs';

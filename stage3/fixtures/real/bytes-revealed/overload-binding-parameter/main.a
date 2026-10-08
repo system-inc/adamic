@@ -1,4 +1,4 @@
-// a-check: checked
+// a-check: refused overload 1 of visitBindingElement parameter elem cannot be served by implementation parameter elem
 // From src/compiler/transformers/declarations.ts:619 (TypeScript 6.0.3, ed6e2975 adaptations).
 
 interface Node {readonly kind:number;}

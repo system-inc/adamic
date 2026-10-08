@@ -1,3 +1,4 @@
+// a-check: type error TS2556
 import { fileStatus } from 'adamic';
 const args: string[] = ['.'];
 fileStatus(...args);

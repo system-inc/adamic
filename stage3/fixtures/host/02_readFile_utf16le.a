@@ -1,4 +1,4 @@
-// a-check: type error TS2591
+// a-check: refused the non-null assertion !
 // From TypeScript 6.0.3, src/compiler/sys.ts:1787; adapted line 1788
 // Adaptations: 32-indexed-reads-program, 47-host-errors
 // Census reason: TS2591

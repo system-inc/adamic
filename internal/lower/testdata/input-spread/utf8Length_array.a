@@ -1,3 +1,4 @@
+// a-check: type error TS2556
 import { utf8Length } from 'adamic';
 const args: string[] = ['é'];
 utf8Length(...args);

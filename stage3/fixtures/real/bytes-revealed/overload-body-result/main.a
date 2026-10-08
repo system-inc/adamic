@@ -1,4 +1,4 @@
-// a-check: checked
+// a-check: refused overload 1 of transformFunctionBody result Block cannot be served by implementation result ConciseBody
 // From src/compiler/transformers/es2018.ts:1220 (TypeScript 6.0.3, ed6e2975 adaptations).
 
 interface Statement {readonly text:string;}

@@ -1,3 +1,4 @@
+// a-check: refused in that narrows a union of object types (any object with the key passes)
 // "message" in value narrows Chain | Message to Message, but any Chain that also carries a message
 // key passes, and value.code would be read on trust. Node prints 2, c, then NaN for the liar.
 interface Chain {

@@ -1,3 +1,4 @@
+// a-check: type error TS2556
 import { utf8At } from 'adamic';
 const args: (string | number)[] = ['é', 1];
 utf8At(...args);
