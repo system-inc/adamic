@@ -95,3 +95,68 @@ func TestClosureConventionRuntimeFeaturesIgnoreLiterals(t *testing.T) {
 		}
 	}
 }
+
+// Definition order, call order and explicit signature-erasing casts each fail
+// independently. A constructor check alone misses a never-stored definition.
+func TestClosureConventionWrongOrder(t *testing.T) {
+	checked, err := load.Load([]string{filepath.Join("..", "oracle", "testdata", "arguments_length_value_count.a")})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lower.Lower(context.Background(), checked)
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := C(program)
+	old := "adamic_value *arguments, size_t argument_count"
+	if !strings.Contains(source, old) {
+		t.Fatal("no counted definition")
+	}
+	swapped := strings.Replace(source, old, "size_t argument_count, adamic_value *arguments", 1)
+	t.Run("definition", func(t *testing.T) {
+		err := Build(swapped, filepath.Join(t.TempDir(), "mutant"), Options{})
+		if err == nil || !strings.Contains(err.Error(), "conflicting types") {
+			t.Fatalf("swapped definition escaped the header-derived declaration: %v", err)
+		}
+		t.Log(err)
+	})
+	t.Run("call", func(t *testing.T) {
+		lines := strings.Split(source, "\n")
+		changed := false
+		for i, line := range lines {
+			start := strings.Index(line, "= adamic_closure_call(")
+			if start < 0 {
+				continue
+			}
+			first := strings.Index(line[start:], ", ") + start
+			last := strings.LastIndex(line, ", ")
+			end := strings.LastIndex(line, ");")
+			if first >= last || end < last {
+				t.Fatal("mutation site changed")
+			}
+			lines[i] = line[:first+2] + line[last+2:end] + ", " + line[first+2:last] + line[end:]
+			changed = true
+			break
+		}
+		if !changed {
+			t.Fatal("no counted call")
+		}
+		err := Build(strings.Join(lines, "\n"), filepath.Join(t.TempDir(), "mutant"), Options{})
+		if err == nil || (!strings.Contains(err.Error(), "int-conversion") && !strings.Contains(err.Error(), "incompatible")) {
+			t.Fatalf("swapped call escaped typed parameters: %v", err)
+		}
+		t.Log(err)
+	})
+	for _, probe := range []struct{ name, code, diagnostic string }{
+		{"function-pointer-cast", "static adamic_value wrong(adamic_closure *self, size_t count, adamic_value *arguments) { return (adamic_value){.number = (double)count}; }\nstatic adamic_counted_code erased = (adamic_counted_code)wrong;\n", "cast-function-type-strict"},
+		{"void-pointer-cast", "static adamic_value wrong(adamic_closure *self, size_t count, adamic_value *arguments) { return (adamic_value){.number = (double)count}; }\nstatic adamic_closure *erased(void) { return adamic_counted_closure_new((void *)wrong, 0); }\n", "generic association"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			err := Build(strings.Replace(source, "#include \"adamic.h\"", "#include \"adamic.h\"\n"+probe.code, 1), filepath.Join(t.TempDir(), "mutant"), Options{})
+			if err == nil || !strings.Contains(err.Error(), probe.diagnostic) {
+				t.Fatalf("signature-erasing cast escaped compiler enforcement: %v", err)
+			}
+			t.Log(err)
+		})
+	}
+}

@@ -1,5 +1,5 @@
-Built: merged census 24a2b287, host blockers b788e96e, front-3 28a10122, current main ce0750f2, and library dependencies for exact host fixture 24; acceptance remains partial. Final release parser best of five: main 48c05d09 9.347 ms, merged 10.137 ms.
-Commits: census merge bf1a3823; host merge 14856bbf; front-3 merge ec485eab; current main merge 28443efc. All are pushed to codex/closure-convention; this host fixture checkpoint follows them. No other branch was pushed.
+Built: merged census 24a2b287, host blockers b788e96e, front-3 28a10122, current main ce0750f2, and library dependencies for exact host fixture 24; acceptance remains partial. Pre-enforcement release parser best of five: main 48c05d09 9.347 ms, merged 10.137 ms.
+Commits: census merge bf1a3823; host merge 14856bbf; front-3 merge ec485eab; current main merge 28443efc. All are pushed to codex/closure-convention; this host fixture checkpoint follows them. The explicitly requested warning is also pushed to codex/arguments-length as fa48dc2d.
 Commands and outputs: uncached host/replacement Node gate 38.225s, full flow 195.888s, recorded counts 160.115s excluding only blocked taste 21, all passed; host24 agrees in both backends. weak_parent 253/302 and typeof_dispatch 6/16 remain main's counts.
 Mutants: generated and runtime drop-count rejected by clang under -Werror; excess-count and unused-runtime literal mutants caught by pins; five callback, 31 filesystem, nested-reference and switch mutants caught by their Node/backend checks.
 Not covered: parser C and binary identity FAIL; hardware instructions/cycles unavailable; taste 21 blocks the complete gate; host fixture 24 now agrees with Node in both backends; four external process/parallel runtime call sites remain unintegrated.
@@ -107,3 +107,62 @@ The matching-subset counts assertion passed in 40.443s before adding host fixtur
 Remaining work
 
 Parser identity to main 48c05d09 remains false because of the merged optional method-table additions, admission string and host object-state/runtime changes. Hardware instructions and cycles remain unavailable on this box. Four external runtime sites remain outside this compiler branch: node_process.c performance invocation at 436/441 and parallel.c at 197/300. This port exposes only cwd/chdir/tmpdir/join; it does not pretend to implement performance or parallel scheduling. The six-site audit identifies the required typed dispatcher and actual count for every site, but does not claim those external modules have been compiled against this header.
+
+Priority ABI enforcement checkpoint
+
+The parser worker found a real silent miscompile in its unpublished scratch
+33bf53aca3ce199aa05fe7bd2e7898e7c5ef2d5b. Its evidence at c109c06d records
+native 9 versus Node 1, both exit 0 and empty stderr. This is evidence supplied
+by that worker; the exact scratch has not yet been rebuilt on this box.
+
+All closure definitions now have a prior declaration using the runtime function
+type underlying the one pointer typedef for their shape. Method thunks and
+runtime collection_next have the same check. Constructors use C11 _Generic
+checks on the unconverted source expression: Clang accepts some function to
+void pointer casts even with -pedantic, so an ordinary typed parameter alone
+would not forbid that escape. Generic checks reject it without runtime work.
+Clang also uses -Wcast-function-type-strict under -Werror.
+
+Every signature-erasing function pointer cast found in the native compiler:
+1. class_inheritance.go classDeclarations: (adamic_virtual_method) followed by
+   a native method symbol. Removed; the virtual table stores closed-world
+   function identities as size_t, never erased function pointers.
+2. class_inheritance.go callCode: ((result (*)(parameters))adamic_virtual(...)).
+   Removed; an emitted dispatcher switches on that identity and uses typed
+   direct calls to the closed-world candidates. C checks each actual signature.
+No closure or interface-method pointer cast was present in the reconciled tree.
+Object/data pointer casts remain; they do not carry function code.
+
+Pinned mutants in TestClosureConventionWrongOrder, all caught:
+- swapped counted definition: conflicting types for adamic_function_4_reader_value;
+  previous declaration: static adamic_counted_code_function ...;
+- swapped call: incompatible integer to pointer conversion passing int to
+  adamic_value *, and incompatible pointer to integer conversion to size_t;
+- incompatible function-pointer cast: converts to incompatible function type
+  [-Werror,-Wcast-function-type-strict];
+- void-pointer-erased constructor: controlling expression type void * not
+  compatible with any generic association type.
+Full compiler errors: closure-convention-evidence/abi-order-mutants.log.
+Generated and runtime drop-count mutants still fail with expected 3, have 2.
+
+Node acceptance includes the exact native-arguments-length-value.a source from
+c109c06d, arguments_length_value_count.a, and arguments_length_reduce_left.a.
+TestArgumentsLengthTypeScriptSource checks source Node, release -O2 native,
+ASan/UBSan native, leak counts, and the JavaScript backend. The uncached final
+focused gate passed: native 12.349s before constructor guards; the subsequent
+final gate includes those guards and all arguments fixtures (see saved log).
+New probe counts: 3 allocations, 3 frees, 2 retains, 7 releases, peak 3.
+
+Warning commit: fa48dc2d73363ea7daa06f634685c8540ce4ff7b on codex/arguments-length
+adds notes/arguments-length/DO_NOT_MERGE_ALONE.md, names reconciliation checkpoint
+9b6b451c3479c043501c346a24570299f069d750, and requires landing only through this
+branch. This additional own-branch push is explicitly authorized by the user.
+
+Exact scratch reproduction remains pending: 33bf53ac and its precursor e4cc453a
+are unpublished commits, absent from this object store and the fetched proof
+branch. The front25 saved patch is incremental against e4cc453a; treating the
+current reconciled tree as that base would not reproduce the recorded compiler
+set. Requested a bundle or complete compiler tree from the parser worker.
+Wrong-order and cast mutants are observed C compiler failures here, not claimed
+as the requested exact scratch replay. Earlier parser byte-identity failure and
+best-five numbers predate this enforcement change; a fresh identity check follows.

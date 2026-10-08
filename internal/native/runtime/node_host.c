@@ -216,4 +216,3 @@ adamic_string *adamic_fs_file_host_tmpdir(void) {
     if (length > 1 && value[length - 1] == '/') { length--; }
     return adamic_decode_utf8((const unsigned char *)value, length);
 }
-

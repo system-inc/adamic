@@ -116,7 +116,15 @@ func cProgram(program *ir.Program, handler int) string {
 	for index := range program.Functions {
 		for _, inRegion := range emitter.regionVariants(index) {
 			emitter.inRegion = inRegion
-			fmt.Fprintf(&builder, "static %s;\n", emitter.signature(index))
+			if program.Functions[index].Closure {
+				shape := "adamic_code_function"
+				if program.PackedCountNeeded(index) {
+					shape = "adamic_counted_code_function"
+				}
+				fmt.Fprintf(&builder, "static %s %s;\n", shape, emitter.functionName(index))
+			} else {
+				fmt.Fprintf(&builder, "static %s;\n", emitter.signature(index))
+			}
 		}
 	}
 	emitter.inRegion = false

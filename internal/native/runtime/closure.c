@@ -13,7 +13,7 @@ adamic_cell *adamic_cell_new(adamic_value value, bool references) {
 	return cell;
 }
 
-adamic_closure *adamic_closure_new(adamic_code code, size_t count) {
+adamic_closure *(adamic_closure_new)(adamic_code code, size_t count) {
 	adamic_closure *closure = adamic_allocate(sizeof *closure + count * sizeof closure->cells[0], adamic_kind_closure);
 	closure->code = code;
 #ifdef ADAMIC_CLOSURE_CONVENTION
@@ -48,7 +48,7 @@ adamic_environment *adamic_environment_new(size_t count) {
 // A live value is unique for its code and activation. If no owner kept it, a
 // later reference can recreate it: no surviving reference can observe that gap.
 // Captured cells keep the frame alive; its cache never keeps a closure alive.
-adamic_closure *adamic_closure_canonical(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[]) {
+adamic_closure *(adamic_closure_canonical)(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[]) {
 	adamic_environment *owner = identity->owner;
 	for (adamic_closure *held = owner->functions; held != NULL; held = held->canonical_next) {
 #ifdef ADAMIC_CLOSURE_CONVENTION
@@ -73,7 +73,7 @@ adamic_closure *adamic_closure_canonical(adamic_cell *identity, adamic_code code
 
 
 #ifdef ADAMIC_CLOSURE_CONVENTION
-adamic_closure *adamic_counted_closure_canonical(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[]) {
+adamic_closure *(adamic_counted_closure_canonical)(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[]) {
  adamic_environment *owner = identity->owner;
  for (adamic_closure *held = owner->functions; held != NULL; held = held->canonical_next) {
  if (held->counted && held->counted_code == code) { return adamic_retain(held); }

@@ -360,7 +360,11 @@ func (e *emitter) methodThunk(function int) string {
 	if e.program.PackedCountNeeded(function) {
 		count = ", size_t argument_count"
 	}
-	lines := []string{fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments%s) {", name, count), "\t(void)arguments;"}
+	shape := "adamic_method_function"
+	if e.program.PackedCountNeeded(function) {
+		shape = "adamic_counted_method_function"
+	}
+	lines := []string{fmt.Sprintf("static %s %s;", shape, name), fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments%s) {", name, count), "\t(void)arguments;"}
 	values := []string{}
 	for index, parameter := range method.Parameters {
 		local := e.program.Locals[parameter]

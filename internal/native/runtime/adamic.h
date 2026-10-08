@@ -99,8 +99,10 @@ adamic_cell *adamic_cell_new(adamic_value value, bool references);
 // adamic_closure is a function value: its code, and the cells it captured. Every closure is called
 // the same way, its arguments and its result as adamic_value, whatever its types.
 typedef struct adamic_closure adamic_closure;
-typedef adamic_value (*adamic_code)(adamic_closure *self, adamic_value *arguments);
-typedef adamic_value (*adamic_counted_code)(adamic_closure *self, adamic_value *arguments, size_t argument_count);
+typedef adamic_value adamic_code_function(adamic_closure *self, adamic_value *arguments);
+typedef adamic_code_function *adamic_code;
+typedef adamic_value adamic_counted_code_function(adamic_closure *self, adamic_value *arguments, size_t argument_count);
+typedef adamic_counted_code_function *adamic_counted_code;
 struct adamic_closure {
 	adamic_heap heap;
 #ifdef ADAMIC_CLOSURE_CONVENTION
@@ -218,7 +220,6 @@ typedef struct adamic_shape {
 	const adamic_methods *methods;
 } adamic_shape;
 
-typedef void (*adamic_virtual_method)(void);
 typedef struct adamic_object adamic_object;
 typedef struct adamic_accessor {
 	const char *name;
@@ -230,7 +231,7 @@ typedef struct adamic_class {
 	const struct adamic_class *base;
 	size_t own_start;
 	size_t count;
-	const adamic_virtual_method *methods;
+	const size_t *methods;
 	size_t definition;
 	const adamic_shape *public_shape;
 	const adamic_accessor *accessors;
@@ -262,7 +263,7 @@ static inline unsigned char *adamic_object_field_types(const adamic_object *obje
 }
 
 bool adamic_instanceof(const void *value, const adamic_class *wanted);
-adamic_virtual_method adamic_virtual(const adamic_object *object, size_t slot);
+size_t adamic_virtual(const adamic_object *object, size_t slot);
 void adamic_object_free_children(adamic_object *object, void (*release)(void *));
 
 // adamic_slot_cache remembers, at one place in the program that reads a field, where the field was in
@@ -279,8 +280,10 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
 
 // adamic_method is a class's method as a call through an interface calls it: the object as this, and
 // the arguments and the result as adamic_value, as a closure's are (the result owned).
-typedef adamic_value (*adamic_method)(adamic_object *self, adamic_value *arguments);
-typedef adamic_value (*adamic_counted_method)(adamic_object *self, adamic_value *arguments, size_t argument_count);
+typedef adamic_value adamic_method_function(adamic_object *self, adamic_value *arguments);
+typedef adamic_method_function *adamic_method;
+typedef adamic_value adamic_counted_method_function(adamic_object *self, adamic_value *arguments, size_t argument_count);
+typedef adamic_counted_method_function *adamic_counted_method;
 #ifdef ADAMIC_CLOSURE_CONVENTION
 typedef struct adamic_method_entry {
  bool counted;
@@ -1016,5 +1019,18 @@ _Noreturn void adamic_unreachable(void);
 // Keep their enumeration distinct from the Object slice, which skips private class slots.
 adamic_array *adamic_plain_object_keys(const adamic_object *object);
 void *adamic_library_identity(size_t index);
+
+// C permits some function-to-void pointer conversions without a diagnostic.
+// Check the source expression's type before a constructor can convert it.
+#define adamic_closure_new(code, ...) (adamic_closure_new)(_Generic((code), adamic_code: (code)), __VA_ARGS__)
+#ifdef ADAMIC_CLOSURE_CONVENTION
+#define adamic_counted_closure_new(code, ...) (adamic_counted_closure_new)(_Generic((code), adamic_counted_code: (code)), __VA_ARGS__)
+#endif
+#ifdef ADAMIC_CANONICAL_CLOSURES
+#define adamic_closure_canonical(identity, code, ...) (adamic_closure_canonical)((identity), _Generic((code), adamic_code: (code)), __VA_ARGS__)
+#ifdef ADAMIC_CLOSURE_CONVENTION
+#define adamic_counted_closure_canonical(identity, code, ...) (adamic_counted_closure_canonical)((identity), _Generic((code), adamic_counted_code: (code)), __VA_ARGS__)
+#endif
+#endif
 
 #endif
