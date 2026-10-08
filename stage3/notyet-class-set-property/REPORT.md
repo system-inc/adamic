@@ -1,7 +1,7 @@
 Built own-slot method replacement, owned mixed-union fields, array length removal, consistently held intersections and undefined fields.
 Commits: 08b76587, 5475f479, 863babed, ecfead29, d0464e43; main landing merge 4249054a; requested non-null merge b6415dda includes c41c0e06.
 Checks: Node, JavaScript, native ASan/UBSan and release, ownership/leaks, focused lower/native/flow/IR checks pass; counts refreshed; no full package or full gate run.
-Mutants: all 35 targeted mutants fail their controls; each restored; individual catches and logs below.
+Mutants: all 37 targeted mutants fail their controls; each restored; individual catches and logs below.
 Uncovered: any needs a ruling (2 roots); 3 census echoes cancelled; keyof replay stops at Path before its assignment; inherited method expandos and unrepresented runtime scalar views remain guarded.
 
 Compiler base: b410340dc8f889b5799c3bc519117c63def3aa24, newest origin/area/compiler resolved at setup. Census replay 9a1f14c5d994aa855625e7cfa295677060348fec was merged at f943bdf03fbe492b65731714a7437a7980db228c. User-requested c41c0e062e99da37820f822968d4df1b48cdaee7 was merged without conflicts at b6415ddab8eeca895d29284d13e1da332fac3ecb; pending work was stashed and restored. All 14 representative examples were replayed again after that merge. replay-final.json contains the final compact findings, including the later intersection replay.
@@ -119,3 +119,11 @@ go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-coun
 ```
 
 Outputs: native 1.844s, oracle 14.306s, regexp .225s, flow 3.810s, counts 56.827s. The initial native run failed to compile because LinkFlags is absent on this branch; the API adaptation above fixed it. Setup and toolchain from the prior unit remain present; resumed nproc=5. No additional lower, IR or backend function changes were needed. The only local runtime C edit is class_set_property_union.c; all other runtime changes are the owner's cherry-picked metadata commit.
+
+Packed runtime scalar correction:
+
+The exhausted numeric and boolean iterator result variants exposed a gap in the initial metadata follow-up b6eec03a: the source/JavaScript backend printed undefined, while native boxed the reserved word as NaN or true. The extended iterator fixture now includes exhaustion for numbers, booleans and references. Runtime number kinds decode the existing reserved undefined word before boxing; boolean kinds decode both that word and packed 0/1/2 slots. Actual field classification still reads only shape->kinds[index], with no name comparison or layout recognition. This also preserves ordinary numbers (including NaN), booleans and references.
+
+Two additional mutants remove number and boolean undefined decoding separately. The same Node fixture catches each through stdout disagreement; both are restored. mutants-shape-kinds.json now records all four follow-up mutants. The counted wrong-kind check remains unchanged. The final correction is committed and pushed once after all local checks pass, following the user's updated shared-fast-gate standing rule.
+
+Final correction outputs: native 13.485s, oracle 10.199s, flow 7.976s, counts refresh 70.980s. Commands match the follow-up selections above; logs are /tmp/adamic-class-set-property-shape-packed-<package>-final.log. The unchanged regexp package checks passed in .225s. No further code or fixture changes followed these successful checks.
