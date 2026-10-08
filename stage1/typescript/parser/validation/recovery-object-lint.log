@@ -1,0 +1,4 @@
+/workspace/adamic/stage1/typescript/parser/parser.ts:1:1 error fix --fix would rewrite this file: no-else-return, format
+/workspace/adamic/stage1/typescript/parser/parser.ts:1726:14 error no-else-return This `else` follows a branch that always returns, so it is doing nothing. The code after it only runs when the `if` did not return, which is what an `else` says, and the extra nesting costs the reader a level of indentation to learn nothing.
+/workspace/adamic/stage1/typescript/parser/parser.ts:1767:18 error no-else-return This `else` follows a branch that always returns, so it is doing nothing. The code after it only runs when the `if` did not return, which is what an `else` says, and the extra nesting costs the reader a level of indentation to learn nothing.
+✗ ☠️ 0.3s • 2 findings • 1 file would change (276 rules • 13 checked) • 100% Adamic-ready (12 of 12) • ⚠ only 13 of 113 files

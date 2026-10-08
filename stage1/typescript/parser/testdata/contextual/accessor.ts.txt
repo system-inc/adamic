@@ -1,0 +1,17 @@
+{
+    accessor = true;
+    accessor();
+    accessor.value;
+    accessor
+}
+{
+    accessor
+    class C {}
+}
+{
+    accessor
+    function f() {}
+}
+{
+    accessor class D {}
+}

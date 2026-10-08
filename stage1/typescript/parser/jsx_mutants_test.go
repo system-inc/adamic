@@ -9,6 +9,7 @@ import (
 
 // Not parallel: establish a positive native control before parallel mutant builds.
 func TestJsxMutants(t *testing.T) {
+	t.Parallel()
 	manifest, _ := jsxManifest(t)
 	oracle := goOracle(t)
 	want := execute(t, "", oracle, "--manifest", manifest, "--whole").output
