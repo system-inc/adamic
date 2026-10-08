@@ -1,0 +1,42 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { SymbolDetails } from '../../checker_declarations.a';
+import { Suggestion, SuggestionEdit } from '../../suggestions.a';
+import { messageNoArrayConstructor, messageUseAnArrayLiteral } from './messages.a';
+
+const noEdits: readonly SuggestionEdit[] = [];
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(node: ParseNode, index: number): void {
+        const context = this.context;
+        const calleeIndex = node.children[0] ?? -1;
+        if(calleeIndex < 0) { return; }
+        const callee = context.node(calleeIndex);
+        if(callee.kind !== 'Identifier' || callee.text !== 'Array') { return; }
+        const count = Math.max(0, node.list);
+        // Non-argument children after the callee are type arguments or the optional token.
+        // Neither is accepted upstream; a parenthesized callee is deliberately not unwrapped.
+        if(node.children.length !== count + 1) { return; }
+        const arguments_ = node.children.slice(node.children.length - count);
+        const first = arguments_[0] ?? -1;
+        if(count === 1 && context.node(first).kind !== 'SpreadElement') { return; }
+        const checker = context.checker;
+        if(checker === undefined) { return; }
+        // This node query follows cohere's GetSymbolAtLocation. No foreign file is opened,
+        // no default-library predicate is consumed, and cohere declares no program reads.
+        const answer = checker.ask(calleeIndex, 'node-symbol-details');
+        if(answer.value === undefined) { return; }
+        const facts = new SymbolDetails(answer.value);
+        if(!facts.present || facts.declarations.length === 0 || facts.declarations[0]?.declarationFile !== true) { return; }
+        const replacement = first < 0 ? '[]' : `[${context.source.slice(context.node(first).pos, node.end - 1)}]`;
+        context.scanAt(node.pos);
+        const start = context.scanStart();
+        context.reportRange(start, node.end, '@typescript-eslint/no-array-constructor',
+            'noArrayConstructor', messageNoArrayConstructor, noEdits,
+            [new Suggestion('useAnArrayLiteral', messageUseAnArrayLiteral,
+                [new SuggestionEdit(start, node.end, replacement)])]);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

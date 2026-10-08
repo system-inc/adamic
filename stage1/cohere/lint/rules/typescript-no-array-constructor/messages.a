@@ -1,0 +1,2 @@
+export const messageNoArrayConstructor = 'This builds an array with the `Array` constructor, whose argument list means two different things depending on how many arguments it gets: `Array(3)` is an empty array of length three, while `Array(3, 4)` holds those two values. A refactor that changes the count silently changes the kind of array produced. Use a literal, `[3, 4]`, which reads the same at every length.';
+export const messageUseAnArrayLiteral = 'Replace the `Array` call with an array literal.';

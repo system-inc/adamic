@@ -1,0 +1,17 @@
+{
+  "lint-registry": {
+    "exit": 0,
+    "log": "registry.log"
+  },
+  "go vet ./stage1/cohere/lint/...": {
+    "exit": 0,
+    "log": "vet.log"
+  },
+  "gofmt -d oracle.go": {
+    "exit": 0,
+    "log": "gofmt.log"
+  },
+  "git diff --check": {
+    "exit": 0
+  }
+}

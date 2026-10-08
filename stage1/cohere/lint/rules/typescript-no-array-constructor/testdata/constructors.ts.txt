@@ -1,0 +1,3 @@
+Array(); new Array; new Array(1, 2); Array(...items);
+function shadow(Array: any) { Array(); new Array(); }
+Array(3); Array<string>(1, 2); Array?.(1, 2);

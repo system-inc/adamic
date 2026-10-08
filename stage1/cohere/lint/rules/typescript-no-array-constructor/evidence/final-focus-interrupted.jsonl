@@ -1,0 +1,5 @@
+{"Time":"2026-10-08T18:14:01.847048792Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-08T18:14:01.932740837Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestRulesAgree"}
+{"Time":"2026-10-08T18:14:01.933067165Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestRulesAgree","Output":"=== RUN   TestRulesAgree\n","OutputType":"frame"}
+{"Time":"2026-10-08T18:14:13.612384333Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestRulesAgree","Output":"    lint_test.go:367: checker compilation phases: load=266.54314ms lower=4.619023582s C=723.51677ms JavaScript=34.303334ms\n"}
+{"Time":"2026-10-08T18:14:28.538564802Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestRulesAgree","Output":"    lint_test.go:367: checker native build: 8.058119877s\n"}

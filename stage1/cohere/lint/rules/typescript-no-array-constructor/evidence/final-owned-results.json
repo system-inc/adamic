@@ -1,0 +1,30 @@
+[
+  {
+    "Time": "2026-10-08T18:30:03.739605415Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "Test": "TestRulesAgree",
+    "Elapsed": 338.38
+  },
+  {
+    "Time": "2026-10-08T19:05:11.690753538Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "Test": "TestMutants/no-array-constructor_reports_a_local_Array_shadow",
+    "Elapsed": 139.25
+  },
+  {
+    "Time": "2026-10-08T19:07:14.405401957Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "Test": "TestMutants",
+    "Elapsed": 0.07
+  },
+  {
+    "Time": "2026-10-08T19:14:49.51284692Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "Test": "TestOwnedWitnesses",
+    "Elapsed": 23.5
+  }
+]

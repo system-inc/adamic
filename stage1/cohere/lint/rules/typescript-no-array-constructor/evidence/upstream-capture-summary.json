@@ -1,0 +1,21 @@
+{
+  "rule": "@typescript-eslint/no-array-constructor",
+  "uniqueCases": 79,
+  "upstreamTestFunctions": [
+    "TestNoArrayConstructorFires",
+    "TestNoArrayConstructorStaysSilent",
+    "TestNoArrayConstructorDeclinesOtherConstructors",
+    "TestNoArrayConstructorDeclinesBareOptionalCalls",
+    "TestNoArrayConstructorDeclinesAShadowedArray",
+    "TestNoArrayConstructorNeedsTheTypedHarness",
+    "TestNoArrayConstructorSuggestsAnArrayLiteral",
+    "TestNoArrayConstructorKeepsCommentsAmongArguments",
+    "TestNoArrayConstructorNeverProposesAnAutomaticFix"
+  ],
+  "runtimeSides": [
+    "Go",
+    "Node",
+    "emitted JavaScript",
+    "sanitized native"
+  ]
+}

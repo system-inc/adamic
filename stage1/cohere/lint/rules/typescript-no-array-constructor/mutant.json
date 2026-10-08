@@ -1,0 +1,5 @@
+{
+  "name": "no-array-constructor reports a local Array shadow",
+  "from": "facts.declarations[0]?.declarationFile !== true",
+  "to": "false"
+}

@@ -1,0 +1,23 @@
+{
+  "exit": 0,
+  "wallSeconds": 3683.1029628000033,
+  "nproc": 5,
+  "load1m": {
+    "min": 1.0,
+    "median": 1.92529296875,
+    "max": 13.4306640625
+  },
+  "testCounts": {
+    "pass": 119,
+    "fail": 0,
+    "skip": 1
+  },
+  "packageCounts": {
+    "pass": 1,
+    "fail": 0,
+    "skip": 0
+  },
+  "skips": [
+    "TestCheckerBridgeRefusalPending"
+  ]
+}
