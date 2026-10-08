@@ -1,0 +1,5 @@
+{
+  "name": "jsx-no-undef treats missing names as declared",
+  "from": "if(facts.present) {",
+  "to": "if(!facts.present) { return; }\n        if(facts.present) {"
+}

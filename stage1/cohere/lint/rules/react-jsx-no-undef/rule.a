@@ -1,0 +1,41 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { SymbolDetails } from '../../checker_declarations.a';
+const message = 'This JSX tag names a component that has no declaration in scope, so React receives `undefined` where a component was meant and throws at render rather than at build. Almost always a misspelling or a missing import. Import the component, or fix the spelling to match the binding you meant.';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(node: ParseNode, index: number): void {
+        const context = this.context;
+        const checker = context.checker;
+        if(checker === undefined) { return; }
+        let reference = node.children[0] ?? -1;
+        if(reference < 0) { return; }
+        let target = context.node(reference);
+        if(target.kind === 'Identifier') {
+            const first = target.text.charCodeAt(0);
+            if(target.text.length === 0 || target.text.includes('-') || (first >= 97 && first <= 122)) { return; }
+        }
+        else if(target.kind === 'PropertyAccessExpression') {
+            while(target.kind === 'PropertyAccessExpression') {
+                reference = target.children[0] ?? -1;
+                if(reference < 0) { return; }
+                target = context.node(reference);
+            }
+            if(target.kind !== 'Identifier') { return; }
+        }
+        else { return; }
+        // A node-local question has no foreign-file selector and no extra program read.
+        const answer = checker.ask(reference, 'node-symbol-details');
+        if(answer.value === undefined) { return; }
+        const facts = new SymbolDetails(answer.value);
+        if(facts.present) {
+            if(context.settings.read('allowglobals', 'false') === 'true' || checker.path.endsWith('.cjs')) { return; }
+            for(const declaration of facts.declarations) {
+                if(declaration.declarationPath === checker.path) { return; }
+            }
+        }
+        context.reportRange(context.start(reference), target.end, 'react/jsx-no-undef', 'jsxIdentifierNotDefined', message);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

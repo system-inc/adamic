@@ -1,0 +1,34 @@
+{
+  "started_epoch": 1791475976.1670122,
+  "nproc": 5,
+  "load_before": [
+    0.291015625,
+    1.48193359375,
+    1.8427734375
+  ],
+  "typescript": "/workspace/wave21-typescript-603",
+  "timeout": "3h",
+  "profile": "/workspace/wave21-facts-merged-profile",
+  "throughput": "1",
+  "finished_epoch": 1791477642.6989882,
+  "load_after": [
+    0.19580078125,
+    3.07421875,
+    4.2216796875
+  ],
+  "package_wall_seconds": 1434.288,
+  "all_test_results": {
+    "pass": 160,
+    "skip": 1
+  },
+  "top_level_results": {
+    "pass": 46,
+    "skip": 1
+  },
+  "skipped_tests": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "registered_mutants_passed": 102,
+  "source_pin": "d845dccde413c89643293e808626344d12e3f023",
+  "area_pin": "ad7bd06632f119abc7680719ad3a7d3b71100f58"
+}
