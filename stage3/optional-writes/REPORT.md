@@ -385,3 +385,49 @@ Every optional oracle, all 28 mutants and the entire count gate passed in
 of all 13 optional fixtures in the mandatory counts table passed in 43.286s.
 These rows count the inserted guards, not just the .a witness without option
 audit. Every new row balances allocations and frees.
+
+Current-main synchronization: origin/main 74fb6490a0ba7f608012a13c9842795f15431551
+introduced one conflicted hunk in markdownblocks/gaps_test.go. Resolve it by
+retaining main's parallelMarkdown(t) scheduling helper and this branch's exact
+NotYet support and newer first-class nested-function diagnosis. No bulk strategy
+was used. The unchanged probe passes in 26.838s. On the merged tree, all optional
+oracles, 28 mutants and all registered counts pass in 61.735s; focused loader/
+lower/commands pass in 6.887s, 2.655s, 0.017s, and affected-package vet passes.
+The production probe still reports 171 sites, 67 scheduled, zero emitted, 194
+errors. Exact ledger validation reports missing=0, extra=0 and wrong option
+attribution=0. Imported evidence whitespace is preserved and recorded in
+evidence/final-merge-whitespace.log.gz; scoped unit and conflict files pass
+diff --check. Full repository gate remains unrun.
+
+Complete run mutant inventory (counts refer to distinct run mutations):
+
+| Mutant | What catches it |
+| --- | --- |
+| Numeric direct write stores absent | Presence guard, exit 70 |
+| Reference direct write stores absent | Presence guard, exit 70 |
+| Class direct write stores absent | Presence guard, exit 70 |
+| Fresh data construction stores absent | Presence guard, exit 70 |
+| Required implements field stores absent | Node observations |
+| Drop absent slot reservation | Missing-field stop and Node observations |
+| Drop spread reservation | Missing-field stop and Node observations |
+| Initially absent fields appear present | Node observations |
+| Layout order replaces write order | Node observations |
+| Delete keeps own presence | Node observations |
+| Interface alias uses static class keys | Node observations, sanitizer off/on |
+| Checked copy drops presence | Independent state assertions, sanitizer off/on |
+| Checked copy drops readiness | Checked read stop, sanitizer off/on |
+| Presence and readiness overlap | Independent state assertions, sanitizer off/on |
+| Leading spread loses copied presence | Copied-property guard, exit 70 |
+| Conditional construction loses presence | Branch construction guard, exit 70 |
+| Move guard cleanup to outer process scope | LeakSanitizer and allocation/free counts; Node output still matches |
+| Required-source optional view loses own field | Argument presence guard, exit 70 |
+| Producer result becomes undefined after its earlier guard | Required-result guard, exit 70 |
+| Propagated-result fixture loses source field | Earlier argument presence guard, exit 70 |
+| Optional-source view has array storage | Storage-kind guard, exit 70 |
+| Optional-source write stores absent | Node observations; legitimate absence stays allowed |
+| Readonly data container loses inner field | Inner presence guard, exit 70 |
+| Readonly nullable value loses inner field | Inner presence guard, exit 70 |
+| Nullish assignment loses inner field | Inner presence guard, exit 70 |
+| Mapped object array loses element field | Element presence guard, exit 70 |
+| Object-return callback has array storage | Closure ABI guard, exit 70 |
+| Callback return loses optional field presence | Node observations |

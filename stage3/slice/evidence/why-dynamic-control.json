@@ -1,0 +1,251 @@
+{
+  "summary": {
+    "typescript": "6.0.3",
+    "tree": "/workspace/scratch/order-dynamic-input",
+    "entries": [
+      "src/compiler/parser.ts:createSourceFile"
+    ],
+    "declarations": 5099,
+    "copied_spans": 5121,
+    "namespace_wrapper_spans": 22,
+    "value_declarations": 3954,
+    "type_declarations": 1145,
+    "files": 78,
+    "declaration_files": 75,
+    "code_declarations": 5022,
+    "export_facade_records": 77,
+    "evaluation_only_files": 3,
+    "preserves_evaluation": true,
+    "declaration_lines": 190832,
+    "declaration_bytes": 9760394,
+    "rewritten_import_lines": 444
+  },
+  "why": [
+    {
+      "selector": "src/compiler/checker.ts:createTypeChecker",
+      "reached": true,
+      "chain": [
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1344,
+          "names": [
+            "createSourceFile"
+          ],
+          "entry": "createSourceFile"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1603,
+          "names": [
+            "Parser.parseSourceFile"
+          ],
+          "via": {
+            "file": "src/compiler/parser.ts",
+            "line": 1356,
+            "column": 18,
+            "text": "Parser.parseSourceFile",
+            "type": false
+          }
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 2478,
+          "names": [
+            "convertToJson"
+          ],
+          "via": {
+            "file": "src/compiler/parser.ts",
+            "line": 1616,
+            "column": 13,
+            "text": "convertToJson(result, result.statements[0]?.expression, result.parseDiagnostics, /*returnValue*/ false, /*jsonConversionNotifier*/ undefined)",
+            "type": false
+          }
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 2385,
+          "names": [
+            "getTextOfPropertyName"
+          ],
+          "via": {
+            "file": "src/compiler/commandLineParser.ts",
+            "line": 2509,
+            "column": 84,
+            "text": "getTextOfPropertyName(element.name)",
+            "type": false
+          }
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 2364,
+          "names": [
+            "tryGetTextOfPropertyName"
+          ],
+          "via": {
+            "file": "src/compiler/utilities.ts",
+            "line": 2386,
+            "column": 31,
+            "text": "tryGetTextOfPropertyName(name)",
+            "type": false
+          }
+        },
+        {
+          "file": "src/compiler/debug.ts",
+          "line": 273,
+          "names": [
+            "Debug.assertNever"
+          ],
+          "via": {
+            "file": "src/compiler/utilities.ts",
+            "line": 2380,
+            "column": 20,
+            "text": "Debug.assertNever",
+            "type": false
+          }
+        },
+        {
+          "file": "src/compiler/debug.ts",
+          "line": 444,
+          "names": [
+            "Debug.formatSyntaxKind"
+          ],
+          "via": {
+            "file": "src/compiler/debug.ts",
+            "line": 274,
+            "column": 131,
+            "text": "formatSyntaxKind((member as Node).kind)",
+            "type": false
+          }
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 1486,
+          "names": [
+            "createTypeChecker"
+          ],
+          "via": {
+            "file": "src/compiler/debug.ts",
+            "line": 445,
+            "column": 61,
+            "text": "ts as any",
+            "type": false
+          },
+          "expansion": "module namespace value expands src/compiler/_namespaces/ts.ts"
+        }
+      ]
+    },
+    {
+      "selector": "src/compiler/program.ts:createProgram",
+      "reached": true,
+      "chain": [
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1344,
+          "names": [
+            "createSourceFile"
+          ],
+          "entry": "createSourceFile"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1603,
+          "names": [
+            "Parser.parseSourceFile"
+          ],
+          "via": {
+            "file": "src/compiler/parser.ts",
+            "line": 1356,
+            "column": 18,
+            "text": "Parser.parseSourceFile",
+            "type": false
+          }
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 2478,
+          "names": [
+            "convertToJson"
+          ],
+          "via": {
+            "file": "src/compiler/parser.ts",
+            "line": 1616,
+            "column": 13,
+            "text": "convertToJson(result, result.statements[0]?.expression, result.parseDiagnostics, /*returnValue*/ false, /*jsonConversionNotifier*/ undefined)",
+            "type": false
+          }
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 2385,
+          "names": [
+            "getTextOfPropertyName"
+          ],
+          "via": {
+            "file": "src/compiler/commandLineParser.ts",
+            "line": 2509,
+            "column": 84,
+            "text": "getTextOfPropertyName(element.name)",
+            "type": false
+          }
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 2364,
+          "names": [
+            "tryGetTextOfPropertyName"
+          ],
+          "via": {
+            "file": "src/compiler/utilities.ts",
+            "line": 2386,
+            "column": 31,
+            "text": "tryGetTextOfPropertyName(name)",
+            "type": false
+          }
+        },
+        {
+          "file": "src/compiler/debug.ts",
+          "line": 273,
+          "names": [
+            "Debug.assertNever"
+          ],
+          "via": {
+            "file": "src/compiler/utilities.ts",
+            "line": 2380,
+            "column": 20,
+            "text": "Debug.assertNever",
+            "type": false
+          }
+        },
+        {
+          "file": "src/compiler/debug.ts",
+          "line": 444,
+          "names": [
+            "Debug.formatSyntaxKind"
+          ],
+          "via": {
+            "file": "src/compiler/debug.ts",
+            "line": 274,
+            "column": 131,
+            "text": "formatSyntaxKind((member as Node).kind)",
+            "type": false
+          }
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 1499,
+          "names": [
+            "createProgram"
+          ],
+          "via": {
+            "file": "src/compiler/debug.ts",
+            "line": 445,
+            "column": 61,
+            "text": "ts as any",
+            "type": false
+          },
+          "expansion": "module namespace value expands src/compiler/_namespaces/ts.ts"
+        }
+      ]
+    }
+  ]
+}

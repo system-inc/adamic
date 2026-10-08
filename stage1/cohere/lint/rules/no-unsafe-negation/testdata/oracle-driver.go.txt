@@ -1,0 +1,83 @@
+package main
+
+import (
+	"fmt"
+ "encoding/json"
+ rules "github.com/system-inc/cohere/internal/lint/rules/core"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/core"
+	"github.com/microsoft/TypeScript/tsc/shim/parser"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	"github.com/system-inc/cohere/internal/lint/rule"
+	"os"
+	"sort"
+	"strings"
+	"unicode/utf16"
+)
+
+func written(text string) string {
+	var b strings.Builder
+	for _, r := range text {
+		if r >= 32 && r <= 126 && r != '\\' {
+			b.WriteRune(r)
+		} else if r <= 65535 {
+			fmt.Fprintf(&b, `\u%04x`, r)
+		} else {
+			h, l := utf16.EncodeRune(r)
+			fmt.Fprintf(&b, `\u%04x\u%04x`, h, l)
+		}
+	}
+	return b.String()
+}
+func main() {
+	data, err := os.ReadFile(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+	countOnly := len(os.Args) > 2
+	total, index := 0, 0
+	for _, row := range strings.Split(string(data), "\n") {
+		if row == "" {
+			continue
+		}
+		columns := strings.Split(row, "\t")
+ path := columns[0]
+ var options rules.NoUnsafeNegationOptions
+ if len(columns)>1 { if err := json.Unmarshal([]byte(columns[1]), &options); err != nil {panic(err)} }
+ source, err := os.ReadFile(path)
+		if err != nil {
+			panic(err)
+		}
+		file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: path, Path: tspath.Path(path)}, string(source), core.ScriptKindTS)
+		var findings []rule.Diagnostic
+		listener := oracleNoUnsafeNegation().Run(rule.Context{SourceFile: file, FileCache: rule.NewFileCache(), Report: func(d rule.Diagnostic) { findings = append(findings, d) }}, options)
+		var walk func(*ast.Node)
+		walk = func(n *ast.Node) {
+			if visit := listener[n.Kind]; visit != nil {
+				visit(n)
+			}
+			n.ForEachChild(func(child *ast.Node) bool { walk(child); return false })
+		}
+		walk(file.AsNode())
+		total += len(findings)
+		if countOnly {
+			continue
+		}
+		fmt.Printf("case %d\n", index)
+		index++
+		sort.SliceStable(findings, func(i, j int) bool { return findings[i].Range.Pos() < findings[j].Range.Pos() })
+		for _, d := range findings {
+			fmt.Printf("finding %d %d %s\t%s\n", d.Range.Pos(), d.Range.End(), d.Message.Id, written(d.Message.Description))
+			for _, s := range d.Suggestions {
+				fmt.Printf("suggestion %s\t%s\n", s.Message.Id, written(s.Message.Description))
+				for _, f := range s.Fixes {
+					fmt.Printf("edit %d %d\t%s\n", f.Range.Pos(), f.Range.End(), written(f.Text))
+				}
+			}
+		}
+		fmt.Printf("fixed\t%s\n", written(string(source)))
+	}
+	if countOnly {
+		fmt.Println(total)
+	}
+}

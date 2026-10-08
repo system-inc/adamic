@@ -13,7 +13,7 @@ import (
 )
 
 func TestMarkdownParserPrefixes(t *testing.T) {
-	t.Parallel()
+	parallelMarkdown(t)
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)

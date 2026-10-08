@@ -115,7 +115,7 @@ func auditResults(t *testing.T, name string, result run) []auditOutput {
 }
 
 func TestWholeDocumentOraclePreflight(t *testing.T) {
-	t.Parallel()
+	parallelMarkdown(t)
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
