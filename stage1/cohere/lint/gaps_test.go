@@ -11,6 +11,7 @@ import (
 )
 
 func TestNestedConstructorGap(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("gaps/1_nested_constructor.ts")
 	if err != nil {
 		t.Fatal(err)

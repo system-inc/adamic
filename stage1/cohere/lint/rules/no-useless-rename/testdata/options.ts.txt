@@ -1,0 +1,3 @@
+const {foo: foo} = obj;
+import {bar as bar} from 'bar';
+export {foo as foo};

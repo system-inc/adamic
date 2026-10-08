@@ -1,0 +1,42 @@
+var wave15VisitorLock sync.Mutex
+var wave15Delegations int
+func wave15DelegatedCallSource(node *ast.Node) (string, bool) {
+ wave15Delegations++
+ return CallExpressionSource(node)
+}
+func SourceVisitors(report func(string,*ast.Node)) rule.Listeners {
+ var sources []string
+ var blamed []*ast.Node
+ original := wave15OriginalSourceVisitors(func(source string,node *ast.Node) {
+  sources = append(sources,source); blamed = append(blamed,node); report(source,node)
+ })
+ result := rule.Listeners{}
+ for kind, listener := range original {
+  result[kind] = func(node *ast.Node) {
+   wave15VisitorLock.Lock(); defer wave15VisitorLock.Unlock()
+   sources, blamed, wave15Delegations = nil,nil,0
+   modulePresent, moduleLiteral, moduleText := false,false,""
+   if node != nil && node.Kind == ast.KindImportDeclaration {
+    if declaration := node.AsImportDeclaration(); declaration != nil && declaration.ModuleSpecifier != nil {
+     modulePresent = true; moduleLiteral = ast.IsStringLiteralLike(declaration.ModuleSpecifier)
+     if moduleLiteral { moduleText = declaration.ModuleSpecifier.Text() }
+    }
+   }
+   callSource, callMatches := "",false
+   if kind == ast.KindCallExpression { callSource,callMatches = CallExpressionSource(node) }
+   listener(node)
+   for _, target := range blamed { if target != node { panic("SourceVisitors did not blame its supplied node") } }
+   record := struct {
+    Kind int; Nil bool; ModulePresent bool; ModuleLiteral bool; ModuleText string
+    CallMatches bool; CallSource string; Sources []string; Delegations int
+   }{int(kind),node == nil,modulePresent,moduleLiteral,moduleText,callMatches,callSource,sources,wave15Delegations}
+   path := os.Getenv("WAVE15_VISITORS_CAPTURE")
+   if path != "" {
+    data,err := json.Marshal(record); if err != nil { panic(err) }
+    file,err := os.OpenFile(path,os.O_APPEND|os.O_CREATE|os.O_WRONLY,0600); if err != nil { panic(err) }
+    if _,err = file.Write(append(data,'\n')); err != nil { panic(err) }; if err=file.Close(); err != nil { panic(err) }
+   }
+  }
+ }
+ return result
+}

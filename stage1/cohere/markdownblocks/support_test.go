@@ -12,10 +12,9 @@ import (
 	"runtime"
 	"strconv"
 	"sync"
-	"syscall"
 	"testing"
-	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
@@ -164,7 +163,7 @@ func cohereFormatter(t *testing.T) string {
 		}
 		command := bounded(t, "go", "build", "-o", formatterBinary, "./command/cohere")
 		command.Dir = cohere
-		if output, err := command.CombinedOutput(); err != nil {
+		if output, err := combinedOutput(command); err != nil {
 			formatterError = fmt.Errorf("build cohere formatter: %w\n%s", err, output)
 		}
 	})
@@ -251,19 +250,17 @@ func loweredResult(path string) (*ir.Program, error) {
 	return result, nil
 }
 
-// bounded is a command that can't outlive its test: it has a deadline, it runs in a process group of
-// its own, and when the deadline passes or the test ends, the whole group is killed.
+// bounded prepares a child for the shared output-based hang guard.
+// Silent builds and buffered children use its 30-minute first-output window.
+// With ten CPU burners, the longest output gap was 5.7s; the default
+// two-minute Stall leaves more than three times that gap as headroom.
 func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
-	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-	}
-	command.WaitDelay = 5 * time.Second
-	return command
+	return exec.Command(name, arguments...)
+}
+
+func combinedOutput(command *exec.Cmd) ([]byte, error) {
+	return childguard.CombinedOutput(command, childguard.Options{})
 }
 
 func execute(t *testing.T, environment []string, name string, arguments ...string) run {
@@ -284,7 +281,7 @@ func executeResult(t *testing.T, environment []string, name string, arguments ..
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := command.Run()
+	err := childguard.Run(command, childguard.Options{})
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		return run{}, fmt.Errorf("running %s: %v", name, err)
@@ -349,7 +346,7 @@ func nativeMutant(t *testing.T, program *ir.Program, arguments ...string) run {
 	flags = append(flags, "-I", filepath.Dir(library), "-o", binary, source)
 	flags = append(flags, native.RuntimeLinkFlags(library)...)
 	flags = append(flags, "-lm")
-	if output, err := bounded(t, "clang", flags...).CombinedOutput(); err != nil {
+	if output, err := combinedOutput(bounded(t, "clang", flags...)); err != nil {
 		t.Fatalf("mutant build: %v\n%s", err, output)
 	}
 	return execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, arguments...)

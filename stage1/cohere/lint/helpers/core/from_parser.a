@@ -1,0 +1,16 @@
+import type { Parser } from '../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { CoreArena, CoreNode } from './nodes.a';
+import { kindNumber } from './kind_number.a';
+// Token-signature adapter. Other helpers require their explicitly named Go facts.
+export function signaturesFromParser(parser: Parser, source: string): CoreArena {
+    const nodes: CoreNode[] = []; const scanner = new Scanner(source);
+    for(const parsed of parser.nodes) {
+        const node = new CoreNode(); node.kind = parsed.kind; node.kindNumber = kindNumber(parsed.kind);
+        scanner.pos = parsed.pos; scanner.scan(); node.start = scanner.start; node.end = parsed.end;
+        node.children = parsed.children.slice(); node.elements = parsed.children.slice();
+        if(parsed.kind === 'ParenthesizedExpression') { node.expression = parsed.children[0] ?? -1; }
+        nodes.push(node);
+    }
+    return new CoreArena(source, nodes);
+}

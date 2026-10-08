@@ -1,0 +1,9 @@
+=== RUN   TestLintCases
+=== PAUSE TestLintCases
+=== CONT  TestLintCases
+    lint_cases_test.go:167: source fixture testdata/lint_cases/decorated_async_promise_executor.ts: use .ts.txt or .tsx.txt
+--- FAIL: TestLintCases (0.00s)
+FAIL
+parser longest native build child: 0s; build CPU budget: 10m0s
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser	0.007s
+FAIL

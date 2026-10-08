@@ -1,0 +1,6 @@
+// Numeric node coordinates preserve identity; -1 represents nil.
+// Parameter SyntaxKind is 171 in the pinned Go parser.
+export function parameterTypeNodeIndex(present: boolean, kind: number, typeNodeIndex: number): number {
+    if (!present || kind !== 171) { return -1; }
+    return typeNodeIndex;
+}

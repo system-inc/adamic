@@ -37,6 +37,8 @@ export function written(text: string): string {
     return result;
 }
 
+const printedDepths = '0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31'.split(' ');
+
 export function printTree(
     nodes: readonly ParseNode[],
     root: number,
@@ -45,8 +47,9 @@ export function printTree(
     whole = false,
 ): number {
     const node = nodes[root] ?? panic('missing parse node');
+    const depthText = depth >= 0 && depth < printedDepths.length ? printedDepths[depth] ?? panic('missing printed depth') : `${depth}`;
     console.log(
-        `${depth} ${node.kind} ${offsets[node.pos] ?? panic('node start outside source')} ${offsets[node.end] ?? panic('node end outside source')} ${node.optional ? 32 : 0} ${node.literalFlags} ${node.list} ${node.trailing ? 1 : 0} ${node.multiLine ? 1 : 0}\t${node.operator}\t${written(node.text)}\t${written(node.raw)}${whole ? `\t${node.semantic}` : ''}`,
+        `${depthText} ${node.kind} ${offsets[node.pos] ?? panic('node start outside source')} ${offsets[node.end] ?? panic('node end outside source')} ${node.optional ? '32' : '0'} ${node.literalFlags === 0 ? '0' : `${node.literalFlags}`} ${node.list === -1 ? '-1' : `${node.list}`} ${node.trailing ? '1' : '0'} ${node.multiLine ? '1' : '0'}\t${node.operator}\t${written(node.text)}\t${written(node.raw)}${whole ? '\t' : ''}${whole ? node.semantic : ''}`,
     );
     let count = 1;
     for(const child of node.children) {

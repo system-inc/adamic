@@ -1,0 +1,6 @@
+import type { ExportNodeView } from './modifier_view.a';
+import { HasExportModifier } from './has_export_modifier.a';
+export function IsExported(node: ExportNodeView): boolean {
+    if(!node.present) { return false; }
+    return HasExportModifier(node.modifiers);
+}

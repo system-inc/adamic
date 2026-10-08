@@ -1,0 +1,5 @@
+{
+  "name": "no-useless-rename-import-side",
+  "from": "const keep = kind === 'ImportSpecifier' ? second : first;",
+  "to": "const keep = kind === 'ImportSpecifier' ? first : first;"
+}

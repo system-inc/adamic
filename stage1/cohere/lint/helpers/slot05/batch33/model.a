@@ -1,0 +1,8 @@
+export interface AnalysisNode {
+    functionLike: boolean; identifier: boolean; typeReference: boolean;
+    call: boolean; property: boolean; parenthesized: boolean;
+    block: boolean; returnStatement: boolean;
+    text: string; expression: number; name: number; typeName: number; body: number;
+    parameters: number[]; statements: number[];
+}
+export type JsxReturnPredicate = (index: number) => boolean;

@@ -1,0 +1,14 @@
+import type { Parser } from '../../../../typescript/parser/parser.ts';
+import type { ExportNodeView } from './modifier_view.a';
+// Project parser modifier children into the shared helper's immutable facts.
+export function exportNodeView(parser: Parser, index: number): ExportNodeView {
+    const tags: string[] = [];
+    if(index < 0) { return {present: false, modifiers: {present: false, tags}}; }
+    const node = parser.node(index);
+    for(const child of node.children) {
+        const kind = parser.node(child).kind;
+        if(kind === 'ExportKeyword') { tags.push('export-keyword'); }
+        else if(kind === 'DefaultKeyword') { tags.push('default-keyword'); }
+    }
+    return {present: true, modifiers: {present: tags.length > 0, tags}};
+}

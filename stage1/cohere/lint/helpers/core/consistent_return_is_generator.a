@@ -1,0 +1,5 @@
+import type { CoreArena } from './nodes.a';
+export function consistentReturnIsGenerator(arena: CoreArena, index: number): boolean {
+    const node = arena.node(index);
+    return ['FunctionDeclaration', 'FunctionExpression', 'MethodDeclaration'].includes(node.kind) && node.generator;
+}

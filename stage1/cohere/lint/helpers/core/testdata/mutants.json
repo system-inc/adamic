@@ -1,0 +1,104 @@
+[
+  {
+    "Helper": "appendNodeSignature",
+    "File": "append_node_signature.a",
+    "From": "return result + ')';",
+    "To": "return result + ')!';"
+  },
+  {
+    "Helper": "appendTokensBetween",
+    "File": "append_tokens_between.a",
+    "From": "return result;",
+    "To": "return result + \"!\";"
+  },
+  {
+    "Helper": "bodyDefinitelyExits",
+    "File": "body_definitely_exits.a",
+    "From": "case 'ReturnStatement': case 'ThrowStatement': return true;",
+    "To": "case 'ReturnStatement': case 'ThrowStatement': return false;"
+  },
+  {
+    "Helper": "consistentReturnIsGenerator",
+    "File": "consistent_return_is_generator.a",
+    "From": "&& node.generator",
+    "To": "&& !node.generator"
+  },
+  {
+    "Helper": "hasSameTokens",
+    "File": "has_same_tokens.a",
+    "From": "tokenSignature(arena, left) === tokenSignature(arena, right)",
+    "To": "tokenSignature(arena, left) !== tokenSignature(arena, right)"
+  },
+  {
+    "Helper": "idDenylistIsDestructuringTarget",
+    "File": "id_denylist_is_destructuring_target.a",
+    "From": "node.left === current",
+    "To": "node.left !== current"
+  },
+  {
+    "Helper": "idDenylistIsImportAttributeKey",
+    "File": "id_denylist_is_import_attribute_key.a",
+    "From": "if(node.kind === 'ImportAttribute') { return node.name === index; }",
+    "To": "if(node.kind === 'ImportAttribute') { return node.name !== index; }"
+  },
+  {
+    "Helper": "idDenylistIsImportOptionsObject",
+    "File": "id_denylist_is_import_options_object.a",
+    "From": "node.args[1] === index",
+    "To": "node.args[1] !== index"
+  },
+  {
+    "Helper": "isEmptyBracketLiteral",
+    "File": "is_empty_bracket_literal.a",
+    "From": "node.elements.length === 0",
+    "To": "node.elements.length !== 0"
+  },
+  {
+    "Helper": "isNullOrUndefined",
+    "File": "is_null_or_undefined.a",
+    "From": "node.text === 'undefined'",
+    "To": "node.text !== 'undefined'"
+  },
+  {
+    "Helper": "isSeparateEvaluationContext",
+    "File": "is_separate_evaluation_context.a",
+    "From": "return [",
+    "To": "return !["
+  },
+  {
+    "Helper": "memberAccessObject",
+    "File": "member_access_object.a",
+    "From": "? node.expression : -1",
+    "To": "? node.expression : 0"
+  },
+  {
+    "Helper": "noRestrictedExportsNameText",
+    "File": "no_restricted_exports_name_text.a",
+    "From": "? node.text : ''",
+    "To": "? '' : node.text"
+  },
+  {
+    "Helper": "numericLiteralSign",
+    "File": "numeric_literal_sign.a",
+    "From": "return 1;",
+    "To": "return 0;"
+  },
+  {
+    "Helper": "switchStatementExits",
+    "File": "switch_statement_exits.a",
+    "From": "if(!hasDefault)",
+    "To": "if(hasDefault)"
+  },
+  {
+    "Helper": "tokenSignature",
+    "File": "token_signature.a",
+    "From": "return appendNodeSignature(arena, index);",
+    "To": "return '!' + appendNodeSignature(arena, index);"
+  },
+  {
+    "Helper": "tryStatementExits",
+    "File": "try_statement_exits.a",
+    "From": "if(!bodyDefinitelyExits(arena, node.tryBlock))",
+    "To": "if(bodyDefinitelyExits(arena, node.tryBlock))"
+  }
+]

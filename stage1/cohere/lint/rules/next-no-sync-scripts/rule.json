@@ -1,0 +1,6 @@
+{
+ "name":"@next/next/no-sync-scripts",
+ "kinds":["JsxOpeningElement","JsxSelfClosingElement"],
+ "visit":"visit", "prepare":"prepare", "factory":"create", "class":"Rule",
+ "oracle":"oracleNextNoSyncScripts", "upstreamPackage":"next", "upstreamTest":"TestNoSyncScripts"
+}

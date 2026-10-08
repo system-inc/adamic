@@ -1,0 +1,12 @@
+{
+  "name": "@typescript-eslint/no-import-type-side-effects",
+  "kinds": [
+    "ImportDeclaration"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoImportTypeSideEffects",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoImportTypeSideEffects"
+}

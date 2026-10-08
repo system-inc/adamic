@@ -2,21 +2,16 @@ package lint
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/internal/testguard"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"sort"
 	"strings"
 	"sync"
-	"time"
 
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -76,9 +71,7 @@ func sharedPath(name string) (string, error) {
 // run is execute without a test: output goes to a file, never a pipe, and anything on standard error is
 // a failure, as execute requires.
 func run(directory string, environment []string, name string, args ...string) ([]byte, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
-	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.Command(name, args...)
 	command.Dir = directory
 	// An explicit environment loses the PWD os/exec sets from Dir, and the go command trusts PWD over the
 	// real working directory, so a stale one resolves the module through the wrong path.
@@ -95,40 +88,10 @@ func run(directory string, environment []string, name string, args ...string) ([
 	command.Stdout = output
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
-	if err := command.Run(); err != nil || stderr.Len() != 0 {
+	if err := testguard.Run(command, testguard.Budget, testguard.Ceiling); err != nil || stderr.Len() != 0 {
 		return nil, fmt.Errorf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
 	return os.ReadFile(output.Name())
-}
-
-func buildPortTo(directory string, sanitize bool, binary string) error {
-	if _, err := registry.Generate(directory); err != nil {
-		return err
-	}
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		return err
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		return err
-	}
-	return native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize})
-}
-
-func emitJavaScriptTo(directory, module string) error {
-	if _, err := registry.Generate(directory); err != nil {
-		return err
-	}
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		return err
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		return err
-	}
-	return os.WriteFile(module, []byte(javascript.JavaScript(lowered)), 0644)
 }
 
 // goOracleIn builds the Go oracle over sourceRoot's rules into directory, through an overlay inside cohere
@@ -243,7 +206,7 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 	}
 	sort.Strings(names)
 	for _, name := range names {
-		if _, err := run(root, environment, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=10m"); err != nil {
+		if _, err := run(root, environment, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=0"); err != nil {
 			return nil, err
 		}
 	}
@@ -316,7 +279,7 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 			case "type T = { m: => void };":
 				mode = "recovery"
 			case "interface I", "interface I { m(a: string): void;", "interface I { m<(a: string): void; }", "interface I { m<T(a: T): T; }":
-				mode = "unsupported-recovery"
+				mode = "recovery"
 			}
 		}
 		if row.Rule == "no-div-regex" && (row.Source == "var a = /;" || row.Source == "var a = /" || row.Source == "var a = [/];" || row.Source == "if (/) {}" || row.Source == "var a = /=") {
@@ -327,5 +290,48 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 	if len(rows) < 150 {
 		return nil, fmt.Errorf("capture unexpectedly small: %d cases", len(rows))
 	}
-	return rows, nil
+	// Captured fixtures are replayable inputs, including parser diagnostics that
+	// cohere's own rule tests deliberately run on recovered trees. Carry that
+	// boundary in the manifest rather than requiring every consumer to rediscover it.
+	oracleDirectory := filepath.Join(directory, "recovery-oracle")
+	if err := os.MkdirAll(oracleDirectory, 0755); err != nil {
+		return nil, err
+	}
+	oracle, err := goOracleIn(sourceRoot, oracleDirectory)
+	if err != nil {
+		return nil, err
+	}
+	manifest := filepath.Join(directory, "recovery-inputs.txt")
+	if err := os.WriteFile(manifest, []byte(strings.Join(rows, "\n")+"\n"), 0644); err != nil {
+		return nil, err
+	}
+	flags, err := run("", nil, oracle, "--manifest", manifest, "--diagnostics")
+	if err != nil {
+		return nil, err
+	}
+	return classifyRecoveryRows(rows, strings.Fields(string(flags)))
+}
+
+// A nonempty mode belongs to its caller. In particular, unsupported-recovery
+// stays visible as a port limitation rather than becoming a successful port case.
+func classifyRecoveryRows(rows, flags []string) ([]string, error) {
+	if len(flags) != len(rows) {
+		return nil, fmt.Errorf("diagnostics answered %d rows of %d", len(flags), len(rows))
+	}
+	result := make([]string, len(rows))
+	for index, row := range rows {
+		result[index] = row
+		if flags[index] != "1" {
+			continue
+		}
+		fields := strings.Split(row, "\t")
+		for len(fields) < 7 {
+			fields = append(fields, "")
+		}
+		if fields[6] == "" {
+			fields[6] = "recovery"
+		}
+		result[index] = strings.Join(fields, "\t")
+	}
+	return result, nil
 }

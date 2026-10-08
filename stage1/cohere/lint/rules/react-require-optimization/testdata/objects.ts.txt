@@ -1,0 +1,8 @@
+createReactClass({});
+createReactClass({ ...spread });
+createReactClass({ mixins: [] });
+createReactClass({ foo: () => 1 });
+createReactClass({ shouldComponentUpdate: 1 });
+createClass({}); React.createClass({}); React.createReactClass({});
+(createReactClass)({}); createReactClass<any>({});
+createReactClass({ ...shouldComponentUpdate });

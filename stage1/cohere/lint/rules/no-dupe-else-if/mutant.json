@@ -1,0 +1,5 @@
+{
+  "name": "duplicate-else-if-keeps-covered-group",
+  "from": "if(!covered) { kept.push(group); }",
+  "to": "if(true) { kept.push(group); }"
+}

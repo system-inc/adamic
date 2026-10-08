@@ -1,0 +1,3 @@
+const f = (pattern: string) =>
+ try { x(); } catch {}
+};

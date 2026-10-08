@@ -1,0 +1,3 @@
+export function isIndicLinker(c: number): boolean {
+ return c === 0x94d || c === 0x9cd || c === 0xacd || c === 0xb4d || c === 0xc4d || c === 0xd4d;
+}

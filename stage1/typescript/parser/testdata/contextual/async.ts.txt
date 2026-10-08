@@ -1,0 +1,17 @@
+{
+    async = true;
+    async();
+    async.value;
+    async
+}
+{
+    async
+    class C {}
+}
+{
+    async
+    function f() {}
+}
+{
+    async class D {}
+}
