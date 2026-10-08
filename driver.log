@@ -7,3 +7,5 @@ github.com/system-inc/adamic/internal/flow TestFlowLiveness____oracle_testdata_t
     corpus_units_test.go:9121: Node trace exceeded unit budget: context deadline exceeded
 --- FAIL: TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95 (25.08s)
 
+red: 5b7bd612e8018b1df3021e06a833c625e596c08b full gate, first failure at tests after 88.6 s (coverage=0.0s build=16.8s tools=0.1s vet=29.7s wasi=157.6s catalog=295.1s stage3=879.9s tests=882.2s; 218 units over 30 s (21277 s, 159 on the burn-down, 59 drifted over)), 15 fail, 8905 pass
+stopped: stopped
