@@ -57,6 +57,8 @@ IN THE SOFTWARE.
   - String well-formed Unicode (`runtime/string_wellformed.c`, after
     src/builtins/string-iswellformed.tq and src/builtins/string-towellformed.tq,
     adapted to canonical WTF-8 storage);
+  - String RegExp global-flag validation (`runtime/regexp.c`, after
+    src/builtins/builtins-string-gen.cc and src/builtins/string-replaceall.tq, V8 13.6.233.17);
   - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
   - generic Array indexOf and lastIndexOf lowering (`internal/lower/library_array_generic.go`,
     after Runtime_ArrayIndexOf in src/runtime/runtime-array.cc and GetFromIndex /

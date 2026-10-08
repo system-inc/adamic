@@ -1,0 +1,15 @@
+// Hold global and sticky lastIndex against the source run on Node.
+for (const regex of [/(a)|(z)/, /(a)|(z)/g, /(a)|(z)/y, /(a)|(z)/gy, /(?:)/gu]) {
+ for (const start of [-1, -0, 0, 1.5, 3, 99, NaN, Infinity]) {
+  regex.lastIndex = start;
+  console.log(`${'aba'.replace(regex, "[$&:$1:$2:$$:$`:$']")}:${regex.lastIndex}:${1 / regex.lastIndex}`);
+  regex.lastIndex = start;
+  console.log(`${String.prototype.replace.call<string, [RegExp, string], string>('aba', regex, '$2-$1')}:${regex.lastIndex}:${1 / regex.lastIndex}`);
+ }
+}
+console.log('🌍'.replace(/(?:)/gu, '-'));
+console.log('aba'.replace(/(?<x>a)/g, '$<x>!'));
+
+let text = 'aba';
+function pattern(): RegExp { text = 'xxx'; return /a/g; }
+console.log(`order:${text.replace(pattern(), '!')}:${text}`);

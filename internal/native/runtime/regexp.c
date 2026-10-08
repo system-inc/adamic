@@ -845,14 +845,25 @@ adamic_array *adamic_regex_match(adamic_string *input, adamic_object *regex) {
 static const char *const iterator_names[] = {"regex", "input", "done"};
 static const bool iterator_references[] = {true, true, false};
 static const adamic_shape iterator_shape = {3, iterator_names, iterator_references, NULL};
-static void regex_require_global(const adamic_regex_program *p, const char *message) {
-	if (!(p->flags & 8))
-		adamic_panic(message, strlen(message));
+// V8 String.prototype.matchAll/replaceAll reject non-global patterns before executing them.
+// Their TypeError owns its message and follows the ordinary catch/cleanup path.
+static bool regex_require_global(const adamic_regex_program *p, const char *message) {
+	if (p->flags & 8) return true;
+	adamic_string text = {{0, adamic_kind_string, 0}, strlen(message), message, 0, NULL, NULL, 0};
+	adamic_string *owned = adamic_string_concat(1, (adamic_string *const[]){&text});
+	adamic_object *error = adamic_error_new(owned);
+	adamic_release(owned);
+	static adamic_string name = ADAMIC_STRING("TypeError");
+	adamic_release(error->slots[0].reference);
+	error->slots[0].reference = adamic_retain(&name);
+	adamic_error_tag(error);
+	adamic_thrown = error;
+	return false;
 }
 adamic_object *adamic_regex_match_all(adamic_string *input, adamic_object *regex) {
 	const adamic_regex_program *p = regex_program(regex);
-	regex_require_global(
-		p, "TypeError: String.prototype.matchAll called with a non-global RegExp argument");
+	if (!regex_require_global(
+		p, "String.prototype.matchAll called with a non-global RegExp argument")) return NULL;
 	#ifdef ADAMIC_REGEXP_RUNTIME_OWNER
  adamic_object *copy = regex_copy_object(regex);
 #else
@@ -1074,9 +1085,8 @@ static void regex_substitution(adamic_array *pieces, adamic_string *input, size_
 adamic_string *adamic_regex_replace(adamic_string *input, adamic_object *regex,
 									adamic_string *replacement, bool require_global) {
 	const adamic_regex_program *p = regex_program(regex);
-	if (require_global)
-		regex_require_global(
-			p, "TypeError: String.prototype.replaceAll called with a non-global RegExp argument");
+	if (require_global && !regex_require_global(
+		p, "String.prototype.replaceAll called with a non-global RegExp argument")) return NULL;
 	bool global = (p->flags & 8) != 0;
 	if (global)
 		regex->slots[1].number = 0;

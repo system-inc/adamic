@@ -161,6 +161,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			if node.Index < 0 {
 				found = true
 			}
+		case ir.RegExpCall:
+			found = found || node.MayThrow()
 		case ir.StringFromCodes:
 			found = found || node.CodePoints
 		case ir.NodeFSFile:
@@ -228,10 +230,6 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 		case ir.ObjectCall:
 			if node.Method == "assign" && l.objectCanFreeze() {
 				failing = "Object.assign into a potentially frozen object"
-			}
-		case ir.RegExpCall:
-			if node.Method == "replaceAll" || node.Method == "matchAll" {
-				failing = "RegExp global-flag validation"
 			}
 		case ir.StringCall:
 			switch {

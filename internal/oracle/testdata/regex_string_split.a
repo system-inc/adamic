@@ -1,0 +1,17 @@
+// Hold global and sticky lastIndex against the source run on Node.
+function pieces(values: (string | undefined)[]): string {
+ return values.map((value) => value ?? 'undefined').join('|');
+}
+for (const regex of [/a/, /a/g, /a/y, /a/gy, /()/gu, /(a)|(z)/gy]) {
+ for (const start of [-1, -0, 0, 1.5, 3, 99, NaN, Infinity]) {
+  regex.lastIndex = start;
+  console.log(`${pieces('aba'.split(regex))}:${regex.lastIndex}:${1 / regex.lastIndex}`);
+  console.log(`${pieces(String.prototype.split.call('aba', regex, 3))}:${regex.lastIndex}:${1 / regex.lastIndex}`);
+ }
+}
+console.log(pieces('🌍a'.split(/(?:)/u)));
+console.log(pieces(String.prototype.split.call('', /()/g)));
+
+let text = 'aba';
+function pattern(): RegExp { text = 'xxx'; return /a/g; }
+console.log(`order:${text.split(pattern()) .join('|')}:${text}`);
