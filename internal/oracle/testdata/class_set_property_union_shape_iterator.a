@@ -1,0 +1,16 @@
+interface Holder { value: number | string | boolean; }
+interface NumberView { readonly done: boolean | string; readonly value: number | string; }
+interface BooleanView { readonly done: boolean | string; readonly value: boolean | string; }
+interface StringView { readonly done: boolean | number; readonly value: string | boolean; }
+function number(holder: Holder, view: NumberView): void { holder.value = view.done; console.log(`${holder.value}`); holder.value = view.value; console.log(`${holder.value}`); }
+function boolean(holder: Holder, view: BooleanView): void { holder.value = view.done; console.log(`${holder.value}`); holder.value = view.value; console.log(`${holder.value}`); }
+function string(holder: Holder, view: StringView): void { holder.value = view.done; console.log(`${holder.value}`); holder.value = view.value; console.log(`${holder.value}`); }
+const holder: Holder = { value: 'initial' };
+const numbers = new Map<string, number>([['n', 42]]).values();
+const first = numbers.next(); if (!first.done) number(holder, first);
+const booleans = new Map<string, boolean>([['b', true], ['f', false]]).values();
+const second = booleans.next(); if (!second.done) boolean(holder, second);
+const third = booleans.next(); if (!third.done) boolean(holder, third);
+const strings = new Map<string, string>([['s', 'owned'.repeat(2)]]).values();
+const fourth = strings.next(); if (!fourth.done) string(holder, fourth);
+holder.value = 'released'; console.log(`${holder.value}`);

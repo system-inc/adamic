@@ -1,0 +1,16 @@
+interface Holder { value: number | string | boolean; }
+interface RegexView { readonly global: string | boolean; readonly lastIndex: string | number; readonly source: string | boolean; }
+function store(holder: Holder, view: RegexView): void {
+ holder.value = view.global; console.log(`${holder.value}`);
+ holder.value = view.lastIndex; console.log(`${holder.value}`);
+ holder.value = view.source; console.log(`${holder.value}`);
+}
+const holder: Holder = { value: 'initial' };
+const expression = new RegExp('x', 'g');
+store(holder, expression);
+const match = expression.exec('axb');
+if (match !== null) {
+ holder.value = match.index; console.log(`${holder.value}`);
+ holder.value = match.input; console.log(`${holder.value}`);
+}
+store(holder, expression);

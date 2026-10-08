@@ -1,7 +1,7 @@
 Built own-slot method replacement, owned mixed-union fields, array length removal, consistently held intersections and undefined fields.
 Commits: 08b76587, 5475f479, 863babed, ecfead29, d0464e43; main landing merge 4249054a; requested non-null merge b6415dda includes c41c0e06.
 Checks: Node, JavaScript, native ASan/UBSan and release, ownership/leaks, focused lower/native/flow/IR checks pass; counts refreshed; no full package or full gate run.
-Mutants: all 33 targeted mutants fail their controls; each restored; individual catches and logs below.
+Mutants: all 35 targeted mutants fail their controls; each restored; individual catches and logs below.
 Uncovered: any needs a ruling (2 roots); 3 census echoes cancelled; keyof replay stops at Path before its assignment; inherited method expandos and unrepresented runtime scalar views remain guarded.
 
 Compiler base: b410340dc8f889b5799c3bc519117c63def3aa24, newest origin/area/compiler resolved at setup. Census replay 9a1f14c5d994aa855625e7cfa295677060348fec was merged at f943bdf03fbe492b65731714a7437a7980db228c. User-requested c41c0e062e99da37820f822968d4df1b48cdaee7 was merged without conflicts at b6415ddab8eeca895d29284d13e1da332fac3ecb; pending work was stashed and restored. All 14 representative examples were replayed again after that merge. replay-final.json contains the final compact findings, including the later intersection replay.
@@ -97,3 +97,25 @@ Ownership: origin/codex/notyet-* histories were checked after the compiler base.
 Rulings and limits: any lacks a storage proof and remains refused by doctrine; Map/inherited-method expandos need a language ruling; direct class/library method replacement remains refused. General length growth/holes and runtime scalar layouts without representation metadata are not covered. Path and named next stops belong to other lessons. New fixture files are all .a, no cohere code was copied, no PR was opened, and pushes target only codex/notyet-class-set-property.
 
 Landing: origin/main efe9f4042049234e5a52639fe77b47c311fd530c was merged without conflicts at 4249054a3b82e4343bd2d1e7011f718c0c4c8220. A final fetch confirmed main was still at that SHA. All 14 representative replays were repeated and their findings are unchanged. Focused commands above pass after landing: oracle 7.661s, lower 11.068s, native 4.675s, flow 11.560s, IR 4.365s; JavaScript has no standalone tests. `go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1` verifies the recorded counts in 63.758s. Landing logs: /tmp/adamic-class-set-property-landing-<package>.log. The final documentation commit changes only this report and replay log paths.
+
+Runtime shape-kind review follow-up:
+
+The requested range `git log origin/area/runtime..17b5a053` contains only 17b5a053a19b40cad6d08edf2f2aadb6564e865c. It was cherry-picked at 6a026ee4, without merging the runtime area. Conflict resolution kept this branch's three-argument closure ABI, full IR-type shape identity (packed scalars still differ), and adamic_object_new_in allocator entry point. Changes to files absent from this branch were omitted. The runtime test uses this branch's Flags API instead of area/runtime's LinkFlags.
+
+adamic_union_slot_owner is unchanged. adamic_union_runtime_field now reads owner->shape->kinds[index], retains references, boxes numbers, and uses immortal boolean boxes. All four hard-coded name layouts and the string comparison include are removed. Invalid or missing kind metadata fails with a named guard. This supersedes the earlier runtime-name classification and metadata-free scalar limitation described above; generated packed-scalar handling remains in the emitter.
+
+Three new .a fixtures, registered from class_set_property_union_shape_test.go, store RegExp constructor fields and exec result fields, stat fields, and numeric/boolean/owned-string iterator result fields into mixed union slots. The readonly views exercise runtime scalar boxing as well as reference retention. Source Node, emitted JavaScript, native ASan/UBSan, release and ownership checks pass. The counted stat fixture also passes independently before mutation.
+
+The stat size mutant changes its kind from number to reference while leaving its ownership bitmap unchanged. TestClassSetPropertyShapeStatCounted fails at the counted runtime debug check, before field reads: `adamic: inconsistent shape kind for field size` (exit -1). The boolean-boxing mutant returns number boxes; the iterator fixture catches stdout differences (false/true becomes 0/1). Both were restored. Logs and exit codes are in mutants-shape-kinds.json. The runtime owner's own TestCountedShapeKindsCatchRuntimeMutant also passes its valid/mutant controls.
+
+Follow-up commands, all redirected to /tmp/adamic-class-set-property-shape-<package>-final.log:
+
+```
+go test ./internal/native -run '^(TestShapeKindsDistinguishScalarLayouts|TestCountedShapeKindsCatchRuntimeMutant|TestUnionRuntimeFieldGuards|TestUniformFieldsMatchNode|TestRuntimeFieldLayoutsAreIncluded|TestRegexProgramsKeepCheckedFieldReads|TestOptionalWriteMissingSlotRemainsChecked|TestRegExpIteratorResultShape|TestRegExpBytecodePatternUnits)$' -count=1
+go test ./internal/oracle -run '^TestNativeAgreesWithNode/internal/oracle/testdata/class_set_property_|^TestClassSetPropertyShapeStatCounted$' -count=1
+go test ./internal/regexp -run '^(TestParse|TestFlags|TestQuantifierBounds)$' -count=1
+go test ./internal/flow -run '^TestClassSetPropertyFlow$|^TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/class_set_property_union_shape_|^Test(LivenessHoldsOnEveryPath|EveryMutationIsInItsRange)/programs/../oracle/testdata/class_set_property_union_shape_' -count=1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts
+```
+
+Outputs: native 1.844s, oracle 14.306s, regexp .225s, flow 3.810s, counts 56.827s. The initial native run failed to compile because LinkFlags is absent on this branch; the API adaptation above fixed it. Setup and toolchain from the prior unit remain present; resumed nproc=5. No additional lower, IR or backend function changes were needed. The only local runtime C edit is class_set_property_union.c; all other runtime changes are the owner's cherry-picked metadata commit.

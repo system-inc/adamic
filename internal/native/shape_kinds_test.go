@@ -76,7 +76,7 @@ int main(int argc, char **argv) {
 				t.Fatal(err)
 			}
 			binary := filepath.Join(directory, "probe")
-			arguments := append(LinkFlags(options), "-I", filepath.Dir(library), "-o", binary, source)
+			arguments := append(Flags(options), "-I", filepath.Dir(library), "-o", binary, source)
 			arguments = append(arguments, RuntimeLinkFlags(library)...)
 			arguments = append(arguments, "-lm")
 			if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
