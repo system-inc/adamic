@@ -24,26 +24,29 @@ func TestAcceptanceGrammar(t *testing.T) {
 	}
 	t.Logf("%d acceptance grammar cases, %d identical canonical bytes", len(acceptanceGrammar()), len(want))
 }
-func TestAcceptanceMutants(t *testing.T) {
-	list := manifest(t, acceptanceGrammar())
-	want := execute(t, "", goOracle(t), "--manifest", list)
-	for _, item := range []struct{ name, file, from, to string }{
-		{"catch-initializer", "convert.ts", "this.separated(this.child(declaration, 0), this.child(declaration, 1), 'ColonToken')", "true"},
-		{"class-keyword-name", "sourceStatements.ts", "!(this.parser.peek() === 'Identifier' || this.parser.peek().endsWith('Keyword'))", "false"},
-	} {
-		t.Run(item.name, func(t *testing.T) {
-			main := mutantPort(t, item.file, item.from, item.to)
-			binary, _ := build(t, main, true)
-			for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
-				if diff := firstDifference(want, got); diff == "" {
-					t.Fatal(name + " mutant survived")
-				} else {
-					t.Log(name + ": " + diff)
-				}
-			}
-		})
+
+const testAcceptanceMutantsShards = 2
+
+func acceptanceMutations() []portMutation {
+	return []portMutation{
+		{"catch-initializer", "convert.ts", "this.separated(this.child(declaration, 0), this.child(declaration, 1), 'ColonToken')", "true", "try {} catch(e=1){}"},
+		{"class-keyword-name", "sourceStatements.ts", "!(this.parser.peek() === 'Identifier' || this.parser.peek().endsWith('Keyword'))", "false", "class implements {}"},
 	}
 }
+
+// TestAcceptanceMutants runs all 22 mutant/case pairs on source Node and
+// sanitized native. ADAMIC_TEST_SHARD=i/n selects zero-based shard indices
+// modulo n; unset runs both. Shared products are prepared once per invocation.
+func TestAcceptanceMutants(t *testing.T) {
+	cases, mutations := acceptanceGrammar(), acceptanceMutations()
+	runMutantShards(t, cases, mutations, mutantShardPlan(t, cases, mutations, testAcceptanceMutantsShards))
+}
+
+func TestAcceptanceMutantShardProof(t *testing.T) {
+	cases, mutations := acceptanceGrammar(), acceptanceMutations()
+	proveMutantShards(t, mutations, mutantShardPlan(t, cases, mutations, testAcceptanceMutantsShards))
+}
+
 func TestAcceptanceDiagnostics(t *testing.T) {
 	sources := []string{"++await 42;", "++delete foo.bar;", "--ANY1--;", "type T = A | () => B;", "new obj?.member();", "import { 'a' } from 'm';", "import A from 'm' assert {type:'json'};", "super<T>();"}
 	list := manifest(t, sources)

@@ -37,12 +37,12 @@ func portBuildInputs(path string, sanitize bool) buildInputs {
 }
 
 const testThreePortMutantsShards = 12
-const threePortCasesPerShard = 20
+const mutantCasesPerShard = 20
 
-type threePortMutation struct{ name, file, from, to, witness string }
+type portMutation struct{ name, file, from, to, witness string }
 
-func threePortMutations() []threePortMutation {
-	return []threePortMutation{
+func threePortMutations() []portMutation {
+	return []portMutation{
 		{"member-computed", "convert.ts", "boolValue(node.kind === 'ElementAccessExpression')", "boolValue(node.kind === 'PropertyAccessExpression')", "a.b; a[b];"},
 		{"logical-rebalance", "postprocess.ts", "completed.set(id, this.rebalance(id));", "completed.set(id, id);", "a && (b && (c && d));"},
 		{"merged-jsdoc-value", "postprocess.ts", "*//*", "*/ /*", "x; /**\n * one\n *//**\n * two\n */ y;"},
@@ -59,8 +59,11 @@ type mutantShard struct {
 }
 
 func threePortShards(t *testing.T) []mutantShard {
+	return mutantShardPlan(t, generated(), threePortMutations(), testThreePortMutantsShards)
+}
+
+func mutantShardPlan(t *testing.T, cases []string, mutations []portMutation, declared int) []mutantShard {
 	t.Helper()
-	cases, mutations := generated(), threePortMutations()
 	var shards []mutantShard
 	var unsplit []mutantCase
 	for m, mutation := range mutations {
@@ -77,13 +80,13 @@ func threePortShards(t *testing.T) []mutantShard {
 		if witnesses != 1 {
 			t.Fatalf("%s: expected one witness, got %d", mutation.name, witnesses)
 		}
-		for start := 0; start < len(pairs); start += threePortCasesPerShard {
-			end := min(start+threePortCasesPerShard, len(pairs))
+		for start := 0; start < len(pairs); start += mutantCasesPerShard {
+			end := min(start+mutantCasesPerShard, len(pairs))
 			shards = append(shards, mutantShard{fmt.Sprintf("shard-%03d", len(shards)), pairs[start:end]})
 		}
 	}
-	if len(shards) != testThreePortMutantsShards {
-		t.Fatalf("enumerated %d shards, declared %d", len(shards), testThreePortMutantsShards)
+	if len(shards) != declared {
+		t.Fatalf("enumerated %d shards, declared %d", len(shards), declared)
 	}
 	want := make(map[[2]int]bool)
 	for _, pair := range unsplit {
@@ -179,9 +182,12 @@ func checkMutantCase(pair mutantCase, want, source, native []byte) error {
 // i/n selects zero-based shard indices modulo n; unset runs all. The gate can
 // independently select TestThreePortMutants/shard-NNN with -run.
 func TestThreePortMutants(t *testing.T) {
+	runMutantShards(t, generated(), threePortMutations(), threePortShards(t))
+}
+
+func runMutantShards(t *testing.T, cases []string, mutations []portMutation, shards []mutantShard) {
+	t.Helper()
 	start := time.Now()
-	shards := threePortShards(t)
-	mutations, cases := threePortMutations(), generated()
 	type product struct{ source, native string }
 	products := make([]product, len(mutations))
 	needed := make([]bool, len(mutations))
@@ -233,12 +239,17 @@ func TestThreePortMutants(t *testing.T) {
 
 // Plant one surviving native mutant in its sole witness case, then execute all
 // named shards in a child test process. Assert exactly one failing shard and
-// eleven passing shards, including the actual fatal diagnostic and case id.
+// every other shard passing, including the actual fatal diagnostic and case id.
 func TestThreePortMutantShardProof(t *testing.T) {
-	shards := threePortShards(t)
+	proveMutantShards(t, threePortMutations(), threePortShards(t))
+}
+
+func proveMutantShards(t *testing.T, mutations []portMutation, shards []mutantShard) {
+	t.Helper()
+	parent := t.Name()
 	if value := os.Getenv("ADAMIC_ESTREE_PLANTED_MUTANT"); value != "" {
 		m, err := strconv.Atoi(value)
-		if err != nil || m < 0 || m >= len(threePortMutations()) {
+		if err != nil || m < 0 || m >= len(mutations) {
 			t.Fatal("invalid planted mutant")
 		}
 		for _, shard := range shards {
@@ -264,7 +275,7 @@ func TestThreePortMutantShardProof(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for m, mutation := range threePortMutations() {
+	for m, mutation := range mutations {
 		t.Run(mutation.name, func(t *testing.T) {
 			expected, caseID := "", -1
 			for _, shard := range shards {
@@ -274,7 +285,7 @@ func TestThreePortMutantShardProof(t *testing.T) {
 					}
 				}
 			}
-			command := exec.Command(executable, "-test.run=^TestThreePortMutantShardProof$", "-test.v", "-test.count=1")
+			command := exec.Command(executable, "-test.run=^"+parent+"$", "-test.v", "-test.count=1")
 			command.Env = append(os.Environ(), fmt.Sprintf("ADAMIC_ESTREE_PLANTED_MUTANT=%d", m))
 			output, err := command.CombinedOutput()
 			exit, ok := err.(*exec.ExitError)
@@ -284,13 +295,13 @@ func TestThreePortMutantShardProof(t *testing.T) {
 			failed, passed := 0, 0
 			for _, line := range strings.Split(string(output), "\n") {
 				line = strings.TrimSpace(line)
-				if strings.HasPrefix(line, "--- FAIL: TestThreePortMutantShardProof/shard-") {
+				if strings.HasPrefix(line, "--- FAIL: "+parent+"/shard-") {
 					failed++
-					if !strings.HasPrefix(line, "--- FAIL: TestThreePortMutantShardProof/"+expected+" (") {
+					if !strings.HasPrefix(line, "--- FAIL: "+parent+"/"+expected+" (") {
 						t.Fatalf("wrong shard caught failure: %s", line)
 					}
 				}
-				if strings.HasPrefix(line, "--- PASS: TestThreePortMutantShardProof/shard-") {
+				if strings.HasPrefix(line, "--- PASS: "+parent+"/shard-") {
 					passed++
 				}
 			}
