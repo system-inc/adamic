@@ -1,0 +1,253 @@
+[
+  {
+    "site": "any",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2065:9",
+        "reason": "a value of type any"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2068:44",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      }
+    ],
+    "log": "/tmp/adamic-class-set-property-after3-any.log"
+  },
+  {
+    "site": "any2",
+    "exit": 0,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2080:5",
+        "reason": "storing any in a field"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2083:9",
+        "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2291:114",
+        "reason": "a rest parameter outside a nongeneric named function"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:609:28",
+        "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:610:28",
+        "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:614:24",
+        "reason": "an array of ResolvedConfigFileName"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:619:23",
+        "reason": "a BinaryExpression with a value and a value"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:622:5",
+        "reason": "a function inside a function (a closure)"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:660:68",
+        "reason": "a function returning ResolvedConfigFileName"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:663:5",
+        "reason": "a Map of ResolvedConfigFilePath"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:666:29",
+        "reason": "a Set of ResolvedConfigFilePath (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:672:5",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "error",
+        "where": "",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/utilities.ts:8199:1",
+        "reason": "overload 1 of mutateMapSkippingNewValues with additional implementation type parameters"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:692:9",
+        "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:719:31",
+        "reason": "reading buildOrder"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:656:12",
+        "reason": "a BinaryExpression with a union of differently held members and a union of differently held members"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:1212:47",
+        "reason": "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2287:109",
+        "reason": "a rest parameter outside a nongeneric named function"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2364:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2372:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2379:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2386:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2393:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2400:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2407:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2416:17",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2427:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2433:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2439:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2446:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2455:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2462:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2470:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:2484:31",
+        "reason": "a value of type T"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:1321:39",
+        "reason": "a value of type ResolvedConfigFileName"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:1322:5",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2090:9",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2094:17",
+        "reason": "a value of type any"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2065:9",
+        "reason": "a value of type any"
+      },
+      {
+        "kind": "panic",
+        "where": "src/compiler/tsbuildPublic.ts:2068:5",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuildPublic.ts:2104:13",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      },
+      {
+        "kind": "SkippedDependency",
+        "where": "src/compiler/tsbuildPublic.ts:778:1",
+        "reason": "a dependency function whose body has checker diagnostics (measurement skipped)"
+      }
+    ],
+    "log": "/tmp/adamic-class-set-property-after3-any2.log"
+  },
+  {
+    "site": "receiver",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/debug.ts:213:28",
+        "reason": "a value of type unknown"
+      }
+    ],
+    "log": "/tmp/adamic-class-set-property-after3-receiver.log"
+  }
+]

@@ -423,6 +423,9 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	if err != nil {
 		return nil, err
 	}
+	if object.Type() == ir.Array && target.Name().Text() == "length" && valueNode.Kind == ast.KindNumericLiteral && valueNode.Text() == "0" {
+		return l.arrayLengthRemoval(target, object, true)
+	}
 	if object.Type() != ir.Object {
 		return nil, l.notYet(target, "assigning a field of a "+typeName(object.Type()))
 	}
@@ -455,6 +458,9 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 	object, err := l.expression(target.AsPropertyAccessExpression().Expression)
 	if err != nil {
 		return nil, err
+	}
+	if object.Type() == ir.Array && target.Name().Text() == "length" && operator == ast.KindMinusToken && valueNode == nil {
+		return l.arrayLengthRemoval(target, object, false)
 	}
 	if object.Type() != ir.Object {
 		return nil, l.notYet(target, "assigning a field of a "+typeName(object.Type()))
