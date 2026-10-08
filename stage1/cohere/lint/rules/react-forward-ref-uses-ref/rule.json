@@ -1,0 +1,13 @@
+{
+  "name": "react/forward-ref-uses-ref",
+  "order": 11,
+  "kinds": [
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "oracle": "oracleForwardRefUsesRef",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestForwardRefUsesRef",
+  "factory": "create",
+  "class": "Rule"
+}

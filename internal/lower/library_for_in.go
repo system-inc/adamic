@@ -78,6 +78,10 @@ func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
 
 func (l *lowering) plainEnumerableObject(node *ast.Node, visiting map[*ast.Symbol]bool) bool {
 	node = ast.SkipParentheses(node)
+	// Enum objects have a complete fixed shape, including numeric reverse keys.
+	if l.enumObject(node) != nil {
+		return true
+	}
 	if node.Kind == ast.KindAsExpression {
 		return l.plainEnumerableObject(node.AsAsExpression().Expression, visiting)
 	}

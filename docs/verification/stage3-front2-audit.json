@@ -1,0 +1,1497 @@
+{
+  "compiles_regressions_first": [],
+  "area_base": "738b16f1",
+  "merged": "829b8a6",
+  "node_records": "All bytes outside stage0 are identical to area 738b16f1, reland 829b8a6 and step1 80fb9b75.",
+  "records": [
+    {
+      "fixture": "stage3/fixtures/assertions/09_interface_kind.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/09_interface_kind.a:15:10: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"
+      },
+      "observed": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/09_interface_kind.a:15:10: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "action": "retained"
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/11_parenthesized_kind.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/11_parenthesized_kind.a:15:14: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"
+      },
+      "observed": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/11_parenthesized_kind.a:15:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "action": "retained"
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/12_union_target.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/12_union_target.a:19:13: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"
+      },
+      "observed": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/12_union_target.a:19:13: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "action": "retained"
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/13_flag_downcast.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/13_flag_downcast.a:11:12: Adamic 0.1 refuses a number as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "observed": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/13_flag_downcast.a:11:52: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "action": "retained"
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/14_structural_cache.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/14_structural_cache.a:11:17: Adamic 0.1 refuses an unproven relation from Type to IterableOrIteratorType: optional field iterationTypes has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)"
+      },
+      "observed": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/14_structural_cache.a:11:17: Adamic 0.1 refuses an unproven relation from Type to IterableOrIteratorType: optional field iterationTypes has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "action": "retained"
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/15_mutable_view.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/15_mutable_view.a:9:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+      },
+      "observed": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/15_mutable_view.a:9:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "action": "retained"
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/16_unknown_chain.a",
+      "old": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/assertions/16_unknown_chain.a:11:11: stage 0 can't lower a value of type PollingWatchKind | undefined yet"
+      },
+      "observed": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/16_unknown_chain.a:6:50: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "action": "regenerated"
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/17_brand_upcast.a",
+      "old": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/assertions/17_brand_upcast.a:11:13: stage 0 can't lower a PrefixUnaryExpression on a number yet"
+      },
+      "observed": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/17_brand_upcast.a:14:70: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "action": "regenerated"
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/19_identifier_kind.a",
+      "old": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/assertions/19_identifier_kind.a:14:13: stage 0 can't lower a case that isn't a constant yet"
+      },
+      "observed": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/19_identifier_kind.a:15:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "action": "regenerated"
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/20_type_flag_mask.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/20_type_flag_mask.a:11:12: Adamic 0.1 refuses a number as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "observed": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/20_type_flag_mask.a:11:54: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "action": "retained"
+    },
+    {
+      "fixture": "stage3/fixtures/enums/08_debug_format_enum.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/08_debug_format_enum.a:16:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/08_debug_format_enum.a:16:64: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/08_debug_format_enum.a:7:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "observed": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/08_debug_format_enum.a:16:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/08_debug_format_enum.a:16:64: error TS2532: Object is possibly 'undefined'."
+      },
+      "action": "retained"
+    },
+    {
+      "fixture": "stage3/fixtures/enums/11_format_syntax_kind.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/11_format_syntax_kind.a:14:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/11_format_syntax_kind.a:14:64: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/syntax-kind-support.a:3:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "observed": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/11_format_syntax_kind.a:14:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/11_format_syntax_kind.a:14:64: error TS2532: Object is possibly 'undefined'."
+      },
+      "action": "retained"
+    },
+    {
+      "fixture": "stage3/fixtures/host/25_readDirectory.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:103:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:104:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:105:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:106:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:1074:41: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\nstage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:741:10: error TS7030: Not all code paths return a value.\nstage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+      },
+      "observed": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:103:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:104:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:105:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:106:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:1074:41: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\nstage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+      },
+      "action": "retained"
+    },
+    {
+      "fixture": "stage3/fixtures/objects/05_polling_array_metadata.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/objects/05_polling_array_metadata.a:12:23: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"
+      },
+      "observed": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/objects/05_polling_array_metadata.a:12:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "action": "retained"
+    },
+    {
+      "fixture": "stage3/fixtures/objects/08_loop_state.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/objects/08_loop_state.a:10:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "observed": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/objects/08_loop_state.a:13:17: Adamic 0.1 refuses a string as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "action": "retained"
+    },
+    {
+      "fixture": "stage3/fixtures/taste/03_diagnostic_file.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/03_diagnostic_file.a:5:12: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "observed": {
+        "outcome": "Compiles",
+        "what": ""
+      },
+      "action": "retained"
+    },
+    {
+      "fixture": "stage3/fixtures/taste/14_relative_complement.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/14_relative_complement.a:12:5: Adamic 0.1 refuses a label; move the loop into a function and return from it"
+      },
+      "observed": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/taste/14_relative_complement.a:28:17: stage 0 can't lower a case that isn't a constant yet"
+      },
+      "action": "retained"
+    },
+    {
+      "fixture": "stage3/fixtures/taste/20_jsdoc_terminate.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/20_jsdoc_terminate.a:15:1: Adamic 0.1 refuses a label; move the loop into a function and return from it"
+      },
+      "observed": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/taste/20_jsdoc_terminate.a:18:21: stage 0 can't lower a case that isn't a constant yet"
+      },
+      "action": "retained"
+    },
+    {
+      "fixture": "stage3/fixtures/taste/21_truthy_loops.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/21_truthy_loops.a:14:12: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "observed": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/21_truthy_loops.a:31:13: Adamic 0.1 refuses a number as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "action": "retained"
+    },
+    {
+      "fixture": "stage3/fixtures/taste/23_labels_finally.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/23_labels_finally.a:6:5: Adamic 0.1 refuses a label; move the loop into a function and return from it"
+      },
+      "observed": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/taste/23_labels_finally.a:10:53: stage 0 can't lower a labeled continue yet"
+      },
+      "action": "retained"
+    }
+  ],
+  "pinned_stop": {
+    "fixture": "stage3/fixtures/enums/07_regex_array_map.a",
+    "outcome": "CheckedStop",
+    "stderr": "adamic: panic: index 1 is outside an array of length 0\n",
+    "stdout": "",
+    "exit": 70
+  },
+  "optional_widening": "No optional_widening.go exists in fetched area/main. Their optional-field proof in proven_relations.go is preserved, including reverse mutable and invariant class argument checks.",
+  "import_cycles": {
+    "merged": "779ff9d",
+    "cohere": "7945d102",
+    "records": [
+      {
+        "fixture": "stage3/fixtures/cycles/01_call_time/main.a",
+        "old": {
+          "outcome": "Refused",
+          "what": "stage3/fixtures/cycles/01_call_time/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+        },
+        "observed": {
+          "outcome": "Refused",
+          "what": "stage3/fixtures/cycles/01_call_time/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+        },
+        "action": "retained",
+        "branch": "codex/import-cycles 779ff9d",
+        "reason": "Ruling 7 accepts cycles and named exports. This removes a recorded refusal; the binding audit rule requires reporting it instead of regenerating it."
+      },
+      {
+        "fixture": "stage3/fixtures/cycles/02_reverse_barrel/main.a",
+        "old": {
+          "outcome": "Refused",
+          "what": "stage3/fixtures/cycles/02_reverse_barrel/path.a:3:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+        },
+        "observed": {
+          "outcome": "Refused",
+          "what": "stage3/fixtures/cycles/02_reverse_barrel/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+        },
+        "action": "retained",
+        "branch": "codex/import-cycles 779ff9d",
+        "reason": "Ruling 7 accepts cycles and named exports. This removes a recorded refusal; the binding audit rule requires reporting it instead of regenerating it."
+      },
+      {
+        "fixture": "stage3/fixtures/cycles/03_extensions/main.a",
+        "old": {
+          "outcome": "Refused",
+          "what": "stage3/fixtures/cycles/03_extensions/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+        },
+        "observed": {
+          "outcome": "Refused",
+          "what": "stage3/fixtures/cycles/03_extensions/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+        },
+        "action": "retained",
+        "branch": "codex/import-cycles 779ff9d",
+        "reason": "Ruling 7 accepts cycles and named exports. This removes a recorded refusal; the binding audit rule requires reporting it instead of regenerating it."
+      },
+      {
+        "fixture": "stage3/fixtures/cycles/04_directory_callback/main.a",
+        "old": {
+          "outcome": "Refused",
+          "what": "stage3/fixtures/cycles/04_directory_callback/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+        },
+        "observed": {
+          "outcome": "Refused",
+          "what": "stage3/fixtures/cycles/04_directory_callback/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+        },
+        "action": "retained",
+        "branch": "codex/import-cycles 779ff9d",
+        "reason": "Ruling 7 accepts cycles and named exports. This removes a recorded refusal; the binding audit rule requires reporting it instead of regenerating it."
+      },
+      {
+        "fixture": "stage3/fixtures/cycles/05_safe_load_read/main.a",
+        "old": {
+          "outcome": "Refused",
+          "what": "stage3/fixtures/cycles/05_safe_load_read/core.a:3:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+        },
+        "observed": {
+          "outcome": "NotYet",
+          "what": "stage3/fixtures/cycles/05_safe_load_read/core.a:4:36: stage 0 can't lower an array of never yet"
+        },
+        "action": "retained",
+        "branch": "codex/import-cycles 779ff9d",
+        "reason": "Ruling 7 accepts cycles and named exports. This removes a recorded refusal; the binding audit rule requires reporting it instead of regenerating it."
+      },
+      {
+        "fixture": "stage3/fixtures/cycles/06_import_order_mutant/main.a",
+        "old": {
+          "outcome": "Refused",
+          "what": "stage3/fixtures/cycles/06_import_order_mutant/_namespaces/ts.a:5:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+        },
+        "observed": {
+          "outcome": "NotYet",
+          "what": "stage3/fixtures/cycles/06_import_order_mutant/core.a:4:36: stage 0 can't lower an array of never yet"
+        },
+        "action": "retained",
+        "branch": "codex/import-cycles 779ff9d",
+        "reason": "Ruling 7 accepts cycles and named exports. This removes a recorded refusal; the binding audit rule requires reporting it instead of regenerating it."
+      },
+      {
+        "fixture": "stage3/fixtures/cycles/07_namespace_barrel/main.a",
+        "old": {
+          "outcome": "Refused",
+          "what": "stage3/fixtures/cycles/07_namespace_barrel/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+        },
+        "observed": {
+          "outcome": "Refused",
+          "what": "stage3/fixtures/cycles/07_namespace_barrel/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+        },
+        "action": "retained",
+        "branch": "codex/import-cycles 779ff9d",
+        "reason": "Ruling 7 accepts cycles and named exports. This removes a recorded refusal; the binding audit rule requires reporting it instead of regenerating it."
+      },
+      {
+        "fixture": "stage3/fixtures/cycles/08_named_reexports/main.a",
+        "old": {
+          "outcome": "Refused",
+          "what": "stage3/fixtures/cycles/08_named_reexports/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+        },
+        "observed": {
+          "outcome": "Refused",
+          "what": "stage3/fixtures/cycles/08_named_reexports/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+        },
+        "action": "retained",
+        "branch": "codex/import-cycles 779ff9d",
+        "reason": "Ruling 7 accepts cycles and named exports. This removes a recorded refusal; the binding audit rule requires reporting it instead of regenerating it."
+      },
+      {
+        "fixture": "stage3/fixtures/cycles/09_function_value_load/main.a",
+        "old": {
+          "outcome": "Refused",
+          "what": "stage3/fixtures/cycles/09_function_value_load/core.a:3:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+        },
+        "observed": {
+          "outcome": "NotYet",
+          "what": "stage3/fixtures/cycles/09_function_value_load/core.a:4:22: stage 0 can't lower a value of type unknown yet"
+        },
+        "action": "retained",
+        "branch": "codex/import-cycles 779ff9d",
+        "reason": "Ruling 7 accepts cycles and named exports. This removes a recorded refusal; the binding audit rule requires reporting it instead of regenerating it."
+      },
+      {
+        "fixture": "stage3/fixtures/cycles/10_hoisted_before_body/main.a",
+        "old": {
+          "outcome": "Refused",
+          "what": "stage3/fixtures/cycles/10_hoisted_before_body/performance.a:3:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+        },
+        "observed": {
+          "outcome": "NotYet",
+          "what": "stage3/fixtures/cycles/10_hoisted_before_body/core.a:4:22: stage 0 can't lower a value of type unknown yet"
+        },
+        "action": "retained",
+        "branch": "codex/import-cycles 779ff9d",
+        "reason": "Ruling 7 accepts cycles and named exports. This removes a recorded refusal; the binding audit rule requires reporting it instead of regenerating it."
+      },
+      {
+        "fixture": "stage3/fixtures/taste/15_barrel.a",
+        "old": {
+          "outcome": "Refused",
+          "what": "stage3/fixtures/taste/15_barrel.a:3:1: Adamic 0.1 refuses an ExportDeclaration; export where you declare: export function, export const (one name for one thing)"
+        },
+        "observed": {
+          "outcome": "Compiles",
+          "what": ""
+        },
+        "action": "retained",
+        "branch": "codex/import-cycles 779ff9d",
+        "reason": "Ruling 7 accepts cycles and named exports. This removes a recorded refusal; the binding audit rule requires reporting it instead of regenerating it."
+      },
+      {
+        "fixture": "stage3/fixtures/taste/18_named_export.a",
+        "old": {
+          "outcome": "Refused",
+          "what": "stage3/fixtures/taste/support/performance.a:4:1: Adamic 0.1 refuses an ExportDeclaration; export where you declare: export function, export const (one name for one thing)"
+        },
+        "observed": {
+          "outcome": "Compiles",
+          "what": ""
+        },
+        "action": "retained",
+        "branch": "codex/import-cycles 779ff9d",
+        "reason": "Ruling 7 accepts cycles and named exports. This removes a recorded refusal; the binding audit rule requires reporting it instead of regenerating it."
+      }
+    ],
+    "compiles_regressions_first": []
+  },
+  "counts_changes_step2": [
+    "Four added rows, all from import-cycles: import_cycles/order/main.a, import_cycles/runtime/even.a, cyclic-initialized-value/main.a, cyclic-premature-value/main.a. No existing count row changed."
+  ],
+  "validation": {
+    "load": "PASS 2.616s",
+    "lower": "PASS 67.268s",
+    "flow": "PASS 176.006s",
+    "native": "PASS 253.439s",
+    "oracle": "PASS 261.159s, native misses 1684/hits 0, Node misses 992/hits 0",
+    "fixtures": "PASS 9.820s after regenerating 29 differing stage0 records; all Node bytes preserved.",
+    "mutants": {
+      "optional_proof_disabled": "upcast_hidden_optional and satisfies_hidden_optional fail: expected refusal, got nil",
+      "class_cast_erasure": "empty_subclass and generic_ancestry fail: nominal refusal instead of a checked cast",
+      "sparse_array_write_removed": "enums/07 native exits 0 with undefined values; pinned stop test fails"
+    },
+    "not_covered": "OriginalCycleLedger needs ADAMIC_CYCLE_LEDGER_ROOT and was skipped; no complete tsc lowering claimed.",
+    "gofmt": "PASS, no files listed",
+    "vet": "PASS go vet ./..."
+  },
+  "full_step2_audit": [
+    {
+      "fixture": "stage3/fixtures/assertions/09_interface_kind.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/09_interface_kind.a:15:10: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/09_interface_kind.a:15:10: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "cause": "codex/checked-downcasts via 829b8a6: revised no-unchecked-cast diagnostics and refusal-pass precedence."
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/11_parenthesized_kind.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/11_parenthesized_kind.a:15:14: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/11_parenthesized_kind.a:15:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "cause": "codex/checked-downcasts via 829b8a6: revised no-unchecked-cast diagnostics and refusal-pass precedence."
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/12_union_target.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/12_union_target.a:19:13: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/12_union_target.a:19:13: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "cause": "codex/checked-downcasts via 829b8a6: revised no-unchecked-cast diagnostics and refusal-pass precedence."
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/13_flag_downcast.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/13_flag_downcast.a:11:12: Adamic 0.1 refuses a number as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/13_flag_downcast.a:11:52: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "cause": "codex/checked-downcasts via 829b8a6: revised no-unchecked-cast diagnostics and refusal-pass precedence."
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/14_structural_cache.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/14_structural_cache.a:11:17: Adamic 0.1 refuses an unproven relation from Type to IterableOrIteratorType: optional field iterationTypes has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/14_structural_cache.a:11:17: Adamic 0.1 refuses an unproven relation from Type to IterableOrIteratorType: optional field iterationTypes has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "cause": "codex/checked-downcasts via 829b8a6: revised no-unchecked-cast diagnostics and refusal-pass precedence."
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/15_mutable_view.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/15_mutable_view.a:9:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/15_mutable_view.a:9:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "cause": "codex/checked-downcasts via 829b8a6: revised no-unchecked-cast diagnostics and refusal-pass precedence."
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/20_type_flag_mask.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/20_type_flag_mask.a:11:12: Adamic 0.1 refuses a number as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/20_type_flag_mask.a:11:54: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "cause": "codex/checked-downcasts via 829b8a6: revised no-unchecked-cast diagnostics and refusal-pass precedence."
+    },
+    {
+      "fixture": "stage3/fixtures/cycles/01_call_time/main.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/01_call_time/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/01_call_time/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/cycles/02_reverse_barrel/main.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/02_reverse_barrel/path.a:3:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/02_reverse_barrel/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/cycles/03_extensions/main.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/03_extensions/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/03_extensions/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/cycles/04_directory_callback/main.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/04_directory_callback/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/04_directory_callback/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/cycles/05_safe_load_read/main.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/05_safe_load_read/core.a:3:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      },
+      "new": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/cycles/05_safe_load_read/core.a:4:36: stage 0 can't lower an array of never yet"
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/cycles/06_import_order_mutant/main.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/06_import_order_mutant/_namespaces/ts.a:5:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      },
+      "new": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/cycles/06_import_order_mutant/core.a:4:36: stage 0 can't lower an array of never yet"
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/cycles/07_namespace_barrel/main.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/07_namespace_barrel/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/07_namespace_barrel/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/cycles/08_named_reexports/main.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/08_named_reexports/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/08_named_reexports/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/cycles/09_function_value_load/main.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/09_function_value_load/core.a:3:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      },
+      "new": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/cycles/09_function_value_load/core.a:4:22: stage 0 can't lower a value of type unknown yet"
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/cycles/10_hoisted_before_body/main.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/10_hoisted_before_body/performance.a:3:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      },
+      "new": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/cycles/10_hoisted_before_body/core.a:4:22: stage 0 can't lower a value of type unknown yet"
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/enums/08_debug_format_enum.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/08_debug_format_enum.a:16:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/08_debug_format_enum.a:16:64: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/08_debug_format_enum.a:7:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/08_debug_format_enum.a:16:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/08_debug_format_enum.a:16:64: error TS2532: Object is possibly 'undefined'."
+      },
+      "cause": "codex/flag-enums via 829b8a6: transform-mode checker options remove TS1294; other checker diagnostics remain."
+    },
+    {
+      "fixture": "stage3/fixtures/enums/11_format_syntax_kind.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/11_format_syntax_kind.a:14:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/11_format_syntax_kind.a:14:64: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/syntax-kind-support.a:3:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/11_format_syntax_kind.a:14:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/11_format_syntax_kind.a:14:64: error TS2532: Object is possibly 'undefined'."
+      },
+      "cause": "codex/flag-enums via 829b8a6: transform-mode checker options remove TS1294; other checker diagnostics remain."
+    },
+    {
+      "fixture": "stage3/fixtures/host/25_readDirectory.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:103:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:104:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:105:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:106:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:1074:41: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\nstage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:741:10: error TS7030: Not all code paths return a value.\nstage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+      },
+      "new": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:103:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:104:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:105:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:106:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:1074:41: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\nstage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+      },
+      "cause": "compiler/reland-fixes-3 via 829b8a6: implicit-return ruling removes noImplicitReturns and TS7030; other checker diagnostics remain."
+    },
+    {
+      "fixture": "stage3/fixtures/objects/05_polling_array_metadata.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/objects/05_polling_array_metadata.a:12:23: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/objects/05_polling_array_metadata.a:12:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "cause": "codex/checked-downcasts via 829b8a6: revised no-unchecked-cast diagnostics and refusal-pass precedence."
+    },
+    {
+      "fixture": "stage3/fixtures/objects/08_loop_state.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/objects/08_loop_state.a:10:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/objects/08_loop_state.a:13:17: Adamic 0.1 refuses a string as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "cause": "compiler/reland-fixes-3 via 829b8a6: fallthrough/labels and union narrowing advance lowering or move the next refused condition."
+    },
+    {
+      "fixture": "stage3/fixtures/taste/03_diagnostic_file.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/03_diagnostic_file.a:5:12: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "new": {
+        "outcome": "Compiles",
+        "what": ""
+      },
+      "cause": "compiler/reland-fixes-3 via 829b8a6: fallthrough/labels and union narrowing advance lowering or move the next refused condition."
+    },
+    {
+      "fixture": "stage3/fixtures/taste/14_relative_complement.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/14_relative_complement.a:12:5: Adamic 0.1 refuses a label; move the loop into a function and return from it"
+      },
+      "new": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/taste/14_relative_complement.a:28:17: stage 0 can't lower a case that isn't a constant yet"
+      },
+      "cause": "compiler/reland-fixes-3 via 829b8a6: fallthrough/labels and union narrowing advance lowering or move the next refused condition."
+    },
+    {
+      "fixture": "stage3/fixtures/taste/15_barrel.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/15_barrel.a:3:1: Adamic 0.1 refuses an ExportDeclaration; export where you declare: export function, export const (one name for one thing)"
+      },
+      "new": {
+        "outcome": "Compiles",
+        "what": ""
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/taste/18_named_export.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/support/performance.a:4:1: Adamic 0.1 refuses an ExportDeclaration; export where you declare: export function, export const (one name for one thing)"
+      },
+      "new": {
+        "outcome": "Compiles",
+        "what": ""
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/taste/20_jsdoc_terminate.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/20_jsdoc_terminate.a:15:1: Adamic 0.1 refuses a label; move the loop into a function and return from it"
+      },
+      "new": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/taste/20_jsdoc_terminate.a:18:21: stage 0 can't lower a case that isn't a constant yet"
+      },
+      "cause": "compiler/reland-fixes-3 via 829b8a6: fallthrough/labels and union narrowing advance lowering or move the next refused condition."
+    },
+    {
+      "fixture": "stage3/fixtures/taste/21_truthy_loops.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/21_truthy_loops.a:14:12: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/21_truthy_loops.a:31:13: Adamic 0.1 refuses a number as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "cause": "compiler/reland-fixes-3 via 829b8a6: fallthrough/labels and union narrowing advance lowering or move the next refused condition."
+    },
+    {
+      "fixture": "stage3/fixtures/taste/23_labels_finally.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/23_labels_finally.a:6:5: Adamic 0.1 refuses a label; move the loop into a function and return from it"
+      },
+      "new": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/taste/23_labels_finally.a:10:53: stage 0 can't lower a labeled continue yet"
+      },
+      "cause": "compiler/reland-fixes-3 via 829b8a6: fallthrough/labels and union narrowing advance lowering or move the next refused condition."
+    }
+  ],
+  "audit_rule": "User authorized all differing stage0 outcomes and diagnostics on October 7; every byte outside stage0 remains unchanged. Earlier retained entries are historical step1 decisions.",
+  "counts_changes_step1": "Reland, flag-enums and checked-downcasts add their regression fixtures and change flow counts for unions, tuple values, generic functions and proven guards. Counts regenerated on Linux; all oracle observations match Node.",
+  "full_audit_against_area_738b16f1": [
+    {
+      "fixture": "stage3/fixtures/assertions/09_interface_kind.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/09_interface_kind.a:15:10: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/09_interface_kind.a:15:10: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "cause": "codex/checked-downcasts via 829b8a6: revised no-unchecked-cast diagnostics and refusal-pass precedence."
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/11_parenthesized_kind.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/11_parenthesized_kind.a:15:14: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/11_parenthesized_kind.a:15:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "cause": "codex/checked-downcasts via 829b8a6: revised no-unchecked-cast diagnostics and refusal-pass precedence."
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/12_union_target.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/12_union_target.a:19:13: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/12_union_target.a:19:13: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "cause": "codex/checked-downcasts via 829b8a6: revised no-unchecked-cast diagnostics and refusal-pass precedence."
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/13_flag_downcast.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/13_flag_downcast.a:11:12: Adamic 0.1 refuses a number as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/13_flag_downcast.a:11:52: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "cause": "codex/checked-downcasts via 829b8a6: revised no-unchecked-cast diagnostics and refusal-pass precedence."
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/14_structural_cache.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/14_structural_cache.a:11:17: Adamic 0.1 refuses an unproven relation from Type to IterableOrIteratorType: optional field iterationTypes has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/14_structural_cache.a:11:17: Adamic 0.1 refuses an unproven relation from Type to IterableOrIteratorType: optional field iterationTypes has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "cause": "codex/checked-downcasts via 829b8a6: revised no-unchecked-cast diagnostics and refusal-pass precedence."
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/15_mutable_view.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/15_mutable_view.a:9:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/15_mutable_view.a:9:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "cause": "codex/checked-downcasts via 829b8a6: revised no-unchecked-cast diagnostics and refusal-pass precedence."
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/16_unknown_chain.a",
+      "old": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/assertions/16_unknown_chain.a:11:11: stage 0 can't lower a value of type PollingWatchKind | undefined yet"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/16_unknown_chain.a:6:50: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "cause": "codex/checked-downcasts via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/17_brand_upcast.a",
+      "old": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/assertions/17_brand_upcast.a:11:13: stage 0 can't lower a PrefixUnaryExpression on a number yet"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/17_brand_upcast.a:14:70: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "cause": "codex/checked-downcasts via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/19_identifier_kind.a",
+      "old": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/assertions/19_identifier_kind.a:14:13: stage 0 can't lower a case that isn't a constant yet"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/19_identifier_kind.a:15:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "cause": "codex/checked-downcasts via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/assertions/20_type_flag_mask.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/20_type_flag_mask.a:11:12: Adamic 0.1 refuses a number as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/assertions/20_type_flag_mask.a:11:54: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "cause": "codex/checked-downcasts via 829b8a6: revised no-unchecked-cast diagnostics and refusal-pass precedence."
+    },
+    {
+      "fixture": "stage3/fixtures/cycles/01_call_time/main.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/01_call_time/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/01_call_time/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/cycles/02_reverse_barrel/main.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/02_reverse_barrel/path.a:3:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/02_reverse_barrel/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/cycles/03_extensions/main.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/03_extensions/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/03_extensions/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/cycles/04_directory_callback/main.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/04_directory_callback/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/04_directory_callback/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/cycles/05_safe_load_read/main.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/05_safe_load_read/core.a:3:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      },
+      "new": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/cycles/05_safe_load_read/core.a:4:36: stage 0 can't lower an array of never yet"
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/cycles/06_import_order_mutant/main.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/06_import_order_mutant/_namespaces/ts.a:5:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      },
+      "new": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/cycles/06_import_order_mutant/core.a:4:36: stage 0 can't lower an array of never yet"
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/cycles/07_namespace_barrel/main.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/07_namespace_barrel/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/07_namespace_barrel/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/cycles/08_named_reexports/main.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/08_named_reexports/core.a:6:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/08_named_reexports/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/cycles/09_function_value_load/main.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/09_function_value_load/core.a:3:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      },
+      "new": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/cycles/09_function_value_load/core.a:4:22: stage 0 can't lower a value of type unknown yet"
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/cycles/10_hoisted_before_body/main.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/cycles/10_hoisted_before_body/performance.a:3:1: Adamic 0.1 refuses an import cycle; move what both modules need into a third that neither imports"
+      },
+      "new": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/cycles/10_hoisted_before_body/core.a:4:22: stage 0 can't lower a value of type unknown yet"
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/enums/01_token_range.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/01_token_range.a:5:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Compiles",
+        "what": ""
+      },
+      "cause": "codex/flag-enums via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/enums/02_node_range.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/02_node_range.a:5:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Compiles",
+        "what": ""
+      },
+      "cause": "codex/flag-enums via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/enums/03_jsdoc_range.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/03_jsdoc_range.a:5:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Compiles",
+        "what": ""
+      },
+      "cause": "codex/flag-enums via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/enums/04_parse_tree_mask.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/04_parse_tree_mask.a:5:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Compiles",
+        "what": ""
+      },
+      "cause": "codex/flag-enums via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/enums/05_local_export_flags.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/05_local_export_flags.a:5:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Compiles",
+        "what": ""
+      },
+      "cause": "codex/flag-enums via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/enums/06_set_node_flags.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/06_set_node_flags.a:6:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/enums/06_set_node_flags.a:79:10: Adamic 0.1 refuses a value of type T seen as Mutable<T>, which can write T[\"flags\"] where NodeFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "cause": "codex/flag-enums and codex/checked-downcasts via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/enums/07_regex_array_map.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/07_regex_array_map.a:20:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/enums/07_regex_array_map.a:7:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "CheckedStop",
+        "what": "adamic: panic: index 1 is outside an array of length 0\n"
+      },
+      "cause": "codex/flag-enums via 829b8a6 enables lowering; the existing inserted array-write check deliberately stops a sparse write. User explicitly pinned exit 70 and exact panic."
+    },
+    {
+      "fixture": "stage3/fixtures/enums/08_debug_format_enum.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/08_debug_format_enum.a:16:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/08_debug_format_enum.a:16:64: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/08_debug_format_enum.a:7:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/08_debug_format_enum.a:16:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/08_debug_format_enum.a:16:64: error TS2532: Object is possibly 'undefined'."
+      },
+      "cause": "codex/flag-enums via 829b8a6: transform-mode checker options remove TS1294; other checker diagnostics remain."
+    },
+    {
+      "fixture": "stage3/fixtures/enums/09_symbol_exclusion_mask.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/09_symbol_exclusion_mask.a:5:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Compiles",
+        "what": ""
+      },
+      "cause": "codex/flag-enums via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/enums/10_string_enum.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/10_string_enum.a:5:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Compiles",
+        "what": ""
+      },
+      "cause": "codex/flag-enums via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/enums/11_format_syntax_kind.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/11_format_syntax_kind.a:14:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/11_format_syntax_kind.a:14:64: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/syntax-kind-support.a:3:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/11_format_syntax_kind.a:14:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/11_format_syntax_kind.a:14:64: error TS2532: Object is possibly 'undefined'."
+      },
+      "cause": "codex/flag-enums via 829b8a6: transform-mode checker options remove TS1294; other checker diagnostics remain."
+    },
+    {
+      "fixture": "stage3/fixtures/enums/12_diagnostic_reverse_lookup.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/12_diagnostic_reverse_lookup.a:4:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Compiles",
+        "what": ""
+      },
+      "cause": "codex/flag-enums via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/enums/13_regex_map_keys.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/enums/13_regex_map_keys.a:19:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/enums/13_regex_map_keys.a:6:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Compiles",
+        "what": ""
+      },
+      "cause": "codex/flag-enums via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/host/25_readDirectory.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:103:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:104:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:105:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:106:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:1074:41: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\nstage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:741:10: error TS7030: Not all code paths return a value.\nstage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+      },
+      "new": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:103:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:104:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:105:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:106:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:1074:41: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\nstage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+      },
+      "cause": "compiler/reland-fixes-3 via 829b8a6: implicit-return ruling removes noImplicitReturns and TS7030; other checker diagnostics remain."
+    },
+    {
+      "fixture": "stage3/fixtures/namespaces/01_builder_state.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/namespaces/01_builder_state.a:10:18: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/namespaces/01_builder_state.a:10:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
+      },
+      "cause": "codex/flag-enums via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/namespaces/02_jsx_names.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/namespaces/02_jsx_names.a:6:11: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/namespaces/02_jsx_names.a:6:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
+      },
+      "cause": "codex/flag-enums via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/namespaces/03_react_names.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/namespaces/03_react_names.a:6:11: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/namespaces/03_react_names.a:6:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
+      },
+      "cause": "codex/flag-enums via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/namespaces/04_debug_state.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/namespaces/04_debug_state.a:13:18: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/namespaces/04_debug_state.a:5:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/namespaces/04_debug_state.a:13:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
+      },
+      "cause": "codex/flag-enums via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/namespaces/05_debug_log_merge.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/namespaces/05_debug_log_merge.a:18:18: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/namespaces/05_debug_log_merge.a:39:22: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/namespaces/05_debug_log_merge.a:6:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/namespaces/05_debug_log_merge.a:18:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
+      },
+      "cause": "codex/flag-enums via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/namespaces/06_binary_expression_state.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/namespaces/06_binary_expression_state.a:11:11: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/namespaces/06_binary_expression_state.a:11:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
+      },
+      "cause": "codex/flag-enums via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/namespaces/07_parser_singleton.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/namespaces/07_parser_singleton.a:6:11: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/namespaces/07_parser_singleton.a:6:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
+      },
+      "cause": "codex/flag-enums via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/namespaces/08_parser_jsdoc_nested.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/namespaces/08_parser_jsdoc_nested.a:11:11: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/namespaces/08_parser_jsdoc_nested.a:20:22: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/namespaces/08_parser_jsdoc_nested.a:21:20: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/namespaces/08_parser_jsdoc_nested.a:28:20: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/namespaces/08_parser_jsdoc_nested.a:9:6: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/namespaces/08_parser_jsdoc_nested.a:11:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
+      },
+      "cause": "codex/flag-enums via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/namespaces/09_incremental_parser.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/namespaces/09_incremental_parser.a:18:16: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/namespaces/09_incremental_parser.a:5:6: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/namespaces/09_incremental_parser.a:7:11: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/namespaces/09_incremental_parser.a:7:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
+      },
+      "cause": "codex/flag-enums via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/namespaces/10_tracing_escape.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/namespaces/10_tracing_escape.a:18:23: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/namespaces/10_tracing_escape.a:7:18: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/namespaces/10_tracing_escape.a:7:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
+      },
+      "cause": "codex/flag-enums via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/namespaces/11_status_type_only.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/namespaces/11_status_type_only.a:6:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/namespaces/11_status_type_only.a:36:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
+      },
+      "cause": "codex/flag-enums via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/namespaces/12_builder_release_cache.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/namespaces/12_builder_release_cache.a:10:18: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/namespaces/12_builder_release_cache.a:10:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports"
+      },
+      "cause": "codex/flag-enums via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/objects/05_polling_array_metadata.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/objects/05_polling_array_metadata.a:12:23: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/objects/05_polling_array_metadata.a:12:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "cause": "codex/checked-downcasts via 829b8a6: revised no-unchecked-cast diagnostics and refusal-pass precedence."
+    },
+    {
+      "fixture": "stage3/fixtures/objects/08_loop_state.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/objects/08_loop_state.a:10:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/objects/08_loop_state.a:13:17: Adamic 0.1 refuses a string as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "cause": "compiler/reland-fixes-3 via 829b8a6: fallthrough/labels and union narrowing advance lowering or move the next refused condition."
+    },
+    {
+      "fixture": "stage3/fixtures/objects/14_comment_pending.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/objects/14_comment_pending.a:28:13: error TS7029: Fallthrough case in switch."
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/objects/14_comment_pending.a:10:19: Adamic 0.1 refuses a definite assignment assertion !; remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"
+      },
+      "cause": "compiler/reland-fixes-3 via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/objects/22_nested_optional_calls.a",
+      "old": {
+        "outcome": "Checker",
+        "what": "stage3/fixtures/objects/22_nested_optional_calls.a:15:48: error TS7030: Not all code paths return a value."
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/objects/22_nested_optional_calls.a:16:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "cause": "compiler/reland-fixes-3 and codex/checked-downcasts via 829b8a6; carried forward from the previously isolated, audited stage3 landing."
+    },
+    {
+      "fixture": "stage3/fixtures/taste/03_diagnostic_file.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/03_diagnostic_file.a:5:12: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "new": {
+        "outcome": "Compiles",
+        "what": ""
+      },
+      "cause": "compiler/reland-fixes-3 via 829b8a6: fallthrough/labels and union narrowing advance lowering or move the next refused condition."
+    },
+    {
+      "fixture": "stage3/fixtures/taste/14_relative_complement.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/14_relative_complement.a:12:5: Adamic 0.1 refuses a label; move the loop into a function and return from it"
+      },
+      "new": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/taste/14_relative_complement.a:28:17: stage 0 can't lower a case that isn't a constant yet"
+      },
+      "cause": "compiler/reland-fixes-3 via 829b8a6: fallthrough/labels and union narrowing advance lowering or move the next refused condition."
+    },
+    {
+      "fixture": "stage3/fixtures/taste/15_barrel.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/15_barrel.a:3:1: Adamic 0.1 refuses an ExportDeclaration; export where you declare: export function, export const (one name for one thing)"
+      },
+      "new": {
+        "outcome": "Compiles",
+        "what": ""
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/taste/18_named_export.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/support/performance.a:4:1: Adamic 0.1 refuses an ExportDeclaration; export where you declare: export function, export const (one name for one thing)"
+      },
+      "new": {
+        "outcome": "Compiles",
+        "what": ""
+      },
+      "cause": "codex/import-cycles 779ff9d: ruling 7 accepts module cycles and named exports; the next lower-stage check is now observed."
+    },
+    {
+      "fixture": "stage3/fixtures/taste/20_jsdoc_terminate.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/20_jsdoc_terminate.a:15:1: Adamic 0.1 refuses a label; move the loop into a function and return from it"
+      },
+      "new": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/taste/20_jsdoc_terminate.a:18:21: stage 0 can't lower a case that isn't a constant yet"
+      },
+      "cause": "compiler/reland-fixes-3 via 829b8a6: fallthrough/labels and union narrowing advance lowering or move the next refused condition."
+    },
+    {
+      "fixture": "stage3/fixtures/taste/21_truthy_loops.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/21_truthy_loops.a:14:12: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "new": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/21_truthy_loops.a:31:13: Adamic 0.1 refuses a number as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      },
+      "cause": "compiler/reland-fixes-3 via 829b8a6: fallthrough/labels and union narrowing advance lowering or move the next refused condition."
+    },
+    {
+      "fixture": "stage3/fixtures/taste/23_labels_finally.a",
+      "old": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/23_labels_finally.a:6:5: Adamic 0.1 refuses a label; move the loop into a function and return from it"
+      },
+      "new": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/taste/23_labels_finally.a:10:53: stage 0 can't lower a labeled continue yet"
+      },
+      "cause": "compiler/reland-fixes-3 via 829b8a6: fallthrough/labels and union narrowing advance lowering or move the next refused condition."
+    }
+  ],
+  "setup": {
+    "go": "ready 0s",
+    "clang": "ready 1s",
+    "node": "ready 1s",
+    "submodules": "ready 1s",
+    "build_cache": "warm 104s",
+    "nproc": 5,
+    "workaround": "Removed abandoned Go scratch directories after ENOSPC and reran failed builds successfully."
+  }
+}

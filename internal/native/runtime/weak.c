@@ -42,7 +42,12 @@ static size_t table_used;
 #define TOMBSTONE ((uintptr_t)1)
 
 static size_t slot_of(const void *target) {
+#ifdef ADAMIC_TARGET_WASI
+	// Widen before the 64-bit hash shifts; wasm32 pointers have only 32 bits.
+	uint64_t key = (uintptr_t)target;
+#else
 	uintptr_t key = (uintptr_t)target;
+#endif
 	key ^= key >> 33;
 	key *= 0xff51afd7ed558ccdu;
 	key ^= key >> 33;

@@ -1,0 +1,6 @@
+=== RUN   TestAdamicCorpusRequiresExplicitBridge
+    adamic_inventory_test.go:173: cohere now supports .a: remove the unknown-count fallback and measure the complete program
+--- FAIL: TestAdamicCorpusRequiresExplicitBridge (0.07s)
+FAIL
+FAIL	command-line-arguments	0.090s
+FAIL
