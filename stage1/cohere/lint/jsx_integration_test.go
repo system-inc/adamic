@@ -95,7 +95,7 @@ func TestJsxLintReleaseAndThroughput(t *testing.T) {
 	}
 	oracle := goOracle(t)
 	binary := buildPort(t, directory, false)
-	input := manifest(t, rows)
+	input := manifest(t, recoveryRows(t, oracle, rows))
 	compare(t, oracle, binary, directory, input)
 	best := map[string]time.Duration{}
 	var answer []byte

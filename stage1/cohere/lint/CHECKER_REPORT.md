@@ -587,3 +587,17 @@ Cache keys and scopes:
 * The area's run-shared oracle and upstream capture apply only to the immutable package directory; scratch directories get their own oracle/capture. They cache build artifacts and asserted input rows, not test verdicts. Every comparison executes again.
 
 TestCheckerCacheSourceByte warms the actual compilation, native binary, runtime and object caches, then changes exactly one byte (A to B in an owned diagnostic message) in a scratch copy at the same pathname, without clearing caches. It requires generated C and emitted JavaScript to change and requires rebuilt native, Node and emitted findings to match the changed message and differ from the independent Go oracle. Restoring the byte must restore the original findings and reuse the original compiler bundle. Its output hashes are recorded in the package log.
+
+
+All-input gate after the merge:
+
+* Command: `go test -json -count=1 -timeout=60m ./stage1/cohere/lint`, with the installed toolchain environment sourced; `GOMAXPROCS=4`, `GOFLAGS=-buildvcs=false`, `GOPROXY=https://proxy.golang.org|direct`, `ADAMIC_LINT_BENCH=1`, `ADAMIC_TYPESCRIPT_SOURCE=/workspace/typescript-wave08-corpus` at clean `050880ce59e30b356b686bd3144efe24f875ebc8`, and both profile variables set to the same fresh `/workspace/checker-merged-final-all-inputs-profiles` directory.
+* Package: PASS, 2030.966 seconds. Outer wall: 2041.939508 seconds. Top-level tests: 34 pass, 0 fail, 1 skip. Including subtests: 113 pass, 0 fail, 1 skip. All 75 registered mutants caught.
+* Only skip: `TestCheckerBridgeRefusalPending`, reason `awaits codex/tsgo-errors-as-values: tsgoInspect must return TSGoError from the C error buffer`. No library branch was merged. Its prior scratch-merge proof remains in the earlier report.
+* Machine: nproc 5, quota 4 cores, one-minute load minimum/median/maximum 0.611/1.151/5.609. Load averages at start 0.611/1.509/1.416; end 1.688/1.884/1.956.
+* Required setup completed in 62.041 seconds; Go build ready at 61.729 seconds, cache warm at 61.957 seconds. Compile-only check passed in 0.141 seconds.
+* Compiler and repository corpus: 872 files. TypeScript checkout was clean before and after the gate.
+
+Enabling the previously optional JSX throughput input found an existing manifest bug: the captured JSX fixture `<></* valid *//>` lacks a recovery marker when jsxSources is converted into all-rule rows. The oracle correctly rejected it with `Expected corresponding closing tag for JSX fragment. Expression expected.`. The benchmark now calls the existing recoveryRows helper: the Go parser supplies one diagnostics flag for every row, every fixture remains, and findings and count comparisons still run on all runtimes. Before and after logs are in checker-proof/merge-jsx-throughput-{before,after}.txt. This changes the benchmark input metadata, not the oracle guard, parser behavior or expected findings.
+
+Full JSON events, load samples, setup timing, reproducible runner and the one-byte cache control's differing output hashes are saved under checker-proof/merge-*. The one-byte control passed in 20.34 seconds in the final full run (its exact events are authoritative if timings vary).
