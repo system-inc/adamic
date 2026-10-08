@@ -26,3 +26,14 @@ bool adamic_optional_spread_presence(const adamic_object *target, const adamic_a
  }
  return true;
 }
+
+// The object ABI reserves insertion ranks separately from value slots. Optional
+// interface views must keep this ABI, not reinterpret a value-only structure.
+bool adamic_optional_view_storage(const adamic_object *object, bool nullable, const char *site) {
+ if (object == NULL ? nullable : object->heap.kind == adamic_kind_object) return true;
+ size_t capacity = strlen(site) + sizeof "optional view lacks own-presence storage at ";
+ char *message = malloc(capacity);
+ if (message == NULL) adamic_panic("out of memory", 13);
+ int length = snprintf(message, capacity, "optional view lacks own-presence storage at %s", site);
+ adamic_panic(message, (size_t)length);
+}

@@ -224,3 +224,19 @@ absent-construction mutant still fails the earlier presence check. There are now
 0.779s, 0.008s. Production schedules 61/67, emits zero whole-program checks, and
 retains 200 errors: 90 declarations, 104 other flags, six optional contracts.
 The provisional all-67 date is October 10 UTC.
+
+Optional-source view batch: checker.ts:21434 and 46159 now check the object
+representation at the interface use. The native object ABI has insertion ranks
+separate from values; the runtime check requires its heap-kind discriminator.
+Other IR representations stop with a named NotYet. Legitimate absent fields and
+undefined receivers remain allowed. This does not attempt to infer past writes
+from a field that is currently absent. The fixture distinguishes an empty source,
+a source written with undefined and an undefined receiver; Node, native and
+JavaScript agree under sanitizers and explicit leak checks. A storage-kind mutant
+compiles and stops at the representation check with exit 70. A lost-write-presence
+mutant compiles and exits zero; independent Node observations catch its absent
+property. These are separate proofs of the check and representation behavior.
+There are now 22 run mutants. Focused oracle passes in 11.337s; load/lower/commands
+in 3.682s, 0.719s, 0.007s. Production schedules 63/67, emits zero whole-program
+checks, and retains 198 errors: 90 declarations, 104 other flags, four optional
+contracts. Date remains October 10 UTC.

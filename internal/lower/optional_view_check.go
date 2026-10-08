@@ -19,9 +19,19 @@ func (l *lowering) checkedOptionalView(node *ast.Node, value ir.Expression, cont
 		message := ir.StringConstant{Index: l.constant("optional contract produced undefined at " + l.program.Where(node))}
 		body = append(body, ir.Evaluate{Value: ir.Coalesce{Value: read, Panic: message, Of: ir.Object}})
 	}
+	if contract.Storage || contract.Nullable {
+		guard := ir.ObjectCall{Method: "optionalViewStorage", Arguments: []ir.Expression{read, ir.BooleanConstant{Value: contract.Nullable}}, Returns: ir.Boolean, Readiness: l.program.Where(node)}
+		body = append(body, ir.Evaluate{Value: guard})
+	}
+	fieldGuards := []ir.Statement{}
 	for _, name := range contract.Fields {
 		guard := ir.ObjectCall{Method: "optionalWritePresence", Arguments: []ir.Expression{read, ir.StringConstant{Index: l.constant(name)}}, Returns: ir.Boolean, Readiness: l.program.Where(node)}
-		body = append(body, ir.Evaluate{Value: guard})
+		fieldGuards = append(fieldGuards, ir.Evaluate{Value: guard})
+	}
+	if contract.Nullable {
+		body = append(body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: read}}, Then: fieldGuards})
+	} else {
+		body = append(body, fieldGuards...)
 	}
 	l.program.RecordOptionalLiteral(node)
 	return ir.Effects{Body: body, Result: read}, nil

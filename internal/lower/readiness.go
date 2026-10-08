@@ -298,7 +298,7 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 				}
 				node = expression
 			case ir.ObjectCall:
-				if expression.Method != "optionalWritePresence" && expression.Method != "optionalSpreadKeys" && expression.Method != "optionalSpreadPresence" && (len(fields) == 0 || (expression.Method != "values" && expression.Method != "entries" && expression.Method != "assign")) {
+				if expression.Method != "optionalViewStorage" && expression.Method != "optionalWritePresence" && expression.Method != "optionalSpreadKeys" && expression.Method != "optionalSpreadPresence" && (len(fields) == 0 || (expression.Method != "values" && expression.Method != "entries" && expression.Method != "assign")) {
 					expression.Readiness = ""
 				}
 				node = expression

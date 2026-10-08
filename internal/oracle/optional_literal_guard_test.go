@@ -21,6 +21,9 @@ func TestOptionalConditionalGuard(t *testing.T) {
 func TestOptionalDefinedGuard(t *testing.T) {
 	testOptionalConstruction(t, "optional_defined_guard.a", false)
 }
+func TestOptionalNullableViewGuard(t *testing.T) {
+	testOptionalConstruction(t, "optional_nullable_view_guard.a", false)
+}
 func TestOptionalRequiredViewGuard(t *testing.T) {
 	testOptionalConstruction(t, "optional_required_view_guard.a", false)
 }
@@ -55,10 +58,13 @@ func testOptionalConstruction(t *testing.T, fixtureName string, spread bool) {
 	}
 	checks := program.ExplainedOptionalChecks()
 	wantChecks := 1
+	if fixtureName == "optional_nullable_view_guard.a" {
+		wantChecks = 3
+	}
 	if fixtureName == "optional_defined_guard.a" {
 		wantChecks = 2
 	}
-	if len(checks) != wantChecks || (!strings.Contains(checks[0], "checked TS2375") && !strings.Contains(checks[0], "checked TS2322") && !strings.Contains(checks[0], "checked TS2379")) {
+	if len(checks) != wantChecks || (!strings.Contains(checks[0], "checked TS2375") && !strings.Contains(checks[0], "checked TS2322") && !strings.Contains(checks[0], "checked TS2379") && !strings.Contains(checks[0], "checked TS2345")) {
 		t.Fatalf("want one emitted construction check, got %v", checks)
 	}
 	expected := onNode(t, fixture)
@@ -141,6 +147,48 @@ static void mutant_outer_cleanup(void *value) {
 			t.Fatalf("defined guard did not catch missing producer result: %d %s", result.exitCode, result.stderr)
 		}
 		t.Logf("undefined producer-result mutant caught by required-result guard, exit 70; checks: %v", checks)
+	}
+	if fixtureName == "optional_nullable_view_guard.a" {
+		kindMutant := strings.ReplaceAll(c, "adamic_optional_view_storage(", "mutant_optional_storage(")
+		if kindMutant == c {
+			t.Fatal("storage check mutant target absent")
+		}
+		helper := `#include "adamic.h"
+extern bool adamic_optional_view_storage(const adamic_object *, bool, const char *);
+static bool mutant_optional_storage(const adamic_object *object, bool nullable, const char *site) {
+ if (object != NULL) ((adamic_object *)object)->heap.kind = adamic_kind_array;
+ return adamic_optional_view_storage(object, nullable, site);
+}
+`
+		binary := filepath.Join(t.TempDir(), "storage-mutant")
+		if err := native.Build(helper+kindMutant, binary, native.Options{Sanitize: true}); err != nil {
+			t.Fatal(err)
+		}
+		result := execute(t, binary)
+		if result.exitCode != 70 || !strings.Contains(string(result.stderr), "optional view lacks own-presence storage") {
+			t.Fatalf("storage mutant not caught: %d %s", result.exitCode, result.stderr)
+		}
+		absent := strings.ReplaceAll(c, "adamic_object_set_initialized(", "mutant_optional_absent(")
+		if absent == c {
+			t.Fatal("optional write mutant target absent")
+		}
+		helper = `#include "adamic.h"
+static void mutant_optional_absent(adamic_object *object, const char *name, bool ready) {
+ adamic_object_set_initialized(object,name,ready);
+ adamic_slot_cache cache={NULL,0};
+ (void)adamic_object_field(object,name,&cache);
+ adamic_object_absent(object,cache.index);
+}
+`
+		if err := native.Build(helper+absent, binary, native.Options{Sanitize: true}); err != nil {
+			t.Fatal(err)
+		}
+		result = execute(t, binary)
+		if result.exitCode != 0 || disagreement(expected, result) == "" {
+			t.Fatalf("Node did not catch optional absent-write mutant: %d %s %s", result.exitCode, result.stdout, result.stderr)
+		}
+		t.Log("storage-kind mutant caught by runtime check, exit 70; lost optional-write presence mutant caught by Node observations, exit 0")
+		return
 	}
 	mutant := strings.ReplaceAll(c, "adamic_object_new(", "mutant_absent_literal(")
 	if mutant == c {

@@ -12,6 +12,9 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 		arguments = append(arguments, e.value(argument))
 	}
 	switch call.Method {
+	case "optionalViewStorage":
+		e.line("extern bool adamic_optional_view_storage(const adamic_object *, bool, const char *);")
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_optional_view_storage(%s, %s, %s)", arguments[0], arguments[1], cString(call.Readiness)))
 	case "optionalSpreadKeys":
 		e.line("extern adamic_array *adamic_optional_spread_keys(const adamic_object *);")
 		return e.own(ir.Array, fmt.Sprintf("adamic_optional_spread_keys(%s)", arguments[0]))

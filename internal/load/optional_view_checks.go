@@ -8,11 +8,13 @@ import (
 )
 
 // Required source fields are present even when their values are undefined.
-// Optional source fields need a different contract: legitimate absence is allowed.
+// Optional source fields check the storage ABI, allowing legitimate absence.
 type OptionalViewContract struct {
-	Site    OptionSite
-	Fields  []string
-	Defined bool
+	Site     OptionSite
+	Fields   []string
+	Defined  bool
+	Storage  bool
+	Nullable bool
 }
 
 func (p *Program) acceptOptionalView(site OptionSite) bool {
@@ -27,6 +29,7 @@ func (p *Program) acceptOptionalView(site OptionSite) bool {
 		defer release()
 		var found *ast.Node
 		var names []string
+		var storage, nullable bool
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
 			candidate := node
@@ -40,9 +43,16 @@ func (p *Program) acceptOptionalView(site OptionSite) bool {
 			}
 			if matches {
 				source := checked.GetTypeAtLocation(candidate)
+				nonNullable := checked.GetNonNullableType(source)
+				nullable = source != nonNullable
+				source = nonNullable
 				target := checked.GetContextualType(candidate, checker.ContextFlagsNone)
 				if target != nil {
-					target = checked.GetNonNullableType(target)
+					nonNullableTarget := checked.GetNonNullableType(target)
+					if nullable && target == nonNullableTarget {
+						return false
+					}
+					target = nonNullableTarget
 				}
 				if source.Flags()&checker.TypeFlagsObject == 0 || target == nil || target.Flags()&checker.TypeFlagsObject == 0 {
 					return false
@@ -52,12 +62,16 @@ func (p *Program) acceptOptionalView(site OptionSite) bool {
 						continue
 					}
 					own := checked.GetPropertyOfType(source, field.Name)
-					if own == nil || own.Flags&ast.SymbolFlagsOptional != 0 || own.Flags&ast.SymbolFlagsProperty == 0 {
+					if own == nil || own.Flags&ast.SymbolFlagsProperty == 0 {
 						return false
 					}
-					names = append(names, field.Name)
+					if own.Flags&ast.SymbolFlagsOptional != 0 {
+						storage = true
+					} else {
+						names = append(names, field.Name)
+					}
 				}
-				if len(names) > 0 {
+				if len(names) > 0 || storage {
 					found = candidate
 					return true
 				}
@@ -72,7 +86,7 @@ func (p *Program) acceptOptionalView(site OptionSite) bool {
 			if p.checkedOptions == nil {
 				p.checkedOptions = map[string]bool{}
 			}
-			p.optionalViews[p.Where(found)] = OptionalViewContract{Site: site, Fields: names}
+			p.optionalViews[p.Where(found)] = OptionalViewContract{Site: site, Fields: names, Storage: storage, Nullable: nullable}
 			return true
 		}
 	}

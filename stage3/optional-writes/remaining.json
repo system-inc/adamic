@@ -11,28 +11,6 @@
     ]
   },
   {
-    "position": 1258563,
-    "file": "src/compiler/checker.ts",
-    "line": 21434,
-    "column": 98,
-    "code": 2379,
-    "message": "src/compiler/checker.ts:21434:98: error TS2379: Argument of type '{ errors?: Diagnostic[] | undefined; }' is not assignable to parameter of type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'errors' are incompatible.\n    Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.\n      Type 'undefined' is not assignable to type 'Diagnostic[]'.",
-    "options": [
-      "exactOptionalPropertyTypes"
-    ]
-  },
-  {
-    "position": 2703362,
-    "file": "src/compiler/checker.ts",
-    "line": 46159,
-    "column": 176,
-    "code": 2345,
-    "message": "src/compiler/checker.ts:46159:176: error TS2345: Argument of type 'ErrorOutputContainer | undefined' is not assignable to parameter of type '{ errors?: Diagnostic[]; } | undefined'.\n  Type 'ErrorOutputContainer' is not assignable to type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'errors' are incompatible.\n      Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.\n        Type 'undefined' is not assignable to type 'Diagnostic[]'.",
-    "options": [
-      "exactOptionalPropertyTypes"
-    ]
-  },
-  {
     "position": 106522,
     "file": "src/compiler/commandLineParser.ts",
     "line": 2677,
