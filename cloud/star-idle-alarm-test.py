@@ -31,9 +31,10 @@ esac
         (self.root / 'bin/ahra').chmod(0o755)
         self.env = dict(os.environ, PATH=str(self.root / 'bin') + ':' + os.environ['PATH'], ROOT=str(self.root),
                         ADAMIC_FAST_GATE_WATCH_STATE=str(self.root), ADAMIC_FAST_GATE_WATCH_LOG=str(self.root / 'watch.log'),
-                        ADAMIC_FAST_GATE_AHRA_DIR=str(self.root))
+                        ADAMIC_FAST_GATE_AHRA_DIR=str(self.root), ADAMIC_FULL_GATE_LOG=str(self.root / 'full.log'),
+                        ADAMIC_MAIN_REDS=str(self.root / 'main-reds.tsv'))
         self.now = int(time.time())
-        for name in ('queue', 'queue.ranked', 'seen', 'watch.log'):
+        for name in ('queue', 'queue.ranked', 'seen', 'watch.log', 'full.log', 'main-reds.tsv'):
             (self.root / name).write_text('')
 
     def check(self):
@@ -85,6 +86,40 @@ esac
         (self.root / 'running/9').write_text('compiler/area-stack %s B threadripper B token log\n' % other)
         self.queueStar(waited=4000)
         self.assertEqual(self.check(), [], 'a gate running on one of its branches is a live turn')
+
+
+    def mainIsRed(self):
+        main = 'e' * 40
+        (self.root / 'full.log').write_text('published gate-logs/eeeeeeeeeeee/20261008T202422Z/full-main (abc)\n'
+                                            '20:35:28 red: %s first failure at tests after 597.9 s (still running for triage)\n' % main)
+        return main
+
+    def test_a_red_main_with_no_fix_forward_named_pages_integration_and_the_parent(self):
+        # Oct 8: d72728e5 red at TestSplitTSGoAgrees, before main-reds.tsv named its fix-forward.
+        self.mainIsRed()
+        sends = self.check()
+        self.assertEqual([line.split('|')[0] for line in sends], ['system_adamic_integration', 'system_adamic'])
+        self.assertIn('names no fix-forward', sends[0])
+        self.assertEqual(len(self.check()), 2)
+
+    def test_a_named_fix_forward_must_be_gating(self):
+        self.mainIsRed()
+        (self.root / 'main-reds.tsv').write_text('gate-logs/eeeeeeeeeeee/20261008T202422Z/full-main\tsplit build: owner @system_adamic_compiler, fix-forward cloud/land-split-fix*\n')
+        sends = self.check()
+        self.assertEqual([line.split('|')[0] for line in sends], ['system_adamic_compiler', 'system_adamic'])
+        self.assertIn('cloud/land-split-fix* has no live turn', sends[0])
+        # Gating is a live turn: quiet, and re-armed.
+        (self.root / 'running/77').write_text('cloud/land-split-fix %s S server S token log\n' % other)
+        self.assertEqual(len(self.check()), 2)
+        self.assertFalse((self.root / 'main-red-alarmed').exists())
+        # An explained red (LIFTED, FIXED FORWARD, CLOSED) is not paged.
+        (self.root / 'running/77').unlink()
+        (self.root / 'main-reds.tsv').write_text('gate-logs/eeeeeeeeeeee/20261008T202422Z/full-main\tFIXED FORWARD by compiler\n')
+        self.assertEqual(len(self.check()), 2)
+
+    def test_a_green_main_is_quiet(self):
+        (self.root / 'full.log').write_text('20:35:28 red: %s first failure at tests\n21:30:00 green: %s full gate in 3000 s\n' % ('e' * 40, 'f' * 40))
+        self.assertEqual(self.check(), [])
 
 
 if __name__ == '__main__':

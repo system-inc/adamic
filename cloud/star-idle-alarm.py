@@ -26,6 +26,8 @@ state = Path(os.environ.get('ADAMIC_FAST_GATE_WATCH_STATE', os.path.expanduser('
 watchLog = Path(os.environ.get('ADAMIC_FAST_GATE_WATCH_LOG', os.path.expanduser('~/Projects/system/adamic-gate-logs/fast-gate-watch.log')))
 ahraDirectory = os.environ.get('ADAMIC_FAST_GATE_AHRA_DIR', '/Users/kirkouimet/Projects/ahra')
 queuedLimit = int(os.environ.get('ADAMIC_STAR_QUEUED_SECONDS', '60'))
+fullLog = Path(os.environ.get('ADAMIC_FULL_GATE_LOG', os.path.expanduser('~/Projects/system/adamic-gate-logs/full-gate-main.log')))
+mainReds = os.environ.get('ADAMIC_MAIN_REDS', '')  # a file standing in for cloud/merge-tree's, in tests
 verdictLine = re.compile(r'^\S+ done (\S+): (green|red): ([0-9a-f]{40})\b(.*)$')
 
 
@@ -96,8 +98,64 @@ def check(step, now):
     return '%s %s %s' % (verdict, branch, sha[:12]), None, None
 
 
+def mainRed():
+    """Main's newest whole-gate verdict when it's red, from the full gate's log: (sha, step, gate-log ref)."""
+    verdict, published = None, {}
+    for line in lines(fullLog):
+        found = re.match(r'^\S+ (red|green): ([0-9a-f]{40})\b(.*)$', line)
+        if found:
+            verdict = found
+        ref = re.match(r'^published (gate-logs/([0-9a-f]{12})/\S+/full-main)', line)
+        if ref:
+            published[ref.group(2)] = ref.group(1)
+    if verdict is None or verdict.group(1) != 'red':
+        return None
+    where = re.search(r'first failure at (\S+)', verdict.group(3))
+    return verdict.group(2), where.group(1) if where else 'unknown', published.get(verdict.group(2)[:12], '')
+
+
+def mainRedRow(sha):
+    """main-reds.tsv's row for this main, from cloud/merge-tree (integration's): its owner and fix-forward branch."""
+    try:
+        text = Path(mainReds).read_text() if mainReds else subprocess.run(
+            ['git', 'show', 'refs/remotes/origin/cloud/merge-tree:cloud/integration/main-reds.tsv'],
+            capture_output=True, text=True, check=True, cwd=os.path.dirname(os.path.abspath(__file__))).stdout
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    for line in text.splitlines():
+        if line.startswith('gate-logs/' + sha[:12] + '/'):
+            owner = re.search(r'owner @(\w+)', line)
+            fix = re.search(r'fix-forward (\S+)', line)
+            closed = re.search(r'\b(LIFTED|FIXED FORWARD|CLOSED)\b', line)
+            return {'owner': owner.group(1) if owner else '', 'fix': fix.group(1).rstrip('.,;') if fix else '', 'closed': bool(closed)}
+    return {'owner': '', 'fix': '', 'closed': False}
+
+
+def checkMain(now):
+    """While main is red, the star is main's fix-forward (@system_adamic, Oct 8): it must be gating."""
+    red = mainRed()
+    if red is None:
+        return 'main green', None, None, []
+    sha, where, ref = red
+    row = mainRedRow(sha) or {'owner': '', 'fix': '', 'closed': False}
+    if row['closed']:
+        return 'main red %s, explained in main-reds.tsv' % sha[:12], None, None, []
+    owner = row['owner'] or 'system_adamic_integration'
+    if not row['fix']:
+        return ('main red %s, no fix-forward named' % sha[:12], 'main:' + sha,
+                'Main %s is red at %s (%s) and main-reds.tsv names no fix-forward for it (a row with "owner @<name>" and '
+                '"fix-forward <branch>"), so nothing lands and nothing is visibly fixing it.' % (sha[:12], where, ref or 'full-main'), [owner])
+    fixStep = {'id': 'main-fix', 'globs': [row['fix']], 'owner': owner}
+    summary, key, text = check(fixStep, now)
+    if summary.startswith('running') or (summary.startswith('queued') and key is None):
+        return 'main red %s, fix-forward %s' % (sha[:12], summary), None, None, []
+    return ('main red %s, fix-forward %s' % (sha[:12], summary), 'main:%s:%s' % (sha, key or 'idle'),
+            'Main %s is red at %s and its fix-forward %s has no live turn in the gate (%s). Nothing lands until it does.'
+            % (sha[:12], where, row['fix'], summary), [owner])
+
+
 def page(step, text):
-    for recipient in dict.fromkeys(filter(None, [step['owner'], 'system_adamic'])):
+    for recipient in dict.fromkeys(filter(None, step['owner'].split(',') + ['system_adamic'])):
         try:
             ahra('os', 'send', recipient, text, '--from', 'system_adamic_developer_tools')
         except (subprocess.CalledProcessError, OSError) as error:
@@ -105,16 +163,20 @@ def page(step, text):
 
 
 def once(step):
-    summary, key, text = check(step, int(time.time()))
-    print('%s ★%s %s' % (time.strftime('%H:%M:%S', time.gmtime()), step['id'], summary), flush=True)
-    alarmed = state / 'star-idle-alarmed'
-    previous = alarmed.read_text().strip() if alarmed.exists() else ''
-    if key is None:
-        alarmed.unlink(missing_ok=True)
-    elif key != previous:
-        page(step, text)
-        alarmed.write_text(key + '\n')
-        print('%s paged %s and system_adamic' % (time.strftime('%H:%M:%S', time.gmtime()), step['owner'] or 'no owner'), flush=True)
+    now = int(time.time())
+    summary, key, text = check(step, now) if step and step['globs'] else ('no star with Branches', None, None)
+    mainSummary, mainKey, mainText, mainOwners = checkMain(now)
+    print('%s ★%s %s; %s' % (time.strftime('%H:%M:%S', time.gmtime()), step['id'] if step else '-', summary, mainSummary), flush=True)
+    for name, alarmKey, alarmText, owners in (('star-idle-alarmed', key, text, [step['owner']] if step else []),
+                                              ('main-red-alarmed', mainKey, mainText, mainOwners)):
+        alarmed = state / name
+        previous = alarmed.read_text().strip() if alarmed.exists() else ''
+        if alarmKey is None:
+            alarmed.unlink(missing_ok=True)
+        elif alarmKey != previous:
+            page({'owner': ','.join(owners)}, alarmText)
+            alarmed.write_text(alarmKey + '\n')
+            print('%s paged %s and system_adamic' % (time.strftime('%H:%M:%S', time.gmtime()), ', '.join(owners) or 'no owner'), flush=True)
 
 
 def main():
@@ -125,8 +187,7 @@ def main():
                 step, refreshed = star(), time.time()
             except (subprocess.CalledProcessError, OSError, ValueError, KeyError) as error:
                 print('%s could not read the star: %s' % (time.strftime('%H:%M:%S', time.gmtime()), error), flush=True)
-        if step and step['globs']:
-            once(step)
+        once(step)
         if '--once' in sys.argv:
             return
         time.sleep(15)
