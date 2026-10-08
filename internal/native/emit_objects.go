@@ -217,10 +217,17 @@ func (e *emitter) shapeOf(fieldNames []string, fieldTypes []ir.Type) string {
 // shapeWith declares a layout by its field names and types, and a class's methods, each called
 // through a thunk that takes what a call through an interface gives (adamic_method).
 func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods []ir.Method) string {
-	names, references := []string{}, []string{}
+	names, references, kinds := []string{}, []string{}, []string{}
 	for index, name := range fieldNames {
 		names = append(names, cString(name))
 		references = append(references, strconv.FormatBool(fieldTypes[index].IsReference()))
+		kind := "adamic_field_number"
+		if fieldTypes[index].IsReference() {
+			kind = "adamic_field_reference"
+		} else if fieldTypes[index] == ir.Boolean {
+			kind = "adamic_field_boolean"
+		}
+		kinds = append(kinds, kind)
 	}
 	fields := fieldNames
 	key := strings.Join(names, ",") + "|" + fmt.Sprint(fieldTypes)
@@ -252,12 +259,13 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 		table = "&" + name + "_methods"
 	}
 	if len(fields) == 0 {
-		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_shape %s = {0, NULL, NULL, %s};", name, table))
+		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_shape %s = {0, NULL, NULL, %s, NULL};", name, table))
 	} else {
 		e.declarations = append(e.declarations,
 			fmt.Sprintf("static const char *const %s_names[] = {%s};", name, strings.Join(names, ", ")),
 			fmt.Sprintf("static const bool %s_references[] = {%s};", name, strings.Join(references, ", ")),
-			fmt.Sprintf("static const adamic_shape %s = {%d, %s_names, %s_references, %s};", name, len(fields), name, name, table))
+			fmt.Sprintf("static const adamic_field_kind %s_kinds[] = {%s};", name, strings.Join(kinds, ", ")),
+			fmt.Sprintf("static const adamic_shape %s = {%d, %s_names, %s_references, %s, %s_kinds};", name, len(fields), name, name, table, name))
 	}
 	return name
 }

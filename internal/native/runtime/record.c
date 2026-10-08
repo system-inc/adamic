@@ -10,10 +10,12 @@
 // global field-layout proof (fields.go). No new unchecked field offset is introduced.
 static const char *const record_names[] = {"0"};
 static const bool record_references[] = {true};
-static const adamic_shape record_shape = {1, record_names, record_references, NULL};
+static const adamic_field_kind record_kinds[] = {adamic_field_reference};
+static const adamic_shape record_shape = {1, record_names, record_references, NULL, record_kinds};
 static const char *const iteration_names[] = {"0", "1", "key"};
 static const bool iteration_references[] = {true, true, false};
-static const adamic_shape iteration_shape = {3, iteration_names, iteration_references, NULL};
+static const adamic_field_kind iteration_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_number};
+static const adamic_shape iteration_shape = {3, iteration_names, iteration_references, NULL, iteration_kinds};
 
 static adamic_map *table(const adamic_record *record) {
 	return record->slots[0].reference;

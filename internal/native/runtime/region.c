@@ -31,6 +31,7 @@ static size_t object_size(size_t count) {
 }
 
 adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *shape) {
+	adamic_shape_check(shape);
 	if (region == NULL) {
 		return adamic_object_new(shape);
 	}

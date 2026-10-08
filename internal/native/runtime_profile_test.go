@@ -28,7 +28,8 @@ int main(void) {
  if(adamic_counted.live != 0) {fprintf(stderr,"last release left %zu values\n",adamic_counted.live);return 1;}
  static const char *const names[] = {"next", "label"};
  static const bool references[] = {true, true};
- static const adamic_shape shape = {2, names, references, NULL};
+ static const adamic_field_kind shape_kinds_0[] = {adamic_field_reference, adamic_field_reference};
+static const adamic_shape shape = {2, names, references, NULL, shape_kinds_0};
  adamic_object *chain = NULL;
  for (size_t i = 0; i < 100000; i++) {
   adamic_object *next = adamic_object_new(&shape);
