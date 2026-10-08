@@ -19,8 +19,8 @@ actual kind before unboxing. No asserted target creates a producer certificate.
 The shared allocation flow still decides whether an unsupported read can see a
 view. Nullable descriptors defer their unsupported present-family contract to
 the read. Present unions requiring member selection stay named refusals until
-the nullable adapter validates that selection. Callable and Map coverage is not
-claimed by this batch; nullable writes do not acquire new slot certificates.
+the nullable adapter validates that selection. Nullable callable coverage was added in the next batch below; Map payloads
+still require a collection certificate; nullable writes do not acquire new slot certificates.
 Destructuring representation conversion and unsupported element representations
 keep existing explicit refusals. Computed literal member accesses reuse property
 access lowering. Legacy RegExp reference-null producers are preserved at boxed
@@ -85,3 +85,39 @@ primitive pairs/181 reads; the complete list is in read-summary.json.
 The ledger worker owns the row-for-row own-tsconfig/Adamic-options/stage-0 split.
 No diagnostic conversion or cast compilation counts are inferred here. Inserted
 checks will be built from its only-under-Adamic-options column when supplied.
+
+## Nullable callable and collection boundary follow-up
+
+Nullable callable fields now pass all three alternatives and coalescing. The
+present function is compared with GetNonNullableType of the target signature,
+using the existing closed-world implementation/body proof. Null and undefined
+never authorize a calling convention. The same helper first reads an ordinary
+Target literal, then cast values. Four positive callable fixtures match Node,
+sanitized and release native, JavaScript and leak checks. Eight source mutants
+(wrong present kind, missing field, excluded nullish alternative) trap at
+node.value in all three compiled runs. A ninth changes the actual implementation
+return from string to number; it is refused at the helper read with the callable
+family. Removing the implementation proof temporarily makes that refusal test
+fail; the guard was restored and all tests rerun.
+
+Nullable Map fields are admitted when unread (three Node/backend/leak matches).
+Eight demanded Map cases, including five wrong-kind/nullish mutants, refuse
+precisely at node.value with the collection family. Three valid Map cases are
+also refused: this is an existing collection-certificate gap, not evidence of
+nullable Map support. The native map has reference_values, not a complete value
+kind/contract certificate; number and boolean storage cannot be distinguished
+from that bit. Reading it using an asserted Map generic would be unsound. The
+nullish wrapper preserves this refusal. The integrator can combine this batch
+with a future producer-backed collection contract without replacing the flow
+solver or trusting the target cast.
+
+Follow-up command:
+`ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewNullish$/^callable-|^TestCheckedViewNullishMutants$/^callable-|^TestCheckedViewNullishCallableSignatureMutant$|^TestCheckedViewNullishMap' -v -count=1`
+passes in 7.210s after restoring the implementation mutant. Focused lower
+view/callable tests pass in 2.544s. Compressed logs are in evidence/.
+
+After this push, the exact production table still has 2,018 pairs/9,101 reads
+awaiting successful lowering and reaching-view proof. None are subtracted based
+on fixture coverage. Callable overlap remains 224 pairs/392 reads as an inventory,
+not a remaining language-gap count; the wrapper now has fixture evidence.
+Inserted option checks still await the ledger's only-under-Adamic-options rows.

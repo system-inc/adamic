@@ -1,12 +1,13 @@
 package oracle
 
 import (
+	"path/filepath"
 	"strings"
 	"testing"
 )
 
 func TestCheckedViewNullish(t *testing.T) {
-	for _, representation := range []string{"number", "boolean", "string", "object", "array"} {
+	for _, representation := range []string{"number", "boolean", "string", "object", "array", "callable"} {
 		for _, variant := range []string{"null", "undefined", "both", "coalesce"} {
 			name := representation + "-" + variant
 			t.Run(name, func(t *testing.T) {
@@ -31,7 +32,7 @@ func TestCheckedViewNullish(t *testing.T) {
 }
 
 func TestCheckedViewNullishMutants(t *testing.T) {
-	for _, representation := range []string{"number", "boolean", "string", "object", "array"} {
+	for _, representation := range []string{"number", "boolean", "string", "object", "array", "callable"} {
 		for _, variant := range []string{"null", "undefined", "both"} {
 			mutations := []string{"wrong", "missing"}
 			if variant != "both" {
@@ -86,4 +87,64 @@ func TestCheckedViewNullishRegexIdentity(t *testing.T) {
 		t.Fatal(report)
 	}
 	t.Logf("Node and both backends: %q", truth.stdout)
+}
+
+func TestCheckedViewNullishCallableSignatureMutant(t *testing.T) {
+	path := filepath.Join(repository, "stage3/interface-downcasts/nullish/fixtures/callable-signature-mutant.a")
+	path, pathErr := filepath.Abs(path)
+	if pathErr != nil {
+		t.Fatal(pathErr)
+	}
+	_, err := lowered(t, path)
+	truth := onNode(t, path)
+	t.Logf("Node source: exit=%d stdout=%q", truth.exitCode, truth.stdout)
+	if err == nil || !strings.Contains(err.Error(), "field value") || !strings.Contains(err.Error(), "callable") {
+		t.Fatalf("signature mutant escaped read refusal: %v", err)
+	}
+	t.Logf("caught signature mutant: %v", err)
+}
+
+func TestCheckedViewNullishMapUnread(t *testing.T) {
+	for _, variant := range []string{"null", "undefined", "both"} {
+		t.Run(variant, func(t *testing.T) {
+			program, path := interfaceFixture(t, "nullish/fixtures/map-"+variant+"-unread")
+			truth := onNode(t, path)
+			checked, binary := nativelyUncached(t, program)
+			for _, got := range []run{checked, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if difference := disagreement(truth, got); difference != "" {
+					t.Fatal(difference)
+				}
+			}
+			if report := leaks(t, program, binary); report != "" {
+				t.Fatal(report)
+			}
+			t.Logf("unread map admitted, Node and both backends: %q", truth.stdout)
+		})
+	}
+}
+func TestCheckedViewNullishMapReadRefusals(t *testing.T) {
+	for _, variant := range []string{"null", "undefined", "both"} {
+		for _, mutation := range []string{"", "-wrong", "-opposite"} {
+			if variant == "both" && mutation == "-opposite" {
+				continue
+			}
+			t.Run(variant+mutation, func(t *testing.T) {
+				path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/nullish/fixtures/map-"+variant+mutation+".a"))
+				if err != nil {
+					t.Fatal(err)
+				}
+				_, err = lowered(t, path)
+				truth := onNode(t, path)
+				t.Logf("Node source: exit=%d stdout=%q", truth.exitCode, truth.stdout)
+				if err == nil || !strings.Contains(err.Error(), "field value") || !strings.Contains(err.Error(), "collection") {
+					t.Fatalf("map read escaped family refusal: %v", err)
+				}
+				// Refusal belongs to the helper's read, before the downstream get call.
+				if !strings.Contains(err.Error(), ":9:14:") && !strings.Contains(err.Error(), ":10:14:") {
+					t.Fatalf("refusal not at map field read: %v", err)
+				}
+				t.Logf("caught unsupported map read: %v", err)
+			})
+		}
+	}
 }

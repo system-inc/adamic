@@ -40,5 +40,19 @@
     ],
     "exit": 1,
     "log": "evidence/nullish-mutant-skip-kind.log.gz"
+  },
+  {
+    "mutant": "skip-callable-implementation-proof",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewNullishCallableSignatureMutant$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/nullish-mutant-callable-signature.log.gz"
   }
 ]
