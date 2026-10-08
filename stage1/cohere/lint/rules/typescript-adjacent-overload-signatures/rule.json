@@ -1,0 +1,19 @@
+{
+  "name": "@typescript-eslint/adjacent-overload-signatures",
+  "kinds": [
+    "ClassDeclaration",
+    "ClassExpression",
+    "InterfaceDeclaration",
+    "TypeLiteral",
+    "SourceFile",
+    "Block",
+    "ModuleBlock"
+  ],
+  "visit": "visit",
+  "node": true,
+  "oracle": "oracleAdjacentOverloadSignatures",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestAdjacentOverloadSignatures",
+  "factory": "create",
+  "class": "Rule"
+}
