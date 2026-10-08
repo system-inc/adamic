@@ -41,6 +41,10 @@ def main():
     parser.add_argument("--out", required=True)
     parser.add_argument("--parallel", type=int, default=os.cpu_count() or 8)
     parser.add_argument("--full", action="store_true")
+    parser.add_argument("--branch", default="")
+    parser.add_argument("--branch-source", default="")
+    parser.add_argument("--session", default="")
+    parser.add_argument("--session-source", default="")
     parser.add_argument("--weights", help="package seconds, longest first, to order the full gate's packages")
     arguments = parser.parse_args()
     os.makedirs(arguments.out, exist_ok=True)
@@ -65,6 +69,10 @@ class Gate:
         self.census = {"required_input": [], "unclassified": []}
         self.result = {
             "sha": arguments.sha,
+            "branch": arguments.branch,
+            "branch_source": arguments.branch_source,
+            "session": arguments.session,
+            "session_source": arguments.session_source,
             "base": arguments.base,
             "tools_sha": git(arguments.tools, "rev-parse", "HEAD"),
             "machine": {"hostname": socket.gethostname(), "nproc": os.cpu_count()},
@@ -85,6 +93,7 @@ class Gate:
             self.runFull()
             return
         smoke, smokeSource = self.smokeList()
+        self.deferred = self.deferredList()
         changed = git(tree, "diff", "--name-only", "%s...%s" % (self.arguments.base, self.arguments.sha)).split("\n")
         changed = [path for path in changed if path]
         packages, unowned = self.touched(changed)
@@ -137,6 +146,23 @@ class Gate:
             thread.join()
         log.close()
         self.checkCensus()
+
+    def deferredList(self):
+        """Tests the landing gate leaves to the full gate on main (cloud/fast-gate/deferred.txt, by
+        @system_adamic's ruling): each over 15 s warm and a mutant test, a randomized or differential
+        sweep, or a whole external suite. Read like the smoke list, from the gated tree first."""
+        for root in (self.arguments.tree, self.arguments.tools):
+            path = os.path.join(root, "cloud/fast-gate/deferred.txt")
+            if os.path.exists(path):
+                deferred = {}
+                with open(path) as handle:
+                    for line in handle:
+                        fields = line.split()
+                        if fields and not fields[0].startswith("#"):
+                            deferred.setdefault(module + "/" + fields[0], set()).add(fields[1])
+                self.result["deferred_list_blob"] = git(root, "hash-object", path)
+                return deferred
+        return {}
 
     def smokeList(self):
         for root, name in ((self.arguments.tree, "gated tree"), (self.arguments.tools, "tools checkout")):
@@ -214,6 +240,11 @@ class Gate:
             if listing is None:
                 return
             names = [line for line in listing.splitlines() if line.startswith(("Test", "Example", "Fuzz"))]
+            deferred = sorted(set(names) & self.deferred.get(importPath, set()))
+            if deferred:
+                with self.lock:
+                    self.result.setdefault("deferred_to_full_gate", []).extend(importPath + " " + name for name in deferred)
+                names = [name for name in names if name not in deferred]
             self.result.setdefault("split_tests", {})[importPath] = len(names)
             tests = []
             for name in names:
@@ -358,6 +389,10 @@ class Gate:
             json.dump(self.result, handle, indent=2)
             handle.write("\n")
         steps = " ".join("%s=%.1fs" % item for item in self.steps.items())
+        deferred = self.result.get("deferred_to_full_gate", [])
+        if not self.arguments.full:
+            steps += "; deferred to full gate: %d tests%s" % (len(deferred), (" (" + ", ".join(name.split()[-1] for name in deferred) + ")") if deferred else "")
+            steps += "; branch %s, session %s" % (self.arguments.branch or "none", self.arguments.session or "none")
         if green:
             self.status("green: %s %s gate in %.1f s (%s), %d packages, %d pass, %d skip, smoke %d fixtures" % (self.arguments.sha, self.kind, wall, steps, len(self.result.get("package_list", self.result.get("packages", []))), self.counts["pass"], self.counts["skip"], len(self.result.get("smoke_fixtures", []))))
         else:

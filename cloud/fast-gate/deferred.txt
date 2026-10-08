@@ -1,0 +1,16 @@
+# Tests the landing gate leaves to the whole gate on every new main, whose first red pauses landings
+# (@system_adamic's ruling, Oct 7 19:37). A test belongs here only if it takes over 15 s warm and is
+# a mutant test, a randomized or differential sweep, or a whole external suite; nothing else moves
+# without a ruling. The fast gate skips these in touched packages and its status line counts them.
+#
+# package             test                              seconds  kind
+# Seconds: the Threadripper, Oct 7, one-function internal/native edit 74cf77df, measured beside
+# another gate (load 20 to 34 of 64); to be re-measured alone, and any entry under 15 s comes off.
+internal/native       TestRecordMutants                 39.9     mutant
+internal/native       TestWASI                          36.9     external-suite
+internal/native       TestSplitTSGoAgrees               35.5     differential-sweep
+internal/native       TestRegExpBytecodeRandomNode      29.8     randomized-sweep
+internal/native       TestRegExpBytecodeTest262         24.2     external-suite
+internal/native       TestMapHashProbeCatchesMutants    23.9     mutant
+internal/native       TestRecordReadMutants             22.3     mutant
+internal/native       TestNormalizeRandomMatchesNode    18.6     randomized-sweep
