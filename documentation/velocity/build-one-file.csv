@@ -1,4 +1,4 @@
-timestamp_utc,main_sha,box,file,build_seconds
+timestamp_utc,main_sha,box,file,build_seconds,load_1m
 2026-10-08T02:23:55Z,6a8eebf41710e9bb696da9a7872d19765b1e7476,Cloud 32,internal/lower/optional_widening.go,12.64
 2026-10-08T02:24:04Z,6a8eebf41710e9bb696da9a7872d19765b1e7476,Cloud 32,internal/native/native.go,8.83
 2026-10-08T02:24:16Z,6a8eebf41710e9bb696da9a7872d19765b1e7476,Cloud 32,stage1/cohere/json/parser.ts,11.62
@@ -8,3 +8,6 @@ timestamp_utc,main_sha,box,file,build_seconds
 2026-10-08T03:05:17Z,c6761c24c4bb35e5a7edbcbe0c5e8937d1879c3e,Cloud 32,internal/lower/optional_widening.go,27.11
 2026-10-08T03:05:34Z,c6761c24c4bb35e5a7edbcbe0c5e8937d1879c3e,Cloud 32,internal/native/native.go,16.63
 2026-10-08T03:05:56Z,c6761c24c4bb35e5a7edbcbe0c5e8937d1879c3e,Cloud 32,stage1/cohere/json/parser.ts,22.26
+2026-10-08T03:27:44Z,855d114e9b37776ec3739f25d63dbf4da968d02e,Cloud 24,internal/lower/optional_widening.go,36.95,121.69
+2026-10-08T03:28:08Z,855d114e9b37776ec3739f25d63dbf4da968d02e,Cloud 24,internal/native/native.go,24.16,127.75
+2026-10-08T03:28:34Z,855d114e9b37776ec3739f25d63dbf4da968d02e,Cloud 24,stage1/cohere/json/parser.ts,26.26,138.78
