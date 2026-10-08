@@ -15,6 +15,8 @@ func NormalizeAsync(program *ir.Program) error {
 		program.Functions = append(program.Functions, ir.Function{Name: "module", Async: true, Returns: ir.Promise, Body: program.Main})
 		program.AsyncEntry = index + 1
 		program.Main = nil
+		// Module boundaries describe Main, which now lives in the async entry body.
+		program.MainModules = nil
 		// The top level's own locals (a catch binding, a block's let) belong to the module
 		// function now, so they get frame cells and the frame releases them. Globals stay global.
 		for local := range program.Locals {

@@ -9,9 +9,12 @@ import (
 	bridge "github.com/system-inc/adamic/bridge/tsgo"
 )
 
-// BuildSplitTSGo is an explicit prototype entrypoint for TSGoC output. BuildTSGo is unchanged;
-// its owner can decide whether to dispatch here when Options.Split is requested.
+// BuildSplitTSGo compiles TSGoC output with the same unit ownership as ordinary builds.
 func BuildSplitTSGo(source, output, archive string, options Options) error {
+	if shippedRelease(options) {
+		return BuildTSGo(source, output, archive, options)
+	}
+
 	archive, err := filepath.Abs(archive)
 	if err != nil {
 		return err
@@ -47,5 +50,9 @@ func splitTSGoRuntime(options Options) (string, error) {
 		return "", err
 	}
 	flags := append(Flags(options), "-DADAMIC_TSGO")
-	return cachedRuntime(files, flags, compiler, string(version), filepath.Join(cache, "adamic", "runtime"))
+	jobs, err := splitJobs(options)
+	if err != nil {
+		return "", err
+	}
+	return cachedRuntime(files, flags, compiler, string(version), filepath.Join(cache, "adamic", "runtime"), jobs)
 }

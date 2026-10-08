@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	goruntime "runtime"
 	"strconv"
 	"strings"
 	"sync"
@@ -139,6 +140,12 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 			return nil, fmt.Errorf("native: split: incomplete declaration")
 		}
 		declaration.tokens = tokens[begin:end]
+		// Async frame types are declarations, never shared state definitions.
+		if declaration.tokens[0].text == "typedef" {
+			declarations = append(declarations, declaration)
+			begin = end
+			continue
+		}
 		limit := len(declaration.tokens)
 		if declaration.body >= 0 {
 			limit = declaration.body
@@ -162,6 +169,22 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 		}
 		if declaration.name == ";" && limit >= 3 {
 			declaration.name = declaration.tokens[limit-2].text
+		}
+		// Parallel runtime entry points are external ABI declarations, not generated
+		// definitions. Keep their names and linkage in the common header.
+		if declaration.body < 0 && declaration.initializer < 0 && declaration.tokens[0].text != "static" &&
+			(declaration.name == "adamic_parallel_map" || declaration.name == "adamic_parallel_map_move") {
+			for _, token := range declaration.tokens {
+				if token.text == "(" {
+					declaration.name = ""
+					declarations = append(declarations, declaration)
+					begin = end
+					break
+				}
+			}
+			if declaration.name == "" {
+				continue
+			}
 		}
 		if declaration.name != "main" && (!cName.MatchString(declaration.name) || declaration.tokens[0].text != "static") {
 			return nil, fmt.Errorf("native: split: unsupported declaration near %q", declaration.tokens[0].text)
@@ -310,20 +333,9 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 		return err
 	}
 	cache = filepath.Join(cache, "adamic", "units")
-	jobs := options.Jobs
-	if jobs == 0 {
-		if value := os.Getenv("ADAMIC_NATIVE_JOBS"); value != "" {
-			jobs, err = strconv.Atoi(value)
-			if err != nil {
-				return fmt.Errorf("native: invalid ADAMIC_NATIVE_JOBS: %w", err)
-			}
-		}
-	}
-	if jobs == 0 {
-		jobs = 1
-	}
-	if jobs < 1 {
-		return fmt.Errorf("native: split jobs must be positive")
+	jobs, err := splitJobs(options)
+	if err != nil {
+		return err
 	}
 	if jobs > len(units) {
 		jobs = len(units)
@@ -362,4 +374,24 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 		return fmt.Errorf("native: linking units: %w\n%s", err, output)
 	}
 	return nil
+}
+
+func splitJobs(options Options) (int, error) {
+	jobs := options.Jobs
+	var err error
+	if jobs == 0 {
+		if value := os.Getenv("ADAMIC_NATIVE_JOBS"); value != "" {
+			jobs, err = strconv.Atoi(value)
+			if err != nil {
+				return 0, fmt.Errorf("native: invalid ADAMIC_NATIVE_JOBS: %w", err)
+			}
+		}
+	}
+	if jobs == 0 {
+		jobs = goruntime.NumCPU()
+	}
+	if jobs < 1 {
+		return 0, fmt.Errorf("native: split jobs must be positive")
+	}
+	return jobs, nil
 }

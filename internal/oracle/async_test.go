@@ -270,14 +270,24 @@ func TestAsyncGeneratedAbandonment(t *testing.T) {
 		t.Fatal("missing settled void await")
 	}
 	control = changed
+	localCallable := false
+	for _, function := range program.Functions {
+		localCallable = localCallable || function.Name == "local"
+	}
+	if !localCallable {
+		t.Fatal("missing local callable")
+	}
+	// The harness calls the emitted callable, whose identity is now module-qualified.
+	symbols := regexp.MustCompile(`\badamic_function_[A-Za-z0-9_]*_local_[0-9a-f]{32}\b`).FindAllString(control, -1)
 	target := ""
-	for index, function := range program.Functions {
-		if function.Name == "local" {
-			target = fmt.Sprintf("adamic_function_%d_local", index)
+	for _, symbol := range symbols {
+		if target != "" && target != symbol {
+			t.Fatal("ambiguous local callable symbol")
 		}
+		target = symbol
 	}
 	if target == "" {
-		t.Fatal("missing local callable")
+		t.Fatal("missing emitted local callable symbol")
 	}
 	for _, mode := range []string{"cancel", "exit"} {
 		for _, mutant := range []bool{false, true} {
