@@ -413,3 +413,12 @@ logs/continued. No full package, full repository gate or unlanded worker merge
 was run. This completed unit receives one push under the standing rule.
 
 Broader views oracle: passes in 1056.031s, with 1001 native observations and 3961 Node observations missed from cache. The final source-specific copy and complete count-discovery plumbing are independently covered by the 278.261s and 83.266s runs above.
+
+
+## October 8 dictionary groups 9 through 11
+
+Merged 48d166cf7ba1954de46ca2a4b30d72f6872153a9 without conflicts. Actual-key enumeration does not demand values; values and entries check selected values, preserve transitive obligations, and keep reached array-entry tuple consumers refused. Private unpublished enumeration arrays alone use DictionaryProduction. Sixty-eight executable controls are registered with measured allocation rows; six demanded tuple refusals and eighteen uncredited frontier probes are excluded from those rows.
+
+Setup passed in 40.219s; nproc is 5. Scoped IR/lower/native/JavaScript checks passed in 0.012/7.671/69.682/0.953s. Dictionary oracle, array writes, wider-helper callable refusal, readiness and record mutants passed in 138.530s. Nine new dictionary mutants cover eager key demands, omitted element checks, wrong entry shape, omitted transitive checks on both backends, and omitted derived-origin IR roots. All were killed. The 68 regular Node, sanitized native, release and JavaScript controls and focused counts passed in 18.525s. An initial registration mistakenly marked every positive control as an expected runtime refusal; the harness caught it, and metadata now marks only demanded bad-payload controls checked. No compiler guard was changed to repair it.
+
+The required global counts refresh reproduces exactly the inherited 41 failures, with no additions; focused measurement adds 68 rows without changing old rows. Historical incoming GROUP11-broad-gate.log retains three trailing-whitespace lines as raw evidence. No full package or full gate was run. Logs are archived under logs/continued/views-dictionaries-*.log.gz. Lane 1 0f55d664 is next; the updated tuple tip has not been supplied. This merge will share one push with the completed current integration unit.

@@ -597,13 +597,15 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 	case ir.ArrayPush:
 		array := e.value(expression.Array)
 		value := e.value(expression.Value)
-		e.viewArrayMutation(array, expression.Element, value)
+		if !expression.DictionaryProduction {
+			e.viewArrayMutation(array, expression.Element, value)
+		}
 		if expression.Element.IsReference() {
 			value = e.heldReferenceIn(array, value)
 		}
 		// The append happens here, in JavaScript's order, and the new length is the value.
 		push := "adamic_array_push"
-		if ir.HasArrayViews(e.program) {
+		if ir.HasArrayViews(e.program) && !expression.DictionaryProduction {
 			push = "adamic_view_array_push"
 		}
 		e.line("%s(%s, (adamic_value){.%s = %s});", push, array, member(expression.Element), slotted(expression.Element, value))

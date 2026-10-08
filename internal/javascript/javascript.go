@@ -976,7 +976,7 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		}
 		return "(" + e.value(expression.Value) + " ?? " + e.value(expression.Fallback) + ")"
 	case ir.ArrayPush:
-		if ir.HasArrayViews(e.program) {
+		if ir.HasArrayViews(e.program) && !expression.DictionaryProduction {
 			return fmt.Sprintf("adamicViewPush(%s, %s, %d)", e.value(expression.Array), e.value(expression.Value), expression.Element)
 		}
 		return e.value(expression.Array) + ".push(" + e.value(expression.Value) + ")"

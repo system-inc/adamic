@@ -1,0 +1,23 @@
+=== RUN   TestCheckedViewDictionaryKeys
+=== RUN   TestCheckedViewDictionaryKeys/fixed-good
+=== RUN   TestCheckedViewDictionaryKeys/fixed-empty
+=== RUN   TestCheckedViewDictionaryKeys/fixed-read-wrong
+=== RUN   TestCheckedViewDictionaryKeys/producer-good
+=== RUN   TestCheckedViewDictionaryKeys/producer-empty
+=== RUN   TestCheckedViewDictionaryKeys/producer-read-wrong
+--- PASS: TestCheckedViewDictionaryKeys (18.61s)
+    --- PASS: TestCheckedViewDictionaryKeys/fixed-good (16.52s)
+    --- PASS: TestCheckedViewDictionaryKeys/fixed-empty (0.41s)
+    --- PASS: TestCheckedViewDictionaryKeys/fixed-read-wrong (0.41s)
+    --- PASS: TestCheckedViewDictionaryKeys/producer-good (0.41s)
+    --- PASS: TestCheckedViewDictionaryKeys/producer-empty (0.40s)
+    --- PASS: TestCheckedViewDictionaryKeys/producer-read-wrong (0.46s)
+=== RUN   TestCheckedViewDictionaryKeysEagerMutant
+    checked_view_dictionary_enumeration_test.go:80: key-only control catches eager element mutant: exit=70 stderr="adamic: panic: field read failed: Object.keys[key]; expected string, found number\n"
+    checked_view_dictionary_enumeration_test.go:80: key-only control catches eager element mutant: exit=70 stderr="adamic: panic: field read failed: Object.keys[key]; expected string, found number\n"
+--- PASS: TestCheckedViewDictionaryKeysEagerMutant (0.25s)
+PASS
+gate cache: native hits=0 misses=4
+gate cache: node hits=0 misses=14
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	18.872s

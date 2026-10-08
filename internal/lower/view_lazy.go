@@ -120,7 +120,7 @@ func (l *lowering) checkLazyViewReads() error {
 			}
 		}
 	}
-	for _, origin := range program.ViewOrigins {
+	for _, origin := range dictionaryEnumerationOrigins(program) {
 		add(graph.ReachingAllocations(origin))
 	}
 	index := graph.projectionIndex()
