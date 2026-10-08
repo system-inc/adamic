@@ -68,8 +68,8 @@ func (l *lowering) recordUse(node *ast.Node) error {
 	if node.Kind == ast.KindAsExpression {
 		cast := node.AsAsExpression()
 		from, to := l.checker.GetTypeAtLocation(cast.Expression), l.checker.GetTypeAtLocation(node)
-		if ast.SkipParentheses(cast.Expression).Kind != ast.KindObjectLiteralExpression && !l.sameKeeping(from, to, map[[2]*checker.Type]bool{}) {
-			return l.notYet(node, "a cast changing the storage representation, including incompatible record and fixed-object views or mutable payload types")
+		if (l.hasStringRecordIndex(from) || l.hasStringRecordIndex(to)) && ast.SkipParentheses(cast.Expression).Kind != ast.KindObjectLiteralExpression && !l.sameKeeping(from, to, map[[2]*checker.Type]bool{}) {
+			return l.notYet(node, "a cast between incompatible record and fixed-object views or mutable payload types")
 		}
 	}
 	if node.Kind == ast.KindPropertyAccessExpression {

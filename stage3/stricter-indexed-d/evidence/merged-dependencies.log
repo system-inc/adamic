@@ -1,0 +1,7 @@
+--- FAIL: TestTypedArrayRepresentationBoundaries (11.39s)
+    --- FAIL: TestTypedArrayRepresentationBoundaries/cast-view (0.43s)
+        typed_array_test.go:48: want explicit typed-array refusal "cast changing the storage representation", got /tmp/adamic-gate/TestTypedArrayRepresentationBoundariescast-view1448446581/001/main.ts:1:48: stage 0 can't lower a cast between incompatible record and fixed-object views or mutable payload types yet
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/stricter-options	52.296s
+ok  	github.com/system-inc/adamic/stage3/stricter-records	53.413s
+FAIL

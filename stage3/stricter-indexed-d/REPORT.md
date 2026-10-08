@@ -1,8 +1,8 @@
-Built witnesses for all 27 assigned rows: 23 dense reads proven, including D151 nullable strings; 4 record rows blocked.
-Commits: representation eff7e8e9, indexed guards 27b06da3; D151 observation and runtime-mutant completion in this commit.
-Commands: touched packages, complete witness suite, 30 filtered Node oracle fixtures, vet, census and diff check pass.
-Mutants: 23 erased site guards caught; actual runtime null-sentinel helper changed to NULL is caught by both nullable controls and D151.
-Not covered: D119/D129/D130/D131 record representation, 23 hole variants, other reference-kind sentinels, whole-program build and full repository gate.
+Built witnesses for all 27 assigned rows: 26 proven, including all 26 supported hole variants; D119 nested records blocked.
+Commits: sentinel eff7e8e9, nullable guards 27b06da3, D151 927e13e9; dependency merges 09180ec8 and f7c17f3b; witness groups ac206b80 through 1fb6e6a4; cast integration correction and regression evidence in this commit.
+Commands: complete witness suite, compiler packages, both dependency suites, 30 uncached Node oracle fixtures, vet and census pass.
+Mutants: every supported absent and hole guard erased independently and caught; record outer guard and null-sentinel-to-NULL mutants caught.
+Not covered: D119 needs nested record payload support; full repository gate and whole TypeScript build not run.
 
 ## Scope and assumptions
 
@@ -469,3 +469,112 @@ record representation is attempted here.
 First five hole variants D107, D171, D172, D173 and D174 pass with exact named
 exit-70 stderr, source Node undefined, checked explain entries and individually
 erased guards caught (holes-group1.log, 6.102s). Further hole groups follow.
+
+Second hole group D175, D184, D185, D186 and D189 passes all backend and
+sanitized mutant assertions (holes-group2.log, 6.570s). Total completed hole
+variants so far: 10 of 23 standalone shapes, plus the three record-chain holes.
+
+Third hole group D191, D192, D193, D194 and D225 passes (holes-group3.log,
+9.382s), including each independently erased guard. 15 standalone holes proven.
+
+Fourth hole group D226, D227, D228, D229 and D230 passes (holes-group4.log,
+9.376s). 20 standalone holes proven; each guard mutant caught.
+
+
+## Final hole group and per-row state
+
+D231, D151 and D170 hole variants pass (holes-group5.log, 4.729s).
+The user's original 21 holes are all proven; the added D170 and newly supported
+D151 bring standalone array holes to 23. Record-chain D129/D130/D131 contribute
+three additional hole controls, for 26 supported hole variants. No assigned row
+needs a typed-array witness; its implementation arrived through the requested
+merge and is checked in the dependency suite.
+
+All proven rows below have present and absent Node controls, exact named
+exit-70 site stderr in JS and native release and ASan/UBSan, independently
+computed IR/CLI checked locations and erased-guard mutants caught. Hole controls
+use new Array<T>(1), with the same receiver and index form as the dense source.
+
+| Row | State | Checks and additional controls |
+|---|---|---|
+| D107 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D129 | Proven | Two chained checks; inner absent and hole mutants, separate outer-key present/absent control and outer mutant |
+| D130 | Proven | Two chained checks; inner absent and hole mutants, separate outer-key present/absent control and outer mutant |
+| D131 | Proven | Two chained checks; inner absent and hole mutants, separate outer-key present/absent control and outer mutant |
+| D171 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D172 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D173 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D174 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D175 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D184 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D185 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D186 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D189 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D191 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D192 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D193 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D194 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D225 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D226 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D227 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D228 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D229 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D230 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D231 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+| D119 | Blocked | Nested record payload unsupported; waits on records implementation expansion; refusal pinned at D119.ts:1:24 |
+| D151 | Proven | One presence check; string/null/absent/hole; equality, typeof, String and console; both guard and sentinel-conflation mutants |
+| D170 | Proven | One check; present/absent/hole and separate absent/hole guard mutants |
+
+D119 is the sole unresolved row. Its receiver is a readonly string-key record
+whose payload is another record of string arrays. The published recordInfo in
+internal/lower/records.go admits scalars and arrays of scalars, but does not
+admit that nested payload. Both source Node controls are observed and the exact
+compiler refusal is pinned. No native result, checked classification or guard
+mutant is claimed for D119.
+
+The private string sentinel remains declared once in
+internal/native/runtime/nullable.c for runtime review; both dependency merges
+preserve its undefined-only indexed guards and separate null observations.
+
+## Combined merge regression validation
+
+Initial dependency run exposed a diagnostic-order regression:
+TestTypedArrayRepresentationBoundaries/cast-view expected the typed-array
+storage refusal, but recordUse caught that non-record cast first. The correction
+limits recordUse's cast refusal to types with a string record index signature.
+The existing cast path still refuses incompatible typed-array storage views;
+record cast/view boundaries retain their record refusal. This does not admit
+new representations or runtime behavior. The failed run is retained in
+merged-dependencies.log, and the corrected full suites pass in
+merged-dependencies-fixed.log.
+
+Commands (all test output redirected to evidence logs):
+
+```sh
+source /workspace/adamic-tools/env.sh
+go test ./internal/lower ./internal/ir ./internal/javascript -count=1 -timeout 10m
+go test ./internal/native -count=1 -timeout 10m
+go test ./stage3/stricter-indexed-d -count=1 -timeout 10m -v
+go test ./internal/lower ./stage3/stricter-options ./stage3/stricter-records -count=1 -timeout 10m
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(indexing|string_index|narrowed_reads|narrowed_numbers|unions|typeof.*|regexp.*)\.a$' -count=1 -timeout 8m -v
+go vet ./internal/lower ./internal/ir ./internal/native ./internal/javascript ./stage3/stricter-indexed-d ./stage3/stricter-options ./stage3/stricter-records
+python3 stage3/stricter-indexed-d/census.py
+git diff --check
+```
+
+Compiler package results: lower 25.882s, IR 21.118s, JavaScript no standalone
+tests, native 141.275s. After the cast correction: lower 30.773s,
+stricter-options 39.435s and stricter-records 39.879s, all pass. The complete
+unit before that correction passes in 75.668s, with 55 independently erased
+guard mutants caught (26 absent, 26 hole, three outer-record absent), plus two
+sentinel-to-NULL runtime mutants caught. Generic nullable controls additionally
+hold erased guards in release and sanitized builds. The uncached 30-fixture
+Node oracle passes in 12.089s (native 0 cache hits/85 misses, Node 0 hits/60
+misses). Vet and diff check have empty logs; census reports 27 rows, zero
+missing/extra, exact source metadata. Setup was reused from the prior successful
+run, with its recorded timing unchanged; nproc is still 5. The complete
+repository gate and whole TypeScript native build remain unrun.
+
+Final complete witness rerun after the cast correction passes in 80.072s,
+with all 27 row assessments and both nullable runtime mutants rerun; raw output
+is merged-final-witnesses.log. No supported row or hole variant remains.

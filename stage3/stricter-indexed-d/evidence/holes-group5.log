@@ -1,0 +1,19 @@
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/D231
+=== RUN   TestLedgerWitnesses/D231/hole
+    witness_test.go:223: PROVEN D231 read=importRequireStatements[1].declarationList.declarations[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D151
+=== RUN   TestLedgerWitnesses/D151/hole
+    witness_test.go:223: PROVEN D151 read=map.sourcesContent[raw.sourceIndex]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="false\ntrue\ntrue\nundefined\nundefined\nundefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D170
+=== RUN   TestLedgerWitnesses/D170/hole
+    witness_test.go:223: PROVEN D170 read=clause.types[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+--- PASS: TestLedgerWitnesses (4.72s)
+    --- PASS: TestLedgerWitnesses/D231 (0.90s)
+        --- PASS: TestLedgerWitnesses/D231/hole (0.90s)
+    --- PASS: TestLedgerWitnesses/D151 (0.80s)
+        --- PASS: TestLedgerWitnesses/D151/hole (0.80s)
+    --- PASS: TestLedgerWitnesses/D170 (0.77s)
+        --- PASS: TestLedgerWitnesses/D170/hole (0.77s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-d	4.729s
