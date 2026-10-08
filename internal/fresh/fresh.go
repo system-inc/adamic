@@ -52,7 +52,11 @@ import (
 // may keep them. Summaries are found to a fixed point over the call graph from "returns nothing",
 // recursion included, and fall back to "returns something outside" if that takes too long.
 func ProveWrites(program *ir.Program) []Write {
-	proof := &freshness{program: program, summaries: map[int]*summary{}, origins: map[originKey]int{}, direct: directlyCalled(program), top: program.HasAsync()}
+	return prepare(program, false).writeResults()
+}
+
+func prepare(program *ir.Program, ownership bool) *freshness {
+	proof := &freshness{program: program, summaries: map[int]*summary{}, origins: map[originKey]int{}, direct: directlyCalled(program), top: program.HasAsync(), ownership: ownership}
 	functions := []int{}
 	for index := range program.Functions {
 		functions = append(functions, index)
@@ -64,6 +68,7 @@ func ProveWrites(program *ir.Program) []Write {
 	}
 	for round := 0; ; round++ {
 		proof.writes = map[writeKey]*Write{}
+		proof.queries = nil
 		changed := false
 		for _, function := range functions {
 			returned := proof.analyze(function, graphs[function])
@@ -84,6 +89,10 @@ func ProveWrites(program *ir.Program) []Write {
 			proof.top = true
 		}
 	}
+	return proof
+}
+
+func (proof *freshness) writeResults() []Write {
 	keys := make([]writeKey, 0, len(proof.writes))
 	for key := range proof.writes {
 		keys = append(keys, key)
@@ -546,6 +555,8 @@ func (s *state) recent(site int) {
 
 // freshness is the whole program's proof.
 type freshness struct {
+	ownership bool
+	queries   []TransferAnswer
 	program   *ir.Program
 	summaries map[int]*summary
 	origins   map[originKey]int
@@ -587,8 +598,10 @@ type analysis struct {
 	function int
 	graph    *flow.Function
 
-	sites      map[siteKey]int
-	siteOrigin []int
+	graphSites      map[int]bool
+	classifiedSites map[int]bool
+	sites           map[siteKey]int
+	siteOrigin      []int
 
 	// sitesOf is every site each instruction has made, so each is made recent before the instruction
 	// runs, while nothing in it holds the old instance's name.
@@ -711,6 +724,10 @@ func (a *analysis) everything(from value) value {
 // analyze interprets a function to its fixed point, judges its writes, and returns its summary.
 func (proof *freshness) analyze(function int, graph *flow.Function) *summary {
 	a := &analysis{proof: proof, function: function, graph: graph, sites: map[siteKey]int{}, sitesOf: map[flow.InstructionId][]int{}, iterables: map[*ir.Statement]int{}, termObjects: map[term]object{}, deferred: map[writeKey]*deferral{}}
+	if proof.ownership {
+		a.graphSites = map[int]bool{}
+		a.classifiedSites = map[int]bool{}
+	}
 	a.returnedLocal = len(proof.program.Locals)
 	a.placeholders = function >= 0 && proof.direct[function] && !proof.top
 	entry := newState()
@@ -1247,6 +1264,7 @@ func (a *analysis) value(expression ir.Expression) value {
 			fields[index] = a.value(field.Value)
 		}
 		made := a.fresh(anyField, copied)
+		a.tagOwnershipGraph(made, expression.GraphTypes)
 		for index, field := range all {
 			if !fields[index].empty() {
 				a.state.store(newestOf(made), field.Name, fields[index])
@@ -1262,7 +1280,9 @@ func (a *analysis) value(expression ir.Expression) value {
 			}
 			elements.merge(held)
 		}
-		return a.fresh(elementKey, elements)
+		made := a.fresh(elementKey, elements)
+		a.tagOwnershipGraph(made, expression.GraphTypes)
+		return made
 	case ir.CollectionIterator:
 		return a.fresh(anyField, a.value(expression.Collection))
 	case ir.MapNew:
@@ -1435,8 +1455,13 @@ func (a *analysis) value(expression ir.Expression) value {
 		// union for any bounded target set, and for Unknown, is an arbitrary call.
 		return a.call(a.operands(expression), expression.Returns)
 	case ir.ParallelMap:
+		items := a.value(expression.Items)
+		work := a.value(expression.Work)
+		if a.judging && a.proof.ownership && expression.Moved {
+			a.proof.queries = append(a.proof.queries, a.transferAnswer(expression, items))
+		}
 		// Tasks have a separate effect proof; results may alias shared inputs.
-		return a.call([]value{a.value(expression.Items), a.value(expression.Work)}, ir.Array)
+		return a.call([]value{items, work}, ir.Array)
 	case ir.ArrayMap:
 		return a.call([]value{a.value(expression.Array), a.value(expression.Callback)}, ir.Array)
 	case ir.ArrayVisit:

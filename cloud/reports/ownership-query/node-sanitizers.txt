@@ -1,0 +1,124 @@
+=== RUN   TestOwnershipQueryNodeShapes
+=== RUN   TestOwnershipQueryNodeShapes/flat
+    ownership_query_test.go:24: gate cache node hit
+=== RUN   TestOwnershipQueryNodeShapes/flat/asan
+=== RUN   TestOwnershipQueryNodeShapes/flat/asan/1
+    parallel_test.go:96: race variant runs=1 elapsed=33.313113ms
+=== RUN   TestOwnershipQueryNodeShapes/flat/asan/default
+    parallel_test.go:96: race variant runs=1 elapsed=22.765163ms
+=== RUN   TestOwnershipQueryNodeShapes/flat/release
+=== RUN   TestOwnershipQueryNodeShapes/flat/release/1
+    parallel_test.go:96: race variant runs=1 elapsed=11.017949ms
+=== RUN   TestOwnershipQueryNodeShapes/flat/release/default
+    parallel_test.go:96: race variant runs=1 elapsed=11.773964ms
+=== RUN   TestOwnershipQueryNodeShapes/flat/asan_slabs
+=== RUN   TestOwnershipQueryNodeShapes/flat/asan_slabs/1
+    parallel_test.go:96: race variant runs=1 elapsed=12.401146ms
+=== RUN   TestOwnershipQueryNodeShapes/flat/asan_slabs/default
+    parallel_test.go:96: race variant runs=1 elapsed=13.872172ms
+=== RUN   TestOwnershipQueryNodeShapes/flat/tsan
+=== RUN   TestOwnershipQueryNodeShapes/flat/tsan/1
+    parallel_test.go:96: race variant runs=3 elapsed=129.181179ms
+=== RUN   TestOwnershipQueryNodeShapes/flat/tsan/default
+    parallel_test.go:96: race variant runs=3 elapsed=118.516096ms
+=== RUN   TestOwnershipQueryNodeShapes/array
+    ownership_query_test.go:24: gate cache node hit
+=== RUN   TestOwnershipQueryNodeShapes/array/asan
+=== RUN   TestOwnershipQueryNodeShapes/array/asan/1
+    parallel_test.go:96: race variant runs=1 elapsed=5.125954ms
+=== RUN   TestOwnershipQueryNodeShapes/array/asan/default
+    parallel_test.go:96: race variant runs=1 elapsed=5.761758ms
+=== RUN   TestOwnershipQueryNodeShapes/array/release
+=== RUN   TestOwnershipQueryNodeShapes/array/release/1
+    parallel_test.go:96: race variant runs=1 elapsed=3.761518ms
+=== RUN   TestOwnershipQueryNodeShapes/array/release/default
+    parallel_test.go:96: race variant runs=1 elapsed=2.56698ms
+=== RUN   TestOwnershipQueryNodeShapes/array/asan_slabs
+=== RUN   TestOwnershipQueryNodeShapes/array/asan_slabs/1
+    parallel_test.go:96: race variant runs=1 elapsed=7.340745ms
+=== RUN   TestOwnershipQueryNodeShapes/array/asan_slabs/default
+    parallel_test.go:96: race variant runs=1 elapsed=7.44222ms
+=== RUN   TestOwnershipQueryNodeShapes/array/tsan
+=== RUN   TestOwnershipQueryNodeShapes/array/tsan/1
+    parallel_test.go:96: race variant runs=3 elapsed=66.928747ms
+=== RUN   TestOwnershipQueryNodeShapes/array/tsan/default
+    parallel_test.go:96: race variant runs=3 elapsed=58.092632ms
+=== RUN   TestOwnershipQueryNodeShapes/nested
+    ownership_query_test.go:24: gate cache node hit
+    ownership_query_test.go:37: Node agrees; runtime gate: /workspace/adamic/internal/oracle/testdata/ownership-query/nested.a:3:26: Adamic 0.1 refuses cannot move items[0].child: nested reachable ownership is not proven; return it through the results
+=== RUN   TestOwnershipQueryNodeShapes/ring
+    ownership_query_test.go:24: gate cache node hit
+    ownership_query_test.go:37: Node agrees; runtime gate: /workspace/adamic/internal/oracle/testdata/ownership-query/ring.a:6:17: Adamic 0.1 refuses cannot move items[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+=== RUN   TestOwnershipQueryNodeShapes/outside-ring
+    ownership_query_test.go:24: gate cache node hit
+    ownership_query_test.go:37: Node agrees; runtime gate: /workspace/adamic/internal/oracle/testdata/ownership-query/outside-ring.a:7:17: Adamic 0.1 refuses cannot move items[0]: element is not a fresh object literal with only scalar literal fields; return it through the results
+=== RUN   TestOwnershipQueryNodeShapes/objects.a
+    ownership_query_test.go:66: gate cache node hit
+=== RUN   TestOwnershipQueryNodeShapes/objects.a/asan
+=== RUN   TestOwnershipQueryNodeShapes/objects.a/asan/1
+    parallel_test.go:96: race variant runs=1 elapsed=349.87722ms
+=== RUN   TestOwnershipQueryNodeShapes/objects.a/asan/default
+    parallel_test.go:96: race variant runs=1 elapsed=147.829774ms
+=== RUN   TestOwnershipQueryNodeShapes/objects.a/release
+=== RUN   TestOwnershipQueryNodeShapes/objects.a/release/1
+    parallel_test.go:96: race variant runs=1 elapsed=378.002154ms
+=== RUN   TestOwnershipQueryNodeShapes/objects.a/release/default
+    parallel_test.go:96: race variant runs=1 elapsed=100.624156ms
+=== RUN   TestOwnershipQueryNodeShapes/objects.a/asan_slabs
+=== RUN   TestOwnershipQueryNodeShapes/objects.a/asan_slabs/1
+    parallel_test.go:96: race variant runs=1 elapsed=917.873208ms
+=== RUN   TestOwnershipQueryNodeShapes/objects.a/asan_slabs/default
+    parallel_test.go:96: race variant runs=1 elapsed=118.64263ms
+=== RUN   TestOwnershipQueryNodeShapes/objects.a/tsan
+=== RUN   TestOwnershipQueryNodeShapes/objects.a/tsan/1
+    parallel_test.go:96: race variant runs=3 elapsed=1.643465912s
+=== RUN   TestOwnershipQueryNodeShapes/objects.a/tsan/default
+    parallel_test.go:96: race variant runs=3 elapsed=722.863039ms
+--- PASS: TestOwnershipQueryNodeShapes (229.43s)
+    --- PASS: TestOwnershipQueryNodeShapes/flat (3.29s)
+        --- PASS: TestOwnershipQueryNodeShapes/flat/asan (0.88s)
+            --- PASS: TestOwnershipQueryNodeShapes/flat/asan/1 (0.08s)
+            --- PASS: TestOwnershipQueryNodeShapes/flat/asan/default (0.07s)
+        --- PASS: TestOwnershipQueryNodeShapes/flat/release (0.23s)
+            --- PASS: TestOwnershipQueryNodeShapes/flat/release/1 (0.01s)
+            --- PASS: TestOwnershipQueryNodeShapes/flat/release/default (0.01s)
+        --- PASS: TestOwnershipQueryNodeShapes/flat/asan_slabs (0.77s)
+            --- PASS: TestOwnershipQueryNodeShapes/flat/asan_slabs/1 (0.04s)
+            --- PASS: TestOwnershipQueryNodeShapes/flat/asan_slabs/default (0.08s)
+        --- PASS: TestOwnershipQueryNodeShapes/flat/tsan (0.75s)
+            --- PASS: TestOwnershipQueryNodeShapes/flat/tsan/1 (0.13s)
+            --- PASS: TestOwnershipQueryNodeShapes/flat/tsan/default (0.12s)
+    --- PASS: TestOwnershipQueryNodeShapes/array (1.66s)
+        --- PASS: TestOwnershipQueryNodeShapes/array/asan (0.46s)
+            --- PASS: TestOwnershipQueryNodeShapes/array/asan/1 (0.03s)
+            --- PASS: TestOwnershipQueryNodeShapes/array/asan/default (0.02s)
+        --- PASS: TestOwnershipQueryNodeShapes/array/release (0.17s)
+            --- PASS: TestOwnershipQueryNodeShapes/array/release/1 (0.00s)
+            --- PASS: TestOwnershipQueryNodeShapes/array/release/default (0.00s)
+        --- PASS: TestOwnershipQueryNodeShapes/array/asan_slabs (0.36s)
+            --- PASS: TestOwnershipQueryNodeShapes/array/asan_slabs/1 (0.02s)
+            --- PASS: TestOwnershipQueryNodeShapes/array/asan_slabs/default (0.02s)
+        --- PASS: TestOwnershipQueryNodeShapes/array/tsan (0.47s)
+            --- PASS: TestOwnershipQueryNodeShapes/array/tsan/1 (0.07s)
+            --- PASS: TestOwnershipQueryNodeShapes/array/tsan/default (0.06s)
+    --- PASS: TestOwnershipQueryNodeShapes/nested (0.11s)
+    --- PASS: TestOwnershipQueryNodeShapes/ring (0.09s)
+    --- PASS: TestOwnershipQueryNodeShapes/outside-ring (0.08s)
+    --- PASS: TestOwnershipQueryNodeShapes/objects.a (224.20s)
+        --- PASS: TestOwnershipQueryNodeShapes/objects.a/asan (51.65s)
+            --- PASS: TestOwnershipQueryNodeShapes/objects.a/asan/1 (0.72s)
+            --- PASS: TestOwnershipQueryNodeShapes/objects.a/asan/default (0.27s)
+        --- PASS: TestOwnershipQueryNodeShapes/objects.a/release (19.07s)
+            --- PASS: TestOwnershipQueryNodeShapes/objects.a/release/1 (0.38s)
+            --- PASS: TestOwnershipQueryNodeShapes/objects.a/release/default (0.10s)
+        --- PASS: TestOwnershipQueryNodeShapes/objects.a/asan_slabs (49.94s)
+            --- PASS: TestOwnershipQueryNodeShapes/objects.a/asan_slabs/1 (1.32s)
+            --- PASS: TestOwnershipQueryNodeShapes/objects.a/asan_slabs/default (0.25s)
+        --- PASS: TestOwnershipQueryNodeShapes/objects.a/tsan (34.24s)
+            --- PASS: TestOwnershipQueryNodeShapes/objects.a/tsan/1 (1.64s)
+            --- PASS: TestOwnershipQueryNodeShapes/objects.a/tsan/default (0.72s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=6 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	229.454s
