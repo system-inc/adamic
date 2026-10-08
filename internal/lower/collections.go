@@ -362,6 +362,11 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		l.prepareViewCallableProperty(binding, fieldType, &value)
 		value.ViewAllowed = l.viewLiterals(fieldType)
 		l.preparePrimitiveDestructuredRead(binding, destructured, fieldType, &value)
+		if !tuple {
+			if err := l.viewIntersectionBindingRead(binding, destructured, fieldType, &value); err != nil {
+				return nil, err
+			}
+		}
 		statements = append(statements, ir.Declare{Local: local, Value: value})
 	}
 	return statements, nil

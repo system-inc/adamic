@@ -8,6 +8,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 )
@@ -21,8 +22,6 @@ func TestCheckedViewObjectPrimitiveRemainingFrontiers(t *testing.T) {
 	expected := map[string]string{
 		"emit-helper-frontier":                "a field of type string | ((node: EmitHelperUniqueNameCallback) => string)",
 		"incremental-tuple-element-frontier":  "a cast the runtime can't check",
-		"jsdoc-parent-union-frontier":         "checked view read of field kind with unsupported union intersection contract",
-		"jsdoc-parent-optional-frontier":      "checked view read of field kind with unsupported union intersection contract",
 		"build-options-key-frontier":          "a cast the runtime can't check",
 		"incremental-root-frontier":           "an array of IncrementalBuildInfoRoot",
 		"incremental-signature-frontier":      "an array of IncrementalBuildInfoEmitSignature",
@@ -66,7 +65,36 @@ func TestCheckedViewObjectPrimitiveRemainingFrontiers(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			_, err = lower.Lower(context.Background(), loaded)
+			program, err := lower.Lower(context.Background(), loaded)
+			if strings.HasPrefix(probe.name, "jsdoc-parent-") {
+				if err != nil {
+					t.Fatal(err)
+				}
+				// The complete intersection is now supported. This reduced producer
+				// still lacks required Node fields and must stop at the parent read.
+				missing := "flags is not initialized; expected NodeFlags"
+				if probe.name == "jsdoc-parent-optional-frontier" {
+					missing = "escapedText is not initialized; expected __String"
+				}
+				want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: node.parent." + missing + ", found missing\n")}
+				actual, _ := nativelyUncached(t, program)
+				for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if diff := disagreement(want, got); diff != "" {
+						t.Fatalf("parent obligation: %s; got %#v", diff, got)
+					}
+				}
+				if count := changeObjectPrimitiveRead(program, func(read ir.Property) bool { return read.View == "node.parent" }, func(read ir.Property) ir.Property { read.View = ""; return read }); count != 1 {
+					t.Fatalf("want one parent-read mutant, got %d", count)
+				}
+				mutated, _ := nativelyUncached(t, program)
+				for _, got := range []run{mutated, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if diff := disagreement(run{stdout: []byte(probe.source)}, got); diff != "" {
+						t.Fatalf("parent mutant must execute original Node value: %s; got %#v", diff, got)
+					}
+					t.Log("parent-read omission caught by exact missing-field refusal after valid execution")
+				}
+				return
+			}
 			switch failure := err.(type) {
 			case *lower.Refused:
 				if failure.What != expected[probe.name] {

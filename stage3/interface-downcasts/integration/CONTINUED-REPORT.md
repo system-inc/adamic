@@ -14,8 +14,8 @@ Limits: latest owner integration is unresolved; additional optional suites and t
 | Arrays and parser | a3b0e3570fdf83fa3071b7f34ff9780d5334d5f7 | Plan: retain existing duplicate sections, whitespace and both final reports; counts: retain every distinct row and reject differing values for one fixture | e636841dd3d2996e471d97dd23712e7dbaa6aaeb | Required filter passes; inherited failures below |
 | Mixed unions, first tip | d78c3f5cf19959be2bdb2ba4b72951750303cc4a | One plan hunk: append both independent reports; update the primitive helper to preserve its wrong-boolean runtime refusal | 6d9811a91da9346217f45c0c5223df9d194363eb | Stale compile-only helper expectation fixed; inherited failures unchanged |
 | Mixed unions, requested newer tip | 37763565c317a80c3b362e475edab8b61ab0eafd | No conflicts; retain producer certificates and original reference obligations; update stale array-gap assertions | 93a086abbfbaa3d36ccb9bbe2516733452d2b521 | Required tests pass; same 41 inherited counts failures |
-| Object and primitive unions | 8abb52a1518b9d8c3f0dbde993551d4f01ba10e2 | No conflicts; retain unread storage admission and named tuple-member refusal | This merge | Required tests pass; counts retain 41 baseline failures |
-| Intersections | 4c3c3009c1ab74e4da902ffa9357b81ec0cf7d95 | Pending | Pending | Pending |
+| Object and primitive unions | 8abb52a1518b9d8c3f0dbde993551d4f01ba10e2 | No conflicts; retain unread storage admission and named tuple-member refusal | b8b419d2b2e6f6a3bf62e02c749a6cd9f8465437 | Required tests pass; counts retain 41 baseline failures |
+| Intersections | 4c3c3009c1ab74e4da902ffa9357b81ec0cf7d95 | Five hunks: both binding hooks, both plan reports, all count rows, superseded gap lists and both blocker histories | This merge | Required filter passes; corrected JSDoc runtime probes pass; redundant hook mutant survives |
 | Callables | 0040752305d151dff23d234213edc47aaddbd305 | Pending | Pending | Pending |
 | Tuples | 5c54e8c6583462ae061557d5fc4618deaf4b67ee | Pending | Pending | Pending |
 | Dictionaries | deec3c933543c7b5e7ba0d9db0964265d03c494c | Already an ancestor | d718a9ffa0432245b69a3545c3ca080db865e0bb | None introduced |
@@ -172,3 +172,41 @@ by the exact named tuple union refusal. Every source mutation is restored.
 
 Object/primitive filtered oracle: ok  	github.com/system-inc/adamic/internal/oracle	742.346s
 Counts refresh: identical 41 baseline fixtures, 63.565s; new focused rows pass.
+
+## Intersections
+
+Five one-hunk conflict decisions, individually inspected:
+
+- collections.go: keep primitive binding preparation, then retain the object
+  intersection binding hook. Ordinary primitive binding and deferred-member-
+  destructure exercise the separate behaviors.
+- checked-views-plan.md: append both independent continuation reports.
+- counts.md: retain every existing row and append the five deferred-member rows;
+  duplicate fixture keys must have identical measurements.
+- checked_views_brands_original_gaps_test.go: neither historical list remains
+  blocked in the combined code. Explicitly supersede the compile-gap suite with
+  BrandsOriginalPairs and IntersectionOriginalIdentifier runtime certificates.
+- lane4/original/BLOCKERS.md: retain both histories, then mark all three former
+  gaps closed by the combined runtime controls and mutants.
+
+Backend and IR checks pass: lower 7.739s, native 29.514s, JavaScript 1.935s,
+IR 0.053s. Complete original brand/intersection controls passed; the 479.740s run
+reported only two obsolete lane4b JSDoc compile-frontier assertions. Those reduced
+producers now retain exact runtime missing-field obligations: union parent flags,
+optional parent escapedText. Independent parent-read omission mutants execute the
+original Node value 80 in sanitized/release native and JavaScript and are caught
+by their refusal pins. No compiler check is removed to update these expectations.
+
+Six IR mutants execute and fail all three backend pins: deferred member selector
+omission at direct, helper, callback and destructured reads; absorbed ancestor pos
+omission; isolated Identifier helper omission. A seventh source mutant omitting
+only the binding metadata hook survives the deferred destructuring fixture:
+retained contract metadata still produces the correct refusal. That redundant
+hook is not credited as an independently essential check in this integration.
+The actual descendant-selection omission is killed independently. All source
+mutations are restored. Counts refresh reports the identical 41 baseline failures
+in 55.884s, with no additions or removals.
+
+Intersections oracle: ok  	github.com/system-inc/adamic/internal/oracle	677.460s
+
+Intersections frontiers: ok  	github.com/system-inc/adamic/internal/oracle	11.220s

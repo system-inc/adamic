@@ -1770,6 +1770,51 @@ Unsupported or unresolved reads retain the existing conservative fallback.
 The original missing-optional control caught that fallback collision.
 
 
+Lane 7 bounded intersection group, October 8: complete original declarations
+make every Node need a Node parent and every Declaration a Symbol, so an honest
+acyclic value cannot satisfy a walk to the end of its data, and a Weak parent
+slot is not yet readable through a view. Reads whose contract lane 7 had
+refused (union intersection, recursive, mixed or compound payloads) are now
+admitted when the bounded walk validates their whole reachable graph. It checks
+every descriptor once per path, as the inline field walk does: kinds, presence
+and literals at each level, tagged object unions by their selected arm (plain
+unions by their discriminant), arrays, Maps and callables by kind. A descriptor
+already entered on the path, array elements, mixed scalar unions and refused
+families keep their own checked reads. Nullable, nominal and tuple members still
+refuse the read. The pure object recursive walk is unchanged.
+
+Named minimal hooks for this group: shared IR views.go adds the
+IntersectionBounded flag; shared lower/view_lazy.go calls the lane-owned
+finishBoundedIntersections at the start of checkLazyViewReads, after every
+descriptor is complete. Admission runs to a fixpoint so a refused descriptor is
+walked only when it is admitted too, and the emitters walk exactly what lowering
+proved. Arms coalesce when their obligations are the same to the walk: one
+canonical descriptor behind optional copies, or arrays checked by kind alone.
+The table runtime is lane-owned: ir/view_intersections.go,
+native/view_intersections_recursive.go and runtime/view_intersections_recursive.c/.h,
+javascript/view_intersections_recursive.go.
+
+Certified with complete pinned declarations: BindableStaticPropertyAssignmentExpression.left
+(9 reads), BindableStaticAccessExpression.expression (11), BindablePropertyAssignmentExpression.left
+(9) and BindableAccessExpression.expression (4). BindableStaticElementAccessExpression.argumentExpression
+(1) is held by the shared argument descriptor, but no admitted program reaches its
+read without an earlier read checking the same argument (the direct intersection
+cast and the unproven type predicate both refuse), so it stays pending.
+Merging codex/views-integration 6a7f1bf3 conflicted in code files
+(javascript/readiness.go, javascript/view_nullish.go, native/view_nullish.go,
+where lane 7's nullish intersection hook and callable kind meet integration's
+member selection, Map and callable certificates); the merge was aborted unresolved.
+
+Lane 7 node pairs on the bounded walk, October 8: no compiler change. Certified
+with complete pinned declarations: GeneratedIdentifier.emitNode (4 reads),
+JSDocAugmentsTag.class (4), JSDocImplementsTag.class (3), JSDoc.parent (10) and
+the optional-chain JSDoc root parent (1). Lane 7 now has 10 certified pairs / 56
+reads and 7 pairs / 10 reads pending, each with its reason in
+lane7/NODES-REPORT.md. Two findings for other owners: a field type first seen
+through a union receiver gets no interned contract, so that read checks only the
+object kind (shared readObjectField); and the JavaScript union discriminant
+wrapper panics on an undefined optional-chain result where Node and native return
+undefined (lane7/probes/plain-union-optional-chain.a, also on integration 6a7f1bf3).
 Intersection integration presence hook: native object_optional_view separates
 required property presence, optional receiver presence and permitted undefined
 payloads. The explicit adamic_object_optional_view_undefined entry point and
@@ -2336,3 +2381,74 @@ proves every admitted runtime kind primitive/nullish. Unknown flow fallback is
 unchanged. Actual reference kinds are excluded and stop at this read until their
 owning lane provides selection, so unread reference alternatives cannot poison
 a selected scalar. Object and array alternatives receive no certification credit.
+
+### Lane 7 approved deferred descendant selection
+
+Supported untagged object-union descendants in bounded intersections retain
+presence and object-kind checks. Member selection is demanded at the descendant
+read. The approved rule is witnessed by direct, helper, callback and destructured
+reads, plus an unread Node control. The named hook viewIntersectionBindingRead
+in lower/view_intersections.go supplies contract metadata from destructureFrom
+in collections.go. Selector-removal and hook-removal mutants fail these controls.
+Full original certification is restored to ten pairs / 56 reads; see lane7's
+DEFERRED-REPORT.md for evidence and remaining candidates.
+
+### Lane 7 declared ancestor absorption
+
+viewIntersectionAbsorbSupertype admits an intersected object union containing a
+declared ancestor only when every arm inherits that ancestor and the checker
+verifies actual-arm assignability. Structural similarity alone is refused.
+Generic interface ancestry is traced through its original declared target. The
+complete ancestor contract is retained by canonical ID and completed after
+recursive reservations, before bounded admission. An unavailable ancestor stays
+a named refusal. Original 7644 parent is now certified, including an open-kind
+Node control, named wrong-pos failure, and a three-backend omission mutant.
+Lane 7 now totals eleven pairs / 57 reads; see ABSORPTION-REPORT.md.
+
+### Lane 7 synthetic intersection field contracts
+
+viewIntersectionFieldRead is called by shared readObjectField when an object
+field's fresh union/intersection type has no interned contract and contains an
+intersection. It interns the complete declaration at that syntactic read; an
+unavailable descriptor remains a named refusal. This closes original 92175.class.
+The oracle compares the actual synthetic contract ID's full field set because
+the stock and shim checkers abbreviate this duplicate union differently. A
+read-check omission now fails independently in all three backends. Lane 7 totals
+twelve pairs / 58 reads; see HERITAGE-UNION-REPORT.md.
+
+### Lane 7 remaining original blockers after integration
+
+Original array rows 97923 and 98493 remain before runtime certification: their
+mixed string/object element representation is refused by elementType. New
+original-declaration Node controls pin both exact array-storage refusals.
+Assigned lane 4 Identifier 9477 now has recursive admission but is not counted:
+its helper-bypass mutant survives, caught at the earlier carrier.child read.
+Direct intersection casting and a wider alias-write isolation remain refused.
+The obsolete compile-gap row moves to the new runtime/admission gap oracle;
+the two unrelated lane 4 never-family compile gaps remain. Lane 7 counts stay
+twelve pairs / 58 reads, with five rows / eight reads remaining.
+
+### Lane 7 isolated original Identifier member certificate
+
+The fixture enters through the existing checked Identifier interface and passes
+it by proven upcast to the original LeftHandSideExpression & Identifier helper.
+The wrong value reaches value.escapedText without a prior carrier.child read.
+Helper bypass is now killed in all three backends. No compiler admission rule
+changed. Original assigned 9477 is certified separately from lane 7's twelve
+pairs / 58 reads. Own original counts are measured in lane7/counts.md.
+
+October 11, lane 7 isolated helper certificates: 9454.argumentExpression and
+9657.class.expression now have independent wrong-member witnesses, using an
+ordinary interface inheriting the complete original intersection. Both member
+check omission mutants execute true successfully in all three modes and are
+caught by the named exit-70 pins. No compiler admission changes. Lane 7 is now
+14 pairs / 60 reads; remaining 97923 and 98493 array reads plus private 68704
+(four reads). Assigned Identifier 9477 is separately certified, one read.
+
+October 11, assigned lane 4b intersection rows: all seven / 45 original reads
+map to lane 7 certificates (9474, 7642, 9476, 9485, 9475, 7644, 36241), with
+zero duplicate additions. Mapping and fresh validation are under lane7's
+ASSIGNED-REPORT.md and assigned-lane4b-certificates.json. Remaining lane 7
+array blockers are pinned through actual string and original FileInfo objects;
+they need boxed union array storage and member adapters in the array consumers.
+Private 68704 remains excluded as instructed.
