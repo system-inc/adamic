@@ -220,9 +220,31 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 			}
 		}
 	}
+	jsonSites, err := loaded.jsonContractSites(config)
+	if err != nil {
+		return nil, err
+	}
+	if project != "" {
+		sites = append(sites, jsonSites...)
+	}
 	loaded.optionSites = sites
 	diagnostics := loaded.diagnostics(context.Background())
+	for _, site := range jsonSites {
+		for i, message := range diagnostics {
+			if message == site.Message {
+				if project != "" {
+					diagnostics = append(diagnostics[:i], diagnostics[i+1:]...)
+				} else {
+					diagnostics[i] += "\n  Fix: JSON.stringify can return undefined; narrow the result or provide a fallback with ??."
+				}
+				break
+			}
+		}
+	}
 	for _, site := range sites {
+		if len(site.Options) == 1 && site.Options[0] == "JSON.stringify" {
+			continue
+		}
 		// Every successfully lowered project indexed read requiring presence is
 		// guarded by lower.checkedIndexedRead. Unsupported representations refuse
 		// before emission. For a joint optional/index site the recorded ancestor
