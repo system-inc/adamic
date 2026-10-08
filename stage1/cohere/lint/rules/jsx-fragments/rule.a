@@ -14,10 +14,11 @@ export class Rule {
         this.context = context;
         this.element = context.settings.read('mode', context.settings.read('option', 'Syntax')).toLowerCase() === 'element';
         const checker = context.checker;
-        if(checker === undefined) { return; }
+        if(checker !== undefined) {
         for(let index = 0; index < context.parser.nodes.length; index++) {
             const node = context.parser.nodes[index] ?? panic('missing node');
             this.declarations.set(`${node.kind}:${checker.offsets[node.pos] ?? panic('missing checker offset')}:${checker.offsets[node.end] ?? panic('missing checker offset')}`, index);
+        }
         }
     }
     child(index: number, position: number): number {

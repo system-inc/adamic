@@ -30,7 +30,7 @@ export class Tree {
 
 export class Bindings {
  readonly context: RuleContext; readonly spans = new Map<string, number>();
- constructor(context: RuleContext) { this.context = context; const offsets = context.checker?.offsets; if(offsets === undefined) { return; } for(let index=0;index<context.parser.nodes.length;index++) { const node=context.node(index); this.spans.set(`${node.kind}:${offsets[node.pos] ?? -1}:${offsets[node.end] ?? -1}`, index); } }
+ constructor(context: RuleContext) { this.context = context; const offsets = context.checker?.offsets; if(offsets !== undefined) { for(let index=0;index<context.parser.nodes.length;index++) { const node=context.node(index); this.spans.set(`${node.kind}:${offsets[node.pos] ?? -1}:${offsets[node.end] ?? -1}`, index); } } }
  functionKind(kind: string): boolean { return ['FunctionDeclaration','FunctionExpression','ArrowFunction','MethodDeclaration','GetAccessor','SetAccessor','Constructor'].includes(kind); }
     declaring(index: number): boolean {
         const parentIndex = this.context.parent(index);
