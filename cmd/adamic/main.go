@@ -37,6 +37,8 @@ func main() {
 // be compiled, 2 for a usage error.
 func run(arguments []string) int {
 	switch {
+	case len(arguments) == 3 && (arguments[0] == "c" || arguments[0] == "js") && arguments[2] == "--explain-checks":
+		return renderWithChecks(arguments[0], arguments[1])
 	case len(arguments) >= 2 && arguments[0] == "types":
 		program, code := check(arguments[1:])
 		if program == nil {
