@@ -15,12 +15,14 @@ func init() {
 		lowers, checked bool
 	}{
 		{"internal/oracle/testdata/scout22_prototype_create.a", true, false},
+		{"internal/oracle/testdata/scout22_prototype_refused/scout22_prototype_links.a", false, false},
+		{"internal/oracle/testdata/scout22_prototype_refused/scout22_prototype_lifetimes.a", false, false},
 	} {
 		fixtures = append(fixtures, fixture)
 	}
 }
 func TestScout22PrototypeLinks(t *testing.T) {
-	original, _ := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout22_prototype_links.a"))
+	original, _ := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout22_prototype_refused/scout22_prototype_links.a"))
 	source, err := os.ReadFile(original)
 	if err != nil {
 		t.Fatal(err)
@@ -65,7 +67,7 @@ func TestScout22PrototypeLinks(t *testing.T) {
 }
 
 func TestScout22PrototypeLifetimes(t *testing.T) {
-	original, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout22_prototype_lifetimes.a"))
+	original, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout22_prototype_refused/scout22_prototype_lifetimes.a"))
 	if err != nil {
 		t.Fatal(err)
 	}

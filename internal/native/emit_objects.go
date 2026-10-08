@@ -287,7 +287,6 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 			thunks = append(thunks, "NULL")
 			continue
 		}
-		methodNames = append(methodNames, cString(method.Name))
 		thunk := e.methodThunk(method.Function)
 		if e.program.ClosureConventionNeeded() {
 			field := "code"

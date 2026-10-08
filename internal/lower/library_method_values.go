@@ -104,6 +104,10 @@ func (l *lowering) libraryMapArgument(node *ast.Node) bool {
 }
 
 func (l *lowering) libraryMethodValue(node *ast.Node) (ir.Expression, bool, error) {
+	// The typed own-property alias keeps its real closure and its separately proven .call uses.
+	if l.borrowedOwnAlias(node) != nil {
+		return nil, false, nil
+	}
 	_, known := l.libraryMethod(node, map[*ast.Symbol]bool{})
 	if !known {
 		return nil, false, nil

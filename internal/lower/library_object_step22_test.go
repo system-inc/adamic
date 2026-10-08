@@ -13,11 +13,9 @@ func TestObjectStep22UnrepresentedCasesStayRefused(t *testing.T) {
 		`Object.prototype.hasOwnProperty.call(null, 'x');`,
 		`Object.prototype.propertyIsEnumerable.call(undefined, 'x');`,
 		`Object.prototype.hasOwnProperty.call({x:1}, Symbol.iterator);`,
-		`const method = Object.prototype.toString;`,
 		`Object.prototype.toString = ():string => 'changed'; console.log(Object.prototype.toString.call({}));`,
 		`Number({valueOf: (): number|{x:number} => true ? 1 : {x:1}, toString: ():string => '2'});`,
 		`Number({valueOf: (): {x:number} => ({x:1}), toString: (): {x:number} => ({x:2})});`,
-		`Number({valueOf():number {return 1;}});`,
 		`Number({valueOf: ():{}=>42, toString: ():string=>'wrong'});`,
 		`Number({valueOf: (unused?:number):number => 1});`,
 		`const hidden={x:1,toString:():string=>'hidden'}; const view:{readonly x:number}=hidden; Number(view);`,
@@ -49,6 +47,8 @@ func TestObjectStep22ProvenCasesLower(t *testing.T) {
 		"console.log(`${Object.hasOwn({x:1}, 'missing')}`);",
 		`console.log(Object.keys({10:10,2:2,b:3}).join('|'));`,
 		`Number({valueOf: ():number=>1});`,
+		`const method = Object.prototype.toString;`,
+		`Number({valueOf():number {return 1;}});`,
 		`String({toString: ():string=>'text'});`,
 	} {
 		t.Run(source, func(t *testing.T) {

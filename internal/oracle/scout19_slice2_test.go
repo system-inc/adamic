@@ -31,7 +31,7 @@ func TestScout19Slice2ExpectedRefusals(t *testing.T) {
 	for _, name := range []string{"create_set", "presence", "range", "brands", "path", "generator"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout19_slice2_"+name+".a"))
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout19_slice2_refused/scout19_slice2_"+name+".a"))
 			if err != nil {
 				t.Fatal(err)
 			}

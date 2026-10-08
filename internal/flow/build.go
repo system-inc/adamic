@@ -474,6 +474,8 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				throws = true
 			}
 			switch value.Type() {
+			case reflect.TypeOf(ir.RegExpNew{}):
+				throws = throws || value.Interface().(ir.RegExpNew).Index < 0
 			case reflect.TypeOf(ir.RegExpCall{}):
 				throws = throws || value.Interface().(ir.RegExpCall).MayThrow()
 			case reflect.TypeOf(ir.StringFromCodes{}):
