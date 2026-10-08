@@ -35,23 +35,7 @@ func (e *emitter) recordCall(call ir.RecordCall) string {
 	case "keys":
 		return e.own(ir.Array, fmt.Sprintf("adamic_record_keys(%s)", args[0]))
 	case "values", "entries":
-		result := e.own(ir.Array, fmt.Sprintf("adamic_array_new(0, %t)", call.Method == "entries" || call.Element.IsReference()))
-		e.recordWalk(args[0], func(key, slot string) {
-			value := slot
-			if call.Element.IsReference() {
-				value = fmt.Sprintf("(adamic_value){.reference = adamic_retain(%s.reference)}", slot)
-			}
-			if call.Method == "entries" {
-				shape := e.shapeOf([]string{"0", "1"}, []ir.Type{ir.String, call.Element})
-				pair := e.temporary()
-				e.line("adamic_object *%s = adamic_object_new(&%s);", pair, shape)
-				e.line("%s->slots[0].reference = adamic_retain(%s);", pair, key)
-				e.line("%s->slots[1] = %s;", pair, value)
-				value = fmt.Sprintf("(adamic_value){.reference = %s}", pair)
-			}
-			e.line("adamic_array_push(%s, %s);", result, value)
-		})
-		return result
+		return e.own(ir.Array, fmt.Sprintf("adamic_record_values(%s, %t)", args[0], call.Method == "entries"))
 	}
 	panic("native: unknown record operation")
 }
@@ -70,7 +54,12 @@ func (e *emitter) recordWalk(record string, visit func(string, string)) {
 	e.line("adamic_release(%s);", iterator)
 }
 func (e *emitter) recordLiteral(literal ir.RecordLiteral) string {
-	result := e.own(ir.Record, fmt.Sprintf("adamic_record_new(%t)", literal.Element.IsReference()))
+	types := make([]ir.Type, len(literal.Fixed))
+	for index := range types {
+		types[index] = literal.Element
+	}
+	shape := e.shapeOf(literal.Fixed, types)
+	result := e.own(ir.Record, fmt.Sprintf("adamic_record_new_shaped(&%s, %t)", shape, literal.Element.IsReference()))
 	if literal.Spread != nil {
 		source := e.value(literal.Spread)
 		e.recordWalk(source, func(key, slot string) {
@@ -121,4 +110,21 @@ func (e *emitter) recordCoalesce(c ir.RecordCoalesce) string {
 		e.owned = append(e.owned, result)
 	}
 	return result
+}
+
+// A fixed view may reach a record allocation; neither reuse nor an offset-only
+// lookup may assume its visible fields are the complete physical object.
+func (e *emitter) recordObjects() bool {
+	for _, local := range e.program.Locals {
+		if local.Type == ir.Record {
+			return true
+		}
+	}
+	found := false
+	walkExpressions(e.program, func(expression ir.Expression) {
+		if _, ok := expression.(ir.RecordLiteral); ok {
+			found = true
+		}
+	})
+	return found
 }

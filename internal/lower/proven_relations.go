@@ -71,6 +71,9 @@ func (l *lowering) optionalRelationFailure(from, to *checker.Type, origin *ast.N
 	if !l.structured(from) || !l.structured(to) {
 		return ""
 	}
+	if element := l.recordElement(from); element != nil && l.recordStringObjectView(from, to, element) {
+		return ""
+	}
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	if len(fromSignatures) > 0 && len(toSignatures) > 0 {

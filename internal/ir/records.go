@@ -17,6 +17,8 @@ func (c RecordCall) Type() Type { return c.Returns }
 type RecordEntry struct{ Key, Value Expression }
 type RecordLiteral struct {
 	Element Type
+	// Fixed contains declared field names, including absent optional fields.
+	Fixed   []string
 	Spread  Expression
 	Entries []RecordEntry
 	Site    int

@@ -7,10 +7,13 @@ import (
 )
 
 // Dictionary entries have one storage kind. Heterogeneous values use the existing
-// counted union boxes. Two-word optional booleans retain their existing boundary.
+// counted union boxes. Optional booleans use those boxes at the record boundary.
 func (l *lowering) recordStorageType(t *checker.Type) (ir.Type, bool) {
 	of, known := l.kept(t)
-	return of, known && of != 0 && of != ir.Weak && of != ir.MaybeBoolean
+	if of == ir.MaybeBoolean {
+		return ir.Union, known
+	}
+	return of, known && of != 0 && of != ir.Weak
 }
 
 // The checker resolves literal keys to their named declaration and dynamic keys

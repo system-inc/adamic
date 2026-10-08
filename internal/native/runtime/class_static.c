@@ -11,6 +11,7 @@ adamic_value *adamic_static_field(const adamic_object *object, const char *name,
 }
 
 adamic_value *adamic_object_write_field(adamic_object *object, const char *name, adamic_slot_cache *cache) {
+    if (object->dictionary != NULL) { return adamic_record_write_field(object, name); }
     if (object->class == NULL || !object->class->is_static) {
         adamic_value *slot = adamic_object_field(object, name, cache);
         adamic_object_initialized(object)[cache->index] = 1;

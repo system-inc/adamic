@@ -1,0 +1,20 @@
+[
+  {
+    "mutant": "index-keys-in-fixed-shape",
+    "caught": "Node stdout",
+    "native_exit": 0,
+    "native_stdout": "2,10,b,a,01,0,3,4294967295\n",
+    "node_stdout": "0,2,3,10,b,a,01,4294967295\n",
+    "counts": "adamic: counts: allocations 13 frees 13 retains 53 releases 26 peak 11 regions 0\n",
+    "sanitizers_and_leaks": "clean"
+  },
+  {
+    "mutant": "optional-view-dictionary-miss",
+    "caught": "Node stdout",
+    "native_exit": 0,
+    "native_stdout": "undefined src\nundefined\n",
+    "node_stdout": "src src\nlib\n",
+    "counts": "adamic: counts: allocations 4 frees 4 retains 13 releases 14 peak 3 regions 0\n",
+    "sanitizers_and_leaks": "clean"
+  }
+]

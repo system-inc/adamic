@@ -223,6 +223,12 @@ func (l *lowering) recordLiteral(node *ast.Node, t *checker.Type) (ir.Expression
 		return nil, l.notYet(node, "record values with an unsupported slot representation")
 	}
 	result := ir.RecordLiteral{Element: of, Site: l.writeSite(node)}
+	context := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+	if context != nil {
+		for _, property := range l.checker.GetPropertiesOfType(l.checker.GetNonNullableType(context)) {
+			result.Fixed = append(result.Fixed, property.Name)
+		}
+	}
 	for i, p := range node.AsObjectLiteralExpression().Properties.Nodes {
 		if p.Kind == ast.KindSpreadAssignment {
 			if i != 0 {
@@ -398,13 +404,16 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 	visited[[2]*checker.Type{from, to}] = true
 	inside, viewed := l.recordElement(from), l.recordElement(to)
 	if inside != nil || viewed != nil {
+		if inside != nil && viewed == nil {
+			return l.recordStringObjectView(from, to, inside)
+		}
 		return inside != nil && viewed != nil && l.sameRecordNamedContracts(from, to, inside, viewed, visited) && l.sameRecordStorage(inside, viewed, visited)
 	}
 	a, b := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall), l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	if len(a) > 0 && len(b) > 0 {
 		ap, bp := a[0].Parameters(), b[0].Parameters()
 		for i := 0; i < len(ap) && i < len(bp); i++ {
-			if !l.sameRecordStorage(l.checker.GetTypeOfSymbol(ap[i]), l.checker.GetTypeOfSymbol(bp[i]), visited) {
+			if !l.sameRecordStorage(l.checker.GetTypeOfSymbol(bp[i]), l.checker.GetTypeOfSymbol(ap[i]), visited) {
 				return false
 			}
 		}
@@ -416,12 +425,19 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 			if !l.sameRecordStorage(a[i], b[i], visited) {
 				return false
 			}
+			readonly := l.isLibraryType(to, "ReadonlyArray", "ReadonlyMap", "ReadonlySet") || checker.IsTupleType(to) && to.TargetTupleType().IsReadonly()
+			if !readonly && !l.sameRecordStorage(b[i], a[i], visited) {
+				return false
+			}
 		}
 		return true
 	}
 	for _, property := range l.checker.GetPropertiesOfType(to) {
 		if own := l.checker.GetPropertyOfType(from, property.Name); own != nil {
 			if !l.sameRecordStorage(l.checker.GetTypeOfSymbol(own), l.checker.GetTypeOfSymbol(property), visited) {
+				return false
+			}
+			if !l.checker.IsReadonlySymbol(property) && !l.sameRecordStorage(l.checker.GetTypeOfSymbol(property), l.checker.GetTypeOfSymbol(own), visited) {
 				return false
 			}
 		}
@@ -474,4 +490,36 @@ func (l *lowering) recordLiteralRead(node *ast.Node) error {
 		return &Refused{Where: l.program.Where(node), What: "record key " + name + " names an Object.prototype member", Fix: "use own keys"}
 	}
 	return nil
+}
+
+// Admit an optional string view only when every writer preserves the same string
+// storage and member type. Other physical representations remain NotYet until
+// their named-view adapters can prove the conversion in both directions.
+func (l *lowering) recordStringObjectView(from, to, element *checker.Type) bool {
+	of, known := l.recordStorageType(element)
+	if !known || of != ir.String || isClassInstance(to) || l.checker.IsArrayType(to) || checker.IsTupleType(to) || len(l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(to, checker.SignatureKindConstruct)) != 0 {
+		return false
+	}
+	properties := l.checker.GetPropertiesOfType(to)
+	if len(properties) == 0 {
+		return false
+	}
+	for _, property := range properties {
+		if recordPrototypeName(property.Name) || strings.ContainsRune(property.Name, 0) {
+			return false
+		}
+		value := l.checker.GetNonMissingTypeOfSymbol(property)
+		actual := element
+		if own := l.checker.GetPropertyOfType(from, property.Name); own != nil {
+			if l.checker.IsReadonlySymbol(own) != l.checker.IsReadonlySymbol(property) {
+				return false
+			}
+			actual = l.checker.GetNonMissingTypeOfSymbol(own)
+		}
+		stored, known := l.kept(value)
+		if !known || stored != ir.String || property.Flags&ast.SymbolFlagsOptional == 0 || !l.checker.IsTypeAssignableTo(l.checker.GetNonNullableType(actual), l.checker.GetNonNullableType(value)) || !l.checker.IsTypeAssignableTo(l.checker.GetNonNullableType(value), l.checker.GetNonNullableType(actual)) {
+			return false
+		}
+	}
+	return true
 }

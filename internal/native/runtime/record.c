@@ -4,29 +4,67 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Wrappers let the ordinary iterative object cleanup release the table and iterator snapshots.
-// Their fields are implementation storage, never the record's observable own properties.
-// Tuple names 0 and 1, and key at slot 2, reuse offsets already covered by the compiler's
-// global field-layout proof (fields.go). No new unchecked field offset is introduced.
-static const char *const record_names[] = {"0"};
-static const bool record_references[] = {true};
-static const adamic_shape record_shape = {1, record_names, record_references, NULL};
+// The iterator alone uses private wrapper slots. Records themselves use the ordinary
+// object's declared shape and dictionary pointer, never a second object representation.
+static const adamic_shape record_shape = {0, NULL, NULL, NULL};
 static const char *const iteration_names[] = {"0", "1", "key"};
 static const bool iteration_references[] = {true, true, false};
 static const adamic_shape iteration_shape = {3, iteration_names, iteration_references, NULL};
 
 static adamic_map *table(const adamic_record *record) {
-	return record->slots[0].reference;
+	return record->dictionary;
 }
 
-adamic_record *adamic_record_new(bool reference_values) {
-	adamic_record *record = adamic_object_new(&record_shape);
-	record->slots[0].reference = adamic_map_new(true, reference_values);
+adamic_record *adamic_record_new_shaped(const adamic_shape *shape, bool reference_values) {
+	adamic_record *record = adamic_object_new(shape);
+	record->dictionary = adamic_map_new(true, reference_values);
 	return record;
 }
 
+adamic_record *adamic_record_new(bool reference_values) {
+	return adamic_record_new_shaped(&record_shape, reference_values);
+}
+
+// A spread makes a new object, retaining both stores and their common key order.
+adamic_record *adamic_record_copy(const adamic_record *source) {
+	adamic_record *copy = adamic_record_new_shaped(source->shape, table(source)->reference_values);
+	for (size_t index = 0; index < source->shape->count; index++) {
+		copy->slots[index] = source->slots[index];
+		if (source->shape->references[index]) { adamic_retain(copy->slots[index].reference); }
+	}
+	memcpy(adamic_object_initialized(copy), adamic_object_initialized(source), source->shape->count);
+	memcpy(adamic_object_field_types(copy), adamic_object_field_types(source), source->shape->count);
+	const adamic_map *map = table(source);
+	for (size_t index = 0; index < map->used; index++) {
+		const adamic_map_entry *entry = &map->entries[index];
+		if (entry->deleted) { continue; }
+		adamic_value value = entry->value;
+		if (map->reference_values) { adamic_retain(value.reference); }
+		adamic_map_set(table(copy), (adamic_value){.reference = adamic_retain(entry->key.reference)}, value);
+	}
+	return copy;
+}
+
+static adamic_value *fixed_slot(const adamic_record *record, const adamic_string *key) {
+	for (size_t index = 0; index < record->shape->count; index++) {
+		const char *name = record->shape->names[index];
+		if (strlen(name) == key->length && memcmp(name, key->bytes, key->length) == 0) {
+			return &((adamic_record *)record)->slots[index];
+		}
+	}
+	return NULL;
+}
+
 adamic_value *adamic_record_get_own(const adamic_record *record, const adamic_string *key) {
-	return adamic_map_get(table(record), (adamic_value){.reference = (void *)key});
+	adamic_value *entry = adamic_map_get(table(record), (adamic_value){.reference = (void *)key});
+	if (entry == NULL) { return NULL; }
+	adamic_value *fixed = fixed_slot(record, key);
+	return fixed == NULL ? entry : fixed;
+}
+
+adamic_value *adamic_object_dictionary_field(const adamic_object *object, const char *name) {
+	const adamic_string key = {.length = strlen(name), .bytes = name};
+	return adamic_record_get_own(object, &key);
 }
 
 bool adamic_record_has_own(const adamic_record *record, const adamic_string *key) {
@@ -93,6 +131,13 @@ bool adamic_record_has(const adamic_record *record, const adamic_string *key) {
 }
 
 void adamic_record_define(adamic_record *record, adamic_string *key, adamic_value value) {
+	adamic_value *fixed = fixed_slot(record, key);
+	if (fixed != NULL) {
+		if (table(record)->reference_values) { adamic_release(fixed->reference); }
+		*fixed = value;
+		// A zero-valued token owns the name and its insertion position, not the field's value.
+		value = (adamic_value){.reference = NULL};
+	}
 	adamic_map_set(table(record), (adamic_value){.reference = key}, value);
 }
 
@@ -104,7 +149,24 @@ void adamic_record_set(adamic_record *record, adamic_string *key, adamic_value v
 	adamic_record_define(record, key, value);
 }
 
+// Fixed string views use the same table when a named optional field is first written.
+adamic_value *adamic_record_write_field(adamic_record *record, const char *name) {
+	const adamic_string borrowed = {.length = strlen(name), .bytes = name};
+	adamic_value *slot = adamic_record_get_own(record, &borrowed);
+	if (slot != NULL) { return slot; }
+	adamic_string *key = adamic_string_allocate(borrowed.length);
+	memcpy((char *)key->bytes, name, borrowed.length);
+	adamic_record_set(record, key, (adamic_value){.reference = NULL});
+	return adamic_record_get_own(record, &borrowed);
+}
+
 bool adamic_record_delete(adamic_record *record, const adamic_string *key) {
+	// Delete clears a fixed value too; reinsertion gets a new table position.
+	adamic_value *fixed = fixed_slot(record, key);
+	if (fixed != NULL) {
+		if (table(record)->reference_values) { adamic_release(fixed->reference); }
+		*fixed = (adamic_value){.reference = NULL};
+	}
 	// JavaScript delete succeeds even when no own property was there.
 	(void)adamic_map_delete(table(record), (adamic_value){.reference = (void *)key});
 	return true;
@@ -189,6 +251,33 @@ adamic_array *adamic_record_keys(const adamic_record *record) {
 		}
 	}
 	return keys;
+}
+
+// The same ordered keys drive both reflection APIs; a fixed field's token is
+// never interpreted as its value. The returned arrays own their values and pairs.
+adamic_array *adamic_record_values(const adamic_record *record, bool entries) {
+	adamic_array *keys = adamic_record_keys(record);
+	bool references = table(record)->reference_values;
+	adamic_array *values = adamic_array_new(keys->length, entries || references);
+	static const char *const names[] = {"0", "1"};
+	static const bool scalar_references[] = {true, false};
+	static const bool reference_references[] = {true, true};
+	static const adamic_shape scalar_pair = {2, names, scalar_references, NULL};
+	static const adamic_shape reference_pair = {2, names, reference_references, NULL};
+	for (size_t index = 0; index < keys->length; index++) {
+		adamic_string *key = keys->elements[index].reference;
+		adamic_value value = *adamic_record_get_own(record, key);
+		if (references) { adamic_retain(value.reference); }
+		if (entries) {
+			adamic_object *pair = adamic_object_new(references ? &reference_pair : &scalar_pair);
+			pair->slots[0].reference = adamic_retain(key);
+			pair->slots[1] = value;
+			value.reference = pair;
+		}
+		adamic_array_push(values, value);
+	}
+	adamic_release(keys);
+	return values;
 }
 
 adamic_record_iterator *adamic_record_iterate(adamic_record *record) {

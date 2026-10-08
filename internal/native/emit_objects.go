@@ -105,6 +105,9 @@ func (e *emitter) writeFieldSlot(object, name string, class int) string {
 		}
 	}
 	if !static {
+		if e.recordObjects() {
+			return fmt.Sprintf("(%s->dictionary != NULL ? %s : %s)", object, lookup, data)
+		}
 		return data
 	}
 	return fmt.Sprintf("(%s->class != NULL && %s->class->is_static ? %s : %s)", object, object, lookup, data)
@@ -116,8 +119,10 @@ var cName = regexp.MustCompile(`^[A-Za-z_][A-Za-z0-9_]*$`)
 // objectLiteral makes an object. Its fields' values are evaluated in order first; making the object
 // itself can't be observed, so it may come after them.
 func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
-	if reused, ok := e.reused(literal); ok {
-		return reused
+	if !e.recordObjects() {
+		if reused, ok := e.reused(literal); ok {
+			return reused
+		}
 	}
 	if literal.Spread != nil {
 		// A copy of the source's object, whatever its shape, with the named fields replaced. The copy
@@ -137,12 +142,12 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		for index, field := range literal.Fields {
 			slot := e.temporary()
 			cache := e.cache()
-			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
+			e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
 			if e.fieldTypesNeeded() {
-				e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
+				e.line("if (%s->dictionary == NULL) adamic_object_field_types(%s)[%s.index] = %d;", object, object, cache, field.Value.Type())
 			}
 			if e.fieldReadinessNeeded(field.Name) {
-				e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
+				e.line("if (%s->dictionary == NULL) adamic_object_initialized(%s)[%s.index] = %d;", object, object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
 			}
 			if field.Value.Type().IsReference() {
 				e.line("adamic_release(%s->reference);", slot)

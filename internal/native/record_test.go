@@ -148,7 +148,7 @@ func recordDifference(a, b string) int {
 
 // Build a changed runtime in an isolated cache, without editing the working tree. Each mutant
 // changes production C, links successfully, and is rejected by the named external check.
-func recordMutant(t *testing.T, file, before, after string) string {
+func recordMutant(t *testing.T, file, before, after string, customSource ...string) string {
 	t.Helper()
 	files, err := readRuntime(runtime, "runtime")
 	if err != nil {
@@ -179,7 +179,11 @@ func recordMutant(t *testing.T, file, before, after string) string {
 		t.Fatal(err)
 	}
 	source, binary := filepath.Join(directory, "main.c"), filepath.Join(directory, "main")
-	if err := os.WriteFile(source, []byte(recordHarness(t)), 0o644); err != nil {
+	harness := recordHarness(t)
+	if len(customSource) != 0 {
+		harness = customSource[0]
+	}
+	if err := os.WriteFile(source, []byte(harness), 0o644); err != nil {
 		t.Fatal(err)
 	}
 	arguments := append(flags, "-I", filepath.Dir(library), "-o", binary, source)
@@ -201,7 +205,7 @@ func TestRecordMutants(t *testing.T) {
 		{"deleted-key-iterated", "record.c", "if (slot != NULL) {\n\t\t\t*key = candidate;\n\t\t\t*value = *slot;", "if (true) {\n\t\t\t*key = candidate;\n\t\t\t*value = slot == NULL ? (adamic_value){.number = 0} : *slot;", "iteration", "Node"},
 		{"overwrite-key-leaked", "map.c", "adamic_release(key.reference);", "(void)key;", "references", "LeakSanitizer"},
 		{"stored-key-freed", "record.c", "adamic_map_set(table(record), (adamic_value){.reference = key}, value);", "adamic_map_set(table(record), (adamic_value){.reference = key}, value);\n\tadamic_release(key);", "semantics", "AddressSanitizer: heap-use-after-free"},
-		{"own-slot-null-read", "record.c", "return adamic_map_get(table(record), (adamic_value){.reference = (void *)key});", "adamic_value *missing = NULL;\n\tvolatile double observed = missing->number;\n\t(void)observed;\n\treturn adamic_map_get(table(record), (adamic_value){.reference = (void *)key});", "prototypes", "runtime error: member access within null pointer"},
+		{"own-slot-null-read", "record.c", "adamic_value *entry = adamic_map_get(table(record), (adamic_value){.reference = (void *)key});", "adamic_value *missing = NULL;\n\tvolatile double observed = missing->number;\n\t(void)observed;\n\tadamic_value *entry = adamic_map_get(table(record), (adamic_value){.reference = (void *)key});", "prototypes", "runtime error: member access within null pointer"},
 	} {
 		t.Run(mutant.name, func(t *testing.T) {
 			binary := recordMutant(t, mutant.file, mutant.before, mutant.after)

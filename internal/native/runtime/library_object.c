@@ -41,6 +41,7 @@ void adamic_object_check_write(const adamic_object *object, const char *name) {
 }
 
 bool adamic_object_has_own(const adamic_object *object, const adamic_string *key) {
+ if (object->dictionary != NULL) return adamic_record_has_own(object, key);
  for (size_t index = 0; index < object->shape->count; index++) {
   const char *name = object->shape->names[index];
   if (name[0] != '#' && strlen(name) == key->length && memcmp(name, key->bytes, key->length) == 0) return true;
@@ -94,6 +95,7 @@ static adamic_string *key_string(const char *name) {
 }
 
 adamic_array *adamic_object_keys(const adamic_object *object) {
+ if (object->dictionary != NULL) return adamic_record_keys(object);
  // Class descriptors hide private storage and track static own-property presence.
  if (object->class != NULL) return adamic_class_object_keys(object);
  size_t *indices = ordered(object);
@@ -108,6 +110,7 @@ adamic_array *adamic_object_keys(const adamic_object *object) {
 }
 
 adamic_array *adamic_object_values(const adamic_object *object, bool references, bool entries) {
+ if (object->dictionary != NULL) return adamic_record_values(object, entries);
  size_t *indices = ordered(object);
  adamic_array *values = adamic_array_new(object->shape->count, entries || references);
  static const char *const names[] = {"0", "1"};

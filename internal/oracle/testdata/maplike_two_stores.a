@@ -1,0 +1,41 @@
+// Reduced tsc MapLike/CompilerOptions shape and getOwnKeys use; no Map adaptation.
+interface Options { z?: string; '2'?: string; [key: string]: string | undefined }
+const seed = 'seed' + String(1);
+const options: Options = { [seed]: 'early', z: 'fixed', '2': 'two' };
+const first = 'a' + String(Object.keys(options).length);
+options[first] = 'dynamic-' + first;
+options['10'] = 'ten';
+options['01'] = 'leading';
+options['absent'] = undefined;
+console.log(Object.keys(options).join(','));
+for (const entry of Object.entries(options)) {
+    console.log(entry[0] + ':' + String(entry[1]));
+}
+console.log(Object.values(options).join(','));
+console.log(String(options['missing']) + ':' + String('missing' in options));
+console.log(String('absent' in options));
+delete options['z'];
+options['z'] = 'readded-' + first;
+delete options[first];
+options[first] = 'last-' + first;
+console.log(Object.keys(options).join(','));
+console.log(String(options.z));
+type Named = { z?: string };
+const named: Named = options;
+console.log(String(named.z));
+options['z'] = 'changed';
+console.log(String(named.z));
+const copied = { ...named };
+console.log(String(copied.z));
+options['z'] = 'after-copy';
+console.log(String(copied.z) + ':' + String(named.z));
+named.z = 'through-view';
+console.log(String(options['z']));
+const fresh: Record<string, string> = {};
+const freshView: { added?: string } = fresh;
+freshView.added = 'created-through-view';
+console.log(String(fresh['added']));
+const erased: unknown = freshView;
+if (typeof erased === 'object' && erased !== null && 'added' in erased) {
+    console.log(String(erased.added));
+}

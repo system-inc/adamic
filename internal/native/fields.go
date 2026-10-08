@@ -28,7 +28,14 @@ func (e *emitter) uniformFieldSlot(object, name string) string {
 func uniformFieldOffsets(program *ir.Program) map[string]int {
 	// Named regex groups create layouts outside ObjectLiteral. Until their names and
 	// offsets participate in this proof, regex programs retain checked shape lookup.
-	if len(program.Regexps) != 0 {
+	hasRecords := false
+	walkExpressions(program, func(expression ir.Expression) {
+		if _, ok := expression.(ir.RecordLiteral); ok {
+			hasRecords = true
+		}
+	})
+	// Record views can reach dictionary slots, which have no fixed offset.
+	if len(program.Regexps) != 0 || hasRecords {
 		return map[string]int{}
 	}
 	// Runtime-produced layouts are not ObjectLiterals: map entries (0, 1), Error (name, message),

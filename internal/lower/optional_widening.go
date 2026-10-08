@@ -60,6 +60,9 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 	if source.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 || target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
 		return nil
 	}
+	if element := l.recordElement(source); element != nil && l.recordStringObjectView(source, target, element) {
+		return nil // The dictionary proves the optional field's presence and string storage.
+	}
 	// Container elements are views too. Avoid walking library methods, whose generic signatures
 	// describe operations rather than value fields.
 	if (l.checker.IsArrayType(source) || checker.IsTupleType(source)) && (l.checker.IsArrayType(target) || checker.IsTupleType(target)) {

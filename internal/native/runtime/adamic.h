@@ -250,6 +250,8 @@ typedef struct adamic_object {
 	const adamic_shape *shape;
 	const adamic_class *class;
 	bool frozen;
+	// Index values and creation-order tokens for fixed record fields share record.c's table.
+	struct adamic_map *dictionary;
 	adamic_value slots[];
 } adamic_object;
 
@@ -355,8 +357,12 @@ adamic_value *adamic_object_write_field(adamic_object *object, const char *name,
 adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 // Optional own fields may be absent; NULL then asks the reader to produce typed undefined.
+adamic_value *adamic_object_dictionary_field(const adamic_object *object, const char *name);
 adamic_value *adamic_object_optional_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 static inline adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (object->dictionary != NULL) {
+		return adamic_object_dictionary_field(object, name);
+	}
 	if (cache->shape != object->shape) {
 		return adamic_object_optional_find(object, name, cache);
 	}
@@ -369,6 +375,7 @@ static inline adamic_value *adamic_object_optional_field(const adamic_object *ob
 // layout. That whole-program proof excludes inherited constructor storage, so the cache
 // hit needs only the shape comparison, without loading a class descriptor.
 static inline adamic_value *adamic_object_data_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (object->dictionary != NULL) { return adamic_object_dictionary_field(object, name); }
 	if (cache->shape == object->shape) {
 		return &((adamic_object *)object)->slots[cache->index];
 	}
@@ -538,12 +545,15 @@ void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value);
 
 bool adamic_map_delete(adamic_map *map, adamic_value key);
 
-// Records own a string-keyed Map through a fixed-shape wrapper (record.c). These aliases
-// use ordinary object cleanup; the compiler must use record operations for record views.
+// Records are ordinary objects with fixed declared slots and an ordered dictionary
+// (record.c). Fixed keys have order tokens in that table, but their values live only in slots.
 typedef adamic_object adamic_record;
 typedef adamic_object adamic_record_iterator;
 
 adamic_record *adamic_record_new(bool reference_values);
+adamic_record *adamic_record_copy(const adamic_record *record);
+adamic_value *adamic_record_write_field(adamic_record *record, const char *name);
+adamic_record *adamic_record_new_shaped(const adamic_shape *shape, bool reference_values);
 // Own lookup returns a borrowed slot, NULL for absence (including an inherited name).
 adamic_value *adamic_record_get_own(const adamic_record *record, const adamic_string *key);
 bool adamic_record_has_own(const adamic_record *record, const adamic_string *key);
@@ -560,6 +570,7 @@ bool adamic_record_delete(adamic_record *record, const adamic_string *key);
 size_t adamic_record_size(const adamic_record *record);
 // keys returns an owned array in own-key order: array indices ascending, then insertion order.
 adamic_array *adamic_record_keys(const adamic_record *record);
+adamic_array *adamic_record_values(const adamic_record *record, bool entries);
 // Iteration snapshots keys, holds record and keys, skips deleted keys, and reads current values.
 // New keys are not visited. next returns borrowed key/value pairs; release ends iteration.
 adamic_record_iterator *adamic_record_iterate(adamic_record *record);

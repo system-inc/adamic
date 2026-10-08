@@ -11,6 +11,7 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
 	object->shape = shape;
 	object->class = NULL;
 	object->frozen = false;
+	object->dictionary = NULL;
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
 	memset(adamic_object_initialized(object), 1, shape->count);
 	memset(adamic_object_field_types(object), 0, shape->count);
@@ -18,6 +19,7 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
 }
 
 adamic_object *adamic_object_copy_checked(const adamic_object *source, const char *expression) {
+	if (source->dictionary != NULL) { return adamic_record_copy(source); }
 	const adamic_shape *shape = source->class == NULL ? source->shape : source->class->public_shape;
 	adamic_object *object = adamic_object_new(shape);
 	for (size_t position = 0; position < shape->count; position++) {
@@ -41,6 +43,7 @@ adamic_object *adamic_object_copy(const adamic_object *source) { return adamic_o
 // adamic_object_has is object.hasOwnProperty(name): one of the shape's own names, not a method on a
 // prototype. A shape's names are C strings, so the lengths have to agree before the bytes do.
 bool adamic_object_has(const adamic_object *object, const adamic_string *name) {
+	if (object->dictionary != NULL) { return adamic_record_has_own(object, name); }
 	for (size_t index = 0; index < object->shape->count; index++) {
 		const char *field = object->shape->names[index];
 		size_t length = strlen(field);
@@ -133,7 +136,7 @@ static adamic_value *adamic_object_read_mode(const adamic_object *object, const 
 			return adamic_object_read_mode(object->slots[object->class->static_parent - 1].reference, name, cache, expression, expected, owner);
 		}
 	}
-	if (slot == NULL || !adamic_object_initialized(object)[cache->index]) {
+	if (slot == NULL || (object->dictionary == NULL && !adamic_object_initialized(object)[cache->index])) {
 		size_t capacity = strlen(name) + strlen(expression) + (expected == NULL ? 0 : strlen(expected)) + 100;
 		char *message = malloc(capacity);
 		if (message == NULL) {
@@ -152,6 +155,7 @@ adamic_value *adamic_object_read(const adamic_object *object, const char *name, 
 }
 
 void adamic_object_set_initialized(adamic_object *object, const char *name, bool initialized) {
+	if (object->dictionary != NULL) { return; }
 	adamic_slot_cache cache = {NULL, 0};
 	(void)adamic_object_field(object, name, &cache);
 	adamic_object_initialized(object)[cache.index] = initialized;
@@ -162,7 +166,7 @@ void adamic_object_set_initialized(adamic_object *object, const char *name, bool
 adamic_value adamic_object_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression) {
 	const adamic_object *owner = NULL;
 	adamic_value *slot = adamic_object_read_mode(object, name, cache, expression, type, &owner);
-	unsigned char actual = adamic_object_field_types(owner)[cache->index];
+	unsigned char actual = owner->dictionary == NULL ? adamic_object_field_types(owner)[cache->index] : owner->dictionary->reference_values ? 10 : 0;
 	// Boxed unions and packed maybe-numbers have a real runtime tag. Convert only
 	// after that tag proves which payload is live; never interpret a pointer as a number.
 	if (actual == 10 && slot->reference != NULL) {
@@ -216,7 +220,7 @@ void adamic_view_literal_failure(const char *expression, const char *expected, u
 void adamic_object_view_write(adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression) {
 	adamic_value *slot = adamic_object_optional_field(object, name, cache);
 	if (slot != NULL) {
-		unsigned char actual = adamic_object_field_types(object)[cache->index];
+		unsigned char actual = object->dictionary == NULL ? adamic_object_field_types(object)[cache->index] : object->dictionary->reference_values ? 10 : 0;
 		if (actual == wanted || (actual == 10 && wanted <= 2) || (actual == 7 && wanted == 1)) { return; }
 	}
 	(void)adamic_object_view(object, name, cache, wanted, type, expression);

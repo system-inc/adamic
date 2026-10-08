@@ -1,0 +1,27 @@
+{
+  "all_bytes_outside_stage0_unchanged": true,
+  "changes": [
+    {
+      "file": "07_optional_view.a",
+      "before": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/records/07_optional_view.a:17:7: stage 0 can't lower a Record<string, string> seen as Named (fixed objects and records have different storage; copy explicitly) yet"
+      },
+      "after": {
+        "outcome": "Compiles",
+        "what": ""
+      }
+    },
+    {
+      "file": "13_strict_option.a",
+      "before": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/records/13_strict_option.a:17:12: stage 0 can't lower a record value of type boolean | undefined yet"
+      },
+      "after": {
+        "outcome": "Compiles",
+        "what": ""
+      }
+    }
+  ]
+}
