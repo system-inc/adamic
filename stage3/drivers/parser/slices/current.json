@@ -1,5 +1,5 @@
 {
-  "source_area": "b61e70642652a7f23af113278ce2fc357d7b4646",
+  "source_area": "efe9f4042049234e5a52639fe77b47c311fd530c",
   "source_pin": {
     "repository": "https://github.com/microsoft/TypeScript.git",
     "tag": "v6.0.3",
@@ -7,7 +7,7 @@
   },
   "summary": {
     "typescript": "6.0.3",
-    "tree": "/workspace/scratch/parser-front25-adapted",
+    "tree": "/workspace/scratch/parser-front31-lane-fixed/adapted-tree",
     "entries": [
       "src/compiler/parser.ts:createSourceFile",
       "src/compiler/parser.ts:forEachChild",
@@ -17,22 +17,22 @@
       "src/compiler/types.ts:ScriptTarget",
       "src/compiler/types.ts:SyntaxKind"
     ],
-    "declarations": 2068,
-    "copied_spans": 2080,
+    "declarations": 2071,
+    "copied_spans": 2083,
     "namespace_wrapper_spans": 12,
-    "value_declarations": 1403,
+    "value_declarations": 1406,
     "type_declarations": 665,
     "files": 79,
     "declaration_files": 27,
-    "code_declarations": 1991,
+    "code_declarations": 1994,
     "export_facade_records": 77,
     "evaluation_only_files": 52,
     "preserves_evaluation": true,
-    "declaration_lines": 41853,
-    "declaration_bytes": 2358440,
+    "declaration_lines": 41861,
+    "declaration_bytes": 2358868,
     "rewritten_import_lines": 236
   },
-  "archive_sha256": "700528e3a5570926c18c22d6959b0d1f078962b64167e17bbd2b7a2fe8bd105e",
+  "archive_sha256": "3d9f2e7f09d6c52bc690f03797b4614b034a281bba10d6dd9a96b9da77a4a7ae",
   "temporary_adaptations_retained": [
     60,
     61,
@@ -45,5 +45,6 @@
   "retired_scanner_temporary_80": "absent from current area and not reapplied",
   "dump_reference": "../reference.json",
   "case_reference": "../cases-reference.json",
-  "warning": "Artifact uses every current area adaptation plus still-required 65 before gathering; declarations are verbatim relative to that adapted source, not pristine TypeScript."
+  "warning": "Current main plus temporary 65, gathered verbatim relative to the adapted source. No discovery stubs. The 81-file Node dump was revalidated; the existing case manifest was not rerun in this unit.",
+  "source_base": "origin/main"
 }

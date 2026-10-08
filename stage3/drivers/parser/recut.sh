@@ -6,11 +6,11 @@ area=$(realpath "$1")
 tree=$(realpath -m "$2")
 slice=$(realpath -m "$3")
 : "${SLICE_TYPESCRIPT:?point at stock TypeScript 6.0.3 lib/typescript.js}"
-: "${CENSUS_NODE_TYPES:?point at official @types/node 25.3.3}"
 export CENSUS_TYPESCRIPT="$SLICE_TYPESCRIPT"
 bash "$area/stage3/apply.sh" "$tree" > "$tree.apply.log" 2>&1
-# The current area pipeline already carries 60-64. 65 is still absent there.
-node "$here/../../adapt/65-temporary-node-process-cast/adapt.cjs" "$tree" > "$tree.temp65.log" 2>&1
+# Apply the local temporary if the selected checkout does not yet carry it.
+# The adapter is idempotent when its apply pipeline already includes 65.
+node "$here/../../adapt/65-temporary-node-builtins/adapt.cjs" "$tree" > "$tree.temp65.log" 2>&1
 bash "$area/stage3/slice/run.sh" "$tree" "$slice" \
     src/compiler/parser.ts:createSourceFile src/compiler/parser.ts:forEachChild \
     src/compiler/program.ts:flattenDiagnosticMessageText \

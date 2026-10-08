@@ -1,0 +1,25 @@
+// From TypeScript 6.0.3, src/compiler/core.ts, sameMap implementation.
+// A type-correct callback can mutate the input through a captured alias.
+function sameMap<T, U = T>(array: readonly T[] | undefined, f: (x: T, i: number) => U): readonly U[] | undefined {
+    if (array !== undefined) {
+        for (let i = 0; i < array.length; i++) {
+            const item = array[i]!;
+            const mapped = f(item, i);
+            if (item as unknown !== mapped) {
+                const result: U[] = array.slice(0, i) as unknown[] as U[];
+                result.push(mapped);
+                for (i++; i < array.length; i++) {
+                    result.push(f(array[i]!, i));
+                }
+                return result;
+            }
+        }
+    }
+    return array as unknown[] as U[];
+}
+const input: (string | number)[] = ["a", "b"];
+const output = sameMap<string | number, string>(input, (value, index) => {
+    if (index === 1) { input[0] = 0; }
+    return typeof value === "string" ? value : String(value);
+});
+console.log(`${typeof output?.[0]}`);

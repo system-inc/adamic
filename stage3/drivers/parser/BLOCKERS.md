@@ -1,3 +1,127 @@
+# Current main and temporary Node builtins: adaptation green, native red
+
+Driver inputs use readTextFile and programArguments from adamic. The erased
+node:fs activation import is removed. Both the full tree and the newly gathered
+slice produce 36,429,231 bytes, SHA256
+686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615,
+with empty stderr; cmp exits 0. Node-end and both JSDoc mutants are caught.
+The audited re-cut has 27 declaration files, 1,994 code declarations,
+41,861 copied-span lines and 2,083 spans, across a 79-module evaluation graph.
+The archive at slices/current.tar.gz contains the validated tree and driver.
+
+Temporary 65 now groups the erased Node builtin contracts. Current main already
+has the minimal local process view, so full apply edits only performanceCore.ts
+and tracing.ts: 7 lines added, 2 removed. Both complete stage3 lanes PASS against
+main efe9f404: 106,366 passing, 1 sanctioned API failure, 0 pending; exactly
+api/typescript.d.ts differs, with identical 222-line composed sanctions. Install
+and build exit 0; the expected upstream/oracle exit is 1. All ten newly built
+JavaScript artifacts are byte-identical. No new API sanction is added.
+
+On current main both native split modes stop before C at debug.ts:113:19:
+TS2339 Property captureStackTrace does not exist on type ErrorConstructor.
+The second use at 114:19 has the same error. This is the measured checker result,
+even though Error facts were reported as landed. Build-attempt wall times are
+0.5710s unsplit, 0.6212s split; these are not clang times. There is no parser C,
+binary, native dump comparison, performance measurement or native-output mutant.
+
+The following fifteen source stops were found in a separate uncommitted copy.
+All after row 1 are behind throwing discovery placeholders. Two source columns
+are mapped back from edited callback types; the raw observed columns and exact
+messages are retained in ordered-stops.json. Return-predicate stops were reached
+only after widening the preceding overload callback contracts.
+
+| Order | Original slice location | Minimal program | Covered on a branch |
+|---|---|---|---|
+| 1 | src/compiler/debug.ts:113:19 | [native-error-capture-stack.a](native-error-capture-stack.a) | Error checker fact missing on observed main; no covering clean merge verified |
+| 2 | src/compiler/core.ts:11:52 | [native-enum-map.a](native-enum-map.a) | codex/enum-init-reach 2152fc3b, previously reported green; absent from main |
+| 3 | src/compiler/debug.ts:333:29 | [native-enum-map.a](native-enum-map.a) | codex/enum-init-reach 2152fc3b, previously reported green; absent from main |
+| 4 | src/compiler/performanceCore.ts:37:37 | [native-call-before-enum.a](native-call-before-enum.a) | codex/enum-init-reach 2152fc3b, previously reported green; absent from main |
+| 5 | src/compiler/performance.ts:15:18 | [native-call-before-enum.a](native-call-before-enum.a) | codex/enum-init-reach 2152fc3b, previously reported green; absent from main |
+| 6 | src/compiler/performance.ts:16:15 | [native-call-before-enum.a](native-call-before-enum.a) | codex/enum-init-reach 2152fc3b, previously reported green; absent from main |
+| 7 | src/compiler/performance.ts:17:16 | [native-call-before-enum.a](native-call-before-enum.a) | codex/enum-init-reach 2152fc3b, previously reported green; absent from main |
+| 8 | src/compiler/performance.ts:18:19 | [native-call-before-enum.a](native-call-before-enum.a) | codex/enum-init-reach 2152fc3b, previously reported green; absent from main |
+| 9 | src/compiler/corePublic.ts:9:5 | [native-maplike-index.a](native-maplike-index.a) | codex/records-lowering 456c981b, absent from main |
+| 10 | src/compiler/core.ts:28:37 | [native-nonnull.a](native-nonnull.a) | codex/non-null-check a02613ef, absent from main |
+| 11 | src/compiler/core.ts:42:30 | [native-nonnull.a](native-nonnull.a) | codex/non-null-check a02613ef, absent from main |
+| 12 | src/compiler/core.ts:54:101 | [native-predicate-overload.a](native-predicate-overload.a) | codex/notyet-predicates c191f97b, attempted merge conflicted and aborted |
+| 13 | src/compiler/core.ts:54:116 | [native-some-predicate-overload.a](native-some-predicate-overload.a) | codex/notyet-predicates c191f97b, attempted merge conflicted and aborted |
+| 14 | src/compiler/core.ts:56:128 | [native-some-predicate-overload.a](native-some-predicate-overload.a) | codex/notyet-predicates c191f97b, attempted merge conflicted and aborted |
+| 15 | src/compiler/core.ts:76:113 | [native-predicate-overload.a](native-predicate-overload.a) | codex/notyet-predicates c191f97b, attempted merge conflicted and aborted |
+
+The discovery helpers replace function bodies with throw, preserve inferred
+variable types and explicitly preserve tryGetPerformance's return type. The
+MapLike declaration becomes Record<string,T> with an unused throwing typed
+helper. Overload predicate parameter contracts are widened and the implementation
+is made throwing; later bodyless return overloads are removed. These edits have
+no Node-identity or acceptance claim. Trial synthetic inference/syntax errors
+and a reintroduced duplicate enum stop are excluded from the fifteen-source
+list; raw failed attempts remain evidence. The last find placeholder is recorded
+without another build after the limit. No discovery source is an adaptation.
+
+## Requested feature trials
+
+Fresh unpushed feature scratch starts at efe9f404. Generic-function-value
+5d1b45e1 merges cleanly. Its isolated empty-array conditional prints `0\n1\n`
+on Node and native, stderr empty, cmp 0; a one-byte output mutant gives cmp 1.
+The probe binary is 361,104 bytes. Main refuses this probe at array-of-never
+lowering. The older whole toSorted witness still stops at its independent
+SortedReadonlyArray cast, so it does not test the conditional in isolation.
+
+Predicates c191f97b was found on codex/notyet-predicates and attempted; conflicts
+were aborted. Closure-convention 22fd701a also conflicted and was aborted,
+including lowering files. No conflicts were resolved. Both full-slice modes on
+the clean generic-function-value merge retain the same Error checker stop.
+Predicate and arguments.length probes remain refused; no disappearance is
+claimed from an unmerged fix. Namespace fixes are still with compiler.
+
+## The two casts
+
+Classify both as source-proof/edit candidates, not permission to admit unchecked
+array casts. native-same-map-return-cast.a isolates the T-to-U return view;
+native-key-array-cast.a isolates string[] to finite AssertionKeys[]. Both are
+refused by main and the clean feature scratch.
+
+There is also a concrete sameMap source counterexample: native-same-map-side-effect.a
+keeps its implementation statements and uses a type-correct string-returning
+callback that changes the earlier captured input slot to a number. Node prints
+`number`, although the result type promises strings. Equality of each mapped
+item at its own iteration therefore does not prove the final array view under
+callback mutation. This is an upstream source-contract candidate, not a native
+miscompile: native compilation stops first at the checked indexed read. The
+smaller cast-only witness reaches the actual cast refusal. Actual tsc callers
+would need separate invariant evidence for a checked/type-only source repair;
+none is implemented in this unit.
+
+The assertion-cache key case has a local finite-key ownership invariant, but
+getOwnKeys returns string[]. A local typed enumeration or checked key narrowing
+would expose that invariant; the reduced cast admits arbitrary string input
+and cannot justify blanket compiler narrowing. No key-array source edit is
+implemented here.
+
+## Gate and limitations
+
+The first adapter gate found a missing writeFileSync member; it was added before
+any final push. Unbounded upstream worker runs exited without counts; bounded
+Node heaps and sequential full lanes pass. No failures were accepted. The
+adapter is idempotent, and its JS-equality guard catches a ! to !! mutation of
+tsc's actual browser test. All 32 local lane tests pass, including their planted
+API/count/failure-title mutants. Fifteen distinct stop/feature probes run on
+Node with exit 0; main rejects all fifteen, and the clean feature scratch builds
+only the isolated conditional. Its native comparison and byte mutant pass.
+The extra sameMap source counterexample runs on Node and remains natively refused.
+
+Tool setup: Go ready 0.029s, Node 0.031s, clang 0.246s, markdown install 0.811s
+(ready 0.908s), submodules 239.908s; nproc 5. Initial scratch SDK replacement
+used the wrong module name, then the pinned TypeScript/tsc replacement corrected
+it; compiler build exits 0. No compiler edits or full compiler gate are claimed.
+
+[Final evidence](evidence/front31/result.json),
+[ordered exact diagnostics](evidence/front31/ordered-stops.json),
+[branch attempts](evidence/front31/parser-front31-feature-merges.json) and raw
+compressed logs include commands, outputs, mutants and the exact discovery diff.
+
+---
+
 # Main-based parser run: fifteen ordered stops, native red
 
 Fresh main ef3141e9 plus clean namespace 47a6fabe, enum reachability 2152fc3b

@@ -24,6 +24,11 @@ Rows measure incremental edits; total measures the final tree against pristine.
 | 62-temporary-tracing-write | 1 | 1 | 1 |
 | 63-temporary-tracing-legend | 1 | 1 | 1 |
 | 64-temporary-parser-range-read | 1 | 1 | 1 |
+| 65-temporary-node-builtins | 2 | 7 | 2 |
 | 70-readonly-views | 7 | 22 | 22 |
 | 75-optional-widening | 1 | 17 | 6 |
-| **Total** | 78 | 5128 | 5102 |
+| **Total** | 78 | 5135 | 5104 |
+
+65-temporary-node-builtins is temporary: it retires when Adamic accepts require
+with a literal specifier and Node builtin types. Its two-file edit erases on Node;
+core already has the required local process view on current main.
