@@ -16,7 +16,7 @@ func TestLibraryMapSetGapsStayRefused(t *testing.T) {
 	keys: () => new Set<number>().keys(),
 };
 const combined = new Set<number>().union(other);
-`, "union with anything but a concrete library Set"},
+`, "union with anything but a concrete library Set or Map"},
 		{"different representations", `const combined = new Set<number>([1]).union(new Set<string>(['a']));`, "union between Sets whose elements have different representations"},
 		{"void thisArg", `function context(): void {}
 new Set<number>([1]).forEach((value: number): void => {}, context());`, "a void call used as a value"},

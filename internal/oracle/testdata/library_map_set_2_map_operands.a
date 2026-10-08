@@ -1,0 +1,32 @@
+// Maps contribute keys, not values, to every ES2025 Set operation.
+function show(values: ReadonlySet<number>): string { return [...values].join(','); }
+const left = new Set<number>([3, 1, 2, NaN, -0]);
+const right = new Map<number, string>([[2, 'two'.repeat(2)], [3, 'three'.repeat(2)], [7, 'seven'.repeat(2)], [NaN, 'nan'.repeat(2)]]);
+console.log(`union ${show(left.union(right))}`);
+console.log(`intersection ${show(left.intersection(right))}`);
+console.log(`difference ${show(left.difference(right))}`);
+console.log(`symmetric ${show(left.symmetricDifference(right))}`);
+console.log(`predicates ${left.isSubsetOf(right)} ${left.isSupersetOf(right)} ${left.isDisjointFrom(right)}`);
+const small = new Set<number>([2]);
+console.log(`subset ${small.isSubsetOf(right)} superset ${left.isSupersetOf(new Map<number, boolean>([[2, false]]))}`);
+console.log(`disjoint ${small.isDisjointFrom(new Map<number, boolean>([[8, false]]))}`);
+const tie = new Map<number, boolean>([[1, false], [3, true], [4, false]]);
+console.log(`tie ${show(new Set<number>([3, 2, 1]).intersection(tie))}`);
+const zero = new Map<number, boolean>([[+0, false], [NaN, false]]);
+console.log(`zero ${show(left.intersection(zero))} ${zero.size}`);
+const empty = new Map<number, string>();
+console.log(`empty ${show(left.union(empty))} ${show(left.difference(empty))} ${left.isDisjointFrom(empty)}`);
+console.log(`unchanged ${show(left)} ${[...right.keys()].join(',')}`);
+const key = { value: 'key'.repeat(2) };
+const other = { value: 'key'.repeat(2) };
+const objects = new Set([key]);
+const objectMap = new Map([[other, 1], [key, 2]]);
+console.log(`identity ${objects.union(objectMap).size} ${objects.intersection(objectMap).size} ${objects.symmetricDifference(objectMap).size}`);
+const text = new Set<string>(['ab'.repeat(2), 'cd'.repeat(2)]);
+const textMap = new Map<string, number>([['cd'.repeat(2), 1], ['ef'.repeat(2), 2]]);
+console.log(`text ${[...text.union(textMap)].join(',')} ${[...text.difference(textMap)].join(',')}`);
+const flags = new Set<boolean>([false]);
+console.log(`flags ${[...flags.union(new Map<boolean, number>([[true, 1]]))].join(',')}`);
+const optional = new Set<number | undefined>([undefined, NaN, -0]);
+const optionalMap = new Map<number | undefined, string>([[undefined, 'missing'], [+0, 'zero']]);
+console.log(`optional ${optional.intersection(optionalMap).size} ${optional.difference(optionalMap).size} ${optional.isSupersetOf(optionalMap)}`);
