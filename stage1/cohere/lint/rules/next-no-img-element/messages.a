@@ -1,0 +1,1 @@
+export const message = "This is a raw <img> element. Use `<Image />` from `next/image` instead, which serves a correctly sized image, defers what is offscreen, and reserves the space before the bytes arrive. A raw <img> does none of that, so it costs a slower Largest Contentful Paint and more bandwidth without failing anything at build time.";

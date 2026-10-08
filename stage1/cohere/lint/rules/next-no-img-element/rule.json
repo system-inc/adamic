@@ -1,0 +1,14 @@
+{
+  "name": "@next/next/no-img-element",
+  "kinds": [
+    "JsxOpeningElement",
+    "JsxSelfClosingElement"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNextNoImgElement",
+  "upstreamPackage": "next",
+  "upstreamTest": "TestNoImgElement"
+}

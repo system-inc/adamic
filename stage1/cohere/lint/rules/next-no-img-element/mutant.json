@@ -1,0 +1,5 @@
+{
+  "name": "no-img-element-gate-inverted",
+  "from": "if (this.enclosedByPicture(index))",
+  "to": "if (!this.enclosedByPicture(index))"
+}
