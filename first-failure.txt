@@ -1,0 +1,5 @@
+FIRST FAILURE (vet, at 34.2 s):
+# github.com/system-inc/adamic/stage1/cohere/markdowninline
+# [github.com/system-inc/adamic/stage1/cohere/markdowninline]
+vet: stage1/cohere/markdowninline/port_test.go:396:11: undefined: fmt
+
