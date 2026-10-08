@@ -7,14 +7,14 @@
     "__String": {
       "total_pairs": 14,
       "total_reads": 511,
-      "remaining_pairs": 12,
-      "remaining_reads": 64
+      "remaining_pairs": 0,
+      "remaining_reads": 0
     },
     "mixed primitive union": {
       "total_pairs": 23,
       "total_reads": 538,
-      "remaining_pairs": 21,
-      "remaining_reads": 91
+      "remaining_pairs": 9,
+      "remaining_reads": 27
     }
   },
   "pairs": [
@@ -3812,8 +3812,11 @@
         }
       ],
       "pair_id": "7618:escapedText",
-      "state": "pending source integration",
-      "evidence": []
+      "state": "complete source fixture group",
+      "evidence": [
+        "TestCheckedViewBrandCandidatePairs",
+        "brand-pairs/7618-escapedText-*.a"
+      ]
     },
     {
       "type_id": 7619,
@@ -3961,8 +3964,11 @@
         }
       ],
       "pair_id": "7619:escapedText",
-      "state": "pending source integration",
-      "evidence": []
+      "state": "complete source fixture group",
+      "evidence": [
+        "TestCheckedViewBrandCandidatePairs",
+        "brand-pairs/7619-escapedText-*.a"
+      ]
     },
     {
       "type_id": 10393,
@@ -4069,8 +4075,11 @@
         }
       ],
       "pair_id": "10393:escapedName",
-      "state": "pending source integration",
-      "evidence": []
+      "state": "complete source fixture group",
+      "evidence": [
+        "TestCheckedViewBrandCandidatePairs",
+        "brand-pairs/10393-escapedName-*.a"
+      ]
     },
     {
       "type_id": 9170,
@@ -4178,8 +4187,11 @@
         }
       ],
       "pair_id": "9170:escapedText",
-      "state": "pending source integration",
-      "evidence": []
+      "state": "complete source fixture group",
+      "evidence": [
+        "TestCheckedViewBrandCandidatePairs",
+        "brand-pairs/9170-escapedText-*.a"
+      ]
     },
     {
       "type_id": 6849,
@@ -4412,8 +4424,11 @@
         }
       ],
       "pair_id": "9228:escapedText",
-      "state": "pending source integration",
-      "evidence": []
+      "state": "complete source fixture group",
+      "evidence": [
+        "TestCheckedViewBrandCandidatePairs",
+        "brand-pairs/9228-escapedText-*.a"
+      ]
     },
     {
       "type_id": 8654,
@@ -4467,8 +4482,11 @@
         }
       ],
       "pair_id": "8654:keyPropertyName",
-      "state": "pending source integration",
-      "evidence": []
+      "state": "complete source fixture group",
+      "evidence": [
+        "TestCheckedViewBrandCandidatePairs",
+        "brand-pairs/8654-keyPropertyName-*.a"
+      ]
     },
     {
       "type_id": 9761,
@@ -4628,8 +4646,11 @@
         }
       ],
       "pair_id": "6998:localJsxFragmentNamespace",
-      "state": "pending source integration",
-      "evidence": []
+      "state": "complete source fixture group",
+      "evidence": [
+        "TestCheckedViewBrandCandidatePairs",
+        "brand-pairs/6998-localJsxFragmentNamespace-*.a"
+      ]
     },
     {
       "type_id": 6998,
@@ -4675,8 +4696,11 @@
         }
       ],
       "pair_id": "6998:localJsxNamespace",
-      "state": "pending source integration",
-      "evidence": []
+      "state": "complete source fixture group",
+      "evidence": [
+        "TestCheckedViewBrandCandidatePairs",
+        "brand-pairs/6998-localJsxNamespace-*.a"
+      ]
     },
     {
       "type_id": 10782,
@@ -4719,8 +4743,11 @@
         }
       ],
       "pair_id": "10782:escapedName",
-      "state": "pending source integration",
-      "evidence": []
+      "state": "complete source fixture group",
+      "evidence": [
+        "TestCheckedViewBrandCandidatePairs",
+        "brand-pairs/10782-escapedName-*.a"
+      ]
     },
     {
       "type_id": 37515,
@@ -4898,8 +4925,11 @@
         }
       ],
       "pair_id": "7612:escapedText",
-      "state": "pending source integration",
-      "evidence": []
+      "state": "complete source fixture group",
+      "evidence": [
+        "TestCheckedViewBrandCandidatePairs",
+        "brand-pairs/7612-escapedText-*.a"
+      ]
     },
     {
       "type_id": 8588,
@@ -4943,8 +4973,11 @@
         }
       ],
       "pair_id": "8588:escapedName",
-      "state": "pending source integration",
-      "evidence": []
+      "state": "complete source fixture group",
+      "evidence": [
+        "TestCheckedViewBrandCandidatePairs",
+        "brand-pairs/8588-escapedName-*.a"
+      ]
     },
     {
       "type_id": 9477,
@@ -4979,8 +5012,11 @@
         }
       ],
       "pair_id": "9477:escapedText",
-      "state": "pending source integration",
-      "evidence": []
+      "state": "complete source fixture group",
+      "evidence": [
+        "TestCheckedViewBrandCandidatePairs",
+        "brand-pairs/9477-escapedText-*.a"
+      ]
     },
     {
       "type_id": 97180,

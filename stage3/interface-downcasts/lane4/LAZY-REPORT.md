@@ -92,3 +92,45 @@ With shared hooks now explicitly authorized, working targets remain October 8,
 2026, 17:00 MDT for the remaining branded family and October 10, 17:00 MDT for
 both families. These dates supersede the earlier handoff-dependent estimate;
 remaining fixture results, not another lane's permission, determine delivery.
+
+## Branded family source coverage complete
+
+Built: all fourteen branded candidate pairs, including optional fields and receiver unions/intersections.
+Commits: implementation 2b767776; this per-pair fixture group carries the remaining twelve pairs.
+Checks: TestCheckedViewBrandCandidatePairs passes 26.446s across 60 source cases; scoped oracle vet passes.
+Mutants: each of twelve malformed-number helper reads has a one-read bypass caught independently by valid native release and JavaScript runs.
+Uncovered: nine remaining mixed-family candidate pairs / 27 reads; whole-tsc compilation and runtime reachability.
+
+The twelve remaining pair fixtures preserve their candidate receiver forms,
+field names and complete __String declaration. They cover string, branded void,
+wrong number, wrong null and missing own fields. The three optional fields allow
+absence; required fields refuse it. Helpers with Identifier|undefined and
+Symbol|undefined guard their receiver, while the Identifier|PrivateIdentifier,
+MemberName and LeftHandSideExpression&Identifier helpers retain their static
+receiver type. The last is a read through an intersection receiver; this does not
+claim general intersection cast admission or lane 7's conjunction machinery.
+Module-local reduced interfaces avoid library declaration merging.
+
+Each positive source case matches Node in release native, sanitized native with
+leak checks, and JavaScript. Each wrong case pins field, declared __String union,
+found category and exit 70 in both backends. The malformed-number read-removal
+mutants execute valid release code and print uncheckedunchecked at exit 0,
+violating the refusal pin. These are per-pair checks, not a claim that compiling
+a reduced fixture compiles its entire tsc source module.
+
+| Family | Completed candidate pairs / reads | Remaining candidate pairs / reads |
+| --- | ---: | ---: |
+| __String | 14 / 511 | 0 / 0 |
+| Mixed primitive union | 14 / 511 | 9 / 27 |
+
+The branded candidate family is delivered on October 8 UTC (October 7 MDT),
+earlier than October 9. The remaining mixed-family working target is October 9,
+2026, 17:00 MDT (23:00 UTC), with the array consumer's overlapping object/member
+contract reported separately if it needs another lane's source adapter. Shared
+hooks are now in this lane's hands; no wait on permission or whole-tsc checker
+cleanup is included in that estimate.
+
+No production code changed in this fixture-only group. The prior uncached
+checked-view oracle, scoped lowering and backend undefined-admission overlay
+mutants cover the unchanged implementation; the new pair oracle and vet cover
+this group's additions. Test outputs are preserved in logs/brand-candidate-pairs*.
