@@ -1,0 +1,5 @@
+replayed 20 {'covered': 10, 'unreached': 10}
+replayed 40 {'covered': 22, 'unreached': 18}
+replayed 60 {'covered': 25, 'unreached': 35}
+replayed 80 {'covered': 28, 'unreached': 51, 'retained': 1}
+{"table_sha": "e8c283b5ed32477805357b652a170b85a04b2469", "reason": "a void call used as a value", "root_sites": 92, "observed": {"covered": 28, "unreached": 61, "retained": 3}}

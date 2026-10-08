@@ -1,0 +1,9 @@
+drop-call: caught (exit 1), /tmp/adamic-void-value-mutants/drop-call.log
+drop-closure: caught (exit 1), /tmp/adamic-void-value-mutants/drop-closure.log
+drop-array-visit: caught (exit 1), /tmp/adamic-void-value-mutants/drop-array-visit.log
+drop-map-clear: caught (exit 1), /tmp/adamic-void-value-mutants/drop-map-clear.log
+drop-map-visit: caught (exit 1), /tmp/adamic-void-value-mutants/drop-map-visit.log
+defined-result: caught (exit 1), /tmp/adamic-void-value-mutants/defined-result.log
+lose-return: caught (exit 1), /tmp/adamic-void-value-mutants/lose-return.log
+erase-callable-result: caught (exit 1), /tmp/adamic-void-value-mutants/erase-callable-result.log
+accept-unknown-target: caught (exit 1), /tmp/adamic-void-value-mutants/accept-unknown-target.log

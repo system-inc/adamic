@@ -1,0 +1,6 @@
+--- FAIL: TestVoidValueErasedResultsStayNotYet (0.03s)
+    --- FAIL: TestVoidValueErasedResultsStayNotYet/unknown_parameter (0.03s)
+        void_value_test.go:29: want "a void call used as a value", got <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.043s
+FAIL

@@ -1,0 +1,14 @@
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/void_value_builtin.a (0.65s)
+        oracle_test.go:750: stdout differs
+            node:   exit 0, stdout "true\ntrue\ntrue\n0\ntrue\ntrue\n0\n1,2,3,4\n1,2,3,4,context,5\n", stderr ""
+            native: exit 0, stdout "true\ntrue\ntrue\n1\ntrue\ntrue\n1\n1,2,3,4\n1,2,3,4,context,5\n", stderr ""
+        oracle_test.go:756: JavaScript backend: stdout differs
+            node:    exit 0, stdout "true\ntrue\ntrue\n0\ntrue\ntrue\n0\n1,2,3,4\n1,2,3,4,context,5\n", stderr ""
+            backend: exit 0, stdout "true\ntrue\ntrue\n1\ntrue\ntrue\n1\n1,2,3,4\n1,2,3,4,context,5\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.684s
+FAIL
