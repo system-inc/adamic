@@ -1,0 +1,4 @@
+if (0 <= obj.name && obj['name'] < 10) {}
+if (10 < obj.name && obj['name'] < 0) {}
+if ('😀' <= obj.name && obj[`name`] < '\ue000') {}
+if ('0' <= obj.name && obj[`name`] < 10) {}

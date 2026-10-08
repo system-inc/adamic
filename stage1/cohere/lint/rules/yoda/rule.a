@@ -1,0 +1,127 @@
+import type { RuleContext } from '../../context.ts';
+import type { HelperNode } from '../../helpers/slot02_ast.a';
+import { propertyName, Static } from '../../helpers/property_name.a';
+import type { NameAnswer } from '../../helpers/wave15/accessed_property/accessed_name.a';
+import { accessedName, SettledName } from '../../helpers/wave15/accessed_property/accessed_name.a';
+import { Options } from './options.a';
+import { expectedMessage } from './messages.a';
+function whitespace(c: string): boolean { return [' ', '\t', '\n', '\r', '\v', '\f'].includes(c); }
+function word(c: string): boolean { return c !== '' && (c === '_' || c === '$' || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')); }
+function fuse(a: string, b: string): boolean { return (word(a) && word(b)) || ((a === '+' || a === '-') && a === b); }
+export class Rule {
+    readonly context: RuleContext;
+    readonly nodes: HelperNode[] = [];
+    readonly always: boolean;
+    readonly exceptRange: boolean;
+    readonly onlyEquality: boolean;
+    constructor(context: RuleContext) {
+        this.context = context;
+        const options = new Options(context);
+        this.always = options.always;
+        this.exceptRange = options.exceptRange;
+        this.onlyEquality = options.onlyEquality;
+    }
+    prepare(root: number): void {
+        for(const node of this.context.parser.nodes) { this.nodes.push({kind: node.kind, text: node.text, expression: node.children[0] ?? -1, name: -1}); }
+    }
+    skip(index: number): number { let current = index; while(this.context.kind(current) === 'ParenthesizedExpression') { current = this.context.node(current).children[0] ?? -1; } return current; }
+    child(index: number, position: number): number { return this.context.node(index).children[position] ?? -1; }
+    literal(index: number): boolean {
+        const kind = this.context.kind(index);
+        if(['StringLiteral', 'NumericLiteral', 'BigIntLiteral', 'TrueKeyword', 'FalseKeyword', 'NullKeyword', 'RegularExpressionLiteral', 'NoSubstitutionTemplateLiteral'].includes(kind)) { return true; }
+        return kind === 'PrefixUnaryExpression' && this.context.node(index).operator === 'MinusToken' && this.context.kind(this.child(index, 0)) === 'NumericLiteral';
+    }
+    normalized(index: number): string[] {
+        const kind = this.context.kind(index);
+        if(kind === 'NumericLiteral' || kind === 'BigIntLiteral') { return [this.context.node(index).text, 'number']; }
+        if(kind === 'StringLiteral' || kind === 'NoSubstitutionTemplateLiteral') { return [this.context.node(index).text, 'string']; }
+        if(kind === 'PrefixUnaryExpression' && this.context.node(index).operator === 'MinusToken' && this.context.kind(this.child(index, 0)) === 'NumericLiteral') { return ['-' + this.context.node(this.child(index, 0)).text, 'number']; }
+        return [];
+    }
+    notGreater(left: number, right: number): boolean {
+        const l = this.normalized(left); const r = this.normalized(right);
+        if(l.length === 0 && r.length === 0) { return false; }
+        if(l.length === 0 || r.length === 0) { return true; }
+        if(l[1] !== r[1]) { return false; }
+        const lt = l[0] ?? ''; const rt = r[0] ?? '';
+        if(l[1] === 'string') { return this.lexical(lt, rt); }
+        const lv = Number(lt.endsWith('n') ? lt.slice(0, -1) : lt); const rv = Number(rt.endsWith('n') ? rt.slice(0, -1) : rt);
+        return Number.isNaN(lv) || Number.isNaN(rv) ? this.lexical(lt, rt) : lv <= rv;
+    }
+    // Go compares UTF-8 strings: scalar order differs from UTF-16 at supplementary characters.
+    lexical(left: string, right: string): boolean {
+        let l = 0; let r = 0;
+        while(l < left.length && r < right.length) {
+            const a = left.codePointAt(l) ?? 0; const b = right.codePointAt(r) ?? 0;
+            if(a !== b) { return a < b; }
+            l += a > 65535 ? 2 : 1; r += b > 65535 ? 2 : 1;
+        }
+        return l === left.length;
+    }
+    access(index: number): boolean { return this.context.kind(index) === 'PropertyAccessExpression' || this.context.kind(index) === 'ElementAccessExpression'; }
+    staticName(index: number): NameAnswer {
+        const node = this.context.node(index);
+        const kind = node.kind === 'PropertyAccessExpression' ? 213 : 214;
+        let key = node.children[node.children.length - 1] ?? -1;
+        if(kind === 214) { key = this.skip(key); }
+        const keyKind = this.context.kind(key);
+        const answer = accessedName(true, kind, key, keyKind === 'Identifier' ? 79 : (keyKind === 'PrivateIdentifier' ? 80 : 0), Static, (handle: number, accept: number): NameAnswer => {
+            const name = propertyName(this.nodes, handle, accept); const value = new SettledName(); value.text = name.name; value.ok = name.named; return value;
+        });
+        if(!answer.ok && kind === 214 && keyKind === 'RegularExpressionLiteral') { const value = new SettledName(); value.text = this.context.node(key).text; value.ok = true; return value; }
+        return answer;
+    }
+    same(left: number, right: number): boolean {
+        const l = this.skip(left); const r = this.skip(right);
+        if(l < 0 || r < 0) { return false; }
+        if(this.access(l) && this.access(r)) {
+            const name = this.staticName(l);
+            if(name.ok) { const other = this.staticName(r); return other.ok && name.text === other.text && this.same(this.child(l, 0), this.child(r, 0)); }
+        }
+        const kind = this.context.kind(l);
+        if(kind !== this.context.kind(r)) { return false; }
+        if(kind === 'ThisKeyword' || kind === 'SuperKeyword') { return true; }
+        if(['Identifier', 'PrivateIdentifier', 'StringLiteral', 'NumericLiteral', 'BigIntLiteral', 'TrueKeyword', 'FalseKeyword', 'NullKeyword', 'NoSubstitutionTemplateLiteral', 'RegularExpressionLiteral'].includes(kind)) { return this.context.node(l).text === this.context.node(r).text; }
+        if(this.access(l)) { const lc = this.context.node(l).children; const rc = this.context.node(r).children; return this.same(lc[lc.length - 1] ?? -1, rc[rc.length - 1] ?? -1) && this.same(this.child(l, 0), this.child(r, 0)); }
+        return false;
+    }
+    range(index: number): boolean {
+        if(this.context.kind(index) !== 'BinaryExpression') { return false; }
+        const op = this.context.kind(this.child(index, 1));
+        if(op !== 'AmpersandAmpersandToken' && op !== 'BarBarToken') { return false; }
+        const left = this.child(index, 0); const right = this.child(index, 2);
+        if(this.context.kind(left) !== 'BinaryExpression' || this.context.kind(right) !== 'BinaryExpression') { return false; }
+        if(!['LessThanToken', 'LessThanEqualsToken'].includes(this.context.kind(this.child(left, 1))) || !['LessThanToken', 'LessThanEqualsToken'].includes(this.context.kind(this.child(right, 1)))) { return false; }
+        const between = op === 'AmpersandAmpersandToken' && this.same(this.child(left, 2), this.child(right, 0)) && this.notGreater(this.child(left, 0), this.child(right, 2));
+        const outside = op === 'BarBarToken' && this.same(this.child(left, 0), this.child(right, 2)) && this.notGreater(this.child(left, 2), this.child(right, 0));
+        if(!between && !outside) { return false; }
+        let before = this.context.start(index) - 1; let after = this.context.node(index).end;
+        while(before >= 0 && whitespace(this.context.source.slice(before, before + 1))) { before--; }
+        while(after < this.context.source.length && whitespace(this.context.source.slice(after, after + 1))) { after++; }
+        return this.context.source.slice(before, before + 1) === '(' && this.context.source.slice(after, after + 1) === ')';
+    }
+    visit(index: number, parent: number): void {
+        const node = this.context.node(index); const op = this.context.kind(this.child(index, 1));
+        if(!['EqualsEqualsToken', 'EqualsEqualsEqualsToken', 'ExclamationEqualsToken', 'ExclamationEqualsEqualsToken', 'LessThanToken', 'GreaterThanToken', 'LessThanEqualsToken', 'GreaterThanEqualsToken'].includes(op)) { return; }
+        if(this.onlyEquality && op !== 'EqualsEqualsToken' && op !== 'EqualsEqualsEqualsToken') { return; }
+        const left = this.child(index, 0); const token = this.child(index, 1); const right = this.child(index, 2);
+        const literal = this.skip(this.always ? left : right); const other = this.skip(this.always ? right : left);
+        if(!this.literal(other) || this.literal(literal)) { return; }
+        if(this.exceptRange && this.range(parent)) { return; }
+        const start = this.context.start(index); const end = node.end;
+        const operatorStart = this.context.start(token); const operatorEnd = this.context.node(token).end;
+        const operatorText = this.context.source.slice(operatorStart, operatorEnd);
+        const message = expectedMessage(this.always ? 'left' : 'right', operatorText);
+        const leftEnd = this.context.node(left).end; const rightStart = this.context.start(right);
+        if(start < 0 || this.context.node(right).end > this.context.source.length || leftEnd > operatorStart || operatorEnd > rightStart) { this.context.report(index, 'yoda', 'expected', message, '', '', ''); return; }
+        const leftText = this.context.source.slice(start, leftEnd); const rightText = this.context.source.slice(rightStart, end);
+        let flipped = operatorText;
+        if(op === 'LessThanToken') { flipped = '>'; } else if(op === 'GreaterThanToken') { flipped = '<'; } else if(op === 'LessThanEqualsToken') { flipped = '>='; } else if(op === 'GreaterThanEqualsToken') { flipped = '<='; }
+        const previous = this.context.source.slice(start - 1, start); const next = this.context.source.slice(end, end + 1);
+        const prefix = start > 0 && !whitespace(previous) && fuse(previous, rightText.slice(0, 1)) ? ' ' : '';
+        const suffix = end < this.context.source.length && !whitespace(next) && fuse(leftText.slice(-1), next) ? ' ' : '';
+        const replacement = prefix + rightText + this.context.source.slice(leftEnd, operatorStart) + flipped + this.context.source.slice(operatorEnd, rightStart) + leftText + suffix;
+        this.context.reportNode(index, 'yoda', 'expected', message, [this.context.edit(index, replacement)]);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

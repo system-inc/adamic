@@ -1,0 +1,29 @@
+import type { RuleContext } from '../../context.ts';
+import { Settings } from '../../settings.ts';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+export class Options {
+    always = false;
+    exceptRange = false;
+    onlyEquality = false;
+    constructor(context: RuleContext) {
+        let settings = context.settings;
+        const text = settings.text;
+        if(text.trim().startsWith('[')) {
+            const source = `(${text});`;
+            const parser = new Parser(source, 'yoda options');
+            const root = parser.file();
+            const statement = parser.node(root).children[0] ?? -1;
+            const outer = parser.node(statement).children[0] ?? -1;
+            const array = parser.node(outer).children[0] ?? -1;
+            const children = parser.node(array).children;
+            const first = children[0] ?? -1;
+            this.always = first >= 0 && parser.node(first).text === 'always';
+            const second = children[1] ?? -1;
+            settings = new Settings();
+            if(second >= 0) { const node = parser.node(second); settings.load(source.slice(node.pos, node.end)); }
+        }
+        else { this.always = settings.read('always', 'false') === 'true'; }
+        this.exceptRange = settings.read('exceptrange', 'false') === 'true';
+        this.onlyEquality = settings.read('onlyequality', 'false') === 'true';
+    }
+}
