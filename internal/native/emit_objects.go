@@ -128,8 +128,16 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		if literal.NoReuse {
 			source = e.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", source))
 		}
-		object := e.own(ir.Object, e.spreadCopy(literal, source))
-		e.emptySpread(literal, source, object)
+		copied := e.spreadCopy(literal, source)
+		if literal.Extend && literal.SpreadMaybeUndefined {
+			copied = fmt.Sprintf("(%s != NULL ? adamic_object_copy(%s) : adamic_object_new(&%s))", source, source, e.shape(nil))
+		}
+		object := e.own(ir.Object, copied)
+		if literal.Extend {
+			object = e.extendedSpread(literal, object)
+		} else {
+			e.emptySpread(literal, source, object)
+		}
 		values := make([]string, 0, len(literal.Fields))
 		for _, field := range literal.Fields {
 			values = append(values, e.value(field.Value))

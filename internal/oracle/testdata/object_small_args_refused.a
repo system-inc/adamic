@@ -1,0 +1,9 @@
+type Args = { [name: string]: number | string | Args | undefined };
+function argumentsForEvent(present: boolean): Args | undefined { return present ? { phase: "event", duration: 4 } : undefined; }
+const event: Args = { ...argumentsForEvent(true), results: { duration: 8 } };
+const phase = event.phase;
+if (typeof phase === "string") console.log(phase);
+console.log(String(event.hasOwnProperty("duration")));
+const noEvent = { ...argumentsForEvent(false), results: { duration: 9 } };
+console.log(String(noEvent.hasOwnProperty("phase")));
+console.log(String(noEvent.hasOwnProperty("results")));

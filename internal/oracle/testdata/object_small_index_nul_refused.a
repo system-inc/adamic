@@ -1,0 +1,7 @@
+type Fields = { a: number; "a\0x": number };
+const first: Fields = { a: 1, "a\0x": 2 };
+const reversed: Fields = { "a\0x": 4, a: 5 };
+function put(fields: Fields): void { fields["a\0x"] = 3; }
+put(first);
+put(reversed);
+console.log(`${first.a},${reversed.a}`);

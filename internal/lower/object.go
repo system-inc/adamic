@@ -43,6 +43,13 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if err != nil {
 				return nil, err
 			}
+			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, name) {
+				if name == iteratorSlot {
+					return nil, l.notYet(property, "adding Symbol.iterator through an object spread")
+				}
+				literal.Extend = true
+				literal.NoReuse = true
+			}
 			literal.Fields = append(literal.Fields, ir.Field{Name: name, Value: value})
 		case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment:
 			name := property.Name()
@@ -67,7 +74,8 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				return nil, err
 			}
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
-				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
+				literal.Extend = true
+				literal.NoReuse = true
 			}
 			if declared := l.declaredField(node, fieldName); declared != 0 && !censusFieldSlotless(declared) {
 				// Store the value as the member's slot holds it, rather than the initializer's type.
@@ -76,12 +84,21 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if censusFieldSlotless(value.Type()) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
+			if literal.Spread != nil && value.Type() == ir.Union {
+				// A readonly union view can hide scalar storage in the source.
+				// Replacements need their own boxed layout, rather than that scalar slot.
+				literal.Extend = true
+				literal.NoReuse = true
+			}
 			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
 		default:
 			return nil, l.notYet(property, describe(property)+" in an object literal")
 		}
 	}
-	if literal.SpreadMaybeUndefined {
+	if literal.Extend && !l.objectSpreadNamesKnown() {
+		return nil, l.notYet(node, "an extending object spread in a program with NUL-bearing property names")
+	}
+	if literal.SpreadMaybeUndefined && !literal.Extend {
 		empty, err := l.emptySpread(node, literal.Fields)
 		if err != nil {
 			return nil, err

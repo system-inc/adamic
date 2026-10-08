@@ -4,6 +4,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"strings"
 )
 
 // A finite string key dispatches to the same fixed slots as named writes.
@@ -23,12 +24,15 @@ func (l *lowering) setObjectIndex(target, valueNode *ast.Node, object ir.Express
 			return nil, l.notYet(target, "assigning an object element with a key that is not a finite string union")
 		}
 		name := member.AsLiteralType().Value().(string)
+		if strings.ContainsRune(name, 0) {
+			return nil, l.notYet(target, "assigning a computed object field whose name contains NUL")
+		}
 		field := l.checker.GetPropertyOfType(receiver, name)
 		if field == nil {
 			return nil, l.notYet(target, "assigning an object element outside its named fields")
 		}
 		if field.Flags&ast.SymbolFlagsOptional != 0 {
-			return nil, l.notYet(target, "assigning an optional object field through a computed key requires growing its own shape")
+			return nil, &Refused{Where: l.program.Where(target), What: "adding an own field through a computed optional-field write", Fix: "declare and initialize every candidate as a required own field before writing it, or use a Map; object shapes are fixed when made"}
 		}
 		if accessorSymbol(field) || name == "__proto__" {
 			return nil, l.notYet(target, "assigning a computed object accessor or prototype field")

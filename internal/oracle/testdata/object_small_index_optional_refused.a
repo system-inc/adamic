@@ -1,0 +1,7 @@
+type Cache = { left?: number; right?: number };
+const cache: Cache = {};
+console.log(String(cache.hasOwnProperty("left")));
+function put(name: "left" | "right", value: number): void { cache[name] = value; }
+put("left", 12);
+console.log(String(cache.hasOwnProperty("left")));
+console.log(String(cache.left));

@@ -300,6 +300,7 @@ type (
 		Spread               Expression
 		Fields               []Field
 		NoReuse              bool
+		Extend               bool // spread may add fields; allocate a new merged own layout
 		SpreadMaybeUndefined bool
 		Empty                []Field
 

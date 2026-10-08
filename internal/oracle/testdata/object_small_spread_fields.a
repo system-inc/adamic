@@ -1,0 +1,51 @@
+type Source = { readonly text: string; readonly count: number };
+const actual = { text: "old".repeat(3), count: 1, hidden: "kept".repeat(3) };
+const view: Source = actual;
+function change(): string { actual.text = "new".repeat(3); actual.count = 7; return "added".repeat(2); }
+const merged = { ...view, added: change(), count: 11 };
+console.log(`${merged.text},${merged.count},${merged.added}`);
+console.log(String(merged.hasOwnProperty("hidden")));
+console.log(`${actual.text},${actual.count}`);
+const repeated = { ...merged, later: true, added: "replaced".repeat(2) };
+console.log(`${repeated.text},${repeated.added},${repeated.later}`);
+console.log(String(repeated.hasOwnProperty("hidden")));
+function absent(): Source | undefined { return undefined; }
+const empty = { ...absent(), added: "only" };
+console.log(empty.added);
+console.log(String(empty.hasOwnProperty("count")));
+console.log(String(empty.hasOwnProperty("text")));
+const scalar = { value: 14 };
+const extended = { ...scalar, other: "added" };
+const unionView: { readonly value: number | string } = extended;
+const copied = unionView.value;
+console.log(typeof copied);
+if (typeof copied === "number") console.log(String(copied + 1));
+class Point { value = 23; extra = "class".repeat(2); }
+const point = new Point();
+const classView: { readonly value: number | string } = point;
+const classCopy = classView.value;
+console.log(typeof classCopy);
+if (typeof classCopy === "number") console.log(String(classCopy));
+const classSpread = { ...point, added: "plain" };
+console.log(`${classSpread.value},${classSpread.extra},${classSpread.added}`);
+
+function replacement(): number | string { return "boxed".repeat(2); }
+const replaced = { ...unionView, value: replacement() };
+const replacedValue = replaced.value;
+console.log(typeof replacedValue);
+if (typeof replacedValue === "string") console.log(replacedValue);
+const nested = { ...extended, again: true };
+const nestedView: { readonly value: number | string } = nested;
+const nestedCopy = nestedView.value;
+console.log(typeof nestedCopy);
+if (typeof nestedCopy === "number") console.log(String(nestedCopy));
+
+
+const withMethod = { ...view, doubled(): number { return this.count * 2; } };
+console.log(String(withMethod.doubled()));
+
+let order = "";
+const getterSource = { get getterValue(): number { order += "g"; return actual.count; } };
+function later(): number { order += "v"; actual.count = 99; return 0; }
+const getterSpread = { ...getterSource, added: later() };
+console.log(`${order}:${getterSpread.getterValue},${getterSpread.added}`);

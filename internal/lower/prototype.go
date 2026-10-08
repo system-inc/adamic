@@ -227,7 +227,7 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 					}
 					if node.Kind == ast.KindObjectLiteralExpression {
 						for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
-							if property.Kind == ast.KindSpreadAssignment && l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) {
+							if property.Kind == ast.KindSpreadAssignment && l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) && !l.objectSpreadExtends(node) {
 								reason = "a possibly absent spread has slots without own-property presence descriptors"
 								return true
 							}

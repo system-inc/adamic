@@ -86,5 +86,14 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 			}
 		}
 	})
+	// Added fields follow the source's actual own layout, which a structural view
+	// may hide. Their positions are not determined by the literal's field list.
+	walkExpressions(program, func(expression ir.Expression) {
+		if literal, ok := expression.(ir.ObjectLiteral); ok && literal.Extend {
+			for _, field := range literal.Fields {
+				offsets[field.Name] = -1
+			}
+		}
+	})
 	return offsets
 }

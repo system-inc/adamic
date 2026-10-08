@@ -10,6 +10,9 @@ import (
 // object. Box that view from its actual layout, while preserving reference identity.
 func (e *emitter) objectUnionProperty(property ir.Property) string {
 	object := e.snapshot(ir.Object, e.value(property.Object))
+	e.declarations = append(e.declarations, `#include "object_spread_extend.h"`)
+	fieldShape := e.temporary()
+	e.line("const adamic_shape *%s = %s == NULL ? NULL : adamic_object_spread_field_shape(%s->shape, %s);", fieldShape, object, object, cString(property.Name))
 	result := e.temporary()
 	e.line("adamic_heap *%s = NULL;", result)
 	if property.Optional {
@@ -26,16 +29,11 @@ func (e *emitter) objectUnionProperty(property ir.Property) string {
 	}
 	seen := map[string]bool{}
 	first := true
-	walkExpressions(e.program, func(expression ir.Expression) {
-		literal, ok := expression.(ir.ObjectLiteral)
-		if !ok || literal.Spread != nil {
-			return
-		}
-		for _, field := range literal.Fields {
+	register := func(fields []ir.Field, shape string) {
+		for _, field := range fields {
 			if field.Name != property.Name {
 				continue
 			}
-			shape := e.literalShape(literal)
 			if seen[shape] {
 				return
 			}
@@ -45,7 +43,7 @@ func (e *emitter) objectUnionProperty(property ir.Property) string {
 				prefix = "else if"
 			}
 			first = false
-			e.line("%s (%s->shape == &%s) {", prefix, object, shape)
+			e.line("%s (%s == &%s) {", prefix, fieldShape, shape)
 			raw := unslotted(field.Value.Type(), slot+"->"+member(field.Value.Type()))
 			boxed, fresh := converted(field.Value.Type(), ir.Union, raw)
 			if !fresh {
@@ -55,7 +53,30 @@ func (e *emitter) objectUnionProperty(property ir.Property) string {
 			e.line("}")
 			return
 		}
+	}
+	walkExpressions(e.program, func(expression ir.Expression) {
+		literal, ok := expression.(ir.ObjectLiteral)
+		if !ok {
+			return
+		}
+		shape := e.literalShape(literal)
+		if literal.Spread != nil {
+			shape = e.shape(literal.Fields)
+		}
+		register(literal.Fields, shape)
 	})
+	for _, class := range e.program.Classes {
+		fields := class.PublicFields
+		if !class.Literal {
+			fields = nil
+			for _, field := range class.Fields {
+				if !field.Private {
+					fields = append(fields, field)
+				}
+			}
+		}
+		register(fields, e.publicClassShape(class))
+	}
 	if first {
 		e.line("%s = adamic_retain(%s->reference);", result, slot)
 	} else {
