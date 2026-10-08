@@ -1,0 +1,17 @@
+{
+  "type": "Timeout | undefined",
+  "parts": [
+    {
+      "type": "undefined",
+      "flags": 4
+    },
+    {
+      "type": "Timeout",
+      "flags": 1048576
+    }
+  ],
+  "noAny": true,
+  "latentObservation": "still a value of type any at sys.ts:52:31",
+  "conclusion": "stock resolved parameter type and latent observation disagree; cause not diagnosed",
+  "mutant": "stock actual any type rejected by the no-any assertion"
+}

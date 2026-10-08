@@ -1,0 +1,32 @@
+{
+  "mutants": [
+    {
+      "change": "actual list predicate returns false",
+      "caughtBy": "existing acceptance counterexample"
+    },
+    {
+      "change": "actual strict JSON parser substitutes an empty object",
+      "caughtBy": "primitive reader counterexample"
+    },
+    {
+      "change": "actual header initializes a parent object",
+      "caughtBy": "absent parent observation"
+    },
+    {
+      "change": "actual Type header initializes symbol",
+      "caughtBy": "missing symbol observation"
+    }
+  ],
+  "observations": {
+    "optionListOfObjectsAccepted": true,
+    "objectReaderReturnsNumber": 7,
+    "publicConverterReturnsNumber": 7,
+    "nodeParent": "undefined",
+    "tokenModifierCache": "absent",
+    "identifierEscapedText": "absent",
+    "typeSymbol": "absent",
+    "typeId": "absent",
+    "sourceFileExternalEnumerableExtensionPreserved": true
+  },
+  "interpretation": "JSON has a recursive static union. Public API sanctions, staged owner contracts and unvalidated option predicates require decisions; these observations do not establish impossibility."
+}

@@ -252,7 +252,7 @@
     "kind": "JSON and config",
     "file": "src/compiler/commandLineParser.ts",
     "before": "export interface JsonConversionNotifier {",
-    "after": "type JsonConfigValue = string | number | boolean | null | undefined | JsonConfigValue[] | JsonConfigObject;\ninterface JsonConfigObject { [key: string]: JsonConfigValue; }\n\n/** @internal */\nexport interface JsonConversionNotifier {",
+    "after": "export type JsonConfigValue = string | number | boolean | null | undefined | JsonConfigValue[] | JsonConfigObject;\n/** @internal */\nexport interface JsonConfigObject { [key: string]: JsonConfigValue; }\n\n/** @internal */\nexport interface JsonConversionNotifier {",
     "reason": "The AST converter produces JSON scalars, recursive containers and undefined for recovery or check-only mode."
   },
   {

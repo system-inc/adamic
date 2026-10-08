@@ -1,0 +1,18 @@
+{
+  "original_main": "ef3141e9",
+  "resumed_main": "5fda2d26",
+  "merge": "68a6f7db",
+  "notyet_table": "dc6b1529",
+  "changed_paths": [
+    "cmd/adamic-test262/run_test.go",
+    "documentation/velocity/landings.csv",
+    "internal/fuzz/run_test.go",
+    "stage3/lane/README.md",
+    "stage3/lane/check.py",
+    "stage3/lane/test_check.py",
+    "stage3/oracle/run.py"
+  ],
+  "compiler_adaptation_census_inputs_unchanged": true,
+  "baseline_measurement": "evidence/before-census.json",
+  "baseline_oracle": "evidence/main-oracle.json"
+}

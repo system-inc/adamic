@@ -1,0 +1,918 @@
+{
+  "typescript": "6.0.3",
+  "count": 96,
+  "files": [
+    "src/compiler/checker.ts",
+    "src/compiler/commandLineParser.ts",
+    "src/compiler/core.ts",
+    "src/compiler/debug.ts",
+    "src/compiler/emitter.ts",
+    "src/compiler/factory/nodeFactory.ts",
+    "src/compiler/moduleNameResolver.ts",
+    "src/compiler/moduleSpecifiers.ts",
+    "src/compiler/parser.ts",
+    "src/compiler/program.ts",
+    "src/compiler/resolutionCache.ts",
+    "src/compiler/symbolWalker.ts",
+    "src/compiler/sys.ts",
+    "src/compiler/tracing.ts",
+    "src/compiler/transformer.ts",
+    "src/compiler/tsbuildPublic.ts",
+    "src/compiler/types.ts",
+    "src/compiler/utilities.ts",
+    "src/compiler/visitorPublic.ts",
+    "src/compiler/watch.ts",
+    "src/compiler/watchPublic.ts"
+  ],
+  "groups": {
+    "constructors": 7,
+    "ast-projection": 6,
+    "display-projection": 5,
+    "node-family": 1,
+    "json": 27,
+    "generator-input": 1,
+    "sorted-proof": 4,
+    "comparer": 1,
+    "host-standard": 2,
+    "generic-default": 3,
+    "host-extension": 3,
+    "debug-mutation": 2,
+    "dependent-dispatch": 3,
+    "copy": 2,
+    "module-key": 1,
+    "instrumentation": 3,
+    "resolution-write": 1,
+    "timer": 13,
+    "watch-callback": 2,
+    "program-feature": 2,
+    "builder-factory": 5,
+    "distribution": 1,
+    "config-host": 1
+  },
+  "sites": [
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2940,
+      "column": 76,
+      "source": "        return nodeLinks[nodeId] || (nodeLinks[nodeId] = new (NodeLinks as any)());",
+      "parentKind": "AsExpression",
+      "historicalClass": "constructors",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6834,
+      "column": 40,
+      "source": "                        (parentName as any).isTypeOf = true; // mutably update, node is freshly manufactured anyhow",
+      "parentKind": "AsExpression",
+      "historicalClass": "ast-projection",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10953,
+      "column": 77,
+      "source": "                    return Debug.fail(`Unhandled class member kind! ${(p as any).__debugFlags || p.flags}`);",
+      "parentKind": "AsExpression",
+      "historicalClass": "display-projection",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 12480,
+      "column": 87,
+      "source": "    function widenTypeForVariableLikeDeclaration(type: Type | undefined, declaration: any, reportErrors?: boolean) {",
+      "parentKind": "Parameter",
+      "historicalClass": "node-family",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2267,
+      "column": 110,
+      "source": "export function readConfigFile(fileName: string, readFile: (path: string) => string | undefined): { config?: any; error?: Diagnostic | undefined; } {",
+      "parentKind": "PropertySignature",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2277,
+      "column": 91,
+      "source": "export function parseConfigFileTextToJson(fileName: string, jsonText: string): { config?: any; error?: Diagnostic | undefined; } {",
+      "parentKind": "PropertySignature",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2472,
+      "column": 84,
+      "source": "export function convertToObject(sourceFile: JsonSourceFile, errors: Diagnostic[]): any {",
+      "parentKind": "FunctionDeclaration",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2611,
+      "column": 79,
+      "source": "function isCompilerOptionsValue(option: CommandLineOption | undefined, value: any): value is CompilerOptionsValue {",
+      "parentKind": "Parameter",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3018,
+      "column": 50,
+      "source": "export function parseJsonConfigFileContent(json: any, host: ParseConfigHost, basePath: string, existingOptions?: CompilerOptions, configFileName?: string, resolutionStack?: Path[], extraFileExtensions?: readonly FileExtensionInfo[], extendedConfigCache?: Map<string, ExtendedConfigCacheEntry>, existingWatchOptions?: WatchOptions): ParsedCommandLine {",
+      "parentKind": "Parameter",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3065,
+      "column": 11,
+      "source": "    json: any,",
+      "parentKind": "Parameter",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3359,
+      "column": 48,
+      "source": "export function canJsonReportNoInputFiles(raw: any): boolean {",
+      "parentKind": "Parameter",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3382,
+      "column": 10,
+      "source": "    raw: any;",
+      "parentKind": "PropertySignature",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3411,
+      "column": 11,
+      "source": "    json: any,",
+      "parentKind": "Parameter",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3502,
+      "column": 11,
+      "source": "    json: any,",
+      "parentKind": "Parameter",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3604,
+      "column": 16,
+      "source": "        value: any,",
+      "parentKind": "Parameter",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3730,
+      "column": 57,
+      "source": "function convertCompileOnSaveOptionFromJson(jsonOption: any, basePath: string, errors: Diagnostic[]): boolean {",
+      "parentKind": "Parameter",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3738,
+      "column": 61,
+      "source": "export function convertCompilerOptionsFromJson(jsonOptions: any, basePath: string, configFileName?: string): { options: CompilerOptions; errors: Diagnostic[]; } {",
+      "parentKind": "Parameter",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3744,
+      "column": 61,
+      "source": "export function convertTypeAcquisitionFromJson(jsonOptions: any, basePath: string, configFileName?: string): { options: TypeAcquisition; errors: Diagnostic[]; } {",
+      "parentKind": "Parameter",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3757,
+      "column": 60,
+      "source": "function convertCompilerOptionsFromJsonWorker(jsonOptions: any, basePath: string, errors: Diagnostic[], configFileName?: string): CompilerOptions {",
+      "parentKind": "Parameter",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3770,
+      "column": 60,
+      "source": "function convertTypeAcquisitionFromJsonWorker(jsonOptions: any, basePath: string, errors: Diagnostic[], configFileName?: string): TypeAcquisition {",
+      "parentKind": "Parameter",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3776,
+      "column": 57,
+      "source": "function convertWatchOptionsFromJsonWorker(jsonOptions: any, basePath: string, errors: Diagnostic[]): WatchOptions | undefined {",
+      "parentKind": "Parameter",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3780,
+      "column": 94,
+      "source": "function convertOptionsFromJson(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: any, basePath: string, defaultOptions: undefined, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): WatchOptions | undefined;",
+      "parentKind": "Parameter",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3781,
+      "column": 94,
+      "source": "function convertOptionsFromJson(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: any, basePath: string, defaultOptions: CompilerOptions | TypeAcquisition, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): CompilerOptions | TypeAcquisition;",
+      "parentKind": "Parameter",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3782,
+      "column": 94,
+      "source": "function convertOptionsFromJson(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: any, basePath: string, defaultOptions: CompilerOptions | TypeAcquisition | WatchOptions | undefined, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]) {",
+      "parentKind": "Parameter",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3808,
+      "column": 12,
+      "source": "    value: any,",
+      "parentKind": "Parameter",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3840,
+      "column": 90,
+      "source": "function normalizeNonListOptionValue(option: CommandLineOption, basePath: string, value: any): CompilerOptionsValue {",
+      "parentKind": "Parameter",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3885,
+      "column": 22,
+      "source": "    values: readonly any[],",
+      "parentKind": "ArrayType",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3891,
+      "column": 4,
+      "source": "): any[] {",
+      "parentKind": "ArrayType",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 437,
+      "column": 136,
+      "source": "export function* flatMapIterator<T, U>(iter: Iterable<T>, mapfn: (x: T) => readonly U[] | Iterable<U> | undefined): Generator<U, void, any> {",
+      "parentKind": "TypeReference",
+      "historicalClass": "generator-input",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 736,
+      "column": 50,
+      "source": "    if (array.length === 0) return emptyArray as any as SortedReadonlyArray<T>;",
+      "parentKind": "AsExpression",
+      "historicalClass": "sorted-proof",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 759,
+      "column": 28,
+      "source": "    return deduplicated as any as SortedReadonlyArray<T>;",
+      "parentKind": "AsExpression",
+      "historicalClass": "sorted-proof",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 764,
+      "column": 18,
+      "source": "    return [] as any as SortedArray<T>; // TODO: GH#19873",
+      "parentKind": "AsExpression",
+      "historicalClass": "sorted-proof",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 810,
+      "column": 120,
+      "source": "    return deduplicateSorted(toSorted(array, comparer), equalityComparer ?? comparer ?? compareStringsCaseSensitive as any as Comparer<T>);",
+      "parentKind": "AsExpression",
+      "historicalClass": "comparer",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1066,
+      "column": 119,
+      "source": "export const elementAt: <T>(array: readonly T[] | undefined, offset: number) => T | undefined = !!(Array.prototype as any).at",
+      "parentKind": "AsExpression",
+      "historicalClass": "host-standard",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1067,
+      "column": 36,
+      "source": "    ? (array, offset) => (array as any)?.at(offset)",
+      "parentKind": "AsExpression",
+      "historicalClass": "host-standard",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1522,
+      "column": 40,
+      "source": "export function maybeBind<T, A extends any[], R>(obj: T, fn: ((this: T, ...args: A) => R) | undefined): ((...args: A) => R) | undefined {",
+      "parentKind": "ArrayType",
+      "historicalClass": "generic-default",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1778,
+      "column": 49,
+      "source": "export function tryCast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut | undefined {",
+      "parentKind": "TypeParameter",
+      "historicalClass": "generic-default",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1783,
+      "column": 46,
+      "source": "export function cast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut {",
+      "parentKind": "TypeParameter",
+      "historicalClass": "generic-default",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 2593,
+      "column": 25,
+      "source": "        && !(process as any).browser",
+      "parentKind": "AsExpression",
+      "historicalClass": "host-extension",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 170,
+      "column": 31,
+      "source": "                    (Debug as any)[key] = cachedFunc;",
+      "parentKind": "AsExpression",
+      "historicalClass": "debug-mutation",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 190,
+      "column": 23,
+      "source": "            (Debug as any)[name] = noop;",
+      "parentKind": "AsExpression",
+      "historicalClass": "debug-mutation",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1274,
+      "column": 53,
+      "source": "    var currentParenthesizerRule: ParenthesizerRule<any> | undefined;",
+      "parentKind": "TypeReference",
+      "historicalClass": "dependent-dispatch",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6145,
+      "column": 22,
+      "source": "            (node as any)[p] = (source as any)[p];",
+      "parentKind": "AsExpression",
+      "historicalClass": "copy",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6145,
+      "column": 43,
+      "source": "            (node as any)[p] = (source as any)[p];",
+      "parentKind": "AsExpression",
+      "historicalClass": "copy",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 954,
+      "column": 69,
+      "source": "            str += `${key}: ${compilerOptionValueToString((value as any)[key])}`;",
+      "parentKind": "AsExpression",
+      "historicalClass": "display-projection",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 1256,
+      "column": 54,
+      "source": "            const packageJsonContent: Record<string, any> | undefined = cachedPackageJson?.contents.packageJsonContent || tryParseJson(host.readFile!(packageJsonPath)!);",
+      "parentKind": "TypeReference",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1253,
+      "column": 78,
+      "source": "    const fn = (forEachChildTable as Record<SyntaxKind, ForEachChildFunction<any>>)[node.kind];",
+      "parentKind": "TypeReference",
+      "historicalClass": "dependent-dispatch",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10207,
+      "column": 25,
+      "source": "        if ((element as any).parent) {",
+      "parentKind": "AsExpression",
+      "historicalClass": "ast-projection",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10208,
+      "column": 40,
+      "source": "            const parent = (element as any).parent as Node;",
+      "parentKind": "AsExpression",
+      "historicalClass": "ast-projection",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 3284,
+      "column": 130,
+      "source": "        return rootNames.length ? sortAndDeduplicateDiagnostics(getTypeChecker().getGlobalDiagnostics().slice()) : emptyArray as any as SortedReadonlyArray<Diagnostic>;",
+      "parentKind": "AsExpression",
+      "historicalClass": "sorted-proof",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 4379,
+      "column": 81,
+      "source": "            const moduleResolutionName = ModuleResolutionKind[moduleKindName as any] ? moduleKindName : \"Node16\";",
+      "parentKind": "AsExpression",
+      "historicalClass": "module-key",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 209,
+      "column": 8,
+      "source": "    ): any;",
+      "parentKind": "MethodSignature",
+      "historicalClass": "instrumentation",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 215,
+      "column": 15,
+      "source": "        data: any,",
+      "parentKind": "Parameter",
+      "historicalClass": "instrumentation",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 216,
+      "column": 8,
+      "source": "    ): any;",
+      "parentKind": "MethodSignature",
+      "historicalClass": "instrumentation",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 563,
+      "column": 46,
+      "source": "            (primaryResult.resolvedModule as any) = resolvedModule;",
+      "parentKind": "AsExpression",
+      "historicalClass": "resolution-write",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 207,
+      "column": 27,
+      "source": "                if ((d as any).type && (d as any).type.kind === SyntaxKind.TypeQuery) {",
+      "parentKind": "AsExpression",
+      "historicalClass": "ast-projection",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 207,
+      "column": 46,
+      "source": "                if ((d as any).type && (d as any).type.kind === SyntaxKind.TypeQuery) {",
+      "parentKind": "AsExpression",
+      "historicalClass": "ast-projection",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 208,
+      "column": 41,
+      "source": "                    const query = (d as any).type as TypeQueryNode;",
+      "parentKind": "AsExpression",
+      "historicalClass": "ast-projection",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 464,
+      "column": 24,
+      "source": "    let pollScheduled: any;",
+      "parentKind": "VariableDeclaration",
+      "historicalClass": "timer",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 517,
+      "column": 30,
+      "source": "                    (param1: any, param2: never, param3: any) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3))",
+      "parentKind": "Parameter",
+      "historicalClass": "watch-callback",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 517,
+      "column": 58,
+      "source": "                    (param1: any, param2: never, param3: any) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3))",
+      "parentKind": "Parameter",
+      "historicalClass": "watch-callback",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 618,
+      "column": 36,
+      "source": "    let timerToUpdateChildWatches: any;",
+      "parentKind": "VariableDeclaration",
+      "historicalClass": "timer",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1441,
+      "column": 37,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "parentKind": "ArrayType",
+      "historicalClass": "timer",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1441,
+      "column": 74,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "parentKind": "ArrayType",
+      "historicalClass": "timer",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1441,
+      "column": 82,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "parentKind": "MethodSignature",
+      "historicalClass": "timer",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1442,
+      "column": 30,
+      "source": "    clearTimeout?(timeoutId: any): void;",
+      "parentKind": "Parameter",
+      "historicalClass": "timer",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1595,
+      "column": 203,
+      "source": "            debugMode: !!process.env.NODE_INSPECTOR_IPC || !!process.env.VSCODE_INSPECTOR_OPTIONS || some(process.execArgv, arg => /^--(?:inspect|debug)(?:-brk)?(?:=\\d+)?$/i.test(arg)) || !!(process as any).recordreplay,",
+      "parentKind": "AsExpression",
+      "historicalClass": "host-extension",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1610,
+      "column": 51,
+      "source": "                const handle = (process.stdout as any)?._handle as { setBlocking?: (value: boolean) => void; };",
+      "parentKind": "AsExpression",
+      "historicalClass": "host-extension",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 232,
+      "column": 42,
+      "source": "            const objectFlags = (type as any).objectFlags;",
+      "parentKind": "AsExpression",
+      "historicalClass": "display-projection",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 318,
+      "column": 41,
+      "source": "                intrinsicName: (type as any).intrinsicName,",
+      "parentKind": "AsExpression",
+      "historicalClass": "display-projection",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/transformer.ts",
+      "line": 338,
+      "column": 116,
+      "source": "        tracing?.push(tracing.Phase.Emit, \"transformNodes\", node.kind === SyntaxKind.SourceFile ? { path: (node as any as SourceFile).path } : { kind: node.kind, pos: node.pos, end: node.end });",
+      "parentKind": "AsExpression",
+      "historicalClass": "display-projection",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 424,
+      "column": 37,
+      "source": "    timerToBuildInvalidatedProject: any;",
+      "parentKind": "PropertySignature",
+      "historicalClass": "timer",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 992,
+      "column": 34,
+      "source": "                    ((program as any as SemanticDiagnosticsBuilderProgram).getSemanticDiagnosticsOfNextAffectedFile) &&",
+      "parentKind": "AsExpression",
+      "historicalClass": "program-feature",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 993,
+      "column": 33,
+      "source": "                    (program as any as SemanticDiagnosticsBuilderProgram).getSemanticDiagnosticsOfNextAffectedFile(cancellationToken, ignoreSourceFile),",
+      "parentKind": "AsExpression",
+      "historicalClass": "program-feature",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1355,
+      "column": 64,
+      "source": "    return readBuilderProgram(parsed.options, compilerHost) as any as T;",
+      "parentKind": "AsExpression",
+      "historicalClass": "builder-factory",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 7716,
+      "column": 11,
+      "source": "    raw?: any;",
+      "parentKind": "PropertySignature",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 10331,
+      "column": 49,
+      "source": "export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;",
+      "parentKind": "ConditionalType",
+      "historicalClass": "distribution",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 7809,
+      "column": 45,
+      "source": "export function tryParseJson(text: string): any {",
+      "parentKind": "FunctionDeclaration",
+      "historicalClass": "json",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8556,
+      "column": 39,
+      "source": "    getNodeConstructor: () => Node as any,",
+      "parentKind": "AsExpression",
+      "historicalClass": "constructors",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8557,
+      "column": 41,
+      "source": "    getTokenConstructor: () => Token as any,",
+      "parentKind": "AsExpression",
+      "historicalClass": "constructors",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8558,
+      "column": 51,
+      "source": "    getIdentifierConstructor: () => Identifier as any,",
+      "parentKind": "AsExpression",
+      "historicalClass": "constructors",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8559,
+      "column": 52,
+      "source": "    getPrivateIdentifierConstructor: () => Node as any,",
+      "parentKind": "AsExpression",
+      "historicalClass": "constructors",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8560,
+      "column": 45,
+      "source": "    getSourceFileConstructor: () => Node as any,",
+      "parentKind": "AsExpression",
+      "historicalClass": "constructors",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8562,
+      "column": 39,
+      "source": "    getTypeConstructor: () => Type as any,",
+      "parentKind": "AsExpression",
+      "historicalClass": "constructors",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/visitorPublic.ts",
+      "line": 603,
+      "column": 82,
+      "source": "    const fn = (visitEachChildTable as Record<SyntaxKind, VisitEachChildFunction<any> | undefined>)[node.kind];",
+      "parentKind": "TypeReference",
+      "historicalClass": "dependent-dispatch",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 221,
+      "column": 49,
+      "source": "    const host: ParseConfigFileHost = system as any;",
+      "parentKind": "AsExpression",
+      "historicalClass": "config-host",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 862,
+      "column": 91,
+      "source": "        createProgram: createProgram || createEmitAndSemanticDiagnosticsBuilderProgram as any as CreateProgram<T>,",
+      "parentKind": "AsExpression",
+      "historicalClass": "builder-factory",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 150,
+      "column": 88,
+      "source": "    createProgram = createProgram || createEmitAndSemanticDiagnosticsBuilderProgram as any as CreateProgram<T>;",
+      "parentKind": "AsExpression",
+      "historicalClass": "builder-factory",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 151,
+      "column": 61,
+      "source": "    const oldProgram = readBuilderProgram(options, host) as any as T;",
+      "parentKind": "AsExpression",
+      "historicalClass": "builder-factory",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 169,
+      "column": 37,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "parentKind": "ArrayType",
+      "historicalClass": "timer",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 169,
+      "column": 74,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "parentKind": "ArrayType",
+      "historicalClass": "timer",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 169,
+      "column": 82,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;",
+      "parentKind": "MethodSignature",
+      "historicalClass": "timer",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 171,
+      "column": 30,
+      "source": "    clearTimeout?(timeoutId: any): void;",
+      "parentKind": "Parameter",
+      "historicalClass": "timer",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 443,
+      "column": 31,
+      "source": "    let timerToUpdateProgram: any; // timer callback to recompile the program",
+      "parentKind": "VariableDeclaration",
+      "historicalClass": "timer",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 444,
+      "column": 51,
+      "source": "    let timerToInvalidateFailedLookupResolutions: any; // timer callback to invalidate resolutions for changes in failed lookup locations",
+      "parentKind": "VariableDeclaration",
+      "historicalClass": "timer",
+      "status": "remaining; see residue and historical owner ledger"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 555,
+      "column": 75,
+      "source": "    builderProgram = readBuilderProgram(compilerOptions, compilerHost) as any as T;",
+      "parentKind": "AsExpression",
+      "historicalClass": "builder-factory",
+      "status": "remaining; see residue and historical owner ledger"
+    }
+  ]
+}

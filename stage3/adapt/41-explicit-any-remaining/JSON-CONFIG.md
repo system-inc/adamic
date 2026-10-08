@@ -31,3 +31,12 @@ ledger has exact locations, runtime counterexamples and minimal programs.
 Commands: stock tsc --noEmit; family-proof.cjs; json-proof.cjs; latent census
 and census-report.py on control and real restored-return mutant. Outputs go to
 logs. The final composed lane/oracle verifies behavior before the single push.
+
+Shared JsonConfigValue and JsonConfigObject are exported with @internal. The
+initial private-owner full lane had a missing JsonConfigObject API-lib diagnostic
+and changed namespace declaration printing (106365 passing/two failures). The
+concrete owner repair restores public API byte identity; the final fresh lane
+passes with 106366 passing/one sanctioned API failure and222 declarations.
+The final JSON emission proof remains byte-identical for both whole files; final
+census totals are unchanged from the pre-export snapshot, with command parser
+locations shifted one line. Receipts are under evidence/finished/.

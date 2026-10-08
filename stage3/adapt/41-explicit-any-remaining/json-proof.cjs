@@ -14,4 +14,4 @@ const run=functions=>{
 };
 const before=run(compile(sources(beforeTree))),after=run(compile(sources(afterTree)));assert.equal(JSON.stringify(after),JSON.stringify(before),"actual converter and source map observations");
 const text=sources(afterTree);assert.equal(text.split('x.version === 3').length,2);assert.throws(()=>run(compile(text.replace('x.version === 3','x.version === 2'))),assert.AssertionError);
-const evidence={inputs:8,recursiveDomain:true,configRootRecovery:true,invalidSourceMapsRejected:true,observationsIdentical:true,mutants:[{change:"actual source-map version check accepts 2 instead of 3",caughtBy:"runtime valid and invalid shape assertions"}]};fs.writeFileSync(output,JSON.stringify(evidence,null,2)+"\n");console.log(JSON.stringify(evidence));
+const evidence={configCases:6,sourceMapCases:7,recursiveDomain:true,configRootRecovery:true,invalidSourceMapsRejected:true,observationsIdentical:true,mutants:[{change:"actual source-map version check accepts 2 instead of 3",caughtBy:"runtime valid and invalid shape assertions"}]};fs.writeFileSync(output,JSON.stringify(evidence,null,2)+"\n");console.log(JSON.stringify(evidence));
