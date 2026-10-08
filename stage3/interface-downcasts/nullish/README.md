@@ -782,3 +782,31 @@ TestArrayHoles(Milestone|Refusals)$`) passed in 177.796 seconds. Touched-package
 checks (`View|Map|Contract|Callable|Tuple`, with the inherited Phantom exclusion)
 passed: IR 0.011s, lower 5.954s, native 35.910s, JavaScript 0.981s. Scoped vet passed.
 The complete repository gate was not run for this group.
+
+### Mutable nominal fields, October 8
+
+Finite structural entry descriptors retain each field's actual mutability rather
+than refusing all writable paths. Class-valued source slots use a private complete
+nominal certificate. The existing checked field-write path validates the incoming
+class and its recursively certified data fields; mutable assignment compatibility
+still requires both directions. Every escaped class field result also checks
+identity, independently of the producer or write certificate.
+
+Controls compare Node with native sanitized/release and JavaScript for a mutable
+Map entry and source-alias replacement. An isolated write payload mutant supplies
+a structural lookalike and stops at the write. A second mutant removes the write
+certificate to model unchecked corruption and stops at the next field read.
+The corresponding four backend guard bypasses all fail behaviorally. Evidence is
+under `evidence/map-nominal-mutable-*` and `evidence/map-mutable-nominal-*`.
+
+Optional aggregate fields, nullable aggregate adapters, nullable class source-slot
+widening and recursive nominal aggregates remain outside this bounded group.
+Broader callable conventions stay with lane 5. Exact production discharge remains
+unmeasured; no fixture closure is subtracted from the conservative demand inventory.
+
+Mutable nominal validation: the scoped uncached oracle (`Map|Nullish|
+NullableSelection|TestCheckedViewArrayJSONStorageRefusal|TestCheckedViewNominalArray|
+TestCheckedViewMutableNominal`) passed in 188.573 seconds. Touched-package checks
+(`View|Map|Contract|Callable|Tuple`, inherited Phantom exclusion) passed: IR 0.014s,
+lower 5.371s, native 36.508s, JavaScript 0.999s. Scoped vet passed. The complete
+repository gate was not run for this group.

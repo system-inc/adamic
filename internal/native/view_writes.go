@@ -10,6 +10,7 @@ import (
 // converts to the actual slot's storage. Readiness changes only after success.
 func (e *emitter) checkedWrite(write ir.SetProperty) {
 	object, value := e.value(write.Object), e.value(write.Value)
+	e.mapEntryNominalCertificate(write.WriteContract, value, write.WriteWhere)
 	allowed := ir.ScalarWriteContracts(e.program, write.WriteContract)
 	ids := []string{}
 	for _, id := range allowed {

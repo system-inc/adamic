@@ -9,6 +9,9 @@ import (
 // Slot certificates describe the declared logical type, independently of the
 // current payload. Unsupported contracts have no certificate and fail closed.
 func (l *lowering) slotContract(node *ast.Node, target *checker.Type) ir.ViewContractID {
+	if isClassInstance(l.checker.GetNonNullableType(target)) {
+		return l.mapNominalEntrySlot(node, target)
+	}
 	if target.Flags()&checker.TypeFlagsUndefined != 0 {
 		id, err := l.viewContract(node, target)
 		if err != nil {

@@ -426,10 +426,10 @@ func (e *emitter) statement(at *ir.Statement) {
 				allowed = append(allowed, fmt.Sprint(id))
 			}
 			if statement.WriteProven {
-				e.line("adamicWriteField(%s, %s, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
+				e.line("adamicWriteField(%s, %s, %s);", e.value(statement.Object), quote(statement.Name), e.mapEntryNominalCertificate(statement.WriteContract, e.value(statement.Value), statement.WriteWhere))
 				break
 			}
-			e.line("adamicCheckedWrite(%s, %s, %s, [%s], %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), strings.Join(allowed, ","), quote(statement.WriteWhere))
+			e.line("adamicCheckedWrite(%s, %s, %s, [%s], %s);", e.value(statement.Object), quote(statement.Name), e.mapEntryNominalCertificate(statement.WriteContract, e.value(statement.Value), statement.WriteWhere), strings.Join(allowed, ","), quote(statement.WriteWhere))
 			break
 		}
 		if e.program.CheckedFields[statement.Name] && !statement.Define && !statement.Uninitialized {

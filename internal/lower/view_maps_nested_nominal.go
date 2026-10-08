@@ -39,9 +39,9 @@ func (l *lowering) mapNestedNominalType(target *checker.Type, seen map[*checker.
 	return false
 }
 
-// Only immutable structural paths are certified here. Fixed tuples use their
-// existing adapter. Nullable aggregate and mutable paths retain a named
-// read refusal until their stores carry the same recursive witness.
+// Finite structural paths are certified at the producer. Every class field
+// read separately checks identity, including after mutation through an alias.
+// Fixed tuples use their existing adapter; recursive paths remain refused.
 func (l *lowering) mapNestedNominalEntrySlot(node *ast.Node, target *checker.Type) ir.ViewContractID {
 	if !l.mapNominalPathAcyclic(target, map[*checker.Type]bool{}) {
 		return 0
@@ -54,14 +54,17 @@ func (l *lowering) mapNestedNominalEntrySlot(node *ast.Node, target *checker.Typ
 	}
 	contract := ir.ViewContract{Kind: ir.ViewObject, Of: ir.Object, Name: l.checker.TypeToString(target)}
 	for _, field := range l.checker.GetPropertiesOfType(target) {
-		if !l.checker.IsReadonlySymbol(field) || field.Flags&ast.SymbolFlagsOptional != 0 {
+		if field.Flags&ast.SymbolFlagsOptional != 0 {
 			return 0
 		}
 		child := l.mapEntrySlot(node, l.concrete(l.checker.GetTypeOfSymbol(field)))
 		if child == 0 {
 			return 0
 		}
-		contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: field.Name, Contract: child, Readonly: true})
+		contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: field.Name, Contract: child, Readonly: l.checker.IsReadonlySymbol(field)})
+		if ir.HasMapNominalWitness(l.result, child) && l.result.ViewContracts[child-1].Of == ir.Object && !l.checker.IsReadonlySymbol(field) {
+			l.optionalViewWriteField(field.Name)
+		}
 		if l.result.CheckedFields == nil {
 			l.result.CheckedFields = map[string]bool{}
 		}
