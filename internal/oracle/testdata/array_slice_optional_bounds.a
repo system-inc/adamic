@@ -1,0 +1,20 @@
+function copy<T>(values: readonly T[], start: number | undefined, end: number | undefined): T[] { return values.slice(start, end); }
+const numbers = [1,2,3,4];
+console.log(copy(numbers,undefined,undefined).join(","));
+console.log(copy(numbers,1,undefined).join(","));
+console.log(copy(numbers,undefined,2).join(","));
+console.log(copy(numbers,-3,-1).join(","));
+console.log(copy(numbers,NaN,Infinity).join(","));
+console.log(numbers.slice(undefined).join(","));
+const strings = ["owned:" + "first", "owned:" + "second"];
+console.log(copy(strings,undefined,undefined).join(","));
+interface Box { word: string }
+const boxes: Box[] = [{word: "owned:" + "one"}, {word: "owned:" + "two"}];
+const copied = copy(boxes,undefined,undefined);
+for (const box of copied) console.log(box.word);
+let events = "";
+function receiver(): number[] { events += "r"; return numbers; }
+function start(): number | undefined { events += "s"; return undefined; }
+function end(): number | undefined { events += "e"; numbers.push(5); return undefined; }
+console.log(receiver().slice(start(),end()).join(","));
+console.log(events);
