@@ -1,0 +1,13 @@
+// Original tsc declaration/read witness; adjacent helpers and carriers reduced.
+type BindingName = Expression;
+interface Expression {readonly value:number;}
+interface ModifierLike {readonly value:number;}
+interface DotDotDotToken {readonly value:number;}
+interface QuestionToken {readonly value:number;}
+interface TypeNode {readonly value:number;}
+interface ParameterDeclaration {readonly value:number;}
+interface Base {readonly createParameterDeclaration:unknown;readonly createIdentifier:(text:string)=>Expression;}
+interface Target {createParameterDeclaration(modifiers: readonly ModifierLike[] | undefined, dotDotDotToken: DotDotDotToken | undefined, name: string | BindingName, questionToken?: QuestionToken, type?: TypeNode, initializer?: Expression): ParameterDeclaration;readonly createIdentifier:(text:string)=>Expression;}
+function inspect(node:ParameterDeclaration):void {console.log(`${node.value}`);}
+function probe(value:Base):void {const factory=value as Target;inspect(factory.createParameterDeclaration(undefined, undefined, factory.createIdentifier("obj")));}
+probe({createParameterDeclaration:(modifiers:readonly ModifierLike[]|undefined,dotDotDotToken:DotDotDotToken|undefined,name:string|{readonly value:string},questionToken?:QuestionToken,type?:TypeNode,initializer?:Expression):ParameterDeclaration=>({value:typeof name === "string" ? name.length : +name.value}),createIdentifier:(text:string):Expression=>({value:text.length})});

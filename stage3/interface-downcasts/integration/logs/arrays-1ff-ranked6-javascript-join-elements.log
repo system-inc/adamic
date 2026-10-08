@@ -1,0 +1,9 @@
+--- FAIL: TestCheckedViewRanked6ArrayContracts (0.00s)
+    --- FAIL: TestCheckedViewRanked6ArrayContracts/ranked6-template-join-wrong (0.67s)
+        checked_views_ranked6_arrays_test.go:69: exit codes differ; stderr ""; stdout "1|2\n"; exit 0
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.686s
+FAIL

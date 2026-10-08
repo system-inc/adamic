@@ -1,0 +1,8 @@
+import type { ReusableDiagnosticRelatedInformation } from 'original-tsc-builder';
+interface Base { readonly kind: 'box' | 'other'; }
+interface Carrier extends Base { readonly kind: 'box'; readonly child: ReusableDiagnosticRelatedInformation; }
+function helper(value: ReusableDiagnosticRelatedInformation): void { console.log(String(value.file)); }
+const raw = {kind: 'box' as const, child: {file: false}};
+const base: Base = raw;
+const carrier = base as Carrier;
+helper(carrier.child);

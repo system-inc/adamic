@@ -19,8 +19,11 @@ func (e *emitter) viewObjectUnion(property ir.Property, value string) string {
 	if contract.IntersectionTag != "" {
 		return e.viewIntersectionUnion(property, value)
 	}
-	if contract.Kind != ir.ViewUnion {
+	if contract.Kind != ir.ViewUnion || (contract.Of != ir.Object && contract.Of != ir.Array) {
 		return value
+	}
+	if untaggedObjectUnion(e.program.ViewContracts, contract) {
+		return e.viewUntaggedObjectUnion(property, value)
 	}
 	for _, field := range contract.Fields {
 		tag := e.program.ViewContracts[int(field.Contract)-1]

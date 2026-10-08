@@ -1,0 +1,6 @@
+--- FAIL: TestViewCallableAggregateReturnedDemand (0.00s)
+    --- FAIL: TestViewCallableAggregateReturnedDemand/unknown-callable-owner (0.00s)
+        view_callables_aggregate_test.go:41: returned allocation lost demanded refusal: <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.011s
+FAIL

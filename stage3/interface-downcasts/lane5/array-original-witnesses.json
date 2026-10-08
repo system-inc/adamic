@@ -1,0 +1,42 @@
+{
+  "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "basis": "original declarations and read spans; reduced adjacent helpers and data carriers",
+  "members": [
+    {
+      "rank": 13,
+      "type": "NodeFactory",
+      "field": "createCallExpression",
+      "candidateReads": 89,
+      "witness": {
+        "file": "src/compiler/factory/emitHelpers.ts",
+        "line": 221,
+        "column": 16
+      },
+      "read": "factory.createCallExpression",
+      "call": "factory.createCallExpression(\r\n            getUnscopedHelperName(\"__decorate\"),\r\n            /*typeArguments*/ undefined,\r\n            argumentsArray,\r\n        )",
+      "utf16Start": 8499,
+      "utf16End": 8527,
+      "fileSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+      "declaration": "createCallExpression(expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined): CallExpression;",
+      "declarationLine": 8953
+    },
+    {
+      "rank": 49,
+      "type": "NodeFactory",
+      "field": "inlineExpressions",
+      "candidateReads": 35,
+      "witness": {
+        "file": "src/compiler/transformers/destructuring.ts",
+        "line": 178,
+        "column": 12
+      },
+      "read": "context.factory.inlineExpressions",
+      "call": "context.factory.inlineExpressions(expressions!)",
+      "utf16Start": 6718,
+      "utf16End": 6751,
+      "fileSha256": "d38490b41ddbc56be090ddebcec8de5cd11ec88104cc4b859a19cdf132e7c640",
+      "declaration": "inlineExpressions(expressions: readonly Expression[]): Expression;",
+      "declarationLine": 9398
+    }
+  ]
+}

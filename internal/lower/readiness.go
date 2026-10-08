@@ -356,13 +356,13 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 				}
 				node = expression
 			case ir.Property:
-				if expression.DictionaryKey == nil && !program.CheckedFields[expression.Name] {
+				if expression.DictionaryKey == nil && !program.CheckedFields[expression.Name] && !primitiveBindingConversion(program, expression) {
 					expression.View = ""
 					expression.ViewType = ""
 					expression.ViewAllowed = nil
 					expression.ViewContract = 0
 					expression.ViewTypeID = 0
-				} else if expression.ViewTypeID != 0 {
+				} else if expression.ViewTypeID != 0 && !expression.DictionaryPrimitive {
 					// A function read can precede the cast that interns its contract.
 					expression.ViewContract = program.ViewContractTypes[expression.ViewTypeID]
 				}

@@ -1,0 +1,21 @@
+Built: fixture-only original 9477 helper certificate; its formerly surviving member bypass now fails independently.
+Commits: follows pushed 01a1eda4a6bb4e86031176a63a282f85ccc6e124; this report accompanies the Identifier certificate commit.
+Commands and outputs: all ten original Identifier controls PASS 16.204s; own counts update PASS 4.876s and verification PASS 4.725s; Node and leak checks pass.
+Mutants: helper bypass on helper-only expected FAIL 2.361s; sanitized native, release native and JavaScript each wrongly print uncheckedunchecked and exit zero, caught independently.
+Not covered: remaining five lane 7 pairs / eight reads; no broader intersection cast admission added, and private 68704 remains excluded under the original instruction.
+
+Working date: October 11, 2026. Assigned lane 4 9477.escapedText is now certified, one pair / one original read. Lane 7's own count is still twelve pairs / 58 reads. Lane 4b's seven / 45 overlap those certificates and are not added again.
+
+The isolated wrong control is generated from the existing complete original Identifier fixture. Its actual node holds numeric escapedText, all other original required Node and Symbol fields supplied. A DirectBase interface carries only readonly kind: SyntaxKind. The existing checked cast DirectBase to original Identifier checks the kind and retains lazy member obligations. Identifier already extends LeftHandSideExpression, so passing it to the original intersection-typed helper is a proven upcast. No carrier.child read occurs before the helper. The exact original receiver and full ancestor fields are retained, not reduced.
+
+Node prints 42. All three checked modes stop with exit 70 and exact diagnostic: adamic: panic: field read failed: value.escapedText is not a __String; expected __String, found number. The good counterpart prints word-built and agrees with Node, sanitized native, release native and JavaScript, with successful leak checks. The helper-bypass mutant replaces only the original helper member read with the existing unchecked expression. All three modes then print uncheckedunchecked and exit zero. This invalid output is caught by the original failure pins; the earlier carrier check can no longer kill the mutant first.
+
+Own counts, from counted native executions of those actual generated original-declaration controls, are recorded in stage3/interface-downcasts/lane7/counts.md. Wrong: allocations 5, frees 0, retains 7, releases 5, peak 5. Good: allocations/frees 6/6, retains/releases 8/11, peak 6. Both have zero regions and graph merges. No global counts refresh is claimed or required by this follow-up. The count table labels identify generated controls, not tracked .a paths. The scoped recorder is part of this original oracle and verifies measured rows on subsequent runs.
+
+Commands, directly redirected to logs:
+- ADAMIC_INTERSECTION_ORIGINAL_DECLS=/tmp/lane7-declarations go test ./internal/oracle -run '^TestCheckedViewIntersectionOriginalIdentifier$/^helper-only' -count=1 -v -args -update-counts: /tmp/lane7-identifier-own-counts-final.log, PASS 4.876s.
+- ADAMIC_INTERSECTION_ORIGINAL_DECLS=/tmp/lane7-declarations go test ./internal/oracle -run '^TestCheckedViewIntersectionOriginalIdentifier$' -count=1 -v: /tmp/lane7-identifier-final-certified2.log, PASS 16.204s.
+- ADAMIC_INTERSECTION_ORIGINAL_DECLS=/tmp/lane7-declarations ADAMIC_INTERSECTION_IDENTIFIER_MUTANT=1 go test ./internal/oracle -run '^TestCheckedViewIntersectionOriginalIdentifier$/^helper-only$' -count=1 -v: /tmp/lane7-identifier-final-killed-mutant2.log, expected FAIL 2.361s, three successful wrong outputs caught.
+- ADAMIC_INTERSECTION_ORIGINAL_DECLS=/tmp/lane7-declarations go test ./internal/oracle -run '^TestCheckedViewIntersectionOriginalIdentifier$/^helper-only' -count=1: /tmp/lane7-identifier-scoped-counts-verify.log, PASS 4.725s.
+
+An initial proposed broad cast-preflight/object-view change was rejected by automatic approval review for broader silent-miscompile risk. The command never ran. This certificate instead uses the existing admitted interface view and a proven upcast; no rejected code was applied by another route. There is no pending approval request for that abandoned proposal. Only fixture/oracle/count/report files change in this batch.

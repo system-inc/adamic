@@ -1,0 +1,3 @@
+const f:(value:string)=>string = (value:number|string):string => `${value}`;
+const value = ["some","text"].join("-");
+console.log(f(value));

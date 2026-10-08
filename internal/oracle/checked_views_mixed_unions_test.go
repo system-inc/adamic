@@ -1,7 +1,6 @@
 package oracle
 
 import (
-	"context"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 	"os"
@@ -12,8 +11,6 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
 )
 
 // Helpers receive viewed and ordinary objects of the same static interface.
@@ -55,23 +52,61 @@ func TestCheckedViewLane4HelperReads(t *testing.T) {
 	}
 }
 
+// Primitive unions are admitted lazily; the original wrong boolean must still
+// fail at the helper read even when an ordinary valid object reaches that helper.
 func TestCheckedViewLane4UnsupportedHelper(t *testing.T) {
-	path, err := filepath.Abs("../../stage3/interface-downcasts/lane4/read-fixtures/helper-unsupported.a")
+	input, err := os.ReadFile("../../stage3/interface-downcasts/lane4/read-fixtures/helper-unsupported.a")
 	if err != nil {
 		t.Fatal(err)
 	}
-	if difference := disagreement(run{stdout: []byte("true\n")}, onNode(t, path)); difference != "" {
-		t.Fatal(difference)
+	for _, probe := range []struct{ name, value, output string }{
+		{"string", "'word'", "word\n"}, {"number", "42", "42\n"}, {"wrong-boolean", "true", "true\n"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			source := strings.Replace(string(input), "unsupported: true", "unsupported: "+probe.value, 1)
+			source = strings.Replace(source, "helper(base as Box);", "const ordinary: Box = {kind: 'box', unsupported: 'ordinary'}; helper(ordinary); helper(base as Box);", 1)
+			path := filepath.Join(t.TempDir(), "helper.a")
+			if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+				t.Fatal(err)
+			}
+			sourceWant := run{stdout: []byte("ordinary\n" + probe.output)}
+			if difference := disagreement(sourceWant, onNode(t, path)); difference != "" {
+				t.Fatal("source Node: " + difference)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			want := sourceWant
+			if probe.name == "wrong-boolean" {
+				want = run{stdout: []byte("ordinary\n"), exitCode: 70, stderr: []byte("adamic: panic: field read failed: value.unsupported matches no member of string | number; expected string | number, found boolean\n")}
+			}
+			actual, binary := nativelyUncached(t, program)
+			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Fatalf("%s: stdout %q stderr %q", difference, got.stdout, got.stderr)
+				}
+			}
+			if probe.name != "wrong-boolean" {
+				if report := leaksUncached(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+				return
+			}
+			if count := skipPrimitiveMemberChecks(program, "unsupported"); count != 1 {
+				t.Fatalf("want one helper member-check mutation, got %d", count)
+			}
+			for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if difference := disagreement(sourceWant, got); difference != "" {
+					t.Fatalf("mutant must execute the wrong source value: %s, stderr %q", difference, got.stderr)
+				}
+				if disagreement(want, got) == "" {
+					t.Fatal("primitive helper mutant escaped the refusal pin")
+				}
+				t.Logf("primitive helper member-check mutant caught: exit %d stdout %q", got.exitCode, got.stdout)
+			}
+		})
 	}
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		t.Fatal(err)
-	}
-	_, err = lower.Lower(context.Background(), loaded)
-	if err == nil || !strings.HasSuffix(err.Error(), ":3:56: stage 0 can't lower a field of type string | number yet") {
-		t.Fatalf("want unsupported helper compile refusal, got %v", err)
-	}
-	t.Logf("current eager compile refusal: %v", err)
 }
 
 func dropLane4HelperView(program *ir.Program, replacement ...ir.Expression) int {

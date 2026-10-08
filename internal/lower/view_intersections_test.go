@@ -88,3 +88,36 @@ func TestViewIntersectionContracts(t *testing.T) {
 		})
 	}
 }
+
+func TestViewIntersectionAncestorProof(t *testing.T) {
+	t.Parallel()
+	for _, sample := range []struct {
+		name, source string
+		inherits     bool
+	}{
+		{"declared", "interface A { readonly value: number } interface B extends A { readonly other: string } type Target = B;", true},
+		{"structural only", "interface A { readonly value: number } interface B { readonly value: number; readonly other: string } type Target = B;", false},
+		{"intersection", "interface A { readonly value: number } interface B extends A { readonly other: string } type Target = B & { readonly more: number };", true},
+		{"generic ancestry", "interface A { readonly value: number } interface B<T> extends A { readonly other: T } type Target = B<string>;", true},
+	} {
+		t.Run(sample.name, func(t *testing.T) {
+			path := filepath.Join(t.TempDir(), "ancestor.a")
+			if err := os.WriteFile(path, []byte(sample.source), 0600); err != nil {
+				t.Fatal(err)
+			}
+			program, err := load.Load([]string{path})
+			if err != nil {
+				t.Fatal(err)
+			}
+			file := program.Files()[0]
+			checked, release := program.Checker(context.Background(), file)
+			defer release()
+			l := &lowering{program: program, checker: checked, result: &ir.Program{}}
+			ancestor := checked.GetTypeAtLocation(file.Statements.Nodes[0].Name())
+			source := checked.GetTypeAtLocation(file.Statements.Nodes[len(file.Statements.Nodes)-1].Name())
+			if got := l.viewIntersectionInherits(source, ancestor, map[*checker.Type]bool{}); got != sample.inherits {
+				t.Fatalf("declared ancestry %v, want %v", got, sample.inherits)
+			}
+		})
+	}
+}

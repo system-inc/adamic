@@ -1,0 +1,6 @@
+type SyntaxKind=number;
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Base {readonly scan:unknown;}
+interface Target {scan(): SyntaxKind;}
+function probe(value:Base):void {const scanner=value as Target;console.log(`${scanner.scan()}`);}
+probe({scan:():number=>3});

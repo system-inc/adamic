@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface ComputedPropertyName {readonly value:number;readonly expression:Expression;}
+interface Expression {readonly value:number;}
+interface Base {readonly updateComputedPropertyName:unknown;}
+interface Target {updateComputedPropertyName(node: ComputedPropertyName, expression: Expression): ComputedPropertyName;}
+function probe(value:Base):void {const context={factory:value as Target};const node:ComputedPropertyName={value:3,expression:{value:4}};const visitor=0;function nodeVisitor(expression:Expression,visitor:number,isExpression:boolean):Expression{return expression;}const isExpression=true;const Debug={checkDefined:(expression:Expression):Expression=>expression};console.log(`${context.factory.updateComputedPropertyName(node,Debug.checkDefined(nodeVisitor(node.expression,visitor,isExpression))).value}`);}
+probe({updateComputedPropertyName:():ComputedPropertyName=>({value:9,expression:{value:0}})});

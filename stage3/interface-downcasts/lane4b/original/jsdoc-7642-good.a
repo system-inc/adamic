@@ -1,0 +1,20 @@
+import type { JSDoc } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(node: JSDoc): string {
+ const member = node.comment;
+ if (member === undefined) return 'absent';
+ if (typeof member === 'string') return member;
+ if (typeof member !== 'object') return 'wrong';
+ const first = member[0];
+ if (first === undefined) return 'empty';
+ return `${first.flags}`;
+}
+const plain = { kind: 321, comment: 'plain' };
+const array = { kind: 321, comment: [{ kind: 322, flags: 7, text: 'nested' }] };
+const absent = { kind: 321 };
+const plainBase: Base = plain;
+const arrayBase: Base = array;
+const absentBase: Base = absent;
+console.log(read(plainBase as JSDoc));
+console.log(read(arrayBase as JSDoc));
+console.log(read(absentBase as JSDoc));

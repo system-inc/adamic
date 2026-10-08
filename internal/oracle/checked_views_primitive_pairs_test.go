@@ -132,7 +132,8 @@ func TestCheckedViewFiniteStringKeyComponent(t *testing.T) {
 	}
 }
 
-// Admission remains closed until the boxed array adapter passes source oracles.
+// Certified homogeneous producers use checked primitive reads. Heterogeneous
+// array literals still require their own producer-storage adapter.
 func TestCheckedViewPrimitiveArrayPairGap(t *testing.T) {
 	for _, variant := range []string{"string", "number", "plain-number", "plain-string", "wrong", "bounds"} {
 		t.Run(variant, func(t *testing.T) {
@@ -148,9 +149,30 @@ func TestCheckedViewPrimitiveArrayPairGap(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			_, err = lower.Lower(context.Background(), loaded)
-			if err == nil || !strings.HasSuffix(err.Error(), ":4:92: stage 0 can't lower an array of string | number yet") {
-				t.Fatalf("expected closed array admission, got %v", err)
+			program, err := lower.Lower(context.Background(), loaded)
+			if variant != "plain-number" && variant != "plain-string" {
+				member := "string | number"
+				if variant == "wrong" {
+					member = "string | boolean"
+				}
+				refused, ok := err.(*lower.NotYet)
+				if !ok || refused.What != "an array of "+member || !strings.HasSuffix(refused.Where, ":5:46") {
+					t.Fatalf("expected original producer storage refusal, got %v", err)
+				}
+				return
+			}
+			if err != nil {
+				t.Fatal(err)
+			}
+			want := run{stdout: []byte(text + "\n")}
+			sanitized, binary := nativelyUncached(t, program)
+			for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Fatal(difference)
+				}
+			}
+			if report := leaksUncached(t, program, binary); report != "" {
+				t.Fatal(report)
 			}
 		})
 	}

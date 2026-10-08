@@ -1,0 +1,8 @@
+// Rank 53 original declaration/read witness; adjacent data carriers reduced.
+type TokenFlags = number;
+interface NumericLiteral {readonly kind:"number";readonly text:string;}
+interface Base {readonly createNumericLiteral:unknown;}
+interface Target {createNumericLiteral(value: string | number, numericLiteralFlags?: TokenFlags): NumericLiteral;}
+function inspect(node:NumericLiteral):void {console.log(node.text);}
+function probe(value:Base):void {const factory=value as Target;const name="5";inspect(factory.createNumericLiteral(+name));}
+probe({createNumericLiteral:(value:string|number,numericLiteralFlags:TokenFlags):NumericLiteral=>({kind:"number",text:`${value}`})});

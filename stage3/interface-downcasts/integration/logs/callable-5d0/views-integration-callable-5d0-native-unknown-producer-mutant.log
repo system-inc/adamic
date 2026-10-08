@@ -1,0 +1,6 @@
+=== RUN   TestViewCallableBoxingUnknownProducer
+    view_callables_boxing_boundary_test.go:39: unknown producer exit <nil> stdout "7\n" stderr ""
+--- FAIL: TestViewCallableBoxingUnknownProducer (0.08s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.086s
+FAIL

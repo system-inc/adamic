@@ -1,0 +1,15 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (0.80s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/resolution-settings/wrong-result (0.42s)
+        checked_views_callable_later_ranked_test.go:76: gate cache node hit
+        checked_views_callable_later_ranked_test.go:96: gate cache node miss
+        checked_views_callable_later_ranked_test.go:116: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: resolutionHost.getCompilationSettings().value is not initialized; expected string, found missing\n" want "getCompilationSettings" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: resolutionHost.getCompilationSettings expected () => CompilerOptions, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/scanner-scan/wrong-result (0.37s)
+        checked_views_callable_later_ranked_test.go:76: gate cache node hit
+        checked_views_callable_later_ranked_test.go:96: gate cache node miss
+        checked_views_callable_later_ranked_test.go:116: backend2 exit 0 stdout "bad\n" stderr "" want "scan" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: scanner.scan expected () => number, found function with incompatible result representation\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.810s
+FAIL

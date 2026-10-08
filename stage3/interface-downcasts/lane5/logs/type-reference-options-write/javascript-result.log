@@ -1,0 +1,19 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.20s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/type-reference/wrong-result (0.48s)
+        checked_views_callable_later_ranked_test.go:26: gate cache node hit
+        checked_views_callable_later_ranked_test.go:46: gate cache node miss
+        checked_views_callable_later_ranked_test.go:66: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createTypeReferenceNode(parseEntityNameOfTypeReference(),parseTypeArgumentsOfTypeReference()).value is not initialized; expected number, found missing\n" want "createTypeReferenceNode" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createTypeReferenceNode expected (typeName: string | EntityName, typeArguments?: readonly TypeNode[] | undefined) => TypeReferenceNode, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/program-options/wrong-result (0.36s)
+        checked_views_callable_later_ranked_test.go:26: gate cache node hit
+        checked_views_callable_later_ranked_test.go:46: gate cache node miss
+        checked_views_callable_later_ranked_test.go:66: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: program.getCompilerOptions().value is not initialized; expected string, found missing\n" want "getCompilerOptions" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: program.getCompilerOptions expected () => CompilerOptions, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/context-options/wrong-result (0.36s)
+        checked_views_callable_later_ranked_test.go:26: gate cache node hit
+        checked_views_callable_later_ranked_test.go:46: gate cache node miss
+        checked_views_callable_later_ranked_test.go:66: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: context.getCompilerOptions().value is not initialized; expected string, found missing\n" want "getCompilerOptions" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: context.getCompilerOptions expected () => CompilerOptions, found function with incompatible result representation\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=3 misses=3
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.209s
+FAIL

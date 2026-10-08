@@ -1,0 +1,114 @@
+{
+  "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "basis": "original declarations and read spans; reduced adjacent helpers and data carriers",
+  "members": [
+    {
+      "rank": 7,
+      "type": "NodeFactory",
+      "field": "createExpressionStatement",
+      "candidateReads": 114,
+      "witness": {
+        "file": "src/compiler/factory/emitHelpers.ts",
+        "line": 314,
+        "column": 21
+      },
+      "read": "factory.createExpressionStatement",
+      "call": "factory.createExpressionStatement(\r\n                        factory.createAssignment(\r\n                            accessor,\r\n                            factory.createIdentifier(\"value\"),\r\n                        ),\r\n                    )",
+      "utf16Start": 12338,
+      "utf16End": 12371,
+      "fileSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+      "declaration": "createExpressionStatement(expression: Expression): ExpressionStatement;",
+      "declarationLine": 9036
+    },
+    {
+      "rank": 22,
+      "type": "DiagnosticCollection",
+      "field": "add",
+      "candidateReads": 59,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 6709,
+        "column": 13
+      },
+      "read": "diagnostics.add",
+      "call": "diagnostics.add(createCompilerDiagnostic(Diagnostics.Could_not_write_file_0_Colon_1, fileName, hostErrorMessage))",
+      "utf16Start": 263316,
+      "utf16End": 263331,
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declaration": "add(diagnostic: Diagnostic): void;",
+      "declarationLine": 10082
+    },
+    {
+      "rank": 31,
+      "type": "NodeFactory",
+      "field": "createVoidZero",
+      "candidateReads": 46,
+      "witness": {
+        "file": "src/compiler/factory/emitHelpers.ts",
+        "line": 430,
+        "column": 57
+      },
+      "read": "factory.createVoidZero",
+      "call": "factory.createVoidZero()",
+      "utf16Start": 18153,
+      "utf16End": 18175,
+      "fileSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+      "declaration": "createVoidZero(): VoidExpression;",
+      "declarationLine": 9361
+    },
+    {
+      "rank": 36,
+      "type": "NodeFactory",
+      "field": "createThis",
+      "candidateReads": 42,
+      "witness": {
+        "file": "src/compiler/factory/emitHelpers.ts",
+        "line": 430,
+        "column": 34
+      },
+      "read": "factory.createThis",
+      "call": "factory.createThis()",
+      "utf16Start": 18130,
+      "utf16End": 18148,
+      "fileSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+      "declaration": "createThis(): ThisExpression;",
+      "declarationLine": 8813
+    },
+    {
+      "rank": 51,
+      "type": "TransformationContext",
+      "field": "requestEmitHelper",
+      "candidateReads": 33,
+      "witness": {
+        "file": "src/compiler/factory/emitHelpers.ts",
+        "line": 209,
+        "column": 9
+      },
+      "read": "context.requestEmitHelper",
+      "call": "context.requestEmitHelper(decorateHelper)",
+      "utf16Start": 8058,
+      "utf16End": 8083,
+      "fileSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+      "declaration": "requestEmitHelper(helper: EmitHelper): void;",
+      "declarationLine": 9605
+    },
+    {
+      "rank": 52,
+      "type": "EmitResolver",
+      "field": "hasNodeCheckFlag",
+      "candidateReads": 32,
+      "witness": {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 1756,
+        "column": 25
+      },
+      "read": "resolver.hasNodeCheckFlag",
+      "call": "resolver.hasNodeCheckFlag(member, NodeCheckFlags.ContainsConstructorReference)",
+      "utf16Start": 77961,
+      "utf16End": 77986,
+      "fileSha256": "d3a0359fad8430943ca68282cc32b12bc61a6631fa93901f6c480f411c4542f4",
+      "declaration": "hasNodeCheckFlag(node: Node, flags: LazyNodeCheckFlags): boolean;",
+      "declarationLine": 5906
+    }
+  ]
+}
