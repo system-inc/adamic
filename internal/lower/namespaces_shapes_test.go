@@ -26,7 +26,7 @@ func TestTscNamespaceDeclarationShapes(t *testing.T) {
 		{"Parser.JSDocParser", ""},
 		{"Debug", "class inside a namespace"},
 		{"Debug.log", "callable object properties"},
-		{"Parser", overloadReason},
+		{"Parser", "function overloads with different parameter or return representations"},
 		{"IncrementalParser", overloadReason},
 		{"tracingEnabled", "no runtime container is emitted"},
 	} {

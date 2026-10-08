@@ -57,7 +57,7 @@ func (g *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode {
 		}
 		if ast.IsClassLike(node) {
 			if node == function {
-				for _, clause := range nodesOf(node.AsClassDeclaration().HeritageClauses) {
+				for _, clause := range nodesOf(namespaceClassHeritage(node)) {
 					if clause.AsHeritageClause().Token == ast.KindExtendsKeyword {
 						for _, element := range clause.AsHeritageClause().Types.Nodes {
 							if base := g.lowering.namespaceCallable(element.AsExpressionWithTypeArguments().Expression); base != nil {
@@ -68,7 +68,7 @@ func (g *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode {
 				}
 				// Construction executes instance initializers, parameter defaults and
 				// the constructor body. Static members ran at the class declaration.
-				for _, member := range node.AsClassDeclaration().Members.Nodes {
+				for _, member := range node.Members() {
 					if member.Kind == ast.KindPropertyDeclaration && !ast.HasStaticModifier(member) {
 						walk(member.Initializer())
 					}
@@ -81,14 +81,14 @@ func (g *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode {
 				}
 				return
 			}
-			for _, clause := range nodesOf(node.AsClassDeclaration().HeritageClauses) {
+			for _, clause := range nodesOf(namespaceClassHeritage(node)) {
 				if clause.AsHeritageClause().Token == ast.KindExtendsKeyword {
 					for _, element := range clause.AsHeritageClause().Types.Nodes {
 						walk(element.AsExpressionWithTypeArguments().Expression)
 					}
 				}
 			}
-			for _, member := range node.AsClassDeclaration().Members.Nodes {
+			for _, member := range node.Members() {
 				if ast.HasStaticModifier(member) || member.Kind == ast.KindClassStaticBlockDeclaration {
 					walk(member)
 				}

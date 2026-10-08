@@ -13,6 +13,7 @@ func TestIndexedLedgerProbePreservesOtherDiagnostics(t *testing.T) {
 	}
 	var result struct {
 		OptionSites []OptionSite `json:"option_sites"`
+ Census OptionLedgerReport `json:"census"`
 		Excluded    []struct {
 			Site OptionSite `json:"site"`
 		} `json:"excluded"`
@@ -27,7 +28,9 @@ func TestIndexedLedgerProbePreservesOtherDiagnostics(t *testing.T) {
 		found := false
 		for _, site := range result.OptionSites {
 			if site.File == excluded.Site.File && site.Line == excluded.Site.Line && site.Column == excluded.Site.Column && site.Code == excluded.Site.Code {
-				diagnostics = append(diagnostics, site.Message)
+				for _, decision := range result.Census.Rows {
+					if decision.Site.File == site.File && decision.Site.Line == site.Line && decision.Site.Column == site.Column && decision.Site.Code == site.Code && decision.State == OptionRemainingError { diagnostics = append(diagnostics, site.Message) }
+				}
 				found = true
 				break
 			}
@@ -49,12 +52,18 @@ func TestIndexedLedgerProbePreservesOtherDiagnostics(t *testing.T) {
 		t.Fatal("indexed audit evidence missing")
 	}
 	diagnostics = append(diagnostics, indexed)
-	remaining, err := filterIndexedLedgerDiagnostics(diagnostics, result.OptionSites, exclusions)
+	remaining, err := filterIndexedLedgerDiagnostics(diagnostics, result.OptionSites, exclusions, censusDispositions(result.Census))
 	if err != nil {
 		t.Fatal(err)
 	}
 	if len(remaining) != 2 || remaining[0] != ordinary || remaining[1] != indexed {
 		t.Fatalf("must retain every unrelated and indexed diagnostic: %v", remaining)
 	}
-	t.Log("Removed the exact 72 audited optional/catch diagnostics; retained an ordinary and an indexed diagnostic unchanged")
+	t.Log("Removed only five pending catch diagnostics, retained 67 scheduled optional contracts, and preserved ordinary/indexed diagnostics unchanged")
+}
+
+func censusDispositions(report OptionLedgerReport) []OptionDisposition {
+ rows := []OptionDisposition{}
+ for _, row := range report.Rows { rows = append(rows, row.OptionDisposition) }
+ return rows
 }

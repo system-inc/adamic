@@ -35,7 +35,7 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 			return nil, l.notYet(name, "a destructuring declaration")
 		}
 
-		if list.Flags&ast.NodeFlagsBlockScoped == 0 {
+		if list.Flags&ast.NodeFlagsBlockScoped == 0 && !namespaceVariable(list) {
 			if symbol := l.symbol(name); symbol != nil && len(symbol.Declarations) > 1 {
 				return nil, &Refused{Where: l.program.Where(declaration), What: "repeated var assertion declarations", Fix: "use one declaration and subsequent assignments"}
 			}

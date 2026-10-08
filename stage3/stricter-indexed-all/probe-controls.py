@@ -49,7 +49,7 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
     for outcome in executor.map(run_loader, loader_cases.items()):
         print(outcome)
 
-for name in ['missing-indexed-audit', 'fabricated-built-entry', 'wrong-excluded-id']:
+for name in ['missing-indexed-audit', 'fabricated-built-entry', 'wrong-excluded-id', 'missing-census-row', 'fabricated-emitted-state']:
     mutant = copy.deepcopy(result)
     if name == 'missing-indexed-audit':
         index = next(i for i, site in enumerate(mutant['option_sites']) if 'noUncheckedIndexedAccess' in site['options'])
@@ -57,11 +57,15 @@ for name in ['missing-indexed-audit', 'fabricated-built-entry', 'wrong-excluded-
     elif name == 'fabricated-built-entry':
         mutant['attempts'][0]['stage'] = 'built'
         mutant['attempts'][0]['binary'] = '/tmp/fabricated-binary'
+    elif name == 'missing-census-row':
+        del mutant['census']['rows']['D108']
+    elif name == 'fabricated-emitted-state':
+        mutant['census']['rows']['D037']['state'] = 'emitted-check'
     else:
         mutant['excluded'][0]['id'] = 'D069'
     path = controls / (name + '.json')
     path.write_text(json.dumps(mutant))
-    run = subprocess.run(['python3', str(root / 'classify-production.py'),
+    run = subprocess.run(['python3', str(root / 'classify-census.py'),
                           '--result', str(path), '--tree', str(args.tree),
                           '--output', str(controls / name)], capture_output=True, text=True)
     assert run.returncode != 0, name

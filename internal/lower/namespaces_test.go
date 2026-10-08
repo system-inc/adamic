@@ -35,6 +35,13 @@ func TestNamespaceLimitsStayLoud(t *testing.T) {
 		t.Run(probe.name, func(t *testing.T) {
 			_, err := lowerSource(t, probe.source)
 			var notYet *NotYet
+			if probe.name == "class merge" {
+				var refused *Refused
+				if !errors.As(err, &refused) || !strings.Contains(err.Error(), "declaration merging of class N") {
+					t.Fatalf("got %v, want class merge refusal", err)
+				}
+				return
+			}
 			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.reason) {
 				t.Fatalf("got %v, want NotYet %s", err, probe.reason)
 			}
@@ -89,6 +96,13 @@ func TestDebugNamespaceMergesStayNotYet(t *testing.T) {
 			}
 			_, err = lowerSource(t, string(source))
 			var notYet *NotYet
+			var refused *Refused
+			if test.name == "class_merge.a" {
+				if !errors.As(err, &refused) || !strings.Contains(err.Error(), "declaration merging of class Logger") {
+					t.Fatalf("got %v, want class merge refusal", err)
+				}
+				return
+			}
 			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), test.reason) {
 				t.Fatalf("got %v, want NotYet %s", err, test.reason)
 			}
@@ -96,15 +110,14 @@ func TestDebugNamespaceMergesStayNotYet(t *testing.T) {
 	}
 }
 
-func TestNamespaceReturnedAssignmentLimits(t *testing.T) {
+func TestNamespaceReturnedAssignments(t *testing.T) {
 	for _, source := range []string{
 		"namespace N {let text=''; export function set():string{return text='built'.repeat(2);}}",
 		"namespace N {let optional:number|undefined; export function set():number{return optional=1;}}",
 	} {
 		_, err := lowerSource(t, source)
-		var notYet *NotYet
-		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "only scalar singleton assignment is proven") {
-			t.Fatalf("got %v, want the scalar returned-assignment boundary", err)
+		if err != nil {
+			t.Fatalf("general returned-assignment lowering must preserve the namespace target: %v", err)
 		}
 	}
 }

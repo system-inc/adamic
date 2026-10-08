@@ -512,7 +512,7 @@ func (l *lowering) sameRecordView(from, to *checker.Type) bool {
 	}
 	f, fok := l.recordInfo(from)
 	t, tok := l.recordInfo(to)
-	if !fok && !tok && l.recordElement(from) != nil && l.recordElement(to) != nil {
+	if !fok && !tok {
 		return true
 	}
 	if !fok || !tok {
