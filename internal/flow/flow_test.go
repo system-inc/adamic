@@ -28,8 +28,6 @@ func programs(t *testing.T) []string {
 		"../load/testdata/0.1/compile/*.ts",
 		"../load/testdata/0.1/compile/07_modules/main.ts",
 		"../oracle/testdata/*.a",
-		"../oracle/testdata/non_null_checked_*.ts",
-		"../oracle/testdata/non_null_refuse_*.ts",
 		"../oracle/testdata/modules/main.a",
 		"testdata/*.a",
 	} {
@@ -59,27 +57,12 @@ func programs(t *testing.T) []string {
 			"node_process_errors.a", "node_process_directory_mutation.a", "node_process_environment_mutation.a":
 			return true
 		}
-		return refusedNonNullFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "normalize_coverage_long.a" || filepath.Base(path) == "typed_arrays_primes_large.a"
+		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "normalize_coverage_long.a" || filepath.Base(path) == "typed_arrays_primes_large.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
 	}
 	return paths
-}
-
-// These new controls pin compile-time refusals, rather than runnable graphs.
-// The TypeScript literal controls remain runnable with inserted checks.
-func refusedNonNullFixture(path string) bool {
-	name := filepath.Base(path)
-	if filepath.Ext(path) == ".a" && strings.HasPrefix(name, "non_null_refuse_") {
-		return true
-	}
-	switch name {
-	case "non_null_initialized.a", "non_null_literal_statement.a", "non_null_literal_return.a", "non_null_uninitialized_default.a",
-		"non_null_possible_read.a", "non_null_possible_typeerror.a", "non_null_checked_initializer.ts":
-		return true
-	}
-	return false
 }
 
 func lowered(t *testing.T, path string) *ir.Program {
