@@ -52,7 +52,7 @@ func TestEmbeddedNodeTypesPortable(t *testing.T) {
 			command := bounded(t, os.Args[0], "-test.run=^TestEmbeddedNodeTypesPortableWorker$", "-test.v")
 			command.Dir = directory
 			command.Env = append(os.Environ(), "ADAMIC_NODE_PORTABLE_WORKER=1", "ADAMIC_NODE_PORTABLE_RUNNER="+filepath.Join(root, "oracle/node.mjs"))
-			output, err := command.CombinedOutput()
+			output, err := combinedChildOutput(command)
 			if err != nil {
 				t.Fatalf("foreign-directory compiler: %v\n%s", err, output)
 			}

@@ -16,7 +16,6 @@ import (
 	"strings"
 	"syscall"
 	"testing"
-	"time"
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
@@ -531,7 +530,7 @@ func executeWith(t *testing.T, environment []string, name string, arguments ...s
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := command.Run()
+	err := runChild(command)
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
@@ -541,19 +540,11 @@ func executeWith(t *testing.T, environment []string, name string, arguments ...s
 	return result
 }
 
-// bounded is a command that can't outlive its test: it has a deadline, it runs in a process group of
-// its own, and when the deadline passes or the test ends, the whole group is killed. A fixture that
-// loops, or a child left with nowhere to write, is stopped instead of orphaned.
+// bounded prepares a command; runChild owns the output-based stall guard.
 func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
-	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-	}
-	command.WaitDelay = 5 * time.Second
+	command := exec.Command(name, arguments...)
+	command.SysProcAttr = &syscall.SysProcAttr{}
 	return command
 }
 
