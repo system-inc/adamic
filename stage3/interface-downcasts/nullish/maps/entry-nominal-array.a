@@ -9,7 +9,7 @@ console.log(values.map(inspectNamed).join(','));console.log(values.filter(value=
 values.forEach(value=>{console.log(String(value.count));});
 for(const value of values){console.log(String(value.count));}
 console.log(String(values.some(value=>value.count===7)));console.log(String(values.every(value=>value.count>0)));console.log(String(values.reduce((sum,value)=>sum+value.count,0)));
-console.log(String(values.indexOf(values[0]!)));console.log(String(values.includes(values[0]!)));
+const head=values[0];if(head!==undefined){console.log(String(values.indexOf(head)));console.log(String(values.includes(head)));}
 const first=values.at(0);if(first!==undefined){console.log(String(first.count));}
 const found=values.find(value=>value.count===8);if(found!==undefined){console.log(String(found.count));}
 console.log(values.slice(1).map(inspectNamed).join(','));

@@ -13,8 +13,10 @@ type Program struct {
 	// PrimitiveArrayReads requires producer metadata even without a cast.
 	PrimitiveArrayReads bool
 	// ViewOrigins are metadata for the shared may-flow graph, never executable IR.
-	ViewOrigins     []Expression
-	MapCertificates [][2]ViewContractID
+	// DictionaryEntryOrigins are derived containers, never additional cast sites.
+	DictionaryEntryOrigins []Expression
+	ViewOrigins            []Expression
+	MapCertificates        [][2]ViewContractID
 
 	// PredicateChecks counts predicate directions, per emitted call site.
 	// Unobservable is included in Proven: no narrowed read consumes that region.
@@ -474,9 +476,12 @@ type (
 
 	// ArrayPush is Array.push(Value): it appends and is the new length.
 	ArrayPush struct {
-		Array   Expression
-		Value   Expression
-		Element Type
+		// DictionaryProduction appends checked snapshots to a private new result.
+		// It conveys no writable element certificate for later aliases.
+		DictionaryProduction bool
+		Array                Expression
+		Value                Expression
+		Element              Type
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
 		// what it writes into), or 0 when nothing recorded one.
 		Site int
@@ -519,7 +524,7 @@ type (
 	// undefined).
 	Narrow struct {
 		Value          Expression
-		Tuple          bool
+		Tuple          bool // Native object slots; JavaScript array identity.
 		Undefined      bool
 		UndefinedWhere string
 		To             Type
@@ -605,6 +610,7 @@ type (
 	// null reference, or a Maybe pair). Relative is array.at(index), where a negative index counts
 	// from the end and a fraction truncates.
 	ArrayIndex struct {
+		TupleUnion       bool // Selected read has the lowering tuple/scalar union plan.
 		Required         bool
 		UndefinedAllowed bool
 		View, ViewType   string

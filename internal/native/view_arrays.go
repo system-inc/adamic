@@ -9,7 +9,7 @@ import (
 // Keep metadata at allocation, not at assertion. Wrapping dispatch here also
 // covers arrays produced inside callees, irrespective of source lowering order.
 func (e *emitter) evaluate(expression ir.Expression) string {
-	if read, ok := expression.(ir.ArrayIndex); ok && read.Element == ir.Union && read.View != "" {
+	if read, ok := expression.(ir.ArrayIndex); ok && !read.TupleUnion && read.Element == ir.Union && read.View != "" {
 		if _, primitive := ir.PrimitiveViewMembers(e.program, read.ViewContract); primitive {
 			return e.emitPrimitiveArrayIndex(read)
 		}
@@ -27,6 +27,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.emitViewArrayString(join)
 	}
 	value := e.evaluateWithoutViewArrays(expression)
+	if literal, ok := expression.(ir.ObjectLiteral); ok {
+		e.line("%s->tuple = %t;", value, literal.Tuple)
+	}
 	if !ir.HasArrayViews(e.program) {
 		return value
 	}
@@ -70,6 +73,9 @@ func (e *emitter) viewArrayReadOwner(element ir.Type) string {
 }
 
 func (e *emitter) emitViewArrayRead(read ir.ArrayIndex, array, index string) string {
+	if read.TupleUnion {
+		return e.emitTupleArrayUnionIndex(read, array, index)
+	}
 	return e.emitViewArrayReadWithOwner(read, array, index, e.viewArrayReadOwner(read.Element))
 }
 
@@ -131,7 +137,12 @@ func (e *emitter) emitViewArrayReadChecked(read ir.ArrayIndex, array, index, own
 }
 
 func (e *emitter) viewArrayElementSlot(read ir.ArrayViewRead, array, index, owner string) string {
-	slot := e.emitViewArrayReadWithOwner(read.Index(), array, index, owner)
+	slot := ""
+	if read.TupleUnion {
+		slot = e.emitTupleArrayUnionSlot(read.Index(), array, index, false)
+	} else {
+		slot = e.emitViewArrayReadWithOwner(read.Index(), array, index, owner)
+	}
 	value := e.temporary()
 	fallback := "(adamic_value){.reference = NULL}"
 	if read.Element == ir.MaybeNumber {

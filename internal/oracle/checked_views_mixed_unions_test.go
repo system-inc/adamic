@@ -55,7 +55,7 @@ func TestCheckedViewLane4HelperReads(t *testing.T) {
 // Primitive unions are admitted lazily; the original wrong boolean must still
 // fail at the helper read even when an ordinary valid object reaches that helper.
 func TestCheckedViewLane4UnsupportedHelper(t *testing.T) {
-	input, err := os.ReadFile("../../stage3/interface-downcasts/lane4/read-fixtures/helper-unsupported.a")
+	input, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane4/read-fixtures/helper-unsupported.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -176,7 +176,7 @@ func TestCheckedViewMixedSelection(t *testing.T) {
 		{"false-string-undefined", "boolean:false\nstring:word\nundefined:undefined\n", "boolean:true\n", "false | string | undefined", "boolean"},
 	} {
 		t.Run(sample.name, func(t *testing.T) {
-			path, err := filepath.Abs("../../stage3/interface-downcasts/lane4/selection-fixtures/" + sample.name + "-good.a")
+			path, err := filepath.Abs(checkedViewFixturePath("../../stage3/interface-downcasts/lane4/selection-fixtures/" + sample.name + "-good.a"))
 			if err != nil {
 				t.Fatal(err)
 			}

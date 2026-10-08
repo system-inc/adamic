@@ -1,0 +1,720 @@
+Built: opt-in mutant runners now fail only when their semantic, leak or sanitizer oracle catches the mutation.
+Commits: test-only cleanup follows fc21dde4f9445f6250d5311fb2d679254b1e4a80.
+Checks: baseline opt-in tests pass with mutations disabled; final unit PASS 122.144s and lane regressions PASS 28.186s before this test-only cleanup.
+Mutants: all ten affected modes rerun and fail at their real oracle; skip-release leaks 24 bytes and double-release triggers sanitizer use-after-free.
+Remaining: primary 10 pairs / 15 reads complete; overlapping lane 4b direct-cast frontier remains blocked.
+
+Removed unconditional fallback failures that could mask an escaped mutant. An
+escaped mutation now passes its opt-in runner, making a missing kill visible.
+Exact rerun environments, tests, exit codes and logs are recorded in
+/tmp/views-tuples-final-mutants.json; logs are /tmp/views-tuples-final-mutant-1.log
+through -10.log. All exit 1 and contain their oracle's mutant-caught evidence.
+Baseline command selects those nine opt-in test functions with environments
+unset, -count=1; /tmp/views-tuples-final-mutant-baseline.log records its result.
+No compiler behavior, fixtures or counts changed in this cleanup.
+
+---
+
+Built: original lane 4b outSignature frontier certified with string, tuple and wrong-primitive inputs; primary total remains 10 pairs / 15 candidate reads.
+Commits: frontier certification follows blocked direct-cast witness 348c4d74e5f3faacac80efe6e570f7ab4b7e9f8d.
+Checks: three Node/JS/native release/sanitized witnesses PASS 2.919s with finishing leak checks; 82 tuple and two legacy Map count rows refreshed PASS 54.120s.
+Mutants: unchecked outSignature returns boolean and exit zero instead of the tuple-union refusal (FAIL 0.751s).
+Remaining: one overlapping lane 4b direct array-to-tuple cast frontier, four candidate reads; primary pairs and optional/rest forms are complete.
+
+Commands: TestCheckedViewTupleLane4bOutSignature -count=1 -v
+(/tmp/views-tuples-lane4b-out-signature.log);
+ADAMIC_TUPLE_NUMERIC_MUTANT=outSignature on lane4b-out-signature-wrong
+(/tmp/views-tuples-lane4b-out-signature-mutant.log); scoped counts
+-args -update-counts (/tmp/views-tuples-lane4b-out-signature-counts.log).
+The string input is the exact original handoff source. Tuple and wrong-kind
+controls retain the original complete IncrementalBundleEmitBuildInfo receiver.
+No additional primary production reads are counted for this overlapping check.
+
+---
+
+Built: preserve and pin the exact lane 4b direct array-to-tuple cast frontier; no new runtime certificate.
+Commits: frontier witness follows Map expectation refresh 75c9ef06.
+Checks: source Node prints string; exact compiler adamic/no-unchecked-cast refusal PASS 0.399s.
+Mutants: none claimed for this blocker; the compiler cannot emit its runtime program.
+Remaining: one blocked overlapping direct-cast frontier (four candidate reads), plus the outSignature frontier still being certified; primary 10 pairs / 15 reads remain complete.
+
+Command: TestCheckedViewTupleLane4bCastFrontier -count=1 -v with original
+declarations (/tmp/views-tuples-lane4b-cast-frontier.log). The .a input is the
+exact handoff fixture from 8abb52a1518b9d8c3f0dbde993551d4f01ba10e2.
+Observed: refusal at its direct cast, line 5 column 18, before node[1].
+Inference from the current representation rules: homogeneous mixed-scalar
+array storage needs an alias-preserving bridge to tuple object slots. Existing
+checked field tuple certificates cannot prove that representation conversion.
+A snapshot copy could lose later source mutations and identity, and broad
+mixed-union array admission would violate this unit's narrowed dispatch scope.
+Neither is introduced. This nested blocker fixture cannot emit native code, so
+it has no runtime counts, release/sanitizer/leak runs or acceptance mutant.
+It is kept outside the runtime-certified fixture census; its absent count row
+is explicit rather than invented. The next overlapping frontier is independent.
+
+---
+
+Built: refresh the two legacy optional/rest tuple Map admission expectations; primary total remains 10 pairs / 15 reads.
+Commits: this test-only patch follows final primary kind pair 3c32b869.
+Checks: all six Map boundary cases PASS 2.413s; two now-supported forms match Node in both backends with finishing leak checks; owned counts PASS 47.278s.
+Mutants: removing source certificate pairs stops each positive form at node.value instead of matching Node (both caught, FAIL 0.201s).
+Remaining: two lane 4b frontier obligations; direct array-to-tuple cast observation is still a named compile refusal.
+
+Commands: ADAMIC_GATE_UNCACHED=1 TestCheckedViewMapStorageGaps -count=1 -v
+(/tmp/views-tuples-legacy-map-admission.log);
+ADAMIC_TUPLE_LEGACY_MAP_MUTANT=certificate on
+TestCheckedViewTupleLegacyMapAdmissionMutant
+(/tmp/views-tuples-legacy-map-mutant.log); scoped tuple counts -args
+-update-counts (/tmp/views-tuples-legacy-map-counts.log). The counts updater
+now also owns these two existing Map rows, so old refusal rows do not remain
+stale. Four other conversion gaps retain their named node.value failures.
+No compiler implementation or unrelated test expectation changed.
+
+---
+
+Built: original module kind position pair 68230/0; all primary 10 pairs / 15 candidate reads certified.
+Commits: kind certification is separate from module specifier patch f1f41ada.
+Checks: five Node/JS/native release/sanitized witnesses PASS 5.041s, finishing cases leak checked; 79 owned tuple rows refreshed PASS 49.248s.
+Mutants: unchecked literal position returns wrong with exit zero instead of literal refusal (FAIL 0.878s).
+Remaining: two overlapping lane 4b frontier checks; two stale optional/rest Map admission expectations will be refreshed separately.
+
+Commands: TestCheckedViewTupleOriginalModuleKind -count=1 -v
+(/tmp/views-tuples-module-kind-final.log); ADAMIC_TUPLE_NUMERIC_MUTANT=0
+on module-kind-wrong-literal (/tmp/views-tuples-module-kind-mutant.log);
+TestCheckedViewTupleOriginalCounts -args -update-counts
+(/tmp/views-tuples-module-kind-counts.log). All original kind alternatives and
+undefined remain checked. Additional TestCheckedViewMapStorageGaps exposed two
+stale refusal expectations for exact optional/rest tuple Map schemas; these
+now succeed and match Node, as this unit intends. The other four gaps retain
+named failures. That expectation refresh is separate from this primary pair.
+
+---
+
+Built: original module specifier optional tuple position pair 68230/1, two candidate reads; total 9 pairs / 14 reads.
+Commits: module specifier certification follows watcher filename cd2500f87ea9d532b029c5cac7348a6692342a93; no production hook changes.
+Checks: six Node/JS/native release/sanitized witnesses PASS 6.144s, completing cases leak checked; 74 owned counts refreshed PASS 40.158s.
+Mutants: unchecked optional array slot FAIL 1.297s (boolean instead of refusal); widened arity accepts six positions and fails the named-refusal oracle.
+Remaining: module kind position, one primary pair / one read, and two overlapping lane 4b checks.
+
+The upstream worker is private, so standard declaration emission omits it.
+Conservative oracle assumption: extract its entire written return type from
+the original pinned source AST, with all five positions unchanged, and bind
+its imported types to the unchanged emitted declarations. This certifies the
+original declared tuple, not a reduced demand-only reconstruction.
+prepare_optional_tuple.cjs verifies the source pin and clean original source,
+then separately hashes the extracted declaration. Oracle binding pins source
+9a7623ef273cfe670f11132590583b7628dec59c2d85e36e897ca5deed8f168a and declaration
+a64ec3b73d8fceda35d0b7ccab60db0afcf50a56e2de1160862d23ae1a76d1c1.
+The 78 emitted declaration hashes remain unchanged. Completeness checks pin
+all five optional positions and the exact original SourceFile field set.
+Only kind/specifier reads are certified; other tuple slots remain lazy.
+
+Commands: node stage3/interface-downcasts/tuples/prepare_optional_tuple.cjs
+/tmp/views-tuples-pinned /tmp/views-tuples-original-declarations
+(/tmp/views-tuples-private-worker-prepare-final.log);
+TestCheckedViewTupleOriginalModuleSpecifiers -count=1 -v
+(/tmp/views-tuples-module-specifiers-final.log); ADAMIC_TUPLE_NUMERIC_MUTANT=1
+on module-specifiers-wrong-kind (/tmp/views-tuples-module-specifiers-mutant.log);
+ADAMIC_TUPLE_MODULE_MUTANT=arity on TestCheckedViewTupleOriginalModuleArityMutant
+(/tmp/views-tuples-module-arity-mutant.log); scoped tuple counts -args
+-update-counts (/tmp/views-tuples-module-specifiers-counts.log). Both mutants
+finish exit zero with invalid behavior instead of named refusal. The wrong-kind
+source uses typeof as its Node observation; calling join on a boolean would
+throw independently, so that initial fixture was corrected before certification.
+
+---
+
+Built: original watcher filename position pair 95604/0, one candidate read; total 8 pairs / 12 reads.
+Commits: filename certification is separate from watcher event patch 21fd3587, with no production changes.
+Checks: three Node/JS/native release/sanitized witnesses PASS 2.308s, completing cases leak checked; 68 owned counts refreshed PASS 45.359s.
+Mutants: unchecked position zero returns 7 and exit zero instead of the string refusal (FAIL 0.351s).
+Remaining: original module kind and specifier positions, two pairs / three reads; two overlapping lane 4b checks.
+
+Commands: TestCheckedViewTupleOriginalWatchFilename -count=1 -v
+(/tmp/views-tuples-watch-filename.log); ADAMIC_TUPLE_NUMERIC_MUTANT=0
+on watch-filename-wrong (/tmp/views-tuples-watch-filename-mutant.log);
+TestCheckedViewTupleOriginalCounts -args -update-counts
+(/tmp/views-tuples-watch-filename-counts.log). Both original callback parameter
+alternatives read the required filename through the same positional path.
+The mutant is killed semantically in JavaScript before unsafe native use.
+The separately prepared private module declaration is not part of this commit.
+
+---
+
+Built: original watcher tuple event position pair 95604/1, two candidate reads; unified positional path; total 7 pairs / 11 reads.
+Commits: watcher event patch follows original forEach pair 19418766cc313c0dc2d4fcb4fe26a7da248609e1.
+Checks: eight Node/JS/release/sanitized witnesses PASS 4.131s with finishing leak checks; tuple regressions PASS 25.050s; 65 owned counts PASS 35.404s; lane 2/lane 4 regressions PASS 25.898s.
+Mutants: unchecked event FAIL 0.314s (boolean instead of refusal); wrong arity FAIL 0.259s (undefined instead of refusal); lost narrowing guard FAIL 0.232s (NaN instead of refusal).
+Remaining: watcher filename and module kind/specifier pairs, three pairs / four reads; two overlapping lane 4b checks.
+
+Both Parameters aliases bind the original unchanged sys.d.ts. Completeness
+controls pin the one-position callback and all three positions of the other,
+including optional Date and its getTime projection. The initial extra assertion
+incorrectly expected Date's descriptor itself to refuse; observation showed it
+is a structural library interface descriptor. No Date behavior is certified here.
+TupleUnion is recorded only for disjoint finite tuple arity alternatives. The
+existing mixed selector and tuple predicates provide membership, while the
+existing readTupleViewElement is the sole positional read constructor for fixed,
+optional, rest and alternative tuples. No second tuple producer or certificate.
+Narrowed numeric demands preserve maybe-number storage before the existing
+unwrap guard. A callback call that removes the event returns NaN on Node; both
+compiler backends stop with the existing narrowed-away diagnostic.
+
+Commands: TestCheckedViewTupleOriginalWatchEvent -count=1 -v
+(/tmp/views-tuples-watch-completeness-final.log). Positional mutant:
+ADAMIC_TUPLE_NUMERIC_MUTANT=1 on watch-event-wrong-event
+(/tmp/views-tuples-watch-final-mutant.log). Arity mutant:
+ADAMIC_TUPLE_WATCH_MUTANT=arity on TestCheckedViewTupleOriginalWatchArityMutant
+(/tmp/views-tuples-watch-arity-mutant.log). Narrowing mutant:
+ADAMIC_TUPLE_WATCH_MUTANT=narrow on TestCheckedViewTupleWatchNarrowingMutant
+(/tmp/views-tuples-watch-narrow-mutant.log). All finish exit zero with incorrect
+behavior; no compiler failure is counted. Eight scoped affected tuple-family
+tests (/tmp/views-tuples-watch-unified-regressions.log) pass. Scoped counts
+-args -update-counts (/tmp/views-tuples-watch-final-counts.log) refreshed.
+The same ten lane 2/lane 4 array/union tests pass with 221 uncached Node
+observations (/tmp/views-tuples-watch-final-lane-regressions.log). gofmt applied.
+
+---
+
+Built: original IncrementalBuildInfoEmitSignature[] | undefined forEach pair 97931, one candidate read; total 6 pairs / 9 reads.
+Commits: pair follows rest patch 3dd953f7; no production hook changes needed.
+Checks: five original declaration Node/JS/release/sanitized witnesses PASS 2.607s, finishing cases leak checked; 57 owned counts refreshed PASS 32.143s.
+Mutants: changing the selected tuple alternative arity accepts the malformed tuple and fails the named-refusal oracle (FAIL 0.259s).
+Remaining: four primary optional pairs / six reads and two overlapping lane 4b checks.
+
+Commands: TestCheckedViewTupleOriginalSignatureForEach -count=1 -v
+(/tmp/views-tuples-signature-foreach-final.log);
+ADAMIC_TUPLE_SIGNATURE_FOREACH_MUTANT=skip on
+TestCheckedViewTupleOriginalSignatureForEachMutant
+(/tmp/views-tuples-signature-foreach-mutant.log);
+TestCheckedViewTupleOriginalCounts -count=1 -args -update-counts
+(/tmp/views-tuples-signature-foreach-counts.log). The receiver uses the
+unmodified imported alias including its required any-valued numeric brand,
+and nullable receiver syntax preserves callback suppression when absent.
+The mutation finishes with object/done and exit zero instead of named refusal.
+This is candidate-pair certification, not a new exact reaching-view census.
+
+---
+
+Built: trailing rest tuple object/Map views through the single certificate and producer path.
+Commits: rest admission is separate from optional admission cf1765d1 and foundation 8b37f903.
+Checks: eight Node/backend witnesses include release, sanitized and finishing leak checks; scoped counts PASS 37.966s; lane 2/lane 4 regressions PASS 32.443s.
+Mutants: zero-rest-as-present FAIL 0.249s (stdout); unchecked late position FAIL 0.386s (missing refusal); erased rest schema FAIL 0.275s (missing Map refusal).
+Remaining: five primary pairs / seven reads and two overlapping lane 4b checks; spread/variadic rest remain refused.
+
+Commands: TestCheckedViewTupleRestContract and
+TestTupleOptionalRestOriginalLayoutProbe -count=1 -v
+(/tmp/views-tuples-rest-contract-final.log). Presence mutant:
+ADAMIC_TUPLE_REST_CONTRACT_MUTANT=present on
+TestCheckedViewTupleRestAbsentMutant
+(/tmp/views-tuples-rest-contract-mutant.log). Late check mutant:
+ADAMIC_TUPLE_NUMERIC_MUTANT=3 on rest-view-wrong-tail
+(/tmp/views-tuples-rest-tail-mutant.log). Schema mutant:
+ADAMIC_TUPLE_REST_CONTRACT_MUTANT=schema on
+TestCheckedViewTupleRestSchemaMutant
+(/tmp/views-tuples-rest-schema-mutant.log). All semantic mutants compile and
+finish exit zero with incorrect behavior rather than a compiler failure.
+Scoped tuple counts -args -update-counts refreshes 52 owned rows
+(/tmp/views-tuples-rest-contract-counts.log). The same ten lane 2/lane 4
+array/union tests remain unchanged with 221 uncached Node observations
+(/tmp/views-tuples-rest-contract-regressions.log). gofmt applied.
+
+---
+
+Built: optional tuple view arity contracts and optional Map tuple forms, through the existing constructor.
+Commits: optional admission is a separate patch following 8b37f903 arity foundation.
+Checks: six Node/JavaScript/native release/sanitized/leak witnesses PASS 2.520s; layout probe PASS 0.319s; scoped counts PASS 27.497s; lane 2/lane 4 regressions PASS 24.436s.
+Mutants: absent-as-present compiles, returns string rather than undefined, and fails stdout oracle (FAIL 0.226s).
+Remaining: rest admission, five primary pairs / seven reads, and two overlapping lane 4b checks.
+
+Commands: TestCheckedViewTupleOptionalContract and
+TestTupleOptionalRestOriginalLayoutProbe scoped go tests with -count=1 -v
+(/tmp/views-tuples-optional-contract-final.log);
+ADAMIC_TUPLE_OPTIONAL_CONTRACT_MUTANT=present on
+TestCheckedViewTupleOptionalAbsentMutant
+(/tmp/views-tuples-optional-contract-mutant.log). The initial run refused at
+the old admission guard and is not a successful mutant witness. Final native
+mutant reaches exit zero with incorrect output. TestCheckedViewTupleOriginalCounts
+-args -update-counts refreshed 44 owned rows
+(/tmp/views-tuples-optional-contract-counts-final.log). Same ten scoped lane
+2/lane 4 array and union tests as the transfer patch pass, with 221 uncached
+Node observations (/tmp/views-tuples-optional-contract-regressions-final.log).
+
+---
+
+Built: shared tuple arity metadata and validators, independently of optional/rest source admission.
+Commits: arity foundation follows the separately pushed forEach transfer patch.
+Checks: runtime release/sanitized/leak probe PASS 0.613s; JavaScript IR probe PASS 0.331s; original tuple and transfer regressions PASS 19.893s.
+Mutants: removing the range check accepts count zero and fails the named-refusal oracle (FAIL 0.162s).
+Remaining: optional/rest admission, five primary pairs / seven reads, and two overlapping lane 4b checks.
+
+Commands: go test ./internal/oracle ./internal/javascript -run
+'^(TestCheckedViewTupleArityRuntimeProbe|TestTupleArityIRPlanProbe)$' -count=1 -v
+(/tmp/views-tuples-arity-foundation-final.log). OriginalOutSignature,
+OriginalSignaturePositions and ForEachTransfer scoped oracle regression
+(/tmp/views-tuples-arity-foundation-regression.log). The runtime probe mutant
+uses ADAMIC_TUPLE_ARITY_PROBE_MUTANT=range and compiles successfully before
+its semantic mismatch (/tmp/views-tuples-arity-foundation-mutant.log).
+No new fixture rows or certified production pairs in this infrastructure patch.
+
+---
+
+Built: explicitly flagged tuple-union forEach ownership transfer; primary certification remains 5 pairs / 8 reads pending the final pair queue.
+Commits: transfer patch recorded in git history, independently of optional/rest admission.
+Checks: four ownership fixtures PASS 1.849s; lane 2/lane 4 array and union regressions PASS 25.236s; counts refreshed PASS 29.414s.
+Mutants: skip-release leaks 24 bytes in one allocation; double-release triggers AddressSanitizer heap-use-after-free, both expected test failures.
+Remaining: optional/rest contracts, then 5 primary pairs / 7 reads and two overlapping lane 4b frontier checks.
+
+The user explicitly approved callback transfer with required ownership controls.
+ArrayViewRead carries TupleUnion through finalized contract binding. Only flagged
+forEach reads transfer the normalizer's owned count into the existing callback
+release path. Indexed reads keep statement cleanup ownership. Ordinary lane 2
+and lane 4 consumers keep their existing retain/release. Other tuple-union array
+consumers remain refused. A C marker on the flagged normal release supports
+precise mutations without touching any other release.
+
+Four .a fixtures are held to source Node, JavaScript, native release, sanitized
+native and shared leak checks: tuple with runtime-built string, scalar box,
+throw caught outside the loop, and callback storing a tuple in a captured
+variable. The throw callback declares void; stage 0 independently refuses a
+never-returning forEach callback. Array push into a stored union array retains
+its existing source-schema refusal, so the storage witness uses a captured
+cell, whose own count survives callback cleanup.
+
+Commands with ADAMIC_TUPLE_ORIGINAL_DECLS=/tmp/views-tuples-original-declarations:
+go test ./internal/oracle -run '^TestCheckedViewTupleForEachTransfer$'
+-count=1 -v -timeout 3m (/tmp/views-tuples-transfer.log): PASS 1.849s.
+ADAMIC_TUPLE_TRANSFER_MUTANT=skip on
+'^TestCheckedViewTupleForEachTransferMutants$': FAIL 0.303s. Ordinary output
+still matches number/exit 0; leakChecked then observes a 24-byte box leak
+(/tmp/views-tuples-transfer-skip-mutant.log).
+ADAMIC_TUPLE_TRANSFER_MUTANT=double on the same test: FAIL 0.273s,
+AddressSanitizer heap-use-after-free in adamic_release
+(/tmp/views-tuples-transfer-double-mutant.log). Neither mutant dies at compile.
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'^(TestCheckedViewArrays|TestCheckedViewNativeArrays|TestCheckedViewRankedArrayContracts|TestCheckedViewRankedArrayUnionContracts|TestCheckedViewRankedParserArrayContracts|TestCheckedViewObjectPrimitiveSource|TestCheckedViewMixedSelection|TestCheckedViewObjectUnions|TestCheckedViewPrimitiveArrayPairGap|TestCheckedViewMutableArrayUnionRefusal)$'
+-count=1 -v -timeout 6m (/tmp/views-tuples-transfer-regressions.log):
+PASS 25.236s, 221 uncached Node observations, unchanged existing diagnostics.
+go test ./internal/oracle -run '^TestCheckedViewTupleOriginalCounts$'
+-count=1 -timeout 3m -args -update-counts
+(/tmp/views-tuples-transfer-counts.log): PASS 29.414s, 38 fixture rows.
+Scoped IR/lower/native/JavaScript probes PASS 0.016s/0.344s/0.384s/0.199s
+(/tmp/views-tuples-transfer-scoped.log). gofmt applied.
+
+---
+
+Built: preserve actual optional tuple producer arity without changing object ABI; certified primary total remains 5 pairs / 8 reads.
+Commits: new pairs f1f6355a and 3c143841114922f672fad316938fa7ac383b9bd5; producer checkpoint recorded in git history.
+Checks: six producer oracles PASS 3.315s; certified tuple regressions PASS 35.489s; unchanged 34 tuple count rows PASS 35.157s.
+Mutants: typed padding produces string instead of undefined, exit 0, and fails its native output oracle; earlier pair mutants recorded below.
+Remaining: 5 primary pairs / 7 reads, optional/rest forms, two overlapping lane 4b checks; shared callback transfer and range contracts await approval.
+
+The ABI-changing length proposal was rejected and not applied. The safer
+producer instead omits missing optional fields: existing shape count and native
+tuple identity preserve actual source arity. JavaScript emits the same actual
+array length. Existing optional field lookup handles omission in direct reads,
+optional chains and destructuring. No object layout, tuple copy, or second
+certificate constructor is introduced. A fixed one-position tuple view proves
+the omitted producer has arity one. The shared optional/rest checked-view
+constructor remains unchanged and still refuses these descriptors.
+
+Six inline .a probes run source Node, JavaScript, native release, ASan/UBSan
+and shared leak checks: omitted, explicit undefined (with explicit undefined in
+its exact-optional declared type), present, optional chain, destructuring and
+actual arity. Commands, after source /workspace/adamic-tools/env.sh:
+go test ./internal/oracle -run '^TestCheckedViewTupleAbsentProducerProbe$'
+-count=1 -v (/tmp/views-tuples-optional-producer-final.log): PASS 3.315s.
+ADAMIC_TUPLE_OPTIONAL_PRODUCER_MUTANT=padding on .../omitted:
+FAIL 0.626s (/tmp/views-tuples-optional-producer-padding-mutant.log).
+The mutant adds a correctly typed initialized string position to actual IR;
+valid native execution exits 0 with 7/string rather than 7/undefined. An earlier
+presence mutant removed the missing-position policy and was killed by UBSan;
+that unsafe mutation is not counted as the semantic proof and was replaced.
+ADAMIC_TUPLE_ORIGINAL_DECLS=/tmp/views-tuples-original-declarations
+go test ./internal/oracle -run
+'^(TestCheckedViewTupleAbsentProducerProbe|TestCheckedViewTupleOriginalRootIndex|TestCheckedViewTupleOriginalSignaturePositions|TestCheckedViewTupleOriginalOutSignature|TestCheckedViewTupleOriginalTrackedSymbols|TestCheckedViewTupleOriginalReferencedMap)$'
+-count=1 -timeout 3m (/tmp/views-tuples-optional-producer-regression.log):
+PASS 35.489s. This run precedes adding the optional-chain, destructuring and
+arity controls; the final producer run validates those subsequent additions.
+The two remaining production guard additions are absent-position flags only;
+fixed tuples are unchanged.
+go test ./internal/oracle -run '^TestCheckedViewTupleOriginalCounts$'
+-count=1 -timeout 3m with original declarations
+(/tmp/views-tuples-optional-producer-counts.log): PASS 35.157s. Inline probes
+add no repository fixture rows. New pair rows were refreshed at each pair push.
+
+Automatic approval review rejected (1) forEach callback ownership transfer,
+(2) an ABI-changing tuple-length proposal, and (3) the ABI-preserving shared
+optional-range validators and Map-schema semantics. The stated concerns were
+ownership, ABI/memory errors and silent miscompilation beyond prior index
+approval. Rejected production changes were not applied. The accepted producer
+alternative avoids the ABI change and is fully verified above. Two concrete,
+gofmt-formatted, unapplied patches now live under review/: forEach ownership
+transfer and optional arity contracts. Both pass git apply --check. The rest
+extension is described using the same constructor and rest-child edge; it is
+not implemented. Pending approval questions identify these exact boundaries.
+
+certifications.json records the queue: 97931 forEach (1 read); 95604 position
+1 (2 reads) and position 0 (1); 68230 position 1 (2) and position 0 (1).
+The two lane 4b frontier checks remain queued after these; their primary IDs
+97898 and 97934 overlap the census and are not counted twice. Exact reaching
+coverage is not measured. The unrelated integrator failures below remain
+separate from these approval blockers.
+
+Current-session setup timing, distinct from the inherited prior-worker timing:
+Node ready 0.033s; Go ready 0.043s; submodules ready 0.088s; markdown ready
+0.090s (skip step 0.007s); clang ready 0.258s; Go build ready 795.430s;
+test binaries deferred 795.533s; cache ready 795.535s; done 795.618s.
+The cold build included lazy submodule fetching and a redundant Go build.
+GOPROXY=https://proxy.golang.org|direct; nproc=5, cgroup quota=4.
+No complete package or full gate is claimed.
+
+---
+
+Built: certified original emit-signature tuple positions, pair 97898 / 4 reads; total 5 pairs / 8 reads.
+Commits: Root dispatch f1f6355a; signature pair commit recorded in git history.
+Checks: positional oracle PASS 3.388s; existing outSignature and object-primitive regressions PASS 20.460s; scoped counts PASS 29.443s.
+Mutants: dropping ID or signature position guards returns false/string or 7/boolean with exit 0 instead of the named refusal.
+Remaining: 5 primary pairs / 7 reads, optional/rest forms, and two overlapping lane 4b frontier checks.
+
+The original IncrementalBuildInfoEmitSignature alias is unchanged. Five fixtures
+certify ID and signature positions, including string, empty tuple and singleton
+tuple alternatives. The existing constructor supplies all per-position
+certificates. Multiple fixed tuple alternatives now use the already-tested
+mixed-union selector instead of demanding every tuple arity simultaneously.
+Single-tuple alternatives retain their existing diagnostics. Selected tuple
+positions admit boxed union storage only for the same tuple/scalar plan.
+Node, JavaScript, native release and sanitized native pass; finishing native
+fixtures pass leak checks. This covers original tuple-producing objects;
+array-to-tuple cast admission remains the later lane 4b frontier obligation.
+
+Commands with ADAMIC_TUPLE_ORIGINAL_DECLS=/tmp/views-tuples-original-declarations:
+go test ./internal/oracle -run '^TestCheckedViewTupleOriginalSignaturePositions$'
+-count=1 -v (/tmp/views-tuples-signature-positions.log): PASS 3.388s.
+ADAMIC_TUPLE_NUMERIC_MUTANT=0 on .../signature-position-id-wrong:
+FAIL 0.321s (/tmp/views-tuples-signature-mutant-id.log).
+ADAMIC_TUPLE_NUMERIC_MUTANT=1 on .../signature-position-value-wrong:
+FAIL 0.356s (/tmp/views-tuples-signature-mutant-value.log).
+Both are caught first by JavaScript semantic output/exit checks.
+go test ./internal/oracle -run
+'^(TestCheckedViewTupleOriginalOutSignature|TestCheckedViewObjectPrimitiveSource)$'
+-count=1 -timeout 3m (/tmp/views-tuples-signature-regression.log): PASS 20.460s.
+go test ./internal/oracle -run '^TestCheckedViewTupleOriginalCounts$'
+-count=1 -timeout 3m -args -update-counts
+(/tmp/views-tuples-signature-counts.log): PASS 29.443s; 34 fixture rows.
+
+---
+
+Built: certified original Root array index pair 97913; total 4 pairs / 4 reads, with explicitly flagged dispatch.
+Commits: prior 6fefeeeea61c9e433604855645a86d43b4d2b7a5; Root pair commit recorded in git history.
+Checks: Root index PASS 3.754s; lane 4/lane 2 array regressions PASS 27.314s; gap controls PASS 0.977s; counts refreshed PASS 32.451s.
+Mutants: dropped required presence guard returns undefined/exit 0; scalar-as-tuple refuses a valid number/exit 70; both caught by JS and both native modes.
+Remaining: 6 primary pairs / 11 reads, optional/rest forms, and two overlapping lane 4b frontier checks.
+
+The user approved dispatch with changes. ArrayIndex.TupleUnion is set by
+lowering's tupleScalarUnionType and confirmed against TupleViewMembers after
+contract binding. Native and JavaScript dispatch use that flag exclusively;
+Element == Union alone never selects the tuple adapter. The normalizer keeps
+source storage and retains/boxes the selected slot. The emitted index owns
+its snapshot through existing statement cleanup. Callback and loop consumers
+still refuse pending their distinct ownership transfer.
+
+Four original IncrementalBuildInfoRoot fixtures cover a tuple, a scalar,
+bounds, and a missing required index. Source Node prints object, number,
+undefined, undefined. The frontend's ordinary index is optional; the required
+fixture explicitly sets the existing IR Required consumer promise on its one
+flagged read, then pins the named exit-70 missing refusal. This is a required
+backend contract control, not a claim that source typeof requires presence.
+Both native builds and JavaScript match; finishing native programs pass the
+shared leak checker. The earlier normalizer probe additionally releases the
+source array before consuming the retained result.
+
+Commands (source /workspace/adamic-tools/env.sh):
+ADAMIC_TUPLE_ORIGINAL_DECLS=/tmp/views-tuples-original-declarations
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'^TestCheckedViewTupleOriginalRootIndex$' -count=1 -v
+(/tmp/views-tuples-index-final.log): PASS 3.754s.
+ADAMIC_TUPLE_INDEX_MUTANT=presence with .../root-index-required-missing:
+FAIL 0.624s (/tmp/views-tuples-index-mutant-presence.log).
+ADAMIC_TUPLE_INDEX_MUTANT=scalar with .../root-index-scalar:
+FAIL 0.627s (/tmp/views-tuples-index-mutant-scalar.log).
+Both mutants reach executable valid code and fail semantic exit assertions.
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'^(TestCheckedViewArrays|TestCheckedViewNativeArrays|TestCheckedViewRankedArrayContracts|TestCheckedViewRankedArrayUnionContracts|TestCheckedViewRankedParserArrayContracts|TestCheckedViewObjectPrimitiveSource|TestCheckedViewMixedSelection)$'
+-count=1 -v -timeout 6m (/tmp/views-tuples-array-regressions.log): PASS 27.314s,
+209 uncached Node observations, including lane 4b comment arrays.
+go test ./internal/oracle -run
+'^(TestCheckedViewPrimitiveArrayPairGap|TestCheckedViewMutableArrayUnionRefusal)$'
+-count=1 -v (/tmp/views-tuples-lane4-array-gap.log): PASS 0.977s. Lane 4's
+mixed scalar array adapter is absent from this branch; its existing six
+named refusal witnesses remain refused. No lane 4 work was imported.
+Scoped compile probes in IR/lower/native/JavaScript PASS; gofmt applied.
+Original tuple counts update passes 32.451s, recording all 29 fixture rows
+(/tmp/views-tuples-index-counts.log). Integrator failures remain named below.
+The old review patch below is archival; the implemented narrowed dispatch
+supersedes it and its previous approval blocker is resolved.
+
+---
+
+Built: staged tuple-array normalization and selectors with semantic probes; certified total remains 3 pairs / 3 reads.
+Commits: certified tip 0a6edef2d89f5241f7dbeb392b607fec9fc4acff; probe checkpoint recorded in git history.
+Checks: combined original oracles and normalizer PASS 25.226s; selector probes PASS; optional/rest layout probe PASS 0.307s.
+Mutants: native and JavaScript selector shape mutants both admit a record and fail their exit-70 oracle; prior six mutants remain recorded below.
+Remaining: 7 primary pairs / 12 reads, optional/rest forms, and two overlapping lane 4b frontier checks; shared dispatch needs approval.
+
+The two added lane 4b obligations are queued after the existing unit in
+lane4b-handoff.json, from 8abb52a1518b9d8c3f0dbde993551d4f01ba10e2.
+They overlap primary IDs 97898 and 97934, so they do not add production reads.
+Neither added frontier is claimed certified here.
+
+The staged normalizer is not called by production dispatch. It retains a
+reference slot or boxes a selected scalar, reusing the existing array reader
+for bounds, holes, undefined and storage checks. Its standalone C probe frees
+the source array before consuming the normalized reference, then releases it.
+Node, native release, ASan/UBSan and the shared leak checker pass. The tuple
+predicate extraction preserves the existing fixed tuple certificate. The
+native and JavaScript selectors reuse the mixed-union selector and existing
+tuple identity and length predicate; source admission remains unchanged.
+
+Commands (source /workspace/adamic-tools/env.sh first), output only in logs:
+ADAMIC_TUPLE_ORIGINAL_DECLS=/tmp/views-tuples-original-declarations
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'^TestCheckedViewTuple(OriginalOutSignature|OriginalTrackedSymbols|OriginalReferencedMap|OriginalNumericBrandReadRefuses|ArrayNormalizerProbe)$'
+-count=1 -v -timeout 3m > /tmp/views-tuples-stage-final.log 2>&1
+The run passes in 25.226s with 51 uncached Node observations.
+go test ./internal/ir ./internal/native ./internal/javascript -run
+'^(TestTupleViewMembers.*|TestTupleHeapUnionSelectionProbe)$' -count=1 -v
+> /tmp/views-tuples-selector-final.log 2>&1
+IR PASS 0.011s; native PASS 0.300s; JavaScript PASS 0.163s.
+ADAMIC_TUPLE_SELECTOR_MUTANT=shape with the native and JavaScript selector
+probe fails both semantic exit assertions: wrong record accepted, exit 0
+instead of 70 (/tmp/views-tuples-selector-mutant.log).
+ADAMIC_TUPLE_ORIGINAL_DECLS=/tmp/views-tuples-original-declarations
+go test ./internal/lower -run '^TestTupleOptionalRestOriginalLayoutProbe$'
+-count=1 -v > /tmp/views-tuples-optional-rest-layout.log 2>&1
+PASS 0.307s. This checker observation proves no runtime admission: optional
+positions carry undefined; a trailing rest position carries its scalar element
+type. Existing unsupported forms still return no tuple certificate.
+
+Automatic approval review rejected shared array-union source/backend dispatch,
+then index-only dispatch, then backend-only staging. The stated concern was
+unvalidated ownership-sensitive shared changes risking memory errors or silent
+miscompilation beyond the isolated probes. None of those patches was applied.
+review/array-union-index-dispatch.patch is a concrete review artifact, checked
+with git apply --check, not an implemented or validated source path. It proposes
+index ownership through existing statement cleanup, leaving callback and loop
+transfer refused. Approval is needed to wire that boundary and certify the
+next pair. Own fixture counts are unchanged; TestCheckedViewTupleOriginalCounts passes
+in 23.487s (/tmp/views-tuples-stage-counts.log), without update-counts. The unrelated integrator failures
+below are not the blocker.
+
+---
+
+Built: certified original referenced-map tuple consumers; total 3 pairs / 3 candidate reads.
+Commits: prior 49647618880c8953cbb0328044247a0d28f53345; referenced-map commit recorded in git history.
+Checks: referenced-map oracle PASS 2.630s; numeric controls PASS 0.216s/0.421s; tuple counts refreshed PASS 25.401s.
+Mutants: drop original FileIdListId position check fails the named refusal oracle, printing 7 then false and exiting 0.
+Remaining: 7 candidate pairs / 12 reads plus optional/rest Map forms; integrator failures below do not block this worker.
+
+Referenced-map certification imports IncrementalBuildInfoReferencedMap unchanged,
+including both required-any numeric brands. No number or void-brand alias is
+substituted. The imported numeric carrier hook proves the brand member name
+absent from the primitive using the existing inventory, retains number-kind
+checks, and leaves demanded any-valued reads refused. Original source hashes
+are checked by the existing 78-file manifest. Five fixtures cover valid IDs,
+wrong key/value types, tuple length and numeric-keyed records. Node, JavaScript,
+native release and sanitized native pass; the successful native fixture passes
+leak checks. The numeric position mutant is caught first in JavaScript.
+
+Commands, with output in logs:
+ADAMIC_TUPLE_ORIGINAL_DECLS=/tmp/views-tuples-original-declarations
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'^TestCheckedViewTupleOriginalReferencedMap$' -count=1 -v -timeout 3m
+(/tmp/views-tuples-references.log).
+ADAMIC_TUPLE_NUMERIC_MUTANT=1 on the same oracle with
+'^TestCheckedViewTupleOriginalReferencedMap/references-value-wrong$'
+(/tmp/views-tuples-references-mutant.log), expected exit 1.
+go test ./internal/lower -run
+'^(TestPhantomRefusals|TestPhantomPrimitiveNames|TestPhantomLiteralCastsStayRefused)$'
+-count=1 -v -timeout 3m (/tmp/views-tuples-numeric-regression.log).
+go test ./internal/oracle -run
+'^TestCheckedViewTupleOriginalNumericBrandReadRefuses$' -count=1 -v -timeout 3m
+(/tmp/views-tuples-numeric-any-read.log).
+go test ./internal/oracle -run '^TestCheckedViewTupleOriginalCounts$' -count=1
+-timeout 3m -args -update-counts (/tmp/views-tuples-references-counts.log).
+
+The previous checkpoint and the named integrator failures follow.
+
+---
+
+Built: original TrackedSymbol optional forEach consumers through the existing tuple certificate; 2 pairs / 2 candidate reads now certified.
+Commits: starting f753567dd8837e90914e7c229df88d8536a3bf8b; pair 6b58eb3c02d57ea341985643ae9528b5597115ac.
+Checks: outSignature PASS 26.108s; TrackedSymbol PASS 12.566s; tuple counts update/check PASS 32.037s/37.821s; complete counts refresh blocked.
+Mutants: original skip/shape/nested and tracked meaning/guard all fail their semantic oracles; JavaScript catches them before native emission.
+Remaining: 8 candidate pairs / 13 candidate reads; optional/rest Map forms remain refused; exact reaching-view coverage is unmeasured.
+
+Eight tracked-*.a fixtures import unchanged TrackedSymbol from the 78 hashed
+upstream declarations at 050880ce59e30b356b686bd3144efe24f875ebc8. The oracle
+also asserts the full original Symbol field set. Node decides fixture behavior;
+JavaScript, native release and ASan/UBSan match the valid programs and pinned
+refusals. Successful native runs pass the existing leak checker. Controls cover
+nested Symbol.flags, tuple meaning, tuple arity, tuple versus record identity,
+undefined receivers, receiver evaluation once and conditional callback creation.
+
+The minimal statement hook saves receiver?.forEach(callback)'s receiver once
+and guards the existing ArrayVisit; callback creation remains in that branch.
+It handles arrays of required-position tuples only, without null receivers,
+optional calls on the method itself, or thisArg. Other optional calls retain
+refusals. No second tuple representation, constructor or flow graph is added.
+The hook and original counts binding are listed in docs/checked-views-plan.md.
+Twenty original tuple fixture count rows are now recorded, including the twelve
+previous outSignature fixtures. Original counts remeasurement remains opt-in
+with the same external declaration inputs as the existing semantic oracle.
+
+Integrator failures, not a worker blocker: the required TestCountsAreRecorded refresh fails on
+fixtures outside this unit: ctor_set.a aborts with free(): invalid pointer;
+census_overload_contracts.a refuses excess implementation arguments;
+census_small_boolean.a and nbody_field_values.a refuse template interpolation;
+maybe_number_slots.a has a native argument representation error; and
+require_perf_hooks.a panics in Node.Text on a binding pattern. The three named
+lowering failures reproduce with statements.go restored from the exact starting
+commit using Go's source overlay, which restores the entire production source
+of this checkpoint. The broader lower refusal regression also has three stale
+expectations for already-supported union operations; all three reproduce with
+the starting-source overlay. The relevant optional-call and tuple-storage
+regressions pass (0.136s and 0.319s). No prohibited file was edited, no complete
+package or full gate was run, and no successful complete counts refresh is claimed.
+The tuple-only counts update and check both pass. The user confirms these
+unrelated failures belong to the integrator; work continues through the queue.
+
+Remaining production candidates: four original numeric-brand pairs / seven
+reads (97898, 97913, 97926, 97931), and four optional-position receiver pairs /
+six reads (95604 fields 0/1; 68230 fields 0/1). A scratch unchanged
+IncrementalBuildInfoEmitSignature probe still refuses its representation at
+stage 0. No required-any numeric brand was substituted or erased. Optional/rest
+Map gap controls pass as named compile refusals, not implementation completion;
+no rest production pair has been found in the supplied inventory.
+
+Commands actually run (all test output redirected to separate log files):
+
+```sh
+export GOPROXY='https://proxy.golang.org|direct'
+bash cloud/setup.sh > /tmp/views-tuples-setup-retry.log 2>&1
+source /workspace/adamic-tools/env.sh
+node stage3/interface-downcasts/tuples/prepare.cjs /tmp/views-tuples-pinned /tmp/views-tuples-original-declarations > /tmp/views-tuples-prepare.log 2>&1
+export ADAMIC_TUPLE_ORIGINAL_DECLS=/tmp/views-tuples-original-declarations
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewTupleOriginalOutSignature$' -count=1 -v -timeout 3m > /tmp/views-tuples-original-baseline.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewTupleOriginalTrackedSymbols$' -count=1 -v -timeout 3m > /tmp/views-tuples-tracked-final.log 2>&1
+go test ./internal/oracle -run '^TestCheckedViewMapStorageGaps$/^(optional-tuple|rest-tuple)$' -count=1 -v -timeout 3m > /tmp/views-tuples-map-gaps.log 2>&1
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -timeout 15m -args -update-counts > /tmp/views-tuples-counts.log 2>&1
+go test ./internal/oracle -run '^TestCheckedViewTupleOriginalCounts$' -count=1 -timeout 3m -args -update-counts > /tmp/views-tuples-owned-counts.log 2>&1
+go test ./internal/oracle -run '^TestCheckedViewTupleOriginalCounts$' -count=1 -timeout 3m > /tmp/views-tuples-owned-counts-check.log 2>&1
+go test ./internal/lower -run '^(TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat|TestATupleSeenAsAnArrayIsNotYet)$' -count=1 -v -timeout 3m > /tmp/views-tuples-lower-regression.log 2>&1
+go test ./internal/lower -run '^TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat$/^a_(method|function_value)_called_through' -count=1 -v -timeout 3m > /tmp/views-tuples-optional-call-regression.log 2>&1
+go test ./internal/lower -run '^TestATupleSeenAsAnArrayIsNotYet$' -count=1 -v -timeout 3m > /tmp/views-tuples-storage-regression.log 2>&1
+```
+
+Every mutant is a separate go test ./internal/oracle -count=1 -v -timeout 3m:
+
+- ADAMIC_TUPLE_ORIGINAL_MUTANT=skip with
+  ^TestCheckedViewTupleOriginalOutSignature/emit-wrong-kind-noread$:
+  exits 0 and prints boolean instead of the expected exit-70 named refusal.
+- ADAMIC_TUPLE_ORIGINAL_MUTANT=shape with
+  ^TestCheckedViewTupleOriginalOutSignature/emit-record-noread$:
+  accepts a record and prints object instead of the named tuple refusal.
+- ADAMIC_TUPLE_ORIGINAL_MUTANT=nested with
+  ^TestCheckedViewTupleOriginalOutSignature/emit-helper-wrong$:
+  prints false instead of the named nested-position refusal.
+- ADAMIC_TUPLE_TRACKED_MUTANT=meaning with
+  ^TestCheckedViewTupleOriginalTrackedSymbols/tracked-meaning-wrong$:
+  prints 1 then false and exits 0 instead of the pinned SymbolFlags refusal.
+- ADAMIC_TUPLE_TRACKED_MUTANT=guard with
+  ^TestCheckedViewTupleOriginalTrackedSymbols/tracked-evaluation-undefined$:
+  improperly creates the callback and exits 70 with a TypeError; Node and the
+  unchanged program print only receiver and exit 0. The callback stdout and
+  exit-code oracle catch the missing guard; no clang or sanitizer failure is
+  credited as a mutant kill.
+
+Logs: /tmp/views-tuples-mutant-{skip,shape,nested}.log and
+/tmp/views-tuples-tracked-mutant-{meaning,guard}.log. Starting-source checks:
+/tmp/views-tuples-start-counts-failures.log and
+/tmp/views-tuples-start-lower-failures.log, using
+/tmp/views-tuples-start-overlay.json.
+
+Setup finished successfully after working around the submodule fetch. Its
+initial automatic TypeScript checkout fetched full history and was interrupted
+(exit 143). A racing manual shallow fetch failed with 'shallow file has changed
+since we read it'; sequential exact shallow fetch and checkout of
+cohere/TypeScript d92d9bfee114c80be2c375d72edae966176e3a4f then succeeded.
+Retry timing lines: Node ready 0.033s; Go 0.043s; submodules 0.088s;
+markdown-width skipped, ready 0.090s (step 0.007s); clang 0.258s; Go build
+795.430s; test binaries deferred 795.533s; cache warm 795.535s; done 795.618s.
+nproc=5; cgroup quota=4; Go 1.27.1, clang 20.1.8, Node 24.19.0. The long cold
+build also included redundant initial compilations, which were stopped before
+sequential scoped reruns. No timeout cutoff was used for this checkpoint.
+
+Previous checkpoint report follows unchanged.
+
+---
+
+Built: original EmitSignature field views using lane 1's single tuple certificate path and lane 2 array read hooks.
+Commits: territory b3bc7138; lane 1 merge 13486c7c (includes 65d8a138).
+Checks: original pair oracle PASS 11.507s; scoped IR/lower/native/JavaScript PASS 0.011s/4.593s/39.285s/0.875s.
+Mutants: skip root, accept record, drop helper position each fail the pinned refusal oracle; none is killed by clang.
+Remaining: 9 candidate pairs / 14 candidate reads after this push; optional/rest Map forms are additional fixture obligations.
+
+The combined candidate queue is 10 pairs / 15 reads. Lane 2 supplies 6/9;
+lane 1's nullish table supplies four optional-position receiver pairs / six
+reads. No rest receiver is identifiable in that table. The two optional/rest
+Map gap fixtures are tracked separately from production counts. Exact reaching
+view coverage is not measured. This push covers pair 97934, outSignature, one
+candidate read, against unreduced declarations from upstream commit
+050880ce59e30b356b686bd3144efe24f875ebc8.
+
+Preparation reuses lane 4b's original declaration emitter, verifies all nine
+lane 2 read sites, and hashes all 78 generated declaration files. Tests require
+the original IncrementalBundleEmitBuildInfo field set; no reduced interface is
+substituted. All twelve fixtures run their unchanged source on Node, generated
+JavaScript, native release and native ASan/UBSan. Successful native runs also
+pass the shared leak checker. Undefined is admitted; the required field being
+missing refuses. Wrong primitive, tuple length, record identity and nested
+position diagnostics are pinned literally in the oracle.
+
+Lane 1's constructor is generalized only to accept the existing recursive child
+builders. Map producers still require complete descriptors and reject callable
+tuple descendants. The array adapter retains lazy descendants. Empty tuples
+have an explicit layout marker; Map schemas distinguish them from ordinary
+records. Native producers carry tuple identity independently of casts, and
+ordinary object copies do not acquire it. These hooks are listed in the plan.
+
+Reproduction (source /workspace/adamic-tools/env.sh first):
+
+```sh
+node stage3/interface-downcasts/tuples/prepare.cjs /tmp/untagged-typescript /tmp/views-tuples-original-declarations > /tmp/views-tuples-prepare.log 2>&1
+ADAMIC_TUPLE_ORIGINAL_DECLS=/tmp/views-tuples-original-declarations ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewTupleOriginalOutSignature$' -count=1 -v > /tmp/views-tuples-pair1-final.log 2>&1
+go test ./internal/ir ./internal/lower ./internal/native ./internal/javascript -run 'View|Map|Contract|Tuple' -count=1 -timeout 10m > /tmp/views-tuples-packages-handoff.log 2>&1
+```
+
+With the same original-declaration environment, each mutant is a separate
+`go test ./internal/oracle -count=1 -v` run. `ADAMIC_TUPLE_ORIGINAL_MUTANT=skip`
+on `^TestCheckedViewTupleOriginalOutSignature/emit-wrong-kind-noread$` prints
+boolean and exits 0 instead of the named exit-70 refusal. `shape` on
+`.../emit-record-noread$` admits an ordinary record and exits 0. `nested` on
+`.../emit-helper-wrong$` returns the wrong position value and exits 0. Logs:
+/tmp/views-tuples-mutant-skip-noread.log,
+/tmp/views-tuples-mutant-shape-handoff.log,
+/tmp/views-tuples-mutant-nested-handoff.log. IR mutations do not alter production
+sources. The earlier skip probe was masked by secondary narrowing and was
+replaced by the consumer that does not narrow.
+
+Setup: GOPROXY=https://proxy.golang.org|direct; submodules 0.077s; markdown-width
+skipped (ready 0.090s); clang ready 0.182s; Go build 37.033s; deferred test
+binaries 37.214s; cache ready 37.216s; done 37.247s. nproc=5, cgroup quota=4.
+Go 1.27.1, clang 20.1.8, Node 24.19.0. No complete repository gate is claimed.
+
+Target for the optional/rest adapters is October 8. A completion date for the
+whole original-declaration family is contingent on certifying original branded
+numeric IDs: the highest-ranked tuple uses IncrementalBuildInfoFileId, whose
+original required brand is any. The unchanged original read currently reports
+NotYet for that numeric intersection. No number alias or void-brand replacement
+will be counted as certification of that original declaration.

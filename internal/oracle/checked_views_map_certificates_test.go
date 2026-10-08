@@ -52,7 +52,7 @@ func TestCheckedViewMapCertificateWrites(t *testing.T) {
 	for _, name := range []string{"write-good", "write-wrong", "unknown"} {
 		t.Run(name, func(t *testing.T) {
 			if name == "write-wrong" {
-				path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/write-wrong.a"))
+				path, err := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/write-wrong.a")))
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -115,7 +115,7 @@ func TestCheckedViewMapApprovedBrandBoundaries(t *testing.T) {
 	for _, family := range []string{"nested-array-brand", "nested-object-brand"} {
 		for _, use := range []string{"read", "unread"} {
 			t.Run(family+"-"+use, func(t *testing.T) {
-				path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/"+family+"-"+use+".a"))
+				path, err := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/"+family+"-"+use+".a")))
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -160,7 +160,7 @@ func TestCheckedViewMapUnionEntryStorage(t *testing.T) {
 }
 
 func TestCheckedViewMapStorageGaps(t *testing.T) {
-	for _, family := range []string{"optional-tuple", "rest-tuple"} {
+	for _, family := range []string{"optional-object", "optional-array", "nested-array", "key", "optional-tuple", "rest-tuple"} {
 		t.Run(family, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/entry-convert-gap-"+family+".a"))
 			if err != nil {
@@ -168,6 +168,24 @@ func TestCheckedViewMapStorageGaps(t *testing.T) {
 			}
 			program, err := lowered(t, path)
 			truth := onNode(t, path)
+			// Owner storage adapters and tuple descriptors have complete source certificates.
+			if family == "optional-object" || family == "optional-array" || family == "nested-array" || family == "key" || family == "optional-tuple" || family == "rest-tuple" {
+				if err != nil {
+					t.Fatal(err)
+				}
+				actual, binary := nativelyUncached(t, program)
+				for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if diff := disagreement(truth, got); diff != "" {
+						t.Fatalf("tuple admission: %s; %#v", diff, got)
+					}
+				}
+				if report := leaksUncached(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+				t.Logf("Node=%q; complete tuple Map schema admitted", truth.stdout)
+				return
+			}
+
 			if err != nil {
 				if !strings.Contains(err.Error(), "field value") || !strings.Contains(err.Error(), "Map") {
 					t.Fatalf("gap refused away from demanded read: %v", err)
@@ -253,6 +271,31 @@ func TestCheckedViewArrayJSONStorage(t *testing.T) {
 				t.Fatal(report)
 			}
 			t.Logf("Node=%q", truth.stdout)
+		})
+	}
+}
+
+// Tuple descriptors do not certify incompatible producer Map storage.
+func TestCheckedViewMapTupleEntryBoundary(t *testing.T) {
+	for _, use := range []string{"read", "unread"} {
+		t.Run(use, func(t *testing.T) {
+			program, path := interfaceFixture(t, "nullish/maps/tuple-entry-"+use)
+			truth := onNode(t, path)
+			native, binary := nativelyUncached(t, program)
+			for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if use == "read" {
+					if got.exitCode != 70 || !strings.Contains(string(got.stderr), "Map contract failed: node.value") {
+						t.Fatalf("incompatible tuple storage escaped: %#v", got)
+					}
+				} else if diff := disagreement(truth, got); diff != "" {
+					t.Fatal(diff)
+				}
+			}
+			if use == "unread" {
+				if report := leaksUncached(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+			}
 		})
 	}
 }

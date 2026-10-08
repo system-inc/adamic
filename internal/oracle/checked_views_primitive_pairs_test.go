@@ -13,7 +13,7 @@ import (
 )
 
 func TestCheckedViewBrandCandidatePairs(t *testing.T) {
-	data, err := os.ReadFile("../../stage3/interface-downcasts/lane4/brand-pair-fixtures.json")
+	data, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane4/brand-pair-fixtures.json"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -137,7 +137,7 @@ func TestCheckedViewFiniteStringKeyComponent(t *testing.T) {
 func TestCheckedViewPrimitiveArrayPairStorage(t *testing.T) {
 	for _, variant := range []string{"string", "number", "plain-number", "plain-string", "wrong", "bounds"} {
 		t.Run(variant, func(t *testing.T) {
-			path, err := filepath.Abs("../../stage3/interface-downcasts/lane4/primitive-pairs/6849-element-" + variant + ".a")
+			path, err := filepath.Abs(checkedViewFixturePath("../../stage3/interface-downcasts/lane4/primitive-pairs/6849-element-" + variant + ".a"))
 			if err != nil {
 				t.Fatal(err)
 			}

@@ -11,7 +11,7 @@ import (
 func TestCheckedViewCallableOriginalBindingRefusals(t *testing.T) {
 	for _, family := range []struct{ directory, out string }{{"variable-declaration", "9\n"}, {"variable-list", "9\n"}} {
 		t.Run(family.directory, func(t *testing.T) {
-			path, err := filepath.Abs(repository + "/stage3/interface-downcasts/lane5/optional-aggregates/" + family.directory + "/good.a")
+			path, err := filepath.Abs(checkedViewFixturePath(repository + "/stage3/interface-downcasts/lane5/optional-aggregates/" + family.directory + "/good.a"))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -92,7 +92,7 @@ func TestCheckedViewCallableOptionalAggregates(t *testing.T) {
 }
 
 func TestCheckedViewCallableDestructuredSiblingRefusal(t *testing.T) {
-	path, err := filepath.Abs(repository + "/stage3/interface-downcasts/lane5/gaps/destructured-sibling.a")
+	path, err := filepath.Abs(checkedViewFixturePath(repository + "/stage3/interface-downcasts/lane5/gaps/destructured-sibling.a"))
 	if err != nil {
 		t.Fatal(err)
 	}

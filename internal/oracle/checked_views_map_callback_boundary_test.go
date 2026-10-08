@@ -3,6 +3,7 @@ package oracle
 import (
 	"github.com/system-inc/adamic/internal/ir"
 	"path/filepath"
+	"sort"
 	"strings"
 	"testing"
 )
@@ -92,4 +93,15 @@ func mapStorageFixture(t *testing.T, name string) (*ir.Program, string) {
 		name += "-iteration"
 	}
 	return interfaceFixture(t, "nullish/maps/"+name)
+}
+
+func TestCheckedViewMapCallbackRefusals(t *testing.T) {
+	names := make([]string, 0, len(mapCallbackRefusalSites))
+	for name := range mapCallbackRefusalSites {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+	for _, name := range names {
+		t.Run(name, func(t *testing.T) { mapCallbackRefusal(t, name) })
+	}
 }

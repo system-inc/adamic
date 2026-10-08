@@ -1,0 +1,3 @@
+import type {OriginalModuleSpecifierTuple} from 'original-tsc-module-worker';
+interface Base {readonly kind:string;} interface Target extends Base {readonly value:OriginalModuleSpecifierTuple;}
+const pair:readonly [undefined,undefined,undefined,undefined,undefined,undefined]=[undefined,undefined,undefined,undefined,undefined,undefined]; const raw={kind:'probe',value:pair};const base:Base=raw;const viewed=base as Target;const entry=viewed.value; if(entry[1]!==undefined){console.log(entry[1].join(','));}else{console.log('absent');}

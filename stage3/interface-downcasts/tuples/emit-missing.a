@@ -1,0 +1,8 @@
+import type { IncrementalBundleEmitBuildInfo, EmitSignature } from 'original-tsc-builder';
+interface Base { readonly version: string; }
+const raw = {version:'probe'};
+const base: Base = raw;
+const viewed = base as IncrementalBundleEmitBuildInfo;
+const signature = viewed.outSignature;
+if (signature === undefined) console.log('absent');
+else console.log(typeof signature === 'string' ? signature : signature[0]);

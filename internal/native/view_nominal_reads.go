@@ -17,13 +17,13 @@ func (e *emitter) nominalViewRead(id ir.ViewContractID, value, where string, opt
 	}
 	accepted := []string{fmt.Sprintf("adamic_instanceof(%s, &adamic_class_%d)", value, c.NominalClass)}
 	if nullable {
-		accepted = append(accepted, value+" == &adamic_null")
+		accepted = append(accepted, "(const void *)"+value+" == &adamic_null")
 	}
 	if undefined || optional {
 		accepted = append(accepted, value+" == NULL")
 	}
 	if optional {
-		accepted = append(accepted, value+" == &adamic_null")
+		accepted = append(accepted, "(const void *)"+value+" == &adamic_null")
 	}
 	message := cString("field read failed: " + where + "; expected " + e.program.ViewContracts[id-1].Name + " class identity, found incompatible object")
 	e.line("if (!(%s)) adamic_panic(%s, sizeof %s - 1);", strings.Join(accepted, " || "), message, message)

@@ -52,7 +52,7 @@ func TestCheckedViewRankedArrayUnionContracts(t *testing.T) {
 
 func TestCheckedViewMutableArrayUnionRefusal(t *testing.T) {
 	t.Parallel()
-	path, pathErr := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/lane2/ranked3-mutable-array-read.a"))
+	path, pathErr := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "stage3/interface-downcasts/lane2/ranked3-mutable-array-read.a")))
 	if pathErr != nil {
 		t.Fatal(pathErr)
 	}

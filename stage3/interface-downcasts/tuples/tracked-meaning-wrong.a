@@ -1,0 +1,10 @@
+import type { TrackedSymbol } from 'original-tsc-types';
+interface Base { readonly kind: string; }
+interface Target extends Base { readonly trackedSymbols: TrackedSymbol[] | undefined; }
+interface RawSymbol { readonly flags: number; readonly escapedName: string; }
+const item: [RawSymbol, undefined, boolean] = [{flags: 1, escapedName: 'probe'}, undefined, false];
+const raw = {kind: 'probe', trackedSymbols: [item]};
+const base: Base = raw;
+const viewed = base as Target;
+const trackedSymbols = viewed.trackedSymbols;
+trackedSymbols?.forEach((item) => { console.log(String(item[0].flags)); console.log(String(item[2])); });

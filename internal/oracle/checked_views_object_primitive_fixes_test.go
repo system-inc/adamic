@@ -13,7 +13,7 @@ import (
 
 func TestCheckedViewObjectPrimitiveFixes(t *testing.T) {
 	t.Run("graph", func(t *testing.T) {
-		path, err := filepath.Abs("../../stage3/interface-downcasts/lane4b/fixtures/fixes-graph.a")
+		path, err := filepath.Abs(checkedViewFixturePath("../../stage3/interface-downcasts/lane4b/fixtures/fixes-graph.a"))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -44,7 +44,7 @@ func TestCheckedViewObjectPrimitiveFixes(t *testing.T) {
 	})
 
 	t.Run("tuple-unread", func(t *testing.T) {
-		path, err := filepath.Abs("../../stage3/interface-downcasts/lane4b/fixtures/fixes-tuple-unread.a")
+		path, err := filepath.Abs(checkedViewFixturePath("../../stage3/interface-downcasts/lane4b/fixtures/fixes-tuple-unread.a"))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -71,7 +71,7 @@ func TestCheckedViewObjectPrimitiveFixes(t *testing.T) {
 		}
 	})
 	t.Run("tuple", func(t *testing.T) {
-		path, err := filepath.Abs("../../stage3/interface-downcasts/lane4b/fixtures/fixes-tuple.a")
+		path, err := filepath.Abs(checkedViewFixturePath("../../stage3/interface-downcasts/lane4b/fixtures/fixes-tuple.a"))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -89,7 +89,7 @@ func TestCheckedViewObjectPrimitiveFixes(t *testing.T) {
 		}
 	})
 	t.Run("long-message", func(t *testing.T) {
-		path, err := filepath.Abs("../../stage3/interface-downcasts/lane4b/fixtures/diagnostic-code-wrong.a")
+		path, err := filepath.Abs(checkedViewFixturePath("../../stage3/interface-downcasts/lane4b/fixtures/diagnostic-code-wrong.a"))
 		if err != nil {
 			t.Fatal(err)
 		}

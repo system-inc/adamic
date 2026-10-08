@@ -7,9 +7,22 @@ import (
 	"strconv"
 )
 
-// Fixed tuples use object slots, not homogeneous array storage. Optional/rest
-// lengths need their own runtime witness and cannot be certified here.
+// Tuple certificates share object slots and retain their declared arity domain.
 func (l *lowering) mapTupleEntrySlot(node *ast.Node, target *checker.Type) ir.ViewContractID {
+	id := l.tupleViewSlot(node, target, func(element *checker.Type) ir.ViewContractID {
+		child := l.mapEntrySlot(node, l.concrete(element))
+		if tupleCallableEntry(l.result, child, map[ir.ViewContractID]bool{}) {
+			return 0
+		}
+		return child
+	})
+	if !mapEntryDescriptorProven(l.result, id, map[ir.ViewContractID]bool{}) || tupleCallableEntry(l.result, id, map[ir.ViewContractID]bool{}) {
+		return 0
+	}
+	return id
+}
+
+func (l *lowering) tupleViewSlot(node *ast.Node, target *checker.Type, build func(*checker.Type) ir.ViewContractID) ir.ViewContractID {
 	if l.result.CheckedFields == nil {
 		l.result.CheckedFields = map[string]bool{}
 	}
@@ -17,8 +30,18 @@ func (l *lowering) mapTupleEntrySlot(node *ast.Node, target *checker.Type) ir.Vi
 		l.result.ViewContractTypes = map[int]ir.ViewContractID{}
 	}
 	tuple := target.TargetTupleType()
-	for _, flag := range tuple.ElementFlags() {
-		if flag != checker.ElementFlagsRequired {
+	minimum, variable := 0, false
+	for position, flag := range tuple.ElementFlags() {
+		if flag == checker.ElementFlagsRequired {
+			if variable {
+				return 0
+			}
+			minimum++
+		} else if flag == checker.ElementFlagsOptional {
+			variable = true
+		} else if flag == checker.ElementFlagsRest && position == len(tuple.ElementFlags())-1 {
+			variable = true
+		} else {
 			return 0
 		}
 	}
@@ -26,44 +49,96 @@ func (l *lowering) mapTupleEntrySlot(node *ast.Node, target *checker.Type) ir.Vi
 		if l.result.ViewContracts[id-1].Unsupported == "tuple building" {
 			return 0
 		}
-		if len(l.result.ViewContracts[id-1].Tuple) > 0 {
+		if l.result.ViewContracts[id-1].FixedTuple {
 			return id
 		}
 	}
 	id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
 	l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewUnknown, Unsupported: "tuple building"})
 	l.result.ViewContractTypes[int(target.Id())] = id
-	contract := ir.ViewContract{Kind: ir.ViewObject, Of: ir.Object, Name: l.checker.TypeToString(target), ArrayReadonly: tuple.IsReadonly()}
+	contract := ir.ViewContract{Kind: ir.ViewObject, Of: ir.Object, Name: l.checker.TypeToString(target), ArrayReadonly: tuple.IsReadonly(), FixedTuple: true, TupleVariable: variable, TupleMinimum: minimum}
 	for position, element := range l.checker.GetTypeArguments(target) {
-		child := l.mapEntrySlot(node, l.concrete(element))
-		if child == 0 || tupleCallableEntry(l.result, child, map[ir.ViewContractID]bool{}) {
+		child := build(element)
+		if child == 0 {
 			return 0
 		}
 		name := strconv.Itoa(position)
+		if tuple.ElementFlags()[position] == checker.ElementFlagsRest {
+			contract.TupleRest = child
+			contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: name, Contract: child, Optional: true, Readonly: tuple.IsReadonly()})
+			l.result.CheckedFields[name] = true
+			continue
+		}
 		contract.Tuple = append(contract.Tuple, child)
-		contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: name, Contract: child, Readonly: tuple.IsReadonly()})
+		contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: name, Contract: child, Optional: tuple.ElementFlags()[position] == checker.ElementFlagsOptional, Readonly: tuple.IsReadonly()})
 		l.result.CheckedFields[name] = true
-	}
-	if len(contract.Tuple) == 0 {
-		return 0
 	}
 	l.result.ViewContracts[id-1] = contract
 	l.result.ViewContractTypes[int(target.Id())] = id
 	return id
 }
 
-func (l *lowering) readTupleViewElement(node *ast.Node, object ir.Expression, name string, of ir.Type) ir.Expression {
+func (l *lowering) readTupleViewElement(node *ast.Node, object ir.Expression, name string, of ir.Type) (ir.Expression, error) {
 	receiver := node.AsElementAccessExpression().Expression
-	elements := l.checker.GetTypeArguments(l.checker.GetTypeAtLocation(receiver))
+	receiverType := l.checker.GetTypeAtLocation(receiver)
 	position, err := strconv.Atoi(name)
-	if err != nil || position < 0 || position >= len(elements) {
-		return ir.Property{Object: object, Name: name, Of: of}
+	if err != nil || position < 0 {
+		return ir.Property{Object: object, Name: name, Of: of}, nil
 	}
-	declared := l.concrete(elements[position])
-	property := ir.Property{Object: object, Name: name, Of: of, Readiness: sourceExpression(node), View: sourceExpression(node), ViewWhere: l.program.Where(node), ViewType: l.checker.TypeToString(declared), ViewTypeID: int(declared.Id())}
-	property.ViewAllowed = l.viewLiterals(declared)
+	var declared *checker.Type
+	absent := false
+	alternatives := tupleAlternativesType(receiverType)
+	tail := false
+	if alternatives {
+		declared = l.concrete(l.checker.GetTypeAtLocation(node))
+		for _, member := range receiverType.Types() {
+			flags := member.TargetTupleType().ElementFlags()
+			absent = absent || position >= len(flags)
+			if position < len(flags) {
+				absent = absent || flags[position] == checker.ElementFlagsOptional
+			}
+		}
+	} else {
+		elements := l.checker.GetTypeArguments(receiverType)
+		flags := receiverType.TargetTupleType().ElementFlags()
+		rest := len(elements) > 0 && flags[len(elements)-1] == checker.ElementFlagsRest
+		declaredPosition := position
+		if rest && position >= len(elements)-1 {
+			declaredPosition = len(elements) - 1
+		}
+		if declaredPosition >= len(elements) {
+			return ir.Property{Object: object, Name: name, Of: of}, nil
+		}
+		declared = l.concrete(elements[declaredPosition])
+		tail = rest && position >= len(elements)-1
+		absent = flags[declaredPosition] == checker.ElementFlagsOptional || tail
+	}
+	if alternatives || tail {
+		if l.result.CheckedFields == nil {
+			l.result.CheckedFields = map[string]bool{}
+		}
+		l.result.CheckedFields[name] = true
+	}
+	property := ir.Property{Object: object, Name: name, Of: of, Absent: absent, Readiness: sourceExpression(node), View: sourceExpression(node), ViewWhere: l.program.Where(node), ViewType: l.checker.TypeToString(declared), ViewTypeID: int(declared.Id()), ViewReceiverTypeID: int(receiverType.Id()), ViewAllowed: l.viewLiterals(declared)}
 	property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
-	return property
+	if alternatives {
+		property.ViewContract, err = l.viewContract(node, declared)
+		if err != nil {
+			return nil, err
+		}
+	}
+	// A narrowed demand cannot reinterpret absence as numeric bits or a pointer.
+	if absent && of == ir.Number {
+		property.Of = ir.MaybeNumber
+		if l.acceptsUndefined(node) {
+			return property, nil
+		}
+		return ir.Unwrap{Value: property}, nil
+	}
+	if absent && of.IsReference() && !l.includesUndefined(l.checker.GetTypeAtLocation(node)) && !l.acceptsUndefined(node) {
+		return ir.Defined{Value: property, Message: "field read failed: " + property.View + " is not initialized; expected " + property.ViewType + ", found missing"}, nil
+	}
+	return property, nil
 }
 
 func (l *lowering) mapNullableTupleEntrySlot(node *ast.Node, target *checker.Type) ir.ViewContractID {

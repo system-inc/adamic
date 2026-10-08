@@ -1,0 +1,8 @@
+interface MapLike<T> {[key:string]:T;}
+interface Plugin {readonly name:string;}
+interface Project {readonly path:string;}
+interface TsConfigSourceFile {readonly text:string;}
+type CompilerOptionsValue=string|number|boolean|(string|number)[]|MapLike<string[]>|Plugin[]|Project[]|null|undefined;
+interface Base {readonly kind:'Recheck';}
+interface View extends Base {readonly table:{readonly [key:string]:CompilerOptionsValue|TsConfigSourceFile;};}
+const payload={kind:'Recheck' as const,table:{item:['name']}};const base:Base=payload;const view=base as View;console.log(typeof view.table['item']);

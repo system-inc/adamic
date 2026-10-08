@@ -14,7 +14,7 @@ func TestCheckedViewIntersectionOriginalHeritageUnion(t *testing.T) {
 	declarations, manifest := intersectionOriginalInputs(t)
 	for _, name := range []string{"good", "wrong"} {
 		t.Run(name, func(t *testing.T) {
-			input, err := os.ReadFile("../../stage3/interface-downcasts/lane7/original/class-augments-good.a")
+			input, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane7/original/class-augments-good.a"))
 			if err != nil {
 				t.Fatal(err)
 			}

@@ -351,7 +351,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 			return valueType, nil
 		}
 	}
-	if !isKnown || slotless(valueType) {
+	if !isKnown || slotless(valueType) && !(valueType == ir.Union && l.tupleScalarUnionType(element)) {
 		// An element is one adamic_value, and number | undefined needs two words.
 		return 0, l.notYet(node, "an array of "+l.checker.TypeToString(element))
 	}
@@ -1888,7 +1888,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	if optional {
 		return l.optionalTupleElement(node, object, index)
 	}
-	if object.Type() != ir.Object || index.Kind != ast.KindNumericLiteral || !checker.IsTupleType(l.checker.GetTypeAtLocation(access.Expression)) {
+	if object.Type() != ir.Object || index.Kind != ast.KindNumericLiteral || !(checker.IsTupleType(l.checker.GetTypeAtLocation(access.Expression)) || tupleAlternativesType(l.checker.GetTypeAtLocation(access.Expression))) {
 		return nil, l.notYet(node, describe(node))
 	}
 	of, err := l.typeOf(node)
@@ -1903,10 +1903,10 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
-	if slotless(of) {
+	if slotless(of) && !(of == ir.Union && l.tupleScalarUnionType(l.checker.GetTypeAtLocation(node))) {
 		return nil, l.notYet(node, "a tuple element of type "+typeName(of))
 	}
-	return l.readTupleViewElement(node, object, index.Text(), of), nil
+	return l.readTupleViewElement(node, object, index.Text(), of)
 }
 
 // setIndex lowers array[index] = value, as a statement.
@@ -1994,26 +1994,32 @@ func (l *lowering) tupleType(node *ast.Node) *checker.Type {
 func (l *lowering) tupleLiteral(node *ast.Node, tuple *checker.Type) (ir.Expression, error) {
 	items := node.AsArrayLiteralExpression().Elements.Nodes
 	elements := l.checker.GetTypeArguments(tuple)
-	if len(items) > len(elements) {
+	rest := len(elements) > 0 && tuple.TargetTupleType().ElementFlags()[len(elements)-1] == checker.ElementFlagsRest
+	if len(items) > len(elements) && !rest {
 		return nil, l.notYet(node, "a tuple literal with more values than its tuple has elements")
 	}
 	literal := ir.ObjectLiteral{Tuple: true}
-	// An optional element left out is undefined, a field of its own, as tuple[index] reads it.
-	missing := []ir.Field{}
+	// Missing optional positions stay absent. Shape arity remains actual source length.
 	for index := len(items); index < len(elements); index++ {
+		if rest && index == len(elements)-1 {
+			continue
+		}
 		of, isKnown := l.representation(elements[index])
 		if !isKnown || slotless(of) || !l.includesUndefined(elements[index]) || !(of.IsMaybe() || of.IsReference()) {
 			return nil, l.notYet(node, "a tuple literal leaving out an element of type "+l.checker.TypeToString(elements[index]))
 		}
-		missing = append(missing, ir.Field{Name: strconv.Itoa(index), Value: fit(ir.Undefined{}, of)})
 	}
 	for index, item := range items {
 		if item.Kind == ast.KindSpreadElement || item.Kind == ast.KindOmittedExpression {
 			return nil, l.notYet(item, describe(item)+" in a tuple literal")
 		}
-		of, isKnown := l.representation(elements[index])
+		declaredPosition := index
+		if rest && index >= len(elements)-1 {
+			declaredPosition = len(elements) - 1
+		}
+		of, isKnown := l.representation(elements[declaredPosition])
 		if !isKnown || slotless(of) {
-			return nil, l.notYet(item, "a tuple element of type "+l.checker.TypeToString(elements[index]))
+			return nil, l.notYet(item, "a tuple element of type "+l.checker.TypeToString(elements[declaredPosition]))
 		}
 		value, err := l.expression(item)
 		if err != nil {
@@ -2026,7 +2032,6 @@ func (l *lowering) tupleLiteral(node *ast.Node, tuple *checker.Type) (ir.Express
 		}
 		literal.Fields = append(literal.Fields, ir.Field{Name: strconv.Itoa(index), Value: value})
 	}
-	literal.Fields = append(literal.Fields, missing...)
 	return literal, nil
 }
 

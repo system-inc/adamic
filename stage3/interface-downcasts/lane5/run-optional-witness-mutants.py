@@ -12,6 +12,8 @@ for directory, before, after in [
     ('variable-statement', 'declarationList: VariableDeclarationList | readonly VariableDeclaration[]', 'declarationList: VariableDeclarationList'),
 ]:
     fixture = root / 'stage3/interface-downcasts/lane5/optional-aggregates' / directory / 'good.a'
+    if fixture.with_suffix('.ts').is_file():
+        fixture = fixture.with_suffix('.ts')
     original = fixture.read_text()
     assert original.count(before) == 1
     try:

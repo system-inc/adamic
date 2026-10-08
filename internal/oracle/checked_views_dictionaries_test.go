@@ -20,7 +20,7 @@ func TestCheckedViewDictionaryComponents(t *testing.T) {
 	}
 	for _, variant := range []string{"options-good", "options-wrong", "nested-good", "nested-wrong", "array-wrong"} {
 		t.Run(variant, func(t *testing.T) {
-			path, err := filepath.Abs("../../stage3/interface-downcasts/dictionaries/components/" + variant + ".a")
+			path, err := filepath.Abs(checkedViewFixturePath("../../stage3/interface-downcasts/dictionaries/components/" + variant + ".a"))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -62,7 +62,7 @@ func TestCheckedViewDictionaryComponents(t *testing.T) {
 // certify frontend aliases while source dispatch remains absent.
 func TestCheckedViewDictionaryComponentMutants(t *testing.T) {
 	t.Parallel()
-	production, err := os.ReadFile("../native/runtime/view_dictionaries.c")
+	production, err := os.ReadFile(checkedViewFixturePath("../native/runtime/view_dictionaries.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -212,7 +212,7 @@ func TestCheckedViewDictionaryJavaScriptGuards(t *testing.T) {
 
 func TestCheckedViewDictionaryNativeStorageGuard(t *testing.T) {
 	t.Parallel()
-	production, err := os.ReadFile("../native/runtime/view_dictionaries.c")
+	production, err := os.ReadFile(checkedViewFixturePath("../native/runtime/view_dictionaries.c"))
 	if err != nil {
 		t.Fatal(err)
 	}

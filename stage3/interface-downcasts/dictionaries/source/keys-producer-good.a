@@ -1,0 +1,8 @@
+interface MapLike<T> { [key:string]: T; }
+interface Base { readonly kind:'Keys'; }
+interface Holder extends Base { readonly table: MapLike<string>; }
+const table: Record<string, number> = {'10':1,'2':2,z:42,a:3};
+const payload = {kind:'Keys' as const,table};
+const base:Base=payload;
+const view=base as Holder;
+const keys=Object.keys(view.table); for(const key of keys) console.log(key);
