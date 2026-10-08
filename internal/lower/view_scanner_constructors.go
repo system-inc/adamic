@@ -105,7 +105,7 @@ func (l *lowering) scannerStringConstructorRead(node *ast.Node) (ir.Expression, 
 		l.result.CheckedFields = map[string]bool{}
 	}
 	l.result.CheckedFields["fromCodePoint"] = true
-	l.result.ViewOrigins = append(l.result.ViewOrigins, carrier)
+	l.recordViewCastOrigin(node, carrier)
 	read := ir.Property{Object: carrier, Name: "fromCodePoint", Of: ir.Closure, View: sourceExpression(property), ViewContract: contract}
 	if node.Kind != ast.KindCallExpression {
 		return read, true, nil

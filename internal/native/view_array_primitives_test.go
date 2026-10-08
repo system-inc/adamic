@@ -57,7 +57,7 @@ int main(int argc, char **argv) {
 				return
 			}
 			failure, ok := err.(*exec.ExitError)
-			want := "adamic: panic: cast failed: field read failed: value[index] matches no member of string | number; expected string | number, found " + sample.found + "\n"
+			want := "adamic: panic: field read failed: value[index] matches no member of string | number; expected string | number, found " + sample.found + "\n"
 			if !ok || failure.ExitCode() != 70 || out.Len() != 0 || stderr.String() != want {
 				t.Fatalf("guard: %v stdout %q stderr %q, want %q", err, out.String(), stderr.String(), want)
 			}

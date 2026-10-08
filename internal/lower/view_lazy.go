@@ -287,6 +287,9 @@ func (l *lowering) checkLazyViewReads() error {
 	for _, function := range program.Functions {
 		walk(function.Body, inspect)
 	}
+	if refused == nil {
+		l.recordViewReadCastLocations(graph)
+	}
 	return refused
 }
 

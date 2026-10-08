@@ -10,7 +10,7 @@ static bool map_read_reference(unsigned char type) {
 static _Noreturn void map_storage_failure(const char *part, unsigned char wanted, unsigned char source) {
  static const char *const names[] = {"uncertified", "number", "boolean", "string", "object", "array", "Map", "number | undefined", "function", "boolean | undefined", "boxed union", "Weak"};
  char message[256];
- int length = snprintf(message, sizeof message, "cast failed: field read failed: Map %s storage cannot be converted; expected %s, found %s", part, wanted < 12 ? names[wanted] : "unknown", source < 12 ? names[source] : "unknown");
+ int length = snprintf(message, sizeof message, "field read failed: Map %s storage cannot be converted; expected %s, found %s", part, wanted < 12 ? names[wanted] : "unknown", source < 12 ? names[source] : "unknown");
  adamic_panic(message, (size_t)length);
 }
 

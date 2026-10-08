@@ -13,7 +13,7 @@ const viewCallablesRuntime = `const adamicViewCallableRead = (object, name, expr
         while (!Object.hasOwn(holder, name) && Object.getPrototypeOf(holder) !== null) holder = Object.getPrototypeOf(holder);
     }
     const value = adamicReadField(holder, name, expression, false, false, "function");
-    if (adamicTypeOf(value) !== "function") panic("cast failed: field read failed: " + expression + " is not a function; expected function, found " + (value === null ? "null" : adamicTypeOf(value)));
+    if (adamicTypeOf(value) !== "function") panic("field read failed: " + expression + " is not a function; expected function, found " + (value === null ? "null" : adamicTypeOf(value)));
     return value;
 };
 const adamicViewCallableCall = (value, receiver, arguments_, method) => method ? value(receiver, ...arguments_) : adamicCall(value, arguments_);

@@ -28,7 +28,7 @@ func TestTupleArityIRPlanProbe(t *testing.T) {
 			if sample.valid {
 				runViewNode(t, viewTestRuntime+checked+";console.log('ok');", "ok\n", "", 0)
 			} else {
-				runViewNode(t, viewTestRuntime+checked+";", "", fmt.Sprintf("adamic: panic: cast failed: field read failed: selected is not a Tuple; expected Tuple, found %s\n", sample.found), 70)
+				runViewNode(t, viewTestRuntime+checked+";", "", fmt.Sprintf("adamic: panic: field read failed: selected is not a Tuple; expected Tuple, found %s\n", sample.found), 70)
 			}
 		}
 	}

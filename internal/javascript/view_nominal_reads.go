@@ -29,7 +29,7 @@ func (e *emitter) nominalViewRead(id ir.ViewContractID, value, where string, opt
 	if undefined || optional {
 		accepted = append(accepted, "value === undefined")
 	}
-	message := quote("cast failed: field read failed: " + where + "; expected " + name + " class identity, found incompatible object")
+	message := quote("field read failed: " + where + "; expected " + name + " class identity, found incompatible object")
 	return "((value) => (" + strings.Join(accepted, " || ") + ") ? value : panic(" + message + "))(" + value + ")"
 }
 

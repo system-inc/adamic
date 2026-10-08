@@ -9,6 +9,7 @@ import (
 // Keep metadata at allocation, not at assertion. Wrapping dispatch here also
 // covers arrays produced inside callees, irrespective of source lowering order.
 func (e *emitter) evaluate(expression ir.Expression) string {
+	expression = ir.ViewDiagnosticExpression(e.program, expression)
 	if read, ok := expression.(ir.ArrayIndex); ok && read.ScalarCastSnapshot {
 		return e.scalarCastIndexSnapshot(read)
 	}
@@ -140,6 +141,7 @@ func (e *emitter) emitViewArrayReadChecked(read ir.ArrayIndex, array, index, own
 }
 
 func (e *emitter) viewArrayElementSlot(read ir.ArrayViewRead, array, index, owner string) string {
+	read.View = ir.ViewDiagnosticLabel(e.program, read.View)
 	slot := ""
 	if read.TupleUnion {
 		slot = e.emitTupleArrayUnionSlot(read.Index(), array, index, false)

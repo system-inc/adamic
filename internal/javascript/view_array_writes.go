@@ -86,7 +86,7 @@ const adamicArrayReferenceWrite = (array, value) => {
  const target = adamicArrayElementContracts.get(array) || 0;
  if (!target) adamicArrayReferenceFailure("object", "uncertified source element contract");
  if (adamicArrayPrimitiveWrites[target]) {
-  if (!adamicArrayPrimitiveWrites[target](value)) panic("cast failed: field read failed: <array write> matches no member of " + adamicArrayReferenceNames[target] + "; expected " + adamicArrayReferenceNames[target] + ", found " + (value === null ? "null" : typeof value));
+  if (!adamicArrayPrimitiveWrites[target](value)) panic("field read failed: <array write> matches no member of " + adamicArrayReferenceNames[target] + "; expected " + adamicArrayReferenceNames[target] + ", found " + (value === null ? "null" : typeof value));
   return;
  }
  if (adamicArrayNominalClasses[target]) {

@@ -23,6 +23,6 @@ func TestTupleHeapUnionSelectionProbe(t *testing.T) {
 			runViewNode(t, viewTestRuntime+"const v="+checked+";console.log(Array.isArray(v)?v[0]:v);", "7\n", "", 0)
 			continue
 		}
-		runViewNode(t, viewTestRuntime+checked+";", "", "adamic: panic: cast failed: field read failed: item matches no member of ID | Tuple; expected ID | Tuple, found "+sample.found+"\n", 70)
+		runViewNode(t, viewTestRuntime+checked+";", "", "adamic: panic: field read failed: item matches no member of ID | Tuple; expected ID | Tuple, found "+sample.found+"\n", 70)
 	}
 }

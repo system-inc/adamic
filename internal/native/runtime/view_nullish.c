@@ -22,7 +22,7 @@ static _Noreturn void failure(const char *expression, const char *expected, unsi
  size_t capacity=strlen(expression)+2*strlen(expected)+strlen(found)+96;
  char *message=malloc(capacity);
  if(message==NULL){static const char oom[]="out of memory";adamic_panic(oom,sizeof oom-1);}
- int length=snprintf(message,capacity,"cast failed: field read failed: %s matches no member of %s; expected %s, found %s",expression,expected,expected,found);
+ int length=snprintf(message,capacity,"field read failed: %s matches no member of %s; expected %s, found %s",expression,expected,expected,found);
  adamic_panic(message,(size_t)length);
 }
 _Noreturn void adamic_nullish_failure(const char *expression,const char *expected,const adamic_heap *value){failure(expression,expected,logical_kind(value));}

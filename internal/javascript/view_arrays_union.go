@@ -12,7 +12,7 @@ func (e *emitter) arrayPrimitiveUnionRead(id ir.ViewContractID, value, expressio
 	if ir.PrimitiveArrayContract(e.program, id) {
 		test = e.arrayPrimitiveUnionTest(id, "v")
 	}
-	return fmt.Sprintf("((v) => { if (!(%s)) panic(%s + (v === null ? 'null' : typeof v)); return v; })(%s)", test, quote("cast failed: element read failed: "+expression+" expected "+expected+", found "), value)
+	return fmt.Sprintf("((v) => { if (!(%s)) panic(%s + (v === null ? 'null' : typeof v)); return v; })(%s)", test, quote("element read failed: "+expression+" expected "+expected+", found "), value)
 }
 
 func (e *emitter) arrayPrimitiveUnionTest(id ir.ViewContractID, value string) string {

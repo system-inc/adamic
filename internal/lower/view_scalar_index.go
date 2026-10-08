@@ -46,6 +46,6 @@ func (l *lowering) scalarCastIndexOperand(node *ast.Node) (ir.Expression, bool, 
 	}
 	// Activate producer metadata needed by the physical snapshot. This is not
 	// evidence about the unread object payload or about other array elements.
-	l.result.ViewOrigins = append(l.result.ViewOrigins, array)
+	l.recordViewCastOrigin(node, array)
 	return ir.ArrayIndex{Array: array, Index: index, Element: ir.Union, ScalarCastSnapshot: true, View: sourceExpression(operand), ViewType: l.checker.TypeToString(element)}, true, nil
 }

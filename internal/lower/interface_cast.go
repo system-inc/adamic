@@ -116,7 +116,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 	for field := range fields {
 		l.result.CheckedFields[field] = true
 	}
-	l.result.ViewOrigins = append(l.result.ViewOrigins, value)
+	l.recordViewCastOrigin(node, value)
 	return value, nil
 }
 

@@ -16,6 +16,8 @@ type Program struct {
 	// DictionaryEntryOrigins are derived containers, never additional cast sites.
 	DictionaryEntryOrigins []Expression
 	ViewOrigins            []Expression
+	ViewCastLocations      []ViewCastLocation
+	ViewReadCastLocations  map[string]string
 	MapCertificates        [][2]ViewContractID
 
 	// PredicateChecks counts predicate directions, per emitted call site.

@@ -11,7 +11,7 @@ import (
 // reach backend dispatch. check returns the value or a transitive checked view.
 // Keeping it outside the array preserves identity and observes mutable aliases.
 const viewArraysRuntime = `const adamicViewArray = (value, expression, expected) => {
-    if (!Array.isArray(value)) panic("cast failed: field read failed: " + expression + " expected " + expected + ", found " + (value === null ? "null" : typeof value));
+    if (!Array.isArray(value)) panic("field read failed: " + expression + " expected " + expected + ", found " + (value === null ? "null" : typeof value));
     return value;
 };
 const adamicViewArrayRead = (array, index, expression, check) => {
@@ -33,17 +33,17 @@ func emitViewArrayFieldRead(object, member, expression, expected string) string 
 }
 
 const viewArrayElementsRuntime = `const adamicViewArrayIndex = (array, index, relative, check, expression = "<array index>", expected = "array") => {
-    if (!Array.isArray(array)) panic("cast failed: element read failed: " + expression + " expected " + expected + ", found " + (array === null ? "null" : typeof array));
+    if (!Array.isArray(array)) panic("element read failed: " + expression + " expected " + expected + ", found " + (array === null ? "null" : typeof array));
     if (relative) { index = Math.trunc(Number(index)) || 0; if (index < 0) index += array.length; }
     if (!Number.isInteger(index) || index < 0 || index >= array.length) return undefined;
     if (!(index in array)) return undefined;
     return check(array[index]);
 };
 const adamicViewArrayElement = (value, expression, type, expected, allowed, required = false, tuple = false) => {
-    if (value === undefined) { if (required) panic("cast failed: element read failed: " + expression + " expected " + expected + ", found undefined"); return value; }
+    if (value === undefined) { if (required) panic("element read failed: " + expression + " expected " + expected + ", found undefined"); return value; }
     const valid = type === 1 || type === 7 ? typeof value === "number" : type === 2 || type === 9 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? value !== null && typeof value === "object" && (tuple || !Array.isArray(value)) && !(value instanceof Map) : type === 5 ? Array.isArray(value) : type === 6 ? value instanceof Map : type === 8 ? adamicTypeOf(value) === "function" : type === 10 ? value === null || typeof value === "number" || typeof value === "boolean" || typeof value === "string" : false;
-    if (!valid) panic("cast failed: element read failed: " + expression + " expected " + expected + ", found " + (value === null ? "nullish" : Array.isArray(value) ? "array" : adamicTypeOf(value)));
-    if (allowed.length && !allowed.includes(value)) panic("cast failed: field read failed: " + expression + " expected " + expected + ", found " + typeof value + " " + value);
+    if (!valid) panic("element read failed: " + expression + " expected " + expected + ", found " + (value === null ? "nullish" : Array.isArray(value) ? "array" : adamicTypeOf(value)));
+    if (allowed.length && !allowed.includes(value)) panic("field read failed: " + expression + " expected " + expected + ", found " + typeof value + " " + value);
     return value;
 };
 `
@@ -58,7 +58,7 @@ func (e *emitter) emitViewArrayRead(read ir.ArrayIndex) string {
 	if read.TupleUnion {
 		checked := fmt.Sprintf("adamicViewArrayIndex(%s, %s, %t, (value) => %s, %s, %s)", array, index, read.Relative, e.tupleArrayUnionCheck(read.ViewContract, read.View, "value"), quote(read.View), quote(read.ViewType))
 		if read.Required {
-			return "((value) => { if (value === undefined) panic(" + quote("cast failed: element read failed: "+read.View+" expected "+read.ViewType+", found undefined") + "); return value;})(" + checked + ")"
+			return "((value) => { if (value === undefined) panic(" + quote("element read failed: "+read.View+" expected "+read.ViewType+", found undefined") + "); return value;})(" + checked + ")"
 		}
 		return checked
 	}
@@ -92,7 +92,7 @@ func (e *emitter) emitViewArrayRead(read ir.ArrayIndex) string {
 const viewArrayOperationsRuntime = `const adamicArrayStorage = new WeakMap();
 const adamicArrayStorageValue = (array, storage) => { adamicArrayStorage.set(array, storage === 1 || storage === 2 || storage === 7 || storage === 9 ? storage : 10); return array; };
 const adamicViewSlice = (array, arguments_) => adamicArrayElementCertificate(adamicArrayStorageValue(array.slice(...arguments_), adamicArrayStorage.get(array)), adamicArrayElementContracts.get(array) || 0);
-const adamicArrayWriteCheck = (array, storage) => { const actual = adamicArrayStorage.get(array); if (actual !== (storage === 1 || storage === 2 || storage === 7 || storage === 9 ? storage : 10)) panic("cast failed: element read failed: <array write> expected " + (storage === 7 ? "number" : adamicViewTypeNames[storage] || "uncertified storage") + ", found " + (actual === 7 ? "number" : actual === 10 ? "heap pointers" : adamicViewTypeNames[actual] || "uncertified storage")); if (storage === 4 || storage === 5 || storage === 6 || storage === 8 || storage === 10) panic("cast failed: element read failed: <array write> expected " + (adamicViewTypeNames[storage] || "uncertified storage") + ", found uncertified source element contract"); };
+const adamicArrayWriteCheck = (array, storage) => { const actual = adamicArrayStorage.get(array); if (actual !== (storage === 1 || storage === 2 || storage === 7 || storage === 9 ? storage : 10)) panic("element read failed: <array write> expected " + (storage === 7 ? "number" : adamicViewTypeNames[storage] || "uncertified storage") + ", found " + (actual === 7 ? "number" : actual === 10 ? "heap pointers" : adamicViewTypeNames[actual] || "uncertified storage")); if (storage === 4 || storage === 5 || storage === 6 || storage === 8 || storage === 10) panic("element read failed: <array write> expected " + (adamicViewTypeNames[storage] || "uncertified storage") + ", found uncertified source element contract"); };
 const adamicViewMap = (array, callback, check) => array.map((value, index, all) => adamicCall(callback, [check(value), index, all]));
 const adamicViewVisit = (array, method, callback, check) => adamicVisit(array, method, new AdamicClosure((self, values) => adamicCall(callback, [check(values[0]), values[1], values[2]]), []));
 const adamicViewFind = (array, method, callback, check) => adamicFind(array, method, new AdamicClosure((self, values) => adamicCall(callback, [check(values[0]), values[1], values[2]]), []));
@@ -104,8 +104,9 @@ const adamicViewJoin = (array, separator, check) => array.map(value => check(val
 `
 
 func (e *emitter) value(expression ir.Expression) string {
+	expression = ir.ViewDiagnosticExpression(e.program, expression)
 	if read, ok := expression.(ir.ArrayIndex); ok && read.ScalarCastSnapshot {
-		return fmt.Sprintf("((a,i) => { if (!Array.isArray(a)) panic(%s); return a[i]; })(%s,%s)", quote("cast failed: field read failed: "+read.View+" matches no member of "+read.ViewType+"; expected "+read.ViewType+", found unsupported representation"), e.value(read.Array), e.value(read.Index))
+		return fmt.Sprintf("((a,i) => { if (!Array.isArray(a)) panic(%s); return a[i]; })(%s,%s)", quote("field read failed: "+read.View+" matches no member of "+read.ViewType+"; expected "+read.ViewType+", found unsupported representation"), e.value(read.Array), e.value(read.Index))
 	}
 	if record, ok := expression.(ir.ArrayRecord); ok {
 		return e.emitViewArrayRecord(record)
@@ -158,6 +159,7 @@ func (e *emitter) value(expression ir.Expression) string {
 }
 
 func (e *emitter) viewArrayElementCheck(read ir.ArrayViewRead, value string) string {
+	read.View = ir.ViewDiagnosticLabel(e.program, read.View)
 	if read.TupleUnion {
 		return e.tupleArrayUnionCheck(read.ViewContract, read.View, value)
 	}

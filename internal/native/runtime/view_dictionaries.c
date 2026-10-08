@@ -8,7 +8,7 @@ static void dictionary_failure(const char *expression, const char *declared, ada
     size_t capacity = strlen(expression) + strlen(declared) + strlen(found) + 96;
     char *message = malloc(capacity);
     if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
-    int length = snprintf(message, capacity, "cast failed: field read failed: %s; expected %s, found %s", expression, declared, found);
+    int length = snprintf(message, capacity, "field read failed: %s; expected %s, found %s", expression, declared, found);
     adamic_panic(message, (size_t)length);
 }
 
@@ -104,7 +104,7 @@ adamic_view_dictionary_result adamic_view_dictionary_source_read(const adamic_ob
             size_t capacity = strlen(expression) + strlen(declared) + 96;
             char *message = malloc(capacity);
             if (message == NULL) adamic_panic("out of memory", sizeof "out of memory" - 1);
-            int length = snprintf(message, capacity, "cast failed: field read failed: %s; expected %s, found uninitialized", expression, declared);
+            int length = snprintf(message, capacity, "field read failed: %s; expected %s, found uninitialized", expression, declared);
             adamic_panic(message, (size_t)length);
         }
         unsigned char actual = adamic_object_field_types(object)[index];

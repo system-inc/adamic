@@ -164,7 +164,7 @@ func (e *emitter) viewBoundedIntersection(property ir.Property, value string) st
    const next = path + '.' + contract.tag;
    const tag = adamicViewField(object,contract.tag,next,contract.tagType,contract.tagExpected);
    const arm = contract.arms.find(arm => arm.allowed.includes(tag));
-   if (arm === undefined) panic('cast failed: field read failed: ' + next + ' expected ' + contract.tagExpected + ', found ' + typeof tag + ' ' + tag);
+   if (arm === undefined) panic('field read failed: ' + next + ' expected ' + contract.tagExpected + ', found ' + typeof tag + ' ' + tag);
    if (arm.contract !== 0) check(object,arm.contract,path);
   } else {
    for (const field of contract.fields) {

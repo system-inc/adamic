@@ -25,7 +25,7 @@ func (e *emitter) nominalViewRead(id ir.ViewContractID, value, where string, opt
 	if optional {
 		accepted = append(accepted, "(const void *)"+value+" == &adamic_null")
 	}
-	message := cString("cast failed: field read failed: " + where + "; expected " + e.program.ViewContracts[id-1].Name + " class identity, found incompatible object")
+	message := cString("field read failed: " + where + "; expected " + e.program.ViewContracts[id-1].Name + " class identity, found incompatible object")
 	e.line("if (!(%s)) adamic_panic(%s, sizeof %s - 1);", strings.Join(accepted, " || "), message, message)
 }
 

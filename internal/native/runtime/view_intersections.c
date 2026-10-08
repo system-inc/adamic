@@ -17,6 +17,6 @@ void adamic_view_intersection_require(const adamic_view_union_value *value, cons
     size_t capacity = strlen(expression) + strlen(declared) + strlen(found) + 96;
     char *message = malloc(capacity);
     if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
-    int length = snprintf(message, capacity, "cast failed: field read failed: %s does not satisfy every member; expected %s, found %s", expression, declared, found);
+    int length = snprintf(message, capacity, "field read failed: %s does not satisfy every member; expected %s, found %s", expression, declared, found);
     adamic_panic(message, (size_t)length);
 }

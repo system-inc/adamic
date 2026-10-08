@@ -15,7 +15,7 @@ void adamic_view_tuple(const adamic_object *value, size_t length, const char *ex
  size_t capacity = strlen(expression) + 2 * strlen(expected) + strlen(found) + 100;
  char *message = malloc(capacity);
  if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
- int written = snprintf(message, capacity, "cast failed: field read failed: %s is not a %s; expected %s, found %s", expression, expected, expected, found);
+ int written = snprintf(message, capacity, "field read failed: %s is not a %s; expected %s, found %s", expression, expected, expected, found);
  adamic_panic(message, (size_t)written);
 }
 

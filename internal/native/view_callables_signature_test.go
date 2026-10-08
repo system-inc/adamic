@@ -81,7 +81,7 @@ int main(void) {
 				if probe.found != "" {
 					wantOut = ""
 					wantExit = 70
-					wantErr = fmt.Sprintf("adamic: panic: cast failed: field read failed: node.run expected (value: number) => number, found %s\n", probe.found)
+					wantErr = fmt.Sprintf("adamic: panic: field read failed: node.run expected (value: number) => number, found %s\n", probe.found)
 				}
 				if exit != wantExit || stdout.String() != wantOut || stderr.String() != wantErr {
 					t.Fatalf("exit%d out%q err%q", exit, stdout.String(), stderr.String())
