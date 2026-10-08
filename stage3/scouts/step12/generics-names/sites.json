@@ -1,0 +1,264 @@
+{
+  "typescript": "6.0.3",
+  "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "closure": {
+    "typescript": "6.0.3",
+    "tree": "/workspace/type-imports/generator-adapted",
+    "entries": [
+      "src/compiler/scanner.ts:createScanner",
+      "src/compiler/types.ts:ScriptTarget",
+      "src/compiler/types.ts:SyntaxKind"
+    ],
+    "declarations": 166,
+    "copied_spans": 168,
+    "namespace_wrapper_spans": 2,
+    "value_declarations": 150,
+    "type_declarations": 16,
+    "files": 78,
+    "declaration_files": 8,
+    "code_declarations": 89,
+    "export_facade_records": 77,
+    "evaluation_only_files": 70,
+    "preserves_evaluation": true,
+    "declaration_lines": 7283,
+    "declaration_bytes": 822323,
+    "rewritten_import_lines": 177
+  },
+  "files": [
+    "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+    "src/compiler/_namespaces/ts.performance.ts",
+    "src/compiler/_namespaces/ts.ts",
+    "src/compiler/binder.ts",
+    "src/compiler/builder.ts",
+    "src/compiler/builderPublic.ts",
+    "src/compiler/builderState.ts",
+    "src/compiler/builderStatePublic.ts",
+    "src/compiler/checker.ts",
+    "src/compiler/commandLineParser.ts",
+    "src/compiler/core.ts",
+    "src/compiler/corePublic.ts",
+    "src/compiler/debug.ts",
+    "src/compiler/diagnosticInformationMap.generated.ts",
+    "src/compiler/emitter.ts",
+    "src/compiler/executeCommandLine.ts",
+    "src/compiler/expressionToTypeNode.ts",
+    "src/compiler/factory/baseNodeFactory.ts",
+    "src/compiler/factory/emitHelpers.ts",
+    "src/compiler/factory/emitNode.ts",
+    "src/compiler/factory/nodeChildren.ts",
+    "src/compiler/factory/nodeConverters.ts",
+    "src/compiler/factory/nodeFactory.ts",
+    "src/compiler/factory/nodeTests.ts",
+    "src/compiler/factory/parenthesizerRules.ts",
+    "src/compiler/factory/utilities.ts",
+    "src/compiler/factory/utilitiesPublic.ts",
+    "src/compiler/moduleNameResolver.ts",
+    "src/compiler/moduleSpecifiers.ts",
+    "src/compiler/parser.ts",
+    "src/compiler/path.ts",
+    "src/compiler/performance.ts",
+    "src/compiler/performanceCore.ts",
+    "src/compiler/program.ts",
+    "src/compiler/programDiagnostics.ts",
+    "src/compiler/resolutionCache.ts",
+    "src/compiler/scanner.ts",
+    "src/compiler/semver.ts",
+    "src/compiler/sourcemap.ts",
+    "src/compiler/symbolWalker.ts",
+    "src/compiler/sys.ts",
+    "src/compiler/tracing.ts",
+    "src/compiler/transformer.ts",
+    "src/compiler/transformers/classFields.ts",
+    "src/compiler/transformers/classThis.ts",
+    "src/compiler/transformers/declarations.ts",
+    "src/compiler/transformers/declarations/diagnostics.ts",
+    "src/compiler/transformers/destructuring.ts",
+    "src/compiler/transformers/es2015.ts",
+    "src/compiler/transformers/es2016.ts",
+    "src/compiler/transformers/es2017.ts",
+    "src/compiler/transformers/es2018.ts",
+    "src/compiler/transformers/es2019.ts",
+    "src/compiler/transformers/es2020.ts",
+    "src/compiler/transformers/es2021.ts",
+    "src/compiler/transformers/esDecorators.ts",
+    "src/compiler/transformers/esnext.ts",
+    "src/compiler/transformers/generators.ts",
+    "src/compiler/transformers/jsx.ts",
+    "src/compiler/transformers/legacyDecorators.ts",
+    "src/compiler/transformers/module/esnextAnd2015.ts",
+    "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+    "src/compiler/transformers/module/module.ts",
+    "src/compiler/transformers/module/system.ts",
+    "src/compiler/transformers/namedEvaluation.ts",
+    "src/compiler/transformers/taggedTemplate.ts",
+    "src/compiler/transformers/ts.ts",
+    "src/compiler/transformers/typeSerializer.ts",
+    "src/compiler/transformers/utilities.ts",
+    "src/compiler/tsbuild.ts",
+    "src/compiler/tsbuildPublic.ts",
+    "src/compiler/types.ts",
+    "src/compiler/utilities.ts",
+    "src/compiler/utilitiesPublic.ts",
+    "src/compiler/visitorPublic.ts",
+    "src/compiler/watch.ts",
+    "src/compiler/watchPublic.ts",
+    "src/compiler/watchUtilities.ts"
+  ],
+  "sites": [
+    {
+      "file": "src/compiler/core.ts",
+      "line": 12,
+      "column": 1,
+      "kind": "generic-return",
+      "name": "forEach",
+      "returns": "U | undefined",
+      "body": true,
+      "upstream": {
+        "line": 33,
+        "column": 1
+      }
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 51,
+      "column": 1,
+      "kind": "generic-return",
+      "name": "identity",
+      "returns": "T",
+      "body": true,
+      "upstream": {
+        "line": 1828,
+        "column": 1
+      }
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 77,
+      "column": 1,
+      "kind": "generic-return",
+      "name": "getSpellingSuggestion",
+      "returns": "T | undefined",
+      "body": true,
+      "upstream": {
+        "line": 2169,
+        "column": 1
+      }
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 84,
+      "column": 5,
+      "kind": "generic-return",
+      "name": "lookAhead",
+      "returns": "T",
+      "body": false,
+      "upstream": {
+        "line": 121,
+        "column": 5
+      }
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 88,
+      "column": 5,
+      "kind": "generic-return",
+      "name": "scanRange",
+      "returns": "T",
+      "body": false,
+      "upstream": {
+        "line": 125,
+        "column": 5
+      }
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 94,
+      "column": 5,
+      "kind": "generic-return",
+      "name": "tryScan",
+      "returns": "T",
+      "body": false,
+      "upstream": {
+        "line": 131,
+        "column": 5
+      }
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 113,
+      "column": 5,
+      "kind": "computed-name",
+      "text": "[\"\" + \"constructor\"]",
+      "parent": "PropertyAssignment",
+      "upstream": {
+        "line": 150,
+        "column": 5
+      }
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3376,
+      "column": 5,
+      "kind": "generic-return",
+      "name": "speculationHelper",
+      "returns": "T",
+      "body": true,
+      "upstream": {
+        "line": 3930,
+        "column": 5
+      }
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3398,
+      "column": 5,
+      "kind": "generic-return",
+      "name": "scanRange",
+      "returns": "T",
+      "body": true,
+      "upstream": {
+        "line": 3952,
+        "column": 5
+      }
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3423,
+      "column": 5,
+      "kind": "generic-return",
+      "name": "lookAhead",
+      "returns": "T",
+      "body": true,
+      "upstream": {
+        "line": 3977,
+        "column": 5
+      }
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3427,
+      "column": 5,
+      "kind": "generic-return",
+      "name": "tryScan",
+      "returns": "T",
+      "body": true,
+      "upstream": {
+        "line": 3981,
+        "column": 5
+      }
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 12,
+      "column": 1,
+      "kind": "generic-return",
+      "name": "forEachEntry",
+      "returns": "U | undefined",
+      "body": true,
+      "upstream": {
+        "line": 746,
+        "column": 1
+      }
+    }
+  ]
+}

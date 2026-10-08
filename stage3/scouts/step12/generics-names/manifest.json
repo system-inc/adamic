@@ -1,0 +1,44 @@
+{
+  "witnesses": [
+    {
+      "file": "01-core-forEach.a",
+      "topic": "generic",
+      "mutant": [
+        "return result;",
+        "return undefined;"
+      ],
+      "expected_stdout": "hit\nmissing\n",
+      "expected_build": "TS2345"
+    },
+    {
+      "file": "02-utilities-forEachEntry.a",
+      "topic": "generic",
+      "mutant": [
+        "return result;",
+        "return undefined;"
+      ],
+      "expected_stdout": "y\nmissing\n",
+      "expected_build": "refuses a string as a condition"
+    },
+    {
+      "file": "03-concrete-each.a",
+      "topic": "generic",
+      "mutant": [
+        "return result;",
+        "return undefined;"
+      ],
+      "expected_stdout": "x\nmissing\n",
+      "expected_build": null
+    },
+    {
+      "file": "04-scanner-constructor.a",
+      "topic": "names",
+      "mutant": [
+        "\"\" + \"constructor\"",
+        "\"\" + \"wrong\""
+      ],
+      "expected_stdout": "constructor\n",
+      "expected_build": null
+    }
+  ]
+}
