@@ -1,0 +1,76 @@
+JSON port split measurements, Codex cloud, 2026-10-08
+Branch stage1-split/json-port; base origin/main 54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8.
+nproc=5; cgroup cpu.max=400000 100000 (4 CPUs of quota). Go 1.27.1; clang 20.1.8.
+All 3365 pinned corpus cases, no gate sample, no changed-file filter, no Node-only mode.
+Cohere and nested TypeScript restored through the hash-verified cloud submodule archive;
+package-lock npm inputs installed, Prettier 3.9.6 installed, BENCH=1, profile binary
+and artifact/report inputs enabled. Guard calibration is an optional diagnostic,
+not a corpus input; it was not enabled. The profile input is the baseline release binary.
+
+BEFORE, unchanged requested selector -count=1 -timeout 3h:
+Test wall 554.21 s; command wall 557.451 s; one test unit, longest 554.21 s.
+Load before: 2.79 5.49 2.84 1/142 4720
+Load after: 1.53 2.15 2.28 1/140 5214
+Go formatting 23.893 s (audit subprocess 27.623 s, go test wrapper 28.805 s).
+Initial Node 24.708 s; release approximately 31.05 s; JS backend approximately 25.68 s.
+ASan/UBSan five simultaneous corpus chunks: longest approximately 77.32 s;
+LeakSanitizer five simultaneous chunks: longest approximately 78.44 s.
+Native C compiler main invocations approximately 4.76 s release and 6.67 s sanitized,
+plus runtime compilation/linking. Go benchmark driver build approximately 5.81 s.
+Benchmark rounds (release / Node / Go):
+  27.180 / 19.752 / 26.213 s
+  33.261 / 21.644 / 26.348 s
+  26.917 / 21.889 / 29.691 s
+Comparisons, protocol encoding, loading/lowering and artifact writes account for
+the remaining parent time; these are not separately instrumented in unchanged code.
+No mutants execute under the requested baseline selector; mutant tests are separate
+and are included in the complete package run.
+
+AFTER, full package -json -count=1 -parallel=1 -timeout 3h:
+Port observed whole wall from CONT to PASS: 1020.227 s.
+This includes sibling scheduling during parallel subtest barriers in the full package;
+the serial unit census is for 4 CPU allocation per unit, not a throughput benchmark.
+Whole package command wall: 1123.618 s.
+Agreement shards: 518; longest 24.07 s.
+Benchmark units: 1554 (three rounds per shard); longest 13.61 s.
+Every individual time is in SPLIT-RESULTS.csv, including cold and warm builds.
+Load before: 0.03 0.55 1.46 1/170 57612
+Load after: 1.95 1.99 1.95 1/181 94916
+Union: 3365 cases, 3365 unique case IDs, exact equality with unsplit enumeration.
+The code verifies bounds, count, identity/text and uniqueness before selection.
+ADAMIC_TEST_SHARD=i/n is zero-based ordinal modulo n; unset runs every shard.
+Each agreement shard checks Go, Node source, release native, ASan/UBSan, JS backend
+and LeakSanitizer. Sanitizers follow a first wave of the other sides to reduce heap
+contention. Every benchmark round compares each of release, Node and Go to Go.
+
+COLD BUILD UNITS (fresh Go and native action-cache directories):
+The 10.71 s oracle row follows test-binary compilation and shares its Go standard
+library actions. An independent empty-Go-cache oracle build of the identical
+callback command took 55.333 s, exit 0; this exceeds 30 s and is a separate build
+input. Its load before/after was 1.09 1.77 1.88 1/179 94929 / 2.70 2.05 1.97 1/178 96423.
+
+Go test binary, go test -c: 171.332 s. This exceeds 30 s and is an input
+build, not a test logic unit; its compiler/checker dependencies belong to that build.
+build-go-oracle: 10.71 s.
+build-lowered-port: 1.05 s.
+build-release: 7.07 s.
+build-sanitized: 12.04 s.
+Functions: buildJSONGoOracle; buildJSONLoweredPort; buildJSONReleasePort(source);
+buildJSONSanitizedPort(source). Each callback is func(dir string) error, with
+jsonGoOracleInputs/jsonLoweredPortInputs/jsonNativePortInputs beside it, including
+repo-relative files/directories, flags/environment, generated C digest and toolchain.
+jsonBuildUnit calls once into a parent-owned temporary product directory, shared by
+all children. No package disk cache. internal/buildcache was absent on main; the
+Product adapter is a one-line replacement documented beside the invocation.
+
+FAILURE PROOF:
+TestJSONPortShardDisagreement planted case-17.json byte 4; exactly shard-0001 caught
+it through the production comparisonError, and the failure names shard and case.
+Missing, repeated and out-of-range union mutations are rejected by TestJSONPortShardUnion.
+A real ADAMIC_TEST_SHARD=113/518 run passed; agreement shard-0113 took 24.27 s.
+A filtered single-child run also passed with shared inputs prepared and artifacts enabled.
+
+Package test events: pass=2125, fail=0, skip=0.
+gofmt, go vet and git diff --check passed. An environment refresh interrupted an
+earlier package run; the reported run was restarted and completed. A baseline
+scratch-space failure was discarded before the successful unchanged measurement.
