@@ -18,7 +18,7 @@ func TestOverloadContractRulings(t *testing.T) {
 		{"serializer", "node/arg\n", "overload 2 of setSerializerContextAnd parameter cb"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
-			path, pathErr := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/overload_"+test.name+"_contract.a"))
+			path, pathErr := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/overload_contracts/"+test.name+".a"))
 			if pathErr != nil {
 				t.Fatal(pathErr)
 			}
