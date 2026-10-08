@@ -100,6 +100,39 @@ ordinary counted prototype ownership would leak: an object points to its prototy
 and a data field on that prototype points back to the object. A prototype-chain-only
 cycle check cannot detect this ownership cycle and must not reject it as JavaScript's
 cyclic-chain TypeError. Graph-region integration is absent on this compiler base.
-A direction question is pending before changing this rule. That worker's unlanded
-branch was inspected, not merged. Step 21 `origin/codex/scout-exceptions` remains a
+The amended ruling keeps all eight debug-site refusals exactly; no prototype link
+is admitted. Runtime commit 0e2af455 was explicitly requested and cherry-picked as
+bd59c092c, following OrdinaryToPrimitive commit 12cc2e52 as a44503796. These are
+the first commits of the runtime-dependency batch, after the already pushed lowering
+slices. Neither dependency branch was merged. Step 21 `origin/codex/scout-exceptions` remains a
 separate unlanded dependency for generalized error identity/throw support.
+
+## Catchable error slice and dependency block
+
+String.repeat now guards JavaScript count and length failures before calling the
+native helper. It throws catchable Errors named RangeError, with Node's diagnostic
+(including the original fractional count), through the existing exception cleanup.
+Both receiver and count evaluate once; finally runs after a caught failure. Adamic
+inserted checks and allocation failures remain terminal. Other conversion/property
+error sites and generalized exception identity remain unfinished.
+
+The new catchable_errors.a fixture covers negative/fractional counts, NaN, infinity,
+the UTF-16 length limit, empty strings and evaluation order. Its mutant changes
+RangeError names to Error; Node output detects the mutation in both backends.
+Sanitized and release native and the JavaScript backend are compared with Node.
+Focused lower checks pass (ruling6-lower.log). A sandboxed oracle retry failed
+because LeakSanitizer cannot run under ptrace; its first unsandboxed retry reused
+those cached failures. The final ADAMIC_GATE_UNCACHED=1 focused run outside ptrace
+passes all four tests, with leak checks and both mutants caught
+(runtime-merge-oracle-uncached.log). Counts refresh passes (ruling6-counts.log).
+Logs are under /tmp/object-semantics.
+
+The runtime-dependency test command selects TestOrdinaryToPrimitive, its mutants
+and protocol guards, TestPrototypeNodeResearch and TestPrototypeDebugSiteRefusals.
+It is blocked before compilation: internal/leakcheck is missing from this area base.
+That shared package was introduced by f6eef5df9 and updated by a29a1b9be; those
+commits also touch unrelated and protected files and have not been cherry-picked.
+The prototype graph control also requires missing graph_regions.h. These are
+dependencies, not passed checks. The lowering still uses its existing IR conversion
+loop; wiring it to adamic_ordinary_to_primitive remains pending. No claim is made
+that the C runtime contract is yet used by generated conversion code.

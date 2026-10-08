@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	for _, path := range []string{"cached_own", "ordinary_primitive"} {
+	for _, path := range []string{"cached_own", "ordinary_primitive", "catchable_errors"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
@@ -169,4 +169,53 @@ func TestObjectAccessorReadinessRemainsTerminal(t *testing.T) {
 	if difference := disagreement(got, releasedUncached(t, program)); difference != "" {
 		t.Fatalf("release: %s", difference)
 	}
+}
+
+func TestObjectCatchableErrors(t *testing.T) {
+	t.Parallel()
+	objectSemanticsNode(t, "catchable_errors")
+}
+
+// Wrong exception identity is a clean miscompile; only source Node catches it.
+func TestObjectCatchableErrorNameMutant(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/object_semantics/catchable_errors.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	index := len(program.Strings)
+	program.Strings = append(program.Strings, "Error")
+	changed := 0
+	mutate := func(value ir.Expression) ir.Expression {
+		if error, ok := value.(ir.MakeError); ok && error.Name != nil {
+			error.Name = ir.StringConstant{Index: index}
+			changed++
+			return error
+		}
+		return value
+	}
+	for at := range program.Functions {
+		mutateStringExpressions(reflect.ValueOf(&program.Functions[at].Body).Elem(), mutate)
+	}
+	if changed == 0 {
+		t.Fatal("no checked library error mutated")
+	}
+	want := onNode(t, path)
+	got, binary := nativelyUncached(t, program)
+	if got.exitCode != 0 || len(got.stderr) != 0 {
+		t.Fatalf("mutant must finish: %+v", got)
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+	if difference := disagreement(want, got); difference != "stdout differs" {
+		t.Fatalf("native mutant escaped: %s", difference)
+	}
+	if difference := disagreement(want, onJavaScriptBackend(t, program)); difference != "stdout differs" {
+		t.Fatalf("JavaScript mutant escaped: %s", difference)
+	}
+	t.Logf("Node caught %d incorrectly named exceptions; native exited zero without leaks", changed)
 }

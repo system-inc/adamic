@@ -1,0 +1,16 @@
+// Reduced from formatting helpers that catch a conversion/property failure.
+let order = '';
+function receiver(): string { order += 'receiver '; return 'x'.repeat(2); }
+function count(value: number): number { order += 'count '; return value; }
+function show(n: number): void {
+    order = '';
+    try {
+        console.log(`${receiver().repeat(count(n)).length}`);
+    } catch (error) {
+        if (error instanceof Error) console.log(`${error.name}: ${error.message}`);
+    } finally { console.log(order); }
+}
+for (const n of [-1, -1.1, -0.9, Infinity, -Infinity, NaN, 268435445, 3]) show(n);
+try { console.log(''.repeat(Infinity)); }
+catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+console.log(`${''.repeat(536870889).length}`);

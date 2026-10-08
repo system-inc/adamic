@@ -595,9 +595,12 @@ type (
 	// trimStart, trimEnd, at (a string, or undefined: a null reference), replace and replaceAll
 	// with a string pattern, toUpperCase and toLowerCase, and normalize (its form filled in). Arguments are as written; lowering filled in any default.
 	StringCall struct {
-		Method    string
-		Value     Expression
-		Arguments []Expression
+		// FailuresChecked means a generated helper has already thrown JavaScript
+		// errors through ordinary IR guards before reaching this runtime call.
+		FailuresChecked bool
+		Method          string
+		Value           Expression
+		Arguments       []Expression
 	}
 
 	// CodePoints is [...string]: an array of its code points, each a string.
