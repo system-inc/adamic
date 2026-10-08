@@ -1,0 +1,186 @@
+github.com/system-inc/adamic/stage1/cohere/lint	TestEmittedJavaScriptMismatch	435.29	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownUnicodeWidths (setup)	424.38	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownTableLayout (setup)	419.30	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownCodeBlockLayout (setup)	418.07	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownWhitespaceLayout (setup)	416.83	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownLeafComposition (setup)	416.35	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownStructureLayout (setup)	414.58	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownQuoteLayout (setup)	412.86	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownRootLayout (setup)	411.19	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestUpstreamRepositoryCorpusParity	369.13	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestExpressionsAgainstGoAndPrettier	332.02	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownListLayout (setup)	327.95	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownHTMLBlockLayout (setup)	319.30	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestTokenizerEvents (setup)	316.55	pass
+github.com/system-inc/adamic/bridge/tsgo	TestBridge	312.13	pass
+github.com/system-inc/adamic/stage1/cohere/cssnumbers	TestCSSNumbers (setup)	260.26	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMdastIdentifierScalars	259.54	pass
+github.com/system-inc/adamic/stage1/cohere/cssstrings	TestCSSStrings (setup)	225.97	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownASTPreprocessing (setup)	225.16	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestAcceptanceGrammar	224.96	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownSourceDecoding (setup)	204.15	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestNativeMdastConstruction (setup)	181.64	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants/text_start	167.76	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants/expression_kind	167.28	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants/namespace_kind	166.64	pass
+github.com/system-inc/adamic/internal/oracle	TestLoopCountersAgreeWithNode	143.16	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestAcceptanceMutants/catch-initializer	138.08	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants/type_argument_comma	130.26	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants/self_closing_kind	127.61	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants/whitespace_flag	125.06	pass
+github.com/system-inc/adamic/internal/native	TestWASI (setup)	124.83	pass
+github.com/system-inc/adamic/stage1/typescript/scanner	TestScannerAgreesWithTypescriptGo (setup)	123.26	pass
+github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle	TestCompileProfiles	121.01	pass
+github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation	TestCompileProfiles	118.76	pass
+github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining	TestCompileProfiles	117.65	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestThePortParsesAsGoCohereDoes/Go_agreement	115.36	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestGeneratedExpressionsAgree	115.14	pass
+github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias	TestCompileProfiles	114.02	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	TestCommentsMatchCohere	104.11	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	TestCommentMutants/collect_list_interiors.ts	95.93	pass
+github.com/system-inc/adamic/internal/flow	TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95	94.53	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestAdditionalJSONBoundaries	93.50	pass
+github.com/system-inc/adamic/stage1/cohere/yaml	TestComposeMatchGo	91.00	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestSingleFileStdoutDriver	90.76	pass
+github.com/system-inc/adamic/stage1/cohere/lint/regex	TestShapeFixtures (setup)	90.53	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers	TestHelpersMatchCohere	90.40	pass
+github.com/system-inc/adamic/stage1/cohere/yaml	TestFormatterMatchesGo	89.14	pass
+github.com/system-inc/adamic/internal/oracle	TestCountsAreRecorded (setup)	88.58	pass
+github.com/system-inc/adamic/cloud	TestLintWaveCheck	85.35	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownListLayout/unordered_marker	82.07	pass
+github.com/system-inc/adamic/internal/flow	TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95	80.02	pass
+github.com/system-inc/adamic/internal/flow	TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95	79.99	pass
+github.com/system-inc/adamic/internal/fuzz	TestGeneratedProgramsCheckAndLower	79.28	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestThreePortMutantsAreCaught/missing_colon_space	78.89	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestThreePortMutantsAreCaught/wrong_filename_parser	76.09	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestThreePortMutantsAreCaught/missing_final_newline	75.66	pass
+github.com/system-inc/adamic/stage1/cohere/graphql/printer	TestPrinterWhitespaceGap	74.07	pass
+github.com/system-inc/adamic/stage1/cohere/graphql/printer	TestPrinterAsGoCohere/narrow	73.70	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo/natively_and_on_Node,_as_Go_cohere	67.90	pass
+github.com/system-inc/adamic/internal/fuzz	TestUndefinedNumbersShapes	65.68	pass
+github.com/system-inc/adamic/stage1/cohere/suppression	TestThePortParsesAsGoCohereDoes/catches_a_directive_word_in_any_case	59.76	pass
+github.com/system-inc/adamic/cmd/adamic-test262	TestParallelCachedMatchesSerial	58.62	pass
+github.com/system-inc/adamic/stage1/cohere/suppression	TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere	58.60	pass
+github.com/system-inc/adamic/internal/flow	TestFlowProgram____oracle_testdata_normalize_coverage_limit_a_5b4a20c3aad5	58.41	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	TestCommentMutants/can_begin_at.ts	58.39	pass
+github.com/system-inc/adamic/stage1/cohere/suppression	TestThePortParsesAsGoCohereDoes/catches_an_enable_on_the_block's_own_line_closing_it	57.95	pass
+github.com/system-inc/adamic/stage1/cohere/graphql	TestThePortParsesAsGoCohereDoes/catches_an_escaped_triple_quote_keeping_its_backslash	57.08	pass
+github.com/system-inc/adamic/stage1/cohere/graphql	TestThePortParsesAsGoCohereDoes/catches_the_first_line's_indent_common	56.71	pass
+github.com/system-inc/adamic/stage1/cohere/values	TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere	56.57	pass
+github.com/system-inc/adamic/internal/flow	TestFlowProgram____oracle_testdata_user_iterators_a_c4fa97d41bf3	55.30	pass
+github.com/system-inc/adamic/stage1/cohere/graphql	TestThePortParsesAsGoCohereDoes/catches_a_lone_surrogate_written_as_itself	55.28	pass
+github.com/system-inc/adamic/stage1/cohere/graphql	TestThePortParsesAsGoCohereDoes/catches_a_spread's_absent_arguments_written	55.13	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMemberNameRejection	55.13	pass
+github.com/system-inc/adamic/stage1/cohere/graphql	TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere	54.75	pass
+github.com/system-inc/adamic/stage1/cohere/suppression	TestThePortParsesAsGoCohereDoes/catches_only_space_or_tab_ending_a_directive_word	54.74	pass
+github.com/system-inc/adamic/stage1/cohere/graphql	TestThePortParsesAsGoCohereDoes/catches_a_no-break_space_ignored	54.69	pass
+github.com/system-inc/adamic/stage1/cohere/values	TestThePortParsesAsGoCohereDoes/catches_alphaNum's_uppercase_stopping_at_Y	54.55	pass
+github.com/system-inc/adamic/stage1/cohere/graphql	TestThePortParsesAsGoCohereDoes/catches_a_[_in_a_name	53.72	pass
+github.com/system-inc/adamic/stage1/cohere/values	TestThePortParsesAsGoCohereDoes/catches_?_not_in_a_unicode_range	53.11	pass
+github.com/system-inc/adamic/stage1/cohere/graphql	TestThePortParsesAsGoCohereDoes/catches_no_directives_an_empty_list	53.10	pass
+github.com/system-inc/adamic/stage1/cohere/suppression	TestThePortParsesAsGoCohereDoes/catches_a_)_opening_a_regular_expression	52.84	pass
+github.com/system-inc/adamic/stage1/cohere/graphql	TestThePortParsesAsGoCohereDoes/catches_a_CRLF_counted_as_two_lines	52.80	pass
+github.com/system-inc/adamic/stage1/cohere/formatfiles	TestThePortParsesAsGoCohereDoes/catches_a_quote_passed_by_the_quoting's_fast_path	52.64	pass
+github.com/system-inc/adamic/stage1/cohere/graphql	TestThePortParsesAsGoCohereDoes/catches_the_sign_bit_not_reached	52.39	pass
+github.com/system-inc/adamic/stage1/cohere/formatfiles	TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere	52.38	pass
+github.com/system-inc/adamic/internal/flow	TestFlowProgram____oracle_testdata_node_buffer_utf16_a_2529b6f186b9	52.35	pass
+github.com/system-inc/adamic/stage1/cohere/graphql	TestThePortParsesAsGoCohereDoes/catches_U+DFFF_no_trailing_surrogate	52.06	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants/attribute_list	51.95	pass
+github.com/system-inc/adamic/stage1/cohere/yaml	TestComposeMutants/implicit_key_limit_skipped	51.90	pass
+github.com/system-inc/adamic/stage1/cohere/values	TestThePortParsesAsGoCohereDoes/catches_alphaNum's_digits_stopping_at_8	51.89	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants/text_payload	51.83	pass
+github.com/system-inc/adamic/stage1/cohere/values	TestThePortParsesAsGoCohereDoes/catches_a_word_ending_at_=	51.64	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants/child_order	51.51	pass
+github.com/system-inc/adamic/stage1/cohere/formatfiles	TestThePortParsesAsGoCohereDoes/catches_a_link_round_a_loop_taken_for_nothing	51.42	pass
+github.com/system-inc/adamic/stage1/cohere/graphql	TestThePortParsesAsGoCohereDoes/catches_the_unexpected_token_not_the_one_named	51.29	pass
+github.com/system-inc/adamic/stage1/cohere/formatfiles	TestThePortParsesAsGoCohereDoes/catches_a_.prettierignore_link_to_nothing_let_through	50.73	pass
+github.com/system-inc/adamic/stage1/cohere/graphql/printer	TestPrinterAsGoCohere/defaults	50.59	pass
+github.com/system-inc/adamic/stage1/cohere/formatfiles	TestThePortParsesAsGoCohereDoes/catches_an_extension_lowercased_as_JavaScript_does	50.51	pass
+github.com/system-inc/adamic/stage1/cohere/graphql/printer	TestPrinterAsGoCohere/tight	50.34	pass
+github.com/system-inc/adamic/stage1/cohere/values	TestThePortParsesAsGoCohereDoes/catches_a_space_compared_with_the_comma_token's_kind	50.06	pass
+github.com/system-inc/adamic/stage1/cohere/formatfiles	TestThePortParsesAsGoCohereDoes/catches_the_declined_extensions_sorted_by_UTF-16_unit	50.01	pass
+github.com/system-inc/adamic/stage1/cohere/values	TestThePortParsesAsGoCohereDoes/catches_next_starting_at_0,_not_NaN	49.64	pass
+github.com/system-inc/adamic/stage1/cohere/graphql	TestThePortParsesAsGoCohereDoes/catches_FRAGMENT_VARIABLE_DEFINITION_no_location	49.30	pass
+github.com/system-inc/adamic/stage1/cohere/values	TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped	48.80	pass
+github.com/system-inc/adamic/stage1/cohere/values	TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped	48.65	pass
+github.com/system-inc/adamic/cmd/adamic-test262	TestLargeCompilerOutputIsComplete	48.60	pass
+github.com/system-inc/adamic/stage1/cohere/formatfiles	TestThePortParsesAsGoCohereDoes/catches_DEL_passed_by_the_quoting's_fast_path	48.47	pass
+github.com/system-inc/adamic/internal/fuzz	TestOverridesShapesAndLower	47.27	pass
+github.com/system-inc/adamic/stage1/cohere/formatfiles	TestThePortParsesAsGoCohereDoes/catches_a_.git_link_to_nothing_taken_for_a_repository	47.04	pass
+github.com/system-inc/adamic/stage1/cohere/graphql	TestThePortParsesAsGoCohereDoes/catches_a_leading_zero's_error_at_the_number's_start	47.00	pass
+github.com/system-inc/adamic/stage1/cohere/graphql	TestThePortParsesAsGoCohereDoes/catches_a_G_in_a_hex_escape	46.09	pass
+github.com/system-inc/adamic/stage1/cohere/formatfiles	TestThePortParsesAsGoCohereDoes/catches_Adamic_files_declined_instead_of_held_back	46.02	pass
+github.com/system-inc/adamic/stage1/cohere/values	TestThePortParsesAsGoCohereDoes/catches_the_tokenizer's_url_argument_ignoring_case	45.86	pass
+github.com/system-inc/adamic/stage1/cohere/graphql	TestThePortParsesAsGoCohereDoes/catches_a_byte_order_mark_not_ignored	45.36	pass
+github.com/system-inc/adamic/stage1/cohere/values	TestThePortParsesAsGoCohereDoes/catches_isColor's_digits_stopping_at_8	45.26	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo/catches_a_linked_exclude_file_refused	45.17	pass
+github.com/system-inc/adamic/stage1/cohere/formatfiles	TestThePortParsesAsGoCohereDoes/catches_a_trailing_dot_no_extension	45.00	pass
+github.com/system-inc/adamic/stage1/cohere/formatfiles	TestThePortParsesAsGoCohereDoes/catches_a_bare_.a_name_held_back_as_Adamic	44.97	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo/catches_precedence_read_from_the_root_down	44.69	pass
+github.com/system-inc/adamic/internal/unicodeproperties	TestCanonicalizeUnicodeNode/4208-4224-4efe9aef49a1	44.46	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo/catches_R2_a_path_never_cleaned	44.42	pass
+github.com/system-inc/adamic/stage1/cohere/formatfiles	TestThePortParsesAsGoCohereDoes/catches_uppercase_.A_held_back_as_Adamic	44.08	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo/catches_entering_from_below_the_root_forgetting_the_files_above	43.73	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo/catches_R2_[[:xdigit:]]_taking_G	43.61	pass
+github.com/system-inc/adamic/internal/fuzz	TestReduceKeepsTheSignature	43.59	pass
+github.com/system-inc/adamic/stage1/cohere/suppression	TestThePortParsesAsGoCohereDoes/catches_an_interpolation_closing_on_an_object's_brace	42.93	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo/catches_R2_[[:upper:]]_one_letter_short	42.69	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo/catches_**_matching_one_segment_too_few	42.52	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	TestCommentMutants/sort_by_position.ts	42.33	pass
+github.com/system-inc/adamic/stage1/cohere/values	TestThePortParsesAsGoCohereDoes/catches_alphaNum_taking__	42.18	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo/catches_%q_in_uppercase_hexadecimal	41.90	pass
+github.com/system-inc/adamic/stage1/cohere/values	TestThePortParsesAsGoCohereDoes/catches_unicodeRange's_digits_stopping_at_8	41.67	pass
+github.com/system-inc/adamic/stage1/cohere/formatfiles	TestThePortParsesAsGoCohereDoes/catches_a_link_to_nothing_taken_for_nothing	41.27	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo/catches_R2_an_escaped_range_end_read_as_the_backslash	41.01	pass
+github.com/system-inc/adamic/stage1/cohere/values	TestThePortParsesAsGoCohereDoes/catches_an_operator's_sourceIndex_its_index	40.96	pass
+github.com/system-inc/adamic/internal/unicodeproperties	TestCanonicalizeUnicodeNode/4880-4896-7c09eff29e7c	40.75	pass
+github.com/system-inc/adamic/stage1/cohere/values	TestThePortParsesAsGoCohereDoes/catches_a_number's_unit_taken_off_its_end	40.65	pass
+github.com/system-inc/adamic/internal/oracle	TestNativeAgreesWithNode/internal/oracle/testdata/normalize_coverage_long.a	40.32	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower	40.16	pass
+github.com/system-inc/adamic/stage1/cohere/suppression	TestThePortParsesAsGoCohereDoes/catches_a_vertical_tab_skipped_as_space	39.98	pass
+github.com/system-inc/adamic/internal/fuzz	TestFuzzerSharesRuntimeLibrary	39.62	pass
+github.com/system-inc/adamic/stage1/cohere/graphql	TestThePortParsesAsGoCohereDoes/catches_an_invalid_escape_read_as_nothing	39.53	pass
+github.com/system-inc/adamic/stage1/cohere/values	TestThePortParsesAsGoCohereDoes/catches_the_url_argument_check_ignoring_case	39.43	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo/catches_R2_a_trailing_tab_trimmed_as_a_space	39.32	pass
+github.com/system-inc/adamic/stage1/cohere/values	TestThePortParsesAsGoCohereDoes/catches_the_strict_calc_check_ignoring_case	39.03	pass
+github.com/system-inc/adamic/stage1/cohere/selector	TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere	38.32	pass
+github.com/system-inc/adamic/internal/unicodeproperties	TestCanonicalizeUnicodeNode/4464-4480-d5cd9927e1ac	38.12	pass
+github.com/system-inc/adamic/internal/unicodeproperties	TestNodeAgrees	37.66	pass
+github.com/system-inc/adamic/internal/unicodeproperties	TestCanonicalizeUnicodeNode/4688-4704-6974441563ab	37.52	pass
+github.com/system-inc/adamic/internal/flow	TestFlowProgram____oracle_testdata_library_map_set_iterator_number_hash_a_1fa7ab647356	37.35	pass
+github.com/system-inc/adamic/internal/unicodeproperties	TestCanonicalizeUnicodeNode/4320-4336-8b84862c1c36	37.27	pass
+github.com/system-inc/adamic/stage1/cohere/suppression	TestThePortParsesAsGoCohereDoes/catches_a_string_running_past_its_line	37.03	pass
+github.com/system-inc/adamic/internal/native	TestParserHasNoUnusedOptionalMethodThunks	36.86	pass
+github.com/system-inc/adamic/stage1/cohere/suppression	TestThePortParsesAsGoCohereDoes/catches_a_directive_covering_the_finding_about_itself	36.72	pass
+github.com/system-inc/adamic/stage1/cohere/values	TestThePortParsesAsGoCohereDoes/catches_--_a_word_only_before_more_text	36.57	pass
+github.com/system-inc/adamic/stage1/cohere/yaml	TestCSTMatchesGo	35.79	pass
+github.com/system-inc/adamic/stage1/cohere/suppression	TestThePortParsesAsGoCohereDoes/catches_a_suffix_match_off_a_/_boundary	35.74	pass
+github.com/system-inc/adamic/stage1/cohere/values	TestThePortParsesAsGoCohereDoes/catches_alphaNum's_lowercase_stopping_at_y	35.21	pass
+github.com/system-inc/adamic/stage1/cohere/mediaquery	TestThePortParsesAsGoCohereDoes/catches_U+2000_not_whitespace	34.83	pass
+github.com/system-inc/adamic/internal/fresh	TestFreshWrites____oracle_testdata_node_fs_file_mkdir_a_b27dc23fc728	34.58	fail
+github.com/system-inc/adamic/internal/unicodeproperties	TestCanonicalizeUnicodeNode/4192-4208-1b5da984e430	34.50	pass
+github.com/system-inc/adamic/stage1/cohere/suppression	TestThePortParsesAsGoCohereDoes/catches_Go_whitespace_instead_of_JavaScript_whitespace	34.40	pass
+github.com/system-inc/adamic/internal/fresh	TestFreshWrites____oracle_testdata_node_fs_file_write_buffer_a_bab39c7b6026	34.34	fail
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/host/11_setModifiedTime.a/native	34.19	pass
+github.com/system-inc/adamic/internal/unicodeproperties	TestCanonicalizeUnicodeNode/4752-4768-8228ed08c214	34.08	pass
+github.com/system-inc/adamic/stage1/cohere/lint/regex	TestFixedPatterns	33.90	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	TestCommentMutants/all.ts	33.33	pass
+github.com/system-inc/adamic/internal/unicodeproperties	TestCanonicalizeUnicodeNode/4240-4256-a4c37161a774	33.28	pass
+github.com/system-inc/adamic/stage1/cohere/graphql/printer	TestPrinterAsGoCohere/tabs	33.27	pass
+github.com/system-inc/adamic/internal/oracle	TestNativeAgreesWithNode/internal/oracle/testdata/bitwise_sweep.a	32.91	pass
+github.com/system-inc/adamic/internal/fresh	TestFreshWrites____oracle_testdata_node_buffer_utf8_a_48a5e29c1ac9	32.86	fail
+github.com/system-inc/adamic/stage1/cohere/suppression	TestThePortParsesAsGoCohereDoes/catches_a_regular_expression's_class_ignored	32.70	pass
+github.com/system-inc/adamic/internal/fresh	TestFreshWrites____oracle_testdata_node_buffer_writes_a_04c9d4399aec	32.57	fail
+github.com/system-inc/adamic/internal/unicodeproperties	TestCanonicalizeUnicodeNode/4576-4592-4c6ebf0bb611	32.51	pass
+github.com/system-inc/adamic/internal/unicodeproperties	TestCanonicalizeUnicodeNode/4288-4304-ebe9c86bf8a3	32.22	pass
+github.com/system-inc/adamic/stage1/cohere/suppression	TestThePortParsesAsGoCohereDoes/catches_a_//_file-scope_disable_honored	32.06	pass
+github.com/system-inc/adamic/stage1/cohere/yaml	TestComposeMutants/block_mapping_pair_lost	31.94	pass
+github.com/system-inc/adamic/internal/fresh	TestFreshWrites____oracle_testdata_node_buffer_encodings_a_ff90fb91f28c	31.52	fail
+github.com/system-inc/adamic/internal/unicodeproperties	TestCanonicalizeUnicodeNode/4976-4992-f1644e29ac7b	31.46	pass
+github.com/system-inc/adamic/internal/oracle	TestNativeAgreesWithNode/internal/oracle/testdata/normalize_coverage_limit.a	31.31	pass
+github.com/system-inc/adamic/internal/oracle	TestNativeAgreesWithNode/internal/oracle/testdata/user_iterators.a	30.95	pass
+github.com/system-inc/adamic/internal/fresh	TestFreshWrites____oracle_testdata_node_buffer_finalized_a_9c919f6e11f6	30.76	fail
+github.com/system-inc/adamic/internal/unicodeproperties	TestCanonicalizeUnicodeNode/4960-4976-4729fbbe3463	30.47	pass
+github.com/system-inc/adamic/internal/unicodeproperties	TestCanonicalizeUnicodeNode/4352-4368-2aab9b6512d0	30.33	pass
+github.com/system-inc/adamic/stage1/cohere/static_single_assignment	TestThePortMakesWhatGoCohereMakes/natively_and_on_Node,_as_Go_cohere	30.20	pass
+github.com/system-inc/adamic/internal/flow	TestFlowProgram____oracle_testdata_long_chain_a_2c0a4de29dc2	30.15	pass
