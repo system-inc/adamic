@@ -1,0 +1,11 @@
+const fs=require('fs'),path=require('path'),ts=require('/tmp/lane5-c-original/lib/typescript.js');
+const home=path.resolve(__dirname,'../..'),member=require('../../original-members.json').members.find(m=>m.rank===113),c=require('/tmp/lane5-c-carrier-declarations.json'),defs=new Map();
+const parse=s=>ts.createSourceFile('declaration.a',s,ts.ScriptTarget.Latest,true);
+function named(name){if(defs.has(name))return;const d=c[name];if(!d)throw Error('unknown '+name);if(d.kind==='EnumDeclaration'){defs.set(name,'const enum '+name+' {'+Object.entries(d.values).map(([k,v])=>k+'='+v).join(',')+'}');return;}if(d.kind==='TypeAliasDeclaration'){defs.set(name,d.text);visit(parse(d.text).statements[0].type);return;}if(name==='ModifierToken'){const p=parse(d.text).statements[0].typeParameters[0];defs.set(name,'interface ModifierToken<'+p.getText()+'> {readonly value:number;readonly kind:'+p.name.text+';}');visit(p.constraint);return;}throw Error('unhandled original carrier '+name);}
+function visit(t){if(ts.isTypeReferenceNode(t)){if(ts.isIdentifier(t.typeName))named(t.typeName.text);else named(t.typeName.left.getText());for(const a of t.typeArguments||[])visit(a);return;}ts.forEachChild(t,n=>{if(ts.isTypeNode(n))visit(n);});}
+named('Modifier');
+const prefix='// Original Modifier aliases, generic constraint and numeric tags; adjacent token payload reduced.\n'+[...defs.values()].join('\n')+'\ninterface OriginalMember<T> {'+member.declarations[0].text+'}\ninterface Base {readonly items:unknown;}\ninterface Target {readonly items:Modifier[];}\nfunction probe(value:Base):void {const result=(value as Target).items;const incoming:AbstractKeyword={value:1,kind:SyntaxKind.AbstractKeyword};const witnessResult=result.push(incoming);console.log(String(witnessResult));}\n';
+const dir=path.join(home,'families','rank-113');fs.mkdirSync(dir,{recursive:true});
+fs.writeFileSync(path.join(dir,'good.a'),(prefix+'const seed:AbstractKeyword={value:1,kind:SyntaxKind.AbstractKeyword};probe({items:[seed]});\n').replace(/\r\n/g,'\n'));
+fs.writeFileSync(path.join(dir,'wrong-element.a'),(prefix+'probe({items:[{value:"bad",kind:128}]});\n').replace(/\r\n/g,'\n'));
+console.log('Prepared rank 113 with all original Modifier aliases, generic constraint and enum names/values.');

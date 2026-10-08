@@ -1,10 +1,10 @@
 {
-  "certifiedPairs": 256,
-  "certifiedCandidateReads": 700,
-  "mutantBackendComparisons": 512,
-  "sourceVerifiedFixtures": 512,
-  "codeBoundaryPairs": 21,
-  "uncoveredPairs": 629,
+  "certifiedPairs": 267,
+  "certifiedCandidateReads": 730,
+  "mutantBackendComparisons": 534,
+  "sourceVerifiedFixtures": 534,
+  "codeBoundaryPairs": 22,
+  "uncoveredPairs": 618,
   "finalOracle": {
     "command": "go test ./internal/oracle -run '^TestCheckedViewCallableShareC($|Mutants$|Array(Intrinsics|Mutants)$|CodeBoundaries$|Counts$)' -count=1 -timeout=30m -v",
     "result": "PASS",
@@ -62,6 +62,19 @@
     },
     "countsUpdateSeconds": 2.32,
     "countsVerifySeconds": 2.381,
-    "requiredCountsSeconds": 45.387
+    "requiredCountsSeconds": 45.387,
+    "batch02": {
+      "newCertifiedPairs": 11,
+      "newCertifiedCandidateReads": 30,
+      "mutantBackendComparisons": 22,
+      "oracleResult": "PASS",
+      "seconds": 11.873,
+      "log": "/tmp/lane5-c-step09-b02-final2.log",
+      "ownCountsUpdateSeconds": 2.499,
+      "ownCountsVerifySeconds": 2.656,
+      "codeBoundaryRanks": [
+        125
+      ]
+    }
   }
 }

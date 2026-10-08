@@ -1,0 +1,12 @@
+// Original Array.pop receiver and declaration; adjacent payload carriers reduced.
+type CodeBlock = ExceptionBlock | LabeledBlock | SwitchBlock | LoopBlock | WithBlock;
+interface ExceptionBlock {readonly value:number;readonly kind:0;}
+interface LabeledBlock {readonly value:number;readonly kind:4;}
+interface SwitchBlock {readonly value:number;readonly kind:2;}
+interface LoopBlock {readonly value:number;readonly kind:3;}
+interface WithBlock {readonly value:number;readonly kind:1;}
+interface OriginalMember<T> {pop(): T | undefined;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:CodeBlock[];}
+function probe(value:Base):void {const blockStack=(value as Target).items;blockStack!.pop();console.log("completed");}
+probe({items:["bad"]});

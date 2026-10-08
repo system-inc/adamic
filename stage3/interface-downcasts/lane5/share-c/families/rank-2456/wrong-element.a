@@ -1,0 +1,7 @@
+// Original Array.pop receiver and declaration; adjacent payload carriers reduced.
+interface Symbol {readonly value:number;}
+interface OriginalMember<T> {pop(): T | undefined;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Symbol[];}
+function probe(value:Base):void {const parameters=(value as Target).items;parameters.pop();console.log("completed");}
+probe({items:["bad"]});

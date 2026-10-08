@@ -1,8 +1,8 @@
-Built: step 09 adds 10 certified pairs / 27 ranked reads; cumulative share c is 256 pairs / 700 reads. Fixtures, tests, evidence and own counts only.
-Commits: prior delivery 6e2e4878; this batch is committed and pushed only to codex/views-callables-c. Delivery SHA is in the final response.
-Commands and outputs: scoped oracle PASS 10.987s, source verifier PASS 256 pairs / 512 fixtures, context verifier PASS five headers, own counts PASS. Required global updater still fails 60 inherited fixtures.
-Mutants: ten Array.push write-certificate omissions caught in native and JavaScript, 20 executed backend comparisons; every mutant exits 0 with stdout 2 instead of the pinned exit 70.
-Uncovered: six new code-needing pairs, ranks 2, 8, 56, 65, 80, 389; 31 Set pairs / 107 reads remain handed off under 058635b9. No compiler/runtime code changed.
+Built: 11 further pairs / 30 ranked reads certified; cumulative share c 267 pairs / 730 reads. Fixtures, tests, own counts and evidence only.
+Commits: follows bd953abe, pushed only to codex/views-callables-c; delivery SHA is in the final response.
+Commands and outputs: scoped oracle PASS 11.873s; independent source verifier PASS 267 pairs / 534 fixtures; own counts update PASS 2.499s and verification PASS 2.656s.
+Mutants: ten pop element-check omissions and one push write-check omission caught in native and JavaScript; 22 executed comparisons, each changing exactly one operation.
+Uncovered: rank 125 needs native slice-result storage and transitive read-contract checks; all 31 Set pairs / 107 reads stay delegated under 058635b9. No compiler/runtime changes.
 
 Current step: see step09/REPORT.md for full commands, mutants and new boundary list. The following is the historical prior-delivery report and validation evidence.
 

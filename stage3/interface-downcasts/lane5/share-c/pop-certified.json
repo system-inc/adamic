@@ -1,0 +1,92 @@
+[
+  {
+    "rank": 386,
+    "reads": 5,
+    "type": "Type[]",
+    "read": "reverseMappedSourceStack.pop",
+    "declaration": "pop(): T | undefined;",
+    "diagnostic": "adamic: panic: element read failed: reverseMappedSourceStack[element] expected Type, found string\n",
+    "status": "certified original Array.pop receiver"
+  },
+  {
+    "rank": 1130,
+    "reads": 2,
+    "type": "TempFlags[]",
+    "read": "privateNameTempFlagsStack.pop",
+    "declaration": "pop(): T | undefined;",
+    "diagnostic": "adamic: panic: element read failed: privateNameTempFlagsStack[element] expected TempFlags, found string\n",
+    "status": "certified original Array.pop receiver"
+  },
+  {
+    "rank": 1283,
+    "reads": 1,
+    "type": "BindingPattern[]",
+    "read": "contextualBindingPatterns.pop",
+    "declaration": "pop(): T | undefined;",
+    "diagnostic": "adamic: panic: element read failed: contextualBindingPatterns[element] expected BindingPattern, found string\n",
+    "status": "certified original Array.pop receiver"
+  },
+  {
+    "rank": 1301,
+    "reads": 1,
+    "type": "CodeBlock[]",
+    "read": "blockStack!.pop",
+    "declaration": "pop(): T | undefined;",
+    "diagnostic": "adamic: panic: element read failed: blockStack![element] expected CodeBlock, found string\n",
+    "status": "certified original Array.pop receiver"
+  },
+  {
+    "rank": 1424,
+    "reads": 1,
+    "type": "ExceptionBlock[]",
+    "read": "exceptionBlockStack!.pop",
+    "declaration": "pop(): T | undefined;",
+    "diagnostic": "adamic: panic: element read failed: exceptionBlockStack![element] expected ExceptionBlock, found string\n",
+    "status": "certified original Array.pop receiver"
+  },
+  {
+    "rank": 2060,
+    "reads": 1,
+    "type": "Node[]",
+    "read": "parents.pop",
+    "declaration": "pop(): T | undefined;",
+    "diagnostic": "adamic: panic: element read failed: parents[element] expected Node, found string\n",
+    "status": "certified original Array.pop receiver"
+  },
+  {
+    "rank": 2456,
+    "reads": 1,
+    "type": "Symbol[]",
+    "read": "parameters.pop",
+    "declaration": "pop(): T | undefined;",
+    "diagnostic": "adamic: panic: element read failed: parameters[element] expected Symbol, found string\n",
+    "status": "certified original Array.pop receiver"
+  },
+  {
+    "rank": 2555,
+    "reads": 1,
+    "type": "TypeElement[]",
+    "read": "typeElements.pop",
+    "declaration": "pop(): T | undefined;",
+    "diagnostic": "adamic: panic: element read failed: typeElements[element] expected TypeElement, found string\n",
+    "status": "certified original Array.pop receiver"
+  },
+  {
+    "rank": 2564,
+    "reads": 1,
+    "type": "TypeSystemEntity[]",
+    "read": "resolutionTargets.pop",
+    "declaration": "pop(): T | undefined;",
+    "diagnostic": "adamic: panic: element read failed: resolutionTargets[element] expected TypeSystemEntity, found string\n",
+    "status": "certified original Array.pop receiver"
+  },
+  {
+    "rank": 2618,
+    "reads": 1,
+    "type": "WithBlock[]",
+    "read": "withBlockStack!.pop",
+    "declaration": "pop(): T | undefined;",
+    "diagnostic": "adamic: panic: element read failed: withBlockStack![element] expected WithBlock, found string\n",
+    "status": "certified original Array.pop receiver"
+  }
+]

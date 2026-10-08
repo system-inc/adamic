@@ -99,7 +99,7 @@ func TestCheckedViewCallableShareCCounts(t *testing.T) {
 	}
 	lines := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	rows := callableShareCRows(t)
-	arrays := callableShareCArrayRows(t)
+	arrays := append(callableShareCArrayRows(t), callableShareCPopRows(t)...)
 	rows = append(rows, arrays...)
 	arrayRanks := map[int]bool{}
 	for _, r := range arrays {

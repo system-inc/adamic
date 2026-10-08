@@ -1,0 +1,7 @@
+// Original readonly Array.slice declaration and receiver; adjacent Type carrier reduced.
+interface Type {readonly value:number;}
+interface OriginalMember<T> {slice(start?: number, end?: number): T[];}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:readonly Type[];}
+function probe(value:Base):void {const typeArguments=(value as Target).items;const copied=typeArguments.slice();const first=copied[0];if(first===undefined){return;}console.log(String(first.value));}
+const seed:Type={value:1};probe({items:[seed]});

@@ -1,0 +1,7 @@
+// Original Array.pop receiver and declaration; adjacent payload carriers reduced.
+interface Type {readonly value:number;}
+interface OriginalMember<T> {pop(): T | undefined;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Type[];}
+function probe(value:Base):void {const reverseMappedSourceStack=(value as Target).items;reverseMappedSourceStack.pop();console.log("completed");}
+probe({items:["bad"]});

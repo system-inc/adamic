@@ -1,0 +1,7 @@
+// Original Array.pop receiver and declaration; adjacent payload carriers reduced.
+interface Node {readonly value:number;}
+interface OriginalMember<T> {pop(): T | undefined;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Node[];}
+function probe(value:Base):void {const parents=(value as Target).items;parents.pop();console.log("completed");}
+const seed:Node={value:1};probe({items:[seed]});

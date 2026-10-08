@@ -1,0 +1,9 @@
+// Original Array.pop receiver and declaration; adjacent payload carriers reduced.
+type BindingPattern = ObjectBindingPattern | ArrayBindingPattern;
+interface ObjectBindingPattern {readonly value:number;readonly kind:207;}
+interface ArrayBindingPattern {readonly value:number;readonly kind:208;}
+interface OriginalMember<T> {pop(): T | undefined;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:BindingPattern[];}
+function probe(value:Base):void {const contextualBindingPatterns=(value as Target).items;contextualBindingPatterns.pop();console.log("completed");}
+probe({items:["bad"]});

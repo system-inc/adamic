@@ -1,0 +1,11 @@
+// Original Array.pop receiver and declaration; adjacent payload carriers reduced.
+type TypeSystemEntity = Node | Symbol | Type | Signature;
+interface Node {readonly value:number;}
+interface Symbol {readonly value:number;}
+interface Type {readonly value:number;}
+interface Signature {readonly value:number;}
+interface OriginalMember<T> {pop(): T | undefined;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:TypeSystemEntity[];}
+function probe(value:Base):void {const resolutionTargets=(value as Target).items;resolutionTargets.pop();console.log("completed");}
+const seed:Node={value:1};probe({items:[seed]});

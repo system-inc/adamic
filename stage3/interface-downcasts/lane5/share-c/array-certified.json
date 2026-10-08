@@ -224,5 +224,14 @@
     "declaration": "push(...items: T[]): number;",
     "diagnostic": "adamic: panic: element write failed: <array write> expected { nodePos: string; detachedCommentEndPos: number; }, found { nodePos: number; detachedCommentEndPos: number; }\n",
     "status": "certified original Array.push receiver"
+  },
+  {
+    "rank": 113,
+    "reads": 15,
+    "type": "Modifier[]",
+    "read": "result.push",
+    "declaration": "push(...items: T[]): number;",
+    "diagnostic": "adamic: panic: element write failed: <array write> expected { value: string; kind: number; }, found { value: number; kind: SyntaxKind.AbstractKeyword; }\n",
+    "status": "certified original Array.push receiver"
   }
 ]

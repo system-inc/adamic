@@ -1,0 +1,7 @@
+// Original Array.pop receiver and declaration; adjacent payload carriers reduced.
+const enum TempFlags {Auto=0,CountMask=268435455,_i=268435456}
+interface OriginalMember<T> {pop(): T | undefined;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:TempFlags[];}
+function probe(value:Base):void {const privateNameTempFlagsStack=(value as Target).items;privateNameTempFlagsStack.pop();console.log("completed");}
+const seed:TempFlags=TempFlags.Auto;probe({items:[seed]});

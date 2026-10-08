@@ -2,11 +2,12 @@
 const fs=require('fs'),path=require('path'),crypto=require('crypto');
 const root=process.argv[2],ts=require(path.join(root,'lib/typescript.js'));
 const evidence=JSON.parse(fs.readFileSync(path.join(__dirname,'original-members.json')));
-const arrays=JSON.parse(fs.readFileSync(path.join(__dirname,'array-certified.json')));
+const arrays=JSON.parse(fs.readFileSync(path.join(__dirname,'array-certified.json'))).concat(JSON.parse(fs.readFileSync(path.join(__dirname,'pop-certified.json'))));
 const arrayRanks=new Set(arrays.map(r=>r.rank));
 const rows=JSON.parse(fs.readFileSync(path.join(__dirname,'certified.json'))).concat(arrays);
 const carriers=JSON.parse(fs.readFileSync('/tmp/lane5-c-carrier-declarations.json'));
 const normalized=t=>t.replace(/\s+/g,'');
+if(new Set(rows.map(r=>r.rank)).size!==rows.length)throw Error('duplicate certified rank');
 let count=0;
 for(const row of rows){
  if(row.rank%3!==2)throw Error('wrong share rank '+row.rank);

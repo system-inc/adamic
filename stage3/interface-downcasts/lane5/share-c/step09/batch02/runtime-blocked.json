@@ -1,0 +1,15 @@
+[
+  {
+    "rank": 125,
+    "reads": 14,
+    "type": "readonly Type[]",
+    "read": "typeArguments.slice",
+    "subsequentRead": "first.value after copied[0] and an undefined check",
+    "nativeReleaseObservation": "SIGSEGV (return code -11)",
+    "nativeSanitizerObservation": "exit 1; runtime error: member access within misaligned address; UndefinedBehaviorSanitizer summary in object.c:122",
+    "javaScriptObservation": "exit 70; adamic: panic: element read failed: copied[0] expected Type, found string",
+    "nodeObservation": "positive prints 1; negative prints undefined; both exit 0",
+    "neededChange": "Preserve and enforce native producer element storage and checked-view contracts through Array.slice and subsequent element/field reads before interpreting a string as an object.",
+    "certified": false
+  }
+]

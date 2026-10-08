@@ -1,0 +1,7 @@
+// Original Array.pop receiver and declaration; adjacent payload carriers reduced.
+interface ExceptionBlock {readonly value:number;readonly kind:0;}
+interface OriginalMember<T> {pop(): T | undefined;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:ExceptionBlock[];}
+function probe(value:Base):void {const exceptionBlockStack=(value as Target).items;exceptionBlockStack!.pop();console.log("completed");}
+probe({items:["bad"]});

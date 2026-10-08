@@ -1,0 +1,7 @@
+// Original Array.pop receiver and declaration; adjacent payload carriers reduced.
+interface WithBlock {readonly value:number;readonly kind:1;}
+interface OriginalMember<T> {pop(): T | undefined;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:WithBlock[];}
+function probe(value:Base):void {const withBlockStack=(value as Target).items;withBlockStack!.pop();console.log("completed");}
+probe({items:["bad"]});

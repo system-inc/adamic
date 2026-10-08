@@ -151,7 +151,7 @@
     "type": "Modifier[]",
     "field": "push",
     "read": "result.push",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Array.push receiver"
   },
   {
     "rank": 119,
@@ -167,7 +167,7 @@
     "type": "readonly Type[]",
     "field": "slice",
     "read": "typeArguments.slice",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "observed native runtime boundary: transitive slice result field read uses incompatible string as an object; UBSan catches misaligned member access"
   },
   {
     "rank": 134,
@@ -601,7 +601,7 @@
     "type": "Type[]",
     "field": "pop",
     "read": "reverseMappedSourceStack.pop",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Array.pop receiver"
   },
   {
     "rank": 389,
@@ -2593,7 +2593,7 @@
     "type": "TempFlags[]",
     "field": "pop",
     "read": "privateNameTempFlagsStack.pop",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Array.pop receiver"
   },
   {
     "rank": 1133,
@@ -3001,7 +3001,7 @@
     "type": "BindingPattern[]",
     "field": "pop",
     "read": "contextualBindingPatterns.pop",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Array.pop receiver"
   },
   {
     "rank": 1286,
@@ -3049,7 +3049,7 @@
     "type": "CodeBlock[]",
     "field": "pop",
     "read": "blockStack!.pop",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Array.pop receiver"
   },
   {
     "rank": 1304,
@@ -3377,7 +3377,7 @@
     "type": "ExceptionBlock[]",
     "field": "pop",
     "read": "exceptionBlockStack!.pop",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Array.pop receiver"
   },
   {
     "rank": 1427,
@@ -5076,7 +5076,7 @@
     "type": "Node[]",
     "field": "pop",
     "read": "parents.pop",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Array.pop receiver"
   },
   {
     "rank": 2063,
@@ -6147,7 +6147,7 @@
     "type": "Symbol[]",
     "field": "pop",
     "read": "parameters.pop",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Array.pop receiver"
   },
   {
     "rank": 2459,
@@ -6411,7 +6411,7 @@
     "type": "TypeElement[]",
     "field": "pop",
     "read": "typeElements.pop",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Array.pop receiver"
   },
   {
     "rank": 2558,
@@ -6435,7 +6435,7 @@
     "type": "TypeSystemEntity[]",
     "field": "pop",
     "read": "resolutionTargets.pop",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Array.pop receiver"
   },
   {
     "rank": 2567,
@@ -6580,7 +6580,7 @@
     "type": "WithBlock[]",
     "field": "pop",
     "read": "withBlockStack!.pop",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Array.pop receiver"
   },
   {
     "rank": 2621,
