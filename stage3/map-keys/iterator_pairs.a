@@ -1,6 +1,8 @@
 // commandLineParser.ts:141's readonly mapped-pair constructor, reduced to an explicit iterator.
 // core.ts:332's original mapIterator is a generator and remains a separate refusal.
+let factoryCalls = 0;
 function pairs() {
+    factoryCalls++;
     return {
         [Symbol.iterator]() {
             let index = 0;
@@ -23,7 +25,37 @@ function pairs() {
     };
 }
 const map = new Map(pairs());
-console.log(`${map.size}:${map.get('0')}:${map.get('1')}`);
+console.log(`${map.size}:${map.get('0')}:${map.get('1')}:${factoryCalls}`);
 for (const [key, value] of map) {
     console.log(`${key}:${value}`);
+}
+
+
+
+function throwingPairs() {
+    return {
+        [Symbol.iterator]() {
+            let index = 0;
+            return {
+                next(): { readonly value: readonly [string, string]; readonly done: boolean } {
+                    index++;
+                    if (index === 2) { throw new Error('next failed'); }
+                    return { value: [`throw-key-${index}`, `throw-value-${index}`], done: false };
+                },
+                return(): { readonly value: readonly [string, string]; readonly done: boolean } {
+                    console.log('unexpected close after next failed');
+                    return { value: ['', ''], done: true };
+                },
+                throw(): { readonly value: readonly [string, string]; readonly done: boolean } {
+                    return { value: ['', ''], done: true };
+                },
+            };
+        },
+    };
+}
+try {
+    const failed = new Map(throwingPairs());
+    console.log(`${failed.size}`);
+} catch (error) {
+    if (error instanceof Error) { console.log(error.message); }
 }

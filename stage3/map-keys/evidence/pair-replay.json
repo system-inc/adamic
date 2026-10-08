@@ -1,0 +1,46 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/scout-map-keys-adapted/src/compiler/commandLineParser.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/scout-map-keys-adapted/src/compiler/commandLineParser.ts:141:1",
+      "kind": "KindVariableStatement",
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "top": "/tmp/scout-map-keys-adapted/src/compiler/commandLineParser.ts:141:1"
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/scout-map-keys-adapted/src/compiler/commandLineParser.ts:141:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/scout-map-keys-adapted/src/compiler/commandLineParser.ts:141:65",
+      "reason": "new Map from something that isn't [key, value] pairs",
+      "text": "/tmp/scout-map-keys-adapted/src/compiler/commandLineParser.ts:141:65: stage 0 can't lower new Map from something that isn't [key, value] pairs yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/scout-map-keys-adapted/src/compiler/commandLineParser.ts:141:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/scout-map-keys-adapted/src/compiler/commandLineParser.ts:141:1",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/scout-map-keys-adapted/src/compiler/commandLineParser.ts:141:65: stage 0 can't lower new Map from something that isn't [key, value] pairs yet",
+      "start": 3352,
+      "end": 3540
+    }
+  ],
+  "timing_and_result": [
+    "replay load/register/lower: 1.992927442s",
+    "reproduced NotYet: new Map from something that isn't [key, value] pairs at /tmp/scout-map-keys-adapted/src/compiler/commandLineParser.ts:141:65",
+    "replay total (including overlay and Go build): 15.556652903s"
+  ],
+  "source_manifest": {
+    "files": 81,
+    "hashes_matching_inherited_census": 81
+  },
+  "retired_original_roots": 0
+}

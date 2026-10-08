@@ -1,0 +1,6 @@
+=== RUN   TestScoutMapIteratorPairRepresentationGap
+    map_keys_scout_test.go:58: want representation-conversion gap, got <nil>
+--- FAIL: TestScoutMapIteratorPairRepresentationGap (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.044s
+FAIL

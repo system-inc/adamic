@@ -1,0 +1,17 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_construct.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_construct.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/user_iterators.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/user_iterators.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_construct.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/user_iterators.a
+--- PASS: TestNativeAgreesWithNode (0.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_construct.a (0.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/user_iterators.a (4.28s)
+PASS
+gate cache: native hits=0 misses=6
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.326s

@@ -1,0 +1,26 @@
+=== RUN   TestScoutMapKeyOutcomes
+=== RUN   TestScoutMapKeyOutcomes/branded_map
+    map_keys_scout_test.go:34: /tmp/adamic-gate/TestScoutMapKeyOutcomesbranded_map1287839068/001/main.a:3:19: stage 0 can't lower a value of type Path yet
+=== RUN   TestScoutMapKeyOutcomes/branded_set
+    map_keys_scout_test.go:34: /tmp/adamic-gate/TestScoutMapKeyOutcomesbranded_set2571434669/001/main.a:3:19: stage 0 can't lower a value of type Path yet
+=== RUN   TestScoutMapKeyOutcomes/mixed_map
+    map_keys_scout_test.go:34: /tmp/adamic-gate/TestScoutMapKeyOutcomesmixed_map4061420803/001/main.a:2:13: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet
+=== RUN   TestScoutMapKeyOutcomes/nullish_set
+    map_keys_scout_test.go:34: /tmp/adamic-gate/TestScoutMapKeyOutcomesnullish_set1370594164/001/main.a:2:13: stage 0 can't lower a Set of null | undefined (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far) yet
+=== RUN   TestScoutMapKeyOutcomes/maplike
+    map_keys_scout_test.go:34: /tmp/adamic-gate/TestScoutMapKeyOutcomesmaplike3178604911/001/main.a:2:24: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added
+=== RUN   TestScoutMapKeyOutcomes/reused_pair_mutation
+    map_keys_scout_test.go:34: /tmp/adamic-gate/TestScoutMapKeyOutcomesreused_pair_mutation1232337840/001/main.a:10:21: stage 0 can't lower assigning an element of a value yet
+--- PASS: TestScoutMapKeyOutcomes (0.20s)
+    --- PASS: TestScoutMapKeyOutcomes/branded_map (0.04s)
+    --- PASS: TestScoutMapKeyOutcomes/branded_set (0.03s)
+    --- PASS: TestScoutMapKeyOutcomes/mixed_map (0.03s)
+    --- PASS: TestScoutMapKeyOutcomes/nullish_set (0.03s)
+    --- PASS: TestScoutMapKeyOutcomes/maplike (0.03s)
+    --- PASS: TestScoutMapKeyOutcomes/reused_pair_mutation (0.03s)
+=== RUN   TestScoutMapIteratorPairsLower
+--- PASS: TestScoutMapIteratorPairsLower (0.04s)
+=== RUN   TestScoutMapIteratorPairRepresentationGap
+--- PASS: TestScoutMapIteratorPairRepresentationGap (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.283s

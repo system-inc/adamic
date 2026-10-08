@@ -1,0 +1,27 @@
+// Streaming-order obligation; tuple index writes remain a separate NotYet dependency.
+// A mutable tuple viewed readonly must be consumed before next mutates it again.
+function reusedPairs() {
+    const pair: [string, string] = ['', ''];
+    return {
+        [Symbol.iterator]() {
+            let index = 0;
+            return {
+                next(): { readonly value: readonly [string, string]; readonly done: boolean } {
+                    pair[0] = `key-${index}`;
+                    pair[1] = `value-${index}`;
+                    const done = index >= 3;
+                    index++;
+                    return { value: pair, done };
+                },
+                return(): { readonly value: readonly [string, string]; readonly done: boolean } {
+                    return { value: pair, done: true };
+                },
+                throw(): { readonly value: readonly [string, string]; readonly done: boolean } {
+                    return { value: pair, done: true };
+                },
+            };
+        },
+    };
+}
+const reused = new Map(reusedPairs());
+for (const [key, value] of reused) { console.log(`${key}:${value}`); }

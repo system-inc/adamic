@@ -123,6 +123,11 @@ func (l *lowering) collectionPart(node *ast.Node, receiver *ast.Node, part strin
 // another Map, or map.entries(). Each pair's key and value must be held as the Map holds its own, or
 // a number would land where number | undefined goes without becoming the pair, so they're checked.
 func (l *lowering) newMapFrom(node *ast.Node, source *ast.Node, key ir.Type, value ir.Type) (ir.Expression, error) {
+	if plan, err := l.planIteration(source); err != nil {
+		return nil, err
+	} else if plan != nil {
+		return l.mapFromIteration(node, source, plan, key, value)
+	}
 	pairKey, pairValue, isKnown := l.pairTypes(source)
 	if !isKnown {
 		return nil, l.notYet(source, "new Map from something that isn't [key, value] pairs")
