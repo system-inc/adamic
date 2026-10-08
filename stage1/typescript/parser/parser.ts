@@ -581,7 +581,7 @@ export class Parser {
         let name = this.entityIdentifier(typeExpected);
         while(this.kind() === 'DotToken') {
             this.next();
-            const right = this.entityIdentifier(typeExpected);
+            const right = this.identifier();
             name = this.make('QualifiedName', pos, [name, right]);
         }
         return name;

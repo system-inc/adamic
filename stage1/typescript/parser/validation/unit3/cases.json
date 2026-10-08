@@ -21,7 +21,7 @@
     "function_names": "Reserved function keywords cannot serve as function-expression names.",
     "property_names": "Share the full property-name predicate, including private identifiers, across members, modifiers, and accessors."
   },
-  "focused_fixtures": 29,
+  "focused_fixtures": 30,
   "discovered_failures": [
     {
       "input": "02761-corePublic.ts-remove-26.ts",
@@ -874,13 +874,13 @@
     "result": "PASS"
   },
   "source_sha256": {
-    "parser.ts": "5f082f7e1ea5db6f4c6a01a8759a30710804ce5ebbbe9795fb7bfc21797eb7d2",
+    "parser.ts": "e0abfb4aec0f63982e7ddfc2d1248579c3308b840fff55e98b13b9600cc242ec",
     "grammar.ts": "c45dbe12869ea033a59b9759860e4e161dcf7416f04c1cf2aef52571f7c91324",
     "lookahead.ts": "f6172245086a0470c380666a0eeb3be654b57ef79e70992162f10c2b684f28c7",
     "recovery.ts": "8ea9d0873ab866453878aba1c85e4fcce9d4e2ab75d54a9fa3d39e63c1bb5f8f",
     "statements.ts": "bf589bf17d9ca27c15e53be20ed0c3f32373250c8574c228b5bc87c356b3cd56",
     "incomplete_test.go": "cfd973aced53d3bca2c576c81110be6f74247c9e5d7889dbdf954cb131459dd5",
-    "incomplete_recovery_test.go": "edbb2e3d3edd24416d567a6fc83ca69bb151dcab145a00f47fdaa79c2cc01256",
+    "incomplete_recovery_test.go": "46743764fcc5a445180f545683bb9fa6a3716e6193c7312c809cb820630b489c",
     "recovery_test.go": "6405aa742bd392c808e0667d16cb0b8e61bb70c368d33bdfcc34175860f76b6b"
   },
   "lint_cases": {
@@ -892,5 +892,19 @@
     "expected_different": [
       "testdata/lint_cases/wave13_top_level_await_new.ts"
     ]
-  }
+  },
+  "additional_regressions": [
+    {
+      "source": "src/compiler/factory/baseNodeFactory.ts",
+      "edit": "duplicate",
+      "token": 169,
+      "fix": "The name after a dot uses diagnostic 1003; only a missing initial type name uses 1110."
+    },
+    {
+      "source": "src/compiler/factory/baseNodeFactory.ts",
+      "edit": "duplicate",
+      "token": 241,
+      "fix": "The name after a dot uses diagnostic 1003; only a missing initial type name uses 1110."
+    }
+  ]
 }
