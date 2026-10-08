@@ -1,0 +1,46 @@
+{
+  "status": "fail",
+  "errors": [
+    "test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106365, 'failing': 2, 'pending': 0}",
+    "reporter counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106365, 'failing': 2, 'pending': 0}",
+    "failed test names: expected ['unittests:: Public APIs for typescript.d.ts should be acknowledged when they change'], observed ['unittests:: services:: extract:: extractFunctions extractFunction1 [.ts]', 'unittests:: Public APIs for typescript.d.ts should be acknowledged when they change']",
+    "number of reported failure titles: expected 1, observed 2"
+  ],
+  "counts": {
+    "passing": 106365,
+    "failing": 2,
+    "pending": 0
+  },
+  "failed_tests": [
+    "unittests:: services:: extract:: extractFunctions extractFunction1 [.ts]",
+    "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+  ],
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "api": {
+    "reference_declarations": 28,
+    "composed_declarations": 222,
+    "sanctioned_declarations": 222,
+    "added_lines": 194,
+    "removed_lines": 193
+  },
+  "platform": {
+    "os": "linux",
+    "arch": "x64",
+    "node": "v24.19.0"
+  },
+  "execution": {
+    "commit": "ca016bab19c040c44748924cde12976afbf68978",
+    "apply_exit": 0,
+    "oracle_exit": 1,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "wall_seconds": 888.007
+  },
+  "results": "/home/ahra/fast-gate/tree-3-stage3-lane",
+  "verdict": "FAIL stage3 landing lane: test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106365, 'failing': 2, 'pending': 0}"
+}
