@@ -1,0 +1,19 @@
+function readActual(actual: { value: string | undefined }): void { console.log(`${actual.value}`); }
+function readView(view: { value?: string | undefined }): void { console.log(`${view.value}`); }
+function word(index: number): string { return `value${index}`; }
+function maybe(present: boolean): string | undefined { return present ? word(7) : undefined; }
+const actual: { x: number; value: string | undefined } = { x: 1, value: word(0) };
+const narrow: { x: number } = actual;
+const view: { x: number; value?: string | undefined } = narrow;
+view.value = undefined;
+readActual(actual);
+view.value = word(2);
+readActual(actual);
+actual.value = word(3);
+readView(view);
+actual.value = undefined;
+readView(view);
+view.value = maybe(false);
+readActual(actual);
+view.value = maybe(true);
+readActual(actual);

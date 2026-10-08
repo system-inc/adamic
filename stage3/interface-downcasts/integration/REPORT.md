@@ -1,7 +1,7 @@
 Integrated checked-view lane checkpoints into codex/views-integration from ab4d6f902; further tips remain queued.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
 Final checkpoint gates cover focused packages, full IR, filtered Node oracle and vet; the rejected-owner publication was immediately corrected.
-487 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
+495 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -1308,3 +1308,48 @@ FunctionLike and two class tags are checked, not full class member certification
 Full original tsc execution and exact reaching-view census remain unmeasured.
 The user has authorized lifting the optional-boolean hold after integrating
 its fix; a2eb65ca76816f895f846f78a210bc1717a5f7c4 is next, ahead of lane 5.
+
+
+## Optional boolean storage hold resolved
+
+Merged codex/view-write-optional-boolean a2eb65ca76816f895f846f78a210bc1717a5f7c4
+on a2ab63f0ff7783312b4a4a73b760686993b8bac8 immediately ahead of pending lanes.
+No conflict hunks. Incoming counts combined cleanly with the two newly measured
+union-cast rows. The branch also carries main bfa0bfec9ab6f49c81e22984d3fca4ee21a472e8:
+3536 changed files including landed stage-1 work and class/iterator refusals.
+No whole-file or bulk picks. Only codex/views-integration is pushed.
+
+Canonical tag-9 packed writes now agree with every reachable boolean reader:
+scalar, optional, nullable, union snapshot and dictionary. Both alias directions
+and direct proven loads preserve false, true and undefined. The initial packed
+false adapter miscompile is fixed. Required boolean reads still stop on absence
+with the exact pinned exit-70 diagnostic. Number, heap string and object controls
+remain held to Node, not inferred from the boolean fix.
+
+Ten coherence fixtures, measured counts, native snapshot, class/iterator negative
+controls and repair controls PASS: oracle 19.862s, native 13.614s, lower 0.287s.
+Command: ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle ./internal/native
+./internal/lower -run '^TestViewWriteStorage|^TestPackedBooleanViewSnapshot$|^TestClassWrongOutput'
+-v -count=1 -timeout 15m, output directly to the controls log.
+Eight sequential source mutants run through verify_storage_mutants.py and are
+caught: raw undefined, raw maybe-pair, boxed nullable decoding, omitted required
+presence, scalar unpack, optional absence, snapshot unpack and dictionary unpack.
+Raw undefined prints false instead of undefined, exit 0; raw maybe-pair prints
+false instead of undefined in the fifth alias observation, exit 0. The other
+mutants reach semantic tests; no build failure is credited. Every source restored,
+with no unstaged production differences, before the final gate.
+
+Required restored gates: lower 11.547s, native 32.608s, JavaScript 2.100s,
+full IR 13.807s; go vet ./... exit 0. Uncached filtered oracle PASS 737.559s,
+Node misses 3628, native misses 1034, no configured exclusions. All three
+original-declaration opt-ins and required untagged source dispatch remain enabled.
+Eight new unique mutants raise the cumulative explicit total from 487 to 495;
+rerunning the existing original-brand and tag IR cases is not counted again.
+
+The user explicitly lifted the optional-boolean landing hold with this fix.
+That storage hold is now resolved on integration and the branch is available
+to the area/compiler owner under the reported focused validation. No whole
+repository green gate or area/main push is claimed. Nullable object storage,
+class maybe-boolean fields, string self-assignment, full tsc execution and exact
+reachability remain outside this fix's evidence. Lane 5/owner ABI reconciliation
+and newly queued lane 4, 4b and 7 tips remain integration work.

@@ -1,0 +1,2 @@
+class Box { #secret: string; constructor(secret: string) { this.#secret = secret; } static peek(box: Box): string { return box.#secret; } static swap(box: Box, value: string): void { box.#secret = value; } #hidden(): string { return `hidden ${this.#secret}`; } static callHidden(box: Box): string { return box.#hidden(); } reveal(): string { return this.#secret; } }
+const box = new Box(`s${1}`); console.log(Box.peek(box)); Box.swap(box, `t${2}`); console.log(box.reveal()); console.log(Box.callHidden(box));

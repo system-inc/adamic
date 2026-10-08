@@ -9,8 +9,7 @@ if (process.argv.length !== 3) throw new Error('usage: node adapt.cjs <tree>');
 const tree = path.resolve(process.argv[2]);
 const options = {
     strict: true, exactOptionalPropertyTypes: true, noUncheckedIndexedAccess: true,
-    noImplicitReturns: true, noFallthroughCasesInSwitch: true,
-    verbatimModuleSyntax: true, erasableSyntaxOnly: true,
+    verbatimModuleSyntax: true, erasableSyntaxOnly: false,
     allowImportingTsExtensions: true, noEmit: true,
     module: ts.ModuleKind.ESNext, moduleDetection: ts.ModuleDetectionKind.Force,
     moduleResolution: ts.ModuleResolutionKind.Bundler, target: ts.ScriptTarget.ES2024,

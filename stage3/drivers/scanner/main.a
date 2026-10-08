@@ -1,0 +1,31 @@
+// From TypeScript 6.0.3, src/compiler/parser.ts:1444
+// The runner copies this file beside the adapted tree, preserving these imports.
+// Activate the pinned Node declaration loader for ErrorConstructor.captureStackTrace.
+import type {} from 'node:util';
+import { createScanner } from './adapted/src/compiler/scanner.ts';
+import { ScriptTarget, SyntaxKind } from './adapted/src/compiler/types.ts';
+import { tokenNames } from './token-names.a';
+import { panic, programArguments, readTextFile } from 'adamic';
+
+// Both passes use the same input corpus and a fresh scanner per pass.
+for (const skipTrivia of [true, false]) {
+    const scanner = createScanner(ScriptTarget.Latest, skipTrivia);
+    scanner.setOnError((message, length, arg0) => {
+        console.log(`error\t${message.code}\t${message.category}\t${scanner.getTextPos()}\t${length}\t${JSON.stringify(message.message)}\t${JSON.stringify(arg0 ?? null)}`);
+    });
+    for (const path of programArguments()) {
+        console.log(`pass\t${skipTrivia}\t${JSON.stringify(path)}`);
+        const input = readTextFile(path);
+        if (input.kind === 'Error') {
+            panic(input.message);
+        }
+        scanner.setText(input.text);
+        while (true) {
+            const kind = scanner.scan();
+            console.log(`${tokenNames[kind] ?? panic('missing SyntaxKind name')}\t${scanner.getTokenFullStart()}\t${scanner.getTokenStart()}\t${scanner.getTokenEnd()}\t${scanner.getTokenFlags()}\t${JSON.stringify(scanner.getTokenText())}\t${JSON.stringify(scanner.getTokenValue() ?? null)}`);
+            if (kind === SyntaxKind.EndOfFileToken) {
+                break;
+            }
+        }
+    }
+}

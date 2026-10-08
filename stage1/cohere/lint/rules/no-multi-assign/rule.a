@@ -1,0 +1,56 @@
+// Port of batch2:no_multi_assign.ts, held to pinned Go cohere.
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { messageNoMultiAssign } from './messages.a';
+
+// The operator child distinguishes assignments from comparison and comma expressions.
+function assignment(context: RuleContext, node: ParseNode): boolean {
+    const operator = node.children[1];
+    if(operator === undefined) {
+        return false;
+    }
+    return [
+        'EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken',
+        'SlashEqualsToken', 'PercentEqualsToken', 'AsteriskAsteriskEqualsToken',
+        'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken',
+        'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken',
+        'BarEqualsToken', 'CaretEqualsToken', 'AmpersandAmpersandEqualsToken',
+        'BarBarEqualsToken', 'QuestionQuestionEqualsToken',
+    ].includes(context.node(operator).kind);
+}
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    visit(node: ParseNode, index: number): void {
+        if(!assignment(this.context, node)) {
+            return;
+        }
+        let outer = index;
+        let parent = this.context.parent(outer);
+        while(parent >= 0 && this.context.node(parent).kind === 'ParenthesizedExpression') {
+            outer = parent;
+            parent = this.context.parent(outer);
+        }
+        if(parent < 0) {
+            return;
+        }
+        const parentNode = this.context.node(parent);
+        const chained =
+            parentNode.kind === 'VariableDeclaration' || parentNode.kind === 'PropertyDeclaration'
+                ? this.context.initializer(parent) === outer
+                : parentNode.kind === 'BinaryExpression' &&
+                  this.context.settings.read('ignorenondeclaration', 'false') !== 'true' &&
+                  assignment(this.context, parentNode) &&
+                  parentNode.children[2] === outer;
+        if(chained) {
+            this.context.reportNode(index, 'no-multi-assign', 'unexpectedChain', messageNoMultiAssign);
+        }
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}
