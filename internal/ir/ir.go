@@ -108,8 +108,6 @@ type Function struct {
 	ReadsArguments bool
 	// ForwardsArguments is the one-based target of an implementation-only adapter.
 	ForwardsArguments int
-	// Receiver excludes the leading implementation-only this from that count.
-	Receiver bool
 	// RestElement identifies the final parameter as a rest array.
 	RestElement Type
 
