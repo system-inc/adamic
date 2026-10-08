@@ -1,0 +1,34 @@
+{
+  "full_slice": {
+    "label": "found behind a stub",
+    "exit": "1\n",
+    "diagnostic": "adamic: /tmp/parser-after-runtime-enum-stub-slice/src/compiler/debug.ts:333:29: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+    "moved_declaration": {
+      "scope": "Untracked scratch only, never committed",
+      "moved": "Only emptyMap declaration and attached @internal comment",
+      "from": "src/compiler/core.ts",
+      "to": "src/compiler/types.ts",
+      "afterEnum": "ModuleKind",
+      "importEdits": 0,
+      "reason": "Existing compiler barrel already exports both modules; core has no other emptyMap reference"
+    }
+  },
+  "local_const_enum_attempt": {
+    "exit": "1\n",
+    "diagnostic": "adamic: /tmp/parser-after-enum-stub-slice/src/compiler/core.ts:693:52: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n"
+  },
+  "minimal_runtime_enum_attempt": {
+    "label": "found behind a stub in minimal probe, not a full-slice result",
+    "exit": "1\n",
+    "diagnostic": "adamic: /tmp/parser-enum-map-after.a:4:52: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet\n"
+  },
+  "original_source_hashes": {
+    "core.ts": "009c0d08cf4346ed350c0194dea68c4572e8c4e3c186a5e1608f5832cf5c32c3",
+    "types.ts": "5afa2edfb65cdd2e719db49b483b43e941159166b6cc9ee833fe99896d66d710"
+  },
+  "changes": [
+    "types.ts",
+    "core.ts"
+  ],
+  "commit_scope": "Documentation and measurements only; reordered source remains untracked under /tmp, no temporary adaptation"
+}

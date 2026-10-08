@@ -1,0 +1,59 @@
+{
+  "tokens": 1369432,
+  "errors": 466,
+  "sha256": "41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc",
+  "bytes": 108019935,
+  "input_tree": "/workspace/scratch/scanner-fixed-inputs",
+  "files": 81,
+  "node_exit": 0,
+  "comparison_control_exit": 0,
+  "end_mutant_diff_exit": 1,
+  "native": "not attempted",
+  "full_tree": {
+    "tokens": 1369432,
+    "errors": 466,
+    "sha256": "41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc",
+    "bytes": 108019935,
+    "input_tree": "/workspace/scratch/scanner-fixed-inputs",
+    "files": 81,
+    "node_exit": 0,
+    "comparison_control_exit": 0,
+    "end_mutant_diff_exit": 1,
+    "native": "not attempted"
+  },
+  "mutants": {
+    "escape": {
+      "node_exit": 0,
+      "comparison_exit": 1,
+      "rows_before": 1370060,
+      "rows_after": 1370060,
+      "sha256": "5f14b6fb776e235d37ee92f07ca60a2c8005bccadb824cdc3383e4d5c5b9b8d2"
+    },
+    "error": {
+      "node_exit": 0,
+      "comparison_exit": 1,
+      "rows_before": 1370060,
+      "rows_after": 1370059,
+      "sha256": "79361743515c48a3782195507dda77f2330e1bc33b1fd97970a5be95dc8b5860"
+    },
+    "trivia": {
+      "node_exit": 0,
+      "comparison_exit": 1,
+      "rows_before": 1370060,
+      "rows_after": 1370060,
+      "sha256": "672dc06d9bcd57df9cb3f811a9585ca7eacd8f6ae79922103f6363e9e7e1dc29"
+    }
+  },
+  "passes": {
+    "true": {
+      "tokens": 509014,
+      "errors": 233,
+      "files": 81
+    },
+    "false": {
+      "tokens": 860418,
+      "errors": 233,
+      "files": 81
+    }
+  }
+}

@@ -16,8 +16,9 @@ import (
 	"time"
 )
 
-// Not parallel: the exhaustive numeric corpus and sanitizer run need a bounded peak working set.
+// Parallel execution reserves memory: the exhaustive numeric corpus and sanitizer run need a bounded peak working set.
 func TestMarkdownSourceDecoding(t *testing.T) {
+	parallelMarkdownMemory(t, 8)
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
@@ -155,7 +156,7 @@ func TestMarkdownSourceDecoding(t *testing.T) {
 				}
 				write(t, filepath.Join(scratch, file), b)
 			}
-			result := nativelyRun(t, lowered(t, filepath.Join(scratch, "testdata/decode_probe.ts")), mutantCases)
+			result := onNode(t, filepath.Join(scratch, "testdata/decode_probe.ts"), mutantCases)
 			clean(t, m.name, result)
 			if bytes.Equal(result.stdout, mutantWant.stdout) {
 				t.Fatal("survived")

@@ -13,7 +13,7 @@ import (
 )
 
 func TestMarkdownParserPrefixes(t *testing.T) {
-	t.Parallel()
+	parallelMarkdown(t)
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
@@ -129,14 +129,14 @@ func TestMarkdownParserPrefixes(t *testing.T) {
 			}
 			mutantMain := filepath.Join(scratch, "testdata/prefix_probe.ts")
 			write(t, mutantMain, content)
-			result := nativelyRun(t, lowered(t, mutantMain), cases)
-			clean(t, "native output-only prefix mutant", result)
+			result := onNode(t, mutantMain, cases)
+			clean(t, "source Node output-only prefix mutant", result)
 			if bytes.Equal(result.stdout, want.stdout) {
 				t.Fatal("mutant survived")
 			}
 			offset := firstDifference(string(result.stdout), string(want.stdout))
 			index := bytes.Count(want.stdout[:offset], []byte("\n"))
-			t.Logf("output-only native mutant caught in %q at byte %d", inputs[index].Name, offset)
+			t.Logf("output-only source Node mutant caught in %q at byte %d", inputs[index].Name, offset)
 		})
 	}
 	fast := filepath.Join(dir, "native-fast")

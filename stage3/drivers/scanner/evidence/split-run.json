@@ -1,0 +1,36 @@
+{
+  "developer_tools": "2adf65c2514eefbbb073bfdab922d00a4e80a3d3",
+  "scratch": "64d470344dfbe2179f22aa80b184928782773105",
+  "merge_conflicts": [],
+  "nproc": 5,
+  "unsplit": {
+    "input_tree": "/workspace/scratch/scanner-fixed-inputs",
+    "files": 81,
+    "node_exit": 0,
+    "comparison_control_exit": 0,
+    "end_mutant_diff_exit": 1,
+    "native": "blocked at compilation",
+    "build_exit": 1
+  },
+  "split": {
+    "input_tree": "/workspace/scratch/scanner-fixed-inputs",
+    "files": 81,
+    "node_exit": 0,
+    "comparison_control_exit": 0,
+    "end_mutant_diff_exit": 1,
+    "native": "blocked at compilation",
+    "build_exit": 1
+  },
+  "split_jobs": 5,
+  "generated_c_bytes": null,
+  "generated_c_lines": null,
+  "clang_unsplit_wall_seconds": null,
+  "clang_split_cold_wall_seconds": null,
+  "clang_split_warm_wall_seconds": null,
+  "native_binary_bytes": null,
+  "reason": "Error-as-any cast refusal before C emission; clang never invoked for scanner",
+  "c_emission_stdout_bytes": 0,
+  "full_tree_node_diff_exit": 0,
+  "node_tokens": 509014,
+  "stubs": false
+}

@@ -1,0 +1,96 @@
+{
+  "status": "default oracle and explicit-property lane pass; supplied default lane manifest needs three sanctioned property entries",
+  "integration": "06f89a045c877808bcce0d72687cc59c893645ed",
+  "implementation": "5d4c023f8fee81cefe238141d872266e4465da0c",
+  "restored_public_methods": 10,
+  "retained_public_property_unions": [
+    [
+      "AmdDependency",
+      "name"
+    ],
+    [
+      "CommentRange",
+      "hasTrailingNewLine"
+    ],
+    [
+      "BuilderProgramHost",
+      "createHash"
+    ]
+  ],
+  "files_leaving_zero": [
+    "watch.ts"
+  ],
+  "watch": [
+    0,
+    2
+  ],
+  "whole_tree": [
+    310,
+    317
+  ],
+  "original_files_at_zero": [
+    55,
+    54
+  ],
+  "partition_findings": [
+    143,
+    150
+  ],
+  "watch_omission": "declined: public returned hosts and injected callbacks can observe own undefined keys with six operations",
+  "stock_javascript": "all 26 owned files byte-identical",
+  "crlf": "preserved",
+  "idempotence": "zero changes on independently adapted and fresh lane trees",
+  "mutants": "10 restored-method reintroductions, one required ! -> ?? 0, one removed owner ledger entry, one unrelated API declaration; all 13 caught",
+  "oracle": {
+    "tree": "/tmp/adapt32-methods-after",
+    "nproc": 5,
+    "workers": 4,
+    "runners": "all",
+    "tests": null,
+    "node": "v24.19.0",
+    "phases": {
+      "install": {
+        "command": [
+          "npm",
+          "ci",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "exit": 0,
+        "seconds": 3.876
+      },
+      "build": {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit": 0,
+        "seconds": 38.04
+      },
+      "tests": {
+        "command": [
+          "npm",
+          "test",
+          "--",
+          "--workers=4",
+          "--lint=false",
+          "--no-colors"
+        ],
+        "exit": 0,
+        "seconds": 527.86
+      }
+    },
+    "status": "pass",
+    "counts": {
+      "passing": 106367,
+      "failing": 0,
+      "pending": 0
+    },
+    "baseline_diffs": [],
+    "wall_seconds": 569.844
+  },
+  "lane_default": "fails only three retained sanctioned property owners missing from supplied manifest",
+  "lane_explicit_properties": "pass with exactly those three additional owners; default script and expectations unchanged",
+  "no_native_compiler_edits": true
+}
