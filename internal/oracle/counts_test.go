@@ -4,8 +4,10 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"regexp"
+	"sort"
 	"strings"
 	"sync"
 	"syscall"
@@ -131,87 +133,134 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 	return fmt.Sprintf("| %s | %s | %s | %s | %s | %s | %s |", path, match[1], match[2], match[3], match[4], match[5], match[6])
 }
 
-// Every fixture's counts are recorded, and a change to them fails until the table is updated with it.
+type countCase struct {
+	path                                                  string
+	input, unreadable, writes, defaultCompiler, predicate bool
+	arguments                                             []string
+}
+
+// countCases is the complete old sweep, including the helpers formerly run in the parent.
+func countCases() ([]countCase, error) {
+	var cases []countCase
+	for _, fixture := range fixtures {
+		if fixture.lowers && !uncounted[fixture.path] {
+			cases = append(cases, countCase{path: fixture.path})
+		}
+	}
+	for _, fixture := range inputFixtures {
+		cases = append(cases, countCase{path: fixture.path, input: true, arguments: fixture.arguments, unreadable: fixture.unreadable, writes: fixture.writes})
+	}
+	for _, fixture := range fsFileFixtures {
+		cases = append(cases, countCase{path: "internal/oracle/testdata/node_fs_file_" + fixture + ".a", input: true})
+	}
+	for _, path := range []string{"stage3/interface-downcasts/visitor.a", "stage3/interface-downcasts/wrong-kind.a"} {
+		cases = append(cases, countCase{path: path, defaultCompiler: true})
+	}
+	for _, name := range []string{"default-staged", "default-wrong-type", "default-wrong-boolean", "default-literal", "default-boxed-string", "default-boxed-write", "default-destructure", "default-read-before-set", "readiness-identifier", "readiness-identifier-uninitialized", "readiness-number", "readiness-number-uninitialized"} {
+		cases = append(cases, countCase{path: interfaceSource(name)})
+	}
+	paths, err := filepath.Glob(filepath.Join(repository, "internal/lower/testdata/predicates/overload_*.a"))
+	if err != nil || len(paths) == 0 {
+		return nil, fmt.Errorf("predicate fixtures: %v", err)
+	}
+	typescript, err := filepath.Glob(filepath.Join(repository, "internal/lower/testdata/predicates/overload_*.ts"))
+	if err != nil {
+		return nil, err
+	}
+	paths = append(paths, typescript...)
+	sort.Strings(paths)
+	for _, path := range paths {
+		relative, err := filepath.Rel(repository, path)
+		if err != nil {
+			return nil, err
+		}
+		cases = append(cases, countCase{path: filepath.ToSlash(relative), predicate: true})
+	}
+	return cases, nil
+}
+
+// Each fixture owns its comparison, so sharding and failures use the same unit.
 func TestCountsAreRecorded(t *testing.T) {
 	t.Parallel()
-	rows := make([]string, len(fixtures)+len(inputFixtures)+len(fsFileFixtures))
-	var lock sync.Mutex
-	t.Run("fixtures", func(t *testing.T) {
-		for index, fixture := range fixtures {
-			if !fixture.lowers || uncounted[fixture.path] {
-				continue
-			}
-			t.Run(fixture.path, func(t *testing.T) {
-				t.Parallel()
-				row := counted(t, fixture.path, false, nil, false, false)
-				lock.Lock()
-				rows[index] = row
-				lock.Unlock()
-			})
-		}
-		for index, fixture := range inputFixtures {
-			t.Run(fixture.path, func(t *testing.T) {
-				t.Parallel()
-				row := counted(t, fixture.path, true, fixture.arguments, fixture.unreadable, fixture.writes)
-				lock.Lock()
-				rows[len(fixtures)+index] = row
-				lock.Unlock()
-			})
-		}
-		for index, fixture := range fsFileFixtures {
-			path := "internal/oracle/testdata/node_fs_file_" + fixture + ".a"
-			t.Run(path, func(t *testing.T) {
-				t.Parallel()
-				row := counted(t, path, true, nil, false, false)
-				lock.Lock()
-				rows[len(fixtures)+len(inputFixtures)+index] = row
-				lock.Unlock()
-			})
-		}
-	})
-	if t.Failed() {
-		return
-	}
-	rows = append(rows, interfaceCastCounts(t)...)
-	var table strings.Builder
-	table.WriteString(countsHeader)
-	for _, row := range rows {
-		if row != "" {
-			table.WriteString(row)
-			table.WriteString("\n")
-		}
-	}
-	table.WriteString(predicateCountsTable(t))
-	if *updateCounts {
-		if err := os.WriteFile(countsPath, []byte(table.String()), 0o644); err != nil {
-			t.Fatal(err)
-		}
-		return
+	identity(t) // sync.Once shares the runtime builds across all fixtures.
+	cases, err := countCases()
+	if err != nil {
+		t.Fatal(err)
 	}
 	recorded, err := os.ReadFile(countsPath)
-	if err != nil {
+	if err != nil && !*updateCounts {
 		t.Fatalf("%v: record the counts with -update-counts", err)
 	}
-	if string(recorded) == table.String() {
-		return
-	}
-	// Say which rows moved, so the failure reads as the review diff will.
 	recordedRows := map[string]string{}
 	for _, line := range strings.Split(string(recorded), "\n") {
-		if fields := strings.Split(line, " | "); len(fields) == 7 {
+		fields := strings.Split(line, " | ")
+		if len(fields) == 7 || len(fields) == 5 {
 			recordedRows[strings.TrimPrefix(fields[0], "| ")] = line
 		}
 	}
-	moved := []string{}
-	for _, row := range rows {
-		if row == "" {
-			continue
+	// Validate the complete shape even when only a subset of leaves is selected.
+	table := func(rows []string) string {
+		var table strings.Builder
+		table.WriteString(countsHeader)
+		predicate := false
+		for index, each := range cases {
+			if each.predicate && !predicate {
+				table.WriteString(predicateCountsHeader)
+				predicate = true
+			}
+			table.WriteString(rows[index])
+			table.WriteString("\n")
 		}
-		fixture := strings.TrimPrefix(strings.Split(row, " | ")[0], "| ")
-		if recordedRows[fixture] != row {
-			moved = append(moved, fmt.Sprintf("recorded: %s\nmeasured: %s", recordedRows[fixture], row))
-		}
+		return table.String()
 	}
-	t.Errorf("the counts changed and %s wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts):\n%s",
-		countsPath, strings.Join(moved, "\n"))
+	wanted := make([]string, len(cases))
+	for index, each := range cases {
+		wanted[index] = recordedRows[each.path]
+	}
+	if !*updateCounts && table(wanted) != string(recorded) {
+		t.Error("counts.md header, fixture inventory, or order changed; record with -update-counts")
+	}
+	rows := make([]string, len(cases))
+	if *updateCounts {
+		t.Cleanup(func() {
+			if t.Failed() {
+				return
+			}
+			if err := os.WriteFile(countsPath, []byte(table(rows)), 0o644); err != nil {
+				t.Fatal(err)
+			}
+		})
+	}
+	// The two default-compiler fixtures share one CLI build, rather than go run per case.
+	var compilerOnce sync.Once
+	compiler := filepath.Join(t.TempDir(), "adamic")
+	var compilerError error
+	for index, each := range cases {
+		t.Run(each.path, func(t *testing.T) {
+			t.Parallel()
+			var row string
+			switch {
+			case each.predicate:
+				row = predicateCountsRow(t, filepath.Join(repository, each.path))
+			case each.defaultCompiler:
+				compilerOnce.Do(func() {
+					command := exec.Command("go", "build", "-o", compiler, "./cmd/adamic")
+					command.Dir = repository
+					if output, err := command.CombinedOutput(); err != nil {
+						compilerError = fmt.Errorf("build default compiler: %w: %s", err, output)
+					}
+				})
+				if compilerError != nil {
+					t.Fatal(compilerError)
+				}
+				row = defaultInterfaceCount(t, each.path, compiler)
+			default:
+				row = counted(t, each.path, each.input, each.arguments, each.unreadable, each.writes)
+			}
+			rows[index] = row // Each leaf owns one slot; cleanup runs after all children finish.
+			if !*updateCounts && recordedRows[each.path] != row {
+				t.Errorf("the counts changed and %s wasn't updated (go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts):\nrecorded: %s\nmeasured: %s", countsPath, recordedRows[each.path], row)
+			}
+		})
+	}
 }

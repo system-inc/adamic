@@ -1,0 +1,26 @@
+{
+  "cpu_quota": "400000 100000",
+  "memory_max": "17179869184",
+  "baseline_commit": "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8",
+  "submodules": [
+    "7945d102a6c18dd36adf9114a758ce646e8b2359 cohere (7945d102)",
+    " d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (remotes/origin/adamic)"
+  ],
+  "tools": {
+    "go": {
+      "version": "go version go1.27.1 linux/amd64",
+      "sha256": "30969f97169d7f43fe6a085873d75613adc21e30818a8c61d95bd27275df4624"
+    },
+    "node": {
+      "version": "v24.19.0",
+      "sha256": "bc17c508ffeed0ec622934f9b7fa72f8e78da65350e63c3eceb56fa688aa5e12"
+    },
+    "clang": {
+      "version": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "sha256": "92a0ff2751ad344b94c7d30f53c56a71a5edfb6f867e7269a573e0e3f663786a"
+    }
+  },
+  "go_build_cache": "Go compilation is preparatory; /workspace/split-evidence/before-cache/go-build reused for paired passing measurements. Native libraries/results use new empty XDG_CACHE_HOME each time; ADAMIC_GATE_UNCACHED=1 and -count=1 bypass result/test caches.",
+  "uid": 1000,
+  "python": "3.12.14"
+}

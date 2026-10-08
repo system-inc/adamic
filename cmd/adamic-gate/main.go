@@ -310,12 +310,40 @@ func literalChildren(file, parent string, table ...string) ([]string, error) {
 	}
 	return names, nil
 }
+
+// Query the initialized test inventory: many oracle fixtures are appended by init helpers.
+// AST enumeration of the base literal would silently omit those fixtures.
+func oracleCounterChildren(parent string) ([]string, error) {
+	data, err := output("go", "test", "./internal/oracle", "-count=1", "-run", "^$", "-v", "-args", "-oracle-unit-list")
+	if err != nil {
+		return nil, err
+	}
+	for _, line := range strings.Split(data, "\n") {
+		if !strings.HasPrefix(line, "oracle units: ") {
+			continue
+		}
+		var units map[string][]string
+		if err := json.Unmarshal([]byte(strings.TrimPrefix(line, "oracle units: ")), &units); err != nil {
+			return nil, err
+		}
+		if len(units[parent]) == 0 {
+			return nil, fmt.Errorf("empty oracle inventory for %s", parent)
+		}
+		return units[parent], nil
+	}
+	return nil, errors.New("oracle unit inventory missing")
+}
+
 func children(pkg, parent string) ([]string, error) {
 	if strings.HasSuffix(pkg, "/stage1/cohere/typeaware") && parent == "TestVolumeAgreementAndMutants" {
 		return literalChildren("stage1/cohere/typeaware/volume_test.go", parent, "changes")
 	}
 	if strings.HasSuffix(pkg, "/internal/oracle") {
 		switch parent {
+		case "TestLoopCountersAgreeWithNode":
+			return oracleCounterChildren(parent)
+		case "TestCountsAreRecorded":
+			return oracleCounterChildren(parent)
 		case "TestNativeAgreesWithNode":
 			return fixtureRows("internal/oracle/oracle_test.go", "fixtures")
 		case "TestInputAgreesWithNode":

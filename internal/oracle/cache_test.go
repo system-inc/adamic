@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/sha256"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"os"
 	"os/exec"
@@ -448,7 +449,35 @@ func cacheProbe(t *testing.T, path string, program *ir.Program, external string,
 	}
 }
 
+var listOracleUnits = flag.Bool("oracle-unit-list", false, "list independent counter test units without running them")
+
+func oracleCounterUnits() map[string][]string {
+	units := map[string][]string{}
+	for _, each := range loopCounterCases() {
+		units["TestLoopCountersAgreeWithNode"] = append(units["TestLoopCountersAgreeWithNode"], each.name)
+	}
+	cases, err := countCases()
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+	for _, each := range cases {
+		units["TestCountsAreRecorded"] = append(units["TestCountsAreRecorded"], each.path)
+	}
+	return units
+}
+
 func TestMain(main *testing.M) {
+	flag.Parse()
+	if *listOracleUnits {
+		data, err := json.Marshal(oracleCounterUnits())
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+		fmt.Printf("oracle units: %s\n", data)
+		os.Exit(0)
+	}
 	status := main.Run()
 	if gate.cache != nil {
 		for index, kind := range resultKinds {

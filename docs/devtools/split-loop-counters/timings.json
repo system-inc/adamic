@@ -1,0 +1,181 @@
+{
+  "before-loop": {
+    "instrument": "Python time.perf_counter",
+    "wall": 47.87260523300006,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-run",
+      "TestLoopCountersAgreeWithNode"
+    ],
+    "env": {
+      "GOMAXPROCS": "4",
+      "ADAMIC_GATE_UNCACHED": "1",
+      "XDG_CACHE_HOME": "/workspace/split-evidence/before-loop-cache",
+      "GOCACHE": "/workspace/split-evidence/before-cache/go-build"
+    },
+    "leaf_count": 0,
+    "failed_leaves": [],
+    "max_leaf_seconds": 0
+  },
+  "after-loop": {
+    "instrument": "Python time.perf_counter",
+    "wall": 31.962655366000035,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-run",
+      "TestLoopCountersAgreeWithNode"
+    ],
+    "env": {
+      "GOMAXPROCS": "4",
+      "ADAMIC_GATE_UNCACHED": "1",
+      "XDG_CACHE_HOME": "/workspace/split-evidence/after-loop-cache",
+      "GOCACHE": "/workspace/split-evidence/before-cache/go-build"
+    },
+    "leaf_count": 1193,
+    "failed_leaves": [],
+    "max_leaf_seconds": 1.84
+  },
+  "before-counts": {
+    "instrument": "Python time.perf_counter",
+    "wall": 61.14525457700006,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-run",
+      "TestCountsAreRecorded"
+    ],
+    "env": {
+      "GOMAXPROCS": "4",
+      "ADAMIC_GATE_UNCACHED": "1",
+      "XDG_CACHE_HOME": "/workspace/split-evidence/before-counts-cache",
+      "GOCACHE": "/workspace/split-evidence/before-cache/go-build"
+    },
+    "leaf_count": 791,
+    "failed_leaves": [],
+    "max_leaf_seconds": 11.82
+  },
+  "after-counts": {
+    "instrument": "Python time.perf_counter",
+    "wall": 60.53434488399989,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-run",
+      "TestCountsAreRecorded"
+    ],
+    "env": {
+      "GOMAXPROCS": "4",
+      "ADAMIC_GATE_UNCACHED": "1",
+      "XDG_CACHE_HOME": "/workspace/split-evidence/after-counts-cache",
+      "GOCACHE": "/workspace/split-evidence/before-cache/go-build"
+    },
+    "leaf_count": 819,
+    "failed_leaves": [],
+    "max_leaf_seconds": 4.3
+  },
+  "before-ready": {
+    "instrument": "Python time.perf_counter",
+    "wall": 85.75409586300009,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-run",
+      "^(TestLoopCountersAgreeWithNode|TestCountsAreRecorded)$"
+    ],
+    "env": {
+      "GOMAXPROCS": "4",
+      "ADAMIC_GATE_UNCACHED": "1",
+      "XDG_CACHE_HOME": "/workspace/split-evidence/before-ready-cache"
+    },
+    "leaf_count": 791,
+    "failed_leaves": [],
+    "max_leaf_seconds": 11.91
+  },
+  "after-shared-node": {
+    "instrument": "Python time.perf_counter",
+    "wall": 85.77888770100003,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-run",
+      "^(TestLoopCountersAgreeWithNode|TestCountsAreRecorded)$"
+    ],
+    "env": {
+      "GOMAXPROCS": "4",
+      "ADAMIC_GATE_UNCACHED": "1",
+      "XDG_CACHE_HOME": "/workspace/split-evidence/after-shared-node-cache",
+      "GOCACHE": "/workspace/split-evidence/before-cache/go-build"
+    },
+    "leaf_count": 2012,
+    "failed_leaves": [],
+    "max_leaf_seconds": 4.55
+  },
+  "after-loop-one-slot": {
+    "instrument": "Python time.perf_counter",
+    "wall": 41.14898908200007,
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-count=1",
+      "-parallel=1",
+      "-json",
+      "-run",
+      "TestLoopCountersAgreeWithNode"
+    ],
+    "env": {
+      "GOMAXPROCS": "4",
+      "ADAMIC_GATE_UNCACHED": "1",
+      "XDG_CACHE_HOME": "/workspace/split-evidence/after-loop-one-slot-cache",
+      "GOCACHE": "/workspace/split-evidence/before-cache/go-build"
+    },
+    "leaf_count": 1193,
+    "failed_leaves": [],
+    "max_leaf_seconds": 1.38
+  },
+  "requested-command": {
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "TestLoopCountersAgreeWithNode"
+    ],
+    "exit": 0,
+    "wall": 18.685348449999992,
+    "instrument": "Python time.perf_counter"
+  }
+}

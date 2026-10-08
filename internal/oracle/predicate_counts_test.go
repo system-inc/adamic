@@ -36,45 +36,51 @@ func predicateCountsTable(t *testing.T) string {
 	var table strings.Builder
 	table.WriteString(predicateCountsHeader)
 	for _, path := range paths {
-		program, err := lowered(t, path)
-		if err != nil {
-			t.Fatalf("%s: %v", path, err)
-		}
-		counts := program.PredicateChecks
-		proven, checked, unobservable := 0, 0, 0
-		for _, site := range counts.Sites {
-			if site.Where == "" || site.Function == "" || site.Overload < 1 {
-				t.Fatalf("incomplete predicate site: %+v", site)
-			}
-			seen := map[string]bool{}
-			for _, direction := range site.Directions {
-				if (direction.Direction != "true" && direction.Direction != "false") || seen[direction.Direction] || direction.Reason == "" {
-					t.Fatalf("invalid direction: %+v", direction)
-				}
-				seen[direction.Direction] = true
-				switch direction.Status {
-				case "proven":
-					proven++
-				case "checked":
-					checked++
-				case "unobservable":
-					proven++
-					unobservable++
-				default:
-					t.Fatalf("unknown predicate status: %+v", direction)
-				}
-			}
-		}
-		if counts.Proven != proven || counts.Checked != checked || counts.Unobservable != unobservable {
-			t.Fatalf("%s: direction records (%d,%d,%d) disagree with aggregate %+v", path, proven, checked, unobservable, counts)
-		}
-		relative, err := filepath.Rel(repository, path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		fmt.Fprintf(&table, "| %s | %d | %d | %d | %d |\n", filepath.ToSlash(relative), len(counts.Sites), proven, checked, unobservable)
+		table.WriteString(predicateCountsRow(t, path))
+		table.WriteString("\n")
 	}
 	return table.String()
+}
+
+func predicateCountsRow(t *testing.T, path string) string {
+	t.Helper()
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatalf("%s: %v", path, err)
+	}
+	counts := program.PredicateChecks
+	proven, checked, unobservable := 0, 0, 0
+	for _, site := range counts.Sites {
+		if site.Where == "" || site.Function == "" || site.Overload < 1 {
+			t.Fatalf("incomplete predicate site: %+v", site)
+		}
+		seen := map[string]bool{}
+		for _, direction := range site.Directions {
+			if (direction.Direction != "true" && direction.Direction != "false") || seen[direction.Direction] || direction.Reason == "" {
+				t.Fatalf("invalid direction: %+v", direction)
+			}
+			seen[direction.Direction] = true
+			switch direction.Status {
+			case "proven":
+				proven++
+			case "checked":
+				checked++
+			case "unobservable":
+				proven++
+				unobservable++
+			default:
+				t.Fatalf("unknown predicate status: %+v", direction)
+			}
+		}
+	}
+	if counts.Proven != proven || counts.Checked != checked || counts.Unobservable != unobservable {
+		t.Fatalf("%s: direction records (%d,%d,%d) disagree with aggregate %+v", path, proven, checked, unobservable, counts)
+	}
+	relative, err := filepath.Rel(repository, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return fmt.Sprintf("| %s | %d | %d | %d | %d |", filepath.ToSlash(relative), len(counts.Sites), proven, checked, unobservable)
 }
 
 func TestPredicateDirectionCountsAreRecorded(t *testing.T) {
