@@ -20,7 +20,9 @@ import (
 )
 
 type Descriptor struct {
-	Parent bool `json:"parent,omitempty"`
+	Typed        bool     `json:"typed,omitempty"`
+	ProgramReads []string `json:"programReads,omitempty"`
+	Parent       bool     `json:"parent,omitempty"`
 	// Node opts a rule into being handed the node it listens to, as `visit(node, index[, parent])`, rather
 	// than refetching it from its index. Every rule moves to it in #93z4yv7's codemod, and then the field
 	// goes: until then a rule without it keeps `visit(index[, parent])`.
@@ -63,15 +65,31 @@ func RuleModule(directory string) (string, error) {
 	return module, nil
 }
 
-// Witnesses are raw source files outside the module graph. Keep their script kind.
+// Witnesses are raw source files outside the module graph. Keep their script kind. A witness may sit in a
+// directory under testdata, as testdata/src/utils/format.ts.txt, when its rule judges the path: the
+// harness lints it at that relative path.
 func Witnesses(directory string) ([]string, error) {
 	var paths []string
-	for _, extension := range []string{"ts", "tsx", "js", "jsx"} {
-		found, err := filepath.Glob(filepath.Join(directory, "testdata", "*."+extension+".txt"))
+	root := filepath.Join(directory, "testdata")
+	err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
 		if err != nil {
-			return nil, err
+			if os.IsNotExist(err) && path == root {
+				return filepath.SkipDir
+			}
+			return err
 		}
-		paths = append(paths, found...)
+		if entry.IsDir() {
+			return nil
+		}
+		for _, extension := range []string{"ts", "tsx", "js", "jsx"} {
+			if strings.HasSuffix(path, "."+extension+".txt") {
+				paths = append(paths, path)
+			}
+		}
+		return nil
+	})
+	if err != nil {
+		return nil, err
 	}
 	sort.Strings(paths)
 	return paths, nil
@@ -129,6 +147,21 @@ func Discover(root string) ([]Descriptor, error) {
 			if !slugPattern.MatchString(part) {
 				return nil, fmt.Errorf("%s: invalid upstream package", path)
 			}
+		}
+		seenReads := map[string]bool{}
+		for _, read := range d.ProgramReads {
+			switch read {
+			case "ReadsCompilerOptions", "ReadsDefaultLibrary", "ReadsModuleResolution", "ReadsOtherFiles", "ReadsDesignSystem":
+			default:
+				return nil, fmt.Errorf("%s: invalid program read %q", path, read)
+			}
+			if seenReads[read] {
+				return nil, fmt.Errorf("%s: duplicate program read %q", path, read)
+			}
+			seenReads[read] = true
+		}
+		if len(d.ProgramReads) > 0 && !d.Typed {
+			return nil, fmt.Errorf("%s: program reads require typed", path)
 		}
 		d.Module, err = RuleModule(filepath.Dir(path))
 		if err != nil {
@@ -253,7 +286,11 @@ func Render(descriptors []Descriptor) (typescript, golang []byte) {
 		fmt.Fprintf(&ts, "        this.rule%d = rule%d;\n", i, i)
 	}
 	for i, d := range descriptors {
-		fmt.Fprintf(&ts, "        this.selected%d = context.enabled('%s');\n", i, d.Name)
+		selection := "enabled"
+		if d.Typed {
+			selection = "typed"
+		}
+		fmt.Fprintf(&ts, "        this.selected%d = context.%s('%s');\n", i, selection, d.Name)
 	}
 	ts.WriteString("    }\n")
 	goSource.WriteString("} }\n")
@@ -265,7 +302,7 @@ func Render(descriptors []Descriptor) (typescript, golang []byte) {
 				name = d.Finish
 			}
 			if name != "" {
-				fmt.Fprintf(&ts, "    if(this.selected%d) { this.rule%d.%s(root); }\n", i, i, name)
+				fmt.Fprintf(&ts, "    if(this.selected%d) { %s this.rule%d.%s(root); }\n", i, checkerEnter(d), i, name)
 			}
 		}
 		ts.WriteString("}\n")
@@ -293,14 +330,14 @@ func Render(descriptors []Descriptor) (typescript, golang []byte) {
 			if d.Parent {
 				arguments += ", parent"
 			}
-			fmt.Fprintf(&ts, "            if(this.selected%d) { this.rule%d.%s(%s); }\n", i, i, d.Visit, arguments)
+			fmt.Fprintf(&ts, "            if(this.selected%d) { %s this.rule%d.%s(%s); }\n", i, checkerEnter(d), i, d.Visit, arguments)
 		}
 		ts.WriteString("            break;\n")
 	}
 	ts.WriteString("        default:\n            break;\n    }\n    }\n}\n")
 	ts.WriteString("export function createRuleSet(context: RuleContext): RuleSet {\n")
-	for i := range descriptors {
-		fmt.Fprintf(&ts, "    const rule%d = create%d(context);\n", i, i)
+	for i, d := range descriptors {
+		fmt.Fprintf(&ts, "    %s\n    const rule%d = create%d(context);\n", strings.ReplaceAll(checkerEnter(d), "this.context", "context"), i, i)
 	}
 	ts.WriteString("    return new RuleSet(context")
 	for i := range descriptors {
@@ -312,6 +349,14 @@ func Render(descriptors []Descriptor) (typescript, golang []byte) {
 		panic(fmt.Sprintf("registry generator produced invalid Go: %v", err))
 	}
 	return []byte(ts.String()), formatted
+}
+
+func checkerEnter(d Descriptor) string {
+	var reads []string
+	for _, read := range d.ProgramReads {
+		reads = append(reads, "'"+read+"'")
+	}
+	return fmt.Sprintf("if(this.context.checker !== undefined) { this.context.checker.enter('%s', [%s]); }", d.Name, strings.Join(reads, ","))
 }
 
 // Generate validates the entire registry even when a test selects only one rule.

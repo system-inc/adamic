@@ -1,0 +1,256 @@
+file,line,column,code,message
+src/compiler/_namespaces/ts.moduleSpecifiers.ts,3,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/moduleSpecifiers.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.performance.ts,3,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/performance.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  The file is in the program because:
+    Imported via ""../performance.js"" from file '/tmp/checker-rerun-adapted/src/compiler/_namespaces/ts.performance.ts'
+    Imported via ""./performance.js"" from file '/tmp/checker-rerun-adapted/src/compiler/executeCommandLine.ts'
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,10,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/sys.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,11,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/path.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,12,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/diagnosticInformationMap.generated.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,13,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/scanner.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,14,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/utilitiesPublic.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,15,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/utilities.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,16,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/factory/baseNodeFactory.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,17,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/factory/parenthesizerRules.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,18,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/factory/nodeConverters.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,19,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/factory/nodeFactory.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,20,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/factory/emitNode.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,21,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/factory/emitHelpers.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,22,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/factory/nodeTests.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,23,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/factory/nodeChildren.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,24,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/factory/utilities.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,25,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/factory/utilitiesPublic.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,26,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/parser.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,27,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/commandLineParser.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,28,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/moduleNameResolver.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,30,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/symbolWalker.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,31,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/checker.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,32,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/visitorPublic.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,33,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/sourcemap.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,34,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/utilities.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,35,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/destructuring.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,36,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/classThis.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,37,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/namedEvaluation.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,38,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/taggedTemplate.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,39,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/ts.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,3,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/corePublic.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,40,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/classFields.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,41,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/typeSerializer.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,42,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/legacyDecorators.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,43,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/esDecorators.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,44,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/es2017.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,45,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/es2018.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,46,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/es2019.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,47,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/es2020.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,48,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/es2021.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,49,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/esnext.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,4,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/core.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,50,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/jsx.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,51,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/es2016.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,52,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/es2015.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,53,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/generators.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,54,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/module/module.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,55,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/module/system.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,56,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/module/esnextAnd2015.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,57,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,58,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/declarations/diagnostics.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,59,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformers/declarations.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,5,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/debug.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,60,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/transformer.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,61,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/emitter.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,62,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/watchUtilities.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,63,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/program.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,64,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/programDiagnostics.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,65,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/builderStatePublic.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,66,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/builderState.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,67,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/builder.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,68,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/builderPublic.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,69,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/resolutionCache.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,6,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/semver.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,70,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/watch.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,71,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/watchPublic.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,72,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/tsbuild.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,73,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/tsbuildPublic.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,74,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/executeCommandLine.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,75,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/expressionToTypeNode.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,7,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/performanceCore.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,8,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/tracing.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/_namespaces/ts.ts,9,15,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/types.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  The file is in the program because:
+    Imported via ""../types.js"" from file '/tmp/checker-rerun-adapted/src/compiler/_namespaces/ts.ts'
+    Imported via ""./types.js"" from file '/tmp/checker-rerun-adapted/src/compiler/diagnosticInformationMap.generated.ts'
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/binder.ts,311,8,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/_namespaces/ts.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  The file is in the program because:
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/binder.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/core.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/debug.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/debug.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/semver.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/performanceCore.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/tracing.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/performance.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/types.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/sys.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/path.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/scanner.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/utilitiesPublic.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/utilities.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/factory/baseNodeFactory.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/factory/parenthesizerRules.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/factory/nodeConverters.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/factory/nodeFactory.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/factory/emitNode.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/factory/emitHelpers.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/factory/nodeTests.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/factory/nodeChildren.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/factory/utilities.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/factory/utilitiesPublic.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/parser.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/commandLineParser.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/moduleNameResolver.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/symbolWalker.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/checker.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/moduleSpecifiers.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/visitorPublic.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/sourcemap.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/utilities.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/destructuring.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/classThis.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/namedEvaluation.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/taggedTemplate.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/ts.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/classFields.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/typeSerializer.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/legacyDecorators.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/esDecorators.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/es2017.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/es2018.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/es2019.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/es2020.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/es2021.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/esnext.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/jsx.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/es2016.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/es2015.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/generators.ts'
+    Imported via ""../../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/module/module.ts'
+    Imported via ""../../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/module/system.ts'
+    Imported via ""../../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/module/esnextAnd2015.ts'
+    Imported via ""../../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts'
+    Imported via ""../../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/declarations/diagnostics.ts'
+    Imported via ""../_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformers/declarations.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformer.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/emitter.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/emitter.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/watchUtilities.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/program.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/programDiagnostics.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/builderStatePublic.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/builderState.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/builder.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/builderPublic.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/resolutionCache.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/watch.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/watchPublic.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/tsbuild.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/tsbuildPublic.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/executeCommandLine.ts'
+    Imported via ""./_namespaces/ts.js"" from file '/tmp/checker-rerun-adapted/src/compiler/expressionToTypeNode.ts'
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/checker.ts,1151,35,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  The file is in the program because:
+    Imported via ""./_namespaces/ts.moduleSpecifiers.js"" from file '/tmp/checker-rerun-adapted/src/compiler/checker.ts'
+    Imported via ""./ts.moduleSpecifiers.js"" from file '/tmp/checker-rerun-adapted/src/compiler/_namespaces/ts.ts'
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/tracing.ts,24,30,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/_namespaces/ts.performance.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  The file is in the program because:
+    Imported via ""./_namespaces/ts.performance.js"" from file '/tmp/checker-rerun-adapted/src/compiler/tracing.ts'
+    Imported via ""./_namespaces/ts.performance.js"" from file '/tmp/checker-rerun-adapted/src/compiler/parser.ts'
+    Imported via ""./_namespaces/ts.performance.js"" from file '/tmp/checker-rerun-adapted/src/compiler/checker.ts'
+    Imported via ""./_namespaces/ts.performance.js"" from file '/tmp/checker-rerun-adapted/src/compiler/sourcemap.ts'
+    Imported via ""./_namespaces/ts.performance.js"" from file '/tmp/checker-rerun-adapted/src/compiler/transformer.ts'
+    Imported via ""./_namespaces/ts.performance.js"" from file '/tmp/checker-rerun-adapted/src/compiler/emitter.ts'
+    Imported via ""./_namespaces/ts.performance.js"" from file '/tmp/checker-rerun-adapted/src/compiler/program.ts'
+    Imported via ""./_namespaces/ts.performance.js"" from file '/tmp/checker-rerun-adapted/src/compiler/tsbuildPublic.ts'
+    Imported via ""./ts.performance.js"" from file '/tmp/checker-rerun-adapted/src/compiler/_namespaces/ts.ts'
+    Imported via ""./_namespaces/ts.performance.js"" from file '/tmp/checker-rerun-adapted/src/compiler/binder.ts'
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""
+src/compiler/tracing.ts,25,30,TS6307,"File '/tmp/checker-rerun-adapted/src/compiler/hostErrors.ts' is not listed within the file list of project '/tmp/checker-rerun-adapted/src/compiler/tsconfig.json'. Projects must list all files or use an 'include' pattern.
+  The file is in the program because:
+    Imported via ""./hostErrors.js"" from file '/tmp/checker-rerun-adapted/src/compiler/tracing.ts'
+    Imported via ""./hostErrors.js"" from file '/tmp/checker-rerun-adapted/src/compiler/sys.ts'
+  File is CommonJS module because '/tmp/checker-rerun-adapted/package.json' does not have field ""type"""

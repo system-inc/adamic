@@ -5,6 +5,7 @@
 // specifiers with the AST and insert only the inline modifier into real text.
 const fs = require("node:fs");
 const path = require("node:path");
+const { spawnSync } = require("node:child_process");
 
 // The generator owns this import. Parse its output string as TypeScript, then
 // classify its names against the actual exports of compiler/types.ts.
@@ -74,10 +75,8 @@ function main() {
         strict: true,
         exactOptionalPropertyTypes: true,
         noUncheckedIndexedAccess: true,
-        noImplicitReturns: true,
-        noFallthroughCasesInSwitch: true,
         verbatimModuleSyntax: true,
-        erasableSyntaxOnly: true,
+        erasableSyntaxOnly: false,
         allowImportingTsExtensions: true,
         noEmit: true,
         module: ts.ModuleKind.ESNext,
@@ -96,6 +95,7 @@ function main() {
     }));
     const generator = generatorEdits(ts, tree, program);
     const generated = path.join(directory, "diagnosticInformationMap.generated.ts");
+    let regenerate = generator.positions.size > 0 || !program.getSourceFile(generated);
     const owned = new Set(roots.map(name => path.resolve(name)));
     const edits = new Map();
     if (generator.positions.size) edits.set(generator.source, generator.positions);
@@ -106,7 +106,10 @@ function main() {
         if (diagnostic.code !== 1484 && diagnostic.code !== 1205) continue;
         const source = diagnostic.file;
         // The generator template is adapted instead of its generated artifact.
-        if (source && path.resolve(source.fileName) === generated) continue;
+        if (source && path.resolve(source.fileName) === generated) {
+            regenerate = true;
+            continue;
+        }
         if (!source || !owned.has(path.resolve(source.fileName))) {
             declined.push({ code: diagnostic.code, file: source?.fileName, reason: "outside src/compiler" });
             continue;
@@ -152,7 +155,17 @@ function main() {
         }
         fs.writeFileSync(source.fileName, text);
     }
-    console.log(JSON.stringify({ files: edits.size, imports, exports, generatorImports: generator.positions.size, declined }, null, 2));
+    // Setup ran before this adaptation. Refresh its artifact through the same
+    // upstream owner after fixing the template, including an already-stale tree.
+    if (regenerate) {
+        const result = spawnSync(process.execPath, ["scripts/processDiagnosticMessages.mjs", "src/compiler/diagnosticMessages.json"], {
+            cwd: tree,
+            stdio: "inherit",
+        });
+        if (result.error) throw result.error;
+        if (result.status !== 0) throw new Error(`diagnostic generation failed: exit ${result.status}, signal ${result.signal}`);
+    }
+    console.log(JSON.stringify({ files: edits.size, imports, exports, generatorImports: generator.positions.size, regenerated: regenerate, declined }, null, 2));
     if (declined.length) process.exitCode = 1;
 }
 

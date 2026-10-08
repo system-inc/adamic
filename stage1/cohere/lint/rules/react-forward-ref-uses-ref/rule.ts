@@ -36,7 +36,7 @@ export function forwardRefUsesRef(context: RuleContext, index: number): void {
     const parameters = context.children(first, 'Parameter');
     let counted = 0;
     for(const parameter of parameters) {
-        if(context.children(parameter, 'DotDotDotToken').length !== 0) {
+        if(context.has(parameter, 'DotDotDotToken')) {
             return;
         }
         const named = context.name(parameter);

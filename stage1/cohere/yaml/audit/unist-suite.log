@@ -1,0 +1,22 @@
+=== RUN   TestStructuralPositionRefusal
+    gaps_test.go:74: /workspace/adamic/stage1/cohere/yaml/gaps/structuralPosition.ts:8:5: Adamic 0.1 refuses Span[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/yaml/gaps/structuralPosition.ts:11:37 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here, where append is called from the top level); declare the elements weak, Weak<Span>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly Span[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- PASS: TestStructuralPositionRefusal (0.12s)
+=== RUN   TestUnistMatchesGo
+    unist_test.go:90: 36 repository files, 9216 cases, 5940046 unist answer bytes identical on all five sides
+--- PASS: TestUnistMatchesGo (47.87s)
+=== RUN   TestUnistMutants
+=== RUN   TestUnistMutants/comment_prefix_lost
+    unist_test.go:148: native successful execution, wrong bytes caught: byte 9609: got "|-|[],]|-|-|[]|[comment|38,1,2140|38,98,2237|mappingItem,41,1,2384,43,30,2445|0041002000720065006c0065006100730065002000770072006900740065007300200074006f002000", want "|-|[],]|-|-|[]|[comment|38,1,2140|38,98,2237|mappingItem,41,1,2384,43,30,2445|00200041002000720065006c0065006100730065002000770072006900740065007300200074006f00"
+    unist_test.go:148: Node successful execution, wrong bytes caught: byte 9609: got "|-|[],]|-|-|[]|[comment|38,1,2140|38,98,2237|mappingItem,41,1,2384,43,30,2445|0041002000720065006c0065006100730065002000770072006900740065007300200074006f002000", want "|-|[],]|-|-|[]|[comment|38,1,2140|38,98,2237|mappingItem,41,1,2384,43,30,2445|00200041002000720065006c0065006100730065002000770072006900740065007300200074006f00"
+=== RUN   TestUnistMutants/point_column_shifted
+    unist_test.go:148: native successful execution, wrong bytes caught: byte 14: got "case 0\nroot|1,2,0|564,2,30841|-|||-1|0|0|||[document|1,2,0|564,2,30841|root,1,2,0,564,2,30841|", want "case 0\nroot|1,1,0|564,1,30841|-|||-1|0|0|||[document|1,1,0|564,1,30841|root,1,1,0,564,1,30841|"
+    unist_test.go:148: Node successful execution, wrong bytes caught: byte 14: got "case 0\nroot|1,2,0|564,2,30841|-|||-1|0|0|||[document|1,2,0|564,2,30841|root,1,2,0,564,2,30841|", want "case 0\nroot|1,1,0|564,1,30841|-|||-1|0|0|||[document|1,1,0|564,1,30841|root,1,1,0,564,1,30841|"
+=== RUN   TestUnistMutants/document_end_marker_lost
+    unist_test.go:148: native successful execution, wrong bytes caught: byte 1974423: got "\nroot|1,1,0|5,1,27|-|||-1|0|0|||[document|1,1,0|4,4,26|root,1,1,0,5,1,27|||-1|1|0|||[documentHead|1,1,0|2,4,17|document,1,1,0,4,4,26|||-1|0|0|||[directive|1,1,0", want "\nroot|1,1,0|5,1,27|-|||-1|0|0|||[document|1,1,0|4,4,26|root,1,1,0,5,1,27|||-1|1|1|||[documentHead|1,1,0|2,4,17|document,1,1,0,4,4,26|||-1|0|0|||[directive|1,1,0"
+    unist_test.go:148: Node successful execution, wrong bytes caught: byte 1974423: got "\nroot|1,1,0|5,1,27|-|||-1|0|0|||[document|1,1,0|4,4,26|root,1,1,0,5,1,27|||-1|1|0|||[documentHead|1,1,0|2,4,17|document,1,1,0,4,4,26|||-1|0|0|||[directive|1,1,0", want "\nroot|1,1,0|5,1,27|-|||-1|0|0|||[document|1,1,0|4,4,26|root,1,1,0,5,1,27|||-1|1|1|||[documentHead|1,1,0|2,4,17|document,1,1,0,4,4,26|||-1|0|0|||[directive|1,1,0"
+--- PASS: TestUnistMutants (24.99s)
+    --- PASS: TestUnistMutants/comment_prefix_lost (7.30s)
+    --- PASS: TestUnistMutants/point_column_shifted (7.06s)
+    --- PASS: TestUnistMutants/document_end_marker_lost (7.06s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/yaml	72.994s

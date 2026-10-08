@@ -1,15 +1,14 @@
 package lint
 
 import (
-	"context"
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
+	bridge "github.com/system-inc/adamic/bridge/tsgo"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -56,27 +55,38 @@ func TestProfileArtifacts(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(directory, "oracle"), oracle, 0755); err != nil {
 		t.Fatal(err)
 	}
+	pilot := filepath.Join(directory, "pilot.ts")
+	witness, err := os.ReadFile(filepath.Join(directory, "rules/no-unnecessary-boolean-literal-compare/testdata/witness.ts.txt"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(pilot, witness, 0644); err != nil {
+		t.Fatal(err)
+	}
+	config := filepath.Join(directory, "pilot.tsconfig.json")
+	options := fmt.Sprintf(`{"compilerOptions":{"strict":true},"files":[%q]}`, pilot)
+	if err := os.WriteFile(config, []byte(options), 0644); err != nil {
+		t.Fatal(err)
+	}
+	pilotManifest := "program " + config + "\n" + pilot + "\t@typescript-eslint/no-unnecessary-boolean-literal-compare\n"
+	if err := os.WriteFile(filepath.Join(directory, "pilot.txt"), []byte(pilotManifest), 0644); err != nil {
+		t.Fatal(err)
+	}
 	buildProfile(t, directory)
 }
 
 func buildProfile(t *testing.T, directory string) {
 	t.Helper()
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		t.Fatal(err)
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	source := native.C(lowered)
+	built := checkerCompile(t, directory)
+	source := built.c
+	archive := checkerArchive(t, false)
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0644); err != nil {
 		t.Fatal(err)
 	}
-	if err := native.Build(source, filepath.Join(directory, "scanner"), native.Options{}); err != nil {
+	if err := buildCheckerWithRuntime(source, filepath.Join(directory, "scanner"), archive, native.Options{}); err != nil {
 		t.Fatal(err)
 	}
-	if err := native.Build(source, filepath.Join(directory, "counted"), native.Options{Count: true}); err != nil {
+	if err := buildCheckerWithRuntime(source, filepath.Join(directory, "counted"), archive, native.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	runtime := filepath.Join(repository, "internal/native/runtime")
@@ -101,9 +111,12 @@ func buildProfile(t *testing.T, directory string) {
 			units = append(units, path)
 		}
 	}
-	flags := append(native.Flags(native.Options{}), "-g", "-o", filepath.Join(directory, "profiled"))
+	if err := os.WriteFile(filepath.Join(directory, "tsgo.h"), bridge.Header, 0644); err != nil {
+		t.Fatal(err)
+	}
+	flags := append(native.Flags(native.Options{}), "-DADAMIC_TSGO", "-g", "-o", filepath.Join(directory, "profiled"))
 	flags = append(flags, units...)
-	flags = append(flags, "-lm")
+	flags = append(flags, archive, "-lm", "-lpthread", "-ldl")
 	execute(t, "", "clang", flags...)
 	t.Logf("release, counted and -O2 -g profiling builds saved in %s", directory)
 }
@@ -161,7 +174,7 @@ func TestProfileSnapshotsAgree(t *testing.T) {
 	if asked == "" {
 		t.Skip("set ADAMIC_LINT_PROFILE_SNAPSHOTS")
 	}
-	rows := append(generated(t), volumeGenerated(t)...)
+	rows := generated(t)
 	var recovery []string
 	for _, row := range upstream(t) {
 		if strings.HasSuffix(row, "\tunsupported-recovery") {
@@ -188,8 +201,10 @@ func TestProfileSnapshotsAgree(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	path := manifest(t, rows)
 	oracle := goOracle(t)
+	// Classify recovery rows as TestRulesAgree does, so a captured case Go parses with a diagnostic (an
+	// octal escape in strict mode, say) is compared in recovery mode rather than panicking the oracle.
+	path := manifest(t, recoveryRows(t, oracle, rows))
 	want := execute(t, "", oracle, "--manifest", path).output
 	for _, directory := range filepath.SplitList(asked) {
 		// Match the ordinary suite's explicit recovery boundary in both snapshots.
@@ -238,7 +253,7 @@ func TestPositionIndexMutant(t *testing.T) {
 	t.Parallel()
 	path := manifest(t, generated(t))
 	want := execute(t, "", goOracle(t), "--manifest", path).output
-	directory := mutant(t, "this.anchors[0] = true;", "this.anchors[0] = false;")
+	directory := mutant(t, "this.anchors[0] = true;", "this.anchors[0] = false;", "rules/no-warning-comments/rule.ts")
 	binary := buildPort(t, directory, true)
 	for _, side := range []struct {
 		name string

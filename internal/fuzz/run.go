@@ -75,7 +75,8 @@ const (
 	// generator should stay inside what stage 0 lowers.
 	NotYet Verdict = "not yet"
 	// Checked: native and the JavaScript backend stopped at the same inserted check where the source
-	// on Node runs on. That's Adamic meaning what it says, not a bug.
+	// on Node runs on. That's Adamic meaning what it says, not a bug. The panic line has to be one of
+	// the inserted checks' (insertedCheck), not just any stop the two backends share.
 	Checked Verdict = "checked"
 	// Unfit: the program misbehaved on Node itself (it never ended, or printed megabytes), which is
 	// the generator's fault.
@@ -104,7 +105,11 @@ func (c *Checkout) Try(source string, directory string) Outcome {
 	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
 		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
 	}
+	return c.TryFile(path, directory)
+}
 
+// TryFile runs a program file three ways, building in directory.
+func (c *Checkout) TryFile(path string, directory string) Outcome {
 	// The C first: the checker's and stage 0's refusals come from here.
 	lowered := execute(directory, nil, 30*time.Second, c.adamic, "c", path)
 	if lowered.ExitCode != 0 || lowered.TimedOut {
@@ -148,6 +153,15 @@ var sanitizerReport = regexp.MustCompile(`ERROR: AddressSanitizer: ([a-z-]+)|run
 // clangWarning is the warning -Werror made an error, by its flag, so two kinds of bad C stay apart.
 var clangWarning = regexp.MustCompile(`\[-Werror,(-W[a-z-]+)\]`)
 
+// insertedCheck is the panic line of a check Adamic inserts where JavaScript doesn't stop: it goes
+// on with undefined or null a call put back after a narrowing (ir.Defined, ir.Unwrap), with the
+// holes of an array a map's or a find's callback shrank, with an array a write past its end grew or
+// a fractional index gave a property, and with an object an as cast doesn't look at (ir.CheckedCast).
+// A check whose words are JavaScript's own (TypeError: Cannot read properties of undefined, and the
+// rest) is where Node throws too, so Node's run stops there and the two agree; a shared stop on one
+// of those, or on anything else, while Node runs on, is a finding.
+var insertedCheck = regexp.MustCompile(`^adamic: panic: (?:(?:undefined|null) where the checker narrowed it away: a call since the narrowing put it back|map: the array shrank while it was being mapped|[A-Za-z]+: the array shrank while it was being searched|index [^ ]+ is outside an array of length [0-9]+|cast failed: this .+ is not a .+)\n$`)
+
 var digits = regexp.MustCompile(`[0-9]+|0x[0-9a-f]+`)
 
 // javascriptError is how oracle/adamic.mjs reports an exception the program didn't mean: a panic
@@ -185,8 +199,9 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
 	}
 	if nativeDifference != "" && backendDifference != "" && difference(outcome.Backend, outcome.Native) == "" && outcome.Native.ExitCode == 70 {
 		// Both of Adamic's backends stopped at the same place, where Node didn't stop: an inserted
-		// check, as long as what was printed before it is what Node printed.
-		if bytes.HasPrefix(outcome.Node.Stdout, outcome.Native.Stdout) {
+		// check, as long as the panic says it is one and what was printed before it is what Node
+		// printed.
+		if insertedCheck.Match(outcome.Native.Stderr) && bytes.HasPrefix(outcome.Node.Stdout, outcome.Native.Stdout) {
 			outcome.Verdict, outcome.Key, outcome.Detail = Checked, "inserted check", firstLines(string(outcome.Native.Stderr), 1)
 			return outcome
 		}
@@ -262,12 +277,30 @@ func difference(expected Run, actual Run) string {
 	return ""
 }
 
-// execute runs a command in its own process group, killed whole at the deadline, so a program that
-// loops is stopped rather than orphaned.
+// execute limits child CPU time, with a wall backstop for blocked children.
+// Cancellation kills the whole process group so descendants are not orphaned.
 func execute(directory string, environment []string, limit time.Duration, name string, arguments ...string) Run {
-	ctx, cancel := context.WithTimeout(context.Background(), limit)
+	path, err := exec.LookPath(name)
+	if err != nil {
+		return Run{ExitCode: -1, Stderr: []byte(err.Error())}
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
-	command := exec.CommandContext(ctx, name, arguments...)
+	// Set both limits so children that ignore SIGXCPU (including Go programs)
+	// are still stopped by the kernel. Some kernels send SIGKILL at the hard
+	// limit; distinguish that CPU death using the child's recorded CPU usage.
+	// The portable shell interface accepts whole seconds, rounded up.
+	seconds := limit / time.Second
+	if limit%time.Second != 0 {
+		seconds++
+	}
+	// The soft limit is set first (a hard limit below the current soft one is refused), and the hard
+	// limit sits one second past it, so a child that ignores SIGXCPU is killed a
+	// full second after its budget, and the SIGKILL check below compares against the soft limit:
+	// rusage is tick-sampled and can read a hair under the hard limit the kernel enforced
+	// (TestExecuteCPULimit/infinite on 6f16a169's whole gate, "TimedOut:false").
+	script := fmt.Sprintf(`ulimit -S -t %d && ulimit -H -t %d || exit; exec "$0" "$@"`, seconds, seconds+1)
+	command := exec.CommandContext(ctx, "/bin/sh", append([]string{"-c", script, path}, arguments...)...)
 	command.Dir = directory
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
@@ -280,12 +313,18 @@ func execute(directory string, environment []string, limit time.Duration, name s
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := command.Run()
+	err = command.Run()
 	run := Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), TimedOut: ctx.Err() != nil}
 	var exitError *exec.ExitError
 	switch {
 	case err == nil || errors.As(err, &exitError):
 		run.ExitCode = command.ProcessState.ExitCode()
+		if status, ok := command.ProcessState.Sys().(syscall.WaitStatus); ok && status.Signaled() {
+			cpu := command.ProcessState.UserTime() + command.ProcessState.SystemTime()
+			if status.Signal() == syscall.SIGXCPU || (status.Signal() == syscall.SIGKILL && cpu >= seconds*time.Second) {
+				run.TimedOut = true
+			}
+		}
 	default:
 		run.ExitCode = -1
 		run.Stderr = append(run.Stderr, []byte(err.Error())...)
