@@ -134,6 +134,8 @@ func TestCommentsMatchCohere(t *testing.T) {
 	t.Logf("Go, Node and sanitized native match %d output lines", bytes.Count(want, []byte("\n")))
 }
 
+const testCommentMutantsShards = 5
+
 // ADAMIC_TEST_SHARD=i/n (zero-based i) selects deterministic mutant shards; unset runs all.
 // Builds are inputs, prepared once before the parallel units. Every unit runs
 // the entire witness corpus under the original sanitizers and leak checks.
@@ -155,6 +157,9 @@ func TestCommentMutants(t *testing.T) {
 	}
 	ids := make([]string, len(mutants))
 	binaries := make([]string, len(mutants))
+	if len(mutants) != testCommentMutantsShards {
+		t.Fatalf("enumerated %d shards, declared %d", len(mutants), testCommentMutantsShards)
+	}
 	for i, m := range mutants {
 		ids[i] = m.file
 	}
@@ -363,8 +368,9 @@ func runCommentMutantShards(t *testing.T, ids []string, check func(*testing.T, i
 		if !commentMutantSelected(t, i) {
 			continue
 		}
-		t.Run(fmt.Sprintf("shard-%02d-%s", i, id), func(t *testing.T) {
+		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
 			t.Parallel()
+			t.Logf("mutant %s; complete witness corpus", id)
 			start := time.Now()
 			defer func() {
 				if elapsed := time.Since(start); elapsed > 30*time.Second {
@@ -457,7 +463,7 @@ func TestCommentMutantShardCatchesSurvivor(t *testing.T) {
 		if failed != (i == 2) {
 			t.Fatalf("shard %d: unexpected result %v: %s", i, err, output)
 		}
-		name := fmt.Sprintf("shard-%02d-%s", i, ids[i])
+		name := fmt.Sprintf("shard-%03d", i)
 		if !bytes.Contains(output, []byte(name)) {
 			t.Fatalf("shard name missing: %s", output)
 		}
