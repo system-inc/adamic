@@ -6,7 +6,7 @@ import (
 )
 
 func logicalAssignment(operator ast.Kind) bool {
-	return operator == ast.KindBarBarEqualsToken
+	return operator == ast.KindBarBarEqualsToken || operator == ast.KindAmpersandAmpersandEqualsToken
 }
 
 // expressionScope puts an expression's statements in an immediately called closure. Captures
@@ -109,7 +109,11 @@ func (l *lowering) assignmentReference(b *libraryArrayBuilder, target *ast.Node)
 }
 
 func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
-	return l.expressionScope("logical_or_assignment", func(b *libraryArrayBuilder) (ir.Expression, error) {
+	name := "logical_or_assignment"
+	if node.AsBinaryExpression().OperatorToken.Kind == ast.KindAmpersandAmpersandEqualsToken {
+		name = "logical_and_assignment"
+	}
+	return l.expressionScope(name, func(b *libraryArrayBuilder) (ir.Expression, error) {
 		binary := node.AsBinaryExpression()
 		current, _, store, err := l.assignmentReference(b, binary.Left)
 		if err != nil {
@@ -127,7 +131,10 @@ func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
 		}
 		result := b.local("assignment_right", right.Type())
 		taken := []ir.Statement{ir.Declare{Local: result, Value: right}, store(b.read(result)), ir.Return{Value: assignmentResult(b.read(result), resultType)}}
-		take := ir.Unary{Operator: ir.Not, Operand: l.assignmentTruthy(current)}
+		take := l.assignmentTruthy(current)
+		if binary.OperatorToken.Kind == ast.KindBarBarEqualsToken {
+			take = ir.Unary{Operator: ir.Not, Operand: take}
+		}
 		b.body = append(b.body, ir.If{Condition: take, Then: taken})
 		return assignmentResult(current, resultType), nil
 	})

@@ -10,13 +10,17 @@ func init() {
 	fixtures = append(fixtures, struct {
 		path            string
 		lowers, checked bool
+	}{"internal/oracle/testdata/logical_and_assignment.a", true, false})
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
 	}{"internal/oracle/testdata/logical_or_assignment.a", true, false})
 }
 
 // Mutants preserve valid IR and ownership. Each must compile and finish cleanly, then disagree
 // with source Node in both backends on the side-effect counters or expression value.
 func TestLogicalAssignmentMutants(t *testing.T) {
-	for _, operator := range []string{"or"} {
+	for _, operator := range []string{"or", "and"} {
 		for _, mutation := range []string{"target_twice", "right_always"} {
 			t.Run(operator+"/"+mutation, func(t *testing.T) {
 				path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/logical_"+operator+"_assignment.a"))
