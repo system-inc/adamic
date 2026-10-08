@@ -10,7 +10,7 @@ import (
 func TestIncompleteRecoveryCasesAgree(t *testing.T) {
 	t.Parallel()
 	paths, err := filepath.Glob("testdata/incomplete_recovery/*.ts.txt")
-	if err != nil || len(paths) != 30 {
+	if err != nil || len(paths) != 31 {
 		t.Fatalf("incomplete recovery fixtures: %d, %v", len(paths), err)
 	}
 	oracle := goOracle(t)

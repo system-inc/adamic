@@ -1,0 +1,42 @@
+// Production default Base validation parity. The checker supplies types only.
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { types } from '../../../typeaware/facts.ts';
+import { optionalButTypeNot, typeOptionalButNoVerify } from './messages.a';
+
+export class Rule {
+    readonly rules: RuleContext;
+    constructor(rules: RuleContext) { this.rules = rules; }
+    visit(node: ParseNode, index: number): void {
+            if(node.kind === 'Parameter' && !node.children.some((child) =>
+                ['PublicKeyword', 'PrivateKeyword', 'ProtectedKeyword', 'ReadonlyKeyword'].includes(this.rules.parser.node(child).kind))) { return; }
+            const key = node.children.find((child) => !['Decorator', 'QuestionToken', 'ExclamationToken'].includes(this.rules.parser.node(child).kind) &&
+                !this.rules.parser.node(child).kind.endsWith('Keyword')) ?? -1;
+            if(key < 0 || this.rules.parser.node(key).kind !== 'Identifier') { return; }
+            let sentinel = false; let other = false;
+            for(const child of node.children) {
+                const decorator = this.rules.parser.node(child);
+                if(decorator.kind !== 'Decorator') { continue; }
+                const call = this.rules.parser.node(decorator.children[0] ?? -1);
+                if(call.kind !== 'CallExpression') { continue; }
+                const callee = this.rules.parser.node(call.children[0] ?? -1);
+                if(callee.kind !== 'Identifier' || !callee.text.startsWith('Verify')) { continue; }
+                if(callee.text === 'VerifyIsOptional') { sentinel = true; } else { other = true; }
+            }
+            if(!sentinel && !other) { return; }
+            const answer = this.rules.checker?.ask(key, 'raw-type');
+            if(answer === undefined || answer.value === undefined) { return; }
+            const facts = types(answer.value, 'raw-type');
+            const nullable = facts.has(facts.root(), 1 | 2 | 4 | 8 | 16);
+            const text = facts.root().name;
+            if(sentinel && !nullable) {
+                this.rules.reportNode(key, 'base/correctness-require-verify-optional-parity', 'optionalButTypeNot',
+                    optionalButTypeNot(text));
+            } else if(nullable && !sentinel && other) {
+                this.rules.reportNode(key, 'base/correctness-require-verify-optional-parity', 'typeOptionalButNoVerify',
+                    typeOptionalButNoVerify(text));
+            }
+    }
+}
+
+export function create(context: RuleContext): Rule { return new Rule(context); }

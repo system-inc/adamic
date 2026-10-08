@@ -1,0 +1,5 @@
+{
+  "name": "non Error throw suppressed",
+  "from": "this.context.report(index, 'no-throw-literal', 'object', messageObject, '', '', '');",
+  "to": "// Mutant suppresses the firing throw."
+}

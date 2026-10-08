@@ -1899,7 +1899,15 @@ export class Parser {
         this.typeParameters();
         let result = this.kind() === 'OpenParenToken';
         if(result) {
-            this.parameters();
+            this.next();
+            this.delimitedList('parameters', () => this.parameter());
+            // typescript-go's speculative arrow parse disallows ambiguity, so a parameter list that
+            // recovery ends anywhere but its ')' rejects the arrow (parseExpected(CloseParen) && !allowAmbiguity).
+            // Without this, ([b=>c]) recovered into a parameter list and read the inner => as its own.
+            result = this.kind() === 'CloseParenToken';
+        }
+        if(result) {
+            this.next();
             if(this.kind() === 'ColonToken') {
                 this.next();
                 this.returnType();
