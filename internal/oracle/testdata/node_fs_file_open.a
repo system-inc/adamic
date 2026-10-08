@@ -1,8 +1,10 @@
+function errorCode(error: unknown): string | undefined {
+    return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
 import { programArguments } from 'adamic';
 const root = programArguments()[0] ?? '';
 function failure(error: Error): void {
-    const errno: NodeJS.ErrnoException = error;
-    console.log(`${errno.code ?? ''}: ${error.message.replace(root, '<root>')}`);
+    console.log(`${errorCode(error) ?? ''}: ${error.message.replace(root, '<root>')}`);
 }
 import { openSync, closeSync, writeSync, readFileSync } from 'node:fs';
 const fd = openSync(root + '/out', 'w', 0o640);
