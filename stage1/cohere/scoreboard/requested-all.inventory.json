@@ -1,5 +1,5 @@
 {
-  "scope": "inventory only; no full-tree comparison executed",
+  "scope": "complete full-tree Go/source-Node scoreboard; both inputs dependency-uninstalled",
   "dependency_inputs": {
     "go": "uninstalled",
     "node": "uninstalled"
@@ -165,5 +165,6 @@
       "selected_files": 587
     }
   ],
-  "manifest_sha256": "2b4565a81dda5448c6cacf22be8ce64bd0dff7bd86a4c1171270ed7775dc584b"
+  "manifest_sha256": "2b4565a81dda5448c6cacf22be8ce64bd0dff7bd86a4c1171270ed7775dc584b",
+  "scoreboard": "results/REPORT.md"
 }

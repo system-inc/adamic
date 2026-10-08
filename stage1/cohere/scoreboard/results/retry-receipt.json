@@ -1,0 +1,14 @@
+{
+  "index": 232584,
+  "path": "/workspace/scratch/scoreboard-public/microsoft__TypeScript-050880ce/tests/cases/fourslash/reallyLargeFile.ts",
+  "source_sha256": "0bfbf3533e463028ad1094a8a012c9da3549d6c836c0df534a88308c527fde90",
+  "files_verified": 235377,
+  "raw_receipt": "/workspace/scratch/scoreboard-full-clean/receipts-retry-232584.jsonl.gz",
+  "reason": {
+    "reason": "first full-tree census exceeded 30-second request budget",
+    "request_limit": "5m",
+    "go_memory_limit": "4GiB",
+    "node_heap_limit": "512MiB",
+    "attempt_directory": "/workspace/scratch/scoreboard-single-retry/run"
+  }
+}

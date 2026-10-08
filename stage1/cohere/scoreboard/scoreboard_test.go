@@ -4,6 +4,7 @@ import (
 	"context"
 	"os"
 	"path/filepath"
+	"reflect"
 	"strings"
 	"testing"
 	"time"
@@ -76,6 +77,14 @@ func TestLiveOracleAndNode(t *testing.T) {
 	if err = d.build(); err != nil {
 		t.Fatal(err)
 	}
+	goWorker, lintModule, formatModule, err := d.buildWorkers()
+	if err != nil {
+		t.Fatal(err)
+	}
+	gw := Worker{args: []string{goWorker}, dir: root, Limit: 30 * time.Second}
+	nw := Worker{args: []string{"node", "--max-old-space-size=512", "--disable-warning=ExperimentalWarning", filepath.Join(root, "oracle/node.mjs"), filepath.Join(root, "stage1/cohere/scoreboard/node-worker.mjs"), lintModule, formatModule}, dir: root, Limit: 30 * time.Second}
+	defer gw.close()
+	defer nw.close()
 	path := filepath.Join(scratch, "probe.ts")
 	if err = os.WriteFile(path, []byte("debugger;\n"), 0600); err != nil {
 		t.Fatal(err)
@@ -92,6 +101,36 @@ func TestLiveOracleAndNode(t *testing.T) {
 		if classify(a, b) != "diverge" || !strings.Contains(a.Output, fixture.marker) || strings.Contains(b.Output, fixture.marker) {
 			t.Fatalf("named fixture %s lost its failure: Go=%+v Node=%+v", fixture.name, a, b)
 		}
+	}
+	for _, source := range []string{"debugger;\n", "//", "\ufeffvar x=10;\r\n", "let x = 1;\n"} {
+		if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+			t.Fatal(err)
+		}
+		q := WorkRequest{Path: path, Root: root, Source: []byte(source), Rule: "no-debugger", Op: "lint"}
+		a, b := d.pair(path, q.Rule, "", "")
+		x, y := gw.call(q), nw.call(q)
+		if x.Output != a.Output || y.Output != b.Output || x.Error != "" || y.Error != "" {
+			t.Fatalf("persistent lint changed bytes: %+v %+v / %+v %+v", x, y, a, b)
+		}
+		q.Op = "format"
+		q.Family = "typescript"
+		a, b = d.format(path)
+		x, y = gw.call(q), nw.call(q)
+		if x.Output != a.Output || y.Output != b.Output || x.Error != "" || y.Error != "" {
+			t.Fatalf("persistent formatter changed bytes: %+v %+v / %+v %+v", x, y, a, b)
+		}
+	}
+	for _, source := range []string{"debugger;\n", "const fooBar = 1;\n// test\n", "type T = String;\n", "="} {
+		q := WorkRequest{Path: path, Root: root, Source: []byte(source), Op: "census"}
+		fused := gw.call(q)
+		q.Op = "census-reference"
+		reference := gw.call(q)
+		if fused.Error != "" || reference.Error != "" || !reflect.DeepEqual(fused.Rows, reference.Rows) {
+			t.Fatalf("fused census differs from isolated upstream walks: %+v / %+v", fused, reference)
+		}
+	}
+	if err := os.WriteFile(path, []byte("debugger;\n"), 0600); err != nil {
+		t.Fatal(err)
 	}
 	// Formatting reductions must not switch a valid witness to a parser error.
 	invalid := filepath.Join(scratch, "invalid.ts")

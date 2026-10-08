@@ -1,275 +1,102 @@
-# Step 43 (#csz98j8): an executable byte-agreement scoreboard, not a parity claim
+# Step 43 (#csz98j8): all 235,377 files scored, with every divergence reduced
 
-Branch: `scout/43-scoreboard`, based on `origin/area/stage1-lint` at
-`9156bf5c`. Oracle: cohere `7945d102a6c18dd36adf9114a758ce646e8b2359`;
-its TypeScript submodule is `d92d9bfee114c80be2c375d72edae966176e3a4f`.
-Only this package is changed. Generated, ignored lint registry files are produced
-through the existing public `registry.Generate` API; no shared source is edited.
+Branch: `scout/43-scoreboard`. Source baseline: `fc4b4bc1a08af292a7e675b1e62b1bf4f794a749`, descended from `origin/area/stage1-lint` at `9156bf5c`. Go oracle: cohere `7945d102a6c18dd36adf9114a758ce646e8b2359`; its TypeScript pin is `d92d9bfee114c80be2c375d72edae966176e3a4f`. Only `stage1/cohere/scoreboard/` changes. The full port execution is source Node, not a native Adamic lint binary.
 
-## Research and evidence
+## Headline findings
 
-The quiet hundred is Kirk's Mac corpus, not a repository manifest. The user's
-23 public snapshot SHAs were all shallow-fetched and checked at their exact
-commits, without installs or source-repository scripts. `public-fetch.json`
-records each actual identity. `corpus.py` inventories Git blobs, rather than
-inventing a hundred-file substitute. Its first-run selection is explicitly one
-shortest nonempty, non-declaration `.ts` file per snapshot, with lexical ties.
-This is a probe run, not all files in those repositories and not the quiet hundred.
-`first-run.manifest.sources.json` records the selected paths, hashes, sizes and
-full supported-file denominator for each snapshot. `--all` produces the complete
-tracked supported-file manifest for those same snapshots. The actual 242,883-file
-input list is included as `public-all.manifest.json.gz`; it has not been scored
-in full. `fetch-public.py` recreates the read-only source snapshots in scratch.
+1. All **235,377 tracked files** at the **23 requested public pins** ran; **201,196** are scripts. Both inputs are explicitly **dependency-uninstalled**. This is the public subset, not Kirk's entire quiet hundred.
+2. **99,626,201 cells: 17,175,641 agree, 11,476 diverge, 82,439,084 blocked.** Per-rule, per-family and per-file answers are published in [results/REPORT.md](results/REPORT.md), the CSVs and compressed file receipts.
+3. Every divergence has same-path, replayed, deletion-minimal Go/Node answers and checked port/Go responsibility references: **11,476 cells, 325 distinct witnesses, 35 rules/comparison scopes, 43 inspected causes**; no emission-only attribution remains.
+4. Blocks: **80,277,204 unported-rule**, **753,828 checker-fact**, **1,205,021 parser**, **196,905 formatter-refusal**; another **6,126 execution-fault** cells are explicitly separate. Equal failures never count as agreement.
+5. All **399 missing rules** are ranked by measured Go findings. `one-var` leads with **921,962**, then `id-length` **581,633**, `no-inline-comments` **181,067**. Incomplete censuses are lower bounds. Package tests, the live planted divergence, vet and the receipt/reduction closure are green.
 
-The driver runs the existing port on source Node and builds the actual Go
-oracle with cohere-internal imports through an overlay. It compares **stdout
-bytes**, including human descriptions, byte ranges, message ids, fixes and
-suggestions. No whitespace, filenames, order or text is normalized away. In a
-full registry run, per-rule slices retain their human finding blocks and all
-following edit/suggestion records. An additional `lint/all-fixes` cell holds the
-complete answer, including cross-rule order, overlap decisions and converged
-fixed source. Per-rule cells alone cannot certify cross-rule fixes.
+## Corpus and measured boundary
 
-Relevant implementation sites:
+GitHub was reachable. All 23 repositories were shallow-fetched read-only at the supplied SHAs, verified independently, without dependency installs or source-repository scripts. [public-fetch.json](public-fetch.json) records identities; [requested-all.manifest.json.gz](requested-all.manifest.json.gz) is the exact full input list; [requested-all.inventory.json](requested-all.inventory.json) gives counts by repository and extension. The eight requested extensions contribute `.ts` 127,288; `.tsx` 25,372; `.js` 48,511; `.jsx` 25; `.json` 21,636; `.md` 10,348; `.yaml` 1,239; `.css` 958. All **51 tracked symlinks** use their Git blob contents at the original paths, rather than reading their targets. Every receipt has its source SHA-256.
 
-| Boundary | Go cohere / independent oracle | Port |
+The earlier 23-probe run and 242,883-file broader-extension inventory remain historical artifacts (`first-run.json`, `fixture-run.json`, `public-all.manifest.json.gz`). They do not supply these numbers. The exact eight-extension denominator is 235,377.
+
+There are **492 Go registry rules**, **93 registered port rules**, and **399 unported rules**. Every script gets the full rule census and registered-rule comparison; every input gets its applicable formatter. The primary denominator is **99,425,005 cells** (492 rules plus full all-fixes on each script, plus 235,377 formatters). The separately identified **90-listener syntax-fixes** comparison adds 201,196 cells, yielding 99,626,201. It exposes **132** fix divergences otherwise hidden by the checker-dependent all-fixes block. Full all-fixes remains blocked where checker facts are missing; syntax-fixes does not certify typed or configured cross-rule fix parity.
+
+Registered-rule findings account for **804** divergences across **32** rules; formatting accounts for **10,540** (10,536 TypeScript-family, 4 JSON); syntax-fixes adds 132. The per-family report groups registered and unported Next rules under `next`, and TypeScript rules under `typescript`. Counts include findings on blocked inputs as measured observations, not proof that those inputs were successfully compared. Missing-rule rankings use the independent Go census, with finding-bearing files counted once per rule/file.
+
+The census uses Go's registered default external option decoders; the registered-rule adapters use their existing internal decoded options. These are distinct dialects. The comparisons hold the adapter's rules/options equally on Go and Node; the missing-rule ranking is a default census, not each project's installed lint policy or resolved directory configuration. Checker programs are not fabricated. All absent programs, required/undecodable options, invalid Go syntax and panics remain explicit census statuses. Statuses on an unported rule overlap its primary `unported rule` cell and must not be added again to the blocked total.
+
+## Research: implementation evidence and hard cases
+
+The relevant docs were read before designing the boundary: `docs/0.1.md`, `docs/memory.md`, `docs/lint-registration.md`, stage1 progress/READMEs, and nearby lint, parser, printer, JSON, YAML and formatfiles READMEs/GAPS. At this pin, Go's compiler tests live at `cohere/TypeScript/tsc/testdata/tests/cases`.
+
+| Boundary or observed cause | Port | Go oracle |
 | --- | --- | --- |
-| public rule universe | `cohere/internal/lint/registry/registry.go:48`, `rule/register.go:183` | `stage1/cohere/lint/registry/registry.go:98` discovers owned descriptors; `:257` renders dispatch |
-| exact human bytes and stable position order | `cohere/internal/lint/report/report.go:48`, `:62` | `stage1/cohere/lint/main.ts:60` UTF-16 to UTF-8 table and subsequent human/range serialization |
-| actual diagnostic/edit protocol | `stage1/cohere/lint/testdata/oracle.go:75`, `:114`, `:173`, `:136` calls real rules, `report.Write` and edit engine | `stage1/cohere/lint/main.ts:13` runs the actual Linter and serializes findings |
-| debugger witness and safe removal | `cohere/internal/lint/rules/core/no_debugger_test.go:18`, `no_debugger.go:19`, `:54` | `stage1/cohere/lint/rules/no-debugger/rule.ts:9` |
-| required options versus inert rules | `cohere/internal/lint/rule/register.go:43`, `registry/registry.go:94` | each discovered `rules/<slug>/oracle.go`; manifest decoded JSON field 5 |
-| checker availability | oracle `testdata/oracle.go:181` builds file context, requires program for typed rules | `stage1/cohere/lint/main.ts:54`, `:204` recording/replay; `oracle/adamic.mjs:137` live Node bridge unavailable |
-| formatter wrapper semantics | `cohere/internal/format/native/native.go:203`, `:218` strips/restores BOM and normalizes CR | direct port formatter APIs; `scoreboard/format.a` carries their actual results |
-| full TS program printing | actual native TypeScript printer | `stage1/cohere/tsprinter/expressions.ts:1814` `formatProgram`, with explicit unsupported-family result |
+| Rule discovery / registration | `stage1/cohere/lint/registry/registry.go:98`, dispatch at `:257` | `cohere/internal/lint/registry/registry.go:48`; `rule/register.go:183` |
+| Human findings, byte ranges, edits | `stage1/cohere/lint/main.ts:60` and serializer; existing Linter | `cohere/internal/lint/report/report.go:48`, `:62`; existing oracle `stage1/cohere/lint/testdata/oracle.go:75`, `:114`, `:136`, `:173` |
+| Comment loss: shortest held input `//` (8,541 cells), `/**/` (447) | `stage1/cohere/tsprinter/expressions.ts:1814`, whole-program entry lacks comment attachment | `cohere/internal/format/javascript/comments_hooks.go:14` |
+| BOM loss: shortest held input U+FEFF (614 cells) | `stage1/cohere/tsprinter/expressions.ts:1814` omits native file wrapper | `cohere/internal/format/native/native.go:218`, restoration at `:237` |
+| Lost source empty line: e.g. `""\n\ni` (398 cells) | `stage1/cohere/tsprinter/expressions.ts:623`, one hardline between statements | `cohere/internal/format/javascript/print_block.go:103` checks the source empty line |
+| Missing lazy attached JSDoc trees (238 cells across witnesses) | `stage1/typescript/parser/parser.ts:1980`, source-file construction | `cohere/TypeScript/tsc/internal/parser/jsdoc.go:139` |
+| Empty variable list / `of` recovery (72 cells) | `stage1/typescript/parser/statements.ts:203` | `cohere/TypeScript/tsc/internal/parser/parser.go:1553` |
+| Shared configured-rule option transport, owned by lint lane | **`stage1/cohere/lint/main.ts:13`** supplies one JSON bag to all listeners | Individual oracle adapters decode their own options |
 
-The independent catalog runs Go's complete registry, not the port list, once per
-file/rule. It records findings and finding-bearing files for every unported rule,
-sorted by findings descending then rule name. `status != complete` means a
-**lower bound**, not a zero-finding rule: required options, missing checker,
-parse diagnostics, decoder errors and rule panics remain named. Defaults for
-path-sensitive decoders are anchored to each snapshot root. This is a default
-rule census, not the project's resolved ESLint/cohere policy, suppression or
-module-resolution environment. The registered port adapter options are decoded
-internal structs; the global registry census options use its registered external
-JSON decoders. They are distinct dialects. Non-default option ranking needs a
-separate external-option manifest; this piece does not assert their equivalence.
+[results/witnesses.json](results/witnesses.json) enumerates **every** held input, case count, cause, example path, port site and Go line; [results/divergences-minimized.jsonl.gz](results/divergences-minimized.jsonl.gz) carries every divergence cell's replayed answer, source hash, mismatch signature, tested deletions, predicate count and emission plus causal sites. These references were checked against the pinned files. The 43 causes include import phases, constructor/static-block parsing, speculative arrows, mapped/index signatures, JavaScript type arguments, hashbang comment guards, JSX interior expressions, and lint edit ranges. Paired parser-tree evidence is retained in `results/parser-trees-initial.json`, `parser-trees-second.json` and `additional-trees.json`.
 
-Hard-case inputs and what is actually held:
+Go preserves the comment and BOM; source Node successfully emits a different formatted answer. These are successful byte divergences, not refusals. Findings, human descriptions, byte positions, IDs, suggestions, edit replacements and fixed source are compared without normalizing order, whitespace, filenames or line endings. File summaries retain exact output SHA-256, exit codes and timings; original divergent stdout answers are in `divergences-*.jsonl.gz`. Invalid UTF-8 uses explicit base64 raw bytes when needed, so JSON replacement characters cannot create false equality.
 
-* `debugger;\n`: a real Go test. Go and source Node must produce the exact
-  finding and deletion/fixed answer. The clean-running Node mutant changes the
-  human message, and must become `diverge`.
-* `\ufeffvar x=10;\r\n`: verbatim TypeScript compiler `bom-utf8.ts`. This
-  exposes byte/UTF-16 coordinates, BOM and CR handling, and a declaration-shaped
-  full-program formatter input. The fixture-run report retains both answers.
-* `skipped typed/rule no program\n`: shortest protocol witness for false green
-  coverage. Equal missing-checker records must be `blocked`, not agreement.
-* `refused format/typescript function-types\n`: equal formatter coverage
-  refusals must also be blocked. Process failure and cancellation are held
-  separately; two failed executions cannot certify bytes.
-* A one-character change in a suggestion's replacement (`===` to `==`) must
-  survive per-rule slicing and be detected. Another rule's bytes stay identical.
+## Host design, audit and reduction limits
 
-The relevant READMEs/GAPS were read before choosing these boundaries: lint,
-parser, TypeScript printer, JSON, YAML and formatfiles, plus `docs/0.1.md`,
-`docs/memory.md`, `docs/lint-registration.md` and stage1 progress guidance.
-The historical lint parser-EOF report is not assumed current: this baseline's
-`parser.ts:989` already uses list terminators/recovery. No parser repair is made.
-At this pin, the compiler corpus is actually under
-`cohere/TypeScript/tsc/testdata/tests/cases`, not `cohere/TypeScript/tests/cases`.
+Persistent Go/Node workers invoke the existing implementations through owned overlays/wrappers. They reuse processes and transport, not replacement parsers or lint rules. The Go overlay calls the real native formatters, rule registry, reporting and edit engine. Node imports the existing port. A per-file source override permits same-path reduced inputs and Git symlink blobs; it does not edit source snapshots. CLI/worker fixture agreement and the fused census versus isolated per-rule oracle are checked by the package test.
 
-### First measured scoreboard
+Receipts stream in bounded gzip chunks, with source hashes, pins, explicit incomplete status and resumable index checks. The full collector's old stderr accumulation was repaired in this package. Separate validated copies preserve stdout, exit code, timings, source and census; the copy tool may omit only stderr, and original archives are retained in scratch. `results/raw-evidence-index.jsonl` records original SHA-256 identities and original/copy byte counts. No measured answers were rewritten. All **235,377 Go records** passed an independent byte-transport audit; **zero** needed corrected answers. Explicit raw byte fields and strings without U+FFFD are lossless; ambiguous old JSON strings were replayed independently.
 
-`first-run.json`: **23 files / 642 source bytes**, from a **242,883-file**
-tracked supported-source denominator across the 23 snapshots. **93 registered
-port rules**, of which **3 require a checker**. **2 lint findings** match Go and
-Node. **2,185 cells: 2,072 agree, 1 diverges, 112 are blocked**. The 112 are
-69 typed-rule cells, 23 all-fixes cells lacking complete typed coverage, and
-20 formatter refusals. Exactly one observed public formatter byte divergence:
-Prisma's `packages/1-framework/3-tooling/cli/test/fixtures/empty-module.ts`
-loses its comment. Its parse-valid deletion-minimal input is **`//`**.
-Go formats the comment; the program port emits empty text. The cause is the
-unguarded whole-program printer path at `tsprinter/expressions.ts:1814`, which
-has no comment attachment. The expression entry's comment refusal at `:1786`
-does not protect callers of this separate exported entry. No shared printer fix
-is attempted.
+The initial census request for TypeScript's 3.5 MB `tests/cases/fourslash/reallyLargeFile.ts` hit the request budget. The single-file retry uses the same path, source hash and pins, an explicit larger request/memory budget, and complete Go/Node lint, formatter and 492-rule census receipts. `results/retry-receipt.json` records that exception. Original timeout evidence remains in scratch. The final exporter validates all indices exactly once, the 93-rule order, all 492 census entries per script, the source hashes and dependency labels. [results/closure.json](results/closure.json) proves that the complete score set and complete reduction set have exactly the same 11,476 divergence keys; no missing or extra reductions remain. `results/artifacts.sha256` covers the published evidence.
 
-`fixture-run.json`: **2 files, 6 cells: 5 agree, 1 diverges**. The real Go debugger
-fixture produces **1 identical finding** and deletion/fixed-source answer.
-The TypeScript BOM/CRLF fixture exposes a missing-BOM formatter result. Its
-parse-valid deletion-minimal input is the single **U+FEFF** character. Go's file
-wrapper preserves it; the port's whole-program printer loses it. Both reduced
-engine answers are retained in the reports, separately from the original answers.
+For each mismatch, reduction retains the original path/script kind/options, deletes only source material, requires Go parse validity for scripts and preserves the observed mismatch signature. Cached witnesses are accepted only after same-input subsequence and same-path replay checks. Every final witness was rechecked against **every single-rune deletion**. This is a deletion fixed point, **not a proof of global shortestness**; replacements, reordering and arbitrary equivalent programs are outside the search. No project/checker semantics are asserted by these uninstalled syntax witnesses.
 
-The full Go registry has **492 rules**, so **399 are unported** on this branch.
-Of those, **178 have a complete default probe census** and **221 are incomplete**:
-194 lack a program, 24 lack decoded options, and 3 explicitly require options.
-The three nonzero unported probe counts are one each for
-`@typescript-eslint/no-non-null-assertion`, `id-length`, and
-`structure/consistency-require-organized-imports`. This sample is too narrow to
-rank work on the quiet hundred; the report does not present these counts as that
-ranking.
+Compact per-file state vectors follow `summary.json`'s 93-rule order: `A` agree, `D` diverge, `C` checker fact, `P` parser, `F` formatter refusal, `U` unported rule, `E` execution fault. All unported rules apply to every script and their exact per-rule census counts/statuses remain in the summary. `all_fixes` and `syntax_fixes` have separate states. Markdown lacks a whole-file port composition API and is visibly blocked. Unknown process failures remain `execution fault`; they are not misclassified as an explicit formatter refusal.
 
-## Design and limits
+The owned formatter adapter remains valid TypeScript/Adamic with concrete existing imports and readonly option interfaces. The host tools introduce no language syntax, GC, runtime feature or workaround for a language gap. Shared lint, parser, printer, bridge, runtime and compiler source files are untouched.
 
-The scoreboard is host Go orchestration, like existing oracle/test tooling; it
-contains no replacement lint rule. The owned formatter adapter is valid
-TypeScript/Adamic, imports concrete existing ports and uses readonly existing
-option interfaces. There is no new syntax, runtime service, GC, compiler change,
-or substitute implementation for a language gap. Reports are append-only values
-until aggregation; source inputs are read-only, and mutant/reduction files live
-in scratch. All new top-level Go tests call `t.Parallel`.
+## Open questions and rulings for @system_adamic
 
-`agree`, `diverge` and `blocked` are separate outcomes, aggregated per rule,
-upstream family and file. The report retains the complete original input for
-every non-agreement. `--reduce` reaches a single-rune-deletion fixed point for
-successful byte divergences. This is **not globally shortest**: syntax-preserving
-replacement, reordering and shorter equivalent programs are not searched.
-Reductions relocate the file while preserving its basename/script extension;
-path-sensitive and typed-program reductions need stronger project-preserving
-handling. Those limits are recorded in each reduction field. No globally-shortest
-or project-preserving claim is made by this first piece.
+**No open language questions remain for this piece.** The two original questions are resolved:
 
-The current adapter covers TypeScript/JS/Adamic program printing, JSON, YAML,
-GraphQL and CSS/SCSS at the existing port's exposed options. Markdown has
-component printers but no whole-file port composition API available to this
-adapter; it produces a visible blocked cell, not fragment-as-file agreement.
-The native Go wrapper is used for the oracle; the port gets defaults matching
-that wrapper (JSON/YAML use Prettier defaults, other families use cohere defaults).
-Custom formatter options and the resolved per-directory cohere configuration
-are not yet wired into this host driver.
+* **Host tooling may remain Go.** It measures Adamic binaries through stdout, exit code and timing and never links into the product build. This full receipt labels source Node separately; the earlier `native-node.json` smoke remains separate native build/replay evidence.
+* **Dependency-uninstalled snapshots are a different input from installed programs.** Both labels must be present and equal. The manifest validator rejects absent, unknown or differing labels before execution; installed/uninstalled results must never be compared as the same program.
 
-The exact shared-file dependency for configured cross-rule fixes is
-`stage1/cohere/lint/main.ts` (the manifest passes one decoded JSON bag), with
-`context.ts`/`settings.ts` retaining that same bag for every listener. Separate
-selected-rule rows can compare findings and per-rule fixes with identical
-options today. A simultaneous all-rule run with a distinct bag per rule cannot
-be represented by this transport. The scoreboard stops at this boundary: no
-shared transport, context or fix-engine edit is made, and configured cross-rule
-fix parity is not claimed. Its owner must expose that input contract before
-this package can hold those combined answers.
+A future language question must be recorded for @system_adamic instead of answered by an implementation workaround. The next native sweep must use the actual Adamic binary and report its originating runtime/compiler refusal through its owner.
 
+## Fixtures and mutants
 
-Typed findings require a program config and an already built native lint binary:
-`--native` records the existing bridge facts and Node uses the existing replay
-mechanism. Without both, typed coverage is blocked. The first public probe run
-has neither installed project dependencies nor fabricated checker facts, so it
-cannot certify typed findings. Go's independent census likewise records `no program`.
+* All 235,377 actual sources at the pinned 23 repositories, including both public TypeScript compiler test trees, identified by path/hash/pin in the full manifest.
+* Go cohere's real `debugger;\n` fixture (`cohere/internal/lint/rules/core/no_debugger_test.go:18`): identical Go/Node finding and deletion/fixed answer.
+* Named **`comment-loss`** fixture: Prisma's real empty-module comment, whose held minimal witness is `//`.
+* Named **`BOM preservation`** fixture: the cohere-pinned compiler's real `bom-utf8.ts`, `\ufeffvar x=10;\r\n`, whose held minimal witness is U+FEFF. Original CRLF bytes remain held.
+* Both named formatter fixtures remain in `testdata/extra-fixtures.json` and are asserted as successful-but-different Go/Node answers in the live test; `rulings-fixtures.json` preserves their earlier nine-cell receipt.
+* The live scratch Node mutant runs the unchanged port with exit zero, replaces the debugger description with `planted divergence`, and must become `diverge`. Synthetic mutants cover suggestion replacement, invalid-byte normalization, matching failures, literal `skipped` text inside real output and accumulated stderr. They test the scoreboard, not source-corpus lint rules.
 
-## Open questions for @system_adamic
-
-Both questions below were resolved by @system_adamic. No new language question
-is raised by this receipt.
-
-* Host-tool boundary: **the scoreboard may remain Go**. It measures Adamic
-  binaries through stdout, exit code and timing; none of it links into the
-  product's Adamic build. Source Node remains a separately identified reference
-  execution, not evidence of an Adamic binary run.
-* Dependency-input boundary: **a snapshot without installed dependencies is a
-  different input**. It must be labeled and compared only with another snapshot
-  of that kind. Manifests now require `dependency_inputs.go` and
-  `dependency_inputs.node`, each `installed` or `uninstalled`, and reject absent
-  or differing labels before building or executing adapters. Reports retain the
-  labels. `TestDependencySnapshotBoundary` plants both mismatch directions and
-  missing/unknown labels; all must fail validation. Matching labels identify the
-  kind, not identical installed dependency versions or checker configuration.
-
-Stage 0 successfully built `format.a`; no new language refusal was encountered.
-`native-node.json` holds identical native/source-Node output and exit codes for
-the debugger and BOM witnesses and real `CohereSettings.json`. This is a native
-compile/replay check, not native-versus-Go parity on the known formatter gaps.
-Any future native adapter refusal must be recorded in the validation evidence. Its
-owner must rule or fix the originating compiler/runtime/port gap. This scout
-must not repair a shared compiler, runtime, bridge or parser to get green.
-
-## Fixtures, mutants and reproduction
-
-* 23 real public source probes, exact path/hash/pin: `first-run.manifest.sources.json`.
-* Go's real debugger fixture and TypeScript's real BOM fixture:
-  `testdata/extra-fixtures.json`; raw `.ts.txt` files stay outside the module graph.
-* Synthetic protocol controls are clearly tests of the scoreboard, not source
-  corpus: missing-checker, formatter refusal, cancellation, empty/duplicate
-  manifest, suggestion edit mutation, and aggregation of a wrong-message result.
-* The live mutant is an owned scratch Node wrapper. It runs the unchanged source
-  port successfully, changes only `A debugger statement stops execution` to
-  `planted divergence`, and requires the ordinary byte comparator to reject it.
-  This proves output sensitivity; it does not claim a lint-rule implementation mutant.
+## Reproduction and validation
 
 ```sh
 source /workspace/adamic-tools/env.sh
-mkdir -p /tmp/adamic-gate
 go test ./stage1/cohere/scoreboard -count=1 -v -timeout=30m
 go vet ./stage1/cohere/scoreboard
-python3 stage1/cohere/scoreboard/fetch-public.py /path/to/scratch/public
-python3 stage1/cohere/scoreboard/corpus.py /path/to/scratch/public/fetch.json --out /tmp/probes.json
-# --all produces every tracked supported file instead of first-run probes.
-go run ./stage1/cohere/scoreboard --fixtures --manifest /tmp/probes.json --out /tmp/report.json
-go run ./stage1/cohere/scoreboard --fixtures --manifest stage1/cohere/scoreboard/fixture-run.manifest.json --reduce --out /tmp/fixtures.json
+python3 stage1/cohere/scoreboard/fetch-public.py /workspace/scratch/scoreboard-public
+python3 stage1/cohere/scoreboard/corpus.py /workspace/scratch/scoreboard-public/fetch.json --all --requested-extensions --out /tmp/requested.json
+go run ./stage1/cohere/scoreboard --full-tree --manifest /tmp/requested.json --out /tmp/full-receipts --workers 4
+go run ./stage1/cohere/scoreboard --verify-go-sweep /tmp/full-receipts --manifest /tmp/requested.json --out /tmp/byte-verification
+go run ./stage1/cohere/scoreboard --reduce-sweep /tmp/full-receipts --manifest /tmp/requested.json --out /tmp/reductions
+python3 stage1/cohere/scoreboard/audit_sweep.py /tmp/requested.json /tmp/full-receipts /tmp/results --corrections /tmp/byte-verification
+python3 stage1/cohere/scoreboard/attribute_sweep.py /tmp/reductions /tmp/results
+python3 stage1/cohere/scoreboard/report_sweep.py /tmp/results
 ```
 
-A nonzero scoreboard exit preserves its report; it means a byte divergence,
-blocked coverage or census failure. It is not a crashed package test. A canonical
-Mac manifest must identify all 100 snapshots by repository/root/SHA; the driver
-validates each pin and source and refuses to label the 23 snapshots canonical.
-A canonical manifest still needs the actual Mac file-selection/options contract;
-100 identities alone do not prove that every configured file was selected.
+The individual retry/merge is explicit in `merge_retry.py` and its published receipt; it is not an implicit skipped input. The reducer supports observing newly completed chunks and resume. The final independent export and reduction closure are reusable without rerunning engines.
 
-## Validation receipt
-
-All **8 top-level Go tests** pass without skips, including the actual Go/source-Node
-fixture and clean-running message mutant. `validation/tests.txt` retains the
-complete final run; `validation/vet.txt` is clean. `gofmt -l` and
-`git diff --check` are clean. Both scoreboard commands exit nonzero by design
-because their reports contain named divergences/coverage blocks; these expected
-nonzero receipts are retained. Stage 0 built the owned adapter successfully, and
-its three native/source-Node replay checks are byte-identical. No full gate,
-full public-source scoreboard sweep or full quiet-hundred sweep is claimed.
+All **17 top-level package tests** pass, with every required input available and no skips; every new top-level Go test calls `t.Parallel`. `validation/full-tree-tests.txt` includes actual Go/Node workers, isolated census checks, named formatter divergences and the clean-running mutant. `full-tree-vet.txt` is clean; the generated Go worker overlay's vet receipt is `full-tree-worker-vet.txt`. The collector/byte transport race checks pass in `full-tree-race.txt`. gofmt and `git diff --check` are clean. Earlier owned native formatter build/replay evidence is retained, without claiming native coverage for this sweep.
 
 ## What the next scout takes
 
-Take the driver, the exact snapshot/source inventories, the first-run answers,
-the public all-files manifest generator, the byte comparator/partition tests,
-and the clean-running planted divergence. Obtain the actual Mac selections and
-resolved options; run full available trees before claiming a frequency ranking
-for the public portion, then the full quiet hundred. Supply project-specific
-checker configs/native recordings; add whole-file Markdown composition only
-through its owner. Finish project-preserving reductions and their failure
-controls. Do not treat the probe ranking or deletion-minimal inputs as the
-requested quiet-hundred ranking or globally shortest inputs.
+Take the complete score/reduction closure, the 325 replayed witness catalog, the frequency-ranked 399 missing rules and the causal tree evidence. Prioritize fixes through each owning lane; rerun the same corpus and labels to measure the change. Comment attachment, BOM preservation and source blank-line handling dominate successful formatter mismatches. Parser/JSDoc/hashbang witnesses expose multiple lint rules at once.
 
-## Full-tree continuation receipt
+**`stage1/cohere/lint/main.ts:13` is the lint lane's shared option transport: name it, do not edit it here.** Distinct per-rule option bags for a simultaneous configured run need that owner to change its input contract. `context.ts`/`settings.ts` currently retain the same bag for every listener. Checker facts/program recording need the bridge/lint owners; whole-file Markdown composition needs the formatter owner. This scout stops at those boundaries.
 
-`requested-all.manifest.json.gz` enumerates the exact requested eight extensions
-from all 23 pinned Git trees: **235,377 files**.
-`requested-all.inventory.json` gives per-snapshot and per-extension counts and
-bytes. This is an inventory, **not a full-tree scoreboard run**. An independent NUL-delimited `git ls-files -z` census agrees on that count,
-including 51 symlinks. The earlier
-242,883 denominator used a broader extension set; it is not this request's
-denominator. The manifest explicitly labels both execution inputs uninstalled.
-Tracked symlink contents are hashed as Git blobs during inventory rather than
-following their targets; a future executor must preserve those bytes and path
-semantics or report the input unavailable. The current per-file executor reads
-the checkout and is not yet suitable for certifying those symlink inputs.
-
-The existing executor also starts fresh Go/Node processes per file and stores
-all cells and repeated input bytes in memory. Persistent workers, bounded
-streamed reports, resume checks and project-preserving reductions remain
-unimplemented. No all-tree agreement counts, missing-rule frequency ranking,
-or all-divergence attribution is claimed in this receipt. These are the next
-scout's concrete work, not permission or language questions.
-
-`stage1/cohere/lint/main.ts:13` is the lint lane's option transport. A distinct
-per-rule option table must be implemented there by that lane; this scout has
-not changed it. The current scoreboard's adapter-options/census-options
-dialect distinction remains material.
-
-The named `comment-loss` and `BOM preservation` fixtures are retained in
-`testdata/extra-fixtures.json` with hashes and provenance, and both are asserted
-as successful-but-different Go/Node executions in the live package test.
-`rulings-fixtures.json` records nine cells: seven agree and these two formatter
-fixtures diverge, with dependency labels.
-The BOM fixture keeps its original CRLF bytes; package-local `.gitattributes`
-marks it binary for diffs. Earlier validation `.log` receipts were ignored by
-the repository's global pattern; this receipt includes fresh tracked `.txt`
-receipts instead.
+The remaining acceptance scope is Kirk's actual quiet-hundred manifest, selections/options and the other Mac-only snapshots, followed by a separately identified installed-program/native run. Do not treat 23 full public trees, an uninstalled census lower bound, or deletion-minimal witnesses as full hundred-program parity or globally shortest programs.

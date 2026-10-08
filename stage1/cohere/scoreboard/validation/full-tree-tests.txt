@@ -1,0 +1,72 @@
+=== RUN   TestSweepStatesAndMutant
+=== PAUSE TestSweepStatesAndMutant
+=== RUN   TestReductionSubsequence
+=== PAUSE TestReductionSubsequence
+=== RUN   TestHostAdapterAnchors
+=== PAUSE TestHostAdapterAnchors
+=== RUN   TestFailurePhaseAndOutputTrace
+=== PAUSE TestFailurePhaseAndOutputTrace
+=== RUN   TestByteTransportCannotNormalizeInvalidUTF8
+=== PAUSE TestByteTransportCannotNormalizeInvalidUTF8
+=== RUN   TestStderrCollectorDoesNotRestoreEarlierRequest
+=== PAUSE TestStderrCollectorDoesNotRestoreEarlierRequest
+=== RUN   TestCleanCopiesPreserveMeasuredBoundaries
+=== PAUSE TestCleanCopiesPreserveMeasuredBoundaries
+=== RUN   TestLiteralSkipTextCannotBlockARealAnswer
+=== PAUSE TestLiteralSkipTextCannotBlockARealAnswer
+=== RUN   TestByteAuditSentinel
+=== PAUSE TestByteAuditSentinel
+=== RUN   TestMutantIsCaught
+=== PAUSE TestMutantIsCaught
+=== RUN   TestFailuresCannotAgree
+=== PAUSE TestFailuresCannotAgree
+=== RUN   TestMinimize
+=== PAUSE TestMinimize
+=== RUN   TestManifestRejectsSubstitution
+=== PAUSE TestManifestRejectsSubstitution
+=== RUN   TestProcessTimeoutIsBlocked
+=== PAUSE TestProcessTimeoutIsBlocked
+=== RUN   TestLiveOracleAndNode
+=== PAUSE TestLiveOracleAndNode
+=== RUN   TestPartitionPreservesBytes
+=== PAUSE TestPartitionPreservesBytes
+=== RUN   TestDependencySnapshotBoundary
+=== PAUSE TestDependencySnapshotBoundary
+=== CONT  TestSweepStatesAndMutant
+--- PASS: TestSweepStatesAndMutant (0.00s)
+=== CONT  TestDependencySnapshotBoundary
+--- PASS: TestDependencySnapshotBoundary (0.00s)
+=== CONT  TestPartitionPreservesBytes
+--- PASS: TestPartitionPreservesBytes (0.00s)
+=== CONT  TestLiveOracleAndNode
+=== CONT  TestLiteralSkipTextCannotBlockARealAnswer
+--- PASS: TestLiteralSkipTextCannotBlockARealAnswer (0.00s)
+=== CONT  TestHostAdapterAnchors
+=== CONT  TestByteTransportCannotNormalizeInvalidUTF8
+=== CONT  TestCleanCopiesPreserveMeasuredBoundaries
+=== CONT  TestStderrCollectorDoesNotRestoreEarlierRequest
+--- PASS: TestHostAdapterAnchors (0.00s)
+--- PASS: TestByteTransportCannotNormalizeInvalidUTF8 (0.00s)
+=== CONT  TestFailurePhaseAndOutputTrace
+=== CONT  TestReductionSubsequence
+--- PASS: TestReductionSubsequence (0.00s)
+=== CONT  TestMinimize
+--- PASS: TestFailurePhaseAndOutputTrace (0.00s)
+=== CONT  TestProcessTimeoutIsBlocked
+--- PASS: TestMinimize (0.00s)
+=== CONT  TestManifestRejectsSubstitution
+--- PASS: TestProcessTimeoutIsBlocked (0.00s)
+=== CONT  TestMutantIsCaught
+--- PASS: TestMutantIsCaught (0.00s)
+=== CONT  TestFailuresCannotAgree
+--- PASS: TestFailuresCannotAgree (0.00s)
+=== CONT  TestByteAuditSentinel
+--- PASS: TestByteAuditSentinel (0.00s)
+--- PASS: TestStderrCollectorDoesNotRestoreEarlierRequest (0.00s)
+--- PASS: TestManifestRejectsSubstitution (0.00s)
+--- PASS: TestCleanCopiesPreserveMeasuredBoundaries (0.04s)
+=== NAME  TestLiveOracleAndNode
+    scoreboard_test.go:165: live witness debugger;: Go and Node agree; clean-running Node message mutant status=diverge, findings=1
+--- PASS: TestLiveOracleAndNode (21.92s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/scoreboard	21.923s

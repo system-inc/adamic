@@ -228,7 +228,7 @@ func minimize(input string, fails func(string) bool) string {
 				chars = next
 				start = 0
 			} else {
-				start++
+				start += width
 			}
 		}
 	}
@@ -527,9 +527,6 @@ func (d *Driver) format(path string) (Execution, Execution) {
 // ruleAnswer retains each human finding and all its range/suggestion rows verbatim.
 // Shared converged fixed text and overlap refusals are held by the all-fixes cell.
 func ruleAnswer(e Execution, name string) Execution {
-	if e.Error != "" {
-		return e
-	}
 	lines := strings.SplitAfter(e.Output, "\n")
 	var out strings.Builder
 	active := false
@@ -549,5 +546,5 @@ func ruleAnswer(e Execution, name string) Execution {
 			out.WriteString(line)
 		}
 	}
-	return Execution{Output: out.String(), Stderr: e.Stderr}
+	return Execution{Output: out.String(), Error: e.Error, Stderr: e.Stderr}
 }

@@ -61,5 +61,31 @@
         }
       }
     ]
+  },
+  "full-tree": {
+    "files": 235377,
+    "script_files": 201196,
+    "cells": 99626201,
+    "statuses": {
+      "agree": 17175641,
+      "diverge": 11476,
+      "blocked": 82439084
+    },
+    "blocked_causes": {
+      "formatter refusal": 196905,
+      "checker fact": 753828,
+      "unported rule": 80277204,
+      "parser": 1205021,
+      "execution fault": 6126
+    },
+    "divergence_witnesses": 325,
+    "registered_port_rules": 93,
+    "unported_rules": 399,
+    "dependency_inputs": {
+      "go": "uninstalled",
+      "node": "uninstalled"
+    },
+    "port_execution": "source Node",
+    "report": "results/REPORT.md"
   }
 }

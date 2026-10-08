@@ -17,7 +17,46 @@ func main() {
 	native := flag.String("native", "", "native lint binary for checker recording")
 	out := flag.String("out", "", "report destination; default stdout")
 	limit := flag.Duration("limit", 30*time.Second, "per process timeout")
+	full := flag.Bool("full-tree", false, "stream the pinned full-tree run using persistent workers")
+	workers := flag.Int("workers", 4, "number of independent host worker pairs")
+	maxFiles := flag.Int("max-files", 0, "explicit partial transport validation scope; zero means every file")
+	reduceInput := flag.String("reduce-sweep", "", "receipt directory to reduce at original source paths")
+	watch := flag.Bool("reduce-watch", false, "reduce newly completed receipt chunks until the full run completes")
+	verifyInput := flag.String("verify-go-sweep", "", "verify every oracle stdout using the byte-preserving transport")
 	flag.Parse()
+	if *verifyInput != "" {
+		abs, err := filepath.Abs(*root)
+		if err == nil {
+			err = verifyGo(abs, *manifest, *verifyInput, *out, *limit, *watch)
+		}
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+		return
+	}
+	if *reduceInput != "" {
+		abs, err := filepath.Abs(*root)
+		if err == nil {
+			err = reduceSweep(abs, *manifest, *reduceInput, *out, *limit, *watch)
+		}
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+		return
+	}
+	if *full {
+		abs, err := filepath.Abs(*root)
+		if err == nil {
+			err = sweep(abs, *manifest, *out, *workers, *maxFiles, *limit)
+		}
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+		return
+	}
 	if err := runCLI(*manifest, *root, *native, *out, *fixtures, *reduce, *limit); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
