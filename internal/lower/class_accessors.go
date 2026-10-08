@@ -363,7 +363,8 @@ func (l *lowering) hasAccessorStorage(proven *checker.Type) bool {
 	return false
 }
 
-// Until spread callbacks are explicit calls in the flow graph, their exception edges must not be lost.
+// Spread callbacks have an explicit LibraryMayThrow edge. Static and setter-only
+// layouts still need separate presence and value representation proofs.
 func (l *lowering) checkAccessorSpreads() error {
 	setterOnly := false
 	for _, class := range l.result.Classes {
@@ -371,15 +372,7 @@ func (l *lowering) checkAccessorSpreads() error {
 			setterOnly = setterOnly || (class.Literal && accessor.Getter < 0)
 		}
 	}
-	throwing := false
-	for _, class := range l.result.Classes {
-		for _, accessor := range class.Accessors {
-			if class.Literal && accessor.Getter >= 0 && (l.result.Functions[accessor.Getter].MayThrow || l.libraryFailure(l.result.Functions[accessor.Getter].Body, map[int]bool{}) != "") {
-				throwing = true
-			}
-		}
-	}
-	if !throwing && !setterOnly && len(l.staticGlobals) == 0 {
+	if !setterOnly && len(l.staticGlobals) == 0 {
 		return nil
 	}
 	spread := false
@@ -398,9 +391,6 @@ func (l *lowering) checkAccessorSpreads() error {
 	}
 	if spread && setterOnly {
 		return &NotYet{Where: l.result.Source, What: "spreading a setter-only property, whose read value is undefined"}
-	}
-	if spread {
-		return &NotYet{Where: l.result.Source, What: "spreading an accessor literal whose getter may throw"}
 	}
 	return nil
 }

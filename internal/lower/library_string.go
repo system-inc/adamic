@@ -639,10 +639,7 @@ func (l *lowering) stringNullPrototypeCall(node *ast.Node, method string, writte
 		message = "String.prototype." + method + " requires that 'this' be a String"
 	}
 	l.result.Functions[function].Returns = returns
-	l.result.Functions[function].Body = []ir.Statement{ir.Throw{Value: ir.ObjectLiteral{Fields: []ir.Field{
-		{Name: "name", Value: ir.StringConstant{Index: l.constant("TypeError")}},
-		{Name: "message", Value: ir.StringConstant{Index: l.constant(message)}},
-	}}}}
+	l.result.Functions[function].Body = []ir.Statement{ir.Throw{Value: ir.MakeError{Name: ir.StringConstant{Index: l.constant("TypeError")}, Message: ir.StringConstant{Index: l.constant(message)}}}}
 	return ir.Call{Function: function, Arguments: values, Returns: returns}, true, nil
 }
 

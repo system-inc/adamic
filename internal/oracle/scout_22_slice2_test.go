@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-var scout22Slice2Fixtures = []string{"scout22_conversion_hints", "scout22_conversion_errors", "scout22_range_errors", "scout22_property_errors", "scout22_tsc_to_string"}
+var scout22Slice2Fixtures = []string{"scout22_conversion_hints", "scout22_conversion_errors", "scout22_range_errors", "scout22_property_errors", "scout22_tsc_to_string", "scout22_spread_errors"}
 
 func init() {
 	for _, name := range scout22Slice2Fixtures {
@@ -54,7 +54,7 @@ func TestScout22Slice2Fixtures(t *testing.T) {
 // Mutations remain well typed and terminate without diagnostics or leaks. The
 // source Node execution is the independent witness of the semantic difference.
 func TestScout22Slice2Mutants(t *testing.T) {
-	for _, family := range []string{"conversion_hints", "conversion_errors", "property_errors", "range_errors", "padStart", "normalize", "toFixed", "toExponential", "toPrecision", "toString", "error_identity"} {
+	for _, family := range []string{"conversion_hints", "conversion_errors", "property_errors", "range_errors", "padStart", "normalize", "toFixed", "toExponential", "toPrecision", "toString", "error_identity", "spread_errors"} {
 		t.Run(family, func(t *testing.T) {
 			fixture := family
 			switch family {
@@ -137,7 +137,7 @@ func TestScout22Slice2Mutants(t *testing.T) {
 						changed++
 						return call
 					}
-				case "range_errors":
+				case "range_errors", "spread_errors":
 					if call, ok := value.(ir.StringCall); ok && call.Method == "repeat" && len(call.Arguments) > 0 {
 						// Skipping the negative-count error exercises the catch continuation.
 						if count, constant := call.Arguments[0].(ir.NumberConstant); !constant || count.Value < 0 {

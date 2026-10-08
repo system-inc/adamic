@@ -905,9 +905,32 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
-		value, err = l.stringConversionValue(span.AsTemplateSpan().Expression, value)
-		if err != nil {
-			return nil, err
+		switch value.Type() {
+		case ir.Number:
+			value = ir.NumberToString{Value: value}
+		case ir.Boolean:
+			value = ir.BooleanToString{Value: value}
+		case ir.MaybeNumber, ir.MaybeBoolean:
+			value = ir.MaybeToString{Value: value}
+		case ir.Union:
+			if !l.writable(l.checker.GetTypeAtLocation(span.AsTemplateSpan().Expression)) {
+				return nil, l.notYet(span, "a template interpolating a union with an object, an array, a map or a function in it")
+			}
+			value = ir.UnionToString{Value: value}
+		case ir.String:
+			value = l.spelled(span.AsTemplateSpan().Expression, value)
+		default:
+			proven := l.concrete(l.checker.GetTypeAtLocation(span.AsTemplateSpan().Expression))
+			if proven.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+				value = l.spelled(span.AsTemplateSpan().Expression, value)
+				break
+			}
+			// JavaScript writes an object as "[object Object]", an array as its join, and a function as
+			// its source; 0.1 has no use for any of it.
+			value, err = l.stringConversionValue(span.AsTemplateSpan().Expression, value)
+			if err != nil {
+				return nil, err
+			}
 		}
 		parts = append(parts, value)
 		if literal := span.AsTemplateSpan().Literal.Text(); literal != "" {

@@ -1,0 +1,8 @@
+const source = {
+ label: 'owned'.repeat(2),
+ get text(): string {return 'value'.repeat(-1);},
+};
+try {const copy={...source}; console.log(copy.text);}
+catch(error) {if(error instanceof Error) console.log(`${error.name}: ${error.message}`);}
+console.log(source.label);
+console.log('after spread');
