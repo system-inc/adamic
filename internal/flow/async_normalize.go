@@ -314,15 +314,6 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 			if n.program.Locals[value.Local].Captured {
 				return nil, fmt.Errorf("async per-iteration captured cells are not yet represented")
 			}
-			var outerBreak bool
-			inspectAsyncIR(reflect.ValueOf(value.Body), func(node any) {
-				if jump, ok := node.(ir.Break); ok && jump.Depth > 0 {
-					outerBreak = true
-				}
-			})
-			if outerBreak && containsAwait(reflect.ValueOf(value.Body)) {
-				return nil, fmt.Errorf("async for-of labeled outer break is not yet proven")
-			}
 			// Hold the array itself, not a copy or its current length. The next pass
 			// observes mutations made while suspended, like an array iterator on Node.
 			array := n.expression(value.Iterable, &before, true)

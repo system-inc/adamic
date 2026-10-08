@@ -114,6 +114,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/async_for_of_return.a", true, false},
 	{"internal/oracle/testdata/async_finally_completion.a", true, false},
 	{"internal/oracle/testdata/async_labels.a", true, false},
+	{"internal/oracle/testdata/async_labels_finally.a", true, false},
 	{"internal/oracle/testdata/async_switch_body.a", true, false},
 	{"internal/oracle/testdata/async_for_of_mutation.a", true, false},
 	{"internal/oracle/testdata/async_refused/async_refuse_for_of_string.a", false, false},

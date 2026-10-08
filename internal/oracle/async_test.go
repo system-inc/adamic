@@ -7,6 +7,7 @@ import (
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"os"
 	"path/filepath"
 	"reflect"
 	"regexp"
@@ -687,4 +688,38 @@ func TestAsyncLabelInnerTargetMutant(t *testing.T) {
 		t.Fatalf("mutant leaks: %s", report)
 	}
 	t.Log("inner continue target caught by Node stdout; sanitizer and leak checks clean")
+}
+
+func TestAsyncFinallyInnerLabelMutant(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_labels_finally.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	source, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	mutant := strings.Replace(string(source), "continue outer;", "continue inner;", 1)
+	if mutant == string(source) {
+		t.Fatal("no labeled target mutated")
+	}
+	mutantPath := filepath.Join(t.TempDir(), "inner-label.a")
+	if err := os.WriteFile(mutantPath, []byte(mutant), 0600); err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, mutantPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	observed, sanitized := natively(t, program)
+	if observed.exitCode != 0 || len(observed.stderr) != 0 {
+		t.Fatalf("mutant must run cleanly: %+v", observed)
+	}
+	if difference := disagreement(onNode(t, path), observed); difference != "stdout differs" {
+		t.Fatalf("inner-label mutant survived: %s", difference)
+	}
+	if report := leaks(t, program, sanitized); report != "" {
+		t.Fatalf("mutant leaks: %s", report)
+	}
+	t.Log("source jump to inner label caught by Node stdout; sanitizer and leak checks clean")
 }
