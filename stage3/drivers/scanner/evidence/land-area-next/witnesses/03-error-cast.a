@@ -1,3 +1,4 @@
+// a-check: refused a cast the runtime can't check
 const error = new Error("failure");
 if ((Error as any).captureStackTrace) (Error as any).captureStackTrace(error);
 console.log("ok");

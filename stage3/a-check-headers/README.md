@@ -17,3 +17,12 @@ replacing each reason/code is rejected: 226 catches. This proof exercises the
 header predicate; the ordinary scan separately invokes the real compiler on
 all 137 files. [batch4-header-mutants.json](batch4-header-mutants.json) records
 both mutants. Headers are restored after every experiment.
+
+Batch 5b is rebuilt from 45487a80 without the two hidden-source branches.
+Its own compiler accepts all 85 added or modified programs in place: 34 checked
+(including 31 NotYet), 21 refused, and 30 checker errors. Only 29 headers
+changed: 16 refusal reasons and 13 checker codes. The 39 added or modified
+driver paths are checked in place. [batch5b-headers.json](batch5b-headers.json)
+records actual reasons and unchanged body hashes; its 29 wrong-header and
+29 removed-header mutants are all caught by the unchanged pinned predicate.
+[batch5b-header-mutants.json](batch5b-header-mutants.json) records these 58 catches.
