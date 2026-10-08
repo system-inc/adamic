@@ -89,6 +89,7 @@ func TestEnumSwitchExhaustiveness(t *testing.T) {
 
 func TestEnumLimitsStayLoud(t *testing.T) {
 	t.Parallel()
+	t.Fatal("deliberate failure: the fast gate's fail-fast probe")
 	for _, source := range []string{
 		"enum E { A = Math.floor(2) }",
 		"enum E { A } enum E { B = 1 }",
