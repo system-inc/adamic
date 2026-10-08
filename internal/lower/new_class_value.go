@@ -156,8 +156,12 @@ func (l *lowering) classConstructorValue(node *ast.Node) (ir.Expression, error) 
 			case ir.Read:
 				closed = l.result.Locals[value.Local].Global
 			case ir.Call:
-				initializer := l.result.Functions[value.Function]
-				closed = len(value.Arguments) == 0 && !initializer.Closure && len(initializer.Environment) == 0
+				targets := l.result.CallTargets(value)
+				closed = len(value.Arguments) == 0 && len(targets) > 0
+				for _, target := range targets {
+					initializer := l.result.Functions[target]
+					closed = closed && !initializer.Closure && len(initializer.Environment) == 0
+				}
 			}
 			if !closed {
 				return nil, l.notYet(node, "a lexical constructor-cache initializer needing additional captures")
