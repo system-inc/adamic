@@ -1,0 +1,17 @@
+=== RUN   TestCheckedViewRanked22OriginalArrays
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-180-wrong-pos
+    checked_views_original_ranked_arrays_test.go:93: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:122: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-324-wrong-pos
+    checked_views_original_ranked_arrays_test.go:93: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:122: gate cache node miss
+--- PASS: TestCheckedViewRanked22OriginalArrays (2.46s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-180-wrong-pos (1.26s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-324-wrong-pos (1.20s)
+=== RUN   TestCheckedViewRanked22ArrayCounts
+--- PASS: TestCheckedViewRanked22ArrayCounts (24.45s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	26.928s

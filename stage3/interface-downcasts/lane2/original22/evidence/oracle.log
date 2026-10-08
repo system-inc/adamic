@@ -1,0 +1,144 @@
+=== RUN   TestCheckedViewRanked22OriginalArrays
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-180-good
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-180-lazy
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-180-wrong-array
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:123: stderr differs; stderr "adamic: panic: field read failed: viewed.parameters is not a NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[]; expected NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[], found number\n"; stdout ""; exit 70
+    checked_views_original_ranked_arrays_test.go:123: stderr differs; stderr "adamic: panic: field read failed: viewed.parameters is not a NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[]; expected NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[], found number\n"; stdout ""; exit 70
+    checked_views_original_ranked_arrays_test.go:123: stderr differs; stderr "adamic: panic: field read failed: viewed.parameters is not a NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[]; expected NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[], found number\n"; stdout ""; exit 70
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-180-wrong-pos
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-180-missing-pos
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-180-lazy-element
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-180-wrong-kind
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:123: stderr differs; stderr "adamic: panic: element read failed: items[0] expected JSDocParameterTag | ParameterDeclaration, found number\n"; stdout ""; exit 70
+    checked_views_original_ranked_arrays_test.go:123: stderr differs; stderr "adamic: panic: element read failed: items[0] expected JSDocParameterTag | ParameterDeclaration, found number\n"; stdout ""; exit 70
+    checked_views_original_ranked_arrays_test.go:123: stderr differs; stderr "adamic: panic: element read failed: items[0] expected JSDocParameterTag | ParameterDeclaration, found number\n"; stdout ""; exit 70
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-180-map
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-180-map-bad
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-181-good
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-174-good
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-182-good
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-185-good
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-186-good
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-318-good
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-263-good
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-175-good
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-177-good
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-178-good
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-179-good
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-219-good
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-220-good
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-324-good
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-324-lazy
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-324-wrong-array
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:123: stderr differs; stderr "adamic: panic: field read failed: viewed.parameters is not a NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[]; expected NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[], found number\n"; stdout ""; exit 70
+    checked_views_original_ranked_arrays_test.go:123: stderr differs; stderr "adamic: panic: field read failed: viewed.parameters is not a NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[]; expected NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[], found number\n"; stdout ""; exit 70
+    checked_views_original_ranked_arrays_test.go:123: stderr differs; stderr "adamic: panic: field read failed: viewed.parameters is not a NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[]; expected NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[], found number\n"; stdout ""; exit 70
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-324-wrong-pos
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-324-missing-pos
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-324-lazy-element
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-324-wrong-kind
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:123: stderr differs; stderr "adamic: panic: element read failed: items[0] expected JSDocParameterTag | ParameterDeclaration, found number\n"; stdout ""; exit 70
+    checked_views_original_ranked_arrays_test.go:123: stderr differs; stderr "adamic: panic: element read failed: items[0] expected JSDocParameterTag | ParameterDeclaration, found number\n"; stdout ""; exit 70
+    checked_views_original_ranked_arrays_test.go:123: stderr differs; stderr "adamic: panic: element read failed: items[0] expected JSDocParameterTag | ParameterDeclaration, found number\n"; stdout ""; exit 70
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-324-map
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-324-map-bad
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+--- FAIL: TestCheckedViewRanked22OriginalArrays (36.17s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-180-good (1.26s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-180-lazy (1.15s)
+    --- FAIL: TestCheckedViewRanked22OriginalArrays/signature-180-wrong-array (1.14s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-180-wrong-pos (1.12s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-180-missing-pos (1.22s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-180-lazy-element (1.19s)
+    --- FAIL: TestCheckedViewRanked22OriginalArrays/signature-180-wrong-kind (1.10s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-180-map (1.23s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-180-map-bad (1.18s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-181-good (1.20s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-174-good (1.19s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-182-good (1.22s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-185-good (1.18s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-186-good (1.21s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-318-good (1.19s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-263-good (1.19s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-175-good (1.15s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-177-good (1.17s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-178-good (1.16s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-179-good (1.16s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-219-good (1.15s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-220-good (1.18s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-324-good (1.17s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-324-lazy (1.09s)
+    --- FAIL: TestCheckedViewRanked22OriginalArrays/signature-324-wrong-array (1.10s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-324-wrong-pos (1.11s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-324-missing-pos (1.14s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-324-lazy-element (1.19s)
+    --- FAIL: TestCheckedViewRanked22OriginalArrays/signature-324-wrong-kind (1.12s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-324-map (1.19s)
+    --- PASS: TestCheckedViewRanked22OriginalArrays/signature-324-map-bad (1.13s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=62
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	36.178s
+FAIL

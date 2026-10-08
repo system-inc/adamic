@@ -1,0 +1,277 @@
+[
+  {
+    "name": "signature-180-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "signature-180-lazy",
+    "source": "180\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration"
+    ]
+  },
+  {
+    "name": "signature-180-wrong-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: viewed.parameters is not a NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[]; expected NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[], found number",
+    "contracts": [
+      "CallSignatureDeclaration"
+    ]
+  },
+  {
+    "name": "signature-180-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "signature-180-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "signature-180-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "signature-180-wrong-kind",
+    "source": "undefined\n",
+    "diagnostic": "element read failed: items[0] expected JSDocParameterTag | ParameterDeclaration, found number",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "signature-180-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "signature-180-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "signature-181-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "signature-174-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "MethodSignature",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "signature-182-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "IndexSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "signature-185-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionTypeNode",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "signature-186-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructorTypeNode",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "signature-318-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocFunctionType",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "signature-263-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "signature-175-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "MethodDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "signature-177-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "signature-178-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "GetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "signature-179-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "SetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "signature-219-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "FunctionExpression",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "signature-220-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ArrowFunction",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "signature-324-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocSignature",
+      "JSDocParameterTag"
+    ]
+  },
+  {
+    "name": "signature-324-lazy",
+    "source": "324\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocSignature"
+    ]
+  },
+  {
+    "name": "signature-324-wrong-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: viewed.parameters is not a NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[]; expected NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[], found number",
+    "contracts": [
+      "JSDocSignature"
+    ]
+  },
+  {
+    "name": "signature-324-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "JSDocSignature",
+      "JSDocParameterTag"
+    ]
+  },
+  {
+    "name": "signature-324-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "JSDocSignature",
+      "JSDocParameterTag"
+    ]
+  },
+  {
+    "name": "signature-324-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocSignature",
+      "JSDocParameterTag"
+    ]
+  },
+  {
+    "name": "signature-324-wrong-kind",
+    "source": "undefined\n",
+    "diagnostic": "element read failed: items[0] expected JSDocParameterTag | ParameterDeclaration, found number",
+    "contracts": [
+      "JSDocSignature",
+      "JSDocParameterTag"
+    ]
+  },
+  {
+    "name": "signature-324-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocSignature",
+      "JSDocParameterTag"
+    ]
+  },
+  {
+    "name": "signature-324-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "JSDocSignature",
+      "JSDocParameterTag"
+    ]
+  }
+]

@@ -2711,3 +2711,15 @@ are certified across all 25 receiver arms. 101 Node/backend probes pass,
 and eight executed descendant-check mutants fail. No compiler change.
 Fixture obligations held: 178 / 2887; remaining: 156 / 302. Lane 4c skips and
 tuples earn no credit. See stage3/interface-downcasts/lane2/RANKED21-ARRAYS-REPORT.md.
+
+## Lane 2 group 22: original signature parameter array union
+
+SignatureDeclaration | JSDocSignature.parameters (5 static reads) is certified
+with full original declarations for all 15 arms. 31 source/backend probes and
+21 finishing leak checks pass; 31 counts are measured with restored sources.
+Four executed numeric-descendant mutants fail. No compiler change. Fixture
+obligations held: 179 / 2892; remaining: 155 / 297. The latest instruction gives
+lane 2 ownership of mixed-array joints, tuple storage admission and fileNames
+untagged admission before resuming the ranked list. Callable-array map and
+replacement frontiers remain pending without pair credit. See
+stage3/interface-downcasts/lane2/RANKED22-ARRAYS-REPORT.md.

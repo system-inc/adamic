@@ -1,0 +1,12 @@
+=== RUN   TestCheckedViewRanked22OriginalArrays
+=== RUN   TestCheckedViewRanked22OriginalArrays/signature-180-wrong-pos
+    checked_views_original_ranked_arrays_test.go:124: exit codes differ; stderr ""; stdout "4.6367797255191e-310\n"; exit 0
+    checked_views_original_ranked_arrays_test.go:124: exit codes differ; stderr ""; stdout "4.63889632174805e-310\n"; exit 0
+--- FAIL: TestCheckedViewRanked22OriginalArrays (1.23s)
+    --- FAIL: TestCheckedViewRanked22OriginalArrays/signature-180-wrong-pos (1.23s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.243s
+FAIL

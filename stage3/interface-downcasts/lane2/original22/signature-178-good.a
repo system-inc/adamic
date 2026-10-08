@@ -1,0 +1,9 @@
+import type { SignatureDeclaration, JSDocSignature } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(base: Base): void {
+ const viewed = base as SignatureDeclaration | JSDocSignature;
+ const items = viewed.parameters;
+ console.log(`${items.length}:${items[0]!.pos}`);
+}
+const raw = { kind: 178, parameters: [{kind: 170, pos: 7}] };
+read(raw);
