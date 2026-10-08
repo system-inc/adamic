@@ -1,0 +1,152 @@
+import type { RuleContext } from '../../context.ts';
+import { fileComments } from './comments.a';
+import { deprecations } from './messages.a';
+import type { Deprecation } from './messages.a';
+import { importProjection } from './bindings.a';
+import { bindingsOf } from '../../helpers/imports/bindings_of.a';
+import { importedNameOf } from '../../helpers/imports/imported_name_of.a';
+
+function asciiSpace(code: number): boolean { return code === 32 || (code >= 9 && code <= 13); }
+function identifier(name: string): boolean {
+    if(name === '') { return false; }
+    for(let i = 0; i < name.length; i++) {
+        const c = name.charCodeAt(i);
+        if(c === 95 || c === 36 || (c >= 65 && c <= 90) || (c >= 97 && c <= 122) || (i > 0 && c >= 48 && c <= 57)) { continue; }
+        return false;
+    }
+    return true;
+}
+function annotation(text: string): string {
+    let offset = 0;
+    for(;;) {
+        const marker = text.indexOf('@jsx', offset);
+        if(marker < 0) { return ''; }
+        const start = marker + 4;
+        let cursor = start;
+        while(cursor < text.length && asciiSpace(text.charCodeAt(cursor))) { cursor++; }
+        if(cursor > start && cursor < text.length) {
+            const begin = cursor;
+            while(cursor < text.length && !asciiSpace(text.charCodeAt(cursor))) { cursor++; }
+            const name = (text.slice(begin, cursor).split('.')[0] ?? '');
+            if(name !== '') { return name; }
+        }
+        offset = start;
+    }
+}
+function moduleName(source: string): string {
+    switch(source) {
+        case 'react': return 'React';
+        case 'react-addons-perf': return 'ReactPerf';
+        case 'react-dom': return 'ReactDOM';
+        case 'react-dom/server': return 'ReactDOMServer';
+        default: return '';
+    }
+}
+function baseName(name: string): boolean { return name === 'Component' || name === 'PureComponent'; }
+export class Rule {
+    readonly context: RuleContext;
+    entries: Deprecation[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    prepare(root: number): void {
+        let pragma = 'React';
+        for(const comment of fileComments(this.context, this.context.node(root))) {
+            let text = comment.text.slice(2);
+            if(comment.text.startsWith('/*') && comment.text.endsWith('*/')) { text = comment.text.slice(2, -2); }
+            const candidate = annotation(text);
+            if(candidate === '') { continue; }
+            pragma = identifier(candidate) ? candidate : 'React';
+            break;
+        }
+        this.entries = deprecations(pragma);
+    }
+    report(index: number, name: string): void {
+        for(const entry of this.entries) {
+            if(entry.name === name) { this.context.reportNode(index, 'react/no-deprecated', 'deprecated', entry.describe()); return; }
+        }
+    }
+    componentBase(index: number): boolean {
+        if(index < 0) { return false; }
+        const context = this.context;
+        const expression = context.unwrap(index);
+        if(context.kind(expression) === 'Identifier') { return baseName(context.node(expression).text); }
+        if(context.kind(expression) !== 'PropertyAccessExpression') { return false; }
+        const receiver = context.unwrap(context.child(expression, 0));
+        const name = context.property(expression);
+        return context.kind(receiver) === 'Identifier' && context.node(receiver).text === 'React' && context.kind(name) === 'Identifier' && baseName(context.node(name).text);
+    }
+    component(index: number): boolean {
+        const context = this.context;
+        const kind = context.kind(index);
+        if(kind === 'ClassDeclaration' || kind === 'ClassExpression') {
+            for(const clause of context.children(index, 'HeritageClause')) {
+                for(const type of context.node(clause).children) {
+                    if(context.kind(type) === 'ExpressionWithTypeArguments' && this.componentBase(context.node(type).children[0] ?? -1)) { return true; }
+                }
+            }
+            return false;
+        }
+        if(kind !== 'ObjectLiteralExpression') { return false; }
+        const parent = context.parent(index);
+        if(context.kind(parent) !== 'CallExpression') { return false; }
+        const callee = context.unwrap(context.child(parent, 0));
+        if(context.kind(callee) === 'Identifier') { return context.node(callee).text === 'createReactClass'; }
+        if(context.kind(callee) !== 'PropertyAccessExpression') { return false; }
+        const receiver = context.unwrap(context.child(callee, 0));
+        const name = context.property(callee);
+        return context.kind(receiver) === 'Identifier' && context.node(receiver).text === 'React' && context.kind(name) === 'Identifier' && context.node(name).text === 'createReactClass';
+    }
+    visit(index: number): void {
+        const context = this.context;
+        const kind = context.kind(index);
+        if(kind === 'PropertyAccessExpression') {
+            this.report(index, context.raw(index));
+            return;
+        }
+        if(kind === 'ImportDeclaration') {
+            const source = context.node(index).children.find(child => ['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(context.kind(child))) ?? -1;
+            if(source < 0) { return; }
+            const module = moduleName(context.node(source).text);
+            if(module === '') { return; }
+            const projection = importProjection(context, index);
+            const bindings = bindingsOf(projection.nodes, 0);
+            for(const element of bindings.named) {
+                const specifier = projection.originals[element] ?? -1;
+                if(context.kind(specifier) !== 'ImportSpecifier') { continue; }
+                const imported = context.node(specifier).children[0] ?? -1;
+                if(context.kind(imported) !== 'Identifier') { continue; }
+                this.report(specifier, module + '.' + importedNameOf(projection.nodes, element));
+            }
+            return;
+        }
+        if(kind === 'VariableDeclaration') {
+            const children = context.node(index).children;
+            const name = children[0] ?? -1;
+            if(context.kind(name) !== 'ObjectBindingPattern') { return; }
+            const initializer = children[children.length - 1] ?? -1;
+            let module = '';
+            if(context.kind(initializer) === 'Identifier') {
+                const text = context.node(initializer).text;
+                if(['React', 'ReactPerf', 'Perf', 'ReactDOM', 'ReactDOMServer'].includes(text)) { module = text; }
+            }
+            else if(context.kind(initializer) === 'CallExpression') {
+                const callee = context.child(initializer, 0);
+                const argument = context.arguments(initializer)[0] ?? -1;
+                if(context.kind(callee) === 'Identifier' && context.node(callee).text === 'require' && ['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(context.kind(argument))) { module = moduleName(context.node(argument).text); }
+            }
+            if(module === '') { return; }
+            for(const element of context.node(name).children) {
+                if(context.kind(element) !== 'BindingElement' || context.has(element, 'DotDotDotToken')) { continue; }
+                const key = context.node(element).children[0] ?? -1;
+                if(context.kind(key) === 'Identifier') { this.report(element, module + '.' + context.node(key).text); }
+            }
+            return;
+        }
+        if(!this.component(index)) { return; }
+        const members = kind === 'ObjectLiteralExpression' ? context.node(index).children : context.members(index);
+        for(const member of members) {
+            const name = context.name(member);
+            if(context.kind(name) === 'Identifier') { this.report(name, context.node(name).text); }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

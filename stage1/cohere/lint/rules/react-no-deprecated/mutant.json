@@ -1,0 +1,5 @@
+{
+  "name": "property source trivia collapsed",
+  "from": "this.report(index, context.raw(index));",
+  "to": "this.report(index, context.raw(index).split(' ').join(''));"
+}

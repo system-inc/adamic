@@ -1,0 +1,48 @@
+export class Deprecation {
+    readonly name: string;
+    readonly since: string;
+    readonly replacement: string;
+    readonly reference: string;
+    constructor(name: string, since: string, replacement: string, reference: string) { this.name = name; this.since = since; this.replacement = replacement; this.reference = reference; }
+    describe(): string {
+        let text = this.name + ' is deprecated since React ' + this.since;
+        if(this.replacement !== '') { text += ', use ' + this.replacement + ' instead'; }
+        if(this.reference !== '') { text += ', see ' + this.reference; }
+        return text;
+    }
+}
+export function deprecations(pragma: string): Deprecation[] {
+    return [
+        new Deprecation(pragma + ".renderComponent", "0.12.0", pragma + ".render", ''),
+        new Deprecation(pragma + ".renderComponentToString", "0.12.0", pragma + ".renderToString", ''),
+        new Deprecation(pragma + ".renderComponentToStaticMarkup", "0.12.0", pragma + ".renderToStaticMarkup", ''),
+        new Deprecation(pragma + ".isValidComponent", "0.12.0", pragma + ".isValidElement", ''),
+        new Deprecation(pragma + ".PropTypes.component", "0.12.0", pragma + ".PropTypes.element", ''),
+        new Deprecation(pragma + ".PropTypes.renderable", "0.12.0", pragma + ".PropTypes.node", ''),
+        new Deprecation(pragma + ".isValidClass", "0.12.0", '', ''),
+        new Deprecation("this.transferPropsTo", "0.12.0", "spread operator ({...})", ''),
+        new Deprecation(pragma + ".addons.classSet", "0.13.0", "the npm module classnames", ''),
+        new Deprecation(pragma + ".addons.cloneWithProps", "0.13.0", pragma + ".cloneElement", ''),
+        new Deprecation(pragma + ".render", "0.14.0", "ReactDOM.render", ''),
+        new Deprecation(pragma + ".unmountComponentAtNode", "0.14.0", "ReactDOM.unmountComponentAtNode", ''),
+        new Deprecation(pragma + ".findDOMNode", "0.14.0", "ReactDOM.findDOMNode", ''),
+        new Deprecation(pragma + ".renderToString", "0.14.0", "ReactDOMServer.renderToString", ''),
+        new Deprecation(pragma + ".renderToStaticMarkup", "0.14.0", "ReactDOMServer.renderToStaticMarkup", ''),
+        new Deprecation(pragma + ".addons.LinkedStateMixin", "15.0.0", '', ''),
+        new Deprecation("ReactPerf.printDOM", "15.0.0", "ReactPerf.printOperations", ''),
+        new Deprecation("Perf.printDOM", "15.0.0", "Perf.printOperations", ''),
+        new Deprecation("ReactPerf.getMeasurementsSummaryMap", "15.0.0", "ReactPerf.getWasted", ''),
+        new Deprecation("Perf.getMeasurementsSummaryMap", "15.0.0", "Perf.getWasted", ''),
+        new Deprecation(pragma + ".createClass", "15.5.0", "the npm module create-react-class", ''),
+        new Deprecation(pragma + ".addons.TestUtils", "15.5.0", "ReactDOM.TestUtils", ''),
+        new Deprecation(pragma + ".PropTypes", "15.5.0", "the npm module prop-types", ''),
+        new Deprecation(pragma + ".DOM", "15.6.0", "the npm module react-dom-factories", ''),
+        new Deprecation("componentWillMount", "16.9.0", "UNSAFE_componentWillMount", "https://reactjs.org/docs/react-component.html#unsafe_componentwillmount" + ". Use https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles to automatically update your components."),
+        new Deprecation("componentWillReceiveProps", "16.9.0", "UNSAFE_componentWillReceiveProps", "https://reactjs.org/docs/react-component.html#unsafe_componentwillreceiveprops" + ". Use https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles to automatically update your components."),
+        new Deprecation("componentWillUpdate", "16.9.0", "UNSAFE_componentWillUpdate", "https://reactjs.org/docs/react-component.html#unsafe_componentwillupdate" + ". Use https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles to automatically update your components."),
+        new Deprecation("ReactDOM.render", "18.0.0", "createRoot", "https://reactjs.org/link/switch-to-createroot"),
+        new Deprecation("ReactDOM.hydrate", "18.0.0", "hydrateRoot", "https://reactjs.org/link/switch-to-createroot"),
+        new Deprecation("ReactDOM.unmountComponentAtNode", "18.0.0", "root.unmount", "https://reactjs.org/link/switch-to-createroot"),
+        new Deprecation("ReactDOMServer.renderToNodeStream", "18.0.0", "renderToPipeableStream", "https://reactjs.org/docs/react-dom-server.html#rendertonodestream")
+    ];
+}

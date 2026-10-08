@@ -1,0 +1,35 @@
+import type { RuleContext } from '../../context.ts';
+import type { HelperNode } from '../../helpers/imports/nodes.a';
+const empty: readonly number[] = [];
+// Only this import's subtree is projected; integer links preserve the shared helper's contract.
+function project(context: RuleContext, index: number, nodes: HelperNode[], originals: number[]): number {
+    const node = context.node(index);
+    const slot = nodes.length;
+    originals.push(index);
+    nodes.push({kind: node.kind, text: node.text, expression: -1, name: -1, propertyName: -1, importClause: -1, namedBindings: -1, elements: empty});
+    const children: number[] = [];
+    for(const child of node.children) { children.push(project(context, child, nodes, originals)); }
+    let name = -1;
+    let clause = -1;
+    let named = -1;
+    for(const child of children) {
+        const kind = nodes[child]?.kind ?? '';
+        if(kind === 'Identifier' || kind === 'StringLiteral') { name = child; }
+        if(kind === 'ImportClause') { clause = child; }
+        if(kind === 'NamespaceImport' || kind === 'NamedImports') { named = child; }
+    }
+    const property = node.kind === 'ImportSpecifier' && children.length > 1 ? children[0] ?? -1 : -1;
+    nodes[slot] = {kind: node.kind, text: node.text, expression: -1, name, propertyName: property, importClause: clause, namedBindings: named, elements: children};
+    return slot;
+}
+export class ImportProjection {
+    readonly nodes: HelperNode[];
+    readonly originals: number[];
+    constructor(nodes: HelperNode[], originals: number[]) { this.nodes = nodes; this.originals = originals; }
+}
+export function importProjection(context: RuleContext, index: number): ImportProjection {
+    const nodes: HelperNode[] = [];
+    const originals: number[] = [];
+    project(context, index, nodes, originals);
+    return new ImportProjection(nodes, originals);
+}

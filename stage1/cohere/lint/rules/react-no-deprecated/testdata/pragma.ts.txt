@@ -1,0 +1,5 @@
+/**@jsx Foo.bar*/
+Foo.renderComponent();
+React.renderComponent();
+class C extends ((React.Component)) { componentWillMount() {} ['componentWillUpdate']() {} }
+const D = (createReactClass)({ componentWillReceiveProps() {} });

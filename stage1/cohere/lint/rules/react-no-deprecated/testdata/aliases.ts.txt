@@ -1,0 +1,3 @@
+import { createClass as legacy, PropTypes as props } from 'react';
+const { printDOM: print, ...rest } = require('react-addons-perf');
+const { createClass: C } = React;
