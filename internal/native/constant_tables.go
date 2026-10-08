@@ -121,6 +121,10 @@ func (e *emitter) constantRecords(literal ir.ArrayLiteral) (string, bool) {
 	return array, true
 }
 
+// Limit specialization so the generated constructor itself stays bounded. Larger
+// shapes use the normal stores, which moduleMain outlines into statement chunks.
+const constantRecordFields = 16
+
 type constantRecord struct {
 	literal ir.ObjectLiteral
 	layout  string
@@ -130,7 +134,7 @@ type constantRecord struct {
 
 func constantRecordOf(expression ir.Expression, program *ir.Program) (constantRecord, bool) {
 	literal, ok := expression.(ir.ObjectLiteral)
-	if !ok || literal.Class != 0 || literal.Spread != nil || len(literal.Methods) != 0 || literal.Tuple || len(literal.Fields) == 0 {
+	if !ok || literal.Class != 0 || literal.Spread != nil || len(literal.Methods) != 0 || literal.Tuple || len(literal.Fields) == 0 || len(literal.Fields) > constantRecordFields {
 		return constantRecord{}, false
 	}
 	row := constantRecord{literal: literal, arrays: map[int][]string{}}
