@@ -339,6 +339,9 @@ func (l *lowering) staticInitializationReads(node, declaration *ast.Node, availa
 			}
 			if current {
 				symbol := l.checker.GetSymbolAtLocation(child.Name())
+				if receiver && object.Kind == ast.KindThisKeyword && child.Name().Kind != ast.KindPrivateIdentifier {
+					symbol = l.checker.GetPropertyOfType(l.checker.GetTypeOfSymbol(l.symbol(declaration.Name())), child.Name().Text())
+				}
 				if symbol != nil && len(symbol.Declarations) > 0 {
 					member := symbol.Declarations[0]
 					if member.Kind == ast.KindPropertyDeclaration && !available[member.Name().Text()] {
@@ -384,6 +387,11 @@ func (l *lowering) staticInitializationReads(node, declaration *ast.Node, availa
 			symbol := l.checker.GetSymbolAtLocation(callee)
 			if ast.IsIdentifier(callee) {
 				symbol = l.symbol(callee)
+			}
+			// this keeps the constructor that began initialization, even in an inherited body.
+			// super selects its declared implementation; calls on this select the override.
+			if receiver && callee.Kind == ast.KindPropertyAccessExpression && ast.SkipParentheses(callee.AsPropertyAccessExpression().Expression).Kind == ast.KindThisKeyword && callee.Name().Kind != ast.KindPrivateIdentifier {
+				symbol = l.checker.GetPropertyOfType(l.checker.GetTypeOfSymbol(l.symbol(declaration.Name())), callee.Name().Text())
 			}
 			known := false
 			if symbol != nil && len(symbol.Declarations) > 0 {

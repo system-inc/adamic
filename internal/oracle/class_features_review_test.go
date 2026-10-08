@@ -32,3 +32,19 @@ func TestClassFeaturesReviewInitializerRefusals(t *testing.T) {
 		})
 	}
 }
+
+func TestClassFeaturesReviewStaticRefusal(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/classfeat_static_virtual.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	observed := onNode(t, path)
+	if observed.exitCode != 70 || !strings.Contains(string(observed.stderr), "TypeError") {
+		t.Fatalf("Node: %+v", observed)
+	}
+	_, err = lowered(t, path)
+	var refusal *lower.Refused
+	if !errors.As(err, &refusal) || !strings.Contains(refusal.What, "static field read before") || !strings.Contains(refusal.Fix, "declare the field earlier") {
+		t.Fatalf("want initialization refusal, got %v", err)
+	}
+}

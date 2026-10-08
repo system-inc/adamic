@@ -1,0 +1,3 @@
+class Base { static n(): string { return 'b'; } static m(): string { return `m:${this.n()}`; } }
+class Derived extends Base { static early = this.m(); static label: string = `L${1}`; static override n(): string { return this.label.toUpperCase(); } }
+console.log(Derived.early);
