@@ -67,20 +67,22 @@ func TestNodeProcessDirectoryRuntime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for name, anchor := range map[string]string{"cache invalidation": "adamic_release(current_directory); current_directory = NULL;", "error code": "case ENOENT: code = \"ENOENT\";"} {
+	for name, anchor := range map[string]string{"cache invalidation": "adamic_release(adamic_library_cwd_value); adamic_library_cwd_value = NULL;", "error code": "case ENOENT: code = \"ENOENT\";"} {
 		t.Run(name, func(t *testing.T) {
-			replacement := "(void)current_directory;"
+			replacement := "(void)adamic_library_cwd_value;"
 			if name == "error code" {
 				replacement = "case ENOENT: code = \"ENOTDIR\";"
 			}
-			if strings.Count(string(data), anchor) != 1 {
+			code := native.C(program)
+			if name == "error code" {
+				code = strings.ReplaceAll(string(data)+"\n"+code, "adamic_node_", "mutant_node_")
+			}
+			if strings.Count(code, anchor) < 1 {
 				t.Fatal("mutant anchor changed")
 			}
-			runtime := strings.Replace(string(data), anchor, replacement, 1)
-			runtime = strings.ReplaceAll(runtime, "adamic_node_", "mutant_node_")
-			code := strings.ReplaceAll(native.C(program), "adamic_node_", "mutant_node_")
+			code = strings.Replace(code, anchor, replacement, 1)
 			mutant := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(runtime+"\n"+code, mutant, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(code, mutant, native.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			bad := execute(t, mutant)

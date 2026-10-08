@@ -1,0 +1,10 @@
+import type {} from "node:process";
+const host: typeof import("node:process") = require("node:process");
+const path: typeof import("node:path") = require("node:path");
+const fs: typeof import("node:fs") = require("node:fs");
+console.log(String(path.resolve(host.execPath) === host.execPath));
+console.log(String(path.resolve(__filename) === __filename));
+console.log(String(path.dirname(__filename) === __dirname));
+console.log(String(host.argv === host.argv));
+console.log(String(host.argv[1] === __filename));
+console.log(String(fs.existsSync(path.join(__dirname, "lib.d.ts"))));

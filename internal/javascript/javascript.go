@@ -621,7 +621,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		case "setExitCode":
 			return "(process.exitCode = " + e.value(expression.Arguments[0]) + ")"
 		case "exit":
-			return "adamicProcessExit(" + e.value(expression.Arguments[0]) + ")"
+			return "(process.exitCode = " + e.value(expression.Arguments[0]) + ", process.exit())"
 		}
 	case ir.TypedArrayNew:
 		return "new " + typedArrayName(expression.Of) + "(" + e.value(expression.Source) + ")"

@@ -1,10 +1,11 @@
-# Step 29 library startup and output checkpoint
+# Step 29 library startup and output binding
 
 Branch `codex/host29-startup-output`, based on library `71f91687` with
 host surface `91215715` merged. The supplied refs have no `AGENTS.md`;
 repository guidance was read from `CLAUDE.md`, `README.md`, `docs/0.1.md`
 and `docs/memory.md`. This unit changes library lowering and its tests only.
-Runtime's C primitive files are untouched.
+Runtime `8a0d1803` is merged at `f2173aef` into checkpoint `5cb3db47`.
+Runtime's C primitive files are untouched after that merge.
 
 The existing library already lowers `process.cwd`, `argv`, environment reads,
 stdout writes, numeric exit and exitCode, performance and memoryUsage to native
@@ -28,7 +29,8 @@ rewriting their sys.ts bodies. Node is 24.19.0, on Linux.
 | 23 newLine | Agrees with Node | TargetRefused | Its scratch setup calls `fs.mkdtempSync`, unavailable on WASI |
 
 Fixture 15 shadows `__filename` and `__dirname` with local strings. Its success
-holds the sys.ts branch expression, not the still-pending executable globals.
+holds the sys.ts branch expression; the separate identity probe holds the
+actual executable globals.
 No source-shape approximation is advertised as closing a compiler prerequisite.
 WASI refusal is recorded separately so it cannot hide native/JavaScript results.
 
@@ -51,28 +53,49 @@ fixtures have no backend mutant success claim. The separate getter's empty-text
 mutant compiles and runs cleanly on native, JavaScript and WASI and fails only
 the Node stdout comparison.
 
-## Runtime seam still pending
+## Runtime seam bound
 
-At the latest remote check, `refs/heads/runtime/host-exit-clocks` was absent.
-Do not invent its C ABI or modify runtime's primitive implementation. Merge that
-branch and read its section in `docs/scout-29-host.md` before completing:
+The binding delegates to the C ABI documented in the runtime contract section
+of [scout-29-host.md](scout-29-host.md). Environment reads call the live getter;
+cwd preserves Node's getter cache until a successful chdir. Generated adapters
+convert cwd failures to catchable Errors with code, errno, syscall and message.
+argv and execArgv each retain one stable array.
 
-- startup cwd/argv/environment bindings against its documented ownership and
-  catchable Node error contract, including WASI capabilities;
-- `process.execPath`, executable `__filename`/`__dirname`, the supported require
-  mapping, and distribution of tsc's default libraries beside that executable;
-- one stable `process.stdout` object, its absent private setBlocking probe,
-  and stdout writing under the runtime output contract;
-- exit and exitCode, flushing and termination without running finally blocks;
-- performance.now/timeOrigin, Date.now and the supported memoryUsage fields.
+process.execPath and CommonJS __filename/__dirname use OS executable identity.
+Checked constant builtin requires with matching `typeof import(...)` annotations
+lower through the same native namespace bindings as imports. Dynamic requests,
+untyped any, observing module objects and source-map hooks remain NotYet. This
+does not claim tsc's unannotated any requires or dynamic module loading.
+Native identity builds ship every real bundled lib.*.d.ts beside the executable;
+different existing files are refused. A completeness test checks every file.
 
-The base already has calls named `adamic_node_cwd`, `adamic_node_argv`,
-`adamic_process_environment`, `adamic_node_stdout_write`,
-`adamic_process_exit`, `adamic_process_exit_code`,
-`adamic_process_set_exit_code`, `adamic_node_performance_now`,
-`adamic_node_time_origin` and `adamic_node_memory_usage`. Their existence does
-not establish the new contract or all-backend support. Source-map hooks remain
-NotYet. No branch is pushed while this runtime seam is pending.
+stdout is one stable owned receiver; its private handle probe is undefined.
+Unsupported reflection on the opaque receiver is refused. Raw writes delegate
+to runtime's blocking writer without adding a newline. Numeric validation
+precedes exitCode writes; getters and natural main status use runtime's status
+primitives. Explicit exit calls runtime's terminating primitive, without
+unwinding finally. JavaScript calls Node's exit directly. String exit overloads,
+write callbacks and observed backpressure remain NotYet.
+
+performance.now/timeOrigin and Date.now use runtime's new clocks, including the
+stable performance receiver's clock method. Existing mark/measure behavior is
+retained. memoryUsage exposes all five native fields. These are native metrics,
+not V8 heap totals: comparisons cover field names and finite/nonnegative bounds,
+not exact totals or V8 relationships. Runtime tracks numeric typed-array backing;
+additional foreign/Buffer backing accounting is not claimed here.
+
+The new CommonJS identity probe passes on native and JavaScript, including
+stable argv and default-library lookup, under a raw Node CommonJS control.
+Memory passes on those backends. Clocks/stdout/cwd, environment and direct exit
+0/1/2 with finally bodies pass on native, JavaScript and WASI. Identity/argv and
+memory are explicitly TargetRefused on WASI under runtime's contract.
+These probes do not approximate or close the blocked scout source shapes.
+
+Binding source mutants reverse clock ordering, negate the RSS bound, break
+dirname identity and change exit 0/1/2 to 1/2/0. Each compiles and runs cleanly,
+and fails only Node stdout/status comparison on every supported backend.
+Related process mutants now target generated adapters when the old implementation
+was replaced. Runtime's primitive contract and mutant tests also pass.
 
 ## Validation
 
@@ -83,16 +106,20 @@ source /workspace/adamic-tools/env.sh
 ADAMIC_GATE_UNCACHED=1 ADAMIC_ORACLE_WASI=1 go test ./internal/lower ./internal/oracle -run '^TestNodeStartup' -count=1 -v -timeout 10m
 ```
 
-It passes, with the explicit compiler/target skips above. Log:
-`/tmp/host29-verification.log`. The existing newline comparison and emitted
-native/JavaScript mutants also passed (`/tmp/host29-final.log`). Linux counts
-are refreshed with `TestCountsAreRecorded -update-counts`, with output in
-`/tmp/host29-counts-final.log`. Full repository tests are left to the fast gate.
+Scoped lower/native/oracle comparisons, default-library completeness, field
+layout proofs and vet pass, with the explicit compiler/target skips above.
+Logs: `/tmp/host29-final-verification.log`,
+`/tmp/host29-exit-and-counts-final.log`, `/tmp/host29-binding-first.log` and
+`/tmp/host29-vet-final.log`. Full repository tests are left to the fast gate.
 
-The Linux getter count row is 2 allocations, 2 frees, 5 retains, 8 releases,
-peak 2, regions 0. The existing directory-system row also changes because
-it enumerates the fixture directory containing the new source: from
-3220/3220/5812/4829/1938/0 to 3292/3292/5959/4937/1992/0. All other existing
-rows remain unchanged. Targeted vet and diff/format checks pass. macOS was not
-run. The runtime remote ref was checked again after validation and remained
-absent, so this is an unpushed local checkpoint, not a completed runtime binding.
+Linux startup/process count rows are refreshed with scoped TestCountsAreRecorded,
+which preserves unmeasured rows; full runs retain the canonical table check.
+The getter row is 2/2/5/8/2/0, clocks 2/2/3/5/2/0, memory 1/1/0/2/1/0 and
+identity 16/16/5/19/4/0. The directory-system row changes to
+3876/3876/7131/5813/2430/0 because it enumerates the expanded fixture directory.
+The full-table refresh failed on eleven graph-region fixtures with invalid
+frees, including graph_regions_coverage_readonly.a. That integration failure
+is recorded in `/tmp/host29-counts-current.log`; no graph primitive is changed
+by this binding unit. The readonly graph failure also reproduces at merge
+checkpoint f2173aef before binding edits, in `/tmp/host29-baseline-graph.log`.
+macOS and Windows were not run.

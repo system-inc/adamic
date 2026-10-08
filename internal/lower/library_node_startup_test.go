@@ -20,6 +20,32 @@ func TestNodeStartupEnvironmentWritesRefused(t *testing.T) {
 	}
 }
 
+func TestNodeStartupCommonJSRefusals(t *testing.T) {
+	for _, source := range []string{
+		`import type {} from 'node:process'; const fs=require('node:fs');`,
+		`import type {} from 'node:process'; const name='node:fs'; const fs: typeof import('node:fs')=require(name);`,
+		`import type {} from 'node:process'; const fs: typeof import('node:fs')=require('source-map-support');`,
+		`import type {} from 'node:process'; const fs: typeof import('node:fs')=require('node:fs'); console.log(String(fs===fs));`,
+	} {
+		_, err := lowerSource(t, source)
+		if err == nil {
+			t.Fatal("unsupported CommonJS request or namespace observation was accepted")
+		}
+	}
+}
+
+func TestNodeStartupStdoutReflectionRefused(t *testing.T) {
+	for _, source := range []string{
+		`import process from 'node:process'; Object.keys(process.stdout);`,
+		`import process from 'node:process'; const stream=process.stdout; JSON.stringify(stream);`,
+	} {
+		_, err := lowerSource(t, source)
+		if err == nil {
+			t.Fatal("opaque stdout reflection was accepted")
+		}
+	}
+}
+
 func TestNodeStartupExitOverloadsRefused(t *testing.T) {
 	for _, source := range []string{
 		`import process from 'node:process'; process.exit('2');`,

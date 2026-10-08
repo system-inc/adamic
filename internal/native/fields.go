@@ -49,7 +49,8 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 		{"nodeKind", "symbolName", "type"},
 		{"bytes", "finalized"},
 		// Process host layouts are part of the same whole-program proof.
-		{"name", "message", "code"}, {"heapUsed"},
+		{"name", "message", "code"}, {"name", "message", "code", "errno", "syscall"}, {"heapUsed"},
+		{"rss", "heapTotal", "heapUsed", "external", "arrayBuffers"},
 		{"name", "entryType", "startTime", "duration"}, {"setBlocking"},
 		{"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"},
 	} {

@@ -205,6 +205,7 @@ type emitter struct {
 
 	// declarations are file-scope lines the bodies need: object shapes and field caches.
 	declarations []string
+	hostHelpers  map[string]bool
 
 	// shapes names each object layout already declared, by its fields.
 	shapes map[string]string

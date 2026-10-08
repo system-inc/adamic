@@ -1,0 +1,11 @@
+import process from "node:process";
+const first = performance.now();
+const next = performance.now();
+console.log(String(first >= 0));
+console.log(String(next >= first));
+console.log(String(Math.abs(Date.now() - performance.timeOrigin - performance.now()) < 1000));
+const wall = Date.now();
+console.log(String(wall === Math.trunc(wall)));
+console.log(String(process.stdout === process.stdout));
+process.stdout.write("héllo 🌍\n");
+console.log(String(process.cwd().length > 0));

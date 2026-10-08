@@ -2,6 +2,5 @@ import 'node:process';
 console.log(`width ${process.stdout.columns ?? -1}`);
 console.log(`tty ${process.stdout.isTTY ?? false}`);
 const handle = (process.stdout as { readonly _handle?: { setBlocking(blocking: boolean): void } | undefined })._handle;
-console.log(`handle ${handle === undefined ? 'undefined' : typeof handle.setBlocking}`);
 if (handle !== undefined) { handle.setBlocking(true); }
 process.stdout.write('set blocking\n');

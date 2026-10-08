@@ -39,6 +39,8 @@ var fixtures = []struct {
 	checked bool
 }{
 	{"internal/oracle/testdata/node_startup_environment.a", true, false},
+	{"internal/oracle/testdata/node_startup_clocks.a", true, false},
+	{"internal/oracle/testdata/node_startup_memory.a", true, false},
 	{"internal/oracle/testdata/process_exit_code.a", true, false},
 	{"internal/oracle/testdata/process_exit.a", true, false},
 	{"internal/oracle/testdata/process_exit_default.a", true, false},

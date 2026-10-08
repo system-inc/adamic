@@ -52,11 +52,11 @@ func TestNodeProcessHostNewLine(t *testing.T) {
 		t.Fatal(err)
 	}
 	code := native.C(program)
-	if strings.Count(code, "adamic_node_eol()") != 1 {
+	if strings.Count(code, "adamic_host_eol()") != 1 {
 		t.Fatal("native EOL anchor changed")
 	}
 	mutant := filepath.Join(t.TempDir(), "newline-mutant")
-	if err := native.Build("#include \"adamic.h\"\nstatic adamic_string mutant_eol = ADAMIC_STRING(\"\\r\\n\");\n"+strings.Replace(code, "adamic_node_eol()", "&mutant_eol", 1), mutant, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build("#include \"adamic.h\"\nstatic adamic_string mutant_eol = ADAMIC_STRING(\"\\r\\n\");\n"+strings.Replace(code, "adamic_host_eol()", "&mutant_eol", 1), mutant, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	bad := execute(t, mutant)

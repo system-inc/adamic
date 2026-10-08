@@ -1,0 +1,7 @@
+import process from "node:process";
+const usage = process.memoryUsage();
+console.log(String(usage.rss > 0));
+console.log(String(usage.heapTotal >= 0));
+console.log(String(usage.heapUsed >= 0));
+console.log(String(usage.external >= 0));
+console.log(String(usage.arrayBuffers >= 0));

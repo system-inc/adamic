@@ -142,20 +142,14 @@ int chdir(const char *path) {
 	if report := inputLeaks(t, func() inputRun { return how }, program, binary); report != "" {
 		t.Fatal(report)
 	}
-	data, err := os.ReadFile(filepath.Join(directory, "internal/native/runtime/process.c"))
-	if err != nil {
-		t.Fatal(err)
-	}
+	code := native.C(program)
 	anchor := "ADAMIC_STRING(\"ERR_OUT_OF_RANGE\")"
-	if strings.Count(string(data), anchor) != 1 {
+	if strings.Count(code, anchor) != 1 {
 		t.Fatal("exit error mutant anchor changed")
 	}
-	runtime := strings.Replace(string(data), anchor, "ADAMIC_STRING(\"ERR_INVALID_ARG_TYPE\")", 1)
-	runtime = strings.ReplaceAll(runtime, "adamic_process_", "mutant_process_")
-	runtime = strings.ReplaceAll(runtime, "mutant_process_exit_now", "adamic_process_exit_now")
-	code := strings.ReplaceAll(native.C(program), "adamic_process_", "mutant_process_")
+	code = strings.Replace(code, anchor, "ADAMIC_STRING(\"ERR_INVALID_ARG_TYPE\")", 1)
 	mutant := filepath.Join(shared, "errors-mutant")
-	if err := native.Build(runtime+"\n"+code, mutant, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(code, mutant, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	bad := executeInput(t, how, environment, mutant, paths...)
@@ -218,15 +212,9 @@ func TestNodeProcessCwdErrorRuntime(t *testing.T) {
 			t.Fatalf("%s: %q %q", difference, got.stdout, got.stderr)
 		}
 	}
-	runtime, err := os.ReadFile(filepath.Join(directory, "internal/native/runtime/node_process.c"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	mutated := strings.Replace(string(runtime), "case ENOENT: code = \"ENOENT\";", "case ENOENT: code = \"ENOTDIR\";", 1)
-	mutated = strings.ReplaceAll(mutated, "adamic_node_", "mutant_node_")
-	code := strings.ReplaceAll(native.C(program), "adamic_node_", "mutant_node_")
+	code := strings.Replace(native.C(program), "case ENOENT: code = \"ENOENT\";", "case ENOENT: code = \"ENOTDIR\";", 1)
 	mutant := filepath.Join(t.TempDir(), "cwd-mutant")
-	if err := native.Build(mutated+"\n"+code, mutant, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(code, mutant, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	bad := observe(mutant)

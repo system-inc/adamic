@@ -223,5 +223,8 @@ func Build(source string, output string, options Options) error {
 	if combined, err := command.CombinedOutput(); err != nil {
 		return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
 	}
+	if options.Target != "wasm32-wasi" && strings.Contains(source, "\n#define ADAMIC_HOST_EXECUTABLE_LIBRARIES 1\n") {
+		return installStartupLibraries(filepath.Dir(output))
+	}
 	return nil
 }

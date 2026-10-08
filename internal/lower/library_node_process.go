@@ -9,10 +9,11 @@ import (
 
 func init() {
 	RegisterNodeLibraryMembers("node:os.tmpdir", "node:os.platform", "node:os.EOL", "node:process.process", "node:globals.process")
-	for _, name := range []string{"cwd", "chdir", "argv", "execArgv", "env", "platform", "pid", "stdout", "stderr", "exitCode", "exit", "memoryUsage", "nextTick"} {
+	for _, name := range []string{"cwd", "chdir", "argv", "execArgv", "execPath", "env", "platform", "pid", "stdout", "stderr", "exitCode", "exit", "memoryUsage", "nextTick"} {
 		RegisterNodeLibraryMembers("node:process.Process."+name, "node:process."+name)
 	}
 	RegisterNodeLibraryMembers("node:process.MemoryUsage.heapUsed", "node:tty.WriteStream.columns", "node:tty.WriteStream.isTTY", "node:tty.ReadStream.isTTY", "node:stream.Writable.write", "node:net.Socket.write")
+	RegisterNodeLibraryMembers("node:process.MemoryUsage.rss", "node:process.MemoryUsage.heapTotal", "node:process.MemoryUsage.external", "node:process.MemoryUsage.arrayBuffers", "node:module.__filename", "node:module.__dirname", "node:globals.__filename", "node:globals.__dirname")
 	RegisterNodeLibraryMembers("node:perf_hooks.performance", "node:performance.performance")
 	for _, name := range []string{"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"} {
 		RegisterNodeLibraryMembers("node:perf_hooks.Performance." + name)
@@ -47,8 +48,17 @@ func (l *lowering) nodeProcessPath(node *ast.Node) string {
 			}
 		}
 		declaration := symbol.Declarations[0]
+		if module := l.nodeRequireBinding(declaration); module != "" {
+			if module == "perf_hooks" {
+				return "performanceModule"
+			}
+			return module
+		}
 		if !load.IsPrelude(ast.GetSourceFileOfNode(declaration)) && !load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration)) {
 			return ""
+		}
+		if load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration)) && (symbol.Name == "__filename" || symbol.Name == "__dirname") {
+			return symbol.Name
 		}
 		for parent := declaration.Parent; parent != nil; parent = parent.Parent {
 			if parent.Kind == ast.KindModuleDeclaration {
@@ -176,6 +186,13 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 	call := ir.ProcessCall{}
 	if node.Kind == ast.KindCallExpression {
 		written := node.AsCallExpression()
+		callee := ast.SkipParentheses(written.Expression)
+		if callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "now" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Date") {
+			if len(written.Arguments.Nodes) != 0 {
+				return nil, true, l.notYet(node, "Date.now with arguments")
+			}
+			return ir.ProcessCall{Operation: "dateNow", Of: ir.Number}, true, nil
+		}
 		path = l.processPath(written.Expression)
 		if path == "" {
 			path = l.nodeProcessPath(written.Expression)
@@ -263,6 +280,15 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 		call.Operation, call.Of = "pid", ir.Number
 	case "process.argv":
 		call.Operation, call.Of = "argv", ir.Array
+	case "process.execPath", "__filename":
+		call.Operation, call.Of = "execPath", ir.String
+		if path == "__filename" {
+			call.Operation = "filename"
+		}
+	case "__dirname":
+		call.Operation, call.Of = "dirname", ir.String
+	case "process.stdout":
+		call.Operation, call.Of = "stdout", ir.Object
 	case "process.execArgv":
 		call.Operation, call.Of = "execArgv", ir.Array
 	case "process.stdout._handle":

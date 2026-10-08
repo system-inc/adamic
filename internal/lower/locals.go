@@ -16,6 +16,9 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 	}
 	statements := []ir.Statement{}
 	for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
+		if l.nodeRequireBinding(declaration) != "" {
+			continue
+		}
 		name := declaration.Name()
 		if name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern {
 			// const [a, b] = tuple, and const { x, y } = object (collections.go).

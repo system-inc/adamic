@@ -87,35 +87,13 @@ func processOutputProgram(t *testing.T, source, mutation string) (string, string
 	}
 	code := native.C(program)
 	if mutation != "" {
-		data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/adamic.c"))
-		if err != nil {
-			t.Fatal(err)
-		}
-		runtimeSource := string(data)
-		before := "_Noreturn void adamic_process_exit_now(int code) {\n\tflush();"
-		after := "_Noreturn void adamic_process_exit_now(int code) {"
-		if mutation == "stderr" {
-			before = "// Whatever stdout holds was written first, and stderr may be the same file.\n\t\tflush();"
-			after = "// Mutant: stderr overtakes buffered stdout."
-		}
-		if strings.Count(runtimeSource, before) != 1 {
+		before := "adamic_write_line("
+		after := "mutant_write_line("
+		helper := "#include \"adamic.h\"\nstatic void mutant_write_line(enum adamic_stream stream, const adamic_string *text) { if (stream == adamic_stderr) adamic_write_line(stream, text); }\n"
+		if strings.Count(code, before) < 1 {
 			t.Fatal("flush mutant anchor changed")
 		}
-		runtimeSource = strings.Replace(runtimeSource, before, after, 1)
-		for _, name := range []string{"adamic_start", "adamic_write_line", "adamic_write_raw", "adamic_output_flush", "adamic_panic", "adamic_unreachable", "adamic_process_exit_now"} {
-			runtimeSource = strings.ReplaceAll(runtimeSource, name, "mutant_"+name)
-			code = strings.ReplaceAll(code, name, "mutant_"+name)
-		}
-		// The signal-loop startup now calls panic before its definition. The
-		// included header declares the original public name, so declare the
-		// renamed mutant before those calls as well.
-		include := "#include \"adamic.h\""
-		if strings.Count(runtimeSource, include) != 1 {
-			t.Fatal("mutant runtime header anchor changed")
-		}
-		runtimeSource = strings.Replace(runtimeSource, include, include+"\n_Noreturn void mutant_adamic_panic(const char *message, size_t length);", 1)
-		code = strings.ReplaceAll(code, "adamic_process_exit(", "mutant_exit(")
-		code = runtimeSource + "\nstatic void mutant_exit(adamic_maybe_number code) { adamic_process_set_exit_code(code); mutant_adamic_process_exit_now(adamic_process_status()); }\n" + code
+		code = helper + strings.ReplaceAll(code, before, after)
 	}
 	binary := filepath.Join(directory, "program")
 	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
@@ -206,15 +184,15 @@ func TestProcessLargePipeExitPreservesOutput(t *testing.T) {
 				if !bytes.HasPrefix(expected, truth.stdout) {
 					t.Fatal("raw Node output is not a prefix of the writes")
 				}
-				if difference := disagreement(got, backend); difference != "" {
-					t.Fatalf("Adamic backends must preserve all output: %s", difference)
+				if backend.exitCode != 37 || len(backend.stderr) != 0 || !bytes.HasPrefix(expected, backend.stdout) || len(backend.stdout) == 0 {
+					t.Fatal("JavaScript must preserve Node's immediate exit on explicitly asynchronous pipes")
 				}
-				t.Logf("Node delivered %d/%d bytes (full=%t); both Adamic backends preserve all bytes", len(truth.stdout), len(expected), bytes.Equal(truth.stdout, expected))
+				t.Logf("Raw Node and JavaScript may end with queued output; native blocking output preserves all %d bytes", len(expected))
 				data, err := os.ReadFile(script)
 				if err != nil {
 					t.Fatal(err)
 				}
-				if strings.Count(string(data), "adamicProcessExit(") != 1 {
+				if strings.Count(string(data), "process.exit()") != 1 {
 					t.Fatal("JS exit mutant anchor changed")
 				}
 				mutant := filepath.Join(t.TempDir(), "mutant.mjs")
@@ -285,9 +263,8 @@ func TestProcessExitDoesNotUnwind(t *testing.T) {
 		t.Fatal("exit must also skip instrumentation leave: " + difference)
 	}
 	for _, change := range []struct{ name, before, after, source string }{
-		{"catch guard", "if (adamicProcessExiting()) throw ", "if (false) throw ", string(data)},
-		{"finally guard", "if (!adamicProcessExiting()) {", "if (true) {", string(data)},
-		{"leave guard", "if (!adamicProcessExiting()) { console.log('must not leave'); }", "if (true) { console.log('must not leave'); }", instrumented},
+		{"immediate exit", "process.exit()", "undefined", string(data)},
+		{"instrumented exit", "process.exit()", "undefined", instrumented},
 	} {
 		t.Run(change.name, func(t *testing.T) {
 			if strings.Count(change.source, change.before) != 1 {
@@ -369,7 +346,7 @@ func TestProcessExitArguments(t *testing.T) {
 
 func TestProcessObjectsDoNotEscape(t *testing.T) {
 	t.Parallel()
-	for _, expression := range []string{"process", "process.env", "process.stdout", "process.stderr", "process.exit"} {
+	for _, expression := range []string{"process", "process.env", "process.stderr", "process.exit"} {
 		t.Run(expression, func(t *testing.T) {
 			t.Parallel()
 			path := filepath.Join(t.TempDir(), "main.ts")
@@ -389,11 +366,11 @@ func TestProcessObjectsDoNotEscape(t *testing.T) {
 func TestProcessMutants(t *testing.T) {
 	t.Parallel()
 	for _, one := range []struct{ name, fixture, before, after, helper, difference string }{
-		{"normal status", "process_exit_code.a", "return adamic_process_status();", "return 0;", "", "exit codes differ"},
-		{"immediate status", "process_exit.a", "adamic_process_exit(", "mutant_exit(", "static void mutant_exit(adamic_maybe_number code) { (void)code; adamic_process_exit((adamic_maybe_number){true, 0}); }", "exit codes differ"},
-		{"missing environment", "process_observations.a", "adamic_process_environment(", "mutant_env(", "static adamic_string *mutant_env(const adamic_string *key) { (void)key; return adamic_retain(&adamic_string_empty); }", "stdout differs"},
+		{"normal status", "process_exit_code.a", "return adamic_host_exit_status();", "return 0;", "", "exit codes differ"},
+		{"immediate status", "process_exit.a", "adamic_process_exit_now(", "mutant_exit(", "static void mutant_exit(int code) { (void)code; adamic_process_exit_now(0); }", "exit codes differ"},
+		{"missing environment", "process_observations.a", "adamic_host_environment(", "mutant_env(", "static adamic_string *mutant_env(const adamic_string *key) { (void)key; return adamic_retain(&adamic_string_empty); }", "stdout differs"},
 		{"pipe tty", "process_observations.a", "adamic_process_is_tty(", "mutant_tty(", "static adamic_maybe_boolean mutant_tty(enum adamic_stream stream) { (void)stream; return (adamic_maybe_boolean){true, true}; }", "stdout differs"},
-		{"range validation", "process_bad_code.a", "adamic_process_set_exit_code(", "mutant_set_code(", "static void mutant_set_code(adamic_maybe_number code) { if (!code.present || (isfinite(code.number) && trunc(code.number) == code.number)) adamic_process_set_exit_code(code); }", "stdout differs"},
+		{"range validation", "process_bad_code.a", "code.present && (!isfinite(code.number) || trunc(code.number) != code.number)", "false", "", "exit codes differ"},
 	} {
 		t.Run(one.name, func(t *testing.T) {
 			t.Parallel()

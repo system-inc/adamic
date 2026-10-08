@@ -154,6 +154,11 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 func TestCountsAreRecorded(t *testing.T) {
 	t.Parallel()
 	fixtures := append(slices.Clone(fixtures), slowRegExpFixtures...)
+	// This CommonJS source has its own raw Node runner in TestNodeStartupBindings.
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
+	}{"internal/oracle/testdata/node_startup_identity.a", true, false})
 	rows := make([]string, len(fixtures)+len(inputFixtures)+len(fsFileFixtures))
 	var lock sync.Mutex
 	t.Run("fixtures", func(t *testing.T) {
@@ -190,6 +195,52 @@ func TestCountsAreRecorded(t *testing.T) {
 		}
 	})
 	if t.Failed() {
+		return
+	}
+	// A scoped subtest run refreshes only measured rows and preserves all others.
+	// The full run still constructs and checks the complete canonical table.
+	scoped := false
+	for index, fixture := range fixtures {
+		if fixture.lowers && !uncounted[fixture.path] && rows[index] == "" {
+			scoped = true
+		}
+	}
+	for _, row := range rows[len(fixtures):] {
+		if row == "" {
+			scoped = true
+		}
+	}
+	if scoped {
+		recorded, err := os.ReadFile(countsPath)
+		if err != nil {
+			t.Fatal(err)
+		}
+		lines := strings.Split(string(recorded), "\n")
+		for _, row := range rows {
+			if row == "" {
+				continue
+			}
+			prefix := strings.SplitN(row, " | ", 2)[0] + " | "
+			found := false
+			for index, line := range lines {
+				if strings.HasPrefix(line, prefix) {
+					lines[index] = row
+					found = true
+					break
+				}
+			}
+			if !found {
+				lines = append(lines[:len(lines)-1], row, "")
+			}
+		}
+		measured := strings.Join(lines, "\n")
+		if *updateCounts {
+			if err := os.WriteFile(countsPath, []byte(measured), 0644); err != nil {
+				t.Fatal(err)
+			}
+		} else if measured != string(recorded) {
+			t.Fatal("scoped counts changed; refresh these rows with -update-counts")
+		}
 		return
 	}
 	var table strings.Builder

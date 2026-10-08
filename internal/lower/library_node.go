@@ -67,7 +67,35 @@ func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
 	if err := l.nodeFSDirectorySignature(node); err != nil {
 		return err
 	}
+	if node.Kind == ast.KindCallExpression {
+		call := node.AsCallExpression()
+		callee := ast.SkipParentheses(call.Expression)
+		if callee.Kind == ast.KindPropertyAccessExpression {
+			receiver := callee.AsPropertyAccessExpression().Expression
+			if l.isLibraryGlobal(receiver, "Object") || l.isLibraryGlobal(receiver, "JSON") {
+				for _, argument := range call.Arguments.Nodes {
+					proven := l.checker.GetTypeAtLocation(argument).Symbol()
+					if proven != nil && proven.Name == "WriteStream" {
+						for _, declaration := range proven.Declarations {
+							if load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration)) {
+								return l.notYet(node, "reflection or mutation of the opaque process.stdout object")
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 	name := l.nodeLibraryMember(node)
+	if name == "node:module.require" {
+		call := node
+		if ast.IsIdentifier(call) {
+			call = call.Parent
+		}
+		if call != nil && call.Kind == ast.KindCallExpression && call.Parent != nil && l.nodeRequireBinding(call.Parent) != "" {
+			return nil
+		}
+	}
 	if ast.IsIdentifier(node) && node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name() == node {
 		node = node.Parent
 	}

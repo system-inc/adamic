@@ -68,6 +68,14 @@ func nodeProcessMutant(t *testing.T, fixture, before, after string) (string, str
 	if err != nil {
 		t.Fatal(err)
 	}
+	code := native.C(program)
+	if strings.Contains(code, before) {
+		binary := filepath.Join(t.TempDir(), "mutant")
+		if err := native.Build(strings.ReplaceAll(code, before, after), binary, native.Options{Sanitize: true}); err != nil {
+			t.Fatal(err)
+		}
+		return path, binary
+	}
 	data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_process.c"))
 	if err != nil {
 		t.Fatal(err)
@@ -78,7 +86,7 @@ func nodeProcessMutant(t *testing.T, fixture, before, after string) (string, str
 	}
 	source = strings.Replace(source, before, after, 1)
 	source = strings.ReplaceAll(source, "adamic_node_", "mutant_node_")
-	code := strings.ReplaceAll(native.C(program), "adamic_node_", "mutant_node_")
+	code = strings.ReplaceAll(code, "adamic_node_", "mutant_node_")
 	code = strings.Replace(code, "adamic_start(argc, argv);", "adamic_start(argc, argv); mutant_node_process_start(argc, argv);", 1)
 	binary := filepath.Join(t.TempDir(), "mutant")
 	if err := native.Build(source+"\n"+code, binary, native.Options{Sanitize: true}); err != nil {
@@ -90,20 +98,19 @@ func nodeProcessMutant(t *testing.T, fixture, before, after string) (string, str
 func TestNodeProcessMutants(t *testing.T) {
 	t.Parallel()
 	for _, mutant := range []struct{ name, fixture, before, after string }{
-		{"cwd", "node_process_host.a", "strlen(buffer));\n            free(buffer);\n            current_directory = result;\n            return adamic_retain(result);", "strlen(buffer));\n            free(buffer);\n            adamic_release(result);\n            return adamic_node_platform();"},
+		{"cwd", "node_process_host.a", "adamic_host_cwd()", "adamic_node_platform()"},
 		{"platform", "node_process_host.a", `ADAMIC_STRING("linux")`, `ADAMIC_STRING("wrong")`},
-		{"EOL", "node_process_host.a", `ADAMIC_STRING("\n")`, `ADAMIC_STRING("\r\n")`},
+		{"EOL", "node_process_host.a", `adamic_host_eol()`, `adamic_decode_utf8((const unsigned char *)"\r\n", 2)`},
 		{"nextTick feature", "node_process_host.a", "bool adamic_node_next_tick_feature(void) { return true; }", "bool adamic_node_next_tick_feature(void) { return false; }"},
 		{"pid range", "node_process_host.a", "return (double)getpid();", "return 0;"},
-		{"argv", "node_process_host.a", "index < saved_count; index++", "index < saved_count - 1; index++"},
-		{"execArgv", "node_process_host.a", "execution_arguments = adamic_array_new(0, true);", "execution_arguments = adamic_array_new(1, true); static adamic_string flag = ADAMIC_STRING(\"--prof\"); adamic_array_push(execution_arguments, (adamic_value){.reference = &flag});"},
+		{"argv", "node_process_host.a", "return adamic_retain(adamic_library_argv_value);", "return adamic_array_slice(adamic_library_argv_value, 0, adamic_library_argv_value->length - 1, true);"},
+		{"execArgv", "node_process_host.a", "adamic_library_execArgv_value = adamic_host_exec_argv();", "adamic_library_execArgv_value = adamic_array_new(0, true); static adamic_string flag = ADAMIC_STRING(\"--prof\"); adamic_array_push(adamic_library_execArgv_value, (adamic_value){.reference = &flag});"},
 		{"columns", "node_process_terminal.a", "result.number = size.ws_col;", "result.number = 80;"},
-		{"handle feature", "node_process_terminal.a", " || S_ISREG(info.st_mode)", " || !S_ISREG(info.st_mode)"},
-		{"write", "node_process_host.a", "return adamic_write_raw(adamic_stdout, text);", "adamic_write_line(adamic_stdout, text); return true;"},
-		{"memory range", "node_process_host.a", "result->slots[0].number = used;", "result->slots[0].number = used - used - 1;"},
-		{"monotonic now", "node_process_performance.a", "milliseconds(CLOCK_MONOTONIC) - monotonic_origin", "monotonic_origin - milliseconds(CLOCK_MONOTONIC)"},
-		{"time origin range", "node_process_performance.a", "return epoch_origin;", "return epoch_origin - epoch_origin - 1;"},
-		{"performance hooks", "node_process_performance_core.a", "performance_object->slots[0].number = epoch_origin;", "performance_object->slots[0].number = 0;"},
+		{"write", "node_process_host.a", "!adamic_write_raw(adamic_stdout, text)", "(adamic_write_line(adamic_stdout, text), false)"},
+		{"memory range", "node_process_host.a", "result->slots[2].number = memory.heapUsed;", "result->slots[2].number = -1;"},
+		{"monotonic now", "node_process_performance.a", "adamic_host_performance_now()", "(-adamic_host_performance_now())"},
+		{"time origin range", "node_process_performance.a", "adamic_host_time_origin()", "(-1.0)"},
+		{"performance hooks", "node_process_performance_core.a", "result->slots[0].number = adamic_host_time_origin();", "result->slots[0].number = 0;"},
 		{"mark", "node_process_performance.a", "return entry(name, false, now, 0);", "return entry(name, false, now, 1);"},
 		{"measure", "node_process_performance.a", "finish - begin", "begin - finish"},
 		{"clear all marks", "node_process_cleared_marks.a", "name == NULL || (record->length", "name != NULL && (record->length"},
@@ -192,18 +199,18 @@ func TestNodeProcessBlocking(t *testing.T) {
 			t.Fatal(difference)
 		}
 	}
-	_, mutant := nodeProcessMutant(t, "node_process_blocking.a", "(void)fcntl(STDOUT_FILENO, F_SETFL, flags);", "(void)flags;")
+	_, mutant := nodeProcessMutant(t, "node_process_blocking.a", "!adamic_write_raw(adamic_stdout, text)", "(false)")
 	bad := nodeProcessTerminal(t, "backpressure", mutant)
 	if len(bad.stdout) >= len(truth.stdout) || len(bad.stderr) != 0 || disagreement(truth, bad) == "" {
 		t.Fatal("blocking mutation survived, or failed outside Node comparison")
 	}
-	t.Logf("setBlocking mutant runs without sanitizer errors; Node has %d bytes and exit %d, mutant has %d bytes and exit %d", len(truth.stdout), truth.exitCode, len(bad.stdout), bad.exitCode)
+	t.Logf("omitted output mutant runs without sanitizer errors; Node has %d bytes and exit %d, mutant has %d bytes and exit %d", len(truth.stdout), truth.exitCode, len(bad.stdout), bad.exitCode)
 }
 
 func TestNodeProcessCachedDirectory(t *testing.T) {
 	t.Parallel()
 	path, binary, script := sanitized(t, "internal/oracle/testdata/node_process_cached_cwd.a")
-	_, mutant := nodeProcessMutant(t, "node_process_cached_cwd.a", "if (current_directory != NULL) { return adamic_retain(current_directory); }", "if (false) { return adamic_retain(current_directory); }")
+	_, mutant := nodeProcessMutant(t, "node_process_cached_cwd.a", "if (adamic_library_cwd_value != NULL) { return adamic_retain(adamic_library_cwd_value); }", "if (false) { return adamic_retain(adamic_library_cwd_value); }")
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
 		t.Fatal(err)

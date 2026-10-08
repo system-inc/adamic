@@ -15,12 +15,16 @@ func (r *TargetRefused) Error() string {
 }
 
 var wasiHostRefusals = map[string]TargetRefused{
-	"adamic_node_argv":         {"process.argv", "WASI has no executable paths"},
-	"adamic_fs_file_mkdtemp":   {"fs.mkdtempSync", "WASI has no temporary directory creation"},
-	"adamic_node_pid":          {"process.pid", "WASI has no process identifiers"},
-	"adamic_node_platform":     {"process.platform", "WASI has no Node host platform"},
-	"adamic_node_columns":      {"process.stdout.columns", "WASI has no terminal size"},
-	"adamic_node_memory_usage": {"process.memoryUsage", "WASI has no allocator observations"},
+	"adamic_host_argv":                {"process.argv", "WASI has no executable paths"},
+	"adamic_host_exec_path":           {"process.execPath", "WASI has no executable paths"},
+	"adamic_host_executing_file_path": {"executable identity", "WASI has no executable paths"},
+	"adamic_host_memory_usage":        {"process.memoryUsage", "WASI has no allocator observations"},
+	"adamic_node_argv":                {"process.argv", "WASI has no executable paths"},
+	"adamic_fs_file_mkdtemp":          {"fs.mkdtempSync", "WASI has no temporary directory creation"},
+	"adamic_node_pid":                 {"process.pid", "WASI has no process identifiers"},
+	"adamic_node_platform":            {"process.platform", "WASI has no Node host platform"},
+	"adamic_node_columns":             {"process.stdout.columns", "WASI has no terminal size"},
+	"adamic_node_memory_usage":        {"process.memoryUsage", "WASI has no allocator observations"},
 }
 
 func validateBuild(source string, options Options) error {

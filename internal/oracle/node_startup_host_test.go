@@ -7,6 +7,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
@@ -110,6 +111,145 @@ func TestNodeStartupHostShapes(t *testing.T) {
 						t.Fatal("WASI source mutant survived")
 					}
 				})
+			}
+		})
+	}
+}
+
+func TestNodeStartupBindings(t *testing.T) {
+	for _, one := range []struct {
+		name, before, after string
+		identity            bool
+	}{
+		{"clocks", "next >= first", "next < first", false},
+		{"memory", "usage.rss > 0", "usage.rss < 0", false},
+		{"identity", "path.dirname(__filename) === __dirname", "path.dirname(__filename) !== __dirname", true},
+	} {
+		t.Run(one.name, func(t *testing.T) {
+			data, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/node_startup_"+one.name+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			directory := t.TempDir()
+			source := filepath.Join(directory, "source.a")
+			if err := os.WriteFile(source, data, 0600); err != nil {
+				t.Fatal(err)
+			}
+			build := func(path string) (string, string, string) {
+				p, err := lowered(t, path)
+				if err != nil {
+					t.Fatal(err)
+				}
+				c := native.C(p)
+				binary := filepath.Join(t.TempDir(), "program")
+				if err := native.Build(c, binary, native.Options{Sanitize: true}); err != nil {
+					t.Fatal(err)
+				}
+				script := binary + ".mjs"
+				if err := os.WriteFile(script, []byte(javascript.JavaScript(p)), 0600); err != nil {
+					t.Fatal(err)
+				}
+				if one.identity {
+					entries, err := os.ReadDir(filepath.Dir(binary))
+					if err != nil {
+						t.Fatal(err)
+					}
+					for _, entry := range entries {
+						if strings.HasPrefix(entry.Name(), "lib.") {
+							content, err := os.ReadFile(filepath.Join(filepath.Dir(binary), entry.Name()))
+							if err != nil {
+								t.Fatal(err)
+							}
+							if err := os.WriteFile(filepath.Join(directory, entry.Name()), content, 0600); err != nil {
+								t.Fatal(err)
+							}
+						}
+					}
+				}
+				return binary, script, c
+			}
+			truthRun := func(path string) run {
+				if !one.identity {
+					return onNode(t, path)
+				}
+				return execute(t, "node", "--disable-warning=ExperimentalWarning", "-e", `const fs=require('node:fs'),m=require('node:module'),p=require('node:path'); const file=process.argv[1]; new Function('require','__filename','__dirname',m.stripTypeScriptTypes(fs.readFileSync(file,'utf8'),{mode:'transform'}))(m.createRequire(file),file,p.dirname(file));`, path)
+			}
+			binary, script, c := build(source)
+			truth := truthRun(source)
+			for _, got := range []run{execute(t, binary), onNode(t, script)} {
+				if difference := disagreement(truth, got); difference != "" {
+					t.Fatalf("%s: Node %q %q; backend %q %q", difference, truth.stdout, truth.stderr, got.stdout, got.stderr)
+				}
+			}
+			if strings.Count(string(data), one.before) != 1 {
+				t.Fatal("mutant anchor changed")
+			}
+			mutated := filepath.Join(directory, "mutant.a")
+			if err := os.WriteFile(mutated, []byte(strings.Replace(string(data), one.before, one.after, 1)), 0600); err != nil {
+				t.Fatal(err)
+			}
+			badBinary, badScript, badC := build(mutated)
+			for _, bad := range []run{truthRun(mutated), execute(t, badBinary), onNode(t, badScript)} {
+				if disagreement(truth, bad) != "stdout differs" || bad.exitCode != 0 || len(bad.stderr) != 0 {
+					t.Fatalf("mutant did not fail only Node comparison: %q %q", bad.stdout, bad.stderr)
+				}
+			}
+			if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
+				t.Run("WASI", func(t *testing.T) {
+					if difference := disagreement(truth, onWASI(t, c)); difference != "" {
+						t.Fatal(difference)
+					}
+					if bad := onWASI(t, badC); disagreement(truth, bad) != "stdout differs" || len(bad.stderr) != 0 {
+						t.Fatal("WASI mutant survived")
+					}
+				})
+			}
+		})
+	}
+}
+
+func TestNodeStartupExitBindings(t *testing.T) {
+	for _, code := range []string{"0", "1", "2"} {
+		t.Run(code, func(t *testing.T) {
+			directory := t.TempDir()
+			source := filepath.Join(directory, "exit.a")
+			text := `import process from 'node:process'; process.exitCode=2; console.log(String(process.exitCode)); process.stdout.write('before'); try { process.exit(` + code + `); } finally { process.stdout.write('finally'); }`
+			if err := os.WriteFile(source, []byte(text), 0600); err != nil {
+				t.Fatal(err)
+			}
+			_, binary, script := nodeStartupSanitizedMutant(t, source)
+			truth := onNode(t, source)
+			for _, got := range []run{execute(t, binary), onNode(t, script)} {
+				if difference := disagreement(truth, got); difference != "" {
+					t.Fatalf("%s: %q %q", difference, got.stdout, got.stderr)
+				}
+			}
+			mutated := filepath.Join(directory, "mutant.a")
+			next := map[string]string{"0": "1", "1": "2", "2": "0"}[code]
+			if err := os.WriteFile(mutated, []byte(strings.Replace(text, "process.exit("+code+")", "process.exit("+next+")", 1)), 0600); err != nil {
+				t.Fatal(err)
+			}
+			_, badBinary, badScript := nodeStartupSanitizedMutant(t, mutated)
+			for _, bad := range []run{onNode(t, mutated), execute(t, badBinary), onNode(t, badScript)} {
+				if disagreement(truth, bad) != "exit codes differ" || len(bad.stderr) != 0 || string(bad.stdout) != string(truth.stdout) {
+					t.Fatal("exit mutant must fail only Node status comparison")
+				}
+			}
+			if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
+				p, err := lowered(t, source)
+				if err != nil {
+					t.Fatal(err)
+				}
+				if difference := disagreement(truth, onWASI(t, native.C(p))); difference != "" {
+					t.Fatal(difference)
+				}
+				bad, err := lowered(t, mutated)
+				if err != nil {
+					t.Fatal(err)
+				}
+				if got := onWASI(t, native.C(bad)); disagreement(truth, got) != "exit codes differ" || len(got.stderr) != 0 || string(got.stdout) != string(truth.stdout) {
+					t.Fatal("WASI exit mutant survived")
+				}
 			}
 		})
 	}

@@ -49,7 +49,7 @@ func TestNodeProcessOSNamespace(t *testing.T) {
 			t.Fatalf("%s: %q %q", difference, got.stdout, got.stderr)
 		}
 	}
-	_, mutant := nodeProcessMutant(t, "node_process_os_namespace.a", `ADAMIC_STRING("\n")`, `ADAMIC_STRING("\r\n")`)
+	_, mutant := nodeProcessMutant(t, "node_process_os_namespace.a", `adamic_host_eol()`, `adamic_decode_utf8((const unsigned char *)"\r\n", 2)`)
 	bad := execute(t, mutant)
 	if bad.exitCode != 0 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {
 		t.Fatal("namespace EOL mutant not caught only by Node bytes")
