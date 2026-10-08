@@ -1,0 +1,1 @@
+declare let a: any; if ([a]) {} if (+[a]) {} if (![a]) {} if (typeof a) {} if (typeof a === "number") {} if (+[,]) {} if ([,]) {} if (a || 0e5) {} if (a && 0x0) {}

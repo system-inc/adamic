@@ -1,0 +1,1 @@
+function f(undefined: any, Boolean: any) { if (undefined) {} if (Boolean(1)) {} } function* g() { while (1) { yield 1; } }

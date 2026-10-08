@@ -1,0 +1,1 @@
+export const messageUnexpected = 'This condition is always the same value, so the branch it guards either always runs or never does. Nothing reports it: the code compiles, the dead half type-checks, and a reader sees a decision being made where none is. It is usually a comparison that lost an operand, or a guard someone stubbed out and did not restore.';

@@ -1,0 +1,1 @@
+declare let a: any, b: any; if (a || true) {} if (a && false || b) {} if (`prefix${a}`) {} if (`${a}suffix`) {} if (`${a}`) {} if (a ||= true) {} if (a &&= false) {} if ((a, 0)) {}

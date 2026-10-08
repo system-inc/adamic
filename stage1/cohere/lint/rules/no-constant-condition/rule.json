@@ -1,0 +1,18 @@
+{
+  "name": "no-constant-condition",
+  "kinds": [
+    "IfStatement",
+    "ConditionalExpression",
+    "WhileStatement",
+    "DoStatement",
+    "ForStatement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoConstantCondition",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoConstantCondition",
+  "parent": false,
+  "node": true
+}

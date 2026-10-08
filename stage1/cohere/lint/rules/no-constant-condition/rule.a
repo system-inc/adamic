@@ -1,0 +1,123 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { panic } from 'adamic';
+import { RuleContext } from '../../context.ts';
+import { numericLiteralSign } from '../../helpers/core/numeric_literal_sign.a';
+import { messageUnexpected } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    // Absent for clauses have no placeholder nodes. Skip the initializer as a
+    // complete AST subtree before reading its delimiter, including nested literals.
+    forCondition(node: ParseNode): number {
+        let child = 0;
+        this.context.scanAt(node.pos);
+        let token = this.context.scanAt(this.context.scanEnd());
+        if(token === 'AwaitKeyword') { child++; token = this.context.scanAt(this.context.scanEnd()); }
+        if(token !== 'OpenParenToken') { panic('missing for opening delimiter'); }
+        token = this.context.scanAt(this.context.scanEnd());
+        if(token !== 'SemicolonToken') {
+            const initializer = node.children[child] ?? panic('missing for initializer');
+            child++;
+            this.context.scanAt(this.context.node(initializer).end);
+        }
+        if(this.context.scanKind() !== 'SemicolonToken') { panic('missing for initializer delimiter'); }
+        token = this.context.scanAt(this.context.scanEnd());
+        return token === 'SemicolonToken' ? -1 : node.children[child] ?? -1;
+    }
+    visit(node: ParseNode, index: number): void {
+        const condition = node.kind === 'ForStatement' ? this.forCondition(node) : node.children[node.kind === 'DoStatement' ? 1 : 0] ?? -1;
+        if(condition < 0) { return; }
+        if(node.kind === 'WhileStatement' || node.kind === 'DoStatement' || node.kind === 'ForStatement') {
+            const option = this.context.settings.read('checkloops', 'allExceptWhileTrue');
+            if(option === 'none' || option === 'false') { return; }
+            if(option !== 'all' && option !== 'true' && node.kind === 'WhileStatement' && this.context.kind(this.context.unwrap(condition)) === 'TrueKeyword') { return; }
+        }
+        if(this.constant(condition, true)) { this.context.reportNode(condition, 'no-constant-condition', 'unexpected', messageUnexpected); }
+    }
+    constant(index: number, booleanPosition: boolean): boolean {
+        if(index < 0) { return true; }
+        const cursor = this.context.unwrap(index);
+        const node = this.context.node(cursor);
+        switch(node.kind) {
+            case 'StringLiteral': case 'NumericLiteral': case 'BigIntLiteral':
+            case 'TrueKeyword': case 'FalseKeyword': case 'NullKeyword':
+            case 'RegularExpressionLiteral': case 'NoSubstitutionTemplateLiteral':
+            case 'ArrowFunction': case 'FunctionExpression': case 'ClassExpression':
+            case 'ObjectLiteralExpression': return true;
+            case 'Identifier': return node.text === 'undefined';
+            case 'ArrayLiteralExpression':
+                if(booleanPosition) { return true; }
+                for(const element of node.children) { if(!this.constant(element, false)) { return false; } }
+                return true;
+            case 'TemplateExpression':
+                if(booleanPosition) {
+                    const head = node.children[0] ?? -1;
+                    if(head >= 0 && this.context.node(head).text.length > 0) { return true; }
+                    for(const span of node.children.slice(1)) {
+                        const literal = this.context.child(span, 1);
+                        if(this.context.node(literal).text.length > 0) { return true; }
+                    }
+                }
+                for(const span of node.children.slice(1)) { if(!this.constant(this.context.child(span, 0), false)) { return false; } }
+                return true;
+            case 'PrefixUnaryExpression': return this.constant(node.children[0] ?? -1, node.operator === 'ExclamationToken');
+            case 'VoidExpression': return true;
+            case 'TypeOfExpression': return booleanPosition || this.constant(node.children[0] ?? -1, false);
+            case 'NewExpression': return booleanPosition;
+            case 'SpreadElement': return this.constant(node.children[0] ?? -1, booleanPosition);
+            case 'CallExpression': {
+                const callee = node.children[0] ?? -1;
+                if(callee < 0) { return false; }
+                const expression = this.context.node(this.context.unwrap(callee));
+                if(expression.kind !== 'Identifier' || expression.text !== 'Boolean') { return false; }
+                const argumentsList = this.context.arguments(cursor);
+                return argumentsList.length === 0 || this.constant(argumentsList[0] ?? -1, true);
+            }
+            case 'BinaryExpression': return this.binary(cursor, booleanPosition);
+            default: return false;
+        }
+    }
+    binary(index: number, booleanPosition: boolean): boolean {
+        const left = this.context.child(index, 0);
+        const operator = this.context.kind(this.context.child(index, 1));
+        const right = this.context.child(index, 2);
+        switch(operator) {
+            case 'AmpersandAmpersandToken': case 'BarBarToken': {
+                const leftConstant = this.constant(left, booleanPosition);
+                const rightConstant = this.constant(right, booleanPosition);
+                if(leftConstant && this.identity(left, operator)) { return true; }
+                if(booleanPosition && rightConstant && this.identity(right, operator)) { return true; }
+                return leftConstant && rightConstant;
+            }
+            case 'CommaToken': case 'EqualsToken': return this.constant(right, booleanPosition);
+            case 'BarBarEqualsToken': return booleanPosition && this.identity(right, 'BarBarToken');
+            case 'AmpersandAmpersandEqualsToken': return booleanPosition && this.identity(right, 'AmpersandAmpersandToken');
+            case 'InKeyword': case 'InstanceOfKeyword': return false;
+            default: return this.constant(left, false) && this.constant(right, false);
+        }
+    }
+    identity(index: number, operator: string): boolean {
+        if(index < 0) { return false; }
+        const cursor = this.context.unwrap(index);
+        const node = this.context.node(cursor);
+        switch(node.kind) {
+            case 'TrueKeyword': return operator === 'BarBarToken';
+            case 'FalseKeyword': case 'NullKeyword': case 'VoidExpression': return operator === 'AmpersandAmpersandToken';
+            case 'StringLiteral': case 'NoSubstitutionTemplateLiteral': return operator === (node.text.length > 0 ? 'BarBarToken' : 'AmpersandAmpersandToken');
+            case 'NumericLiteral': case 'BigIntLiteral': return operator === (numericLiteralSign(node.text) === 0 ? 'AmpersandAmpersandToken' : 'BarBarToken');
+            case 'RegularExpressionLiteral': case 'ObjectLiteralExpression': case 'ArrayLiteralExpression':
+            case 'ArrowFunction': case 'FunctionExpression': return operator === 'BarBarToken';
+            case 'BinaryExpression': {
+                const own = this.context.kind(this.context.child(cursor, 1));
+                const right = this.context.child(cursor, 2);
+                if(own === 'AmpersandAmpersandToken' || own === 'BarBarToken') { return own === operator && (this.identity(this.context.child(cursor, 0), operator) || this.identity(right, operator)); }
+                if(own === 'BarBarEqualsToken') { return operator === 'BarBarToken' && this.identity(right, operator); }
+                if(own === 'AmpersandAmpersandEqualsToken') { return operator === 'AmpersandAmpersandToken' && this.identity(right, operator); }
+                return false;
+            }
+            default: return false;
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

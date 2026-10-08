@@ -1,0 +1,5 @@
+{
+  "name": "constant-array-boolean-position-lost",
+  "from": "if(booleanPosition) { return true; }",
+  "to": "if(booleanPosition) { return false; }"
+}
