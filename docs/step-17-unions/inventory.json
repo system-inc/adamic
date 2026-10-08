@@ -1,0 +1,2714 @@
+{
+  "source_commit": "ec0b16c04f3bbdfbaf3932ab01307f90b08156fd",
+  "source_sha256": "8e0b922e9130359149e8f1549d243e5a3856d20bcc5c223c9254221daef7adfb",
+  "compiler_commit": "69501280a81259fb512edbb8dd0e52c6eb0d88c8",
+  "selection": "\\bunion\\b|\\bundefined\\b|\\bnull\\b|optional|presence|differently held|holding both",
+  "rows": [
+    {
+      "kind": "NotYet",
+      "reason": "a function returning T | undefined",
+      "bytes_revealed_if_fixed_alone": 24802,
+      "boundary_count": 87,
+      "raw_boundary_records": 87,
+      "contributing_boundary_count": 62,
+      "examples": [
+        "moduleNameResolver.ts:1166",
+        "moduleSpecifiers.ts:713",
+        "utilities.ts:2923"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 19,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:6626:9",
+        "checker.ts:25177:5",
+        "checker.ts:25222:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "Refused",
+      "reason": "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined",
+      "bytes_revealed_if_fixed_alone": 12027,
+      "boundary_count": 5,
+      "raw_boundary_records": 9,
+      "contributing_boundary_count": 5,
+      "examples": [
+        "builder.ts:1673",
+        "builderPublic.ts:223",
+        "builderPublic.ts:184"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 27,
+      "diagnostic_or_attempt_witnesses": [
+        "builder.ts:1663:1",
+        "builder.ts:1668:1",
+        "builder.ts:1673:1"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables",
+      "bytes_revealed_if_fixed_alone": 6424,
+      "boundary_count": 21,
+      "raw_boundary_records": 108,
+      "contributing_boundary_count": 11,
+      "examples": [
+        "tsbuildPublic.ts:1212",
+        "tsbuildPublic.ts:2006",
+        "builder.ts:1597"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 40,
+      "diagnostic_or_attempt_witnesses": [
+        "builder.ts:1597:9",
+        "builder.ts:1584:1",
+        "builder.ts:1608:9"
+      ],
+      "root": "Operation on tagged values (narrowing, conversion, comparison or iteration)"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type string | null",
+      "bytes_revealed_if_fixed_alone": 6421,
+      "boundary_count": 2,
+      "raw_boundary_records": 2,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "sourcemap.ts:36"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 41,
+      "diagnostic_or_attempt_witnesses": [
+        "sourcemap.ts:36:1",
+        "sourcemap.ts:102:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "Refused",
+      "reason": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined",
+      "bytes_revealed_if_fixed_alone": 6371,
+      "boundary_count": 69,
+      "raw_boundary_records": 78,
+      "contributing_boundary_count": 33,
+      "examples": [
+        "core.ts:277",
+        "utilities.ts:2774",
+        "executeCommandLine.ts:517"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 42,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:5667:9",
+        "checker.ts:5664:5",
+        "checker.ts:6583:13"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a function returning U | undefined",
+      "bytes_revealed_if_fixed_alone": 5575,
+      "boundary_count": 10,
+      "raw_boundary_records": 10,
+      "contributing_boundary_count": 9,
+      "examples": [
+        "scanner.ts:826",
+        "core.ts:67",
+        "core.ts:50"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 46,
+      "diagnostic_or_attempt_witnesses": [
+        "core.ts:33:1",
+        "core.ts:50:1",
+        "core.ts:67:1"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a call through ?. (an optional call)",
+      "bytes_revealed_if_fixed_alone": 5095,
+      "boundary_count": 151,
+      "raw_boundary_records": 371,
+      "contributing_boundary_count": 37,
+      "examples": [
+        "performance.ts:189",
+        "scanner.ts:3588",
+        "scanner.ts:3009"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 48,
+      "diagnostic_or_attempt_witnesses": [
+        "builder.ts:670:13",
+        "builder.ts:635:1",
+        "builder.ts:710:5"
+      ],
+      "root": "Optional evaluation or physical own-field presence"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a function returning __String | undefined",
+      "bytes_revealed_if_fixed_alone": 3489,
+      "boundary_count": 26,
+      "raw_boundary_records": 26,
+      "contributing_boundary_count": 10,
+      "examples": [
+        "utilities.ts:5397",
+        "utilities.ts:2364",
+        "utilities.ts:4228"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 57,
+      "diagnostic_or_attempt_witnesses": [
+        "binder.ts:661:5",
+        "binder.ts:916:17",
+        "binder.ts:887:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "Refused",
+      "reason": "overload 1 of getSuperContainer result SuperContainer | undefined cannot be served by implementation result SuperContainerOrFunctions | undefined",
+      "bytes_revealed_if_fixed_alone": 2597,
+      "boundary_count": 5,
+      "raw_boundary_records": 5,
+      "contributing_boundary_count": 3,
+      "examples": [
+        "utilities.ts:3338",
+        "utilities.ts:3335",
+        "utilities.ts:3337"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 70,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:31633:9",
+        "checker.ts:31630:5",
+        "checker.ts:31642:17"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "Refused",
+      "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+      "bytes_revealed_if_fixed_alone": 2411,
+      "boundary_count": 41,
+      "raw_boundary_records": 50,
+      "contributing_boundary_count": 13,
+      "examples": [
+        "utilities.ts:2764",
+        "utilities.ts:5230",
+        "builder.ts:1042"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 75,
+      "diagnostic_or_attempt_witnesses": [
+        "binder.ts:1688:13",
+        "binder.ts:1639:5",
+        "builder.ts:1042:5"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type T | null | undefined",
+      "bytes_revealed_if_fixed_alone": 2252,
+      "boundary_count": 53,
+      "raw_boundary_records": 72,
+      "contributing_boundary_count": 15,
+      "examples": [
+        "transformers/declarations/diagnostics.ts:595",
+        "transformers/destructuring.ts:559",
+        "emitter.ts:584"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 81,
+      "diagnostic_or_attempt_witnesses": [
+        "builder.ts:2478:9",
+        "builder.ts:2452:1",
+        "builder.ts:2477:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "an optional chain longer than one step",
+      "bytes_revealed_if_fixed_alone": 2229,
+      "boundary_count": 12,
+      "raw_boundary_records": 15,
+      "contributing_boundary_count": 8,
+      "examples": [
+        "moduleNameResolver.ts:3100",
+        "program.ts:4860",
+        "program.ts:4867"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 82,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:4742:9",
+        "checker.ts:4730:5",
+        "checker.ts:36469:13"
+      ],
+      "root": "Optional evaluation or physical own-field presence"
+    },
+    {
+      "kind": "Refused",
+      "reason": "overload 1 of find result U | undefined cannot be served by implementation result T | undefined",
+      "bytes_revealed_if_fixed_alone": 2207,
+      "boundary_count": 39,
+      "raw_boundary_records": 62,
+      "contributing_boundary_count": 12,
+      "examples": [
+        "utilities.ts:3115",
+        "utilities.ts:12296",
+        "core.ts:162"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 83,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:9053:13",
+        "checker.ts:9052:9",
+        "checker.ts:9420:17"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "?. to a number, which would be number | undefined",
+      "bytes_revealed_if_fixed_alone": 2099,
+      "boundary_count": 4,
+      "raw_boundary_records": 4,
+      "contributing_boundary_count": 2,
+      "examples": [
+        "utilities.ts:8102",
+        "moduleSpecifiers.ts:910"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 87,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:10416:25",
+        "checker.ts:10395:13",
+        "checker.ts:10445:25"
+      ],
+      "root": "Operation on tagged values (narrowing, conversion, comparison or iteration)"
+    },
+    {
+      "kind": "Refused",
+      "reason": "overload 1 of visitFunctionBody result Block cannot be served by implementation result ConciseBody | undefined",
+      "bytes_revealed_if_fixed_alone": 2087,
+      "boundary_count": 8,
+      "raw_boundary_records": 8,
+      "contributing_boundary_count": 7,
+      "examples": [
+        "visitorPublic.ts:522",
+        "visitorPublic.ts:513",
+        "visitorPublic.ts:508"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 88,
+      "diagnostic_or_attempt_witnesses": [
+        "transformers/es2017.ts:657:9",
+        "transformers/es2017.ts:649:5",
+        "visitorPublic.ts:508:1"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type T | undefined",
+      "bytes_revealed_if_fixed_alone": 1837,
+      "boundary_count": 22,
+      "raw_boundary_records": 22,
+      "contributing_boundary_count": 11,
+      "examples": [
+        "core.ts:921",
+        "utilities.ts:1129",
+        "tsbuildPublic.ts:1358"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 96,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:33507:21",
+        "checker.ts:33495:5",
+        "core.ts:921:1"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a function returning PackageJson[K] | undefined",
+      "bytes_revealed_if_fixed_alone": 1663,
+      "boundary_count": 4,
+      "raw_boundary_records": 4,
+      "contributing_boundary_count": 4,
+      "examples": [
+        "moduleNameResolver.ts:361",
+        "moduleNameResolver.ts:379",
+        "moduleNameResolver.ts:359"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 102,
+      "diagnostic_or_attempt_witnesses": [
+        "moduleNameResolver.ts:359:1",
+        "moduleNameResolver.ts:360:1",
+        "moduleNameResolver.ts:361:1"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "Refused",
+      "reason": "overload 1 of sameMap result U[] cannot be served by implementation result readonly U[] | undefined",
+      "bytes_revealed_if_fixed_alone": 1633,
+      "boundary_count": 30,
+      "raw_boundary_records": 34,
+      "contributing_boundary_count": 7,
+      "examples": [
+        "core.ts:350",
+        "builder.ts:526",
+        "core.ts:342"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 105,
+      "diagnostic_or_attempt_witnesses": [
+        "builder.ts:526:5",
+        "builder.ts:521:1",
+        "builder.ts:564:5"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "Refused",
+      "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined",
+      "bytes_revealed_if_fixed_alone": 1603,
+      "boundary_count": 26,
+      "raw_boundary_records": 28,
+      "contributing_boundary_count": 13,
+      "examples": [
+        "utilitiesPublic.ts:786",
+        "utilitiesPublic.ts:788",
+        "transformers/declarations/diagnostics.ts:708"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 107,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:2015:9",
+        "checker.ts:1963:5",
+        "checker.ts:1986:9"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type string | null | undefined",
+      "bytes_revealed_if_fixed_alone": 1382,
+      "boundary_count": 6,
+      "raw_boundary_records": 6,
+      "contributing_boundary_count": 3,
+      "examples": [
+        "sys.ts:948",
+        "sys.ts:916",
+        "sourcemap.ts:701"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 119,
+      "diagnostic_or_attempt_witnesses": [
+        "sourcemap.ts:701:5",
+        "sourcemap.ts:699:1",
+        "sys.ts:916:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a function returning Path | undefined",
+      "bytes_revealed_if_fixed_alone": 1378,
+      "boundary_count": 2,
+      "raw_boundary_records": 2,
+      "contributing_boundary_count": 2,
+      "examples": [
+        "resolutionCache.ts:468",
+        "resolutionCache.ts:258"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 120,
+      "diagnostic_or_attempt_witnesses": [
+        "resolutionCache.ts:258:1",
+        "resolutionCache.ts:468:1"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "bytes_revealed_if_fixed_alone": 1351,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "transformers/namedEvaluation.ts:322"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 122,
+      "diagnostic_or_attempt_witnesses": [
+        "transformers/namedEvaluation.ts:322:1"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type ResolvedConfigFileName | undefined",
+      "bytes_revealed_if_fixed_alone": 1346,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "tsbuildPublic.ts:1393"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 123,
+      "diagnostic_or_attempt_witnesses": [
+        "tsbuildPublic.ts:1393:1"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "bytes_revealed_if_fixed_alone": 1299,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "transformers/namedEvaluation.ts:354"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 130,
+      "diagnostic_or_attempt_witnesses": [
+        "transformers/namedEvaluation.ts:354:1"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field modifiers of type NodeArray<ModifierLike> | undefined",
+      "bytes_revealed_if_fixed_alone": 1183,
+      "boundary_count": 76,
+      "raw_boundary_records": 90,
+      "contributing_boundary_count": 11,
+      "examples": [
+        "checker.ts:54208",
+        "utilities.ts:3558",
+        "utilities.ts:5489"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 138,
+      "diagnostic_or_attempt_witnesses": [
+        "binder.ts:359:13",
+        "binder.ts:350:1",
+        "binder.ts:2984:17"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "Refused",
+      "reason": "overload 1 of combine result T[] | undefined cannot be served by implementation result T | T[] | undefined",
+      "bytes_revealed_if_fixed_alone": 975,
+      "boundary_count": 4,
+      "raw_boundary_records": 4,
+      "contributing_boundary_count": 4,
+      "examples": [
+        "core.ts:947",
+        "core.ts:953",
+        "core.ts:949"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 160,
+      "diagnostic_or_attempt_witnesses": [
+        "core.ts:947:1",
+        "core.ts:949:1",
+        "core.ts:951:1"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "Refused",
+      "reason": "overload 2 of getParseTreeNode result T | undefined cannot be served by implementation result Node | undefined",
+      "bytes_revealed_if_fixed_alone": 941,
+      "boundary_count": 21,
+      "raw_boundary_records": 21,
+      "contributing_boundary_count": 3,
+      "examples": [
+        "utilitiesPublic.ts:826",
+        "utilitiesPublic.ts:827",
+        "utilitiesPublic.ts:817"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 166,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:2041:9",
+        "checker.ts:2040:5",
+        "checker.ts:50597:9"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "Refused",
+      "reason": "overload 1 of convertOptionsFromJson result WatchOptions | undefined cannot be served by implementation result CompilerOptions | TypeAcquisition | WatchOptions | undefined",
+      "bytes_revealed_if_fixed_alone": 933,
+      "boundary_count": 3,
+      "raw_boundary_records": 3,
+      "contributing_boundary_count": 3,
+      "examples": [
+        "commandLineParser.ts:3777",
+        "commandLineParser.ts:3776",
+        "commandLineParser.ts:3775"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 170,
+      "diagnostic_or_attempt_witnesses": [
+        "commandLineParser.ts:3775:1",
+        "commandLineParser.ts:3776:1",
+        "commandLineParser.ts:3777:1"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "Refused",
+      "reason": "overload 1 of singleOrMany result T | T[] cannot be served by implementation result T | readonly T[] | undefined",
+      "bytes_revealed_if_fixed_alone": 909,
+      "boundary_count": 20,
+      "raw_boundary_records": 25,
+      "contributing_boundary_count": 10,
+      "examples": [
+        "core.ts:1152",
+        "core.ts:1158",
+        "transformers/module/system.ts:776"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 174,
+      "diagnostic_or_attempt_witnesses": [
+        "core.ts:1152:1",
+        "core.ts:1154:1",
+        "core.ts:1156:1"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a function returning AnyValidImportOrReExport | undefined",
+      "bytes_revealed_if_fixed_alone": 864,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "utilities.ts:4381"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 178,
+      "diagnostic_or_attempt_witnesses": [
+        "utilities.ts:4381:1"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "Refused",
+      "reason": "overload 1 of findLast result U | undefined cannot be served by implementation result T | undefined",
+      "bytes_revealed_if_fixed_alone": 842,
+      "boundary_count": 6,
+      "raw_boundary_records": 6,
+      "contributing_boundary_count": 5,
+      "examples": [
+        "core.ts:182",
+        "core.ts:178",
+        "core.ts:180"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 181,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:3665:9",
+        "checker.ts:3664:5",
+        "core.ts:178:1"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a function returning (AssignmentExpression<EqualsToken> & { readonly left: GeneratedIdentifier; }) | undefined",
+      "bytes_revealed_if_fixed_alone": 589,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "factory/utilities.ts:1673"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 228,
+      "diagnostic_or_attempt_witnesses": [
+        "factory/utilities.ts:1673:1"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a function returning (ConstructorDeclaration & { body: Block; }) | undefined",
+      "bytes_revealed_if_fixed_alone": 533,
+      "boundary_count": 4,
+      "raw_boundary_records": 5,
+      "contributing_boundary_count": 3,
+      "examples": [
+        "transformers/typeSerializer.ts:201",
+        "utilities.ts:6759",
+        "transformers/utilities.ts:684"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 234,
+      "diagnostic_or_attempt_witnesses": [
+        "transformers/ts.ts:1201:17",
+        "transformers/ts.ts:1197:5",
+        "transformers/typeSerializer.ts:201:9"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a union of differently held members variable a function value captures",
+      "bytes_revealed_if_fixed_alone": 524,
+      "boundary_count": 28,
+      "raw_boundary_records": 38,
+      "contributing_boundary_count": 4,
+      "examples": [
+        "executeCommandLine.ts:210",
+        "emitter.ts:826",
+        "emitter.ts:893"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 235,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:52365:25",
+        "checker.ts:52358:5",
+        "emitter.ts:827:13"
+      ],
+      "root": "Captured-cell representation"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a tuple element of type string | number | boolean | readonly string[] | SourceFile | undefined",
+      "bytes_revealed_if_fixed_alone": 509,
+      "boundary_count": 2,
+      "raw_boundary_records": 2,
+      "contributing_boundary_count": 2,
+      "examples": [
+        "watch.ts:294",
+        "watch.ts:291"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 242,
+      "diagnostic_or_attempt_witnesses": [
+        "watch.ts:291:9",
+        "watch.ts:276:1",
+        "watch.ts:294:9"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a narrowed scalar in a boxed union field",
+      "bytes_revealed_if_fixed_alone": 377,
+      "boundary_count": 7,
+      "raw_boundary_records": 7,
+      "contributing_boundary_count": 2,
+      "examples": [
+        "moduleNameResolver.ts:3425",
+        "moduleNameResolver.ts:512"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 285,
+      "diagnostic_or_attempt_witnesses": [
+        "binder.ts:3194:13",
+        "binder.ts:3188:5",
+        "checker.ts:39374:13"
+      ],
+      "root": "Operation on tagged values (narrowing, conversion, comparison or iteration)"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "optional chaining to .size on a value",
+      "bytes_revealed_if_fixed_alone": 341,
+      "boundary_count": 20,
+      "raw_boundary_records": 22,
+      "contributing_boundary_count": 4,
+      "examples": [
+        "utilities.ts:9538",
+        "builder.ts:705",
+        "builder.ts:756"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 302,
+      "diagnostic_or_attempt_witnesses": [
+        "builder.ts:705:5",
+        "builder.ts:700:1",
+        "builder.ts:756:5"
+      ],
+      "root": "Optional evaluation or physical own-field presence"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "writing a possibly absent optional own field",
+      "bytes_revealed_if_fixed_alone": 329,
+      "boundary_count": 16,
+      "raw_boundary_records": 24,
+      "contributing_boundary_count": 4,
+      "examples": [
+        "utilities.ts:8987",
+        "parser.ts:1341",
+        "utilities.ts:8992"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 307,
+      "diagnostic_or_attempt_witnesses": [
+        "builder.ts:1962:21",
+        "builder.ts:1909:5",
+        "checker.ts:2529:9"
+      ],
+      "root": "Optional evaluation or physical own-field presence"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field modifiers of type NodeArray<Modifier> | undefined",
+      "bytes_revealed_if_fixed_alone": 300,
+      "boundary_count": 27,
+      "raw_boundary_records": 30,
+      "contributing_boundary_count": 4,
+      "examples": [
+        "utilities.ts:5494",
+        "utilities.ts:2573",
+        "utilities.ts:2247"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 325,
+      "diagnostic_or_attempt_witnesses": [
+        "binder.ts:894:17",
+        "binder.ts:887:5",
+        "binder.ts:926:17"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field textSourceNode of type BigIntLiteral | Identifier | JsxNamespacedName | NumericLiteral | PrivateIdentifier | StringLiteralLike | undefined",
+      "bytes_revealed_if_fixed_alone": 280,
+      "boundary_count": 7,
+      "raw_boundary_records": 7,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "utilities.ts:1994"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 336,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:27759:13",
+        "checker.ts:27757:5",
+        "emitter.ts:5270:9"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "in when a possibly absent spread has no property presence descriptors",
+      "bytes_revealed_if_fixed_alone": 277,
+      "boundary_count": 11,
+      "raw_boundary_records": 20,
+      "contributing_boundary_count": 2,
+      "examples": [
+        "hostErrors.ts:8",
+        "hostErrors.ts:3"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 339,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:2575:13",
+        "checker.ts:2567:5",
+        "checker.ts:2578:9"
+      ],
+      "root": "Optional evaluation or physical own-field presence"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type (ModuleDeclaration & { name: StringLiteral; }) | undefined",
+      "bytes_revealed_if_fixed_alone": 273,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "moduleSpecifiers.ts:880"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 342,
+      "diagnostic_or_attempt_witnesses": [
+        "moduleSpecifiers.ts:880:5",
+        "moduleSpecifiers.ts:879:1"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "an object with a nullable field viewed as unknown or object (null and undefined slot tags)",
+      "bytes_revealed_if_fixed_alone": 260,
+      "boundary_count": 2,
+      "raw_boundary_records": 2,
+      "contributing_boundary_count": 2,
+      "examples": [
+        "builder.ts:295",
+        "builder.ts:296"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 349,
+      "diagnostic_or_attempt_witnesses": [
+        "builder.ts:295:5",
+        "builder.ts:291:1",
+        "builder.ts:296:5"
+      ],
+      "root": "Operation on tagged values (narrowing, conversion, comparison or iteration)"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a number | undefined argument to substring",
+      "bytes_revealed_if_fixed_alone": 255,
+      "boundary_count": 2,
+      "raw_boundary_records": 2,
+      "contributing_boundary_count": 2,
+      "examples": [
+        "sourcemap.ts:378",
+        "builder.ts:1617"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 353,
+      "diagnostic_or_attempt_witnesses": [
+        "builder.ts:1617:5",
+        "builder.ts:1616:1",
+        "sourcemap.ts:378:5"
+      ],
+      "root": "Operation on tagged values (narrowing, conversion, comparison or iteration)"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type false | RegExpExecArray | null",
+      "bytes_revealed_if_fixed_alone": 235,
+      "boundary_count": 2,
+      "raw_boundary_records": 2,
+      "contributing_boundary_count": 2,
+      "examples": [
+        "parser.ts:10715",
+        "parser.ts:10753"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 365,
+      "diagnostic_or_attempt_witnesses": [
+        "parser.ts:10715:5",
+        "parser.ts:10714:1",
+        "parser.ts:10753:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a function returning HasJSDoc | undefined",
+      "bytes_revealed_if_fixed_alone": 232,
+      "boundary_count": 2,
+      "raw_boundary_records": 2,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "utilities.ts:4812"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 370,
+      "diagnostic_or_attempt_witnesses": [
+        "utilities.ts:4812:1",
+        "utilities.ts:12017:21",
+        "utilities.ts:12013:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field initializer of type ForInitializer | undefined",
+      "bytes_revealed_if_fixed_alone": 231,
+      "boundary_count": 17,
+      "raw_boundary_records": 20,
+      "contributing_boundary_count": 3,
+      "examples": [
+        "transformers/module/system.ts:1564",
+        "transformers/module/system.ts:1243",
+        "utilities.ts:3726"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 371,
+      "diagnostic_or_attempt_witnesses": [
+        "binder.ts:1132:17",
+        "binder.ts:1096:5",
+        "checker.ts:49225:17"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a BinaryExpression with a union of differently held members and a union of differently held members",
+      "bytes_revealed_if_fixed_alone": 216,
+      "boundary_count": 1,
+      "raw_boundary_records": 3,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "core.ts:1975"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 381,
+      "diagnostic_or_attempt_witnesses": [
+        "core.ts:1975:5",
+        "core.ts:1971:1",
+        "core.ts:1973:1"
+      ],
+      "root": "Operation on tagged values (narrowing, conversion, comparison or iteration)"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field multiLine of type boolean | undefined",
+      "bytes_revealed_if_fixed_alone": 210,
+      "boundary_count": 17,
+      "raw_boundary_records": 17,
+      "contributing_boundary_count": 2,
+      "examples": [
+        "utilities.ts:7598",
+        "utilities.ts:2991"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 386,
+      "diagnostic_or_attempt_witnesses": [
+        "binder.ts:1833:13",
+        "binder.ts:1818:5",
+        "binder.ts:3003:17"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a function returning TEntry | undefined",
+      "bytes_revealed_if_fixed_alone": 191,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "transformers/utilities.ts:829"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 401,
+      "diagnostic_or_attempt_witnesses": [
+        "transformers/utilities.ts:829:1"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type __String | undefined",
+      "bytes_revealed_if_fixed_alone": 174,
+      "boundary_count": 32,
+      "raw_boundary_records": 44,
+      "contributing_boundary_count": 2,
+      "examples": [
+        "utilities.ts:6857",
+        "utilities.ts:6856"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 417,
+      "diagnostic_or_attempt_witnesses": [
+        "binder.ts:755:9",
+        "binder.ts:749:5",
+        "checker.ts:14421:13"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a boolean | undefined variable a function value captures",
+      "bytes_revealed_if_fixed_alone": 164,
+      "boundary_count": 157,
+      "raw_boundary_records": 431,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "tsbuildPublic.ts:289"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 431,
+      "diagnostic_or_attempt_witnesses": [
+        "core.ts:36:13",
+        "checker.ts:8460:9",
+        "core.ts:35:48"
+      ],
+      "root": "Captured-cell representation"
+    },
+    {
+      "kind": "Refused",
+      "reason": "an unproven relation from Identifier to Identifier: optional field id has no proven compatible presence/type",
+      "bytes_revealed_if_fixed_alone": 160,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "utilitiesPublic.ts:932"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 437,
+      "diagnostic_or_attempt_witnesses": [
+        "utilitiesPublic.ts:932:5",
+        "utilitiesPublic.ts:931:1"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "Refused",
+      "reason": "an unproven relation from LiteralLikeNode to TemplateLiteralLikeNode: optional field rawText has no proven compatible presence/type",
+      "bytes_revealed_if_fixed_alone": 152,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "utilities.ts:2010"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 449,
+      "diagnostic_or_attempt_witnesses": [
+        "utilities.ts:2010:13",
+        "utilities.ts:1980:1"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "Refused",
+      "reason": "an unproven relation from Type to TypeParameter: optional field constraint has no proven compatible presence/type",
+      "bytes_revealed_if_fixed_alone": 152,
+      "boundary_count": 14,
+      "raw_boundary_records": 21,
+      "contributing_boundary_count": 2,
+      "examples": [
+        "utilities.ts:10955",
+        "symbolWalker.ts:104"
+      ],
+      "owner": "internal/lower/proven_relations.go / lowering.provenRelation",
+      "disposition": "adaptation",
+      "owner_source": "refusal-baseline.md",
+      "rank": 450,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:5568:9",
+        "checker.ts:5567:5",
+        "checker.ts:7164:21"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field _propertyAccessExpressionLikeQualifiedNameBrand of type void | undefined",
+      "bytes_revealed_if_fixed_alone": 150,
+      "boundary_count": 2,
+      "raw_boundary_records": 3,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "transformers/typeSerializer.ts:615"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 456,
+      "diagnostic_or_attempt_witnesses": [
+        "parser.ts:9589:21",
+        "parser.ts:9584:13",
+        "transformers/typeSerializer.ts:615:9"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "Refused",
+      "reason": "an unproven relation from SolutionBuilderHostBase<T> to SolutionBuilderHost<T>: optional field reportErrorSummary has no proven compatible presence/type",
+      "bytes_revealed_if_fixed_alone": 145,
+      "boundary_count": 1,
+      "raw_boundary_records": 2,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "tsbuildPublic.ts:313"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 459,
+      "diagnostic_or_attempt_witnesses": [
+        "tsbuildPublic.ts:313:5",
+        "executeCommandLine.ts:812:1",
+        "tsbuildPublic.ts:306:1"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type boolean | V | undefined",
+      "bytes_revealed_if_fixed_alone": 142,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "utilities.ts:942"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 464,
+      "diagnostic_or_attempt_witnesses": [
+        "utilities.ts:942:9",
+        "utilities.ts:930:1"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "Refused",
+      "reason": "a type argument makes a value of type (left: MappedPosition, right: MappedPosition) => boolean seen as EqualityComparer<SourceMappedPosition> | undefined, which can write string | undefined where string is read",
+      "bytes_revealed_if_fixed_alone": 141,
+      "boundary_count": 1,
+      "raw_boundary_records": 2,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "sourcemap.ts:763"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 468,
+      "diagnostic_or_attempt_witnesses": [
+        "sourcemap.ts:763:13",
+        "sourcemap.ts:699:1",
+        "sourcemap.ts:754:5"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type (AmbientModuleDeclaration & { name: StringLiteral; }) | undefined",
+      "bytes_revealed_if_fixed_alone": 138,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "moduleSpecifiers.ts:920"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 470,
+      "diagnostic_or_attempt_witnesses": [
+        "moduleSpecifiers.ts:920:5",
+        "moduleSpecifiers.ts:879:1"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field _optionalChainBrand of type void",
+      "bytes_revealed_if_fixed_alone": 110,
+      "boundary_count": 5,
+      "raw_boundary_records": 7,
+      "contributing_boundary_count": 2,
+      "examples": [
+        "transformers/es2020.ts:93",
+        "transformers/es2020.ts:89"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 499,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:34741:9",
+        "checker.ts:34740:5",
+        "checker.ts:35529:9"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type V | undefined",
+      "bytes_revealed_if_fixed_alone": 106,
+      "boundary_count": 2,
+      "raw_boundary_records": 2,
+      "contributing_boundary_count": 2,
+      "examples": [
+        "utilities.ts:941",
+        "utilities.ts:939"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 506,
+      "diagnostic_or_attempt_witnesses": [
+        "utilities.ts:939:9",
+        "utilities.ts:930:1",
+        "utilities.ts:941:9"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "Refused",
+      "reason": "an unproven relation from ImportEqualsDeclaration & { moduleReference: ExternalModuleReference; } to ImportEqualsDeclaration: optional field moduleReference.id has no proven compatible presence/type",
+      "bytes_revealed_if_fixed_alone": 103,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "utilities.ts:3780"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 510,
+      "diagnostic_or_attempt_witnesses": [
+        "utilities.ts:3780:5",
+        "utilities.ts:3778:1"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field modifiers of type NodeArray<Modifier> | NodeArray<ModifierLike> | undefined",
+      "bytes_revealed_if_fixed_alone": 102,
+      "boundary_count": 10,
+      "raw_boundary_records": 10,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "utilities.ts:5340"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 511,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:11910:13",
+        "checker.ts:11844:5",
+        "checker.ts:16335:17"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a function returning TPrivateEntry | undefined",
+      "bytes_revealed_if_fixed_alone": 100,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "transformers/utilities.ts:855"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 515,
+      "diagnostic_or_attempt_witnesses": [
+        "transformers/utilities.ts:855:1"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a number | undefined argument to slice",
+      "bytes_revealed_if_fixed_alone": 94,
+      "boundary_count": 2,
+      "raw_boundary_records": 2,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "program.ts:751"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 525,
+      "diagnostic_or_attempt_witnesses": [
+        "program.ts:751:13",
+        "program.ts:711:1",
+        "program.ts:2981:13"
+      ],
+      "root": "Operation on tagged values (narrowing, conversion, comparison or iteration)"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type U | readonly U[] | undefined",
+      "bytes_revealed_if_fixed_alone": 88,
+      "boundary_count": 2,
+      "raw_boundary_records": 3,
+      "contributing_boundary_count": 2,
+      "examples": [
+        "core.ts:403",
+        "core.ts:422"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 540,
+      "diagnostic_or_attempt_witnesses": [
+        "core.ts:403:13",
+        "core.ts:399:1",
+        "core.ts:422:13"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field constraint of type JSDocTypeExpression | undefined",
+      "bytes_revealed_if_fixed_alone": 78,
+      "boundary_count": 3,
+      "raw_boundary_records": 3,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "utilities.ts:2852"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 555,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:49168:17",
+        "checker.ts:49064:5",
+        "emitter.ts:1895:21"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type \"\" | ResolvedConfigFileName | undefined",
+      "bytes_revealed_if_fixed_alone": 76,
+      "boundary_count": 1,
+      "raw_boundary_records": 11,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "tsbuildPublic.ts:723"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 558,
+      "diagnostic_or_attempt_witnesses": [
+        "tsbuildPublic.ts:723:5",
+        "executeCommandLine.ts:812:1",
+        "tsbuildPublic.ts:340:1"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type K | undefined",
+      "bytes_revealed_if_fixed_alone": 74,
+      "boundary_count": 2,
+      "raw_boundary_records": 6,
+      "contributing_boundary_count": 2,
+      "examples": [
+        "core.ts:560",
+        "core.ts:561"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 567,
+      "diagnostic_or_attempt_witnesses": [
+        "core.ts:560:9",
+        "core.ts:551:1",
+        "core.ts:561:9"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a function returning TOut | undefined",
+      "bytes_revealed_if_fixed_alone": 73,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "core.ts:1778"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 571,
+      "diagnostic_or_attempt_witnesses": [
+        "core.ts:1778:1"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a BinaryExpression with a string and a union of differently held members",
+      "bytes_revealed_if_fixed_alone": 72,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "moduleNameResolver.ts:946"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 575,
+      "diagnostic_or_attempt_witnesses": [
+        "moduleNameResolver.ts:946:9",
+        "moduleNameResolver.ts:944:1"
+      ],
+      "root": "Operation on tagged values (narrowing, conversion, comparison or iteration)"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field awaitModifier of type AwaitKeyword | undefined",
+      "bytes_revealed_if_fixed_alone": 69,
+      "boundary_count": 12,
+      "raw_boundary_records": 14,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "transformers/module/system.ts:1249"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 578,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:28367:17",
+        "checker.ts:28361:5",
+        "checker.ts:49229:17"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type (ConstructorDeclaration & { body: Block; }) | undefined",
+      "bytes_revealed_if_fixed_alone": 60,
+      "boundary_count": 5,
+      "raw_boundary_records": 5,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "utilities.ts:3571"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 603,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:30773:13",
+        "checker.ts:30763:5",
+        "transformers/es2015.ts:1151:9"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a template interpolating an object, an array, a map, a function or undefined",
+      "bytes_revealed_if_fixed_alone": 59,
+      "boundary_count": 3,
+      "raw_boundary_records": 18,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "semver.ts:452"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 606,
+      "diagnostic_or_attempt_witnesses": [
+        "core.ts:1786:5",
+        "checker.ts:32344:5",
+        "debug.ts:226:13"
+      ],
+      "root": "Operation on tagged values (narrowing, conversion, comparison or iteration)"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "storing Path | undefined in a field",
+      "bytes_revealed_if_fixed_alone": 55,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "builder.ts:668"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 616,
+      "diagnostic_or_attempt_witnesses": [
+        "builder.ts:668:13",
+        "builder.ts:635:1"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type U | undefined",
+      "bytes_revealed_if_fixed_alone": 45,
+      "boundary_count": 2,
+      "raw_boundary_records": 3,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "core.ts:484"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 646,
+      "diagnostic_or_attempt_witnesses": [
+        "core.ts:498:13",
+        "builderState.ts:193:5",
+        "core.ts:484:9"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field id of type number | undefined",
+      "bytes_revealed_if_fixed_alone": 41,
+      "boundary_count": 38,
+      "raw_boundary_records": 217,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "utilities.ts:12031"
+      ],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 652,
+      "diagnostic_or_attempt_witnesses": [
+        "binder.ts:3001:17",
+        "binder.ts:2846:5",
+        "binder.ts:3074:21"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type HasJSDoc | undefined",
+      "bytes_revealed_if_fixed_alone": 38,
+      "boundary_count": 7,
+      "raw_boundary_records": 7,
+      "contributing_boundary_count": 1,
+      "examples": [
+        "utilities.ts:4796"
+      ],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 657,
+      "diagnostic_or_attempt_witnesses": [
+        "binder.ts:2538:13",
+        "binder.ts:2526:5",
+        "checker.ts:4652:9"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "JSON.stringify a union containing containers without runtime element metadata",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 675,
+      "diagnostic_or_attempt_witnesses": [
+        "commandLineParser.ts:2960:9",
+        "commandLineParser.ts:2956:5"
+      ],
+      "root": "Operation on tagged values (narrowing, conversion, comparison or iteration)"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a BinaryExpression with a number | undefined and a number",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 2,
+      "raw_boundary_records": 2,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 676,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:25061:29",
+        "checker.ts:25022:5",
+        "checker.ts:25064:29"
+      ],
+      "root": "Operation on tagged values (narrowing, conversion, comparison or iteration)"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a Map of VisitResult<ExportAssignment | LateVisibilityPaintedStatement | undefined>",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 3,
+      "raw_boundary_records": 4,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 680,
+      "diagnostic_or_attempt_witnesses": [
+        "transformers/declarations.ts:987:17",
+        "transformers/declarations.ts:953:5",
+        "transformers/declarations.ts:977:13"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a function returning ClassStaticBlockDeclaration | Decorator | PrivateIdentifierGetAccessorDeclaration | ... 5 more ... | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 2,
+      "raw_boundary_records": 2,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 692,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:47028:5",
+        "checker.ts:47068:13",
+        "checker.ts:47056:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a function returning InferenceContext | (T & undefined)",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 697,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:26263:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a function returning T | EmptyStatement | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 3,
+      "raw_boundary_records": 3,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 702,
+      "diagnostic_or_attempt_witnesses": [
+        "factory/nodeFactory.ts:7161:5",
+        "factory/nodeFactory.ts:7162:5",
+        "factory/nodeFactory.ts:7163:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a function returning TypeMapper | (T & undefined)",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 707,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:26378:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a function returning TypeOnlyAliasDeclaration | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 3,
+      "raw_boundary_records": 3,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 708,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:4455:5",
+        "checker.ts:30703:17",
+        "checker.ts:30676:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a template interpolating a union with an object, an array, a map or a function in it",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 714,
+      "diagnostic_or_attempt_witnesses": [
+        "core.ts:1786:5",
+        "commandLineParser.ts:2206:1"
+      ],
+      "root": "Operation on tagged values (narrowing, conversion, comparison or iteration)"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type (AssignmentExpression<EqualsToken> & { readonly left: GeneratedIdentifier; }) | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 3,
+      "raw_boundary_records": 3,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 715,
+      "diagnostic_or_attempt_witnesses": [
+        "transformers/classFields.ts:925:13",
+        "transformers/classFields.ts:908:5",
+        "transformers/classFields.ts:2705:13"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type (ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }) | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 11,
+      "raw_boundary_records": 11,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 716,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:3728:13",
+        "checker.ts:3708:5",
+        "checker.ts:3737:9"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 3,
+      "raw_boundary_records": 3,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 718,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:6636:13",
+        "checker.ts:6555:9",
+        "checker.ts:8456:13"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type (VariableDeclaration & { name: Identifier; }) | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 2,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 719,
+      "diagnostic_or_attempt_witnesses": [
+        "transformers/jsx.ts:110:9",
+        "transformers/jsx.ts:92:1",
+        "transformers/jsx.ts:109:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type Children | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 3,
+      "raw_boundary_records": 3,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 729,
+      "diagnostic_or_attempt_witnesses": [
+        "emitter.ts:4663:5",
+        "emitter.ts:4675:5",
+        "emitter.ts:4679:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type ClassNamedEvaluationHelperBlock | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 731,
+      "diagnostic_or_attempt_witnesses": [
+        "transformers/classFields.ts:2184:13",
+        "transformers/classFields.ts:2098:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type ClassStaticBlockDeclaration | Decorator | PrivateIdentifierGetAccessorDeclaration | ... 5 more ... | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 732,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:44188:21",
+        "checker.ts:44163:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type ClassThisAssignmentBlock | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 733,
+      "diagnostic_or_attempt_witnesses": [
+        "transformers/classFields.ts:2183:13",
+        "transformers/classFields.ts:2098:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type DiagnosticRelatedInformation[][] | readonly (DiagnosticRelatedInformation | readonly DiagnosticRelatedInformation[] | undefined)[] where an array goes",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 736,
+      "diagnostic_or_attempt_witnesses": [
+        "core.ts:378:9",
+        "checker.ts:36540:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type Diagnostic[][] | readonly (Diagnostic | readonly Diagnostic[] | undefined)[] where an array goes",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 737,
+      "diagnostic_or_attempt_witnesses": [
+        "core.ts:378:9",
+        "program.ts:2923:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type Extension[][] | readonly (readonly Extension[] | Extension | undefined)[] where an array goes",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 3,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 743,
+      "diagnostic_or_attempt_witnesses": [
+        "core.ts:378:9",
+        "program.ts:3432:5",
+        "utilities.ts:9972:1"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type Path | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 2,
+      "raw_boundary_records": 2,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 754,
+      "diagnostic_or_attempt_witnesses": [
+        "program.ts:2697:9",
+        "program.ts:2688:5",
+        "program.ts:3615:9"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type RedirectsCacheKey | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 759,
+      "diagnostic_or_attempt_witnesses": [
+        "moduleNameResolver.ts:1031:9",
+        "moduleNameResolver.ts:1030:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type T | T[] | readonly T[] | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 764,
+      "diagnostic_or_attempt_witnesses": [
+        "core.ts:378:9",
+        "core.ts:375:1"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type TypeOnlyAliasDeclaration | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 771,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:3353:17",
+        "checker.ts:3298:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type VariableDeclaration[][] | readonly (readonly VariableDeclaration[] | VariableDeclaration | undefined)[] where an array goes",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 774,
+      "diagnostic_or_attempt_witnesses": [
+        "core.ts:378:9",
+        "transformers/declarations.ts:1779:5"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type false | TypeOnlyAliasDeclaration | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 3,
+      "raw_boundary_records": 3,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 775,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:4352:9",
+        "checker.ts:4351:5",
+        "checker.ts:4446:9"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type string[][] | readonly (string | readonly string[] | undefined)[] where an array goes",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 4,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 776,
+      "diagnostic_or_attempt_witnesses": [
+        "core.ts:378:9",
+        "moduleNameResolver.ts:813:1",
+        "moduleSpecifiers.ts:1345:1"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "an array of boolean | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 6,
+      "raw_boundary_records": 10,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": "compiler lesson",
+      "owner_source": "notyet-summary.json: table contains no owner column",
+      "rank": 785,
+      "diagnostic_or_attempt_witnesses": [
+        "binder.ts:1933:17",
+        "binder.ts:1912:5",
+        "binder.ts:2005:13"
+      ],
+      "root": "Concrete representation / element and field storage"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "apply without a dense argument literal (length, presence and argument representations must be proven)",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 788,
+      "diagnostic_or_attempt_witnesses": [
+        "sourcemap.ts:315:13",
+        "sourcemap.ts:313:5"
+      ],
+      "root": "Optional evaluation or physical own-field presence"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field asteriskToken of type AsteriskToken | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 8,
+      "raw_boundary_records": 10,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 797,
+      "diagnostic_or_attempt_witnesses": [
+        "utilities.ts:2929:17",
+        "checker.ts:21234:5",
+        "utilities.ts:2933:17"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field dotDotDotToken of type Token<SyntaxKind.DotDotDotToken> | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 3,
+      "raw_boundary_records": 3,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 799,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:17733:17",
+        "checker.ts:17726:5",
+        "checker.ts:49158:17"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field expression of type Expression | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 9,
+      "raw_boundary_records": 12,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 802,
+      "diagnostic_or_attempt_witnesses": [
+        "utilities.ts:2899:17",
+        "checker.ts:21224:5",
+        "checker.ts:39416:5"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field jsDocPropertyTags of type readonly JSDocPropertyLikeTag[] | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 806,
+      "diagnostic_or_attempt_witnesses": [
+        "emitter.ts:1860:21",
+        "emitter.ts:1556:5"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field label of type Identifier | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 6,
+      "raw_boundary_records": 6,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 807,
+      "diagnostic_or_attempt_witnesses": [
+        "emitter.ts:1713:21",
+        "emitter.ts:1556:5",
+        "emitter.ts:1715:21"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field modifiers of type undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 2,
+      "raw_boundary_records": 3,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 811,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:7377:25",
+        "checker.ts:6769:9",
+        "checker.ts:7364:13"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field name of type JSDocNameReference | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 813,
+      "diagnostic_or_attempt_witnesses": [
+        "emitter.ts:1899:21",
+        "emitter.ts:1556:5"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field readonlyToken of type MinusToken | PlusToken | ReadonlyKeyword | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 3,
+      "raw_boundary_records": 3,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 841,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:13083:25",
+        "checker.ts:13037:5",
+        "checker.ts:49208:17"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field typeArguments of type NodeArray<TypeNode> | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 845,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:36755:17",
+        "checker.ts:36540:5"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field typeExpression of type JSDocTypeExpression | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 846,
+      "diagnostic_or_attempt_witnesses": [
+        "parser.ts:9711:29",
+        "parser.ts:9705:13"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "checked view field typeParameters of type readonly JSDocTemplateTag[] | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 848,
+      "diagnostic_or_attempt_witnesses": [
+        "emitter.ts:1862:21",
+        "emitter.ts:1556:5"
+      ],
+      "root": "Checked-view validation and stored/observed conversion"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "for...of over a union of differently held members",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 4,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 851,
+      "diagnostic_or_attempt_witnesses": [
+        "core.ts:2173:5",
+        "parser.ts:2364:5",
+        "scanner.ts:1023:1"
+      ],
+      "root": "Operation on tagged values (narrowing, conversion, comparison or iteration)"
+    },
+    {
+      "kind": "NotYet",
+      "reason": "null comparison with a scalar",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 855,
+      "diagnostic_or_attempt_witnesses": [
+        "debug.ts:250:9",
+        "parser.ts:8915:13"
+      ],
+      "root": "Operation on tagged values (narrowing, conversion, comparison or iteration)"
+    },
+    {
+      "kind": "Refused",
+      "reason": "an unproven relation from Declaration to NamedDeclaration: optional field name has no proven compatible presence/type",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": "internal/lower/proven_relations.go / lowering.provenRelation",
+      "disposition": "adaptation",
+      "owner_source": "refusal-baseline.md",
+      "rank": 1681,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:26159:17",
+        "checker.ts:26104:5"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "Refused",
+      "reason": "an unproven relation from InstantiableType | UnionOrIntersectionType to TypeParameter: optional field constraint has no proven compatible presence/type",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": "internal/lower/proven_relations.go / lowering.provenRelation",
+      "disposition": "adaptation",
+      "owner_source": "refusal-baseline.md",
+      "rank": 1684,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:15149:9",
+        "checker.ts:15148:5"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "Refused",
+      "reason": "an unproven relation from ObjectType to AnonymousType: optional field target has no proven compatible presence/type",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 2,
+      "raw_boundary_records": 2,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": "internal/lower/proven_relations.go / lowering.provenRelation",
+      "disposition": "adaptation",
+      "owner_source": "refusal-baseline.md",
+      "rank": 1685,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:16568:17",
+        "checker.ts:16561:5",
+        "checker.ts:20967:9"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "Refused",
+      "reason": "an unproven relation from Type to SyntheticDefaultModuleType: optional field syntheticType has no proven compatible presence/type",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 2,
+      "raw_boundary_records": 2,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": "internal/lower/proven_relations.go / lowering.provenRelation",
+      "disposition": "adaptation",
+      "owner_source": "refusal-baseline.md",
+      "rank": 1686,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:37997:13",
+        "checker.ts:37994:5",
+        "checker.ts:38009:13"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "Refused",
+      "reason": "an unproven relation from Type to TypeVariable: optional field constraint has no proven compatible presence/type",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": "internal/lower/proven_relations.go / lowering.provenRelation",
+      "disposition": "adaptation",
+      "owner_source": "refusal-baseline.md",
+      "rank": 1687,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:23898:21",
+        "checker.ts:23544:9"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "Refused",
+      "reason": "an unproven relation from UnionOrIntersectionType to UnionType: optional field resolvedReducedType has no proven compatible presence/type",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 1,
+      "raw_boundary_records": 1,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": "internal/lower/proven_relations.go / lowering.provenRelation",
+      "disposition": "adaptation",
+      "owner_source": "refusal-baseline.md",
+      "rank": 1688,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:23160:17",
+        "checker.ts:23135:9"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "Refused",
+      "reason": "overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined>",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 3,
+      "raw_boundary_records": 3,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 1695,
+      "diagnostic_or_attempt_witnesses": [
+        "utilities.ts:11320:5",
+        "utilities.ts:11321:5",
+        "utilities.ts:11322:5"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "Refused",
+      "reason": "overload 1 of parseModifiers result NodeArray<Modifier> | undefined cannot be served by implementation result NodeArray<ModifierLike> | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 13,
+      "raw_boundary_records": 15,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 1701,
+      "diagnostic_or_attempt_witnesses": [
+        "parser.ts:3957:9",
+        "parser.ts:3955:5",
+        "parser.ts:4044:9"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "Refused",
+      "reason": "overload 1 of parseOptionalToken result Token<TKind> cannot be served by implementation result Node | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 21,
+      "raw_boundary_records": 23,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 1704,
+      "diagnostic_or_attempt_witnesses": [
+        "parser.ts:4069:9",
+        "parser.ts:4034:5",
+        "parser.ts:4035:5"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "Refused",
+      "reason": "overload 1 of parseOptionalTokenJSDoc result Token<TKind> cannot be served by implementation result Node | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 2,
+      "raw_boundary_records": 2,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 1705,
+      "diagnostic_or_attempt_witnesses": [
+        "parser.ts:2531:5",
+        "parser.ts:2532:5"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "Refused",
+      "reason": "overload 2 of makeSerializePropertySymbol result (p: Symbol, isStatic: boolean, baseType: Type | undefined) => T | T[] cannot be served by implementation result (p: Symbol, isStatic: boolean, baseType: Type | undefined) => T | (T | AccessorDeclaration)[] | AccessorDeclaration",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 2,
+      "raw_boundary_records": 2,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 1711,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:10787:13",
+        "checker.ts:10798:13"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    },
+    {
+      "kind": "Refused",
+      "reason": "overload 3 of getGlobalType result GenericType cannot be served by implementation result ObjectType | undefined",
+      "bytes_revealed_if_fixed_alone": 0,
+      "boundary_count": 47,
+      "raw_boundary_records": 47,
+      "contributing_boundary_count": 0,
+      "examples": [],
+      "owner": null,
+      "disposition": null,
+      "owner_source": "exact reason absent from supplied tables",
+      "rank": 1712,
+      "diagnostic_or_attempt_witnesses": [
+        "checker.ts:17481:5",
+        "checker.ts:17482:5",
+        "checker.ts:17483:5"
+      ],
+      "root": "Existing soundness relation; not representation permission"
+    }
+  ]
+}
