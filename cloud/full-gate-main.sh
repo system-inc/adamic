@@ -103,6 +103,13 @@ export PATH="\${ADAMIC_TYPESCRIPT_SOURCE}/bin:\${PATH}"
 # creating work dir: stat /tmp/adamic-gate' after Cloud's restart (Oct 8). Each gate makes it, world-traversable.
 mkdir -p -m 1777 "\${TMPDIR:-/tmp}"
 git -C ~/full-gate/tools fetch -q origin "${tools}" && git -C ~/full-gate/tools switch -q --detach "${tools}"
+# A declared tool the box lacks (cloud/fast-gate/tools.txt) makes the run void, naming the box, never red.
+if ! lacks=\$(bash ~/full-gate/tools/cloud/fast-gate/tools-check.sh); then
+  echo "\${lacks}" > ~/"${out}"/tools-missing.txt
+  echo "void: ${sha} full gate, box \$(hostname) lacks a declared tool: \$(echo "\${lacks}" | sed -E 's/^lacks ([^:]+):.*/\1/' | tr '\n' ' ')" > ~/"${out}"/status.txt
+  echo '{"finished": true, "void": true}' > ~/"${out}"/full.json
+  exit 0
+fi
 git -C ~/full-gate/tree fetch -q origin "${sha}" && git -C ~/full-gate/tree switch -q --detach "${sha}"
 git -C ~/full-gate/tree submodule update -q --init --recursive
 cpus=\$(nproc --all)
@@ -136,6 +143,9 @@ BOX
       final=$(ssh "${box}" "head -1 ~/${out}/status.txt")
       echo "$(date -u +%H:%M:%S) finished: ${final}"
       if [[ ${final} == green:* ]]; then echo "${sha}" > "${state}/last-green"; fi
+      if [[ ${final} == void:* ]]; then
+        (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_developer_tools "Whole gate of main ${sha} is void, a box problem, not the change: ${final}. Fix the box and run it again (cloud/full-gate-main.sh ${sha})." >/dev/null 2>&1 || true)
+      fi
       lend
       # Explicitly 0: a bare return took the status of the green test above, so after every red run
       # (06:55Z and 08:30Z on Oct 8) set -e ended the loop and no main got a whole gate.

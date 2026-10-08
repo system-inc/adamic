@@ -68,6 +68,8 @@ class FailClosed(unittest.TestCase):
             handle.write("internal/oracle/testdata/a.a\n")
         with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
             handle.write("inert *.md\nstage3 stage3/*\n")
+        with open(os.path.join(self.tree, "cloud/fast-gate/tools.txt"), "w") as handle:
+            handle.write("# declared tools\ngo\tall\tcommand -v go\n")
         # The full gate runs stage 3's lane on every main, so the tree has one.
         os.makedirs(os.path.join(self.tree, "stage3/lane"))
         with open(os.path.join(self.tree, "stage3/lane/run.sh"), "w") as handle:
@@ -111,6 +113,16 @@ class FailClosed(unittest.TestCase):
         with open(os.path.join(out, ("full" if full else "fast") + ".json")) as handle:
             result = json.load(handle)
         return gate, status, result
+
+    def test_an_undeclared_tool_is_red_at_tools_naming_it(self):
+        with open(os.path.join(self.tree, "probe.go"), "w") as handle:
+            handle.write('package probe\n\nimport "os/exec"\n\nvar a = exec.Command("go", "version")\nvar b, _ = exec.LookPath("wasmtime")\n')
+        for command in (["add", "."], ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "probe"]):
+            realRun(["git", "-C", self.tree] + command, check=True)
+        self.sha = run.git(self.tree, "rev-parse", "HEAD")
+        gate, status, result = self.gate()
+        self.assertIn("first failure at tools", status)
+        self.assertEqual(result["undeclared_tools"], ["probe.go:6 runs wasmtime, which cloud/fast-gate/tools.txt doesn't declare"])
 
     def test_all_pass_is_green(self):
         for full in (False, True):

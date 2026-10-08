@@ -40,6 +40,9 @@ fullPackageTimeout = "3h"
 slowPackageSeconds = 3600
 smokeTest = "TestNativeAgreesWithNode"
 oracle = module + "/internal/oracle"
+# A command run by literal name: exec.Command("x", exec.CommandContext(ctx, "x", exec.LookPath("x").
+toolLiteral = re.compile(r'exec\.(?:Command\(|CommandContext\([A-Za-z_.()]+, |LookPath\()"([^"]+)"')
+toolLiteralSearch = r'exec\.(Command\(|CommandContext\([A-Za-z_.()]+, |LookPath\()"[^"]+"'  # the same, for git grep -E
 # The oracle's lanes: every test that runs each registered fixture as a subtest named by its path.
 # A test found ranging over the fixtures that isn't listed here makes any oracle change whole.
 oracleLanes = {"TestNativeAgreesWithNode": [], "TestWASIAgreesWithNode": [], "TestWASIEmission": [], "TestCountsAreRecorded": ["fixtures"]}
@@ -90,7 +93,7 @@ class Gate:
         # so a stage that died without reporting (an exception, a process that never started) is red.
         self.exits = {}
         self.watchers = []
-        self.planned = ["coverage", "build", "vet", "tests", "wasi", "stage3", "catalog", "census"] if arguments.full else ["coverage", "build", "vet", "tests", "smoke", "census"]
+        self.planned = ["coverage", "tools", "build", "vet", "tests", "wasi", "stage3", "catalog", "census"] if arguments.full else ["coverage", "tools", "build", "vet", "tests", "smoke", "census"]
         self.result = {
             "sha": arguments.sha,
             "branch": arguments.branch,
@@ -158,7 +161,7 @@ class Gate:
         # Everything starts at once: the tests compile what they need through the same build cache,
         # and the first failure of any step still stops all of them.
         log = open(os.path.join(self.arguments.out, "test.jsonl"), "w")
-        threads = [self.guarded("build", self.build), self.guarded("vet", self.vet),
+        threads = [self.guarded("tools", self.toolsDeclared), self.guarded("build", self.build), self.guarded("vet", self.vet),
                    self.guarded("tests", self.testSplit, packages, log),
                    self.guarded("smoke", self.smoke, smoke, log)]
         if "stage3" in executors:
@@ -207,7 +210,7 @@ class Gate:
         wasi = None
         if os.environ.get("WASI_SYSROOT"):
             wasi = {"PATH": os.path.join(os.path.dirname(os.path.dirname(os.environ["WASI_SYSROOT"])), "bin") + os.pathsep + os.environ["PATH"]}
-        threads = [self.guarded("vet", self.vet),
+        threads = [self.guarded("tools", self.toolsDeclared), self.guarded("vet", self.vet),
                    # Three hours a package (@system_adamic, Oct 8 00:08): the whole gate's 16 CPUs are slower
                    # on purpose, and a wall-clock package timeout there is the per-test fragility at a larger
                    # size. Hangs belong to stall guards that count from output; a package over an hour is
@@ -741,6 +744,30 @@ class Gate:
             with open(os.path.join(self.arguments.out, name + ".log")) as handle:
                 self.fail(name, handle.read()[-4000:])
         return code == 0
+
+    def toolsDeclared(self):
+        """Every command the repository's Go code runs by literal name is declared in the tools checkout's
+        cloud/fast-gate/tools.txt, which the box checks before the gate (cloud/fast-gate/tools-check.sh).
+        A change that reaches for a new tool without declaring it is red here, naming the file and line,
+        instead of red on every box that lacks it (library's stock tsc, Oct 8 11:2xZ)."""
+        started = time.monotonic()
+        with open(os.path.join(self.arguments.tools, "cloud/fast-gate/tools.txt")) as handle:
+            declared = {line.split("\t")[0] for line in handle if line.strip() and not line.startswith("#")}
+        found = subprocess.run(["git", "-C", self.arguments.tree, "grep", "-nE", toolLiteralSearch, "--", "*.go", ":!cohere", ":!stage3/upstream"],
+                               capture_output=True, text=True)
+        if found.returncode not in (0, 1):
+            raise RuntimeError("git grep for tool literals failed: %s" % found.stderr)
+        undeclared = []
+        for line in found.stdout.splitlines():
+            path, number, text = line.split(":", 2)
+            for name in toolLiteral.findall(text):
+                if name not in declared:
+                    undeclared.append("%s:%s runs %s, which cloud/fast-gate/tools.txt doesn't declare" % (path, number, name))
+        self.steps["tools"] = round(time.monotonic() - started, 1)
+        self.result["undeclared_tools"] = undeclared
+        self.exits["tools"] = 1 if undeclared else 0
+        if undeclared:
+            self.fail("tools", "\n".join(undeclared) + "\nDeclare each in cloud/fast-gate/tools.txt (devtools/fast-gate), with a check, and have setup provide it.")
 
     def build(self):
         self.result["build_ok"] = self.step("build", ["go", "build", "./..."])

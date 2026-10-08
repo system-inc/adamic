@@ -59,6 +59,10 @@ recordWait() {
 # red whose log shows the box failed (a missing work dir, a dropped ssh, a stale git lock, a full disk).
 voidCause() {
   local log=$1
+  # A gate whose box lacked a declared tool says so itself (cloud/fast-gate/tools.txt).
+  local lacks
+  lacks=$(grep -m1 -oE '^void: .*lacks a declared tool: .*' "${log}" 2>/dev/null | sed -E 's/^void: [0-9a-f]+ //')
+  [ -n "${lacks}" ] && { echo "${lacks}"; return; }
   grep -qE '^(green|red):' "${log}" 2>/dev/null || { echo "no verdict"; return; }
   grep -qE '^red:' "${log}" || return 0
   grep -oE 'creating work dir|Connection reset by|kex_exchange_identification|ssh: connect to host|Connection refused|index\.lock.: File exists|No space left on device' "${log}" | head -1

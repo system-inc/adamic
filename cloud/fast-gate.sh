@@ -108,6 +108,13 @@ git -C ~/fast-gate/tree${suffix} switch -q --detach "${sha}"
 git -C ~/fast-gate/tree${suffix} submodule update -q --init --recursive
 mkdir -p ~/"${out}"
 echo "slot=${slot} load_before=$(cut -d' ' -f1-3 /proc/loadavg)" > ~/"${out}"/box.txt
+# A declared tool (cloud/fast-gate/tools.txt) the box lacks makes the gate void, naming the box: it says
+# nothing about the change, so the watcher gates it again elsewhere (@system_adamic, Oct 8 05:49).
+if ! lacks=$(bash ~/fast-gate/tools${suffix}/cloud/fast-gate/tools-check.sh); then
+  echo "${lacks}" > ~/"${out}"/tools-missing.txt
+  echo "void: ${sha} fast gate, box $(hostname) lacks a declared tool: $(echo "${lacks}" | sed -E 's/^lacks ([^:]+):.*/\1/' | tr '\n' ' ')" > ~/"${out}"/status.txt
+  exit 0
+fi
 # The box is partitioned, not time-shared: the area slot owns three eighths of the CPUs (24 of 64; Go
 # sizes GOMAXPROCS from the affinity), the two small slots three sixteenths each (12: a one-function
 # edit gated in 19.8 to 21.1 s there), and on a 64-CPU box a third small slot on the last quarter (16), all

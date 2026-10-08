@@ -1,0 +1,19 @@
+# Every external tool the repository's Go code runs by name, and how a gate box proves it has it.
+# One per line: name, platform (linux, darwin or all), and a shell check run after env.sh and the
+# gate's PATH. A gate whose box fails a check for its platform is void, with the box named, and runs
+# again elsewhere; the gate's tools step is red on a change that runs a literal command named nowhere
+# here, so this list stays true. Optional tools (a test probes for them and skips) say "optional".
+go	all	command -v go
+git	all	command -v git
+sh	all	command -v sh
+/bin/sh	all	test -x /bin/sh
+cp	all	command -v cp
+ps	all	command -v ps
+uname	all	command -v uname
+python3	all	command -v python3
+node	all	node --version | grep -qx 'v24.19.0'
+clang	all	command -v clang
+tsc	all	tsc --version | grep -qx 'Version 6.0.3' && test -f "$(dirname "$(readlink -f "$(command -v tsc)")")/../lib/typescript.js"
+wasi-sdk	linux	test -d "${WASI_SYSROOT:-/nonexistent}"
+sysctl	darwin	command -v sysctl
+bun	optional	true
