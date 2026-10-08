@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Merges one finished branch into an area branch and pushes the area if the area's fast tests pass.
-# The area's owner runs it, on their Mac or in a cloud box. It never touches main.
+# The area's owner runs it, on their Mac or in a cloud box. It never pushes main; it merges main into
+# the area first whenever the area lacks some of it.
 #
 # Fast tests, all uncached (ADAMIC_GATE_UNCACHED=1, -count=1):
 #   - gofmt -l on the Go files the merge changed, go vet and go test on every package it changed;
@@ -113,6 +114,27 @@ else
 	git worktree add -q --detach "$worktree" "$areaTip"
 fi
 git -C "$worktree" submodule update -q --init --recursive --depth 1
+
+# Main merges into the area first, inside this locked and tested run (@system_adamic, October 7).
+# Busy areas are always mid-merge, so merge-back.sh, which leaves a locked area alone, never caught
+# them up, and a break arriving with main stayed invisible until a whole stack gate found it. The
+# fast tests below then judge main's arrival too, against the area tip as the base. A conflict with
+# main refuses the run, naming its files; the area's owner merges main by hand, keeping both sides'
+# intent, and runs this again.
+git fetch -q origin "+refs/heads/main:refs/remotes/origin/main"
+mainTip=$(git rev-parse --verify refs/remotes/origin/main)
+tookMain=""
+if ! git merge-base --is-ancestor "$mainTip" "$areaTip"; then
+	if ! git -C "$worktree" merge -q --no-ff -m "Merge main ${mainTip:0:8} into area/$area" "$mainTip"; then
+		echo "conflict merging main ${mainTip:0:8} into area/$area ${areaTip:0:8}; merge main into the area by hand, keeping both sides' intent, then run this again:"
+		git -C "$worktree" diff --name-only --diff-filter=U
+		git -C "$worktree" merge --abort
+		exit 3
+	fi
+	git -C "$worktree" submodule update -q --init --recursive --depth 1
+	tookMain=" with main ${mainTip:0:8} merged in first"
+	echo "merged main ${mainTip:0:8} into the area first ($(git rev-list --count "${areaTip}..${mainTip}") commits the area lacked)"
+fi
 
 if ! git -C "$worktree" merge -q --no-ff -m "Merge $branch at ${sha:0:8} into area/$area" "$sha"; then
 	echo "conflict merging $branch ${sha:0:8} into area/$area ${areaTip:0:8}:"
@@ -316,7 +338,7 @@ if [ "${#packages[@]}" -gt 0 ] || [ "$compiler" = yes ] || [ -n "$oraclePattern"
 		comm -23 "$logs/merged-failures.txt" "$logs/base-excusable.txt" >"$logs/new-failures.txt"
 		echo "already failing on area/$area ${areaTip:0:8} here, not held against the merge: $(comm -12 "$logs/merged-failures.txt" "$logs/base-excusable.txt" | wc -l | tr -d ' ') tests ($logs/base-failures.txt)"
 		if [ -s "$logs/new-failures.txt" ]; then
-			echo "new failures from the merge:"
+			echo "new failures from the merge${tookMain}$([ -n "$tookMain" ] && echo ' (some may have come with main; run main alone to tell)'):"
 			sed 's/^/  /' "$logs/new-failures.txt"
 			status=1
 		fi
@@ -395,7 +417,7 @@ fi
 # failed, so try again; anything else means the area moved, and the merge has to be redone on it.
 for attempt in 1 2 3; do
 	if git push -q origin "${merged}:refs/heads/area/$area"; then
-		echo "merged: area/$area ${areaTip:0:8}..${merged:0:8} takes $branch ${sha:0:8}; logs in $logs"
+		echo "merged: area/$area ${areaTip:0:8}..${merged:0:8} takes $branch ${sha:0:8}${tookMain}; logs in $logs"
 		exit 0
 	fi
 	remoteTip=$(git ls-remote origin "refs/heads/area/$area" 2>/dev/null | cut -f1) || remoteTip=""

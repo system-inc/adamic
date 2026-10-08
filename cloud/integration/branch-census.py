@@ -115,6 +115,33 @@ def ownersFromMessages(databasePath, branches):
     return {**routed, **owners}
 
 
+def utc(unixSeconds):
+    return datetime.datetime.fromtimestamp(int(unixSeconds), datetime.timezone.utc).strftime("%Y-%m-%dT%H:%MZ")
+
+
+def areasAgainstMain():
+    """Each area's standing against main: commits of its own ahead, main's commits it lacks, how many
+    of main's landings those are (record commits, the velocity table and meter runs, aren't landings),
+    the main it last took, and since when it has lagged (the oldest landing it lacks). An area that
+    never catches up hides every break main brings until a whole stack gate finds it."""
+    lines = []
+    areas = sorted(name.strip() for name in git("for-each-ref", "--format=%(refname:short)", "refs/remotes/origin/area/").split("\n") if name.strip())
+    for area in areas:
+        ahead = int(git("rev-list", "--count", "--no-merges", f"origin/main..{area}").strip())
+        behind = int(git("rev-list", "--count", f"{area}..origin/main").strip())
+        tookSha = git("merge-base", area, "origin/main").strip()
+        tookShort, tookTime = git("log", "-1", "--format=%h %ct", tookSha).split()
+        took = f"{tookShort} {utc(tookTime)}"
+        if behind == 0:
+            lines.append(f"  {area.removeprefix('origin/')}: holds main, {ahead} commits ahead")
+            continue
+        missing = [line.split(" ", 2) for line in git("log", "--first-parent", "--reverse", "--format=%h %ct %s", f"{area}..origin/main").splitlines() if line.strip()]
+        landings = [entry for entry in missing if not entry[2].startswith("Record ")]
+        since = utc((landings or missing)[0][1])
+        lines.append(f"  {area.removeprefix('origin/')}: BEHIND main by {behind} commits ({len(landings)} landings), behind since {since}; last took main at {took}; {ahead} commits ahead")
+    return lines
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--fresh-hours", type=float, default=1)
@@ -199,6 +226,10 @@ def main():
     print(f"{len(rows)} branches outside main and the areas: " + ", ".join(f"{byClass[c]} {c}" for c in ("merged", "merges-only", "superseded", "in-flight", "unmerged", "stalled", "abandoned", "closed")))
     print(f"distinct commits on superseded branches, already landed as patches: {len(distinctSuperseded)}")
     print(f"distinct commits outside main and the areas whose patches haven't landed: {len(distinctUnlanded)}")
+    print()
+    print("areas against main (ahead: the area's own commits; behind: main's commits the area lacks):")
+    for line in areasAgainstMain():
+        print(line)
     print()
     byOwner = collections.defaultdict(collections.Counter)
     for row in rows:
