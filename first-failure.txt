@@ -1,4 +1,3 @@
-FIRST FAILURE (census, at 2297.1 s):
 mparison; does not replace correctness verification.
 unknown	github.com/system-inc/adamic/stage1/cohere/estree	TestRepositoryAgreement
 unknown	github.com/system-inc/adamic/stage1/cohere/estree	TestCorpusNativeRefusals
@@ -19,4 +18,3 @@ skips=27 required-input=1 unknown=4
 gate skipped 1 required-input tests; 4 unclassified skips
 exit status 1
 
-red: 132a0ed5b4bec3dc7bc838d9dfec882e5ff9505a full gate, first failure at census after 2297.1 s (build=18.4s vet=1.8s wasi=172.9s tests=2277.0s census=1.2s), 0 fail, 6273 pass

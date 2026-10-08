@@ -1,5 +1,15 @@
-FIRST FAILURE (census, at 2297.1 s):
-mparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/cohere/json	TestProfileSnapshotsAgree	TestProfileSnapshotsAgree:0c806cf55aaf661dc1cd0ca6f410d2e8cd783d596f2a608e77da9ec5f091cf66	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+not-applicable	github.com/system-inc/adamic/stage3/fixtures	TestTransformedNodeRunnerGuardHook	TestTransformedNodeRunnerGuardHook:365ddb0b6660a8b806fdffbcf304774accc4879f412d115bfd7d912a4f669ab2	Dormant subprocess entry point, not an independent verification check. TestTransformedNodeRunnerGuard supplies ADAMIC_RUNNER_GUARD_REPOSITORY for each positive and negative runner-shape probe; without a request this hook is not applicable.
+measurement	github.com/system-inc/adamic/stage1/cohere/selector	TestSelectorThroughput	TestSelectorThroughput:bd045f17a47b90e4aa936cce7744f4c65a82b6b0a6aa7320868b549e63b7af2d	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/typescript/scanner	TestProfileArtifacts	TestProfileArtifacts:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/typescript/scanner	TestProfileSnapshotsAgree	TestProfileSnapshotsAgree:3bd24aa7ec39b0814f83da55e2fa69db6694d0b9024893cf146dc5f7e1cbb1b4	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/internal/native	TestNormalizeLongMeasurements	TestNormalizeLongMeasurements:6dcd1081c12d5b6018fcc9cefc4b64e74675be953be75185fa2be02d217f45de	ADAMIC_NORMALIZE_BENCH_LOG names a writable JSONL output for opt-in long-string timing and RSS observations.
+measurement	github.com/system-inc/adamic/internal/native	TestRecordBenchmark	TestRecordBenchmark:06ee23e4bcdbf34555e793a31d7dc4a10bdb21fb5c9a110c068aa7683ad1f84d	Opt-in benchmark: set ADAMIC_RECORD_BENCH=1 for five-round Node timing comparisons; no timing threshold verifies correctness.
+measurement	github.com/system-inc/adamic/internal/lower	TestOptionalWideningCensus	TestOptionalWideningCensus:6db2c24faa7463ea36fb143a758faf5111de53a4d3f94c7e93eaf86c24f8af9e	Opt-in inventory of a project's optional-widening sites (OPTIONAL_WIDENING_CONFIG and OPTIONAL_WIDENING_OUTPUT); measurement, never a required input of the gate.
+unknown	github.com/system-inc/adamic/stage1/cohere/graphql/printer	TestPrinterThroughput
+measurement	github.com/system-inc/adamic/cmd/adamic-test262	TestCompilerStartupMeasurement	TestCompilerStartupMeasurement:c4a4cc95e992b9399ab2a21ae7e3a1caca9c71a5d9b0b7f5d48200073d19ce03	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/internal/native	TestMeasureClangUnits	TestMeasureClangUnits:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/typescript/scanner	TestPerformance	TestPerformance:fc2cecddef6499ecfc230850eb4569d7b20ef412ad51c601308d2654dfebb2e1	Opt-in timing or profile artifact comparison; does not replace correctness verification.
 unknown	github.com/system-inc/adamic/stage1/cohere/estree	TestRepositoryAgreement
 unknown	github.com/system-inc/adamic/stage1/cohere/estree	TestCorpusNativeRefusals
 required-input	github.com/system-inc/adamic/internal/oracle	TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a	TestWASIEmission:01adf590dfb4d6d0d1ab0c887e7724905ac27af2f60ef5b900d00a0f2adc4dc9	The ADAMIC_ORACLE_WASI lane must support every selected emission fixture; an opted-in fixture that does not lower is missing required compiler support.
@@ -18,5 +28,3 @@ measurement	github.com/system-inc/adamic/stage1/cohere/css	TestCSSProfileSnapsho
 skips=27 required-input=1 unknown=4
 gate skipped 1 required-input tests; 4 unclassified skips
 exit status 1
-
-red: 132a0ed5b4bec3dc7bc838d9dfec882e5ff9505a full gate, first failure at census after 2297.1 s (build=18.4s vet=1.8s wasi=172.9s tests=2277.0s census=1.2s), 0 fail, 6273 pass
