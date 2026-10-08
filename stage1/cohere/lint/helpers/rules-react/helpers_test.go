@@ -346,7 +346,7 @@ func TestCaptureCoverage(t *testing.T) {
 	for _, row := range ast.Calls {
 		counts[row.Name]++
 	}
-	if len(counts) != 34 || len(metadata.ActualCalls) != 34 {
+	if len(counts) != 35 || len(metadata.ActualCalls) != 35 {
 		t.Fatal("helper omitted")
 	}
 	for name, count := range metadata.ActualCalls {

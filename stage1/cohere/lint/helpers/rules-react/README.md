@@ -1,15 +1,15 @@
 # rules/react shared helpers
 
-34 of the triage's 35 required symbols are certified on cohere `7945d102a6c18dd36adf9114a758ce646e8b2359`.
-`isEs5ComponentCallStrict` is stopped on the separately owned `ecmascript/react.IsEs5ComponentCall` package dependency; see [STOPPED.md](STOPPED.md).
+All 35 of the triage's required symbols are certified on cohere `7945d102a6c18dd36adf9114a758ce646e8b2359`.
+`isEs5ComponentCallStrict` composes the verified `ecmascript/react.IsEs5ComponentCall` dependency merged at `52f5534e` with the strict createReactClass spelling check.
 
 The AST helpers use the existing numeric `RuleContext` arena. Capture overlays keep Go bodies unchanged, rename them behind recording wrappers, and save every actual invocation across the complete upstream React test package. Stable arena indexes preserve returned node identity; strings are compared through a lossless UTF-16 observation encoding. Each replay compares source Node, emitted JavaScript, and ASan/UBSan native with the Go result. This certifies the captured contracts, not arbitrary trees or every consuming rule's findings. The proof rule uses the real shared parser and passes its complete upstream corpus.
 
 The isolated AST snapshots come from Go's `ForEachChild`, with source byte positions converted to UTF-16. The consuming rule gate separately proves the parser adapter on its own upstream cases. `parametersOf` returns a fresh read-only view; consuming upstream calls do not mutate it. `attributesOf` retains the parser's child-array identity. Arbitrary invalid UTF-8 strings and decoder nesting beyond `OptionsJson`'s 512-level refusal are outside the captured input domain. No compiler gap or missing fixture is counted as a successful mutant.
 
-Partial-port provenance: `origin/codex/lint-helpers-05` supplies the component-base-name comparison and Unicode uppercase table (adapted for rules/react's `use` and digit acceptance); `origin/codex/lint-helpers-04` supplies the compiler-options acceptance/error structure, replacing its external decoder/sorter callbacks with the landed `OptionsJson` reader and explicit rune-order sorting; `origin/codex/lint-helpers-from-codex/lint-wave1-11` supplies the optional-parentheses contract, adapted to the shared numeric context. The strict ES5 wrapper from slot05 is not delivered because its shelf dependency is not ported on this base.
+Partial-port provenance: `origin/codex/lint-helpers-05` supplies the component-base-name comparison and Unicode uppercase table (adapted for rules/react's `use` and digit acceptance); `origin/codex/lint-helpers-04` supplies the compiler-options acceptance/error structure, replacing its external decoder/sorter callbacks with the landed `OptionsJson` reader and explicit rune-order sorting; `origin/codex/lint-helpers-from-codex/lint-wave1-11` supplies the optional-parentheses contract, adapted to the shared numeric context. The strict ES5 wrapper now uses the verified React projection and identifier predicate from `origin/lint-helpers/react` (`52f5534e`); the former stop is resolved.
 
-Actual capture calls: 29,787, plus 234 explicit leaf controls, for 30,021 comparisons per backend. The capture coverage guard checks all 34 helpers and hashes the Go helper/test sources. Every helper has one compiling semantic mutant, checked by result mismatch on Node, emitted JavaScript, and native. The proof rule is `react-hooks/error-boundaries`, with 69 unique upstream source/file/options combinations and one compiling mutant.
+Actual capture calls: 30,371, plus 234 explicit leaf controls, for 30,605 comparisons per backend. The capture coverage guard checks all 35 helpers and hashes the Go helper/test sources. Every helper has one compiling semantic mutant, checked by result mismatch on Node, emitted JavaScript, and native. The proof rule is `react-hooks/error-boundaries`, with 69 unique upstream source/file/options combinations and one compiling mutant.
 
 Conditional helper readiness alone now includes:
 
@@ -36,6 +36,7 @@ Rules with other helper-package blockers remain conditional on those landings; s
 | `isComponentClass` | [is_component_class.a](is_component_class.a) | 3634 |
 | `isComponentIdentifierName` | [is_component_identifier_name.a](is_component_identifier_name.a) | 388 |
 | `isCreateReactClassCall` | [is_create_react_class_call.a](is_create_react_class_call.a) | 2502 |
+| `isEs5ComponentCallStrict` | [is_es5_component_call_strict.a](is_es5_component_call_strict.a) | 584 |
 | `isFunctionLike` | [is_function_like.a](is_function_like.a) | 4176 |
 | `isHookIdentifierName` | [is_hook_identifier_name.a](is_hook_identifier_name.a) | 730 |
 | `isJavaScriptIdentifier` | [is_java_script_identifier.a](is_java_script_identifier.a) | 10 |

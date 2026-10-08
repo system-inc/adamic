@@ -28,6 +28,7 @@ import {stylePropObjectUnwrapParentheses} from './style_prop_object_unwrap_paren
 import {skipParenthesesOptional} from './skip_parentheses_optional.a';
 import {attributesOf} from './attributes_of.a';
 import {sourceSliceOf} from './source_slice_of.a';
+import {isEs5ComponentCallStrict} from './is_es5_component_call_strict.a';
 import {reactPragmaFor} from './react_pragma_for.a';
 function units(text:string):string {let out='';for(let i=0;i<text.length;i++){out+=`${text.charCodeAt(i)},`;}return out;}
 const input=readTextFile(programArguments()[0] ?? panic('path'));if(input.kind==='Error'){panic(input.message);}
@@ -45,6 +46,7 @@ for(const arena of c.node(field(root,'Arenas')).children){
 }
 for(const call of c.node(field(root,'Calls')).children){
  const name=text(call,'Name');const index=number(call,'Input');const context=contexts[number(call,'Arena')] ?? panic('arena');let out='';
+ if(name==='isEs5ComponentCallStrict'){out=`${isEs5ComponentCallStrict(context,index)}`;}
  if(name==='enclosingFunctionOf'){out=`${enclosingFunctionOf(context,index)}`;}
  if(name==='isFunctionLike'){out=`${isFunctionLike(context,index)}`;}
  if(name==='isReactCompiledFunction'){out=`${isReactCompiledFunction(context,index)}`;}

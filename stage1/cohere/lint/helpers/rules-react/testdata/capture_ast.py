@@ -2,6 +2,7 @@ import json,os,subprocess,tempfile,gzip,re
 from pathlib import Path
 HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[5];COHERE=ROOT/'cohere'
 functions={
+'isEs5ComponentCallStrict':'node',
 'enclosingFunctionOf':'node','isFunctionLike':'node','isReactCompiledFunction':'node','isTopLevelCompilationCandidate':'node','reactFunctionNameOf':'node','hasValidComponentParameters':'node','parametersOf':'node','isRestParameter':'node','returnsNonNode':'node','isNonNodeExpression':'node',
 'enclosingClassOf':'node','enclosingComponentOf':'node','functionBodyBlock':'node','isComponentClass':'node','isCreateReactClassCall':'node','isPureComponentBase':'node','isReactComponentBase':'node','isThisExpression':'node','semanticParentOf':'node','sortDefaultPropsInitializerOf':'node','stylePropObjectUnwrapParentheses':'node','skipParenthesesOptional':'node','attributesOf':'node','sourceSliceOf':'ctx','reactPragmaFor':'ctx'}
 with tempfile.TemporaryDirectory() as tmp:

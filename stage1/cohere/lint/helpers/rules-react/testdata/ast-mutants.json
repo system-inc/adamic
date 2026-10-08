@@ -123,5 +123,10 @@
     "File": "react_pragma_for.a",
     "From": "return 'React';",
     "To": "return 'Preact';"
+  },
+  {
+    "File": "is_es5_component_call_strict.a",
+    "From": "if(callee<0){return false;}",
+    "To": "if(callee>=0){return false;}"
   }
 ]
