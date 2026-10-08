@@ -1,0 +1,6 @@
+declare global {
+    namespace Space {
+        var value: number;
+    }
+}
+export {};

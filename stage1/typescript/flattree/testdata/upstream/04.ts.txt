@@ -1,0 +1,3 @@
+export function run(list: number[]) {
+    for(var item of list) { void item; }
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "source": "a?.b<T>.c;",
+    "agree": false,
+    "go_lines": [
+      "diagnostic 1477 4 3 1\tAn instantiation expression cannot be followed by a property access.",
+      "file",
+      "0 SourceFile 0 10 0 0 -1 0 0\t\t\t\t"
+    ],
+    "node_lines": [
+      "file",
+      "0 SourceFile 0 10 0 0 -1 0 0\t\t\t\t",
+      "1 ExpressionStatement 0 10 0 0 -1 0 0\t\t\t\t"
+    ]
+  },
+  {
+    "source": "`\\u`;",
+    "agree": false,
+    "go_lines": [
+      "diagnostic 1125 3 0 1\tHexadecimal digit expected.",
+      "file",
+      "0 SourceFile 0 5 0 0 -1 0 0\t\t\t\t"
+    ],
+    "node_lines": [
+      "file",
+      "0 SourceFile 0 5 0 0 -1 0 0\t\t\t\t",
+      "1 ExpressionStatement 0 5 0 0 -1 0 0\t\t\t\t"
+    ]
+  },
+  {
+    "source": "let a=({b:c=>c});",
+    "agree": false,
+    "go_lines": [
+      "file",
+      "0 SourceFile 0 17 0 0 -1 0 0\t\t\t\t",
+      "1 VariableStatement 0 17 0 0 -1 0 0\t\t\t\t"
+    ],
+    "node_lines": [
+      "diagnostic 1005 11 2 1\t',' expected.",
+      "diagnostic 1128 14 1 1\tDeclaration or statement expected.",
+      "diagnostic 1128 15 1 1\tDeclaration or statement expected."
+    ]
+  }
+]

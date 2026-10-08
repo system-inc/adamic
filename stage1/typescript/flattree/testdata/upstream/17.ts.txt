@@ -1,0 +1,4 @@
+export function run(resource: { [Symbol.dispose](): void }) {
+    using held = resource;
+    void held;
+}

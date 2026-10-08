@@ -1,0 +1,7 @@
+export function run(flag: boolean) {
+    if(flag) {
+        var value = 1;
+        return value;
+    }
+    return 0;
+}
