@@ -311,8 +311,59 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 				value.Catch, err = n.statements(value.Catch)
 			}
 			statement = value
-		case ir.ForOf, ir.Switch:
-			return nil, fmt.Errorf("async for-of and switch regions are not yet proven")
+		case ir.ForOf:
+			if value.Iterable.Type() != ir.Array || value.RegexIterator || value.MapPart != "" || value.Pattern != nil {
+				return nil, fmt.Errorf("async for-of over this iterable or pattern is not yet proven")
+			}
+			if n.program.Locals[value.Local].Captured {
+				return nil, fmt.Errorf("async per-iteration captured cells are not yet represented")
+			}
+			var outerBreak bool
+			inspectAsyncIR(reflect.ValueOf(value.Body), func(node any) {
+				if jump, ok := node.(ir.Break); ok && jump.Depth > 0 {
+					outerBreak = true
+				}
+			})
+			if outerBreak && containsAwait(reflect.ValueOf(value.Body)) {
+				return nil, fmt.Errorf("async for-of labeled outer break is not yet proven")
+			}
+			// Hold the array itself, not a copy or its current length. The next pass
+			// observes mutations made while suspended, like an array iterator on Node.
+			array := n.expression(value.Iterable, &before, true)
+			index := n.temporary(ir.Number)
+			position := ir.Read{Local: index, Of: ir.Number}
+			before = append(before, ir.Declare{Local: index, Value: ir.NumberConstant{Value: 0}})
+			var element ir.Expression = ir.ArrayIndex{Array: array, Index: position, Element: value.Element}
+			if element.Type() != value.Element {
+				// Only numbers and booleans use presence pairs. References already
+				// have their element representation, and maybe elements stay maybe.
+				element = ir.Unwrap{Value: element}
+			}
+			loop := ir.Loop{
+				Condition: ir.Binary{Operator: ir.Less, Left: position, Right: ir.Length{Array: array}},
+				Body:      append([]ir.Statement{ir.Declare{Local: value.Local, Value: element}}, value.Body...),
+				Update:    []ir.Statement{ir.Assign{Local: index, Value: ir.Binary{Operator: ir.Add, Left: position, Right: ir.NumberConstant{Value: 1}}}},
+			}
+			var normalized []ir.Statement
+			normalized, err = n.statements([]ir.Statement{loop})
+			if err == nil {
+				statement = normalized[0]
+			}
+		case ir.Switch:
+			value.Value = n.expression(value.Value, &before, true)
+			for index := range value.Cases {
+				if containsAwait(reflect.ValueOf(value.Cases[index].Tests)) {
+					return nil, fmt.Errorf("await in switch case tests is not yet proven")
+				}
+				value.Cases[index].Body, err = n.statements(value.Cases[index].Body)
+				if err != nil {
+					break
+				}
+			}
+			if err == nil {
+				value.Default, err = n.statements(value.Default)
+			}
+			statement = value
 		default:
 			if containsAwait(reflect.ValueOf(statement)) {
 				statement = n.operands(reflect.ValueOf(statement), &before).Interface().(ir.Statement)

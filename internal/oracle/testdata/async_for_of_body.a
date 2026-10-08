@@ -1,0 +1,12 @@
+async function walk(): Promise<number> {
+    let total = 0;
+    for (const item of [1, 2, 3, 4]) {
+        const held = await Promise.resolve(item * 10);
+        console.log(`${item}:${held}`);
+        if (item === 2) { continue; }
+        total += item + held;
+        if (item === 3) { break; }
+    }
+    return total;
+}
+console.log(`${await walk()}`);
