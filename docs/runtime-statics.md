@@ -384,6 +384,11 @@ owners. Regex clones and named-group dictionaries retain that immutable storage.
 Constructor code, error names and ownership shapes have no mutable statics.
 
 - `runtime-file:regexp_compile_runtime.c`
+- `runtime-file:regexp_compile_runtime.h`
+
+The split-build ABI header declares adamic_regex_compile_new and includes
+adamic.h. It defines no storage, cache, constructor or registration; the
+included header's storage is covered by its existing audit entries.
 
 ADAMIC_REGEXP_RUNTIME_OWNER selects only the matcher ownership hooks in dynamic
 modules. The archive cache includes that flag. Ordinary archives preprocess the
