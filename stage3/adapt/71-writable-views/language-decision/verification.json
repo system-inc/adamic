@@ -1,0 +1,23 @@
+{
+  "sites": 615,
+  "counts": {
+    "a": 91,
+    "b": 7,
+    "c": 2,
+    "d": 515
+  },
+  "source_files": 603,
+  "library_sha256": "c608261af17bf4b95fc1527c62ba34eb2c44e3f8f0c6944d045ec61b23fc156c",
+  "public_api_sha256": "edd733bf256465ddcbbd753a76cfe14cf4ef0a872ce5da7aa53072e1c9f93a9d",
+  "input_sha256": "fc12e1333c5c10ef41dd2a94aeec8cb178fa9bf09b23383ac798bdcd543b5a64",
+  "mutants": [
+    {
+      "name": "missing-site",
+      "caught_by": "coverage: missing or extra retained site"
+    },
+    {
+      "name": "source-byte-drift",
+      "caught_by": "source identity: src/compiler/corePublic.ts"
+    }
+  ]
+}

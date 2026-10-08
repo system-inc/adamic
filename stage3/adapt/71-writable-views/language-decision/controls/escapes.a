@@ -1,0 +1,12 @@
+interface Narrow { value: 1; }
+interface Wide { value: number; }
+const holder: Narrow = { value: 1 };
+let globalView: Wide;
+function stored(view: Wide) { globalView = view; }
+function captured(view: Wide) { return () => view.value; }
+function unknown(view: Wide, callback: (v: Wide) => void) { callback(view); }
+function generic<T extends Wide>(view: T) { (view as Wide).value = 2; }
+stored(holder);
+captured(holder);
+unknown(holder, () => {});
+generic(holder);

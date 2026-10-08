@@ -1,0 +1,16 @@
+declare const console: { log(value: string): void };
+interface One { value: 1; }
+interface Wide { value: number; }
+const holder: One = { value: 1 };
+function read(view: Wide): number { const alias = view; return alias.value; }
+function writeSame(view: Wide): number { const alias = view; alias.value = 1; return alias.value; }
+function writeOther(view: Wide): number { const alias = view; alias.value = 2; return alias.value; }
+function store(view: Wide) { return { view }; }
+function callUnknown(view: Wide, callback: (value: Wide) => void) { callback(view); }
+function forward(view: Wide): Wide { return view; }
+const first = read(holder);
+const second = writeSame(holder);
+const third = writeOther(holder);
+const retained = store(holder);
+const fourth = read(forward(holder));
+console.log(`${first} ${second} ${third} ${fourth} ${holder.value}`);

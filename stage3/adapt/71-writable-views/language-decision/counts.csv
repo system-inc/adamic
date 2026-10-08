@@ -1,0 +1,167 @@
+group,family,a,b,c,d,total
+all,all,91,7,2,515,615
+cohort,other,91,5,2,272,370
+cohort,diagnostics,0,2,0,161,163
+cohort,shared-never,0,0,0,82,82
+source-type,DiagnosticWithLocation,0,2,0,144,146
+source-type,never[],0,0,0,82,82
+source-type,FlowNode,0,0,0,26,26
+source-type,T,0,0,2,17,19
+source-type,Symbol | undefined,18,0,0,0,18
+source-type,ResolvedType,0,0,0,17,17
+source-type,NodeBuilderContext,0,0,0,11,11
+source-type,Type | undefined,10,0,0,0,10
+source-type,DiagnosticWithLocation[],0,0,0,9,9
+source-type,Identifier,0,0,0,8,8
+source-type,GeneratedIdentifier,0,0,0,8,8
+source-type,Node,0,0,0,7,7
+source-type,Declaration | undefined,7,0,0,0,7
+source-type,TypeNode | undefined,7,0,0,0,7
+source-type,NodeArray<Statement>,1,0,0,6,7
+source-type,Expression,0,0,0,7,7
+source-type,FlowNode | undefined,4,0,0,2,6
+source-type,Expression | undefined,6,0,0,0,6
+source-type,Declaration[],0,0,0,6,6
+source-type,GeneratedIdentifier | GeneratedPrivateIdentifier,3,0,0,3,6
+source-type,CapturedThis,0,0,0,6,6
+source-type,FlowArrayMutation | FlowAssignment,0,0,0,5,5
+source-type,Node | undefined,5,0,0,0,5
+source-type,DiagnosticWithDetachedLocation,0,0,0,5,5
+source-type,GeneratedIdentifier | GeneratedPrivateIdentifier | Node,0,0,0,5,5
+source-type,SyntheticSuper,0,0,0,5,5
+source-type,Symbol,4,0,0,0,4
+source-type,Mutable<GeneratedIdentifier>,0,0,0,4,4
+source-type,SourceFile,0,0,0,3,3
+source-type,Signature | undefined,3,0,0,0,3
+source-type,GenericType | ResolvedType,0,0,0,3,3
+source-type,Diagnostic,0,0,0,3,3
+source-type,Symbol[],0,0,0,3,3
+source-type,Mutable<T>,0,0,0,3,3
+source-type,FlowCall,0,0,0,2,2
+source-type,ParameterDeclaration | undefined,2,0,0,0,2
+source-type,undefined,0,0,0,2,2
+source-type,"(readonly [() => IntrinsicType, __String])[]",0,0,0,2,2
+source-type,SourceFile | undefined,2,0,0,0,2
+source-type,DiagnosticWithLocation | undefined,0,0,0,2,2
+source-type,false | FlowNode | undefined,0,0,0,2,2
+source-type,IndexSignatureDeclaration,0,1,0,1,2
+source-type,any,0,0,0,2,2
+source-type,(identifierOrPrivateName: Identifier | PrivateIdentifier) => string,0,0,0,2,2
+source-type,PropertySignature,0,1,0,1,2
+source-type,ClassStaticBlockDeclaration,0,1,0,1,2
+source-type,ImportTypeAssertionContainer,0,1,0,1,2
+source-type,ImportDeclaration,0,0,0,2,2
+source-type,ClassStaticBlockDeclaration | PropertyDeclaration,0,0,0,2,2
+source-type,PropertyName,0,0,0,2,2
+source-type,SuperExpression,0,0,0,2,2
+source-type,ModuleDeclaration,0,0,0,1,1
+source-type,{ noInferenceFallback?: boolean | undefined; enclosingDeclaration: ModuleDeclaration; enclosingFile: SourceFile | undefined; flags: NodeBuilderFlags; ... 28 more ...; out: WriterContextOut; },0,0,0,1,1
+source-type,(ClassDeclaration | EnumDeclaration | ExportAssignment | ExportDeclaration | FunctionDeclaration | ... 5 more ... | VariableStatement)[],0,0,0,1,1
+source-type,{ introducesError: boolean; node: Identifier | PropertyAccessEntityNameExpression; sym?: never; } | { introducesError: boolean; node: Identifier | PropertyAccessEntityNameExpression; sym: Symbol | undefined; },0,0,0,1,1
+source-type,Identifier | undefined,1,0,0,0,1
+source-type,AccessorDeclaration[],0,0,0,1,1
+source-type,Block | undefined,1,0,0,0,1
+source-type,AutoAccessorPropertyDeclaration | undefined,1,0,0,0,1
+source-type,"Map<__String, TransientSymbol>",0,0,0,1,1
+source-type,TransientSymbol[],0,0,0,1,1
+source-type,Set<__String>,0,0,0,1,1
+source-type,BigIntLiteral | ComputedPropertyName | Identifier | JsxNamespacedName | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral | undefined,0,0,0,1,1
+source-type,JSDocTypeExpression | undefined,1,0,0,0,1
+source-type,IndexInfo[],0,0,0,1,1
+source-type,ClassDeclaration | ClassExpression | InferTypeNode | InterfaceDeclaration | JSDocCallbackTag | ... 4 more ... | undefined,0,0,0,1,1
+source-type,IntrinsicType[] | undefined,0,0,0,1,1
+source-type,IntrinsicType[],0,0,0,1,1
+source-type,AssignmentPattern | undefined,1,0,0,0,1
+source-type,CallLikeExpression | undefined,1,0,0,0,1
+source-type,ResolvedType | TypeReference,0,0,0,1,1
+source-type,JsxAttributeLike | undefined,1,0,0,0,1
+source-type,StringLiteralType[],0,0,0,1,1
+source-type,TypeVariable[],0,0,0,1,1
+source-type,BigIntLiteral | ComputedPropertyName | Identifier | JsxNamespacedName | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral,0,0,0,1,1
+source-type,AnonymousType,0,0,0,1,1
+source-type,AnonymousType | DeferredTypeReference,0,0,0,1,1
+source-type,IndexInfo | undefined,1,0,0,0,1
+source-type,NumberLiteralType,0,0,0,1,1
+source-type,StringLiteralType,0,0,0,1,1
+source-type,GetAccessorDeclaration | MethodDeclaration | PropertyAssignment | SetAccessorDeclaration | ShorthandPropertyAssignment | SpreadAssignment | undefined,0,0,0,1,1
+source-type,CallExpression | undefined,1,0,0,0,1
+source-type,EntityNameExpression | undefined,1,0,0,0,1
+source-type,JSDocSignature | SignatureDeclaration | undefined,0,0,0,1,1
+source-type,Declaration,1,0,0,0,1
+source-type,Type[],0,0,0,1,1
+source-type,PropertyAccessExpression | undefined,1,0,0,0,1
+source-type,AwaitedTypeInstantiation | Type,0,0,0,1,1
+source-type,AwaitedTypeInstantiation,0,0,0,1,1
+source-type,"Map<string, [VariableDeclarationList, VariableDeclaration[]]>",0,0,0,1,1
+source-type,MemberName | undefined,1,0,0,0,1
+source-type,IterationTypes[],0,0,0,1,1
+source-type,BigIntLiteral | ComputedPropertyName | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral | undefined,0,0,0,1,1
+source-type,PropertyName | undefined,1,0,0,0,1
+source-type,TypeParameterDeclaration | undefined,1,0,0,0,1
+source-type,IndexSignatureDeclaration[],0,0,0,1,1
+source-type,ExportDeclaration | undefined,1,0,0,0,1
+source-type,"[() => Type, __String][]",0,0,0,1,1
+source-type,Type,1,0,0,0,1
+source-type,readonly TypeParameter[] | undefined,1,0,0,0,1
+source-type,(node: CommentRange) => boolean,0,0,0,1,1
+source-type,Children,1,0,0,0,1
+source-type,TypeParameterDeclaration,0,0,0,1,1
+source-type,CallSignatureDeclaration,0,0,0,1,1
+source-type,ConstructSignatureDeclaration,0,0,0,1,1
+source-type,FunctionTypeNode,0,0,0,1,1
+source-type,ConstructorTypeNode,0,0,0,1,1
+source-type,ImportTypeNode,0,0,0,1,1
+source-type,TypeOperatorNode,0,0,0,1,1
+source-type,MappedTypeNode,0,0,0,1,1
+source-type,Mutable<NoSubstitutionTemplateLiteral>,0,0,0,1,1
+source-type,YieldExpression,0,0,0,1,1
+source-type,Block,0,0,0,1,1
+source-type,ExpressionStatement,0,0,0,1,1
+source-type,ContinueStatement,0,0,0,1,1
+source-type,BreakStatement,0,0,0,1,1
+source-type,ReturnStatement,0,0,0,1,1
+source-type,SwitchStatement,0,0,0,1,1
+source-type,CaseBlock,0,0,0,1,1
+source-type,ImportClause,0,0,0,1,1
+source-type,AssertClause,0,0,0,1,1
+source-type,AssertEntry,0,0,0,1,1
+source-type,ImportAttributes,0,0,0,1,1
+source-type,ImportAttribute,0,0,0,1,1
+source-type,NamespaceImport,0,0,0,1,1
+source-type,NamespaceExport,0,0,0,1,1
+source-type,NamedImports,0,0,0,1,1
+source-type,JSDocFunctionType,0,0,0,1,1
+source-type,JSDocTypeLiteral,0,0,0,1,1
+source-type,JSDocTypeExpression,0,0,0,1,1
+source-type,JSDocSignature,0,0,0,1,1
+source-type,JSDocTemplateTag,0,0,0,1,1
+source-type,JSDocTypedefTag,0,0,0,1,1
+source-type,JSDocParameterTag,0,0,0,1,1
+source-type,JSDocPropertyTag,0,0,0,1,1
+source-type,"(recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined) => GeneratedIdentifier",0,0,0,1,1
+source-type,JSDocCallbackTag,0,0,0,1,1
+source-type,JSDocOverloadTag,0,0,0,1,1
+source-type,JSDocAugmentsTag,0,0,0,1,1
+source-type,JSDocSeeTag,0,0,0,1,1
+source-type,JSDocNameReference,0,0,0,1,1
+source-type,JSDocLink,0,0,0,1,1
+source-type,JSDocLinkCode,0,0,0,1,1
+source-type,JSDocLinkPlain,0,0,0,1,1
+source-type,JSDocImplementsTag,0,0,0,1,1
+source-type,JSDocUnknownTag,0,0,0,1,1
+source-type,JSDocImportTag,0,0,0,1,1
+source-type,JSDocText,0,0,0,1,1
+source-type,TKind,0,0,0,1,1
+source-type,GeneratedPrivateIdentifier,0,0,0,1,1
+source-type,(resolution: ResolvedModuleWithFailedLookupLocations) => ResolvedModuleFull | undefined,0,0,0,1,1
+source-type,DiagnosticWithLocation[] | undefined,0,0,0,1,1
+source-type,StringLiteral,0,0,0,1,1
+source-type,ModuleName,0,1,0,0,1
+source-type,string[],0,0,0,1,1
+source-type,PropertyDeclaration,0,0,0,1,1
+source-type,ParameterDeclaration,0,0,0,1,1
+source-type,LeftHandSideExpression & GeneratedIdentifier,0,0,0,1,1
+source-type,ThisCapturingVariableDeclaration,0,0,0,1,1
+source-type,"Identifier & GeneratedIdentifier & { readonly escapedText: { __escapedIdentifier: void; } & ""__this""; }",0,0,0,1,1
+source-type,VariableDeclarationList,0,0,0,1,1
+source-type,PropertyAccessExpression | SyntheticSuper,0,0,0,1,1

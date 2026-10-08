@@ -1,0 +1,318 @@
+{
+  "typescript": "6.0.3",
+  "controls": [
+    {
+      "control": "receivers",
+      "callee": "read",
+      "classification": "a",
+      "reads": 1,
+      "writes": [],
+      "unresolved": []
+    },
+    {
+      "control": "receivers",
+      "callee": "writeSame",
+      "classification": "b",
+      "reads": 1,
+      "writes": [
+        {
+          "where": "receivers.ts:6:62",
+          "path": "value",
+          "operation": "=",
+          "original_domains": [
+            "1"
+          ],
+          "written_type": "1",
+          "value": "1",
+          "compatible": true,
+          "definitely_outside": false,
+          "conditional": false,
+          "original_domain_is_generic_upper_bound": false,
+          "feasible_counterexample": false
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "control": "receivers",
+      "callee": "writeOther",
+      "classification": "c",
+      "reads": 1,
+      "writes": [
+        {
+          "where": "receivers.ts:7:63",
+          "path": "value",
+          "operation": "=",
+          "original_domains": [
+            "1"
+          ],
+          "written_type": "2",
+          "value": "2",
+          "compatible": false,
+          "definitely_outside": true,
+          "conditional": false,
+          "original_domain_is_generic_upper_bound": false,
+          "feasible_counterexample": false
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "control": "receivers",
+      "callee": "store",
+      "classification": "d",
+      "reads": 0,
+      "writes": [],
+      "unresolved": [
+        {
+          "where": "receivers.ts:8:39",
+          "reason": "unsupported receiving syntax ShorthandPropertyAssignment",
+          "expression": "view"
+        }
+      ]
+    },
+    {
+      "control": "receivers",
+      "callee": "forward",
+      "classification": "a",
+      "reads": 1,
+      "writes": [],
+      "unresolved": []
+    },
+    {
+      "control": "arrays",
+      "callee": "read",
+      "classification": "a",
+      "reads": 1,
+      "writes": [],
+      "unresolved": []
+    },
+    {
+      "control": "arrays",
+      "callee": "same",
+      "classification": "b",
+      "reads": 0,
+      "writes": [
+        {
+          "where": "arrays.ts:4:33",
+          "path": "[]",
+          "operation": "push",
+          "original_domains": [
+            "1"
+          ],
+          "written_type": "1",
+          "value": "1",
+          "compatible": true,
+          "definitely_outside": false,
+          "conditional": false,
+          "original_domain_is_generic_upper_bound": false,
+          "feasible_counterexample": false
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "control": "arrays",
+      "callee": "other",
+      "classification": "c",
+      "reads": 0,
+      "writes": [
+        {
+          "where": "arrays.ts:5:34",
+          "path": "[]",
+          "operation": "push",
+          "original_domains": [
+            "1"
+          ],
+          "written_type": "2",
+          "value": "2",
+          "compatible": false,
+          "definitely_outside": true,
+          "conditional": false,
+          "original_domain_is_generic_upper_bound": false,
+          "feasible_counterexample": false
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "control": "arrays",
+      "callee": "conditional",
+      "classification": "d",
+      "reads": 1,
+      "writes": [
+        {
+          "where": "arrays.ts:6:61",
+          "path": "[]",
+          "operation": "push",
+          "original_domains": [
+            "1"
+          ],
+          "written_type": "2",
+          "value": "2",
+          "compatible": false,
+          "definitely_outside": true,
+          "conditional": true,
+          "original_domain_is_generic_upper_bound": false,
+          "feasible_counterexample": false
+        }
+      ],
+      "unresolved": [
+        {
+          "where": "arrays.ts:6:61",
+          "reason": "incompatible write needs value/branch/union-variant feasibility proof",
+          "expression": "view.push(2)"
+        }
+      ]
+    },
+    {
+      "control": "nested",
+      "callee": "read",
+      "classification": "a",
+      "reads": 1,
+      "writes": [],
+      "unresolved": []
+    },
+    {
+      "control": "nested",
+      "callee": "same",
+      "classification": "b",
+      "reads": 0,
+      "writes": [
+        {
+          "where": "nested.ts:6:53",
+          "path": "box.value",
+          "operation": "=",
+          "original_domains": [
+            "1"
+          ],
+          "written_type": "1",
+          "value": "1",
+          "compatible": true,
+          "definitely_outside": false,
+          "conditional": false,
+          "original_domain_is_generic_upper_bound": false,
+          "feasible_counterexample": false
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "control": "nested",
+      "callee": "other",
+      "classification": "c",
+      "reads": 0,
+      "writes": [
+        {
+          "where": "nested.ts:7:54",
+          "path": "box.value",
+          "operation": "=",
+          "original_domains": [
+            "1"
+          ],
+          "written_type": "2",
+          "value": "2",
+          "compatible": false,
+          "definitely_outside": true,
+          "conditional": false,
+          "original_domain_is_generic_upper_bound": false,
+          "feasible_counterexample": false
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "control": "escapes",
+      "callee": "stored",
+      "classification": "d",
+      "reads": 0,
+      "writes": [],
+      "unresolved": [
+        {
+          "where": "escapes.ts:5:31",
+          "reason": "assignment into an existing binding needs flow-sensitive alias tracking",
+          "expression": "globalView = view"
+        }
+      ]
+    },
+    {
+      "control": "escapes",
+      "callee": "captured",
+      "classification": "d",
+      "reads": 0,
+      "writes": [],
+      "unresolved": [
+        {
+          "where": "escapes.ts:6:46",
+          "reason": "alias captured by a nested callback/closure",
+          "expression": "view"
+        }
+      ]
+    },
+    {
+      "control": "escapes",
+      "callee": "unknown",
+      "classification": "d",
+      "reads": 0,
+      "writes": [],
+      "unresolved": [
+        {
+          "where": "escapes.ts:7:61",
+          "reason": "unresolved, external, virtual, or callback consumer",
+          "expression": "callback(view)"
+        }
+      ]
+    },
+    {
+      "control": "escapes",
+      "callee": "generic",
+      "classification": "c",
+      "reads": 0,
+      "writes": [
+        {
+          "where": "escapes.ts:8:45",
+          "path": "value",
+          "operation": "=",
+          "original_domains": [
+            "1"
+          ],
+          "written_type": "2",
+          "value": "2",
+          "compatible": false,
+          "definitely_outside": true,
+          "conditional": false,
+          "original_domain_is_generic_upper_bound": false,
+          "feasible_counterexample": false
+        }
+      ],
+      "unresolved": []
+    }
+  ],
+  "external_node_outputs": {
+    "receivers": "1 1 2 2 2",
+    "arrays": "1 1,1,2,2",
+    "nested": "1 2"
+  },
+  "mutants": [
+    {
+      "name": "reader-writes",
+      "exit": 1,
+      "caught_by": "receiver classification assertion; stock TypeScript diagnostics remain zero"
+    },
+    {
+      "name": "compatible-writes-other",
+      "exit": 1,
+      "caught_by": "receiver classification assertion; stock TypeScript diagnostics remain zero"
+    },
+    {
+      "name": "unsound-writes-same",
+      "exit": 1,
+      "caught_by": "receiver classification assertion; stock TypeScript diagnostics remain zero"
+    },
+    {
+      "name": "shorthand-no-escape",
+      "exit": 1,
+      "caught_by": "receiver classification assertion; stock TypeScript diagnostics remain zero"
+    }
+  ]
+}

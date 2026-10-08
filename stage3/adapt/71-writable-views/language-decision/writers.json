@@ -1,0 +1,24 @@
+{
+  "typescript": "6.0.3",
+  "diagnostics": 0,
+  "library_sha256": "c608261af17bf4b95fc1527c62ba34eb2c44e3f8f0c6944d045ec61b23fc156c",
+  "output": [
+    "16 0 true undefined"
+  ],
+  "flags_site": "src/compiler/utilities.ts:10689:10",
+  "parent_site": "src/compiler/utilities.ts:12365:6",
+  "witness": "controls/tsc-writers.a",
+  "scope": "actual unchanged built tsc exports, with legal narrowed Node holders; no claim these calls occur during the baseline compiler test run",
+  "mutants": [
+    {
+      "name": "flags",
+      "exit": 1,
+      "caught_by": "external Node counterexample observation; stock TypeScript diagnostics remain zero"
+    },
+    {
+      "name": "parent",
+      "exit": 1,
+      "caught_by": "external Node counterexample observation; stock TypeScript diagnostics remain zero"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+declare const console: { log(value: string): void };
+interface Narrow { box: { value: 1; }; }
+interface Wide { box: { value: number; }; }
+const holder: Narrow = { box: { value: 1 } };
+function read(view: Wide): number { const alias = view.box; return alias.value; }
+function same(view: Wide) { const alias = view.box; alias.value = 1; }
+function other(view: Wide) { const alias = view.box; alias.value = 2; }
+const n = read(holder);
+same(holder);
+other(holder);
+console.log(`${n} ${holder.box.value}`);

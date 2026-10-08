@@ -1,0 +1,77 @@
+[
+  {
+    "id": 603,
+    "where": "src/compiler/utilities.ts:10689:10",
+    "reason": "a value of type T seen as Mutable<T>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of T[\"pos\"] would replace",
+    "family": "other",
+    "source_family": "T",
+    "classification": "c",
+    "source_expression": "node",
+    "source_expression_where": "src/compiler/utilities.ts:10689:10",
+    "original_type": "T",
+    "receiving_syntax": "AsExpression",
+    "reads": [],
+    "writes": [
+      {
+        "where": "src/compiler/utilities.ts:10689:9",
+        "path": "flags",
+        "operation": "=",
+        "original_domains": [
+          "NodeFlags"
+        ],
+        "written_type": "NodeFlags",
+        "value": "newFlags",
+        "compatible": false,
+        "definitely_outside": true,
+        "conditional": true,
+        "original_domain_is_generic_upper_bound": true,
+        "counterexample": {
+          "kind": "readonly generic-field instantiation",
+          "holder_field": "NodeFlags.Synthesized",
+          "written_field": "NodeFlags.None",
+          "witness": "controls/tsc-writers.a#flags",
+          "guard": "object-presence only"
+        },
+        "feasible_counterexample": true
+      }
+    ],
+    "aliases": [],
+    "calls": [],
+    "unresolved": [],
+    "steps": 3
+  },
+  {
+    "id": 606,
+    "where": "src/compiler/utilities.ts:12365:6",
+    "reason": "a value of type T seen as Mutable<T>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of T[\"pos\"] would replace",
+    "family": "other",
+    "source_family": "T",
+    "classification": "c",
+    "source_expression": "visited",
+    "source_expression_where": "src/compiler/utilities.ts:12365:6",
+    "original_type": "T",
+    "receiving_syntax": "AsExpression",
+    "reads": [],
+    "writes": [
+      {
+        "where": "src/compiler/utilities.ts:12365:5",
+        "path": "parent",
+        "operation": "=",
+        "original_domains": [
+          "Node"
+        ],
+        "written_type": "undefined",
+        "value": "undefined",
+        "compatible": false,
+        "definitely_outside": true,
+        "conditional": false,
+        "original_domain_is_generic_upper_bound": true,
+        "feasible_counterexample": false
+      }
+    ],
+    "aliases": [],
+    "calls": [],
+    "unresolved": [],
+    "steps": 3
+  }
+]

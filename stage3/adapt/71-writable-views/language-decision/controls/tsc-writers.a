@@ -1,0 +1,19 @@
+import type { Node, NodeFactory, NodeFlags, SourceFile, SyntaxKind } from "__TSC_PUBLIC__";
+declare const console: { log(value: string): void };
+declare const runtime: {
+    factory: NodeFactory;
+    NodeFlags: typeof NodeFlags;
+    SyntaxKind: typeof SyntaxKind;
+    setNodeFlags<T extends Node>(node: T, flags: NodeFlags): T;
+    getSynthesizedDeepClone<T extends Node>(node: T): T;
+};
+const flagged = Object.assign(runtime.factory.createIdentifier("x"), { flags: runtime.NodeFlags.Synthesized as NodeFlags.Synthesized });
+const before = flagged.flags;
+const changed = runtime.setNodeFlags(flagged, runtime.NodeFlags.None);
+const promisedFlag: NodeFlags.Synthesized = changed.flags;
+const binary = runtime.factory.createBinaryExpression(runtime.factory.createIdentifier("x"), runtime.SyntaxKind.PlusToken, runtime.factory.createIdentifier("y"));
+const parent = runtime.factory.createSourceFile([runtime.factory.createExpressionStatement(binary)], runtime.factory.createToken(runtime.SyntaxKind.EndOfFileToken), runtime.NodeFlags.None);
+const parented = Object.assign(binary, { parent });
+const cloned = runtime.getSynthesizedDeepClone(parented);
+const promisedParent: SourceFile = cloned.parent;
+console.log(`${before} ${promisedFlag} ${parented.parent === parent} ${typeof promisedParent}`);

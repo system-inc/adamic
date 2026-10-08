@@ -1,0 +1,11 @@
+declare const console: { log(value: string): void };
+const holder: 1[] = [1];
+function read(view: number[]): number { return view.length; }
+function same(view: number[]) { view.push(1); }
+function other(view: number[]) { view.push(2); }
+function conditional(view: number[]) { if (view.length > 0) view.push(2); }
+const n = read(holder);
+same(holder);
+other(holder);
+conditional(holder);
+console.log(`${n} ${holder.join(",")}`);
