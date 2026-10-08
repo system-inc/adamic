@@ -245,5 +245,11 @@
     "passed": 22,
     "skipped": 1,
     "exit": 0
+  },
+  "first_meter_attempt": {
+    "run": "20261008T005459Z.7BpQxn",
+    "stage": "latent census build",
+    "exit": 1,
+    "error": "# github.com/system-inc/adamic/internal/lower\n../stage3-meter-tmp/stage3-meter.MBcZdN/latent-overlay/internal_lower_refusals.go:256:17: undefined: found\n../stage3-meter-tmp/stage3-meter.MBcZdN/latent-overlay/internal_lower_refusals.go:257:4: undefined: found\n../stage3-meter-tmp/stage3-meter.MBcZdN/latent-overlay/internal_lower_refusals.go:258:22: undefined: visit\n"
   }
 }

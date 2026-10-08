@@ -36,7 +36,7 @@ The overlay builder globally replaces return true in the refusal function with c
 
 The baseline checked-views count is the sum of 14 exact checked numeric enum object view payload-field reasons; full reason rows are in failure.json. The claimed 90 -> 0 cannot be confirmed by this run. Pass-to-fail is unmeasured, not an empty regression list.
 
-Initial setup exited 1 during go list -deps -export -json ./..., with empty packages.json and list.log. The first meter attempt exited 1 at the ordinary census build with an empty build.log. These outputs are retained in first-attempt/ and setup-first-*; their cause is not established. Verbose go list and the targeted ordinary build succeeded with GOMAXPROCS=2 and -p=1; setup retry then succeeded.
+Initial setup exited 1 during go list -deps -export -json ./..., with empty packages.json and list.log. The first meter attempt also exited 1 at the latent census build with the same undefined found/visit diagnostics. Its ordinary build.log is empty because that build succeeded without output. These outputs are retained in first-attempt/ and setup-first-*; their cause is not established. Verbose go list and the targeted ordinary build succeeded with GOMAXPROCS=2 and -p=1; setup retry then succeeded.
 
 Setup retry timing: Go 0.045s; Node 0.055s; dependencies 0.153s; submodules 0.168s; clang 0.392s; go build ready 105.009s; test binaries deferred 105.272s; cache warm 105.275s; total 105.372s. nproc=5; Node v24.19.0 first on PATH. Full logs are retained.
 
