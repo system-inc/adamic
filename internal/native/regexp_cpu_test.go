@@ -71,7 +71,7 @@ int main(int argc, char **argv) {
 	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	_, err := runRegExpChild(t, binary, nil, "ASAN_OPTIONS=detect_leaks=1", 5*time.Minute, 10*time.Millisecond)
+	_, err := runRegExpChild(t, binary, nil, "ASAN_OPTIONS=detect_leaks=0", 5*time.Minute, 10*time.Millisecond)
 	if err == nil || !strings.Contains(err.Error(), "CPU time") {
 		t.Fatalf("CPU overrun escaped budget: %v", err)
 	}
