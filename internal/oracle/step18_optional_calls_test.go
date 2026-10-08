@@ -13,10 +13,17 @@ import (
 
 const step18Directory = "docs/step-18/fixtures/"
 
-var step18Supported = map[string]bool{}
+var step18Supported = map[string]bool{"function.a": true, "method.a": true, "runtime-values.a": true, "runtime-order.a": true, "runtime-arguments.a": true}
 
 func init() {
 	for _, name := range []string{"function.a", "method.a", "element.a", "call-result.a", "cross-call.a", "receiver-call.a", "two-guards.a", "size.a", "number.a"} {
+		fixtures = append(fixtures, struct {
+			path    string
+			lowers  bool
+			checked bool
+		}{step18Directory + name, step18Supported[name], false})
+	}
+	for _, name := range []string{"runtime-values.a", "runtime-order.a", "runtime-methods.a", "runtime-arguments.a", "runtime-cross-chain.a"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -38,13 +45,17 @@ type step18Observation struct {
 
 func step18Observations(t *testing.T) []step18Observation {
 	t.Helper()
-	data, err := os.ReadFile(filepath.Join(repository, "docs/step-18/baseline.json"))
-	if err != nil {
-		t.Fatal(err)
-	}
 	var observations []step18Observation
-	if err := json.Unmarshal(data, &observations); err != nil {
-		t.Fatal(err)
+	for _, name := range []string{"baseline.json", "runtime-observations.json"} {
+		data, err := os.ReadFile(filepath.Join(repository, "docs/step-18", name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		var rows []step18Observation
+		if err := json.Unmarshal(data, &rows); err != nil {
+			t.Fatal(err)
+		}
+		observations = append(observations, rows...)
 	}
 	return observations
 }

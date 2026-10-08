@@ -687,6 +687,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindFunctionExpression:
 		return l.functionExpression(node)
 	case ast.KindCallExpression:
+		if value, known, err := l.optionalCallable(node); known {
+			return value, err
+		}
 		if value, known, err := l.optionalIntrinsic(node); known {
 			return value, err
 		}
@@ -1283,7 +1286,11 @@ func (l *lowering) optionalCall(call *ast.Node) error {
 
 // callClosure lowers a call through a function value.
 func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
-	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall)
+	calleeType := l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)
+	if node.AsCallExpression().QuestionDotToken != nil {
+		calleeType = l.checker.GetNonNullableType(calleeType)
+	}
+	signatures := l.checker.GetSignaturesOfType(calleeType, checker.SignatureKindCall)
 	if len(signatures) == 1 && l.censusNeverRestSignature(signatures[0]) {
 		// never[] admits a zero-argument call in TypeScript. The erased slot does
 		// not retain a source signature to prove its required arguments or ABI.
@@ -1304,7 +1311,14 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	var returns ir.Type
-	if result := l.concrete(l.checker.GetTypeAtLocation(node)); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
+	result := l.checker.GetTypeAtLocation(node)
+	if node.AsCallExpression().QuestionDotToken != nil && len(signatures) == 1 {
+		// The optional expression widens the result after the call. The closure
+		// itself still uses its signature's original return ABI.
+		result = l.checker.GetReturnTypeOfSignature(signatures[0])
+	}
+	result = l.concrete(result)
+	if result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
 		var isKnown bool
 		if returns, isKnown = l.representation(result); !isKnown {
 			return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))
@@ -1312,7 +1326,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	}
 	// Each argument is made what the function value takes: a number or undefined where it takes
 	// number | undefined is packed as one.
-	if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall); len(signatures) == 1 {
+	if len(signatures) == 1 {
 		parameters := signatures[0].Parameters()
 		position := 0
 		expanded := false
