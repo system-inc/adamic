@@ -112,6 +112,10 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 	// whatever function or closure called it.
 	outerSubstitution, outerLocals, outerClosures, outerTypeMapper := l.substitution, l.locals, l.closures, l.typeMapper
 	l.substitution, l.closures = substitution, nil
+	// Validation may return before body lowering; restore the caller on every exit.
+	defer func() {
+		l.substitution, l.locals, l.closures, l.typeMapper = outerSubstitution, outerLocals, outerClosures, outerTypeMapper
+	}()
 	if owner >= 0 {
 		for proven, held := range outerSubstitution {
 			if _, ok := substitution[proven]; !ok {
@@ -141,7 +145,6 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 	}
 	l.genericDepth++
 	defer func() {
-		l.substitution, l.locals, l.closures, l.typeMapper = outerSubstitution, outerLocals, outerClosures, outerTypeMapper
 		l.genericDepth--
 	}()
 	if owner >= 0 {

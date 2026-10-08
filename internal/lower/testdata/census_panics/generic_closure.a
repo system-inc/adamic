@@ -1,0 +1,10 @@
+function append<T extends (string | undefined)[]>(result: T, item: string | undefined): void {
+    result.push(item);
+}
+function use(): void {
+    const result: string[] = [];
+    const callback = () => append(result, undefined);
+    callback();
+    console.log(result.length.toString());
+}
+use();
