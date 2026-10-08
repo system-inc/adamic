@@ -16,7 +16,9 @@
       "id": "core/default_case.go:30",
       "js_pattern": "^no default(?![\\s\\S])",
       "js_flags": "gui",
-      "status": "candidate, differential gate required"
+      "status": "candidate, differential gate required",
+      "commit": "c2e39b755570a15c8c2bd39aec64314142003a34",
+      "replacement_engine": "cohere esregexp / JavaScript"
     },
     {
       "rule": "default-case",
@@ -30,7 +32,9 @@
       "js_constructor": "new RegExp(pattern, 'u')",
       "js_pattern": null,
       "js_flags": "u",
-      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap",
+      "commit": "c2e39b755570a15c8c2bd39aec64314142003a34",
+      "replacement_engine": "cohere esregexp / JavaScript"
     },
     {
       "rule": "id-length",
@@ -44,7 +48,9 @@
       "js_constructor": "new RegExp(pattern, 'u')",
       "js_pattern": null,
       "js_flags": "u",
-      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap",
+      "commit": "c2e39b755570a15c8c2bd39aec64314142003a34",
+      "replacement_engine": "cohere esregexp / JavaScript"
     },
     {
       "rule": "id-match",
@@ -58,7 +64,9 @@
       "js_constructor": "new RegExp(pattern, 'u')",
       "js_pattern": null,
       "js_flags": "u",
-      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap",
+      "commit": "c2e39b755570a15c8c2bd39aec64314142003a34",
+      "replacement_engine": "cohere esregexp / JavaScript"
     },
     {
       "rule": "no-fallthrough",
@@ -72,7 +80,9 @@
       "js_constructor": "new RegExp(pattern, 'u')",
       "js_pattern": null,
       "js_flags": "u",
-      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap",
+      "commit": "c2e39b755570a15c8c2bd39aec64314142003a34",
+      "replacement_engine": "cohere esregexp / JavaScript"
     },
     {
       "rule": "no-inline-comments",
@@ -86,7 +96,9 @@
       "js_constructor": "new RegExp(pattern, 'u')",
       "js_pattern": null,
       "js_flags": "u",
-      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap",
+      "commit": "c2e39b755570a15c8c2bd39aec64314142003a34",
+      "replacement_engine": "cohere esregexp / JavaScript"
     },
     {
       "rule": "no-param-reassign",
@@ -100,7 +112,9 @@
       "js_constructor": "new RegExp(pattern, 'u')",
       "js_pattern": null,
       "js_flags": "u",
-      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap",
+      "commit": "c2e39b755570a15c8c2bd39aec64314142003a34",
+      "replacement_engine": "cohere esregexp / JavaScript"
     },
     {
       "rule": "no-unused-vars",
@@ -114,7 +128,9 @@
       "js_constructor": "new RegExp(pattern, 'u')",
       "js_pattern": null,
       "js_flags": "u",
-      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap",
+      "commit": "c2e39b755570a15c8c2bd39aec64314142003a34",
+      "replacement_engine": "cohere esregexp / JavaScript"
     },
     {
       "rule": "no-unused-vars",
@@ -128,7 +144,9 @@
       "js_constructor": "new RegExp(pattern, 'u')",
       "js_pattern": null,
       "js_flags": "u",
-      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap",
+      "commit": "c2e39b755570a15c8c2bd39aec64314142003a34",
+      "replacement_engine": "cohere esregexp / JavaScript"
     },
     {
       "rule": "no-warning-comments",
@@ -142,7 +160,9 @@
       "js_constructor": "new RegExp(pattern, 'u')",
       "js_pattern": null,
       "js_flags": "u",
-      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap",
+      "commit": "c2e39b755570a15c8c2bd39aec64314142003a34",
+      "replacement_engine": "cohere esregexp / JavaScript"
     },
     {
       "rule": "object-shorthand",
@@ -156,7 +176,9 @@
       "js_constructor": "new RegExp(pattern, 'u')",
       "js_pattern": null,
       "js_flags": "u",
-      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap",
+      "commit": "c2e39b755570a15c8c2bd39aec64314142003a34",
+      "replacement_engine": "cohere esregexp / JavaScript"
     },
     {
       "rule": "boolean-prop-naming",
@@ -170,7 +192,9 @@
       "js_constructor": "new RegExp(pattern, 'u')",
       "js_pattern": null,
       "js_flags": "u",
-      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap",
+      "commit": "c2e39b755570a15c8c2bd39aec64314142003a34",
+      "replacement_engine": "cohere esregexp / JavaScript"
     },
     {
       "rule": "boolean-prop-naming",
@@ -184,7 +208,9 @@
       "js_constructor": "new RegExp(pattern, 'u')",
       "js_pattern": null,
       "js_flags": "u",
-      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap",
+      "commit": "c2e39b755570a15c8c2bd39aec64314142003a34",
+      "replacement_engine": "cohere esregexp / JavaScript"
     },
     {
       "rule": "exhaustive-deps",
@@ -198,7 +224,9 @@
       "js_constructor": "new RegExp(pattern, 'u')",
       "js_pattern": null,
       "js_flags": "u",
-      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap",
+      "commit": "c2e39b755570a15c8c2bd39aec64314142003a34",
+      "replacement_engine": "cohere esregexp / JavaScript"
     },
     {
       "rule": "sort-comp",
@@ -212,7 +240,9 @@
       "js_constructor": "new RegExp(pattern, 'u')",
       "js_pattern": null,
       "js_flags": "u",
-      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap",
+      "commit": "c2e39b755570a15c8c2bd39aec64314142003a34",
+      "replacement_engine": "cohere esregexp / JavaScript"
     },
     {
       "rule": "enforce-canonical-classes",
@@ -226,7 +256,9 @@
       "js_constructor": "new RegExp(pattern, 'u')",
       "js_pattern": null,
       "js_flags": "u",
-      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap",
+      "commit": "c2e39b755570a15c8c2bd39aec64314142003a34",
+      "replacement_engine": "cohere esregexp / JavaScript"
     },
     {
       "rule": "no-require-imports",
@@ -240,7 +272,9 @@
       "js_constructor": "new RegExp(pattern, 'u')",
       "js_pattern": null,
       "js_flags": "u",
-      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap",
+      "commit": "c2e39b755570a15c8c2bd39aec64314142003a34",
+      "replacement_engine": "cohere esregexp / JavaScript"
     },
     {
       "rule": "switch-exhaustiveness-check",
@@ -254,7 +288,9 @@
       "js_constructor": "new RegExp(pattern, 'u')",
       "js_pattern": null,
       "js_flags": "u",
-      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap"
+      "status": "dynamic source expression, not a finite pattern; option source uses new RegExp(pattern, u) but Go-only syntax is a gap",
+      "commit": "c2e39b755570a15c8c2bd39aec64314142003a34",
+      "replacement_engine": "cohere esregexp / JavaScript"
     },
     {
       "rule": "switch-exhaustiveness-check",
@@ -267,7 +303,9 @@
       "id": "typescript/switch_exhaustiveness_check.go:382",
       "js_pattern": "^no default(?![\\s\\S])",
       "js_flags": "gui",
-      "status": "candidate, differential gate required"
+      "status": "candidate, differential gate required",
+      "commit": "c2e39b755570a15c8c2bd39aec64314142003a34",
+      "replacement_engine": "cohere esregexp / JavaScript"
     }
   ],
   "added_go_rows": [
@@ -282,7 +320,9 @@
       "id": "tailwind/class_matchers.go:783",
       "js_pattern": "^[A-Z_a-z][0-9A-Z_a-z]*(?![\\s\\S])",
       "js_flags": "gu",
-      "status": "candidate, differential gate required"
+      "status": "candidate, differential gate required",
+      "commit": "0b892cc9055d6a584f7974ad5dcfadcbda35bb91",
+      "review": "JavaScript identifier recognizer in the Tailwind matcher engine; exact addition diff retained in evidence"
     }
   ],
   "review": "Option engine migration is backed by cohere c2e39b75 (#7mztrdd); all current esregexp source sites and flags are retained in option-sites.json. A source expression whose text changed is retained as removed/added for review, not silently relabeled."

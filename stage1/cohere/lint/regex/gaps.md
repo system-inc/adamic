@@ -29,3 +29,9 @@ Reproducer for @system_adamic_library: testdata/split_gap.a and TestNativeSplitA
 BuildTSGo on the production fixture graphs fails to link regexp_compile_runtime.c: `undefined reference to adamic_regex_new_owned`. The standalone cached-runtime builder succeeds, including dynamic_gap and all shape/matcher tests; the checker-linked builder compiles the runtime as separate C units.
 
 Shortest reproducer for @system_adamic_library: unchanged testdata/dynamic_gap.a linked via native.BuildTSGo with the current sanitized checker archive; TestNativeCheckerRegexLinkGap captures the exact linker error. No runtime linkage shim is added. The production finding tests require native, so they fail after proving Go, source Node and emitted JavaScript parity rather than skipping this leg.
+
+## Shared legacy mutant anchors and interrupted package run
+
+The unchanged shared package's legacy mutations look for removed/retired matcher text: `this.anchors[0] = true;`, `!space(character)`, and `for(const entry of decoration) {`. These anchors now return a count of zero; owned runtime-RegExp mutants replace their relevant comparison coverage. The shared harness is unchanged.
+
+The package's pinned stage1 corpus check rejected the initially dirty tree; the implementation is now committed. The single all-input package run was interrupted with SIGKILL after the environment reconnect and has no final summary. Partial counts, exact command, timestamps and every completed test name are in evidence/scout/package-summary.json. No second full-package run or stage1 corpus parity is claimed.

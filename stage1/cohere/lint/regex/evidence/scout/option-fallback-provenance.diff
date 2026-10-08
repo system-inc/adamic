@@ -1,0 +1,245 @@
+commit c2e39b755570a15c8c2bd39aec64314142003a34
+Author: kirkouimet <kirk@kirkouimet.com>
+Date:   Wed Oct 7 00:16:47 2026 -0600
+
+    rules: a pattern a user wrote in a rule's options compiles as JavaScript reads it, not as RE2 (#7mztrdd)
+    
+    A rule's option pattern is written by its user as a JavaScript regexp, and upstream compiles it with `new
+    RegExp(pattern, flags)`. 17 sites across 15 rules compiled it with Go's RE2, which refuses lookahead, lookbehind
+    and backreferences (so the option was dropped or the config refused) and reads `\s` without the no-break space,
+    the byte order mark and 18 more, among other gaps. They now compile through esregexp with upstream's own flags:
+    
+    - `u`: no-inline-comments ignorePattern, no-param-reassign ignorePropertyModificationsForRegex, default-case
+      commentPattern, id-length exceptionPatterns, object-shorthand methodsIgnorePattern, id-match pattern,
+      no-unused-vars' four ignore patterns, switch-exhaustiveness-check defaultCaseCommentPattern,
+      no-require-imports allow;
+    - `iu`: no-warning-comments (its pattern built from the user's terms), and no-fallthrough commentPattern, which
+      keeps oxc's case-insensitivity in JavaScript's dialect;
+    - none: exhaustive-deps additionalHooks, boolean-prop-naming rule, enforce-canonical-classes ignore (shared with
+      no-unknown-classes, which upstream compiles the same way);
+    - the user's own: sort-comp's `/body/flags` entries, so `u` and `y` now count (a fresh sticky regexp anchors).
+    The rules' default patterns that share a variable (default-case's and switch-exhaustiveness-check's `/^no
+    default$/iu`) compile through esregexp with upstream's flags too. The one RE2 site left in the class is
+    no-unstable-nested-components, whose upstream matches a minimatch glob rather than a regexp.
+    
+    Each use takes the esregexp method by which way a match that overruns the time bound should fall: TestOrTimeout
+    where a match spares a report (an ignore, allow, exception or excusing comment, a name required to match), Test
+    where it causes one. Two rules used one pattern both ways and now ask each way: no-fallthrough's matcher returns
+    one predicate for a fallthrough it excuses and one for an unused comment it reports, and
+    switch-exhaustiveness-check carries whether a default comment's match overran, so it is not reported as the
+    dangerous default it would be had it matched.
+    
+    no-warning-comments also escapes as upstream's escape-string-regexp does, `-` as `\x2d`, so a `-` decoration is
+    one character rather than a range (`*`, `-`, `/` took in `+`), and its first-character fast path skips
+    JavaScript's whitespace (text.IsWhitespace), the class the pattern now compiles. That closes the first instance
+    #tez6dna names.
+    
+    Fixtures: every rule gains the case RE2 read differently, checked in Node: a lookahead or lookbehind that now
+    takes effect, `\s` on U+00A0 where the subject can hold one, and a control the new pattern does not match. sort-comp's
+    upstream invalid[9], held out as a recorded RE2 divergence, is a plain row now with upstream's own message, and its
+    new rows were run through eslint-plugin-react 7.37.5 (all five agree). Three existing tests that pinned the RE2 drop (no-param-reassign, no-require-imports, sort-comp)
+    now expect JavaScript's reading. Two overrun fixtures, `(a|aa)+$` on a long run of `a`, hold the two-way splits.
+    Mutated:
+    - esregexp refusing lookaround, as RE2 does: every rule's new fixtures fail, eight core rules run one by one;
+    - no-fallthrough naming an unused comment on an overrun, or switch-exhaustiveness-check reporting one: each overrun
+      fixture fails;
+    - no-warning-comments without the `-` escape, or skipping Go's five whitespace characters: the lead test fails.
+    
+    Review, every rule on, each tree's own config, main 7945d102 against this, no tree changed: no finding moved on
+    ahra (6), www (10), api (0), ahra-ai (0) or live www-phi-health (9,632). None of these options is configured by a
+    consumer's settings or a shipped set, so none could. The docs recapture (`generate -capture`, 42,860 records)
+    changed no file: the new cases run with options, which are counted and not shown.
+    
+    Co-Authored-By: Ahra <ahra@ahra.ai>
+    Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>
+
+diff --git a/internal/lint/rules/core/default_case.go b/internal/lint/rules/core/default_case.go
+index 77c11eea..6ed559ee 100644
+--- a/internal/lint/rules/core/default_case.go
++++ b/internal/lint/rules/core/default_case.go
+@@ -1,11 +1,11 @@
+ package core
+ 
+ import (
+-	"regexp"
+ 	"strings"
+ 
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+ 	"github.com/system-inc/cohere/internal/lint/ecmascript/comments"
++	esregexp "github.com/system-inc/cohere/internal/lint/ecmascript/regexp"
+ 	"github.com/system-inc/cohere/internal/lint/ecmascript/text"
+ 	"github.com/system-inc/cohere/internal/lint/rule"
+ )
+@@ -25,9 +25,10 @@ type DefaultCaseOptions struct {
+ // defaultCaseDefaultCommentPattern is upstream's `DEFAULT_COMMENT_PATTERN`, `/^no default$/iu`.
+ //
+ // Anchored at both ends and case-insensitive, so `// no default` and `// NO DEFAULT` excuse the
+-// switch while `// no default case here` does not. The `u` flag has no Go equivalent and needs
+-// none: the pattern contains no escapes whose meaning changes under Unicode mode.
+-var defaultCaseDefaultCommentPattern = regexp.MustCompile(`(?i)^no default$`)
++// switch while `// no default case here` does not. Compiled with upstream's own source and flags and
++// read as JavaScript reads it, the same engine a user's `commentPattern` goes through, since both
++// fill the one variable the listener tests (#7mztrdd).
++var defaultCaseDefaultCommentPattern = esregexp.MustCompile(`^no default$`, "iu")
+ 
+ var messageDefaultCaseMissingDefaultCase = rule.Message{
+ 	Id: "missingDefaultCase",
+@@ -93,11 +94,13 @@ var DefaultCase = rule.Rule{
+ 		if resolved, isDefaultCaseOptions := rule.OptionsAs[DefaultCaseOptions](options); isDefaultCaseOptions &&
+ 			resolved.CommentPattern != "" {
+ 			// Upstream builds `new RegExp(options.commentPattern, "u")`, which THROWS on a bad
+-			// pattern and takes the lint run down naming the rule. A pattern Go's RE2 cannot compile
+-			// is kept as the default here instead: the rule keeps enforcing rather than crashing,
+-			// and a crash costs every OTHER rule its verdict on that file because the walk recovers
+-			// per file. Same drop `core/no-param-reassign` takes for the same reason.
+-			if compiled, err := regexp.Compile(resolved.CommentPattern); err == nil {
++			// pattern and takes the lint run down naming the rule. The pattern is read as JavaScript
++			// reads it (#7mztrdd), so a lookaround or a backreference compiles and takes effect; one
++			// JavaScript itself would refuse is kept as the default here instead: the rule keeps
++			// enforcing rather than crashing, and a crash costs every OTHER rule its verdict on that
++			// file because the walk recovers per file. Same drop `core/no-param-reassign` takes for
++			// the same reason.
++			if compiled, err := esregexp.Compile(resolved.CommentPattern, "u"); err == nil {
+ 				pattern = compiled
+ 			}
+ 		}
+@@ -151,7 +154,7 @@ func defaultCaseHasExcusingComment(
+ 	ctx rule.Context,
+ 	lastClause *ast.Node,
+ 	caseBlock *ast.Node,
+-	pattern *regexp.Regexp,
++	pattern *esregexp.RegExp,
+ ) bool {
+ 	searchStart := lastClause.End()
+ 	searchEnd := caseBlock.End()
+@@ -175,7 +178,8 @@ func defaultCaseHasExcusingComment(
+ 		return false
+ 	}
+ 
+-	return pattern.MatchString(defaultCaseCommentBody(lastComment))
++	// A match that overruns the time bound excuses too: no answer here is a report.
++	return pattern.TestOrTimeout(defaultCaseCommentBody(lastComment))
+ }
+ 
+ // defaultCaseCommentBody strips a comment's delimiters and trims it, matching upstream's
+diff --git a/internal/lint/rules/typescript/switch_exhaustiveness_check.go b/internal/lint/rules/typescript/switch_exhaustiveness_check.go
+index ef35ceb5..1204b59e 100644
+--- a/internal/lint/rules/typescript/switch_exhaustiveness_check.go
++++ b/internal/lint/rules/typescript/switch_exhaustiveness_check.go
+@@ -1,7 +1,6 @@
+ package typescript
+ 
+ import (
+-	"regexp"
+ 	"slices"
+ 	"strings"
+ 
+@@ -9,6 +8,7 @@ import (
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+ 	"github.com/system-inc/cohere/internal/lint/checking"
+ 	"github.com/system-inc/cohere/internal/lint/ecmascript/comments"
++	esregexp "github.com/system-inc/cohere/internal/lint/ecmascript/regexp"
+ 	"github.com/system-inc/cohere/internal/lint/ecmascript/text"
+ 	"github.com/system-inc/cohere/internal/lint/rule"
+ )
+@@ -207,10 +207,12 @@ var SwitchExhaustivenessCheck = rule.Rule{
+ 		}
+ 		// Upstream compiles the pattern with `new RegExp(pattern, 'u')`, so an invalid one throws
+ 		// when the rule is created. Here it matches no comment, which leaves the real default clause
+-		// the only default, the reading that reports rather than the one that silences.
++		// the only default, the reading that reports rather than the one that silences. A valid one is
++		// read as JavaScript reads it, so a lookaround or a backreference its user wrote compiles, and
++		// `\s` and `\b` mean what they mean upstream (#7mztrdd).
+ 		commentPattern := defaultCaseCommentPattern
+ 		if opts.DefaultCaseCommentPattern != nil {
+-			commentPattern, _ = regexp.Compile(*opts.DefaultCaseCommentPattern)
++			commentPattern, _ = esregexp.Compile(*opts.DefaultCaseCommentPattern, "u")
+ 		}
+ 
+ 		isLiteralLikeType := func(t *checker.Type) bool {
+@@ -291,7 +293,7 @@ var SwitchExhaustivenessCheck = rule.Rule{
+ 				MissingLiteralBranchTypes: missingLiteralBranchTypes,
+ 			}
+ 			if defaultCase == nil {
+-				metadata.DefaultCaseComment = defaultCaseComment(ctx, node, commentPattern)
++				metadata.DefaultCaseComment, metadata.DefaultCaseCommentOverran = defaultCaseComment(ctx, node, commentPattern)
+ 			}
+ 			return metadata
+ 		}
+@@ -319,7 +321,9 @@ var SwitchExhaustivenessCheck = rule.Rule{
+ 				!metadata.ContainsNonLiteralType {
+ 				if metadata.DefaultCase != nil {
+ 					ctx.ReportNode(&metadata.DefaultCase.Node, buildDangerousDefaultCaseMessage())
+-				} else {
++				} else if !metadata.DefaultCaseCommentOverran {
++					// A comment taken as the default only because its match overran is no answer, and no
++					// answer is not a report here.
+ 					ctx.ReportRange(metadata.DefaultCaseComment.Range, buildDangerousDefaultCaseMessage())
+ 				}
+ 			}
+@@ -367,7 +371,10 @@ type switchMetadata struct {
+ 	DefaultCase *ast.CaseOrDefaultClause
+ 	// DefaultCaseComment is the comment standing in for a default clause, when there is no clause and
+ 	// the last comment after the last case matches the pattern; nil otherwise.
+-	DefaultCaseComment        *comments.Comment
++	DefaultCaseComment *comments.Comment
++	// DefaultCaseCommentOverran is a DefaultCaseComment taken because its pattern's match overran the time
++	// bound (esregexp.MatchTimeout) rather than matched: it spares a missing default, and is not reported.
++	DefaultCaseCommentOverran bool
+ 	MissingLiteralBranchTypes []*checker.Type
+ 	// TODO: add support for fixed (symbolname is used only for fixes)
+ 	// SymbolName string
+@@ -378,8 +385,9 @@ func (metadata *switchMetadata) hasDefaultCase() bool {
+ 	return metadata.DefaultCase != nil || metadata.DefaultCaseComment != nil
+ }
+ 
+-// defaultCaseCommentPattern is typescript-eslint's DEFAULT_COMMENT_PATTERN, `/^no default$/iu`.
+-var defaultCaseCommentPattern = regexp.MustCompile(`(?i)^no default$`)
++// defaultCaseCommentPattern is typescript-eslint's DEFAULT_COMMENT_PATTERN, `/^no default$/iu`, compiled
++// with its own flags so it folds case as JavaScript does (#7mztrdd).
++var defaultCaseCommentPattern = esregexp.MustCompile(`^no default$`, "iu")
+ 
+ // defaultCaseComment is upstream's getCommentDefaultCase: the LAST comment between the end of the last
+ // case clause and the switch's closing brace, when its text, delimiters stripped and trimmed, matches
+@@ -396,14 +404,14 @@ var defaultCaseCommentPattern = regexp.MustCompile(`(?i)^no default$`)
+ //	// no default here                        not          the default pattern is anchored at both ends
+ //
+ // An empty pattern matches every comment, as `new RegExp(”)` does upstream.
+-func defaultCaseComment(ctx rule.Context, statement *ast.SwitchStatement, pattern *regexp.Regexp) *comments.Comment {
++func defaultCaseComment(ctx rule.Context, statement *ast.SwitchStatement, pattern *esregexp.RegExp) (*comments.Comment, bool) {
+ 	if pattern == nil {
+-		return nil
++		return nil, false
+ 	}
+ 	caseBlock := statement.CaseBlock
+ 	clauses := caseBlock.AsCaseBlock().Clauses.Nodes
+ 	if len(clauses) == 0 {
+-		return nil
++		return nil, false
+ 	}
+ 	after, closingBrace := clauses[len(clauses)-1].End(), caseBlock.End()-1
+ 	var last *comments.Comment
+@@ -414,16 +422,19 @@ func defaultCaseComment(ctx rule.Context, statement *ast.SwitchStatement, patter
+ 		}
+ 	}
+ 	if last == nil {
+-		return nil
++		return nil, false
+ 	}
+ 	value := last.Text[2:]
+ 	if last.IsBlock {
+ 		value = strings.TrimSuffix(value, "*/")
+ 	}
+-	if !pattern.MatchString(text.TrimWhitespace(value)) {
+-		return nil
++	// A match that overruns the time bound counts as the default case too, since the comment excuses a
++	// missing default and no answer here would be a report; overran says so, for the one use that reports.
++	matched, overran := pattern.TestOrError(text.TrimWhitespace(value))
++	if !matched && overran == nil {
++		return nil, false
+ 	}
+-	return last
++	return last, !matched
+ }
+ 
+ // SwitchExhaustivenessCheckOptions is the configuration surface, named once so the registration and
