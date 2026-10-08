@@ -73,12 +73,13 @@ func esmModuleOrder(typeChecker *checker.Checker, entry *ast.SourceFile) ([]*ast
 // call knows what the function it calls returns wherever that function is declared, and two
 // functions can call each other. Then each body is lowered.
 func (l *lowering) declareModule(statements []*ast.Node) error {
+	statements = namespaceDeclarations(statements)
 	declarations := []*ast.Node{}
 	for _, statement := range statements {
 		switch statement.Kind {
 		case ast.KindVariableStatement:
 			list := statement.AsVariableStatement().DeclarationList
-			if list.Flags&ast.NodeFlagsBlockScoped == 0 {
+			if list.Flags&ast.NodeFlagsBlockScoped == 0 && !namespaceVariable(list) {
 				continue // statements() refuses var where it stands
 			}
 			for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
@@ -94,6 +95,10 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 							return err
 						}
 						l.result.Locals[local].Global = true
+						if namespaceVariable(list) && list.Flags&ast.NodeFlagsBlockScoped == 0 {
+							l.result.Locals[local].NamespaceVar = true
+							l.result.Locals[local].NamespaceState = true
+						}
 					}
 					continue
 				}
@@ -103,6 +108,10 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 						return err
 					}
 					l.result.Locals[local].Global = true
+					if namespaceVariable(list) {
+						l.result.Locals[local].NamespaceVar = list.Flags&ast.NodeFlagsBlockScoped == 0
+						l.result.Locals[local].NamespaceState = declaration.Initializer() == nil || l.result.Locals[local].NamespaceVar
+					}
 				}
 			}
 		case ast.KindEnumDeclaration:

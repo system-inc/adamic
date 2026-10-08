@@ -244,6 +244,9 @@ func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error) {
 		declaration := member.Parent
 		if ast.HasSyntacticModifier(declaration, ast.ModifierFlagsConst) {
 			value, err := l.enumConstant(member)
+			if err == nil {
+				value = l.namespaceReadyValue(node, value)
+			}
 			return value, true, err
 		}
 		var receiver *ast.Node
@@ -386,11 +389,8 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 			}
 		}
 	}
-	if node.Kind == ast.KindParameter && ast.HasSyntacticModifier(node, ast.ModifierFlagsParameterPropertyModifier) {
-		return &Refused{Where: l.program.Where(node), What: "a parameter property", Fix: "declare a field and assign it in the constructor"}
-	}
 	if node.Kind == ast.KindEnumDeclaration {
-		if node.Parent.Kind != ast.KindSourceFile {
+		if node.Parent.Kind != ast.KindSourceFile && node.Parent.Kind != ast.KindModuleBlock {
 			return l.notYet(node, "an enum inside a function or block; declare it at module scope")
 		}
 		symbol := l.symbol(node.Name())
