@@ -1,0 +1,8 @@
+import type { SortedAndCanonicalizedMutableFileSystemEntries } from 'original-tsc-directory';
+interface Base { readonly directories: string[]; }
+function read(base: Base, alias: string[]): void {
+ const viewed = base as SortedAndCanonicalizedMutableFileSystemEntries;
+ console.log(typeof viewed.files);
+}
+const raw = {directories: ['kept'], files: 7};
+read(raw, []);

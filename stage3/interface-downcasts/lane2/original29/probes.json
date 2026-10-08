@@ -1,0 +1,58 @@
+[
+  {
+    "name": "files-good",
+    "source": "a;b\n",
+    "diagnostic": "",
+    "contracts": [
+      "SortedAndCanonicalizedMutableFileSystemEntries"
+    ]
+  },
+  {
+    "name": "files-lazy",
+    "source": "unread\n",
+    "diagnostic": "",
+    "contracts": [
+      "SortedAndCanonicalizedMutableFileSystemEntries"
+    ]
+  },
+  {
+    "name": "files-wrong-array",
+    "source": "number\n",
+    "diagnostic": "field read failed: viewed.files is not a string[]; expected string[], found number",
+    "contracts": [
+      "SortedAndCanonicalizedMutableFileSystemEntries"
+    ]
+  },
+  {
+    "name": "files-wrong-element",
+    "source": "number\n",
+    "diagnostic": "element read failed: items[0] expected string, found number",
+    "contracts": [
+      "SortedAndCanonicalizedMutableFileSystemEntries"
+    ]
+  },
+  {
+    "name": "files-lazy-element",
+    "source": "a\n",
+    "diagnostic": "",
+    "contracts": [
+      "SortedAndCanonicalizedMutableFileSystemEntries"
+    ]
+  },
+  {
+    "name": "files-map",
+    "source": "a!;b!\n",
+    "diagnostic": "",
+    "contracts": [
+      "SortedAndCanonicalizedMutableFileSystemEntries"
+    ]
+  },
+  {
+    "name": "files-alias",
+    "source": "new;b\n",
+    "diagnostic": "",
+    "contracts": [
+      "SortedAndCanonicalizedMutableFileSystemEntries"
+    ]
+  }
+]

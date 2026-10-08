@@ -2777,3 +2777,7 @@ Three original array pairs / nine reads are certified with fifty-three fixtures 
 ### Lane 2 ranked group 28 configuration arrays
 
 Two original array pairs / six reads are certified with sixteen fixtures and two executed mutants. Complete ConfigFileSpecs and CompilerOptions declarations are retained; finishing controls and mutants pass leak checks. Lane 2 totals are 201 pairs / 2954 reads, remaining 133 / 235. See stage3/interface-downcasts/lane2/RANKED28-ARRAYS-REPORT.md.
+
+### Lane 2 ranked group 29 private directory arrays
+
+The original private files array adds one pair / three reads, verified with seven fixtures and an executed mutant while retaining unread branded sorted arrays. Finishing controls and the mutant pass leak checks. Groups 24 through 29 add eighteen pairs / fifty-four reads in total. Lane 2 is now 202 pairs / 2957 reads, remaining 132 / 232. See stage3/interface-downcasts/lane2/RANKED24-29-BATCH-REPORT.md. The amdDependencies intersection is listed for lane 7 and does not stop independent ranked work.
