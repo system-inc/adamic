@@ -13,6 +13,9 @@ import os
 import subprocess
 import sys
 import tempfile
+import signal
+import threading
+import time
 import unittest
 from unittest import mock
 
@@ -96,7 +99,7 @@ class FailClosed(unittest.TestCase):
         listing = mock.Mock(stdout="example.com/p\n")
         with mock.patch.object(run.subprocess, "Popen", side_effect=popen), \
                 mock.patch.object(run.Gate, "touched", lambda gate, changed: (gate.packageDirectories.update({"p": self.tree, run.module + "/stage1/cohere/tsprinter": self.tree}) or ["p"], list(unowned))), \
-                mock.patch.object(run.subprocess, "run", side_effect=lambda command, **options: listing if command[:2] == ["go", "list"] else realRun(command, **options)), \
+                mock.patch.object(run.Gate, "command", side_effect=lambda command, **options: listing if command[:2] == ["go", "list"] else realRun(command, **options)), \
                 mock.patch.object(run.Gate, silent, lambda *arguments: None) if silent else mock.patch.object(run, "smokeTest", run.smokeTest), \
                 mock.patch.object(run.Gate, "npmCli", lambda gate: "npm-cli.js"), \
                 mock.patch.object(sys, "argv", ["run.py"]), mock.patch("builtins.print"):
@@ -271,7 +274,8 @@ class OracleSelection(unittest.TestCase):
 
     def select(self, base):
         gate = run.Gate.__new__(run.Gate)
-        gate.arguments = mock.Mock(tree=self.tree, base=base, sha=self.commit())
+        gate.arguments = mock.Mock(tree=self.tree, base=base, sha=self.commit(), full=False)
+        gate.lock, gate.processes, gate.failure = threading.Lock(), [], None
         return gate.selectOracle()
 
     def test_a_fixture_no_table_names_skips_that_tables_test(self):
@@ -294,6 +298,112 @@ class OracleSelection(unittest.TestCase):
         selection = self.select(base)
         self.assertTrue(selection["whole"], selection)
         self.assertIn("castFixtures", selection["reason"])
+
+
+@unittest.skipUnless(sys.platform == "linux", "requires Linux /proc sessions")
+class KillDescendants(unittest.TestCase):
+    def setUp(self):
+        self.directory = tempfile.TemporaryDirectory()
+        self.addCleanup(self.directory.cleanup)
+        self.tree = self.directory.name
+        for name, content in {
+            "go.mod": "module example.com/kill\n\ngo 1.20\n",
+            "kill_test.go": r'''package kill
+import ("os"; "os/exec"; "strconv"; "syscall"; "testing"; "time")
+func TestGuard(t *testing.T) {
+    child := exec.Command("sleep", "600")
+    child.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+    if err := child.Start(); err != nil { t.Fatal(err) }
+    defer child.Process.Kill()
+    if err := os.WriteFile(os.Getenv("CHILD_PID"), []byte(strconv.Itoa(child.Process.Pid)), 0600); err != nil { t.Fatal(err) }
+    for { time.Sleep(time.Second) }
+}
+''',
+        }.items():
+            with open(os.path.join(self.tree, name), "w") as handle:
+                handle.write(content)
+        realRun(["git", "init", "-q", self.tree], check=True)
+        realRun(["git", "-C", self.tree, "add", "."], check=True)
+        realRun(["git", "-C", self.tree, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "scratch"], check=True)
+        self.binary = os.path.join(self.tree, "guard.test")
+        realRun(["go", "test", "-c", "-o", self.binary, "."], cwd=self.tree, check=True, timeout=120)
+
+    def state(self, pid):
+        try:
+            with open("/proc/%d/stat" % pid) as handle:
+                return handle.read().rsplit(")", 1)[1].split()
+        except FileNotFoundError:
+            return None
+
+    def alive(self, pid):
+        state = self.state(pid)
+        return state is not None and state[0] not in ("Z", "X")
+
+    def probe(self, action):
+        pidFile = os.path.join(self.tree, "child.pid")
+        if os.path.exists(pidFile):
+            os.unlink(pidFile)
+        sha = run.git(self.tree, "rev-parse", "HEAD")
+        arguments = mock.Mock(tree=self.tree, tools=self.tree, out=self.tree, sha=sha, base=sha,
+                              full=False, branch="", branch_source="", session="", session_source="")
+        gate = run.Gate(arguments)
+        # The exact testSplit test-binary launch path, including test2json and stream.
+        command = ["go", "tool", "test2json", "-t", "-p", "example.com/kill", self.binary,
+                   "-test.v=test2json", "-test.run", "^TestGuard$"]
+        thread = gate.guarded("tests", gate.stream, "tests", command, None, self.tree, {"CHILD_PID": pidFile})
+        thread.start()
+        pid = None
+        try:
+            deadline = time.monotonic() + 15
+            while not os.path.exists(pidFile) and time.monotonic() < deadline:
+                time.sleep(0.01)
+            self.assertTrue(os.path.exists(pidFile), "Go child did not start")
+            with open(pidFile) as handle:
+                pid = int(handle.read())
+            state = self.state(pid)
+            self.assertTrue(self.alive(pid), "control cannot see sleep")
+            self.assertEqual(int(state[2]), pid, "sleep must have its own process group")
+            self.assertIn(int(state[3]), [process.pid for process in gate.processes])
+            if action == "fail":
+                gate.step("other", ["sh", "-c", "exit 1"])
+            elif action == "finish":
+                gate.planned = []
+                gate.finish()
+            deadline = time.monotonic() + 2
+            while action != "control" and self.alive(pid) and time.monotonic() < deadline:
+                time.sleep(0.01)
+            survived = self.alive(pid)
+            print("kill probe: action=%s pid=%d pgrp=%s sid=%s survived=%s" %
+                  (action, pid, state[2], state[3], survived))
+            return survived
+        finally:
+            # Independent cleanup also handles the intentionally broken mutant and old gate.
+            if pid is not None and self.alive(pid):
+                os.kill(pid, signal.SIGKILL)
+            for process in gate.processes:
+                try:
+                    os.killpg(process.pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+            thread.join(10)
+            for process in gate.processes:
+                if process.stdout is not None:
+                    process.stdout.close()
+            self.assertFalse(thread.is_alive(), "test stream did not stop")
+
+    def test_control_sees_survivor(self):
+        self.assertTrue(self.probe("control"))
+
+    def test_fail_kills_separate_process_group(self):
+        self.assertFalse(self.probe("fail"), "Setpgid child survived Gate.fail")
+
+    def test_finish_kills_separate_process_group(self):
+        self.assertFalse(self.probe("finish"), "Setpgid child survived Gate.finish")
+
+    def test_mutant_without_session_cleanup_is_caught(self):
+        with mock.patch.object(run.Gate, "killSessions", lambda gate: None):
+            with self.assertRaisesRegex(AssertionError, "Setpgid child survived"):
+                self.test_fail_kills_separate_process_group()
 
 
 if __name__ == "__main__":
