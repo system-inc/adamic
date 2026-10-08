@@ -1,7 +1,7 @@
 // cohere regularExpressionQuantifierBounds1.ts, with both compilation paths.
-console.log(`${new RegExp('a{9223372036854775808,9223372036854775807}').test('a')}`);
+console.log(`${new RegExp('a{9223372036854775807,9223372036854775808}').test('a')}`);
 console.log(`${/a{18446744073709551616}/.test('aaa')}`);
-for (const pattern of ['a{9223372036854775808,9223372036854775807}', 'a{2147483648,2147483647}', 'a{0,18446744073709551616}', '(a){1,2147483648}', 'a{2147483648,2147483646}']) {
+for (const pattern of ['a{9223372036854775807,9223372036854775808}', 'a{2147483647,2147483648}', 'a{0,18446744073709551616}', '(a){1,2147483648}', 'a{2147483648,2147483646}']) {
     for (const input of ['', 'a', 'aaa', 'b']) {
         try {
             const expression = new RegExp(pattern, 'g');

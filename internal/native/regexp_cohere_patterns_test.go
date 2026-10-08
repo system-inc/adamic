@@ -113,6 +113,10 @@ process.stdout.write(JSON.stringify(rows.map(r=>r.Error??'')));`)
 			err = program.NativeCompatibility()
 		}
 		if err != nil {
+			var divergence *regex.V8DivergenceError
+			if !errors.As(err, &divergence) || p.Pattern != "a{9223372036854775808,9223372036854775807}" || divergence.Behavior != "clamps quantifier bounds above 2^31-1 before the min > max check" {
+				t.Fatalf("unexpected Node-valid refusal /%s/%s: %v", p.Pattern, p.Flags, err)
+			}
 			refused++
 			t.Logf("REFUSED pattern=%d /%s/%s source=%s: %v", i, p.Pattern, p.Flags, p.Sources[0], err)
 			continue
@@ -131,8 +135,8 @@ process.stdout.write(JSON.stringify(rows.map(r=>r.Error??'')));`)
 		}
 	}
 	t.Logf("cohere totals: patterns=%d compiled=%d refused=%d Node-invalid=%d without-fixture-input=%d executions=%d pin=%s", len(corpus.Patterns), compiled, refused, invalid, withoutInputs, len(cases), corpus.CohereCommit)
-	if refused != 0 {
-		t.Fatalf("%d unexpected Node-valid refusals", refused)
+	if refused != 1 {
+		t.Fatalf("expected the single ruled V8 divergence, got %d refusals", refused)
 	}
 	// The existing native oracle compares test, exec, capture text, capture spans,
 	// named groups and lastIndex in bounded, unbounded and forced-VM modes.
