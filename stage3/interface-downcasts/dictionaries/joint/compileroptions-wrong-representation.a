@@ -1,0 +1,10 @@
+import type { CompilerOptions } from 'original-tsc-types';
+interface Base { readonly kind:'options'; }
+interface Carrier extends Base { readonly child:CompilerOptions; }
+const raw={kind:'options' as const,child:{item:['array']}};
+const base:Base=raw;
+const carrier=base as Carrier;
+const selected=carrier.child['item'];
+const dictionary=selected as {readonly [key:string]:string[]|undefined};
+const values=dictionary['name'];
+console.log(values===undefined ? 'missing' : values[0] ?? 'missing');

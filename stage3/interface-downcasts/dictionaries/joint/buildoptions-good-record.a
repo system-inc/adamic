@@ -1,0 +1,11 @@
+import type { BuildOptions } from 'original-tsc-tsbuildPublic';
+interface Base { readonly kind:'options'; }
+interface Carrier extends Base { readonly child:BuildOptions; }
+const entries:{[key:string]:string[]}={name:['built'.concat('-value')]};
+const raw={kind:'options' as const,child:{item:entries}};
+const base:Base=raw;
+const carrier=base as Carrier;
+const selected=carrier.child['item'];
+const dictionary=selected as {readonly [key:string]:string[]|undefined};
+const values=dictionary['name'];
+console.log(values===undefined ? 'missing' : values[0] ?? 'missing');

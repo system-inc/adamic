@@ -103,9 +103,11 @@ func (l *lowering) dictionaryReadContract(node *ast.Node, object, key ir.Express
 	if err != nil {
 		return nil, err
 	}
-	primitive := false
+	primitive, reference := false, false
 	if _, ok := ir.DictionaryReadKinds(l.result, id); !ok {
-		if selected, supported := l.dictionaryPrimitiveReadContract(node, declared); supported {
+		if selected, supported := l.dictionaryReferenceReadContract(node, declared); supported && !l.dictionaryPrimitiveReadContext(node) {
+			id, reference = selected, true
+		} else if selected, supported := l.dictionaryPrimitiveReadContract(node, declared); supported {
 			id, primitive = selected, true
 		} else {
 			return nil, l.lazyReadRefusal(node, sourceExpression(node), "dictionary element "+l.checker.TypeToString(declared))
@@ -132,7 +134,7 @@ func (l *lowering) dictionaryReadContract(node *ast.Node, object, key ir.Express
 	if err != nil {
 		return nil, err
 	}
-	return ir.Property{Object: object, DictionaryKey: key, DictionaryPrimitive: primitive, Of: of, View: sourceExpression(node), ViewWhere: l.program.Where(node), ViewType: l.checker.TypeToString(declared), ViewContract: id, ViewTypeID: int(declared.Id()), ViewAllowed: dictionaryReadLiterals(l.viewLiterals(declared))}, nil
+	return ir.Property{Object: object, DictionaryKey: key, DictionaryPrimitive: primitive, DictionaryReference: reference, Of: of, View: sourceExpression(node), ViewWhere: l.program.Where(node), ViewType: l.checker.TypeToString(declared), ViewContract: id, ViewTypeID: int(declared.Id()), ViewAllowed: dictionaryReadLiterals(l.viewLiterals(declared))}, nil
 }
 
 // Resolved string-index signatures carry generic arguments that have no named

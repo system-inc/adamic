@@ -98,3 +98,12 @@ func PrimitiveDictionaryReadCertificate(program *Program, read Property) bool {
 	}
 	return true
 }
+
+// A complete immediate selector preserves the original child graph for later reads.
+func SelectedDictionaryReadCertificate(program *Program, read Property) bool {
+	if !read.DictionaryPrimitive && !read.DictionaryReference || read.DictionaryKey == nil {
+		return false
+	}
+	kinds, ok := DictionaryReadKinds(program, read.ViewContract)
+	return ok && len(kinds) > 0
+}

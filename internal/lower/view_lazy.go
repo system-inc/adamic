@@ -195,7 +195,7 @@ func (l *lowering) checkLazyViewReads() error {
 				operationFamily = "dictionary enumeration"
 			} else if read.DictionaryRead == nil {
 				operationFamily = "dictionary read without a supported contract"
-			} else if read.DictionaryRead.DictionaryPrimitive && ir.PrimitiveDictionaryReadCertificate(program, *read.DictionaryRead) {
+			} else if (read.DictionaryRead.DictionaryPrimitive || read.DictionaryRead.DictionaryReference) && ir.SelectedDictionaryReadCertificate(program, *read.DictionaryRead) {
 				selectedContract = read.DictionaryRead.ViewContract
 			} else if id := program.ViewContractTypes[typeID]; id != 0 {
 				if _, ok := ir.DictionaryReadKinds(program, id); !ok {

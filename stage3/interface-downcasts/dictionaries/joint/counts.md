@@ -1,0 +1,14 @@
+| Fixture | Allocations | Frees | Retains | Releases | Peak | Regions |
+| --- | --- | --- | --- | --- | --- | --- |
+| buildoptions-good | 5 | 5 | 13 | 19 | 5 | 0 |
+| buildoptions-good-record | 6 | 6 | 16 | 22 | 6 | 0 |
+| buildoptions-missing | 3 | 3 | 10 | 16 | 3 | 0 |
+| buildoptions-wrong-element | 4 | 0 | 10 | 9 | 4 | 0 |
+| buildoptions-wrong-representation | 3 | 0 | 9 | 8 | 3 | 0 |
+| buildoptions-wrong-value | 3 | 0 | 8 | 8 | 3 | 0 |
+| compileroptions-good | 5 | 5 | 13 | 19 | 5 | 0 |
+| compileroptions-good-record | 6 | 6 | 16 | 22 | 6 | 0 |
+| compileroptions-missing | 3 | 3 | 10 | 16 | 3 | 0 |
+| compileroptions-wrong-element | 4 | 0 | 10 | 9 | 4 | 0 |
+| compileroptions-wrong-representation | 3 | 0 | 9 | 8 | 3 | 0 |
+| compileroptions-wrong-value | 3 | 0 | 8 | 8 | 3 | 0 |
