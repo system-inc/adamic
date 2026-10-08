@@ -1,0 +1,270 @@
+[
+  {
+    "name": "changed-native-query-0",
+    "shard": "0/4",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/test-split-bridge/mutants/changed-native-query-0-overlay.json",
+      "-run",
+      "^TestBridge",
+      "-count=1",
+      "-timeout=30s"
+    ],
+    "exit": 0,
+    "failed": [],
+    "passed": 6,
+    "skipped": 32,
+    "catcher": "PASS",
+    "log": "/tmp/test-split-bridge/mutants/changed-native-query-0.jsonl"
+  },
+  {
+    "name": "changed-native-query-1",
+    "shard": "1/4",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/test-split-bridge/mutants/changed-native-query-1-overlay.json",
+      "-run",
+      "^TestBridge",
+      "-count=1",
+      "-timeout=30s"
+    ],
+    "exit": 0,
+    "failed": [],
+    "passed": 6,
+    "skipped": 32,
+    "catcher": "PASS",
+    "log": "/tmp/test-split-bridge/mutants/changed-native-query-1.jsonl"
+  },
+  {
+    "name": "changed-native-query-2",
+    "shard": "2/4",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/test-split-bridge/mutants/changed-native-query-2-overlay.json",
+      "-run",
+      "^TestBridge",
+      "-count=1",
+      "-timeout=30s"
+    ],
+    "exit": 0,
+    "failed": [],
+    "passed": 6,
+    "skipped": 32,
+    "catcher": "PASS",
+    "log": "/tmp/test-split-bridge/mutants/changed-native-query-2.jsonl"
+  },
+  {
+    "name": "changed-native-query-3",
+    "shard": "3/4",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/test-split-bridge/mutants/changed-native-query-3-overlay.json",
+      "-run",
+      "^TestBridge",
+      "-count=1",
+      "-timeout=30s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestBridgeOracleSample"
+    ],
+    "passed": 5,
+    "skipped": 32,
+    "catcher": "native oracle mismatch",
+    "log": "/tmp/test-split-bridge/mutants/changed-native-query-3.jsonl"
+  },
+  {
+    "name": "missing-piece",
+    "shard": null,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/test-split-bridge/mutants/missing-piece-overlay.json",
+      "-run",
+      "TestBridgeUnitsCoverEveryPiece",
+      "-count=1",
+      "-timeout=30s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestBridgeUnitsCoverEveryPiece"
+    ],
+    "passed": 0,
+    "skipped": 0,
+    "catcher": "bridge coverage count",
+    "log": "/tmp/test-split-bridge/mutants/missing-piece.jsonl"
+  },
+  {
+    "name": "missing-query",
+    "shard": null,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/test-split-bridge/mutants/missing-query-overlay.json",
+      "-run",
+      "TestBridgeUnitsCoverEveryPiece",
+      "-count=1",
+      "-timeout=30s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestBridgeUnitsCoverEveryPiece"
+    ],
+    "passed": 0,
+    "skipped": 0,
+    "catcher": "query coverage count",
+    "log": "/tmp/test-split-bridge/mutants/missing-query.jsonl"
+  },
+  {
+    "name": "drop-shard-filter",
+    "shard": null,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/test-split-bridge/mutants/drop-shard-filter-overlay.json",
+      "-run",
+      "TestBridgeUnitsCoverEveryPiece",
+      "-count=1",
+      "-timeout=30s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestBridgeUnitsCoverEveryPiece"
+    ],
+    "passed": 0,
+    "skipped": 0,
+    "catcher": "shard coverage",
+    "log": "/tmp/test-split-bridge/mutants/drop-shard-filter.jsonl"
+  },
+  {
+    "name": "accept-corrupt-product",
+    "shard": null,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/test-split-bridge/mutants/accept-corrupt-product-overlay.json",
+      "-run",
+      "TestBridgeProductCacheIsVerified",
+      "-count=1",
+      "-timeout=30s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "passed": 0,
+    "skipped": 0,
+    "catcher": "corrupt product was accepted",
+    "log": "/tmp/test-split-bridge/mutants/accept-corrupt-product.jsonl"
+  },
+  {
+    "name": "accept-extra-product",
+    "shard": null,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/test-split-bridge/mutants/accept-extra-product-overlay.json",
+      "-run",
+      "TestBridgeProductCacheIsVerified",
+      "-count=1",
+      "-timeout=30s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "passed": 0,
+    "skipped": 0,
+    "catcher": "wrong product count was accepted",
+    "log": "/tmp/test-split-bridge/mutants/accept-extra-product.jsonl"
+  },
+  {
+    "name": "rebuild-product",
+    "shard": null,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/test-split-bridge/mutants/rebuild-product-overlay.json",
+      "-run",
+      "TestBridgeProductCacheIsVerified",
+      "-count=1",
+      "-timeout=30s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "passed": 0,
+    "skipped": 0,
+    "catcher": "product was rebuilt",
+    "log": "/tmp/test-split-bridge/mutants/rebuild-product.jsonl"
+  },
+  {
+    "name": "over-budget",
+    "shard": null,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/test-split-bridge/mutants/over-budget-overlay.json",
+      "-run",
+      "TestBridgeABI",
+      "-count=1",
+      "-timeout=30s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestBridgeABI"
+    ],
+    "passed": 0,
+    "skipped": 0,
+    "catcher": "bridge unit exceeded 30 seconds",
+    "log": "/tmp/test-split-bridge/mutants/over-budget.jsonl"
+  },
+  {
+    "name": "poison-build-callback",
+    "shard": null,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/test-split-bridge/mutants/poison-build-callback-overlay.json",
+      "-run",
+      "^TestBridge",
+      "-count=1",
+      "-timeout=30s"
+    ],
+    "exit": 0,
+    "failed": [],
+    "passed": 18,
+    "skipped": 20,
+    "catcher": "PASS",
+    "log": "/tmp/test-split-bridge/mutants/poison-build-callback.jsonl"
+  }
+]

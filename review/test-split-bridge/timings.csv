@@ -1,0 +1,8 @@
+test,before,after,after_with_fetch,units
+TestBridge sample,207.15,0.17,1.994,16
+bridge/tsgo/TestTSGoRequiresLink,0.04,0.04,0.053,1
+bridge/tsgo/checker/TestFactEncoding,0,0,0.005,1
+bridge/tsgo/checker/TestShapeAndNameFacts,0.01,0.01,0.016,1
+bridge/tsgo/checker/TestExactIndexMatchesCompilerNodes,0.05,0.05,0.06,1
+bridge/tsgo/checker/TestAdamicRootKeepsConfigDeclarations,0.05,0.05,0.06,1
+TestBridge compiler corpus,56.26,1.26,3.283,31
