@@ -1,0 +1,9 @@
+import type { TypeMapper, FlowReduceLabelData } from 'original-tsc-types';
+interface Base { readonly target: object; }
+function read(base: Base, alias: readonly {flags: number; id: number; node: undefined; antecedent: undefined}[]): void {
+ const viewed = base as FlowReduceLabelData;
+ const items = viewed.antecedents;
+ alias[0]!.flags = 4; console.log(`${items[0]!.flags}`);
+}
+const raw = {target: {}, antecedents: [{flags: 2, id: 0, node: undefined, antecedent: undefined}]};
+read(raw, raw.antecedents);

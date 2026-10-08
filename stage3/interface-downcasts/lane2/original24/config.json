@@ -1,0 +1,32 @@
+{
+  "targets": [
+    [
+      "{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }",
+      "sources",
+      3
+    ],
+    [
+      "{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }",
+      "targets",
+      3
+    ],
+    [
+      "FlowReduceLabelData",
+      "antecedents",
+      3
+    ]
+  ],
+  "fields": [
+    "FlowReduceLabelData",
+    "Type",
+    "FlowUnreachable",
+    "FlowStart",
+    "FlowLabel",
+    "FlowAssignment",
+    "FlowCondition",
+    "FlowSwitchClause",
+    "FlowArrayMutation",
+    "FlowCall",
+    "FlowReduceLabel"
+  ]
+}

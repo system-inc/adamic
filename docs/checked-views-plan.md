@@ -2757,3 +2757,7 @@ The full private watcher callback array is certified at four original reads. Ind
 ### Lane 2 next ranked intersection boundary
 
 All three requested array joints and ranked group 23 are pushed. The next SourceFile.amdDependencies element path read refuses an unsupported intersection contract with complete original declarations; a Node control and exact compile-boundary regression pass. No pair credit is added. TypeMapper sources/targets and FlowReduceLabelData antecedents remain uncertified after compile-only discovery. See stage3/interface-downcasts/lane2/MORNING-ARRAY-JOINTS-REPORT.md.
+
+### Lane 2 ranked group 24 mapper and flow arrays
+
+Original mapper sources/targets and FlowReduceLabelData antecedents are certified with complete declarations, 28 fixtures and ten executed mutants. Finishing controls and mutants pass leak checks. Lane 2 totals are 187 pairs / 2912 reads, remaining 147 / 277. SourceFile.amdDependencies is listed for lane 7 in stage3/interface-downcasts/lane2/INTERSECTION-HANDOFFS.md; independent ranked work continues. See stage3/interface-downcasts/lane2/RANKED24-ARRAYS-REPORT.md.

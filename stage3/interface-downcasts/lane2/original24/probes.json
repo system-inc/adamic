@@ -1,0 +1,319 @@
+[
+  {
+    "name": "sources-good",
+    "source": "1\n",
+    "diagnostic": "",
+    "contracts": [
+      "{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }",
+      "Type"
+    ]
+  },
+  {
+    "name": "sources-lazy",
+    "source": "unread\n",
+    "diagnostic": "",
+    "contracts": [
+      "{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }"
+    ]
+  },
+  {
+    "name": "sources-wrong-array",
+    "source": "number\n",
+    "diagnostic": "field read failed: viewed.sources is not a readonly Type[]; expected readonly Type[], found number",
+    "contracts": [
+      "{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }"
+    ]
+  },
+  {
+    "name": "sources-wrong-element",
+    "source": "number\n",
+    "diagnostic": "element read failed: items[0] expected Type, found number",
+    "contracts": [
+      "{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }"
+    ]
+  },
+  {
+    "name": "sources-wrong-flags",
+    "source": "string\n",
+    "diagnostic": "field read failed: items[0]!.flags is not a TypeFlags; expected TypeFlags, found string",
+    "contracts": [
+      "{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }",
+      "Type"
+    ]
+  },
+  {
+    "name": "sources-missing-flags",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.flags is not initialized; expected TypeFlags, found missing",
+    "contracts": [
+      "{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }",
+      "Type"
+    ]
+  },
+  {
+    "name": "sources-lazy-element",
+    "source": "1\n",
+    "diagnostic": "",
+    "contracts": [
+      "{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }",
+      "Type"
+    ]
+  },
+  {
+    "name": "sources-map",
+    "source": "1\n",
+    "diagnostic": "",
+    "contracts": [
+      "{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }",
+      "Type"
+    ]
+  },
+  {
+    "name": "sources-alias",
+    "source": "2\n",
+    "diagnostic": "",
+    "contracts": [
+      "{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }",
+      "Type"
+    ]
+  },
+  {
+    "name": "targets-good",
+    "source": "1\n",
+    "diagnostic": "",
+    "contracts": [
+      "{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }",
+      "Type"
+    ]
+  },
+  {
+    "name": "targets-lazy",
+    "source": "unread\n",
+    "diagnostic": "",
+    "contracts": [
+      "{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }"
+    ]
+  },
+  {
+    "name": "targets-wrong-array",
+    "source": "number\n",
+    "diagnostic": "field read failed: viewed.targets matches no member of readonly Type[] | undefined; expected readonly Type[] | undefined, found number",
+    "contracts": [
+      "{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }"
+    ]
+  },
+  {
+    "name": "targets-wrong-element",
+    "source": "number\n",
+    "diagnostic": "element read failed: items[0] expected Type, found number",
+    "contracts": [
+      "{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }"
+    ]
+  },
+  {
+    "name": "targets-wrong-flags",
+    "source": "string\n",
+    "diagnostic": "field read failed: items[0]!.flags is not a TypeFlags; expected TypeFlags, found string",
+    "contracts": [
+      "{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }",
+      "Type"
+    ]
+  },
+  {
+    "name": "targets-missing-flags",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.flags is not initialized; expected TypeFlags, found missing",
+    "contracts": [
+      "{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }",
+      "Type"
+    ]
+  },
+  {
+    "name": "targets-lazy-element",
+    "source": "1\n",
+    "diagnostic": "",
+    "contracts": [
+      "{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }",
+      "Type"
+    ]
+  },
+  {
+    "name": "targets-map",
+    "source": "1\n",
+    "diagnostic": "",
+    "contracts": [
+      "{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }",
+      "Type"
+    ]
+  },
+  {
+    "name": "targets-alias",
+    "source": "2\n",
+    "diagnostic": "",
+    "contracts": [
+      "{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }",
+      "Type"
+    ]
+  },
+  {
+    "name": "targets-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "{ kind: TypeMapKind.Array; sources: readonly Type[]; targets: readonly Type[] | undefined; }"
+    ]
+  },
+  {
+    "name": "flow-good",
+    "source": "2\n",
+    "diagnostic": "",
+    "contracts": [
+      "FlowReduceLabelData",
+      "FlowUnreachable",
+      "FlowStart",
+      "FlowLabel",
+      "FlowAssignment",
+      "FlowCondition",
+      "FlowSwitchClause",
+      "FlowArrayMutation",
+      "FlowCall",
+      "FlowReduceLabel"
+    ]
+  },
+  {
+    "name": "flow-lazy",
+    "source": "unread\n",
+    "diagnostic": "",
+    "contracts": [
+      "FlowReduceLabelData",
+      "FlowUnreachable",
+      "FlowStart",
+      "FlowLabel",
+      "FlowAssignment",
+      "FlowCondition",
+      "FlowSwitchClause",
+      "FlowArrayMutation",
+      "FlowCall",
+      "FlowReduceLabel"
+    ]
+  },
+  {
+    "name": "flow-wrong-array",
+    "source": "number\n",
+    "diagnostic": "field read failed: viewed.antecedents is not a FlowNode[]; expected FlowNode[], found number",
+    "contracts": [
+      "FlowReduceLabelData",
+      "FlowUnreachable",
+      "FlowStart",
+      "FlowLabel",
+      "FlowAssignment",
+      "FlowCondition",
+      "FlowSwitchClause",
+      "FlowArrayMutation",
+      "FlowCall",
+      "FlowReduceLabel"
+    ]
+  },
+  {
+    "name": "flow-wrong-element",
+    "source": "number\n",
+    "diagnostic": "element read failed: items[0] expected FlowNode, found number",
+    "contracts": [
+      "FlowReduceLabelData",
+      "FlowUnreachable",
+      "FlowStart",
+      "FlowLabel",
+      "FlowAssignment",
+      "FlowCondition",
+      "FlowSwitchClause",
+      "FlowArrayMutation",
+      "FlowCall",
+      "FlowReduceLabel"
+    ]
+  },
+  {
+    "name": "flow-wrong-flags",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0] matches no member of FlowNode; expected FlowNode, found object",
+    "contracts": [
+      "FlowReduceLabelData",
+      "FlowUnreachable",
+      "FlowStart",
+      "FlowLabel",
+      "FlowAssignment",
+      "FlowCondition",
+      "FlowSwitchClause",
+      "FlowArrayMutation",
+      "FlowCall",
+      "FlowReduceLabel"
+    ]
+  },
+  {
+    "name": "flow-missing-flags",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0] matches no member of FlowNode; expected FlowNode, found object",
+    "contracts": [
+      "FlowReduceLabelData",
+      "FlowUnreachable",
+      "FlowStart",
+      "FlowLabel",
+      "FlowAssignment",
+      "FlowCondition",
+      "FlowSwitchClause",
+      "FlowArrayMutation",
+      "FlowCall",
+      "FlowReduceLabel"
+    ]
+  },
+  {
+    "name": "flow-lazy-element",
+    "source": "2\n",
+    "diagnostic": "",
+    "contracts": [
+      "FlowReduceLabelData",
+      "FlowUnreachable",
+      "FlowStart",
+      "FlowLabel",
+      "FlowAssignment",
+      "FlowCondition",
+      "FlowSwitchClause",
+      "FlowArrayMutation",
+      "FlowCall",
+      "FlowReduceLabel"
+    ]
+  },
+  {
+    "name": "flow-map",
+    "source": "2\n",
+    "diagnostic": "",
+    "contracts": [
+      "FlowReduceLabelData",
+      "FlowUnreachable",
+      "FlowStart",
+      "FlowLabel",
+      "FlowAssignment",
+      "FlowCondition",
+      "FlowSwitchClause",
+      "FlowArrayMutation",
+      "FlowCall",
+      "FlowReduceLabel"
+    ]
+  },
+  {
+    "name": "flow-alias",
+    "source": "4\n",
+    "diagnostic": "",
+    "contracts": [
+      "FlowReduceLabelData",
+      "FlowUnreachable",
+      "FlowStart",
+      "FlowLabel",
+      "FlowAssignment",
+      "FlowCondition",
+      "FlowSwitchClause",
+      "FlowArrayMutation",
+      "FlowCall",
+      "FlowReduceLabel"
+    ]
+  }
+]
