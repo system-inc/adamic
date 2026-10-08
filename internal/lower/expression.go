@@ -810,6 +810,7 @@ var comparisons = map[ast.Kind]ir.Operator{
 // combine lowers a binary operator on two lowered operands.
 func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression, right ir.Expression) (ir.Expression, error) {
 	both := func(want ir.Type) bool { return left.Type() == want && right.Type() == want }
+	if operator == ast.KindPlusToken && (left.Type() == ir.Object || right.Type() == ir.Object) { return l.objectStringAddition(node, left, right) }
 	if operator == ast.KindPlusToken && (left.Type() == ir.String || right.Type() == ir.String) {
 		spell := func(value ir.Expression) ir.Expression {
 			switch value.Type() {
@@ -946,25 +947,8 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
-		switch value.Type() {
-		case ir.Number:
-			value = ir.NumberToString{Value: value}
-		case ir.Boolean:
-			value = ir.BooleanToString{Value: value}
-		case ir.MaybeNumber, ir.MaybeBoolean:
-			value = ir.MaybeToString{Value: value}
-		case ir.Union:
-			if !l.writable(l.arrayPredicateObservedType(span.AsTemplateSpan().Expression)) {
-				return nil, l.notYet(span, "a template interpolating a union with an object, an array, a map or a function in it")
-			}
-			value = ir.UnionToString{Value: value}
-		case ir.String:
-			value = l.spelled(span.AsTemplateSpan().Expression, value)
-		default:
-			// JavaScript writes an object as "[object Object]", an array as its join, and a function as
-			// its source; 0.1 has no use for any of it.
-			return nil, l.notYet(span, "a template interpolating an object, an array, a map, a function or undefined")
-		}
+		value, err = l.stringConversionValue(span.AsTemplateSpan().Expression, value)
+		if err != nil { return nil, err }
 		parts = append(parts, value)
 		if literal := span.AsTemplateSpan().Literal.Text(); literal != "" {
 			parts = append(parts, ir.StringConstant{Index: l.constant(literal)})

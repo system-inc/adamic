@@ -82,6 +82,9 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if found != nil {
 			return true
 		}
+		if node.Kind == ast.KindPropertyAccessExpression && node.Name().Text() == "toPrimitive" && l.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, "Symbol") {
+			found = l.notYet(node, "Symbol.toPrimitive hooks need verified intrinsic provenance and tagged callable dispatch"); return true
+		}
 		if branch := l.literalCallableBranch(node); branch != nil {
 			return visit(branch)
 		}

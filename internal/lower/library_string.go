@@ -72,6 +72,10 @@ func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	return l.stringConversionValue(node, value)
+}
+
+func (l *lowering) stringConversionValue(node *ast.Node, value ir.Expression) (ir.Expression, error) {
 	if l.checker.GetTypeAtLocation(node).Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0 {
 		return ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: value}}, Result: ir.StringConstant{Index: l.constant("undefined")}}, nil
 	}
@@ -92,6 +96,7 @@ func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
 	if _, missing := value.(ir.Undefined); missing {
 		return ir.StringConstant{Index: l.constant("undefined")}, nil
 	}
+	if value.Type() == ir.Object && !l.includesUndefined(l.checker.GetTypeAtLocation(node)) && !l.includesNull(l.checker.GetTypeAtLocation(node)) { return l.stringObjectConversion(node, value) }
 	return nil, l.notYet(node, "String conversion of an object, array, map or function (ToPrimitive is not lowered)")
 }
 
