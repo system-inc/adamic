@@ -578,6 +578,14 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
+		if binary.OperatorToken.Kind == ast.KindPlusToken && (left.Type() == ir.String || right.Type() == ir.String) {
+			if _, isNull := left.(ir.Null); isNull {
+				left = ir.StringConstant{Index: l.constant("null")}
+			}
+			if _, isNull := right.(ir.Null); isNull {
+				right = ir.StringConstant{Index: l.constant("null")}
+			}
+		}
 		if binary.OperatorToken.Kind == ast.KindPlusToken {
 			left, right = l.spelled(binary.Left, left), l.spelled(binary.Right, right)
 		}
@@ -875,6 +883,9 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 		value, err := l.expression(span.AsTemplateSpan().Expression)
 		if err != nil {
 			return nil, err
+		}
+		if _, isNull := value.(ir.Null); isNull {
+			value = ir.StringConstant{Index: l.constant("null")}
 		}
 		switch value.Type() {
 		case ir.Number:

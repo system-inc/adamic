@@ -1,8 +1,8 @@
-Built witnesses for all 27 assigned rows: 26 proven, including all 26 supported hole variants; D119 nested records blocked.
-Commits: sentinel eff7e8e9, nullable guards 27b06da3, D151 927e13e9; dependency merges 09180ec8 and f7c17f3b; witness groups ac206b80 through 1fb6e6a4; cast integration correction and regression evidence in this commit.
-Commands: complete witness suite, compiler packages, both dependency suites, 30 uncached Node oracle fixtures, vet and census pass.
-Mutants: every supported absent and hole guard erased independently and caught; record outer guard and null-sentinel-to-NULL mutants caught.
-Not covered: D119 needs nested record payload support; full repository gate and whole TypeScript build not run.
+Built inline sentinel predicates, address-safe nullable Map/Set keys, null-byte backstop, JSON null classification and literal-null call fitting.
+Commits: inline predicates and migration assertion 3a69e75c; Map/Set, conversions and new Node controls in this commit; prior witness completion 71897d7e.
+Commands: all runtime-review controls and compiler packages pass; full merged witness/runtime regression results follow.
+Mutants: erased Map hash/comparison address checks and erased JSON sentinel classification both caught; prior null/undefined and indexed guard mutants retained.
+Not covered: D119 nested record payload remains refused; full repository gate, whole TypeScript build and WebAssembly timing not run.
 
 ## Scope and assumptions
 
@@ -604,3 +604,57 @@ and the same with ADAMIC_NULL_BENCH=after-inline. Migration backstop passes in
 runtime-review-kinds.log. Existing nullable controls and D151 pass in 17.556s,
 including the sentinel-to-NULL and erased-presence mutants
 (runtime-review-inline-controls.log). Setup/environment is reused; nproc 5.
+
+
+## Runtime review: Map/Set identity, bytes and conversions
+
+String-key hashing checks the sentinel address before reading bytes; null gets
+its own fixed hash. String-key comparison checks either sentinel address first
+and compares sentinel values by identity, then handles undefined NULL and normal
+string contents. The normal byte comparison follows the existing canonical
+WTF-8 equality used by strings. Set uses the same map storage. The fixture
+stores empty string, null, a runtime-built real string "null", and undefined
+in one Map and one Set. It exercises size, get/has, overwrite, duplicate add
+and delete. All four keys stay distinct in source Node, JS, native release and
+ASan/UBSan. Removing exactly the Map hash and comparison sentinel-address
+branches from a temporary replacement map.o compiles and runs, but exits 0
+with size 3 instead of Node's 4 and wrong lookups/deletions. The byte-for-byte
+Node fixture catches it. The original archive and runtime cache are unchanged.
+
+The one adamic_null_string definition in internal/native/runtime/nullable.c
+now uses ADAMIC_STRING("null"), retaining its immortal string-kind header.
+adamic.h contains its sole extern declaration and both inline predicates.
+A direct C runtime backstop checks the header (references 0, string kind),
+constructor address and raw sentinel output against Node's String(null), in
+release and ASan/UBSan. Null equality remains by address, distinct from a real
+string with the same bytes.
+
+Ten independent project .ts programs hold these requested shapes to Node:
+Map/Set, narrowed concatenation, narrowed length, narrowed JSON.stringify,
+narrowed slice, narrowed equality/order comparison, null template, null +
+string in both orders, null JSON.stringify, and String(null). Narrowed controls
+pass a runtime-built string, empty string, real "null" and literal null through
+a string | null function. Conversion controls include literal-null templates
+and both literal-null concatenation orders as well as a nullable variable.
+All stdout/stderr/exit observations match in both backends, including native
+release and ASan/UBSan (runtime-review-controls-final.log, 5.781s).
+
+The controls first exposed a real pre-existing native call gap: literal null
+passed to a string | null parameter still emitted NULL because argument fitting
+handled maybe/union/weak but not null's reference kind. This could incorrectly
+enter a narrowed branch and panic, or print undefined. Native arguments now
+fit ir.Null to the parameter's reference kind before normal evaluation through
+nullReference. It is shared across kinds, and UsesNullSentinel continues to
+keep unmigrated kinds off the constructor's default path. Literal null in
+string concatenation/templates is spelled "null" directly. No mixed numeric
+coercion or general object ToPrimitive support is introduced.
+
+JSON schema validation now recognizes null members, allowing the sentinel-backed
+string | null representation. Runtime scalar classification identifies the
+sentinel as JSON null, so it writes null while the real string "null" is quoted;
+NULL remains undefined. An additional isolated JSON runtime mutant erases that
+classification branch, compiles and exits 0 with quoted "null" for null. The
+null JSON Node fixture catches it. Initial failing observations are retained
+in runtime-review-controls.log; the intermediate literal-call fix is retained
+in runtime-review-controls-fixed.log. Compiler lower/IR packages pass in
+22.345s and 14.473s; JavaScript has no standalone tests.
