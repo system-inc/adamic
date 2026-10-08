@@ -1,6 +1,31 @@
 # Stage 3 verdict
 
-Run the native compiler as soon as it links:
+Run correctness and, only after every selected case passes, performance:
+
+```sh
+source /workspace/adamic-tools/env.sh  # use the path cloud/setup.sh printed
+stage3/verdict/final.sh --tsc /absolute/native-tsc /tmp/new-final > /tmp/final.log 2>&1
+```
+
+`final.sh` runs the complete verdict below against the unchanged Node oracle,
+then invokes the merged `stage3/performance/run.sh --native` runner. It prints
+one table: pass/fail per suite followed by native, Node and both typescript-go
+modes' mean and sample SD. The src/compiler native mean must be below **1.78 s**
+to meet the displayed bar. Missing, deferred or inconsistent correctness counts
+refuse timing. Binaries are hashed before and after correctness and timing.
+There is no smoke or cached-correctness bypass in this entry point.
+
+The new output directory contains `correctness/`, `performance/` when permitted,
+logs, executed argv, and final `summary.json` / `summary.md`. Exit 0 means complete
+correctness and performance measurement; missing the speed bar is reported in
+the table and JSON. Exit 1 means correctness or native performance-preflight
+mismatch; exit 2 means infrastructure or inconsistent artifacts. A failed
+verdict never creates a performance command, log or directory. Performance
+prerequisites and the pinned Node/Go versions are in
+[../performance/README.md](../performance/README.md).
+[FINAL.md](FINAL.md) records the A/B/C proof and observed times.
+
+Run correctness alone:
 
 ```sh
 stage3/verdict/run.sh --tsc /absolute/native-tsc /tmp/new-verdict > /tmp/verdict.log 2>&1

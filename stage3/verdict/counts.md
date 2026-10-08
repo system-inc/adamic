@@ -5,7 +5,8 @@
 | Remaining-exclusion reason groups | 6 | 240/240 configurations | 6/6 |
 | Pinned diagnostic fixtures, one per diagnostic-bearing group | 5 | 5/5 | 5/5 |
 | Authored case-host diagnostic fixture (`fixtures/case-host/input.a`) | 1 | 1/1 | 1/1 |
-| Focused harness tests (`test_*.py`) | 23 | 23/23 | See REMAINING.md |
+| Focused harness tests (`test_*.py`) | 34 | 34/34 | See REMAINING.md and FINAL.md |
+| Final-command orchestration fixture outcomes (A, B, C) | 3 | A reaches timing | B and C refuse performance |
 
 The pinned fixtures are references, not duplicated TypeScript sources:
 `evidence/remaining/fixtures.json` records their inputs, baselines and hashes.

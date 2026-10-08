@@ -1,0 +1,37 @@
+{
+  "node_version": "v24.19.0",
+  "node_sha256": "bc17c508ffeed0ec622934f9b7fa72f8e78da65350e63c3eceb56fa688aa5e12",
+  "tsc_sha256": "1c59e77a54b186ec43fa7f3e0d3c4bb15ca5eb5ba43e96b1d3a267139eddd3e3",
+  "typescript_api_sha256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39",
+  "tsgo_sha256": "138b9ab195ae0ad372dae2f952090e07d4c504bbccf63240172ae843116009ce",
+  "pins": {
+    "node": "v24.19.0",
+    "repositories": {
+      "typescript": [
+        "https://github.com/microsoft/TypeScript.git",
+        "050880ce59e30b356b686bd3144efe24f875ebc8"
+      ],
+      "mitt": [
+        "https://github.com/developit/mitt.git",
+        "6b41670516ed8e8b738612f60491995470aa63b3"
+      ],
+      "zod": [
+        "https://github.com/colinhacks/zod.git",
+        "0b216ef674e297ebe41d8bf902262e56f8755822"
+      ]
+    },
+    "driver_cases": [
+      1,
+      24,
+      56,
+      61
+    ]
+  },
+  "versions": {
+    "node": "Version 6.0.3",
+    "go-single": "Version 7.0.0-dev.20260707.2",
+    "go-default": "Version 7.0.0-dev.20260707.2",
+    "native": "Version 6.0.3"
+  },
+  "native_sha256": "a2e43e36d72562c068bb54d5ed06b09fe496195c4ae6304f33772b0684efdaab"
+}
