@@ -7,14 +7,18 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/corpusfiles"
 )
 
 type auditInput struct {
-	Name string `json:"name"`
-	Text string `json:"text"`
+	Corpus bool   `json:"-"`
+	Name   string `json:"name"`
+	Text   string `json:"text"`
 }
 type auditOutput struct {
 	Name      string   `json:"name"`
@@ -35,36 +39,27 @@ func census() bool {
 func auditCorpus(t *testing.T, root string) ([]auditInput, int) {
 	t.Helper()
 	var inputs []auditInput
-	walk := filepath.Join(root, "stage1/cohere/markdownblocks")
+	patterns := []string{"*.md", "*.markdown", "*.mdown", "*.mkd"}
+	roots := []string{"stage1/cohere/markdownblocks"}
 	if census() {
-		walk = root
+		roots = []string{"."}
 	}
-	err := filepath.WalkDir(walk, func(path string, entry os.DirEntry, err error) error {
+	paths := corpusfiles.Repository(t, root, roots, patterns)
+	if census() {
+		paths = append(paths, corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit, []string{"CHANGELOG.md", "CONTRIBUTING.md", "README.md", "THIRD_PARTY_NOTICES.md", "TypeScript-shim", "editors", "internal", "schema", "swift"}, patterns)...)
+		paths = append(paths, corpusfiles.Upstream(t, filepath.Join(root, "cohere/TypeScript"), corpusfiles.TypeScriptGoCommit, []string{".github", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md", "README.md", "SECURITY.md", "SUPPORT.md", "packages", "tsc"}, patterns)...)
+	}
+	sort.Strings(paths)
+	for _, path := range paths {
+		content, err := os.ReadFile(path)
 		if err != nil {
-			return err
+			t.Fatal(err)
 		}
-		if entry.IsDir() {
-			if entry.Name() == ".git" {
-				return filepath.SkipDir
-			}
-			return nil
+		name, err := filepath.Rel(root, path)
+		if err != nil {
+			t.Fatal(err)
 		}
-		switch strings.ToLower(filepath.Ext(path)) {
-		case ".md", ".markdown", ".mdown", ".mkd":
-			content, err := os.ReadFile(path)
-			if err != nil {
-				return err
-			}
-			name, err := filepath.Rel(root, path)
-			if err != nil {
-				return err
-			}
-			inputs = append(inputs, auditInput{Name: filepath.ToSlash(name), Text: string(content)})
-		}
-		return nil
-	})
-	if err != nil {
-		t.Fatal(err)
+		inputs = append(inputs, auditInput{Name: filepath.ToSlash(name), Text: string(content)})
 	}
 	files := len(inputs)
 	for _, marker := range []string{"*", "-", "+", "1.", "1)", "10.", "999999999."} {
@@ -122,6 +117,12 @@ func TestWholeDocumentOraclePreflight(t *testing.T) {
 	}
 	dir := t.TempDir()
 	inputs, files := auditCorpus(t, root)
+	// This file sweep is small beside the mandatory generated and fixed checks.
+	selection := selectMarkdownFiles(t, root, inputs, files, 1)
+	if selection.Sample {
+		t.Log(selection.Log(t.Name()))
+	}
+	inputs, files = selectedMarkdownInputs(inputs, files, selection)
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
 	for _, input := range inputs {

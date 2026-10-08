@@ -14,31 +14,7 @@ func statementCorpus(t *testing.T) (string, string, string) {
 	t.Helper()
 	directory := t.TempDir()
 	root, _ := filepath.Abs(repository)
-	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
-	if source == "" {
-		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to a TypeScript 6.0.3 source checkout at 050880ce; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
-	}
-	pin := bounded(t, "git", "-C", source, "rev-parse", "HEAD")
-	if data, err := pin.Output(); err != nil || strings.TrimSpace(string(data)) != "050880ce59e30b356b686bd3144efe24f875ebc8" {
-		t.Fatalf("TypeScript pin: %s %v", data, err)
-	}
-	files := []string{}
-	for _, base := range []string{root, source + "/src/compiler"} {
-		if err := filepath.WalkDir(base, func(path string, entry os.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if entry.IsDir() && (entry.Name() == ".git" || path == filepath.Join(root, "cohere")) {
-				return filepath.SkipDir
-			}
-			if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
-				files = append(files, path)
-			}
-			return nil
-		}); err != nil {
-			t.Fatal(err)
-		}
-	}
+	files := printerCorpusFiles(t)
 	request, _ := json.Marshal(map[string]any{"Files": files, "Directory": directory})
 	if err := os.WriteFile(directory+"/request.json", request, 0644); err != nil {
 		t.Fatal(err)
@@ -120,10 +96,10 @@ func TestStatementsAgainstGoAndPrettier(t *testing.T) {
 		t.Skip("set ADAMIC_TS_PRETTIER to an npm install of prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	script, _ := filepath.Abs("testdata/expressions.mjs")
-	compare("npm Prettier", execute(t, nil, "node", script, library, specs))
+	comparePrinterLibrary(t, "npm Prettier", execute(t, nil, "node", script, library, specs), specs, "statements", false)
 	embedded, _ := filepath.Abs("testdata/embedded.mjs")
 	bundles, _ := filepath.Abs(filepath.Join(repository, "cohere/internal/format/prettier/bundles"))
-	compare("embedded Prettier", execute(t, nil, "node", embedded, bundles, specs))
+	comparePrinterLibrary(t, "embedded Prettier", execute(t, nil, "node", embedded, bundles, specs), specs, "statements", true)
 	release := filepath.Join(t.TempDir(), "release")
 	if keep := os.Getenv("ADAMIC_TS_STATEMENT_ARTIFACTS"); keep != "" {
 		if err := os.MkdirAll(keep, 0755); err != nil {
