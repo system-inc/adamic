@@ -1,0 +1,2 @@
+['/workspace/adamic-tools/llvm/bin/clang', '-O2', '-flto=thin', '-fuse-ld=lld', '-fprofile-use=/workspace/scratch/release-pgo/profile-api.profdata', '-Werror', '-Wno-profile-instr-out-of-date', '-fsplit-machine-functions', '/workspace/scratch/release-pgo/profile-api-mismatch.c', '-o', '/workspace/scratch/release-pgo/profile-api-mismatch']
+exit 0

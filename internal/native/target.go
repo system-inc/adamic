@@ -8,6 +8,9 @@ import (
 
 // ValidateOptions refuses unsupported combinations before invoking clang.
 func ValidateOptions(options Options) error {
+	if options.ProfileGenerate && options.Profile != "" {
+		return fmt.Errorf("native: profile generation and use are mutually exclusive")
+	}
 	if options.Request && options.Target != "wasm32-wasi" {
 		return fmt.Errorf("native: request exports require wasm32-wasi")
 	}
