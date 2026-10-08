@@ -1,3 +1,21 @@
+Built: refresh the two legacy optional/rest tuple Map admission expectations; primary total remains 10 pairs / 15 reads.
+Commits: this test-only patch follows final primary kind pair 3c32b869.
+Checks: all six Map boundary cases PASS 2.413s; two now-supported forms match Node in both backends with finishing leak checks; owned counts PASS 47.278s.
+Mutants: removing source certificate pairs stops each positive form at node.value instead of matching Node (both caught, FAIL 0.201s).
+Remaining: two lane 4b frontier obligations; direct array-to-tuple cast observation is still a named compile refusal.
+
+Commands: ADAMIC_GATE_UNCACHED=1 TestCheckedViewMapStorageGaps -count=1 -v
+(/tmp/views-tuples-legacy-map-admission.log);
+ADAMIC_TUPLE_LEGACY_MAP_MUTANT=certificate on
+TestCheckedViewTupleLegacyMapAdmissionMutant
+(/tmp/views-tuples-legacy-map-mutant.log); scoped tuple counts -args
+-update-counts (/tmp/views-tuples-legacy-map-counts.log). The counts updater
+now also owns these two existing Map rows, so old refusal rows do not remain
+stale. Four other conversion gaps retain their named node.value failures.
+No compiler implementation or unrelated test expectation changed.
+
+---
+
 Built: original module kind position pair 68230/0; all primary 10 pairs / 15 candidate reads certified.
 Commits: kind certification is separate from module specifier patch f1f41ada.
 Checks: five Node/JS/native release/sanitized witnesses PASS 5.041s, finishing cases leak checked; 79 owned tuple rows refreshed PASS 49.248s.

@@ -53,6 +53,9 @@ func TestCheckedViewTupleOriginalCounts(t *testing.T) {
 		t.Skip("original tuple declarations required to measure counts")
 	}
 	rows := tupleOriginalCounts(t)
+	for _, family := range []string{"optional-tuple", "rest-tuple"} {
+		rows = append(rows, counted(t, "stage3/interface-downcasts/nullish/maps/entry-convert-gap-"+family+".a", false, nil, false, false))
+	}
 	data, err := os.ReadFile(countsPath)
 	if err != nil {
 		t.Fatal(err)
@@ -68,7 +71,7 @@ func TestCheckedViewTupleOriginalCounts(t *testing.T) {
 	parts := strings.SplitN(string(data), "\n## Predicate direction counts", 2)
 	var lines []string
 	for _, line := range strings.Split(strings.TrimSuffix(parts[0], "\n"), "\n") {
-		if !strings.HasPrefix(line, "| stage3/interface-downcasts/tuples/") {
+		if !strings.HasPrefix(line, "| stage3/interface-downcasts/tuples/") && !strings.HasPrefix(line, "| stage3/interface-downcasts/nullish/maps/entry-convert-gap-optional-tuple.a |") && !strings.HasPrefix(line, "| stage3/interface-downcasts/nullish/maps/entry-convert-gap-rest-tuple.a |") {
 			lines = append(lines, line)
 		}
 	}

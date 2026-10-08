@@ -164,6 +164,24 @@ func TestCheckedViewMapStorageGaps(t *testing.T) {
 			}
 			program, err := lowered(t, path)
 			truth := onNode(t, path)
+			// These handed-off tuple forms now have complete source certificates.
+			if family == "optional-tuple" || family == "rest-tuple" {
+				if err != nil {
+					t.Fatal(err)
+				}
+				actual, binary := nativelyUncached(t, program)
+				for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if diff := disagreement(truth, got); diff != "" {
+						t.Fatalf("tuple admission: %s; %#v", diff, got)
+					}
+				}
+				if report := leaksUncached(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+				t.Logf("Node=%q; complete tuple Map schema admitted", truth.stdout)
+				return
+			}
+
 			if err != nil {
 				if !strings.Contains(err.Error(), "field value") || !strings.Contains(err.Error(), "Map") {
 					t.Fatalf("gap refused away from demanded read: %v", err)
