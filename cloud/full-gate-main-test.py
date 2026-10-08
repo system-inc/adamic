@@ -137,6 +137,19 @@ class FullGateLoopTests(unittest.TestCase):
             self.assertEqual(result.returncode, code, sha)
         self.assertEqual((Path(self.tmp.name) / 'ssh-calls').read_text(), "threadripper pkill -TERM -f 'run.py .*--sha %s'\n" % self.changed)
 
+    def test_a_red_or_running_pre_gate_keeps_a_candidate_off_the_box(self):
+        red, running, green = self.code, self.records, self.changed
+        (self.state / 'requests').write_text('%s\n%s\n%s\n' % (red, running, green))
+        (self.state / 'pregate').mkdir()
+        (self.state / 'pregate' / red).write_text('red: 3 units failed\n')
+        (self.state / 'pregate' / running).write_text('running\n')
+        (self.state / 'pregate' / green).write_text('green\n')
+        self.assertEqual(self.call('nextRequest'), (0, green))
+        # No pre-gate file at all: eligible.
+        (self.state / 'pregate' / red).unlink()
+        self.call('release %s' % green)
+        self.assertEqual(self.call('nextRequest'), (0, red))
+
     def test_record_paths_are_push_main_s_three(self):
         self.assertEqual(self.call('recordOnly %s %s' % (self.code, self.records))[0], 0)
         self.assertEqual(self.call('recordOnly %s %s' % (self.records, self.changed))[0], 1)

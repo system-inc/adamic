@@ -355,11 +355,23 @@ release() {
   rm -f "${claims}/$1/holder"
   rmdir "${claims}/$1" 2> /dev/null || true
 }
+# Loom's pre-gate (@system_adamic, Oct 8 23:36Z): the packages that turned the star red, every unit in parallel on the
+# warm pool, before a box takes the candidate. Loom writes ${pregates}/<sha>, first line green, red or running. A red
+# candidate never takes a box (it goes back to its owner with the whole list) and a running one waits; with no file
+# (no pre-gate for it) the candidate is eligible, so a box never idles on a pre-gate that doesn't exist.
+pregates=${ADAMIC_FULL_GATE_PREGATES:-$(dirname "${requests}")/pregate}
+pregateAllows() {
+  local verdict
+  [ -f "${pregates}/$1" ] || return 0
+  verdict=$(head -1 "${pregates}/$1")
+  [ "${verdict%% *}" = green ]
+}
 nextRequest() {
   local sha
   [ -s "${requests}" ] || return 1
   while read -r sha; do
     [ -n "${sha}" ] || continue
+    pregateAllows "${sha}" || continue
     case $(recordState "${sha}") in
       none | void) claim "${sha}" && { echo "${sha}"; return 0; } ;;
     esac
