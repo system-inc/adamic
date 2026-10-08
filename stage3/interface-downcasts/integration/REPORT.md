@@ -1,7 +1,7 @@
 Integrated every requested pushed lane into codex/views-integration from ab4d6f902.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
 Focused compiler packages, full IR, filtered Node oracle and vet pass after every published merge.
-101 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
+103 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -465,3 +465,34 @@ These are original-contract witnesses for two pairs and 35 candidate reads;
 40 candidate pairs and 146 reads remain, with whole-program reachability
 unmeasured. The optional-boolean landing hold remains active; its branch had
 no published ref at this check.
+
+Newest lazy owner nullable selection, c809598e4443d2a20f4a8b2e9b260ce6069b4b5e
+
+Two individual conflicts in lower/interface_cast.go and lower/object.go:
+retain objectPrimitiveViewType, scalar/maybe representations, callable exception
+and accessor refusal; expand only the Union nullish exception to include
+undefined as well as null. The incoming owner guards contain both behaviors.
+Fixture controls scalar-undefined, tagged-undefined and object-undefined exercise
+the new route, while optional-receiver, required-missing and original-pair
+controls retain the earlier policies.
+
+The owner selector validates present scalar member literals and finite tagged
+object union members after the shared presence/readiness/kind check. Nested
+payload checks remain lazy. Unsupported/ambiguous member families retain named
+read refusals; no producer certificate comes from the target.
+
+All 21 owner selection fixtures passed the uncached preflight (12.253s). Two
+actual backend omission mutants were executed and restored: remove only the
+nullishMemberSelection call, native then JavaScript. scalar-both-wrong constructs
+not-allowed at runtime with the valid string kind, and both mutants run valid
+code but fail the pinned refusal. Evidence is nullable-selection-mutants.log and
+its per-backend logs. Existing source-kind guards alone cannot catch this case.
+
+Optional-boolean landing hold remains active until the user lifts it; the
+priority fix branch has no published ref at this fetch. Production read census
+and whole-repository gate remain unmeasured.
+
+Final nullable-selection gates: lower 18.751s, native 26.510s, JavaScript
+3.720s, full IR 31.124s, uncached filtered oracle 185.782s; vet exit 0.
+Original declarations were enabled and all earlier original-pair controls ran.
+The sole documented array-callback baseline exclusion is unchanged.
