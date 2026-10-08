@@ -146,3 +146,17 @@ bd59c092c becomes 90ed82a59, and 6fb710351 becomes 37cc25cd6. Earlier cached
 intrinsic and conversion lowering commits are retained on the new base.
 Prototype operations stay refused. The earlier dependency block above describes
 the old base only. The C conversion adapter remains unfinished.
+
+On the runtime base, the focused native command selecting OrdinaryToPrimitive,
+its five mutants and protocol guards, prototype Node research, all eight debug
+refusals and the mixed counted-cycle probe passes. The mixed cycle leaks two
+counted objects as expected; the graph-region control frees them. No prototype
+operation is admitted. The uncached six object oracle tests pass in both backends
+against Node, with sanitizer and leak checks. Their receiver-dispatch, missing
+conversion TypeError and wrong RangeError-name mutants are caught. Focused lower
+checks pass. Logs: runtime-base-native.log, runtime-base-oracle.log and
+runtime-base-lower.log under /tmp/object-semantics.
+
+The required TestCountsAreRecorded -count=1 -args -update-counts run passes and
+refreshes counts on this base (runtime-base-counts.log). No full gate or whole
+package was run.
