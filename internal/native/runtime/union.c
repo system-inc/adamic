@@ -3,6 +3,7 @@
 #include "adamic.h"
 
 #include <math.h>
+#include <pthread.h>
 #include <string.h>
 
 adamic_heap adamic_null = {0, adamic_kind_object, 0};
@@ -85,15 +86,21 @@ adamic_string *adamic_union_typeof(const adamic_heap *value, bool null) {
 	}
 }
 
-// Program shape metadata is static, registered when an object of the shape is made.
+// Program shape metadata is static, registered when an object of the shape is made. Objects are made
+// in parallel tasks too, so an entry is pushed once under the lock and published with release order;
+// readers load the list head with acquire, and an entry's fields never change once it's on the list.
 static adamic_shape_types *shape_types;
+static pthread_mutex_t shape_types_lock = PTHREAD_MUTEX_INITIALIZER;
 
 void adamic_register_shape_types(adamic_shape_types *metadata) {
-	for (adamic_shape_types *entry = shape_types; entry != NULL; entry = entry->next) {
-		if (entry == metadata) return;
+	if (__atomic_load_n(&metadata->registered, __ATOMIC_ACQUIRE)) return;
+	pthread_mutex_lock(&shape_types_lock);
+	if (!metadata->registered) {
+		metadata->next = shape_types;
+		__atomic_store_n(&shape_types, metadata, __ATOMIC_RELEASE);
+		__atomic_store_n(&metadata->registered, true, __ATOMIC_RELEASE);
 	}
-	metadata->next = shape_types;
-	shape_types = metadata;
+	pthread_mutex_unlock(&shape_types_lock);
 }
 
 static bool named(const char *name, const char *const *names, size_t count) {
@@ -155,7 +162,7 @@ bool adamic_has_property(const adamic_heap *value, const char *name) {
 static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
 	const adamic_value slot = object->slots[index];
 	if (object->shape->references[index]) return adamic_retain(slot.reference);
-	for (const adamic_shape_types *entry = shape_types; entry != NULL; entry = entry->next) {
+	for (const adamic_shape_types *entry = __atomic_load_n(&shape_types, __ATOMIC_ACQUIRE); entry != NULL; entry = entry->next) {
 		if (entry->shape != object->shape) continue;
 		// These are ir.Type's scalar representations, written by the emitter.
 		switch (entry->types[index]) {

@@ -139,7 +139,7 @@ void adamic_object_assign(adamic_object *target, const adamic_object *source) {
   size_t index = indices[at];
   const char *name = source->shape->names[index];
   adamic_object_check_write(target, name);
-  adamic_slot_cache cache = {NULL, 0};
+  adamic_slot_cache cache = {0};
   adamic_value *slot = adamic_object_field(target, name, &cache);
   adamic_value value = source->slots[index];
   if (source->shape->references[index]) {

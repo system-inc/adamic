@@ -139,10 +139,10 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			cache := e.cache()
 			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
 			if e.fieldTypesNeeded() {
-				e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
+				e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, field.Value.Type())
 			}
 			if e.fieldReadinessNeeded(field.Name) {
-				e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
+				e.line("adamic_object_initialized(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, map[bool]int{true: 0, false: 1}[field.Uninitialized])
 			}
 			if field.Value.Type().IsReference() {
 				e.line("adamic_release(%s->reference);", slot)
@@ -306,7 +306,7 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 	if len(fields) > 0 && e.dynamicProperties() {
 		e.declarations = append(e.declarations,
 			fmt.Sprintf("static const int %s_types[] = {%s};", name, strings.Join(kinds, ", ")),
-			fmt.Sprintf("static adamic_shape_types %s_metadata = {&%s, %s_types, NULL};", name, name, name))
+			fmt.Sprintf("static adamic_shape_types %s_metadata = {&%s, %s_types, NULL, false};", name, name, name))
 	}
 	return name
 }

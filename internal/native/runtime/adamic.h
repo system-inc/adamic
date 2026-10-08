@@ -6,6 +6,9 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <stdatomic.h>
+#include "count.h"
+#include "tsan_test.h"
 
 #include <math.h>
 
@@ -30,6 +33,9 @@ enum adamic_kind {
 	adamic_kind_weak,
 	adamic_kind_typed_array,
 	adamic_kind_typed_array_iterator,
+	adamic_kind_async_frame,
+	adamic_kind_async_promise,
+	adamic_kind_async_reaction,
 #ifdef ADAMIC_CANONICAL_CLOSURES
 	adamic_kind_environment,
 #endif
@@ -43,9 +49,48 @@ typedef struct adamic_heap {
 	uint32_t slab;
 } adamic_heap;
 
+// The high count bit records permanent sharing; the remaining bits are the actual count.
+// Unshared operations read and update the count plainly. Shared updates are atomic. A separate
+// immutable slab bit dispatches before reading a count. Zero remains immortal, including regions.
+#define ADAMIC_SHARED ((size_t)1 << (sizeof(size_t) * 8 - 1))
+_Static_assert((intptr_t)ADAMIC_SHARED == INTPTR_MIN, "native count tags require two-complement intptr_t conversion");
+#define ADAMIC_SHARED_HEADER UINT32_C(0x80000000)
+#define ADAMIC_REGION_VALUE UINT32_C(0x40000000)
+static inline bool adamic_is_shared(const adamic_heap *heap) {
+	return (heap->slab & ADAMIC_SHARED_HEADER) != 0;
+}
+static inline size_t adamic_reference_count(const adamic_heap *heap) {
+	return adamic_is_shared(heap) ? __atomic_load_n(&heap->references, __ATOMIC_ACQUIRE) & ~ADAMIC_SHARED : heap->references;
+}
+void adamic_share(void *value);
+void adamic_heap_thread_end(void);
+void adamic_heap_end(void);
+
 // adamic_retain and adamic_release take any heap value. NULL (undefined) is left alone.
-void *adamic_retain(void *value);
-void adamic_release(void *value);
+void *adamic_retain_slow(void *value);
+void adamic_release_slow(void *value);
+
+// Sharing is published before any other worker can reach a value and never cleared. Test that
+// separate bit first: a plain read of a shared count would race with its atomic updates.
+static inline void *adamic_retain(void *value) {
+	ADAMIC_COUNT_RETAIN();
+	adamic_heap *heap = value;
+	if (heap != NULL && !adamic_is_shared(heap)) {
+		size_t count = heap->references;
+		if (count > 0) { ADAMIC_TSAN_PAUSE(adamic_tsan_plain_count); heap->references = count + 1; return value; }
+	}
+	return adamic_retain_slow(value);
+}
+
+static inline void adamic_release(void *value) {
+	ADAMIC_COUNT_RELEASE();
+	adamic_heap *heap = value;
+	if (heap != NULL && !adamic_is_shared(heap)) {
+		size_t count = heap->references;
+		if (count > 1) { heap->references = count - 1; return; }
+	}
+	adamic_release_slow(value);
+}
 
 // adamic_allocate makes a heap value of size bytes, references 1, and panics when memory runs out.
 void *adamic_allocate(size_t size, enum adamic_kind kind);
@@ -185,6 +230,8 @@ typedef struct adamic_string {
 } adamic_string;
 
 struct adamic_string_index {
+	// Published with the view, never written after sharing.
+	size_t units;
 	// The last code point found: its first unit, and its byte offset.
 	size_t cursor_unit;
 	size_t cursor_offset;
@@ -263,6 +310,12 @@ void adamic_object_set_initialized(adamic_object *object, const char *name, bool
 static inline unsigned char *adamic_object_field_types(const adamic_object *object) {
 	return adamic_object_initialized(object) + object->shape->count;
 }
+// adamic_slot_index is where a slot sits in its object, for that object's per-slot bytes. It's taken
+// from the slot a lookup returned, never from a slot cache: the cache is one packed word another
+// thread may overwrite with a different shape's slot (adamic_slot_cache below).
+static inline size_t adamic_slot_index(const adamic_object *object, const adamic_value *slot) {
+	return (size_t)(slot - object->slots);
+}
 
 bool adamic_instanceof(const void *value, const adamic_class *wanted);
 size_t adamic_virtual(const adamic_object *object, size_t slot);
@@ -271,9 +324,14 @@ void adamic_object_free_children(adamic_object *object, void (*release)(void *))
 // adamic_slot_cache remembers, at one place in the program that reads a field, where the field was in
 // the last shape seen there.
 typedef struct adamic_slot_cache {
-	const adamic_shape *shape;
-	size_t index;
+	uint64_t packed;
 } adamic_slot_cache;
+#define ADAMIC_SLOT_SHAPE_MASK UINT64_C(0x0000ffffffffffff)
+_Static_assert(sizeof(uintptr_t) <= sizeof(uint64_t), "slot cache requires pointers of at most 64 bits");
+_Static_assert(__atomic_always_lock_free(sizeof(uint64_t), 0), "slot cache requires lock-free 64-bit atomics");
+// One relaxed word contains both the immutable shape identity and its slot. Large
+// slot indices are simply not cached; shape addresses outside 48 bits are refused.
+void adamic_slot_cache_store(adamic_slot_cache *cache, const adamic_shape *shape, size_t index);
 
 adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression);
 adamic_value adamic_object_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);
@@ -339,6 +397,9 @@ typedef struct adamic_shape_types {
 	const adamic_shape *shape;
 	const int *types;
 	struct adamic_shape_types *next;
+	// Set, with release order, once the entry is on the list; parallel tasks make objects too, so
+	// registration is read with acquire and published under a lock (union.c).
+	bool registered;
 } adamic_shape_types;
 extern adamic_heap adamic_null;
 void adamic_register_shape_types(adamic_shape_types *metadata);
@@ -357,20 +418,20 @@ adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, co
 // Optional own fields may be absent; NULL then asks the reader to produce typed undefined.
 adamic_value *adamic_object_optional_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 static inline adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
-	if (cache->shape != object->shape) {
+	uint64_t packed = __atomic_load_n(&cache->packed, __ATOMIC_RELAXED);
+	if ((packed & ADAMIC_SLOT_SHAPE_MASK) != (uintptr_t)object->shape) {
 		return adamic_object_optional_find(object, name, cache);
 	}
-	if (cache->index == object->shape->count) {
-		return NULL;
-	}
-	return &((adamic_object *)object)->slots[cache->index];
+	size_t slot = packed >> 48;
+	if (slot == object->shape->count) { return NULL; }
+	return &((adamic_object *)object)->slots[slot];
 }
-// Data lookup is also available to emitted accesses whose field name occurs in no static
-// layout. That whole-program proof excludes inherited constructor storage, so the cache
+// Whole-program data accesses exclude inherited constructor storage, so a cache
 // hit needs only the shape comparison, without loading a class descriptor.
 static inline adamic_value *adamic_object_data_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
-	if (cache->shape == object->shape) {
-		return &((adamic_object *)object)->slots[cache->index];
+	uint64_t packed = __atomic_load_n(&cache->packed, __ATOMIC_RELAXED);
+	if ((packed & ADAMIC_SLOT_SHAPE_MASK) == (uintptr_t)object->shape) {
+		return &((adamic_object *)object)->slots[packed >> 48];
 	}
 	return adamic_object_find(object, name, cache);
 }
@@ -452,6 +513,9 @@ const adamic_accessor *adamic_accessor_find(const adamic_object *object, const c
 adamic_value adamic_accessor_get(adamic_object *object, const char *name);
 void adamic_accessor_set(adamic_object *object, const char *name, adamic_value value, int type);
 
+// Structured fork-join. Arguments are borrowed until the join; the result is owned.
+adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, bool references);
+
 // adamic_array_push appends; a reference pushed belongs to the array.
 void adamic_array_push(adamic_array *array, adamic_value value);
 
@@ -483,7 +547,7 @@ typedef struct adamic_map {
 	bool reference_values;
 	// iterating counts the iterations open over the map; while there are any, its entries keep their
 	// places (map.c).
-	size_t iterating;
+	_Atomic size_t iterating;
 } adamic_map;
 
 // adamic_map_iterator is one for...of over a map, in insertion order: entries added before it gets
@@ -719,6 +783,7 @@ bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean 
 uint8_t adamic_maybe_boolean_pack(adamic_maybe_boolean value);
 adamic_maybe_boolean adamic_maybe_boolean_unpack(uint8_t packed);
 
+
 // A string's UTF-16 view (string.c): length, charCodeAt and trim as JavaScript means them.
 //
 // length reads the propagated or counted units inline. charCodeAt reads ASCII bytes or a built
@@ -726,20 +791,34 @@ adamic_maybe_boolean adamic_maybe_boolean_unpack(uint8_t packed);
 // to adamic_string_char_code. A position in range truncates to its index as (size_t) does.
 size_t adamic_string_units(const adamic_string *string);
 double adamic_string_char_code(const adamic_string *string, double position);
+// A shared string publishes length and position metadata together in its index.
+// Keep warm length and ASCII reads inline, without writing its plain units field.
+static inline size_t adamic_string_known_units(const adamic_string *string) {
+	if (string->units != 0) { return string->units; }
+	if (adamic_is_shared(&string->heap)) {
+		struct adamic_string_index *index = __atomic_load_n(&string->index, __ATOMIC_ACQUIRE);
+		if (index != NULL && index != ADAMIC_LITERAL_INDEX) { return index->units + 1; }
+	}
+	return 0;
+}
 static inline double adamic_string_length(const adamic_string *string) {
-	return string->units != 0 ? (double)(string->units - 1) : (double)adamic_string_units(string);
+	size_t units = adamic_string_known_units(string);
+	return units != 0 ? (double)(units - 1) : (double)adamic_string_units(string);
 }
 static inline double adamic_string_char_code_at(const adamic_string *string, double position) {
 	if (string->units == string->length + 1 && position >= 0 && position < (double)string->length) {
 		return (double)(unsigned char)string->bytes[(size_t)position];
 	}
-	// A built index has a direct UTF-16 view, including supplementary halves. The range
-	// comparisons reject NaN and infinities before conversion; a fraction truncates as JS does.
-	if (string->index != NULL && string->index != ADAMIC_LITERAL_INDEX && position >= 0 && position < (double)(string->units - 1)) {
-		return (double)string->index->view[(size_t)position];
+	// Shared views are published complete; an ordinary index is thread-local.
+	struct adamic_string_index *index = adamic_is_shared(&string->heap) ?
+		__atomic_load_n(&string->index, __ATOMIC_ACQUIRE) : string->index;
+	if (index != NULL && index != ADAMIC_LITERAL_INDEX && position >= 0 && position < (double)index->units) {
+		if (index->units == string->length) { return (double)(unsigned char)string->bytes[(size_t)position]; }
+		if (index->view != NULL) { return (double)index->view[(size_t)position]; }
 	}
 	return adamic_string_char_code(string, position);
 }
+
 adamic_string *adamic_string_trim(adamic_string *string);
 
 // for...of over a string walks code points: adamic_string_next is the byte size of the one at offset,
@@ -826,6 +905,7 @@ size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low)
 // point: indexOf's answer, found through the index rather than by counting from the start.
 size_t adamic_string_units_before(const adamic_string *string, size_t offset);
 void adamic_string_free_index(adamic_string *string);
+void adamic_string_prepare_shared(adamic_string *string);
 
 // adamic_string_equal is ===.
 int adamic_string_equal(const adamic_string *left, const adamic_string *right);
@@ -888,7 +968,7 @@ bool adamic_weak_held(const void *target);
 // adamic_thrown is the error being thrown, or NULL (exceptions.c): set by a throw, tested after
 // every call that can throw, and taken by the catch that lands it. adamic_error_new is new
 // Error(message), and adamic_uncaught the panic of an error nothing caught.
-extern adamic_object *adamic_thrown;
+extern _Thread_local adamic_object *adamic_thrown;
 adamic_object *adamic_error_new(adamic_string *message);
 _Noreturn void adamic_uncaught(void);
 
@@ -1023,7 +1103,8 @@ _Noreturn void adamic_panic(const char *message, size_t length);
 // nearly gone, and that's a panic, as Node's RangeError is, rather than a segfault (stack.c). The
 // stack grows down on every processor Adamic targets. __builtin_frame_address is the real frame even
 // when the address sanitizer keeps locals elsewhere.
-extern uintptr_t adamic_stack_limit;
+extern _Thread_local uintptr_t adamic_stack_limit;
+void adamic_stack_thread_start(void);
 _Noreturn void adamic_stack_overflow(void);
 #ifdef ADAMIC_TARGET_WASI
 // Even a function using only Wasm locals must advance the linear stack. Otherwise
