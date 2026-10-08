@@ -147,6 +147,11 @@ exits = fast.get("stages_exit") or fast.get("exit_codes") or {}
 nonzero = ["%s=%s" % (stage, code) for stage, code in exits.items() if code != 0]
 if nonzero:
     problems.append("stages that exited nonzero: %s" % " ".join(nonzero))
+# Since developer tools' fail-closed fix (62a5fcf1) the log names its planned stages, and each must
+# have an exit of 0 on record.
+unrecorded = [stage for stage in fast.get("planned_stages") or [] if exits.get(stage) != 0]
+if unrecorded:
+    problems.append("planned stages without a recorded exit of 0: %s" % " ".join(unrecorded))
 if fast.get("finished") is not True:
     problems.append("the gate didn't record that it finished")
 if problems:
