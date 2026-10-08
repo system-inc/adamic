@@ -1,0 +1,11 @@
+import { WalkerState, Character } from './state.a';
+import { quantifierAt } from './quantifier_at.a';
+import { emit } from './emit.a';
+export function emitAndQuantify(w: WalkerState, character: Character): number {
+ const next = quantifierAt(w.pattern, character.end);
+ if(next.ok) { w.quantifierDepth++; }
+ const emitted = emit(w, character);
+ if(next.ok) { w.quantifierDepth--; }
+ if(!emitted) { return character.end; }
+ return next.end;
+}

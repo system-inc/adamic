@@ -1,0 +1,3 @@
+import { WalkerState } from './state.a';
+import { quantifierAt } from './quantifier_at.a';
+export function applyQuantifier(w: WalkerState, index: number): number { return quantifierAt(w.pattern, index).end; }

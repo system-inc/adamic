@@ -1,0 +1,17 @@
+import { WalkerState, Character } from './state.a';
+import { parseRegexCharacterClassWithEnd } from '../../regexsyntax/parse_regex_character_class_with_end.a';
+import { kindFromSource } from './kind_from_source.a';
+import { emit } from './emit.a';
+export function walkClass(w: WalkerState, start: number, end: number): boolean {
+ w.classDepth++;
+ const parsed = parseRegexCharacterClassWithEnd(w.pattern,start,end,w.flags);
+ if(!parsed.ok) { w.classDepth--; return false; }
+ for(const element of parsed.elements) {
+  if(element.Kind === 0 || element.Kind === 1) {
+   const character = new Character(element.Value >>> 0,kindFromSource(w.pattern,element.Start,element.End),element.Start,element.End,0,0);
+   if(!emit(w,character)) { w.classDepth--; return false; }
+  }
+ }
+ w.classDepth--;
+ return true;
+}

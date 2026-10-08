@@ -1,0 +1,4 @@
+export function consumeDigits(pattern: number[], index: number): number {
+ while(index < pattern.length && (pattern[index] ?? 0) >= 48 && (pattern[index] ?? 0) <= 57) { index++; }
+ return index;
+}

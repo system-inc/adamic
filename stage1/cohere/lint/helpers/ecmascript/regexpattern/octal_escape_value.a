@@ -1,0 +1,11 @@
+export class OctalValue {
+ readonly value: number;
+ readonly ok: boolean;
+ constructor(value: number, ok: boolean) { this.value = value; this.ok = ok; } }
+export function octalEscapeValue(digits: number[]): OctalValue {
+ if(digits.length === 0) { return new OctalValue(0, false); }
+ let value = 0;
+ for(const digit of digits) { if(digit < 48 || digit > 55) { return new OctalValue(0, false); } value = (value * 8 + digit - 48) >>> 0; }
+ if(value > 255) { return new OctalValue(0, false); }
+ return new OctalValue(value, true);
+}

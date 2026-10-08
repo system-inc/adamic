@@ -1,0 +1,12 @@
+export function groupPrologueEnd(pattern: number[], index: number): number {
+ if(index + 1 >= pattern.length || (pattern[index + 1] ?? 0) !== 63) { return index + 1; }
+ if(index + 2 >= pattern.length) { return index + 2; }
+ switch((pattern[index + 2] ?? 0)) {
+ case 58: case 61: case 33: return index + 3;
+ case 60:
+  if(index + 3 < pattern.length && ((pattern[index + 3] ?? 0) === 61 || (pattern[index + 3] ?? 0) === 33)) { return index + 4; }
+  for(let scan = index + 3; scan < pattern.length; scan++) { if((pattern[scan] ?? 0) === 62) { return scan + 1; } }
+  return pattern.length;
+ }
+ return index + 2;
+}

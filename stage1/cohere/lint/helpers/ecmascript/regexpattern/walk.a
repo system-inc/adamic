@@ -1,0 +1,6 @@
+import type { RegexFlags } from '../../regexsyntax/flags.a';
+import { WalkerState, Character } from './state.a';
+import { run } from './run.a';
+export function Walk(pattern: number[], flags: RegexFlags, callback: (character: Character) => boolean): boolean {
+ return run(new WalkerState(pattern, 0, 0, callback, flags));
+}

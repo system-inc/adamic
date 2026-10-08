@@ -1,0 +1,6 @@
+import type { RegexFlags } from './flags.a';
+// Go strings are byte sequences. ASCII u and v cannot occur inside a UTF-8 rune.
+// The caller supplies original UTF-8 bytes, including any invalid bytes.
+export function parseRegexFlags(bytes: readonly number[]): RegexFlags {
+    return { unicode: bytes.includes(117), unicodeSets: bytes.includes(118) };
+}

@@ -1,0 +1,62 @@
+import { RuleContext } from '../../context.ts';
+import { SuggestionEdit } from '../../suggestions.a';
+import { Bytes } from '../../helpers/regexsyntax/utf8.a';
+import { parseRegexFlags } from '../../helpers/regexsyntax/parse_regex_flags.a';
+import { patternAndFlags } from '../../helpers/regexsyntax/pattern_and_flags.a';
+import { Walk } from '../../helpers/ecmascript/regexpattern/walk.a';
+import { Character } from '../../helpers/ecmascript/regexpattern/state.a';
+import { CookedToRaw } from '../../helpers/literal/cooked_to_raw.a';
+import { message } from './messages.a';
+export class Rule {
+ readonly context: RuleContext;
+ constructor(context: RuleContext) { this.context = context; }
+ first(pattern: number[], flags: number[]): number[] {
+  let start = 0; let end = 0; let held = false;
+  const walked = Walk(pattern,parseRegexFlags(flags),(character: Character): boolean => {
+   if(character.quantifierDepth > 0 || character.classDepth > 0 || character.value !== 32) { return true; }
+   if(!held) { start = character.start; end = character.end; held = true; }
+   else if(end === character.start) { end = character.end; }
+   else if(end-start === 1) { start = character.start; end = character.end; }
+   return true;
+  });
+  return walked && held && end-start >= 2 ? [start,end] : [];
+ }
+ report(start: number, end: number, count: number): void {
+  this.context.reportRange(start,end,'no-regex-spaces','multipleSpaces',message,[new SuggestionEdit(start,end,` {${count}}`)]);
+ }
+ visit(index: number): void {
+  const ctx = this.context; const node = ctx.node(index);
+  if(node.kind === 'RegularExpressionLiteral') {
+   const at = ctx.start(index); const raw = ctx.source.slice(at,node.end);
+   if(!raw.includes('  ')) { return; }
+   const bytes = new Bytes(raw); const parts = patternAndFlags(bytes.values);
+   if(parts.pattern.length === 0) { return; }
+   const span = this.first(parts.pattern,parts.flags);
+   if(span.length === 0) { return; }
+   const a = span[0] ?? 0; const b = span[1] ?? 0;
+   this.report(at+(bytes.positions[a+1] ?? 0),at+(bytes.positions[b+1] ?? raw.length),b-a);
+   return;
+  }
+  const expression = node.children[0] ?? -1;
+  if(expression < 0) { return; }
+  const callee = ctx.unwrap(expression);
+  if(ctx.kind(callee) !== 'Identifier' || ctx.node(callee).text !== 'RegExp') { return; }
+  const args = ctx.arguments(index); const patternIndex = args[0] ?? -1;
+  if(patternIndex < 0 || ctx.kind(patternIndex) !== 'StringLiteral') { return; }
+  let flags = '';
+  if(args.length >= 2) { const flagIndex = args[1] ?? -1; if(ctx.kind(flagIndex) !== 'StringLiteral') { return; } flags = ctx.node(flagIndex).text; }
+  const at = ctx.start(patternIndex); const literal = ctx.source.slice(at,ctx.node(patternIndex).end);
+  if(literal.length < 2) { return; }
+  const raw = literal.slice(1,-1);
+  if(!raw.includes('  ')) { return; }
+  const cooked = ctx.node(patternIndex).text; const mapping = CookedToRaw(raw,cooked);
+  if(!mapping.valid) { return; }
+  const span = this.first(new Bytes(cooked).values,new Bytes(flags).values);
+  if(span.length === 0) { return; }
+  const a = span[0] ?? 0; const b = span[1] ?? 0; const projection = new Bytes(raw);
+  const begin = projection.positions[mapping.offsets[a] ?? 0] ?? raw.length;
+  const end = projection.positions[mapping.offsets[b] ?? 0] ?? raw.length;
+  this.report(at+1+begin,at+1+end,b-a);
+ }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

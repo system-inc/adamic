@@ -1,0 +1,5 @@
+{
+  "name": "no-useless-escape drops quoted findings",
+  "from": "if(escaped !== quote &&",
+  "to": "if(false && escaped !== quote &&"
+}

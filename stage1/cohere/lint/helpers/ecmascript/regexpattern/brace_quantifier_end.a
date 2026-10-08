@@ -1,0 +1,13 @@
+import { consumeDigits } from './consume_digits.a';
+export class QuantifierEnd {
+ readonly end: number;
+ readonly ok: boolean;
+ constructor(end: number, ok: boolean) { this.end = end; this.ok = ok; } }
+export function braceQuantifierEnd(pattern: number[], start: number): QuantifierEnd {
+ if(start >= pattern.length || (pattern[start] ?? 0) !== 123) { return new QuantifierEnd(0, false); }
+ let index = start + 1; const before = consumeDigits(pattern, index);
+ if(before === index) { return new QuantifierEnd(0, false); } index = before;
+ if(index < pattern.length && (pattern[index] ?? 0) === 44) { index++; index = consumeDigits(pattern, index); }
+ if(index >= pattern.length || (pattern[index] ?? 0) !== 125) { return new QuantifierEnd(0, false); }
+ return new QuantifierEnd(index + 1, true);
+}

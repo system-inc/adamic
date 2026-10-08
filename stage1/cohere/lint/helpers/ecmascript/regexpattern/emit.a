@@ -1,0 +1,6 @@
+import { WalkerState, Character } from './state.a';
+export function emit(w: WalkerState, character: Character): boolean {
+ const projected = new Character(character.value, character.kind, character.start, character.end, w.quantifierDepth, w.classDepth);
+ if(!w.callback(projected)) { w.stopped = true; return false; }
+ return true;
+}

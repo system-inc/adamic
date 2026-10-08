@@ -1,0 +1,7 @@
+import { decode } from './utf8.a';
+import type { ElementResult } from './types.a';
+import type { RegexFlags } from './flags.a';
+export function readRawClassChar(bytes: readonly number[], i: number, flags: RegexFlags): ElementResult {
+ const rune = decode(bytes,i); const w = rune[1] ?? 0;
+ return {element: {Kind:0, Value: w === 0 ? 0 : (rune[0] ?? 0), IsUBrace:false, IsLoneSurrogate:false, Max:0, MaxIsUBrace:false, Start:w === 0 ? 0 : i, End:w === 0 ? 0 : i+w}, step:w, ok:w !== 0};
+}
