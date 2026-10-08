@@ -46,7 +46,12 @@ func (e *emitter) accessorDeclarations(builder *strings.Builder, classID int, cl
 				raw = fmt.Sprintf("(type == %d ? adamic_box_number(value.number) : type == %d ? (value.boolean ? &adamic_box_true.heap : &adamic_box_false.heap) : value.reference)", ir.Number, ir.Boolean)
 				fresh = true
 			}
-			fmt.Fprintf(builder, "\t%s incoming = (%s)(%s);\n", cType(input), cType(input), raw)
+			if input == ir.MaybeNumber {
+				// Optional numbers are structs; C11 initializes them without a scalar cast.
+				fmt.Fprintf(builder, "\t%s incoming = %s;\n", cType(input), raw)
+			} else {
+				fmt.Fprintf(builder, "\t%s incoming = (%s)(%s);\n", cType(input), cType(input), raw)
+			}
 			self, argument := "object", "incoming"
 			if e.reuse.consumed[function.Parameters[0]] {
 				self = "adamic_retain(object)"

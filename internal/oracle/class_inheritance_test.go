@@ -4,6 +4,7 @@ package oracle
 // ASan/UBSan and the leak check. Register separately to avoid changing oracle_test.go's fixture list.
 func init() {
 	for _, path := range []string{
+		"internal/oracle/testdata/classfeat_maybe_setter.a",
 		"internal/oracle/testdata/classfeat_method_view.a",
 		"internal/oracle/testdata/class_features_static.a",
 		"internal/oracle/testdata/class_features_static_private.a",
