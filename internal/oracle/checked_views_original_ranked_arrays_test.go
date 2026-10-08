@@ -221,3 +221,12 @@ func TestCheckedViewRanked17OriginalArrays(t *testing.T) {
 func TestCheckedViewRanked17ArrayCounts(t *testing.T) {
 	originalRankedArrayCountTest(t, "17")
 }
+
+func TestCheckedViewRanked18OriginalArrays(t *testing.T) {
+	originalRankedArrayOracle(t, "18", 5, 4)
+}
+
+// Not parallel: the explicit refresh writes this group's rows in the shared counts file.
+func TestCheckedViewRanked18ArrayCounts(t *testing.T) {
+	originalRankedArrayCountTest(t, "18")
+}
