@@ -287,7 +287,16 @@ func (l *lowering) enumMemberPromises(from, to *checker.Type, seen map[[2]*check
 				return true
 			}
 		}
-		return false
+		// The checker can relate a value to a union no single member takes, by
+		// splitting a tag such as Token<A | B> across Token<A> | Token<B>. Which
+		// member the value then is depends on its tag, so every member's promises
+		// must hold. Without a member-annotated field nothing is claimed here.
+		for _, member := range to.Types() {
+			if !l.enumMemberPromises(from, member, seen) {
+				return false
+			}
+		}
+		return true
 	}
 	for _, target := range l.containers(to) {
 		for _, source := range l.containers(from) {

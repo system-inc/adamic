@@ -157,3 +157,10 @@ func TestEnumTagPayloadMutant(t *testing.T) {
 	}
 	t.Log("open_tag payload-check erasure caught by pinned stop in both backends")
 }
+
+func init() {
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
+	}{"internal/oracle/testdata/enums_tag_split_union.a", true, false})
+}

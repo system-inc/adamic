@@ -1,0 +1,16 @@
+// tsc relates Token<A | B> to Token<A> | Token<B> by splitting the tag.
+enum SyntaxKind { Abstract, Async, Const, Identifier }
+interface Token<K extends SyntaxKind> { readonly kind: K; pos: number }
+type AbstractKeyword = Token<SyntaxKind.Abstract>;
+type AsyncKeyword = Token<SyntaxKind.Async>;
+type Modifier = AbstractKeyword | AsyncKeyword;
+function createToken<K extends SyntaxKind>(kind: K): Token<K> { return { kind, pos: 0 }; }
+function finish<T extends Token<SyntaxKind>>(node: T, pos: number): T { node.pos = pos; return node; }
+function parseModifier(kind: SyntaxKind): Modifier | undefined {
+    if (kind === SyntaxKind.Abstract || kind === SyntaxKind.Async) return finish(createToken(kind === SyntaxKind.Abstract ? SyntaxKind.Abstract : SyntaxKind.Async), 3);
+    return undefined;
+}
+for (const kind of [SyntaxKind.Async, SyntaxKind.Const, SyntaxKind.Abstract]) {
+    const found = parseModifier(kind);
+    console.log(found === undefined ? "none" : `${found.kind} ${found.pos}`);
+}
