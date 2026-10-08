@@ -1,0 +1,73 @@
+type KeyType = number | string | boolean | { id: number } | undefined;
+const first = { id: 1 };
+const second = { id: 1 };
+const minusZero: KeyType = -0;
+const map = new Map<KeyType, string>([
+    [minusZero, 'zero'],
+    ['0', 'string'],
+    [false, 'boolean'],
+    [NaN, 'nan'],
+    [first, 'first'],
+    [second, 'second'],
+    [undefined, 'undefined'],
+]);
+const set = new Set<KeyType>([minusZero, '0', false, NaN, first, second, undefined]);
+map.set(0, 'updated zero');
+map.set(0 / 0, 'updated nan');
+set.add(0);
+set.add(0 / 0);
+console.log(
+    `${map.size} ${set.size} ${map.get(0)} ${map.get(NaN)} ${map.get('0')} ${map.get(false)} ${map.get(undefined)}`,
+);
+console.log(`${map.has({ id: 1 })} ${set.has({ id: 1 })} ${set.has(NaN)} ${set.has(undefined)}`);
+let order = '';
+for(const [key, value] of map) {
+    order += `${typeof key}:${value}|`;
+    if(typeof key === 'number' && key === 0) {
+        console.log(`${1 / key}`);
+    }
+}
+console.log(order);
+order = '';
+for(const key of set) {
+    order += `${typeof key}|`;
+    if(typeof key === 'number' && key === 0) {
+        console.log(`${1 / key}`);
+    }
+}
+console.log(order);
+console.log(`${1 / minusZero}`);
+map.delete(first);
+map.set(first, 'last');
+set.delete(first);
+set.add(first);
+order = '';
+map.forEach(function(value) {
+    order += `${value}|`;
+});
+console.log(order);
+map.set('built'.repeat(2), 'text');
+console.log(`${map.get('builtbuilt'.slice(0))}`);
+console.log(`${map.delete(NaN)} ${map.has(NaN)} ${set.delete(NaN)} ${set.has(NaN)}`);
+map.set(NaN, 'again');
+set.add(NaN);
+console.log(`${map.get(0 / 0)} ${set.has(0 / 0)} ${map.size} ${set.size}`);
+
+const inlineMap = new Map<number | string, string>([
+    [1, 'number'],
+    ['1', 'text'],
+]);
+inlineMap.set(1, 'updated');
+const inlineSet = new Set<number | string>([1, '1', 1]);
+console.log(`${inlineMap.size} ${inlineMap.get(1)} ${inlineMap.get('1')} ${inlineSet.size}`);
+const live = new Set<number | string>([1, 'a']);
+let visited = '';
+for(const key of live) {
+    visited += `${key}|`;
+    if(key === 1) {
+        live.delete('a');
+        live.add('a');
+        live.add(2);
+    }
+}
+console.log(visited);

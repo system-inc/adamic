@@ -56,6 +56,25 @@ adamic_map *adamic_map_new_identity(bool reference_values) {
 	return map;
 }
 
+// V8's SameValueZeroHeapNumber / SameValueZeroString / OtherKey dispatch
+// (src/builtins/builtins-collections-gen.cc, Node v24.19.0). A mixed union
+// holds primitives in boxes and objects directly; box identity is not key identity.
+static bool reference_key_equal(const adamic_heap *left, const adamic_heap *right) {
+	if (left == NULL || right == NULL) return left == right;
+	if (left->kind != right->kind) return false;
+	switch (left->kind) {
+	case adamic_kind_number: {
+		double a = ((const adamic_number_box *)left)->number;
+		double b = ((const adamic_number_box *)right)->number;
+		return a == b || (isnan(a) && isnan(b));
+	}
+	case adamic_kind_string:
+		return adamic_string_equal((const adamic_string *)left, (const adamic_string *)right);
+	default:
+		return left == right;
+	}
+}
+
 static uint64_t hash_key(const adamic_map *map, adamic_value key) {
 	if (map->maybe_number_keys) {
 		return adamic_map_maybe_key_hash(key.number);
@@ -78,7 +97,18 @@ static uint64_t hash_key(const adamic_map *map, adamic_value key) {
 		return key.boolean ? 0x9e3779b97f4a7c15ull : 0x7f4a7c159e3779b9ull;
 	}
 	if (map->reference_keys) {
-		// By identity: the address, its low bits (alignment, always zero) mixed up into the rest.
+		const adamic_heap *reference = key.reference;
+		if (reference != NULL && reference->kind == adamic_kind_number) {
+			return adamic_map_number_hash(((const adamic_number_box *)reference)->number);
+		}
+		if (reference != NULL && reference->kind == adamic_kind_string) {
+			const adamic_string *string = key.reference;
+			for (size_t index = 0; index < string->length; index++) {
+				hash = (hash ^ (unsigned char)string->bytes[index]) * 1099511628211ull;
+			}
+			return hash;
+		}
+		// Objects and canonical boolean boxes compare by identity.
 		uint64_t bits = (uint64_t)(uintptr_t)key.reference;
 		return (bits ^ (bits >> 4) ^ (bits >> 29)) * 1099511628211ull;
 	}
@@ -96,7 +126,7 @@ static bool same_key(const adamic_map *map, adamic_value left, adamic_value righ
 		return left.boolean == right.boolean;
 	}
 	if (map->reference_keys) {
-		return left.reference == right.reference;
+		return reference_key_equal(left.reference, right.reference);
 	}
 	return left.number == right.number || (isnan(left.number) && isnan(right.number));
 }
@@ -192,6 +222,19 @@ void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value) {
 	if (!map->reference_keys && !map->boolean_keys && key.number == 0) {
 		// Map.prototype.set stores -0 as +0 (ECMA-262), so iterating gives back +0: 1 / key is Infinity.
 		key.number = 0;
+	}
+	if (map->reference_keys && !map->string_keys && key.reference != NULL) {
+		const adamic_heap *reference = key.reference;
+		if (reference->kind == adamic_kind_number) {
+			double number = ((const adamic_number_box *)reference)->number;
+			if (number == 0 && signbit(number)) {
+				// NormalizeNumberKey stores +0. Do not mutate a box shared with
+				// the source variable: its own -0 remains observable.
+				adamic_heap *zero = adamic_box_number(0);
+				adamic_release(key.reference);
+				key.reference = zero;
+			}
+		}
 	}
 	entry->key = key;
 	entry->value = value;

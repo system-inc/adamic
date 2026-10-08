@@ -17,6 +17,12 @@ binary Adamic makes carries what is ported into the runtime, and these notices t
     src/objects/objects-inl.h and ComputeUnseededHash/ComputeLongHash in src/utils/utils.h,
     V8 13.6.233.17);
   - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
+  - generic Array indexOf and lastIndexOf lowering (`internal/lower/library_array_generic.go`,
+    after Runtime_ArrayIndexOf in src/runtime/runtime-array.cc and GetFromIndex /
+    GenericArrayLastIndexOf in src/builtins/array-lastindexof.tq, V8 13.6.233.17);
+  - mixed Map and Set key dispatch (`internal/native/runtime/map.c`, after
+    SameValueZeroHeapNumber, SameValueZeroString, FindOrderedHashTableEntryForOtherKey
+    and NormalizeNumberKey in src/builtins/builtins-collections-gen.cc, Node v24.19.0);
   - exponentiation (`runtime/number.c`, after math::pow);
   - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own
     notice is below);
