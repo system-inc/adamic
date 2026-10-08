@@ -18,11 +18,12 @@ set -euo pipefail
 
 sha=${1:?usage: cloud/fast-gate.sh <full sha> [--branch <name>] [--session <id>]}
 shift
-branch="" branchSource=given session="" sessionSource=given
+branch="" branchSource=given session="" sessionSource=given cpus=""
 while [ $# -gt 0 ]; do
   case $1 in
     --branch) branch=$2; shift 2 ;;
     --session) session=$2; shift 2 ;;
+    --cpus) cpus=$2; shift 2 ;;
     *) echo "unknown argument $1" >&2; exit 2 ;;
   esac
 done
@@ -52,9 +53,9 @@ out=fast-gate/out/${sha:0:12}-${stamp}
 echo "fast gate: ${sha} against main ${base}, tools ${tools}, on ${box}"
 set +e
 # ssh joins its arguments into one remote command line, so each is quoted for the remote shell.
-ssh "${box}" bash -s -- "$(printf '%q ' "${sha}" "${base}" "${tools}" "${out}" "${branch:-}" "${branchSource}" "${session:-}" "${sessionSource}")" <<'BOX'
+ssh "${box}" bash -s -- "$(printf '%q ' "${sha}" "${base}" "${tools}" "${out}" "${branch:-}" "${branchSource}" "${session:-}" "${sessionSource}" "${cpus:-}")" <<'BOX'
 set -euo pipefail
-sha=$1 base=$2 tools=$3 out=$4 branch=$5 branchSource=$6 session=$7 sessionSource=$8
+sha=$1 base=$2 tools=$3 out=$4 branch=$5 branchSource=$6 session=$7 sessionSource=$8 width=${9:-}
 mkdir -p ~/fast-gate
 # Two slots, each with its own tree and tools checkout, so a small change doesn't wait behind a
 # stack's long gate; the second slot's tree starts as a copy of the first (submodules included).
@@ -86,7 +87,9 @@ echo "slot=${slot} load_before=$(cut -d' ' -f1-3 /proc/loadavg)" > ~/"${out}"/bo
 # so two gates never contend with each other; the full gate and any other long job run idle-scheduled
 # (cloud/box-run.sh idle), so they only get cycles the slots leave.
 cpus=$(nproc --all)
-range=$([ "${slot}" = 1 ] && echo "0-$((cpus / 2 - 1))" || echo "$((cpus / 2))-$((cpus - 1))")
+first=$([ "${slot}" = 1 ] && echo 0 || echo $((cpus / 2)))
+# --cpus N narrows the gate to the first N CPUs of its slot (to size slots by measurement).
+range="${first}-$((first + ${width:-$((cpus / 2))} - 1))"
 echo "cpus=${range}" >> ~/"${out}"/box.txt
 taskset -c "${range}" python3 ~/fast-gate/tools${suffix}/cloud/fast-gate/run.py --tree ~/fast-gate/tree${suffix} --sha "${sha}" --base "${base}" --tools ~/fast-gate/tools${suffix} --out ~/"${out}" --branch "${branch}" --branch-source "${branchSource}" --session "${session}" --session-source "${sessionSource}"
 BOX
