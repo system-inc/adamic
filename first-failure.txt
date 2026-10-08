@@ -1,0 +1,8 @@
+FIRST FAILURE (smoke, at 219.1 s):
+github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode/internal/oracle/testdata/nbody_runtime_fields.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nbody_runtime_fields.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nbody_runtime_fields.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nbody_runtime_fields.a
+    oracle_test.go:686: running node: context deadline exceeded
+--- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/nbody_runtime_fields.a (83.81s)
+
