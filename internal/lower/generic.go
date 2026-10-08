@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"reflect"
 	"strconv"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -17,10 +18,9 @@ const maximumGenericDepth = 32
 // distinct set of checker type identities, as a generic class is (instantiate). Within it,
 // each type parameter is what this call made it.
 //
-// The checker resolves the call's signature with its type arguments substituted, but doesn't export
-// the mapping itself, so it's read back the way it was made: each declared parameter's type, and the
-// result's, against the resolved signature's, through arrays and tuples. A type parameter that can't
-// be read back that way is left unmapped, and the body says not yet wherever it needs to know it.
+// Direct optional binder results use the checker's resolved mapper. Richer dependent results
+// need instantiated relation proofs before this path can accept them. Existing structural inference
+// remains the fallback; an unread binder says not yet when its representation is needed.
 func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (int, error) {
 	resolved := l.checker.GetResolvedSignature(call)
 	target := l.checker.GetSignatureFromDeclaration(declaration)
@@ -28,9 +28,39 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 		return 0, l.notYet(call, "a call to a generic function whose signature the checker didn't resolve")
 	}
 	concreteTypes := map[*checker.Type]*checker.Type{}
-	// Class-generic calls supply this callee's resolved mapper. Ordinary recursive
-	// calls must infer their own arguments: the outer mapper can still describe the
-	// same declaration's previous instantiation, as nest<T>([item], depth - 1) does.
+	// Read this call's mapper, not the same declaration's enclosing instantiation.
+	// The bridge is the one classGenericCall uses until the checker shim exports it.
+	optionalBinder := false
+	resultType := l.checker.GetReturnTypeOfSignature(target)
+	if resultType.Flags()&checker.TypeFlagsUnion != 0 && len(resultType.Types()) == 2 && l.censusHasUndefined(resultType) {
+		for _, member := range resultType.Types() {
+			optionalBinder = optionalBinder || member.Flags()&checker.TypeFlagsTypeParameter != 0
+		}
+	}
+	// A constrained body can admit indexed locals against a wider bound.
+	// Keep it on the old conservative path until instantiated relations are proved.
+	for _, parameter := range declaration.TypeParameters() {
+		optionalBinder = optionalBinder && parameter.AsTypeParameterDeclaration().Constraint == nil
+	}
+	field := reflect.ValueOf(resolved).Elem().FieldByName("mapper")
+	if optionalBinder && field.IsValid() && field.Kind() == reflect.Pointer && !field.IsNil() {
+		resolvedMapper := (*typeMapper)(field.UnsafePointer())
+		for _, parameter := range declaration.TypeParameters() {
+			source := l.checker.GetTypeAtLocation(parameter.Name())
+			mapped := instantiateType(l.checker, source, resolvedMapper)
+			// An identity mapping can still name this recursive call's binder.
+			// Compose first, so each concrete recursion reuses its own ABI key.
+			concrete := l.concrete(mapped)
+			if concrete != source {
+				concreteTypes[source] = concrete
+			}
+		}
+	}
+
+	// Class-generic calls supply a mapper already composed with their caller. It
+	// takes precedence over the raw resolved mapper, whose targets can still name
+	// an outer binder that the class-call wrapper has replaced. Ordinary recursive
+	// calls need their own arguments, not the previous instantiation's mapper.
 	if l.genericUsesClasses(declaration, map[*ast.Node]bool{}) {
 		for _, parameter := range declaration.TypeParameters() {
 			declaredType := l.checker.GetTypeAtLocation(parameter.Name())

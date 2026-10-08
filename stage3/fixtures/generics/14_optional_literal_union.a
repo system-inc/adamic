@@ -1,0 +1,6 @@
+// Supplemental capability boundary: the mapper build covers a direct T | undefined.
+function optionalOrZero<T>(value: T | undefined): T | 0 | undefined {
+    if (value === undefined) return 0;
+    return value;
+}
+console.log(`${optionalOrZero<number>(undefined)} ${optionalOrZero(4)}`);

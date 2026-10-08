@@ -262,7 +262,7 @@ The contract is [0.1.md](0.1.md): concrete monomorphization, nominal invariant c
 | Shape | Representation and lowering | Disposition |
 | --- | --- | --- |
 | Direct `T` result, argument or local | Substitute the checker's concrete type throughout the body, then use its existing IR representation and ownership rules. Cache by declaration and checker type identities, including the nested frame owner. | Already lowers for concrete number and string calls. Unspecialized `T` remains NotYet; do not invent a type. |
-| `T \| undefined`, callback result `U \| undefined`, optional containers | Read each declaration binder through the resolved call signature's actual mapper, then compose its target with the enclosing mapper. Choose the existing concrete optional representation after substitution. Absence and falsy presence must remain distinct. | Compiler lesson within the existing generic contract. The first build targets optional results for represented concrete instantiations. Unsupported concrete unions remain NotYet. |
+| `T \| undefined`, callback result `U \| undefined`, optional containers | Read each declaration binder through the resolved call signature's actual mapper, then compose its target with the enclosing mapper. Choose the existing concrete optional representation after substitution. Absence and falsy presence must remain distinct. | Compiler lesson within the existing generic contract. The first build targets exactly a direct `T | undefined` result in an unconstrained generic declaration for represented concrete instantiations; optional containers and dependent members remain outside the mapper path. Unsupported concrete unions remain NotYet. |
 | `ArenaIndex<Tag>` inside `Arena<Tag>.push` | Substitute the enclosing class argument before finding the inner class layout. Instantiate fields, constructor, methods and results together. Keep layouts and method targets keyed by checker identity, not only C storage. | The reduced nesting already lowers on this base. Add an ownership and identity regression. No class invariance change. |
 | Generic interface, alias, array, tuple, map or conditional/indexed type inside another generic | Ask the checker to instantiate the whole type, including dependent arguments, before representation selection. Reuse the existing concrete container ABI; no runtime type parameter slot. | No universal erased `T` representation. A concrete unsupported container/member continues to say NotYet. Dependent readonly/mutable and nominal checks still apply. |
 | Generic function assigned to a concrete callable slot | A specialization adapter needs a concrete callable ABI. A separate source identity must survive adapters, imports, aliases and repeated reads. Captured declarations additionally need the proper environment identity and lifetime. | Proposal below; generic function values stay NotYet in this build. |
@@ -311,6 +311,72 @@ console.log(`${grow(1, 1)}`);
 
 The runtime branch does not bound static monomorphization. A finite chain of more than 32 distinct generic calls is a separate counterexample to inferring infinity from this implementation guard. Proving or specializing such programs requires an explicit policy decision. Unbounded native code generation is not an escape hatch.
 
+**Instantiated dependent result proofs.** Whole-signature mapper use would newly admit this checker-clean type lie. It is currently NotYet and remains so in this build:
+
+```a
+function two<T extends { readonly value: number }>(): T['value'] { return 2; }
+const value: 1 = two<{ readonly value: 1 }>();
+console.log(`${value}`); // Node prints 2 even though the declared type is 1.
+```
+
+Proposal for @system_adamic: recheck each concrete return and assignment relation under the resolved mapper before accepting dependent/indexed results. The concrete return above must be refused, not trusted because its generic constraint is number. Reclassifying this from NotYet to Refused is not implemented here. The first build therefore reads resolved maps only when the declared result is exactly a two-member union of a type parameter and undefined, and every declaration binder is unconstrained. Removing that guard makes the negative outcome fixture fail because the type lie is accepted; matching Node output alone cannot detect it. A mixed `T['value'] | U | undefined` result with `U = never` has the same problem. Requiring exactly two members prevents that dependent member from bypassing the guard; fixture 12 pins this boundary:
+
+```a
+function two<T extends { readonly value: number }, U>(): T['value'] | U | undefined { return 2; }
+const value: 1 | undefined = two<{ readonly value: 1 }, never>();
+console.log(`${value}`); // Node prints 2; the declared slot permits only 1 or undefined.
+```
+
+**Instantiated body relations.** Constrained bodies remain on their old inference path because a correct result ABI does not prove local types. Fixture 13 previously stayed NotYet because U could not be read back. Mapping its unrelated optional result would expose this checker-clean local type lie, so that new mapper path is withheld:
+
+```a
+function test<T extends { readonly value: number }, U>(): U | undefined {
+    const value: T['value'] = 2;
+    console.log(`${value}`);
+    return undefined;
+}
+test<{ readonly value: 1 }, string>();
+```
+
+There is also a pre-existing accepted type lie, observed on both the exact base and delivery compiler. It is separate from this new capability and must not be mistaken for a proven program:
+
+```a
+function test<T extends { readonly value: number }>(): T | undefined {
+    const value: T['value'] = 2;
+    console.log(`${value}`);
+    return undefined;
+}
+test<{ readonly value: 1 }>();
+```
+
+Both print 2 on Node while the instantiated local slot is declared 1. A nested variant that captures the constrained outer T also remains NotYet on both compilers: the base stops at U-or-undefined, and the delivery compiler reaches the unsupported T-indexed local without accepting it:
+
+```a
+function outer<T extends { readonly value: number }>(item: T): void {
+    function inner<U>(): U | undefined {
+        const value: T['value'] = 2;
+        console.log(`${value}`);
+        return undefined;
+    }
+    inner<string>();
+}
+outer<{ readonly value: 1 }>({value: 1});
+```
+
+Instantiated body relations must cover enclosing binders as well as declaration binders. Proposal for @system_adamic: prove every instantiated local initializer, assignment and return against its actual concrete type, and refuse this local initializer. That acceptance/refusal change is not implemented here. Removing the new unconstrained-declaration guard makes fixture 13 newly accepted; its negative assertion catches that mutation. A proposed unconstrained intersection-alias variant was independently rejected by TypeScript with TS2322, rather than treated as a valid counterexample.
+
+**Custom mutation methods.** A sound custom `add(key, value)` inside a generic function is currently mistaken for the Set protocol `add(value)`. Preserve the existing refusal in this build. Proposal for @system_adamic: identify library mutation protocols by the resolved declaration, and prove custom method writes from their actual signature/body without weakening instantiated invariance. This refused checker-clean counterexample logs `key` on Node:
+
+```a
+class Bag<T> {
+    add(key: string, value: T): void { console.log(key); }
+}
+function put<T>(bag: Bag<T>, value: T): void { bag.add('key', value); }
+put(new Bag<number>(), 4);
+```
+
+The current diagnostic says a value of type "key" is written where number is read. The method writes no such slot. The probe is supplemental evidence, not a new tsc census count. The TypeScript multimap class reduction keeps construction inside a generic factory and invokes its custom mutation method from the concrete driver, preserving the original class body while isolating this separate classifier gap.
+
 **Generic casts, predicates and mutable views.** No relaxation is proposed. These must continue to fail even after a concrete specialization is available:
 
 ```a
@@ -346,7 +412,7 @@ The following are distinct obligations; merely reaching C emission verifies none
 
 ## Reduced acceptance fixtures and baseline outcomes
 
-The TypeScript reductions come from pristine upstream `050880ce59e30b356b686bd3144efe24f875ebc8`, verified against its own source, rather than from cohere. Every new Adamic source is `.a`. [fixture-baseline.json](step-16-generics/fixture-baseline.json) pins each source hash, exact reduction, independent Node stdout and the outcome on `8cb5e7c1`. All eight sources exit 0 with empty stderr on Node. An innocent invocation does not make an arbitrary cast, a writable view or unbounded static monomorphization safe.
+The TypeScript reductions come from pristine upstream `050880ce59e30b356b686bd3144efe24f875ebc8`, verified against its own source, rather than from cohere. Every new Adamic source is `.a`. [fixture-baseline.json](step-16-generics/fixture-baseline.json) pins each source hash, exact reduction, independent Node stdout and the outcome on `8cb5e7c1`. The initial eight sources exit 0 with empty stderr on Node; the later recursive stress fixture does too. An innocent invocation does not make an arbitrary cast, a writable view or unbounded static monomorphization safe.
 
 | Fixture in stage3/fixtures/generics | Pristine origin | Base outcome |
 | --- | --- | --- |
@@ -358,5 +424,158 @@ The TypeScript reductions come from pristine upstream `050880ce59e30b356b686bd31
 | 06_polymorphic_recursion.a | Supplemental 0.1 growing-type recursion boundary | Refused: polymorphic recursion |
 | 07_generic_cast.a | core.ts:1778 tryCast; arbitrary target cast replaces its unproved predicate contract | Refused: a cast the runtime can't check |
 | 08_readonly_view.a | utilities.ts:10644 setTextRangePos | Refused: readonly field pos becomes writable |
+| 09_recursive_optional.a | Supplemental recursion added to the core.ts:67 result reduction | Base NotYet: a function returning U \| undefined; final lowering regression |
+| 10_identifier_multimap.a | transformers/utilities.ts:389 IdentifierNameMap and :441 IdentifierNameMultiMap; generic construction driver added | Already lowered on base; both backends match Node with sanitizer/leak checks |
+| 11_indexed_result.a | Supplemental indexed-result type-lie boundary | NotYet on base and final compiler; Node prints 2 for a declared literal 1 |
+| 12_mixed_indexed_result.a | Supplemental mixed indexed/optional result type-lie boundary | NotYet on base and final compiler; Node prints 2 for a declared literal 1 or undefined |
+| 13_constrained_local.a | Supplemental constrained indexed-local type-lie boundary | NotYet on base and final compiler; unrelated optional U must not expose an unproved local T["value"] |
+| 14_optional_literal_union.a | Supplemental unconstrained three-member union capability boundary | NotYet on base and final compiler; broader optional unions are outside this mapper build |
+| 15_array_callback.a | core.ts:67 firstDefined; optional readonly array and loop retained; non-null assertion replaced with explicit checked failure | Base NotYet returning U or undefined; final Lowered with both backends, sanitizer and leak checks |
 
 The oracle registry and `TestStep16GenericOutcomes` record the distinction between capability gaps and policy refusals. The numeric identity mutant changes the valid IR return from its argument to 17. It finishes normally with valid C, no sanitizer findings and no leaks, then fails Node stdout comparison in both backends. This prevents an emission-only regression test from passing a wrong generic result. Optional fixtures preserve zero, false and empty text as present values, exercise explicit undefined at two type arguments, dynamically allocate returned text, and route an enclosing type parameter through a callback result.
+
+## Built optional generic returns
+
+`internal/lower/generic.go` now seeds declaration binders only in unconstrained generic declarations with direct optional type-parameter results from the resolved call signature's mapper and composes its target with the active caller mapper before deciding whether it is concrete. An identity mapping in a recursive call must also compose: otherwise different concrete callers can share an unread cache key and incompatible ABIs. Structural read-back remains available when the shim does not expose a mapping. The existing class-call wrapper's already-composed concrete binder takes precedence: raw resolved targets can still name an outer binder after that wrapper has replaced the active mapper. This distinction is exercised by the existing forwarded `makePair`/`forwardPair` generic factory fixture.
+
+Fixtures 02 and 03 now lower and match independent source Node through JavaScript and native C. Both retain the baseline source bytes and provenance; their baseline NotYet observations remain in fixture-baseline.json. The fixtures preserve zero, false and empty strings, explicit missing values, dynamically allocated text, and generic callback results inside an enclosing specialization. Counted allocations/frees are 5/5 and 8/8 respectively. No new IR representation or runtime allocation scheme was introduced.
+
+The numeric identity mutant and the new optional-result mutant emit valid C, finish with empty stderr and no sanitizer/leak findings, and disagree with Node stdout in both backends. Disabling resolved mapping returns fixture 02 to the original U-or-undefined NotYet. Removing the result-shape guard accepts fixture 11's indexed type lie; omitting the two-member requirement accepts fixture 14's broader literal-union shape. Fixture 12's mixed type lie also stays blocked by the constrained-declaration guard. The negative assertions catch their respective mutation; the literal-union case proves the two-member capability boundary independently of the constraint guard. Removing the unconstrained-declaration requirement also accepts fixture 13's unproved indexed local, caught by its negative assertion. These mutations are restored before the final verification and census. During the broader mapper experiment, raw signature mapping also displaced the class wrapper's concrete binder, and the existing generic factory regression caught the resulting unread T. The final bounded path preserves the original class behavior.
+
+Generic function values and unproved indexed/dependent results remain NotYet. Arbitrary target casts, readonly-to-writable views and growing polymorphic recursion retain their recorded refusals. The supplemental recursive optional fixture 09 exercises number and dynamically allocated string calls through the same recursive declaration. Its unchanged-base NotYet was measured with a Go overlay restoring the only changed production file, generic.go, from 8cb5e7c1. Skipping identity mappings reproduces an incompatible native ABI and is caught by the fixture's clang build. This is separate from the valid result mutants that reach Node output comparison.
+
+The array/callback fixture 15 retains the optional readonly array and loop from core.ts:67. It checks zero, false, empty text, a dynamically allocated callback result after an absent result, an empty typed array and a missing array. The original non-null assertion becomes an explicit missing-element throw; the driver excludes undefined elements, so no broader source-domain equivalence is claimed. Both backends agree with its independent Node source under fresh sanitizers and leak checks. The three newly failing larger census contexts below remain tracked; this fixture does not prove their captured or union-shaped arrays supported.
+
+Unspecialized generic declarations, richer unsupported concrete containers and unproved generic overload relations remain outside this build. The source identity and limit-policy proposals above remain unimplemented.
+
+## Measured root retirement
+
+The full guarded census was repeated over the identical adapted compiler corpus. Checker diagnostics, every root identity/eligibility/body range and every source hash were unchanged. Compare exact `(unit, kind, reason)` sets; a moved diagnostic does not retire a root. This is measurement-only, not whole-program compilation or runtime acceptance.
+
+431 scoped blocker/root pairs disappeared across 384 distinct roots. 76 of those roots have no remaining Refused/NotYet finding in the continuing measurement. The rest expose or retain other blockers. Neither number credits the historical hidden-byte estimates as measured native progress.
+
+The complete affected root names, retired blockers, remaining blockers and newly exposed reasons are in [retirement.json.gz](step-16-generics/retirement.json.gz). The ledger also retains every newly exposed blocker across the corpus, including roots outside the selected baseline subset.
+
+3 roots gained a failure where the baseline measurement had none. These are recorded below, rather than hidden in a net total. 0 roots that lost a Refused blocker became free of all findings; a disappearing refusal in a root that still fails is not acceptance of that program. The baseline and continuing corpus are checker-rejected, so an empty measurement finding set is not a valid-program or backend proof.
+
+| Retired exact blocker | Roots |
+| --- | ---: |
+| NotYet: a function returning T \| T[] \| undefined | 4 |
+| NotYet: a function returning T \| readonly T[] \| undefined | 5 |
+| NotYet: a function returning T \| undefined | 79 |
+| NotYet: a function returning U \| undefined | 24 |
+| NotYet: a generic function as a value | 1 |
+| NotYet: a value of type Children \| undefined | 18 |
+| NotYet: a value of type CustomTransformerFactory \| TransformerFactory<T> | 2 |
+| NotYet: a value of type IncludeTypeSpaceImports | 1 |
+| NotYet: a value of type Map<string, SingleFileWatcher<T>> | 2 |
+| NotYet: a value of type MapLike<T> | 2 |
+| NotYet: a value of type NodeArray<T> | 1 |
+| NotYet: a value of type NodeArray<T> \| undefined | 1 |
+| NotYet: a value of type NonNullable<T> | 20 |
+| NotYet: a value of type Set<K> | 2 |
+| NotYet: a value of type SortedArray<T> | 1 |
+| NotYet: a value of type T | 46 |
+| NotYet: a value of type T \| T[] | 3 |
+| NotYet: a value of type T \| readonly T[] | 3 |
+| NotYet: a value of type T \| undefined | 78 |
+| NotYet: a value of type T[] | 7 |
+| NotYet: a value of type U | 5 |
+| NotYet: a value of type readonly (readonly T[])[] | 1 |
+| NotYet: a value of type readonly T[] | 10 |
+| NotYet: a value of type readonly T[] \| undefined | 64 |
+| NotYet: an array of T | 21 |
+| NotYet: overload 1 of getOriginalNode with additional implementation type parameters | 2 |
+| NotYet: overload 2 of arrayFrom with additional implementation type parameters | 10 |
+| NotYet: overload 3 of group with additional implementation type parameters | 5 |
+| Refused: a cast the runtime can't check | 6 |
+| Refused: a value of type T seen as Mutable<T>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of any would replace | 2 |
+| Refused: optional property return in ArrayIterator<any> absent from structural source ArrayIterator<Child>, which can hide fields | 1 |
+| Refused: overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined | 1 |
+| Refused: overload 1 of find result U \| undefined cannot be served by implementation result T \| undefined | 2 |
+| Refused: overload 1 of findAncestor result T \| undefined cannot be served by implementation result Node \| undefined | 1 |
+
+| Root with no remaining measurement finding | Name |
+| --- | --- |
+| binder.ts:1084:5 | bindEach |
+| checker.ts:2800:5 | addDuplicateDeclarationErrorsForSymbols |
+| commandLineParser.ts:2718:1 | filterSameAsDefaultInclude |
+| commandLineParser.ts:4018:1 | isExcludedFile |
+| core.ts:1966:1 | equateStringsCaseSensitive |
+| emitter.ts:1395:5 | print |
+| emitter.ts:1454:5 | emitIdentifierName |
+| emitter.ts:1455:5 | emitIdentifierName |
+| emitter.ts:1456:5 | emitIdentifierName |
+| emitter.ts:1468:5 | emitJsxAttributeValue |
+| emitter.ts:2032:5 | emitMappedTypeParameter |
+| emitter.ts:2179:5 | emitQualifiedName |
+| emitter.ts:2204:5 | emitTypeParameter |
+| emitter.ts:2245:5 | emitPropertySignature |
+| emitter.ts:2253:5 | emitPropertyDeclaration |
+| emitter.ts:2263:5 | emitMethodSignature |
+| emitter.ts:2300:5 | emitCallSignature |
+| emitter.ts:2304:5 | emitConstructSignature |
+| emitter.ts:2317:5 | emitTemplateTypeSpan |
+| emitter.ts:2330:5 | emitTypePredicate |
+| emitter.ts:2344:5 | emitTypeReference |
+| emitter.ts:2349:5 | emitFunctionType |
+| emitter.ts:2360:5 | emitFunctionTypeBody |
+| emitter.ts:2365:5 | emitJSDocFunctionType |
+| emitter.ts:2372:5 | emitJSDocNullableType |
+| emitter.ts:2377:5 | emitJSDocNonNullableType |
+| emitter.ts:2382:5 | emitJSDocOptionalType |
+| emitter.ts:2387:5 | emitConstructorType |
+| emitter.ts:2394:5 | emitTypeQuery |
+| emitter.ts:2419:5 | emitRestOrJSDocVariadicType |
+| emitter.ts:2431:5 | emitNamedTupleMember |
+| emitter.ts:2469:5 | emitInferType |
+| emitter.ts:2475:5 | emitParenthesizedType |
+| emitter.ts:2551:5 | emitLiteralType |
+| emitter.ts:2560:5 | emitImportTypeNode |
+| emitter.ts:2746:5 | emitParenthesizedExpression |
+| emitter.ts:2760:5 | emitArrowFunction |
+| emitter.ts:2765:5 | emitArrowFunctionHead |
+| emitter.ts:2971:5 | emitYieldExpression |
+| emitter.ts:2992:5 | emitAsExpression |
+| emitter.ts:3007:5 | emitSatisfiesExpression |
+| emitter.ts:3017:5 | emitMetaProperty |
+| emitter.ts:3027:5 | emitTemplateSpan |
+| emitter.ts:3047:5 | emitVariableStatement |
+| emitter.ts:3073:5 | emitIfStatement |
+| emitter.ts:3093:5 | emitWhileClause |
+| emitter.ts:3133:5 | emitForInStatement |
+| emitter.ts:3146:5 | emitForOfStatement |
+| emitter.ts:3345:5 | emitWithStatement |
+| emitter.ts:3354:5 | emitSwitchStatement |
+| emitter.ts:3364:5 | emitLabeledStatement |
+| emitter.ts:3377:5 | emitTryStatement |
+| factory/emitNode.ts:271:1 | removeEmitHelper |
+| path.ts:538:1 | reducePathComponents |
+| path.ts:606:1 | resolvePath |
+| sys.ts:262:5 | watchFile |
+| sys.ts:467:5 | watchFile |
+| sys.ts:879:5 | isIgnoredPath |
+| transformer.ts:218:1 | wrapScriptTransformerFactory |
+| transformer.ts:222:1 | wrapDeclarationTransformerFactory |
+| transformers/classThis.ts:90:1 | classHasClassThisAssignment |
+| transformers/es2015.ts:1212:5 | isUninitializedVariableStatement |
+| transformers/namedEvaluation.ts:156:1 | classHasExplicitlyAssignedName |
+| transformers/ts.ts:873:5 | isClassLikeDeclarationWithTypeScriptSyntax |
+| transformers/utilities.ts:124:1 | containsDefaultReference |
+| transformers/utilities.ts:729:1 | getAllDecoratorsOfAccessors |
+| transformers/utilities.ts:762:1 | getAllDecoratorsOfMethod |
+| transformers/utilities.ts:781:1 | getAllDecoratorsOfProperty |
+| transformers/utilities.ts:871:1 | isSimpleParameterList |
+| utilities.ts:1351:1 | indexOfNode |
+| utilities.ts:2751:1 | isHoistedVariableStatement |
+| utilities.ts:7617:1 | isExportDefaultSymbol |
+| utilities.ts:8609:1 | createDetachedDiagnostic |
+| utilities.ts:8682:1 | createFileDiagnostic |
+| utilities.ts:8705:1 | formatMessage |
+| utilities.ts:8716:1 | createCompilerDiagnostic |
+
+| Newly blocked root | Name | Exact findings |
+| --- | --- | --- |
+| checker.ts:9080:9 | serializeInferredTypeForDeclaration | NotYet: a value of type readonly T[] \| undefined |
+| checker.ts:9285:9 | canReuseTypeNode | NotYet: a value of type (element: Node) => "quit" \| boolean<br>NotYet: a value of type readonly T[] \| undefined |
+| checker.ts:9550:13 | mergeRedundantStatements | NotYet: a value of type readonly T[] \| undefined |

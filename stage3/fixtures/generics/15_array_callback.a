@@ -1,0 +1,18 @@
+// Reduced from TypeScript core.ts:67, firstDefined; pin 050880ce.
+// Keep the optional readonly array and loop; replace the non-null assertion with an explicit missing-element throw.
+function firstDefined<T, U>(array: readonly T[] | undefined, callback: (element: T, index: number) => U | undefined): U | undefined {
+    if (array === undefined) return undefined;
+    for (let i = 0; i < array.length; i++) {
+        const element = array[i];
+        if (element === undefined) throw new Error('missing element');
+        const result = callback(element, i);
+        if (result !== undefined) return result;
+    }
+    return undefined;
+}
+console.log(`${firstDefined([0, 2], (value: number): number | undefined => value) ?? 99}`);
+console.log(`${firstDefined([1], (value: number): boolean | undefined => false) ?? true}`);
+console.log(`${firstDefined([1], (value: number): string | undefined => '') ?? 'wrong'}`);
+console.log(`${firstDefined([1, 2], (value: number, index: number): string | undefined => index === 0 ? undefined : 'owned'.repeat(3)) ?? 'missing'}`);
+const empty: number[] = [];
+console.log(`${firstDefined<number, string>(empty, (value: number): string | undefined => 'wrong') ?? 'empty'} ${firstDefined<number, string>(undefined, (value: number): string | undefined => 'wrong') ?? 'absent'}`);

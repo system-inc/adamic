@@ -1,0 +1,8 @@
+// Supplemental recursive stress for the core.ts:67 firstDefined result reduction.
+// Recursion is added here; it is not claimed as part of the upstream helper.
+function firstDefined<U>(value: U | undefined, depth: number): U | undefined {
+    if (depth !== 0) return firstDefined<U>(value, depth - 1);
+    if (value !== undefined) return value;
+    return undefined;
+}
+console.log(`${firstDefined<number>(0, 2) ?? 99} ${firstDefined<string>('owned'.repeat(3), 2) ?? 'missing'}`);

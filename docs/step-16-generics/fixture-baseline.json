@@ -81,6 +81,82 @@
       "source_sha256": "41f484aef444f8fbe414f561c43884c0637bb5e1bb37442e864b93af982a9e17",
       "origin": "utilities.ts:10644",
       "reduction": "setTextRangePos retains generic readonly constraint and writable cast; other range fields removed"
+    },
+    {
+      "path": "stage3/fixtures/generics/09_recursive_optional.a",
+      "exit": 0,
+      "stdout": "0 ownedownedowned\n",
+      "stderr": "",
+      "kind": "NotYet",
+      "reason": "a function returning U | undefined",
+      "source_sha256": "a6e7899e7a85928b0a0d68774f4461ef86c69cc20685148a758e1ad5269b00e8",
+      "origin": "core.ts:67 result reduction, with supplemental recursion",
+      "reduction": "recursion added to stress specialization identity; not an upstream recursive helper"
+    },
+    {
+      "path": "stage3/fixtures/generics/10_identifier_multimap.a",
+      "exit": 0,
+      "stdout": "true ownedownedowned/secondsecond/third\n0/7\n",
+      "stderr": "",
+      "kind": "Lowered",
+      "source_sha256": "9a5ff1f40a7a4071fcea20a2c3997390f50ba01561ce55a9dc71b96d7da8882d",
+      "origin": "transformers/utilities.ts:389; transformers/utilities.ts:441",
+      "reduction": "Identifier keys replaced by string keys; getters, reflection and unused methods removed; generic construction/relay and identity observations added as drivers"
+    },
+    {
+      "path": "stage3/fixtures/generics/11_indexed_result.a",
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": "",
+      "kind": "NotYet",
+      "reason": "a function returning T[\"value\"]",
+      "source_sha256": "9eb68d3772b96f213ba8b399d8f9f8800f5dbaa74f19d73f0c686e46fbc85b7b",
+      "origin": null,
+      "reduction": "supplemental checker-clean indexed-result type lie; requires instantiated result proof"
+    },
+    {
+      "path": "stage3/fixtures/generics/12_mixed_indexed_result.a",
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": "",
+      "kind": "NotYet",
+      "reason": "a function returning U | T[\"value\"] | undefined",
+      "source_sha256": "752c9ecfd68492c3381b519753f07d7cecc7faea479ede52c8f4262be182c76f",
+      "origin": null,
+      "reduction": "supplemental checker-clean mixed indexed/optional type lie; requires instantiated result proof"
+    },
+    {
+      "path": "stage3/fixtures/generics/13_constrained_local.a",
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": "",
+      "kind": "NotYet",
+      "reason": "a function returning U | undefined",
+      "source_sha256": "dfe015b1ea28869c3b31470c1a4438f8ca647feba13f3df6d319e781ba3fb019",
+      "origin": null,
+      "reduction": "supplemental constrained indexed-local type lie exposed by specializing an unrelated optional result binder"
+    },
+    {
+      "path": "stage3/fixtures/generics/14_optional_literal_union.a",
+      "exit": 0,
+      "stdout": "0 4\n",
+      "stderr": "",
+      "kind": "NotYet",
+      "reason": "a function returning 0 | T | undefined",
+      "source_sha256": "3f1f9f871478abbfd1a824b0566aba0b8d1de2a4608e7857518f422afee937d0",
+      "origin": null,
+      "reduction": "supplemental unconstrained three-member optional-union capability boundary"
+    },
+    {
+      "path": "stage3/fixtures/generics/15_array_callback.a",
+      "exit": 0,
+      "stdout": "0\nfalse\n\nownedownedowned\nempty absent\n",
+      "stderr": "",
+      "kind": "NotYet",
+      "reason": "a function returning U | undefined",
+      "source_sha256": "63065343826ccd098309f612457b0f46e76b2516f921174ccba292e126e88c6f",
+      "origin": "core.ts:67",
+      "reduction": "optional readonly array and loop retained; non-null assertion replaced with checked missing-element throw; driver elements exclude undefined, and empty array is explicitly number[]"
     }
   ]
 }
