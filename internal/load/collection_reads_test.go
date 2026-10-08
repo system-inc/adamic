@@ -23,6 +23,7 @@ func TestCollectionReadPayloadErrorsRemain(t *testing.T) {
 }
 func TestCollectionReadObligations(t *testing.T) {
 	for _, source := range []string{
+		"function f(array:readonly number[],i:number):number {return array[i];}",
 		"function f(map:Map<string,number>):number {return map.get('x');}",
 		"function f(map:Map<string,number>):number {const value=map.get('x');return value;}",
 		"const map=new Map<string,number>();const value:number=map.get('x');",

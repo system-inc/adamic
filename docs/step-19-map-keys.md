@@ -300,3 +300,31 @@ go test ./internal/oracle -run '^TestScoutMapPresenceInvalidationContract$' -cou
 ```
 
 All unmutated checks pass. The uncached oracle run records 22 native misses and 16 Node misses, no hits. Evidence logs are in stage3/map-keys/evidence/ruling-presence. Additional frozen census roots credited: zero. This piece implements a ruled flow fact; it does not remove createSet's generic-key, union-value or generator blockers, and no entry-root or hidden-byte credit is inferred from a reduced fixture. Indexed arrays and collection protocol implementations remain separate pieces.
+
+### Piece 3: indexed arrayToMap reads
+
+An ordinary array index can carry the same checked absence obligation as Map.get. The receiving payload must remain assignable after excluding undefined; nullable payloads remain unsupported. The range proof follows a direct index or a const-local snapshot to a fresh let index initialized at zero, incremented with i++, and compared as i < array.length on the same array binding. It rejects effects between the comparison and the read, writes to the index anywhere in the body, captures of the index, hoisted var indices, different arrays, negative starts and elements that can themselves be undefined. No assertion is needed in the ruled source reduction.
+
+Length changes after a read do not invalidate that completed read: the next iteration compares the current length again. The source-reduced arrayToMap fixture explicitly exercises a callback that shrinks the array after each read. It also covers empty input, zero, duplicate-key overwrite order and skipped undefined keys. Both backends agree with source Node, under sanitizers and successful-program leaks: 35 allocations, 35 frees, 25 retains, 57 releases, peak 11, zero regions. The invalidated fixture pops the only element before reading it. Source Node prints undefined; both generated backends print reading and panic with collection lookup failed: value is undefined, exit 70. Its terminal panic is not a successful-program leak claim.
+
+The mutant omits the comparison-to-read effect check in collectionRangeProven. The alias-mutation flow control fails, and the independent runtime contract fails because the generated program prints reading then 0 and exits 0 instead of panicking. The native mutant is sanitizer/leak clean; the failure is semantic, not a build warning. The production source is restored. Frozen census roots credited: zero, since the full generic overload's key/value representation blockers remain. This proves the concrete loop rule without claiming whole tsc compilation or hidden-byte recovery.
+
+Exact commands, after sourcing the toolchain and redirecting output:
+
+```sh
+go test ./internal/load -run '^TestCollectionRead' -count=1 -v > /tmp/scout19-range-load.log 2>&1
+go test ./internal/lower -run '^TestScoutArrayRangeRules$' -count=1 -v > /tmp/scout19-range-lower.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^scout_array_to_map.*[.]a$' -count=1 -timeout 30m -v > /tmp/scout19-range-oracle.log 2>&1
+go test ./internal/oracle -run '^TestScoutArrayRangeInvalidationContract$' -count=1 -v > /tmp/scout19-range-contract.log 2>&1
+go test ./internal/lower -run '^(TestScoutArrayRangeRules|TestScoutMap.*|TestNonNull.*|TestWhatZeroOneRefusesIsRefusedWithAFix)$' -count=1 -v > /tmp/scout19-range-regression-lower.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(scout_(map|array)_.*[.]a|array_reads.*[.]a|library_array.*[.]a)$' -count=1 -timeout 30m -v > /tmp/scout19-range-regression-oracle.log 2>&1
+go vet ./internal/load ./internal/lower ./internal/oracle > /tmp/scout19-range-vet.log 2>&1
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts > /tmp/scout19-range-counts.log 2>&1
+# With the comparison-to-read effect check omitted, each must fail:
+go test ./internal/lower -run '^TestScoutArrayRangeRules$' -count=1 > /tmp/scout19-range-mutant-flow.log 2>&1
+go test ./internal/oracle -run '^TestScoutArrayRangeInvalidationContract$' -count=1 > /tmp/scout19-range-mutant-contract.log 2>&1
+```
+
+Logs are preserved as .log.txt evidence under stage3/map-keys/evidence/ruling-range; the preceding presence logs are also preserved with that extension.
+
+All unmutated range checks passed. The broad affected-fixture run records 57 native misses and 40 Node misses, zero hits. No whole package test or full gate was run.

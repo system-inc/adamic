@@ -1,0 +1,24 @@
+=== RUN   TestCollectionReadPayloadErrorsRemain
+=== RUN   TestCollectionReadPayloadErrorsRemain/function_f(map:Map<string,string>):number_{return_map.get('x');}
+=== RUN   TestCollectionReadPayloadErrorsRemain/function_f(map:Map<string,number>):string_{return_map.get('x');}
+=== RUN   TestCollectionReadPayloadErrorsRemain/function_f(map:Map<string,number|null>):number|null_{return_map.get('x');}
+=== RUN   TestCollectionReadPayloadErrorsRemain/function_f(object:{get:(k:string)=>number|undefined}):number_{return_object.get('x');}
+=== RUN   TestCollectionReadPayloadErrorsRemain/function_f(map:Map<string,number>):number_{let_value=map.get('x');return_value;}
+--- PASS: TestCollectionReadPayloadErrorsRemain (0.13s)
+    --- PASS: TestCollectionReadPayloadErrorsRemain/function_f(map:Map<string,string>):number_{return_map.get('x');} (0.03s)
+    --- PASS: TestCollectionReadPayloadErrorsRemain/function_f(map:Map<string,number>):string_{return_map.get('x');} (0.03s)
+    --- PASS: TestCollectionReadPayloadErrorsRemain/function_f(map:Map<string,number|null>):number|null_{return_map.get('x');} (0.03s)
+    --- PASS: TestCollectionReadPayloadErrorsRemain/function_f(object:{get:(k:string)=>number|undefined}):number_{return_object.get('x');} (0.02s)
+    --- PASS: TestCollectionReadPayloadErrorsRemain/function_f(map:Map<string,number>):number_{let_value=map.get('x');return_value;} (0.02s)
+=== RUN   TestCollectionReadObligations
+=== RUN   TestCollectionReadObligations/function_f(map:Map<string,number>):number_{return_map.get('x');}
+=== RUN   TestCollectionReadObligations/function_f(map:Map<string,number>):number_{const_value=map.get('x');return_value;}
+=== RUN   TestCollectionReadObligations/const_map=new_Map<string,number>();const_value:number=map.get('x');
+=== RUN   TestCollectionReadObligations/function_f(n:number):void{};const_map=new_Map<string,number>();f(map.get('x'));
+--- PASS: TestCollectionReadObligations (0.11s)
+    --- PASS: TestCollectionReadObligations/function_f(map:Map<string,number>):number_{return_map.get('x');} (0.03s)
+    --- PASS: TestCollectionReadObligations/function_f(map:Map<string,number>):number_{const_value=map.get('x');return_value;} (0.03s)
+    --- PASS: TestCollectionReadObligations/const_map=new_Map<string,number>();const_value:number=map.get('x'); (0.03s)
+    --- PASS: TestCollectionReadObligations/function_f(n:number):void{};const_map=new_Map<string,number>();f(map.get('x')); (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/load	0.243s

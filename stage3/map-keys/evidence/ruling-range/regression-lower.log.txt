@@ -1,0 +1,214 @@
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix
+=== RUN   TestScoutMapKeyOutcomes
+=== RUN   TestScoutMapKeyOutcomes/branded_map
+    map_keys_scout_test.go:35: /tmp/adamic-gate/TestScoutMapKeyOutcomesbranded_map3421766121/001/main.a:3:19: stage 0 can't lower a value of type Path yet
+=== RUN   TestScoutMapKeyOutcomes/branded_set
+    map_keys_scout_test.go:35: /tmp/adamic-gate/TestScoutMapKeyOutcomesbranded_set525766318/001/main.a:3:19: stage 0 can't lower a value of type Path yet
+=== RUN   TestScoutMapKeyOutcomes/mixed_map
+    map_keys_scout_test.go:35: /tmp/adamic-gate/TestScoutMapKeyOutcomesmixed_map1467979719/001/main.a:2:13: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet
+=== RUN   TestScoutMapKeyOutcomes/nullish_set
+    map_keys_scout_test.go:35: /tmp/adamic-gate/TestScoutMapKeyOutcomesnullish_set1417687182/001/main.a:2:13: stage 0 can't lower a Set of null | undefined (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far) yet
+=== RUN   TestScoutMapKeyOutcomes/maplike
+    map_keys_scout_test.go:35: /tmp/adamic-gate/TestScoutMapKeyOutcomesmaplike1083335093/001/main.a:2:24: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added
+=== RUN   TestScoutMapKeyOutcomes/reused_pair_mutation
+    map_keys_scout_test.go:35: /tmp/adamic-gate/TestScoutMapKeyOutcomesreused_pair_mutation2176027131/001/main.a:10:21: stage 0 can't lower assigning an element of a value yet
+--- PASS: TestScoutMapKeyOutcomes (0.19s)
+    --- PASS: TestScoutMapKeyOutcomes/branded_map (0.04s)
+    --- PASS: TestScoutMapKeyOutcomes/branded_set (0.03s)
+    --- PASS: TestScoutMapKeyOutcomes/mixed_map (0.03s)
+    --- PASS: TestScoutMapKeyOutcomes/nullish_set (0.03s)
+    --- PASS: TestScoutMapKeyOutcomes/maplike (0.03s)
+    --- PASS: TestScoutMapKeyOutcomes/reused_pair_mutation (0.03s)
+=== RUN   TestScoutMapIteratorPairsLower
+--- PASS: TestScoutMapIteratorPairsLower (0.03s)
+=== RUN   TestScoutMapIteratorPairRepresentationGap
+--- PASS: TestScoutMapIteratorPairRepresentationGap (0.03s)
+=== RUN   TestScoutMapBrandBoundary
+=== RUN   TestScoutMapBrandBoundary/42
+=== RUN   TestScoutMapBrandBoundary/undefined
+=== RUN   TestScoutMapBrandBoundary/false
+=== RUN   TestScoutMapBrandBoundary/null
+--- PASS: TestScoutMapBrandBoundary (0.11s)
+    --- PASS: TestScoutMapBrandBoundary/42 (0.03s)
+    --- PASS: TestScoutMapBrandBoundary/undefined (0.03s)
+    --- PASS: TestScoutMapBrandBoundary/false (0.03s)
+    --- PASS: TestScoutMapBrandBoundary/null (0.02s)
+=== RUN   TestScoutMapBrandRefinementRefused
+--- PASS: TestScoutMapBrandRefinementRefused (0.03s)
+=== RUN   TestScoutMapPresenceRules
+=== RUN   TestScoutMapPresenceRules/early_missing_return
+=== RUN   TestScoutMapPresenceRules/early_return_then_alias_write
+=== RUN   TestScoutMapPresenceRules/same_map/key
+=== RUN   TestScoutMapPresenceRules/different_key
+=== RUN   TestScoutMapPresenceRules/different_map
+=== RUN   TestScoutMapPresenceRules/alias_write
+=== RUN   TestScoutMapPresenceRules/unknown_call
+=== RUN   TestScoutMapPresenceRules/key_update
+=== RUN   TestScoutMapPresenceRules/optional_stored_undefined
+--- PASS: TestScoutMapPresenceRules (0.25s)
+    --- PASS: TestScoutMapPresenceRules/early_missing_return (0.03s)
+    --- PASS: TestScoutMapPresenceRules/early_return_then_alias_write (0.03s)
+    --- PASS: TestScoutMapPresenceRules/same_map/key (0.03s)
+    --- PASS: TestScoutMapPresenceRules/different_key (0.02s)
+    --- PASS: TestScoutMapPresenceRules/different_map (0.03s)
+    --- PASS: TestScoutMapPresenceRules/alias_write (0.03s)
+    --- PASS: TestScoutMapPresenceRules/unknown_call (0.03s)
+    --- PASS: TestScoutMapPresenceRules/key_update (0.03s)
+    --- PASS: TestScoutMapPresenceRules/optional_stored_undefined (0.03s)
+=== RUN   TestScoutArrayRangeRules
+=== RUN   TestScoutArrayRangeRules/range
+=== RUN   TestScoutArrayRangeRules/alias_mutation_before_read
+=== RUN   TestScoutArrayRangeRules/index_mutation_after_read
+=== RUN   TestScoutArrayRangeRules/hoisted_index
+=== RUN   TestScoutArrayRangeRules/negative_start
+=== RUN   TestScoutArrayRangeRules/different_array
+=== RUN   TestScoutArrayRangeRules/undefined_payload
+--- PASS: TestScoutArrayRangeRules (0.19s)
+    --- PASS: TestScoutArrayRangeRules/range (0.03s)
+    --- PASS: TestScoutArrayRangeRules/alias_mutation_before_read (0.03s)
+    --- PASS: TestScoutArrayRangeRules/index_mutation_after_read (0.02s)
+    --- PASS: TestScoutArrayRangeRules/hoisted_index (0.03s)
+    --- PASS: TestScoutArrayRangeRules/negative_start (0.02s)
+    --- PASS: TestScoutArrayRangeRules/different_array (0.03s)
+    --- PASS: TestScoutArrayRangeRules/undefined_payload (0.03s)
+=== RUN   TestNonNullAssertionLowersToNullishPanic
+=== PAUSE TestNonNullAssertionLowersToNullishPanic
+=== RUN   TestNonNullAssertionOnPresentTypeIsErased
+=== PAUSE TestNonNullAssertionOnPresentTypeIsErased
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/var
+=== CONT  TestNonNullAssertionOnPresentTypeIsErased
+=== CONT  TestNonNullAssertionLowersToNullishPanic
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/var
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/async
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/async
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_string
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_string
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_number
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_number
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/!
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/!
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/==
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/==
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/delete
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/delete
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_calling_a_method_before_its_fields_are_set_(R2's,_and_R's_half_built)
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_calling_a_method_before_its_fields_are_set_(R2's,_and_R's_half_built)
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_handing_this_out_before_its_fields_are_set_(R's_early_this)
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_handing_this_out_before_its_fields_are_set_(R's_early_this)
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this_before_its_fields_are_set
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this_before_its_fields_are_set
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this,_a_field_set_only_in_a_branch
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this,_a_field_set_only_in_a_branch
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_filter_that_decides_by_truthiness
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_filter_that_decides_by_truthiness
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/Array.from's_undefined_typed_as_a_number
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/Array.from's_undefined_typed_as_a_number
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_parent_pointer_not_declared_weak
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_parent_pointer_not_declared_weak
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_doubly_linked_list_with_a_strong_next
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_doubly_linked_list_with_a_strong_next
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_closure_in_a_cell_it_captures
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_closure_in_a_cell_it_captures
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_mutable_array_of_children
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_mutable_array_of_children
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_callback_that_captures_what_holds_it
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_callback_that_captures_what_holds_it
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_values_reach_back
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_values_reach_back
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_keys_reach_back
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_keys_reach_back
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_set_whose_elements_reach_back
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_set_whose_elements_reach_back
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_of_sets_that_reach_back
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_of_sets_that_reach_back
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_through_a_subtype
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_through_a_subtype
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_only_a_later_instantiation_closes
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_only_a_later_instantiation_closes
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_a_generic_class_makes_but_never_names
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_a_generic_class_makes_but_never_names
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_generic_cell_holding_a_function_that_captures_it
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_generic_cell_holding_a_function_that_captures_it
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/reduce_without_an_initial_value
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/reduce_without_an_initial_value
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random,_not_called
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random,_not_called
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_method_read_off_its_object
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_method_read_off_its_object
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/this.method_read_as_a_value
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/this.method_read_as_a_value
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/an_unchecked_cast
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/an_unchecked_cast
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/var
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_mutable_array_of_children
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_handing_this_out_before_its_fields_are_set_(R's_early_this)
+--- PASS: TestNonNullAssertionOnPresentTypeIsErased (0.07s)
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_calling_a_method_before_its_fields_are_set_(R2's,_and_R's_half_built)
+--- PASS: TestNonNullAssertionLowersToNullishPanic (0.07s)
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/delete
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/==
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/!
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_number
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_string
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/async
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_a_generic_class_makes_but_never_names
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/an_unchecked_cast
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/this.method_read_as_a_value
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_method_read_off_its_object
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random,_not_called
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/reduce_without_an_initial_value
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_generic_cell_holding_a_function_that_captures_it
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_closure_in_a_cell_it_captures
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/Array.from's_undefined_typed_as_a_number
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_doubly_linked_list_with_a_strong_next
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_parent_pointer_not_declared_weak
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_set_whose_elements_reach_back
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_only_a_later_instantiation_closes
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_through_a_subtype
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_of_sets_that_reach_back
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_values_reach_back
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_keys_reach_back
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this,_a_field_set_only_in_a_branch
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this_before_its_fields_are_set
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_filter_that_decides_by_truthiness
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_callback_that_captures_what_holds_it
+--- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix (0.00s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/var (0.07s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_handing_this_out_before_its_fields_are_set_(R's_early_this) (0.07s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_mutable_array_of_children (0.08s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/== (0.06s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/! (0.06s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/delete (0.07s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_number (0.07s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_calling_a_method_before_its_fields_are_set_(R2's,_and_R's_half_built) (0.09s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_string (0.08s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_a_generic_class_makes_but_never_names (0.08s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/this.method_read_as_a_value (0.07s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/async (0.10s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/an_unchecked_cast (0.09s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random (0.04s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_method_read_off_its_object (0.06s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random,_not_called (0.08s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/reduce_without_an_initial_value (0.07s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_generic_cell_holding_a_function_that_captures_it (0.07s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/Array.from's_undefined_typed_as_a_number (0.03s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_doubly_linked_list_with_a_strong_next (0.03s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_closure_in_a_cell_it_captures (0.06s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_set_whose_elements_reach_back (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_through_a_subtype (0.04s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_parent_pointer_not_declared_weak (0.08s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_of_sets_that_reach_back (0.04s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_only_a_later_instantiation_closes (0.07s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this,_a_field_set_only_in_a_branch (0.04s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_keys_reach_back (0.04s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_values_reach_back (0.06s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this_before_its_fields_are_set (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_filter_that_decides_by_truthiness (0.04s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_callback_that_captures_what_holds_it (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.274s

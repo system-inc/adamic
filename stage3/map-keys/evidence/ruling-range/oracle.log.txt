@@ -1,0 +1,17 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_array_to_map.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_array_to_map.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_array_to_map_invalidated.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_array_to_map_invalidated.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_array_to_map.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_array_to_map_invalidated.a
+--- PASS: TestNativeAgreesWithNode (0.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_array_to_map_invalidated.a (0.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_array_to_map.a (0.55s)
+PASS
+gate cache: native hits=0 misses=5
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.584s

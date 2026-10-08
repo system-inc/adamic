@@ -1,0 +1,17 @@
+// Reduced from core.ts:1409-1416. The ruled loop needs no assertion.
+function arrayToMap(array:readonly number[],makeKey:(value:number)=>string|undefined):Map<string,number>{
+ const result=new Map<string,number>();
+ for(let i=0;i<array.length;i++){
+  const value=array[i];
+  const key=makeKey(value);
+  if(key!==undefined)result.set(key,value);
+ }
+ return result;
+}
+const result=arrayToMap([3,0,2,3,-1],value=>value<0?undefined:`key-${value}`);
+for(const [key,value] of result)console.log(`${key}:${value}`);
+console.log(`${arrayToMap([],value=>`${value}`).size}`);
+// An effect after this read is safe: the next iteration reads the current length.
+const mutable=[7,8,9];
+const shrunk=arrayToMap(mutable,value=>{mutable.pop();return `${value}`;});
+for(const [key,value] of shrunk)console.log(`${key}:${value}`);

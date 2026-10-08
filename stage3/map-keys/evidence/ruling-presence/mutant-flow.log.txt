@@ -1,0 +1,12 @@
+--- FAIL: TestScoutMapPresenceRules (0.27s)
+    --- FAIL: TestScoutMapPresenceRules/early_return_then_alias_write (0.03s)
+        map_keys_scout_test.go:129: want 1 lookup checks, got 0
+    --- FAIL: TestScoutMapPresenceRules/alias_write (0.03s)
+        map_keys_scout_test.go:129: want 1 lookup checks, got 0
+    --- FAIL: TestScoutMapPresenceRules/unknown_call (0.03s)
+        map_keys_scout_test.go:129: want 1 lookup checks, got 0
+    --- FAIL: TestScoutMapPresenceRules/key_update (0.03s)
+        map_keys_scout_test.go:129: want 1 lookup checks, got 0
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.278s
+FAIL

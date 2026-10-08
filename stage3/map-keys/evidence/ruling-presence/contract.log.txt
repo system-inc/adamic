@@ -1,0 +1,8 @@
+=== RUN   TestScoutMapPresenceInvalidationContract
+    map_keys_scout_test.go:176: gate cache node miss
+--- PASS: TestScoutMapPresenceInvalidationContract (0.32s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.326s

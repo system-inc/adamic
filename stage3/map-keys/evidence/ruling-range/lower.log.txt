@@ -1,0 +1,16 @@
+=== RUN   TestScoutArrayRangeRules
+=== RUN   TestScoutArrayRangeRules/range
+=== RUN   TestScoutArrayRangeRules/alias_mutation_before_read
+=== RUN   TestScoutArrayRangeRules/index_mutation_after_read
+=== RUN   TestScoutArrayRangeRules/negative_start
+=== RUN   TestScoutArrayRangeRules/different_array
+=== RUN   TestScoutArrayRangeRules/undefined_payload
+--- PASS: TestScoutArrayRangeRules (0.19s)
+    --- PASS: TestScoutArrayRangeRules/range (0.03s)
+    --- PASS: TestScoutArrayRangeRules/alias_mutation_before_read (0.04s)
+    --- PASS: TestScoutArrayRangeRules/index_mutation_after_read (0.03s)
+    --- PASS: TestScoutArrayRangeRules/negative_start (0.03s)
+    --- PASS: TestScoutArrayRangeRules/different_array (0.03s)
+    --- PASS: TestScoutArrayRangeRules/undefined_payload (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.199s

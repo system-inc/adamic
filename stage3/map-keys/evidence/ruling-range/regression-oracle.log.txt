@@ -1,0 +1,89 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_join.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_join.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_iterators.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_iterators.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_metadata.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_metadata.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_with.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_with.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat_map.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat_map.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_spliced.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_spliced.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy_within.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy_within.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_search.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_search.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_array_to_map.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_array_to_map.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_array_to_map_invalidated.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_array_to_map_invalidated.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_presence.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_presence.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_presence_invalidated.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_presence_invalidated.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_brands.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_brands.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_brand_boundary.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_brand_boundary.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_objects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_objects.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_numbers.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_numbers.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_references.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_references.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_join.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_search.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy_within.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_spliced.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_with.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat_map.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_metadata.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_brands.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_references.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_numbers.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_objects.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_brand_boundary.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_array_to_map_invalidated.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_presence_invalidated.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_presence.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_iterators.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_array_to_map.a
+--- PASS: TestNativeAgreesWithNode (0.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_join.a (0.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_search.a (0.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy.a (0.71s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last.a (0.75s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat.a (0.82s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_with.a (0.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_spliced.a (0.73s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_metadata.a (0.64s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy_within.a (0.86s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat_map.a (0.97s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_references.a (0.58s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_numbers.a (0.62s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_brands.a (0.76s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_objects.a (0.69s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_brand_boundary.a (0.62s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_array_to_map_invalidated.a (0.69s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_presence_invalidated.a (0.63s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_map_presence.a (0.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_iterators.a (0.69s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_array_to_map.a (0.59s)
+PASS
+gate cache: native hits=0 misses=57
+gate cache: node hits=0 misses=40
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.966s

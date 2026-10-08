@@ -1,0 +1,11 @@
+// Reduced core.ts arrayToMap loop, with an alias mutation invalidating its comparison.
+function read(array:number[]):number {
+ const alias=array;
+ for(let i=0;i<array.length;i++){
+  alias.pop();
+  const value=array[i];
+  return value;
+ }
+ return -1;
+}
+console.log('reading');console.log(`${read([9])}`);

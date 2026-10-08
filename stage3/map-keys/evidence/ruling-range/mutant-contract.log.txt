@@ -1,0 +1,10 @@
+--- FAIL: TestScoutArrayRangeInvalidationContract (0.43s)
+    oracle_test.go:603: gate cache native miss
+    map_keys_scout_test.go:200: gate cache node miss
+    map_keys_scout_test.go:202: native invalidated proof: exit codes differ; exit 0 stdout "reading\n0\n" stderr ""
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.440s
+FAIL

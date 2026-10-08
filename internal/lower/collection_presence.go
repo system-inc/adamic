@@ -74,7 +74,7 @@ func collectionPrefixUnchanged(root *ast.Node, start, end int) bool {
 }
 func (l *lowering) collectionPresenceProven(node *ast.Node) bool {
 	lookup := load.CollectionLookup(l.checker, node)
-	if lookup == nil {
+	if lookup == nil || lookup.Kind != ast.KindCallExpression {
 		return false
 	}
 	receiver := ast.SkipParentheses(lookup.AsCallExpression().Expression).AsPropertyAccessExpression().Expression
@@ -126,7 +126,7 @@ func (l *lowering) collectionRequiredRead(node *ast.Node, value ir.Expression) (
 	if !known || (!value.Type().IsMaybe() && !value.Type().IsReference()) || (value.Type() != of && value.Type().Present() != of) {
 		return nil, l.notYet(node, "a checked collection lookup without a compatible presence representation")
 	}
-	return l.collectionPresentValue(node, value, of, l.collectionPresenceProven(node)), nil
+	return l.collectionPresentValue(node, value, of, (l.collectionPresenceProven(node) || l.collectionRangeProven(node))), nil
 }
 func (l *lowering) collectionPresentValue(node *ast.Node, value ir.Expression, of ir.Type, proven bool) ir.Expression {
 	if proven && !value.Type().IsMaybe() {

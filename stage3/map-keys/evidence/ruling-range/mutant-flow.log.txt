@@ -1,0 +1,6 @@
+--- FAIL: TestScoutArrayRangeRules (0.20s)
+    --- FAIL: TestScoutArrayRangeRules/alias_mutation_before_read (0.02s)
+        map_keys_scout_test.go:164: want 1 checked reads, got 0
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.210s
+FAIL

@@ -131,3 +131,49 @@ func TestScoutMapPresenceRules(t *testing.T) {
 		})
 	}
 }
+
+func TestScoutArrayRangeRules(t *testing.T) {
+	for _, test := range []struct {
+		name, body string
+		checked    int
+	}{
+		{"range", "for(let i=0;i<array.length;i++){const value=array[i];take(value);}", 0},
+		{"alias mutation before read", "const alias=array;for(let i=0;i<array.length;i++){alias.pop();const value=array[i];take(value);}", 1},
+		{"index mutation after read", "for(let i=0;i<array.length;i++){const value=array[i];take(value);i=-1;}", 1},
+		{"hoisted index", "for(var i=0;i<array.length;i++){const value=array[i];take(value);}", 1},
+		{"negative start", "for(let i=-1;i<array.length;i++){const value=array[i];take(value);}", 1},
+		{"different array", "const other:number[]=[];for(let i=0;i<array.length;i++){const value=other[i];take(value);}", 1},
+		{"undefined payload", "const other:(number|undefined)[]=[undefined];for(let i=0;i<other.length;i++){const value=other[i];take(value);}", 1},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			source := "function take(value:number):void{} function run(array:number[]):void{" + test.body + "}"
+			var program *ir.Program
+			var err error
+			if test.name == "hoisted index" {
+				program, err = lowerTypeScriptSource(t, source)
+			} else {
+				program, err = lowerSource(t, source)
+			}
+			if err != nil {
+				if test.name == "hoisted index" && strings.Contains(err.Error(), "refuses var") {
+					return
+				}
+				t.Fatal(err)
+			}
+			checks := 0
+			for _, function := range program.Functions {
+				walk(function.Body, func(node any) bool {
+					if value, ok := node.(ir.Coalesce); ok && value.Panic != nil {
+						if text, ok := value.Panic.(ir.StringConstant); ok && strings.HasPrefix(program.Strings[text.Index], "collection lookup failed:") {
+							checks++
+						}
+					}
+					return true
+				})
+			}
+			if checks != test.checked {
+				t.Fatalf("want %d checked reads, got %d", test.checked, checks)
+			}
+		})
+	}
+}

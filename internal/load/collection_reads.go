@@ -7,7 +7,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/scanner"
 )
 
-// CollectionLookup follows only immutable local snapshots of an ordinary library Map lookup.
+// CollectionLookup follows only immutable local snapshots of an ordinary library Map lookup or an array index.
 // A method merely named get, a mutable alias, or an assertion is not a lookup contract.
 func CollectionLookup(check *checker.Checker, node *ast.Node) *ast.Node {
 	return collectionLookup(check, node, map[*ast.Symbol]bool{})
@@ -25,6 +25,13 @@ func collectionLookup(check *checker.Checker, node *ast.Node, seen map[*ast.Symb
 			return nil
 		}
 		return collectionLookup(check, declaration.AsVariableDeclaration().Initializer, seen)
+	}
+	if node.Kind == ast.KindElementAccessExpression {
+		access := node.AsElementAccessExpression()
+		if access.QuestionDotToken == nil && check.IsArrayType(check.GetTypeAtLocation(access.Expression)) && check.GetTypeAtLocation(access.ArgumentExpression).Flags()&checker.TypeFlagsNumberLike != 0 {
+			return node
+		}
+		return nil
 	}
 	if node.Kind != ast.KindCallExpression {
 		return nil
