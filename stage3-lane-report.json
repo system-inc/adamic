@@ -1,0 +1,53 @@
+{
+  "status": "fail",
+  "errors": [
+    "test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106358, 'failing': 9, 'pending': 0}",
+    "reporter counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106358, 'failing': 9, 'pending': 0}",
+    "failed test names: expected ['unittests:: Public APIs for typescript.d.ts should be acknowledged when they change'], observed ['unittests:: tsserver:: externalProjects:', \"unittests:: tsbuild:: on 'sample1' project emit output tsc --b tests --verbose sample1:: when logic specifies tsBuildInfoFile baseline for the tsc compiles\", 'unittests:: tsbuildWatch:: watchMode:: configFileErrors:: reports syntax errors in config file configFileErrors multiFile/reports syntax errors in config file tscWatch:: Generates files matching the baseline', 'unittests:: services:: languageService:', 'unittests:: tscWatch:: watchAPI:: when watchHost uses createSemanticDiagnosticsBuilderProgram multiFile/noEmitOnError with composite writes the tsbuildinfo with pending affected files correctly noEmitOnError with composite writes the tsbuildinfo with pending affected files correctly', 'unittests:: tsbuild:: noEmit:', 'unittests:: tsbuild:: with resolveJsonModule:: option on project resolveJsonModuleAndComposite tsc --b project --v --explainFiles --listEmittedFiles resolveJsonModule:: include only baseline for the tsc compiles', 'unittests:: tsc:: noEmit:', 'unittests:: Public APIs for typescript.d.ts should be acknowledged when they change']",
+    "number of reported failure titles: expected 1, observed 9"
+  ],
+  "counts": {
+    "passing": 106358,
+    "failing": 9,
+    "pending": 0
+  },
+  "failed_tests": [
+    "unittests:: tsserver:: externalProjects:",
+    "unittests:: tsbuild:: on 'sample1' project emit output tsc --b tests --verbose sample1:: when logic specifies tsBuildInfoFile baseline for the tsc compiles",
+    "unittests:: tsbuildWatch:: watchMode:: configFileErrors:: reports syntax errors in config file configFileErrors multiFile/reports syntax errors in config file tscWatch:: Generates files matching the baseline",
+    "unittests:: services:: languageService:",
+    "unittests:: tscWatch:: watchAPI:: when watchHost uses createSemanticDiagnosticsBuilderProgram multiFile/noEmitOnError with composite writes the tsbuildinfo with pending affected files correctly noEmitOnError with composite writes the tsbuildinfo with pending affected files correctly",
+    "unittests:: tsbuild:: noEmit:",
+    "unittests:: tsbuild:: with resolveJsonModule:: option on project resolveJsonModuleAndComposite tsc --b project --v --explainFiles --listEmittedFiles resolveJsonModule:: include only baseline for the tsc compiles",
+    "unittests:: tsc:: noEmit:",
+    "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+  ],
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "api": {
+    "reference_declarations": 28,
+    "composed_declarations": 222,
+    "sanctioned_declarations": 222,
+    "added_lines": 194,
+    "removed_lines": 193
+  },
+  "platform": {
+    "os": "linux",
+    "arch": "x64",
+    "node": "v24.19.0"
+  },
+  "execution": {
+    "commit": "22483cd4d147e7ef67a1190c18d3c7dda5af2473",
+    "apply_exit": 0,
+    "oracle_exit": 1,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "wall_seconds": 927.249
+  },
+  "results": "/home/ahra/fast-gate/tree-2-stage3-lane",
+  "verdict": "FAIL stage3 landing lane: test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106358, 'failing': 9, 'pending': 0}"
+}
