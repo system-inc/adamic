@@ -444,8 +444,8 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if function, isFunction := l.functions[l.symbol(node)]; !isLocal && isFunction {
 			return l.functionValue(node, function)
 		}
-		if _, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
-			return nil, l.notYet(node, "a generic function as a value")
+		if declaration, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
+			return l.genericFunctionValue(node, declaration)
 		}
 		if !isLocal && l.isLibraryGlobal(node, "String") {
 			return nil, l.notYet(node, "reading String as a first-class constructor (its any-typed call signature, construction and static members need an intrinsic value representation)")

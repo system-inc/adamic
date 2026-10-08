@@ -1,0 +1,10 @@
+function identity<T>(value: T): T { return value; }
+function textIdentity<T>(value: T): T { return value; }
+function use(value: number, project: (value: number) => number = identity): number {
+ return project(value);
+}
+const first: (value: number) => number = identity;
+const second: (value: number) => number = identity;
+const text: (value: string) => string = textIdentity;
+console.log(`${use(7)} ${first(11)} ${second(19)} ${first === second}`);
+console.log(text(['Ada', 'mic'].join('')));
