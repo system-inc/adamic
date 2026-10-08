@@ -1,0 +1,1122 @@
+{
+  "base_sha": "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8",
+  "branch": "stage1-split/markdownblocks",
+  "package": "stage1/cohere/markdownblocks",
+  "nproc": 5,
+  "cpu_quota": 4,
+  "memory_gib": 16,
+  "toolchains": {
+    "go": "go1.27.1",
+    "clang": "20.1.8 (87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+    "node": "v24.19.0"
+  },
+  "inputs": {
+    "census": true,
+    "width_dependencies": "all locked dependencies installed",
+    "sample": false,
+    "physical_documents": 1353,
+    "case_ids": 80350,
+    "case_shards": 141,
+    "mutant_shards": 3,
+    "union": "80350 distinct ids equal unsplit enumeration; missing/repeated/out-of-range controls rejected"
+  },
+  "before": {
+    "test_wall_seconds": 303.3,
+    "command_wall_seconds": 433.271,
+    "load_start": "0.00 0.00 0.00",
+    "build_attribution": "Unmodified baseline did not instrument builders. Subsequent cold-product timings below measure the same build stages; no exact baseline build/logic subtraction is claimed. About 129.9 s of command time was outside the test (initial Go package compilation).",
+    "serial_three_repeat_seconds": {
+      "Go": 19.825,
+      "release_native": 31.639,
+      "original_Node": 12.782
+    }
+  },
+  "after": {
+    "longest_shard_seconds": 13.55,
+    "longest_shard": "shard-143",
+    "setup_seconds": 10.01,
+    "shard_count": 144,
+    "load_during": "5.04 2.62 2.36",
+    "units": [
+      {
+        "name": "TestTokenizerEvents/shard-000",
+        "wall_seconds": 3.14,
+        "coverage": [
+          "events_test.go:266: union cases 12; ids 0..11"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-001",
+        "wall_seconds": 1.76,
+        "coverage": [
+          "events_test.go:266: union cases 8; ids 12..19"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-002",
+        "wall_seconds": 4.78,
+        "coverage": [
+          "events_test.go:266: union cases 5; ids 20..24"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-003",
+        "wall_seconds": 4.94,
+        "coverage": [
+          "events_test.go:266: union cases 3; ids 25..27"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-004",
+        "wall_seconds": 5.46,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 28..28"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-005",
+        "wall_seconds": 2.28,
+        "coverage": [
+          "events_test.go:266: union cases 23; ids 29..51"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-006",
+        "wall_seconds": 1.89,
+        "coverage": [
+          "events_test.go:266: union cases 47; ids 52..98"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-007",
+        "wall_seconds": 4.99,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 99..99"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-008",
+        "wall_seconds": 2.58,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 100..100"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-009",
+        "wall_seconds": 3.95,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 101..101"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-010",
+        "wall_seconds": 3.42,
+        "coverage": [
+          "events_test.go:266: union cases 82; ids 102..183"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-011",
+        "wall_seconds": 3.85,
+        "coverage": [
+          "events_test.go:266: union cases 58; ids 184..241"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-012",
+        "wall_seconds": 2.43,
+        "coverage": [
+          "events_test.go:266: union cases 18; ids 242..259"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-013",
+        "wall_seconds": 3.8,
+        "coverage": [
+          "events_test.go:266: union cases 52; ids 260..311"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-014",
+        "wall_seconds": 3.82,
+        "coverage": [
+          "events_test.go:266: union cases 88; ids 312..399"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-015",
+        "wall_seconds": 3.52,
+        "coverage": [
+          "events_test.go:266: union cases 69; ids 400..468"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-016",
+        "wall_seconds": 3.37,
+        "coverage": [
+          "events_test.go:266: union cases 70; ids 469..538"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-017",
+        "wall_seconds": 2.87,
+        "coverage": [
+          "events_test.go:266: union cases 72; ids 539..610"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-018",
+        "wall_seconds": 3.14,
+        "coverage": [
+          "events_test.go:266: union cases 92; ids 611..702"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-019",
+        "wall_seconds": 3.05,
+        "coverage": [
+          "events_test.go:266: union cases 88; ids 703..790"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-020",
+        "wall_seconds": 3.11,
+        "coverage": [
+          "events_test.go:266: union cases 62; ids 791..852"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-021",
+        "wall_seconds": 2.98,
+        "coverage": [
+          "events_test.go:266: union cases 25; ids 853..877"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-022",
+        "wall_seconds": 2.83,
+        "coverage": [
+          "events_test.go:266: union cases 3; ids 878..880"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-023",
+        "wall_seconds": 10.06,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 881..881"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-024",
+        "wall_seconds": 2.87,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 882..882"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-025",
+        "wall_seconds": 2.61,
+        "coverage": [
+          "events_test.go:266: union cases 6; ids 883..888"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-026",
+        "wall_seconds": 2.68,
+        "coverage": [
+          "events_test.go:266: union cases 4; ids 889..892"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-027",
+        "wall_seconds": 3.06,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 893..893"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-028",
+        "wall_seconds": 2.96,
+        "coverage": [
+          "events_test.go:266: union cases 4; ids 894..897"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-029",
+        "wall_seconds": 3.05,
+        "coverage": [
+          "events_test.go:266: union cases 7; ids 898..904"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-030",
+        "wall_seconds": 2.64,
+        "coverage": [
+          "events_test.go:266: union cases 6; ids 905..910"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-031",
+        "wall_seconds": 2.6,
+        "coverage": [
+          "events_test.go:266: union cases 7; ids 911..917"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-032",
+        "wall_seconds": 3.04,
+        "coverage": [
+          "events_test.go:266: union cases 4; ids 918..921"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-033",
+        "wall_seconds": 2.34,
+        "coverage": [
+          "events_test.go:266: union cases 5; ids 922..926"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-034",
+        "wall_seconds": 2.12,
+        "coverage": [
+          "events_test.go:266: union cases 7; ids 927..933"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-035",
+        "wall_seconds": 2.14,
+        "coverage": [
+          "events_test.go:266: union cases 3; ids 934..936"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-036",
+        "wall_seconds": 1.35,
+        "coverage": [
+          "events_test.go:266: union cases 7; ids 937..943"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-037",
+        "wall_seconds": 2.35,
+        "coverage": [
+          "events_test.go:266: union cases 9; ids 944..952"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-038",
+        "wall_seconds": 3.14,
+        "coverage": [
+          "events_test.go:266: union cases 10; ids 953..962"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-039",
+        "wall_seconds": 2.79,
+        "coverage": [
+          "events_test.go:266: union cases 9; ids 963..971"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-040",
+        "wall_seconds": 2.45,
+        "coverage": [
+          "events_test.go:266: union cases 6; ids 972..977"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-041",
+        "wall_seconds": 2.76,
+        "coverage": [
+          "events_test.go:266: union cases 8; ids 978..985"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-042",
+        "wall_seconds": 2.52,
+        "coverage": [
+          "events_test.go:266: union cases 4; ids 986..989"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-043",
+        "wall_seconds": 2.06,
+        "coverage": [
+          "events_test.go:266: union cases 14; ids 990..1003"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-044",
+        "wall_seconds": 6.55,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 1004..1004"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-045",
+        "wall_seconds": 2.3,
+        "coverage": [
+          "events_test.go:266: union cases 24; ids 1005..1028"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-046",
+        "wall_seconds": 2.43,
+        "coverage": [
+          "events_test.go:266: union cases 26; ids 1029..1054"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-047",
+        "wall_seconds": 2.68,
+        "coverage": [
+          "events_test.go:266: union cases 7; ids 1055..1061"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-048",
+        "wall_seconds": 3,
+        "coverage": [
+          "events_test.go:266: union cases 8; ids 1062..1069"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-049",
+        "wall_seconds": 2.76,
+        "coverage": [
+          "events_test.go:266: union cases 4; ids 1070..1073"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-050",
+        "wall_seconds": 2.66,
+        "coverage": [
+          "events_test.go:266: union cases 7; ids 1074..1080"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-051",
+        "wall_seconds": 2.54,
+        "coverage": [
+          "events_test.go:266: union cases 6; ids 1081..1086"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-052",
+        "wall_seconds": 2.55,
+        "coverage": [
+          "events_test.go:266: union cases 9; ids 1087..1095"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-053",
+        "wall_seconds": 1.99,
+        "coverage": [
+          "events_test.go:266: union cases 3; ids 1096..1098"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-054",
+        "wall_seconds": 1.97,
+        "coverage": [
+          "events_test.go:266: union cases 2; ids 1099..1100"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-055",
+        "wall_seconds": 2.22,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 1101..1101"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-056",
+        "wall_seconds": 2.02,
+        "coverage": [
+          "events_test.go:266: union cases 3; ids 1102..1104"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-057",
+        "wall_seconds": 2.31,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 1105..1105"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-058",
+        "wall_seconds": 2.2,
+        "coverage": [
+          "events_test.go:266: union cases 5; ids 1106..1110"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-059",
+        "wall_seconds": 2.15,
+        "coverage": [
+          "events_test.go:266: union cases 7; ids 1111..1117"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-060",
+        "wall_seconds": 2,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 1118..1118"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-061",
+        "wall_seconds": 2.1,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 1119..1119"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-062",
+        "wall_seconds": 2.5,
+        "coverage": [
+          "events_test.go:266: union cases 2; ids 1120..1121"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-063",
+        "wall_seconds": 2.36,
+        "coverage": [
+          "events_test.go:266: union cases 16; ids 1122..1137"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-064",
+        "wall_seconds": 2.32,
+        "coverage": [
+          "events_test.go:266: union cases 12; ids 1138..1149"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-065",
+        "wall_seconds": 2.29,
+        "coverage": [
+          "events_test.go:266: union cases 9; ids 1150..1158"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-066",
+        "wall_seconds": 1.78,
+        "coverage": [
+          "events_test.go:266: union cases 15; ids 1159..1173"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-067",
+        "wall_seconds": 2.34,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 1174..1174"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-068",
+        "wall_seconds": 2.26,
+        "coverage": [
+          "events_test.go:266: union cases 3; ids 1175..1177"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-069",
+        "wall_seconds": 1.79,
+        "coverage": [
+          "events_test.go:266: union cases 4; ids 1178..1181"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-070",
+        "wall_seconds": 2.29,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 1182..1182"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-071",
+        "wall_seconds": 2.14,
+        "coverage": [
+          "events_test.go:266: union cases 5; ids 1183..1187"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-072",
+        "wall_seconds": 2.3,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 1188..1188"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-073",
+        "wall_seconds": 1.86,
+        "coverage": [
+          "events_test.go:266: union cases 2; ids 1189..1190"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-074",
+        "wall_seconds": 2.5,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 1191..1191"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-075",
+        "wall_seconds": 3.2,
+        "coverage": [
+          "events_test.go:266: union cases 3; ids 1192..1194"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-076",
+        "wall_seconds": 2.67,
+        "coverage": [
+          "events_test.go:266: union cases 2; ids 1195..1196"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-077",
+        "wall_seconds": 3.14,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 1197..1197"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-078",
+        "wall_seconds": 2.97,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 1198..1198"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-079",
+        "wall_seconds": 2.72,
+        "coverage": [
+          "events_test.go:266: union cases 2; ids 1199..1200"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-080",
+        "wall_seconds": 3.62,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 1201..1201"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-081",
+        "wall_seconds": 2.87,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 1202..1202"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-082",
+        "wall_seconds": 2.6,
+        "coverage": [
+          "events_test.go:266: union cases 8; ids 1203..1210"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-083",
+        "wall_seconds": 2.85,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 1211..1211"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-084",
+        "wall_seconds": 2.42,
+        "coverage": [
+          "events_test.go:266: union cases 12; ids 1212..1223"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-085",
+        "wall_seconds": 2.69,
+        "coverage": [
+          "events_test.go:266: union cases 3; ids 1224..1226"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-086",
+        "wall_seconds": 2.99,
+        "coverage": [
+          "events_test.go:266: union cases 12; ids 1227..1238"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-087",
+        "wall_seconds": 2.5,
+        "coverage": [
+          "events_test.go:266: union cases 9; ids 1239..1247"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-088",
+        "wall_seconds": 2.56,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 1248..1248"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-089",
+        "wall_seconds": 2.92,
+        "coverage": [
+          "events_test.go:266: union cases 8; ids 1249..1256"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-090",
+        "wall_seconds": 3.01,
+        "coverage": [
+          "events_test.go:266: union cases 3; ids 1257..1259"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-091",
+        "wall_seconds": 2.69,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 1260..1260"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-092",
+        "wall_seconds": 2.48,
+        "coverage": [
+          "events_test.go:266: union cases 6; ids 1261..1266"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-093",
+        "wall_seconds": 2.54,
+        "coverage": [
+          "events_test.go:266: union cases 8; ids 1267..1274"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-094",
+        "wall_seconds": 2.52,
+        "coverage": [
+          "events_test.go:266: union cases 14; ids 1275..1288"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-095",
+        "wall_seconds": 2.19,
+        "coverage": [
+          "events_test.go:266: union cases 8; ids 1289..1296"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-096",
+        "wall_seconds": 1.62,
+        "coverage": [
+          "events_test.go:266: union cases 7; ids 1297..1303"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-097",
+        "wall_seconds": 1.91,
+        "coverage": [
+          "events_test.go:266: union cases 2; ids 1304..1305"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-098",
+        "wall_seconds": 10.05,
+        "coverage": [
+          "events_test.go:266: union cases 8; ids 1306..1313"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-099",
+        "wall_seconds": 10.89,
+        "coverage": [
+          "events_test.go:266: union cases 27; ids 1314..1340"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-100",
+        "wall_seconds": 12.84,
+        "coverage": [
+          "events_test.go:266: union cases 1; ids 1341..1341"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-101",
+        "wall_seconds": 3.73,
+        "coverage": [
+          "events_test.go:266: union cases 895; ids 1342..2236"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-102",
+        "wall_seconds": 3.98,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 2237..4284"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-103",
+        "wall_seconds": 2.33,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 4285..6332"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-104",
+        "wall_seconds": 1.72,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 6333..8380"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-105",
+        "wall_seconds": 1.99,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 8381..10428"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-106",
+        "wall_seconds": 1.6,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 10429..12476"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-107",
+        "wall_seconds": 2.17,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 12477..14524"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-108",
+        "wall_seconds": 1.9,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 14525..16572"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-109",
+        "wall_seconds": 1.76,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 16573..18620"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-110",
+        "wall_seconds": 1.97,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 18621..20668"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-111",
+        "wall_seconds": 1.87,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 20669..22716"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-112",
+        "wall_seconds": 1.85,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 22717..24764"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-113",
+        "wall_seconds": 2.11,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 24765..26812"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-114",
+        "wall_seconds": 1.91,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 26813..28860"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-115",
+        "wall_seconds": 1.54,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 28861..30908"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-116",
+        "wall_seconds": 1.69,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 30909..32956"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-117",
+        "wall_seconds": 1.6,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 32957..35004"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-118",
+        "wall_seconds": 1.67,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 35005..37052"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-119",
+        "wall_seconds": 1.78,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 37053..39100"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-120",
+        "wall_seconds": 1.76,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 39101..41148"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-121",
+        "wall_seconds": 1.8,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 41149..43196"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-122",
+        "wall_seconds": 1.73,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 43197..45244"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-123",
+        "wall_seconds": 1.73,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 45245..47292"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-124",
+        "wall_seconds": 1.74,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 47293..49340"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-125",
+        "wall_seconds": 1.61,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 49341..51388"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-126",
+        "wall_seconds": 1.72,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 51389..53436"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-127",
+        "wall_seconds": 1.85,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 53437..55484"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-128",
+        "wall_seconds": 1.71,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 55485..57532"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-129",
+        "wall_seconds": 1.84,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 57533..59580"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-130",
+        "wall_seconds": 1.85,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 59581..61628"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-131",
+        "wall_seconds": 1.41,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 61629..63676"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-132",
+        "wall_seconds": 2.1,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 63677..65724"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-133",
+        "wall_seconds": 1.55,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 65725..67772"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-134",
+        "wall_seconds": 2.79,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 67773..69820"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-135",
+        "wall_seconds": 3.19,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 69821..71868"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-136",
+        "wall_seconds": 4.19,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 71869..73916"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-137",
+        "wall_seconds": 4.28,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 73917..75964"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-138",
+        "wall_seconds": 4.08,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 75965..78012"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-139",
+        "wall_seconds": 2.83,
+        "coverage": [
+          "events_test.go:266: union cases 2048; ids 78013..80060"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-140",
+        "wall_seconds": 1.02,
+        "coverage": [
+          "events_test.go:266: union cases 289; ids 80061..80349"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-141",
+        "wall_seconds": 11.94,
+        "coverage": [
+          "events_test.go:274: mutant: event rollback; all 80350 case ids",
+          "events_test.go:308: caught by CLAUDE.md at event byte18442"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-142",
+        "wall_seconds": 12.11,
+        "coverage": [
+          "events_test.go:274: mutant: virtual serialization; all 80350 case ids",
+          "events_test.go:308: caught by cohere/TypeScript/packages/typescript/vendor/vscode-jsonrpc/README.md at event byte1125"
+        ]
+      },
+      {
+        "name": "TestTokenizerEvents/shard-143",
+        "wall_seconds": 13.55,
+        "coverage": [
+          "events_test.go:274: mutant: restored construct; all 80350 case ids",
+          "events_test.go:308: caught by CLAUDE.md at event byte90902"
+        ]
+      }
+    ]
+  },
+  "cold_selector": {
+    "command": "go test -json ./stage1/cohere/markdownblocks -run '^TestTokenizerEvents$/^shard-100$' -count=1 -timeout 3h",
+    "setup_seconds": 18.15,
+    "shard_seconds": 12.24,
+    "build_seconds": {
+      "Go_oracle": 0.152,
+      "lowered_program_and_backends": 0.163,
+      "sanitized_native": 5.91,
+      "release_native": 3.163
+    },
+    "cache_state": "Fresh native runtime archive cache and fresh products; existing Go compiler cache. internal/buildcache absent on base; products built once per parent invocation."
+  },
+  "planted_failure": {
+    "case_id": 2345,
+    "caught_only_by": "shard-073",
+    "fixture": "5000 synthetic cases; production byte comparator; exactly one owner must report disagreement"
+  },
+  "package_verification": {
+    "initial_whole_run": {
+      "status": "FAIL: signal killed, cgroup OOM kill",
+      "elapsed_seconds": 656.146,
+      "test_actions": {
+        "pass": 63,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    "final_whole_retry": {
+      "status": "INTERRUPTED at session boundary after all tokenizer shards passed; package pass unproven",
+      "test_actions": {
+        "pass": 154,
+        "fail": 0,
+        "skip": 0
+      },
+      "command": "go test -json ./stage1/cohere/markdownblocks -count=1 -timeout 3h",
+      "environment": {
+        "GOMAXPROCS": "4",
+        "ADAMIC_MARKDOWNBLOCKS_MEMORY_UNITS": "8",
+        "ADAMIC_MARKDOWNBLOCKS_CENSUS": "1",
+        "ADAMIC_MARKDOWNWIDTH_DEPS": "installed locked node_modules",
+        "ADAMIC_TEST_SHARD": "unset",
+        "ADAMIC_GATE_SAMPLE": "unset"
+      }
+    },
+    "gofmt": "PASS",
+    "go_vet": "PASS",
+    "exact_gate_selector": "PASS"
+  },
+  "remaining": [
+    "TestMarkdownTextSplitting",
+    "TestMdastIdentifierScalars",
+    "TestMarkdownUnicodeWidths",
+    "TestMarkdownWhitespaceLayout",
+    "TestMarkdownAstPath",
+    "TestMarkdownListLayout",
+    "TestMarkdownQuoteLayout",
+    "TestMarkdownTableLayout",
+    "TestMarkdownCodeBlockLayout",
+    "TestMarkdownHTMLBlockLayout",
+    "TestMarkdownLeafComposition",
+    "TestMarkdownRootLayout",
+    "TestMarkdownStructureLayout",
+    "TestMarkdownSourceDecoding",
+    "TestNativeMdastConstruction",
+    "TestMarkdownASTPreprocessing",
+    "TestWholeDocumentOraclePreflight",
+    "TestMdastMalformedEvents"
+  ]
+}
