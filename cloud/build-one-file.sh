@@ -24,8 +24,12 @@ measure() {
   rows=$(ssh "${box}" bash -s -- "${sha}" <<'BOX'
 set -euo pipefail
 sha=$1
+# It runs on CPUs 24-47 of 64, the two small-change slots since 0c126ec4 (slot 2 on 24-35, slot 3 on
+# 36-47), so it holds both slots' locks: one lock left the other slot's gates sharing its CPUs.
 exec 9> ~/fast-gate/lock-2
 flock 9
+exec 8> ~/fast-gate/lock-3
+flock 8
 cpus=$(nproc --all)
 taskset -c "$((cpus * 3 / 8))-$((cpus * 3 / 4 - 1))" bash ~/fast-gate/build-one-file-box.sh "${sha}"
 BOX

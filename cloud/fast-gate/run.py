@@ -692,11 +692,12 @@ class Gate:
                     fixtures.add(entry.group(1))
             else:
                 return whole("%s is not a fixture, a fixture registration or counts.md" % path)
-        registered, inputs = set(), set()
+        registered, inputs, tables, sources = set(), set(), {}, []
         for name in os.listdir(directory):
             if name.endswith("_test.go"):
                 with open(os.path.join(directory, name)) as handle:
                     source = handle.read()
+                sources.append(source)
                 literals = re.findall(r'"(internal/oracle/testdata/[^"]+\.a)"', source)
                 registered.update(literals)
                 if "inputFixtures" in source:
@@ -709,7 +710,18 @@ class Gate:
                         if lane and table == "fixtures" and lane.group(1) not in oracleLanes:
                             return whole("%s ranges over the fixtures and isn't a known lane" % lane.group(1))
                         if lane and table not in ("fixtures", "inputFixtures"):
-                            return whole("%s ranges over %s, a fixture table the selection doesn't know" % (lane.group(1), table))
+                            tables.setdefault(table, set()).add(lane.group(1))
+        # A test over a table of its own (checkedCastFixtures, typeofNullFixtures) runs whole when a changed
+        # fixture is one of its entries, named by path or by bare name, and not at all otherwise: nothing
+        # else it reads changed. A table filled anywhere but its own literal runs the package whole.
+        source = "\n".join(sources)
+        for table, lanes in sorted(tables.items()):
+            declaration = re.search(r"^var %s = (.*?)^\}" % table, source, re.M | re.S)
+            if not declaration or re.search(r"\b%s\s*(=|\[[^]]*\]\s*=)" % table, source[:declaration.start()] + source[declaration.end():]):
+                return whole("%s ranges over %s, a fixture table the selection can't read whole" % (sorted(lanes)[0], table))
+            entries = set(re.findall(r'"([^"]+)"', declaration.group(1)))
+            if any(path in entries or path[len("internal/oracle/"):] in entries or os.path.basename(path)[:-len(".a")] in entries for path in fixtures):
+                tests.update(lanes)
         if fixtures & inputs:
             return whole("an input fixture changed: %s" % ", ".join(sorted(fixtures & inputs)))
         unregistered = sorted(fixtures - registered)
