@@ -167,3 +167,41 @@ SCANNER_TYPESCRIPT=/workspace/scratch/native3-cache/api/node_modules/typescript/
 Omit the two compiler arguments for a Node-only proof. See
 [evidence/json-escape/REPORT.md](evidence/json-escape/REPORT.md) for the measured
 fixture, mutant, complete token-stream comparison and discovery checkpoint.
+
+## One-command scratch measurement
+
+```sh
+stage3/drivers/scanner/scratch-run.sh NEW_OUTPUT REF... > scratch-run.log 2>&1
+```
+
+The command fetches all origin heads, starts a uniquely named scratch branch
+from fetched origin/main, and merges each ref in argument order. It never
+pushes. A conflicting merge records exact paths, aborts that merge and stops
+before setup or compilation. Refs may be branch names or commit IDs.
+NEW_OUTPUT must not exist. summary.json records resolved SHAs, merge outcomes,
+setup timing lines, nproc, compiler identity, both scanner modes and ordered
+witnessed stops. Separate phase stdout/stderr logs stay in the output directory.
+Exit 0 means both native comparisons and their byte mutants passed; exit 2
+means a merge conflicted; exit 1 means compilation or another prerequisite
+failed. scratch-summary.py independently validates the final summary.
+
+After successful integration the command runs cloud/setup.sh with the required
+GOPROXY and sources its reported environment. Dependency checkouts have isolated
+Git metadata pinned to the scratch revision. The scanner's documented adaptation
+profile and source slice run in private copies. A fixed corpus retains the
+509,014-token skip-trivia pass and 860,418-token retain-trivia pass. A full-tree
+Node reference must compare equal to each slice Node run before native builds.
+Each successful native run immediately compares bytes and plants its one-byte
+output mutant; measure.py then records runtime samples.
+
+If compilation is blocked, discovery walks at most fifteen stops in a separate,
+uncommitted source copy. Every listed diagnostic attempts a fresh Node/native
+witness from the existing measured catalogue. Continuation requires Node success
+and a matching compiler refusal. Removed bodies and throwing placeholders are
+recorded; dependent locations are labeled. An uncatalogued diagnostic or an
+unsupported placeholder stops discovery explicitly. Building after placeholders
+never counts as a native scanner pass. No compiler or adaptation sources change.
+
+The scratch worktree, branch and logs remain for inspection. STAGE3_CACHE may
+select an existing pinned stage3 cache. The replay results and false-pass summary
+mutant are in [evidence/scratch-run/REPORT.md](evidence/scratch-run/REPORT.md).
