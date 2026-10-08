@@ -352,6 +352,23 @@ func (e *emitter) dispatchable(function int) bool {
 			return false
 		}
 	}
+	// OrdinaryToPrimitive internally consumes a tagged result, testing whether it
+	// is primitive before converting it. Unlike a public erased callable, that
+	// conversion can safely receive a Union through its reference ABI.
+	if method.Returns == ir.Union {
+		conversion := false
+		walkExpressions(e.program, func(expression ir.Expression) {
+			call, ok := expression.(ir.CallClosure)
+			if !ok || call.Returns != ir.Union {
+				return
+			}
+			property, ok := call.Closure.(ir.Property)
+			if ok && property.Method && len(call.Arguments) == 0 && property.Name == method.MethodName && (property.Name == "valueOf" || property.Name == "toString") {
+				conversion = true
+			}
+		})
+		return conversion
+	}
 	return !slotless(method.Returns)
 }
 

@@ -8,17 +8,29 @@ import (
 )
 
 func init() {
-	fixtures = append(fixtures, struct {
-		path            string
-		lowers, checked bool
-	}{
-		"internal/oracle/testdata/object_semantics/cached_own.a", true, false,
-	})
+	for _, path := range []string{"cached_own", "ordinary_primitive"} {
+		fixtures = append(fixtures, struct {
+			path            string
+			lowers, checked bool
+		}{
+			"internal/oracle/testdata/object_semantics/" + path + ".a", true, false,
+		})
+	}
 }
 
 func TestObjectCachedIntrinsic(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/object_semantics/cached_own.a"))
+	objectSemanticsNode(t, "cached_own")
+}
+
+func TestObjectOrdinaryPrimitive(t *testing.T) {
+	t.Parallel()
+	objectSemanticsNode(t, "ordinary_primitive")
+}
+
+func objectSemanticsNode(t *testing.T, name string) {
+	t.Helper()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/object_semantics/"+name+".a"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -30,7 +42,7 @@ func TestObjectCachedIntrinsic(t *testing.T) {
 	}
 	got, binary := nativelyUncached(t, program)
 	if diff := disagreement(want, got); diff != "" {
-		t.Errorf("native: %s", diff)
+		t.Errorf("native: %s, stdout=%q stderr=%q exit=%d", diff, got.stdout, got.stderr, got.exitCode)
 	}
 	if got.exitCode == 0 {
 		if report := leaks(t, program, binary); report != "" {
@@ -86,4 +98,75 @@ func TestObjectCachedIntrinsicMutant(t *testing.T) {
 		t.Fatalf("JavaScript mutant escaped: %s", difference)
 	}
 	t.Logf("Node caught %d queries dispatched to the receiver override; native exited zero without leaks", changed)
+}
+
+// Exhausting OrdinaryToPrimitive must throw. The mutant silently substitutes
+// the ordinary object tag, which Node catches even though native is leak-clean.
+func TestObjectOrdinaryPrimitiveMutant(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/object_semantics/ordinary_primitive.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	tag := len(program.Strings)
+	program.Strings = append(program.Strings, "[object Object]")
+	changed := 0
+	for index := range program.Functions {
+		function := &program.Functions[index]
+		if function.Name != "ordinary_primitive" {
+			continue
+		}
+		for at, statement := range function.Body {
+			if _, throws := statement.(ir.Throw); throws {
+				function.Body[at] = ir.Return{Value: ir.StringConstant{Index: tag}}
+				changed++
+			}
+		}
+	}
+	if changed == 0 {
+		t.Fatal("no conversion-exhaustion throw mutated")
+	}
+	want := onNode(t, path)
+	got, binary := nativelyUncached(t, program)
+	if got.exitCode != 0 || len(got.stderr) != 0 {
+		t.Fatalf("mutant must finish: %+v", got)
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+	if difference := disagreement(want, got); difference != "stdout differs" {
+		t.Fatalf("native mutant escaped: %s", difference)
+	}
+	if difference := disagreement(want, onJavaScriptBackend(t, program)); difference != "stdout differs" {
+		t.Fatalf("JavaScript mutant escaped: %s", difference)
+	}
+	t.Logf("Node caught %d conversion-exhaustion throws erased; native exited zero without leaks", changed)
+}
+
+func TestObjectAccessorReadinessRemainsTerminal(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/objects/15_accessor_absence.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := onNode(t, path)
+	if source.exitCode != 0 {
+		t.Fatalf("source Node: %+v", source)
+	}
+	got, _ := nativelyUncached(t, program)
+	if got.exitCode != 70 || string(got.stderr) != "adamic: panic: read before assignment: variable 'secondAccessor' in secondAccessor\n" {
+		t.Fatalf("readiness check changed: %+v", got)
+	}
+	if difference := disagreement(got, onJavaScriptBackend(t, program)); difference != "" {
+		t.Fatalf("JavaScript: %s", difference)
+	}
+	if difference := disagreement(got, releasedUncached(t, program)); difference != "" {
+		t.Fatalf("release: %s", difference)
+	}
 }

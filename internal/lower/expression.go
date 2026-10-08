@@ -836,6 +836,9 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 	if operator == ast.KindPlusToken && both(ir.String) {
 		return ir.Concat{Parts: []ir.Expression{left, right}}, nil
 	}
+	if operator == ast.KindPlusToken && (left.Type() == ir.String || right.Type() == ir.String) {
+		return l.ordinaryStringAddition(node, left, right)
+	}
 	if lowered, isArithmetic := arithmetic[operator]; isArithmetic && both(ir.Number) {
 		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
 	}
@@ -971,6 +974,11 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 			value = ir.UnionToString{Value: value}
 		case ir.String:
 			value = l.spelled(span.AsTemplateSpan().Expression, value)
+		case ir.Object, ir.Array:
+			value, err = l.ordinaryString(span.AsTemplateSpan().Expression, value, true)
+			if err != nil {
+				return nil, err
+			}
 		default:
 			// JavaScript writes an object as "[object Object]", an array as its join, and a function as
 			// its source; 0.1 has no use for any of it.

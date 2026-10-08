@@ -1,0 +1,68 @@
+// Reduced from TypeScript diagnostic formatting and debug display strings.
+let order = '';
+const display = {
+    value: 'held'.repeat(2),
+    valueOf() { order += 'valueOf '; return 7; },
+    toString() { order += 'toString '; return this.value; }
+};
+console.log(`${display} ${order}`);
+order = '';
+function right(): string { order += 'right '; return '!'; }
+console.log(display + right());
+console.log(order);
+const fallback = {
+    valueOf() { order += 'object '; return {held: 'owned'.repeat(2)}; },
+    toString() { order += 'fallback '; return 'fallback'.repeat(2); }
+};
+order = '';
+console.log('prefix:' + fallback);
+console.log(order);
+console.log(`${[1,2,3]} ${String({value:1})}`);
+const blocked = {
+    valueOf() { order += 'bad-value '; return {held: 'owned'.repeat(2)}; },
+    toString() { order += 'bad-string '; return {held: 'owned'.repeat(2)}; }
+};
+for (const hint of ['template', 'addition']) {
+    order = '';
+    try {
+        console.log(hint === 'template' ? `${blocked}` : '' + blocked);
+        console.log('wrongly continued');
+    } catch (error) {
+        if (error instanceof Error) console.log(`${error.name}: ${error.message}`);
+    } finally {
+        console.log(order);
+    }
+}
+class Diagnostic {
+    text = 'diagnostic'.repeat(2);
+    valueOf() { return 9; }
+    toString() { return this.text; }
+}
+const diagnostic = new Diagnostic();
+console.log(`${diagnostic}`);
+console.log('code=' + diagnostic);
+const skipped = { valueOf: false, toString: () => 'non-callable skipped' };
+console.log('' + skipped);
+const absent = { toString(): string | undefined { return undefined; } };
+console.log(`${absent}`);
+const voided = { toString(): void { order += 'void '; } };
+console.log(`${voided}`);
+const emptyResults = { valueOf() { return {}; }, toString() { return {}; } };
+try { console.log('' + emptyResults); }
+catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+let primitive = false;
+const varying = { valueOf() { return primitive ? 42 : {held:'owned'.repeat(2)}; }, toString() { return 'fallback'; } };
+console.log('' + varying);
+primitive = true;
+console.log('' + varying);
+console.log(`${null} ${undefined}`);
+// semver.ts: Version.toString's three numeric components.
+class Version {
+    major = 1; minor = 2; patch = 3;
+    toString() { return `${this.major}.${this.minor}.${this.patch}`; }
+}
+console.log(`${new Version()}`);
+// debug.ts: declaration-kind array, including the absent branch.
+function declarations(names: string[] | undefined): string { return `${names}`; }
+console.log(declarations(['Function', 'Class']));
+console.log(declarations(undefined));

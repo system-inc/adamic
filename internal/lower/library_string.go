@@ -75,6 +75,8 @@ func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
 		return ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: value}}, Result: ir.StringConstant{Index: l.constant("undefined")}}, nil
 	}
 	switch value.Type() {
+	case ir.Object, ir.Array:
+		return l.ordinaryString(node, value, true)
 	case ir.Number:
 		return ir.NumberToString{Value: value}, nil
 	case ir.Boolean:
