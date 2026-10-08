@@ -1,0 +1,17 @@
+import {panic,programArguments,readTextFile} from 'adamic';
+import {OptionsJson} from '../options_json.ts';
+import {DecoratorNode} from './nodes.a';
+import {callName} from './call_name.a';
+import {of} from './of.a';
+import {hasDecoratorInSet} from './has_decorator_in_set.a';
+const read=readTextFile(programArguments()[0] ?? panic('capture path'));if(read.kind==='Error'){panic(read.message);}
+const data=new OptionsJson(read.text);const root=data.parse();if(root<0){panic(data.error);}
+function number(row:number,key:string):number{return Number(data.node(data.field(row,key)).text);}
+function text(row:number,key:string):string{return data.node(data.field(row,key)).text;}
+function numbers(row:number,key:string):number[]{return data.node(data.field(row,key)).children.map((n)=>Number(data.node(n).text));}
+const arenas:DecoratorNode[][]=[];
+for(const row of data.node(data.field(root,'Arenas')).children){const nodes:DecoratorNode[]=[];for(const n of data.node(data.field(row,'Nodes')).children){nodes.push(new DecoratorNode(text(n,'Kind'),text(n,'Text'),number(n,'Expression'),numbers(n,'Modifiers')));}if(number(row,'ID')!==arenas.length){panic('arena order');}arenas.push(nodes);}
+for(const row of data.node(data.field(root,'Calls')).children){const name=text(row,'Name');const nodes=arenas[number(row,'Arena')] ?? panic('missing arena');const input=number(row,'Input');let answer='';
+ switch(name){case 'CallName':answer=callName(nodes,input);break;case 'Of':{const list=of(nodes,input);answer=list.isNil?'nil':list.items.join(',');break;}case 'HasDecoratorInSet':{const names=data.node(data.field(row,'Names')).children.map((n)=>data.node(n).text);answer=hasDecoratorInSet(nodes,input,names)?'true':'false';break;}default:panic('unknown helper');}
+ let units='';for(let i=0;i<answer.length;i++){units+=answer.charCodeAt(i).toString()+',';}console.log(name+'|'+units);
+}

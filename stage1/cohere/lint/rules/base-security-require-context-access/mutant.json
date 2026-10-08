@@ -1,0 +1,5 @@
+{
+  "name": "context_access_alias_lost",
+  "from": "aliases.get(surface) ?? surface",
+  "to": "surface"
+}

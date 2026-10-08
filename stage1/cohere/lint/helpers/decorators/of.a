@@ -1,0 +1,8 @@
+import type {DecoratorNode} from './nodes.a';
+import {DecoratorList} from './nodes.a';
+// decorators.go: Of. Keep modifier order, node identity and the nil result.
+export function of(nodes:readonly DecoratorNode[],index:number):DecoratorList {
+ const found:number[]=[];if(index<0){return new DecoratorList(found,true);}const node=nodes[index];
+ if(node!==undefined){for(const modifier of node.modifiers){const child=nodes[modifier];if(child!==undefined&&child.kind==='Decorator'){found.push(modifier);}}}
+ return new DecoratorList(found,found.length===0);
+}

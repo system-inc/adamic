@@ -1,0 +1,6 @@
+import type {ParseNode} from '../../../../typescript/parser/nodes.ts';
+import {DecoratorNode} from './nodes.a';
+// Parser child indexes are borrowed. Decorators are the declaration's modifier children.
+export function project(nodes:readonly ParseNode[]):DecoratorNode[] {
+ return nodes.map((node)=>new DecoratorNode(node.kind,node.text,node.children[0] ?? -1,node.children.filter((child)=>nodes[child]?.kind==='Decorator')));
+}

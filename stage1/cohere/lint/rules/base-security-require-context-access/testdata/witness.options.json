@@ -1,0 +1,11 @@
+{
+  "requirements": [
+    {
+      "contextKey": "AccountRequestContextKey",
+      "requiresAny": [
+        "RequireSessionAccess",
+        "WithSessionAccess"
+      ]
+    }
+  ]
+}

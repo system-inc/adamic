@@ -1,0 +1,123 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { checked } from './options.a';
+import { missingProtector } from './messages.a';
+import type {DecoratorNode} from '../../helpers/decorators/nodes.a';
+import {project} from '../../helpers/decorators/projection.a';
+import {of} from '../../helpers/decorators/of.a';
+import {callName} from '../../helpers/decorators/call_name.a';
+import {hasDecoratorInSet} from '../../helpers/decorators/has_decorator_in_set.a';
+import type {HelperNode} from '../../helpers/imports/nodes.a';
+import {bindingsOf} from '../../helpers/imports/bindings_of.a';
+const emptyElements:readonly number[]=[];
+const modifierKinds = ['PublicKeyword', 'PrivateKeyword', 'ProtectedKeyword', 'ReadonlyKeyword', 'StaticKeyword', 'AbstractKeyword', 'AsyncKeyword', 'DeclareKeyword', 'ExportKeyword', 'DefaultKeyword', 'OverrideKeyword', 'AccessorKeyword'];
+export class Rule {
+    readonly context: RuleContext;
+    readonly required: Map<string, string[]>;
+ readonly decoratorNodes:DecoratorNode[];
+    constructor(context:RuleContext){this.context=context;this.required=checked(context.selected==='base/security-require-context-access'?context.settings.text:'').requirements;this.decoratorNodes=this.required.size===0?[]:project(context.parser.nodes);}
+
+    first(index: number): number { return this.context.node(index).children[0] ?? -1; }
+    name(index: number): number {
+        for(const child of this.context.node(index).children) {
+            const kind = this.context.node(child).kind;
+            if(kind !== 'Decorator' && !modifierKinds.includes(kind) && kind !== 'DotDotDotToken') { return child; }
+        }
+        return -1;
+    }
+    decoratorName(index: number, callsOnly: boolean): string {
+        if(callsOnly){return callName(this.decoratorNodes,index);}
+        let expression = this.first(index);
+        if(expression < 0) { return ''; }
+        if(this.context.node(expression).kind === 'CallExpression') { expression = this.first(expression); }
+        else if(callsOnly) { return ''; }
+        return expression >= 0 && this.context.node(expression).kind === 'Identifier' ? this.context.node(expression).text : '';
+    }
+    names(index: number): string[] {
+        const names: string[] = [];
+        for(const child of of(this.decoratorNodes,index).items){names.push(this.decoratorName(child,false));}
+        return names;
+    }
+    injectedKey(index:number):string {
+        if(callName(this.decoratorNodes,index)!=='InjectRequestContext'){return '';}
+        const expression=this.first(index);const argument=this.context.arguments(expression)[0] ?? -1;
+        if(argument<0){return '';}
+        if(this.context.kind(argument)==='Identifier'){return this.context.node(argument).text;}
+        if(this.context.kind(argument)==='PropertyAccessExpression'){const children=this.context.node(argument).children;const name=children[children.length-1] ?? -1;if(this.context.kind(name)==='Identifier'){return this.context.node(name).text;}}
+        return '';
+    }
+
+    admitsMissing(index: number): boolean {
+        const node = this.context.node(index);
+        if(['UndefinedKeyword', 'NullKeyword', 'AnyKeyword', 'UnknownKeyword', 'VoidKeyword'].includes(node.kind)) { return true; }
+        if(node.kind === 'LiteralType' || node.kind === 'ParenthesizedType' || node.kind === 'UnionType') { return node.children.some(child => this.admitsMissing(child)); }
+        return false;
+    }
+    soft(index: number): boolean {
+        const name = this.name(index);
+        if(name < 0) { return false; }
+        this.context.scanner.pos = this.context.node(name).end;
+        const next = this.context.scanner.scan();
+        if(next === 'QuestionToken') { return true; }
+        if(next !== 'ColonToken') { return false; }
+        const children = this.context.node(index).children;
+        const position = children.indexOf(name);
+        const annotation = children[position + 1] ?? -1;
+        return annotation >= 0 && this.admitsMissing(annotation);
+    }
+    aliases(root:number):Map<string,string> {
+        const context=this.context;const aliases=new Map<string,string>();
+        const nodes:HelperNode[]=context.parser.nodes.map((node)=>({kind:node.kind,text:node.text,expression:-1,name:-1,propertyName:-1,importClause:-1,namedBindings:-1,elements:emptyElements}));
+        for(const statement of context.node(root).children){
+            if(context.kind(statement)!=='ImportDeclaration'){continue;}
+            const clause=context.children(statement,'ImportClause')[0] ?? -1;if(clause<0){continue;}
+            const parts=context.node(clause).children;const defaultName=parts.find((n)=>context.kind(n)==='Identifier') ?? -1;const named=parts.find((n)=>context.kind(n)==='NamedImports'||context.kind(n)==='NamespaceImport') ?? -1;
+            nodes[statement]={kind:'ImportDeclaration',text:'',expression:-1,name:-1,propertyName:-1,importClause:clause,namedBindings:-1,elements:emptyElements};
+            nodes[clause]={kind:'ImportClause',text:'',expression:-1,name:defaultName,propertyName:-1,importClause:-1,namedBindings:named,elements:emptyElements};
+            if(named>=0){nodes[named]={kind:context.kind(named),text:'',expression:-1,name:-1,propertyName:-1,importClause:-1,namedBindings:-1,elements:context.node(named).children};}
+            for(const element of bindingsOf(nodes,statement).named){const children=context.node(element).children;if(children.length<2){continue;}const exported=children[children.length-2] ?? -1;const local=children[children.length-1] ?? -1;if(context.kind(exported)==='Identifier'&&local>=0){aliases.set(context.node(local).text,context.node(exported).text);}}
+        }return aliases;
+    }
+
+    check(index: number, aliases: Map<string, string>): void {
+        const node = this.context.node(index);
+        if(hasDecoratorInSet(this.decoratorNodes,index,['GraphQlFieldResolver'])){return;}
+        const present = this.names(index);
+        let parent = this.context.parents[index] ?? -1;
+        while(parent >= 0) {
+            const kind = this.context.node(parent).kind;
+            if(kind === 'ClassDeclaration' || kind === 'ClassExpression') { for(const name of this.names(parent)) { present.push(name); } break; }
+            if(kind === 'SourceFile') { break; }
+            parent = this.context.parents[parent] ?? -1;
+        }
+        const injected: string[] = [];
+        for(const parameter of node.children) {
+            if(this.context.node(parameter).kind !== 'Parameter' || this.soft(parameter)) { continue; }
+            for(const decorator of of(this.decoratorNodes,parameter).items) {
+                if(this.context.node(decorator).kind !== 'Decorator') { continue; }
+                const surface = this.injectedKey(decorator);
+                if(surface === '') { continue; }
+                const key = aliases.get(surface) ?? surface;
+                if(this.required.has(key) && !injected.includes(key)) { injected.push(key); }
+            }
+        }
+        for(const key of injected) {
+            const requires = this.required.get(key) ?? panic('missing configured requirement');
+            if(requires.some(name => present.includes(name))) { continue; }
+            const target = node.kind === 'Constructor' ? index : this.name(index);
+            this.context.report(target < 0 ? index : target, 'base/security-require-context-access', 'missingProtector', missingProtector(key, requires), '', '', '');
+        }
+    }
+    visit(root: number): void {
+        if(this.required.size === 0) { return; }
+        const aliases = this.aliases(root);
+        const pending = [root];
+        while(pending.length > 0) {
+            const index = pending.pop() ?? panic('missing member');
+            const node = this.context.node(index);
+            if(['MethodDeclaration', 'Constructor', 'GetAccessor', 'SetAccessor'].includes(node.kind)) { this.check(index, aliases); }
+            for(let i = node.children.length - 1; i >= 0; i--) { pending.push(node.children[i] ?? panic('missing member child')); }
+        }
+    }
+}
+export function create(context:RuleContext):Rule{return new Rule(context);}

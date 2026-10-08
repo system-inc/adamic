@@ -1,0 +1,9 @@
+// Non-owning indexes preserve Go AST identity without recursive object ownership.
+export class DecoratorNode {
+ readonly kind:string;readonly text:string;readonly expression:number;readonly modifiers:readonly number[];
+ constructor(kind:string,text:string,expression:number,modifiers:readonly number[]){this.kind=kind;this.text=text;this.expression=expression;this.modifiers=modifiers;}
+}
+export class DecoratorList {
+ readonly items:readonly number[];readonly isNil:boolean;
+ constructor(items:readonly number[],isNil:boolean){this.items=items;this.isNil=isNil;}
+}

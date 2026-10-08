@@ -1,0 +1,8 @@
+import type {DecoratorNode} from './nodes.a';
+// decorators.go: CallName. Parenthesized, bare and qualified names are declines.
+export function callName(nodes:readonly DecoratorNode[],index:number):string {
+ if(index<0){return '';}const node=nodes[index];if(node===undefined||node.kind!=='Decorator'){return '';}
+ if(node.expression<0){return '';}const expression=nodes[node.expression];if(expression===undefined||expression.kind!=='CallExpression'){return '';}
+ if(expression.expression<0){return '';}const callee=nodes[expression.expression];if(callee===undefined||callee.kind!=='Identifier'){return '';}
+ return callee.text;
+}

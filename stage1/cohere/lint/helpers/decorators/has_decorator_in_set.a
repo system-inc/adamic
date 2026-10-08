@@ -1,0 +1,8 @@
+import type {DecoratorNode} from './nodes.a';
+import {of} from './of.a';
+import {callName} from './call_name.a';
+// decorators.go: HasDecoratorInSet. Even the empty-name member is meaningful.
+export function hasDecoratorInSet(nodes:readonly DecoratorNode[],index:number,names:readonly string[]):boolean {
+ for(const decorator of of(nodes,index).items){if(names.includes(callName(nodes,decorator))){return true;}}
+ return false;
+}
