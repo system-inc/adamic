@@ -276,3 +276,71 @@ region. All existing numeric rows are unchanged. Regeneration also moves the
 existing logical_and_reference_maybe row to its fixture-list position and removes
 a stale taste/17_binder_flow row which the base no longer counts. These are
 inherited registry/table reconciliation, not exception lifetime changes.
+
+## Unit four: throw-path implementation held to external behavior
+
+The most common shape is already implemented on the requested base: Error-only
+try/catch, including calls through closures. No new lowering is justified by this
+census. This unit adds a regression assertion for the existing throw-path
+liveness implementation and proves the production cleanup paths with source
+mutants. It does not claim a new exception representation or an admission change.
+
+`TestStep21ThrowPathLiveness` checks that the original `text` array remains live
+before the consuming grow call when a later callback assignment can throw into a
+catch reading that original value. The associated acceptance fixture independently
+matches Node, so this assertion pins an observable lifetime requirement rather
+than merely restating the dataflow transfer implementation.
+
+`run-mutants.py` temporarily changes one production source anchor, runs a focused
+oracle check, requires the intended failure, and restores the original bytes in a
+finally clause. Run it serially, with no concurrent compiler tests. No production
+source changes remain in this delivery.
+
+| Production mutant | Fixture / assertion that catches it | Observed failure |
+| --- | --- | --- |
+| Remove exceptional flow edges | step21_liveness | UBSan runtime error |
+| Kill the old assignment value on the exceptional edge | TestStep21ThrowPathLiveness | old text is dead |
+| Retain statement temporaries instead of releasing them on a throw | existing exceptions fixture | leak check |
+| Remove the pending exception's finally-scope owner | step21_finally_completion | LeakSanitizer, 262 bytes / four allocations |
+| Store an Error message without retaining it | step21_catch_callback | ASan heap-use-after-free |
+
+All five exit nonzero with their intended catcher; none is credited for a compile
+failure. Individual complete outputs are in `evidence/*-leak.log.txt`,
+`evidence/missing-exception-edge.log.txt`,
+`evidence/assignment-kills-handler-value.log.txt` and
+`evidence/error-message-not-retained.log.txt`. The restoring runner's summary is
+`evidence/production-mutants.log.txt`.
+
+Two preliminary attempts are explicitly not credited: removing `e.end()` from
+throw emission produced invalid C; changing temporary releases survived the small
+callback reduction because it did not exercise that ownership path. The final
+cleanup mutation uses the existing deeper exception fixture and fails its leak
+check. The liveness control passes before mutation. These are test observations,
+not newly discovered production defects.
+
+Final focused verification, logged in `evidence/final-checks.log.txt`:
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestStep21|TestNativeAgreesWithNode/internal/oracle/testdata/(step21_|exceptions[.]a$|closures_throw[.]a$|finally_leaves[.]a$|regions_throw[.]a$|reuse_throw[.]a$)' -count=1 -v -timeout 10m
+go vet ./internal/oracle
+```
+
+This covers both generated backends, release native, sanitizers and leaks for the
+five reductions and the existing exception, closure, finally, region and reuse
+regressions. The counts refresh for the new fixtures is recorded above. No whole
+package test or full gate was run.
+
+**Roots retired: zero; hidden bytes retired: zero.** The actual current census has
+no exception-specific refusal/NotYet roots to retire. Arbitrary thrown values,
+saved-Error origins, real unknown narrowing, Error subclasses and recoverable
+library failures remain proposals for @system_adamic. Their refused programs and
+current outcomes are recorded above; implementing them now would change admission
+without the requested language ruling.
+
+Final result: exit zero, oracle 12.232s, native cache hits 0/misses 51, Node
+hits 0/misses 34. Go vet exits zero with empty output. The oracle selector also
+matches existing class_inheritance_exceptions and fallthrough_exceptions, for
+twelve ordinary oracle fixtures in total. Five proposal probes, five semantic IR
+mutants and the direct throw-path liveness assertion all pass. The five production
+mutants are separate expected-failure runs recorded in their individual logs.
