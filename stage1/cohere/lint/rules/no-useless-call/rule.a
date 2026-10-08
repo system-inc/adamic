@@ -1,0 +1,33 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { CoreArena } from '../../helpers/core/nodes.a';
+import { memberAccessObject } from '../../helpers/core/member_access_object.a';
+import { isNullOrUndefined } from '../../helpers/core/is_null_or_undefined.a';
+import { hasSameTokens } from '../../helpers/core/has_same_tokens.a';
+import { project } from './projection.a';
+import { message } from './messages.a';
+export class Rule {
+    readonly context: RuleContext; arena: CoreArena | undefined = undefined;
+    constructor(context: RuleContext) { this.context = context; }
+    prepare(root: number): void { this.arena = undefined; }
+    visit(node: ParseNode, index: number): void {
+        const callee = this.context.unwrap(node.children[0] ?? -1);
+        if(this.context.kind(callee) !== 'PropertyAccessExpression') { return; }
+        const access = this.context.node(callee); const name = access.children[access.children.length - 1] ?? -1;
+        if(this.context.kind(name) !== 'Identifier') { return; }
+        const methodName = this.context.node(name).text;
+        if(methodName === 'call') { if(node.list < 1) { return; } }
+        else if(methodName === 'apply') {
+            if(node.list !== 2 || this.context.kind(this.context.unwrap(node.children[node.children.length - 1] ?? -1)) !== 'ArrayLiteralExpression') { return; }
+        }
+        else { return; }
+        const arena = this.arena ?? project(this.context); this.arena = arena;
+        const appliedFunction = arena.unwrap(memberAccessObject(arena, callee)); if(appliedFunction < 0) { return; }
+        const thisArgument = arena.unwrap(node.children[node.children.length - node.list] ?? -1); if(thisArgument < 0) { return; }
+        const receiver = memberAccessObject(arena, appliedFunction);
+        if(receiver < 0) { if(!isNullOrUndefined(arena, thisArgument)) { return; } }
+        else if(!hasSameTokens(arena, receiver, thisArgument)) { return; }
+        this.context.report(index, 'no-useless-call', 'unnecessaryCall', message(methodName), '', '', '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
