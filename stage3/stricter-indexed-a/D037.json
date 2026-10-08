@@ -1,0 +1,10 @@
+{
+  "ids": [
+    "D037"
+  ],
+  "read": "declarations[0]",
+  "receiver": "object array input followed by optional function return",
+  "source": "interface Declaration { readonly value: number; }\ninterface SourceFile { readonly endFlowNode: number; }\nconst absent = ABSENT;\nconst declarations: Declaration[] = [{ value: 7 }];\nfunction getSourceFileOfNode(node: Declaration): SourceFile | undefined { return absent ? undefined : { endFlowNode: node.value }; }\nconst file = getSourceFileOfNode(declarations[0]);\nconst value: SourceFile = file;\nconsole.log(value === undefined ? \"undefined\" : `${value.endFlowNode}`);\n",
+  "block_stage": "load",
+  "block": "Type 'SourceFile | undefined' is not assignable to type 'SourceFile'"
+}
