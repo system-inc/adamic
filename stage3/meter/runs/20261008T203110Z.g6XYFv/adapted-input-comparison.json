@@ -1,0 +1,13 @@
+{
+  "main_files": 82,
+  "area_files": 82,
+  "different_files": [
+    "src/compiler/commandLineParser.ts",
+    "src/compiler/scanner.ts",
+    "src/compiler/utilities.ts"
+  ],
+  "all_inputs_byte_identical": false,
+  "entry_inputs": {
+    "src/tsc/tsc.ts": true
+  }
+}

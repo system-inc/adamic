@@ -1,0 +1,41 @@
+{
+  "baseline_run": "stage3/meter/runs/20261008T171021Z.iBLy18",
+  "baseline_sha": "45487a809f89885a3fc651cd590e7dabf31362dc",
+  "measured_sha": "d72728e570fe09d91cf55b37b564dbad0fefc24d",
+  "baseline": {
+    "total": 79,
+    "own_file": 56,
+    "whole_program": 2,
+    "lowering": 0,
+    "tsc_original_total": 78,
+    "tsc_original_own_file": 55,
+    "tsc_original_whole_program": 1,
+    "tsc_original_lowering": 0
+  },
+  "measured": {
+    "total": 79,
+    "own_file": 56,
+    "whole_program": 2,
+    "lowering": 1,
+    "tsc_original_total": 78,
+    "tsc_original_own_file": 55,
+    "tsc_original_whole_program": 1,
+    "tsc_original_lowering": 0
+  },
+  "delta": {
+    "total": 0,
+    "own_file": 0,
+    "whole_program": 0,
+    "lowering": 1,
+    "tsc_original_total": 0,
+    "tsc_original_own_file": 0,
+    "tsc_original_whole_program": 0,
+    "tsc_original_lowering": 0
+  },
+  "own_file_fail_to_pass": [],
+  "own_file_pass_to_fail": [],
+  "lowering_fail_to_pass": [
+    "src/compiler/hostErrors.ts"
+  ],
+  "lowering_pass_to_fail": []
+}

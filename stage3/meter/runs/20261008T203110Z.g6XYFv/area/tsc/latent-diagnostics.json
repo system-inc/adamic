@@ -1,0 +1,328 @@
+{
+  "adamic_sha": "17b0161d97ede12914d1c171ac5a58491b64f43e",
+  "count_definition": "unique (kind, where, reason, text) sites across all attempts",
+  "by_reason": [
+    {
+      "kind": "panic",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "count": 23
+    },
+    {
+      "kind": "panic",
+      "reason": "statement panic: Unhandled case in Node.Text: *ast.ComputedPropertyName",
+      "count": 2
+    },
+    {
+      "kind": "error",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "count": 1
+    },
+    {
+      "kind": "panic",
+      "reason": "Unhandled case in Node.Text: *ast.ComputedPropertyName",
+      "count": 1
+    },
+    {
+      "kind": "error",
+      "reason": "statement panic: Unhandled case in Node.Text: *ast.ComputedPropertyName",
+      "count": 1
+    },
+    {
+      "kind": "panic",
+      "reason": "Unhandled case in Node.Text: *ast.QualifiedName",
+      "count": 1
+    }
+  ],
+  "events": [
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:809:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:738:5",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts"
+    },
+    {
+      "kind": "error",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:809:1",
+      "where": "",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:809:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:739:5",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:809:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:741:9",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:809:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:742:9",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:809:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:756:9",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:809:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:759:5",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/semver.ts:443:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:325:13",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/semver.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/sys.ts:1190:5",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/sys.ts:524:5",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/sys.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/path.ts:1047:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/path.ts:515:5",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/path.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/path.ts:1047:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/path.ts:516:5",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/path.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/scanner.ts:520:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:1212:9",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/scanner.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilitiesPublic.ts:1024:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:283:13",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilitiesPublic.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilitiesPublic.ts:1024:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:286:17",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilitiesPublic.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilitiesPublic.ts:1024:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:287:17",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilitiesPublic.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilitiesPublic.ts:1318:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:414:5",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilitiesPublic.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilities.ts:1151:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilities.ts:1125:5",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilities.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilities.ts:1221:5",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:1343:5",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilities.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilities.ts:1276:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:186:9",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilities.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilities.ts:1384:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:1893:5",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilities.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilities.ts:4750:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:170:9",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilities.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilities.ts:6094:5",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/core.ts:780:5",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilities.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilities.ts:8251:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilities.ts:8217:5",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/utilities.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/factory/nodeFactory.ts:6836:5",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/factory/nodeFactory.ts:6392:9",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/factory/nodeFactory.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "refusal_scan",
+      "reason": "Unhandled case in Node.Text: *ast.ComputedPropertyName",
+      "text": "Unhandled case in Node.Text: *ast.ComputedPropertyName",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/transformers/declarations/diagnostics.ts:111:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/transformers/declarations/diagnostics.ts:1:1",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/transformers/declarations/diagnostics.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: Unhandled case in Node.Text: *ast.ComputedPropertyName",
+      "text": "statement panic: Unhandled case in Node.Text: *ast.ComputedPropertyName",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/transformers/declarations/diagnostics.ts:606:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/transformers/declarations/diagnostics.ts:607:5",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/transformers/declarations/diagnostics.ts"
+    },
+    {
+      "kind": "error",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: Unhandled case in Node.Text: *ast.ComputedPropertyName",
+      "text": "statement panic: Unhandled case in Node.Text: *ast.ComputedPropertyName",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/transformers/declarations/diagnostics.ts:606:1",
+      "where": "",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/transformers/declarations/diagnostics.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "lowering",
+      "reason": "statement panic: Unhandled case in Node.Text: *ast.ComputedPropertyName",
+      "text": "statement panic: Unhandled case in Node.Text: *ast.ComputedPropertyName",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/transformers/declarations/diagnostics.ts:606:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/transformers/declarations/diagnostics.ts:622:5",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/transformers/declarations/diagnostics.ts"
+    },
+    {
+      "kind": "panic",
+      "measurement": "measured on a checker-rejected entry-root program",
+      "phase": "refusal_scan",
+      "reason": "Unhandled case in Node.Text: *ast.QualifiedName",
+      "text": "Unhandled case in Node.Text: *ast.QualifiedName",
+      "unit": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/builder.ts:1576:1",
+      "where": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/builder.ts:1:1",
+      "file": "/tmp/stage3-meter-d72728e5/stage3-meter.HZgljE/area-adapted/src/compiler/builder.ts"
+    }
+  ]
+}

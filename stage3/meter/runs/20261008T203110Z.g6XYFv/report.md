@@ -1,0 +1,365 @@
+Whole program: main: 2/79; area: 2/79
+Own file: main: 56/79; area: 56/79
+tsc entry: main: fail; area: fail
+tsc entry diagnostics: main: 320; area: 320
+Roots (target 79/79): main: 79 total, 78 tsc original; area: 79 total, 78 tsc original
+Tsc original roots, main: whole program 1/78; own file 55/78.
+Adaptation-created root, main: src/compiler/hostErrors.ts (adaptation 47-host-errors).
+Tsc original roots, area: whole program 1/78; own file 55/78.
+Adaptation-created root, area: src/compiler/hostErrors.ts (adaptation 47-host-errors).
+
+Stage 3 meter 20261008T203110Z: main d72728e5
+
+Main: origin/main at d72728e570fe09d91cf55b37b564dbad0fefc24d. Area: origin/area/stage3 at 17b0161d97ede12914d1c171ac5a58491b64f43e.
+Main measured with Adamic d72728e570fe09d91cf55b37b564dbad0fefc24d; area measured with Adamic 17b0161d97ede12914d1c171ac5a58491b64f43e. Each compiler is built from its pinned ref with ordinary stage 0 options.
+
+| File | Main whole program | Main own file | Area whole program | Area own file |
+| --- | --- | --- | --- | --- |
+| src/compiler/_namespaces/ts.moduleSpecifiers.ts | fail | pass | fail | pass |
+| src/compiler/_namespaces/ts.performance.ts | fail | pass | fail | pass |
+| src/compiler/_namespaces/ts.ts | fail | pass | fail | pass |
+| src/compiler/binder.ts | fail | pass | fail | pass |
+| src/compiler/builder.ts | fail | fail | fail | fail |
+| src/compiler/builderPublic.ts | fail | pass | fail | pass |
+| src/compiler/builderState.ts | fail | pass | fail | pass |
+| src/compiler/builderStatePublic.ts | fail | pass | fail | pass |
+| src/compiler/checker.ts | fail | fail | fail | fail |
+| src/compiler/commandLineParser.ts | fail | fail | fail | fail |
+| src/compiler/core.ts | fail | fail | fail | fail |
+| src/compiler/corePublic.ts | pass | pass | pass | pass |
+| src/compiler/debug.ts | fail | fail | fail | fail |
+| src/compiler/diagnosticInformationMap.generated.ts | fail | pass | fail | pass |
+| src/compiler/diagnosticMessages.generated.json | fail | fail | fail | fail |
+| src/compiler/diagnosticMessages.json | fail | fail | fail | fail |
+| src/compiler/emitter.ts | fail | pass | fail | pass |
+| src/compiler/executeCommandLine.ts | fail | pass | fail | pass |
+| src/compiler/expressionToTypeNode.ts | fail | pass | fail | pass |
+| src/compiler/factory/baseNodeFactory.ts | fail | pass | fail | pass |
+| src/compiler/factory/emitHelpers.ts | fail | pass | fail | pass |
+| src/compiler/factory/emitNode.ts | fail | pass | fail | pass |
+| src/compiler/factory/nodeChildren.ts | fail | pass | fail | pass |
+| src/compiler/factory/nodeConverters.ts | fail | pass | fail | pass |
+| src/compiler/factory/nodeFactory.ts | fail | pass | fail | pass |
+| src/compiler/factory/nodeTests.ts | fail | pass | fail | pass |
+| src/compiler/factory/parenthesizerRules.ts | fail | pass | fail | pass |
+| src/compiler/factory/utilities.ts | fail | pass | fail | pass |
+| src/compiler/factory/utilitiesPublic.ts | fail | pass | fail | pass |
+| src/compiler/hostErrors.ts | pass | pass | pass | pass |
+| src/compiler/moduleNameResolver.ts | fail | fail | fail | fail |
+| src/compiler/moduleSpecifiers.ts | fail | pass | fail | pass |
+| src/compiler/parser.ts | fail | pass | fail | pass |
+| src/compiler/path.ts | fail | pass | fail | pass |
+| src/compiler/performance.ts | fail | pass | fail | pass |
+| src/compiler/performanceCore.ts | fail | pass | fail | pass |
+| src/compiler/program.ts | fail | fail | fail | fail |
+| src/compiler/programDiagnostics.ts | fail | pass | fail | pass |
+| src/compiler/resolutionCache.ts | fail | fail | fail | fail |
+| src/compiler/scanner.ts | fail | pass | fail | pass |
+| src/compiler/semver.ts | fail | pass | fail | pass |
+| src/compiler/sourcemap.ts | fail | fail | fail | fail |
+| src/compiler/symbolWalker.ts | fail | pass | fail | pass |
+| src/compiler/sys.ts | fail | fail | fail | fail |
+| src/compiler/tracing.ts | fail | pass | fail | pass |
+| src/compiler/transformer.ts | fail | fail | fail | fail |
+| src/compiler/transformers/classFields.ts | fail | fail | fail | fail |
+| src/compiler/transformers/classThis.ts | fail | pass | fail | pass |
+| src/compiler/transformers/declarations.ts | fail | fail | fail | fail |
+| src/compiler/transformers/declarations/diagnostics.ts | fail | pass | fail | pass |
+| src/compiler/transformers/destructuring.ts | fail | pass | fail | pass |
+| src/compiler/transformers/es2015.ts | fail | fail | fail | fail |
+| src/compiler/transformers/es2016.ts | fail | pass | fail | pass |
+| src/compiler/transformers/es2017.ts | fail | fail | fail | fail |
+| src/compiler/transformers/es2018.ts | fail | pass | fail | pass |
+| src/compiler/transformers/es2019.ts | fail | pass | fail | pass |
+| src/compiler/transformers/es2020.ts | fail | pass | fail | pass |
+| src/compiler/transformers/es2021.ts | fail | pass | fail | pass |
+| src/compiler/transformers/esDecorators.ts | fail | fail | fail | fail |
+| src/compiler/transformers/esnext.ts | fail | fail | fail | fail |
+| src/compiler/transformers/generators.ts | fail | fail | fail | fail |
+| src/compiler/transformers/jsx.ts | fail | fail | fail | fail |
+| src/compiler/transformers/legacyDecorators.ts | fail | pass | fail | pass |
+| src/compiler/transformers/module/esnextAnd2015.ts | fail | fail | fail | fail |
+| src/compiler/transformers/module/impliedNodeFormatDependent.ts | fail | pass | fail | pass |
+| src/compiler/transformers/module/module.ts | fail | pass | fail | pass |
+| src/compiler/transformers/module/system.ts | fail | pass | fail | pass |
+| src/compiler/transformers/namedEvaluation.ts | fail | pass | fail | pass |
+| src/compiler/transformers/taggedTemplate.ts | fail | pass | fail | pass |
+| src/compiler/transformers/ts.ts | fail | pass | fail | pass |
+| src/compiler/transformers/typeSerializer.ts | fail | pass | fail | pass |
+| src/compiler/transformers/utilities.ts | fail | pass | fail | pass |
+| src/compiler/tsbuild.ts | fail | pass | fail | pass |
+| src/compiler/tsbuildPublic.ts | fail | fail | fail | fail |
+| src/compiler/tsconfig.json | fail | fail | fail | fail |
+| src/compiler/types.ts | fail | pass | fail | pass |
+| src/compiler/utilities.ts | fail | pass | fail | pass |
+| src/compiler/utilitiesPublic.ts | fail | pass | fail | pass |
+| src/compiler/visitorPublic.ts | fail | pass | fail | pass |
+| src/compiler/watch.ts | fail | fail | fail | fail |
+| src/compiler/watchPublic.ts | fail | fail | fail | fail |
+| src/compiler/watchUtilities.ts | fail | pass | fail | pass |
+
+tsc entry lowering, main: measured on a checker-rejected entry-root program.
+Resolved source files: 81; NotYet: 1551; Refused: 8412.
+Errors: 0; panics: 10558; skipped dependencies: 0.
+
+| Reason | Owner | NotYet | Refused | Total |
+| --- | --- | ---: | ---: | ---: | ---: |
+| an object refinement using an open numeric enum as a literal tag | OWNER BLANK | 0 | 2776 | 2776 |
+| a cast the runtime can&#x27;t check | 01a11410 | 0 | 2141 | 2141 |
+| a type predicate whose return is not proven (return expression is not a trusted check on node) | 01a1143b-d691 | 0 | 414 | 414 |
+| an unproven predicate argument for parameter test (argument &quot;isExpression&quot;) | OWNER BLANK | 0 | 314 | 314 |
+| checked view field expression of type LeftHandSideExpression | OWNER BLANK | 138 | 0 | 138 |
+| checked view field expression of type Expression | OWNER BLANK | 108 | 0 | 108 |
+| checked view field left of type Expression | OWNER BLANK | 108 | 0 | 108 |
+| an unproven predicate argument for parameter test (argument &quot;isTypeNode&quot;) | OWNER BLANK | 0 | 84 | 84 |
+| a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile &#124; undefined where SourceFile is read | adaptation 70, stage 3 | 0 | 83 | 83 |
+| checked view field modifiers of type NodeArray&lt;ModifierLike&gt; &#124; undefined | OWNER BLANK | 82 | 0 | 82 |
+
+Counts cover the entry root and its resolved implementation dependencies, excluding declarations.
+Errors and panics are retained separately in JSON. This census does not establish native output.
+
+tsc entry lowering, area: measured on a checker-rejected entry-root program.
+Resolved source files: 81; NotYet: 15278; Refused: 12156.
+Errors: 2; panics: 27; skipped dependencies: 3.
+
+| Reason | Owner | NotYet | Refused | Total |
+| --- | --- | ---: | ---: | ---: | ---: |
+| a cast the runtime can&#x27;t check | 01a11410 | 0 | 3644 | 3644 |
+| a function inside a function (a closure) | OWNER BLANK | 3109 | 0 | 3109 |
+| an object refinement using an open numeric enum as a literal tag | OWNER BLANK | 0 | 2776 | 2776 |
+| the non-null assertion ! | 01a1130a | 0 | 1755 | 1755 |
+| a method call through a structural signature in a program with statics; use typeof the declaring class | 01a1143c | 1609 | 0 | 1609 |
+| reading node | OWNER BLANK | 1046 | 0 | 1046 |
+| a number as a condition | OWNER BLANK | 0 | 643 | 643 |
+| a PrefixUnaryExpression on a value | 01a1143b-f5d4 | 626 | 0 | 626 |
+| a NonNullExpression | 01a1130a | 555 | 0 | 555 |
+| reading Debug | 01a113e7-bfed | 512 | 0 | 512 |
+
+Counts cover the entry root and its resolved implementation dependencies, excluding declarations.
+Errors and panics are retained separately in JSON. This census does not establish native output.
+
+### Unowned
+
+measured on a checker-rejected program.
+OWNER BLANK rows go to @system_adamic. Counts are grouped by exact reason.
+
+| Reason | Owner | Main NotYet | Main Refused | Area NotYet | Area Refused |
+| --- | --- | ---: | ---: | ---: | ---: |
+| a function inside a function (a closure) | OWNER BLANK | 0 | 0 | 3110 | 0 |
+| an object refinement using an open numeric enum as a literal tag | OWNER BLANK | 0 | 2776 | 0 | 2776 |
+| reading node | OWNER BLANK | 0 | 0 | 1043 | 0 |
+| a number as a condition | OWNER BLANK | 0 | 0 | 0 | 647 |
+| a BinaryExpression with a value and a value | OWNER BLANK | 0 | 0 | 417 | 0 |
+| a PrefixUnaryExpression on a number | OWNER BLANK | 0 | 0 | 316 | 0 |
+| an unproven predicate argument for parameter test (argument &quot;isExpression&quot;) | OWNER BLANK | 0 | 314 | 0 | 0 |
+| a BinaryExpression with a value and a boolean | OWNER BLANK | 0 | 0 | 259 | 0 |
+| reading result | OWNER BLANK | 0 | 0 | 227 | 0 |
+| a BinaryExpression with a number and a number | OWNER BLANK | 0 | 0 | 200 | 0 |
+| a field of type boolean &#124; undefined | OWNER BLANK | 0 | 0 | 164 | 0 |
+| a value of type __String | OWNER BLANK | 0 | 0 | 150 | 0 |
+| var | OWNER BLANK | 0 | 0 | 0 | 140 |
+| a Map whose keys aren&#x27;t strings, numbers, booleans, objects, arrays, maps or functions | OWNER BLANK | 0 | 0 | 138 | 0 |
+| checked view field expression of type LeftHandSideExpression | OWNER BLANK | 138 | 0 | 0 | 0 |
+| a value of type Path | OWNER BLANK | 0 | 0 | 113 | 0 |
+| assigning to an Identifier | OWNER BLANK | 0 | 0 | 112 | 0 |
+| a BinaryExpression with a boolean and a value | OWNER BLANK | 0 | 0 | 111 | 0 |
+| checked view field expression of type Expression | OWNER BLANK | 108 | 0 | 0 | 0 |
+| checked view field left of type Expression | OWNER BLANK | 108 | 0 | 0 | 0 |
+| a call through ?. (an optional call) | OWNER BLANK | 0 | 0 | 105 | 0 |
+| for...of over an object | OWNER BLANK | 0 | 0 | 99 | 0 |
+| reading type | OWNER BLANK | 0 | 0 | 94 | 0 |
+| an unproven predicate argument for parameter test (argument &quot;isTypeNode&quot;) | OWNER BLANK | 0 | 84 | 0 | 0 |
+| checked view field modifiers of type NodeArray&lt;ModifierLike&gt; &#124; undefined | OWNER BLANK | 82 | 0 | 0 | 0 |
+| a BinaryExpression with a number and a boolean | OWNER BLANK | 0 | 0 | 72 | 0 |
+| a parameter that isn&#x27;t a plain name | OWNER BLANK | 0 | 0 | 72 | 0 |
+| an unproven predicate argument for parameter test (argument &quot;isStatement&quot;) | OWNER BLANK | 0 | 69 | 0 | 0 |
+| a BinaryExpression with a boolean and a number | OWNER BLANK | 0 | 0 | 62 | 0 |
+| a declaration directly in a case (wrap the case in a block) | OWNER BLANK | 0 | 0 | 56 | 0 |
+| checked view field escapedText of type __String | OWNER BLANK | 56 | 0 | 0 | 0 |
+| optional property id in Node absent from structural source never, which can hide fields | OWNER BLANK | 0 | 55 | 0 | 55 |
+| a value of type T | OWNER BLANK | 0 | 0 | 54 | 0 |
+| checked view field parent of type ModuleBlock &#124; SourceFile | OWNER BLANK | 53 | 0 | 0 | 0 |
+| reading performance | OWNER BLANK | 0 | 0 | 52 | 0 |
+| an array of never | OWNER BLANK | 0 | 0 | 50 | 0 |
+| an indirect call of a checked predicate overload | OWNER BLANK | 50 | 0 | 0 | 0 |
+| a PrefixUnaryExpression on a boolean &#124; undefined | OWNER BLANK | 0 | 0 | 49 | 0 |
+| an unproven predicate argument for parameter test (argument &quot;isModifier&quot;) | OWNER BLANK | 0 | 49 | 0 | 0 |
+| the comma operator | OWNER BLANK | 0 | 0 | 0 | 47 |
+| reading name | OWNER BLANK | 0 | 0 | 44 | 0 |
+| reading symbol | OWNER BLANK | 0 | 0 | 44 | 0 |
+| a BinaryExpression as a statement | OWNER BLANK | 0 | 0 | 43 | 0 |
+| checked view field id of type number &#124; undefined | OWNER BLANK | 43 | 0 | 0 | 0 |
+| an unproven predicate argument for parameter test (argument &quot;isModifierLike&quot;) | OWNER BLANK | 0 | 42 | 0 | 0 |
+| checked view field parent of type ClassLikeDeclaration | OWNER BLANK | 39 | 0 | 0 | 0 |
+| optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields | OWNER BLANK | 0 | 39 | 0 | 38 |
+| reading updated | OWNER BLANK | 0 | 0 | 39 | 0 |
+| a BinaryExpression with a value and a number | OWNER BLANK | 0 | 0 | 37 | 0 |
+| reading expression | OWNER BLANK | 0 | 0 | 36 | 0 |
+| a PrefixUnaryExpression on a string | OWNER BLANK | 0 | 0 | 35 | 0 |
+| checked view field type of type TypeNode | OWNER BLANK | 34 | 0 | 0 | 0 |
+| reading host | OWNER BLANK | 0 | 0 | 33 | 0 |
+| this outside a method | OWNER BLANK | 0 | 0 | 33 | 0 |
+| a function value returning union of differently held members | OWNER BLANK | 0 | 0 | 32 | 0 |
+| an unproven predicate argument for parameter test (argument &quot;isIdentifier&quot;) | OWNER BLANK | 0 | 32 | 0 | 0 |
+| a call returning void &#124; undefined | OWNER BLANK | 0 | 0 | 31 | 0 |
+| a void call used as a value | OWNER BLANK | 0 | 0 | 31 | 0 |
+| reading statement | OWNER BLANK | 0 | 0 | 31 | 0 |
+| an unproven predicate argument for parameter test (argument &quot;isPropertyName&quot;) | OWNER BLANK | 0 | 30 | 0 | 0 |
+| checked view field parent of type SignatureDeclaration | OWNER BLANK | 30 | 0 | 0 | 0 |
+| checked view field operand of type UnaryExpression | OWNER BLANK | 29 | 0 | 0 | 0 |
+| an ElementAccessExpression | OWNER BLANK | 0 | 0 | 28 | 0 |
+| reading declaration | OWNER BLANK | 0 | 0 | 27 | 0 |
+| checked view field parent of type CatchClause &#124; VariableDeclarationList | OWNER BLANK | 26 | 0 | 0 | 0 |
+| an array of T | OWNER BLANK | 0 | 0 | 25 | 0 |
+| replacing a represented method at runtime | OWNER BLANK | 0 | 0 | 25 | 0 |
+| a checked view with callable field setExternalModuleIndicator | OWNER BLANK | 0 | 24 | 0 | 0 |
+| an unproven relation from Type to TypeParameter: optional field constraint has no proven compatible presence/type | OWNER BLANK | 0 | 24 | 0 | 24 |
+| checked view field expression of type UnaryExpression | OWNER BLANK | 24 | 0 | 0 | 0 |
+| checked view field parent of type SourceFile | OWNER BLANK | 24 | 0 | 0 | 0 |
+| a field of type string &#124; NodeArray&lt;JSDocComment&gt; &#124; undefined | OWNER BLANK | 0 | 0 | 23 | 0 |
+| a method in object destructuring | OWNER BLANK | 0 | 0 | 0 | 23 |
+| checked view field typeName of type EntityName | OWNER BLANK | 23 | 0 | 0 | 0 |
+| optional property return in ArrayIterator&lt;Node&gt; absent from structural source ArrayIterator&lt;TypeParameterDeclaration&gt;, which can hide fields | OWNER BLANK | 0 | 0 | 0 | 23 |
+| reading clone | OWNER BLANK | 0 | 0 | 23 | 0 |
+| reading compilerOptions | OWNER BLANK | 0 | 0 | 23 | 0 |
+| a value of type __String &#124; undefined | OWNER BLANK | 0 | 0 | 22 | 0 |
+| checked view field checkType of type TypeNode | OWNER BLANK | 22 | 0 | 0 | 0 |
+| checked view field elements of type NodeArray&lt;Expression&gt; | OWNER BLANK | 22 | 0 | 0 | 0 |
+| checked view field parent of type ObjectLiteralExpression | OWNER BLANK | 22 | 0 | 0 | 0 |
+| a BinaryExpression with a number &#124; undefined and a number | OWNER BLANK | 0 | 0 | 21 | 0 |
+| a BinaryExpression with a string and a string | OWNER BLANK | 0 | 0 | 21 | 0 |
+| a value of type T &#124; undefined | OWNER BLANK | 0 | 0 | 21 | 0 |
+| an unproven predicate argument for parameter test (argument &quot;isBlock&quot;) | OWNER BLANK | 0 | 21 | 0 | 0 |
+| an unproven predicate argument for parameter test (argument &quot;isParameter&quot;) | OWNER BLANK | 0 | 21 | 0 | 0 |
+| an unproven predicate argument for parameter test (argument &quot;isTypeParameterDeclaration&quot;) | OWNER BLANK | 0 | 21 | 0 | 0 |
+| checked view field modifiers of type NodeArray&lt;Modifier&gt; &#124; undefined | OWNER BLANK | 21 | 0 | 0 | 0 |
+| optional property source in SourceMapRange absent from structural source TextRange, which can hide fields | OWNER BLANK | 0 | 21 | 0 | 21 |
+| a PrefixUnaryExpression on a number &#124; undefined | OWNER BLANK | 0 | 0 | 20 | 0 |
+| a value of type SolutionBuilderState&lt;T&gt; | OWNER BLANK | 0 | 0 | 20 | 0 |
+| an unproven predicate argument for parameter test (argument &quot;isForInitializer&quot;) | OWNER BLANK | 0 | 20 | 0 | 0 |
+| checked view field condition of type Expression | OWNER BLANK | 20 | 0 | 0 | 0 |
+| new an Identifier | OWNER BLANK | 0 | 0 | 20 | 0 |
+| optional property return in ArrayIterator&lt;Statement&gt; absent from structural source ArrayIterator&lt;JsonObjectExpressionStatement&gt;, which can hide fields | OWNER BLANK | 0 | 0 | 0 | 20 |
+| checked view field multiLine of type boolean &#124; undefined | OWNER BLANK | 19 | 0 | 0 | 0 |
+| reading resolved | OWNER BLANK | 0 | 0 | 19 | 0 |
+| a BinaryExpression with a boolean &#124; undefined and a boolean | OWNER BLANK | 0 | 0 | 18 | 0 |
+| a function returning U &#124; undefined | OWNER BLANK | 0 | 0 | 18 | 0 |
+| a function returning __String | OWNER BLANK | 0 | 0 | 18 | 0 |
+| a generic function as a value | OWNER BLANK | 0 | 0 | 18 | 0 |
+| a method read as a value (liftToBlock would lose its object, and this with it) | OWNER BLANK | 0 | 18 | 0 | 18 |
+| a value of type ResolvedConfigFilePath | OWNER BLANK | 0 | 0 | 18 | 0 |
+| reading sourceFile | OWNER BLANK | 0 | 0 | 18 | 0 |
+| a function returning __String &#124; undefined | OWNER BLANK | 0 | 0 | 17 | 0 |
+| checked view field initializer of type ForInitializer &#124; undefined | OWNER BLANK | 17 | 0 | 0 | 0 |
+| checked view field name of type Identifier | OWNER BLANK | 17 | 0 | 0 | 0 |
+| optional property id in ArrayBindingPattern absent from structural source never, which can hide fields | OWNER BLANK | 0 | 17 | 0 | 17 |
+| reading options | OWNER BLANK | 0 | 0 | 17 | 0 |
+| reading visited | OWNER BLANK | 0 | 0 | 17 | 0 |
+| a BinaryExpression with a number and a value | OWNER BLANK | 0 | 0 | 16 | 0 |
+| checked view field parent of type BindingPattern | OWNER BLANK | 16 | 0 | 0 | 0 |
+| reading candidate | OWNER BLANK | 0 | 0 | 16 | 0 |
+| a function returning Path | OWNER BLANK | 0 | 0 | 15 | 0 |
+| a number &#124; undefined as a condition | OWNER BLANK | 0 | 0 | 0 | 15 |
+| a value of type object | OWNER BLANK | 0 | 0 | 15 | 0 |
+| an unproven predicate argument for parameter test (argument &quot;isClassElement&quot;) | OWNER BLANK | 0 | 15 | 0 | 0 |
+| an unproven predicate argument for parameter test (argument &quot;isHeritageClause&quot;) | OWNER BLANK | 0 | 15 | 0 | 0 |
+| checked view field label of type Identifier | OWNER BLANK | 15 | 0 | 0 | 0 |
+| checked view field parent of type ArrayLiteralExpression &#124; CallExpression &#124; NewExpression | OWNER BLANK | 15 | 0 | 0 | 0 |
+| checked view field parent of type SourceFile &#124; ModuleBody | OWNER BLANK | 15 | 0 | 0 | 0 |
+| checked view field tag of type LeftHandSideExpression | OWNER BLANK | 15 | 0 | 0 | 0 |
+| reading file | OWNER BLANK | 0 | 0 | 15 | 0 |
+| yield (generators) | OWNER BLANK | 0 | 15 | 0 | 15 |
+| a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far) | OWNER BLANK | 0 | 0 | 14 | 0 |
+| an array of any | OWNER BLANK | 0 | 0 | 14 | 0 |
+| an unproven value assigned to a numeric literal or enum member slot SyntaxKind.JSDocTypeExpression | OWNER BLANK | 0 | 14 | 0 | 14 |
+| checked view field awaitModifier of type AwaitKeyword &#124; undefined | OWNER BLANK | 14 | 0 | 0 | 0 |
+| checked view field left of type EntityName | OWNER BLANK | 14 | 0 | 0 | 0 |
+| checked view field parent of type NamedExports | OWNER BLANK | 14 | 0 | 0 | 0 |
+| reading block | OWNER BLANK | 0 | 0 | 14 | 0 |
+| reading child | OWNER BLANK | 0 | 0 | 14 | 0 |
+| reading parameter | OWNER BLANK | 0 | 0 | 14 | 0 |
+| reading sig | OWNER BLANK | 0 | 0 | 14 | 0 |
+| a BinaryExpression with a boolean and a boolean &#124; undefined | OWNER BLANK | 0 | 0 | 13 | 0 |
+| checked view field parent of type ImportDeclaration &#124; JSDocImportTag | OWNER BLANK | 13 | 0 | 0 | 0 |
+| checked view field parent of type InterfaceDeclaration &#124; ObjectLiteralExpression &#124; TypeLiteralNode &#124; ClassLikeDeclaration | OWNER BLANK | 13 | 0 | 0 | 0 |
+| reading diag | OWNER BLANK | 0 | 0 | 13 | 0 |
+| reading index | OWNER BLANK | 0 | 0 | 13 | 0 |
+| reading related | OWNER BLANK | 0 | 0 | 13 | 0 |
+| the void operator | OWNER BLANK | 0 | 0 | 0 | 13 |
+| a definite assignment assertion ! | OWNER BLANK | 0 | 0 | 0 | 12 |
+| a function with an optional or rest parameter, as a value | OWNER BLANK | 0 | 0 | 12 | 0 |
+| a generator function | OWNER BLANK | 0 | 12 | 0 | 12 |
+| a method read as a value (parenthesizeExpressionForDisallowedComma would lose its object, and this with it) | OWNER BLANK | 0 | 12 | 0 | 12 |
+| a union of differently held members as a condition | OWNER BLANK | 0 | 0 | 0 | 12 |
+| a value of type ResolvedConfigFileName | OWNER BLANK | 0 | 0 | 12 | 0 |
+| checked view field initializer of type ForInitializer | OWNER BLANK | 12 | 0 | 0 | 0 |
+| checked view field parent of type ObjectLiteralExpression &#124; ClassLikeDeclaration | OWNER BLANK | 12 | 0 | 0 | 0 |
+| optional chaining to .size on a value | OWNER BLANK | 0 | 0 | 12 | 0 |
+| optional property constraint in TypeParameter absent from structural source Type, which can hide fields | OWNER BLANK | 0 | 12 | 0 | 10 |
+| reading t | OWNER BLANK | 0 | 0 | 12 | 0 |
+| a function returning undefined | OWNER BLANK | 0 | 0 | 11 | 0 |
+| a value of type NonNullable&lt;T&gt; | OWNER BLANK | 0 | 0 | 11 | 0 |
+| a value of type TKind | OWNER BLANK | 0 | 0 | 11 | 0 |
+| in | OWNER BLANK | 0 | 0 | 0 | 11 |
+| reading cache | OWNER BLANK | 0 | 0 | 11 | 0 |
+| a call to a PropertyAccessExpression | OWNER BLANK | 0 | 0 | 10 | 0 |
+| a field of type true &#124; Node &#124; undefined | OWNER BLANK | 0 | 0 | 10 | 0 |
+| an enum inside a function or block; declare it at module scope | OWNER BLANK | 10 | 0 | 10 | 0 |
+| an optional chain longer than one step | OWNER BLANK | 0 | 0 | 10 | 0 |
+| an unproven predicate argument for parameter test (argument &quot;isLeftHandSideExpression&quot;) | OWNER BLANK | 0 | 10 | 0 | 0 |
+| checked view field parent of type NamedImports | OWNER BLANK | 10 | 0 | 0 | 0 |
+| checked view field readonlyToken of type MinusToken &#124; PlusToken &#124; ReadonlyKeyword &#124; undefined | OWNER BLANK | 10 | 0 | 0 | 0 |
+| checked view field statements of type NodeArray&lt;Statement&gt; | OWNER BLANK | 10 | 0 | 0 | 0 |
+| checked view field textSourceNode of type BigIntLiteral &#124; Identifier &#124; JsxNamespacedName &#124; NumericLiteral &#124; PrivateIdentifier &#124; StringLiteralLike &#124; undefined | OWNER BLANK | 10 | 0 | 0 | 0 |
+| for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly) | OWNER BLANK | 0 | 0 | 10 | 0 |
+| optional property id in BigIntLiteral absent from structural source never, which can hide fields | OWNER BLANK | 0 | 10 | 0 | 10 |
+| reading body | OWNER BLANK | 0 | 0 | 10 | 0 |
+| reading decl | OWNER BLANK | 0 | 0 | 10 | 0 |
+| reading exception | OWNER BLANK | 0 | 0 | 10 | 0 |
+| reading reference | OWNER BLANK | 0 | 0 | 10 | 0 |
+
+2087 more unowned reasons, 4466 sites in all
+
+Latent lowering, main: measured on a checker-rejected program.
+NotYet: 1551; Refused: 8410.
+Recovery boundaries: 10550; named nested checker exclusions: 110.
+
+| Reason | Owner | NotYet | Refused | Total |
+| --- | --- | ---: | ---: | ---: |
+| an object refinement using an open numeric enum as a literal tag | OWNER BLANK | 0 | 2776 | 2776 |
+| a cast the runtime can&#x27;t check | 01a11410 | 0 | 2141 | 2141 |
+| a type predicate whose return is not proven (return expression is not a trusted check on node) | 01a1143b-d691 | 0 | 414 | 414 |
+| an unproven predicate argument for parameter test (argument &quot;isExpression&quot;) | OWNER BLANK | 0 | 314 | 314 |
+| checked view field expression of type LeftHandSideExpression | OWNER BLANK | 138 | 0 | 138 |
+| checked view field expression of type Expression | OWNER BLANK | 108 | 0 | 108 |
+| checked view field left of type Expression | OWNER BLANK | 108 | 0 | 108 |
+| an unproven predicate argument for parameter test (argument &quot;isTypeNode&quot;) | OWNER BLANK | 0 | 84 | 84 |
+| a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile &#124; undefined where SourceFile is read | adaptation 70, stage 3 | 0 | 83 | 83 |
+| checked view field modifiers of type NodeArray&lt;ModifierLike&gt; &#124; undefined | OWNER BLANK | 82 | 0 | 82 |
+
+Counts are unique finding sites, not attempt events. Skipped dependencies, errors and panics
+are retained separately in JSON. This measurement does not establish successful lowering or native output.
+
+Latent lowering, area: measured on a checker-rejected program.
+NotYet: 15284; Refused: 12186.
+Recovery boundaries: 21451; named nested checker exclusions: 110.
+
+| Reason | Owner | NotYet | Refused | Total |
+| --- | --- | ---: | ---: | ---: |
+| a cast the runtime can&#x27;t check | 01a11410 | 0 | 3641 | 3641 |
+| a function inside a function (a closure) | OWNER BLANK | 3110 | 0 | 3110 |
+| an object refinement using an open numeric enum as a literal tag | OWNER BLANK | 0 | 2776 | 2776 |
+| the non-null assertion ! | 01a1130a | 0 | 1755 | 1755 |
+| a method call through a structural signature in a program with statics; use typeof the declaring class | 01a1143c | 1602 | 0 | 1602 |
+| reading node | OWNER BLANK | 1043 | 0 | 1043 |
+| a number as a condition | OWNER BLANK | 0 | 647 | 647 |
+| a PrefixUnaryExpression on a value | 01a1143b-f5d4 | 629 | 0 | 629 |
+| a NonNullExpression | 01a1130a | 552 | 0 | 552 |
+| reading Debug | 01a113e7-bfed | 510 | 0 | 510 |
+
+Counts are unique finding sites, not attempt events. Skipped dependencies, errors and panics
+are retained separately in JSON. This measurement does not establish successful lowering or native output.
+
+Whole program includes imported diagnostics. Own file uses the primary diagnostic location.
+Global and external diagnostics are counted separately in JSON; they have no compiler-file location.
+Non-source inputs fail the extension gate and are excluded from source denominators.

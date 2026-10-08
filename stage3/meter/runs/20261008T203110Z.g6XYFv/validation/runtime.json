@@ -1,0 +1,9 @@
+{
+  "meter_writer_sha": "11e837ee510c174c8245de17421f655221de8e3f",
+  "node": "24.19.0",
+  "nproc": 5,
+  "go_workspace_wrapper": "/workspace/stage3-meter-progress-tmp/go-wrapper/go",
+  "dependency_note": "The Go workspace wrapper selects the ref-specific compiler module and the clean cached dependencies at the same recorded commits as the initialized submodules.",
+  "tests": "49 merged meter tests passed with no skips before measurement; 10 progress tests passed again during measurement.",
+  "mutants": "Equal hashes alone, missing adaptation provenance, literal entry paths, and full-entry first-error-only were caught during merged-meter validation."
+}
