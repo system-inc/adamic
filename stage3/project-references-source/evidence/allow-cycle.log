@@ -1,0 +1,5 @@
+--- FAIL: TestProjectReferencesCycle (0.27s)
+    project_references_test.go:160: want explicit circular reference refusal, got <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.274s
+FAIL
