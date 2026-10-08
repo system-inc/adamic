@@ -1,0 +1,822 @@
+{
+  "sha": "254d213f427d3347970f075558edbb13d829f572",
+  "branch": "codex/step09-public-any",
+  "branch_source": "given",
+  "session": "",
+  "session_source": "none",
+  "base": "73352e874ddbda5a78c95c5c670860d43275e4d0",
+  "base_name": "main",
+  "tools_sha": "3e339bbf06e0695f1b1223065ee8d4eef4813ba8",
+  "machine": {
+    "hostname": "Cloud",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": true,
+  "vet_ok": true,
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "206c8891b3e22e6782b4d8eaa4bcad61ac833533",
+  "reads": [
+    {
+      "line": 550,
+      "package": "stage1/cohere/gitignore",
+      "glob": "*",
+      "paths": [
+        "stage3/scouts/step09/public-any/LICENSE-TypeScript.txt",
+        "stage3/scouts/step09/public-any/NOTICE",
+        "stage3/scouts/step09/public-any/README.md",
+        "stage3/scouts/step09/public-any/REPORT.md",
+        "stage3/scouts/step09/public-any/aggregate.py",
+        "stage3/scouts/step09/public-any/api-loader.mjs",
+        "stage3/scouts/step09/public-any/audit.py",
+        "stage3/scouts/step09/public-any/contracts.json",
+        "stage3/scouts/step09/public-any/counterexamples.cjs",
+        "stage3/scouts/step09/public-any/counts.md",
+        "stage3/scouts/step09/public-any/evidence/RESIDUE.md",
+        "stage3/scouts/step09/public-any/evidence/acceptance.log",
+        "stage3/scouts/step09/public-any/evidence/aggregate.log",
+        "stage3/scouts/step09/public-any/evidence/apply.log",
+        "stage3/scouts/step09/public-any/evidence/audit-mutants.log",
+        "stage3/scouts/step09/public-any/evidence/audit.log",
+        "stage3/scouts/step09/public-any/evidence/build.log",
+        "stage3/scouts/step09/public-any/evidence/contracts.json",
+        "stage3/scouts/step09/public-any/evidence/counterexamples.json",
+        "stage3/scouts/step09/public-any/evidence/counterexamples.log",
+        "stage3/scouts/step09/public-any/evidence/fixtures.log",
+        "stage3/scouts/step09/public-any/evidence/fixtures/01_primitive_config.a.build.stderr",
+        "stage3/scouts/step09/public-any/evidence/fixtures/01_primitive_config.a.build.stdout",
+        "stage3/scouts/step09/public-any/evidence/fixtures/01_primitive_config.a.mutant.stderr",
+        "stage3/scouts/step09/public-any/evidence/fixtures/01_primitive_config.a.mutant.stdout",
+        "stage3/scouts/step09/public-any/evidence/fixtures/01_primitive_config.a.node.stderr",
+        "stage3/scouts/step09/public-any/evidence/fixtures/01_primitive_config.a.node.stdout",
+        "stage3/scouts/step09/public-any/evidence/fixtures/02_unvalidated_list.a.build.stderr",
+        "stage3/scouts/step09/public-any/evidence/fixtures/02_unvalidated_list.a.build.stdout",
+        "stage3/scouts/step09/public-any/evidence/fixtures/02_unvalidated_list.a.mutant.stderr",
+        "stage3/scouts/step09/public-any/evidence/fixtures/02_unvalidated_list.a.mutant.stdout",
+        "stage3/scouts/step09/public-any/evidence/fixtures/02_unvalidated_list.a.node.stderr",
+        "stage3/scouts/step09/public-any/evidence/fixtures/02_unvalidated_list.a.node.stdout",
+        "stage3/scouts/step09/public-any/evidence/fixtures/03_timer_roundtrip.a.build.stderr",
+        "stage3/scouts/step09/public-any/evidence/fixtures/03_timer_roundtrip.a.build.stdout",
+        "stage3/scouts/step09/public-any/evidence/fixtures/03_timer_roundtrip.a.mutant.stderr",
+        "stage3/scouts/step09/public-any/evidence/fixtures/03_timer_roundtrip.a.mutant.stdout",
+        "stage3/scouts/step09/public-any/evidence/fixtures/03_timer_roundtrip.a.node.stderr",
+        "stage3/scouts/step09/public-any/evidence/fixtures/03_timer_roundtrip.a.node.stdout",
+        "stage3/scouts/step09/public-any/evidence/header-check/after.json",
+        "stage3/scouts/step09/public-any/evidence/header-check/before.json",
+        "stage3/scouts/step09/public-any/evidence/header-check/final.json",
+        "stage3/scouts/step09/public-any/evidence/header-repair.json",
+        "stage3/scouts/step09/public-any/evidence/inspect.log",
+        "stage3/scouts/step09/public-any/evidence/install.log",
+        "stage3/scouts/step09/public-any/evidence/instrument.log",
+        "stage3/scouts/step09/public-any/evidence/instrumentation.json",
+        "stage3/scouts/step09/public-any/evidence/observations.json",
+        "stage3/scouts/step09/public-any/evidence/project-captures.json.gz",
+        "stage3/scouts/step09/public-any/evidence/report.log",
+        "stage3/scouts/step09/public-any/evidence/setup.log",
+        "stage3/scouts/step09/public-any/fixtures/01_primitive_config.a",
+        "stage3/scouts/step09/public-any/fixtures/02_unvalidated_list.a",
+        "stage3/scouts/step09/public-any/fixtures/03_timer_roundtrip.a",
+        "stage3/scouts/step09/public-any/fixtures/status.json",
+        "stage3/scouts/step09/public-any/inspect.cjs",
+        "stage3/scouts/step09/public-any/instrument.cjs",
+        "stage3/scouts/step09/public-any/make-fixtures.cjs",
+        "stage3/scouts/step09/public-any/observe.cjs",
+        "stage3/scouts/step09/public-any/report.py",
+        "stage3/scouts/step09/public-any/run-fixtures.py"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 622,
+      "package": "stage1/cohere/json",
+      "glob": "*.json",
+      "paths": [
+        "stage3/scouts/step09/public-any/contracts.json",
+        "stage3/scouts/step09/public-any/evidence/contracts.json",
+        "stage3/scouts/step09/public-any/evidence/counterexamples.json",
+        "stage3/scouts/step09/public-any/evidence/header-check/after.json",
+        "stage3/scouts/step09/public-any/evidence/header-check/before.json",
+        "stage3/scouts/step09/public-any/evidence/header-check/final.json",
+        "stage3/scouts/step09/public-any/evidence/header-repair.json",
+        "stage3/scouts/step09/public-any/evidence/instrumentation.json",
+        "stage3/scouts/step09/public-any/evidence/observations.json",
+        "stage3/scouts/step09/public-any/fixtures/status.json"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1166,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "*.[mM][dD]",
+      "paths": [
+        "stage3/scouts/step09/public-any/README.md",
+        "stage3/scouts/step09/public-any/REPORT.md",
+        "stage3/scouts/step09/public-any/counts.md",
+        "stage3/scouts/step09/public-any/evidence/RESIDUE.md"
+      ],
+      "map_changed": false
+    }
+  ],
+  "unchecked_a_files": [
+    "stage3/scouts/step09/public-any/fixtures/01_primitive_config.a",
+    "stage3/scouts/step09/public-any/fixtures/02_unvalidated_list.a",
+    "stage3/scouts/step09/public-any/fixtures/03_timer_roundtrip.a"
+  ],
+  "a_check_exempt": [],
+  "executors": {
+    "stage3": 17,
+    "inert": 44
+  },
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "changed_files": [
+    "stage3/scouts/step09/public-any/LICENSE-TypeScript.txt",
+    "stage3/scouts/step09/public-any/NOTICE",
+    "stage3/scouts/step09/public-any/README.md",
+    "stage3/scouts/step09/public-any/REPORT.md",
+    "stage3/scouts/step09/public-any/aggregate.py",
+    "stage3/scouts/step09/public-any/api-loader.mjs",
+    "stage3/scouts/step09/public-any/audit.py",
+    "stage3/scouts/step09/public-any/contracts.json",
+    "stage3/scouts/step09/public-any/counterexamples.cjs",
+    "stage3/scouts/step09/public-any/counts.md",
+    "stage3/scouts/step09/public-any/evidence/RESIDUE.md",
+    "stage3/scouts/step09/public-any/evidence/acceptance.log",
+    "stage3/scouts/step09/public-any/evidence/aggregate.log",
+    "stage3/scouts/step09/public-any/evidence/apply.log",
+    "stage3/scouts/step09/public-any/evidence/audit-mutants.log",
+    "stage3/scouts/step09/public-any/evidence/audit.log",
+    "stage3/scouts/step09/public-any/evidence/build.log",
+    "stage3/scouts/step09/public-any/evidence/contracts.json",
+    "stage3/scouts/step09/public-any/evidence/counterexamples.json",
+    "stage3/scouts/step09/public-any/evidence/counterexamples.log",
+    "stage3/scouts/step09/public-any/evidence/fixtures.log",
+    "stage3/scouts/step09/public-any/evidence/fixtures/01_primitive_config.a.build.stderr",
+    "stage3/scouts/step09/public-any/evidence/fixtures/01_primitive_config.a.build.stdout",
+    "stage3/scouts/step09/public-any/evidence/fixtures/01_primitive_config.a.mutant.stderr",
+    "stage3/scouts/step09/public-any/evidence/fixtures/01_primitive_config.a.mutant.stdout",
+    "stage3/scouts/step09/public-any/evidence/fixtures/01_primitive_config.a.node.stderr",
+    "stage3/scouts/step09/public-any/evidence/fixtures/01_primitive_config.a.node.stdout",
+    "stage3/scouts/step09/public-any/evidence/fixtures/02_unvalidated_list.a.build.stderr",
+    "stage3/scouts/step09/public-any/evidence/fixtures/02_unvalidated_list.a.build.stdout",
+    "stage3/scouts/step09/public-any/evidence/fixtures/02_unvalidated_list.a.mutant.stderr",
+    "stage3/scouts/step09/public-any/evidence/fixtures/02_unvalidated_list.a.mutant.stdout",
+    "stage3/scouts/step09/public-any/evidence/fixtures/02_unvalidated_list.a.node.stderr",
+    "stage3/scouts/step09/public-any/evidence/fixtures/02_unvalidated_list.a.node.stdout",
+    "stage3/scouts/step09/public-any/evidence/fixtures/03_timer_roundtrip.a.build.stderr",
+    "stage3/scouts/step09/public-any/evidence/fixtures/03_timer_roundtrip.a.build.stdout",
+    "stage3/scouts/step09/public-any/evidence/fixtures/03_timer_roundtrip.a.mutant.stderr",
+    "stage3/scouts/step09/public-any/evidence/fixtures/03_timer_roundtrip.a.mutant.stdout",
+    "stage3/scouts/step09/public-any/evidence/fixtures/03_timer_roundtrip.a.node.stderr",
+    "stage3/scouts/step09/public-any/evidence/fixtures/03_timer_roundtrip.a.node.stdout",
+    "stage3/scouts/step09/public-any/evidence/header-check/after.json",
+    "stage3/scouts/step09/public-any/evidence/header-check/before.json",
+    "stage3/scouts/step09/public-any/evidence/header-check/final.json",
+    "stage3/scouts/step09/public-any/evidence/header-repair.json",
+    "stage3/scouts/step09/public-any/evidence/inspect.log",
+    "stage3/scouts/step09/public-any/evidence/install.log",
+    "stage3/scouts/step09/public-any/evidence/instrument.log",
+    "stage3/scouts/step09/public-any/evidence/instrumentation.json",
+    "stage3/scouts/step09/public-any/evidence/observations.json",
+    "stage3/scouts/step09/public-any/evidence/project-captures.json.gz",
+    "stage3/scouts/step09/public-any/evidence/report.log",
+    "stage3/scouts/step09/public-any/evidence/setup.log",
+    "stage3/scouts/step09/public-any/fixtures/01_primitive_config.a",
+    "stage3/scouts/step09/public-any/fixtures/02_unvalidated_list.a",
+    "stage3/scouts/step09/public-any/fixtures/03_timer_roundtrip.a",
+    "stage3/scouts/step09/public-any/fixtures/status.json",
+    "stage3/scouts/step09/public-any/inspect.cjs",
+    "stage3/scouts/step09/public-any/instrument.cjs",
+    "stage3/scouts/step09/public-any/make-fixtures.cjs",
+    "stage3/scouts/step09/public-any/observe.cjs",
+    "stage3/scouts/step09/public-any/report.py",
+    "stage3/scouts/step09/public-any/run-fixtures.py"
+  ],
+  "packages": [
+    "github.com/system-inc/adamic/stage1/cohere/gitignore",
+    "github.com/system-inc/adamic/stage1/cohere/json",
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+    "github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage",
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd",
+    "github.com/system-inc/adamic/stage3/census/latent/tool",
+    "github.com/system-inc/adamic/stage3/census/tool",
+    "github.com/system-inc/adamic/stage3/drivers/parser/probe",
+    "github.com/system-inc/adamic/stage3/fixtures",
+    "github.com/system-inc/adamic/stage3/ledger/checker-259",
+    "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08"
+  ],
+  "unowned_files": [
+    "stage3/scouts/step09/public-any/LICENSE-TypeScript.txt",
+    "stage3/scouts/step09/public-any/NOTICE",
+    "stage3/scouts/step09/public-any/README.md",
+    "stage3/scouts/step09/public-any/REPORT.md",
+    "stage3/scouts/step09/public-any/aggregate.py",
+    "stage3/scouts/step09/public-any/api-loader.mjs",
+    "stage3/scouts/step09/public-any/audit.py",
+    "stage3/scouts/step09/public-any/contracts.json",
+    "stage3/scouts/step09/public-any/counterexamples.cjs",
+    "stage3/scouts/step09/public-any/counts.md",
+    "stage3/scouts/step09/public-any/evidence/RESIDUE.md",
+    "stage3/scouts/step09/public-any/evidence/acceptance.log",
+    "stage3/scouts/step09/public-any/evidence/aggregate.log",
+    "stage3/scouts/step09/public-any/evidence/apply.log",
+    "stage3/scouts/step09/public-any/evidence/audit-mutants.log",
+    "stage3/scouts/step09/public-any/evidence/audit.log",
+    "stage3/scouts/step09/public-any/evidence/build.log",
+    "stage3/scouts/step09/public-any/evidence/contracts.json",
+    "stage3/scouts/step09/public-any/evidence/counterexamples.json",
+    "stage3/scouts/step09/public-any/evidence/counterexamples.log",
+    "stage3/scouts/step09/public-any/evidence/fixtures.log",
+    "stage3/scouts/step09/public-any/evidence/fixtures/01_primitive_config.a.build.stderr",
+    "stage3/scouts/step09/public-any/evidence/fixtures/01_primitive_config.a.build.stdout",
+    "stage3/scouts/step09/public-any/evidence/fixtures/01_primitive_config.a.mutant.stderr",
+    "stage3/scouts/step09/public-any/evidence/fixtures/01_primitive_config.a.mutant.stdout",
+    "stage3/scouts/step09/public-any/evidence/fixtures/01_primitive_config.a.node.stderr",
+    "stage3/scouts/step09/public-any/evidence/fixtures/01_primitive_config.a.node.stdout",
+    "stage3/scouts/step09/public-any/evidence/fixtures/02_unvalidated_list.a.build.stderr",
+    "stage3/scouts/step09/public-any/evidence/fixtures/02_unvalidated_list.a.build.stdout",
+    "stage3/scouts/step09/public-any/evidence/fixtures/02_unvalidated_list.a.mutant.stderr",
+    "stage3/scouts/step09/public-any/evidence/fixtures/02_unvalidated_list.a.mutant.stdout",
+    "stage3/scouts/step09/public-any/evidence/fixtures/02_unvalidated_list.a.node.stderr",
+    "stage3/scouts/step09/public-any/evidence/fixtures/02_unvalidated_list.a.node.stdout",
+    "stage3/scouts/step09/public-any/evidence/fixtures/03_timer_roundtrip.a.build.stderr",
+    "stage3/scouts/step09/public-any/evidence/fixtures/03_timer_roundtrip.a.build.stdout",
+    "stage3/scouts/step09/public-any/evidence/fixtures/03_timer_roundtrip.a.mutant.stderr",
+    "stage3/scouts/step09/public-any/evidence/fixtures/03_timer_roundtrip.a.mutant.stdout",
+    "stage3/scouts/step09/public-any/evidence/fixtures/03_timer_roundtrip.a.node.stderr",
+    "stage3/scouts/step09/public-any/evidence/fixtures/03_timer_roundtrip.a.node.stdout",
+    "stage3/scouts/step09/public-any/evidence/header-check/after.json",
+    "stage3/scouts/step09/public-any/evidence/header-check/before.json",
+    "stage3/scouts/step09/public-any/evidence/header-check/final.json",
+    "stage3/scouts/step09/public-any/evidence/header-repair.json",
+    "stage3/scouts/step09/public-any/evidence/inspect.log",
+    "stage3/scouts/step09/public-any/evidence/install.log",
+    "stage3/scouts/step09/public-any/evidence/instrument.log",
+    "stage3/scouts/step09/public-any/evidence/instrumentation.json",
+    "stage3/scouts/step09/public-any/evidence/observations.json",
+    "stage3/scouts/step09/public-any/evidence/project-captures.json.gz",
+    "stage3/scouts/step09/public-any/evidence/report.log",
+    "stage3/scouts/step09/public-any/evidence/setup.log",
+    "stage3/scouts/step09/public-any/fixtures/01_primitive_config.a",
+    "stage3/scouts/step09/public-any/fixtures/02_unvalidated_list.a",
+    "stage3/scouts/step09/public-any/fixtures/03_timer_roundtrip.a",
+    "stage3/scouts/step09/public-any/fixtures/status.json",
+    "stage3/scouts/step09/public-any/inspect.cjs",
+    "stage3/scouts/step09/public-any/instrument.cjs",
+    "stage3/scouts/step09/public-any/make-fixtures.cjs",
+    "stage3/scouts/step09/public-any/observe.cjs",
+    "stage3/scouts/step09/public-any/report.py",
+    "stage3/scouts/step09/public-any/run-fixtures.py"
+  ],
+  "smoke_list": "cloud/fast-gate/smoke.txt",
+  "smoke_list_source": {
+    "root": "/home/cloud/fast-gate/tools",
+    "from": "tools checkout"
+  },
+  "smoke_list_blob": "eb1bc6ebef73bbea46cfbe96f12512edcc7a19b7",
+  "smoke_fixtures": [
+    "TestNativeAgreesWithNode internal/oracle/testdata/array_from_length.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/bitwise.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/borrow_chain_reassigned.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/call_targets_sort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/casts.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/class_oct6_parameters.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/classes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/closures_throw_uncaught.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_abstract.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/enums_names.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/exceptions_empty.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/finally_leaves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/fresh_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/generic_method_return.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/inherited_static_field_read.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/json_stringify_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/library_object_freeze_write.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/lint_runtime_search_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/map_zero_keys.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/maybe_boolean_panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/narrowed_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/nbody_runtime_fields.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/normalize_form.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/number_parsing.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/optional_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/override_same_representation.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regions_constructor_capture.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/reuse_global_sibling.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/route_targets_accessor.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/search_halves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/set_foreach_fnexpr.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/spread_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/stack_forever.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/string_too_long.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/throw_in_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/timsort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/typeof_string_literal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/undefined_elements.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/utf8_view_fails.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/weak_narrowed.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_modules/main.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/modules/main.a",
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "test_outcomes": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestUpstreamNumericSeparatorGap",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestUpstreamRepositoryCorpusParity",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestExternalComparisonCatchesThreePrinterMutants",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestNativeChunkPlan",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestNativeChunkDifferenceNamesCase",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestDocumentedStageZeroGaps",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProfileSnapshotsAgree",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCachedWidthMutantIsCaught",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinDiagnostics",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinRejectsMissingProvisionedInputs",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinBeforeSampling",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestPortMatchesGoCohere",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestThreePortMutantsAreCaught",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestAdditionalJSONBoundaries",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestSingleFileStdoutDriver",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProgressGuard",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryCorpusMutants",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryLandingWithoutPinEdit",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryRequiresGit",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestDelimiterExpressionMatchesNode",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestMarkdownInline",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestThePortAnswersAsGoCohereAndGitDo",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestPathAnswersAsGosPathPackage",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestCompiler41231d51Shape",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestMissingFunctionMutantFailsLoudly",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestChangedVisitorMutantFailsLoudly",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestVisitorsCollectContinueAndSkipDiagnosedBodies",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixturePaths",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestTransformedNodeRunnerGuardHook",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestTransformedNodeRunnerGuard",
+      "status": "passed"
+    }
+  ],
+  "test_starts": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestPortMatchesGoCohere",
+      "expected_seconds": 120.34,
+      "slots": 1,
+      "after_seconds": 8.628
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestAdditionalJSONBoundaries",
+      "expected_seconds": 54.78912,
+      "slots": 1,
+      "after_seconds": 8.645
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestSingleFileStdoutDriver",
+      "expected_seconds": 53.41696,
+      "slots": 1,
+      "after_seconds": 8.653
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestUpstreamRepositoryCorpusParity",
+      "expected_seconds": 39.17,
+      "slots": 1,
+      "after_seconds": 8.66
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCachedWidthMutantIsCaught",
+      "expected_seconds": 23.1872,
+      "slots": 1,
+      "after_seconds": 8.661
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestExternalComparisonCatchesThreePrinterMutants",
+      "expected_seconds": 2.01,
+      "slots": 1,
+      "after_seconds": 8.672
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestUpstreamNumericSeparatorGap",
+      "expected_seconds": 1.95,
+      "slots": 1,
+      "after_seconds": 8.7
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestThreePortMutantsAreCaught",
+      "expected_seconds": 1.82,
+      "slots": 1,
+      "after_seconds": 8.716
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinBeforeSampling",
+      "expected_seconds": 1.2288,
+      "slots": 1,
+      "after_seconds": 8.725
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinRejectsMissingProvisionedInputs",
+      "expected_seconds": 0.88,
+      "slots": 1,
+      "after_seconds": 8.738
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryLandingWithoutPinEdit",
+      "expected_seconds": 0.11,
+      "slots": 1,
+      "after_seconds": 8.747
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryRequiresGit",
+      "expected_seconds": 0.01,
+      "slots": 1,
+      "after_seconds": 8.763
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinDiagnostics",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 9.362
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestDocumentedStageZeroGaps",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 9.668
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestNativeChunkDifferenceNamesCase",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 9.795
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestNativeChunkPlan",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 10.354
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProfileSnapshotsAgree",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 10.869
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProgressGuard",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 11.436
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryCorpusMutants",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 11.488
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestMarkdownInline",
+      "expected_seconds": 1074.64,
+      "slots": 4,
+      "after_seconds": 18.429
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestThePortAnswersAsGoCohereAndGitDo",
+      "expected_seconds": 8.66,
+      "slots": 1,
+      "after_seconds": 20.838
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestDelimiterExpressionMatchesNode",
+      "expected_seconds": 5.1392,
+      "slots": 1,
+      "after_seconds": 21.946
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestVisitorsCollectContinueAndSkipDiagnosedBodies",
+      "expected_seconds": 1.05,
+      "slots": 1,
+      "after_seconds": 22.472
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestPathAnswersAsGosPathPackage",
+      "expected_seconds": 0.02,
+      "slots": 1,
+      "after_seconds": 22.92
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures",
+      "expected_seconds": 4.992,
+      "slots": 1,
+      "after_seconds": 25.938
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestCompiler41231d51Shape",
+      "expected_seconds": 0.01,
+      "slots": 1,
+      "after_seconds": 27.591
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 27.684
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestChangedVisitorMutantFailsLoudly",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 29.973
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestMissingFunctionMutantFailsLoudly",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 30.078
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixturePaths",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 30.178
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestTransformedNodeRunnerGuard",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 30.282
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestTransformedNodeRunnerGuardHook",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 30.466
+    }
+  ],
+  "undeclared_tools": [],
+  "split_tests": {
+    "github.com/system-inc/adamic/stage1/cohere/json": 19,
+    "github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage": 0,
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd": 0,
+    "github.com/system-inc/adamic/stage3/census/latent/tool": 0,
+    "github.com/system-inc/adamic/stage3/census/tool": 0,
+    "github.com/system-inc/adamic/stage3/drivers/parser/probe": 0,
+    "github.com/system-inc/adamic/stage3/ledger/checker-259": 0,
+    "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08": 0,
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline": 2,
+    "github.com/system-inc/adamic/stage1/cohere/gitignore": 3,
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite": 4,
+    "github.com/system-inc/adamic/stage3/fixtures": 4
+  },
+  "gate_samples": [
+    "TestPortMatchesGoCohere 114/3279 files, stride 32, offset 7",
+    "TestUpstreamRepositoryCorpusParity 419/3279 files, stride 8, offset 7",
+    "TestCorpusPinBeforeSampling 104/3279 files, stride 32, offset 8",
+    "TestMarkdownInline 46/1322 files, stride 32, offset 7"
+  ],
+  "smoke_absent_lanes": [
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "a_check": {
+    "stage3/scouts/step09/public-any/fixtures/01_primitive_config.a": {
+      "outcome": "type error",
+      "expected": "type error TS2307",
+      "first": "stage3/scouts/step09/public-any/fixtures/01_primitive_config.a:4:84: error TS2307: Cannot find module 'public-any-ts' or its corresponding type declarations."
+    },
+    "stage3/scouts/step09/public-any/fixtures/02_unvalidated_list.a": {
+      "outcome": "refused",
+      "expected": "refused a type predicate whose return is not proven (branch is not a trusted parameter check); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "first": "adamic: /home/cloud/fast-gate/tree/stage3/scouts/step09/public-any/fixtures/02_unvalidated_list.a:10:5: Adamic 0.1 refuses a type predicate whose return is not proven (branch is not a trusted parameter check); inline the check where you use it, or return a discriminant comparison on the unmodified p"
+    },
+    "stage3/scouts/step09/public-any/fixtures/03_timer_roundtrip.a": {
+      "outcome": "type error",
+      "expected": "type error TS2304",
+      "first": "stage3/scouts/step09/public-any/fixtures/03_timer_roundtrip.a:22:48: error TS2304: Cannot find name 'setTimeout'."
+    }
+  },
+  "split_tally": {
+    "packages": 12,
+    "planned": 32,
+    "passed": 32,
+    "touched": 12
+  },
+  "stage3_exits": {
+    "stage3-lane-tests": 0,
+    "stage3-apply-tests": 0,
+    "stage3-lane": 0
+  },
+  "wall_seconds": 510.1,
+  "steps_seconds": {
+    "coverage": 0.0,
+    "tools": 0.1,
+    "vet": 1.2,
+    "smoke": 15.3,
+    "a-check-build": 18.6,
+    "a-check": 18.9,
+    "build": 20.0,
+    "tests": 160.0,
+    "stage3": 508.7,
+    "census": 0.4
+  },
+  "pass": 702,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 2,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "failure": null,
+  "planned_stages": [
+    "coverage",
+    "tools",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census",
+    "stage3",
+    "a-check"
+  ],
+  "stages_exit": {
+    "coverage": 0,
+    "tools": 0,
+    "vet": 0,
+    "smoke": 0,
+    "a-check-build": 0,
+    "a-check": 0,
+    "build": 0,
+    "tests": 0,
+    "stage3": 0,
+    "census": 0
+  },
+  "finished": true,
+  "planned_test_counts": {
+    "passed": 32,
+    "failed": 0,
+    "not run": 0
+  }
+}
