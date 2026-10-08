@@ -1,5 +1,5 @@
 Integrated all four indexed slices on the newest stricter-options base; reconciled sparse-array witnesses and attempted the exact whole compiler tree.
-Commits: merge chain 49812121, 9aa2035f, d19185d6, a5ff080b, c6ba3399, 899cae18, 44ac98bb, f2d8c2d4; integration evidence committed separately on codex/stricter-indexed-all.
+Commits: merge chain 49812121, 9aa2035f, d19185d6, a5ff080b, c6ba3399, 899cae18, 44ac98bb, f2d8c2d4; integration evidence b250367c, with retained logs in the following commit, on codex/stricter-indexed-all.
 Commands: all six merged test packages and vet passed; 79 dated source hashes matched; strict native pipeline stopped at 171 checker diagnostics, production pipeline at 72.
 Mutants: every supported slice panic erasure was caught by its pinned observation assertion; two report-classifier mutants were rejected; detailed outcomes are in evidence/mutants.log and evidence/classifier-mutants.log.
 Not covered: no whole-program native artifact; all 99 original indexed native outcomes remain unmeasured; nine minimal rows refuse, and D069's absent optional-field context remains outside its proof.
@@ -82,6 +82,6 @@ With the receiver made a guaranteed array, each standalone exact-`!` reduction s
 
 ## Integration tips and remaining work
 
-Merged and pushed after each merge: b 3ccc3268, c f5a2212c, d c019ca20 then d22099f0, a b7214299 then 90342391, a17a300f and f5a63e24. Current merged-tip evidence commit follows f2d8c2d4. Origin was checked each batch and after the final suite. No codex/stricter-records branch was published at the final check. Newer optional-write tips were observed but not merged. Only codex/stricter-indexed-all was pushed.
+Merged and pushed after each merge: b 3ccc3268, c f5a2212c, d c019ca20 then d22099f0, a b7214299 then 90342391, a17a300f and f5a63e24. Integration evidence b250367c follows f2d8c2d4; retained logs are committed immediately afterward. Origin was checked each batch and after the final suite. No codex/stricter-records branch was published at the final check. Newer optional-write tips were observed but not merged. Only codex/stricter-indexed-all was pushed.
 
 Remaining: remove the 72 whole-program optional/catch checker blockers in their owning units, rerun this exact native pipeline, then classify original indexed sites from actual lowering/native results. Records, array destructuring, nullable string representation and redundant assertion support remain separately routed. No full repository gate was run; the exact six-package gate and three-package vet above were run. Minimal witness completion cannot establish the whole-program completion date.

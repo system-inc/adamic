@@ -1,0 +1,61 @@
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/D155
+=== RUN   TestLedgerWitnesses/D155/present
+    witness_test.go:185: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D155/absent
+    witness_test.go:182: erase D155 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="0\n"
+    witness_test.go:182: erase D155 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="0\n"
+    witness_test.go:185: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D156
+=== RUN   TestLedgerWitnesses/D156/present
+    witness_test.go:185: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D156/absent
+    witness_test.go:182: erase D156 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="0\n"
+    witness_test.go:182: erase D156 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="0\n"
+    witness_test.go:185: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+--- PASS: TestLedgerWitnesses (9.50s)
+    --- PASS: TestLedgerWitnesses/D155 (1.85s)
+        --- PASS: TestLedgerWitnesses/D155/present (0.95s)
+        --- PASS: TestLedgerWitnesses/D155/absent (0.91s)
+    --- PASS: TestLedgerWitnesses/D156 (1.65s)
+        --- PASS: TestLedgerWitnesses/D156/present (0.70s)
+        --- PASS: TestLedgerWitnesses/D156/absent (0.95s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-c	9.511s
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/D107
+=== RUN   TestLedgerWitnesses/D107/present
+    witness_test.go:191: PRESENT D107 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D107/absent
+    witness_test.go:189: PROVEN D107 read=args[i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 1 stdout="" stderr="/home/agent/.cache/adamic/runtime/.build-820677203/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-820677203/string_build_impl.h:40:21 \n"
+=== RUN   TestLedgerWitnesses/D107/hole
+    witness_test.go:189: PROVEN D107 read=args[i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 1 stdout="" stderr="/home/agent/.cache/adamic/runtime/.build-820677203/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-820677203/string_build_impl.h:40:21 \n"
+=== RUN   TestLedgerWitnesses/D171
+=== RUN   TestLedgerWitnesses/D171/present
+    witness_test.go:191: PRESENT D171 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D171/absent
+    witness_test.go:189: PROVEN D171 read=node.declarations[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D171/hole
+    witness_test.go:189: PROVEN D171 read=node.declarations[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D184
+=== RUN   TestLedgerWitnesses/D184/present
+    witness_test.go:191: PRESENT D184 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D184/absent
+    witness_test.go:189: PROVEN D184 read=superPath[superPathDepth]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="0\n" stderr=""
+=== RUN   TestLedgerWitnesses/D184/hole
+    witness_test.go:189: PROVEN D184 read=superPath[superPathDepth]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="0\n" stderr=""
+--- PASS: TestLedgerWitnesses (11.93s)
+    --- PASS: TestLedgerWitnesses/D107 (2.26s)
+        --- PASS: TestLedgerWitnesses/D107/present (0.71s)
+        --- PASS: TestLedgerWitnesses/D107/absent (0.77s)
+        --- PASS: TestLedgerWitnesses/D107/hole (0.77s)
+    --- PASS: TestLedgerWitnesses/D171 (2.21s)
+        --- PASS: TestLedgerWitnesses/D171/present (0.63s)
+        --- PASS: TestLedgerWitnesses/D171/absent (0.83s)
+        --- PASS: TestLedgerWitnesses/D171/hole (0.76s)
+    --- PASS: TestLedgerWitnesses/D184 (2.12s)
+        --- PASS: TestLedgerWitnesses/D184/present (0.59s)
+        --- PASS: TestLedgerWitnesses/D184/absent (0.78s)
+        --- PASS: TestLedgerWitnesses/D184/hole (0.75s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-d	11.938s

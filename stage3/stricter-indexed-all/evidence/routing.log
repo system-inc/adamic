@@ -1,0 +1,12 @@
+=== RUN   TestReceiverAssertionRouting
+=== PAUSE TestReceiverAssertionRouting
+=== CONT  TestReceiverAssertionRouting
+=== RUN   TestReceiverAssertionRouting/D212
+    routing_test.go:39: ROUTE D212 file=src/compiler/transformers/generators.ts function=transformGenerators.hasImmediateContainingLabeledBlock reduction=/tmp/adamic-gate/TestReceiverAssertionRoutingD212462884487/001/generators.ts:1:136: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case
+=== RUN   TestReceiverAssertionRouting/D220
+    routing_test.go:39: ROUTE D220 file=src/compiler/transformers/generators.ts function=transformGenerators.tryEnterOrLeaveBlock reduction=/tmp/adamic-gate/TestReceiverAssertionRoutingD2201994983970/001/generators.ts:1:124: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case
+--- PASS: TestReceiverAssertionRouting (0.35s)
+    --- PASS: TestReceiverAssertionRouting/D212 (0.18s)
+    --- PASS: TestReceiverAssertionRouting/D220 (0.17s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-all	0.357s
