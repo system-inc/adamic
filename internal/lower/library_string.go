@@ -158,13 +158,9 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 }
 
 func (l *lowering) libraryStringMethod(node *ast.Node, value ir.Expression, name string, written []*ast.Node) (ir.Expression, bool, error) {
-	// With no length argument, substr and slice use the same relative start and run to the end.
-	// A second argument is a length for substr, an end for slice, and cannot be substituted.
 	if name == "substr" {
-		if len(written) > 1 {
-			return nil, true, l.notYet(node, "substr with a length argument")
-		}
-		name = "slice"
+		value, err := l.stringSubstr(node, value, written)
+		return value, true, err
 	}
 	if name == "toString" || name == "valueOf" {
 		if len(written) != 0 {

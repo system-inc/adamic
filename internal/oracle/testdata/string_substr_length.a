@@ -1,0 +1,26 @@
+function show(start: number, count: number | undefined): void {
+    console.log("owned:abcdef".substr(start, count));
+}
+show(2, 2);
+show(-4, 2);
+show(-100, 3);
+show(100, 3);
+show(2.9, 2.9);
+show(NaN, NaN);
+show(-Infinity, Infinity);
+show(Infinity, 2);
+show(2, -Infinity);
+show(0, undefined);
+console.log("abcdef".substr(0));
+console.log("abcdef".substr(-2));
+console.log(String.prototype.substr.call("abcdef", 2, 2));
+const units = "a😀z";
+console.log(units.substr(1, 1).charCodeAt(0).toString());
+console.log(units.substr(2, 1).charCodeAt(0).toString());
+console.log(units.substr(-2, 1).charCodeAt(0).toString());
+let events = "";
+function text(): string { events += "r"; return "owned:" + events; }
+function start(): number { events += "s"; return 1; }
+function count(): number { events += "l"; return 3; }
+console.log(text().substr(start(), count()));
+console.log(events);
