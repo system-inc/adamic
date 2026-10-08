@@ -132,6 +132,13 @@ while true; do
     grep -qx "${sha}" "${state}/gated" && continue
     # A tip its branch has already moved past is superseded: gate the branch's newest only.
     grep -qx "${branch} ${sha}" "${state}/seen" || { echo "$(date -u +%H:%M:%S) superseded ${branch} ${sha}"; continue; }
+    # A tip already on main has nothing left to prove: integration's landed cloud/land-* branches stay
+    # on origin, and the first poll that watched them queued every one at landing rank (Oct 8 10:54Z).
+    git -C "${here}" fetch -q origin "${sha}" "+refs/heads/main:refs/remotes/origin/main" 2>/dev/null
+    if git -C "${here}" merge-base --is-ancestor "${sha}" refs/remotes/origin/main 2>/dev/null; then
+      echo "$(date -u +%H:%M:%S) already on main ${branch} ${sha}"
+      continue
+    fi
     echo "${sha}" >> "${state}/gated"
     box=$(echo "${free}" | awk -v class="${class}" '$2 == class {print $1; exit}')
     log=${state}/logs/${sha:0:12}.log
