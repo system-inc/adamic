@@ -558,6 +558,20 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 				b := l.libraryArrayBuilder([]ir.Expression{read})
 				held := b.read(b.parameters[0])
 				matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
+				if narrowed == ir.Object && l.isLibraryType(l.checker.GetTypeAtLocation(node), "Error") {
+					matches = ir.InstanceOf{Value: held, Class: -1}
+				} else if narrowed == ir.Object && isClassInstance(l.checker.GetTypeAtLocation(node)) {
+					proven := l.checker.GetTypeAtLocation(node)
+					declaration := l.classes[proven.Symbol()]
+					if declaration == nil {
+						return nil, l.notYet(node, "an unknown narrowed to an unrepresented nominal class")
+					}
+					instance, err := l.instantiate(declaration, proven, node)
+					if err != nil {
+						return nil, err
+					}
+					matches = ir.InstanceOf{Value: held, Class: instance.class}
+				}
 				if narrowed == ir.Array {
 					matches = ir.ArrayIsArray{Value: held}
 				}

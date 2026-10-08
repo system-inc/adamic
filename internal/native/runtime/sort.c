@@ -41,7 +41,7 @@ typedef struct {
 
 static int order(sort_state *state, adamic_value left, adamic_value right) {
 	int ordered = state->compare(left, right, state->context);
-	if (adamic_thrown != NULL) {
+	if (adamic_exception_pending) {
 		// Only the sort's own frames lie between here and stop, none holding a reference.
 #ifdef ADAMIC_TARGET_WASI
 		return 0;
@@ -55,7 +55,7 @@ static int order(sort_state *state, adamic_value left, adamic_value right) {
 // WASI has no longjmp without experimental exception handling. Propagate the pending
 // error through each sort frame before another comparison or index uses its result.
 #ifdef ADAMIC_TARGET_WASI
-#define STOP_SORT(value) do { if (adamic_thrown != NULL) { return value; } } while (0)
+#define STOP_SORT(value) do { if (adamic_exception_pending) { return value; } } while (0)
 #else
 #define STOP_SORT(value) ((void)0)
 #endif

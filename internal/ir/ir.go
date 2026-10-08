@@ -1224,7 +1224,7 @@ type (
 	}
 	Continue struct{ Label string }
 
-	// Throw throws Value, an Error: to the innermost Try around it, or out of the function, whose
+	// Throw throws Value, an owned tagged payload: to the innermost Try around it, or out of the function, whose
 	// caller passes it on the same way, or, out of every function, as a panic of String(Value).
 	Throw struct{ Value Expression }
 

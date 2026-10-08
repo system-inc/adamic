@@ -719,6 +719,12 @@ func disagreement(oracle run, native run) string {
 		return "exit codes differ"
 	case !bytes.Equal(oracle.stdout, native.stdout):
 		return "stdout differs"
+	case bytes.Contains(native.stderr, []byte("Sanitizer")) || bytes.Contains(native.stderr, []byte("runtime error:")):
+		return "sanitizer failure"
+	case oracle.exitCode == 1:
+		// The adopted exception contract excludes Node's renderer and stack text.
+		// Panics remain exit 70 and retain their owned stderr comparison.
+		return ""
 	case !bytes.Equal(oracle.stderr, native.stderr):
 		return "stderr differs"
 	}

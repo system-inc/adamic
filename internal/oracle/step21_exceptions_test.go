@@ -1,11 +1,14 @@
 package oracle
 
 import (
+	"bytes"
 	"context"
+	"errors"
 	"github.com/system-inc/adamic/internal/flow"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -13,7 +16,7 @@ import (
 
 // Register this unit without editing the shared oracle's compiler-owned fixture list.
 func init() {
-	for _, name := range []string{"catch_callback", "finally_callback", "rethrow", "finally_completion", "liveness"} {
+	for _, name := range []string{"catch_callback", "finally_callback", "rethrow", "finally_completion", "liveness", "dynamic", "region_payload", "dynamic_uncaught", "object_uncaught"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -28,7 +31,6 @@ func init() {
 func TestStep21ProposalOutcomes(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, diagnostic, stdout string }{
-		{"any_value", "refuses throwing a undefined", "undefined\n"},
 		{"saved_error", "throwing an Error that isn't made", "saved1\n"},
 		{"error_subclass", "base", "true\n"},
 		{"unknown_read", "TS18046", "unknown\n"},
@@ -184,4 +186,91 @@ func TestStep21ThrowPathLiveness(t *testing.T) {
 		t.Fatal("missing consuming statement")
 	}
 	t.Fatal("missing read function")
+}
+
+// The ruling excludes Node's stderr renderer for uncaught exceptions. Keep sanitizer
+// failures fatal and keep the ordinary panic comparisons unchanged.
+func TestStep21Uncaught(t *testing.T) {
+	t.Parallel()
+	for _, name := range []string{"step21_dynamic_uncaught", "step21_object_uncaught", "exceptions_uncaught", "closures_throw_uncaught"} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			original := onNode(t, path)
+			native, binary := natively(t, program)
+			leakRun := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+			if leakRun.exitCode != 1 || len(leakRun.stderr) != 0 {
+				t.Fatalf("uncaught lifetime check: exit %d stderr %q", leakRun.exitCode, leakRun.stderr)
+			}
+			for label, result := range map[string]run{"native": native, "release": released(t, program), "JavaScript": onJavaScriptBackend(t, program)} {
+				if original.exitCode != 1 || result.exitCode != 1 || !bytes.Equal(original.stdout, result.stdout) {
+					t.Fatalf("%s: stdout/exit differ: source %d %q, actual %d %q stderr %q", label, original.exitCode, original.stdout, result.exitCode, result.stdout, result.stderr)
+				}
+				if strings.Contains(string(result.stderr), "Sanitizer") || strings.Contains(string(result.stderr), "runtime error:") {
+					t.Fatalf("%s sanitizer failure: %s", label, result.stderr)
+				}
+			}
+		})
+	}
+}
+
+func TestStep21UnknownAssertions(t *testing.T) {
+	t.Parallel()
+	for _, assertion := range []string{"{ readonly message: string }", "() => string"} {
+		t.Run(assertion, func(t *testing.T) {
+			t.Parallel()
+			path := filepath.Join(t.TempDir(), "unknown.a")
+			source := "try { throw 42; } catch (error) { const value = error as " + assertion + "; console.log(typeof value); }"
+			if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+				t.Fatal(err)
+			}
+			loaded, err := load.Load([]string{path})
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = lower.Lower(context.Background(), loaded)
+			var refused *lower.Refused
+			if !errors.As(err, &refused) {
+				t.Fatalf("want Refused, got %v", err)
+			}
+		})
+	}
+}
+
+// New repository programs stay .a; this temporary .ts copy proves equal admission.
+func TestStep21TypeScriptExtension(t *testing.T) {
+	t.Parallel()
+	originalPath, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/step21_dynamic.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	source, err := os.ReadFile(originalPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "dynamic.ts")
+	if err := os.WriteFile(path, source, 0600); err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	original := execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), path)
+	native, binary := natively(t, program)
+	for label, result := range map[string]run{"native": native, "JavaScript": onJavaScriptBackend(t, program), "release": released(t, program)} {
+		if difference := disagreement(original, result); difference != "" {
+			t.Fatalf("%s: %s", label, difference)
+		}
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
 }

@@ -125,6 +125,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			e.line("(void)%s;", value)
 			return e.snapshot(ir.Boolean, "false")
 		}
+		if expression.Class == -1 {
+			return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_instanceof(%s, &adamic_error_class)", value))
+		}
 		if expression.Exact {
 			return e.snapshot(ir.Boolean, fmt.Sprintf("(%s != NULL && ((adamic_object *)%s)->class == &adamic_class_%d)", value, value, expression.Class))
 		}
