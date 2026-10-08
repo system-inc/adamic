@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface T {readonly value:number;}
+interface Base {readonly slice:unknown;}
+interface Target {slice(start?: number, end?: number): T[];}
+function probe(value:Base):void {const buildOrder=value as Target;const result=buildOrder.slice(3,3);console.log("completed");}
+probe({slice:(): T[]=>([{value:3}])});

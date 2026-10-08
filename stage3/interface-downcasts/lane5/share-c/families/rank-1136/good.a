@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly dispose:unknown;}
+interface Target {dispose(): void;}
+function probe(value:Base):void {const transform=value as Target;transform.dispose();console.log("completed");}
+probe({dispose:():void=>{}});

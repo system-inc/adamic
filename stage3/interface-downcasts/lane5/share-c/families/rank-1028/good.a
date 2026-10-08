@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface ResolvedRefAndOutputDts {readonly value:number;}
+interface Base {readonly getRedirectFromSourceFile:unknown;}
+interface Target {getRedirectFromSourceFile(fileName: string): ResolvedRefAndOutputDts | undefined;}
+function probe(value:Base):void {const program=value as Target;const result=program.getRedirectFromSourceFile("abc");console.log("completed");}
+probe({getRedirectFromSourceFile:(fileName: string):ResolvedRefAndOutputDts | undefined=>({value:3})});

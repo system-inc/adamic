@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly useCaseSensitiveFileNames:unknown;}
+interface Target {useCaseSensitiveFileNames(): boolean;}
+function probe(value:Base):void {const host=value as Target;const result=host.useCaseSensitiveFileNames();console.log("completed");}
+probe({useCaseSensitiveFileNames:():boolean=>(true)});

@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly getCurrentDirectory:unknown;}
+interface Target {getCurrentDirectory(): string;}
+function probe(value:Base):void {const host=value as Target;const result=host.getCurrentDirectory();console.log("completed");}
+probe({getCurrentDirectory:(extra:number): string=>("abc")});

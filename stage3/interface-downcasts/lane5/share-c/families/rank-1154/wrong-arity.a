@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Version {readonly value:number;}
+interface Base {readonly test:unknown;}
+interface Target {test(version: Version | string): boolean;}
+function probe(value:Base):void {const keyRange=value as Target;const result=keyRange.test({value:3});console.log("completed");}
+probe({test:(): boolean=>(true)});

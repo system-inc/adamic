@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Entry {readonly value:number;}
+interface Base {readonly getName:unknown;}
+interface Target {getName(entry: Entry): string;}
+function probe(value:Base):void {const loader={nameAndMode:value as Target};const result=loader.nameAndMode.getName({value:3});console.log("completed");}
+probe({getName:(entry: Entry):string=>("abc")});

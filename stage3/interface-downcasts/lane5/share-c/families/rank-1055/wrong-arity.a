@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly getCommonSourceDirectory:unknown;}
+interface Target {getCommonSourceDirectory(): string;}
+function probe(value:Base):void {const host=value as Target;const result=host.getCommonSourceDirectory();console.log("completed");}
+probe({getCommonSourceDirectory:(extra:number): string=>("abc")});

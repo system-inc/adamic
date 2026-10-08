@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface CompilerOptions {readonly value:number;}
+interface Base {readonly update:unknown;}
+interface Target {update(newOptions: CompilerOptions): void;}
+function probe(value:Base):void {const moduleNameToDirectoryMap=value as Target;moduleNameToDirectoryMap.update({value:3});console.log("completed");}
+probe({update:(newOptions: CompilerOptions):void=>{}});

@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly hasUnicodeEscape:unknown;}
+interface Target {hasUnicodeEscape(): boolean;}
+function probe(value:Base):void {const scanner=value as Target;const result=scanner.hasUnicodeEscape();console.log("completed");}
+probe({hasUnicodeEscape:():boolean=>(true)});

@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Node {readonly value:number;}
+interface Base {readonly reportInferenceFallback:unknown;}
+interface Target {reportInferenceFallback(node: Node): void;}
+function probe(value:Base):void {const context={tracker:value as Target};context.tracker.reportInferenceFallback({value:3});console.log("completed");}
+probe({reportInferenceFallback:(node: Node):void=>{}});

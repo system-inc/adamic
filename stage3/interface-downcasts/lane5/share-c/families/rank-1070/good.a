@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface K {readonly value:number;}
+interface V {readonly value:number;}
+interface Base {readonly get:unknown;}
+interface Target {get(key: K): V | undefined;}
+function probe(value:Base):void {const allFeatures=value as Target;const result=allFeatures.get({value:3});console.log("completed");}
+probe({get:(key: K):V | undefined=>({value:3})});

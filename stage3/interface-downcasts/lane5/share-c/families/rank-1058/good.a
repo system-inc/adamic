@@ -1,0 +1,20 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface RuntimeTypeSerializerContext {readonly value:number;}
+interface Node {readonly value:number;}
+type SerializedTypeNode =
+    | SerializedEntityName
+    | ConditionalExpression // Type Reference or Global fallback
+    | VoidExpression // `void 0` used for null/undefined/never
+;
+type SerializedEntityName =
+    | Identifier // Globals (i.e., `String`, `Number`, etc.)
+    | PropertyAccessEntityNameExpression // `A.B`
+;
+interface Identifier {readonly value:number;readonly kind:80;}
+interface PropertyAccessEntityNameExpression {readonly value:number;readonly kind:212;}
+interface ConditionalExpression {readonly value:number;readonly kind:228;}
+interface VoidExpression {readonly value:number;readonly kind:223;}
+interface Base {readonly serializeReturnTypeOfNode:unknown;}
+interface Target {serializeReturnTypeOfNode(serializerContext: RuntimeTypeSerializerContext, node: Node): SerializedTypeNode;}
+function probe(value:Base):void {const typeSerializer=value as Target;const result=typeSerializer.serializeReturnTypeOfNode({value:3},{value:3});console.log("completed");}
+probe({serializeReturnTypeOfNode:(serializerContext: RuntimeTypeSerializerContext,node: Node):SerializedTypeNode=>({value:3,kind:80})});

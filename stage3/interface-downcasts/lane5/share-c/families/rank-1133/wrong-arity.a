@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Statement {readonly value:number;}
+interface Base {readonly addInitializationStatement:unknown;}
+interface Target {addInitializationStatement(node: Statement): void;}
+function probe(value:Base):void {const context=value as Target;context.addInitializationStatement({value:3});console.log("completed");}
+probe({addInitializationStatement:(): void=>{}});

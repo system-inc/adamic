@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly readFile:unknown;}
+interface Target {readFile(path: string, encoding?: string): string | undefined;}
+function probe(value:Base):void {const host=value as Target;const result=host.readFile("abc","abc");console.log("completed");}
+probe({readFile:(): string | undefined=>("abc")});
