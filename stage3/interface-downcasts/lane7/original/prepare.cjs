@@ -29,7 +29,9 @@ const moduleExports = checker.getExportsOfModule(checker.getSymbolAtLocation(sou
 const fields = {};
 for (const name of ['SymbolTracker','ModuleSpecifierResolutionHost','GeneratedIdentifier','EmitNode','AutoGenerateInfo','Identifier',
   'Node','Symbol','Declaration','LeftHandSideExpression','PropertyAccessEntityNameExpression','ElementAccessExpression',
-  'StringLiteral','NumericLiteral','NoSubstitutionTemplateLiteral','BinaryExpression']) {
+  'StringLiteral','NumericLiteral','NoSubstitutionTemplateLiteral','BinaryExpression',
+  'ExpressionWithTypeArguments','JSDocAugmentsTag','JSDocImplementsTag','SourceMapRange',
+  'JSDoc','FunctionDeclaration','EmptyStatement']) {
  const symbol = moduleExports.find(symbol=>symbol.name===name);
  if (!symbol) throw Error('missing original type '+name);
  fields[name] = checker.getPropertiesOfType(checker.getDeclaredTypeOfSymbol(symbol)).map(field=>field.name).sort();
@@ -38,7 +40,8 @@ const pairs = [];
 for (const [id,name,field] of [[10236,'SymbolTracker','moduleResolverHost'],[7612,'GeneratedIdentifier','emitNode'],
   [9476,'BindableStaticPropertyAssignmentExpression','left'],[9474,'BindableStaticAccessExpression','expression'],
   [9485,'BindablePropertyAssignmentExpression','left'],[9475,'BindableAccessExpression','expression'],
-  [9454,'BindableStaticElementAccessExpression','argumentExpression']]) {
+  [9454,'BindableStaticElementAccessExpression','argumentExpression'],
+  [8883,'JSDocAugmentsTag','class'],[8882,'JSDocImplementsTag','class'],[7642,'JSDoc','parent'],[36241,'JSDoc','parent']]) {
  const symbol = moduleExports.find(symbol=>symbol.name===name);
  const receiver = checker.getDeclaredTypeOfSymbol(symbol);
  const member = checker.getPropertyOfType(receiver,field);

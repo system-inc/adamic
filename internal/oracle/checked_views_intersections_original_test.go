@@ -42,7 +42,7 @@ func intersectionOriginalInputs(t *testing.T) (string, intersectionOriginalManif
 	if err := json.Unmarshal(data, &manifest); err != nil {
 		t.Fatal(err)
 	}
-	reads := map[int]int{10236: 1, 7612: 4, 9476: 9, 9474: 11, 9485: 9, 9475: 4, 9454: 1}
+	reads := map[int]int{10236: 1, 7612: 4, 9476: 9, 9474: 11, 9485: 9, 9475: 4, 9454: 1, 8883: 4, 8882: 3, 7642: 10, 36241: 1}
 	if manifest.Commit != "050880ce59e30b356b686bd3144efe24f875ebc8" || len(manifest.Declarations) != 78 || len(manifest.Pairs) != len(reads) || manifest.Pairs[0].ID != 10236 {
 		t.Fatal("original provenance changed")
 	}
@@ -207,6 +207,13 @@ func intersectionOriginalMutant(t *testing.T, program *ir.Program, kind string) 
 // tagged arms; a descriptor already entered keeps its fields for its own reads.
 func requireIntersectionOriginalBindable(t *testing.T, program *ir.Program, manifest intersectionOriginalManifest, ids ...int) {
 	t.Helper()
+	requireIntersectionOriginalComplete(t, program, manifest, []string{"Identifier", "Node", "Symbol", "PropertyAccessEntityNameExpression", "ElementAccessExpression"}, ids...)
+}
+
+// Every named original interface keeps its complete field set, and each pair's
+// declared contract is admitted whole by the bounded walk.
+func requireIntersectionOriginalComplete(t *testing.T, program *ir.Program, manifest intersectionOriginalManifest, names []string, ids ...int) {
+	t.Helper()
 	sorted := func(c ir.ViewContract) []string {
 		fields := []string{}
 		for _, f := range c.Fields {
@@ -215,7 +222,7 @@ func requireIntersectionOriginalBindable(t *testing.T, program *ir.Program, mani
 		slices.Sort(fields)
 		return fields
 	}
-	for _, name := range []string{"Identifier", "Node", "Symbol", "PropertyAccessEntityNameExpression", "ElementAccessExpression"} {
+	for _, name := range names {
 		complete := false
 		for _, c := range program.ViewContracts {
 			complete = complete || c.Name == name && len(c.Fields) > 0 && slices.Equal(sorted(c), manifest.Fields[name])
@@ -288,36 +295,130 @@ func TestCheckedViewIntersectionOriginalBindable(t *testing.T) {
 	}
 }
 
-// Each mutant removes one obligation from one pair's read: skip falls back to
-// the plain union's discriminant, shape accepts a wrong tag, nested forgets an
-// Identifier's Symbol.
+// Each mutant removes one obligation from one pair's read: skip drops the read's
+// conjunctive dispatch (a union falls back to its discriminant), shape accepts a
+// wrong value, nested forgets a descendant field, presence makes a required field
+// optional.
 func intersectionOriginalBindableMutant(t *testing.T, program *ir.Program, kind string) {
 	t.Helper()
-	roots := map[string]string{"left": "BindableStaticAccessExpression", "expression": "EntityNameExpression | (LeftHandSideExpression & BindableStaticNameExpression)", "access": "BindableAccessExpression"}
-	tags := map[string][2]any{"left": {"SyntaxKind.PropertyAccessExpression", 999.0}, "expression": {"SyntaxKind.Identifier", 110.0}, "access": {"SyntaxKind.ElementAccessExpression", 999.0}}
+	roots := map[string]string{"left": "BindableStaticAccessExpression", "expression": "EntityNameExpression | (LeftHandSideExpression & BindableStaticNameExpression)", "access": "BindableAccessExpression",
+		"emit": "EmitNode & { autoGenerate: AutoGenerateInfo; }", "class": "ExpressionWithTypeArguments & { readonly expression: Identifier | PropertyAccessEntityNameExpression; }", "jsdoc": "HasJSDoc", "root": "HasJSDoc"}
+	tags := map[string][2]any{"left": {"SyntaxKind.PropertyAccessExpression", 999.0}, "expression": {"SyntaxKind.Identifier", 110.0}, "access": {"SyntaxKind.ElementAccessExpression", 999.0}, "class": {"SyntaxKind.ExpressionWithTypeArguments", 999.0}, "jsdoc": {"SyntaxKind.EmptyStatement", 999.0}, "root": {"SyntaxKind.EmptyStatement", 999.0}}
 	pair, change, _ := strings.Cut(kind, "-")
 	changed := 0
 	for i := range program.ViewContracts {
 		c := &program.ViewContracts[i]
-		switch change {
-		case "skip":
+		switch {
+		case change == "skip":
 			if c.Name == roots[pair] && c.IntersectionBounded {
-				c.IntersectionBounded, c.IntersectionTag = false, ""
+				c.IntersectionBounded, c.IntersectionTag, c.Intersection = false, "", false
 				changed++
 			}
-		case "shape":
+		case change == "shape" && pair == "emit":
+			if c.Name != "AutoGenerateInfo" {
+				continue
+			}
+			for j, f := range c.Fields {
+				if f.Name == "id" {
+					child := program.ViewContracts[f.Contract-1]
+					child.Of, child.Name = ir.String, "string"
+					c.Fields = slices.Clone(c.Fields)
+					c.Fields[j].Contract = ir.ViewContractID(len(program.ViewContracts) + 1)
+					program.ViewContracts = append(program.ViewContracts, child)
+					c = &program.ViewContracts[i]
+					changed++
+				}
+			}
+		case change == "shape":
 			if c.Name == tags[pair][0] && c.Kind == ir.ViewScalar {
 				c.Allowed = append(slices.Clone(c.Allowed), ir.ViewLiteral{Of: ir.Number, Number: tags[pair][1].(float64)})
 				changed++
 			}
-		case "nested":
+		case change == "nested" && pair == "jsdoc":
+			if c.Name == "FunctionDeclaration" {
+				c.Fields = slices.DeleteFunc(slices.Clone(c.Fields), func(f ir.ViewFieldContract) bool { return f.Name == "parameters" })
+				changed++
+			}
+		case change == "nested" && pair == "emit":
+			if c.Name == "SourceMapRange" {
+				c.Fields = slices.DeleteFunc(slices.Clone(c.Fields), func(f ir.ViewFieldContract) bool { return f.Name == "pos" })
+				changed++
+			}
+		case change == "nested":
 			if c.Name == "Identifier" || c.Name == "LeftHandSideExpression & Identifier" {
 				c.Fields = slices.DeleteFunc(slices.Clone(c.Fields), func(f ir.ViewFieldContract) bool { return f.Name == "symbol" })
 				changed++
 			}
+		case change == "presence":
+			if c.Name == roots[pair] {
+				for j, f := range c.Fields {
+					if f.Name == "autoGenerate" {
+						c.Fields = slices.Clone(c.Fields)
+						c.Fields[j].Optional = true
+						changed++
+					}
+				}
+			}
 		}
 	}
 	if changed == 0 {
-		t.Fatal("original bindable mutant found no obligation: " + kind)
+		t.Fatal("original mutant found no obligation: " + kind)
+	}
+}
+
+func TestCheckedViewIntersectionOriginalNodes(t *testing.T) {
+	declarations, manifest := intersectionOriginalInputs(t)
+	emit := []string{"EmitNode", "AutoGenerateInfo", "GeneratedIdentifier", "SourceMapRange"}
+	class := []string{"Identifier", "Symbol", "ExpressionWithTypeArguments"}
+	jsdoc := []string{"JSDoc", "Node"}
+	for _, test := range []struct {
+		name, source, diagnostic string
+		names                    []string
+		pairs                    []int
+	}{
+		{"emit-original-good", "0\n", "", emit, []int{7612}},
+		{"emit-original-ranges-good", "0\n", "", emit, []int{7612}},
+		{"emit-original-missing", "0\n", "field read failed: node.emitNode.autoGenerate is not initialized; expected AutoGenerateInfo, found missing", emit, []int{7612}},
+		{"emit-original-wrong", "0\n", "field read failed: node.emitNode.autoGenerate.id is not a number; expected number, found string", emit, []int{7612}},
+		{"emit-original-range-wrong", "0\n", "field read failed: node.emitNode.sourceMapRange.pos is not a number; expected number, found string", emit, []int{7612}},
+		{"class-augments-good", "true true\n", "", append(slices.Clone(class), "JSDocAugmentsTag"), []int{8883}},
+		{"class-implements-good", "true true\n", "", append(slices.Clone(class), "JSDocImplementsTag"), []int{8882}},
+		{"class-augments-kind", "true\n", "field read failed: node.class.kind expected SyntaxKind.ExpressionWithTypeArguments, found number 999", class, []int{8883}},
+		{"class-augments-name", "true\n", "field read failed: node.class.expression.kind expected SyntaxKind.Identifier | SyntaxKind.PropertyAccessExpression, found number 110", class, []int{8883}},
+		{"class-augments-symbol", "true\n", "field read failed: node.class.expression.symbol is not initialized; expected Symbol, found missing", class, []int{8883}},
+		{"class-implements-kind", "true\n", "field read failed: n.class.kind expected SyntaxKind.ExpressionWithTypeArguments, found number 999", class, []int{8882}},
+		{"class-implements-symbol", "true\n", "field read failed: n.class.expression.symbol is not initialized; expected Symbol, found missing", class, []int{8882}},
+		{"jsdoc-parent-good", "true\n", "", jsdoc, []int{7642}},
+		{"jsdoc-parent-function-good", "true\n", "", append(slices.Clone(jsdoc), "FunctionDeclaration"), []int{7642}},
+		{"jsdoc-parent-kind", "true\n", "field read failed: jsDoc.parent.kind expected SyntaxKind.EndOfFileToken | SyntaxKind.Identifier | SyntaxKind.TypeParameter | SyntaxKind.Parameter | SyntaxKind.PropertySignature | SyntaxKind.PropertyDeclaration | SyntaxKind.MethodSignature | ... 58 more ... | SyntaxKind.JSDocSignature, found number 999", jsdoc, []int{7642}},
+		{"jsdoc-parent-parameters", "true\n", "field read failed: jsDoc.parent.parameters is not initialized; expected NodeArray<ParameterDeclaration>, found missing", jsdoc, []int{7642}},
+		{"jsdoc-parent-symbol", "true\n", "field read failed: jsDoc.parent.name.symbol is not initialized; expected Symbol, found missing", jsdoc, []int{7642}},
+		{"jsdoc-root-good", "true false\n", "", jsdoc, []int{36241}},
+		{"jsdoc-root-symbol", "true\n", "field read failed: root(found)?.parent.name.symbol is not initialized; expected Symbol, found missing", jsdoc, []int{36241}},
+		{"jsdoc-root-kind", "true\n", "field read failed: root(found)?.parent.kind expected SyntaxKind.EndOfFileToken | SyntaxKind.Identifier | SyntaxKind.TypeParameter | SyntaxKind.Parameter | SyntaxKind.PropertySignature | SyntaxKind.PropertyDeclaration | SyntaxKind.MethodSignature | ... 58 more ... | SyntaxKind.JSDocSignature, found number 999", jsdoc, []int{36241}},
+		{"class-implements-arguments", "true\n", "field read failed: n.class.typeArguments is not a NodeArray<TypeNode> | undefined; expected NodeArray<TypeNode> | undefined, found string", class, []int{8882}},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			program, _ := intersectionOriginalProgram(t, declarations, test.name, test.source)
+			requireIntersectionOriginalComplete(t, program, manifest, test.names, test.pairs...)
+			if kind := os.Getenv("ADAMIC_INTERSECTION_ORIGINAL_MUTANT"); kind != "" {
+				intersectionOriginalBindableMutant(t, program, kind)
+			}
+			want := run{stdout: []byte(test.source)}
+			if test.diagnostic != "" {
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: " + test.diagnostic + "\n")}
+			}
+			actual, binary := nativelyUncached(t, program)
+			if want.exitCode == 0 {
+				if report := leaks(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+			}
+			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Errorf("%s; got %#v", difference, got)
+				}
+			}
+		})
 	}
 }

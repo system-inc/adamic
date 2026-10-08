@@ -1,0 +1,18 @@
+import type { JSDoc, SyntaxKind } from 'original-tsc-types';
+interface Base { readonly kind: SyntaxKind }
+const top = { pos: 0, end: 60, kind: 308, flags: 0, modifierFlagsCache: 0, transformFlags: 0, parent: {} };
+const symbol = { flags: 16, escapedName: 'f', id: 1, mergeId: 0 };
+// The optional chain reaches an owner whose function name has no Symbol.
+const name = { pos: 29, end: 30, kind: 80, flags: 0, modifierFlagsCache: 0, transformFlags: 0, parent: top, escapedText: 'f' };
+const owner = { pos: 20, end: 35, kind: 263, flags: 0, modifierFlagsCache: 0, transformFlags: 0, parent: top, name, parameters: [], symbol };
+const actual = { pos: 0, end: 19, kind: 321, flags: 16777216, modifierFlagsCache: 0, transformFlags: 0, parent: owner };
+const base: Base = actual;
+// checkGrammarJsDocParameter: getJSDocRoot(declaration)?.parent.
+function root(found: boolean): JSDoc | undefined {
+ return found ? base as JSDoc : undefined;
+}
+function host(found: boolean): boolean {
+ const parent = root(found)?.parent;
+ return parent !== undefined && parent.end > parent.pos;
+}
+console.log(`${host(true)}`);

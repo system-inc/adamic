@@ -1371,3 +1371,14 @@ Merging codex/views-integration 6a7f1bf3 conflicted in code files
 (javascript/readiness.go, javascript/view_nullish.go, native/view_nullish.go,
 where lane 7's nullish intersection hook and callable kind meet integration's
 member selection, Map and callable certificates); the merge was aborted unresolved.
+
+Lane 7 node pairs on the bounded walk, October 8: no compiler change. Certified
+with complete pinned declarations: GeneratedIdentifier.emitNode (4 reads),
+JSDocAugmentsTag.class (4), JSDocImplementsTag.class (3), JSDoc.parent (10) and
+the optional-chain JSDoc root parent (1). Lane 7 now has 10 certified pairs / 56
+reads and 7 pairs / 10 reads pending, each with its reason in
+lane7/NODES-REPORT.md. Two findings for other owners: a field type first seen
+through a union receiver gets no interned contract, so that read checks only the
+object kind (shared readObjectField); and the JavaScript union discriminant
+wrapper panics on an undefined optional-chain result where Node and native return
+undefined (lane7/probes/plain-union-optional-chain.a, also on integration 6a7f1bf3).
