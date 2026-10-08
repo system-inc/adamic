@@ -1,0 +1,17 @@
+stage3/census/any-returns/.gitignore
+stage3/census/any-returns/README.md
+stage3/census/any-returns/RESULT.json
+stage3/census/any-returns/evidence/boundaries.json
+stage3/census/any-returns/evidence/fixture.json
+stage3/census/any-returns/evidence/fixture.log.txt
+stage3/census/any-returns/evidence/inspection.json
+stage3/census/any-returns/evidence/inspection.log.txt
+stage3/census/any-returns/evidence/mutant.json
+stage3/census/any-returns/evidence/report.log.txt
+stage3/census/any-returns/evidence/setup.log.txt
+stage3/census/any-returns/evidence/source-manifest.json
+stage3/census/any-returns/inspect.cjs
+stage3/census/any-returns/report.py
+stage3/census/any-returns/return-candidates.json
+stage3/census/any-returns/test_fixture.py
+stage3/census/any-returns/testdata/three-callees.a.txt
