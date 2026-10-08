@@ -200,6 +200,27 @@
     "provides": "Requires an FMA-capable arm64 or amd64 CPU; amd64 capability is read from /proc/cpuinfo on Linux or sysctl hw.optional.fma on macOS."
   },
   {
+    "file": "internal/native/decode_ascii_test.go",
+    "test": "TestDecodeASCII",
+    "id": "TestDecodeASCII:61c6fa0cd43d747dcf949e034bc32ba274f18b3f25d119861563ea595401a244",
+    "line": 51,
+    "condition": "target == \"wasi\" && os.Getenv(\"ADAMIC_TEST_WASI\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_DECODE_RUNTIME\")",
+      "os.Getenv(\"ADAMIC_TEST_WASI\")",
+      "os.Getenv(\"WASI_SYSROOT\")"
+    ],
+    "callers": [
+      "TestDecodeASCII"
+    ],
+    "message": "\"set ADAMIC_TEST_WASI=1\"",
+    "class": "required-input",
+    "provides": "Required WASI decode correctness shard: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT to wasi-sdk 27.0/share/wasi-sysroot (bash cloud/setup.sh --wasi-sdk), with the SDK clang/linker/builtins and Node 24 available. TestDecodeASCII/wasi compares the complete byte corpus against Node and the baseline; missing toolchain or gate switch must fail verification.",
+    "opt_in_off": [
+      "ADAMIC_TEST_WASI"
+    ]
+  },
+  {
     "file": "internal/native/normalize_benchmark_test.go",
     "test": "TestNormalizeLongMeasurements",
     "id": "TestNormalizeLongMeasurements:6dcd1081c12d5b6018fcc9cefc4b64e74675be953be75185fa2be02d217f45de",
