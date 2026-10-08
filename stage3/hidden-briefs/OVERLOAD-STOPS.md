@@ -161,3 +161,39 @@ refusals stay in place. 05 remains unchanged on checked views, as instructed.
 [raw census](../../docs/overload-results/groups/admission/after.jsonl.gz).
 Total assigned hidden bytes remain 50,110; the preceding 8,048-byte reveal in
 06 is retained. All 82 adapted hashes remain pinned to 388096e6.
+
+## After the ruled TypeScript field checks
+
+Compiler `0cfe794bf34086b31382c35e015b703555feefc2`, after merging main
+`54cbc125`, admits the ruled readonly field checks for TypeScript sources.
+The equivalent unproved Adamic contracts remain refused. Each resolved narrower
+call checks once and contributes to the existing --explain-checks checked count.
+
+| Region | Hidden before | Hidden after | Additional revealed | First stop | Owner / raising function |
+|---|---:|---:|---:|---|---|
+| hidden-01-large | 13,625 | 13,625 | 0 | transformers/declarations.ts:1678:110; TS2345 | checker: isSignatureApplicable |
+| hidden-01-small | 6,899 | 6,899 | 0 | transformers/declarations.ts:1678:110; TS2345 | checker: isSignatureApplicable |
+| hidden-05-large | 6,078 | 6,078 | 0 | visitorPublic.ts:123:5; visitNode parameter node | censusOverload |
+| hidden-05-small | 5,748 | 5,748 | 0 | visitorPublic.ts:123:5; visitNode parameter node | censusOverload |
+| hidden-06 | 3,369 | 3,369 | 0 | visitorPublic.ts:196:5; visitNodes visitor: Node must fit TIn | censusOverload |
+| hidden-13 | 7,289 | 6,965 | 324 | transformers/es2017.ts:764:38; TS18048, outerParameter possibly undefined | checker: checkNonNullTypeWithReporter |
+| hidden-14 | 7,102 | 7,102 | 0 | utilities.ts:11445:12; returning evaluate as an indirect overload value | overloadDirectUses |
+
+13 reveals the 324-byte signature span [30237,30561); its implementation body
+stays excluded by TS18048, raised through checkNonNullTypeWithReporter /
+reportObjectPossiblyNullOrUndefinedError. 14 now reaches the indirect overloaded
+evaluate value at utilities.ts:11445:12, associated with the independent unit
+at utilities.ts:11322:5. The prior result admission refusals are removed for
+TypeScript sources only. No per-overload structural body proof is claimed.
+
+```text
+transformers/es2017.ts:764:38: error TS18048: 'outerParameter' is possibly 'undefined'.
+utilities.ts:11445:12: stage 0 can't lower an indirect value of an overload requiring a checked implementation boundary yet
+```
+
+01 remains on #k881crd, 05 on checked views ★11, and 06 on visitor-domain proof.
+The prior 8,048-byte reveal in 06 remains; total hidden bytes are now 49,786.
+[Report](../../docs/overload-results/groups/field-hatch/REPORT.md),
+[comparison](../../docs/overload-results/groups/field-hatch/regions.json),
+[exact stops](../../docs/overload-results/groups/field-hatch/next-stops.json), and
+[raw census](../../docs/overload-results/groups/field-hatch/after.jsonl.gz).
