@@ -173,3 +173,19 @@ run-tasks.cjs and measure_plan.py are measurement tools. The recorded candidate
 plan exits 1 as invalid; it is not a replacement for run.sh. The lane's fixture
 suite also verifies artifact invalidation, file ownership, the complete measured
 inventory and original IPC observation behavior.
+
+## Gate manifest and case shards
+
+The follow-up [manifest contract](SHARD_CONTRACT.md) supersedes the whole-file
+blocker for this lane. `shards.json` uses the exact developer-tools version-1
+schema. Its 151 commands share a verified artifact by inputs hash, give each
+watcher case an exact upstream `--tests` grep, and keep the same expected counts
+and Public APIs sanction. The original run.sh remains available; its optional
+`--artifact` mode supplies the same-tree unsharded reference measurement.
+
+[CASE_SHARDS_REPORT.md](CASE_SHARDS_REPORT.md) records cold command walls,
+complete executed coverage and the real single-watcher failure proof. Developer
+tools owns `cloud/fast-gate/run.py stage3()` on `devtools/fast-gate`; it is not
+modified here. Artifact preparation precedes test units. The separate
+merge_shards.py script checks all actual results against the same-artifact
+unsharded lane rather than acting as a parallel unit with undeclared dependencies.

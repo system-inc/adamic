@@ -11,7 +11,7 @@ const config = path.resolve(output, 'worker.json');
 fs.writeFileSync(config, JSON.stringify({ listenForWork: true, runUnitTests: true }));
 function startWorker() {
     const child = fork(path.resolve(tree, 'built/local/run.js'), [`--config=${config}`], {
-        cwd: path.resolve(tree), stdio: ['ignore', 'inherit', 'inherit', 'ipc'],
+        cwd: path.resolve(tree), env: { ...process.env, NODE_ENV: 'development' }, stdio: ['ignore', 'inherit', 'inherit', 'ipc'],
     });
     let current;
     const timer = setTimeout(() => { failed = true; child.kill('SIGKILL'); }, 240000);

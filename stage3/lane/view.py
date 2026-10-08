@@ -1,12 +1,16 @@
 """Private upstream measurement views of immutable prepared artifacts."""
 from pathlib import Path
+import shutil
 
 
 def make_view(tree, output, private_case=None):
     """Share immutable inputs; give each measurement its own baseline scratch."""
     output.mkdir(parents=True, exist_ok=False)
     for file in tree.iterdir():
-        if file.name not in ('tests', 'built'):
+        if file.name == 'Herebyfile.mjs':
+            # Hereby requires an ordinary file; its tests still use the built harness.
+            shutil.copyfile(file, output / file.name)
+        elif file.name not in ('tests', 'built', 'test.config', 'mytest.config', '.failed-tests'):
             (output / file.name).symlink_to(file, target_is_directory=file.is_dir())
     for directory, except_names in [('tests', {'baselines', 'cases'}), ('built', {'local'})]:
         target = output / directory
@@ -23,7 +27,6 @@ def make_view(tree, output, private_case=None):
     local.mkdir()
     for file in (tree / 'built/local').iterdir():
         if file.name in ('run.js', 'run.js.map'):
-            import shutil
             shutil.copyfile(file, local / file.name)
         else:
             (local / file.name).symlink_to(file, target_is_directory=file.is_dir())
@@ -35,6 +38,5 @@ def make_view(tree, output, private_case=None):
             for file in source.iterdir():
                 cases(file, target / file.name, relative / file.name)
         else:
-            import shutil
             shutil.copyfile(source, target)
     cases(tree / 'tests/cases', output / 'tests/cases', Path('tests/cases'))

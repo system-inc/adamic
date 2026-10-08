@@ -1,0 +1,10 @@
+--- original/built/local/run.js
++++ mutant/built/local/run.js
+@@ -249515,6 +249515,7 @@
+           await writeFile2(link);
+           fileResult.watcher.close();
+           linkResult.watcher.close();
++          if (file.endsWith("/polling/file.ts")) assert.equal(sys2.readFile(file), "export const x = 10;");
+           function watchFile2(toWatch) {
+             const result = {
+               watcher: sys2.watchFile(

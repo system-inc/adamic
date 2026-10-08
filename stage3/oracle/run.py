@@ -22,6 +22,7 @@ parser.add_argument('--tests', help='upstream test regex, for targeted mutant ch
 parser.add_argument('--workers', type=int, default=8)
 parser.add_argument('--limit-seconds', type=int, default=2400)
 parser.add_argument('--timeout', type=int, help='upstream Mocha timeout in ms, targeted probes only')
+parser.add_argument('--prepared', action='store_true', help='internal same-artifact lane measurement: reuse producer phases')
 args = parser.parse_args()
 if args.timeout is not None and (not args.tests or args.timeout <= 0):
     parser.error('--timeout requires --tests and a positive millisecond limit')
@@ -59,9 +60,17 @@ def phase(name, command, limit=None, env=None):
     return code
 
 try:
-    if phase('install', ['npm', 'ci', '--no-audit', '--no-fund']) == 0:
-        if phase('build', ['npm', 'run', 'build']) == 0:
+    if args.prepared:
+        producer = json.loads((tree.parent / 'artifact-ready.json').read_text())
+        for name in ('install', 'build'):
+            report['phases'][name] = dict(producer['phases'][name], artifact=producer['key'])
+        report['artifact'] = producer['key']
+    if args.prepared or phase('install', ['npm', 'ci', '--no-audit', '--no-fund']) == 0:
+        if args.prepared or phase('build', ['npm', 'run', 'build']) == 0:
             command = ['npm', 'test', '--', f'--workers={args.workers}', '--lint=false', '--no-colors']
+            if args.prepared:
+                command = ['node', str(Path(__file__).with_name('run-prepared.mjs')), str(tree),
+                           f'--workers={args.workers}', '--light=false', '--no-colors']
             if args.runners != 'all':
                 command.append('--runners=' + args.runners)
             if args.tests:
