@@ -2,6 +2,7 @@ package lower
 
 import (
 	"bytes"
+	"errors"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -24,6 +25,12 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 		name, nodeOut, checkedOut, message string
 		checked                            bool
 	}{
+		{"ordinary_regions", "word\ntrue\ntrue\n", "", "", false},
+		{"parser_assert_defined", "assertion declaration loaded\n", "", "", false},
+		{"assert_defined_read", "WORD\nmissing\nword\nno match\n1\nno number\nevaluated\nfalse\nnull evaluated\nfalse\n", "", "", false},
+		{"parser_callback_parameter", "callback declaration loaded\n", "", "", false},
+		{"generic_callback_parameter_read", "WORD\nSECOND\n", "", "", false},
+		{"callback_parameter_read", "WORD\nmissing\nSECOND\n", "", "", false},
 		{"parser_every_result", "overload declarations loaded\n", "", "", false},
 		{"parser_some_result", "overload declarations loaded\n", "", "", false},
 		{"overload_some", "true:false\n", "", "", false},
@@ -71,6 +78,15 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 				t.Fatal(err)
 			}
 			program, err := lowerSource(t, string(source))
+			if probe.name == "parser_callback_parameter" {
+				// This uncalled declaration supplies no producer proof. Live direct-call
+				// witnesses below retain their native and Node comparisons.
+				var refused *Refused
+				if !errors.As(err, &refused) || refused.What != "a type predicate whose return is not proven (there is no body proving this parameter)" {
+					t.Fatalf("want the closed-caller predicate contract refusal, got %v", err)
+				}
+				return
+			}
 			if err != nil {
 				t.Fatal(err)
 			}
