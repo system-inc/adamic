@@ -1,0 +1,10 @@
+--- FAIL: TestTypedArrayRuntime (10.59s)
+    --- FAIL: TestTypedArrayRuntime/release (3.80s)
+        typed_array_test.go:44: runtime differs from Node at line 1360: got "-2147483648" want "2147483647"
+    --- FAIL: TestTypedArrayRuntime/sanitized (6.73s)
+        typed_array_test.go:38: runtime: exit status 1
+            /home/agent/.cache/adamic/runtime/.build-3593541402/typed_array.c:72:37: runtime error: -1 is outside the range of representable values of type 'unsigned char'
+            SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-3593541402/typed_array.c:72:37 
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	10.601s
+FAIL

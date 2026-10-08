@@ -5,7 +5,7 @@ r=json.loads((root/'results.json').read_text())
 m=json.loads((root/'mutants.json').read_text()) if (root/'mutants.json').exists() else []
 base=subprocess.check_output(['git','rev-parse','origin/main'],text=True).strip()
 text=f'''Built nine .a probes: seven agree in four modes; two are explicit compiler refusals.
-Tested base {base}; history examined: 73352e87..5a2681b1.
+Probe commit 9197ad5b4f0716bb2f0a6fd924ae95d594fe646c; tested base {base}; history examined: 73352e87..5a2681b1.
 Commands: run.py compares source Node, ASan/UBSan native, -O2 native and backend Node; seven leak runs finish cleanly.
 Mutants: negative-wrap and same-kind guards caught; regexp guard survives selected native tests but oracle catches it; readiness call invalidation survives lower; extra view retain caught by leak check.
 Not covered: every readiness path, unsupported element types, allocation exhaustion, resizable/shared buffers, or the full repository gate.
@@ -78,7 +78,7 @@ Run `python3 notes/coverage-oct8/typedarrays/mutants.py > /tmp/coverage-mutants.
 
 '''
 for row in m:
- text+=f"- `{row['mutant']}` in `{row['file']}:{ {'typed-negative-wrap':70,'typed-kind-guard':127,'regexp-argument-guard':17,'readiness-call-invalidation':190}[row['mutant']]} `: `{row['before']}` becomes `{row['after']}`. Package command `{' '.join(row['command'])}` exits {row['exit']}."
+ text+=f"- `{row['mutant']}` in `{row['file']}:{ {'typed-negative-wrap':70,'typed-kind-guard':127,'regexp-argument-guard':17,'readiness-call-invalidation':190}[row['mutant']]}`: `{row['before']}` becomes `{row['after']}`. Package command `{' '.join(row['command'])}` exits {row['exit']}."
  if 'oracle' in row:text+=f" Additional uncached oracle command `{' '.join(row['oracle']['command'])}` exits {row['oracle']['exit']}."
  text+='\n'
 probe_file=root/'probe-mutants.json'

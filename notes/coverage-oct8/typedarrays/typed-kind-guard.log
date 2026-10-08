@@ -1,0 +1,10 @@
+--- FAIL: TestTypedArrayRuntime (11.30s)
+    --- FAIL: TestTypedArrayRuntime/release (4.12s)
+        typed_array_test.go:76: [kind]: wanted panic 70, got <nil>
+            adamic: counts: allocations 2 frees 2 retains 0 releases 2 peak 2 regions 0
+    --- FAIL: TestTypedArrayRuntime/sanitized (7.13s)
+        typed_array_test.go:76: [kind]: wanted panic 70, got <nil>
+            adamic: counts: allocations 2 frees 2 retains 0 releases 2 peak 2 regions 0
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	11.311s
+FAIL

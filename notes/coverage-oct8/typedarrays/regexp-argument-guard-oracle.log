@@ -1,0 +1,12 @@
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace/argument_guard.a (11.20s)
+        oracle_test.go:765: exit codes differ
+            backend: exit 70, stdout "", stderr "adamic: panic: RegExp replacement callback argument does not fit its declared type\n"
+            native:  exit 0, stdout "absent\n", stderr ""
+        oracle_test.go:769: want the inserted check to fire natively (exit 70) where the source on Node runs on: native 0, Node 0
+FAIL
+gate cache: native hits=0 misses=7
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	11.230s
+FAIL
