@@ -79,6 +79,12 @@ func (e *emitter) logicalValue(expression ir.Logical) string {
 }
 
 func logicalConverted(from, to ir.Type, value string) (string, bool) {
+	// && keeps a falsy left value. A reference other than a string is falsy only when it's missing,
+	// and a Maybe result says the checker typed that missing value as undefined, so it's the absent
+	// pair (item && item.ready, item an object or undefined).
+	if from.IsReference() && from != ir.String && from != ir.Union && to.IsMaybe() {
+		return zero(to), false
+	}
 	if from == ir.Union && to != ir.Union {
 		switch to {
 		case ir.Number:

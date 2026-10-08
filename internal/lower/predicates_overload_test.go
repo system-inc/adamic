@@ -74,11 +74,11 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			program, err := lowerSource(t, string(source))
+			lowerInput := lowerSource
 			if extension == ".ts" {
-				program, err = lowerTypeScriptAssertionSource(t, string(source))
+				lowerInput = lowerTypeScriptAssertionSource
 			}
-
+			program, err := lowerInput(t, string(source))
 			if err != nil {
 				t.Fatal(err)
 			}

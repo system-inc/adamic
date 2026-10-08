@@ -13,7 +13,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/namespaces/01_builder_state.a:13:16: stage 0 can't lower a BinaryExpression with a value and a boolean yet"}
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "02_jsx_names.a",

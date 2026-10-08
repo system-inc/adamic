@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"slices"
+	"sort"
 	"strings"
 	"testing"
 )
@@ -27,8 +27,12 @@ func predicateCountsTable(t *testing.T) string {
 	if err != nil || len(paths) == 0 {
 		t.Fatalf("predicate fixtures: %v", err)
 	}
-	paths = append(paths, filepath.Join(repository, "internal/lower/testdata/predicates/overload_every.ts"))
-	slices.Sort(paths)
+	typeScriptPaths, err := filepath.Glob(filepath.Join(repository, "internal/lower/testdata/predicates/overload_*.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	paths = append(paths, typeScriptPaths...)
+	sort.Strings(paths)
 	var table strings.Builder
 	table.WriteString(predicateCountsHeader)
 	for _, path := range paths {
