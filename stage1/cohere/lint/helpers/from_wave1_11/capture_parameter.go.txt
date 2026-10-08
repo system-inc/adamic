@@ -1,0 +1,22 @@
+package structure
+import (
+ "encoding/json"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "os"
+ "sync"
+)
+var wave11ParameterLock sync.Mutex
+func parameterTypeNode(node *ast.Node) *ast.Node {
+ kind, typeID, typeKind := -1, -1, -1
+ var annotation *ast.Node
+ if node != nil { kind = int(node.Kind); if node.Kind == ast.KindParameter { annotation = node.AsParameterDeclaration().Type } }
+ if annotation != nil { typeID = 1; typeKind = int(annotation.Kind) }
+ result := wave11OriginalParameterTypeNode(node)
+ resultID := -1
+ if result != nil { if result != annotation { panic("annotation identity changed") }; resultID = typeID }
+ row := struct { Present bool `json:"present"`; Kind int `json:"kind"`; TypeID int `json:"typeId"`; TypeKind int `json:"typeKind"`; Result int `json:"result"` }{node != nil,kind,typeID,typeKind,resultID}
+ wave11ParameterLock.Lock(); defer wave11ParameterLock.Unlock()
+ file,err:=os.OpenFile(os.Getenv("WAVE11_PARAMETER_CAPTURE"),os.O_CREATE|os.O_WRONLY|os.O_APPEND,0600);if err!=nil {panic(err)};defer file.Close()
+ if err=json.NewEncoder(file).Encode(row);err!=nil {panic(err)}
+ return result
+}
