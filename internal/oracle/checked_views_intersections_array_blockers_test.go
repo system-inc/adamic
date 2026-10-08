@@ -16,20 +16,26 @@ func TestCheckedViewIntersectionOriginalArrayBlockers(t *testing.T) {
 		{"97923", "readonly IncrementalMultiFileEmitBuildInfoFileInfo[]", "an array of IncrementalMultiFileEmitBuildInfoFileInfo"},
 		{"98493", "readonly IncrementalMultiFileEmitBuildInfoFileInfo[] | readonly IncrementalBundleEmitBuildInfoFileInfo[]", "an array of string | FileInfo | IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo"},
 	} {
-		t.Run(sample.name, func(t *testing.T) {
-			source := fmt.Sprintf("import type { IncrementalMultiFileEmitBuildInfoFileInfo, IncrementalBundleEmitBuildInfoFileInfo } from %q;\nfunction visit(fileInfos: %s): void { fileInfos.forEach(() => console.log('item')); }\nvisit(['v']);\n", filepath.ToSlash(filepath.Join(declarations, "compiler/builder.d.ts")), sample.target)
-			path := filepath.Join(t.TempDir(), "array-"+sample.name+".a")
-			if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-				t.Fatal(err)
-			}
-			if difference := disagreement(run{stdout: []byte("item\n")}, onNode(t, path)); difference != "" {
-				t.Fatal("Node: " + difference)
-			}
-			_, err := lowered(t, path)
-			if err == nil || !strings.Contains(err.Error(), sample.refusal) {
-				t.Fatalf("expected original mixed-element storage refusal, got %v", err)
-			}
-			t.Log(err)
-		})
+		for _, value := range []struct{ name, expression string }{
+			{"string", "'v'"},
+			{"intersection-object", "{version: 'v', signature: false, affectsGlobalScope: undefined, impliedFormat: undefined}"},
+			{"file-info-object", "{version: 'v', signature: 's', affectsGlobalScope: undefined, impliedFormat: undefined}"},
+		} {
+			t.Run(sample.name+"/"+value.name, func(t *testing.T) {
+				source := fmt.Sprintf("import type { IncrementalMultiFileEmitBuildInfoFileInfo, IncrementalBundleEmitBuildInfoFileInfo } from %q;\nfunction visit(fileInfos: %s): void { fileInfos.forEach(() => console.log('item')); }\nvisit([%s]);\n", filepath.ToSlash(filepath.Join(declarations, "compiler/builder.d.ts")), sample.target, value.expression)
+				path := filepath.Join(t.TempDir(), "array-"+sample.name+".a")
+				if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+					t.Fatal(err)
+				}
+				if difference := disagreement(run{stdout: []byte("item\n")}, onNode(t, path)); difference != "" {
+					t.Fatal("Node: " + difference)
+				}
+				_, err := lowered(t, path)
+				if err == nil || !strings.Contains(err.Error(), sample.refusal) {
+					t.Fatalf("expected original mixed-element storage refusal, got %v", err)
+				}
+				t.Log(err)
+			})
+		}
 	}
 }

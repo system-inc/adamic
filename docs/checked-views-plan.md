@@ -2221,3 +2221,11 @@ check omission mutants execute true successfully in all three modes and are
 caught by the named exit-70 pins. No compiler admission changes. Lane 7 is now
 14 pairs / 60 reads; remaining 97923 and 98493 array reads plus private 68704
 (four reads). Assigned Identifier 9477 is separately certified, one read.
+
+October 11, assigned lane 4b intersection rows: all seven / 45 original reads
+map to lane 7 certificates (9474, 7642, 9476, 9485, 9475, 7644, 36241), with
+zero duplicate additions. Mapping and fresh validation are under lane7's
+ASSIGNED-REPORT.md and assigned-lane4b-certificates.json. Remaining lane 7
+array blockers are pinned through actual string and original FileInfo objects;
+they need boxed union array storage and member adapters in the array consumers.
+Private 68704 remains excluded as instructed.
