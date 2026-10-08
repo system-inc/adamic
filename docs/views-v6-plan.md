@@ -6,7 +6,8 @@ not a completed compiler/views-v6 delivery. Current main is
 compiler/views-v5 in the completed base checks. No V6 admissions or runtime
 changes are applied to main or this planning branch.
 
-When compiler/views-v5 exists, create compiler/views-v6 from its exact tip.
+The rehearsal protocol below supersedes the standalone V5 base wait. Start V6
+when origin/compiler/views-rehearsal contains a views-v5: subject; use its current tip.
 Do not use the private dry-run branch as the delivery base. Preserve every
 base acceptance, refusal and NotYet result except removal of independently
 proven view checks. No optional-write, callable, array, dictionary, union or
@@ -316,3 +317,60 @@ The new origin check still reports no compiler/views-v5. No compiler/views-v6
 branch or compiler admission is created on an invented base. The planning branch
 contains only the method update and discovery record; implementation waits for
 the required slice base.
+
+
+## Rehearsal and train protocol
+
+This section supersedes the standalone slice-base wait and delivery procedure
+above. The required base is now the current origin/compiler/views-rehearsal tip,
+in slice order V1, V2, V3, V4, V5, V6. V6 starts when that log contains a subject
+starting exactly views-v5: . The predecessor need only apply and compile; its
+green sweep is not a prerequisite. Check origin on each work pass and while
+waiting. Do not add V6 ahead of V5.
+
+Prepared against rehearsal 9f16421c7910607cd06c006b719ff126bd15a7f7:
+[lane3-net.patch](views-v6/lane3-net.patch), with identities and selected paths in
+[lane3-net.json](views-v6/lane3-net.json). This 19-path patch includes implementation,
+proof tests, six original lane probes and the two mutation runners. Historical
+measurement exports and the excluded runtime graph-count guard are omitted.
+The patch is an input for resolution, not a claim that its raw inherited shared
+hunks or original assertion probe are admissible. Preserve the exclusions and
+adapt that probe under the existing ruling before implementation is committed.
+
+One application in /workspace/scratch/views-v6-rehearsal-discovery finds only
+internal/ir/ir.go and internal/lower/readiness.go unmerged against this rehearsal.
+Those are discovery results before the V1 through V5 prerequisites. Resolve once
+per file on the actual V5-bearing tip, with the named merge judgments and lane
+proof tests as the controls. The dictionary erasure guard must be retained even
+though the earlier lane snapshot predates it.
+
+Use one implementation commit for lane 3, subject starting views-v6: . List all
+original lane commit hashes and subjects in its body. The last V6 commit carries
+exactly this trailer line, and earlier slice commits do not:
+
+```text
+Train-slice: views-v6
+```
+
+Before pushing, fetch the rehearsal, place the slice commit on its current tip,
+and run go build ./... and go vet ./internal/... with separate output logs.
+Push compiler/views-rehearsal fast-forward only. On rejection, fetch, rebase onto
+the new tip, rebuild and vet, then retry without force. Also push the same last
+slice commit as compiler/views-v6, cut from the rehearsal at that commit. These
+explicit instructions authorize the rehearsal push and replace the earlier
+prohibition on pushing to a shared compiler branch for this unit.
+
+Push as soon as build and vet pass, including red test results, then run the full
+required sweep on that exact commit. Report each pushed SHA and known failures.
+No full-sweep or mutant requirement is dropped by early publication.
+
+Fix commits start views-v6 fix: . While no later slice is present, put the fix at
+the rehearsal tip with Train-slice: views-v6, making it the newest train source.
+If a later slice is present, omit the trailer and report the SHA to compiler for
+placement by compiler and integration. Never mark a candidate that includes a
+later slice as V6's source. Never rewrite published history or hold back the last
+slice trailer.
+
+The latest rehearsal check has only slice 1, with no views-v5: subject. This
+planning branch contains the prepared diff and protocol record only. No compiled
+V6, result move, sweep completion or mutant kill is claimed.

@@ -1,0 +1,2254 @@
+diff --git a/internal/ir/ir.go b/internal/ir/ir.go
+index 89501590..6a49aa08 100644
+--- a/internal/ir/ir.go
++++ b/internal/ir/ir.go
+@@ -12,6 +12,10 @@ import "fmt"
+ type Program struct {
+ 	// CheckedFields conservatively checks these field names at every object read.
+ 	CheckedFields map[string]bool
++	// GraphTypes selects ownership by checker identity and negative allocation-site flow IDs.
++	GraphTypes        map[int]bool
++	ViewContracts     []ViewContract
++	ViewContractTypes map[int]ViewContractID
+ 
+ 	// Source is the entry file's base name, as written, for the header of what the backends emit.
+ 	Source string
+@@ -45,6 +49,8 @@ type Program struct {
+ 
+ // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
+ type Class struct {
++	Graph bool
++
+ 	// Definition is the erased source identity, shared by distinct native layouts.
+ 	Definition   int
+ 	Name         string
+@@ -68,6 +74,9 @@ type Accessor struct {
+ 
+ // Function is a function declaration.
+ type Function struct {
++	// GraphClosure joins its environment instead of counting captured graph cells.
++	GraphClosure bool
++
+ 	Name string
+ 
+ 	// Parameters are locals, in order.
+@@ -82,6 +91,11 @@ type Function struct {
+ 	// captured variables it reaches through its cells, in order.
+ 	Closure     bool
+ 	Environment []int
++	// NestedParent is the enclosing function plus one for a named nested declaration.
++	NestedParent int
++	// FrameEnvironment is the layout of the single entry allocation for this frame.
++	FrameEnvironment []int
++	NestedFrame      bool
+ 
+ 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
+ 	// one after each call. Lowering works it out over the call graph once every function is lowered.
+@@ -171,6 +185,8 @@ type Local struct {
+ 	Hoisted               bool
+ 	Name                  string
+ 	Type                  Type
++	// GraphCell selects graph ownership for its capture cell or shared environment.
++	GraphCell bool
+ 
+ 	// Global is a variable declared at the module's top level, which functions can read and write.
+ 	Global bool
+@@ -180,6 +196,12 @@ type Local struct {
+ 
+ 	// Captured is a variable some closure reads or writes: it lives in a cell, shared by reference.
+ 	Captured bool
++	// Preallocated cells exist before their source initializer executes.
++	Preallocated bool
++	// EnvironmentCell is an interior slot of its function's FrameEnvironment.
++	EnvironmentCell bool
++	// NestedFunction is the named declaration this binding holds, plus one.
++	NestedFunction int
+ 
+ 	// Borrowed is a reference parameter the function only looks at: its caller keeps the value alive
+ 	// for the whole call, so the function neither retains it on entry nor releases it on the way out
+@@ -208,8 +230,9 @@ type (
+ 	StringConstant  struct{ Index int }
+ 
+ 	// Read reads a local. Of is the local's type, so a Read is typed without the program in hand.
+-	// Checked is a read of a global from inside a function, which may run before the global's
+-	// declaration has: JavaScript throws there (the temporal dead zone), and so does Adamic, out loud.
++	// Checked is a global read whose initialization is not proven, including function
++	// bodies and cyclic module evaluation. JavaScript throws in the temporal dead zone;
++	// Adamic checks it out loud.
+ 	Read struct {
+ 		Local     int
+ 		Of        Type
+@@ -282,6 +305,7 @@ type (
+ 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
+ 	ObjectLiteral struct {
+ 		SpreadReadiness string
++		GraphTypes      []int
+ 		// Class is the nominal class ID, or zero for a plain object.
+ 		Class                int
+ 		Spread               Expression
+@@ -305,9 +329,11 @@ type (
+ 	// number field read that way is number | undefined.
+ 	Property struct {
+ 		// View names a required field read whose presence, readiness and representation are checked.
+-		View        string
+-		ViewType    string
+-		ViewAllowed []Expression
++		View         string
++		ViewType     string
++		ViewAllowed  []Expression
++		ViewContract ViewContractID
++		ViewTypeID   int
+ 		// Readiness is the source expression for a checked field read, empty when proven ready.
+ 		Readiness string
+ 		Object    Expression
+@@ -331,9 +357,10 @@ type (
+ 	// ArrayLiteral makes an array. Where Spread is set, the element at that position is an array of the
+ 	// same elements, spread into this one at that point in the evaluation, as JavaScript does.
+ 	ArrayLiteral struct {
+-		Element  Type
+-		Elements []Expression
+-		Spread   []bool
++		GraphTypes []int
++		Element    Type
++		Elements   []Expression
++		Spread     []bool
+ 	}
+ 
+ 	// Length is array.length.
+@@ -503,6 +530,7 @@ type (
+ 	// members: the discriminant Field must hold one of Allowed, or the program panics with Message,
+ 	// in both backends (docs/0.1.md, decision 5).
+ 	CheckedCast struct {
++		ViewContract  ViewContractID
+ 		CheckedFields bool
+ 		Value         Expression
+ 		Field         string
+@@ -533,6 +561,7 @@ type (
+ 	// ArraySplice is array.splice(Start, Count, ...Items): Count perhaps left out (everything after
+ 	// Start), and what's removed, a new array.
+ 	ArraySplice struct {
++		GraphTypes          []int
+ 		Array, Start, Count Expression
+ 		Items               []Expression
+ 		Element             Type
+@@ -544,6 +573,7 @@ type (
+ 	// ArrayFill is array.fill(Value, Start, End), Start and End perhaps nil (left out); in place, and
+ 	// the array. With Array nil, it's new Array(Length).fill(Value): a new array, every element Value.
+ 	ArrayFill struct {
++		GraphTypes                       []int
+ 		Array, Length, Value, Start, End Expression
+ 		Element                          Type
+ 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
+@@ -556,6 +586,7 @@ type (
+ 	// undefined and its index, in order. First is the type of the callback's first parameter, which
+ 	// undefined is passed as (0 when it has none).
+ 	ArrayFrom struct {
++		GraphTypes       []int
+ 		Length, Callback Expression
+ 		Element, First   Type
+ 	}
+@@ -566,8 +597,9 @@ type (
+ 	// ArrayConcat is array.concat(Others...): a new array of every one's elements, in order. Each of
+ 	// Others is an array of the same elements.
+ 	ArrayConcat struct {
+-		Array  Expression
+-		Others []Expression
++		GraphTypes []int
++		Array      Expression
++		Others     []Expression
+ 	}
+ 
+ 	// ArrayReduce is array.reduce(Callback, Initial): the callback called per element with what it
+@@ -594,6 +626,8 @@ type (
+ 
+ 	// CallClosure calls a function value. Returns is its result type, 0 for void.
+ 	CallClosure struct {
++		// Direct is a sibling code target plus one, sharing Closure as its environment.
++		Direct    int
+ 		Closure   Expression
+ 		Arguments []Expression
+ 		Returns   Type
+@@ -602,10 +636,11 @@ type (
+ 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the
+ 	// element, its index and the array.
+ 	ArrayMap struct {
+-		Array    Expression
+-		Callback Expression
+-		Element  Type
+-		Result   Type
++		GraphTypes []int
++		Array      Expression
++		Callback   Expression
++		Element    Type
++		Result     Type
+ 	}
+ 
+ 	// ArrayVisit is one of the array methods that call a function per element, in order, with the
+@@ -614,24 +649,27 @@ type (
+ 	// is skipped, both as JavaScript does. Returns is what the callback returns, 0 for nothing; every
+ 	// method but forEach requires a boolean.
+ 	ArrayVisit struct {
+-		Method   string
+-		Array    Expression
+-		Callback Expression
+-		Element  Type
+-		Returns  Type
++		GraphTypes []int
++		Method     string
++		Array      Expression
++		Callback   Expression
++		Element    Type
++		Returns    Type
+ 	}
+ 
+ 	// MapEntries is [...map]: an array of [key, value] pairs, each a tuple, an object whose fields
+ 	// are named "0" and "1".
+ 	MapEntries struct {
++		GraphTypes         []int
+ 		Map                Expression
+ 		KeyType, ValueType Type
+ 	}
+ 
+ 	// ArraySlice is array.slice(start, end), either argument perhaps left out.
+ 	ArraySlice struct {
+-		Array     Expression
+-		Arguments []Expression
++		GraphTypes []int
++		Array      Expression
++		Arguments  []Expression
+ 	}
+ 
+ 	// ArraySort is array.sort(comparator): one of the module's functions (Comparator), or a function
+@@ -645,6 +683,7 @@ type (
+ 
+ 	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.
+ 	MapNew struct {
++		GraphTypes []int
+ 		Key, Value Type
+ 		Entries    [][2]Expression
+ 
+@@ -655,12 +694,14 @@ type (
+ 
+ 	// MapKeys and MapValues are [...map.keys()] and [...map.values()]: new arrays, in insertion order.
+ 	MapKeys struct {
+-		Map Expression
+-		Key Type
++		GraphTypes []int
++		Map        Expression
++		Key        Type
+ 	}
+ 	MapValues struct {
+-		Map   Expression
+-		Value Type
++		GraphTypes []int
++		Map        Expression
++		Value      Type
+ 	}
+ 
+ 	// MapClear is map.clear() and set.clear(), which is void.
+@@ -705,8 +746,9 @@ type (
+ 
+ 	// SetNew is new Set(), or new Set(Values), an array of the elements, each added in order.
+ 	SetNew struct {
+-		Element Type
+-		Values  Expression
++		GraphTypes []int
++		Element    Type
++		Values     Expression
+ 	}
+ 
+ 	// SetAdd is set.add(Value), which is the set. An element it already has keeps its place. has,
+@@ -721,8 +763,9 @@ type (
+ 
+ 	// SetValues is [...set]: a new array of its elements, in order.
+ 	SetValues struct {
+-		Set     Expression
+-		Element Type
++		GraphTypes []int
++		Set        Expression
++		Element    Type
+ 	}
+ 
+ 	// MapSize is map.size.
+@@ -776,6 +819,8 @@ type (
+ 
+ // Field is one field of an object literal.
+ type Field struct {
++	// Certificate is compile-time declaration evidence, independent of layout.
++	Certificate *FieldTypeCertificate
+ 	// Uninitialized reserves storage without making its typed value readable.
+ 	Uninitialized bool
+ 	Name          string
+@@ -1010,8 +1055,12 @@ type (
+ 		Value  Expression
+ 	}
+ 
++	// AllocateEnvironment is one frame allocation site, visible to future placement analysis.
++	AllocateEnvironment struct{ Cells []int }
++
+ 	// Declare introduces a local with its first value.
+ 	Declare struct {
++		// Uninitialized allocates only a captured cell, with its ready bit clear.
+ 		Uninitialized bool
+ 		Local         int
+ 		Value         Expression
+@@ -1020,9 +1069,10 @@ type (
+ 	// Assign gives a local a new value, releasing the old one if it's a string. Checked is as for
+ 	// Read: a write to a global from inside a function.
+ 	Assign struct {
+-		Local   int
+-		Value   Expression
+-		Checked bool
++		Local         int
++		Value         Expression
++		Checked       bool
++		Uninitialized bool
+ 	}
+ 
+ 	// Evaluate evaluates an expression for its effects and discards the value: a call as a statement.
+@@ -1104,15 +1154,17 @@ type (
+ 	}
+ 
+ 	// Switch matches Value against each case's tests in order with ===, and runs the first match's
+-	// Body, or Default's when none matches. A break inside a case leaves the switch. (0.1 has no
+-	// fallthrough: the checker refuses it.)
++	// Body, or Default's when none matches. A break inside a case leaves the switch. Source
++	// fallthrough is expressed by lowering as entry dispatch followed by sequential guarded bodies.
+ 	Switch struct {
+ 		Value   Expression
+ 		Cases   []Case
+ 		Default []Statement
+ 	}
+ 
+-	Break    struct{}
++	// Depth counts the enclosing loops and switches skipped by a labeled break.
++	// Zero is the innermost breakable, as for an unlabeled break.
++	Break    struct{ Depth int }
+ 	Continue struct{}
+ 
+ 	// Throw throws Value, an Error: to the innermost Try around it, or out of the function, whose
+@@ -1141,23 +1193,24 @@ type Case struct {
+ 	Body  []Statement
+ }
+ 
+-func (WriteLine) statement()   {}
+-func (Declare) statement()     {}
+-func (Assign) statement()      {}
+-func (Evaluate) statement()    {}
+-func (Panic) statement()       {}
+-func (SetProperty) statement() {}
+-func (SetIndex) statement()    {}
+-func (Return) statement()      {}
+-func (If) statement()          {}
+-func (Loop) statement()        {}
+-func (Block) statement()       {}
+-func (ForOf) statement()       {}
+-func (Switch) statement()      {}
+-func (Break) statement()       {}
+-func (Continue) statement()    {}
+-func (Throw) statement()       {}
+-func (Try) statement()         {}
++func (WriteLine) statement()           {}
++func (AllocateEnvironment) statement() {}
++func (Declare) statement()             {}
++func (Assign) statement()              {}
++func (Evaluate) statement()            {}
++func (Panic) statement()               {}
++func (SetProperty) statement()         {}
++func (SetIndex) statement()            {}
++func (Return) statement()              {}
++func (If) statement()                  {}
++func (Loop) statement()                {}
++func (Block) statement()               {}
++func (ForOf) statement()               {}
++func (Switch) statement()              {}
++func (Break) statement()               {}
++func (Continue) statement()            {}
++func (Throw) statement()               {}
++func (Try) statement()                 {}
+ 
+ func (p *Program) HasInheritance() bool {
+ 	for _, class := range p.Classes {
+diff --git a/internal/ir/shape_conformance.go b/internal/ir/shape_conformance.go
+new file mode 100644
+index 00000000..f2855af4
+--- /dev/null
++++ b/internal/ir/shape_conformance.go
+@@ -0,0 +1,18 @@
++package ir
++
++// AllocationSet is a may-flow result. Unknown disqualifies erasure even when
++// Sites is nonempty; an empty set never establishes conformance.
++type AllocationSet struct {
++	Sites   []int
++	Unknown bool
++	Reasons []string
++}
++
++// FieldTypeCertificate preserves a declared semantic type independently of the
++// physical shape slot. CheckerType is scoped to this compiled program. It is
++// evidence about permitted values, never evidence that a slot is initialized.
++type FieldTypeCertificate struct {
++	CheckerType  int
++	DeclaredType string
++	Optional     bool
++}
+diff --git a/internal/lower/graph_flow.go b/internal/lower/graph_flow.go
+new file mode 100644
+index 00000000..4e3a228f
+--- /dev/null
++++ b/internal/lower/graph_flow.go
+@@ -0,0 +1,388 @@
++package lower
++
++import (
++	"fmt"
++	"reflect"
++
++	"github.com/microsoft/TypeScript/tsc/shim/checker"
++	"github.com/system-inc/adamic/internal/ir"
++)
++
++// graphAllocationSites copies the IR tree before assigning unique allocation
++// IDs. Pointer and map children must be copied too, so their sites do not depend
++// solely on a checker identity. Nil containers preserve their original shape.
++func graphAllocationSites(value reflect.Value, next *int) reflect.Value {
++	var sites func(reflect.Value) reflect.Value
++	sites = func(value reflect.Value) reflect.Value {
++		switch value.Kind() {
++		case reflect.Interface:
++			if value.IsNil() {
++				return value
++			}
++			mapped := sites(value.Elem())
++			result := reflect.New(value.Type()).Elem()
++			result.Set(mapped)
++			return result
++		case reflect.Ptr:
++			if value.IsNil() {
++				return value
++			}
++			result := reflect.New(value.Type().Elem())
++			result.Elem().Set(sites(value.Elem()))
++			return result
++		case reflect.Map:
++			if value.IsNil() {
++				return value
++			}
++			result := reflect.MakeMapWithSize(value.Type(), value.Len())
++			entries := value.MapRange()
++			for entries.Next() {
++				result.SetMapIndex(sites(entries.Key()), sites(entries.Value()))
++			}
++			return result
++		case reflect.Struct:
++			result := reflect.New(value.Type()).Elem()
++			for i := 0; i < value.NumField(); i++ {
++				result.Field(i).Set(sites(value.Field(i)))
++			}
++			if field := result.FieldByName("GraphTypes"); field.IsValid() && field.Type() == reflect.TypeOf([]int{}) {
++				*next--
++				field.Set(reflect.ValueOf(append(append([]int{}, field.Interface().([]int)...), *next)))
++			}
++			return result
++		case reflect.Slice:
++			if value.IsNil() {
++				return value
++			}
++			result := reflect.MakeSlice(value.Type(), value.Len(), value.Len())
++			for i := 0; i < value.Len(); i++ {
++				result.Index(i).Set(sites(value.Index(i)))
++			}
++			return result
++		default:
++			return value
++		}
++	}
++	return sites(value)
++}
++
++// graphFlows works backwards from graph views to the allocations that can supply
++// them. Local assignments and function results are joined across all paths; this
++// is a may-flow proof, not an execution or a choice of one conditional branch.
++// Negative IDs name allocation sites in this IR, independently of fresh checker
++// identities. They select the existing allocation emission without runtime work.
++func (f *cycleFinder) graphFlows() {
++	program := f.l.result
++	assignAllocationSites(program)
++
++	var graphType func(*checker.Type) bool
++	graphType = func(proven *checker.Type) bool {
++		if proven == nil || f.weak(proven) {
++			return false
++		}
++		if program.GraphTypes[int(proven.Id())] {
++			return true
++		}
++		if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
++			for _, member := range proven.Types() {
++				if graphType(member) {
++					return true
++				}
++			}
++		}
++		return false
++	}
++	// Positive nodes are locals followed by function results.
++	flow := newAllocationFlowGraph(program)
++	wanted := map[int]bool{}
++	queue := []int{}
++	demand := func(node int) {
++		if !wanted[node] {
++			wanted[node] = true
++			queue = append(queue, node)
++		}
++	}
++	for local, proven := range f.l.localTypes {
++		if graphType(proven) {
++			demand(local + 1)
++		}
++	}
++	for local, types := range f.l.localAlso {
++		for _, proven := range types {
++			if graphType(proven) {
++				demand(local + 1)
++			}
++		}
++	}
++	pending := []ir.Expression{}
++	// Site retains the checker view of the actual slot being written.
++	slot := func(site int, name string, argument int) bool {
++		if site <= 0 || site > len(f.l.writeSites) {
++			return false
++		}
++		holder := f.l.writeSites[site-1].holder
++		if holder == nil {
++			return false
++		}
++		if name != "" {
++			for _, field := range f.fields(holder) {
++				if f.l.cycleFieldMatches(holder, field.Name, name) {
++					return graphType(f.l.checker.GetTypeOfSymbol(field))
++				}
++			}
++			return false
++		}
++		args := f.l.checker.GetTypeArguments(holder)
++		return argument < len(args) && graphType(args[argument])
++	}
++	// A counted aggregate can have graph-typed fields/elements. Seed those
++	// initializer slots individually, rather than promoting its whole payload.
++	returns := map[int]*checker.Type{}
++	for symbol, index := range f.l.functions {
++		signatures := f.l.checker.GetSignaturesOfType(f.l.checker.GetTypeOfSymbol(symbol), checker.SignatureKindCall)
++		if len(signatures) > 0 {
++			returns[index] = f.l.checker.GetReturnTypeOfSignature(signatures[0])
++		}
++	}
++	for _, closure := range f.l.closureRecords {
++		signatures := f.l.checker.GetSignaturesOfType(closure.proven, checker.SignatureKindCall)
++		if len(signatures) > 0 {
++			returns[closure.function] = f.l.checker.GetReturnTypeOfSignature(signatures[0])
++		}
++	}
++	var members func(ir.Expression, *checker.Type)
++	members = func(expression ir.Expression, proven *checker.Type) {
++		if expression == nil || proven == nil || f.weak(proven) {
++			return
++		}
++		if graphType(proven) {
++			pending = append(pending, expression)
++		}
++		switch value := expression.(type) {
++		case ir.ObjectLiteral:
++			for _, field := range f.fields(proven) {
++				for _, initializer := range value.Fields {
++					if f.l.cycleFieldMatches(proven, field.Name, initializer.Name) {
++						members(initializer.Value, f.l.checker.GetTypeOfSymbol(field))
++					}
++				}
++			}
++		case ir.ArrayLiteral:
++			arguments := f.l.checker.GetTypeArguments(proven)
++			if len(arguments) > 0 {
++				for _, element := range value.Elements {
++					members(element, arguments[0])
++				}
++			}
++		case ir.Conditional:
++			members(value.WhenTrue, proven)
++			members(value.WhenNot, proven)
++		}
++	}
++	collect := func(body []ir.Statement, function int) {
++		walk(body, func(node any) bool {
++			switch value := node.(type) {
++			case ir.Declare:
++				members(value.Value, f.l.localTypes[value.Local])
++			case ir.Assign:
++				members(value.Value, f.l.localTypes[value.Local])
++			case ir.Return:
++				members(value.Value, returns[function])
++			case ir.SetProperty:
++				if slot(value.Site, value.Name, 0) {
++					pending = append(pending, value.Value)
++				}
++			case ir.SetIndex:
++				if slot(value.Site, "", 0) {
++					pending = append(pending, value.Value)
++				}
++			case ir.ArrayPush:
++				if slot(value.Site, "", 0) {
++					pending = append(pending, value.Value)
++				}
++			case ir.MapSet:
++				if slot(value.Site, "", 0) {
++					pending = append(pending, value.Key)
++				}
++				if slot(value.Site, "", 1) {
++					pending = append(pending, value.Value)
++				}
++			case ir.SetAdd:
++				if slot(value.Site, "", 0) {
++					pending = append(pending, value.Value)
++				}
++			}
++			return true
++		})
++	}
++	collect(program.Main, -1)
++	for i, function := range program.Functions {
++		collect(function.Body, i)
++	}
++	follow := func(expression ir.Expression) {
++		flow.follow(expression, func(site int) { program.GraphTypes[site] = true }, demand, func(string) {})
++	}
++	for _, expression := range pending {
++		follow(expression)
++	}
++	for len(queue) > 0 {
++		node := queue[len(queue)-1]
++		queue = queue[:len(queue)-1]
++		for _, expression := range flow.sources[node] {
++			follow(expression)
++		}
++	}
++}
++
++// allocationFlowGraph is the shared may-flow graph used by graph regions and
++// shape certification. It never changes ownership when queried.
++type allocationFlowGraph struct {
++	projection        *allocationProjection
++	projectionReads   map[int]ir.AllocationSet
++	projectionBusy    map[int]bool
++	program           *ir.Program
++	sources           map[int][]ir.Expression
++	unknownParameters map[int]bool
++}
++
++func (graph *allocationFlowGraph) resultNode(function int) int {
++	return len(graph.program.Locals) + function + 1
++}
++
++func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
++	graph := &allocationFlowGraph{program: program, sources: map[int][]ir.Expression{}, unknownParameters: map[int]bool{}}
++	collect := func(body []ir.Statement, function int) {
++		walk(body, func(node any) bool {
++			switch value := node.(type) {
++			case ir.MakeClosure:
++				// Callback invocations are outside the collected call edges.
++				for _, parameter := range program.Functions[value.Function].Parameters {
++					graph.unknownParameters[parameter+1] = true
++				}
++			case ir.Declare:
++				graph.sources[value.Local+1] = append(graph.sources[value.Local+1], value.Value)
++			case ir.Assign:
++				graph.sources[value.Local+1] = append(graph.sources[value.Local+1], value.Value)
++			case ir.Return:
++				if function >= 0 {
++					graph.sources[graph.resultNode(function)] = append(graph.sources[graph.resultNode(function)], value.Value)
++				}
++			case ir.Call:
++				for _, target := range program.CallTargets(value) {
++					if target < 0 || target >= len(program.Functions) {
++						continue
++					}
++					for i, param := range program.Functions[target].Parameters {
++						if i < len(value.Arguments) {
++							graph.sources[param+1] = append(graph.sources[param+1], value.Arguments[i])
++						} else {
++							graph.unknownParameters[param+1] = true
++						}
++					}
++				}
++			case ir.CallClosure:
++				targets := program.ClosureTargets(value)
++				if targets.Unknown {
++					// Opaque function values are a documented leak-only frontier.
++					break
++				}
++				for _, target := range targets.Functions {
++					for i, param := range program.Functions[target].Parameters {
++						if i < len(value.Arguments) {
++							graph.sources[param+1] = append(graph.sources[param+1], value.Arguments[i])
++						} else {
++							graph.unknownParameters[param+1] = true
++						}
++					}
++				}
++
++			}
++			return true
++		})
++	}
++	collect(program.Main, -1)
++	for i, function := range program.Functions {
++		collect(function.Body, i)
++	}
++	return graph
++}
++
++func (graph *allocationFlowGraph) follow(expression ir.Expression, allocation func(int), demand func(int), unknown func(string)) {
++	program := graph.program
++	follow := func(value ir.Expression) { graph.follow(value, allocation, demand, unknown) }
++	if expression == nil {
++		unknown("missing expression")
++		return
++	}
++	value := reflect.ValueOf(expression)
++	if field := value.FieldByName("GraphTypes"); field.IsValid() {
++		ids := field.Interface().([]int)
++		if len(ids) == 0 || ids[len(ids)-1] >= 0 {
++			unknown("allocation has no site identity")
++		} else {
++			allocation(ids[len(ids)-1])
++		}
++		return
++	}
++	switch value := expression.(type) {
++	case ir.Read:
++		demand(value.Local + 1)
++	case ir.Call:
++		if len(program.CallTargets(value)) == 0 {
++			unknown("call has no tracked target")
++		}
++		for _, target := range program.CallTargets(value) {
++			demand(graph.resultNode(target))
++		}
++	case ir.CallClosure:
++		targets := program.ClosureTargets(value)
++		if targets.Unknown {
++			unknown("opaque closure")
++			return
++		}
++		for _, target := range targets.Functions {
++			demand(graph.resultNode(target))
++		}
++	case ir.Conditional:
++		follow(value.WhenTrue)
++		follow(value.WhenNot)
++	case ir.Box:
++		follow(value.Value)
++	case ir.Narrow:
++		follow(value.Value)
++	case ir.Unwrap:
++		follow(value.Value)
++	case ir.CheckedCast:
++		follow(value.Value)
++	default:
++		unknown(fmt.Sprintf("untracked source %T", expression))
++	}
++}
++
++// assignAllocationSites uses graph regions' numbering for programs without cycle
++// seeds too. Existing numbered programs are left unchanged.
++func assignAllocationSites(program *ir.Program) {
++	numbered := false
++	inspect := func(node any) bool {
++		value := reflect.ValueOf(node)
++		if value.IsValid() && value.Kind() == reflect.Struct {
++			if field := value.FieldByName("GraphTypes"); field.IsValid() {
++				ids := field.Interface().([]int)
++				numbered = numbered || len(ids) > 0 && ids[len(ids)-1] < 0
++			}
++		}
++		return true
++	}
++	walk(program.Main, inspect)
++	for _, function := range program.Functions {
++		walk(function.Body, inspect)
++	}
++	if numbered {
++		return
++	}
++	next := 0
++	program.Main = graphAllocationSites(reflect.ValueOf(program.Main), &next).Interface().([]ir.Statement)
++	for i := range program.Functions {
++		program.Functions[i].Body = graphAllocationSites(reflect.ValueOf(program.Functions[i].Body), &next).Interface().([]ir.Statement)
++	}
++}
+diff --git a/internal/lower/graph_types.go b/internal/lower/graph_types.go
+new file mode 100644
+index 00000000..4a0fdec1
+--- /dev/null
++++ b/internal/lower/graph_types.go
+@@ -0,0 +1,369 @@
++package lower
++
++import (
++	"github.com/microsoft/TypeScript/tsc/shim/ast"
++	"github.com/microsoft/TypeScript/tsc/shim/checker"
++	"github.com/system-inc/adamic/internal/ir"
++)
++
++// graphAllocation preserves both the allocation's concrete type and its contextual
++// view. Ownership is selected only after the whole program's cycle proof runs.
++func (l *lowering) graphAllocation(value ir.Expression, node *ast.Node) ir.Expression {
++	ids := []int{int(l.concrete(l.checker.GetTypeAtLocation(node)).Id())}
++	// Fresh literal identities may change across checker queries. The variable's
++	// widened allocation view is stable and is the type the cycle finder visits.
++	if node.Parent != nil && node.Parent.Kind == ast.KindVariableDeclaration && node.Parent.Name() != nil {
++		ids = append(ids, int(l.concrete(l.checker.GetTypeAtLocation(node.Parent.Name())).Id()))
++	}
++	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
++		ids = append(ids, int(l.concrete(contextual).Id()))
++	}
++	switch value := value.(type) {
++	case ir.ObjectLiteral:
++		value = l.certifyAllocationFields(node, value)
++		value.GraphTypes = ids
++		return value
++	case ir.ArrayLiteral:
++		value.GraphTypes = ids
++		return value
++	case ir.MapNew:
++		value.GraphTypes = ids
++		return value
++	case ir.SetNew:
++		value.GraphTypes = ids
++		return value
++	case ir.ArrayMap:
++		value.GraphTypes = ids
++		return value
++	case ir.ArrayFrom:
++		value.GraphTypes = ids
++		return value
++	case ir.ArrayFill:
++		value.GraphTypes = ids
++		return value
++	case ir.ArraySplice:
++		value.GraphTypes = ids
++		return value
++	case ir.ArrayConcat:
++		value.GraphTypes = ids
++		return value
++	case ir.MapEntries:
++		value.GraphTypes = ids
++		return value
++	case ir.ArraySlice:
++		value.GraphTypes = ids
++		return value
++	case ir.MapKeys:
++		value.GraphTypes = ids
++		return value
++	case ir.MapValues:
++		value.GraphTypes = ids
++		return value
++	case ir.SetValues:
++		value.GraphTypes = ids
++		return value
++	case ir.ArrayVisit:
++		value.GraphTypes = ids
++		return value
++	}
++	return value
++}
++
++// The old refusal sites still determine the seeds. The ownership SCC includes
++// all strong connecting paths, including readonly and proven-fresh slots.
++func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
++	seeds := map[cycleNode]bool{}
++	for _, proven := range f.seen {
++		if err := f.slotsOf(proven); err != nil {
++			seeds[cycleNode{proven: proven}] = true
++		}
++	}
++	for local, declared := range f.l.result.Locals {
++		proven := f.l.localTypes[local]
++		if declared.Captured && !declared.Global && proven != nil && !f.weak(proven) && f.reaches(proven, cycleNode{cell: local + 1}) {
++			seeds[cycleNode{cell: local + 1}] = true
++		}
++	}
++	if len(seeds) == 0 {
++		return nil
++	}
++	// Literals may have narrower types than the mutable view through which they
++	// are later written. Include those allocation identities without creating seeds.
++	for _, module := range modules {
++		var visit ast.Visitor
++		visit = func(node *ast.Node) bool {
++			if ast.IsPartOfTypeNode(node) {
++				return false
++			}
++			if ast.IsExpressionNode(node) {
++				f.use(f.l.checker.GetTypeAtLocation(node), node)
++				if contextual := f.l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
++					f.use(contextual, node)
++				}
++			}
++			return node.ForEachChild(visit)
++		}
++		module.AsNode().ForEachChild(visit)
++	}
++	for _, closure := range f.l.closureRecords {
++		f.use(closure.proven, closure.node)
++	}
++	candidates := []cycleNode{}
++	for proven := range f.where {
++		candidates = append(candidates, cycleNode{proven: proven})
++	}
++	for _, shape := range f.shapes {
++		candidates = append(candidates, cycleNode{proven: shape})
++	}
++	for local, declared := range f.l.result.Locals {
++		if declared.Captured && !declared.Global {
++			candidates = append(candidates, cycleNode{cell: local + 1})
++		}
++	}
++	edges := map[cycleNode][]cycleNode{}
++	queue := append([]cycleNode{}, candidates...)
++	for len(queue) != 0 {
++		node := queue[len(queue)-1]
++		queue = queue[:len(queue)-1]
++		if _, seen := edges[node]; seen {
++			continue
++		}
++		links := f.graphLinks(node)
++		// The finder's related relation treats compatible structural views as the
++		// same possible allocation. Weak views never become strong edges.
++		if node.proven != nil && node.proven.Flags()&checker.TypeFlagsObject != 0 && !f.weak(node.proven) && !f.template(node.proven) && !f.isFunction(node.proven) {
++			for _, view := range candidates {
++				if view.proven != nil && view.proven.Flags()&checker.TypeFlagsObject != 0 && !f.weak(view.proven) && !f.template(view.proven) && f.related(node.proven, view.proven) {
++					links = append(links, view)
++				}
++			}
++		}
++		edges[node] = links
++		queue = append(queue, links...)
++	}
++	// Tarjan's components, with a component selected iff it contains a seed.
++	next := 0
++	index, low := map[cycleNode]int{}, map[cycleNode]int{}
++	active := map[cycleNode]bool{}
++	stack := []cycleNode{}
++	graph := map[cycleNode]bool{}
++	var visit func(cycleNode)
++	visit = func(node cycleNode) {
++		next++
++		index[node], low[node] = next, next
++		stack = append(stack, node)
++		active[node] = true
++		for _, link := range edges[node] {
++			if index[link] == 0 {
++				visit(link)
++				if low[link] < low[node] {
++					low[node] = low[link]
++				}
++			} else if active[link] && index[link] < low[node] {
++				low[node] = index[link]
++			}
++		}
++		if low[node] != index[node] {
++			return
++		}
++		component := []cycleNode{}
++		selected := false
++		for {
++			last := stack[len(stack)-1]
++			stack = stack[:len(stack)-1]
++			active[last] = false
++			component = append(component, last)
++			selected = selected || seeds[last]
++			if last == node {
++				break
++			}
++		}
++		if selected {
++			for _, each := range component {
++				graph[each] = true
++			}
++		}
++	}
++	for node := range edges {
++		if index[node] == 0 {
++			visit(node)
++		}
++	}
++	// An otherwise acyclic cache of graph elements belongs inside their graph too.
++	for changed := true; changed; {
++		changed = false
++		for node := range edges {
++			if graph[node] || node.proven == nil || f.weak(node.proven) {
++				continue
++			}
++			proven := node.proven
++			if f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
++				for _, argument := range f.l.checker.GetTypeArguments(proven) {
++					if graph[cycleNode{proven: argument}] {
++						graph[node] = true
++						changed = true
++					}
++					if argument.Flags()&checker.TypeFlagsUnion != 0 {
++						for _, member := range argument.Types() {
++							if graph[cycleNode{proven: member}] {
++								graph[node] = true
++								changed = true
++							}
++						}
++					}
++				}
++			}
++		}
++	}
++	f.l.result.GraphTypes = map[int]bool{}
++	for node := range graph {
++		if node.proven != nil && !f.weak(node.proven) {
++			f.l.result.GraphTypes[int(node.proven.Id())] = true
++		}
++		if node.cell != 0 {
++			f.l.result.Locals[node.cell-1].GraphCell = true
++		}
++	}
++	for _, closure := range f.l.closureRecords {
++		if f.l.result.GraphTypes[int(closure.proven.Id())] {
++			f.l.result.Functions[closure.function].GraphClosure = true
++		}
++	}
++	// One frame allocation is indivisible, even if siblings capture disjoint slots.
++	for changed := true; changed; {
++		changed = false
++		for index := range f.l.result.Functions {
++			function := &f.l.result.Functions[index]
++			for _, local := range function.Environment {
++				if f.l.result.Locals[local].GraphCell && !function.GraphClosure {
++					function.GraphClosure = true
++					changed = true
++				}
++			}
++			if function.GraphClosure {
++				for _, local := range function.Environment {
++					if !f.l.result.Locals[local].GraphCell {
++						f.l.result.Locals[local].GraphCell = true
++						changed = true
++					}
++				}
++			}
++			frame := false
++			for _, local := range function.FrameEnvironment {
++				frame = frame || f.l.result.Locals[local].GraphCell
++			}
++			if frame {
++				for _, local := range function.FrameEnvironment {
++					if !f.l.result.Locals[local].GraphCell {
++						f.l.result.Locals[local].GraphCell = true
++						changed = true
++					}
++				}
++			}
++		}
++	}
++	for _, instance := range f.l.instances {
++		for _, local := range instance.thisLocals {
++			types := append([]*checker.Type{f.l.localTypes[local]}, f.l.localAlso[local]...)
++			for _, proven := range types {
++				if proven != nil && f.l.result.GraphTypes[int(proven.Id())] {
++					f.l.result.Classes[instance.class-1].Graph = true
++				}
++			}
++		}
++	}
++	for symbol, instance := range f.l.statics {
++		if f.l.result.GraphTypes[int(f.l.checker.GetTypeOfSymbol(symbol).Id())] {
++			f.l.result.Classes[instance.class-1].Graph = true
++		}
++	}
++	f.graphFlows()
++	return nil
++}
++
++func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
++	if node.cell != 0 {
++		links := []cycleNode{}
++		if proven := f.l.localTypes[node.cell-1]; proven != nil {
++			links = append(links, cycleNode{proven: proven})
++		}
++		for _, proven := range f.l.localAlso[node.cell-1] {
++			links = append(links, cycleNode{proven: proven})
++		}
++		// A capture into one interior slot owns the entire environment allocation.
++		for _, function := range f.l.result.Functions {
++			found := false
++			for _, local := range function.FrameEnvironment {
++				found = found || local == node.cell-1
++			}
++			if found {
++				for _, local := range function.FrameEnvironment {
++					if local != node.cell-1 {
++						links = append(links, cycleNode{cell: local + 1})
++					}
++				}
++			}
++		}
++		return links
++	}
++	proven := node.proven
++	if proven == nil || f.weak(proven) || f.template(proven) {
++		return nil
++	}
++	links := []cycleNode{}
++	if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
++		for _, member := range proven.Types() {
++			links = append(links, cycleNode{proven: member})
++		}
++		return links
++	}
++	if proven.Flags()&checker.TypeFlagsObject == 0 {
++		return nil
++	}
++	switch {
++	case f.l.isLibraryType(proven, "MapIterator", "SetIterator"):
++		links = append(links, f.libraryIteratorCaptures(proven)...)
++	case f.isFunction(proven):
++		if len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
++			for symbol := range f.l.statics {
++				actual := f.l.checker.GetTypeOfSymbol(symbol)
++				if f.l.checker.IsTypeAssignableTo(actual, proven) {
++					links = append(links, cycleNode{proven: actual})
++				}
++			}
++		}
++		for _, closure := range f.l.closureRecords {
++			if f.l.checker.IsTypeAssignableTo(closure.proven, proven) {
++				for _, local := range f.l.result.Functions[closure.function].Environment {
++					links = append(links, cycleNode{cell: local + 1})
++				}
++			}
++		}
++	case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
++		for _, argument := range f.l.checker.GetTypeArguments(proven) {
++			links = append(links, cycleNode{proven: argument})
++		}
++	default:
++		if f.l.isStaticType(proven) {
++			if parent := f.l.staticBase(f.l.staticClass(proven, nil)); parent != nil {
++				links = append(links, cycleNode{proven: f.l.checker.GetTypeOfSymbol(f.l.symbol(parent.Name()))})
++			}
++		}
++		for _, field := range f.fields(proven) {
++			links = append(links, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
++		}
++		for _, shape := range f.shapes {
++			if shape != proven && f.l.checker.IsTypeAssignableTo(shape, proven) {
++				links = append(links, cycleNode{proven: shape})
++			}
++		}
++		for _, accessor := range f.l.accessorCaptures {
++			if f.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
++				for _, local := range f.l.result.Functions[accessor.function].Environment {
++					links = append(links, cycleNode{cell: local + 1})
++				}
++			}
++		}
++	}
++	return links
++}
+diff --git a/internal/lower/interface_cast.go b/internal/lower/interface_cast.go
+index 2f974e36..5f6e5996 100644
+--- a/internal/lower/interface_cast.go
++++ b/internal/lower/interface_cast.go
+@@ -27,7 +27,7 @@ func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, ta
+ 		if _, err := l.view(node, value, target); err != nil {
+ 			return nil, err
+ 		}
+-		return ir.CheckedCast{Value: value, Field: field, FieldType: fieldType, Allowed: []ir.Expression{allowed}, CheckedFields: true, Message: "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)}, nil
++		return l.certifiedCheckedCast(node, ir.CheckedCast{Value: value, Field: field, FieldType: fieldType, Allowed: []ir.Expression{allowed}, CheckedFields: true, Message: "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)}, target)
+ 	}
+ 	return nil, nil
+ }
+@@ -47,16 +47,11 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
+ 		}
+ 	}
+ 	fields := map[string]bool{}
+-	for _, property := range l.checker.GetPropertiesOfType(target) {
+-		declared := l.checker.GetTypeOfSymbol(property)
+-		if l.callableViewContract(declared) {
+-			return nil, &Refused{Where: l.program.Where(node), What: "a checked view with callable field " + property.Name, Fix: "prove the callable body rather than asserting its signature"}
+-		}
+-		of, known := l.representation(declared)
+-		if property.Flags&ast.SymbolFlagsOptional != 0 || !interfaceScalar(declared) || !known || of < ir.Number || of > ir.String {
+-			return nil, l.notYet(node, "checked view field "+property.Name+" of type "+l.checker.TypeToString(declared))
+-		}
+-		fields[property.Name] = true
++	if err := l.viewObjectFields(node, target, fields, map[*checker.Type]bool{}, false); err != nil {
++		return nil, err
++	}
++	if _, err := l.viewContract(node, target); err != nil {
++		return nil, err
+ 	}
+ 	modules, err := l.moduleOrder(l.program.Files()[0])
+ 	if err != nil {
+@@ -80,7 +75,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
+ 				if name != nil && fields[name.Text()] {
+ 					declared := l.checker.GetTypeAtLocation(binding.Name())
+ 					of, known := l.representation(declared)
+-					if !known || of < ir.Number || of > ir.String || !interfaceScalar(declared) {
++					if !known || of < ir.Number || of > ir.Object || !viewDataType(declared) {
+ 						found = l.notYet(binding, "a checked destructured alias requiring a representation conversion")
+ 					}
+ 				}
+@@ -92,7 +87,10 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
+ 				field := l.checker.GetSymbolAtLocation(part.Name())
+ 				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 {
+ 					of, known := l.representation(l.checker.GetTypeOfSymbol(field))
+-					if !interfaceScalar(l.checker.GetTypeOfSymbol(field)) || !known || of < ir.Number || of > ir.String || field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil || accessorSymbol(field) {
++					if of == ir.Object && ast.IsAssignmentTarget(part) {
++						found = l.notYet(part, "writing a checked object field without its source-slot type certificate")
++					}
++					if !viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || of < ir.Number || of > ir.Object || field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil || accessorSymbol(field) {
+ 						found = l.notYet(part, "a checked field alias requiring an optional, accessor, or representation conversion")
+ 					}
+ 				}
+diff --git a/internal/lower/readiness.go b/internal/lower/readiness.go
+index fefac1d7..bc9af94c 100644
+--- a/internal/lower/readiness.go
++++ b/internal/lower/readiness.go
+@@ -15,8 +15,8 @@ func sourceExpression(node *ast.Node) string {
+ 	return file.Text()[scanner.GetTokenPosOfNode(node, file, false):node.End()]
+ }
+ 
+-// Only direct initializer syntax reserves an uninitialized slot. Assignments, returns,
+-// and assertions outside initializer positions continue to use the nullish check.
++// The two builtin literal assertions reserve or deinitialize a slot.
++// A shadowed identifier named undefined remains an ordinary assertion.
+ func (l *lowering) uninitializedInitializer(node *ast.Node) bool {
+ 	if node == nil {
+ 		return false
+@@ -49,10 +49,29 @@ func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
+ 	return false
+ }
+ 
+-// readiness uses the existing CFG, including its exceptional edges. Readiness is monotone
+-// between declarations: an assignment makes the slot ready, and calls cannot unset it.
++// readiness uses the existing CFG, including its exceptional edges. Literal assertion
++// assignments clear readiness; calls invalidate slots that a captured writer can clear.
+ // Captures and globals participate in this bit analysis even though value SSA excludes them.
+ func readiness(program *ir.Program) {
++	defer eraseProvenViewChecks(program)
++	deinitialized := map[int]bool{}
++	collect := func(node any) bool {
++		if assign, ok := node.(ir.Assign); ok && assign.Uninitialized {
++			deinitialized[assign.Local] = true
++		}
++		return true
++	}
++	walk(program.Main, collect)
++	for _, function := range program.Functions {
++		walk(function.Body, collect)
++	}
++	invalidate := func(state []bool) {
++		for local := range deinitialized {
++			if program.Locals[local].Captured || program.Locals[local].Global {
++				state[local] = false
++			}
++		}
++	}
+ 	names := map[string]bool{}
+ 	walk(program.Main, func(node any) bool {
+ 		if value, ok := node.(ir.ObjectLiteral); ok {
+@@ -139,6 +158,11 @@ func readiness(program *ir.Program) {
+ 		for i, local := range program.Locals {
+ 			entry[i] = !local.Uninitialized
+ 		}
++		if function >= 0 {
++			for _, parameter := range program.Functions[function].Parameters {
++				entry[parameter] = true
++			}
++		}
+ 		changed := true
+ 		for changed {
+ 			changed = false
+@@ -167,6 +191,7 @@ func readiness(program *ir.Program) {
+ 				for _, id := range block.Instructions {
+ 					instruction := graph.Instructions[id]
+ 					if readinessCalls(instruction) {
++						invalidate(state)
+ 						for _, slot := range fieldSlots {
+ 							state[slot] = false
+ 						}
+@@ -189,6 +214,7 @@ func readiness(program *ir.Program) {
+ 			for _, id := range block.Instructions {
+ 				instruction := graph.Instructions[id]
+ 				if readinessCalls(instruction) {
++					invalidate(state)
+ 					for _, slot := range fieldSlots {
+ 						state[slot] = false
+ 					}
+@@ -209,6 +235,9 @@ func readinessWrite(program *ir.Program, graph *flow.Function, instruction *flow
+ 		if declare, ok := (*instruction.At).(ir.Declare); ok {
+ 			ready = !declare.Uninitialized
+ 		}
++		if assign, ok := (*instruction.At).(ir.Assign); ok {
++			ready = !assign.Uninitialized
++		}
+ 		state[local] = ready
+ 		for field, slot := range fields {
+ 			if field.local == local {
+@@ -217,6 +246,13 @@ func readinessWrite(program *ir.Program, graph *flow.Function, instruction *flow
+ 		}
+ 	}
+ 	if set, ok := (*instruction.At).(ir.SetProperty); ok {
++		if set.Uninitialized {
++			for field, slot := range fields {
++				if field.name == set.Name {
++					state[slot] = false
++				}
++			}
++		}
+ 		if local, ok := readinessObject(set.Object); ok {
+ 			if slot, found := fields[fieldReadiness{local, set.Name}]; found {
+ 				state[slot] = !set.Uninitialized
+@@ -262,11 +298,21 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
+ 					expression.SpreadReadiness = ""
+ 				}
+ 				node = expression
++			case ir.ObjectCall:
++				if len(fields) == 0 || (expression.Method != "values" && expression.Method != "entries" && expression.Method != "assign") {
++					expression.Readiness = ""
++				}
++				node = expression
+ 			case ir.Property:
+ 				if !program.CheckedFields[expression.Name] || expression.Method {
+ 					expression.View = ""
+ 					expression.ViewType = ""
+ 					expression.ViewAllowed = nil
++					expression.ViewContract = 0
++					expression.ViewTypeID = 0
++				} else if expression.ViewTypeID != 0 {
++					// A function read can precede the cast that interns its contract.
++					expression.ViewContract = program.ViewContractTypes[expression.ViewTypeID]
+ 				}
+ 				proven := false
+ 				if local, ok := readinessObject(expression.Object); ok {
+@@ -348,7 +394,7 @@ func readinessCalls(instruction *flow.Instruction) bool {
+ 	calls := false
+ 	walk(node, func(node any) bool {
+ 		switch node.(type) {
+-		case ir.Call, ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArraySort, ir.ArrayFrom, ir.MapForEach:
++		case ir.ObjectCall, ir.Call, ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArraySort, ir.ArrayFrom, ir.MapForEach:
+ 			calls = true
+ 		}
+ 		return true
+@@ -363,7 +409,7 @@ func assertionInitializer(node *ast.Node) bool {
+ 
+ func assertionVarList(list *ast.Node) bool {
+ 	for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
+-		if !ast.IsIdentifier(declaration.Name()) || !assertionInitializer(declaration.AsVariableDeclaration().Initializer) {
++		if !ast.IsIdentifier(declaration.Name()) || !assertionInitializer(declaration.AsVariableDeclaration().Initializer) && declaration.AsVariableDeclaration().ExclamationToken == nil {
+ 			return false
+ 		}
+ 	}
+@@ -412,3 +458,17 @@ stored:
+ 	}
+ 	return []ir.Statement{ir.Declare{Local: local, Value: value}}, present, assigned, nil
+ }
++
++// The stored value is inaccessible until a subsequent write sets readiness.
++func uninitializedValue(of ir.Type) ir.Expression {
++	if of.IsMaybe() {
++		return ir.MaybeOf{Of: of}
++	}
++	switch of {
++	case ir.Number:
++		return ir.NumberConstant{}
++	case ir.Boolean:
++		return ir.BooleanConstant{}
++	}
++	return ir.Undefined{Of: of}
++}
+diff --git a/internal/lower/shape_conformance.go b/internal/lower/shape_conformance.go
+new file mode 100644
+index 00000000..352fde33
+--- /dev/null
++++ b/internal/lower/shape_conformance.go
+@@ -0,0 +1,170 @@
++package lower
++
++import (
++	"github.com/microsoft/TypeScript/tsc/shim/ast"
++	"github.com/microsoft/TypeScript/tsc/shim/checker"
++	"github.com/system-inc/adamic/internal/ir"
++)
++
++// certifyAllocationFields records semantic declarations before physical shape
++// layout loses distinctions such as number versus boolean. Missing declarations
++// stay uncertified. Readiness and mutation effects require separate proofs.
++func (l *lowering) certifyAllocationFields(node *ast.Node, literal ir.ObjectLiteral) ir.ObjectLiteral {
++	declared := l.checker.GetTypeAtLocation(node)
++	if declared == nil {
++		return literal
++	}
++	contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
++	for i := range literal.Fields {
++		field := &literal.Fields[i]
++		if field.Private {
++			continue
++		}
++		properties := l.checker.GetPropertiesOfType(declared)
++		// A staged initializer has type never, while its allocated slot retains
++		// the contextual declaration (for example ready: boolean). Prefer that
++		// declaration where present; extra literal fields keep their own type.
++		if ast.IsObjectLiteralExpression(node) && contextual != nil {
++			for _, property := range l.checker.GetPropertiesOfType(contextual) {
++				if property.Name == field.Name {
++					properties = []*ast.Symbol{property}
++					break
++				}
++			}
++		}
++		for _, property := range properties {
++			if property.Name != field.Name {
++				continue
++			}
++			proven := l.checker.GetTypeOfSymbol(property)
++			if proven == nil || proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 {
++				break
++			}
++			field.Certificate = &ir.FieldTypeCertificate{
++				CheckerType: int(proven.Id()), DeclaredType: l.checker.TypeToString(proven),
++				Optional: property.Flags&ast.SymbolFlagsOptional != 0,
++			}
++			break
++		}
++	}
++	return literal
++}
++
++// eraseProvenViewChecks handles closed, immutable scalar records. Broader shape,
++// effect and readiness facts remain checked until their proofs are implemented.
++func eraseProvenViewChecks(program *ir.Program) {
++	if len(program.CheckedFields) == 0 {
++		return
++	}
++	assignAllocationSites(program)
++	flow := newAllocationFlowGraph(program)
++	allocations := map[int]ir.ObjectLiteral{}
++	mutable := false
++	collect := func(node any) bool {
++		switch value := node.(type) {
++		case ir.ObjectLiteral:
++			if len(value.GraphTypes) > 0 {
++				allocations[value.GraphTypes[len(value.GraphTypes)-1]] = value
++			}
++		case ir.SetProperty, ir.SetIndex, ir.ObjectCall, ir.CallClosure:
++			// Until effects through aliases and opaque callbacks are certified, any
++			// such operation blocks this deliberately narrow eraser for the program.
++			mutable = true
++		}
++		return true
++	}
++	walk(program.Main, collect)
++	for _, function := range program.Functions {
++		walk(function.Body, collect)
++	}
++	if mutable {
++		return
++	}
++	fieldProof := func(set ir.AllocationSet, name string, contract ir.ViewContractID) bool {
++		if set.Unknown || len(set.Sites) == 0 || contract <= 0 || int(contract) > len(program.ViewContracts) {
++			return false
++		}
++		if program.ViewContracts[contract-1].Kind != ir.ViewScalar {
++			return false
++		}
++		for _, site := range set.Sites {
++			literal, exists := allocations[site]
++			if !exists || literal.Spread != nil || literal.Class != 0 {
++				return false
++			}
++			found := false
++			for _, field := range literal.Fields {
++				if field.Name != name {
++					continue
++				}
++				certificate := field.Certificate
++				if field.Uninitialized || certificate == nil || certificate.Optional || program.ViewContractTypes[certificate.CheckerType] != contract {
++					return false
++				}
++				found = true
++			}
++			if !found {
++				return false
++			}
++		}
++		return true
++	}
++	rewrite := func(node any) any {
++		switch value := node.(type) {
++		case ir.Property:
++			if value.View != "" && value.Readiness == "" && !value.Optional && !value.Absent && !value.Method && fieldProof(flow.ReachingAllocations(value.Object), value.Name, value.ViewContract) {
++				value.View = ""
++				value.ViewType = ""
++				value.ViewAllowed = nil
++				value.ViewContract = 0
++				value.ViewTypeID = 0
++			}
++			return value
++		case ir.CheckedCast:
++			contract := value.ViewContract
++			if contract <= 0 || int(contract) > len(program.ViewContracts) {
++				return value
++			}
++			target := program.ViewContracts[contract-1]
++			if target.Kind != ir.ViewObject || len(target.Fields) == 0 {
++				return value
++			}
++			set := flow.ReachingAllocations(value.Value)
++			for _, field := range target.Fields {
++				if !fieldProof(set, field.Name, field.Contract) {
++					return value
++				}
++			}
++			return value.Value
++		}
++		return node
++	}
++	program.Main = rewriteShapeStatements(program.Main, rewrite)
++	for i := range program.Functions {
++		program.Functions[i].Body = rewriteShapeStatements(program.Functions[i].Body, rewrite)
++	}
++}
++
++// certifiedCheckedCast retains the complete target contract on the admission
++// node, so the eraser cannot mistake a tag proof for a whole-object proof.
++func (l *lowering) certifiedCheckedCast(node *ast.Node, value ir.CheckedCast, target *checker.Type) (ir.Expression, error) {
++	contract, err := l.viewContract(node, target)
++	if err != nil {
++		return nil, err
++	}
++	value.ViewContract = contract
++	return value, nil
++}
++
++// checkedViewTarget preserves checked structural admission alongside main's tag proof.
++func (l *lowering) checkedViewTarget(node *ast.Node) bool {
++	if node.Kind != ast.KindAsExpression {
++		return false
++	}
++	source := l.checker.GetTypeAtLocation(node.AsAsExpression().Expression)
++	target := l.checker.GetTypeAtLocation(node)
++	if source.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 || isClassInstance(target) {
++		return false
++	}
++	return target.Flags()&checker.TypeFlagsObject != 0 && !l.checker.IsTypeAssignableTo(source, target) && !l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target)
++}
+diff --git a/internal/lower/shape_conformance_test.go b/internal/lower/shape_conformance_test.go
+new file mode 100644
+index 00000000..2536dd5c
+--- /dev/null
++++ b/internal/lower/shape_conformance_test.go
+@@ -0,0 +1,73 @@
++package lower
++
++import (
++	"context"
++	"testing"
++
++	"github.com/system-inc/adamic/internal/ir"
++	"github.com/system-inc/adamic/internal/load"
++)
++
++func TestShapeErasureFixtures(t *testing.T) {
++	for _, name := range []string{"proven", "proven-property", "nonconforming", "nonconforming-property", "uninitialized", "host"} {
++		t.Run(name, func(t *testing.T) {
++			checked, err := load.Load([]string{"../../stage3/interface-downcasts/lane3/" + name + ".a"})
++			if err != nil {
++				t.Fatal(err)
++			}
++			program, err := Lower(context.Background(), checked)
++			if err != nil {
++				t.Fatal(err)
++			}
++			casts, reads := 0, 0
++			inspect := func(node any) bool {
++				if literal, ok := node.(ir.ObjectLiteral); ok && name == "uninitialized" {
++					for _, field := range literal.Fields {
++						if field.Name == "ready" && (field.Certificate == nil || field.Certificate.DeclaredType != "boolean") {
++							t.Fatal("staged slot lost its declared boolean type")
++						}
++					}
++				}
++				if _, ok := node.(ir.CheckedCast); ok {
++					casts++
++				}
++				if property, ok := node.(ir.Property); ok && property.View != "" {
++					reads++
++				}
++				return true
++			}
++			walk(program.Main, inspect)
++			for _, function := range program.Functions {
++				walk(function.Body, inspect)
++			}
++			t.Logf("remaining casts=%d checked reads=%d", casts, reads)
++			if (name == "proven" || name == "proven-property") && (casts != 0 || reads != 0) {
++				t.Fatal("proven factory retained runtime checks")
++			}
++			if name != "proven" && name != "proven-property" && reads == 0 {
++				t.Fatal("unsafe erasure removed field checks")
++			}
++		})
++	}
++}
++
++func TestShapeCertificatesSeparateNumberAndBoolean(t *testing.T) {
++	program, err := lowerSource(t, `const number={value:0};const boolean={value:false};console.log(String(number.value));console.log(String(boolean.value));`)
++	if err != nil {
++		t.Fatal(err)
++	}
++	declared := map[string]bool{}
++	walk(program.Main, func(node any) bool {
++		if literal, ok := node.(ir.ObjectLiteral); ok {
++			for _, field := range literal.Fields {
++				if field.Name == "value" && field.Certificate != nil {
++					declared[field.Certificate.DeclaredType] = true
++				}
++			}
++		}
++		return true
++	})
++	if !declared["number"] || !declared["boolean"] {
++		t.Fatalf("semantic certificates conflated physical scalar slots: %v", declared)
++	}
++}
+diff --git a/internal/lower/shape_flow.go b/internal/lower/shape_flow.go
+new file mode 100644
+index 00000000..42ea57ed
+--- /dev/null
++++ b/internal/lower/shape_flow.go
+@@ -0,0 +1,265 @@
++package lower
++
++import (
++	"reflect"
++	"sort"
++	"strconv"
++
++	"github.com/system-inc/adamic/internal/ir"
++)
++
++// ReachingAllocations queries the shared graph without selecting graph ownership.
++// Unknown frontiers retain checks. Joined assignments, returns and arguments use
++// the same edges as the graph-regions analysis.
++func (graph *allocationFlowGraph) ReachingAllocations(expression ir.Expression) ir.AllocationSet {
++	return graph.reachingAllocations(expression, true, 0)
++}
++
++func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, project bool, depth int) (result ir.AllocationSet) {
++	if read, ok := expression.(ir.Read); ok && project {
++		if graph.projectionReads == nil {
++			graph.projectionReads = map[int]ir.AllocationSet{}
++			graph.projectionBusy = map[int]bool{}
++		}
++		if cached, ok := graph.projectionReads[read.Local]; ok {
++			return cached
++		}
++		if graph.projectionBusy[read.Local] {
++			return ir.AllocationSet{Unknown: true, Reasons: []string{"recursive projection receiver not certified"}}
++		}
++		graph.projectionBusy[read.Local] = true
++		defer func() { delete(graph.projectionBusy, read.Local); graph.projectionReads[read.Local] = result }()
++	}
++	result = ir.AllocationSet{}
++	sites, visited, reasons := map[int]bool{}, map[int]bool{}, map[string]bool{}
++	queue := []int{}
++	demand := func(node int) {
++		if !visited[node] {
++			visited[node] = true
++			queue = append(queue, node)
++		}
++	}
++	unknown := func(reason string) { result.Unknown = true; reasons[reason] = true }
++	var follow func(ir.Expression, int)
++	follow = func(value ir.Expression, level int) {
++		if project {
++			sources, reasons, recognized := graph.projectedSources(value, level)
++			if recognized {
++				for _, reason := range reasons {
++					unknown(reason)
++				}
++				for _, source := range sources {
++					follow(source, level+1)
++				}
++				return
++			}
++			switch wrapper := value.(type) {
++			case ir.Conditional:
++				follow(wrapper.WhenTrue, level)
++				follow(wrapper.WhenNot, level)
++				return
++			case ir.Box:
++				follow(wrapper.Value, level)
++				return
++			case ir.Narrow:
++				follow(wrapper.Value, level)
++				return
++			case ir.Unwrap:
++				follow(wrapper.Value, level)
++				return
++			case ir.CheckedCast:
++				follow(wrapper.Value, level)
++				return
++			}
++		}
++		graph.follow(value, func(site int) { sites[site] = true }, demand, unknown)
++	}
++	follow(expression, depth)
++	for len(queue) != 0 {
++		node := queue[len(queue)-1]
++		queue = queue[:len(queue)-1]
++		if graph.unknownParameters[node] {
++			unknown("parameter may receive untracked or omitted arguments")
++		}
++		sources := graph.sources[node]
++		if len(sources) == 0 {
++			unknown("local or result has no tracked producer")
++		}
++		for _, source := range sources {
++			follow(source, depth)
++		}
++	}
++	if len(sites) == 0 {
++		unknown("no reaching allocation established")
++	}
++	for site := range sites {
++		result.Sites = append(result.Sites, site)
++	}
++	for reason := range reasons {
++		result.Reasons = append(result.Reasons, reason)
++	}
++	sort.Ints(result.Sites)
++	sort.Strings(result.Reasons)
++	return result
++}
++
++// rewriteShapeStatements preserves the IR tree's containers and rewrites only
++// interface-held nodes, so metadata never becomes an executable expression.
++func rewriteShapeStatements(body []ir.Statement, rewrite func(any) any) []ir.Statement {
++	var transform func(reflect.Value) reflect.Value
++	transform = func(value reflect.Value) reflect.Value {
++		switch value.Kind() {
++		case reflect.Interface:
++			if value.IsNil() {
++				return value
++			}
++			mapped := transform(value.Elem())
++			result := reflect.New(value.Type()).Elem()
++			result.Set(reflect.ValueOf(rewrite(mapped.Interface())))
++			return result
++		case reflect.Struct:
++			result := reflect.New(value.Type()).Elem()
++			for i := 0; i < value.NumField(); i++ {
++				result.Field(i).Set(transform(value.Field(i)))
++			}
++			return result
++		case reflect.Slice:
++			if value.IsNil() {
++				return value
++			}
++			result := reflect.MakeSlice(value.Type(), value.Len(), value.Len())
++			for i := 0; i < value.Len(); i++ {
++				result.Index(i).Set(transform(value.Index(i)))
++			}
++			return result
++		default:
++			return value
++		}
++	}
++	return transform(reflect.ValueOf(body)).Interface().([]ir.Statement)
++}
++
++// Projection is queried only by shape proofs. Graph-regions traversal stays unchanged.
++type allocationProjection struct {
++	records       map[int]ir.ObjectLiteral
++	arrays        map[int]ir.ArrayLiteral
++	stores        map[int]map[string][]ir.Expression
++	opaque        map[string]bool
++	opaqueSources map[string][]ir.Expression
++	arrayMutation bool
++	opaqueCalls   bool
++}
++
++func (graph *allocationFlowGraph) projectionIndex() *allocationProjection {
++	if graph.projection != nil {
++		return graph.projection
++	}
++	index := &allocationProjection{records: map[int]ir.ObjectLiteral{}, arrays: map[int]ir.ArrayLiteral{}, stores: map[int]map[string][]ir.Expression{}, opaque: map[string]bool{}, opaqueSources: map[string][]ir.Expression{}}
++	graph.projection = index
++	stores := []ir.SetProperty{}
++	collect := func(node any) bool {
++		switch value := node.(type) {
++		case ir.ObjectLiteral:
++			if len(value.GraphTypes) > 0 {
++				index.records[value.GraphTypes[len(value.GraphTypes)-1]] = value
++			}
++		case ir.ArrayLiteral:
++			if len(value.GraphTypes) > 0 {
++				index.arrays[value.GraphTypes[len(value.GraphTypes)-1]] = value
++			}
++		case ir.SetProperty:
++			stores = append(stores, value)
++		case ir.SetIndex, ir.ArrayPush, ir.ArraySplice, ir.ArrayPop:
++			index.arrayMutation = true
++		case ir.CallClosure, ir.ObjectCall:
++			index.opaqueCalls = true
++		}
++		return true
++	}
++	walk(graph.program.Main, collect)
++	for _, function := range graph.program.Functions {
++		walk(function.Body, collect)
++	}
++	for _, store := range stores {
++		receiver := graph.reachingAllocations(store.Object, false, 0)
++		if receiver.Unknown || store.Uninitialized {
++			index.opaque[store.Name] = true
++			index.opaqueSources[store.Name] = append(index.opaqueSources[store.Name], store.Object, store.Value)
++		}
++		for _, site := range receiver.Sites {
++			if index.stores[site] == nil {
++				index.stores[site] = map[string][]ir.Expression{}
++			}
++			index.stores[site][store.Name] = append(index.stores[site][store.Name], store.Value)
++		}
++	}
++	return index
++}
++
++// projectedSources joins initial fields and all visible stores across all paths.
++// An opaque receiver can alias any allocation; its field name stays unknown.
++func (graph *allocationFlowGraph) projectedSources(expression ir.Expression, depth int) ([]ir.Expression, []string, bool) {
++	var receiver ir.Expression
++	name := ""
++	array := false
++	switch value := expression.(type) {
++	case ir.Property:
++		receiver, name = value.Object, value.Name
++	case ir.ArrayIndex:
++		receiver = value.Array
++		array = true
++		key, ok := value.Index.(ir.NumberConstant)
++		if !ok || key.Value < 0 || key.Value != float64(int(key.Value)) || value.Relative {
++			return nil, []string{"dynamic or relative element key not certified"}, true
++		}
++		name = strconv.Itoa(int(key.Value))
++	default:
++		return nil, nil, false
++	}
++	if depth >= 32 {
++		return nil, []string{"recursive projection depth not certified"}, true
++	}
++	index := graph.projectionIndex()
++	sources := []ir.Expression{}
++	reasons := []string{}
++	if index.opaqueCalls {
++		reasons = append(reasons, "opaque call may mutate projected fields")
++	}
++	if index.opaque[name] {
++		reasons = append(reasons, "field store has opaque receiver or clears readiness: "+name)
++	}
++	if array && index.arrayMutation {
++		reasons = append(reasons, "array mutation prevents element certificate")
++	}
++	bases := graph.reachingAllocations(receiver, true, depth+1)
++	reasons = append(reasons, bases.Reasons...)
++	for _, site := range bases.Sites {
++		found := false
++		if literal, ok := index.records[site]; ok {
++			if literal.Spread != nil {
++				reasons = append(reasons, "spread field projection not certified")
++			}
++			for _, field := range literal.Fields {
++				if field.Name == name {
++					sources = append(sources, field.Value)
++					found = true
++				}
++			}
++		}
++		if literal, ok := index.arrays[site]; ok && array {
++			key, _ := strconv.Atoi(name)
++			if len(literal.Spread) > 0 {
++				reasons = append(reasons, "spread element projection not certified")
++			}
++			if key < len(literal.Elements) {
++				sources = append(sources, literal.Elements[key])
++				found = true
++			}
++		}
++		if !found {
++			reasons = append(reasons, "projected field absent or allocation not modeled: "+name)
++		}
++		sources = append(sources, index.stores[site][name]...)
++	}
++	return sources, reasons, true
++}
+diff --git a/internal/lower/shape_flow_test.go b/internal/lower/shape_flow_test.go
+new file mode 100644
+index 00000000..15ef7a76
+--- /dev/null
++++ b/internal/lower/shape_flow_test.go
+@@ -0,0 +1,117 @@
++package lower
++
++import (
++	"reflect"
++	"testing"
++
++	"github.com/system-inc/adamic/internal/ir"
++)
++
++func TestShapeFlowJoinsArgumentsAssignmentsAndReturns(t *testing.T) {
++	first := ir.ObjectLiteral{GraphTypes: []int{123, -1}}
++	second := ir.ObjectLiteral{GraphTypes: []int{123, -2}}
++	program := &ir.Program{
++		Locals: []ir.Local{{Type: ir.Object}, {Type: ir.Object}},
++		Main: []ir.Statement{
++			ir.Declare{Local: 0, Value: first}, ir.Assign{Local: 0, Value: second},
++			ir.Evaluate{Value: ir.Call{Function: 0, Arguments: []ir.Expression{ir.Read{Local: 0, Of: ir.Object}}, Returns: ir.Object}},
++		},
++		Functions: []ir.Function{{Parameters: []int{1}, Returns: ir.Object, Body: []ir.Statement{ir.Return{Value: ir.Read{Local: 1, Of: ir.Object}}}}},
++	}
++	flow := newAllocationFlowGraph(program)
++	result := flow.ReachingAllocations(ir.Call{Function: 0, Returns: ir.Object})
++	if result.Unknown || !reflect.DeepEqual(result.Sites, []int{-2, -1}) {
++		t.Fatalf("join lost a reaching allocation: %+v", result)
++	}
++	if len(program.GraphTypes) != 0 {
++		t.Fatal("query changed graph ownership")
++	}
++}
++
++func TestShapeFlowUnknownRetainsKnownAllocations(t *testing.T) {
++	flow := newAllocationFlowGraph(&ir.Program{})
++	cases := []ir.Expression{
++		ir.Read{Local: 0, Of: ir.Object},
++		ir.ObjectLiteral{},
++		ir.Property{Object: ir.ObjectLiteral{GraphTypes: []int{-3}}, Name: "host", Of: ir.Object},
++	}
++	for _, opaque := range cases {
++		result := flow.ReachingAllocations(ir.Conditional{WhenTrue: ir.ObjectLiteral{GraphTypes: []int{-1}}, WhenNot: opaque, Of: ir.Object})
++		if !result.Unknown || !reflect.DeepEqual(result.Sites, []int{-1}) || len(result.Reasons) == 0 {
++			t.Fatalf("unknown frontier disappeared: %+v", result)
++		}
++	}
++}
++
++func TestShapeFlowEmptyCycleIsUnknown(t *testing.T) {
++	program := &ir.Program{Locals: []ir.Local{{Type: ir.Object}}, Main: []ir.Statement{ir.Assign{Local: 0, Value: ir.Read{Local: 0, Of: ir.Object}}}}
++	result := newAllocationFlowGraph(program).ReachingAllocations(ir.Read{Local: 0, Of: ir.Object})
++	if !result.Unknown || len(result.Sites) != 0 {
++		t.Fatalf("empty cycle must not prove conformance: %+v", result)
++	}
++}
++
++func TestShapeFlowOmittedAndCallbackArgumentsAreUnknown(t *testing.T) {
++	for _, callback := range []bool{false, true} {
++		program := &ir.Program{
++			Locals:    []ir.Local{{Type: ir.Object}},
++			Functions: []ir.Function{{Parameters: []int{0}, Returns: ir.Object, Body: []ir.Statement{ir.Return{Value: ir.Read{Local: 0, Of: ir.Object}}}}},
++			Main:      []ir.Statement{ir.Evaluate{Value: ir.Call{Function: 0, Arguments: []ir.Expression{ir.ObjectLiteral{GraphTypes: []int{-1}}}, Returns: ir.Object}}},
++		}
++		if callback {
++			program.Main = append(program.Main, ir.Evaluate{Value: ir.MakeClosure{Function: 0}})
++		} else {
++			program.Main = append(program.Main, ir.Evaluate{Value: ir.Call{Function: 0, Returns: ir.Object}})
++		}
++		result := newAllocationFlowGraph(program).ReachingAllocations(ir.Read{Local: 0, Of: ir.Object})
++		if !result.Unknown || !reflect.DeepEqual(result.Sites, []int{-1}) {
++			t.Fatalf("open parameter was treated as closed: %+v", result)
++		}
++	}
++}
++
++func TestShapeProjectionJoinsInitialAndStoredValues(t *testing.T) {
++	first := ir.ObjectLiteral{GraphTypes: []int{-2}}
++	second := ir.ObjectLiteral{GraphTypes: []int{-3}}
++	receiver := ir.Read{Local: 0, Of: ir.Object}
++	program := &ir.Program{Locals: []ir.Local{{Type: ir.Object}}, Main: []ir.Statement{
++		ir.Declare{Local: 0, Value: ir.ObjectLiteral{GraphTypes: []int{-1}, Fields: []ir.Field{{Name: "child", Value: first}}}},
++		ir.SetProperty{Object: receiver, Name: "child", Value: second},
++	}}
++	result := newAllocationFlowGraph(program).ReachingAllocations(ir.Property{Object: receiver, Name: "child", Of: ir.Object})
++	if result.Unknown || !reflect.DeepEqual(result.Sites, []int{-3, -2}) {
++		t.Fatalf("field join lost reaching shapes: %+v", result)
++	}
++	program.Main = append(program.Main, ir.SetProperty{Object: ir.Read{Local: 99, Of: ir.Object}, Name: "child", Value: second})
++	result = newAllocationFlowGraph(program).ReachingAllocations(ir.Property{Object: receiver, Name: "child", Of: ir.Object})
++	if !result.Unknown || !reflect.DeepEqual(result.Sites, []int{-3, -2}) {
++		t.Fatalf("opaque store must retain known shapes and unknown: %+v", result)
++	}
++}
++func TestShapeProjectionCyclesAndMissingFieldsStayUnknown(t *testing.T) {
++	receiver := ir.Read{Local: 0, Of: ir.Object}
++	property := ir.Property{Object: receiver, Name: "child", Of: ir.Object}
++	program := &ir.Program{Locals: []ir.Local{{Type: ir.Object}}, Main: []ir.Statement{
++		ir.Declare{Local: 0, Value: ir.ObjectLiteral{GraphTypes: []int{-1}, Fields: []ir.Field{{Name: "child", Value: ir.ObjectLiteral{GraphTypes: []int{-2}}}}}},
++		ir.SetProperty{Object: receiver, Name: "child", Value: property},
++	}}
++	if result := newAllocationFlowGraph(program).ReachingAllocations(property); !result.Unknown || !reflect.DeepEqual(result.Sites, []int{-2}) {
++		t.Fatalf("recursive store should terminate conservatively: %+v", result)
++	}
++	program.Main = append(program.Main, ir.SetProperty{Object: receiver, Name: "missing", Value: ir.ObjectLiteral{GraphTypes: []int{-3}}})
++	if result := newAllocationFlowGraph(program).ReachingAllocations(ir.Property{Object: receiver, Name: "missing", Of: ir.Object}); !result.Unknown {
++		t.Fatal("store without path readiness certified an initially missing field")
++	}
++}
++func TestShapeProjectionConstantElements(t *testing.T) {
++	receiver := ir.Read{Local: 0, Of: ir.Array}
++	element := ir.ArrayIndex{Array: receiver, Index: ir.NumberConstant{}, Element: ir.Object}
++	program := &ir.Program{Locals: []ir.Local{{Type: ir.Array}}, Main: []ir.Statement{ir.Declare{Local: 0, Value: ir.ArrayLiteral{GraphTypes: []int{-1}, Element: ir.Object, Elements: []ir.Expression{ir.ObjectLiteral{GraphTypes: []int{-2}}}}}}}
++	if result := newAllocationFlowGraph(program).ReachingAllocations(element); result.Unknown || !reflect.DeepEqual(result.Sites, []int{-2}) {
++		t.Fatalf("constant element lost allocation: %+v", result)
++	}
++	program.Main = append(program.Main, ir.Evaluate{Value: ir.ArrayPush{Array: receiver}})
++	if result := newAllocationFlowGraph(program).ReachingAllocations(element); !result.Unknown {
++		t.Fatal("mutable element certified")
++	}
++}
+diff --git a/internal/oracle/checked_views_erasure_test.go b/internal/oracle/checked_views_erasure_test.go
+new file mode 100644
+index 00000000..be8d43c1
+--- /dev/null
++++ b/internal/oracle/checked_views_erasure_test.go
+@@ -0,0 +1,96 @@
++package oracle
++
++import (
++	"reflect"
++	"testing"
++
++	"github.com/system-inc/adamic/internal/ir"
++)
++
++func TestCheckedViewShapeErasure(t *testing.T) {
++	for _, probe := range []struct{ name, stdout, diagnostic string }{
++		{"proven", "hello\n", ""},
++		{"proven-property", "hello\n", ""},
++		{"nonconforming-property", "true\n", "field read failed: (value as Identifier).ready is not a boolean; expected boolean, found number"},
++		{"nonconforming", "true\n", "field read failed: (value as Identifier).ready is not a boolean; expected boolean, found number"},
++		{"uninitialized", "", "field read failed: (held as Identifier).ready is not initialized; expected boolean, found uninitialized"},
++	} {
++		t.Run(probe.name, func(t *testing.T) {
++			program, path := interfaceFixture(t, "lane3/"+probe.name)
++			want := run{stdout: []byte(probe.stdout)}
++			if probe.diagnostic == "" {
++				if difference := disagreement(want, onNode(t, path)); difference != "" {
++					t.Fatal("Node: " + difference)
++				}
++			} else {
++				want.exitCode = 70
++				want.stderr = []byte("adamic: panic: " + probe.diagnostic + "\n")
++			}
++			actual, _ := nativelyUncached(t, program)
++			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
++				if difference := disagreement(want, got); difference != "" {
++					t.Fatalf("%s; got %#v", difference, got)
++				}
++			}
++			if probe.diagnostic != "" {
++				eraseShapeChecksMutant(program)
++				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
++					t.Logf("mutant exit=%d stdout=%q", got.exitCode, got.stdout)
++					if disagreement(want, got) == "" || got.exitCode != 0 {
++						t.Fatalf("unsafe erasure mutant was not caught by a successful wrong execution: %#v", got)
++					}
++				}
++				t.Log("unsafe erasure mutant caught by pinned output and exit with valid release C")
++			}
++		})
++	}
++}
++
++// The two witnesses independently lose a failing type or readiness check. These
++// compile and finish with wrong values, so compiler warnings are not the catch.
++func eraseShapeChecksMutant(program *ir.Program) {
++	var transform func(reflect.Value) reflect.Value
++	transform = func(value reflect.Value) reflect.Value {
++		switch value.Kind() {
++		case reflect.Interface:
++			if value.IsNil() {
++				return value
++			}
++			result := reflect.New(value.Type()).Elem()
++			result.Set(transform(value.Elem()))
++			return result
++		case reflect.Struct:
++			result := reflect.New(value.Type()).Elem()
++			for i := 0; i < value.NumField(); i++ {
++				result.Field(i).Set(transform(value.Field(i)))
++			}
++			if property, ok := result.Interface().(ir.Property); ok {
++				property.View = ""
++				property.Readiness = ""
++				result.Set(reflect.ValueOf(property))
++			}
++			return result
++		case reflect.Slice:
++			if value.IsNil() {
++				return value
++			}
++			result := reflect.MakeSlice(value.Type(), value.Len(), value.Len())
++			for i := 0; i < value.Len(); i++ {
++				result.Index(i).Set(transform(value.Index(i)))
++			}
++			return result
++		default:
++			return value
++		}
++	}
++	program.Main = transform(reflect.ValueOf(program.Main)).Interface().([]ir.Statement)
++	for i := range program.Functions {
++		program.Functions[i].Body = transform(reflect.ValueOf(program.Functions[i].Body)).Interface().([]ir.Statement)
++	}
++}
++
++func TestShapeErasureCountRows(t *testing.T) {
++	for _, name := range []string{"proven", "nonconforming", "uninitialized", "host"} {
++		t.Log(counted(t, "stage3/interface-downcasts/lane3/"+name+".a", false, nil, false, false))
++	}
++}
+diff --git a/stage3/interface-downcasts/lane3/host.a b/stage3/interface-downcasts/lane3/host.a
+new file mode 100644
+index 00000000..840977c2
+--- /dev/null
++++ b/stage3/interface-downcasts/lane3/host.a
+@@ -0,0 +1,6 @@
++import {readTextFile} from 'adamic';
++interface Base {readonly kind: string;}
++interface Failure extends Base {readonly kind: 'Error'; readonly message: string;}
++const held: Base = readTextFile('/adamic-lane3-path-that-does-not-exist');
++const view = held as Failure;
++console.log(`${view.message.length > 0}`);
+diff --git a/stage3/interface-downcasts/lane3/nonconforming-property.a b/stage3/interface-downcasts/lane3/nonconforming-property.a
+new file mode 100644
+index 00000000..ac9b2ef2
+--- /dev/null
++++ b/stage3/interface-downcasts/lane3/nonconforming-property.a
+@@ -0,0 +1,9 @@
++interface Base { readonly kind: 'identifier' | 'other'; }
++interface Identifier extends Base { readonly kind: 'identifier'; readonly ready: boolean; }
++const good = {kind: 'identifier' as const, ready: true};
++const wrong = {kind: 'identifier' as const, ready: 0};
++function read(value: Base): boolean { return (value as Identifier).ready; }
++const heldGood={child:good};
++const heldWrong={child:wrong};
++console.log(`${read(heldGood.child)}`);
++console.log(`${read(heldWrong.child)}`);
+diff --git a/stage3/interface-downcasts/lane3/nonconforming.a b/stage3/interface-downcasts/lane3/nonconforming.a
+new file mode 100644
+index 00000000..e799c0a7
+--- /dev/null
++++ b/stage3/interface-downcasts/lane3/nonconforming.a
+@@ -0,0 +1,7 @@
++interface Base { readonly kind: 'identifier' | 'other'; }
++interface Identifier extends Base { readonly kind: 'identifier'; readonly ready: boolean; }
++const good = {kind: 'identifier' as const, ready: true};
++const wrong = {kind: 'identifier' as const, ready: 0};
++function read(value: Base): boolean { return (value as Identifier).ready; }
++console.log(`${read(good)}`);
++console.log(`${read(wrong)}`);
+diff --git a/stage3/interface-downcasts/lane3/proven-property.a b/stage3/interface-downcasts/lane3/proven-property.a
+new file mode 100644
+index 00000000..65dedf11
+--- /dev/null
++++ b/stage3/interface-downcasts/lane3/proven-property.a
+@@ -0,0 +1,7 @@
++interface Base { readonly kind: 'identifier' | 'other'; }
++interface Identifier extends Base { readonly kind: 'identifier'; readonly name: string; }
++function create(): Identifier { return {kind: 'identifier', name: 'hello'}; }
++function pass(value: Base): Base { return value; }
++function read(value: Base): string { return (value as Identifier).name; }
++const holder={child:create()};
++console.log(read(pass(holder.child)));
+diff --git a/stage3/interface-downcasts/lane3/proven.a b/stage3/interface-downcasts/lane3/proven.a
+new file mode 100644
+index 00000000..8a99bf5c
+--- /dev/null
++++ b/stage3/interface-downcasts/lane3/proven.a
+@@ -0,0 +1,6 @@
++interface Base { readonly kind: 'identifier' | 'other'; }
++interface Identifier extends Base { readonly kind: 'identifier'; readonly name: string; }
++function create(): Identifier { return {kind: 'identifier', name: 'hello'}; }
++function pass(value: Base): Base { return value; }
++function read(value: Base): string { return (value as Identifier).name; }
++console.log(read(pass(create())));
+diff --git a/stage3/interface-downcasts/lane3/uninitialized.a b/stage3/interface-downcasts/lane3/uninitialized.a
+new file mode 100644
+index 00000000..582eab88
+--- /dev/null
++++ b/stage3/interface-downcasts/lane3/uninitialized.a
+@@ -0,0 +1,5 @@
++interface Base { readonly kind: 'identifier' | 'other'; }
++interface Identifier extends Base { readonly kind: 'identifier'; readonly ready: boolean; }
++const raw: Identifier = {kind: 'identifier', ready: undefined!};
++const held: Base = raw;
++console.log(`${(held as Identifier).ready}`);
+diff --git a/stage3/shape-conformance/eraser-mutants.py b/stage3/shape-conformance/eraser-mutants.py
+new file mode 100644
+index 00000000..1c8303f7
+--- /dev/null
++++ b/stage3/shape-conformance/eraser-mutants.py
+@@ -0,0 +1,18 @@
++# Run from the repository root after sourcing the toolchain environment.
++from pathlib import Path
++import os,subprocess
++path=Path('internal/lower/shape_conformance.go'); original=path.read_text()
++mutants=[
++ ('ignore-nonconforming-shape',original.replace(' || program.ViewContractTypes[certificate.CheckerType] != contract',''),'^TestCheckedViewShapeErasure/nonconforming$'),
++ ('ignore-readiness',original.replace('field.Uninitialized || certificate == nil','certificate == nil').replace('value.View != "" && value.Readiness == "" &&','value.View != "" &&').replace('value.View = ""','value.Readiness = ""\n\t\t\t\tvalue.View = ""'),'^TestCheckedViewShapeErasure/uninitialized$'),
++]
++try:
++ for name,changed,selection in mutants:
++  assert changed!=original
++  path.write_text(changed)
++  with open('stage3/shape-conformance/logs/'+name+'.log','w') as log:
++   result=subprocess.run(['go','test','./internal/oracle','-run',selection,'-count=1','-v'],stdout=log,stderr=subprocess.STDOUT,env={**os.environ,'ADAMIC_GATE_UNCACHED':'1'})
++  print(name,'exit',result.returncode,flush=True)
++  if result.returncode==0: raise SystemExit('mutant escaped')
++finally:
++ path.write_text(original)
+diff --git a/stage3/shape-conformance/projection-mutants.py b/stage3/shape-conformance/projection-mutants.py
+new file mode 100644
+index 00000000..09e83520
+--- /dev/null
++++ b/stage3/shape-conformance/projection-mutants.py
+@@ -0,0 +1,20 @@
++"""Mutate real projection guards; valid Go binaries must fail semantic witnesses."""
++from pathlib import Path
++import os,subprocess
++p=Path('internal/lower/shape_flow.go');source=p.read_text()
++mutants={
++ 'projection-drop-stores':source.replace('sources = append(sources, index.stores[site][name]...)',''),
++ 'projection-ignore-opaque-store':source.replace('if index.opaque[name] {','if false {'),
++ 'projection-ignore-missing-field':source.replace('if !found {','if !found && false {'),
++ 'projection-ignore-array-mutation':source.replace('if array && index.arrayMutation {','if false {'),
++}
++try:
++ for name,changed in mutants.items():
++  assert changed!=source,name
++  p.write_text(changed)
++  with Path('stage3/shape-conformance/logs/'+name+'.log').open('w') as log:
++   status=subprocess.run(['go','test','./internal/lower','-run','^TestShapeProjection','-count=1','-v'],stdout=log,stderr=subprocess.STDOUT).returncode
++  text=Path('stage3/shape-conformance/logs/'+name+'.log').read_text()
++  assert status!=0 and 'build failed' not in text,name+' escaped or failed to build'
++  print(name,'caught by semantic query assertion in valid Go test binary',flush=True)
++finally:p.write_text(source)

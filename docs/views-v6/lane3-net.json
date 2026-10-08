@@ -1,0 +1,30 @@
+{
+  "fork": "523cc5d224966a1bf6bc66628f6fa8563df2e5bf",
+  "final": "b8316acde743a436dded1ff19dc833fe2acb25c5",
+  "preparation_base": "9f16421c7910607cd06c006b719ff126bd15a7f7",
+  "paths": [
+    "internal/ir/ir.go",
+    "internal/ir/shape_conformance.go",
+    "internal/lower/graph_flow.go",
+    "internal/lower/graph_types.go",
+    "internal/lower/interface_cast.go",
+    "internal/lower/readiness.go",
+    "internal/lower/shape_conformance.go",
+    "internal/lower/shape_conformance_test.go",
+    "internal/lower/shape_flow.go",
+    "internal/lower/shape_flow_test.go",
+    "internal/oracle/checked_views_erasure_test.go",
+    "stage3/interface-downcasts/lane3/host.a",
+    "stage3/interface-downcasts/lane3/nonconforming-property.a",
+    "stage3/interface-downcasts/lane3/nonconforming.a",
+    "stage3/interface-downcasts/lane3/proven-property.a",
+    "stage3/interface-downcasts/lane3/proven.a",
+    "stage3/interface-downcasts/lane3/uninitialized.a",
+    "stage3/shape-conformance/eraser-mutants.py",
+    "stage3/shape-conformance/projection-mutants.py"
+  ],
+  "patch_sha256": "118440d9e358efb505e95f84e92633f087573de643a1ceb51a70bf2720697c54",
+  "bytes": 82580,
+  "status": "Prepared for one application, requires V5 and shared-file resolutions; not a validated implementation",
+  "excluded": "Historical measurements and graph-count fixture admissions; adapt the ruled staged assertion fixture rather than admit it"
+}
