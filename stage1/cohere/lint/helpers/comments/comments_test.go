@@ -7,6 +7,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/testguard"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -17,9 +18,7 @@ import (
 
 func run(t *testing.T, dir, name string, args ...string) []byte {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
-	defer cancel()
-	cmd := exec.CommandContext(ctx, name, args...)
+	cmd := exec.Command(name, args...)
 	cmd.Dir = dir
 	f, err := os.CreateTemp(t.TempDir(), "output-")
 	if err != nil {
@@ -29,7 +28,7 @@ func run(t *testing.T, dir, name string, args ...string) []byte {
 	cmd.Stdout = f
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
-	if err = cmd.Run(); err != nil {
+	if err = testguard.Run(cmd, testguard.Budget, testguard.Ceiling); err != nil {
 		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
 	if stderr.Len() != 0 {
@@ -261,9 +260,7 @@ func matchesGapRefusal(err error, stderr string) bool {
 }
 func gapRun(t *testing.T, command []string) ([]byte, string, error) {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
-	defer cancel()
-	cmd := exec.CommandContext(ctx, command[0], command[1:]...)
+	cmd := exec.Command(command[0], command[1:]...)
 	out, err := os.CreateTemp(t.TempDir(), "gap-output-")
 	if err != nil {
 		t.Fatal(err)
@@ -271,7 +268,7 @@ func gapRun(t *testing.T, command []string) ([]byte, string, error) {
 	cmd.Stdout = out
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
-	runErr := cmd.Run()
+	runErr := testguard.Run(cmd, time.Minute, testguard.Ceiling)
 	if err := out.Close(); err != nil {
 		t.Fatal(err)
 	}

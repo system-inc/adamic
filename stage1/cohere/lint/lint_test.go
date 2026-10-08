@@ -2,9 +2,10 @@ package lint
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/internal/corpusfiles"
+	"github.com/system-inc/adamic/internal/testguard"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 	"github.com/system-inc/adamic/stage1/cohere/lint/shards"
 	"io/fs"
@@ -73,9 +74,7 @@ func commandDiagnostics(name string, stderr []byte) []byte {
 // Output is a file, never a pipe: the large corpus must also work on Node's writev path.
 func execute(t *testing.T, directory, name string, args ...string) execution {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
-	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.Command(name, args...)
 	command.Dir = directory
 	output, err := os.CreateTemp(t.TempDir(), "stdout-")
 	if err != nil {
@@ -86,7 +85,7 @@ func execute(t *testing.T, directory, name string, args ...string) execution {
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	started := time.Now()
-	err = command.Run()
+	err = testguard.Run(command, testguard.Budget, testguard.Ceiling)
 	duration := time.Since(started)
 	if err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
 		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
@@ -362,8 +361,7 @@ func checkRecoveryRefusal(t *testing.T, oracle, binary, directory, row string) {
 		{binary, []string{"--manifest", path}},
 		{"node", []string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path}},
 	} {
-		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-		command := exec.CommandContext(ctx, side.name, side.args...)
+		command := exec.Command(side.name, side.args...)
 		output, err := os.CreateTemp(t.TempDir(), "recovery-refusal-")
 		if err != nil {
 			t.Fatal(err)
@@ -371,14 +369,13 @@ func checkRecoveryRefusal(t *testing.T, oracle, binary, directory, row string) {
 		command.Stdout = output
 		var stderr bytes.Buffer
 		command.Stderr = &stderr
-		err = command.Run()
-		timedOut := ctx.Err() == context.DeadlineExceeded
-		cancel()
+		err = testguard.Run(command, 2*time.Second, testguard.Ceiling)
+		cpuGuard := strings.Contains(fmt.Sprint(err), "child CPU hang guard exceeded")
 		output.Close()
-		if err == nil || (!timedOut && !strings.Contains(stderr.String(), "adamic: panic:")) {
+		if err == nil || (!cpuGuard && !strings.Contains(stderr.String(), "adamic: panic:")) {
 			t.Fatalf("expected parser refusal from %s, got %v: %s", side.name, err, stderr.String())
 		}
-		t.Logf("explicit unsupported recovery: %s: timeout=%t: %v: %s", side.name, timedOut, err, stderr.String())
+		t.Logf("explicit unsupported recovery: %s: CPU-guard=%t: %v: %s", side.name, cpuGuard, err, stderr.String())
 	}
 }
 
@@ -388,29 +385,18 @@ func TestCompilerAndStage1Agree(t *testing.T) {
 	if source == "" {
 		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to pinned v6.0.3")
 	}
-	pin := execute(t, "", "git", "-C", source, "rev-parse", "HEAD")
-	if strings.TrimSpace(string(pin.output)) != compilerCommit {
-		t.Fatal("compiler corpus pin differs")
+	patterns := []string{"*.ts", "*.a"}
+	rows := corpusfiles.Upstream(t, source, compilerCommit, []string{"src/compiler"}, patterns)
+	rows = append(rows, corpusfiles.Repository(t, repository, []string{"stage1"}, patterns)...)
+	// The old walk also included TestMain's generated dispatch. Preserve that
+	// coverage as an explicit generated input, independent of stray worktree files.
+	generatedRegistry, err := filepath.Abs(".generated/registry.ts")
+	if err != nil {
+		t.Fatal(err)
 	}
-	var rows []string
-	for _, root := range []string{filepath.Join(source, "src/compiler"), filepath.Join(repository, "stage1")} {
-		err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a")) {
-				absolute, err := filepath.Abs(path)
-				if err != nil {
-					return err
-				}
-				rows = append(rows, absolute)
-			}
-			return nil
-		})
-		if err != nil {
-			t.Fatal(err)
-		}
-	}
+	rows = append(rows, generatedRegistry)
+	t.Logf("generated input retained from old walk: %s (count 1)", generatedRegistry)
+
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
@@ -503,7 +489,7 @@ func compilerCasePath(rows []string, message string) string {
 }
 
 // shards.Run accepts an executable, so this adapter supplies Node's fixed arguments too. Each
-// backend still writes to a file, fails on stderr, and has execute's ten-minute limit. Durations belong
+// backend still writes to a file, fails on stderr, and has execute's CPU hang guard. Durations belong
 // to individual shards, not the merged run, so a slow shard remains visible on a loaded gate seat.
 func compilerShardLauncher(t *testing.T, command string, arguments []string, rows []string, assignments [][]int) (string, string) {
 	t.Helper()
@@ -512,8 +498,9 @@ func compilerShardLauncher(t *testing.T, command string, arguments []string, row
 		Command     string
 		Arguments   []string
 		Directory   string
+		Executable  string
 		Assignments [][]int
-	}{command, arguments, directory, assignments})
+	}{command, arguments, directory, guardExecutable(t), assignments})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -542,8 +529,8 @@ const errorPath = path.join(configuration.Directory, shard + '.stderr');
 const output = fs.openSync(outputPath, 'w');
 const errors = fs.openSync(errorPath, 'w');
 const started = process.hrtime.bigint();
-const result = spawnSync(configuration.Command, [...(configuration.Arguments || []), ...backendArgs], {
-  stdio: ['ignore', output, errors], timeout: 600000, killSignal: 'SIGKILL'
+const result = spawnSync(configuration.Executable, ['-test.run=^TestCompilerGuardBackend$', '--', configuration.Command, ...(configuration.Arguments || []), ...backendArgs], {
+  env: {...process.env, ADAMIC_LINT_GUARD_BACKEND: '1'}, stdio: ['ignore', output, errors]
 });
 fs.writeFileSync(path.join(configuration.Directory, shard + '.time'),
   String(Number(process.hrtime.bigint() - started) / 1e6));
@@ -551,6 +538,7 @@ fs.closeSync(output);
 fs.closeSync(errors);
 const stderr = fs.readFileSync(errorPath);
 if (result.error || result.status !== 0 || stderr.length !== 0) {
+  console.error('shard inputs: ' + fs.readFileSync(path.join(configuration.Directory, shardIndex + '.manifest'), 'utf8'));
   console.error(result.error || ('exit ' + result.status + ', signal ' + result.signal));
   process.stderr.write(stderr);
   process.exitCode = 1;
