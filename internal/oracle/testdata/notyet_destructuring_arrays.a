@@ -1,0 +1,11 @@
+let evaluations = 0;
+function source(): string[] { evaluations += 1; return ['a'.repeat(2), 'b'.repeat(2), 'c'.repeat(2), 'd'.repeat(2)]; }
+const [first, , third, ...rest] = source();
+console.log(`${evaluations} ${first} ${third} ${rest.join(',')}`);
+const values: number[] = [1];
+const [one, missing, ...empty] = values;
+console.log(`${one} ${missing} ${empty.length}`);
+values.push(2);
+console.log(`${empty.length} ${values.length}`);
+const [absent = 9] = empty;
+console.log(`${absent}`);

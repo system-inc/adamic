@@ -1,0 +1,13 @@
+let calls = 0;
+function source(): { child: { text: string }; pair: [string, number] } {
+ calls += 1;
+ return { child: { text: 'owned'.repeat(2) }, pair: ['pair'.repeat(2), 3] };
+}
+const { child: { text }, pair: [name, count] } = source();
+console.log(`${calls} ${text} ${name} ${count}`);
+const data: [{ label: string }, number] = [{ label: 'tuple'.repeat(2) }, 8];
+const [{ label }, amount] = data;
+console.log(`${label} ${amount}`);
+const tuple: [number | undefined, number] = [undefined, 2];
+const [value = 5, other] = tuple;
+console.log(`${value} ${other}`);

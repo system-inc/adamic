@@ -1,0 +1,27 @@
+interface Fields { value: string | number | undefined; enabled?: boolean; }
+const fields: Fields = { value: 'owned'.repeat(3), enabled: false };
+const { value, enabled } = fields;
+console.log(`${value} ${enabled}`);
+const missingFields: Fields = { value: undefined };
+const { value: missing, enabled: absent } = missingFields;
+console.log(`${missing} ${absent}`);
+const tuple: [string | number | boolean | undefined, boolean | undefined] = ['tuple'.repeat(2), undefined];
+const [element, optional] = tuple;
+console.log(`${element} ${optional}`);
+let assigned: string | number | boolean | undefined = 0;
+let flag: boolean | undefined = true;
+[assigned, flag] = tuple;
+console.log(`${assigned} ${flag}`);
+interface FileValue { readonly name: string; }
+type MixedValue = string | number | boolean | readonly string[] | FileValue | undefined;
+function hold(value: MixedValue): [string, MixedValue] { return ['key'.repeat(2), value]; }
+const file = { name: 'file'.repeat(2) };
+const strings = ['array'.repeat(2)];
+const [fileKey, fileValue] = hold(file);
+const [arrayKey, arrayValue] = hold(strings);
+console.log(`${fileKey} ${typeof fileValue} ${fileValue === file}`);
+console.log(`${arrayKey} ${typeof arrayValue} ${arrayValue === strings}`);
+let mixed: MixedValue = false;
+let key = '';
+[key, mixed] = hold(file);
+console.log(`${key} ${typeof mixed} ${mixed === file}`);
