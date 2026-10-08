@@ -35,7 +35,7 @@ func (l *lowering) moduleNamespaceRefusal(node *ast.Node) error {
 		return nil
 	}
 	for _, declaration := range symbol.Declarations {
-		if ast.IsFunctionLike(declaration) && containsThis(declaration) {
+		if ast.IsFunctionLike(declaration) && namespaceOwnThis(declaration) {
 			return l.notYet(node, "an ESM namespace function observing its receiver; the module object is not represented")
 		}
 	}

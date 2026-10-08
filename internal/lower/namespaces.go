@@ -158,7 +158,7 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 			switch member.Kind {
 			case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement, ast.KindModuleDeclaration:
 			case ast.KindFunctionDeclaration:
-				if containsThis(member) {
+				if namespaceOwnThis(member) {
 					return &Refused{Where: l.program.Where(member), What: "this in a namespace function; a qualified call and a detached call have different receivers", Fix: "pass the state as an explicit parameter instead of using this"}
 				}
 				for _, parameter := range member.Parameters() {
