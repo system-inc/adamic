@@ -1,0 +1,45 @@
+{
+  "fs_large_roundtrip": {
+    "node": {
+      "exit": 0,
+      "stdout": "0 true 0 0\ntail 0 ffffffffffffff\nremaining 0\n1 true 1 1\ntail 1 ff00ffffffffff\nremaining 1\n4095 true 4095 4095\ntail 2 ffd9e6ffffffff\nremaining 4095\n4096 true 4096 4096\ntail 2 ffe6f3ffffffff\nremaining 4096\n4097 true 4097 4097\ntail 2 fff300ffffffff\nremaining 4097\n8192 true 8192 8192\ntail 2 ffe6f3ffffffff\nremaining 8192\n8193 true 8193 8193\ntail 2 fff300ffffffff\nremaining 8193\n20000 true 20000 20000\ntail 2 ff8693ffffffff\nremaining 20000\n",
+      "stderr": ""
+    },
+    "sanitize": {
+      "build": {
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "run": {
+        "exit": 0,
+        "stdout": "0 true 0 0\ntail 0 ffffffffffffff\nremaining 0\n1 true 1 1\ntail 1 ff00ffffffffff\nremaining 1\n4095 false 3 3\ntail 0 ffffffffffffff\nremaining 3\n4096 false 3 3\ntail 0 ffffffffffffff\nremaining 3\n4097 false 3 3\ntail 0 ffffffffffffff\nremaining 3\n8192 false 3 3\ntail 0 ffffffffffffff\nremaining 3\n8193 false 3 3\ntail 0 ffffffffffffff\nremaining 3\n20000 false 3 3\ntail 0 ffffffffffffff\nremaining 3\n",
+        "stderr": ""
+      }
+    },
+    "release": {
+      "build": {
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "run": {
+        "exit": 0,
+        "stdout": "0 true 0 0\ntail 0 ffffffffffffff\nremaining 0\n1 true 1 1\ntail 1 ff00ffffffffff\nremaining 1\n4095 false 3 3\ntail 0 ffffffffffffff\nremaining 3\n4096 false 3 3\ntail 0 ffffffffffffff\nremaining 3\n4097 false 3 3\ntail 0 ffffffffffffff\nremaining 3\n8192 false 3 3\ntail 0 ffffffffffffff\nremaining 3\n8193 false 3 3\ntail 0 ffffffffffffff\nremaining 3\n20000 false 3 3\ntail 0 ffffffffffffff\nremaining 3\n",
+        "stderr": ""
+      }
+    },
+    "javascript": {
+      "build": {
+        "exit": 0,
+        "stderr": ""
+      },
+      "run": {
+        "exit": 0,
+        "stdout": "0 true 0 0\ntail 0 ffffffffffffff\nremaining 0\n1 true 1 1\ntail 1 ff00ffffffffff\nremaining 1\n4095 true 4095 4095\ntail 2 ffd9e6ffffffff\nremaining 4095\n4096 true 4096 4096\ntail 2 ffe6f3ffffffff\nremaining 4096\n4097 true 4097 4097\ntail 2 fff300ffffffff\nremaining 4097\n8192 true 8192 8192\ntail 2 ffe6f3ffffffff\nremaining 8192\n8193 true 8193 8193\ntail 2 fff300ffffffff\nremaining 8193\n20000 true 20000 20000\ntail 2 ff8693ffffffff\nremaining 20000\n",
+        "stderr": ""
+      }
+    },
+    "agree": false
+  }
+}

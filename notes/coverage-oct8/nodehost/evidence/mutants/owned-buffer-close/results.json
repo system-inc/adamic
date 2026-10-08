@@ -1,0 +1,45 @@
+{
+  "fs_fd_ownership": {
+    "node": {
+      "exit": 0,
+      "stdout": "write EBADF|EBADF: bad file descriptor, write\nafter-error hello\nstill-open 1\nread EBADF|EBADF: bad file descriptor, read\nafter-error-write 2\nok!\nowned-read EISDIR|EISDIR: illegal operation on a directory, read\nowned-write EBADF|EBADF: bad file descriptor, write\nfd-reused true\nok!\n",
+      "stderr": ""
+    },
+    "sanitize": {
+      "build": {
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "run": {
+        "exit": 0,
+        "stdout": "write EBADF|EBADF: bad file descriptor, write\nafter-error hello\nstill-open 1\nread EBADF|EBADF: bad file descriptor, read\nafter-error-write 2\nok!\nowned-read EISDIR|EISDIR: illegal operation on a directory, read\nowned-write EBADF|EBADF: bad file descriptor, write\nfd-reused false\nok!\n",
+        "stderr": ""
+      }
+    },
+    "release": {
+      "build": {
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "run": {
+        "exit": 0,
+        "stdout": "write EBADF|EBADF: bad file descriptor, write\nafter-error hello\nstill-open 1\nread EBADF|EBADF: bad file descriptor, read\nafter-error-write 2\nok!\nowned-read EISDIR|EISDIR: illegal operation on a directory, read\nowned-write EBADF|EBADF: bad file descriptor, write\nfd-reused false\nok!\n",
+        "stderr": ""
+      }
+    },
+    "javascript": {
+      "build": {
+        "exit": 0,
+        "stderr": ""
+      },
+      "run": {
+        "exit": 0,
+        "stdout": "write EBADF|EBADF: bad file descriptor, write\nafter-error hello\nstill-open 1\nread EBADF|EBADF: bad file descriptor, read\nafter-error-write 2\nok!\nowned-read EISDIR|EISDIR: illegal operation on a directory, read\nowned-write EBADF|EBADF: bad file descriptor, write\nfd-reused true\nok!\n",
+        "stderr": ""
+      }
+    },
+    "agree": false
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "fs_zero_read": {
+    "node": {
+      "exit": 0,
+      "stdout": "zero 0 0\nzero 2 0\n",
+      "stderr": ""
+    },
+    "sanitize": {
+      "build": {
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "run": {
+        "exit": 0,
+        "stdout": "error TypeError|The argument 'buffer' is empty and cannot be written. Received <Buffer >\nerror RangeError|The value of \"fd\" is out of range. It must be >= 0 && <= 2147483647. Received -1\n",
+        "stderr": ""
+      }
+    },
+    "release": {
+      "build": {
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "run": {
+        "exit": 0,
+        "stdout": "error TypeError|The argument 'buffer' is empty and cannot be written. Received <Buffer >\nerror RangeError|The value of \"fd\" is out of range. It must be >= 0 && <= 2147483647. Received -1\n",
+        "stderr": ""
+      }
+    },
+    "javascript": {
+      "build": {
+        "exit": 0,
+        "stderr": ""
+      },
+      "run": {
+        "exit": 0,
+        "stdout": "zero 0 0\nzero 2 0\n",
+        "stderr": ""
+      }
+    },
+    "agree": false
+  }
+}

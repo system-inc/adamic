@@ -1,0 +1,45 @@
+{
+  "host_directory": {
+    "node": {
+      "exit": 0,
+      "stdout": "cwd true true\nchild true\nsaved true\nc/\nENOENT: no such file or directory, chdir '<root>/child' -> 'missing'\n",
+      "stderr": ""
+    },
+    "sanitize": {
+      "build": {
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "run": {
+        "exit": 0,
+        "stdout": "cwd false true\nchild false\nsaved false\nc/\nENOENT: no such file or directory, chdir '/workspace/adamic' -> 'missing'\n",
+        "stderr": ""
+      }
+    },
+    "release": {
+      "build": {
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "run": {
+        "exit": 0,
+        "stdout": "cwd false true\nchild false\nsaved false\nc/\nENOENT: no such file or directory, chdir '/workspace/adamic' -> 'missing'\n",
+        "stderr": ""
+      }
+    },
+    "javascript": {
+      "build": {
+        "exit": 0,
+        "stderr": ""
+      },
+      "run": {
+        "exit": 0,
+        "stdout": "cwd true true\nchild true\nsaved true\nc/\nENOENT: no such file or directory, chdir '<root>/child' -> 'missing'\n",
+        "stderr": ""
+      }
+    },
+    "agree": false
+  }
+}

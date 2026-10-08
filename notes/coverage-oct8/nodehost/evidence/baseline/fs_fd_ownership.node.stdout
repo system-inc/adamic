@@ -1,0 +1,10 @@
+write EBADF|EBADF: bad file descriptor, write
+after-error hello
+still-open 1
+read EBADF|EBADF: bad file descriptor, read
+after-error-write 2
+ok!
+owned-read EISDIR|EISDIR: illegal operation on a directory, read
+owned-write EBADF|EBADF: bad file descriptor, write
+fd-reused true
+ok!

@@ -1,0 +1,14 @@
+TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received 'x\ud800\x00'
+TypeError|ERR_INVALID_ARG_VALUE|The argument 'prefix' must be a string, Uint8Array, or URL without null bytes. Received 'x\ud800\x00'
+TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received 'x\udfff\x00'
+TypeError|ERR_INVALID_ARG_VALUE|The argument 'prefix' must be a string, Uint8Array, or URL without null bytes. Received 'x\udfff\x00'
+TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received 'x\x85\x00'
+TypeError|ERR_INVALID_ARG_VALUE|The argument 'prefix' must be a string, Uint8Array, or URL without null bytes. Received 'x\x85\x00'
+TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received 'x \x00'
+TypeError|ERR_INVALID_ARG_VALUE|The argument 'prefix' must be a string, Uint8Array, or URL without null bytes. Received 'x \x00'
+TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received '\x00\n\t\b\x0B\f\r'
+TypeError|ERR_INVALID_ARG_VALUE|The argument 'prefix' must be a string, Uint8Array, or URL without null bytes. Received '\x00\n\t\b\x0B\f\r'
+TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received '\'"`$\x00'
+TypeError|ERR_INVALID_ARG_VALUE|The argument 'prefix' must be a string, Uint8Array, or URL without null bytes. Received '\'"`$\x00'
+TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...
+TypeError|ERR_INVALID_ARG_VALUE|The argument 'prefix' must be a string, Uint8Array, or URL without null bytes. Received 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...

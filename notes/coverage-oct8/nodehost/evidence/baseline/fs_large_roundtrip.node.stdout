@@ -1,0 +1,24 @@
+0 true 0 0
+tail 0 ffffffffffffff
+remaining 0
+1 true 1 1
+tail 1 ff00ffffffffff
+remaining 1
+4095 true 4095 4095
+tail 2 ffd9e6ffffffff
+remaining 4095
+4096 true 4096 4096
+tail 2 ffe6f3ffffffff
+remaining 4096
+4097 true 4097 4097
+tail 2 fff300ffffffff
+remaining 4097
+8192 true 8192 8192
+tail 2 ffe6f3ffffffff
+remaining 8192
+8193 true 8193 8193
+tail 2 fff300ffffffff
+remaining 8193
+20000 true 20000 20000
+tail 2 ff8693ffffffff
+remaining 20000

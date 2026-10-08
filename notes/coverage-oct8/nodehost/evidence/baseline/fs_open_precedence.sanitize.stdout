@@ -1,0 +1,31 @@
+nul,bad,-1: TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received 'bad\x00path'
+nul,bad,0.5: TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received 'bad\x00path'
+nul,bad,NaN: TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received 'bad\x00path'
+nul,bad,Infinity: TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received 'bad\x00path'
+nul,bad,4294967296: TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received 'bad\x00path'
+nul,r<nul>,-1: TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received 'bad\x00path'
+nul,r<nul>,0.5: TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received 'bad\x00path'
+nul,r<nul>,NaN: TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received 'bad\x00path'
+nul,r<nul>,Infinity: TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received 'bad\x00path'
+nul,r<nul>,4294967296: TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received 'bad\x00path'
+nul,r,-1: TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received 'bad\x00path'
+nul,r,0.5: TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received 'bad\x00path'
+nul,r,NaN: TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received 'bad\x00path'
+nul,r,Infinity: TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received 'bad\x00path'
+nul,r,4294967296: TypeError|ERR_INVALID_ARG_VALUE|The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received 'bad\x00path'
+missing,bad,-1: TypeError|ERR_INVALID_ARG_VALUE|The argument 'flags' is invalid. Received 'bad'
+missing,bad,0.5: TypeError|ERR_INVALID_ARG_VALUE|The argument 'flags' is invalid. Received 'bad'
+missing,bad,NaN: TypeError|ERR_INVALID_ARG_VALUE|The argument 'flags' is invalid. Received 'bad'
+missing,bad,Infinity: TypeError|ERR_INVALID_ARG_VALUE|The argument 'flags' is invalid. Received 'bad'
+missing,bad,4294967296: TypeError|ERR_INVALID_ARG_VALUE|The argument 'flags' is invalid. Received 'bad'
+missing,r<nul>,-1: TypeError|ERR_INVALID_ARG_VALUE|The argument 'flags' is invalid. Received 'r\x00'
+missing,r<nul>,0.5: TypeError|ERR_INVALID_ARG_VALUE|The argument 'flags' is invalid. Received 'r\x00'
+missing,r<nul>,NaN: TypeError|ERR_INVALID_ARG_VALUE|The argument 'flags' is invalid. Received 'r\x00'
+missing,r<nul>,Infinity: TypeError|ERR_INVALID_ARG_VALUE|The argument 'flags' is invalid. Received 'r\x00'
+missing,r<nul>,4294967296: TypeError|ERR_INVALID_ARG_VALUE|The argument 'flags' is invalid. Received 'r\x00'
+missing,r,-1: RangeError|ERR_OUT_OF_RANGE|The value of "mode" is out of range. It must be >= 0 && <= 4294967295. Received -1
+missing,r,0.5: RangeError|ERR_OUT_OF_RANGE|The value of "mode" is out of range. It must be an integer. Received 0.5
+missing,r,NaN: RangeError|ERR_OUT_OF_RANGE|The value of "mode" is out of range. It must be an integer. Received NaN
+missing,r,Infinity: RangeError|ERR_OUT_OF_RANGE|The value of "mode" is out of range. It must be an integer. Received Infinity
+missing,r,4294967296: RangeError|ERR_OUT_OF_RANGE|The value of "mode" is out of range. It must be >= 0 && <= 4294967295. Received 4294967296
+exists false
