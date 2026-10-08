@@ -1,0 +1,15 @@
+{
+  "name": "react/no-string-refs",
+  "kinds": [
+    "JsxAttribute",
+    "PropertyAccessExpression",
+    "ElementAccessExpression"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleReactNoStringRefs",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestNoStringRefs"
+}

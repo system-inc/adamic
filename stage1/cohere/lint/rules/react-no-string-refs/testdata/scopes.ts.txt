@@ -1,0 +1,13 @@
+class H extends React.Component {
+    f = this.refs.x;
+    static m() { return (this).refs; }
+    read() { return this[refs].x; }
+    literals() { return this["refs"].x + this[`refs`].x; }
+    nested() { class Inner { m() { return this.refs; } } }
+}
+var A = createReactClass({ m: () => this.refs.x });
+var B = React.createReactClass({ get m() { return this.refs.x; } });
+var C = (createReactClass)({ m() { return this.refs.x; } });
+var D = createReactClass({ m: function() { return (() => this.refs.x)(); } });
+var silent = React.createClass({ m() { return this.refs.x; } });
+var direct = createReactClass({ m: this.refs.x });

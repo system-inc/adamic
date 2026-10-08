@@ -1,0 +1,84 @@
+import type { RuleContext } from '../../context.ts';
+import type { HelperNode } from '../../helpers/react/nodes.a';
+import type { HelperNode as JsxNode } from '../../helpers/jsx/ast.a';
+import { project } from '../../helpers/react/projection.a';
+import { reactEs6ComponentClass } from '../../helpers/react/react_es6_component_class.a';
+import { isComponentBase } from '../../helpers/react/react_component_base.a';
+import { isComponentBaseName } from '../../helpers/react/component_base_name.a';
+import { attributeName } from '../../helpers/jsx/attribute_name.a';
+import { skipParenthesesOptional } from '../../helpers/rules-react/skip_parentheses_optional.a';
+import { isCreateReactClassCall } from '../../helpers/rules-react/is_create_react_class_call.a';
+import { enclosingClassOf } from '../../helpers/rules-react/enclosing_class_of.a';
+import { isThisExpression } from '../../helpers/rules-react/is_this_expression.a';
+import { thisRefsDeprecated, stringInRefDeprecated } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    nodes: readonly HelperNode[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    prepare(root: number): void {
+        this.nodes = project(this.context.parser.nodes);
+    }
+    stringValue(initializer: number): boolean {
+        const context = this.context;
+        const kind = context.kind(initializer);
+        if(kind === 'StringLiteral') { return true; }
+        if(kind !== 'JsxExpression') { return false; }
+        const inner = context.node(initializer).children[0] ?? -1;
+        const innerKind = context.kind(inner);
+        if(innerKind === 'StringLiteral') { return true; }
+        return (innerKind === 'NoSubstitutionTemplateLiteral' || innerKind === 'TemplateExpression') &&
+            context.settings.read('notemplateliterals', 'false') === 'true';
+    }
+    enclosingComponent(index: number): boolean {
+        const context = this.context;
+        // Go stops at the nearest class, even when that class is not a component.
+        const nearestClass = enclosingClassOf(context, index);
+        if(nearestClass >= 0 && reactEs6ComponentClass(this.nodes, nearestClass,
+            (expression: number): boolean => isComponentBase(this.nodes, expression, isComponentBaseName))) {
+            return true;
+        }
+        // The ES5 search continues through every enclosing function scope.
+        for(let current = index; current >= 0; current = context.parent(current)) {
+            if(!context.functionLike(current)) { continue; }
+            const parent = context.parent(current);
+            let object = -1;
+            if(context.kind(parent) === 'ObjectLiteralExpression') { object = parent; }
+            else if(context.kind(parent) === 'PropertyAssignment' &&
+                context.kind(context.parent(parent)) === 'ObjectLiteralExpression') { object = context.parent(parent); }
+            if(object >= 0 && isCreateReactClassCall(context, context.parent(object))) { return true; }
+        }
+        return false;
+    }
+    visit(index: number): void {
+        const context = this.context;
+        const kind = context.kind(index);
+        if(kind === 'JsxAttribute') {
+            const property = context.node(index);
+            const keyIndex = property.children[0] ?? -1;
+            const properties: readonly number[] = [];
+            const jsxNodes: readonly JsxNode[] = [
+                { kind: property.kind, text: property.text, name: keyIndex < 0 ? -1 : 1,
+                    tagName: -1, attributes: -1, properties, propertiesPresent: false },
+                { kind: context.kind(keyIndex), text: keyIndex < 0 ? '' : context.node(keyIndex).text,
+                    name: -1, tagName: -1, attributes: -1, properties, propertiesPresent: false },
+            ];
+            const name = attributeName(jsxNodes, 0);
+            if(!name.named || name.name !== 'ref') { return; }
+            if(this.stringValue(context.node(index).children[1] ?? -1)) {
+                context.reportNode(index, 'react/no-string-refs', 'stringInRefDeprecated', stringInRefDeprecated);
+            }
+            return;
+        }
+        if(context.settings.read('checkthisrefs', 'false') !== 'true') { return; }
+        if(kind !== 'PropertyAccessExpression' && kind !== 'ElementAccessExpression') { return; }
+        const name = context.property(index);
+        if(context.kind(name) !== 'Identifier' || context.node(name).text !== 'refs') { return; }
+        const receiver = skipParenthesesOptional(context, context.node(index).children[0] ?? -1);
+        if(isThisExpression(context, receiver) && this.enclosingComponent(index)) {
+            // Go intentionally reports this[refs], but not this["refs"].
+            context.reportNode(index, 'react/no-string-refs', 'thisRefsDeprecated', thisRefsDeprecated);
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

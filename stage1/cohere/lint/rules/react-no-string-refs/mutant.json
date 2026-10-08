@@ -1,0 +1,5 @@
+{
+  "name": "string-refs-accept-string-attribute",
+  "from": "if(kind === 'StringLiteral') { return true; }",
+  "to": "if(kind === 'StringLiteral') { return false; }"
+}

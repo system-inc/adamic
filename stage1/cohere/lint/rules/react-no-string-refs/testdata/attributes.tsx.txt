@@ -1,0 +1,8 @@
+const a = <div ref="hello" />;
+const b = <Foo.Bar ref={'world'} />;
+const c = <div ref={"🌍"} />;
+const clean = <div REF="hello" refs="hello" ref={123} />;
+const bare = <div ref />;
+const computed = <div ref={"a" + "b"} />;
+const namespaced = <svg xlink:ref="hello" />;
+const spread = <div {...{ref: "hello"}} />;

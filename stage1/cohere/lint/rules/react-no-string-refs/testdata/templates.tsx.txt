@@ -1,0 +1,3 @@
+const a = <div ref={`hello`} />;
+const b = <div ref={`hello${index}`} />;
+const c = <div ref={() => hello} />;

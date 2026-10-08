@@ -1,0 +1,18 @@
+{
+  "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/scratch/s13-typescript",
+  "ADAMIC_LINT_BENCH": "1",
+  "ADAMIC_LINT_PROFILE_DIR": "/workspace/scratch/s13-profile.mlxNAZ",
+  "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/scratch/s13-profile.mlxNAZ",
+  "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot",
+  "GOPROXY": "https://proxy.golang.org|direct",
+  "nproc": "5",
+  "load_before": "1.03 3.94 3.68 1/148 7870",
+  "command": [
+    "go",
+    "test",
+    "./stage1/cohere/lint",
+    "-count=1",
+    "-json",
+    "-timeout=60m"
+  ]
+}
