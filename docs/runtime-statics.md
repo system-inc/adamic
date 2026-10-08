@@ -471,3 +471,14 @@ Additional storage inherited from area/library, audited during the runtime compi
 - `from_codes.c:name_cache:1`: name slot cache. The merged packed cache publishes and reads with atomic operations, including concurrent error construction.
 - `node_fs_directory.c:target_before:1`, `node_fs_directory.c:arrow:1`, and `node_fs_directory.c:quote:2`: immortal error-message strings initialized statically. No literal cache writes or registration.
 - `union.c:shape_types:1`: area/library's process-wide shape-type metadata registry, written by adamic_register_shape_types during generated object construction and read by dynamic_slot. Preserved from the area, not added by the regex compiler. Unsafe today for concurrent registration/dynamic reads: neither this head nor metadata next links are protected. Requires the area's registry owner to arrange registration before the pool or synchronized publication; this merge does not certify that inherited concurrency behavior.
+
+Descriptor runtime inventory: `runtime-file:library_object_descriptors.c` and
+`runtime-file:library_object_descriptors.h` were reviewed. The descriptor field
+names, reference flags and shape (`descriptor_names`, `descriptor_references`,
+`descriptor_shape`) are const storage initialized before any pool, with no writers.
+The header adds only a type and function declarations.
+
+- `library_object_descriptors.c:type_error:1`: function-local immortal TypeError
+  string, initialized statically by ADAMIC_STRING before any pool. Its zero count
+  makes retain/release skip writes; the literal-index sentinel prevents string
+  cache mutation. No other writers, lazy registration or shared mutable state.
