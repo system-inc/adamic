@@ -95,7 +95,7 @@ export function render(nodes: readonly CssNode[], index: number, input: Input): 
             fields.set(key, quote(node.get(key)));
         }
         else if(node.booleans.has(key)) {
-            fields.set(key, node.booleans.get(key) === true ? 'true' : 'false');
+            fields.set(key, node.booleans.get(key) ? 'true' : 'false');
         }
     }
     if(node.start !== undefined && node.end !== undefined && (node.range[0] !== node.start.offset || node.range[1] !== node.end.offset)) {
