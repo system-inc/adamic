@@ -17,11 +17,6 @@ import (
 	"strings"
 	"testing"
 	"time"
-
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 )
 
 const repository = "../../.."
@@ -137,26 +132,34 @@ func goOracleFrom(t *testing.T, sourceRoot string) string {
 
 func buildPort(t *testing.T, directory string, sanitize bool) string {
 	t.Helper()
-	prepareRegistry(t, directory)
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		t.Fatal(err)
-	}
-	program.EnableTSGo()
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	source := native.C(lowered)
+	built := checkerCompile(t, directory)
 	archive := ""
-	if native.UsesTSGo(lowered) {
-		source, err = native.TSGoC(lowered)
-		if err != nil {
-			t.Fatal(err)
-		}
+	if built.bridge {
 		archive = checkerArchive(t, sanitize)
 	}
-	return checkerBinary(t, source, archive, sanitize)
+	started := time.Now()
+	binary := checkerBinary(t, built.c, archive, sanitize)
+	t.Logf("checker native build: %s", time.Since(started))
+	return binary
+}
+
+// Each registered mutant is built once and owns its binary until its subtest
+// completes. Retaining all 75 checker-linked binaries adds no build reuse.
+func buildMutantPort(t *testing.T, directory string) string {
+	t.Helper()
+	built := checkerCompile(t, directory)
+	archive := ""
+	if built.bridge {
+		archive = checkerArchive(t, true)
+	}
+	started := time.Now()
+	binary, err := compileCheckerBinary(built.c, archive, true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { os.RemoveAll(filepath.Dir(binary)) })
+	t.Logf("checker native mutant build: %s", time.Since(started))
+	return binary
 }
 
 func node(t *testing.T, directory, manifest string, count bool) execution {
@@ -441,6 +444,7 @@ func compareWithJavaScript(t *testing.T, oracle, binary, directory, path, module
 		prefix := filepath.Join(t.TempDir(), "transcript")
 		native := execute(t, "", binary, "--manifest", path, "--record", prefix)
 		runner := filepath.Join(repository, "oracle/node.mjs")
+		t.Logf("typed runtime time: Go program and lint=%s native program, lint and recording=%s", want.duration, native.duration)
 		for _, side := range []struct {
 			name string
 			run  execution
@@ -452,6 +456,7 @@ func compareWithJavaScript(t *testing.T, oracle, binary, directory, path, module
 			if diff := difference(side.run.output, want.output); diff != "" {
 				t.Fatalf("%s: %s", side.name, diff)
 			}
+			t.Logf("typed runtime time: %s=%s", side.name, side.run.duration)
 		}
 		t.Logf("live Go, native, Node and emitted JavaScript replay identical: %d bytes", len(want.output))
 		return want.output
@@ -929,7 +934,7 @@ func TestMutants(t *testing.T) {
 			binary := func() string {
 				mutantBuilds <- struct{}{}
 				defer func() { <-mutantBuilds }()
-				return buildPort(t, directory, true)
+				return buildMutantPort(t, directory)
 			}()
 			type runtimeSide struct {
 				name string
@@ -987,22 +992,14 @@ func rewritePortImports(t *testing.T, file, source string) string {
 
 func emittedJavaScript(t *testing.T, directory string) string {
 	t.Helper()
-	prepareRegistry(t, directory)
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		t.Fatal(err)
-	}
-	program.EnableTSGo()
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
+	built := checkerCompile(t, directory)
 	path := filepath.Join(t.TempDir(), "lint.mjs")
-	if err := os.WriteFile(path, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+	if err := os.WriteFile(path, []byte(built.javascript), 0644); err != nil {
 		t.Fatal(err)
 	}
 	return path
 }
+
 func emittedNode(t *testing.T, directory, manifest string, count bool) execution {
 	t.Helper()
 	return runJavaScript(t, emittedJavaScript(t, directory), manifest, count)

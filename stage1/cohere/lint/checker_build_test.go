@@ -100,7 +100,7 @@ func compileCheckerBinary(source, archive string, sanitize bool) (string, error)
 	checkerBuildMutex.Unlock()
 	path := filepath.Join(directory, "scanner")
 	if archive != "" {
-		err = native.BuildTSGo(source, path, archive, native.Options{Sanitize: sanitize})
+		err = buildCheckerWithRuntime(source, path, archive, native.Options{Sanitize: sanitize})
 	} else {
 		err = native.Build(source, path, native.Options{Sanitize: sanitize})
 	}
@@ -111,4 +111,11 @@ func cleanupCheckerArchives() {
 	for _, directory := range checkerBuildDirectories {
 		os.RemoveAll(directory)
 	}
+}
+
+// Use the landed split builder's content-keyed runtime and object caches.
+// One clang worker per build preserves TestMutants' existing four-build bound.
+func buildCheckerWithRuntime(source, output, archive string, options native.Options) error {
+	options.Jobs = 1
+	return native.BuildSplitTSGo(source, output, archive, options)
 }

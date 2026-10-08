@@ -21,14 +21,14 @@ function run(row: string, countOnly: boolean, program = 0, replayPrefix = '', re
     const scanner = new Scanner(source.text);
     let replay: string | undefined = undefined;
     let replayError = '';
-    const rowHeader = `${path}\n${hash(source.text)}\n`;
+    const rowHeader = recordPrefix === '' && replayPrefix === '' ? '' : `${path}\n${hash(source.text)}\n`;
     if(replayPrefix !== '') {
         const transcript = readTextFile(`${replayPrefix}.${caseNumber}`);
         if(transcript.kind === 'Error') { replay = ''; replayError = transcript.message; }
         else if(!transcript.text.startsWith(rowHeader)) { replay = ''; replayError = 'transcript row differs'; }
         else { replay = transcript.text.slice(rowHeader.length); }
     }
-    const checker = program === 0 && replayPrefix === '' ? undefined : new Checker(program, path, parser, source.text, replay);
+    const checker = program === 0 && replayPrefix === '' ? undefined : new Checker(program, path, parser, source.text, replay, recordPrefix !== '');
     const settings = new Settings();
     settings.load(fields[5] ?? '');
     const linter = new Linter(

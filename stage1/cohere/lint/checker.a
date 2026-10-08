@@ -41,11 +41,12 @@ export class Checker {
     readonly refusals: Refusal[] = [];
     readonly recorded: string[] = [];
     readonly replay: Frames | undefined;
+    readonly record: boolean;
     root = -1;
     rule = '';
     reads: readonly string[] = [];
-    constructor(program: number, path: string, parser: Parser, source: string, replay: string | undefined) {
-        this.program = program; this.path = path; this.parser = parser;
+    constructor(program: number, path: string, parser: Parser, source: string, replay: string | undefined, record: boolean) {
+        this.program = program; this.path = path; this.parser = parser; this.record = record;
         this.replay = replay === undefined ? undefined : new Frames(replay);
         let bytes = 0;
         for(let index = 0; index < source.length; index++) {
@@ -71,7 +72,7 @@ export class Checker {
         const node = this.parser.node(index);
         const start = this.offsets[node.pos] ?? panic('checker span outside source');
         const end = this.offsets[node.end] ?? panic('checker span outside source');
-        const key = frame(this.path) + frame(`${start}`) + frame(`${end}`) + frame(node.kind) + frame(question);
+        const key = this.record || this.replay !== undefined ? frame(this.path) + frame(`${start}`) + frame(`${end}`) + frame(node.kind) + frame(question) : '';
         let value = '';
         if(this.replay !== undefined) {
             if(this.replay.cursor === this.replay.text.length) { return this.refuse(start, end, 'missing transcript entry'); }
@@ -86,12 +87,12 @@ export class Checker {
             // Library's result envelope preserves the C error buffer verbatim.
             const inspected = inspect(this.program, this.path, start, end, node.kind, question);
             if(inspected.kind === 'Error') {
-                this.recorded.push(frame(key) + frame('Error') + frame(inspected.message));
+                if(this.record) { this.recorded.push(frame(key) + frame('Error') + frame(inspected.message)); }
                 return this.refuse(start, end, inspected.message);
             }
             value = inspected.value;
         }
-        this.recorded.push(frame(key) + frame('Value') + frame(value));
+        if(this.record) { this.recorded.push(frame(key) + frame('Value') + frame(value)); }
         return new Answer(value, '');
     }
     finish(): void {

@@ -1,7 +1,6 @@
 package lint
 
 import (
-	"context"
 	"fmt"
 	"os"
 	"os/exec"
@@ -10,8 +9,6 @@ import (
 	"testing"
 
 	bridge "github.com/system-inc/adamic/bridge/tsgo"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -80,27 +77,16 @@ func TestProfileArtifacts(t *testing.T) {
 
 func buildProfile(t *testing.T, directory string) {
 	t.Helper()
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		t.Fatal(err)
-	}
-	program.EnableTSGo()
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	source, err := native.TSGoC(lowered)
-	if err != nil {
-		t.Fatal(err)
-	}
+	built := checkerCompile(t, directory)
+	source := built.c
 	archive := checkerArchive(t, false)
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0644); err != nil {
 		t.Fatal(err)
 	}
-	if err := native.BuildTSGo(source, filepath.Join(directory, "scanner"), archive, native.Options{}); err != nil {
+	if err := buildCheckerWithRuntime(source, filepath.Join(directory, "scanner"), archive, native.Options{}); err != nil {
 		t.Fatal(err)
 	}
-	if err := native.BuildTSGo(source, filepath.Join(directory, "counted"), archive, native.Options{Count: true}); err != nil {
+	if err := buildCheckerWithRuntime(source, filepath.Join(directory, "counted"), archive, native.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	runtime := filepath.Join(repository, "internal/native/runtime")
