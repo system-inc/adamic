@@ -60,3 +60,8 @@ pass without changing its receiver or constant-zero index. This proves the array
 check, not support for initially absent optional-field writes or the exact full
 checker expression. Its erased check mutant exits 70 with a different panic,
 which fails the exact indexed-site stderr assertion.
+
+Group 2 pushed as 59257d6a. Group 3 adds independently observable parameter-use
+variants D082 through D086; all five pass in 24.516s. Each variant has exactly one
+node.parameters[0] guard. These ledger rows diagnose later uses of the same
+original parameter read; they are not five different original indexed expressions.
