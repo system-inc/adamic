@@ -378,3 +378,49 @@ func (l *lowering) genericIteratorFactoryKnown(member *ast.Symbol, source, itera
 	}
 	return l.iterationReturnsClass(body, iterator, source, 0)
 }
+
+// A returned receiver keeps its dynamic subclass, even when the result annotation names
+// the base. Follow local aliases too; they do not make this an exact base instance.
+func (l *lowering) iterationFactoryReturnsThis(member *ast.Symbol) bool {
+	var receiver func(*ast.Node, int) bool
+	receiver = func(node *ast.Node, depth int) bool {
+		if node == nil || depth > 16 {
+			return false
+		}
+		node = ast.SkipParentheses(node)
+		if node.Kind == ast.KindThisKeyword {
+			return true
+		}
+		if ast.IsIdentifier(node) {
+			symbol := l.symbol(node)
+			if symbol != nil && len(symbol.Declarations) == 1 && symbol.Declarations[0].Kind == ast.KindVariableDeclaration {
+				return receiver(symbol.Declarations[0].AsVariableDeclaration().Initializer, depth+1)
+			}
+		}
+		return false
+	}
+	for _, root := range l.checker.GetRootSymbols(member) {
+		for _, declaration := range root.Declarations {
+			if declaration.Kind != ast.KindMethodDeclaration || declaration.Body() == nil {
+				continue
+			}
+			found := false
+			var visit ast.Visitor
+			visit = func(node *ast.Node) bool {
+				if ast.IsFunctionLike(node) {
+					return false
+				}
+				if node.Kind == ast.KindReturnStatement && receiver(node.AsReturnStatement().Expression, 0) {
+					found = true
+					return true
+				}
+				return node.ForEachChild(visit)
+			}
+			declaration.Body().ForEachChild(visit)
+			if found {
+				return true
+			}
+		}
+	}
+	return false
+}

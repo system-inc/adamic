@@ -213,6 +213,18 @@ func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
 	if err != nil {
 		return nil, err
 	}
+	// Until protocol calls dispatch virtually, prove that a returned receiver cannot
+	// override next/return or introduce a close method hidden by the return annotation.
+	if l.iterationFactoryReturnsThis(entry) {
+		members := []*ast.Symbol{next}
+		if close != nil {
+			members = append(members, close)
+		}
+		presence := close != nil
+		if !l.iterationOrigin(where, members, &presence, 0) {
+			return nil, &Refused{Where: l.program.Where(where), What: "an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin)", Fix: "return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type"}
+		}
+	}
 	sourceKnown := l.iterationOrigin(where, []*ast.Symbol{entry}, nil, 0)
 	iteratorKnown := sourceKnown && l.iterationFactoryKnown(entry, next, close)
 	if isClassInstance(source) && len(l.checker.GetTypeArguments(source)) > 0 && !l.knownIterationClass(where, source, 0) {
