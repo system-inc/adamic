@@ -49,6 +49,7 @@ correctMain=""
 correctMinutes=""
 correctNote=""
 fastGate=""
+gateKind=fast
 smokeReviewed=no
 pauseException=""
 while [ "$#" -gt 0 ]; do
@@ -57,6 +58,10 @@ while [ "$#" -gt 0 ]; do
 	--meter-run) meterRun=$2; shift 2 ;;
 	--correct-minutes) correctMain=$2; correctMinutes=$3; correctNote=$4; shift 4 ;;
 	--fast-gate) fastGate=${2#origin/}; shift 2 ;;
+	# --full-gate <gate-logs ref>/full-main of this exact sha: the whole gate as the landing's verdict
+	# and main's confirmation in one (@system_adamic, October 8). It is a superset of the fast gate,
+	# deferred tests included, so the landed tree is exactly the tree that passed everything.
+	--full-gate) fastGate=${2#origin/}; gateKind=full; shift 2 ;;
 	--smoke-list-reviewed) smokeReviewed=yes; shift ;;
 	--revert) pauseException=revert; shift ;;
 	--fix-forward) pauseException="fix-forward ${2#origin/}"; shift 2 ;;
@@ -117,12 +122,12 @@ if [ -n "$fastGate" ]; then
 	# fast.json, past what one argument can carry (stage 3 batch 4, October 8).
 	fastJSON=$(mktemp)
 	trap 'rm -f "$fastJSON"' EXIT
-	if ! git show "origin/${fastGate}:fast.json" >"$fastJSON" 2>/dev/null; then
-		echo "refused: ${fastGate} has no fast.json" >&2
+	if ! git show "origin/${fastGate}:${gateKind}.json" >"$fastJSON" 2>/dev/null; then
+		echo "refused: ${fastGate} has no ${gateKind}.json" >&2
 		exit 1
 	fi
-	if ! verdict=$(python3 - "$sha" "$statusLine" "$fastGate" "$fastJSON" <<'VERDICT'
-import json, sys
+	if ! verdict=$(GATE_KIND="$gateKind" python3 - "$sha" "$statusLine" "$fastGate" "$fastJSON" <<'VERDICT'
+import json, os, sys
 sha, status, log = sys.argv[1], sys.argv[2], sys.argv[3]
 with open(sys.argv[4]) as fastFile:
     fast = json.load(fastFile)
@@ -143,7 +148,10 @@ if fast.get("uncached_tests") is not True:
 # A green line alone isn't the verdict: an exception inside a stage once left failure unset and
 # published green (EMFILE under load, round 65's angel). Every planned stage must have run, and where
 # the log records each stage's exit, every one must be 0.
-planned = ("build", "vet", "tests", "smoke", "census")
+kind = os.environ.get("GATE_KIND", "fast")
+planned = ("build", "vet", "tests", "census", "stage3") if kind == "full" else ("build", "vet", "tests", "smoke", "census")
+if kind == "full" and fast.get("packages") != "all":
+    problems.append("a full gate must run every package, this one ran %r" % fast.get("packages"))
 ran = fast.get("steps_seconds") or {}
 missing = [stage for stage in planned if stage not in ran]
 if missing:
@@ -175,7 +183,7 @@ changed = subprocess.run(["git", "diff", "--name-only", fast.get("base", sha), s
 covered = "Gate-runs: deferred" in message or any(
     path.startswith(("internal/native/", "internal/lower/", "internal/ir/", "internal/javascript/"))
     and not path.endswith("_test.go") and "/testdata/" not in path for path in changed)
-if covered:
+if covered and kind != "full":
     results = fast.get("deferred_run_results") or {}
     if fast.get("deferred_all_requested") is not True:
         problems.append("it changes emitted C or the runtime but didn't run its deferred tests (put Gate-runs: deferred on the candidate)")
@@ -186,12 +194,13 @@ if problems:
     print("; ".join(problems))
     sys.exit(1)
 seconds = float(fast["wall_seconds"])
-packages = fast.get("packages") or []
+packages = (fast.get("package_list") if kind == "full" else fast.get("packages")) or []
 machine = fast.get("machine") or {}
-print(fast["base"])
+# A full gate tested this exact tree whole; its base for the moved-paths check below is where it left main.
+print(subprocess.run(["git", "merge-base", sha, "origin/main"], capture_output=True, text=True).stdout.strip() if kind == "full" else fast["base"])
 print("%.2f" % (seconds / 60))
 print(fast["pass"], fast["fail"], fast["skip"])
-print("fast gate %s: %.0f s on %s (%s threads), tools %s, base %s, %d packages (%s), smoke list %s blob %s" % (
+print(kind + " gate %s: %.0f s on %s (%s threads), tools %s, base %s, %d packages (%s), smoke list %s blob %s" % (
     log, seconds, machine.get("hostname", "?"), machine.get("nproc", "?"), str(fast.get("tools_sha", "?"))[:8],
     fast["base"][:8], len(packages), " ".join(packages), fast.get("smoke_list", "?"), str(fast.get("smoke_list_blob", "?"))[:8]))
 VERDICT
