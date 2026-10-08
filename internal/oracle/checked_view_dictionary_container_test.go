@@ -28,9 +28,9 @@ func TestCheckedViewDictionaryCommandOptions(t *testing.T) {
 					continue
 				}
 				found := map[string]string{"wrong": "number", "missing": "missing"}[name]
-				want := "adamic: panic: field read failed: view.options is not a CompilerOptions; expected CompilerOptions, found " + found + "\n"
+				want := "adamic: panic: cast failed: field read failed: view.options is not a CompilerOptions; expected CompilerOptions, found " + found + "\n"
 				if name == "missing" {
-					want = "adamic: panic: field read failed: view.options is not initialized; expected CompilerOptions, found missing\n"
+					want = "adamic: panic: cast failed: field read failed: view.options is not initialized; expected CompilerOptions, found missing\n"
 				}
 				if got.exitCode != 70 || string(got.stderr) != want {
 					t.Fatalf("container check: %#v; want %q", got, want)
@@ -71,12 +71,12 @@ func TestCheckedViewDictionaryContainerBatch(t *testing.T) {
 						}
 						continue
 					}
-					want := "adamic: panic: field read failed: view." + shape.field + " is not a " + shape.declared + "; expected " + shape.declared + ", found number\n"
+					want := "adamic: panic: cast failed: field read failed: view." + shape.field + " is not a " + shape.declared + "; expected " + shape.declared + ", found number\n"
 					if strings.Contains(shape.declared, "undefined") {
-						want = "adamic: panic: field read failed: view." + shape.field + " matches no member of " + shape.declared + "; expected " + shape.declared + ", found number\n"
+						want = "adamic: panic: cast failed: field read failed: view." + shape.field + " matches no member of " + shape.declared + "; expected " + shape.declared + ", found number\n"
 					}
 					if name == "missing" {
-						want = "adamic: panic: field read failed: view." + shape.field + " is not initialized; expected " + shape.declared + ", found missing\n"
+						want = "adamic: panic: cast failed: field read failed: view." + shape.field + " is not initialized; expected " + shape.declared + ", found missing\n"
 					}
 					if got.exitCode != 70 || string(got.stderr) != want {
 						t.Fatalf("pinned container check: %#v; want %q", got, want)

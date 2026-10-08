@@ -1,5 +1,5 @@
 {
-  "compiler_revision": "675951e70113ce5acaad80c5944e3d991f576edc",
+  "compiler_revision": "1af953e64440a2d77526e5c76af6d801b1630e32",
   "node_version": "v24.19.0",
   "results": [
     {
@@ -8,7 +8,7 @@
       "node": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/01_enum_declaration.a.source.mjs"
+          "/tmp/step09-delivery-observed/01_enum_declaration.a.source.mjs"
         ],
         "exit": 0,
         "stdout": "before\nkind=267\nafter\n",
@@ -18,7 +18,7 @@
       "diagnostic": "",
       "native": {
         "command": [
-          "/tmp/step09-scalars-committed-observation/01_enum_declaration.a.native"
+          "/tmp/step09-delivery-observed/01_enum_declaration.a.native"
         ],
         "exit": 0,
         "stdout": "before\nkind=267\nafter\n",
@@ -27,7 +27,7 @@
       "javascript": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/01_enum_declaration.a.compiled.mjs"
+          "/tmp/step09-delivery-observed/01_enum_declaration.a.compiled.mjs"
         ],
         "exit": 0,
         "stdout": "before\nkind=267\nafter\n",
@@ -41,7 +41,7 @@
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/01_enum_declaration.a.output-mutant.mjs"
+              "/tmp/step09-delivery-observed/01_enum_declaration.a.output-mutant.mjs"
             ],
             "exit": 0,
             "stdout": "before\nkind=267\nmutant\n",
@@ -56,7 +56,7 @@
       "node": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/01_enum_declaration_fails.a.source.mjs"
+          "/tmp/step09-delivery-observed/01_enum_declaration_fails.a.source.mjs"
         ],
         "exit": 0,
         "stdout": "before\nkind=279\nafter\n",
@@ -66,7 +66,7 @@
       "diagnostic": "",
       "native": {
         "command": [
-          "/tmp/step09-scalars-committed-observation/01_enum_declaration_fails.a.native"
+          "/tmp/step09-delivery-observed/01_enum_declaration_fails.a.native"
         ],
         "exit": 70,
         "stdout": "before\n",
@@ -75,7 +75,7 @@
       "javascript": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/01_enum_declaration_fails.a.compiled.mjs"
+          "/tmp/step09-delivery-observed/01_enum_declaration_fails.a.compiled.mjs"
         ],
         "exit": 70,
         "stdout": "before\n",
@@ -89,11 +89,11 @@
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/01_enum_declaration_fails.a.skip-check.mjs"
+              "/tmp/step09-delivery-observed/01_enum_declaration_fails.a.skip-check.mjs"
             ],
-            "exit": 70,
-            "stdout": "before\n",
-            "stderr": "adamic: panic: field read failed: result.kind expected SyntaxKind.EnumDeclaration, found number 279\n"
+            "exit": 0,
+            "stdout": "before\nkind=279\nafter\n",
+            "stderr": ""
           }
         },
         {
@@ -102,7 +102,7 @@
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/01_enum_declaration_fails.a.source.mjs"
+              "/tmp/step09-delivery-observed/01_enum_declaration_fails.a.source.mjs"
             ],
             "exit": 0,
             "stdout": "before\nkind=279\nafter\n",
@@ -117,7 +117,7 @@
       "node": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/02_name_subunion.a.source.mjs"
+          "/tmp/step09-delivery-observed/02_name_subunion.a.source.mjs"
         ],
         "exit": 0,
         "stdout": "before\nkind=Identifier\nafter\n",
@@ -127,7 +127,7 @@
       "diagnostic": "",
       "native": {
         "command": [
-          "/tmp/step09-scalars-committed-observation/02_name_subunion.a.native"
+          "/tmp/step09-delivery-observed/02_name_subunion.a.native"
         ],
         "exit": 0,
         "stdout": "before\nkind=Identifier\nafter\n",
@@ -136,7 +136,7 @@
       "javascript": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/02_name_subunion.a.compiled.mjs"
+          "/tmp/step09-delivery-observed/02_name_subunion.a.compiled.mjs"
         ],
         "exit": 0,
         "stdout": "before\nkind=Identifier\nafter\n",
@@ -150,7 +150,7 @@
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/02_name_subunion.a.output-mutant.mjs"
+              "/tmp/step09-delivery-observed/02_name_subunion.a.output-mutant.mjs"
             ],
             "exit": 0,
             "stdout": "before\nkind=Identifier\nmutant\n",
@@ -165,7 +165,7 @@
       "node": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/02_name_subunion_fails.a.source.mjs"
+          "/tmp/step09-delivery-observed/02_name_subunion_fails.a.source.mjs"
         ],
         "exit": 0,
         "stdout": "before\nkind=BindingPattern\nafter\n",
@@ -175,7 +175,7 @@
       "diagnostic": "",
       "native": {
         "command": [
-          "/tmp/step09-scalars-committed-observation/02_name_subunion_fails.a.native"
+          "/tmp/step09-delivery-observed/02_name_subunion_fails.a.native"
         ],
         "exit": 70,
         "stdout": "before\n",
@@ -184,7 +184,7 @@
       "javascript": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/02_name_subunion_fails.a.compiled.mjs"
+          "/tmp/step09-delivery-observed/02_name_subunion_fails.a.compiled.mjs"
         ],
         "exit": 70,
         "stdout": "before\n",
@@ -198,11 +198,11 @@
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/02_name_subunion_fails.a.skip-check.mjs"
+              "/tmp/step09-delivery-observed/02_name_subunion_fails.a.skip-check.mjs"
             ],
-            "exit": 70,
-            "stdout": "before\n",
-            "stderr": "adamic: panic: field read failed: result.kind expected \"Identifier\" | \"StringLiteral\", found string BindingPattern\n"
+            "exit": 0,
+            "stdout": "before\nkind=BindingPattern\nafter\n",
+            "stderr": ""
           }
         },
         {
@@ -211,7 +211,7 @@
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/02_name_subunion_fails.a.source.mjs"
+              "/tmp/step09-delivery-observed/02_name_subunion_fails.a.source.mjs"
             ],
             "exit": 0,
             "stdout": "before\nkind=BindingPattern\nafter\n",
@@ -222,11 +222,11 @@
     },
     {
       "file": "03_chain_info.a",
-      "sha256": "6612a2364985fca7c64018f4bfd71960ebc7ebf8c4fe9629aa8f4186b286f5d0",
+      "sha256": "c790f95b060e7dc50c1b0277afb89c0f0b32b7bdb9ad09269f12d8ac6441b595",
       "node": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/03_chain_info.a.source.mjs"
+          "/tmp/step09-delivery-observed/03_chain_info.a.source.mjs"
         ],
         "exit": 0,
         "stdout": "before\nview\ninfo=12\nafter\n",
@@ -236,7 +236,7 @@
       "diagnostic": "",
       "native": {
         "command": [
-          "/tmp/step09-scalars-committed-observation/03_chain_info.a.native"
+          "/tmp/step09-delivery-observed/03_chain_info.a.native"
         ],
         "exit": 0,
         "stdout": "before\nview\ninfo=12\nafter\n",
@@ -245,7 +245,7 @@
       "javascript": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/03_chain_info.a.compiled.mjs"
+          "/tmp/step09-delivery-observed/03_chain_info.a.compiled.mjs"
         ],
         "exit": 0,
         "stdout": "before\nview\ninfo=12\nafter\n",
@@ -259,7 +259,7 @@
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/03_chain_info.a.output-mutant.mjs"
+              "/tmp/step09-delivery-observed/03_chain_info.a.output-mutant.mjs"
             ],
             "exit": 0,
             "stdout": "before\nview\ninfo=12\nmutant\n",
@@ -270,11 +270,11 @@
     },
     {
       "file": "03_chain_info_fails.a",
-      "sha256": "746288453ac37d467f38942005833375f91544ca4a11fc3020487c501f6f202d",
+      "sha256": "a40b5064d3d9347afb5ad35d60d4d797be6e32b02029edf52a2ee09f5ad28384",
       "node": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/03_chain_info_fails.a.source.mjs"
+          "/tmp/step09-delivery-observed/03_chain_info_fails.a.source.mjs"
         ],
         "exit": 0,
         "stdout": "before\nview\ninfo=wrong\nafter\n",
@@ -284,30 +284,43 @@
       "diagnostic": "",
       "native": {
         "command": [
-          "/tmp/step09-scalars-committed-observation/03_chain_info_fails.a.native"
+          "/tmp/step09-delivery-observed/03_chain_info_fails.a.native"
         ],
         "exit": 70,
         "stdout": "before\nview\n",
-        "stderr": "adamic: panic: field read failed: result.info is not a number; expected number, found string\n"
+        "stderr": "adamic: panic: cast failed: field read failed: result.info is not a number; expected number, found string\n"
       },
       "javascript": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/03_chain_info_fails.a.compiled.mjs"
+          "/tmp/step09-delivery-observed/03_chain_info_fails.a.compiled.mjs"
         ],
         "exit": 70,
         "stdout": "before\nview\n",
-        "stderr": "adamic: panic: field read failed: result.info is not a number; expected number, found string\n"
+        "stderr": "adamic: panic: cast failed: field read failed: result.info is not a number; expected number, found string\n"
       },
-      "contract": "mismatch",
+      "contract": "passed",
       "mutants": [
+        {
+          "name": "remove real emitted cast-point check",
+          "caught_by": "exit, stdout and cast-point diagnostic contract",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-delivery-observed/03_chain_info_fails.a.skip-check.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nview\ninfo=wrong\nafter\n",
+            "stderr": ""
+          }
+        },
         {
           "name": "erased-cast negative control",
           "caught_by": "panic exit and stdout contract",
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/03_chain_info_fails.a.source.mjs"
+              "/tmp/step09-delivery-observed/03_chain_info_fails.a.source.mjs"
             ],
             "exit": 0,
             "stdout": "before\nview\ninfo=wrong\nafter\n",
@@ -318,21 +331,36 @@
     },
     {
       "file": "04_literal_payload.a",
-      "sha256": "ccb932534678ddbd1fb6e8a840447d0d06c75304703238da0d67e6a812b6031d",
+      "sha256": "ad29db7e7f0aba0bb215c6c8d9b32e2ba417ff79b7f4597a919bd14da9bcfe09",
       "node": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/04_literal_payload.a.source.mjs"
+          "/tmp/step09-delivery-observed/04_literal_payload.a.source.mjs"
         ],
         "exit": 0,
         "stdout": "before\nview\nvalue=Ken\nagain=Ahra\nafter\n",
         "stderr": ""
       },
-      "compiler_exit": 1,
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/04_literal_payload.a:10:5: Adamic 0.1 refuses checked view read of field value with unsupported mixed representation union contract; prove or implement the mixed representation union contract before reading this field\n",
-      "native": null,
-      "javascript": null,
-      "contract": "blocked",
+      "compiler_exit": 0,
+      "diagnostic": "",
+      "native": {
+        "command": [
+          "/tmp/step09-delivery-observed/04_literal_payload.a.native"
+        ],
+        "exit": 0,
+        "stdout": "before\nview\nvalue=Ken\nagain=Ahra\nafter\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-delivery-observed/04_literal_payload.a.compiled.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nview\nvalue=Ken\nagain=Ahra\nafter\n",
+        "stderr": ""
+      },
+      "contract": "passed",
       "mutants": [
         {
           "name": "change final output marker",
@@ -340,7 +368,7 @@
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/04_literal_payload.a.output-mutant.mjs"
+              "/tmp/step09-delivery-observed/04_literal_payload.a.output-mutant.mjs"
             ],
             "exit": 0,
             "stdout": "before\nview\nvalue=Ken\nagain=Ahra\nmutant\n",
@@ -351,29 +379,57 @@
     },
     {
       "file": "04_literal_payload_fails.a",
-      "sha256": "54799574adde514ade53eba9f179f9ac6a6e5ac836973e37eeab26bdbf68ad5b",
+      "sha256": "0a41aeb759efe569727323b956ad8f98e41d9703e9a5062b0bb9778fc7137e20",
       "node": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/04_literal_payload_fails.a.source.mjs"
+          "/tmp/step09-delivery-observed/04_literal_payload_fails.a.source.mjs"
         ],
         "exit": 0,
         "stdout": "before\nview\nvalue=Ken\nagain=42\nafter\n",
         "stderr": ""
       },
-      "compiler_exit": 1,
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/04_literal_payload_fails.a:10:5: Adamic 0.1 refuses checked view read of field value with unsupported mixed representation union contract; prove or implement the mixed representation union contract before reading this field\n",
-      "native": null,
-      "javascript": null,
-      "contract": "blocked",
+      "compiler_exit": 0,
+      "diagnostic": "",
+      "native": {
+        "command": [
+          "/tmp/step09-delivery-observed/04_literal_payload_fails.a.native"
+        ],
+        "exit": 70,
+        "stdout": "before\nview\nvalue=Ken\n",
+        "stderr": "adamic: panic: cast failed: field read failed: result.value is not a string; expected string, found number\n"
+      },
+      "javascript": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-delivery-observed/04_literal_payload_fails.a.compiled.mjs"
+        ],
+        "exit": 70,
+        "stdout": "before\nview\nvalue=Ken\n",
+        "stderr": "adamic: panic: cast failed: field read failed: result.value is not a string; expected string, found number\n"
+      },
+      "contract": "passed",
       "mutants": [
+        {
+          "name": "remove real emitted cast-point check",
+          "caught_by": "exit, stdout and cast-point diagnostic contract",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-delivery-observed/04_literal_payload_fails.a.skip-check.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nview\nvalue=Ken\nagain=42\nafter\n",
+            "stderr": ""
+          }
+        },
         {
           "name": "erased-cast negative control",
           "caught_by": "panic exit and stdout contract",
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/04_literal_payload_fails.a.source.mjs"
+              "/tmp/step09-delivery-observed/04_literal_payload_fails.a.source.mjs"
             ],
             "exit": 0,
             "stdout": "before\nview\nvalue=Ken\nagain=42\nafter\n",
@@ -388,7 +444,7 @@
       "node": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/05_extension.a.source.mjs"
+          "/tmp/step09-delivery-observed/05_extension.a.source.mjs"
         ],
         "exit": 0,
         "stdout": "before\nextension=.ts\nafter\n",
@@ -398,7 +454,7 @@
       "diagnostic": "",
       "native": {
         "command": [
-          "/tmp/step09-scalars-committed-observation/05_extension.a.native"
+          "/tmp/step09-delivery-observed/05_extension.a.native"
         ],
         "exit": 0,
         "stdout": "before\nextension=.ts\nafter\n",
@@ -407,7 +463,7 @@
       "javascript": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/05_extension.a.compiled.mjs"
+          "/tmp/step09-delivery-observed/05_extension.a.compiled.mjs"
         ],
         "exit": 0,
         "stdout": "before\nextension=.ts\nafter\n",
@@ -421,7 +477,7 @@
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/05_extension.a.output-mutant.mjs"
+              "/tmp/step09-delivery-observed/05_extension.a.output-mutant.mjs"
             ],
             "exit": 0,
             "stdout": "before\nextension=.ts\nmutant\n",
@@ -436,7 +492,7 @@
       "node": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/05_extension_fails.a.source.mjs"
+          "/tmp/step09-delivery-observed/05_extension_fails.a.source.mjs"
         ],
         "exit": 0,
         "stdout": "before\nextension=.wrong\nafter\n",
@@ -446,7 +502,7 @@
       "diagnostic": "",
       "native": {
         "command": [
-          "/tmp/step09-scalars-committed-observation/05_extension_fails.a.native"
+          "/tmp/step09-delivery-observed/05_extension_fails.a.native"
         ],
         "exit": 70,
         "stdout": "before\n",
@@ -455,7 +511,7 @@
       "javascript": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/05_extension_fails.a.compiled.mjs"
+          "/tmp/step09-delivery-observed/05_extension_fails.a.compiled.mjs"
         ],
         "exit": 70,
         "stdout": "before\n",
@@ -469,7 +525,7 @@
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/05_extension_fails.a.skip-check.mjs"
+              "/tmp/step09-delivery-observed/05_extension_fails.a.skip-check.mjs"
             ],
             "exit": 0,
             "stdout": "before\nextension=undefined\nafter\n",
@@ -482,7 +538,7 @@
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/05_extension_fails.a.source.mjs"
+              "/tmp/step09-delivery-observed/05_extension_fails.a.source.mjs"
             ],
             "exit": 0,
             "stdout": "before\nextension=.wrong\nafter\n",
@@ -497,7 +553,7 @@
       "node": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/06_parser_keyword.a.source.mjs"
+          "/tmp/step09-delivery-observed/06_parser_keyword.a.source.mjs"
         ],
         "exit": 0,
         "stdout": "before\ntoken=118\nafter\n",
@@ -507,7 +563,7 @@
       "diagnostic": "",
       "native": {
         "command": [
-          "/tmp/step09-scalars-committed-observation/06_parser_keyword.a.native"
+          "/tmp/step09-delivery-observed/06_parser_keyword.a.native"
         ],
         "exit": 0,
         "stdout": "before\ntoken=118\nafter\n",
@@ -516,7 +572,7 @@
       "javascript": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/06_parser_keyword.a.compiled.mjs"
+          "/tmp/step09-delivery-observed/06_parser_keyword.a.compiled.mjs"
         ],
         "exit": 0,
         "stdout": "before\ntoken=118\nafter\n",
@@ -530,7 +586,7 @@
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/06_parser_keyword.a.output-mutant.mjs"
+              "/tmp/step09-delivery-observed/06_parser_keyword.a.output-mutant.mjs"
             ],
             "exit": 0,
             "stdout": "before\ntoken=118\nmutant\n",
@@ -545,7 +601,7 @@
       "node": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/06_parser_keyword_fails.a.source.mjs"
+          "/tmp/step09-delivery-observed/06_parser_keyword_fails.a.source.mjs"
         ],
         "exit": 0,
         "stdout": "before\ntoken=80\nafter\n",
@@ -555,7 +611,7 @@
       "diagnostic": "",
       "native": {
         "command": [
-          "/tmp/step09-scalars-committed-observation/06_parser_keyword_fails.a.native"
+          "/tmp/step09-delivery-observed/06_parser_keyword_fails.a.native"
         ],
         "exit": 70,
         "stdout": "before\n",
@@ -564,7 +620,7 @@
       "javascript": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/06_parser_keyword_fails.a.compiled.mjs"
+          "/tmp/step09-delivery-observed/06_parser_keyword_fails.a.compiled.mjs"
         ],
         "exit": 70,
         "stdout": "before\n",
@@ -578,7 +634,7 @@
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/06_parser_keyword_fails.a.skip-check.mjs"
+              "/tmp/step09-delivery-observed/06_parser_keyword_fails.a.skip-check.mjs"
             ],
             "exit": 0,
             "stdout": "before\ntoken=undefined\nafter\n",
@@ -591,7 +647,7 @@
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/06_parser_keyword_fails.a.source.mjs"
+              "/tmp/step09-delivery-observed/06_parser_keyword_fails.a.source.mjs"
             ],
             "exit": 0,
             "stdout": "before\ntoken=80\nafter\n",
@@ -602,21 +658,36 @@
     },
     {
       "file": "07_generic_next.a",
-      "sha256": "2127d7066c44b249054192f13a607cb15cb38773356ccf0c339a0ce45dbd48b2",
+      "sha256": "4ae83723eb008cec1bd58a903aaaa7070855f2540a21a5678d6507d466d8f43b",
       "node": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/07_generic_next.a.source.mjs"
+          "/tmp/step09-delivery-observed/07_generic_next.a.source.mjs"
         ],
         "exit": 0,
         "stdout": "before\nview\nelement=12\nagain=13\nafter\n",
         "stderr": ""
       },
-      "compiler_exit": 1,
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/07_generic_next.a:4:46: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
-      "native": null,
-      "javascript": null,
-      "contract": "blocked",
+      "compiler_exit": 0,
+      "diagnostic": "",
+      "native": {
+        "command": [
+          "/tmp/step09-delivery-observed/07_generic_next.a.native"
+        ],
+        "exit": 0,
+        "stdout": "before\nview\nelement=12\nagain=13\nafter\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-delivery-observed/07_generic_next.a.compiled.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nview\nelement=12\nagain=13\nafter\n",
+        "stderr": ""
+      },
+      "contract": "passed",
       "mutants": [
         {
           "name": "change final output marker",
@@ -624,7 +695,7 @@
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/07_generic_next.a.output-mutant.mjs"
+              "/tmp/step09-delivery-observed/07_generic_next.a.output-mutant.mjs"
             ],
             "exit": 0,
             "stdout": "before\nview\nelement=12\nagain=13\nmutant\n",
@@ -635,29 +706,57 @@
     },
     {
       "file": "07_generic_next_fails.a",
-      "sha256": "eac6ce339061e0052a7768bab4471985fccca02e849cb4d7ac9320f6afe5ea1d",
+      "sha256": "9db00732dab13a8106de00f08d318b14ac7054fe1f88dd4f99f59be9d79c8cd2",
       "node": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/07_generic_next_fails.a.source.mjs"
+          "/tmp/step09-delivery-observed/07_generic_next_fails.a.source.mjs"
         ],
         "exit": 0,
         "stdout": "before\nview\nelement=12\nagain=wrong\nafter\n",
         "stderr": ""
       },
-      "compiler_exit": 1,
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/07_generic_next_fails.a:4:46: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
-      "native": null,
-      "javascript": null,
-      "contract": "blocked",
+      "compiler_exit": 0,
+      "diagnostic": "",
+      "native": {
+        "command": [
+          "/tmp/step09-delivery-observed/07_generic_next_fails.a.native"
+        ],
+        "exit": 70,
+        "stdout": "before\nview\nelement=12\n",
+        "stderr": "adamic: panic: cast failed: element read failed: result[0] expected number, found string\n"
+      },
+      "javascript": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-delivery-observed/07_generic_next_fails.a.compiled.mjs"
+        ],
+        "exit": 70,
+        "stdout": "before\nview\nelement=12\n",
+        "stderr": "adamic: panic: cast failed: element read failed: result[0] expected number, found string\n"
+      },
+      "contract": "passed",
       "mutants": [
+        {
+          "name": "remove real emitted cast-point check",
+          "caught_by": "exit, stdout and cast-point diagnostic contract",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-delivery-observed/07_generic_next_fails.a.skip-check.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nview\nelement=12\nagain=wrong\nafter\n",
+            "stderr": ""
+          }
+        },
         {
           "name": "erased-cast negative control",
           "caught_by": "panic exit and stdout contract",
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/07_generic_next_fails.a.source.mjs"
+              "/tmp/step09-delivery-observed/07_generic_next_fails.a.source.mjs"
             ],
             "exit": 0,
             "stdout": "before\nview\nelement=12\nagain=wrong\nafter\n",
@@ -668,21 +767,36 @@
     },
     {
       "file": "08_generic_node.a",
-      "sha256": "73bddb0722c1a679bb8d5ae052815863848c9aa62f13d544e20034023895d2ca",
+      "sha256": "8b2345f6bd95411d436b411b8f9bd8f6f9d6dd6b4fa5ec986ac7d489a5c4063c",
       "node": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/08_generic_node.a.source.mjs"
+          "/tmp/step09-delivery-observed/08_generic_node.a.source.mjs"
         ],
         "exit": 0,
         "stdout": "before\nview\ntext=Ken\nafter\n",
         "stderr": ""
       },
-      "compiler_exit": 1,
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/08_generic_node.a:6:69: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
-      "native": null,
-      "javascript": null,
-      "contract": "blocked",
+      "compiler_exit": 0,
+      "diagnostic": "",
+      "native": {
+        "command": [
+          "/tmp/step09-delivery-observed/08_generic_node.a.native"
+        ],
+        "exit": 0,
+        "stdout": "before\nview\ntext=Ken\nafter\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-delivery-observed/08_generic_node.a.compiled.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nview\ntext=Ken\nafter\n",
+        "stderr": ""
+      },
+      "contract": "passed",
       "mutants": [
         {
           "name": "change final output marker",
@@ -690,7 +804,7 @@
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/08_generic_node.a.output-mutant.mjs"
+              "/tmp/step09-delivery-observed/08_generic_node.a.output-mutant.mjs"
             ],
             "exit": 0,
             "stdout": "before\nview\ntext=Ken\nmutant\n",
@@ -701,29 +815,57 @@
     },
     {
       "file": "08_generic_node_fails.a",
-      "sha256": "eb727c48751847109cb185383fac30ccf1c2ebdb29104394ce24786f23c87457",
+      "sha256": "98fe23eb16bfc71c0f06ad850d24cb86af10285c417f9f1060333f6883f18884",
       "node": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/08_generic_node_fails.a.source.mjs"
+          "/tmp/step09-delivery-observed/08_generic_node_fails.a.source.mjs"
         ],
         "exit": 0,
         "stdout": "before\nview\ntext=42\nafter\n",
         "stderr": ""
       },
-      "compiler_exit": 1,
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/08_generic_node_fails.a:6:69: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
-      "native": null,
-      "javascript": null,
-      "contract": "blocked",
+      "compiler_exit": 0,
+      "diagnostic": "",
+      "native": {
+        "command": [
+          "/tmp/step09-delivery-observed/08_generic_node_fails.a.native"
+        ],
+        "exit": 70,
+        "stdout": "before\nview\n",
+        "stderr": "adamic: panic: cast failed: field read failed: result.text is not a string; expected string, found number\n"
+      },
+      "javascript": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-delivery-observed/08_generic_node_fails.a.compiled.mjs"
+        ],
+        "exit": 70,
+        "stdout": "before\nview\n",
+        "stderr": "adamic: panic: cast failed: field read failed: result.text is not a string; expected string, found number\n"
+      },
+      "contract": "passed",
       "mutants": [
+        {
+          "name": "remove real emitted cast-point check",
+          "caught_by": "exit, stdout and cast-point diagnostic contract",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-delivery-observed/08_generic_node_fails.a.skip-check.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nview\ntext=42\nafter\n",
+            "stderr": ""
+          }
+        },
         {
           "name": "erased-cast negative control",
           "caught_by": "panic exit and stdout contract",
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/08_generic_node_fails.a.source.mjs"
+              "/tmp/step09-delivery-observed/08_generic_node_fails.a.source.mjs"
             ],
             "exit": 0,
             "stdout": "before\nview\ntext=42\nafter\n",
@@ -738,7 +880,7 @@
       "node": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/09_primitive_string.a.source.mjs"
+          "/tmp/step09-delivery-observed/09_primitive_string.a.source.mjs"
         ],
         "exit": 0,
         "stdout": "before\nvalue=Ken\nafter\n",
@@ -748,7 +890,7 @@
       "diagnostic": "",
       "native": {
         "command": [
-          "/tmp/step09-scalars-committed-observation/09_primitive_string.a.native"
+          "/tmp/step09-delivery-observed/09_primitive_string.a.native"
         ],
         "exit": 0,
         "stdout": "before\nvalue=Ken\nafter\n",
@@ -757,7 +899,7 @@
       "javascript": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/09_primitive_string.a.compiled.mjs"
+          "/tmp/step09-delivery-observed/09_primitive_string.a.compiled.mjs"
         ],
         "exit": 0,
         "stdout": "before\nvalue=Ken\nafter\n",
@@ -771,7 +913,7 @@
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/09_primitive_string.a.output-mutant.mjs"
+              "/tmp/step09-delivery-observed/09_primitive_string.a.output-mutant.mjs"
             ],
             "exit": 0,
             "stdout": "before\nvalue=Ken\nmutant\n",
@@ -786,7 +928,7 @@
       "node": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/09_primitive_string_fails.a.source.mjs"
+          "/tmp/step09-delivery-observed/09_primitive_string_fails.a.source.mjs"
         ],
         "exit": 0,
         "stdout": "before\nvalue=42\nafter\n",
@@ -796,7 +938,7 @@
       "diagnostic": "",
       "native": {
         "command": [
-          "/tmp/step09-scalars-committed-observation/09_primitive_string_fails.a.native"
+          "/tmp/step09-delivery-observed/09_primitive_string_fails.a.native"
         ],
         "exit": 70,
         "stdout": "before\n",
@@ -805,7 +947,7 @@
       "javascript": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/09_primitive_string_fails.a.compiled.mjs"
+          "/tmp/step09-delivery-observed/09_primitive_string_fails.a.compiled.mjs"
         ],
         "exit": 70,
         "stdout": "before\n",
@@ -819,7 +961,7 @@
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/09_primitive_string_fails.a.skip-check.mjs"
+              "/tmp/step09-delivery-observed/09_primitive_string_fails.a.skip-check.mjs"
             ],
             "exit": 0,
             "stdout": "before\nvalue=undefined\nafter\n",
@@ -832,7 +974,7 @@
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/09_primitive_string_fails.a.source.mjs"
+              "/tmp/step09-delivery-observed/09_primitive_string_fails.a.source.mjs"
             ],
             "exit": 0,
             "stdout": "before\nvalue=42\nafter\n",
@@ -843,21 +985,36 @@
     },
     {
       "file": "10_generator_label.a",
-      "sha256": "7756b1f87417ea11fe08b24a3330a82c52242f0c6c086d3620143660959c5781",
+      "sha256": "57b417430c6d8780e344db0148cf6220fa35ded632508a9631a74c83f2e30b57",
       "node": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/10_generator_label.a.source.mjs"
+          "/tmp/step09-delivery-observed/10_generator_label.a.source.mjs"
         ],
         "exit": 0,
         "stdout": "before\nlabel=12\nafter\n",
         "stderr": ""
       },
-      "compiler_exit": 1,
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/10_generator_label.a:7:20: stage 0 can't lower an array of number | Expression | undefined yet\n",
-      "native": null,
-      "javascript": null,
-      "contract": "blocked",
+      "compiler_exit": 0,
+      "diagnostic": "",
+      "native": {
+        "command": [
+          "/tmp/step09-delivery-observed/10_generator_label.a.native"
+        ],
+        "exit": 0,
+        "stdout": "before\nlabel=12\nafter\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-delivery-observed/10_generator_label.a.compiled.mjs"
+        ],
+        "exit": 0,
+        "stdout": "before\nlabel=12\nafter\n",
+        "stderr": ""
+      },
+      "contract": "passed",
       "mutants": [
         {
           "name": "change final output marker",
@@ -865,7 +1022,7 @@
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/10_generator_label.a.output-mutant.mjs"
+              "/tmp/step09-delivery-observed/10_generator_label.a.output-mutant.mjs"
             ],
             "exit": 0,
             "stdout": "before\nlabel=12\nmutant\n",
@@ -876,29 +1033,57 @@
     },
     {
       "file": "10_generator_label_fails.a",
-      "sha256": "c477bdf267b2590c43cd94837d2d85dbf08ba1f657b03d8b6e260c28f5a23845",
+      "sha256": "51a1223f341426241d736eea2b0d449658a11605ecbf404fd08d0f44236bffcb",
       "node": {
         "command": [
           "/workspace/adamic-tools/bin/node",
-          "/tmp/step09-scalars-committed-observation/10_generator_label_fails.a.source.mjs"
+          "/tmp/step09-delivery-observed/10_generator_label_fails.a.source.mjs"
         ],
         "exit": 0,
         "stdout": "before\nlabel=undefined\nafter\n",
         "stderr": ""
       },
-      "compiler_exit": 1,
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/checked-casts/10_generator_label_fails.a:7:20: stage 0 can't lower an array of number | Expression | undefined yet\n",
-      "native": null,
-      "javascript": null,
-      "contract": "blocked",
+      "compiler_exit": 0,
+      "diagnostic": "",
+      "native": {
+        "command": [
+          "/tmp/step09-delivery-observed/10_generator_label_fails.a.native"
+        ],
+        "exit": 70,
+        "stdout": "before\n",
+        "stderr": "adamic: panic: cast failed: args[0] expected number, found undefined\n"
+      },
+      "javascript": {
+        "command": [
+          "/workspace/adamic-tools/bin/node",
+          "/tmp/step09-delivery-observed/10_generator_label_fails.a.compiled.mjs"
+        ],
+        "exit": 70,
+        "stdout": "before\n",
+        "stderr": "adamic: panic: cast failed: args[0] expected number, found undefined\n"
+      },
+      "contract": "passed",
       "mutants": [
+        {
+          "name": "remove real emitted cast-point check",
+          "caught_by": "exit, stdout and cast-point diagnostic contract",
+          "observation": {
+            "command": [
+              "/workspace/adamic-tools/bin/node",
+              "/tmp/step09-delivery-observed/10_generator_label_fails.a.skip-check.mjs"
+            ],
+            "exit": 0,
+            "stdout": "before\nlabel=undefined\nafter\n",
+            "stderr": ""
+          }
+        },
         {
           "name": "erased-cast negative control",
           "caught_by": "panic exit and stdout contract",
           "observation": {
             "command": [
               "/workspace/adamic-tools/bin/node",
-              "/tmp/step09-scalars-committed-observation/10_generator_label_fails.a.source.mjs"
+              "/tmp/step09-delivery-observed/10_generator_label_fails.a.source.mjs"
             ],
             "exit": 0,
             "stdout": "before\nlabel=undefined\nafter\n",

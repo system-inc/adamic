@@ -10,10 +10,10 @@ func TestCheckedViewObjects(t *testing.T) {
 	for _, probe := range []struct{ name, stdout, diagnostic string }{
 		{"objects-good", "true:okok\ntrue\n", ""},
 		{"objects-untagged-good", "true:okok\ntrue:1\n", ""},
-		{"objects-untagged-wrong", "", "field read failed: view.child.ready is not a boolean; expected boolean, found number"},
-		{"objects-wrong-nested", "", "field read failed: view.child.ready is not a boolean; expected boolean, found number"},
-		{"objects-missing-nested", "", "field read failed: view.child.ready is not initialized; expected boolean, found missing"},
-		{"objects-uninitialized-nested", "", "field read failed: view.child.ready is not initialized; expected boolean, found uninitialized"},
+		{"objects-untagged-wrong", "", "cast failed: field read failed: view.child.ready is not a boolean; expected boolean, found number"},
+		{"objects-wrong-nested", "", "cast failed: field read failed: view.child.ready is not a boolean; expected boolean, found number"},
+		{"objects-missing-nested", "", "cast failed: field read failed: view.child.ready is not initialized; expected boolean, found missing"},
+		{"objects-uninitialized-nested", "", "cast failed: field read failed: view.child.ready is not initialized; expected boolean, found uninitialized"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			program, path := interfaceFixture(t, "lane1/"+probe.name)

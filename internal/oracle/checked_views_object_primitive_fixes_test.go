@@ -105,7 +105,7 @@ func TestCheckedViewObjectPrimitiveFixes(t *testing.T) {
 		if count := changeObjectPrimitiveRead(program, func(read ir.Property) bool { return read.View == "member.code" }, func(read ir.Property) ir.Property { read.ViewType = declared; return read }); count != 1 {
 			t.Fatalf("want one named scalar read, got %d", count)
 		}
-		want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: member.code is not a " + declared + "; expected " + declared + ", found boolean\n")}
+		want := run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: member.code is not a " + declared + "; expected " + declared + ", found boolean\n")}
 		sanitized, _ := nativelyUncached(t, program)
 		for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 			if diff := disagreement(want, got); diff != "" {

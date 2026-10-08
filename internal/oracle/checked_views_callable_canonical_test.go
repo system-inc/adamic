@@ -31,9 +31,9 @@ func TestCheckedViewCallableCanonicalWitness(t *testing.T) {
 					}
 					continue
 				}
-				expected := "adamic: panic: field read failed: newProgram.getCanonicalFileName expected GetCanonicalFileName, found " + probe.found + "\n"
+				expected := "adamic: panic: cast failed: field read failed: newProgram.getCanonicalFileName expected GetCanonicalFileName, found " + probe.found + "\n"
 				if probe.found == "number" && index < 2 {
-					expected = "adamic: panic: field read failed: newProgram.getCanonicalFileName is not a GetCanonicalFileName; expected GetCanonicalFileName, found number\n"
+					expected = "adamic: panic: cast failed: field read failed: newProgram.getCanonicalFileName is not a GetCanonicalFileName; expected GetCanonicalFileName, found number\n"
 				}
 				if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != expected {
 					t.Fatalf("backend %d: %#v want %q", index, got, expected)
@@ -74,9 +74,9 @@ func TestCheckedViewCallableWatcherWitness(t *testing.T) {
 					}
 					continue
 				}
-				expected := "adamic: panic: field read failed: watcher.close expected () => void, found " + probe.found + "\n"
+				expected := "adamic: panic: cast failed: field read failed: watcher.close expected () => void, found " + probe.found + "\n"
 				if probe.found == "number" && index < 2 {
-					expected = "adamic: panic: field read failed: watcher.close is not a () => void; expected () => void, found number\n"
+					expected = "adamic: panic: cast failed: field read failed: watcher.close is not a () => void; expected () => void, found number\n"
 				}
 				if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != expected {
 					t.Fatalf("backend %d %#v want %q", index, got, expected)
@@ -121,7 +121,7 @@ func TestCheckedViewCallableNullableArity(t *testing.T) {
 	}
 	sanitized, _ := nativelyUncached(t, program)
 	for _, got := range []run{releasedUncached(t, program), sanitized, onJavaScriptBackend(t, program)} {
-		expected := "adamic: panic: field read failed: node.value expected () => string, found function with arity 1\n"
+		expected := "adamic: panic: cast failed: field read failed: node.value expected () => string, found function with arity 1\n"
 		if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != expected {
 			t.Fatalf("nullable callable: %#v want %q", got, expected)
 		}

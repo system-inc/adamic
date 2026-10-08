@@ -10,8 +10,8 @@ func TestCheckedViewTupleOriginalSignatureForEach(t *testing.T) {
 		{"signature-foreach-tuple", "object\ndone\n", "", ""},
 		{"signature-foreach-scalar", "number\ndone\n", "", ""},
 		{"signature-foreach-undefined", "done\n", "", ""},
-		{"signature-foreach-wrong-kind", "boolean\ndone\n", "", "field read failed: selected[element] matches no member of IncrementalBuildInfoEmitSignature; expected IncrementalBuildInfoEmitSignature, found boolean"},
-		{"signature-foreach-wrong-arity", "object\ndone\n", "", "field read failed: selected[element] matches no member of IncrementalBuildInfoEmitSignature; expected IncrementalBuildInfoEmitSignature, found object"},
+		{"signature-foreach-wrong-kind", "boolean\ndone\n", "", "cast failed: field read failed: selected[element] matches no member of IncrementalBuildInfoEmitSignature; expected IncrementalBuildInfoEmitSignature, found boolean"},
+		{"signature-foreach-wrong-arity", "object\ndone\n", "", "cast failed: field read failed: selected[element] matches no member of IncrementalBuildInfoEmitSignature; expected IncrementalBuildInfoEmitSignature, found object"},
 	})
 }
 func TestCheckedViewTupleOriginalSignatureForEachMutant(t *testing.T) {

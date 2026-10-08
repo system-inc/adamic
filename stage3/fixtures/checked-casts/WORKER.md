@@ -1,3 +1,7 @@
+Current delivery: **all 18 formerly blocked contracts pass; all 20 acceptance fixtures pass** on committed compiler 1af953e6. The unchanged strict verifier is green. Error stays pinned to library #ddwcejg. See [DELIVERY.md](DELIVERY.md) for every contract, command, mutant and limitation.
+
+The following sections retain earlier measurements as historical milestones.
+
 # Scanner cast acceptance measurement
 
 Acceptance inputs copied from ea1b2359 without merging its branch. Compiler base 561166d1, checked-views integration 432d4913. The ledger was fetched as an immutable object. Error remains pinned to library #ddwcejg; no library facts are fabricated.

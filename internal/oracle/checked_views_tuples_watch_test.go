@@ -44,8 +44,8 @@ func TestCheckedViewTupleOriginalWatchEvent(t *testing.T) {
 		{"watch-event-narrowed-missing", "NaN\n", "", "undefined where the checker narrowed it away: a call since the narrowing put it back"},
 		{"watch-event-long", "number\n", "", ""},
 		{"watch-event-undefined", "number\n", "", ""},
-		{"watch-event-wrong-event", "boolean\n", "", "field read failed: args[1] is not a FileWatcherEventKind | undefined; expected FileWatcherEventKind | undefined, found boolean"},
-		{"watch-event-wrong-arity", "undefined\n", "", "field read failed: viewed.args matches no member of Args; expected Args, found object"},
+		{"watch-event-wrong-event", "boolean\n", "", "cast failed: field read failed: args[1] is not a FileWatcherEventKind | undefined; expected FileWatcherEventKind | undefined, found boolean"},
+		{"watch-event-wrong-arity", "undefined\n", "", "cast failed: field read failed: viewed.args matches no member of Args; expected Args, found object"},
 	})
 }
 
@@ -101,6 +101,6 @@ func TestCheckedViewTupleOriginalWatchFilename(t *testing.T) {
 	verifyOriginalTupleCases(t, []originalTupleCase{
 		{"watch-filename-short", "file9\n", "", ""},
 		{"watch-filename-long", "file9\n", "", ""},
-		{"watch-filename-wrong", "7\n", "", "field read failed: args[0] is not a string; expected string, found number"},
+		{"watch-filename-wrong", "7\n", "", "cast failed: field read failed: args[0] is not a string; expected string, found number"},
 	})
 }

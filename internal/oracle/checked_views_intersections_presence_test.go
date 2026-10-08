@@ -63,7 +63,7 @@ func TestCheckedViewIntersectionRequiredUndefinedPresence(t *testing.T) {
 					}
 					continue
 				}
-				if got.exitCode != 70 || len(got.stdout) != 0 || !strings.Contains(string(got.stderr), "field read failed: "+sample.field+" is not initialized;") || !strings.Contains(string(got.stderr), "found missing") {
+				if got.exitCode != 70 || len(got.stdout) != 0 || !strings.Contains(string(got.stderr), "cast failed: field read failed: "+sample.field+" is not initialized;") || !strings.Contains(string(got.stderr), "found missing") {
 					t.Errorf("required undefined field must retain presence: got %#v", got)
 				}
 			}

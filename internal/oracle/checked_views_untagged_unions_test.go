@@ -65,7 +65,7 @@ func TestCheckedViewUntaggedSelection(t *testing.T) {
 				if difference := disagreement(run{stdout: []byte(source)}, onNode(t, path)); difference != "" {
 					t.Fatal("negative source Node: " + difference)
 				}
-				want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value matches no member of " + sample.name + "; expected " + sample.name + ", found object\n")}
+				want := run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: view.value matches no member of " + sample.name + "; expected " + sample.name + ", found object\n")}
 				for _, got := range []run{execute(t, binary, sample.name, variant), executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, sanitized, sample.name, variant), untaggedSelectionJS(t, sample.name, variant)} {
 					if difference := disagreement(want, got); difference != "" {
 						t.Fatalf("%s: %s; got %#v", variant, difference, got)
@@ -279,7 +279,7 @@ func TestCheckedViewUntaggedSourceFlows(t *testing.T) {
 					t.Fatal("Node: " + difference)
 				}
 				if variant == "wrong" {
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: holder.value matches no member of Target; expected Target, found object\n")}
 				}
 				for backend, got := range map[string]run{"native": releasedUncached(t, program), "javascript": onJavaScriptBackend(t, program)} {
 					t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
@@ -360,7 +360,7 @@ func TestCheckedViewUntaggedOwnClassData(t *testing.T) {
 			}
 			want := node
 			if variant != "good" {
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n")}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: view.value matches no member of Target; expected Target, found object\n")}
 			}
 			for backend, got := range map[string]run{"native": releasedUncached(t, program), "javascript": onJavaScriptBackend(t, program)} {
 				t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
@@ -396,7 +396,7 @@ func TestCheckedViewUntaggedRecursive(t *testing.T) {
 			}
 			want := node
 			if variant == "wrong" || variant == "nested" || variant == "cycle-wrong" {
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n")}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: view.value matches no member of Target; expected Target, found object\n")}
 			}
 			for backend, got := range map[string]run{"native": releasedUncached(t, program), "javascript": onJavaScriptBackend(t, program)} {
 				t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
@@ -422,12 +422,12 @@ func TestCheckedViewUntaggedArrayUnion(t *testing.T) {
 						t.Errorf("%s: %s", backend, difference)
 					}
 				} else {
-					message := "adamic: panic: field read failed: view.elements is not a readonly ElementA[] | readonly ElementB[]; expected readonly ElementA[] | readonly ElementB[], found boolean\n"
+					message := "adamic: panic: cast failed: field read failed: view.elements is not a readonly ElementA[] | readonly ElementB[]; expected readonly ElementA[] | readonly ElementB[], found boolean\n"
 					if variant == "mixed" {
-						message = "adamic: panic: field read failed: view.elements matches no member of readonly ElementA[] | readonly ElementB[]; expected readonly ElementA[] | readonly ElementB[], found array\n"
+						message = "adamic: panic: cast failed: field read failed: view.elements matches no member of readonly ElementA[] | readonly ElementB[]; expected readonly ElementA[] | readonly ElementB[], found array\n"
 					}
 					if variant == "nested" {
-						message = "adamic: panic: field read failed: item.payload matches no member of { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; }, found object\n"
+						message = "adamic: panic: cast failed: field read failed: item.payload matches no member of { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; }, found object\n"
 					}
 					if difference := disagreement(run{exitCode: 70, stderr: []byte(message)}, got); difference != "" {
 						t.Errorf("%s: %s", backend, difference)
@@ -457,7 +457,7 @@ func TestCheckedViewUntaggedCallableUnion(t *testing.T) {
 					if variant == "nested" {
 						field = "view.holder.value"
 					}
-					want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + field + " expected Target, found function with incompatible parameter representations\n")}
+					want := run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: " + field + " expected Target, found function with incompatible parameter representations\n")}
 					if difference := disagreement(want, got); difference != "" {
 						t.Errorf("%s: %s", backend, difference)
 					}
@@ -519,7 +519,7 @@ func TestCheckedViewUntaggedCompletedBoundaryMutants(t *testing.T) {
 				}
 				sanitized, _ := nativelyUncached(t, program)
 				for _, got := range []run{releasedUncached(t, program), sanitized, onJavaScriptBackend(t, program)} {
-					if got.exitCode != 70 || len(got.stdout) != 0 || !strings.Contains(string(got.stderr), "field read failed:") || !strings.Contains(string(got.stderr), "matches no member of Type") {
+					if got.exitCode != 70 || len(got.stdout) != 0 || !strings.Contains(string(got.stderr), "cast failed: field read failed:") || !strings.Contains(string(got.stderr), "matches no member of Type") {
 						t.Fatalf("malformed boundary exit %d stdout %q stderr %q", got.exitCode, got.stdout, got.stderr)
 					}
 				}

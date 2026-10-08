@@ -12,8 +12,8 @@ func TestCheckedViewArraySearch(t *testing.T) {
 		{"native-array-search-evaluation", "1:2:9\n", ""},
 		{"native-array-search-boolean", "1:true\n", ""},
 		{"native-array-reference-write", "", "element write failed: <array write> expected { value: number; secret: number; }, found { value: number; }"},
-		{"native-array-search-bad", "", "element read failed: items(raw).values[element] expected number, found string"},
-		{"native-array-search-literal", "", "field read failed: items(raw).values[element] expected \"ok\", found string bad"},
+		{"native-array-search-bad", "", "cast failed: element read failed: items(raw).values[element] expected number, found string"},
+		{"native-array-search-literal", "", "cast failed: field read failed: items(raw).values[element] expected \"ok\", found string bad"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

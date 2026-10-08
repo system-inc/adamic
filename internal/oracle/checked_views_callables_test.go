@@ -30,7 +30,7 @@ func TestCheckedViewOpaqueSignature(t *testing.T) {
 		t.Fatalf("Node %#v", truth)
 	}
 	sanitized, _ := nativelyUncached(t, program)
-	expected := "adamic: panic: field read failed: (node as Runner).run expected (value: number) => number, found function with incompatible result representation\n"
+	expected := "adamic: panic: cast failed: field read failed: (node as Runner).run expected (value: number) => number, found function with incompatible result representation\n"
 	for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 		if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != expected {
 			t.Fatalf("got %#v want %q", got, expected)

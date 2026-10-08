@@ -43,9 +43,9 @@ func TestCheckedViewCallableNumericLiteral(t *testing.T) {
 					continue
 				}
 				expected := "(value: string | number, numericLiteralFlags?: number | undefined) => NumericLiteral"
-				message := "adamic: panic: field read failed: factory.createNumericLiteral expected " + expected + ", found " + probe.found + "\n"
+				message := "adamic: panic: cast failed: field read failed: factory.createNumericLiteral expected " + expected + ", found " + probe.found + "\n"
 				if probe.name == "wrong-value" && index < 2 {
-					message = "adamic: panic: field read failed: factory.createNumericLiteral is not a " + expected + "; expected " + expected + ", found number\n"
+					message = "adamic: panic: cast failed: field read failed: factory.createNumericLiteral is not a " + expected + "; expected " + expected + ", found number\n"
 				}
 				if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != message {
 					t.Fatalf("backend%d %#v want %q", index, got, message)

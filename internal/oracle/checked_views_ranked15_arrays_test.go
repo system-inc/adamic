@@ -47,9 +47,9 @@ func TestCheckedViewRanked15OriginalArrays(t *testing.T) {
 		for _, probe := range []struct{ mode, source, diagnostic string }{
 			{"good", "1:7\nabsent\nabsent\n", ""},
 			{"lazy", receiver.kind + "\n", ""},
-			{"wrong-array", "3\n", "field read failed: (base as " + receiver.typ + ").typeParameters matches no member of NodeArray<TypeParameterDeclaration> | undefined; expected NodeArray<TypeParameterDeclaration> | undefined, found string"},
-			{"wrong-pos", "bad\n", "field read failed: parameters[0]!.pos is not a number; expected number, found string"},
-			{"missing-pos", "undefined\n", "field read failed: parameters[0]!.pos is not initialized; expected number, found missing"},
+			{"wrong-array", "3\n", "cast failed: field read failed: (base as " + receiver.typ + ").typeParameters matches no member of NodeArray<TypeParameterDeclaration> | undefined; expected NodeArray<TypeParameterDeclaration> | undefined, found string"},
+			{"wrong-pos", "bad\n", "cast failed: field read failed: parameters[0]!.pos is not a number; expected number, found string"},
+			{"missing-pos", "undefined\n", "cast failed: field read failed: parameters[0]!.pos is not initialized; expected number, found missing"},
 		} {
 			t.Run(receiver.name+"-"+probe.mode, func(t *testing.T) {
 				name := receiver.name + "-" + probe.mode

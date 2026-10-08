@@ -1,0 +1,615 @@
+=== RUN   TestCheckedViewNativeArrays
+=== PAUSE TestCheckedViewNativeArrays
+=== RUN   TestCheckedViewArrays
+=== PAUSE TestCheckedViewArrays
+=== RUN   TestCheckedViewObjects
+=== RUN   TestCheckedViewObjects/objects-good
+    checked_views_objects_test.go:22: gate cache node hit
+    checked_views_objects_test.go:30: gate cache node hit
+=== RUN   TestCheckedViewObjects/objects-untagged-good
+    checked_views_objects_test.go:22: gate cache node hit
+    checked_views_objects_test.go:30: gate cache node hit
+=== RUN   TestCheckedViewObjects/objects-untagged-wrong
+    checked_views_objects_test.go:30: gate cache node hit
+=== RUN   TestCheckedViewObjects/objects-wrong-nested
+    checked_views_objects_test.go:30: gate cache node hit
+    checked_views_objects_test.go:39: gate cache node hit
+    checked_views_objects_test.go:44: skip transitive view caught by pinned exit/message with valid C
+=== RUN   TestCheckedViewObjects/objects-missing-nested
+    checked_views_objects_test.go:30: gate cache node hit
+=== RUN   TestCheckedViewObjects/objects-uninitialized-nested
+    checked_views_objects_test.go:30: gate cache node hit
+--- PASS: TestCheckedViewObjects (1.94s)
+    --- PASS: TestCheckedViewObjects/objects-good (0.36s)
+    --- PASS: TestCheckedViewObjects/objects-untagged-good (0.32s)
+    --- PASS: TestCheckedViewObjects/objects-untagged-wrong (0.31s)
+    --- PASS: TestCheckedViewObjects/objects-wrong-nested (0.38s)
+    --- PASS: TestCheckedViewObjects/objects-missing-nested (0.28s)
+    --- PASS: TestCheckedViewObjects/objects-uninitialized-nested (0.28s)
+=== RUN   TestCheckedViewPrimitiveArrayPairs
+    checked_views_primitive_arrays_test.go:15: set original declarations
+--- SKIP: TestCheckedViewPrimitiveArrayPairs (0.00s)
+=== RUN   TestCheckedViewPrimitiveArraySafety
+=== RUN   TestCheckedViewPrimitiveArraySafety/ordinary
+    checked_views_primitive_arrays_test.go:128: gate cache node hit
+    checked_views_primitive_arrays_test.go:136: gate cache node hit
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestCheckedViewPrimitiveArraySafety/alias
+    checked_views_primitive_arrays_test.go:128: gate cache node hit
+    checked_views_primitive_arrays_test.go:136: gate cache node hit
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestCheckedViewPrimitiveArraySafety/index
+    checked_views_primitive_arrays_test.go:128: gate cache node hit
+    checked_views_primitive_arrays_test.go:136: gate cache node hit
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestCheckedViewPrimitiveArraySafety/typeof
+    checked_views_primitive_arrays_test.go:128: gate cache node hit
+    checked_views_primitive_arrays_test.go:136: gate cache node hit
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestCheckedViewPrimitiveArraySafety/sparse
+    checked_views_primitive_arrays_test.go:128: gate cache node hit
+    checked_views_primitive_arrays_test.go:136: gate cache node hit
+=== RUN   TestCheckedViewPrimitiveArraySafety/negative
+    checked_views_primitive_arrays_test.go:128: gate cache node hit
+    checked_views_primitive_arrays_test.go:136: gate cache node hit
+=== RUN   TestCheckedViewPrimitiveArraySafety/fraction
+    checked_views_primitive_arrays_test.go:128: gate cache node hit
+    checked_views_primitive_arrays_test.go:136: gate cache node hit
+=== RUN   TestCheckedViewPrimitiveArraySafety/optional
+    checked_views_primitive_arrays_test.go:128: gate cache node hit
+    checked_views_primitive_arrays_test.go:136: gate cache node hit
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestCheckedViewPrimitiveArraySafety/finite-good
+    checked_views_primitive_arrays_test.go:128: gate cache node hit
+    checked_views_primitive_arrays_test.go:136: gate cache node hit
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestCheckedViewPrimitiveArraySafety/finite-wrong
+    checked_views_primitive_arrays_test.go:128: gate cache node hit
+    checked_views_primitive_arrays_test.go:136: gate cache node hit
+--- PASS: TestCheckedViewPrimitiveArraySafety (2.13s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/ordinary (0.29s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/alias (0.30s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/index (0.30s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/typeof (0.28s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/sparse (0.10s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/negative (0.10s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/fraction (0.10s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/optional (0.28s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/finite-good (0.28s)
+    --- PASS: TestCheckedViewPrimitiveArraySafety/finite-wrong (0.10s)
+=== RUN   TestInterfaceCastOracle
+=== RUN   TestInterfaceCastOracle/visitor
+    interface_cast_test.go:31: gate cache node hit
+    interface_cast_test.go:39: gate cache node hit
+    oracle_test.go:644: gate cache native hit
+    oracle_test.go:637: gate cache native hit
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestInterfaceCastOracle/wrong-kind
+    interface_cast_test.go:31: gate cache node hit
+    interface_cast_test.go:39: gate cache node hit
+    oracle_test.go:644: gate cache native hit
+    oracle_test.go:637: gate cache native hit
+--- PASS: TestInterfaceCastOracle (0.09s)
+    --- PASS: TestInterfaceCastOracle/visitor (0.06s)
+    --- PASS: TestInterfaceCastOracle/wrong-kind (0.03s)
+=== RUN   TestInterfaceCastChecksMalformedRead
+    interface_cast_test.go:67: gate cache node hit
+    interface_cast_test.go:77: gate cache node hit
+--- PASS: TestInterfaceCastChecksMalformedRead (0.30s)
+=== RUN   TestInterfaceCastRuntimeMutants
+=== RUN   TestInterfaceCastRuntimeMutants/skip_tag
+    interface_cast_test.go:93: gate cache node hit
+    interface_cast_test.go:95: gate cache node hit
+    oracle_test.go:644: gate cache native hit
+    interface_cast_test.go:136: caught skip tag: exit codes differ; expected exit 70 stdout "casting\n", mutant exit 0 stdout "casting\notherother\n" stderr ""
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestInterfaceCastRuntimeMutants/wrong_tag
+    interface_cast_test.go:93: gate cache node hit
+    oracle_test.go:644: gate cache native hit
+    interface_cast_test.go:136: caught wrong tag: exit codes differ; expected exit 0 stdout "idid\n42\ntexttext\n5\ntrue\nonce2\ncalls 2\n", mutant exit 70 stdout "" stderr "adamic: panic: cast failed: this Node is not a Identifier\n"
+=== RUN   TestInterfaceCastRuntimeMutants/twice_operand
+    interface_cast_test.go:93: gate cache node hit
+    oracle_test.go:644: gate cache native hit
+    interface_cast_test.go:136: caught twice operand: stdout differs; expected exit 0 stdout "idid\n42\ntexttext\n5\ntrue\nonce2\ncalls 2\n", mutant exit 0 stdout "idid\n42\ntexttext\n5\ntrue\nonce3\ncalls 3\n" stderr ""
+    oracle_test.go:651: gate cache native hit
+--- PASS: TestInterfaceCastRuntimeMutants (0.10s)
+    --- PASS: TestInterfaceCastRuntimeMutants/skip_tag (0.04s)
+    --- PASS: TestInterfaceCastRuntimeMutants/wrong_tag (0.03s)
+    --- PASS: TestInterfaceCastRuntimeMutants/twice_operand (0.03s)
+=== RUN   TestScannerCastDiagnostic
+=== RUN   TestScannerCastDiagnostic/good
+    scanner_cast_checks_test.go:30: gate cache node hit
+    scanner_cast_checks_test.go:40: gate cache node hit
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestScannerCastDiagnostic/undefined
+    scanner_cast_checks_test.go:30: gate cache node hit
+    scanner_cast_checks_test.go:40: gate cache node hit
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestScannerCastDiagnostic/missing
+    scanner_cast_checks_test.go:30: gate cache node hit
+    scanner_cast_checks_test.go:40: gate cache node hit
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestScannerCastDiagnostic/wrong
+    scanner_cast_checks_test.go:30: gate cache node hit
+    scanner_cast_checks_test.go:40: gate cache node hit
+--- PASS: TestScannerCastDiagnostic (1.15s)
+    --- PASS: TestScannerCastDiagnostic/good (0.29s)
+    --- PASS: TestScannerCastDiagnostic/undefined (0.29s)
+    --- PASS: TestScannerCastDiagnostic/missing (0.29s)
+    --- PASS: TestScannerCastDiagnostic/wrong (0.28s)
+=== RUN   TestScannerCastDiagnosticMutant
+    scanner_cast_checks_test.go:56: gate cache node hit
+    scanner_cast_checks_test.go:75: gate cache node hit
+    scanner_cast_checks_test.go:82: native release omission caught by exit/message pin: exit=0 stdout="false\n"
+    scanner_cast_checks_test.go:82: JavaScript omission caught by exit/message pin: exit=0 stdout="42\n"
+--- PASS: TestScannerCastDiagnosticMutant (0.11s)
+=== RUN   TestScannerCastCounts
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+    scanner_cast_checks_test.go:128: gate cache native hit
+--- PASS: TestScannerCastCounts (0.83s)
+=== RUN   TestScannerStringConstructorView
+=== RUN   TestScannerStringConstructorView/string-any
+    scanner_constructor_views_test.go:17: gate cache node hit
+    scanner_constructor_views_test.go:22: gate cache node hit
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestScannerStringConstructorView/string-checked
+    scanner_constructor_views_test.go:17: gate cache node hit
+    scanner_constructor_views_test.go:22: gate cache node hit
+    oracle_test.go:651: gate cache native hit
+--- PASS: TestScannerStringConstructorView (0.73s)
+    --- PASS: TestScannerStringConstructorView/string-any (0.39s)
+    --- PASS: TestScannerStringConstructorView/string-checked (0.35s)
+=== RUN   TestScannerErrorLibraryCastNotYet
+    scanner_constructor_views_test.go:39: gate cache node hit
+    scanner_constructor_views_test.go:51: library #ddwcejg dependency: /workspace/adamic/stage3/drivers/scanner/cast-checks/error-library-cast.a:3:1: stage 0 can't lower node:globals.ErrorConstructor.captureStackTrace yet
+--- PASS: TestScannerErrorLibraryCastNotYet (0.49s)
+=== RUN   TestScannerStringConstructorProducerMutant
+    scanner_constructor_views_test.go:85: gate cache node hit
+    scanner_constructor_views_test.go:88: producer liar pin: "adamic: panic: cast failed: field read failed: (String as any).fromCodePoint expected (codePoint: number) => string, found function with unknown signature\n"
+    scanner_constructor_views_test.go:104: gate cache node hit
+    scanner_constructor_views_test.go:111: JavaScript omission caught: exit=0 stdout="liar\n1\n"
+    scanner_constructor_views_test.go:111: native release omission caught: exit=0 stdout="liar\n1\n"
+--- PASS: TestScannerStringConstructorProducerMutant (0.41s)
+=== RUN   TestStep09AcceptanceTagged
+=== RUN   TestStep09AcceptanceTagged/01_enum_declaration.a
+    step09_acceptance_test.go:45: gate cache node hit
+    step09_acceptance_test.go:62: gate cache node hit
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestStep09AcceptanceTagged/01_enum_declaration_fails.a
+    step09_acceptance_test.go:45: gate cache node hit
+    step09_acceptance_test.go:62: gate cache node hit
+    step09_acceptance_test.go:88: gate cache node hit
+    step09_acceptance_test.go:92: native release tag omission caught by exact cast-point diagnostic: exit=70 stderr="adamic: panic: cast failed: field read failed: result.kind expected SyntaxKind.EnumDeclaration, found number 279\n"
+    step09_acceptance_test.go:92: JavaScript tag omission caught by exact cast-point diagnostic: exit=70 stderr="adamic: panic: cast failed: field read failed: result.kind expected SyntaxKind.EnumDeclaration, found number 279\n"
+=== RUN   TestStep09AcceptanceTagged/02_name_subunion.a
+    step09_acceptance_test.go:45: gate cache node hit
+    step09_acceptance_test.go:62: gate cache node hit
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestStep09AcceptanceTagged/02_name_subunion_fails.a
+    step09_acceptance_test.go:45: gate cache node hit
+    step09_acceptance_test.go:62: gate cache node hit
+    step09_acceptance_test.go:88: gate cache node hit
+    step09_acceptance_test.go:92: native release tag omission caught by exact cast-point diagnostic: exit=70 stderr="adamic: panic: cast failed: field read failed: result.kind expected \"Identifier\" | \"StringLiteral\", found string BindingPattern\n"
+    step09_acceptance_test.go:92: JavaScript tag omission caught by exact cast-point diagnostic: exit=70 stderr="adamic: panic: cast failed: field read failed: result.kind expected \"Identifier\" | \"StringLiteral\", found string BindingPattern\n"
+--- PASS: TestStep09AcceptanceTagged (1.31s)
+    --- PASS: TestStep09AcceptanceTagged/01_enum_declaration.a (0.31s)
+    --- PASS: TestStep09AcceptanceTagged/01_enum_declaration_fails.a (0.37s)
+    --- PASS: TestStep09AcceptanceTagged/02_name_subunion.a (0.27s)
+    --- PASS: TestStep09AcceptanceTagged/02_name_subunion_fails.a (0.35s)
+=== RUN   TestStep09AcceptanceScalars
+=== RUN   TestStep09AcceptanceScalars/05_extension.a
+    step09_acceptance_test.go:108: gate cache node hit
+    step09_acceptance_test.go:131: gate cache node hit
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestStep09AcceptanceScalars/05_extension_fails.a
+    step09_acceptance_test.go:108: gate cache node hit
+    step09_acceptance_test.go:131: gate cache node hit
+    step09_acceptance_test.go:158: gate cache node hit
+    step09_acceptance_test.go:162: native release scalar omission caught by exact contract: exit=0 stdout="before\nextension=.wrong\nafter\n" stderr=""
+    step09_acceptance_test.go:162: JavaScript scalar omission caught by exact contract: exit=0 stdout="before\nextension=.wrong\nafter\n" stderr=""
+=== RUN   TestStep09AcceptanceScalars/06_parser_keyword.a
+    step09_acceptance_test.go:108: gate cache node hit
+    step09_acceptance_test.go:131: gate cache node hit
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestStep09AcceptanceScalars/06_parser_keyword_fails.a
+    step09_acceptance_test.go:108: gate cache node hit
+    step09_acceptance_test.go:131: gate cache node hit
+    step09_acceptance_test.go:158: gate cache node hit
+    step09_acceptance_test.go:162: native release scalar omission caught by exact contract: exit=0 stdout="before\ntoken=80\nafter\n" stderr=""
+    step09_acceptance_test.go:162: JavaScript scalar omission caught by exact contract: exit=0 stdout="before\ntoken=80\nafter\n" stderr=""
+=== RUN   TestStep09AcceptanceScalars/09_primitive_string.a
+    step09_acceptance_test.go:108: gate cache node hit
+    step09_acceptance_test.go:131: gate cache node hit
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestStep09AcceptanceScalars/09_primitive_string_fails.a
+    step09_acceptance_test.go:108: gate cache node hit
+    step09_acceptance_test.go:131: gate cache node hit
+    step09_acceptance_test.go:158: gate cache node hit
+    step09_acceptance_test.go:162: native release scalar omission caught by exact contract: exit=70 stdout="before\n" stderr="adamic: panic: a union value does not match its narrowed type\n"
+    step09_acceptance_test.go:162: JavaScript scalar omission caught by exact contract: exit=70 stdout="before\n" stderr="adamic: panic: a union value does not match its narrowed type\n"
+=== RUN   TestStep09AcceptanceScalars/10_generator_label.a
+    step09_acceptance_test.go:108: gate cache node hit
+    step09_acceptance_test.go:131: gate cache node hit
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestStep09AcceptanceScalars/10_generator_label_fails.a
+    step09_acceptance_test.go:108: gate cache node hit
+    step09_acceptance_test.go:131: gate cache node hit
+    step09_acceptance_test.go:158: gate cache node hit
+    step09_acceptance_test.go:162: native release scalar omission caught by exact contract: exit=70 stdout="before\n" stderr="adamic: panic: a union value does not match its narrowed type\n"
+    step09_acceptance_test.go:162: JavaScript scalar omission caught by exact contract: exit=70 stdout="before\n" stderr="adamic: panic: a union value does not match its narrowed type\n"
+--- PASS: TestStep09AcceptanceScalars (2.54s)
+    --- PASS: TestStep09AcceptanceScalars/05_extension.a (0.28s)
+    --- PASS: TestStep09AcceptanceScalars/05_extension_fails.a (0.36s)
+    --- PASS: TestStep09AcceptanceScalars/06_parser_keyword.a (0.30s)
+    --- PASS: TestStep09AcceptanceScalars/06_parser_keyword_fails.a (0.37s)
+    --- PASS: TestStep09AcceptanceScalars/09_primitive_string.a (0.27s)
+    --- PASS: TestStep09AcceptanceScalars/09_primitive_string_fails.a (0.34s)
+    --- PASS: TestStep09AcceptanceScalars/10_generator_label.a (0.27s)
+    --- PASS: TestStep09AcceptanceScalars/10_generator_label_fails.a (0.35s)
+=== RUN   TestStep09AcceptanceViews
+=== RUN   TestStep09AcceptanceViews/03_chain_info.a
+    step09_acceptance_test.go:179: gate cache node hit
+    step09_acceptance_test.go:198: gate cache node hit
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestStep09AcceptanceViews/03_chain_info_fails.a
+    step09_acceptance_test.go:179: gate cache node hit
+    step09_acceptance_test.go:198: gate cache node hit
+    step09_acceptance_test.go:236: gate cache node hit
+    step09_acceptance_test.go:240: sanitized native consumed-read omission caught: exit=0 stdout="before\nview\ninfo=4.64127006568493e-310\nafter\n" stderr=""
+    step09_acceptance_test.go:240: JavaScript consumed-read omission caught: exit=0 stdout="before\nview\ninfo=wrong\nafter\n" stderr=""
+=== RUN   TestStep09AcceptanceViews/04_literal_payload.a
+    step09_acceptance_test.go:179: gate cache node hit
+    step09_acceptance_test.go:198: gate cache node hit
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestStep09AcceptanceViews/04_literal_payload_fails.a
+    step09_acceptance_test.go:179: gate cache node hit
+    step09_acceptance_test.go:198: gate cache node hit
+    step09_acceptance_test.go:236: gate cache node hit
+    step09_acceptance_test.go:240: sanitized native consumed-read omission caught: exit=1 stdout="" stderr="=================================================================\n==65588==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7c122e5e0060 at pc 0x559e4eed0768 bp 0x7ffcfe84a240 sp 0x7ffcfe84a238\nREAD of size 8 at 0x7c122e5e0060 thread T0\n    #0 0x559e4eed0767 in adamic_string_units /home/agent/.cache/adamic/runtime/.build-4158637973/string_index.c:43:14\n    #1 0x559e4eec810e in adamic_string_concat /home/agent/.cache/adamic/runtime/.build-4158637973/string_build_impl.h:45:12\n    #2 0x559e4ee660c7 in adamic_function_0_select /tmp/adamic-gate/adamic-build-1213148986/main.c:53:40\n    #3 0x559e4ee660c7 in main /tmp/adamic-gate/adamic-build-1213148986/main.c:78:2\n    #4 0x7fe22f334ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #5 0x7fe22f334d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #6 0x559e4ed7f510 in _start (/tmp/adamic-gate/TestStep09AcceptanceViews04_literal_payload_fails.a3154445984/004/program+0x66510)\n\n0x7c122e5e0060 is located 8 bytes after 24-byte region [0x7c122e5e0040,0x7c122e5e0058)\nallocated by thread T0 here:\n    #0 0x559e4ee22324 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x559e4ee7f1ff in allocate_storage /home/agent/.cache/adamic/runtime/.build-4158637973/heap.c:198:10\n    #2 0x559e4ee7f1ff in adamic_allocate /home/agent/.cache/adamic/runtime/.build-4158637973/heap.c:212:9\n    #3 0x7fe22f334ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n\nSUMMARY: AddressSanitizer: heap-buffer-overflow /home/agent/.cache/adamic/runtime/.build-4158637973/string_index.c:43:14 in adamic_string_units\nShadow bytes around the buggy address:\n  0x7c122e5dfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c122e5dfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c122e5dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c122e5dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c122e5dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x7c122e5e0000: fa fa 00 00 00 fa fa fa 00 00 00 fa[fa]fa fa fa\n  0x7c122e5e0080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c122e5e0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c122e5e0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c122e5e0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c122e5e0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==65588==ABORTING\n"
+    step09_acceptance_test.go:240: JavaScript consumed-read omission caught: exit=0 stdout="before\nview\nvalue=Ken\nagain=42\nafter\n" stderr=""
+=== RUN   TestStep09AcceptanceViews/07_generic_next.a
+    step09_acceptance_test.go:179: gate cache node hit
+    step09_acceptance_test.go:198: gate cache node hit
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestStep09AcceptanceViews/07_generic_next_fails.a
+    step09_acceptance_test.go:179: gate cache node hit
+    step09_acceptance_test.go:198: gate cache node hit
+    step09_acceptance_test.go:236: gate cache node hit
+    step09_acceptance_test.go:240: sanitized native consumed-read omission caught: exit=0 stdout="before\nview\nelement=12\nagain=4.67553230939954e-310\nafter\n" stderr=""
+    step09_acceptance_test.go:240: JavaScript consumed-read omission caught: exit=0 stdout="before\nview\nelement=12\nagain=wrong\nafter\n" stderr=""
+=== RUN   TestStep09AcceptanceViews/08_generic_node.a
+    step09_acceptance_test.go:179: gate cache node hit
+    step09_acceptance_test.go:198: gate cache node hit
+    oracle_test.go:651: gate cache native hit
+=== RUN   TestStep09AcceptanceViews/08_generic_node_fails.a
+    step09_acceptance_test.go:179: gate cache node hit
+    step09_acceptance_test.go:198: gate cache node hit
+    step09_acceptance_test.go:236: gate cache node hit
+    step09_acceptance_test.go:240: sanitized native consumed-read omission caught: exit=1 stdout="" stderr="AddressSanitizer:DEADLYSIGNAL\n=================================================================\n==65639==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x56148b394d71 bp 0x7ffc7ead0e01 sp 0x7ffc7ead0e00 T0)\n==65639==The signal is caused by a READ memory access.\n==65639==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.\n    #0 0x56148b394d71 in adamic_string_concat /home/agent/.cache/adamic/runtime/.build-4158637973/string_build_impl.h:40:21\n    #1 0x56148b332de2 in main /tmp/adamic-gate/adamic-build-782579788/main.c:65:40\n    #2 0x7fb4ce245ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #3 0x7fb4ce245d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x56148b24c510 in _start (/tmp/adamic-gate/TestStep09AcceptanceViews08_generic_node_fails.a1554375473/004/program+0x66510)\n\n==65639==Register values:\nrax = 0x0808a00000000002  rbx = 0x0000000000000005  rcx = 0x00000ac291687300  rdx = 0x0000000000000002  \nrdi = 0x4045000000000010  rsi = 0x4045000000000000  rbp = 0x00007ffc7ead0e01  rsp = 0x00007ffc7ead0e00  \n r8 = 0x0000000000000006   r9 = 0x0000000000000005  r10 = 0x0000000000000000  r11 = 0x000000008b3c6504  \nr12 = 0x00007bb4cc100068  r13 = 0x00007bb4cc100060  r14 = 0x0000000000000005  r15 = 0x0000000000000001  \nAddressSanitizer can not provide additional info.\nSUMMARY: AddressSanitizer: SEGV /home/agent/.cache/adamic/runtime/.build-4158637973/string_build_impl.h:40:21 in adamic_string_concat\n==65639==ABORTING\n"
+    step09_acceptance_test.go:240: JavaScript consumed-read omission caught: exit=0 stdout="before\nview\ntext=42\nafter\n" stderr=""
+--- PASS: TestStep09AcceptanceViews (3.04s)
+    --- PASS: TestStep09AcceptanceViews/03_chain_info.a (0.27s)
+    --- PASS: TestStep09AcceptanceViews/03_chain_info_fails.a (0.44s)
+    --- PASS: TestStep09AcceptanceViews/04_literal_payload.a (0.29s)
+    --- PASS: TestStep09AcceptanceViews/04_literal_payload_fails.a (0.49s)
+    --- PASS: TestStep09AcceptanceViews/07_generic_next.a (0.29s)
+    --- PASS: TestStep09AcceptanceViews/07_generic_next_fails.a (0.48s)
+    --- PASS: TestStep09AcceptanceViews/08_generic_node.a (0.29s)
+    --- PASS: TestStep09AcceptanceViews/08_generic_node_fails.a (0.50s)
+=== RUN   TestStep09PrimitiveArraySourceWriteLiar
+    step09_acceptance_test.go:273: gate cache node hit
+--- PASS: TestStep09PrimitiveArraySourceWriteLiar (0.29s)
+=== RUN   TestStep09PrimitiveObjectSourceWriteLiar
+    step09_acceptance_test.go:308: gate cache node hit
+    step09_acceptance_test.go:322: gate cache node hit
+    step09_acceptance_test.go:326: native release object-slot source guard omission caught: exit=70 stderr="adamic: panic: cast failed: field read failed: result.value is not a string; expected string, found boolean\n"
+    step09_acceptance_test.go:326: JavaScript object-slot source guard omission caught: exit=70 stderr="adamic: panic: cast failed: field read failed: result.value is not a string; expected string, found boolean\n"
+--- PASS: TestStep09PrimitiveObjectSourceWriteLiar (0.35s)
+=== RUN   TestStep09NullableArrayReceiver
+    step09_acceptance_test.go:336: gate cache node hit
+    step09_acceptance_test.go:346: gate cache node hit
+--- PASS: TestStep09NullableArrayReceiver (0.31s)
+=== RUN   TestStep09ScalarIndexRootLiar
+    step09_acceptance_test.go:376: gate cache node hit
+--- PASS: TestStep09ScalarIndexRootLiar (0.27s)
+=== CONT  TestCheckedViewNativeArrays
+=== CONT  TestCheckedViewArrays
+=== RUN   TestCheckedViewNativeArrays/native-array-join
+=== RUN   TestCheckedViewArrays/array-lazy
+=== PAUSE TestCheckedViewArrays/array-lazy
+=== PAUSE TestCheckedViewNativeArrays/native-array-join
+=== RUN   TestCheckedViewArrays/array-iteration
+=== PAUSE TestCheckedViewArrays/array-iteration
+=== RUN   TestCheckedViewArrays/array-map
+=== PAUSE TestCheckedViewArrays/array-map
+=== RUN   TestCheckedViewArrays/array-pop
+=== PAUSE TestCheckedViewArrays/array-pop
+=== RUN   TestCheckedViewNativeArrays/native-array-join-evaluation
+=== PAUSE TestCheckedViewNativeArrays/native-array-join-evaluation
+=== RUN   TestCheckedViewNativeArrays/native-array-large-field
+=== PAUSE TestCheckedViewNativeArrays/native-array-large-field
+=== RUN   TestCheckedViewArrays/array-bounds
+=== PAUSE TestCheckedViewArrays/array-bounds
+=== RUN   TestCheckedViewArrays/array-second
+=== PAUSE TestCheckedViewArrays/array-second
+=== RUN   TestCheckedViewArrays/array-length-kind
+=== PAUSE TestCheckedViewArrays/array-length-kind
+=== RUN   TestCheckedViewArrays/callable-missing
+=== PAUSE TestCheckedViewArrays/callable-missing
+=== RUN   TestCheckedViewArrays/callable-uninitialized
+=== PAUSE TestCheckedViewArrays/callable-uninitialized
+=== RUN   TestCheckedViewNativeArrays/native-array-join-boolean
+=== PAUSE TestCheckedViewNativeArrays/native-array-join-boolean
+=== RUN   TestCheckedViewNativeArrays/native-array-mutation
+=== PAUSE TestCheckedViewNativeArrays/native-array-mutation
+=== RUN   TestCheckedViewArrays/callable-kind
+=== PAUSE TestCheckedViewArrays/callable-kind
+=== RUN   TestCheckedViewNativeArrays/native-array-string-mutation
+=== PAUSE TestCheckedViewNativeArrays/native-array-string-mutation
+=== RUN   TestCheckedViewNativeArrays/native-array-sparse
+=== PAUSE TestCheckedViewNativeArrays/native-array-sparse
+=== RUN   TestCheckedViewNativeArrays/native-array-sparse-pop-hole
+=== PAUSE TestCheckedViewNativeArrays/native-array-sparse-pop-hole
+=== RUN   TestCheckedViewNativeArrays/native-array-join-bad
+=== PAUSE TestCheckedViewNativeArrays/native-array-join-bad
+=== RUN   TestCheckedViewArrays/array-missing
+=== PAUSE TestCheckedViewArrays/array-missing
+=== RUN   TestCheckedViewArrays/array-uninitialized
+=== PAUSE TestCheckedViewArrays/array-uninitialized
+=== RUN   TestCheckedViewArrays/array-boolean
+=== PAUSE TestCheckedViewArrays/array-boolean
+=== RUN   TestCheckedViewArrays/array-iteration-bad
+=== PAUSE TestCheckedViewArrays/array-iteration-bad
+=== RUN   TestCheckedViewNativeArrays/native-array-join-literal
+=== PAUSE TestCheckedViewNativeArrays/native-array-join-literal
+=== RUN   TestCheckedViewArrays/array-map-bad
+=== PAUSE TestCheckedViewArrays/array-map-bad
+=== RUN   TestCheckedViewArrays/array-alias
+=== PAUSE TestCheckedViewArrays/array-alias
+=== RUN   TestCheckedViewNativeArrays/native-array-write-bad
+=== PAUSE TestCheckedViewNativeArrays/native-array-write-bad
+=== RUN   TestCheckedViewNativeArrays/native-array-push-bad
+=== PAUSE TestCheckedViewNativeArrays/native-array-push-bad
+=== RUN   TestCheckedViewNativeArrays/native-array-copy-bad
+=== PAUSE TestCheckedViewNativeArrays/native-array-copy-bad
+=== CONT  TestCheckedViewNativeArrays/native-array-join
+=== CONT  TestCheckedViewNativeArrays/native-array-sparse-pop-hole
+=== CONT  TestCheckedViewNativeArrays/native-array-push-bad
+=== CONT  TestCheckedViewNativeArrays/native-array-mutation
+=== RUN   TestCheckedViewArrays/array-undefined
+=== PAUSE TestCheckedViewArrays/array-undefined
+=== RUN   TestCheckedViewArrays/array-string-literal
+=== PAUSE TestCheckedViewArrays/array-string-literal
+=== RUN   TestCheckedViewArrays/nullable-array-string
+=== PAUSE TestCheckedViewArrays/nullable-array-string
+=== RUN   TestCheckedViewArrays/nullable-array-element
+=== PAUSE TestCheckedViewArrays/nullable-array-element
+=== RUN   TestCheckedViewArrays/generic-array-element
+=== PAUSE TestCheckedViewArrays/generic-array-element
+=== RUN   TestCheckedViewArrays/array-field
+=== PAUSE TestCheckedViewArrays/array-field
+=== RUN   TestCheckedViewArrays/array-element
+=== PAUSE TestCheckedViewArrays/array-element
+=== RUN   TestCheckedViewArrays/object-element
+=== PAUSE TestCheckedViewArrays/object-element
+=== RUN   TestCheckedViewArrays/non-array
+=== PAUSE TestCheckedViewArrays/non-array
+=== CONT  TestCheckedViewNativeArrays/native-array-sparse
+=== NAME  TestCheckedViewNativeArrays/native-array-mutation
+    checked_views_arrays_native_test.go:28: gate cache node hit
+=== NAME  TestCheckedViewNativeArrays/native-array-sparse
+    checked_views_arrays_native_test.go:28: gate cache node hit
+=== NAME  TestCheckedViewNativeArrays/native-array-sparse-pop-hole
+    checked_views_arrays_native_test.go:28: gate cache node hit
+=== NAME  TestCheckedViewNativeArrays/native-array-join
+    checked_views_arrays_native_test.go:28: gate cache node hit
+=== NAME  TestCheckedViewNativeArrays/native-array-push-bad
+    checked_views_arrays_native_test.go:28: gate cache node hit
+    checked_views_arrays_native_test.go:41: gate cache node hit
+=== CONT  TestCheckedViewNativeArrays/native-array-string-mutation
+=== NAME  TestCheckedViewNativeArrays/native-array-mutation
+    checked_views_arrays_native_test.go:41: gate cache node miss
+=== NAME  TestCheckedViewNativeArrays/native-array-sparse-pop-hole
+    checked_views_arrays_native_test.go:41: gate cache node miss
+=== NAME  TestCheckedViewNativeArrays/native-array-join
+    checked_views_arrays_native_test.go:41: gate cache node miss
+=== NAME  TestCheckedViewNativeArrays/native-array-string-mutation
+    checked_views_arrays_native_test.go:28: gate cache node hit
+=== NAME  TestCheckedViewNativeArrays/native-array-sparse
+    checked_views_arrays_native_test.go:41: gate cache node miss
+=== CONT  TestCheckedViewArrays/array-lazy
+=== CONT  TestCheckedViewNativeArrays/native-array-write-bad
+=== CONT  TestCheckedViewNativeArrays/native-array-join-literal
+=== CONT  TestCheckedViewNativeArrays/native-array-join-bad
+=== NAME  TestCheckedViewArrays/array-lazy
+    checked_views_arrays_test.go:39: gate cache node hit
+=== NAME  TestCheckedViewNativeArrays/native-array-join-literal
+    checked_views_arrays_native_test.go:28: gate cache node hit
+=== NAME  TestCheckedViewNativeArrays/native-array-write-bad
+    checked_views_arrays_native_test.go:28: gate cache node hit
+=== NAME  TestCheckedViewNativeArrays/native-array-join-bad
+    checked_views_arrays_native_test.go:28: gate cache node hit
+=== NAME  TestCheckedViewNativeArrays/native-array-string-mutation
+    checked_views_arrays_native_test.go:41: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-lazy
+    checked_views_arrays_test.go:47: gate cache node hit
+=== CONT  TestCheckedViewNativeArrays/native-array-join-boolean
+=== CONT  TestCheckedViewNativeArrays/native-array-large-field
+=== NAME  TestCheckedViewNativeArrays/native-array-join-literal
+    checked_views_arrays_native_test.go:41: gate cache node miss
+=== NAME  TestCheckedViewNativeArrays/native-array-join-boolean
+    checked_views_arrays_native_test.go:28: gate cache node hit
+=== NAME  TestCheckedViewNativeArrays/native-array-write-bad
+    checked_views_arrays_native_test.go:41: gate cache node hit
+=== CONT  TestCheckedViewNativeArrays/native-array-join-evaluation
+=== NAME  TestCheckedViewNativeArrays/native-array-large-field
+    checked_views_arrays_native_test.go:28: gate cache node hit
+=== CONT  TestCheckedViewNativeArrays/native-array-copy-bad
+=== NAME  TestCheckedViewNativeArrays/native-array-join-evaluation
+    checked_views_arrays_native_test.go:28: gate cache node hit
+=== NAME  TestCheckedViewNativeArrays/native-array-join-bad
+    checked_views_arrays_native_test.go:41: gate cache node miss
+=== NAME  TestCheckedViewNativeArrays/native-array-copy-bad
+    checked_views_arrays_native_test.go:28: gate cache node hit
+=== CONT  TestCheckedViewArrays/array-boolean
+=== NAME  TestCheckedViewNativeArrays/native-array-large-field
+    checked_views_arrays_native_test.go:41: gate cache node hit
+=== CONT  TestCheckedViewArrays/non-array
+=== NAME  TestCheckedViewNativeArrays/native-array-join-boolean
+    checked_views_arrays_native_test.go:41: gate cache node miss
+=== CONT  TestCheckedViewArrays/object-element
+    checked_views_arrays_test.go:39: gate cache node hit
+=== NAME  TestCheckedViewNativeArrays/native-array-join-evaluation
+    checked_views_arrays_native_test.go:41: gate cache node miss
+=== NAME  TestCheckedViewNativeArrays/native-array-copy-bad
+    checked_views_arrays_native_test.go:41: gate cache node hit
+=== CONT  TestCheckedViewArrays/array-element
+=== NAME  TestCheckedViewArrays/array-boolean
+    checked_views_arrays_test.go:47: gate cache node hit
+=== CONT  TestCheckedViewArrays/array-field
+--- PASS: TestCheckedViewNativeArrays (0.00s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-push-bad (0.54s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-sparse-pop-hole (0.63s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-mutation (0.63s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-join (0.65s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-sparse (0.68s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-string-mutation (0.50s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-write-bad (0.48s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-join-literal (0.50s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-join-bad (0.57s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-large-field (0.50s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-join-boolean (0.58s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-copy-bad (0.53s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-join-evaluation (0.63s)
+=== CONT  TestCheckedViewArrays/generic-array-element
+=== NAME  TestCheckedViewArrays/array-element
+    checked_views_arrays_test.go:39: gate cache node hit
+=== NAME  TestCheckedViewArrays/array-field
+    checked_views_arrays_test.go:39: gate cache node hit
+=== NAME  TestCheckedViewArrays/non-array
+    checked_views_arrays_test.go:47: gate cache node hit
+=== CONT  TestCheckedViewArrays/nullable-array-element
+=== NAME  TestCheckedViewArrays/object-element
+    checked_views_arrays_test.go:47: gate cache node hit
+=== CONT  TestCheckedViewArrays/nullable-array-string
+=== NAME  TestCheckedViewArrays/array-element
+    checked_views_arrays_test.go:47: gate cache node hit
+=== CONT  TestCheckedViewArrays/array-string-literal
+=== NAME  TestCheckedViewArrays/generic-array-element
+    checked_views_arrays_test.go:47: gate cache node hit
+=== CONT  TestCheckedViewArrays/array-undefined
+=== NAME  TestCheckedViewArrays/array-field
+    checked_views_arrays_test.go:47: gate cache node hit
+=== CONT  TestCheckedViewArrays/array-alias
+=== NAME  TestCheckedViewArrays/nullable-array-element
+    checked_views_arrays_test.go:47: gate cache node hit
+=== CONT  TestCheckedViewArrays/array-map-bad
+=== NAME  TestCheckedViewArrays/nullable-array-string
+    checked_views_arrays_test.go:47: gate cache node miss
+=== CONT  TestCheckedViewArrays/array-iteration-bad
+=== NAME  TestCheckedViewArrays/array-string-literal
+    checked_views_arrays_test.go:47: gate cache node miss
+=== CONT  TestCheckedViewArrays/array-length-kind
+=== NAME  TestCheckedViewArrays/array-undefined
+    checked_views_arrays_test.go:47: gate cache node hit
+=== CONT  TestCheckedViewArrays/array-uninitialized
+=== NAME  TestCheckedViewArrays/array-alias
+    checked_views_arrays_test.go:47: gate cache node hit
+=== CONT  TestCheckedViewArrays/array-missing
+=== NAME  TestCheckedViewArrays/array-map-bad
+    checked_views_arrays_test.go:47: gate cache node miss
+=== CONT  TestCheckedViewArrays/callable-kind
+=== NAME  TestCheckedViewArrays/array-iteration-bad
+    checked_views_arrays_test.go:47: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-missing
+    checked_views_arrays_test.go:47: gate cache node hit
+=== CONT  TestCheckedViewArrays/callable-uninitialized
+=== CONT  TestCheckedViewArrays/callable-missing
+=== NAME  TestCheckedViewArrays/array-length-kind
+    checked_views_arrays_test.go:47: gate cache node hit
+=== CONT  TestCheckedViewArrays/array-pop
+=== NAME  TestCheckedViewArrays/array-uninitialized
+    checked_views_arrays_test.go:47: gate cache node hit
+=== CONT  TestCheckedViewArrays/array-second
+=== NAME  TestCheckedViewArrays/array-pop
+    checked_views_arrays_test.go:39: gate cache node hit
+=== NAME  TestCheckedViewArrays/callable-kind
+    checked_views_arrays_test.go:47: gate cache node hit
+=== CONT  TestCheckedViewArrays/array-bounds
+=== NAME  TestCheckedViewArrays/array-pop
+    checked_views_arrays_test.go:47: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-bounds
+    checked_views_arrays_test.go:39: gate cache node hit
+=== NAME  TestCheckedViewArrays/array-second
+    checked_views_arrays_test.go:47: gate cache node hit
+=== CONT  TestCheckedViewArrays/array-iteration
+=== CONT  TestCheckedViewArrays/array-map
+=== NAME  TestCheckedViewArrays/array-iteration
+    checked_views_arrays_test.go:39: gate cache node hit
+=== NAME  TestCheckedViewArrays/callable-uninitialized
+    checked_views_arrays_test.go:47: gate cache node hit
+=== NAME  TestCheckedViewArrays/callable-missing
+    checked_views_arrays_test.go:47: gate cache node hit
+=== NAME  TestCheckedViewArrays/array-map
+    checked_views_arrays_test.go:39: gate cache node hit
+=== NAME  TestCheckedViewArrays/array-bounds
+    checked_views_arrays_test.go:47: gate cache node hit
+=== NAME  TestCheckedViewArrays/array-iteration
+    checked_views_arrays_test.go:47: gate cache node miss
+=== NAME  TestCheckedViewArrays/array-map
+    checked_views_arrays_test.go:47: gate cache node miss
+--- PASS: TestCheckedViewArrays (0.00s)
+    --- PASS: TestCheckedViewArrays/array-lazy (0.39s)
+    --- PASS: TestCheckedViewArrays/array-boolean (0.44s)
+    --- PASS: TestCheckedViewArrays/non-array (0.43s)
+    --- PASS: TestCheckedViewArrays/object-element (0.46s)
+    --- PASS: TestCheckedViewArrays/array-element (0.46s)
+    --- PASS: TestCheckedViewArrays/generic-array-element (0.41s)
+    --- PASS: TestCheckedViewArrays/array-field (0.47s)
+    --- PASS: TestCheckedViewArrays/nullable-array-element (0.40s)
+    --- PASS: TestCheckedViewArrays/nullable-array-string (0.47s)
+    --- PASS: TestCheckedViewArrays/array-string-literal (0.44s)
+    --- PASS: TestCheckedViewArrays/array-undefined (0.43s)
+    --- PASS: TestCheckedViewArrays/array-alias (0.43s)
+    --- PASS: TestCheckedViewArrays/array-map-bad (0.55s)
+    --- PASS: TestCheckedViewArrays/array-missing (0.40s)
+    --- PASS: TestCheckedViewArrays/array-iteration-bad (0.51s)
+    --- PASS: TestCheckedViewArrays/array-length-kind (0.47s)
+    --- PASS: TestCheckedViewArrays/array-uninitialized (0.47s)
+    --- PASS: TestCheckedViewArrays/callable-kind (0.51s)
+    --- PASS: TestCheckedViewArrays/array-second (0.43s)
+    --- PASS: TestCheckedViewArrays/array-pop (0.48s)
+    --- PASS: TestCheckedViewArrays/callable-uninitialized (0.56s)
+    --- PASS: TestCheckedViewArrays/callable-missing (0.53s)
+    --- PASS: TestCheckedViewArrays/array-bounds (0.32s)
+    --- PASS: TestCheckedViewArrays/array-iteration (0.38s)
+    --- PASS: TestCheckedViewArrays/array-map (0.39s)
+PASS
+gate cache: native hits=57 misses=0
+gate cache: node hits=155 misses=16
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	20.365s

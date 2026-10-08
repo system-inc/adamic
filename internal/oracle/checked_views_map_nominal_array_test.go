@@ -55,7 +55,7 @@ func nominalArrayMutant(t *testing.T, site string) {
 	}
 	native, _ := nativelyUncached(t, program)
 	for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-		if got.exitCode != 70 || !strings.Contains(string(got.stderr), "class identity") || (site == "read" && !strings.Contains(string(got.stderr), "field read failed:")) || (site == "producer" && !strings.Contains(string(got.stderr), "Map nominal producer failed:")) {
+		if got.exitCode != 70 || !strings.Contains(string(got.stderr), "class identity") || (site == "read" && !strings.Contains(string(got.stderr), "cast failed: field read failed:")) || (site == "producer" && !strings.Contains(string(got.stderr), "Map nominal producer failed:")) {
 			t.Fatalf("array lookalike ran on: %#v", got)
 		}
 	}
@@ -96,7 +96,7 @@ func mutableNominalFieldMutant(t *testing.T, write bool) {
 	}
 	native, _ := nativelyUncached(t, program)
 	for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-		if got.exitCode != 70 || !strings.Contains(string(got.stderr), map[bool]string{false: "field read failed:", true: "Map nominal producer failed:"}[write]) || !strings.Contains(string(got.stderr), "class identity") {
+		if got.exitCode != 70 || !strings.Contains(string(got.stderr), map[bool]string{false: "cast failed: field read failed:", true: "Map nominal producer failed:"}[write]) || !strings.Contains(string(got.stderr), "class identity") {
 			t.Fatalf("mutable nominal lookalike ran on: %#v", got)
 		}
 	}
@@ -209,7 +209,7 @@ func TestCheckedViewOptionalNominalMutants(t *testing.T) {
 				t.Fatal("mutation missed")
 			}
 			native, _ := nativelyUncached(t, program)
-			expected := "field read failed:"
+			expected := "cast failed: field read failed:"
 			if site != "read" {
 				expected = "Map nominal producer failed:"
 			}
@@ -352,7 +352,7 @@ func TestCheckedViewOptionalMutableNominalMutants(t *testing.T) {
 			native, _ := nativelyUncached(t, program)
 			expected := "Map nominal producer failed:"
 			if site == "read" {
-				expected = "field read failed:"
+				expected = "cast failed: field read failed:"
 			}
 			for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 				if got.exitCode != 70 || !strings.Contains(string(got.stderr), expected) || !strings.Contains(string(got.stderr), "class identity") {
@@ -427,7 +427,7 @@ func TestCheckedViewNullableNominalSlotMutants(t *testing.T) {
 			native, _ := nativelyUncached(t, program)
 			expected := "Map nominal producer failed:"
 			if site == "read" {
-				expected = "field read failed:"
+				expected = "cast failed: field read failed:"
 			}
 			for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 				if got.exitCode != 70 || !strings.Contains(string(got.stderr), expected) || !strings.Contains(string(got.stderr), "class identity") {
@@ -489,7 +489,7 @@ func TestCheckedViewNominalFieldWidenReadMutants(t *testing.T) {
 			}
 			native, _ := nativelyUncached(t, program)
 			for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if got.exitCode != 70 || !strings.Contains(string(got.stderr), "field read failed:") || !strings.Contains(string(got.stderr), "class identity") {
+				if got.exitCode != 70 || !strings.Contains(string(got.stderr), "cast failed: field read failed:") || !strings.Contains(string(got.stderr), "class identity") {
 					t.Fatalf("widened reference lookalike ran on: %#v", got)
 				}
 			}

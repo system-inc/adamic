@@ -1,0 +1,62 @@
+=== RUN   TestPrimitiveUnionSlotWriteDomains
+--- PASS: TestPrimitiveUnionSlotWriteDomains (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/ir	0.042s
+=== RUN   TestGenericCastInstantiationsRequireConcreteProof
+--- PASS: TestGenericCastInstantiationsRequireConcreteProof (0.09s)
+=== RUN   TestScalarIndexSnapshotRejectsUnprovedSources
+--- PASS: TestScalarIndexSnapshotRejectsUnprovedSources (0.10s)
+=== RUN   TestNullableWritableArrayConsumersStayRefused
+--- PASS: TestNullableWritableArrayConsumersStayRefused (0.11s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.335s
+=== RUN   TestPrimitiveArraySnapshotStorageAndLifetime
+=== RUN   TestPrimitiveArraySnapshotStorageAndLifetime/0
+=== RUN   TestPrimitiveArraySnapshotStorageAndLifetime/1
+=== RUN   TestPrimitiveArraySnapshotStorageAndLifetime/2
+=== RUN   TestPrimitiveArraySnapshotStorageAndLifetime/3
+=== RUN   TestPrimitiveArraySnapshotStorageAndLifetime/4
+=== RUN   TestPrimitiveArraySnapshotStorageAndLifetime/5
+=== RUN   TestPrimitiveArraySnapshotStorageAndLifetime/6
+=== RUN   TestPrimitiveArraySnapshotStorageAndLifetime/7
+=== NAME  TestPrimitiveArraySnapshotStorageAndLifetime
+    view_array_primitives_test.go:87: forged producer metadata mutant caught by named unknown-storage refusal
+--- PASS: TestPrimitiveArraySnapshotStorageAndLifetime (0.50s)
+    --- PASS: TestPrimitiveArraySnapshotStorageAndLifetime/0 (0.01s)
+    --- PASS: TestPrimitiveArraySnapshotStorageAndLifetime/1 (0.01s)
+    --- PASS: TestPrimitiveArraySnapshotStorageAndLifetime/2 (0.01s)
+    --- PASS: TestPrimitiveArraySnapshotStorageAndLifetime/3 (0.00s)
+    --- PASS: TestPrimitiveArraySnapshotStorageAndLifetime/4 (0.00s)
+    --- PASS: TestPrimitiveArraySnapshotStorageAndLifetime/5 (0.00s)
+    --- PASS: TestPrimitiveArraySnapshotStorageAndLifetime/6 (0.00s)
+    --- PASS: TestPrimitiveArraySnapshotStorageAndLifetime/7 (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.522s
+=== RUN   TestViewArraysNode
+=== PAUSE TestViewArraysNode
+=== RUN   TestViewArrayFieldPresence
+=== PAUSE TestViewArrayFieldPresence
+=== CONT  TestViewArraysNode
+=== CONT  TestViewArrayFieldPresence
+=== RUN   TestViewArraysNode/lazy
+=== RUN   TestViewArraysNode/second
+=== RUN   TestViewArraysNode/kind
+=== RUN   TestViewArraysNode/alias
+--- PASS: TestViewArrayFieldPresence (0.13s)
+=== RUN   TestViewArraysNode/object
+=== RUN   TestViewArraysNode/object_payload
+=== RUN   TestViewArraysNode/hole
+=== RUN   TestViewArraysNode/optional_index
+=== RUN   TestViewArraysNode/once
+--- PASS: TestViewArraysNode (0.39s)
+    --- PASS: TestViewArraysNode/lazy (0.04s)
+    --- PASS: TestViewArraysNode/second (0.04s)
+    --- PASS: TestViewArraysNode/kind (0.04s)
+    --- PASS: TestViewArraysNode/alias (0.04s)
+    --- PASS: TestViewArraysNode/object (0.04s)
+    --- PASS: TestViewArraysNode/object_payload (0.04s)
+    --- PASS: TestViewArraysNode/hole (0.03s)
+    --- PASS: TestViewArraysNode/optional_index (0.03s)
+    --- PASS: TestViewArraysNode/once (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/javascript	0.400s

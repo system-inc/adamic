@@ -65,10 +65,10 @@ func TestCheckedViewOriginalEvaluatorPrimitivePairs(t *testing.T) {
 				want := run{stdout: []byte(text)}
 				if variant == "wrong" || variant == "null" {
 					found := map[string]string{"wrong": "boolean", "null": "null", "undefined": "undefined", "missing": "missing"}[variant]
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + label + " matches no member of string | number | undefined; expected string | number | undefined, found " + found + "\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: " + label + " matches no member of string | number | undefined; expected string | number | undefined, found " + found + "\n")}
 				}
 				if variant == "missing" {
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + label + " is not initialized; expected string | number | undefined, found missing\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: " + label + " is not initialized; expected string | number | undefined, found missing\n")}
 				}
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 					if diff := disagreement(want, got); diff != "" {
@@ -204,10 +204,10 @@ func TestCheckedViewOriginalFinitePrimitiveFields(t *testing.T) {
 					if group.name == "graph-circular" && variant == "wrong" {
 						found = "number"
 					}
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + label + " matches no member of " + group.declared + "; expected " + group.declared + ", found " + found + "\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: " + label + " matches no member of " + group.declared + "; expected " + group.declared + ", found " + found + "\n")}
 				}
 				if (group.name == "literal-union" || group.name == "bundle-pending" || group.name == "package-peer" || group.name == "reusable-file" || group.name == "builder-signature" || group.name == "graph-circular" || group.name == "watch-version") && variant == "missing" {
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + label + " is not initialized; expected " + group.declared + ", found missing\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: " + label + " is not initialized; expected " + group.declared + ", found missing\n")}
 				}
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 					if diff := disagreement(want, got); diff != "" {

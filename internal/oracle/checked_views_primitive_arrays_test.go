@@ -42,7 +42,7 @@ func TestCheckedViewPrimitiveArrayPairs(t *testing.T) {
 					if variant == "missing" {
 						found = "undefined"
 					}
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + label + " matches no member of string | number; expected string | number, found " + found + "\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: " + label + " matches no member of string | number; expected string | number, found " + found + "\n")}
 				}
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 					if diff := disagreement(want, got); diff != "" {
@@ -131,7 +131,7 @@ func TestCheckedViewPrimitiveArraySafety(t *testing.T) {
 			}
 			want := truth
 			if sample.found != "" {
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + sample.field + " matches no member of " + sample.declared + "; expected " + sample.declared + ", found " + sample.found + "\n")}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: " + sample.field + " matches no member of " + sample.declared + "; expected " + sample.declared + ", found " + sample.found + "\n")}
 			}
 			for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 				if diff := disagreement(want, got); diff != "" {

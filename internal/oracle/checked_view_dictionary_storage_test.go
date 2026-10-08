@@ -11,21 +11,21 @@ import (
 func TestCheckedViewDictionaryStorage(t *testing.T) {
 	for _, test := range []struct{ name, truth, stderr string }{
 		{"mutable-good", "name\nundefined\n", ""},
-		{"mutable-wrong", "number\n", "adamic: panic: field read failed: view.table['item']; expected string[] | undefined, found number\n"},
-		{"array-shape-wrong", "object\n", "adamic: panic: field read failed: view.table['item']; expected { readonly name: string; } | undefined, found array\n"},
-		{"union-shape-wrong", "object\n", "adamic: panic: field read failed: view.table['item']; expected string | number | boolean | undefined, found object\n"},
+		{"mutable-wrong", "number\n", "adamic: panic: cast failed: field read failed: view.table['item']; expected string[] | undefined, found number\n"},
+		{"array-shape-wrong", "object\n", "adamic: panic: cast failed: field read failed: view.table['item']; expected { readonly name: string; } | undefined, found array\n"},
+		{"union-shape-wrong", "object\n", "adamic: panic: cast failed: field read failed: view.table['item']; expected string | number | boolean | undefined, found object\n"},
 		{"number-good", "42\nundefined\n", ""},
-		{"number-wrong", "number\n", "adamic: panic: field read failed: view.table['item']; expected string | undefined, found number\n"},
+		{"number-wrong", "number\n", "adamic: panic: cast failed: field read failed: view.table['item']; expected string | undefined, found number\n"},
 		{"boolean-good", "true\nundefined\n", ""},
-		{"boolean-wrong", "boolean\n", "adamic: panic: field read failed: view.table['item']; expected string | undefined, found boolean\n"},
+		{"boolean-wrong", "boolean\n", "adamic: panic: cast failed: field read failed: view.table['item']; expected string | undefined, found boolean\n"},
 		{"string-good", "name\nundefined\n", ""},
 		{"union-good", "42\nundefined\n", ""},
 		{"partial-good", "42\nundefined\n", ""},
-		{"partial-wrong", "number\n", "adamic: panic: field read failed: view.table['item']; expected string | undefined, found number\n"},
+		{"partial-wrong", "number\n", "adamic: panic: cast failed: field read failed: view.table['item']; expected string | undefined, found number\n"},
 		{"object-good", "name\n", ""},
-		{"object-wrong", "42\n", "adamic: panic: field read failed: entry.name is not a string; expected string, found number\n"},
+		{"object-wrong", "42\n", "adamic: panic: cast failed: field read failed: entry.name is not a string; expected string, found number\n"},
 		{"array-good", "name\n", ""},
-		{"array-wrong", "42\n", "adamic: panic: element read failed: entry[0] expected string, found number\n"},
+		{"array-wrong", "42\n", "adamic: panic: cast failed: element read failed: entry[0] expected string, found number\n"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			program, path := interfaceFixture(t, "dictionaries/source/storage-"+test.name)

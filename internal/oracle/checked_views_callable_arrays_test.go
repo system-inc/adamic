@@ -54,12 +54,12 @@ func TestCheckedViewCallableArrays(t *testing.T) {
 					if variant == "wrong-result" {
 						found = "function with incompatible result representation"
 					}
-					message := "adamic: panic: field read failed: " + family.field + " expected " + family.expected + ", found " + found + "\n"
+					message := "adamic: panic: cast failed: field read failed: " + family.field + " expected " + family.expected + ", found " + found + "\n"
 					if variant == "wrong-value" && index < 2 {
-						message = "adamic: panic: field read failed: " + family.field + " is not a " + family.expected + "; expected " + family.expected + ", found number\n"
+						message = "adamic: panic: cast failed: field read failed: " + family.field + " is not a " + family.expected + "; expected " + family.expected + ", found number\n"
 					}
 					if variant == "wrong-element" {
-						message = "adamic: panic: element read failed: " + family.element + " expected number, found object\n"
+						message = "adamic: panic: cast failed: element read failed: " + family.element + " expected number, found object\n"
 					}
 					if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != message {
 						t.Fatalf("backend%d %#v want %q", index, got, message)

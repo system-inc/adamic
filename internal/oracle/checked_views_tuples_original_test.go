@@ -96,14 +96,14 @@ func TestCheckedViewTupleOriginalOutSignature(t *testing.T) {
 	root, manifest := tupleOriginalInputs(t)
 	for _, test := range []struct{ name, node, diagnostic string }{
 		{"emit-tuple-good", "signature\n", ""}, {"emit-string-good", "signature\n", ""}, {"emit-undefined", "absent\n", ""}, {"emit-helper-good", "signature\n", ""},
-		{"emit-missing", "absent\n", "field read failed: viewed.outSignature is not initialized; expected EmitSignature | undefined, found missing"},
-		{"emit-wrong-kind-noread", "boolean\n", "field read failed: viewed.outSignature matches no member of EmitSignature | undefined; expected EmitSignature | undefined, found boolean"},
-		{"emit-wrong-kind", "undefined\n", "field read failed: viewed.outSignature matches no member of EmitSignature | undefined; expected EmitSignature | undefined, found boolean"},
-		{"emit-wrong-position", "false\n", "field read failed: signature[0] is not a string; expected string, found boolean"},
-		{"emit-helper-wrong", "false\n", "field read failed: signature[0] is not a string; expected string, found boolean"},
-		{"emit-wrong-length", "signature\n", "field read failed: viewed.outSignature is not a [signature: string]; expected [signature: string], found array"},
-		{"emit-record-noread", "object\n", "field read failed: viewed.outSignature is not a [signature: string]; expected [signature: string], found object"},
-		{"emit-record", "signature\n", "field read failed: viewed.outSignature is not a [signature: string]; expected [signature: string], found object"},
+		{"emit-missing", "absent\n", "cast failed: field read failed: viewed.outSignature is not initialized; expected EmitSignature | undefined, found missing"},
+		{"emit-wrong-kind-noread", "boolean\n", "cast failed: field read failed: viewed.outSignature matches no member of EmitSignature | undefined; expected EmitSignature | undefined, found boolean"},
+		{"emit-wrong-kind", "undefined\n", "cast failed: field read failed: viewed.outSignature matches no member of EmitSignature | undefined; expected EmitSignature | undefined, found boolean"},
+		{"emit-wrong-position", "false\n", "cast failed: field read failed: signature[0] is not a string; expected string, found boolean"},
+		{"emit-helper-wrong", "false\n", "cast failed: field read failed: signature[0] is not a string; expected string, found boolean"},
+		{"emit-wrong-length", "signature\n", "cast failed: field read failed: viewed.outSignature is not a [signature: string]; expected [signature: string], found array"},
+		{"emit-record-noread", "object\n", "cast failed: field read failed: viewed.outSignature is not a [signature: string]; expected [signature: string], found object"},
+		{"emit-record", "signature\n", "cast failed: field read failed: viewed.outSignature is not a [signature: string]; expected [signature: string], found object"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			path, program := tupleOriginalProgram(t, root, test.name)
@@ -186,10 +186,10 @@ func TestCheckedViewTupleOriginalTrackedSymbols(t *testing.T) {
 		{"tracked-undefined", "", ""},
 		{"tracked-evaluation-good", "receiver\ncallback\n1\n4\n", ""},
 		{"tracked-evaluation-undefined", "receiver\n", ""},
-		{"tracked-meaning-wrong", "1\nfalse\n", "field read failed: item[2] is not a SymbolFlags; expected SymbolFlags, found boolean"},
-		{"tracked-symbol-wrong", "false\n4\n", "field read failed: item[0].flags is not a SymbolFlags; expected SymbolFlags, found boolean"},
-		{"tracked-length-wrong", "1\n4\n", "field read failed: trackedSymbols[element] is not a TrackedSymbol; expected TrackedSymbol, found array"},
-		{"tracked-record-wrong", "1\n4\n", "field read failed: trackedSymbols[element] is not a TrackedSymbol; expected TrackedSymbol, found object"},
+		{"tracked-meaning-wrong", "1\nfalse\n", "cast failed: field read failed: item[2] is not a SymbolFlags; expected SymbolFlags, found boolean"},
+		{"tracked-symbol-wrong", "false\n4\n", "cast failed: field read failed: item[0].flags is not a SymbolFlags; expected SymbolFlags, found boolean"},
+		{"tracked-length-wrong", "1\n4\n", "cast failed: field read failed: trackedSymbols[element] is not a TrackedSymbol; expected TrackedSymbol, found array"},
+		{"tracked-record-wrong", "1\n4\n", "cast failed: field read failed: trackedSymbols[element] is not a TrackedSymbol; expected TrackedSymbol, found object"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			path, program := tupleOriginalProgram(t, root, test.name)

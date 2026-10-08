@@ -17,7 +17,7 @@ func TestCheckedViewArrayReferenceWrites(t *testing.T) {
 		{"reference-array-mutable-incoming", "written\n", "element write failed: <array write> expected { value: number; text: string; }, found { value: 2; text: string; }"},
 		{"reference-array-uncertified", "written\n", "element write failed: <array write> expected object, found uncertified source element contract"},
 		{"reference-array-source-alias", "written:1\n", "field write failed: property 'value' on record { kind: \"entry\"; value: 7; text: string; } at reference-array-source-alias.a:11 has no compatible declared slot"},
-		{"reference-array-uninitialized", "written\n", "field read failed: <array write>.value is not initialized; expected number, found uninitialized"},
+		{"reference-array-uninitialized", "written\n", "cast failed: field read failed: <array write>.value is not initialized; expected number, found uninitialized"},
 		{"reference-array-evaluation", "3:item2\n", ""},
 	} {
 		t.Run(probe.name, func(t *testing.T) {

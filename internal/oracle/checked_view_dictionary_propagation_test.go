@@ -26,7 +26,7 @@ func TestCheckedViewDictionaryPropagation(t *testing.T) {
 						if difference := disagreement(truth, got); difference != "" {
 							t.Fatal(difference)
 						}
-					} else if got.exitCode != 70 || string(got.stderr) != "adamic: panic: field read failed: entry.name is not a string; expected string, found number\n" {
+					} else if got.exitCode != 70 || string(got.stderr) != "adamic: panic: cast failed: field read failed: entry.name is not a string; expected string, found number\n" {
 						t.Fatalf("transitive named check: %#v", got)
 					}
 				}
@@ -63,12 +63,12 @@ func TestCheckedViewDictionaryArrays(t *testing.T) {
 						t.Fatal(difference)
 					}
 				} else {
-					want := fmt.Sprintf("adamic: panic: field read failed: %s; expected %s, found %s\n", test.field, test.expected, test.found)
+					want := fmt.Sprintf("adamic: panic: cast failed: field read failed: %s; expected %s, found %s\n", test.field, test.expected, test.found)
 					if test.name == "paths-element-wrong" {
-						want = fmt.Sprintf("adamic: panic: element read failed: %s expected %s, found %s\n", test.field, test.expected, test.found)
+						want = fmt.Sprintf("adamic: panic: cast failed: element read failed: %s expected %s, found %s\n", test.field, test.expected, test.found)
 					}
 					if test.name == "paths-container-wrong" {
-						want = fmt.Sprintf("adamic: panic: field read failed: %s matches no member of %s; expected %s, found %s\n", test.field, test.expected, test.expected, test.found)
+						want = fmt.Sprintf("adamic: panic: cast failed: field read failed: %s matches no member of %s; expected %s, found %s\n", test.field, test.expected, test.expected, test.found)
 					}
 					if got.exitCode != 70 || string(got.stderr) != want {
 						t.Fatalf("pinned array dictionary check: %#v; want %q", got, want)
@@ -103,7 +103,7 @@ func TestCheckedViewDictionaryRoot(t *testing.T) {
 					if difference := disagreement(truth, got); difference != "" {
 						t.Fatal(difference)
 					}
-				} else if got.exitCode != 70 || string(got.stderr) != "adamic: panic: field read failed: view['item']; expected string | undefined, found number\n" {
+				} else if got.exitCode != 70 || string(got.stderr) != "adamic: panic: cast failed: field read failed: view['item']; expected string | undefined, found number\n" {
 					t.Fatalf("root dictionary check: %#v", got)
 				}
 			}
@@ -154,9 +154,9 @@ func TestCheckedViewDictionaryCompilerPaths(t *testing.T) {
 						t.Fatal(difference)
 					}
 				} else {
-					want := fmt.Sprintf("adamic: panic: field read failed: %s; expected %s, found %s\n", test.field, test.expected, test.found)
+					want := fmt.Sprintf("adamic: panic: cast failed: field read failed: %s; expected %s, found %s\n", test.field, test.expected, test.found)
 					if test.name == "compiler-paths-element-wrong" {
-						want = fmt.Sprintf("adamic: panic: element read failed: %s expected %s, found %s\n", test.field, test.expected, test.found)
+						want = fmt.Sprintf("adamic: panic: cast failed: element read failed: %s expected %s, found %s\n", test.field, test.expected, test.found)
 					}
 
 					if got.exitCode != 70 || string(got.stderr) != want {
@@ -198,9 +198,9 @@ func TestCheckedViewDictionaryOptionalPaths(t *testing.T) {
 						t.Fatal(difference)
 					}
 				} else {
-					want := fmt.Sprintf("adamic: panic: field read failed: %s; expected %s, found %s\n", test.field, test.expected, test.found)
+					want := fmt.Sprintf("adamic: panic: cast failed: field read failed: %s; expected %s, found %s\n", test.field, test.expected, test.found)
 					if test.name == "optional-paths-element-wrong" {
-						want = fmt.Sprintf("adamic: panic: element read failed: %s expected %s, found %s\n", test.field, test.expected, test.found)
+						want = fmt.Sprintf("adamic: panic: cast failed: element read failed: %s expected %s, found %s\n", test.field, test.expected, test.found)
 					}
 
 					if got.exitCode != 70 || string(got.stderr) != want {

@@ -1,4 +1,4 @@
-// Remove exactly the cast panic from real emitted C; require valid, sanitizer-clean execution.
+// Remove the tag-domain checks at the cast and its checked read in real emitted C.
 const fs = require('node:fs'), path = require('node:path'), cp = require('node:child_process');
 const [scratchArg, runtimeArg] = process.argv.slice(2);
 const scratch = path.resolve(scratchArg), runtime = path.resolve(runtimeArg);
@@ -7,7 +7,9 @@ const source = fs.readFileSync(path.join(scratch, fixture + '.c.stdout'), 'utf8'
 const call = 'adamic_panic(message, sizeof message - 1);';
 if (source.split(call).length !== 2 || !source.includes('cast failed: this DeclarationName')) throw Error('expected exactly one real cast panic');
 const mutant = path.join(scratch, fixture + '.skip-check.c'), binary = path.join(scratch, fixture + '.skip-check.native');
-fs.writeFileSync(mutant, source.replace(call, '(void)0;'));
+const fieldCheck = /adamic_view_literal_failure\([^;\n]*\)/g;
+if ([...source.matchAll(fieldCheck)].length !== 1) throw Error('expected one later tag-domain read check');
+fs.writeFileSync(mutant, source.replace(call, '(void)0;').replace(fieldCheck, '(void)0'));
 const flags = ['-std=c11','-Wall','-Wextra','-Werror','-pedantic','-Wno-unused-variable','-Wno-unused-but-set-variable','-Wno-unused-function','-Wno-unused-parameter','-Wno-self-assign','-ffp-contract=off','-fno-optimize-sibling-calls','-O1','-g','-fsanitize=address,undefined','-fno-sanitize-recover=all'];
 const command = ['clang', ...flags, '-I', runtime, mutant, '-Xlinker','--whole-archive',path.join(runtime,'runtime.a'),'-Xlinker','--no-whole-archive','-lm','-o',binary];
 const build = cp.spawnSync(command[0], command.slice(1), {encoding: 'utf8'});
@@ -17,5 +19,5 @@ const actual = cp.spawnSync(binary, [], {encoding: 'utf8', env: {...process.env,
 const fixtureRow = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures.json'))).find(r => r.file === fixture);
 if (actual.status !== 0 || actual.stderr !== '' || actual.stdout !== fixtureRow.node_stdout) throw Error('native mutant must finish normally, leak-clean, exactly as erased source on Node');
 if (actual.status === fixtureRow.runtime_exit && actual.stdout === fixtureRow.runtime_stdout) throw Error('native check omission survived');
-fs.writeFileSync(path.join(__dirname, 'native-mutant.json'), JSON.stringify({fixture, mutant: 'remove cast panic from emitted C', caught_by: 'panic exit and stdout contract', build_command: command, build_exit: build.status, actual: {exit: actual.status, stdout: actual.stdout, stderr: actual.stderr}, expected: {exit: fixtureRow.runtime_exit, stdout: fixtureRow.runtime_stdout}}, null, 2) + '\n');
+fs.writeFileSync(path.join(__dirname, 'native-mutant.json'), JSON.stringify({fixture, mutant: 'remove cast and later tag-domain checks from emitted C', caught_by: 'panic exit and stdout contract', build_command: command, build_exit: build.status, actual: {exit: actual.status, stdout: actual.stdout, stderr: actual.stderr}, expected: {exit: fixtureRow.runtime_exit, stdout: fixtureRow.runtime_stdout}}, null, 2) + '\n');
 console.log('caught native check omission: exit 0 and post-cast output; expected exit 70 before cast result');

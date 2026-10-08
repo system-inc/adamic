@@ -31,9 +31,9 @@ func TestCheckedViewCallableElementAccess(t *testing.T) {
 					continue
 				}
 				expected := "(expression: Expression, index: number | Expression) => ElementAccessExpression"
-				message := "adamic: panic: field read failed: factory.createElementAccessExpression expected " + expected + ", found " + probe.found + "\n"
+				message := "adamic: panic: cast failed: field read failed: factory.createElementAccessExpression expected " + expected + ", found " + probe.found + "\n"
 				if i < 2 && probe.name == "wrong-value" {
-					message = "adamic: panic: field read failed: factory.createElementAccessExpression is not a " + expected + "; expected " + expected + ", found number\n"
+					message = "adamic: panic: cast failed: field read failed: factory.createElementAccessExpression is not a " + expected + "; expected " + expected + ", found number\n"
 				}
 				if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != message {
 					t.Fatalf("backend%d %#v want %q", i, got, message)

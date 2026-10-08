@@ -9,9 +9,9 @@ func TestCheckedViewOptionalDeclarations(t *testing.T) {
 		{"optional-declarations-absent", "missing\n", ""},
 		{"optional-declarations-undefined", "missing\n", ""},
 		{"optional-declarations-lazy", "2\nfirst\n", ""},
-		{"optional-declarations-wrong-array", "", "field read failed: symbol(raw).declarations matches no member of Declaration[] | undefined; expected Declaration[] | undefined, found number"},
-		{"optional-declarations-wrong-element", "", "element read failed: declarations[0] expected Declaration, found number"},
-		{"optional-declarations-wrong-field", "", "field read failed: declaration.name is not a string; expected string, found number"},
+		{"optional-declarations-wrong-array", "", "cast failed: field read failed: symbol(raw).declarations matches no member of Declaration[] | undefined; expected Declaration[] | undefined, found number"},
+		{"optional-declarations-wrong-element", "", "cast failed: element read failed: declarations[0] expected Declaration, found number"},
+		{"optional-declarations-wrong-field", "", "cast failed: field read failed: declaration.name is not a string; expected string, found number"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

@@ -33,9 +33,9 @@ func TestCheckedViewCallableSourceContracts(t *testing.T) {
 					}
 					continue
 				}
-				message := "adamic: panic: field read failed: read(input).run expected (value: number) => number, found " + probe.found + "\n"
+				message := "adamic: panic: cast failed: field read failed: read(input).run expected (value: number) => number, found " + probe.found + "\n"
 				if probe.found == "number" && index < 2 {
-					message = "adamic: panic: field read failed: read(input).run is not a (value: number) => number; expected (value: number) => number, found number\n"
+					message = "adamic: panic: cast failed: field read failed: read(input).run is not a (value: number) => number; expected (value: number) => number, found number\n"
 				}
 				if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != message {
 					t.Fatalf("backend%d got %#v want %q", index, got, message)
@@ -81,9 +81,9 @@ func TestCheckedViewCallableDirectoryPairs(t *testing.T) {
 						}
 						continue
 					}
-					message := "adamic: panic: field read failed: p." + field + " expected () => string, found " + probe.found + "\n"
+					message := "adamic: panic: cast failed: field read failed: p." + field + " expected () => string, found " + probe.found + "\n"
 					if probe.found == "number" && index < 2 {
-						message = "adamic: panic: field read failed: p." + field + " is not a () => string; expected () => string, found number\n"
+						message = "adamic: panic: cast failed: field read failed: p." + field + " is not a () => string; expected () => string, found number\n"
 					}
 					if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != message {
 						t.Fatalf("backend%d got %#v want %q", index, got, message)
@@ -130,14 +130,14 @@ func TestCheckedViewCallableMarker(t *testing.T) {
 					if name == "stored-call" {
 						label, stdout = "cache.assertion", "function view loaded\n"
 					}
-					expected := "adamic: panic: field read failed: " + label + " expected AnyFunction, found function with arity 1\n"
+					expected := "adamic: panic: cast failed: field read failed: " + label + " expected AnyFunction, found function with arity 1\n"
 					if got.exitCode != 70 || string(got.stdout) != stdout || string(got.stderr) != expected {
 						t.Fatalf("marker arity %#v expected %q", got, expected)
 					}
 					continue
 				}
 				if name == "discarded-wrong-arity" {
-					expected := "adamic: panic: field read failed: debug.shouldLog expected () => boolean, found function with arity 1\n"
+					expected := "adamic: panic: cast failed: field read failed: debug.shouldLog expected () => boolean, found function with arity 1\n"
 					if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != expected {
 						t.Fatalf("wrong arity %#v expected %q", got, expected)
 					}
@@ -174,7 +174,7 @@ func TestCheckedViewCallableMethods(t *testing.T) {
 					}
 					continue
 				}
-				expected := "adamic: panic: field read failed: debug.run expected (value: number) => number, found " + probe.found + "\n"
+				expected := "adamic: panic: cast failed: field read failed: debug.run expected (value: number) => number, found " + probe.found + "\n"
 				if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != expected {
 					t.Fatalf("method %#v expected %q", got, expected)
 				}
@@ -212,7 +212,7 @@ func TestCheckedViewStoredMarkerCalls(t *testing.T) {
 			actual, binary := nativelyUncached(t, program)
 			for _, got := range []run{releasedUncached(t, program), actual, onJavaScriptBackend(t, program)} {
 				if name == "wrong-arity" {
-					expected := "adamic: panic: field read failed: callback expected AnyFunction, found function with arity 1\n"
+					expected := "adamic: panic: cast failed: field read failed: callback expected AnyFunction, found function with arity 1\n"
 					if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != expected {
 						t.Fatalf("stored marker %#v expected %q", got, expected)
 					}

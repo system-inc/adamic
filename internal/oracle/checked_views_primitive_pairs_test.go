@@ -41,10 +41,10 @@ func TestCheckedViewBrandCandidatePairs(t *testing.T) {
 				}
 				if variant == "wrong" || variant == "null" {
 					found := map[string]string{"wrong": "number", "null": "null"}[variant]
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value." + pair.Field + " is not a " + expected + "; expected " + expected + ", found " + found + "\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: value." + pair.Field + " is not a " + expected + "; expected " + expected + ", found " + found + "\n")}
 				}
 				if variant == "missing" && !pair.Optional {
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value." + pair.Field + " is not initialized; expected " + expected + ", found missing\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: value." + pair.Field + " is not initialized; expected " + expected + ", found missing\n")}
 				}
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 					if difference := disagreement(want, got); difference != "" {
@@ -93,11 +93,11 @@ func TestCheckedViewFiniteStringKeyComponent(t *testing.T) {
 				want := run{stdout: []byte(text + "\n")}
 				declared := "keyof CompilerOptions | undefined"
 				if variant == "wrong" {
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value.skippedOn matches no member of " + declared + "; expected " + declared + ", found string\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: value.skippedOn matches no member of " + declared + "; expected " + declared + ", found string\n")}
 				}
 				if variant == "number" || variant == "null" {
 					found := map[string]string{"number": "number", "null": "null"}[variant]
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value.skippedOn matches no member of " + declared + "; expected " + declared + ", found " + found + "\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: value.skippedOn matches no member of " + declared + "; expected " + declared + ", found " + found + "\n")}
 				}
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 					if difference := disagreement(want, got); difference != "" {
@@ -189,7 +189,7 @@ func TestCheckedViewOpenCompilerOptionKeySelection(t *testing.T) {
 				want := run{stdout: []byte(text + "\n")}
 				if variant == "wrong" || variant == "null" {
 					found := map[string]string{"wrong": "boolean", "null": "null"}[variant]
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value.skippedOn matches no member of keyof CompilerOptions | undefined; expected keyof CompilerOptions | undefined, found " + found + "\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: value.skippedOn matches no member of keyof CompilerOptions | undefined; expected keyof CompilerOptions | undefined, found " + found + "\n")}
 				}
 				actual, binary := nativelyUncached(t, program)
 				for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {

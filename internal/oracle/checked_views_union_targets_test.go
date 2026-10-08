@@ -69,7 +69,7 @@ func TestCheckedViewOriginalUnionTargets(t *testing.T) {
 						if group.name == "class" {
 							element = "ClassElement"
 						}
-						pin := "adamic: panic: field read failed: viewed." + group.field + " is not a NodeArray<" + element + ">; expected NodeArray<" + element + ">, found number\n"
+						pin := "adamic: panic: cast failed: field read failed: viewed." + group.field + " is not a NodeArray<" + element + ">; expected NodeArray<" + element + ">, found number\n"
 						if string(got.stderr) != pin {
 							t.Fatalf("refusal drift: %q", got.stderr)
 						}

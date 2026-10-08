@@ -36,9 +36,9 @@ func TestCheckedViewCallablePropertyWitnesses(t *testing.T) {
 					}
 					expected := family.signature
 					field := "factory." + family.field
-					message := "adamic: panic: field read failed: " + field + " expected " + expected + ", found " + probe.found + "\n"
+					message := "adamic: panic: cast failed: field read failed: " + field + " expected " + expected + ", found " + probe.found + "\n"
 					if i < 2 && probe.name == "wrong-value" {
-						message = "adamic: panic: field read failed: " + field + " is not a " + expected + "; expected " + expected + ", found number\n"
+						message = "adamic: panic: cast failed: field read failed: " + field + " is not a " + expected + "; expected " + expected + ", found number\n"
 					}
 					if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != message {
 						t.Fatalf("backend%d %#v want %q", i, got, message)

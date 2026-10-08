@@ -34,7 +34,7 @@ func TestScannerCastDiagnostic(t *testing.T) {
 			}
 			expected := truth
 			if name == "wrong" {
-				expected = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value.elidedInCompatabilityPyramid matches no member of boolean | undefined; expected boolean | undefined, found number\n")}
+				expected = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: value.elidedInCompatabilityPyramid matches no member of boolean | undefined; expected boolean | undefined, found number\n")}
 			}
 			sanitized, binary := nativelyUncached(t, program)
 			for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
@@ -116,7 +116,7 @@ func scannerCastCounts(t *testing.T) []string {
 	for _, name := range []string{"string-any", "string-checked"} {
 		rows = append(rows, counted(t, "stage3/drivers/scanner/cast-checks/"+name+".a", false, nil, false, false))
 	}
-	for _, name := range []string{"01_enum_declaration", "01_enum_declaration_fails", "02_name_subunion", "02_name_subunion_fails", "05_extension", "05_extension_fails", "06_parser_keyword", "06_parser_keyword_fails", "09_primitive_string", "09_primitive_string_fails"} {
+	for _, name := range []string{"01_enum_declaration", "01_enum_declaration_fails", "02_name_subunion", "02_name_subunion_fails", "03_chain_info", "03_chain_info_fails", "04_literal_payload", "04_literal_payload_fails", "05_extension", "05_extension_fails", "06_parser_keyword", "06_parser_keyword_fails", "07_generic_next", "07_generic_next_fails", "08_generic_node", "08_generic_node_fails", "09_primitive_string", "09_primitive_string_fails", "10_generator_label", "10_generator_label_fails"} {
 		rows = append(rows, counted(t, "stage3/fixtures/checked-casts/"+name+".a", false, nil, false, false))
 	}
 	return rows
@@ -141,7 +141,7 @@ func TestScannerCastCounts(t *testing.T) {
 	parts := strings.SplitN(string(data), "\n## Predicate direction counts", 2)
 	var lines []string
 	for _, line := range strings.Split(strings.TrimSuffix(parts[0], "\n"), "\n") {
-		if !strings.HasPrefix(line, "| stage3/drivers/scanner/cast-checks/") && !strings.HasPrefix(line, "| stage3/fixtures/checked-casts/01_") && !strings.HasPrefix(line, "| stage3/fixtures/checked-casts/02_") && !strings.HasPrefix(line, "| stage3/fixtures/checked-casts/05_") && !strings.HasPrefix(line, "| stage3/fixtures/checked-casts/06_") && !strings.HasPrefix(line, "| stage3/fixtures/checked-casts/09_") {
+		if !strings.HasPrefix(line, "| stage3/drivers/scanner/cast-checks/") && !strings.HasPrefix(line, "| stage3/fixtures/checked-casts/") {
 			lines = append(lines, line)
 		}
 	}

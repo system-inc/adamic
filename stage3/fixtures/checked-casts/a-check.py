@@ -39,25 +39,24 @@ harness = Harness('fixtures')
 gate.Gate.aCheck(harness, paths)
 assert harness.exits['a-check'] == 0, harness.failure
 result = {'gate_revision': '914ea6d7d3ef0aeca2ac68baa76eb4604556479b', 'fixtures': harness.result['a_check'], 'mutants': []}
-for mutation in ['remove', 'wrong']:
+# All fixtures now lower. A false refusal header must be rejected for each,
+# independently of its Node or native runtime contract.
+for mutation, reason in [('false-cast-refusal', 'adamic/no-unchecked-cast'), ('false-unrelated-refusal', 'unrelated-rule')]:
     mutant_paths = []
     for row in fixtures:
-        if row['file'].startswith('02_'):
-            continue  # These clean programs need no expected-error header.
         text = (HERE / row['file']).read_text()
-        header, body = text.split('\n', 1)
-        assert header == '// a-check: refused adamic/no-unchecked-cast'
+        if text.startswith('// a-check:'):
+            text = text.split('\n', 1)[1]
         target = scratch_path / (mutation + '-' + row['file'])
-        target.write_text(body if mutation == 'remove' else '// a-check: refused unrelated-rule\n' + body)
+        target.write_text('// a-check: refused ' + reason + '\n' + text)
         mutant_paths.append(str(target))
     harness = Harness(mutation)
     gate.Gate.aCheck(harness, mutant_paths)
-    assert harness.exits['a-check'] == 1, 'header mutants survived'
-    assert len(harness.result['a_check']) == 18
+    assert harness.exits['a-check'] == 1, 'false refusal headers survived'
+    assert len(harness.result['a_check']) == 20
     for name, observed in harness.result['a_check'].items():
-        assert observed['outcome'] == 'refused'
-        assert 'adamic/no-unchecked-cast' in observed['first'] or 'a cast the runtime' in observed['first']
-        assert observed['expected'] in ['checked', 'refused unrelated-rule']
+        assert observed['outcome'] == 'checked'
+        assert observed['expected'] == 'refused ' + reason
         result['mutants'].append({'file': name, 'mutation': mutation, 'caught_by': 'unchanged Gate.aCheck expected-error predicate'})
 (HERE / 'a-check-results.json').write_text(json.dumps(result, indent=2) + '\n')
 print(json.dumps({'a_check_passed': 20, 'header_mutants_caught': len(result['mutants'])}))

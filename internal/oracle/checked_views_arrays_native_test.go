@@ -13,11 +13,11 @@ func TestCheckedViewNativeArrays(t *testing.T) {
 		{"native-array-string-mutation", "3\nd\nc:b\n", ""},
 		{"native-array-sparse", ":7::9\n:8::10\n16\n9\n3\n7::10\n", ""},
 		{"native-array-sparse-pop-hole", "-1\n2\n-1\n7\n", ""},
-		{"native-array-join-bad", "2\n", "element read failed: values[element] expected number, found string"},
-		{"native-array-join-literal", "", "field read failed: items(raw).values[element] expected \"ok\", found string bad"},
-		{"native-array-write-bad", "", "element read failed: <array write> expected number, found boolean"},
-		{"native-array-push-bad", "", "element read failed: <array write> expected number, found boolean"},
-		{"native-array-copy-bad", "", "element read failed: values[0] expected number, found boolean"},
+		{"native-array-join-bad", "2\n", "cast failed: element read failed: values[element] expected number, found string"},
+		{"native-array-join-literal", "", "cast failed: field read failed: items(raw).values[element] expected \"ok\", found string bad"},
+		{"native-array-write-bad", "", "cast failed: element read failed: <array write> expected number, found boolean"},
+		{"native-array-push-bad", "", "cast failed: element read failed: <array write> expected number, found boolean"},
+		{"native-array-copy-bad", "", "cast failed: element read failed: values[0] expected number, found boolean"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

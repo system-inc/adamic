@@ -76,7 +76,7 @@ func TestCheckedViewObjectPrimitiveRemainingFrontiers(t *testing.T) {
 				if probe.name == "jsdoc-parent-optional-frontier" {
 					missing = "escapedText is not initialized; expected __String"
 				}
-				want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: node.parent." + missing + ", found missing\n")}
+				want := run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: node.parent." + missing + ", found missing\n")}
 				actual, _ := nativelyUncached(t, program)
 				for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 					if diff := disagreement(want, got); diff != "" {

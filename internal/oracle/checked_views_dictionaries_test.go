@@ -29,16 +29,16 @@ func TestCheckedViewDictionaryComponents(t *testing.T) {
 			switch variant {
 			case "options-wrong":
 				source.stdout = []byte("[object Object]\nundefined\n")
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.options['value']; expected string | number | boolean | undefined, found object\n")}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: view.options['value']; expected string | number | boolean | undefined, found object\n")}
 			case "nested-good":
 				source.stdout = []byte("name\n")
 				want = source
 			case "nested-wrong":
 				source.stdout = []byte("42\n")
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: entry.name is not a string; expected string, found number\n")}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: entry.name is not a string; expected string, found number\n")}
 			case "array-wrong":
 				source.stdout = []byte("undefined\n")
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.symbols['item']; expected Entry | undefined, found array\n")}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: view.symbols['item']; expected Entry | undefined, found array\n")}
 			}
 			if difference := disagreement(source, onNode(t, path)); difference != "" {
 				t.Fatal("source Node: " + difference)
@@ -114,7 +114,7 @@ const probe = variant => {
  } else if(Array.isArray(entry.value)) {
   console.log('undefined');
  } else {
-  if(entry.contract && typeof entry.value.name !== 'string') panic('field read failed: entry.name is not a string; expected string, found '+typeof entry.value.name);
+  if(entry.contract && typeof entry.value.name !== 'string') panic('cast failed: field read failed: entry.name is not a string; expected string, found '+typeof entry.value.name);
   console.log(String(entry.value.name));
  }
 };
@@ -187,7 +187,7 @@ func TestCheckedViewDictionaryJavaScriptGuards(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			body := "\nadamicViewDictionaryRead(" + probe.input + ",'item'," + probe.kinds + "," + probe.contract + ",'view.item','TestContract');console.log('passed');\n"
-			want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.item; expected TestContract, found " + probe.found + "\n")}
+			want := run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: view.item; expected TestContract, found " + probe.found + "\n")}
 			for _, mutated := range []bool{false, true} {
 				runtime := javascript.DictionaryRuntime()
 				if mutated {
@@ -218,7 +218,7 @@ func TestCheckedViewDictionaryNativeStorageGuard(t *testing.T) {
 	}
 	harness := strings.ReplaceAll(dictionaryProbeC, "adamic_view_dictionary_read(", "adamic_view_dictionary_read_guard(")
 	harness = strings.ReplaceAll(harness, "record,true,key,", "record,false,key,")
-	want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.options['value']; expected string | number | boolean | undefined, found unsupported representation\n")}
+	want := run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: view.options['value']; expected string | number | boolean | undefined, found unsupported representation\n")}
 	for _, mutated := range []bool{false, true} {
 		source := strings.ReplaceAll(strings.Split(string(production), "\nstatic adamic_view_union_value dictionary_boxed_value")[0], "adamic_view_dictionary_read(", "adamic_view_dictionary_read_guard(")
 		if mutated {

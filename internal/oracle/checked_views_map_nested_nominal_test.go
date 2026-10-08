@@ -99,7 +99,7 @@ func TestCheckedViewMapNestedNominalMutants(t *testing.T) {
 			for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 				expected := "Map nominal producer failed:"
 				if site == "receiver" || site == "generic" || site == "field" {
-					expected = "field read failed:"
+					expected = "cast failed: field read failed:"
 				}
 				if got.exitCode != 70 || !strings.Contains(string(got.stderr), expected) || !strings.Contains(string(got.stderr), "class identity") {
 					t.Fatalf("nominal lookalike ran on at %s: %#v", site, got)

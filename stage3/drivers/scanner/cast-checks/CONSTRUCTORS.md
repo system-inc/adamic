@@ -1,3 +1,5 @@
+Current diagnostic update in step 09 acceptance delivery: checked field/element stops now begin `cast failed:`. The String producer liar pin is `adamic: panic: cast failed: field read failed: (String as any).fromCodePoint expected (codePoint: number) => string, found function with unknown signature`. Error retains its exact library NotYet. All constructor tests and admission/producer omission mutants were rerun green. See [DELIVERY.md](../../../fixtures/checked-casts/DELIVERY.md). The report below is the prior constructor delivery.
+
 Built: step 09 String scanner cast now lowers through a checked intrinsic member view; Error has an exact library NotYet fixture.
 Commits: mechanism b52fbc43; fixtures, counts and this report follow in the branch tip, without another lane merge.
 Commands and outputs: focused lower/oracle PASS, vet and formatting PASS, unit counts PASS; global counts FAIL on 39 fixtures.

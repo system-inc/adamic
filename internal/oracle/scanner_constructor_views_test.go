@@ -81,7 +81,7 @@ func TestScannerStringConstructorProducerMutant(t *testing.T) {
 	if changed != 1 {
 		t.Fatalf("want one substituted host producer, got %d", changed)
 	}
-	expected := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: (String as any).fromCodePoint expected (codePoint: number) => string, found function with unknown signature\n")}
+	expected := run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: (String as any).fromCodePoint expected (codePoint: number) => string, found function with unknown signature\n")}
 	if got := onJavaScriptBackend(t, program); disagreement(expected, got) != "" {
 		t.Fatalf("imposter must match pinned stop: %#v", got)
 	}

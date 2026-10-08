@@ -1,0 +1,10 @@
+=== RUN   TestStep09PrimitiveArraySourceWriteLiar
+    step09_acceptance_test.go:273: gate cache node miss
+    step09_acceptance_test.go:275: source-write contract: stderr differs: exit=70 stdout="before\nview\nelement=12\n" stderr="adamic: panic: cast failed: element read failed: result[0] expected number, found boolean\n"
+--- FAIL: TestStep09PrimitiveArraySourceWriteLiar (0.37s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.378s
+FAIL

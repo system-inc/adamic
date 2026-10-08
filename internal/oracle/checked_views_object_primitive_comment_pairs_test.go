@@ -122,9 +122,9 @@ func TestCheckedViewObjectPrimitiveCommentPairs(t *testing.T) {
 				want := run{stdout: []byte(source)}
 				switch mode {
 				case "wrong":
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: node.comment matches no member of string | NodeArray<JSDocComment> | undefined; expected string | NodeArray<JSDocComment> | undefined, found boolean\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: node.comment matches no member of string | NodeArray<JSDocComment> | undefined; expected string | NodeArray<JSDocComment> | undefined, found boolean\n")}
 				case "nested":
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: first.flags is not a NodeFlags; expected NodeFlags, found boolean\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: first.flags is not a NodeFlags; expected NodeFlags, found boolean\n")}
 				}
 				objectPrimitiveOriginalCount(t, program, name)
 				sanitized, binary := nativelyUncached(t, program)

@@ -13,14 +13,14 @@ func TestCheckedViewDictionaryLookupBatch(t *testing.T) {
 	for _, c := range []struct{ name, output, failure string }{
 		{"map-string-good", "name\n", ""},
 		{"map-string-missing", "undefined\n", ""},
-		{"map-string-wrong", "42\n", "adamic: panic: field read failed: view['item']; expected string | undefined, found number\n"},
+		{"map-string-wrong", "42\n", "adamic: panic: cast failed: field read failed: view['item']; expected string | undefined, found number\n"},
 		{"map-generic-good", "name\n", ""},
 		{"map-generic-missing", "undefined\n", ""},
-		{"map-generic-wrong", "42\n", "adamic: panic: field read failed: table['item']; expected string | undefined, found number\n"},
+		{"map-generic-wrong", "42\n", "adamic: panic: cast failed: field read failed: table['item']; expected string | undefined, found number\n"},
 		{"package-paths-good", "name\n", ""},
 		{"package-paths-missing", "missing\n", ""},
-		{"package-paths-wrong", "number\n", "adamic: panic: field read failed: view['imports']; expected MapLike<string> | undefined, found number\n"},
-		{"package-paths-nested-wrong", "42\n", "adamic: panic: field read failed: table['item']; expected string | undefined, found number\n"},
+		{"package-paths-wrong", "number\n", "adamic: panic: cast failed: field read failed: view['imports']; expected MapLike<string> | undefined, found number\n"},
+		{"package-paths-nested-wrong", "42\n", "adamic: panic: cast failed: field read failed: table['item']; expected string | undefined, found number\n"},
 	} {
 		for _, producer := range []bool{false, true} {
 			c := c

@@ -14,7 +14,7 @@ func TestCheckedViewTupleRestContract(t *testing.T) {
 		{"rest-map-zero", "7\nundefined\nundefined\n", "", ""},
 		{"rest-map-one", "7\nstring\nundefined\n", "", ""},
 		{"rest-map-many", "7\nstring\nstring\n", "", ""},
-		{"rest-view-wrong-tail", "7\nboolean\n", "7\n", "field read failed: selected[3] is not a string; expected string, found boolean"},
+		{"rest-view-wrong-tail", "7\nboolean\n", "7\n", "cast failed: field read failed: selected[3] is not a string; expected string, found boolean"},
 		{"rest-map-wrong-contract", "read\n", "", "Map contract failed: target.values; expected ReadonlyMap<number, readonly [number, ...number[]]>, found Map<number, readonly [number, ...string[]]>"},
 	})
 }

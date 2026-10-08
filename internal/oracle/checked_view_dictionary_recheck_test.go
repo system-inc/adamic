@@ -18,9 +18,9 @@ func TestCheckedViewDictionaryStringIndexing(t *testing.T) {
 				sanitized, binary := nativelyUncached(t, program)
 				for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 					if test.name == "wrong" {
-						want := "adamic: panic: field read failed: view.text is not a string; expected string, found number\n"
+						want := "adamic: panic: cast failed: field read failed: view.text is not a string; expected string, found number\n"
 						if shape == "path-index" {
-							want = "adamic: panic: field read failed: view.text is not a Path; expected Path, found number\n"
+							want = "adamic: panic: cast failed: field read failed: view.text is not a Path; expected Path, found number\n"
 						}
 						if got.exitCode != 70 || string(got.stderr) != want {
 							t.Fatalf("named refusal: %#v, want %q", got, want)

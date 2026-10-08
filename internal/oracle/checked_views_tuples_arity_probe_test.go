@@ -45,7 +45,7 @@ int main(int argc,char **argv) {
 			args := []string{sample.count, sample.tuple, sample.rest}
 			want := run{stdout: []byte(sample.output)}
 			if sample.found != "" {
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: selected is not a Tuple; expected Tuple, found " + sample.found + "\n")}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: selected is not a Tuple; expected Tuple, found " + sample.found + "\n")}
 			}
 			if sample.found == "" {
 				truth := execute(t, "node", "--eval", "console.log(Array(Number(process.argv[1])).length)", sample.count)

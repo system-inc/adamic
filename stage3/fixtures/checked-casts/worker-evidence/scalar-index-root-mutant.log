@@ -1,0 +1,10 @@
+=== RUN   TestStep09ScalarIndexRootLiar
+    step09_acceptance_test.go:376: gate cache node hit
+    step09_acceptance_test.go:378: snapshot receiver check: stderr differs: exit=70 stdout="before\n" stderr="adamic: panic: TypeError: Cannot read properties of undefined (reading '0')\n"
+--- FAIL: TestStep09ScalarIndexRootLiar (0.32s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.325s
+FAIL

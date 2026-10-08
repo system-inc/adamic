@@ -1,4 +1,3 @@
-// a-check: refused adamic/no-unchecked-cast
 // Reduced from src/compiler/checker.ts:6852:52:as_cast; support types and driver are local.
 interface Type { readonly flags: number; }
 interface StringLiteralType extends Type { readonly value: string; }

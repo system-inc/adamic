@@ -77,13 +77,13 @@ func TestCheckedViewObjectPrimitivePackagePairs(t *testing.T) {
 				nested := "member.version"
 				good := "false\nfalse\nabsent\n"
 				nestedSource := "false\n"
-				nestedMessage := "field read failed: member.version is not a string; expected string, found boolean"
+				nestedMessage := "cast failed: field read failed: member.version is not a string; expected string, found boolean"
 				if pair.Field == "resolvedEntrypoints" {
 					declared = "false | string[] | undefined"
 					nested = "member[0]"
 					good = "false\nstring\nabsent\n"
 					nestedSource = "boolean\n"
-					nestedMessage = "element read failed: member[0] expected string, found boolean"
+					nestedMessage = "cast failed: element read failed: member[0] expected string, found boolean"
 				}
 				if mode == "good" {
 					source = good
@@ -120,7 +120,7 @@ func TestCheckedViewObjectPrimitivePackagePairs(t *testing.T) {
 				}
 				want := run{stdout: []byte(source)}
 				if mode == "wrong" {
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: info." + pair.Field + " matches no member of " + declared + "; expected " + declared + ", found boolean\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: info." + pair.Field + " matches no member of " + declared + "; expected " + declared + ", found boolean\n")}
 				}
 				if mode == "nested" {
 					want = run{exitCode: 70, stderr: []byte("adamic: panic: " + nestedMessage + "\n")}

@@ -72,7 +72,7 @@ func TestInterfaceCastChecksMalformedRead(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: identifier(malformed).name is not initialized; expected string, found missing\n")}
+	want := run{exitCode: 70, stderr: []byte("adamic: panic: cast failed: field read failed: identifier(malformed).name is not initialized; expected string, found missing\n")}
 	actual, _ := nativelyUncached(t, program)
 	for _, result := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 		if difference := disagreement(want, result); difference != "" {
@@ -95,17 +95,23 @@ func TestInterfaceCastRuntimeMutants(t *testing.T) {
 				want = onJavaScriptBackend(t, program)
 			}
 			changed := false
+			nextCalls := 0
 			mutate := func(value ir.Expression) ir.Expression {
+				if name == "twice operand" {
+					// Proving and erasing the cast must still evaluate its source
+					// once. The second next() is the assertion's source in visitor.a.
+					if call, ok := value.(ir.Call); ok && program.Functions[call.Function].Name == "next" && !changed {
+						nextCalls++
+						if nextCalls == 2 {
+							changed = true
+							return ir.Conditional{Condition: ir.Binary{Operator: ir.Equal, Left: call, Right: ir.Undefined{Of: ir.Object}}, WhenTrue: call, WhenNot: call, Of: ir.Object}
+						}
+					}
+					return value
+				}
 				cast, ok := value.(ir.CheckedCast)
 				if !ok || changed {
 					return value
-				}
-				if name == "twice operand" {
-					if _, call := cast.Value.(ir.Call); !call {
-						return value
-					}
-					changed = true
-					return ir.Conditional{Condition: ir.Binary{Operator: ir.Equal, Left: cast.Value, Right: ir.Undefined{Of: ir.Object}}, WhenTrue: cast, WhenNot: cast, Of: ir.Object}
 				}
 				changed = true
 				if name == "skip tag" {
