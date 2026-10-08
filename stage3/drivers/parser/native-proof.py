@@ -16,9 +16,12 @@ parser.add_argument('slice', type=Path)
 parser.add_argument('corpus', type=Path)
 parser.add_argument('node_run', type=Path)
 parser.add_argument('output', type=Path)
+parser.add_argument('--case-checkout', type=Path)
+parser.add_argument('--full-tree', type=Path)
 args = parser.parse_args()
 for name in vars(args):
-    setattr(args, name, getattr(args, name).resolve())
+    if getattr(args, name) is not None:
+        setattr(args, name, getattr(args, name).resolve())
 args.output.mkdir(exist_ok=False)
 here = Path(__file__).resolve().parent
 binary = args.output / 'parser-native'
@@ -89,7 +92,15 @@ else:
     report['native_best_user_seconds'] = None
     report['native_byte_mutant_cmp'] = None
     report['instructions'] = 'not measured: build failed; perf executable ' + ('present' if shutil.which('perf') else 'not installed')
+report['case_acceptance'] = None
+if report['build']['exit'] == 0 and len(report['native_runs']) == 3 and all(
+        r['exit'] == 0 and r['comparison'] == 0 for r in report['native_runs']):
+    report['case_acceptance'] = run([
+        'python3', str(here / 'case-reference.py'),
+        str(args.case_checkout or args.corpus), str(args.full_tree or args.corpus),
+        str(args.slice), str(args.output / 'cases'), '--native', str(binary),
+        '--reference', str(here / 'cases-reference.json')], 'case-acceptance', node_env)
 report['status'] = 'green' if len(report['native_runs']) == 3 and all(
-    r['exit'] == 0 and r['comparison'] == 0 and r['stderr_comparison'] == 0 for r in report['native_runs']) else 'red'
+    r['exit'] == 0 and r['comparison'] == 0 and r['stderr_comparison'] == 0 for r in report['native_runs']) and report['case_acceptance'] is not None and report['case_acceptance']['exit'] == 0 else 'red'
 (args.output / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
 print(json.dumps(report, indent=2))
