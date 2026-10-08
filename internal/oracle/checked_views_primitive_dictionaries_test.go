@@ -14,7 +14,8 @@ import (
 )
 
 // These certify only the primitive/nullish selector component of the original
-// rich dictionary contract. Object and array alternatives belong to other lanes.
+// rich dictionary contract. Joint reference selection now permits unread references;
+// their fields and elements remain obligations at subsequent reads.
 func TestCheckedViewOriginalDictionaryPrimitiveComponents(t *testing.T) {
 	directory := os.Getenv("ADAMIC_BRAND_ORIGINAL_DECLS")
 	if directory == "" {
@@ -63,7 +64,7 @@ func TestCheckedViewOriginalDictionaryPrimitiveComponents(t *testing.T) {
 					declared = "TsConfigSourceFile | CompilerOptionsValue"
 				}
 				want := truth
-				if strings.HasPrefix(variant, "wrong") {
+				if variant == "wrong" {
 					found := map[string]string{"wrong": "function", "wrong-array": "array", "wrong-object": "object"}[variant]
 					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value[key]; expected " + declared + ", found " + found + "\n")}
 				}
