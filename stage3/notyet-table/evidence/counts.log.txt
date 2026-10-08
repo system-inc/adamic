@@ -13,7 +13,7 @@
                   286 |                 return adamic_temporary_41;
                       |                 ^      ~~~~~~~~~~~~~~~~~~~
                 1 error generated.
-                
+
         --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_read_sync.a (0.92s)
             counts_test.go:201: gate cache native miss
             counts_test.go:113: want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit 70, stderr "adamic: panic: field read failed: error.name is not a string; expected string, found unsupported representation\nadamic: counts: allocations 23 frees 17 retains 12 releases 29 peak 6 regions 0\n"
@@ -24,7 +24,7 @@
                   282 |                 return adamic_temporary_41;
                       |                 ^      ~~~~~~~~~~~~~~~~~~~
                 1 error generated.
-                
+
         --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_utimes.a (0.57s)
             counts_test.go:201: gate cache native miss
             counts_test.go:113: want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit 70, stderr "adamic: panic: field read failed: errno.code is not a string | undefined; expected string | undefined, found unsupported representation\nadamic: counts: allocations 23 frees 18 retains 3 releases 16 peak 7 regions 0\n"
