@@ -1,0 +1,11 @@
+// core.ts:2480:13: a generic wrapper returning a capturing rest arrow.
+function not<Args extends string[]>(fn: (...args: Args) => boolean): (...args: Args) => boolean {
+    return (...args: Args) => !fn(...args);
+}
+const hasTwo = (...args: string[]): boolean => args.length === 2;
+const other = not(hasTwo);
+console.log(`${other()} ${other('a')} ${other('a', 'b')}`);
+const items = ['c', 'd'];
+console.log(`${other(...items)}`);
+function count<Item>(...items: Item[]): number { return items.length; }
+console.log(`${count('one', 'two')} ${count(4, 5, 6)}`);

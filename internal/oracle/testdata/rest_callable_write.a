@@ -1,0 +1,15 @@
+// program.ts:582:43: replace a function field with a forwarding rest closure.
+type DiagnosticArguments = (string | number | undefined)[];
+let order = '';
+const host: { write: (name: string, ...rest: DiagnosticArguments) => string } = {
+    write: (name: string, ...rest: DiagnosticArguments): string => `${name}:${rest.length}`,
+};
+const original = host.write;
+host.write = (name: string, ...rest: DiagnosticArguments): string => {
+    order += name;
+    return original(name, ...rest);
+};
+function text(): string { order += 'arg'; return 'label'.repeat(3); }
+console.log(host.write('empty'));
+console.log(host.write('mixed', text(), 42, undefined));
+console.log(order);
