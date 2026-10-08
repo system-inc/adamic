@@ -298,6 +298,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if call, handled, err := l.superAccessor(node, nil); handled {
 		return call, err
 	}
+	if value, known := l.regexStringMethodProperty(node); known {
+		return value, nil
+	}
 	access := node.AsPropertyAccessExpression()
 	name := l.fieldName(node.Name())
 	if _, iterator := l.libraryIteratorElement(access.Expression); iterator && name != "next" {
@@ -1362,7 +1365,7 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 		return value, err
 	}
 	if l.isLibraryGlobal(node.AsNewExpression().Expression, "String") {
-		return nil, l.notYet(node, "new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)")
+		return l.newLibraryStringBox(node)
 	}
 	if l.isLibraryGlobal(node.AsNewExpression().Expression, "RegExp") {
 		return l.regexConstant(node)

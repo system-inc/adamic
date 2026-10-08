@@ -74,6 +74,10 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 			evaluated = append(evaluated, value)
 		}
 	}
+	return l.compiledStringRegExp(node, pattern, flags, evaluated)
+}
+
+func (l *lowering) compiledStringRegExp(node *ast.Node, pattern, flags string, evaluated []ir.Expression) (ir.Expression, error) {
 	program, err := regex.Compile(pattern, flags)
 	if err != nil {
 		var divergence *regex.V8DivergenceError

@@ -10,7 +10,7 @@ import (
 func TestLibraryStringRefusals(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, reason string }{
-		{"box", "const box = new String('x');", "String internal slots"},
+		{"box", "function escape(): String { return new String('x'); }", "String internal slots"},
 		{"hidden primitive", "function f(object: { readonly marker: number }): string { return String(object); }", "hidden by the object view"},
 		{"mixed collection", "function f(value: Map<string, number> | Set<number>): string { return String(value); }", "mixed Map and Set"},
 		{"detached", "const trim = String.prototype.trim;\nconsole.log(trim());\n", "method read as a value"},

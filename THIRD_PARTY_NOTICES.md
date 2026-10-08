@@ -55,6 +55,8 @@ IN THE SOFTWARE.
   - String well-formed Unicode (`runtime/string_wellformed.c`, after
     src/builtins/string-iswellformed.tq and src/builtins/string-towellformed.tq,
     adapted to canonical WTF-8 storage);
+  - RegExp string conversion (`internal/lower/library_regex_string_refused.go`, after
+    RegExpPrototypeToString in src/builtins/builtins-regexp.cc, V8 13.6.233.17);
   - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
   - generic Array indexOf and lastIndexOf lowering (`internal/lower/library_array_generic.go`,
     after Runtime_ArrayIndexOf in src/runtime/runtime-array.cc and GetFromIndex /

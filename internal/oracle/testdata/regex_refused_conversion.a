@@ -1,0 +1,9 @@
+// EscapeRegExpPattern and canonical flag order are observed through String(RegExp).
+for (const regex of [/(?:)/, /a\/b/gi, /(?<x>x)/dgy, /🌍/v]) {
+ console.log(String(regex));
+}
+const dynamic = new RegExp('a' + '/b', 'gi');
+console.log(String(dynamic));
+const text = 'foo-x-bar';
+console.log(text.replace(/(x)()()()()()()()()()/, '|$10:$100:$1:$0|'));
+console.log(text.replace(/(x)|(z)/, '|$20:$200:$10|'));

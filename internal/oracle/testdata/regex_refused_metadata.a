@@ -1,0 +1,28 @@
+// Intrinsic metadata observations keep the method attached and never mutate it.
+console.log(`${String.prototype.split.name}:${String.prototype.split.length}:${String.prototype.split.prototype === undefined}:${String.prototype.split.hasOwnProperty('length')}:${String.prototype.split.hasOwnProperty('name')}:${String.prototype.split.hasOwnProperty('prototype')}:${String.prototype.split.propertyIsEnumerable('length')}`);
+let splitKeys = '';
+for (const key in String.prototype.split) { splitKeys += key; }
+console.log(`keys:${splitKeys}`);
+console.log(`${String.prototype.match.name}:${String.prototype.match.length}:${String.prototype.match.prototype === undefined}:${String.prototype.match.hasOwnProperty('length')}:${String.prototype.match.hasOwnProperty('name')}:${String.prototype.match.hasOwnProperty('prototype')}:${String.prototype.match.propertyIsEnumerable('length')}`);
+let matchKeys = '';
+for (const key in String.prototype.match) { matchKeys += key; }
+console.log(`keys:${matchKeys}`);
+console.log(`${String.prototype.matchAll.name}:${String.prototype.matchAll.length}:${String.prototype.matchAll.prototype === undefined}:${String.prototype.matchAll.hasOwnProperty('length')}:${String.prototype.matchAll.hasOwnProperty('name')}:${String.prototype.matchAll.hasOwnProperty('prototype')}:${String.prototype.matchAll.propertyIsEnumerable('length')}`);
+let matchAllKeys = '';
+for (const key in String.prototype.matchAll) { matchAllKeys += key; }
+console.log(`keys:${matchAllKeys}`);
+console.log(`${String.prototype.search.name}:${String.prototype.search.length}:${String.prototype.search.prototype === undefined}:${String.prototype.search.hasOwnProperty('length')}:${String.prototype.search.hasOwnProperty('name')}:${String.prototype.search.hasOwnProperty('prototype')}:${String.prototype.search.propertyIsEnumerable('length')}`);
+let searchKeys = '';
+for (const key in String.prototype.search) { searchKeys += key; }
+console.log(`keys:${searchKeys}`);
+console.log(`${String.prototype.replace.name}:${String.prototype.replace.length}:${String.prototype.replace.prototype === undefined}:${String.prototype.replace.hasOwnProperty('length')}:${String.prototype.replace.hasOwnProperty('name')}:${String.prototype.replace.hasOwnProperty('prototype')}:${String.prototype.replace.propertyIsEnumerable('length')}`);
+let replaceKeys = '';
+for (const key in String.prototype.replace) { replaceKeys += key; }
+console.log(`keys:${replaceKeys}`);
+console.log(`${String.prototype.replaceAll.name}:${String.prototype.replaceAll.length}:${String.prototype.replaceAll.prototype === undefined}:${String.prototype.replaceAll.hasOwnProperty('length')}:${String.prototype.replaceAll.hasOwnProperty('name')}:${String.prototype.replaceAll.hasOwnProperty('prototype')}:${String.prototype.replaceAll.propertyIsEnumerable('length')}`);
+let replaceAllKeys = '';
+for (const key in String.prototype.replaceAll) { replaceAllKeys += key; }
+console.log(`keys:${replaceAllKeys}`);
+let calls = 0;
+function key(): string { calls++; return 'length'; }
+console.log(`${String.prototype.search.hasOwnProperty(key())}:${String.prototype.split.propertyIsEnumerable(key())}:${calls}`);

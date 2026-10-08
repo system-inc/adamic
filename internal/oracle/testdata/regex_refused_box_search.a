@@ -1,0 +1,17 @@
+// A box keeps StringData and object identity; its admitted uses cannot expose exotic properties.
+let text = 'test ' + '🌍 string';
+const box = new String(text);
+text = 'changed';
+console.log(`${typeof box}:${String(box)}:${box.toString()}:${box.valueOf()}`);
+console.log(`${box.search('string')}:${box.search('String')}:${box.search(/String/i)}:${box.search('🌍')}`);
+for (const regex of [/string/, /string/g, /string/y, /string/gy]) {
+ for (const index of [-0, 2, 99, NaN, Infinity]) {
+  regex.lastIndex = index;
+  console.log(`${box.search(regex)}:${regex.lastIndex}:${1 / regex.lastIndex}`);
+  console.log(`${String.prototype.search.call(box, regex)}:${regex.lastIndex}:${1 / regex.lastIndex}`);
+ }
+}
+const empty = new String();
+console.log(`${typeof empty}:${empty.search('')}:${String(empty)}`);
+const number = new String(123);
+console.log(`${number.search('2')}:${String(number)}`);

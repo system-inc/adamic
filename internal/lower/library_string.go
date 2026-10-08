@@ -26,6 +26,10 @@ func (l *lowering) stringPrototypeMethod(node *ast.Node) (string, bool) {
 // A typeof observation doesn't detach or call a method. An immediate intrinsic .call supplies this
 // explicitly. Neither is the unbound-method hole, and every other method read stays refused.
 func (l *lowering) stringMethodObservation(node *ast.Node) bool {
+	if l.regexStringMetadataUse(node) {
+		return true
+	}
+
 	_, intrinsic := l.stringPrototypeMethod(node)
 	if !intrinsic {
 		access := node.AsPropertyAccessExpression()
@@ -65,6 +69,13 @@ func (l *lowering) stringTypeOf(node *ast.Node) (ir.Expression, bool) {
 }
 
 func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
+	if l.libraryStringBoxOrigin(node) != nil {
+		return l.libraryStringBoxSlot(node)
+	}
+	if value, known, err := l.regexStringConversion(node); known {
+		return value, err
+	}
+
 	if ast.SkipParentheses(node).Kind == ast.KindNullKeyword {
 		return l.stringIdentity(ir.StringConstant{Index: l.constant("null")}), nil
 	}
@@ -146,6 +157,10 @@ func (l *lowering) stringConversionValue(node *ast.Node, value ir.Expression) (i
 }
 
 func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
+	if value, known, err := l.regexStringRefusedCall(node); known {
+		return value, true, err
+	}
+
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	written := node.AsCallExpression().Arguments.Nodes
 	if l.isLibraryGlobal(callee, "String") {

@@ -11,6 +11,10 @@ import (
 // forIn takes a snapshot of a fixed plain object's actual keys. Shapes cannot gain or lose fields,
 // and prototypes cannot be mutated, so this is JavaScript's enumeration throughout the loop.
 func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
+	if statements, known, err := l.regexStringMethodForIn(node); known {
+		return statements, err
+	}
+
 	statement := node.AsForInOrOfStatement()
 	proven := l.checker.GetTypeAtLocation(statement.Expression)
 	if l.checker.IsArrayType(proven) || checker.IsTupleType(proven) {

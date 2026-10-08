@@ -1,0 +1,13 @@
+// The string arm of + uses V8's number printer, including the last bit and negative zero.
+for (const value of [-0, NaN, Infinity, -Infinity, 1e-7, 1e21, 0.30000000000000004, 9007199254740991]) {
+ console.log('left:' + value);
+ console.log(value + ':right');
+}
+let text = 'first:';
+function next(): number { text = 'changed:'; return 123; }
+console.log(text + next());
+console.log(text);
+console.log('bool:' + true);
+console.log(false + ':bool');
+console.log('missing:' + undefined);
+console.log(undefined + ':missing');
