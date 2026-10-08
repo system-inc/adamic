@@ -353,6 +353,12 @@ while true; do
     # A tip takes a free slot of its class; a big tip may also take a free small slot, but only when
     # no small tip could have it (rank 10 and up): 74 big tips waited on two area slots while four small
     # slots sat idle (Oct 8 10:56Z). It then runs on the small slot's CPUs (12; Chonchon's 16).
+    # A small tip that has waited two minutes may take an idle area slot, and only while no big tip is
+    # queued, so it never holds an area slot a big tip wants (the witness, Oct 8: small changes waited
+    # 240 to 300 s on Cloud with 61 Codex running). The area slot has its own CPUs (cloud/fast-gate.sh's
+    # taskset), so it never runs beside a big gate on the same CPUs.
+    pollTime=$(date -u +%s)
+    bigQueued=$(awk '$1 == "B"' "${state}/queue" | wc -l | tr -d ' ')
     next=$(while read -r class queued branch sha; do
       eligible=$(usableSlots "${branch}")
       if reservedBranch "${branch}"; then
@@ -366,15 +372,16 @@ while true; do
       done | head -1)
       slot=${class} extra=0
       if [[ " ${classes}" != *" ${class} "* ]]; then
-        [ "${class}" = B ] && [ -n "${borrowable}" ] || continue
-        slot=S extra=10
+        if [ "${class}" = B ] && [ -n "${borrowable}" ]; then slot=S extra=10
+        elif [ "${class}" = S ] && [[ " ${classes}" == *" B "* ]] && [ "${bigQueued}" = 0 ] && [ $(( pollTime - queued )) -ge 120 ]; then slot=B extra=10
+        else continue; fi
       fi
       if reservedBranch "${branch}"; then rank=0; extra=0
       elif [[ ${branch} == cloud/land-* ]]; then rank=1
       elif [[ ${branch} == area/* ]] || grep -qxF "${branch}" "${state}/priority"; then rank=2
       elif [[ ${branch} == devtools/* ]]; then rank=3
       else rank=4; fi
-      if [ "${slot}" = "${class}" ]; then
+      if [ "${slot}" = "${class}" ] || [ "${slot}" = B ]; then
         box=$(echo "${eligible}" | awk -v c="${slot}" '$2 == c && box == "" {box = $1} END {print box}')
       else box=${borrowable}; fi
       echo "$(( rank + extra )) ${queued} ${branch} ${sha} ${class} ${slot} ${box}"

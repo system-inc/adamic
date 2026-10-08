@@ -234,6 +234,30 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: 'canary/main' in w.read('starts'))
         self.assertTrue(w.read('starts').splitlines()[0].endswith(' B home'), w.read('starts'))
 
+    def test_a_long_waiting_small_tip_takes_an_idle_area_slot(self):
+        # The clock reads 1000: a small tip queued at 800 has waited 200 s, one queued at 950 only 50 s.
+        w = self.reservation('busy S\nhome B\n', [('codex/small-old', 'S')])
+        holder = subprocess.Popen(['sleep', '30'])
+        self.addCleanup(holder.kill)
+        (w.state / 'running' / str(holder.pid)).write_text('codex/old ' + 'c' * 40 + ' S busy S x ' + str(w.state / 'logs/old.log') + '\n')
+        (w.state / 'queue').write_text('S 800 codex/small-old %s\n' % w.tips[0][1])
+        w.wait(lambda: any(x.startswith('codex/small-old ') for x in w.read('starts').splitlines()))
+        line = [x for x in w.read('starts').splitlines() if x.startswith('codex/small-old ')][0]
+        self.assertTrue(line.endswith(' B home'), line)
+
+    def test_a_small_tip_leaves_the_area_slot_while_young_or_a_big_tip_waits(self):
+        for queue, why in [('S 950 codex/young {sha}\n', 'young'),
+                           ('S 800 codex/young {sha}\nB 990 codex/big {big}\n', 'big queued')]:
+            with self.subTest(why=why):
+                w = self.reservation('busy S\nbusy S\n', [('codex/young', 'S'), ('codex/big', 'B')])
+                (w.state / 'slots').write_text('busy S\nhome B\n')
+                holder = subprocess.Popen(['sleep', '30'])
+                self.addCleanup(holder.kill)
+                (w.state / 'running' / str(holder.pid)).write_text('codex/old ' + 'c' * 40 + ' S busy S x ' + str(w.state / 'logs/old.log') + '\n')
+                (w.state / 'queue').write_text(queue.format(sha=w.tips[0][1], big=w.tips[1][1]))
+                time.sleep(.3)
+                self.assertFalse(any(x.startswith('codex/young ') for x in w.read('starts').splitlines()), w.read('starts'))
+
     def test_control_without_globs(self):
         w = self.reservation('server B\nserver S\n',
                              [('cloud/land-other', 'B'), ('codex/small', 'S')])
