@@ -1,0 +1,69 @@
+test_ordinary_apply_leaves_git_clean (__main__.ApplyCheckoutTests.test_ordinary_apply_leaves_git_clean) ... Preparing worktree (detached HEAD 71b01052fa)
+Updating files:  36% (3686/9995)Updating files:  37% (3699/9995)Updating files:  38% (3799/9995)Updating files:  39% (3899/9995)Updating files:  40% (3998/9995)Updating files:  41% (4098/9995)Updating files:  42% (4198/9995)Updating files:  43% (4298/9995)Updating files:  44% (4398/9995)Updating files:  45% (4498/9995)Updating files:  46% (4598/9995)Updating files:  47% (4698/9995)Updating files:  48% (4798/9995)Updating files:  49% (4898/9995)Updating files:  50% (4998/9995)Updating files:  51% (5098/9995)Updating files:  52% (5198/9995)Updating files:  53% (5298/9995)Updating files:  54% (5398/9995)Updating files:  55% (5498/9995)Updating files:  56% (5598/9995)Updating files:  57% (5698/9995)Updating files:  58% (5798/9995)Updating files:  59% (5898/9995)Updating files:  60% (5997/9995)Updating files:  61% (6097/9995)Updating files:  62% (6197/9995)Updating files:  63% (6297/9995)Updating files:  64% (6397/9995)Updating files:  65% (6497/9995)Updating files:  66% (6597/9995)Updating files:  67% (6697/9995)Updating files:  68% (6797/9995)Updating files:  69% (6897/9995)Updating files:  70% (6997/9995)Updating files:  71% (7097/9995)Updating files:  72% (7197/9995)Updating files:  73% (7297/9995)Updating files:  74% (7397/9995)Updating files:  75% (7497/9995)Updating files:  76% (7597/9995)Updating files:  77% (7697/9995)Updating files:  78% (7797/9995)Updating files:  79% (7897/9995)Updating files:  80% (7996/9995)Updating files:  81% (8096/9995)Updating files:  82% (8196/9995)Updating files:  83% (8296/9995)Updating files:  84% (8396/9995)Updating files:  85% (8496/9995)Updating files:  86% (8596/9995)Updating files:  86% (8627/9995)Updating files:  87% (8696/9995)Updating files:  88% (8796/9995)Updating files:  89% (8896/9995)Updating files:  90% (8996/9995)Updating files:  91% (9096/9995)Updating files:  92% (9196/9995)Updating files:  93% (9296/9995)Updating files:  94% (9396/9995)Updating files:  95% (9496/9995)Updating files:  96% (9596/9995)Updating files:  97% (9696/9995)Updating files:  98% (9796/9995)Updating files:  99% (9896/9995)Updating files: 100% (9995/9995)Updating files: 100% (9995/9995), done.
+HEAD is now at 71b01052fa Fast gate kill test: a stage3 adaptation that breaks apply, second run (never for landing)
+[detached HEAD f8f6e3031f] Seed the apply checkout test
+ 1 file changed, 2 insertions(+)
+Cloning into '/tmp/adamic-gate/stage3-apply-checkout-9dbhobg9/adapted'...
+Note: switching to '050880ce59e30b356b686bd3144efe24f875ebc8'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+Updating files:  10% (8900/81500)Updating files:  11% (8965/81500)Updating files:  12% (9780/81500)Updating files:  13% (10595/81500)Updating files:  14% (11410/81500)Updating files:  15% (12225/81500)Updating files:  16% (13040/81500)Updating files:  17% (13855/81500)Updating files:  18% (14670/81500)Updating files:  19% (15485/81500)Updating files:  20% (16300/81500)Updating files:  21% (17115/81500)Updating files:  22% (17930/81500)Updating files:  23% (18745/81500)Updating files:  24% (19560/81500)Updating files:  25% (20375/81500)Updating files:  26% (21190/81500)Updating files:  26% (21470/81500)Updating files:  27% (22005/81500)Updating files:  28% (22820/81500)Updating files:  29% (23635/81500)Updating files:  30% (24450/81500)Updating files:  31% (25265/81500)Updating files:  32% (26080/81500)Updating files:  33% (26895/81500)Updating files:  34% (27710/81500)Updating files:  35% (28525/81500)Updating files:  36% (29340/81500)Updating files:  37% (30155/81500)Updating files:  38% (30970/81500)Updating files:  39% (31785/81500)Updating files:  40% (32600/81500)Updating files:  41% (33415/81500)Updating files:  42% (34230/81500)Updating files:  42% (34722/81500)Updating files:  43% (35045/81500)Updating files:  44% (35860/81500)Updating files:  45% (36675/81500)Updating files:  46% (37490/81500)Updating files:  47% (38305/81500)Updating files:  48% (39120/81500)Updating files:  49% (39935/81500)Updating files:  50% (40750/81500)Updating files:  51% (41565/81500)Updating files:  52% (42380/81500)Updating files:  53% (43195/81500)Updating files:  54% (44010/81500)Updating files:  54% (44231/81500)Updating files:  55% (44825/81500)Updating files:  56% (45640/81500)Updating files:  57% (46455/81500)Updating files:  58% (47270/81500)Updating files:  58% (47909/81500)Updating files:  59% (48085/81500)Updating files:  60% (48900/81500)Updating files:  61% (49715/81500)Updating files:  62% (50530/81500)Updating files:  63% (51345/81500)Updating files:  64% (52160/81500)Updating files:  65% (52975/81500)Updating files:  66% (53790/81500)Updating files:  67% (54605/81500)Updating files:  68% (55420/81500)Updating files:  69% (56235/81500)Updating files:  70% (57050/81500)Updating files:  71% (57865/81500)Updating files:  71% (57927/81500)Updating files:  72% (58680/81500)Updating files:  73% (59495/81500)Updating files:  74% (60310/81500)Updating files:  75% (61125/81500)Updating files:  76% (61940/81500)Updating files:  77% (62755/81500)Updating files:  78% (63570/81500)Updating files:  79% (64385/81500)Updating files:  80% (65200/81500)Updating files:  81% (66015/81500)Updating files:  82% (66830/81500)Updating files:  83% (67645/81500)Updating files:  84% (68460/81500)Updating files:  85% (69275/81500)Updating files:  86% (70090/81500)Updating files:  87% (70905/81500)Updating files:  88% (71720/81500)Updating files:  88% (72403/81500)Updating files:  89% (72535/81500)Updating files:  90% (73350/81500)Updating files:  91% (74165/81500)Updating files:  92% (74980/81500)Updating files:  93% (75795/81500)Updating files:  94% (76610/81500)Updating files:  95% (77425/81500)Updating files:  96% (78240/81500)Updating files:  97% (79055/81500)Updating files:  98% (79870/81500)Updating files:  99% (80685/81500)Updating files: 100% (81500/81500)Updating files: 100% (81500/81500), done.
+HEAD is now at 050880ce5 Bump version to 6.0.3 and LKG
+Reading diagnostics from src/compiler/diagnosticMessages.json
+
+added 3 packages in 525ms
+Reading diagnostics from src/compiler/diagnosticMessages.json
+/tmp/adamic-gate/stage3-apply-checkout-9dbhobg9/source/stage3/adapt/10-type-imports/adapt.cjs:2
+throw new Error("deliberate break: the fast gate kill test for stage 3, second run");
+^
+
+Error: deliberate break: the fast gate kill test for stage 3, second run
+    at Object.<anonymous> (/tmp/adamic-gate/stage3-apply-checkout-9dbhobg9/source/stage3/adapt/10-type-imports/adapt.cjs:2:7)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v24.19.0
+Traceback (most recent call last):
+  File "/tmp/adamic-gate/stage3-apply-checkout-9dbhobg9/source/stage3/apply.py", line 72, in <module>
+    run('node', str(directory / 'adapt.cjs'), str(out), env=adaptation_env)
+  File "/tmp/adamic-gate/stage3-apply-checkout-9dbhobg9/source/stage3/apply.py", line 26, in run
+    return subprocess.run(args, check=True, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '('node', '/tmp/adamic-gate/stage3-apply-checkout-9dbhobg9/source/stage3/adapt/10-type-imports/adapt.cjs', '/tmp/adamic-gate/stage3-apply-checkout-9dbhobg9/adapted')' returned non-zero exit status 1.
+ERROR
+
+======================================================================
+ERROR: test_ordinary_apply_leaves_git_clean (__main__.ApplyCheckoutTests.test_ordinary_apply_leaves_git_clean)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cloud/fast-gate/tree-2/stage3/test_apply.py", line 34, in test_ordinary_apply_leaves_git_clean
+    subprocess.run(['bash', str(source / 'stage3/apply.sh'), str(output)], check=True)
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['bash', '/tmp/adamic-gate/stage3-apply-checkout-9dbhobg9/source/stage3/apply.sh', '/tmp/adamic-gate/stage3-apply-checkout-9dbhobg9/adapted']' returned non-zero exit status 1.
+
+----------------------------------------------------------------------
+Ran 1 test in 36.064s
+
+FAILED (errors=1)
