@@ -98,3 +98,18 @@ exact-optional relations. Merely checking outer object presence would miss neste
 writes; those sites have not been waived. The 90 ordinary production errors are
 an additional block on whole-program emission, outside this unit's requested
 optional-write scope. There is no verified completion date for all 67.
+
+Current main synchronization: merged origin/main at 8b388310 after the CLI commit
+7bea27a8. The single gaps_test.go conflict was resolved hunk by hunk: retain main's
+exact-refusal machinery and added probes, and the presence side's newer nested
+function diagnosis. Re-running the unchanged probes exposed three stale
+expectations: mixed-array join's current NotYet, string logical-or now succeeding,
+and shift's current exact NotYet. The test preserves exact Refused checks and adds
+exact NotYet checks; GAPS.md records the new observations while retaining history.
+The affected suite passes in 18.022s, optional focused packages pass, and the
+focused oracle passes in 4.104s. Main changed no internal or command files between
+f4efdd23 and 8b388310. The full repository gate remains unrun.
+
+The explicit remaining 17-site inventory is in remaining.json. No incomplete
+contract is reported as trusted or emitted. The private branch is synchronized;
+whole-program delivery remains blocked, with 50 scheduled and zero emitted.

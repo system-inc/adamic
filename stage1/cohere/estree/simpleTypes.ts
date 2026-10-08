@@ -1,0 +1,28 @@
+export const keywordTypes = new Map<string, string>([
+    ['AnyKeyword', 'TSAnyKeyword'],
+    ['BigIntKeyword', 'TSBigIntKeyword'],
+    ['BooleanKeyword', 'TSBooleanKeyword'],
+    ['NeverKeyword', 'TSNeverKeyword'],
+    ['NumberKeyword', 'TSNumberKeyword'],
+    ['ObjectKeyword', 'TSObjectKeyword'],
+    ['StringKeyword', 'TSStringKeyword'],
+    ['SymbolKeyword', 'TSSymbolKeyword'],
+    ['UnknownKeyword', 'TSUnknownKeyword'],
+    ['VoidKeyword', 'TSVoidKeyword'],
+    ['UndefinedKeyword', 'TSUndefinedKeyword'],
+    ['IntrinsicKeyword', 'TSIntrinsicKeyword'],
+    ['AbstractKeyword', 'TSAbstractKeyword'],
+]);
+export const unaryTypes = new Map<string, string[]>([
+    ['ReturnStatement', ['ReturnStatement', 'argument']],
+    ['BreakStatement', ['BreakStatement', 'label']],
+    ['ContinueStatement', ['ContinueStatement', 'label']],
+    ['AwaitExpression', ['AwaitExpression', 'argument']],
+    ['ArrayType', ['TSArrayType', 'elementType']],
+    ['OptionalType', ['TSOptionalType', 'typeAnnotation']],
+    ['RestType', ['TSRestType', 'typeAnnotation']],
+    ['InferType', ['TSInferType', 'typeParameter']],
+    ['Decorator', ['Decorator', 'expression']],
+    ['ExternalModuleReference', ['TSExternalModuleReference', 'expression']],
+    ['NamespaceExportDeclaration', ['TSNamespaceExportDeclaration', 'id']],
+]);
