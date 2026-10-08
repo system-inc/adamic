@@ -1005,6 +1005,38 @@ void adamic_weak_dropped(adamic_weak *handle);
 // nothing else can reach, and a Weak reaches without counting.
 bool adamic_weak_held(const void *target);
 
+// OrdinaryToPrimitive's typed call seam (exceptions.c, docs/step22-to-primitive.md).
+// The existing method ABI is untagged; generated adapters must classify its result.
+enum adamic_primitive_kind {
+	adamic_primitive_undefined,
+	adamic_primitive_null,
+	adamic_primitive_boolean,
+	adamic_primitive_number,
+	adamic_primitive_string,
+	adamic_primitive_object,
+};
+typedef struct adamic_primitive {
+	enum adamic_primitive_kind kind;
+	adamic_value value;
+} adamic_primitive;
+enum adamic_primitive_hint {
+	adamic_hint_default,
+	adamic_hint_number,
+	adamic_hint_string,
+};
+typedef struct adamic_primitive_method {
+	// NULL means the property is absent or non-callable. owner is an owned callable
+	// (or non-callable property value) kept until this lookup/call finishes.
+	adamic_primitive (*call)(adamic_heap *receiver, void *owner);
+	void *owner;
+} adamic_primitive_method;
+// get performs one lazy Get and IsCallable, including inheritance and accessors.
+// Both callbacks can set adamic_thrown. String/object results own one reference;
+// an exceptional call returns a zero result with no owned value. An exceptional
+// get may return an owner; the helper releases it before propagating the error.
+typedef adamic_primitive_method (*adamic_primitive_get)(adamic_heap *receiver, const char *name);
+adamic_primitive adamic_ordinary_to_primitive(adamic_heap *receiver, enum adamic_primitive_hint hint, adamic_primitive_get get);
+
 // adamic_thrown is the error being thrown, or NULL (exceptions.c): set by a throw, tested after
 // every call that can throw, and taken by the catch that lands it. adamic_error_new is new
 // Error(message), and adamic_uncaught the panic of an error nothing caught.
