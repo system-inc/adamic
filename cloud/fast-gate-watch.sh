@@ -38,6 +38,25 @@ classify() {
   [ "${count}" -gt 2 ] && echo B || echo S
 }
 
+# Every gate start, appended to documentation/velocity/fast-gate-waits.csv on records/fast-gate-waits
+# (sha, branch, class, queued, started, waited seconds), so slot wait is charted from an artifact.
+recordWait() {
+  local row=$1 records=${state}/waits-records file=documentation/velocity/fast-gate-waits.csv
+  if [ ! -d "${records}" ]; then
+    if git -C "${here}" ls-remote --exit-code origin refs/heads/records/fast-gate-waits > /dev/null; then
+      git -C "${here}" fetch -q origin records/fast-gate-waits && git -C "${here}" worktree add -q --detach "${records}" FETCH_HEAD
+    else
+      git -C "${here}" worktree add -q --detach "${records}" "$(git -C "${here}" commit-tree "$(git -C "${here}" hash-object -t tree /dev/null)" -m "Start the fast gate's slot-wait record")"
+    fi
+  fi
+  mkdir -p "$(dirname "${records}/${file}")"
+  [ -f "${records}/${file}" ] || echo "sha,branch,class,queued_utc,started_utc,waited_seconds" > "${records}/${file}"
+  echo "${row}" >> "${records}/${file}"
+  git -C "${records}" add "${file}"
+  git -C "${records}" -c user.name=kirkouimet -c user.email=kirk@kirkouimet.com commit -q -m "Slot wait: ${row}" -m "Co-Authored-By: Ahra <ahra@ahra.ai>"
+  git -C "${records}" push -q origin "HEAD:refs/heads/records/fast-gate-waits" || true
+}
+
 tips() {
   git -C "${here}" ls-remote origin 'refs/heads/codex/*' 'refs/heads/area/*' 'refs/heads/devtools/*' |
     awk '{sub("refs/heads/", "", $2); print $2, $1}' | sort
@@ -90,7 +109,9 @@ while true; do
     log=${state}/logs/${sha:0:12}.log
     bash "${here}/cloud/fast-gate.sh" "${sha}" --branch "${branch}" > "${log}" 2>&1 &
     echo "${branch} ${sha} ${class}" > "${state}/running/$!"
-    echo "$(date -u +%H:%M:%S) gating ${branch} ${sha} (${class}, waited $(( $(date -u +%s) - queued )) s, log ${log})"
+    now=$(date -u +%s)
+    echo "$(date -u +%H:%M:%S) gating ${branch} ${sha} (${class}, waited $(( now - queued )) s, log ${log})"
+    (recordWait "${sha},${branch},${class},$(date -u -r "${queued}" +%FT%TZ),$(date -u -r "${now}" +%FT%TZ),$(( now - queued ))" > /dev/null 2>&1 &)
   done
   sleep 15
 done
