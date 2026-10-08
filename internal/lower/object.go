@@ -1687,6 +1687,9 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		}
 		return l.defined(node, ir.ArrayIndex{Array: object, Index: position, Element: element, Optional: optional}), nil
 	}
+	if object.Type() == ir.Object && !optional && !checker.IsTupleType(l.checker.GetTypeAtLocation(access.Expression)) {
+		return l.finiteElementRead(node, object)
+	}
 	// pairs[0]?.[0]: the tuple may be missing, and the read is undefined then (collections.go).
 	if optional {
 		return l.optionalTupleElement(node, object, index)

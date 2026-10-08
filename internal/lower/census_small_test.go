@@ -44,14 +44,13 @@ function ensureTrailingDirectorySeparator(path: string) { return path + '/'; }
 	}
 }
 
-func TestCensusSmallFiniteKeyBoundary(t *testing.T) {
+func TestCensusSmallFiniteKeyRead(t *testing.T) {
 	_, err := lowerSource(t, `const wildcardMatchers = { files: 'file', directories: 'directory', exclude: 'excluded' };
 function pick(usage: 'files' | 'directories' | 'exclude'): string { return wildcardMatchers[usage]; }
 console.log(pick('files'));
 `)
-	var notYet *NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "an ElementAccessExpression") {
-		t.Fatalf("expected the computed finite-key access boundary, got %v", err)
+	if err != nil {
+		t.Fatalf("finite-key read did not lower: %v", err)
 	}
 }
 
