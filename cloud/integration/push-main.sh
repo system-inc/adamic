@@ -113,14 +113,19 @@ if [ -n "$fastGate" ]; then
 		exit 1
 	fi
 	statusLine=$(git show "origin/${fastGate}:status.txt" 2>/dev/null | head -n 1)
-	if ! fastJSON=$(git show "origin/${fastGate}:fast.json" 2>/dev/null); then
+	# The log goes to python as a file: a landing that touches thousands of paths lists them all in
+	# fast.json, past what one argument can carry (stage 3 batch 4, October 8).
+	fastJSON=$(mktemp)
+	trap 'rm -f "$fastJSON"' EXIT
+	if ! git show "origin/${fastGate}:fast.json" >"$fastJSON" 2>/dev/null; then
 		echo "refused: ${fastGate} has no fast.json" >&2
 		exit 1
 	fi
 	if ! verdict=$(python3 - "$sha" "$statusLine" "$fastGate" "$fastJSON" <<'VERDICT'
 import json, sys
 sha, status, log = sys.argv[1], sys.argv[2], sys.argv[3]
-fast = json.loads(sys.argv[4])
+with open(sys.argv[4]) as fastFile:
+    fast = json.load(fastFile)
 problems = []
 if fast.get("sha") != sha:
     problems.append("it gated %s, not %s" % (fast.get("sha"), sha))
