@@ -18,27 +18,27 @@ import (
 )
 
 func TestMarkdownListLayout(t *testing.T) {
-	t.Parallel()
+	parallelMarkdown(t)
 	testBlockLayout(t, "lists")
 }
 
 func TestMarkdownQuoteLayout(t *testing.T) {
-	t.Parallel()
+	parallelMarkdown(t)
 	testBlockLayout(t, "quotes")
 }
 
 func TestMarkdownTableLayout(t *testing.T) {
-	t.Parallel()
+	parallelMarkdown(t)
 	testBlockLayout(t, "tables")
 }
 
 func TestMarkdownCodeBlockLayout(t *testing.T) {
-	t.Parallel()
+	parallelMarkdown(t)
 	testBlockLayout(t, "code")
 }
 
 func TestMarkdownHTMLBlockLayout(t *testing.T) {
-	t.Parallel()
+	parallelMarkdown(t)
 	testBlockLayout(t, "html")
 }
 
@@ -66,22 +66,22 @@ func fullLayoutFixture(t *testing.T) *layoutFixture {
 }
 
 func TestMarkdownWhitespaceLayout(t *testing.T) {
-	t.Parallel()
+	parallelMarkdown(t)
 	testBlockLayout(t, "whitespace")
 }
 
 func TestMarkdownLeafComposition(t *testing.T) {
-	t.Parallel()
+	parallelMarkdown(t)
 	testBlockLayout(t, "leaves")
 }
 
 func TestMarkdownRootLayout(t *testing.T) {
-	t.Parallel()
+	parallelMarkdown(t)
 	testBlockLayout(t, "root")
 }
 
 func TestMarkdownStructureLayout(t *testing.T) {
-	t.Parallel()
+	parallelMarkdown(t)
 	testBlockLayout(t, "structure")
 }
 
