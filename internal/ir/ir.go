@@ -452,10 +452,12 @@ type (
 	// Coalesce is Value ?? Fallback: Value when it's present, and otherwise Fallback, evaluated only
 	// then. With Panic set instead of Fallback, it's Value ?? panic(Panic).
 	Coalesce struct {
-		Value    Expression
-		Fallback Expression
-		Panic    Expression
-		Of       Type
+		// UndefinedOnly is an indexed-presence guard: null is a present value.
+		UndefinedOnly bool
+		Value         Expression
+		Fallback      Expression
+		Panic         Expression
+		Of            Type
 	}
 
 	// StringLength is string.length, in UTF-16 code units.

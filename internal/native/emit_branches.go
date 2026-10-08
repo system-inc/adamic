@@ -121,6 +121,9 @@ func unwrap(expression string) string {
 func (e *emitter) coalesce(coalesce ir.Coalesce) string {
 	value := e.value(coalesce.Value)
 	present, unwrapped := value+" != NULL", value
+	if coalesce.Value.Type().UsesNullSentinel() && !coalesce.UndefinedOnly {
+		present = "!(" + nullTest(coalesce.Value.Type(), value, true) + ")"
+	}
 	if coalesce.Value.Type().IsMaybe() {
 		present, unwrapped = value+".present", value+"."+member(coalesce.Value.Type().Present())
 	}

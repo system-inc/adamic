@@ -337,7 +337,7 @@
     "absent": "[]",
     "nullPresent": "[null]",
     "blocked": true,
-    "refusal": "stage 0 can't lower a value of type string | null yet"
+    "refusal": "an indexed presence check on nullable array elements (the lookup needs to retain its presence slot)"
   },
   {
     "id": "D170",

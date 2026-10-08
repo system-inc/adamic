@@ -1,0 +1,5 @@
+=== RUN   TestNullableStringRepresentation
+    nullable_test.go:101: Node controls "true\nfalse\ntrue\nobject\nnull\nnull\nfalse\nfalse\nfallback\nfalse\nfalse\nfalse\nstring\nmade\nmade\nfalse\nfalse\nmade\nfalse\ntrue\ntrue\nundefined\nundefined\nundefined\nfalse\nfalse\nfallback\nfalse\nfalse\nfalse\nstring\n\n\ntrue\nfalse\n\nfalse\nfalse\nfalse\nstring\nnull\nnull\nfalse\ntrue\nnull\n"; release, sanitized and JS match; NULL sentinel mutant caught: exit=0 stdout="false\ntrue\ntrue\nundefined\nundefined\nundefined\nfalse\nfalse\nfallback\nfalse\nfalse\nfalse\nstring\nmade\nmade\nfalse\nfalse\nmade\nfalse\ntrue\ntrue\nundefined\nundefined\nundefined\nfalse\nfalse\nfallback\nfalse\nfalse\nfalse\nstring\n\n\ntrue\nfalse\n\nfalse\nfalse\nfalse\nstring\nnull\nnull\nfalse\ntrue\nnull\n" stderr=""
+--- PASS: TestNullableStringRepresentation (0.61s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-d	0.616s
