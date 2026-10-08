@@ -59,3 +59,4 @@ Shared notes:
 - Node. To run a fixture on Node directly, copy it to a `.ts` file and run `node --experimental-strip-types --no-warnings file.ts`.
 - Host failures. On macOS, `go test ./internal/native` already fails on main (AddressSanitizer reports that detect_leaks is not supported on the platform, plus parseInt and cos bit mismatches against Node). Judge "the packages touched pass" on Linux, or by comparing against the same failures on main.
 - Briefs 3, 4 and 5 all edit the `stringMethods` table and the `stringCall` switch in internal/lower/object.go. Land them one at a time and rebase. If brief 4 lands before brief 5, brief 5 should reuse the helper brief 4 adds.
+- Counts. A new oracle fixture also needs its row in internal/oracle/counts.md, or TestCountsAreRecorded fails: run `go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts` and commit only that fixture's row.

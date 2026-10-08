@@ -14,6 +14,9 @@ set -uo pipefail
 here=$(cd "$(dirname "$0")/.." && pwd)
 state=${ADAMIC_CONTRIBUTION_CLOCK_STATE:-${HOME}/.adamic-contribution-clock}
 watchLog=${ADAMIC_FAST_GATE_WATCH_LOG:-${HOME}/Projects/system/adamic-gate-logs/fast-gate-watch.log}
+watchState=${ADAMIC_FAST_GATE_WATCH_STATE:-${HOME}/.adamic-fast-gate-watch}
+# t0 is stamped just before the clock's own start of a fresh session, never a reused session's creation.
+t0Source="dispatch: fresh session via ahra ai start"
 ahraDirectory=/Users/kirkouimet/Projects/ahra
 branch=records/contribution-clock
 csv=documentation/velocity/contribution-clock.csv
@@ -33,7 +36,13 @@ record() {
   git -C "${records}" fetch -q origin
   git -C "${records}" ls-remote --exit-code origin "refs/heads/${branch}" > /dev/null && git -C "${records}" switch -q --detach "origin/${branch}"
   mkdir -p "$(dirname "${records}/${csv}")"
-  [ -f "${records}/${csv}" ] || echo "dispatched_utc,pushed_utc,verdict_utc,brief,branch,sha,session,verdict,dispatch_to_push_seconds,push_to_verdict_seconds,total_seconds" > "${records}/${csv}"
+  local header="dispatched_utc,pushed_utc,verdict_utc,brief,branch,sha,session,verdict,dispatch_to_push_seconds,push_to_verdict_seconds,total_seconds,first_verdict,rounds,t0_source"
+  # Columns are only ever added at the end, so an older row reads with its new fields empty.
+  if [ -f "${records}/${csv}" ]; then
+    { echo "${header}"; tail -n +2 "${records}/${csv}"; } > "${records}/${csv}.new" && mv "${records}/${csv}.new" "${records}/${csv}"
+  else
+    echo "${header}" > "${records}/${csv}"
+  fi
   echo "${row}" >> "${records}/${csv}"
   git -C "${records}" add "${csv}"
   git -C "${records}" -c user.name=kirkouimet -c user.email=kirk@kirkouimet.com commit -q -m "Contribution clock: ${row%%,*}" -m "${row}" -m "Co-Authored-By: Ahra <ahra@ahra.ai>"
@@ -62,22 +71,36 @@ dispatch() {
     sleep 10
   done
   if [ -z "${t1}" ]; then
-    record "$(iso "${t0}"),,,${name},${target},,${session},no push in 90 minutes,,,"
+    record "$(iso "${t0}"),,,${name},${target},,${session},no push in 90 minutes,,,,,0,${t0Source}"
     return 0
   fi
   echo "$(date -u +%H:%M:%S) pushed ${target} ${sha}"
-  # t2: the watcher's verdict on that branch's tip (it gates only the newest tip, so take the last line).
+  # t2: the watcher's verdict on the branch's newest tip. A red goes back to the worker with the gate's
+  # first failure, as a reviewer would send it, and the clock keeps waiting for the next push: t2 is the
+  # first green, or the last verdict after three rounds or 90 minutes. first_verdict and rounds say
+  # how it got there.
+  local first="" rounds=0 answered="" tip excerpt
   while [ $(( $(date -u +%s) - t1 )) -lt 5400 ]; do
-    line=$(grep -E "^[0-9:]{8} done ${target}: (green|red):" "${watchLog}" | tail -1)
-    if [ -n "${line}" ]; then
-      t2=$(date -u +%s)
+    tip=$(git -C "${here}" ls-remote origin "refs/heads/${target}" | cut -f1)
+    line=$(grep -E "^[0-9:]{8} done ${target}: (green|red): ${tip}" "${watchLog}" | tail -1)
+    if [ -n "${tip}" ] && [ -n "${line}" ] && [ "${tip}" != "${answered}" ]; then
+      answered=${tip}
+      rounds=$(( rounds + 1 ))
       verdict=$(echo "${line}" | sed -E 's/.*: (green|red):.*/\1/')
-      sha=$(echo "${line}" | grep -oE '[0-9a-f]{40}' | head -1)
-      break
+      sha=${tip}
+      [ -n "${first}" ] || first=${verdict}
+      t2=$(date -u +%s)
+      [ "${verdict}" = green ] || [ "${rounds}" -ge 3 ] && break
+      excerpt=$(mktemp)
+      { printf 'The fast gate on your push %s is red. Its first failure:\n\n' "${tip}"
+        sed -n '/^FIRST FAILURE/,/^red:/p' "${watchState}/logs/${tip:0:12}.log" | head -40
+        printf '\nFix it on the same branch %s, keep the change scoped to the brief, push, and say the new full sha.\n' "${target}"; } > "${excerpt}"
+      (cd "${ahraDirectory}" && ahra ai send "${session}" --message-file "${excerpt}" > /dev/null 2>&1)
+      echo "$(date -u +%H:%M:%S) ${target}: red at ${tip}, sent back to the worker (round ${rounds})"
     fi
     sleep 10
   done
-  record "$(iso "${t0}"),$(iso "${t1}"),${t2:+$(iso "${t2}")},${name},${target},${sha},${session},${verdict:-no verdict in 90 minutes},$(( t1 - t0 )),${t2:+$(( t2 - t1 ))},${t2:+$(( t2 - t0 ))}"
+  record "$(iso "${t0}"),$(iso "${t1}"),${t2:+$(iso "${t2}")},${name},${target},${sha},${session},${verdict:-no verdict in 90 minutes},$(( t1 - t0 )),${t2:+$(( t2 - t1 ))},${t2:+$(( t2 - t0 ))},${first},${rounds},${t0Source}"
   echo "$(date -u +%H:%M:%S) ${target}: ${verdict:-no verdict}, $(( ${t2:-$t1} - t0 )) s from dispatch"
 }
 
