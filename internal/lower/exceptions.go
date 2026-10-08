@@ -161,7 +161,7 @@ func (l *lowering) exceptions() error {
 func (l *lowering) throwsOut(statements []ir.Statement) bool {
 	found := false
 	walk(statements, func(node any) bool {
-		found = found || ir.LibraryMayThrow(node)
+		found = found || ir.LibraryMayThrow(node) || ir.NumberFormatMayThrow(node)
 		switch node := node.(type) {
 		case ir.Try:
 			if node.HasCatch {
@@ -173,6 +173,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			if node.Index < 0 {
 				found = true
 			}
+		case ir.RegExpCall:
+			found = found || node.MayThrow()
 		case ir.StringFromCodes:
 			found = found || node.CodePoints
 		case ir.NodeFSFile:
@@ -243,10 +245,6 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 				failing = "Date.toISOString validation (catchable RangeError descriptors are not represented)"
 
 			}
-		case ir.RegExpCall:
-			if node.Method == "replaceAll" || node.Method == "matchAll" {
-				failing = "RegExp global-flag validation"
-			}
 		case ir.ArrayFill:
 			if node.Array == nil && !constantWithin(node.Length, 0, 4294967295) {
 				failing = "new Array(length)"
@@ -272,9 +270,6 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 	}
 	return failing
 }
-
-// formatArguments are the arguments each number format takes without throwing.
-var formatArguments = map[string][2]float64{"toExponential": {0, 100}, "toPrecision": {1, 100}, "toString": {2, 36}}
 
 // constantWithin reports whether a value is a constant integer from low to high, which a call taking
 // it can't fail on.

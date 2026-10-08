@@ -50,3 +50,13 @@ func (e *emitter) libraryNumberCall(call ir.NumberCall) (string, bool) {
 	}
 	return e.snapshot(ir.Number, value), true
 }
+
+// A format can leave through a RangeError, after both operands were evaluated in order.
+func (e *emitter) libraryNumberFormat(method string, receiver, argument ir.Expression) string {
+	value := e.snapshot(ir.Number, e.value(receiver))
+	digits := e.snapshot(ir.Number, e.value(argument))
+	function := map[string]string{"fixed": "fixed", "toString": "radix", "toExponential": "exponential", "toPrecision": "precision"}[method]
+	result := e.own(ir.String, fmt.Sprintf("adamic_number_checked_%s(%s, %s)", function, value, digits))
+	e.checkThrown()
+	return result
+}

@@ -90,11 +90,15 @@ IN THE SOFTWARE.
     GenericArrayPush in src/builtins/builtins-array.cc, Node.js v24.19.0);
   - catchable String repeat (`internal/lower/library_string_repeat.go`, after
     src/builtins/string-repeat.tq, V8 13.6.233.17);
+  - positioned String lastIndexOf (`internal/native/runtime/string_search_impl.h`, after
+    String::LastIndexOf in Node v24.19.0 deps/v8/src/objects/string.cc);
   - positioned String affixes (`internal/lower/library_string.go`, after
     src/builtins/string-startswith.tq and src/builtins/string-endswith.tq);
   - String well-formed Unicode (`runtime/string_wellformed.c`, after
     src/builtins/string-iswellformed.tq and src/builtins/string-towellformed.tq,
     adapted to canonical WTF-8 storage);
+  - String RegExp global-flag validation (`runtime/regexp.c`, after
+    src/builtins/builtins-string-gen.cc and src/builtins/string-replaceall.tq, V8 13.6.233.17);
   - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
   - generic Array indexOf and lastIndexOf lowering (`internal/lower/library_array_generic.go`,
     after Runtime_ArrayIndexOf in src/runtime/runtime-array.cc and GetFromIndex /
@@ -107,11 +111,19 @@ IN THE SOFTWARE.
   - mixed Map and Set key dispatch (`internal/native/runtime/map.c`, after
     SameValueZeroHeapNumber, SameValueZeroString, FindOrderedHashTableEntryForOtherKey
     and NormalizeNumberKey in src/builtins/builtins-collections-gen.cc, Node v24.19.0);
+  - RegExp interval bound saturation (`internal/regexp/parser.go` and
+    `internal/native/runtime/regexp_compile_parser.c`, after
+    RegExpParserImpl::ParseIntervalQuantifier in Node v24.19.0's
+    deps/v8/src/regexp/regexp-parser.cc and RegExpTree::kInfinity in
+    deps/v8/src/regexp/regexp-ast.h);
   - exponentiation (`runtime/number.c`, after math::pow);
   - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own
     notice is below);
   - Math integer and float conversions (`runtime/library_math_number.c`, after src/builtins/math.tq
     and src/numbers/conversions-inl.h, V8 13.6.233.17);
+  - Number formatting validation and catchable range errors (`runtime/library_number_format.c`,
+    declarations in `runtime/library_number_format.h`, after src/builtins/builtins-number.cc
+    and src/builtins/number.tq, V8 13.6.233.17);
   - Math.hypot (`runtime/hypot.c`, after src/builtins/math.tq);
   - exponential, precision and shortest digits (`runtime/dtoa.c`, after src/base/numbers and
     src/numbers/conversions.cc);
@@ -282,16 +294,25 @@ under Apache License 2.0; the source notice and license are retained in
 [cohere/TypeScript/NOTICE.txt](cohere/TypeScript/NOTICE.txt) and
 [cohere/TypeScript/LICENSE.txt](cohere/TypeScript/LICENSE.txt).
 
-The test262 harness fixtures in `cmd/adamic-test262/testdata/regexp/harness/`
-are copied from tc39/test262 commit `7ab7fafa0003f73fc85c1b95d88094d33f7eb8bd`.
+The test262 harness fixtures in `cmd/adamic-test262/testdata/regexp/harness/`,
+`cmd/adamic-test262/testdata/regexp-syntax/harness/`, and
+`cmd/adamic-test262/testdata/regexp-constructor-errors/harness/` are copied from tc39/test262 commit `7ab7fafa0003f73fc85c1b95d88094d33f7eb8bd`.
 `cmd/adamic-test262/regexp_prelude.go` adapts that checkout's `regExpUtils.js`
 (Copyright (C) 2017 Mathias Bynens).
-Their BSD license is reproduced in that fixture directory's [LICENSE](cmd/adamic-test262/testdata/regexp/LICENSE).
+Their BSD license is reproduced in [regexp/LICENSE](cmd/adamic-test262/testdata/regexp/LICENSE)
+[regexp-syntax/LICENSE](cmd/adamic-test262/testdata/regexp-syntax/LICENSE), and
+[regexp-constructor-errors/LICENSE](cmd/adamic-test262/testdata/regexp-constructor-errors/LICENSE).
 
 The `adamic` compiler (stage 0) is built on cohere and the TypeScript compiler it carries (typescript-go,
 Copyright (c) Microsoft Corporation, Apache License 2.0), and on the Go toolchain. Their notices are in
 [cohere/NOTICE](cohere/NOTICE) and [cohere/THIRD_PARTY_NOTICES.md](cohere/THIRD_PARTY_NOTICES.md), and they travel with
 any build of the compiler.
+
+`internal/regexp/testdata/capture-tsc.json` and the callback patterns in
+`internal/regexp/capture_facts_test.go` are derived from the pinned compiler
+source in `cohere/TypeScript/tsc/testdata/fixtures/compiler` (Microsoft
+Corporation, Apache License 2.0). The participation analysis is original code
+following ECMA-262, rather than a V8 or Node implementation port.
 
 `internal/flow` lifts its single-assignment construction, redundant-phi elimination, verifier and graph
 maintenance from cohere's high-level IR (`cohere/internal/lint/ecmascript/high_level_intermediate_representation`),
@@ -303,6 +324,17 @@ from the pinned TypeScript compiler sources under
 `cohere/TypeScript/tsc/testdata/fixtures/compiler` (Copyright Microsoft Corporation,
 Apache-2.0). Their source file and line are recorded in each fixture. The Apache
 license is reproduced in [LICENSE-APACHE](LICENSE-APACHE).
+
+The runtime-constructor fixtures in `internal/oracle/testdata/regexp_runtime_constructors/`
+adapt the constructor expressions in TypeScript's `tools/scripts/tsc/generate-enums.ts`,
+`options.test.ts`, `options-schema.ts`, and compiler test cases
+`duplicateLocalVariable1.ts` and `fixSignatureCaching.ts` at cohere commit
+`7945d102a6c18dd36adf9114a758ce646e8b2359`. TypeScript's Apache-2.0 license is
+reproduced in `cohere/TypeScript/tsc/LICENSE`. Their input generator reads the original
+Go enum definitions and JSON schema. The emoji witness adapts cohere's
+`stage1/cohere/css/print_doc.ts` surrogate mapping and consumes
+`print_width_data.ts` under cohere's MIT OR Apache-2.0 license.
+The native failure-policy change does not introduce a V8 or Node algorithm port.
 
 ### @types/node
 

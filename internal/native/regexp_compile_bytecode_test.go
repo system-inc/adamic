@@ -105,7 +105,7 @@ func runtimeBytecodeIdentity(t *testing.T, wasi bool, mutant string) {
 	if checked {
 		source.WriteString("#define adamic_regex_compile_bytecode adamic_regex_compile_checked\n")
 	}
-	source.WriteString("};\nint main(void){for(size_t j=0;j<sizeof(cases)/sizeof(cases[0]);j++){const struct test *c=&cases[j];adamic_regex_parse_result r;adamic_regex_parse(c->pattern,c->length,c->flags,c->flag_length,&r);adamic_regex_program *p=NULL;if(r.status==0)p=adamic_regex_compile_bytecode(&r);number((uint64_t)r.status);if(r.status==0)program(p);adamic_regex_parse_free(&r);}return 0;}\n")
+	source.WriteString("};\nint main(void){for(size_t j=0;j<sizeof(cases)/sizeof(cases[0]);j++){const struct test *c=&cases[j];adamic_regex_parse_result r;adamic_regex_parse_native(c->pattern,c->length,c->flags,c->flag_length,&r);adamic_regex_program *p=NULL;if(r.status==0)p=adamic_regex_compile_bytecode(&r);number((uint64_t)r.status);if(r.status==0)program(p);adamic_regex_parse_free(&r);}return 0;}\n")
 	if checked {
 		text := source.String()
 		text = strings.Replace(text, "if(r.status==0)program(p);", "if(r.status==0)program(p);if(r.status==3){number(r.message_length);fwrite(r.message,1,r.message_length,stdout);}", 1)

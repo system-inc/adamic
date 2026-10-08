@@ -14,6 +14,7 @@ import (
 func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 	pattern, flags := "", ""
 	var evaluated []ir.Expression
+	var args []*ast.Node
 	if node.Kind == ast.KindRegularExpressionLiteral {
 		text := node.Text()
 		end := strings.LastIndex(text, "/")
@@ -22,7 +23,6 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 		}
 		pattern, flags = text[1:end], text[end+1:]
 	} else {
-		var args []*ast.Node
 		if node.Kind == ast.KindNewExpression {
 			if node.AsNewExpression().Arguments != nil {
 				args = node.AsNewExpression().Arguments.Nodes
@@ -79,6 +79,10 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 		var divergence *regex.V8DivergenceError
 		if errors.As(err, &divergence) {
 			return nil, l.notYet(node, divergence.Error())
+		}
+		var syntax *regex.SyntaxError
+		if node.Kind != ast.KindRegularExpressionLiteral && errors.As(err, &syntax) {
+			return l.regexpConstructorError(node, args, evaluated)
 		}
 		return nil, l.notYet(node, "a RegExp constructor that throws SyntaxError: "+err.Error())
 	}
@@ -150,10 +154,12 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 	if callee.Kind != ast.KindPropertyAccessExpression {
 		return nil, false, nil
 	}
-	receiver := callee.AsPropertyAccessExpression().Expression
-	name := callee.Name().Text()
+	return l.regexMethod(node, callee.AsPropertyAccessExpression().Expression, callee.Name().Text(), node.AsCallExpression().Arguments.Nodes)
+}
+
+func (l *lowering) regexMethod(node, receiver *ast.Node, name string, args []*ast.Node) (ir.Expression, bool, error) {
+	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	proven := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver))
-	args := node.AsCallExpression().Arguments.Nodes
 	method := name
 	result := ir.Type(0)
 	switch {
@@ -178,6 +184,12 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 		of, _ := l.representation(proven)
 		if of != ir.String || len(args) == 0 || !l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(args[0])), "RegExp") {
 			return nil, false, nil
+		}
+		if l.mayBeUndefined(args[0]) || l.includesNull(l.checker.GetTypeAtLocation(args[0])) {
+			return nil, true, l.notYet(node, "String method with a possibly null or undefined RegExp argument")
+		}
+		if (name == "match" || name == "matchAll" || name == "search") && len(args) != 1 {
+			return nil, true, l.notYet(node, "String."+name+" with extra arguments")
 		}
 		switch name {
 		case "match", "split":

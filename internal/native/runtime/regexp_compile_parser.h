@@ -31,7 +31,8 @@ typedef struct {
     adamic_regex_parse_node *body;
     const unsigned char *source;
     size_t length;
-    /* status: 0 accepted, 1 SyntaxError, 2 allocation failure, 3 V8 divergence refusal. */
+    /* status: 0 accepted, 1 Node SyntaxError, 2 allocation failure,
+     * 3 V8 divergence, 4 unsupported native feature. Only 1 is catchable. */
     int status;
     size_t error_offset;
     const char *reference_reason, *node_reason, *message;
@@ -39,6 +40,9 @@ typedef struct {
     adamic_regex_parse_memory *memory;
 } adamic_regex_parse_result;
 void adamic_regex_parse(const unsigned char *pattern, size_t length,
+    const unsigned char *flags, size_t flag_length, adamic_regex_parse_result *result);
+/* Node-compatible production parser; the reference entry retains exact MVs. */
+void adamic_regex_parse_native(const unsigned char *pattern, size_t length,
     const unsigned char *flags, size_t flag_length, adamic_regex_parse_result *result);
 /* Transfer malloc blocks to a counted owner; the callback owns each block. */
 void adamic_regex_parse_take_memory(adamic_regex_parse_result *result, void (*take)(void *, void *), void *owner);

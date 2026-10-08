@@ -94,8 +94,19 @@ static bool affix(const adamic_string *string, const adamic_string *search, bool
 }
 
 double adamic_string_last_index_of(const adamic_string *string, const adamic_string *search) {
+	return adamic_string_last_index_of_from(string, search, INFINITY);
+}
+
+// Port of V8 String::LastIndexOf (Node 24.19.0, src/objects/string.cc), with the
+// existing WTF-8 byte search and surrogate-half fallback in place of flat UTF-16 storage.
+double adamic_string_last_index_of_from(const adamic_string *string, const adamic_string *search, double position) {
+	size_t length = adamic_string_units(string);
+	size_t from = length;
+	if (!isnan(position) && position < (double)length) {
+		from = position <= 0 ? 0 : (size_t)trunc(position);
+	}
 	if (search->length == 0) {
-		return (double)adamic_string_units(string);
+		return (double)from;
 	}
 	if (!halves_pairs(search)) {
 		// A whole-character needle matches by bytes, as indexOf does. Look backward without
@@ -103,7 +114,15 @@ double adamic_string_last_index_of(const adamic_string *string, const adamic_str
 		if (search->length > string->length) {
 			return -1;
 		}
-		for (size_t offset = string->length - search->length + 1; offset-- > 0;) {
+		size_t start = string->length - search->length;
+		if (from < length) {
+			bool low;
+			size_t bound = adamic_string_locate(string, from, &low);
+			if (start > bound) {
+				start = bound;
+			}
+		}
+		for (size_t offset = start + 1; offset-- > 0;) {
 			if (string->bytes[offset] == search->bytes[0] &&
 				memcmp(string->bytes + offset, search->bytes, search->length) == 0) {
 				return (double)adamic_string_units_before(string, offset);
@@ -115,7 +134,11 @@ double adamic_string_last_index_of(const adamic_string *string, const adamic_str
 	unsigned *haystack = to_units(string, &haystack_count), *needle = to_units(search, &needle_count);
 	double found = -1;
 	if (needle_count <= haystack_count) {
-		for (size_t at = haystack_count - needle_count + 1; at-- > 0;) {
+		size_t start = haystack_count - needle_count;
+		if (start > from) {
+			start = from;
+		}
+		for (size_t at = start + 1; at-- > 0;) {
 			if (memcmp(haystack + at, needle, needle_count * sizeof *needle) == 0) {
 				found = (double)at;
 				break;

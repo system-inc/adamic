@@ -446,11 +446,13 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				walk(value.Elem())
 			}
 		case reflect.Struct:
-			throws = throws || ir.LibraryMayThrow(value.Interface())
+			throws = throws || ir.LibraryMayThrow(value.Interface()) || ir.NumberFormatMayThrow(value.Interface())
 			if call, ok := value.Interface().(ir.NodeFSFile); ok && call.MayThrow() {
 				throws = true
 			}
 			switch value.Type() {
+			case reflect.TypeOf(ir.RegExpCall{}):
+				throws = throws || value.Interface().(ir.RegExpCall).MayThrow()
 			case reflect.TypeOf(ir.StringFromCodes{}):
 				if value.Interface().(ir.StringFromCodes).CodePoints {
 					throws = true
