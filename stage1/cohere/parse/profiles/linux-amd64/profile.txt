@@ -13,14 +13,14 @@ adamic.c:buffer
 
 adamic.c:finish
 # Func Hash:
-2684049
+3974289
 # Num Counters:
 4
 # Counter Values:
 1
+1
+1
 0
-1
-1
 
 adamic.c:flush
 # Func Hash:
@@ -28,7 +28,7 @@ adamic.c:flush
 # Num Counters:
 5
 # Counter Values:
-40
+41
 1
 0
 1
@@ -54,20 +54,63 @@ adamic.c:put
 0
 0
 
+adamic.c:stop_end
+# Func Hash:
+43673598829356113
+# Num Counters:
+5
+# Counter Values:
+1
+0
+0
+0
+0
+
+adamic.c:stop_loop
+# Func Hash:
+4033743338953607454
+# Num Counters:
+8
+# Counter Values:
+1
+1
+0
+0
+0
+1
+1
+0
+
+adamic.c:stop_start
+# Func Hash:
+4729569652716351493
+# Num Counters:
+9
+# Counter Values:
+1
+0
+1
+1
+11
+31
+0
+1
+1
+
 adamic.c:stop_with
 # Func Hash:
 703845967377
 # Num Counters:
 4
 # Counter Values:
-3
+42
 0
-3
-3
+42
+42
 
 adamic.c:stopped
 # Func Hash:
-10979746961
+54114257
 # Num Counters:
 4
 # Counter Values:
@@ -78,12 +121,22 @@ adamic.c:stopped
 
 adamic.c:write_all
 # Func Hash:
-2181839874518836427
+17874043287887649093
 # Num Counters:
-4
+14
 # Counter Values:
 1
 1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
 0
 0
 
@@ -135,15 +188,11 @@ adamic_accessor_set
 
 adamic_allocate
 # Func Hash:
-16108242532474798825
+24
 # Num Counters:
-5
+1
 # Counter Values:
 631313
-630729
-631313
-630729
-0
 
 adamic_arguments_save
 # Func Hash:
@@ -190,10 +239,11 @@ adamic_array_concat
 
 adamic_array_fill
 # Func Hash:
-3705203448167214870
+5733963443265889819
 # Num Counters:
-13
+14
 # Counter Values:
+0
 0
 0
 0
@@ -327,7 +377,7 @@ adamic_array_remove
 # Num Counters:
 1
 # Counter Values:
-47530
+47527
 
 adamic_array_reverse
 # Func Hash:
@@ -362,11 +412,12 @@ adamic_array_search_from
 
 adamic_array_set
 # Func Hash:
-46130384152081
+1382374865694797215
 # Num Counters:
-3
+4
 # Counter Values:
 171705
+0
 0
 0
 
@@ -392,12 +443,15 @@ adamic_array_slice
 
 adamic_array_sort
 # Func Hash:
-16627970273385091938
+9823698704503369670
 # Num Counters:
-13
+16
 # Counter Values:
 38
 38
+0
+0
+0
 0
 0
 0
@@ -430,6 +484,96 @@ adamic_array_splice
 # Num Counters:
 1
 # Counter Values:
+0
+
+adamic_async_await
+# Func Hash:
+6560982151006176263
+# Num Counters:
+6
+# Counter Values:
+0
+0
+0
+0
+0
+0
+
+adamic_async_cancel
+# Func Hash:
+0
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_async_forget_cleanup
+# Func Hash:
+0
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_async_free_children
+# Func Hash:
+7734791218542377303
+# Num Counters:
+7
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+
+adamic_async_new
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_async_register_cleanup
+# Func Hash:
+2749585
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+adamic_async_run
+# Func Hash:
+286056342609
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+adamic_async_settle
+# Func Hash:
+185317267066857489
+# Num Counters:
+4
+# Counter Values:
+0
+0
+0
+0
+
+adamic_async_teardown
+# Func Hash:
+10257
+# Num Counters:
+2
+# Counter Values:
+0
 0
 
 adamic_bitwise_and
@@ -515,10 +659,13 @@ adamic_closure_new
 
 adamic_collection_iterator
 # Func Hash:
-24
+185286008276329560
 # Num Counters:
-1
+4
 # Counter Values:
+0
+0
+0
 0
 
 adamic_compare_closure
@@ -533,16 +680,7 @@ adamic_compare_closure
 
 adamic_count_allocation
 # Func Hash:
-2737297
-# Num Counters:
-2
-# Counter Values:
-0
-0
-
-adamic_count_report
-# Func Hash:
-702704068241
+37336721
 # Num Counters:
 4
 # Counter Values:
@@ -551,7 +689,70 @@ adamic_count_report
 0
 0
 
+adamic_count_report
+# Func Hash:
+8941924854393832691
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
 adamic_decode_utf8
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_environment_drop_cells
+# Func Hash:
+4750648401
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+adamic_environment_end
+# Func Hash:
+0
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_environment_init
+# Func Hash:
+0
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_environment_initialize_cells
+# Func Hash:
+18129
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+adamic_environment_new
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_environment_new_in
 # Func Hash:
 24
 # Num Counters:
@@ -575,6 +776,333 @@ adamic_file_status
 # Counter Values:
 0
 0
+0
+0
+0
+0
+0
+0
+0
+0
+
+adamic_graph_adopt
+# Func Hash:
+4285428729228597345
+# Num Counters:
+10
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+adamic_graph_adopt_owned
+# Func Hash:
+172590168
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+adamic_graph_counted
+# Func Hash:
+1562
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_graph_drop
+# Func Hash:
+4247903040792291360
+# Num Counters:
+9
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+adamic_graph_escape
+# Func Hash:
+406120480
+# Num Counters:
+4
+# Counter Values:
+0
+0
+0
+0
+
+adamic_graph_free
+# Func Hash:
+9412549957974131755
+# Num Counters:
+15
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+adamic_graph_hold
+# Func Hash:
+9825375003056494334
+# Num Counters:
+6
+# Counter Values:
+0
+0
+0
+0
+0
+0
+
+adamic_graph_mark_shared
+# Func Hash:
+46130384204945
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+adamic_graph_merge
+# Func Hash:
+17406272494588642502
+# Num Counters:
+26
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+adamic_graph_release_last
+# Func Hash:
+14671675868242694228
+# Num Counters:
+6
+# Counter Values:
+0
+0
+0
+0
+0
+0
+
+adamic_graph_retain
+# Func Hash:
+15524096571373586741
+# Num Counters:
+6
+# Counter Values:
+0
+0
+0
+0
+0
+0
+
+adamic_graph_take
+# Func Hash:
+702772487256
+# Num Counters:
+4
+# Counter Values:
+0
+0
+0
+0
+
+adamic_heap_end
+# Func Hash:
+1244819251021521
+# Num Counters:
+4
+# Counter Values:
+1
+115
+0
+1
+
+adamic_heap_free_children
+# Func Hash:
+4097183836676297324
+# Num Counters:
+24
+# Counter Values:
+631313
+631313
+0
+0
+0
+115440
+208196
+293289
+3862
+178694
+0
+0
+0
+40
+446
+446
+0
+13902
+13826
+0
+0
+0
+0
+0
+
+adamic_heap_free_storage
+# Func Hash:
+42129
+# Num Counters:
+2
+# Counter Values:
+631313
+0
+
+adamic_heap_graph_storage
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_heap_thread_end
+# Func Hash:
+18449
+# Num Counters:
+2
+# Counter Values:
+1
+115
+
+adamic_host_abandon
+# Func Hash:
+10980795537
+# Num Counters:
+4
+# Counter Values:
+0
+0
+0
+0
+
+adamic_host_process_completions
+# Func Hash:
+11283706266916337051
+# Num Counters:
+17
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+adamic_host_promise_new
+# Func Hash:
+17474429457670940127
+# Num Counters:
+9
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+adamic_host_reject
+# Func Hash:
+11262329944
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+adamic_host_resolve
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_host_set_loop_hooks
+# Func Hash:
+8820939866318254822
+# Num Counters:
+8
+# Counter Values:
 0
 0
 0
@@ -639,10 +1167,12 @@ adamic_map_add_pairs
 
 adamic_map_clear
 # Func Hash:
-4945858458952355624
+277090515219417429
 # Num Counters:
-7
+9
 # Counter Values:
+0
+0
 0
 0
 0
@@ -653,10 +1183,12 @@ adamic_map_clear
 
 adamic_map_delete
 # Func Hash:
-5448668434521602900
+4975803939976032772
 # Num Counters:
-4
+6
 # Counter Values:
+0
+0
 0
 0
 0
@@ -664,10 +1196,11 @@ adamic_map_delete
 
 adamic_map_entries
 # Func Hash:
-11430594773821311047
+7825361007266199089
 # Num Counters:
-5
+6
 # Counter Values:
+0
 0
 0
 0
@@ -681,10 +1214,10 @@ adamic_map_free_children
 5
 # Counter Values:
 40
-146
+147
 0
-146
-146
+147
+147
 
 adamic_map_get
 # Func Hash:
@@ -692,15 +1225,17 @@ adamic_map_get
 # Num Counters:
 2
 # Counter Values:
-222459
-74605
+222456
+74550
 
 adamic_map_iterate
 # Func Hash:
-24
+46130384151640
 # Num Counters:
-1
+3
 # Counter Values:
+0
+0
 0
 
 adamic_map_iterator_next
@@ -793,11 +1328,13 @@ adamic_map_number_hash
 
 adamic_map_set
 # Func Hash:
-15109759207942735661
+10938703243981954720
 # Num Counters:
-15
+17
 # Counter Values:
-146
+147
+0
+0
 0
 0
 0
@@ -811,7 +1348,7 @@ adamic_map_set
 0
 0
 0
-77
+78
 
 adamic_map_values
 # Func Hash:
@@ -1722,24 +2259,13 @@ adamic_object_assign
 
 adamic_object_callee
 # Func Hash:
-3343417153716418843
+538063672979614702
 # Num Counters:
-14
+3
 # Counter Values:
-500738
+500735
 307
-2607
-2913
-2607
-307
-0
-0
-0
-0
-0
-0
-0
-500738
+500428
 
 adamic_object_check_write
 # Func Hash:
@@ -1773,9 +2299,9 @@ adamic_object_find
 # Num Counters:
 3
 # Counter Values:
-91
-251
-91
+92
+259
+92
 
 adamic_object_free_children
 # Func Hash:
@@ -1787,7 +2313,7 @@ adamic_object_free_children
 1544
 23050
 206652
-2612286
+2612438
 
 adamic_object_freeze
 # Func Hash:
@@ -1869,10 +2395,13 @@ adamic_object_keys
 
 adamic_object_maybe_number
 # Func Hash:
-2894636465357912
+2261123294499154035
 # Num Counters:
-3
+6
 # Counter Values:
+0
+0
+0
 0
 0
 0
@@ -1885,36 +2414,25 @@ adamic_object_new
 # Counter Values:
 208196
 
-adamic_object_new_in
+adamic_object_new_filled_in
 # Func Hash:
-10646524414152443596
+24
 # Num Counters:
-9
+1
 # Counter Values:
 0
-0
-0
-0
-0
-0
-0
-0
+
+adamic_object_new_in
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
 0
 
 adamic_object_optional_find
 # Func Hash:
-13624937255087323049
-# Num Counters:
-4
-# Counter Values:
-0
-0
-0
-0
-
-adamic_object_typeof
-# Func Hash:
-2952352220894112
+3185220155165032138
 # Num Counters:
 5
 # Counter Values:
@@ -1967,7 +2485,61 @@ adamic_output_flush
 
 adamic_panic
 # Func Hash:
+172508241
+# Num Counters:
+3
+# Counter Values:
 0
+0
+0
+
+adamic_parallel_grain
+# Func Hash:
+406188892
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+adamic_parallel_map
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_parallel_map_move
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_parallel_shutdown
+# Func Hash:
+46130503370577
+# Num Counters:
+3
+# Counter Values:
+1
+1
+0
+
+adamic_parallel_threads
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_parallel_workers
+# Func Hash:
+24
 # Num Counters:
 1
 # Counter Values:
@@ -2076,6 +2648,123 @@ adamic_read_text_file
 0
 0
 0
+0
+
+adamic_record_define
+# Func Hash:
+0
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_record_delete
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_record_get
+# Func Hash:
+175973464
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+adamic_record_get_own
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_record_has
+# Func Hash:
+1568
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_record_has_own
+# Func Hash:
+1568
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_record_iterate
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_record_iterator_next
+# Func Hash:
+682419072078936
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+adamic_record_keys
+# Func Hash:
+6618414730642940342
+# Num Counters:
+18
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+adamic_record_new
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_record_set
+# Func Hash:
+42129
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+adamic_record_size
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
 0
 
 adamic_regex_done
@@ -2258,40 +2947,53 @@ adamic_regex_test
 0
 0
 
-adamic_region_end
+adamic_region_contains
 # Func Hash:
-1266941553821713
+13626818157912450162
 # Num Counters:
-4
+5
 # Counter Values:
 0
 0
 0
 0
+0
 
-adamic_release
+adamic_region_end
 # Func Hash:
-2881785071478289
+17348728642094971022
 # Num Counters:
 6
 # Counter Values:
-7024389
-6863141
-3990780
-161248
-7023802
-3990780
+0
+0
+0
+0
+0
+0
 
-adamic_retain
+adamic_release_slow
 # Func Hash:
-702772487256
+2753681
 # Num Counters:
-4
+2
 # Counter Values:
-7807639
-3917262
-7807639
-3917262
+161248
+161248
+
+adamic_retain_slow
+# Func Hash:
+9489124813647189465
+# Num Counters:
+7
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
 
 adamic_set_add_all
 # Func Hash:
@@ -2309,6 +3011,57 @@ adamic_set_values
 # Num Counters:
 4
 # Counter Values:
+0
+0
+0
+0
+
+adamic_share
+# Func Hash:
+14624075382805856442
+# Num Counters:
+44
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
 0
 0
 0
@@ -2341,7 +3094,25 @@ adamic_shift_right_unsigned
 # Counter Values:
 0
 
+adamic_slot_cache_store
+# Func Hash:
+11279078237
+# Num Counters:
+3
+# Counter Values:
+399
+0
+399
+
 adamic_stack_overflow
+# Func Hash:
+0
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_stack_thread_start
 # Func Hash:
 0
 # Num Counters:
@@ -2351,11 +3122,30 @@ adamic_stack_overflow
 
 adamic_start
 # Func Hash:
-0
+5401593345007574845
 # Num Counters:
-1
+20
 # Counter Values:
 1
+3
+0
+0
+0
+0
+0
+0
+0
+0
+64
+0
+60
+0
+62
+60
+63
+62
+11
+31
 
 adamic_static_field
 # Func Hash:
@@ -2365,17 +3155,6 @@ adamic_static_field
 # Counter Values:
 0
 0
-0
-0
-0
-0
-
-adamic_static_union_typeof
-# Func Hash:
-44977422435416
-# Num Counters:
-4
-# Counter Values:
 0
 0
 0
@@ -2446,7 +3225,7 @@ adamic_string_char_code
 # Counter Values:
 41
 0
-40
+41
 40
 41
 1
@@ -2534,10 +3313,10 @@ adamic_string_ends_with
 # Num Counters:
 4
 # Counter Values:
-35360
+35569
 0
-25608
-2983
+25817
+3002
 
 adamic_string_equal
 # Func Hash:
@@ -2545,15 +3324,15 @@ adamic_string_equal
 # Num Counters:
 9
 # Counter Values:
-4526861
+4606929
 0
-4526861
-4526861
-710346
-350294
-325553
-350295
-350294
+4606929
+4606929
+712135
+352033
+327237
+352034
+352033
 
 adamic_string_free_index
 # Func Hash:
@@ -2707,9 +3486,9 @@ adamic_string_last_index_of
 
 adamic_string_locate
 # Func Hash:
-17585742077166845786
+14633616480849653753
 # Num Counters:
-24
+32
 # Counter Values:
 5356
 5356
@@ -2718,21 +3497,29 @@ adamic_string_locate
 5356
 5356
 5356
+5356
+5356
 5053
 5119
 5053
 5356
 5119
+5356
+5356
 162
 237
 162
 303
 237
+303
+303
 1141
 0
 0
 42397
 0
+5356
+5356
 5356
 5356
 
@@ -2772,6 +3559,14 @@ adamic_string_pad
 0
 0
 0
+0
+
+adamic_string_prepare_shared
+# Func Hash:
+0
+# Num Counters:
+1
+# Counter Values:
 0
 
 adamic_string_put
@@ -2827,13 +3622,14 @@ adamic_string_replace
 
 adamic_string_share
 # Func Hash:
-15948354018031587987
+17140552282991163058
 # Num Counters:
-21
+22
 # Counter Values:
 106809
 1
 9
+0
 0
 0
 2185
@@ -2855,15 +3651,16 @@ adamic_string_share
 
 adamic_string_slice
 # Func Hash:
-3000886767724882162
+1503577196885360071
 # Num Counters:
-13
+14
 # Counter Values:
 104704
 104699
 347
 101679
 0
+2678
 2678
 2678
 2678
@@ -2894,7 +3691,7 @@ adamic_string_split
 0
 0
 0
-81794
+82554
 646
 
 adamic_string_starts_with
@@ -2965,21 +3762,29 @@ adamic_string_unit_view
 
 adamic_string_units
 # Func Hash:
-188949178305287256
+8404359069883216575
 # Num Counters:
-4
+10
 # Counter Values:
-5759
-1118
-43000
+131915
+4182
 0
+0
+0
+0
+154327
+0
+0
+506
 
 adamic_string_units_before
 # Func Hash:
-10960638924196788927
+10438114953956573029
 # Num Counters:
-11
+13
 # Counter Values:
+0
+0
 0
 0
 0
@@ -3002,12 +3807,131 @@ adamic_timsort
 0
 0
 
-adamic_uncaught
+adamic_typed_array_check_write
 # Func Hash:
-242114610355356817
+2729105
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+adamic_typed_array_fill
+# Func Hash:
+14177907800
 # Num Counters:
 4
 # Counter Values:
+0
+0
+0
+0
+
+adamic_typed_array_from_numbers
+# Func Hash:
+1160280
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+adamic_typed_array_iterate
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_typed_array_iterator_next
+# Func Hash:
+11245552728
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+adamic_typed_array_length
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_typed_array_new
+# Func Hash:
+17134019040027267001
+# Num Counters:
+7
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+
+adamic_typed_array_set_from
+# Func Hash:
+6138626177386912095
+# Num Counters:
+10
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+adamic_typed_array_set_slow
+# Func Hash:
+0
+# Num Counters:
+1
+# Counter Values:
+0
+
+adamic_typed_array_sort
+# Func Hash:
+9895155930068473801
+# Num Counters:
+7
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+
+adamic_typed_array_subarray
+# Func Hash:
+14184142872
+# Num Counters:
+4
+# Counter Values:
+0
+0
+0
+0
+
+adamic_uncaught
+# Func Hash:
+58167214601361
+# Num Counters:
+5
+# Counter Values:
+0
 0
 0
 0
@@ -3046,10 +3970,15 @@ adamic_union_to_string
 
 adamic_union_typeof
 # Func Hash:
-12361851431543630984
+3272058261502982059
 # Num Counters:
-8
+13
 # Counter Values:
+0
+0
+0
+0
+0
 0
 0
 0
@@ -3130,13 +4059,26 @@ adamic_weak_forget
 631313
 0
 
-adamic_weak_held
+adamic_weak_forget_region
 # Func Hash:
-6350624
+5504377607497328769
 # Num Counters:
-3
+7
 # Counter Values:
 0
+0
+0
+0
+0
+0
+0
+
+adamic_weak_held
+# Func Hash:
+720789116952
+# Num Counters:
+2
+# Counter Values:
 0
 0
 
@@ -3152,7 +4094,7 @@ adamic_weak_of
 
 adamic_weak_target
 # Func Hash:
-406124511
+222164952
 # Num Counters:
 4
 # Counter Values:
@@ -3172,18 +4114,21 @@ adamic_weak_target_present
 
 adamic_write_line
 # Func Hash:
-2754990857015417352
+6632237637448333766
 # Num Counters:
-8
+11
 # Counter Values:
 1
 1
+1
+1
+1
+1
 0
 0
 1
-0
 1
-0
+1
 
 adamic_write_text_file
 # Func Hash:
@@ -3219,13 +4164,49 @@ array.c:adamic_array_at
 171705
 0
 
+array.c:adamic_graph_is
+# Func Hash:
+6350880
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+array.c:adamic_release
+# Func Hash:
+7657928893062362940
+# Num Counters:
+7
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+
+array.c:adamic_retain
+# Func Hash:
+17256814612385316747
+# Num Counters:
+5
+# Counter Values:
+608
+0
+608
+608
+0
+
 array.c:splice_into
 # Func Hash:
-17938693982307419383
+2950338332458583213
 # Num Counters:
-23
+25
 # Counter Values:
-47530
+47527
 0
 0
 0
@@ -3237,14 +4218,316 @@ array.c:splice_into
 0
 0
 0
-47530
 0
-47530
-47530
+47527
+0
+47527
+47527
 0
 0
 0
 0
+0
+0
+0
+0
+
+async.c:abandon
+# Func Hash:
+9026162931033224678
+# Num Counters:
+7
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+
+async.c:adamic_is_shared
+# Func Hash:
+1568
+# Num Counters:
+1
+# Counter Values:
+0
+
+async.c:adamic_release
+# Func Hash:
+7657928893062362940
+# Num Counters:
+7
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+
+async.c:adamic_retain
+# Func Hash:
+17256814612385316747
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
+async.c:adamic_string_known_units
+# Func Hash:
+3693925817817154517
+# Num Counters:
+6
+# Counter Values:
+0
+0
+0
+0
+0
+0
+
+async.c:adamic_string_length
+# Func Hash:
+99168
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+async.c:clear_wait
+# Func Hash:
+0
+# Num Counters:
+1
+# Counter Values:
+0
+
+async.c:drain_jobs
+# Func Hash:
+171974665297
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+async.c:host_complete
+# Func Hash:
+13527250337988691807
+# Num Counters:
+12
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+async.c:host_default_wait
+# Func Hash:
+2989527910495045492
+# Num Counters:
+10
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+async.c:host_default_wake
+# Func Hash:
+5000844924124300072
+# Num Counters:
+9
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+async.c:host_drop
+# Func Hash:
+0
+# Num Counters:
+1
+# Counter Values:
+0
+
+async.c:host_find
+# Func Hash:
+1267358184313944
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+async.c:host_live
+# Func Hash:
+2072
+# Num Counters:
+1
+# Counter Values:
+0
+
+async.c:host_lock
+# Func Hash:
+2753681
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+async.c:host_loop_thread
+# Func Hash:
+2930356502733905
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+async.c:host_pipe_start
+# Func Hash:
+6358752634695338439
+# Num Counters:
+9
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+async.c:host_publish
+# Func Hash:
+176235729
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+async.c:host_settle
+# Func Hash:
+2727673516630986365
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
+async.c:host_shutdown
+# Func Hash:
+4006060085394202414
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
+async.c:host_unlock
+# Func Hash:
+2753681
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+async.c:host_valid_utf8
+# Func Hash:
+17763257451130251551
+# Num Counters:
+21
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+async.c:queue
+# Func Hash:
+176235729
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+async.c:take_cleanup
+# Func Hash:
+704408230892632
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+async.c:unregister
+# Func Hash:
+11006378607697
+# Num Counters:
+3
+# Counter Values:
 0
 0
 0
@@ -3273,6 +4556,27 @@ bitwise.c:to_uint32
 3
 # Counter Values:
 177426
+0
+0
+
+case.c:adamic_is_shared
+# Func Hash:
+1568
+# Num Counters:
+1
+# Counter Values:
+0
+
+case.c:adamic_string_known_units
+# Func Hash:
+3693925817817154517
+# Num Counters:
+6
+# Counter Values:
+0
+0
+0
+0
 0
 0
 
@@ -3458,8 +4762,8 @@ class_inheritance.c:release_field
 # Num Counters:
 5
 # Counter Values:
-2635336
-1414542
+2635488
+1414694
 367043
 1220794
 367043
@@ -3479,6 +4783,20 @@ class_static.c:adamic_object_field
 # Num Counters:
 4
 # Counter Values:
+0
+0
+0
+0
+
+closure.c:adamic_release
+# Func Hash:
+7657928893062362940
+# Num Counters:
+7
+# Counter Values:
+0
+0
+0
 0
 0
 0
@@ -3548,10 +4866,11 @@ dtoa.c:bignum_align
 
 dtoa.c:bignum_assign_bignum
 # Func Hash:
-4752426705
+187824147286738641
 # Num Counters:
-3
+4
 # Counter Values:
+0
 0
 0
 0
@@ -4056,6 +5375,18 @@ exceptions.c:adamic_object_field
 0
 0
 
+exceptions.c:adamic_retain
+# Func Hash:
+17256814612385316747
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
 from_codes.c:adamic_to_uint16
 # Func Hash:
 187543167022474328
@@ -4098,6 +5429,202 @@ from_codes.c:codes_point
 0
 0
 
+graph_regions.c:adamic_graph_header_of
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
+0
+
+graph_regions.c:adamic_graph_is
+# Func Hash:
+6350880
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+graph_regions.c:adamic_release
+# Func Hash:
+7657928893062362940
+# Num Counters:
+7
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+
+graph_regions.c:adamic_retain
+# Func Hash:
+17256814612385316747
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
+graph_regions.c:children
+# Func Hash:
+7191961093511269675
+# Num Counters:
+22
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+graph_regions.c:fail
+# Func Hash:
+0
+# Num Counters:
+1
+# Counter Values:
+0
+
+graph_regions.c:find
+# Func Hash:
+172084560984
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+graph_regions.c:join_owned
+# Func Hash:
+2753681
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+graph_regions.c:member
+# Func Hash:
+1549
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+graph_regions.c:new_region
+# Func Hash:
+175973464
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+graph_regions.c:owner
+# Func Hash:
+2877319379231832
+# Num Counters:
+6
+# Counter Values:
+0
+0
+0
+0
+0
+0
+
+graph_regions.c:region_of
+# Func Hash:
+99167
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+graph_regions.c:release_outside
+# Func Hash:
+18389130358827641404
+# Num Counters:
+6
+# Counter Values:
+0
+0
+0
+0
+0
+0
+
+heap.c:adamic_graph_header_of
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
+0
+
+heap.c:adamic_graph_is
+# Func Hash:
+6350880
+# Num Counters:
+3
+# Counter Values:
+1985329
+1985329
+0
+
+heap.c:allocate_storage
+# Func Hash:
+16108242532474798825
+# Num Counters:
+5
+# Counter Values:
+631313
+630729
+631313
+630729
+0
+
+heap.c:counted_heap
+# Func Hash:
+2877319379231832
+# Num Counters:
+6
+# Counter Values:
+1130280
+0
+13826
+0
+722703
+13826
+
 heap.c:deallocate
 # Func Hash:
 175973905
@@ -4107,55 +5634,90 @@ heap.c:deallocate
 631313
 584
 
-heap.c:free_one
+heap.c:drain_remote
 # Func Hash:
-1520219853690088213
+10257
 # Num Counters:
-17
+2
 # Counter Values:
+682453
+0
+
+heap.c:drop_reference
+# Func Hash:
+12091233425496128070
+# Num Counters:
+11
+# Counter Values:
+1130280
+407577
+0
+0
+719043
 631313
-631313
-115440
-208196
-293289
-3862
-178694
-40
-446
-446
-13902
-13826
 0
 0
 0
 0
 0
 
+heap.c:find_chunk
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
+630844
+
+heap.c:free_one
+# Func Hash:
+2696721
+# Num Counters:
+2
+# Counter Values:
+631313
+0
+
 heap.c:give
+# Func Hash:
+17372585696565206375
+# Num Counters:
+4
+# Counter Values:
+630729
+630729
+0
+0
+
+heap.c:give_local
 # Func Hash:
 4058029466701111919
 # Num Counters:
 6
 # Counter Values:
 630729
-1948
-529
-1012
-897
-483
+1943
+524
+969
+854
+445
+
+heap.c:heap_cleanup_at_exit
+# Func Hash:
+0
+# Num Counters:
+1
+# Counter Values:
+1
 
 heap.c:let_go
 # Func Hash:
-44958115558545
+2753681
 # Num Counters:
-6
+2
 # Counter Values:
-969030
+969032
 470065
-557795
-470065
-561453
-557795
 
 heap.c:list
 # Func Hash:
@@ -4174,22 +5736,30 @@ heap.c:list_chunk
 # Num Counters:
 2
 # Counter Values:
-2492
-1857
+2482
+1852
 
 heap.c:new_chunk
 # Func Hash:
-11146459362087607448
+189231666119119960
 # Num Counters:
-8
+3
 # Counter Values:
-544
-429
-2
+539
+424
+0
+
+heap.c:register_chunk
+# Func Hash:
+8523432168937008393
+# Num Counters:
+6
+# Counter Values:
+115
+0
 1
 0
-2
-2
+1024
 0
 
 heap.c:release_last
@@ -4204,16 +5774,27 @@ heap.c:release_last
 
 heap.c:take
 # Func Hash:
-7021575747712785846
+16139601189730074384
 # Num Counters:
-6
+8
 # Counter Values:
 630729
-544
-305648
-1948
-425267
-1948
+539
+52148
+539
+307917
+1943
+423044
+1943
+
+heap.c:thread_number
+# Func Hash:
+175973464
+# Num Counters:
+2
+# Counter Values:
+630844
+1
 
 heap.c:unlist_chunk
 # Func Hash:
@@ -4221,9 +5802,9 @@ heap.c:unlist_chunk
 # Num Counters:
 3
 # Counter Values:
-2477
+2467
 115
-1821
+1816
 
 ieee754.c:adamic_ieee754_bits
 # Func Hash:
@@ -4295,10 +5876,11 @@ ieee754.c:kernel_cos
 
 ieee754.c:kernel_rem_pio2
 # Func Hash:
-16023491404238104437
+4188983695017904216
 # Num Counters:
-52
+53
 # Counter Values:
+0
 0
 0
 0
@@ -4393,21 +5975,21 @@ input.c:ascii_prefix
 6
 # Counter Values:
 42
-209468
+209515
 1
-133
-134
-133
+127
+128
+127
 
 input.c:decode
 # Func Hash:
-13064180526419785387
+6214698320380733362
 # Num Counters:
 10
 # Counter Values:
 42
 31231
-41
+0
 42
 31231
 31231
@@ -4489,14 +6071,15 @@ input.c:new_string
 
 input.c:read_all
 # Func Hash:
-18248921841823732253
+8125913069316042077
 # Num Counters:
-8
+9
 # Counter Values:
 39
 318
 0
 120
+0
 0
 0
 0
@@ -4510,7 +6093,7 @@ input.c:utf8
 # Counter Values:
 39
 0
-2679
+3049
 0
 0
 0
@@ -4526,11 +6109,19 @@ input.c:write_all
 0
 0
 
-json_stringify.c:adamic_string_char_code_at
+json_stringify.c:adamic_is_shared
 # Func Hash:
-16751073192097028598
+1568
 # Num Counters:
-13
+1
+# Counter Values:
+0
+
+json_stringify.c:adamic_release
+# Func Hash:
+7657928893062362940
+# Num Counters:
+7
 # Counter Values:
 0
 0
@@ -4539,6 +6130,48 @@ json_stringify.c:adamic_string_char_code_at
 0
 0
 0
+
+json_stringify.c:adamic_retain
+# Func Hash:
+17256814612385316747
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
+json_stringify.c:adamic_string_char_code_at
+# Func Hash:
+1708960477629031224
+# Num Counters:
+16
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+json_stringify.c:adamic_string_known_units
+# Func Hash:
+3693925817817154517
+# Num Counters:
+6
+# Counter Values:
 0
 0
 0
@@ -4742,6 +6375,20 @@ json_stringify.c:write_value
 0
 0
 
+library_array.c:adamic_release
+# Func Hash:
+7657928893062362940
+# Num Counters:
+7
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+
 library_array.c:array_search_equal
 # Func Hash:
 1567
@@ -4759,6 +6406,20 @@ library_language.c:array_index
 0
 0
 0
+0
+0
+0
+0
+0
+0
+0
+
+library_math_number.c:adamic_release
+# Func Hash:
+7657928893062362940
+# Num Counters:
+7
+# Counter Values:
 0
 0
 0
@@ -4819,6 +6480,32 @@ library_object.c:adamic_object_field
 0
 0
 
+library_object.c:adamic_release
+# Func Hash:
+7657928893062362940
+# Num Counters:
+7
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+
+library_object.c:adamic_retain
+# Func Hash:
+17256814612385316747
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
 library_object.c:array_index
 # Func Hash:
 18027727293241508309
@@ -4873,23 +6560,10 @@ library_object.c:ordered
 
 main
 # Func Hash:
-9905261038103275169
+24
 # Num Counters:
-14
+1
 # Counter Values:
-1
-0
-0
-1
-0
-0
-0
-1
-1
-39
-1
-0
-39
 1
 
 main.c:adamic_array_at
@@ -4915,1210 +6589,101 @@ main.c:adamic_array_at_integer
 0
 0
 
-main.c:adamic_function_0_contains
+main.c:adamic_function_______typescript_par_Parser_jsxParser_expression_anonymous_9_1ae5388493d08fbd79ee649922abb8ef
 # Func Hash:
-12857623956534471978
+217353622616
 # Num Counters:
-13
+3
 # Counter Values:
 0
 0
 0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
 
-main.c:adamic_function_100_Parser_rootAssignment
+main.c:adamic_function_______typescript_par_Parser_jsxParser_identifier_anonymous_6_b63d56d9381332a934c685fd7e0cd63d
 # Func Hash:
-6485925337431770953
+217353622616
 # Num Counters:
-9
+3
 # Counter Values:
-3366
 0
 0
 0
-3366
-0
-3366
-3115
-3115
 
-main.c:adamic_function_101_Parser_rootExpression
+main.c:adamic_function_______typescript_par_Parser_statements_getAwait_anonymous_25_8e6aaf616c8cb39239a874e67030f8de
 # Func Hash:
-6485925337431770953
+217353622616
 # Num Counters:
-9
+3
 # Counter Values:
-10101
+1442
 0
 0
-0
-10101
-0
-10101
-9333
-9333
 
-main.c:adamic_function_102_Parser_arrow
+main.c:adamic_function_______typescript_par_Parser_statements_getYield_anonymous_27_cc61d441d7f55ed24b1bd6d094be683f
 # Func Hash:
-3673745337780982596
+217353622616
 # Num Counters:
-24
+3
 # Counter Values:
-215
+1442
 0
-0
-215
-215
-0
-0
-215
-0
-215
-0
-215
-0
-215
-237
-0
-17
-72
-0
-215
-0
-215
-0
-215
-
-main.c:adamic_function_103_Parser_returnType
-# Func Hash:
-16043656629282169824
-# Num Counters:
-11
-# Counter Values:
-2493
-0
-0
-2493
-2493
-0
-1229
-2422
-70
-20
 0
 
-main.c:adamic_function_104_Parser_functionExpression
+main.c:adamic_function_______typescript_par_Parser_statements_setAwait_anonymous_26_58cee6da5bd7657ec539a5152eb93d52
 # Func Hash:
-1714814793152811474
-# Num Counters:
-24
-# Counter Values:
-6
-0
-0
-6
-6
-0
-0
-0
-6
-0
-6
-0
-6
-0
-6
-0
-6
-2
-0
-6
-0
-6
-0
-6
-
-main.c:adamic_function_105_Parser_statements
-# Func Hash:
-7524644417855834194
+6959969430069354962
 # Num Counters:
 5
 # Counter Values:
-446
+2884
 0
 0
-446
-446
+0
+2884
 
-main.c:adamic_function_106_Parser_block
+main.c:adamic_function_______typescript_par_Parser_statements_setYield_anonymous_28_766fc06a67198466fbcf7f336e934baf
 # Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-408
-0
-0
-
-main.c:adamic_function_107_Parser_statement
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-0
-0
-0
-
-main.c:adamic_function_108_Parser_semicolon
-# Func Hash:
-3396150353
-# Num Counters:
-3
-# Counter Values:
-0
-0
-0
-
-main.c:adamic_function_109_Parser_classDeclaration
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-0
-0
-0
-
-main.c:adamic_function_110_Parser_peek
-# Func Hash:
-3483864003677110236
-# Num Counters:
-37
-# Counter Values:
-11980
-0
-0
-11980
-11980
-11980
-11980
-11980
-11980
-11980
-11980
-11980
-11980
-11980
-11980
-11980
-0
-11980
-11980
-0
-11980
-11980
-0
-11980
-11980
-0
-11980
-11980
-11980
-0
-11980
-11980
-11980
-0
-11980
-11980
-11980
-
-main.c:adamic_function_111_Parser_optionalChain
-# Func Hash:
-2288091971230941787
-# Num Counters:
-11
-# Counter Values:
-22844
-0
-0
-67
-22777
-22720
-0
-0
-0
-0
-0
-
-main.c:adamic_function_112_Parser_spread
-# Func Hash:
-7524644417855834194
+6959969430069354962
 # Num Counters:
 5
 # Counter Values:
-71
+2884
 0
 0
-71
-71
+0
+2884
 
-main.c:adamic_function_113_Parser_arguments
-# Func Hash:
-588835873220782958
-# Num Counters:
-13
-# Counter Values:
-9304
-0
-0
-0
-9304
-15231
-1189
-23
-8115
-0
-9304
-0
-9304
-
-main.c:adamic_function_114_Parser_suffix
-# Func Hash:
-3654795001983402509
-# Num Counters:
-82
-# Counter Values:
-39101
-0
-0
-39101
-62387
-0
-173
-173
-65
-94
-238
-0
-0
-0
-238
-0
-0
-49099
-238
-59
-45
-13416
-13223
-193
-0
-13223
-0
-13416
-389
-378
-389
-11
-378
-0
-389
-48433
-9220
-9220
-21
-21
-21
-34
-9220
-21
-21
-21
-28
-0
-13992
-9186
-0
-0
-0
-9220
-0
-9220
-0
-9220
-39297
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-196
-196
-196
-196
-23286
-
-main.c:adamic_function_115_Parser_templatePart
-# Func Hash:
-9658390493472635880
-# Num Counters:
-31
-# Counter Values:
-246
-0
-0
-246
-246
-246
-246
-0
-246
-246
-246
-246
-0
-246
-246
-246
-246
-246
-246
-246
-246
-246
-0
-89
-0
-246
-246
-246
-246
-0
-246
-
-main.c:adamic_function_116_Parser_templateType
-# Func Hash:
-12728376845370608593
-# Num Counters:
-11
-# Counter Values:
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-
-main.c:adamic_function_117_Parser_template
-# Func Hash:
-15937084104479679591
-# Num Counters:
-12
-# Counter Values:
-89
-0
-0
-89
-89
-157
-0
-157
-157
-0
-157
-89
-
-main.c:adamic_function_118_Parser_array
-# Func Hash:
-13903674449227230876
-# Num Counters:
-20
-# Counter Values:
-404
-0
-0
-404
-404
-404
-404
-729
-199
-0
-0
-0
-48
-205
-0
-404
-0
-404
-0
-404
-
-main.c:adamic_function_119_Parser_propertyName
-# Func Hash:
-5750249764531745390
-# Num Counters:
-9
-# Counter Values:
-7768
-0
-0
-0
-7705
-63
-17
-17
-17
-
-main.c:adamic_function_11_precedence
-# Func Hash:
-6106711470356490894
-# Num Counters:
-46
-# Counter Values:
-45079
-0
-0
-0
-48
-1716
-2182
-90
-0
-253
-1799
-39313
-38991
-40790
-39313
-40790
-40790
-823
-38168
-38168
-38689
-38168
-38691
-38689
-38692
-38691
-38742
-38692
-38794
-38742
-38886
-38794
-29
-38139
-38139
-38139
-38139
-433
-37872
-37706
-10
-37700
-37696
-37703
-37700
-0
-
-main.c:adamic_function_120_Parser_methodBody
-# Func Hash:
-17634177402374501000
-# Num Counters:
-19
-# Counter Values:
-193
-0
-0
-0
-193
-0
-193
-0
-193
-2
-318
-167
-193
-0
-193
-0
-193
-0
-193
-
-main.c:adamic_function_121_Parser_object
-# Func Hash:
-14250660355355405348
-# Num Counters:
-45
-# Counter Values:
-757
-0
-0
-757
-757
-757
-757
-2400
-250
-2150
-2150
-38
-0
-0
-0
-0
-0
-0
-0
-0
-2110
-2
-1
-1
-1
-1
-0
-0
-0
-0
-0
-2112
-0
-2104
-8
-1427
-1
-1427
-507
-0
-757
-0
-757
-0
-757
-
-main.c:adamic_function_122_Parser_unary
-# Func Hash:
-12699902587886260499
-# Num Counters:
-48
-# Counter Values:
-40412
-0
-0
-40412
-40412
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-1350
-39062
-39062
-39063
-39062
-40366
-39063
-40374
-40366
-40410
-40374
-0
-1350
-1350
-49
-39062
-39013
-39062
-39062
-0
-0
-38926
-38904
-109
-109
-109
-109
-0
-109
-109
-
-main.c:adamic_function_123_Parser_binary
-# Func Hash:
-6779237458431893250
-# Num Counters:
-22
-# Counter Values:
-39013
-0
-0
-39013
-39013
-44983
-0
-44983
-2
-0
-39013
-6633
-663
-663
-519
-5451
-5451
-519
-519
-0
-519
-5970
-
-main.c:adamic_function_124_Parser_assignment
-# Func Hash:
-9616464251332460387
-# Num Counters:
-27
-# Counter Values:
-33777
-0
-0
-16782
-33777
-215
-33562
-33562
-33562
-12533
-487
-487
-487
-0
-487
-0
-487
-137
-0
-487
-0
-487
-32275
-91
-891
-804
-0
-
-main.c:adamic_function_125_Parser_allowInAssignment
-# Func Hash:
-10748350969643342742
-# Num Counters:
-12
-# Counter Values:
-16289
-0
-0
-804
-0
-16289
-0
-16289
-0
-16289
-0
-16289
-
-main.c:adamic_function_126_Parser_allowInExpression
-# Func Hash:
-10889572845127405875
-# Num Counters:
-11
-# Counter Values:
-1276
-0
-0
-0
-1276
-0
-1276
-0
-1276
-0
-1276
-
-main.c:adamic_function_127_Parser_expression
-# Func Hash:
-13288712611314188166
-# Num Counters:
-7
-# Counter Values:
-11377
-0
-0
-11377
-11377
-11381
-11377
-
-main.c:adamic_function_128_Parser_file
-# Func Hash:
-13884951902238416405
-# Num Counters:
-15
-# Counter Values:
-38
-0
-0
-1359
-38
-38
-38
-38
-38
-0
-38
-38
-38
-0
-38
-
-main.c:adamic_function_12_kind
+main.c:adamic_function_______typescript_par__Parser_statements_primary_anonymous_21_79088bd19f3d51b0ceec405fb0a769ae
 # Func Hash:
 217353622616
 # Num Counters:
 3
 # Counter Values:
-175407
+4
 0
 0
 
-main.c:adamic_function_130_ParseNode_new
+main.c:adamic_function_______typescript_par__statements_rootAssignment_anonymous_15_0a3cf134692d6f121aeb011b2de5c47d
 # Func Hash:
-795187203814228893
+217353622616
 # Num Counters:
-41
-# Counter Values:
-171958
-0
-0
-0
-0
-0
-0
-0
-171958
-0
-0
-0
-0
-171958
-0
-0
-171958
-0
-0
-171958
-0
-0
-171958
-0
-171958
-0
-171958
-0
-171958
-0
-171958
-0
-171958
-0
-0
-171958
-0
-171958
-0
-171958
-0
-
-main.c:adamic_function_132_Statements_new
-# Func Hash:
-5582252354971693987
-# Num Counters:
-8
-# Counter Values:
-446
-0
-0
-0
-0
-0
-446
-0
-
-main.c:adamic_function_133_Statements_make
-# Func Hash:
-8812587008312065423
-# Num Counters:
-6
-# Counter Values:
-31037
-0
-0
-31036
-31037
-31037
-
-main.c:adamic_function_134_Statements_type
-# Func Hash:
-9661097633709943590
-# Num Counters:
-7
-# Counter Values:
-489
-0
-0
-0
-0
-489
-489
-
-main.c:adamic_function_135_Statements_block
-# Func Hash:
-7911359952684560346
-# Num Counters:
-13
-# Counter Values:
-4640
-0
-0
-4640
-4640
-4640
-4640
-15377
-15377
-15377
-4640
-4640
-4640
-
-main.c:adamic_function_136_Statements_semicolon
-# Func Hash:
-9781570312070500213
-# Num Counters:
-20
-# Counter Values:
-9401
-0
-0
-9401
-9401
-9401
-9401
-9401
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-
-main.c:adamic_function_137_Statements_variableList
-# Func Hash:
-2463786823319635455
-# Num Counters:
-55
-# Counter Values:
-3198
-0
-0
-3198
-3198
-3198
-3198
-2790
-408
-408
-408
-0
-0
-0
-0
-0
-0
-0
-0
-0
-3198
-3198
-3201
-0
-3201
-3201
-3201
-3201
-3201
-3201
-0
-0
-0
-3201
-3201
-288
-288
-288
-3201
-3201
-2922
-2922
-2922
-2922
-2922
-3201
-3201
-3198
 3
-3
-3198
-3198
-0
-3198
-3198
-
-main.c:adamic_function_138_Statements_lookahead
-# Func Hash:
-9574968261935166017
-# Num Counters:
-45
 # Counter Values:
-664
+3265
 0
 0
-664
-664
-664
-664
-664
-664
-664
-664
-664
-664
-664
-664
-664
-664
-1406
-664
-742
-742
-664
-664
-664
-0
-664
-664
-0
-664
-664
-0
-664
-664
-0
-664
-664
-664
-0
-664
-664
-664
-0
-664
-664
-664
 
-main.c:adamic_function_139_Statements_decorator
+main.c:adamic_function_______typescript_par__statements_rootExpression_anonymous_16_81879e552b482417456c5e2df2e37581
 # Func Hash:
-12668902784175028292
+217353622616
 # Num Counters:
-5
+3
 # Counter Values:
-0
-0
-0
+10084
 0
 0
 
-main.c:adamic_function_13_optionalParameterAhead
-# Func Hash:
-56977948044751832
-# Num Counters:
-9
-# Counter Values:
-10
-0
-0
-10
-10
-10
-10
-10
-10
-
-main.c:adamic_function_140_Statements_canExportName
-# Func Hash:
-16950681034815682517
-# Num Counters:
-11
-# Counter Values:
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-
-main.c:adamic_function_141_Statements_specifiers
-# Func Hash:
-8557309987427269406
-# Num Counters:
-66
-# Counter Values:
-49
-0
-0
-49
-49
-49
-49
-3579
-3579
-3579
-43
-3536
-3536
-3536
-3536
-3536
-3536
-3536
-3536
-3536
-3536
-3536
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-3536
-3536
-3536
-3
-3
-3
-3
-3
-3
-3536
-3536
-3536
-0
-3536
-0
-3536
-3536
-3536
-6
-3530
-3530
-49
-49
-49
-
-main.c:adamic_function_142_Statements_attributes
-# Func Hash:
-18153534174101030622
-# Num Counters:
-9
-# Counter Values:
-0
-0
-0
-0
-0
-0
-0
-0
-0
-
-main.c:adamic_function_143_Statements_attributeBody
+main.c:adamic_function_______typescript_par__statements_ts_Statements_attributeBody_12eb984131bed2a7df0216f8c1a97723
 # Func Hash:
 3946267131946064901
 # Num Counters:
@@ -6162,218 +6727,12 @@ main.c:adamic_function_143_Statements_attributeBody
 0
 0
 
-main.c:adamic_function_144_Statements_importDeclaration
+main.c:adamic_function_______typescript_par__statements_ts_Statements_canExportName_40ffc4b12fc8b780e9b87873d20c75d8
 # Func Hash:
-3844493480183332931
+16950681034815682517
 # Num Counters:
-126
+11
 # Counter Values:
-53
-0
-0
-53
-53
-53
-53
-53
-53
-53
-53
-53
-49
-49
-49
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-53
-53
-53
-49
-49
-49
-53
-0
-0
-0
-0
-53
-0
-0
-0
-53
-53
-4
-4
-4
-4
-4
-4
-4
-4
-4
-53
-53
-0
-53
-53
-53
-53
-53
-53
-53
-53
-53
-53
-53
-0
-
-main.c:adamic_function_145_Statements_exportDeclaration
-# Func Hash:
-9189110144532025630
-# Num Counters:
-84
-# Counter Values:
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
 0
 0
 0
@@ -6386,144 +6745,77 @@ main.c:adamic_function_145_Statements_exportDeclaration
 0
 0
 
-main.c:adamic_function_146_Statements_moduleDeclaration
+main.c:adamic_function_______typescript_par__statements_typeParameters_anonymous_11_2a358b91612044eba50442909006f734
 # Func Hash:
-15176810051457425425
+217353622616
 # Num Counters:
-41
+3
 # Counter Values:
-15
+1698
 0
 0
-15
-15
-15
-15
-0
-0
-0
-0
-0
-15
-15
-0
-0
-0
-0
-0
-0
-0
-0
-0
-15
-15
-15
-15
-15
-15
-15
-139
-139
-139
-15
-15
-15
-15
-15
-0
-15
-15
 
-main.c:adamic_function_147_Statements_exportedClauseAhead
+main.c:adamic_function_______typescript_par__ts_Parser_jsxParser_expect_anonymous_3_5b4842d467a8b1b2126ea69c002997e3
 # Func Hash:
-317284941043837143
+13910631847448
 # Num Counters:
-23
+3
 # Counter Values:
-586
 0
 0
 0
+
+main.c:adamic_function_______typescript_par__ts_Parser_statements_peek_anonymous_17_8e17c5ca199b344a9b1a94960ee975d9
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+6092
+0
+0
+
+main.c:adamic_function_______typescript_par__ts_Parser_statements_token_anonymous_8_30e868904559d7616a6d7da5d960a76b
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+936
+0
+0
+
+main.c:adamic_function_______typescript_par_arser_statements_decorator_anonymous_24_7f4f35af896b5d78e8ef6c4a7320fc7f
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
 0
 0
 0
-0
-0
-0
-0
-0
-0
-0
-586
-586
-586
-586
-586
-586
-586
+
+main.c:adamic_function_______typescript_par_arser_statements_entityName_anonymous_6_f90fa659760afbb9e8b1d26f0de3e2af
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
 39
-39
+0
+0
 
-main.c:adamic_function_148_Statements_functionDeclaration
+main.c:adamic_function_______typescript_par_arser_statements_identifier_anonymous_7_90835d30a8ef9d4776c5ac49328633f3
 # Func Hash:
-11716464392727645259
+217353622616
 # Num Counters:
-52
+3
 # Counter Values:
-1442
+1758
 0
 0
-1442
-1442
-1442
-1442
-0
-0
-0
-1442
-1442
-1442
-1442
-1442
-1442
-1442
-1442
-1442
-1442
-1442
-1442
-1442
-1442
-1442
-1442
-1442
-1442
-1442
-1442
-1442
-1442
-40
-1442
-1442
-3280
-1442
-1442
-1146
-1146
-1146
-1146
-1146
-1442
-1442
-1426
-1442
-1442
-1442
-1442
-1442
-1442
 
-main.c:adamic_function_149_Statements_classDeclaration
+main.c:adamic_function_______typescript_par_atements_ts_Statements_classDeclaration_6157b0a52eee6927fb518b66a92a7c2a
 # Func Hash:
 6863450326383658545
 # Num Counters:
@@ -6784,62 +7076,191 @@ main.c:adamic_function_149_Statements_classDeclaration
 16
 0
 
-main.c:adamic_function_14_arrowAhead
+main.c:adamic_function_______typescript_par_er_jsxParser_typeArguments_anonymous_10_080ff779be548af71f9851f4432a99e8
 # Func Hash:
-8692317516747945880
+217353622616
 # Num Counters:
-48
+3
 # Counter Values:
-33913
 0
 0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-675
-5344
-0
-843
-843
-4033
-3358
-575
-443
-10
-3226
-584
-135
-675
-308
-308
-308
-22
-5
-5
-17
-86
-86
-17
-6
-0
-0
-1
-1
 0
 
-main.c:adamic_function_150_Statements_forStatement
+main.c:adamic_function_______typescript_par_er_statements_propertyName_anonymous_19_c8dabeb574a132f908f7d5ca7cc2bdf4
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+4241
+0
+0
+
+main.c:adamic_function_______typescript_par_er_ts_Parser_jsxParser_kind_anonymous_1_cdbdd0c93b0c656f8f9c57faa8e0d522
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+main.c:adamic_function_______typescript_par_er_ts_Parser_jsxParser_make_anonymous_5_2a62cdb491433c7a01945408852c8218
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+main.c:adamic_function_______typescript_par_er_ts_Parser_jsxParser_next_anonymous_2_9986c89ff7ce5d085e9ee600bb77422e
+# Func Hash:
+13910631847448
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+main.c:adamic_function_______typescript_par_er_ts_Parser_jsxParser_node_anonymous_4_4a8b50f0e0b329cecf0fd39b9bbf732b
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+main.c:adamic_function_______typescript_par_ments_ts_Statements_exportedClauseAhead_2afeee497446d9c82d4cc011304400ea
+# Func Hash:
+317284941043837143
+# Num Counters:
+23
+# Counter Values:
+586
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+586
+586
+586
+586
+586
+586
+586
+39
+39
+
+main.c:adamic_function_______typescript_par_ments_ts_Statements_functionDeclaration_8726fc7b40a5cdb19af9b653557475d1
+# Func Hash:
+11716464392727645259
+# Num Counters:
+52
+# Counter Values:
+1442
+0
+0
+1442
+1442
+1442
+1442
+0
+0
+0
+1442
+1442
+1442
+1442
+1442
+1442
+1442
+1442
+1442
+1442
+1442
+1442
+1442
+1442
+1442
+1442
+1442
+1442
+1442
+1442
+1442
+1442
+40
+1442
+1442
+3280
+1442
+1442
+1146
+1146
+1146
+1146
+1146
+1442
+1442
+1426
+1442
+1442
+1442
+1442
+1442
+1442
+
+main.c:adamic_function_______typescript_par_nts_nextIdentifierSameLine_anonymous_18_5266b5d877f5236f6eb0c53b37cfdf70
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+264
+0
+0
+
+main.c:adamic_function_______typescript_par_parser_ts_Parser_nextIdentifierSameLine_1a65114e3ddf095c1110a21d0fbb0838
+# Func Hash:
+16648889910789503071
+# Num Counters:
+6
+# Counter Values:
+283
+0
+0
+264
+264
+264
+
+main.c:adamic_function_______typescript_par_r_jsxParser_missingGreater_anonymous_11_439ee7b4b4d4f06881074ef7f4ac1a00
+# Func Hash:
+6959969430069354962
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_par_r_statements_ts_Statements_forStatement_031ccdb31b3d882729f5f773cf42a099
 # Func Hash:
 4756080776481466283
 # Num Counters:
@@ -6926,7 +7347,251 @@ main.c:adamic_function_150_Statements_forStatement
 45
 45
 
-main.c:adamic_function_151_Statements_switchStatement
+main.c:adamic_function_______typescript_par_r_statements_ts_Statements_tryStatement_6c7673581ed0a7e4cf89932cde4b3e67
+# Func Hash:
+13681349227302534990
+# Num Counters:
+35
+# Counter Values:
+5
+0
+0
+5
+5
+5
+5
+5
+5
+2
+2
+2
+2
+2
+2
+2
+1
+1
+1
+1
+1
+1
+1
+1
+1
+0
+0
+0
+1
+1
+5
+5
+3
+3
+3
+
+main.c:adamic_function_______typescript_par_r_statements_ts_Statements_variableList_6eee09a7d09369325f6473d11ccbb46f
+# Func Hash:
+2463786823319635455
+# Num Counters:
+55
+# Counter Values:
+3198
+0
+0
+3198
+3198
+3198
+3198
+2790
+408
+408
+408
+0
+0
+0
+0
+0
+0
+0
+0
+0
+3198
+3198
+3201
+0
+3201
+3201
+3201
+3201
+3201
+3201
+0
+0
+0
+3201
+3201
+288
+288
+288
+3201
+3201
+2922
+2922
+2922
+2922
+2922
+3201
+3201
+3198
+3
+3
+3198
+3198
+0
+3198
+3198
+
+main.c:adamic_function_______typescript_par_r_statements_typeArguments_anonymous_10_dcdc42ccc271295bd473ea707c1d81cd
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+4
+0
+0
+
+main.c:adamic_function_______typescript_par_r_ts_Parser_jsxParser_token_anonymous_7_e4904e780dc91c3adf85bd3ddf913e69
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+main.c:adamic_function_______typescript_par_r_ts_Parser_statements_kind_anonymous_1_fb1b31b0e260895f8001915d73262d3d
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+356584
+0
+0
+
+main.c:adamic_function_______typescript_par_r_ts_Parser_statements_make_anonymous_5_d51eae6216002f4657ebbe75c6803526
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+31037
+0
+0
+
+main.c:adamic_function_______typescript_par_r_ts_Parser_statements_next_anonymous_2_b33d984046ae8ef9d44431427e70c142
+# Func Hash:
+13910631847448
+# Num Counters:
+3
+# Counter Values:
+31029
+0
+0
+
+main.c:adamic_function_______typescript_par_r_ts_Parser_statements_node_anonymous_4_392464be158b51886c1c14c95a102be0
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+14126
+0
+0
+
+main.c:adamic_function_______typescript_par_r_ts_Parser_statements_type_anonymous_9_eab0db9f46f1133f70c8ce6396f90ef7
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+489
+0
+0
+
+main.c:adamic_function_______typescript_par_rser_statements_methodBody_anonymous_20_a28264ec39c8ddae2ff20930924ce940
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+185
+0
+0
+
+main.c:adamic_function_______typescript_par_rser_statements_parameters_anonymous_12_a8124360fd804e9e258e0aaa86324310
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+1442
+0
+0
+
+main.c:adamic_function_______typescript_par_rser_statements_returnType_anonymous_13_7dea39575fb87855241fe3def393a161
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+1146
+0
+0
+
+main.c:adamic_function_______typescript_par_s_Parser_statements_suffix_anonymous_22_8c3b1a71dcae792cda4373b6c9416993
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+4
+0
+0
+
+main.c:adamic_function_______typescript_par_ser_jsxParser_typeTrailing_anonymous_12_e3111664faaff3cd534cb212a9004d6c
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+main.c:adamic_function_______typescript_par_ser_statements_bindingName_anonymous_14_f1a50149d9d1a0001c4b76bedbe5a4d6
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+3202
+0
+0
+
+main.c:adamic_function_______typescript_par_ser_statements_typeLiteral_anonymous_23_2176cc33063f29fa6e01cddebd858b4f
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+188
+0
+0
+
+main.c:adamic_function_______typescript_par_tatements_ts_Statements_switchStatement_f6ef7dfd63aed02b2e1c71f49cd47a4e
 # Func Hash:
 6912103638800901003
 # Num Counters:
@@ -6978,49 +7643,2887 @@ main.c:adamic_function_151_Statements_switchStatement
 175
 175
 
-main.c:adamic_function_152_Statements_tryStatement
+main.c:adamic_function_______typescript_par_tements_ts_Statements_exportDeclaration_728ef885b7c5fa1f8fca4c18d4cb6655
 # Func Hash:
-13681349227302534990
+9189110144532025630
 # Num Counters:
-35
+84
 # Counter Values:
-5
-0
-0
-5
-5
-5
-5
-5
-5
-2
-2
-2
-2
-2
-2
-2
-1
-1
-1
-1
-1
-1
-1
-1
-1
 0
 0
 0
-1
-1
-5
-5
-3
-3
-3
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
 
-main.c:adamic_function_153_Statements_statement
+main.c:adamic_function_______typescript_par_tements_ts_Statements_importDeclaration_9313d035eccaafc2c3164a695757ed8b
+# Func Hash:
+3844493480183332931
+# Num Counters:
+126
+# Counter Values:
+53
+0
+0
+53
+53
+53
+53
+53
+53
+53
+53
+53
+49
+49
+49
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+53
+53
+53
+49
+49
+49
+53
+0
+0
+0
+0
+53
+0
+0
+0
+53
+53
+4
+4
+4
+4
+4
+4
+4
+4
+4
+53
+53
+0
+53
+53
+53
+53
+53
+53
+53
+53
+53
+53
+53
+0
+
+main.c:adamic_function_______typescript_par_tements_ts_Statements_moduleDeclaration_0cff39f84739fa0805809432391de540
+# Func Hash:
+15176810051457425425
+# Num Counters:
+41
+# Counter Values:
+15
+0
+0
+15
+15
+15
+15
+0
+0
+0
+0
+0
+15
+15
+0
+0
+0
+0
+0
+0
+0
+0
+0
+15
+15
+15
+15
+15
+15
+15
+139
+139
+139
+15
+15
+15
+15
+15
+0
+15
+15
+
+main.c:adamic_function_______typescript_par_ts_Parser_jsxParser_literal_anonymous_8_d474ee98e2fe169ef19b170e4b42d0b0
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+main.c:adamic_function_______typescript_par_ts_Parser_statements_depth_anonymous_31_410e7a653ce967c8b138f091ff3b1f87
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+4
+0
+0
+
+main.c:adamic_function_______typescript_par_ts_Parser_statements_expect_anonymous_3_18762397b1138e7c8361beef7d06fba3
+# Func Hash:
+13910631847448
+# Num Counters:
+3
+# Counter Values:
+19300
+0
+0
+
+main.c:adamic_function_______typescript_par_ts_Parser_statements_getIn_anonymous_29_890f630cc919f9ff9254ccde31ccf393
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+1654
+0
+0
+
+main.c:adamic_function_______typescript_par_ts_Parser_statements_setIn_anonymous_30_0c926bc86be0f66b2dbf396af34631a9
+# Func Hash:
+6959969430069354962
+# Num Counters:
+5
+# Counter Values:
+3308
+0
+0
+0
+3308
+
+main.c:adamic_function_______typescript_parser_grammar_ts_precedence_50836491840fcd695ce91ba14e2bb8e9
+# Func Hash:
+6106711470356490894
+# Num Counters:
+46
+# Counter Values:
+45079
+0
+0
+0
+48
+1716
+2182
+90
+0
+253
+1799
+39313
+38991
+40790
+39313
+40790
+40790
+823
+38168
+38168
+38689
+38168
+38691
+38689
+38692
+38691
+38742
+38692
+38794
+38742
+38886
+38794
+29
+38139
+38139
+38139
+38139
+433
+37872
+37706
+10
+37700
+37696
+37703
+37700
+0
+
+main.c:adamic_function_______typescript_parser_jsx_ts_Jsx_allocate_e3906bd1bf3e4d86e8b7b3d9869bc138
+# Func Hash:
+5582252354971693987
+# Num Counters:
+8
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_jsx_ts_Jsx_attributes_a1e5f0b68a63ba31aa6aa8b6a9b578aa
+# Func Hash:
+4275178746516636872
+# Num Counters:
+48
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_jsx_ts_Jsx_element_1a6be9caa90f4c79b8d51f0b2c136506
+# Func Hash:
+9754364885477065293
+# Num Counters:
+70
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_jsx_ts_Jsx_expression_c2b017560b7240daa823d77fb5d8e9e5
+# Func Hash:
+2259306291780716632
+# Num Counters:
+28
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_jsx_ts_Jsx_finishGreater_5d4f52e8ca9fc3e5ca8a008428aab607
+# Func Hash:
+14318737546668055541
+# Num Counters:
+12
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_jsx_ts_Jsx_identifier_40f33f96a748aa60ba5ce88ae41098bb
+# Func Hash:
+12393932626118441666
+# Num Counters:
+20
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_jsx_ts_Jsx_make_cdd67fd46a086bee3c7871f6b9782a24
+# Func Hash:
+8812587008312065423
+# Num Counters:
+6
+# Counter Values:
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_jsx_ts_Jsx_name_f4d3134df3a7fed709123229f1ab3a3d
+# Func Hash:
+16045585444490353130
+# Num Counters:
+23
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_jsx_ts_Jsx_tagKey_7032424adef4b0f48e97a1d1a5c46fa4
+# Func Hash:
+17966408261433853803
+# Num Counters:
+8
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_jsx_ts_Jsx_text_2cf96812dd7ee34a489ec575a72a8f25
+# Func Hash:
+14787451128432422208
+# Num Counters:
+27
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_lookahead_ts_Speculation_allocate_9b886a56d5deb71d8c72b3aa7d48f4c3
+# Func Hash:
+12756878131463449598
+# Num Counters:
+41
+# Counter Values:
+34096
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+34096
+0
+34096
+0
+0
+34096
+0
+0
+34096
+0
+0
+34096
+0
+34096
+0
+34096
+0
+34096
+0
+0
+34096
+0
+0
+34096
+0
+34096
+
+main.c:adamic_function_______typescript_parser_lookahead_ts_Speculation_next_a0d00a8651ef403b39da0d5276655948
+# Func Hash:
+9783773618388351886
+# Num Counters:
+8
+# Counter Values:
+6083
+0
+0
+6083
+0
+6083
+6083
+6083
+
+main.c:adamic_function_______typescript_parser_lookahead_ts_Speculation_prepare_11041ee58ab81744cf1cd19fc20b08e3
+# Func Hash:
+16357938772506080738
+# Num Counters:
+33
+# Counter Values:
+6083
+0
+0
+6083
+6082
+6082
+1
+1
+1
+1
+1
+1
+0
+0
+6083
+63
+4
+0
+4
+4
+4
+3
+0
+6083
+4
+6083
+58
+0
+58
+6083
+59
+0
+59
+
+main.c:adamic_function_______typescript_parser_lookahead_ts_Speculation_restore_684241cb6edd4abaccd7a7dad3331a94
+# Func Hash:
+14031788907400177617
+# Num Counters:
+32
+# Counter Values:
+34096
+0
+0
+34096
+34096
+0
+34096
+34096
+34096
+0
+34096
+34096
+34096
+0
+34096
+34096
+34096
+0
+34096
+34096
+34096
+34096
+0
+34096
+34096
+34096
+34096
+0
+34096
+34096
+34096
+34096
+
+main.c:adamic_function_______typescript_parser_lookahead_ts_arrowAhead_2cbe0a7587ea60c631c90f90cee20f37
+# Func Hash:
+8692317516747945880
+# Num Counters:
+48
+# Counter Values:
+33913
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+675
+5344
+0
+843
+843
+4033
+3358
+575
+443
+10
+3226
+584
+135
+675
+308
+308
+308
+22
+5
+5
+17
+86
+86
+17
+6
+0
+0
+1
+1
+0
+
+main.c:adamic_function_______typescript_parser_lookahead_ts_jsxArrowAhead_14d9e5583d021dcb30ed97c97142ea17
+# Func Hash:
+16245577461820606345
+# Num Counters:
+10
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_lookahead_ts_kind_c485589d0df30b7d181ad70c4a8d5b59
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+175407
+0
+0
+
+main.c:adamic_function_______typescript_parser_lookahead_ts_optionalParameterAhead_db399ce28da1883811e4e8ffd5bb0a97
+# Func Hash:
+56977948044751832
+# Num Counters:
+9
+# Counter Values:
+10
+0
+0
+10
+10
+10
+10
+10
+10
+
+main.c:adamic_function_______typescript_parser_lookahead_ts_typeArgumentsAhead_563a40f9fa3c18899930dad0a82e41df
+# Func Hash:
+17089984516743535311
+# Num Counters:
+82
+# Counter Values:
+173
+0
+0
+747
+0
+35
+34
+713
+1
+0
+713
+8
+0
+34
+0
+10
+10
+10
+10
+10
+10
+10
+10
+10
+8
+8
+32
+32
+34
+32
+32
+1
+1
+1
+1
+174
+70
+69
+0
+670
+665
+665
+657
+28
+69
+69
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+
+main.c:adamic_function_______typescript_parser_nodes_ts_ParseNode_allocate_15e299597e5be80fb0dd10185a8fb89c
+# Func Hash:
+795187203814228893
+# Num Counters:
+41
+# Counter Values:
+171958
+0
+0
+0
+0
+0
+0
+0
+171958
+0
+0
+0
+0
+171958
+0
+0
+171958
+0
+0
+171958
+0
+0
+171958
+0
+171958
+0
+171958
+0
+171958
+0
+171958
+0
+171958
+0
+0
+171958
+0
+171958
+0
+171958
+0
+
+main.c:adamic_function_______typescript_parser_nodes_ts_printTree_32c1f5409ade9209969d60c97446fc56
+# Func Hash:
+2007393062952051015
+# Num Counters:
+16
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_nodes_ts_written_775ef2d0bc6950f321a5fd8403a5d8c6
+# Func Hash:
+14642668650043072862
+# Num Counters:
+10
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_allocate_ca51f91919570aae23db461af01d3d97
+# Func Hash:
+17911250313847095597
+# Num Counters:
+59
+# Counter Values:
+38
+0
+0
+0
+0
+0
+38
+0
+0
+0
+0
+0
+0
+38
+0
+0
+0
+0
+0
+0
+38
+0
+38
+0
+38
+0
+38
+0
+38
+0
+38
+0
+38
+0
+38
+38
+0
+38
+0
+0
+0
+0
+0
+0
+38
+38
+38
+38
+38
+38
+38
+38
+0
+38
+38
+38
+0
+38
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_allowInAssignment_f31852e7181e8b2e05ec96c5d4189e30
+# Func Hash:
+10748350969643342742
+# Num Counters:
+12
+# Counter Values:
+16289
+0
+0
+804
+0
+16289
+0
+16289
+0
+16289
+0
+16289
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_allowInExpression_4eae67d30e2459549cb36e56c4f0c031
+# Func Hash:
+10889572845127405875
+# Num Counters:
+11
+# Counter Values:
+1276
+0
+0
+0
+1276
+0
+1276
+0
+1276
+0
+1276
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_arguments_021c2d90b1ff4cdfffb4ef31e00fbeb5
+# Func Hash:
+588835873220782958
+# Num Counters:
+13
+# Counter Values:
+9304
+0
+0
+0
+9304
+15231
+1189
+23
+8115
+0
+9304
+0
+9304
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_array_bef28506c799e29e03d2cab98a912cdf
+# Func Hash:
+13903674449227230876
+# Num Counters:
+20
+# Counter Values:
+404
+0
+0
+404
+404
+404
+404
+729
+199
+0
+0
+0
+48
+205
+0
+404
+0
+404
+0
+404
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_arrow_5e2dd8f0e6c3eb09eb49e440b52733c4
+# Func Hash:
+3673745337780982596
+# Num Counters:
+24
+# Counter Values:
+215
+0
+0
+215
+215
+0
+0
+215
+0
+215
+0
+215
+0
+215
+237
+0
+17
+72
+0
+215
+0
+215
+0
+215
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_assignment_a85e6f0a64a4c4f803b4dd3aa58747a6
+# Func Hash:
+17614942504463822630
+# Num Counters:
+30
+# Counter Values:
+33777
+0
+0
+16782
+0
+0
+33777
+33777
+215
+33562
+33562
+33562
+12533
+487
+487
+487
+0
+487
+0
+487
+137
+0
+487
+0
+487
+32275
+91
+891
+804
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_binary_260fe8b885033bfc0bf814bb64877cf5
+# Func Hash:
+6779237458431893250
+# Num Counters:
+22
+# Counter Values:
+39013
+0
+0
+39013
+39013
+44983
+0
+44983
+2
+0
+39013
+6633
+663
+663
+519
+5451
+5451
+519
+519
+0
+519
+5970
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_bindingIdentifier_322ffde0cd92191ee739859c81579417
+# Func Hash:
+920893037038587160
+# Num Counters:
+6
+# Counter Values:
+291
+0
+0
+26
+7
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_bindingName_573ef738e4111ee831d186d66c00ee9e
+# Func Hash:
+7031700216069137229
+# Num Counters:
+22
+# Counter Values:
+7658
+0
+0
+7646
+7469
+189
+189
+391
+366
+2
+389
+389
+1
+4
+364
+364
+10
+3
+187
+202
+177
+177
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_block_7e1c4ec8dd3cf54e6a9c6bc9c83621b3
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+408
+0
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_classDeclaration_0c9691faffd404eda5428a259d5e6227
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_decorator_6b2d30923de6975c7c4c0e2d5ff3af30
+# Func Hash:
+5294226535295925955
+# Num Counters:
+9
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_docTypes_0b59af6c4959dc44651ed6409a38dfbf
+# Func Hash:
+245249111085897399
+# Num Counters:
+22
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_entityName_704106368c1bc4ed07fc227efc087e2b
+# Func Hash:
+13288712611314188166
+# Num Counters:
+7
+# Counter Values:
+5840
+0
+0
+5840
+5840
+5947
+5840
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_expect_d97bc94c5daab47197bdb252466046cb
+# Func Hash:
+8288764230549405242
+# Num Counters:
+6
+# Counter Values:
+47031
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_expression_efc9e48eb453d0ba4ac3124cfceb7b82
+# Func Hash:
+13288712611314188166
+# Num Counters:
+7
+# Counter Values:
+11377
+0
+0
+11377
+11377
+11381
+11377
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_file_3c2f677357a4363dbaac198b0c37bd08
+# Func Hash:
+13884951902238416405
+# Num Counters:
+15
+# Counter Values:
+38
+0
+0
+1359
+38
+38
+38
+38
+38
+0
+38
+38
+38
+0
+38
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_functionExpression_e4913a82878a76841fab3dbd510ed93e
+# Func Hash:
+1714814793152811474
+# Num Counters:
+24
+# Counter Values:
+6
+0
+0
+6
+6
+0
+0
+0
+6
+0
+6
+0
+6
+0
+6
+0
+6
+2
+0
+6
+0
+6
+0
+6
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_identifier_9b02947ae40119ca1e676789316b1d99
+# Func Hash:
+4486681807141641153
+# Num Counters:
+10
+# Counter Values:
+70157
+0
+0
+70157
+70157
+70157
+70157
+0
+70157
+70157
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_importType_8d523126316939814e6578f18db91427
+# Func Hash:
+2097760428499745466
+# Num Counters:
+17
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_indexSignatureAhead_8c64928f9a1ef0fc9babe5086ea24f02
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_jsxParser_cc19bfc4f9cddfcde4eb97d22e4c4157
+# Func Hash:
+7524644417855834194
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_kind_fddbda68f59524670af77191254c474e
+# Func Hash:
+7524644417855834194
+# Num Counters:
+5
+# Counter Values:
+1738298
+0
+0
+1738298
+1738298
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_literal_5864f98b10c614963ff65aced69fff29
+# Func Hash:
+10223697294790304969
+# Num Counters:
+31
+# Counter Values:
+2035
+0
+0
+2035
+2035
+2035
+2035
+0
+2035
+2035
+3
+3
+3
+3
+3
+3
+3
+0
+3
+3
+2035
+2035
+1102
+22
+3
+0
+2035
+2035
+2035
+0
+2035
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_make_a027307f58f5d12b7374a92cc25bacf6
+# Func Hash:
+7228806441429891315
+# Num Counters:
+8
+# Counter Values:
+171958
+0
+0
+84238
+171958
+171958
+171958
+171958
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_mappedAhead_9ac87e82f842b1f56992c5fafd1a64aa
+# Func Hash:
+308027454179697836
+# Num Counters:
+7
+# Counter Values:
+104
+0
+0
+104
+0
+24
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_mappedType_5d49568ab9c4f489858cea3ab8f0ba81
+# Func Hash:
+10499162082241989308
+# Num Counters:
+16
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_mark_121d8f985725470127713d0425633173
+# Func Hash:
+5889541618939257176
+# Num Counters:
+16
+# Counter Values:
+395
+0
+0
+395
+395
+395
+395
+395
+395
+395
+395
+395
+395
+395
+395
+395
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_methodBody_939285ce1c2dfdfd3db65fbbfb702d23
+# Func Hash:
+17634177402374501000
+# Num Counters:
+19
+# Counter Values:
+193
+0
+0
+0
+193
+0
+193
+0
+193
+2
+318
+167
+193
+0
+193
+0
+193
+0
+193
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_next_b8ca64ac20eb935034b2001c9a03f145
+# Func Hash:
+890280438192088
+# Num Counters:
+4
+# Counter Values:
+217795
+0
+0
+217795
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_node_b24a00d2de77f99b72e9902079f4e6d3
+# Func Hash:
+14592021027261977605
+# Num Counters:
+6
+# Counter Values:
+425969
+0
+0
+425969
+0
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_object_6997d11d64b6c8caa28f169d2d462621
+# Func Hash:
+14250660355355405348
+# Num Counters:
+45
+# Counter Values:
+757
+0
+0
+757
+757
+757
+757
+2400
+250
+2150
+2150
+38
+0
+0
+0
+0
+0
+0
+0
+0
+2110
+2
+1
+1
+1
+1
+0
+0
+0
+0
+0
+2112
+0
+2104
+8
+1427
+1
+1427
+507
+0
+757
+0
+757
+0
+757
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_optionalChain_853fd2c4bdaec0c0d8e229c4e156dc32
+# Func Hash:
+2288091971230941787
+# Num Counters:
+11
+# Counter Values:
+22844
+0
+0
+67
+22777
+22720
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_parameters_c06e35167b7216664ea965a26d1574fb
+# Func Hash:
+7268285815490632920
+# Num Counters:
+21
+# Counter Values:
+2236
+0
+0
+4830
+408
+4422
+4422
+4422
+4422
+4441
+4441
+4433
+4433
+4422
+4422
+0
+6
+289
+4180
+98
+1828
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_peek_d2f147908d60fb3d5d71f14bba5fbdcf
+# Func Hash:
+3483864003677110236
+# Num Counters:
+37
+# Counter Values:
+11977
+0
+0
+11977
+11977
+11977
+11977
+11977
+11977
+11977
+11977
+11977
+11977
+11977
+11977
+11977
+0
+11977
+11977
+0
+11977
+11977
+0
+11977
+11977
+0
+11977
+11977
+11977
+0
+11977
+11977
+11977
+0
+11977
+11977
+11977
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_primary_94fbf92f0341e01f383c3f3b4a265128
+# Func Hash:
+3117963546593318138
+# Num Counters:
+68
+# Counter Values:
+39101
+0
+0
+39101
+39101
+0
+0
+0
+0
+0
+1892
+37212
+37209
+38193
+37212
+38193
+38193
+22
+37187
+37187
+22
+1347
+36329
+35840
+36771
+36329
+36773
+36771
+36777
+36773
+0
+0
+0
+0
+0
+0
+0
+0
+404
+757
+89
+84
+0
+0
+0
+0
+84
+44
+84
+50
+0
+84
+0
+84
+0
+0
+0
+0
+0
+0
+6
+0
+0
+730
+1685
+33770
+0
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_propertyName_2ab01926c631fd21ba77f55422c6af78
+# Func Hash:
+5750249764531745390
+# Num Counters:
+9
+# Counter Values:
+7768
+0
+0
+0
+7705
+63
+17
+17
+17
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_returnType_8552a8089fb8f076df12e5c64b9440a9
+# Func Hash:
+16043656629282169824
+# Num Counters:
+11
+# Counter Values:
+2493
+0
+0
+2493
+2493
+0
+1229
+2422
+70
+20
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_rewind_a610d4c25deae4da7a958b261cba9187
+# Func Hash:
+13366090040718763694
+# Num Counters:
+26
+# Counter Values:
+395
+0
+0
+395
+0
+395
+395
+0
+395
+395
+0
+395
+395
+0
+395
+395
+395
+0
+395
+395
+395
+0
+395
+395
+395
+395
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_rootAssignment_48e028351456cd90fb5829c319792b9b
+# Func Hash:
+6485925337431770953
+# Num Counters:
+9
+# Counter Values:
+3366
+0
+0
+0
+3366
+0
+3366
+3115
+3115
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_rootExpression_d5249d6287d25fb0bb69d2e4b0446041
+# Func Hash:
+6485925337431770953
+# Num Counters:
+9
+# Counter Values:
+10101
+0
+0
+0
+10101
+0
+10101
+9333
+9333
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_semicolon_5ba67be1078de96cbf5c16f4834239dd
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_spread_4d18b8269214741ce8fbadd2b3f42095
+# Func Hash:
+7524644417855834194
+# Num Counters:
+5
+# Counter Values:
+71
+0
+0
+71
+71
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_statement_456c555b139a043c91c2db4004b21f42
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_statements_12722c9c07f24a679f854ee5032f0495
+# Func Hash:
+7524644417855834194
+# Num Counters:
+5
+# Counter Values:
+446
+0
+0
+446
+446
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_suffix_fa721b6806c62e5f11595cb9cb7f6719
+# Func Hash:
+3654795001983402509
+# Num Counters:
+82
+# Counter Values:
+39101
+0
+0
+39101
+62387
+0
+173
+173
+65
+94
+238
+0
+0
+0
+238
+0
+0
+49099
+238
+59
+45
+13416
+13223
+193
+0
+13223
+0
+13416
+389
+378
+389
+11
+378
+0
+389
+48433
+9220
+9220
+21
+21
+21
+34
+9220
+21
+21
+21
+28
+0
+13992
+9186
+0
+0
+0
+9220
+0
+9220
+0
+9220
+39297
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+196
+196
+196
+196
+23286
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_templatePart_a068fe7027cd8c49716f6a9a78f2e830
+# Func Hash:
+9658390493472635880
+# Num Counters:
+31
+# Counter Values:
+246
+0
+0
+246
+246
+246
+246
+0
+246
+246
+246
+246
+0
+246
+246
+246
+246
+246
+246
+246
+246
+246
+0
+89
+0
+246
+246
+246
+246
+0
+246
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_templateType_9aa37e2d8cbdb0b1cbb5113fb1960e27
+# Func Hash:
+12728376845370608593
+# Num Counters:
+11
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_template_1c6497be9b71bafc0a0d4c6d07a16bbd
+# Func Hash:
+15937084104479679591
+# Num Counters:
+12
+# Counter Values:
+89
+0
+0
+89
+89
+157
+0
+157
+157
+0
+157
+89
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_token_740700567108ff91c5bbbb8ac455453d
+# Func Hash:
+8435723934519183193
+# Num Counters:
+9
+# Counter Values:
+15223
+0
+0
+15223
+15223
+15223
+15223
+0
+15223
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_tupleNameAhead_8579dfb5ebba90437b3156dcc45f9a1c
+# Func Hash:
+5628969369235101325
+# Num Counters:
+5
+# Counter Values:
+8
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_typeArguments_8e832e6daf8692ac0f2759c24fc3d3cf
+# Func Hash:
+17023664744802165959
+# Num Counters:
+8
+# Counter Values:
+241
+0
+0
+316
+0
+241
+0
+241
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_typeLiteral_8ee47d82003069c4c1436315dd9ed34b
+# Func Hash:
+4168192859242102320
+# Num Counters:
+42
+# Counter Values:
+292
+0
+0
+292
+292
+1343
+292
+1051
+1051
+200
+15
+0
+0
+0
+200
+1051
+1051
+0
+0
+0
+0
+0
+0
+0
+0
+0
+1048
+4
+0
+0
+0
+0
+0
+265
+784
+270
+270
+3
+434
+1051
+0
+1051
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_typeParameters_487481a98152323b252d5f46e7ec75eb
+# Func Hash:
+1910452903438027968
+# Num Counters:
+15
+# Counter Values:
+2492
+0
+0
+2447
+51
+0
+51
+51
+51
+51
+51
+51
+17
+1
+45
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_type_83ccdbf02767d073ee16e17642691c90
+# Func Hash:
+8300621277748978803
+# Num Counters:
+150
+# Counter Values:
+9650
+0
+0
+2091
+2091
+9650
+9650
+9641
+9
+9
+40
+40
+9
+31
+9
+9638
+9365
+276
+0
+276
+276
+0
+9365
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+9365
+4
+0
+4
+3
+3
+0
+0
+9361
+0
+0
+0
+0
+0
+9225
+136
+136
+110
+147
+0
+104
+0
+4
+8
+0
+8
+8
+0
+2
+0
+0
+0
+0
+4
+9059
+9059
+9059
+9059
+9034
+9028
+90
+32
+85
+85
+64
+64
+59
+59
+27
+27
+8992
+8982
+8470
+7461
+6862
+6862
+6862
+6035
+6032
+6031
+3230
+2996
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+172
+172
+172
+172
+218
+10530
+9650
+9650
+0
+0
+0
+0
+0
+0
+880
+880
+880
+9650
+0
+0
+16
+864
+880
+10743
+9428
+9397
+1315
+253
+2362
+2300
+1093
+1062
+8048
+8048
+8048
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_parser_ts_Parser_unary_3057395ded1b1382bafc952ae6380831
+# Func Hash:
+3321021537286793235
+# Num Counters:
+50
+# Counter Values:
+40412
+0
+0
+40412
+40412
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+1350
+39062
+39062
+39063
+39062
+40366
+39063
+40374
+40366
+40410
+40374
+0
+1350
+1350
+49
+39062
+39013
+39062
+39062
+0
+0
+38926
+38904
+109
+109
+109
+109
+0
+109
+109
+
+main.c:adamic_function_______typescript_parser_statements_ts_Statements_allocate_04637b69a60d44f1110bd6c47e7699ba
+# Func Hash:
+5582252354971693987
+# Num Counters:
+8
+# Counter Values:
+446
+0
+0
+0
+0
+0
+446
+0
+
+main.c:adamic_function_______typescript_parser_statements_ts_Statements_attributes_6aaec1bfe4962f916d157d7d523fd23a
+# Func Hash:
+18153534174101030622
+# Num Counters:
+9
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_statements_ts_Statements_block_ca226e9ce8ba528562d156383ddc78f6
+# Func Hash:
+7911359952684560346
+# Num Counters:
+13
+# Counter Values:
+4640
+0
+0
+4640
+4640
+4640
+4640
+15377
+15377
+15377
+4640
+4640
+4640
+
+main.c:adamic_function_______typescript_parser_statements_ts_Statements_decorator_a97609a37b623197df4a1699a1a7765b
+# Func Hash:
+12668902784175028292
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_statements_ts_Statements_lookahead_37cc244cd4663d81c81d5924723c4f03
+# Func Hash:
+9574968261935166017
+# Num Counters:
+45
+# Counter Values:
+664
+0
+0
+664
+664
+664
+664
+664
+664
+664
+664
+664
+664
+664
+664
+664
+664
+1406
+664
+742
+742
+664
+664
+664
+0
+664
+664
+0
+664
+664
+0
+664
+664
+0
+664
+664
+664
+0
+664
+664
+664
+0
+664
+664
+664
+
+main.c:adamic_function_______typescript_parser_statements_ts_Statements_make_3c7a735361a6a6c7e3d4039d6ba6ecd3
+# Func Hash:
+8812587008312065423
+# Num Counters:
+6
+# Counter Values:
+31037
+0
+0
+31036
+31037
+31037
+
+main.c:adamic_function_______typescript_parser_statements_ts_Statements_semicolon_a9f81ff461a230a138116a5257409b79
+# Func Hash:
+6770702869108173436
+# Num Counters:
+20
+# Counter Values:
+9401
+0
+0
+9401
+9401
+9401
+9401
+9401
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_parser_statements_ts_Statements_specifiers_68839d61b42142b3a5c192d41c77cd37
+# Func Hash:
+8557309987427269406
+# Num Counters:
+66
+# Counter Values:
+49
+0
+0
+49
+49
+49
+49
+3579
+3579
+3579
+43
+3536
+3536
+3536
+3536
+3536
+3536
+3536
+3536
+3536
+3536
+3536
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+3536
+3536
+3536
+3
+3
+3
+3
+3
+3
+3536
+3536
+3536
+0
+3536
+0
+3536
+3536
+3536
+6
+3530
+3530
+49
+49
+49
+
+main.c:adamic_function_______typescript_parser_statements_ts_Statements_statement_0ce123e9e400072b52391b312cb58b2d
 # Func Hash:
 12115375608690795917
 # Num Counters:
@@ -7181,9 +10684,9 @@ main.c:adamic_function_153_Statements_statement
 5
 4398
 4398
-2382
-2382
-2382
+2379
+2379
+2379
 4
 4
 4
@@ -7382,683 +10885,245 @@ main.c:adamic_function_153_Statements_statement
 2571
 2571
 
-main.c:adamic_function_155_closure
+main.c:adamic_function_______typescript_parser_statements_ts_Statements_type_280825a5598c80826e174dda43cbd716
 # Func Hash:
-217353622616
+9661097633709943590
 # Num Counters:
-3
-# Counter Values:
-356584
-0
-0
-
-main.c:adamic_function_156_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-31029
-0
-0
-
-main.c:adamic_function_157_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-19300
-0
-0
-
-main.c:adamic_function_158_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-14126
-0
-0
-
-main.c:adamic_function_159_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-31037
-0
-0
-
-main.c:adamic_function_15_typeArgumentsAhead
-# Func Hash:
-17089984516743535311
-# Num Counters:
-82
-# Counter Values:
-173
-0
-0
-747
-0
-35
-34
-713
-1
-0
-713
-8
-0
-34
-0
-10
-10
-10
-10
-10
-10
-10
-10
-10
-8
-8
-32
-32
-34
-32
-32
-1
-1
-1
-1
-174
-70
-69
-0
-670
-665
-665
-657
-28
-69
-69
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-4
-
-main.c:adamic_function_160_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-39
-0
-0
-
-main.c:adamic_function_161_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-1758
-0
-0
-
-main.c:adamic_function_162_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-936
-0
-0
-
-main.c:adamic_function_163_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
+7
 # Counter Values:
 489
 0
 0
+0
+0
+489
+489
 
-main.c:adamic_function_164_closure
+main.c:adamic_function_______typescript_sca_canner_ts_Scanner_scanJsxAttributeValue_de3150915df0acdb57a93d44d72a8253
 # Func Hash:
-217353622616
+847293699896293770
 # Num Counters:
-3
-# Counter Values:
-4
-0
-0
-
-main.c:adamic_function_165_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-1698
-0
-0
-
-main.c:adamic_function_166_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-1442
-0
-0
-
-main.c:adamic_function_167_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-1146
-0
-0
-
-main.c:adamic_function_168_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-3202
-0
-0
-
-main.c:adamic_function_169_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-3265
-0
-0
-
-main.c:adamic_function_16_Speculation_new
-# Func Hash:
-12756878131463449598
-# Num Counters:
-41
-# Counter Values:
-34096
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-34096
-0
-34096
-0
-0
-34096
-0
-0
-34096
-0
-0
-34096
-0
-34096
-0
-34096
-0
-34096
-0
-0
-34096
-0
-0
-34096
-0
-34096
-
-main.c:adamic_function_170_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-10084
-0
-0
-
-main.c:adamic_function_171_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-6095
-0
-0
-
-main.c:adamic_function_172_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-264
-0
-0
-
-main.c:adamic_function_173_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-4241
-0
-0
-
-main.c:adamic_function_174_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-185
-0
-0
-
-main.c:adamic_function_175_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-4
-0
-0
-
-main.c:adamic_function_176_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-4
-0
-0
-
-main.c:adamic_function_177_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-188
-0
-0
-
-main.c:adamic_function_178_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
+45
 # Counter Values:
 0
 0
 0
-
-main.c:adamic_function_179_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-1442
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
 0
 0
 
-main.c:adamic_function_17_Speculation_prepare
+main.c:adamic_function_______typescript_sca_er_scanner_ts_Scanner_scanJsxIdentifier_bc2c0d161a58fdeff49d3aee316807a1
 # Func Hash:
-5483686097755495473
+12239919134643851734
 # Num Counters:
-33
+26
 # Counter Values:
-6083
 0
 0
-6083
-6082
-6082
-1
-1
-1
-1
-1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_scanner_characters_ts_contains_10392bdeb2db2aaafb0d2e7d83184d00
+# Func Hash:
+12857623956534471978
+# Num Counters:
+13
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_scanner_characters_ts_digit_9d3f08dd2384702446208f5f858a7939
+# Func Hash:
+11695845049145653858
+# Num Counters:
+12
+# Counter Values:
+1437
+0
+0
+501
+904
+501
+0
+211
+0
+0
 1
 0
-0
-6083
-63
-4
-0
-4
-4
-4
-3
-0
-6083
-4
-6083
-58
-0
-58
-6083
-59
-0
-59
 
-main.c:adamic_function_180_closure
+main.c:adamic_function_______typescript_scanner_characters_ts_isIdentifierPart_58a188b93cf6d8c2e6b9de51b256e824
 # Func Hash:
-15614139510181097257
+3914441029477226425
 # Num Counters:
-5
+9
 # Counter Values:
-2884
+980774
 0
 0
-0
-2884
-
-main.c:adamic_function_181_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-1442
+98874
+16601
+311
+98563
 0
 0
 
-main.c:adamic_function_182_closure
-# Func Hash:
-15614139510181097257
-# Num Counters:
-5
-# Counter Values:
-2884
-0
-0
-0
-2884
-
-main.c:adamic_function_183_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-1654
-0
-0
-
-main.c:adamic_function_184_closure
-# Func Hash:
-15614139510181097257
-# Num Counters:
-5
-# Counter Values:
-3308
-0
-0
-0
-3308
-
-main.c:adamic_function_185_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-4
-0
-0
-
-main.c:adamic_function_186_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-0
-0
-0
-
-main.c:adamic_function_187_Diagnostic_new
-# Func Hash:
-18361213455685926249
-# Num Counters:
-43
-# Counter Values:
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-
-main.c:adamic_function_189_Edit_new
-# Func Hash:
-6694119772449418585
-# Num Counters:
-21
-# Counter Values:
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-
-main.c:adamic_function_18_Speculation_next
-# Func Hash:
-18331087387998605952
-# Num Counters:
-8
-# Counter Values:
-6083
-0
-0
-6083
-0
-6083
-6083
-6083
-
-main.c:adamic_function_191_closure
-# Func Hash:
-13910631847960
-# Num Counters:
-3
-# Counter Values:
-0
-0
-0
-
-main.c:adamic_function_192_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-0
-0
-0
-
-main.c:adamic_function_19_Speculation_restore
-# Func Hash:
-14779282443347660022
-# Num Counters:
-32
-# Counter Values:
-34096
-0
-0
-34096
-34096
-0
-34096
-34096
-34096
-0
-34096
-34096
-34096
-0
-34096
-34096
-34096
-0
-34096
-34096
-34096
-34096
-0
-34096
-34096
-34096
-34096
-0
-34096
-34096
-34096
-34096
-
-main.c:adamic_function_1_isIdentifierStart
+main.c:adamic_function_______typescript_scanner_characters_ts_isIdentifierStart_c061cab3e5ad1c2c433e6dadd88899ba
 # Func Hash:
 138111879689261063
 # Num Counters:
 14
 # Counter Values:
-1301917
+1301914
 0
 0
-1187834
-1301397
-1301915
-1301397
+1187831
+1301394
+1301912
+1301394
 1101752
 113563
 982332
 964899
-222935
+222932
 0
 0
 
-main.c:adamic_function_21_Scanner_new
+main.c:adamic_function_______typescript_scanner_characters_ts_isLineBreak_ead5230f271765ef5629402855848f2e
+# Func Hash:
+10017411958714411436
+# Num Counters:
+9
+# Counter Values:
+556113
+0
+0
+476700
+476700
+476700
+476700
+517760
+476700
+
+main.c:adamic_function_______typescript_scanner_characters_ts_isSpace_75f8996289d8e698631a06680edfbd8d
+# Func Hash:
+3578450691395836066
+# Num Counters:
+26
+# Counter Values:
+659613
+0
+0
+301933
+301933
+301933
+301933
+301933
+301933
+301933
+301933
+301933
+301933
+301933
+301933
+301933
+301933
+301933
+301933
+301933
+301933
+301933
+301933
+301933
+0
+0
+
+main.c:adamic_function_______typescript_scanner_scanner_ts_Scanner_advance_6cb4b507cbb9a15ae68951e88d4bbdb0
+# Func Hash:
+11139645623773714086
+# Num Counters:
+7
+# Counter Values:
+1412631
+0
+0
+1412631
+0
+1412631
+0
+
+main.c:adamic_function_______typescript_scanner_scanner_ts_Scanner_allocate_4b3ac25226d75290b774711d3204835c
 # Func Hash:
 6813554145976680741
 # Num Counters:
@@ -8083,13 +11148,13 @@ main.c:adamic_function_21_Scanner_new
 76
 0
 
-main.c:adamic_function_222_collect
+main.c:adamic_function_______typescript_scanner_scanner_ts_Scanner_bigint_ab47f0615e7a84f71597dd671f200b86
 # Func Hash:
-1014005523654099245
+14910569101671993560
 # Num Counters:
-22
+29
 # Counter Values:
-38
+936
 0
 0
 0
@@ -8104,149 +11169,33 @@ main.c:adamic_function_222_collect
 0
 0
 0
-38
-38
-171958
 0
 0
-38
-38
+0
+0
+0
+0
+0
+936
+0
+936
+936
+0
+936
+936
 
-main.c:adamic_function_223_fixed
-# Func Hash:
-15280032236798438112
-# Num Counters:
-19
-# Counter Values:
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-
-main.c:adamic_function_224_run
-# Func Hash:
-1359850486726058518
-# Num Counters:
-68
-# Counter Values:
-38
-0
-0
-0
-0
-0
-38
-0
-38
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-38
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-
-main.c:adamic_function_225_closure
-# Func Hash:
-217353622616
-# Num Counters:
-3
-# Counter Values:
-171958
-0
-0
-
-main.c:adamic_function_226_closure
-# Func Hash:
-7524644417855834194
-# Num Counters:
-5
-# Counter Values:
-0
-0
-0
-0
-0
-
-main.c:adamic_function_22_Scanner_code
+main.c:adamic_function_______typescript_scanner_scanner_ts_Scanner_code_d5c2c30c3cdee25d3fedebba8ec7f50a
 # Func Hash:
 4760848531019822357
 # Num Counters:
 13
 # Counter Values:
-1849290
+1849275
 0
 0
-101560
-1849290
-1849290
+101551
+1849275
+1849275
 0
 0
 0
@@ -8255,23 +11204,9 @@ main.c:adamic_function_22_Scanner_code
 0
 38
 
-main.c:adamic_function_23_Scanner_advance
+main.c:adamic_function_______typescript_scanner_scanner_ts_Scanner_error_2c85bd9457493b24e2034b42b118683f
 # Func Hash:
-7509760512872805915
-# Num Counters:
-7
-# Counter Values:
-1412634
-0
-0
-1412634
-0
-1412634
-0
-
-main.c:adamic_function_24_Scanner_error
-# Func Hash:
-14578512869070666267
+13557515533594048679
 # Num Counters:
 7
 # Counter Values:
@@ -8283,95 +11218,7 @@ main.c:adamic_function_24_Scanner_error
 0
 0
 
-main.c:adamic_function_25_Scanner_fragment
-# Func Hash:
-5130156526852680015
-# Num Counters:
-33
-# Counter Values:
-936
-0
-0
-5
-0
-1437
-0
-501
-501
-501
-0
-460
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-501
-0
-501
-0
-0
-0
-0
-0
-0
-0
-
-main.c:adamic_function_26_Scanner_unicode
-# Func Hash:
-17947358529467704490
-# Num Counters:
-41
-# Counter Values:
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-
-main.c:adamic_function_27_Scanner_escape
+main.c:adamic_function_______typescript_scanner_scanner_ts_Scanner_escape_518e47b9a6fb079b3a2a52e6ac43e0ea
 # Func Hash:
 18083832078798535029
 # Num Counters:
@@ -8456,7 +11303,47 @@ main.c:adamic_function_27_Scanner_escape
 27
 27
 
-main.c:adamic_function_28_Scanner_identifier
+main.c:adamic_function_______typescript_scanner_scanner_ts_Scanner_fragment_944b6f28ce20b929e8b2a3929a9a75c9
+# Func Hash:
+5130156526852680015
+# Num Counters:
+33
+# Counter Values:
+936
+0
+0
+5
+0
+1437
+0
+501
+501
+501
+0
+460
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+501
+0
+501
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_scanner_scanner_ts_Scanner_identifier_e843b5bcf9171c4eff21c7f98b6b4a4c
 # Func Hash:
 4924160638457621153
 # Num Counters:
@@ -8495,196 +11382,9 @@ main.c:adamic_function_28_Scanner_identifier
 98541
 98541
 
-main.c:adamic_function_29_Scanner_string
+main.c:adamic_function_______typescript_scanner_scanner_ts_Scanner_number_08b3dc1db531010a0b0b6b2275fc00dc
 # Func Hash:
-7851689292162337863
-# Num Counters:
-51
-# Counter Values:
-1140
-0
-0
-1140
-1140
-6
-6
-0
-6
-1140
-0
-1140
-1140
-11578
-0
-11578
-11578
-11578
-11578
-1140
-11578
-10438
-11578
-11578
-11578
-11578
-1140
-1140
-1140
-1140
-0
-1140
-0
-0
-0
-33
-33
-33
-33
-10405
-0
-10405
-0
-1140
-1140
-1116
-0
-0
-0
-1140
-1140
-
-main.c:adamic_function_2_isIdentifierPart
-# Func Hash:
-3914441029477226425
-# Num Counters:
-9
-# Counter Values:
-980774
-0
-0
-98874
-16601
-311
-98563
-0
-0
-
-main.c:adamic_function_30_Scanner_template
-# Func Hash:
-5915663128037553760
-# Num Counters:
-70
-# Counter Values:
-257
-0
-0
-257
-257
-257
-0
-257
-257
-1963
-0
-1963
-1963
-1963
-1963
-95
-1963
-1868
-95
-95
-95
-95
-0
-95
-0
-0
-0
-0
-95
-3
-95
-165
-165
-165
-162
-162
-162
-162
-0
-162
-0
-162
-93
-162
-17
-17
-17
-17
-18
-18
-18
-18
-0
-18
-18
-18
-18
-18
-0
-18
-18
-1671
-0
-1671
-245
-0
-0
-0
-257
-257
-
-main.c:adamic_function_31_Scanner_bigint
-# Func Hash:
-32355394164845183
-# Num Counters:
-29
-# Counter Values:
-936
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-936
-0
-936
-936
-0
-936
-936
-
-main.c:adamic_function_32_Scanner_number
-# Func Hash:
-15249883853889663565
+15872659363813433806
 # Num Counters:
 112
 # Counter Values:
@@ -8801,31 +11501,301 @@ main.c:adamic_function_32_Scanner_number
 0
 0
 
-main.c:adamic_function_33_Scanner_scan
+main.c:adamic_function_______typescript_scanner_scanner_ts_Scanner_punctuation_740d5ba316e3eb42a61739c97de2d539
+# Func Hash:
+10272916237489988688
+# Num Counters:
+67
+# Counter Values:
+123127
+0
+0
+0
+1891
+324
+324
+0
+4
+0
+1907
+1591
+0
+10
+1591
+15
+0
+0
+0
+0
+464
+82
+136
+257
+12
+35
+14901
+132
+132
+26
+0
+539
+32
+0
+54
+32
+7391
+1517
+1517
+0
+1164
+578
+1751
+62
+11
+51
+252
+218
+252
+0
+0
+3086
+1137
+8
+50
+1129
+8
+0
+16378
+16866
+2206
+1758
+7833
+6396
+11948
+11105
+15819
+
+main.c:adamic_function_______typescript_scanner_scanner_ts_Scanner_rescanGreater_5f9dbcd747a244080565e58b95b15896
+# Func Hash:
+1544933660030392835
+# Num Counters:
+22
+# Counter Values:
+45052
+0
+0
+45052
+44843
+788
+0
+788
+788
+788
+0
+0
+579
+209
+0
+0
+209
+209
+209
+0
+209
+579
+
+main.c:adamic_function_______typescript_scanner_scanner_ts_Scanner_rescanSlash_7756f95fa384ff133859b260e5e85ce4
+# Func Hash:
+10751851659791070335
+# Num Counters:
+81
+# Counter Values:
+22
+0
+0
+22
+0
+0
+0
+22
+430
+0
+430
+430
+0
+430
+430
+430
+430
+0
+0
+0
+50
+22
+26
+22
+13
+50
+12
+22
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+29
+29
+29
+29
+29
+22
+7
+7
+0
+0
+22
+22
+22
+0
+22
+22
+0
+22
+22
+
+main.c:adamic_function_______typescript_scanner_scanner_ts_Scanner_rescanTemplate_04201aef19ccb29ceeff211e16eaa805
+# Func Hash:
+16125713321855097268
+# Num Counters:
+6
+# Counter Values:
+161
+0
+0
+161
+0
+161
+
+main.c:adamic_function_______typescript_scanner_scanner_ts_Scanner_scanJsx_b94ca41c81d621d3a1b12f57bb624c0f
+# Func Hash:
+3050712477521133088
+# Num Counters:
+59
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_______typescript_scanner_scanner_ts_Scanner_scan_19f8a20e75d7ef5a550ac871b1a3f969
 # Func Hash:
 4217448461907754259
 # Num Counters:
 264
 # Counter Values:
-223881
+223878
 0
 0
-223881
+223878
 0
-223881
+223878
 0
-223881
-659657
+223878
+659651
 0
-659657
+659651
 0
-659657
+659651
 38
 0
 38
 38
 38
-357683
+357680
 74156
 74156
 0
@@ -8925,15 +11895,15 @@ main.c:adamic_function_33_Scanner_scan
 0
 215332
 212246
-222726
+222723
 215332
-223304
-222726
-11597
-11597
-11597
-11597
-11597
+223301
+222723
+11594
+11594
+11594
+11594
+11594
 0
 0
 0
@@ -8987,14 +11957,14 @@ main.c:adamic_function_33_Scanner_scan
 0
 0
 1140
-223837
-222703
+223834
+222700
 1140
 96
 96
-154078
+154075
 936
-221671
+221668
 14901
 14768
 936
@@ -9033,14 +12003,14 @@ main.c:adamic_function_33_Scanner_scan
 0
 0
 0
-123130
-123130
+123127
+123127
 98541
 98541
 0
 98541
-74026
-24515
+73971
+24570
 0
 98541
 98541
@@ -9055,232 +12025,163 @@ main.c:adamic_function_33_Scanner_scan
 0
 0
 0
-123130
-123130
+123127
+123127
 0
-123130
-0
-0
-123130
-123130
+123127
 0
 0
+123127
+123127
 0
 0
 0
 0
 0
-435776
+0
+0
+435773
 
-main.c:adamic_function_34_Scanner_punctuation
+main.c:adamic_function_______typescript_scanner_scanner_ts_Scanner_string_22d8fbd7e9ca3e61fa361285a7444c6f
 # Func Hash:
-10272916237489988688
+15056156046553993906
 # Num Counters:
-67
-# Counter Values:
-123130
-0
-0
-0
-1891
-324
-324
-0
-4
-0
-1907
-1591
-0
-10
-1591
-15
-0
-0
-0
-0
-464
-82
-136
-257
-12
-35
-14901
-132
-132
-26
-0
-539
-32
-0
-54
-32
-7394
-1517
-1517
-0
-1164
-578
-1751
-62
-11
 51
-252
-218
-252
-0
-0
-3086
-1137
-8
-50
-1129
-8
-0
-16378
-16866
-2206
-1758
-7833
-6396
-11948
-11105
-15819
-
-main.c:adamic_function_35_Scanner_rescanGreater
-# Func Hash:
-332599811414087915
-# Num Counters:
-22
 # Counter Values:
-45052
+1140
 0
 0
-45052
-44843
-788
-0
-788
-788
-788
-0
-0
-579
-209
-0
-0
-209
-209
-209
-0
-209
-579
-
-main.c:adamic_function_36_Scanner_rescanTemplate
-# Func Hash:
-2585429719195929942
-# Num Counters:
+1140
+1140
 6
-# Counter Values:
-161
+6
+0
+6
+1140
+0
+1140
+1140
+11578
+0
+11578
+11578
+11578
+11578
+1140
+11578
+10438
+11578
+11578
+11578
+11578
+1140
+1140
+1140
+1140
+0
+1140
 0
 0
-161
 0
-161
+33
+33
+33
+33
+10405
+0
+10405
+0
+1140
+1140
+1116
+0
+0
+0
+1140
+1140
 
-main.c:adamic_function_37_Scanner_rescanSlash
+main.c:adamic_function_______typescript_scanner_scanner_ts_Scanner_template_9fad291e90078f3ecc0c9ebc495588cd
 # Func Hash:
-17161529762743490803
+3384450680404296293
 # Num Counters:
-81
+70
 # Counter Values:
-22
+257
 0
 0
-22
+257
+257
+257
 0
+257
+257
+1963
 0
+1963
+1963
+1963
+1963
+95
+1963
+1868
+95
+95
+95
+95
 0
-22
-430
-0
-430
-430
-0
-430
-430
-430
-430
-0
-0
-0
-50
-22
-26
-22
-13
-50
-12
-22
+95
 0
 0
 0
 0
+95
+3
+95
+165
+165
+165
+162
+162
+162
+162
+0
+162
+0
+162
+93
+162
+17
+17
+17
+17
+18
+18
+18
+18
+0
+18
+18
+18
+18
+18
+0
+18
+18
+1671
+0
+1671
+245
 0
 0
 0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-29
-29
-29
-29
-29
-22
-7
-7
-0
-0
-22
-22
-22
-0
-22
-22
-0
-22
-22
+257
+257
 
-main.c:adamic_function_38_Scanner_scanJsx
+main.c:adamic_function_______typescript_scanner_scanner_ts_Scanner_unicode_83d6b294927ea3d6e8cefd01a2967ed4
 # Func Hash:
-3050712477521133088
+17947358529467704490
 # Num Counters:
-59
+41
 # Counter Values:
 0
 0
@@ -9323,61 +12224,41 @@ main.c:adamic_function_38_Scanner_scanJsx
 0
 0
 0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
 
-main.c:adamic_function_3_isLineBreak
+main.c:adamic_function_______typescript_scanner_scanner_ts_decimalDigits_7734c1c4a3ec839edc707002bd0d71b6
 # Func Hash:
-10017411958714411436
-# Num Counters:
-9
-# Counter Values:
-556119
-0
-0
-476706
-476706
-476706
-476706
-517766
-476706
-
-main.c:adamic_function_40_lines
-# Func Hash:
-12914265173607501779
+7723869545677767058
 # Num Counters:
 12
 # Counter Values:
-38
 0
 0
-1666096
-38
-38230
-38230
 0
-1627828
-1627828
-1627828
-1627828
+0
+0
+0
+0
+0
+0
+0
+0
+0
 
-main.c:adamic_function_43_Context_new
+main.c:adamic_function_______typescript_scanner_scanner_ts_numberValue_5a946950977424baf97499009e7b80a4
+# Func Hash:
+9867145757197930993
+# Num Counters:
+7
+# Counter Values:
+936
+0
+0
+0
+5
+0
+0
+
+main.c:adamic_function_context_a_Context_allocate_6cf21bf275698e36dd8f516cb21c57ae
 # Func Hash:
 13739586324340341309
 # Num Counters:
@@ -9426,7 +12307,126 @@ main.c:adamic_function_43_Context_new
 38
 0
 
-main.c:adamic_function_44_Context_line
+main.c:adamic_function_context_a_Context_arguments_6fdb483cdd9122429b83eac6c3d2663b
+# Func Hash:
+9777865952196218429
+# Num Counters:
+4
+# Counter Values:
+0
+0
+0
+0
+
+main.c:adamic_function_context_a_Context_child_20ba6c9714023acc8cd70fbd89e0a188
+# Func Hash:
+7484870185997006540
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
+main.c:adamic_function_context_a_Context_children_anonymous_1_ea763e3d075d8ebcbb00d361b1bf31e3
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+main.c:adamic_function_context_a_Context_children_f8c3512dbf133c0c1298610ce6540b7e
+# Func Hash:
+14796494370754646458
+# Num Counters:
+6
+# Counter Values:
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_context_a_Context_edit_d86e0f56c10e55cccd3d97ce39d58e6c
+# Func Hash:
+890280438192088
+# Num Counters:
+4
+# Counter Values:
+0
+0
+0
+0
+
+main.c:adamic_function_context_a_Context_enabled_a96e7d5ddd3654790059058664d9aec1
+# Func Hash:
+12129927862078076390
+# Num Counters:
+4
+# Counter Values:
+0
+0
+0
+0
+
+main.c:adamic_function_context_a_Context_extendsClass_anonymous_1_a2df144512c99ca307e54e54f20ca4d2
+# Func Hash:
+217353622616
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+main.c:adamic_function_context_a_Context_extendsClass_bab2e7901a3e5f0820c3c629c4643b72
+# Func Hash:
+11287296627435839264
+# Num Counters:
+6
+# Counter Values:
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_context_a_Context_initializer_d9addfef56708edbfd1132c5cee6ab57
+# Func Hash:
+17554079727463542742
+# Num Counters:
+9
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_context_a_Context_kind_c59c423a30caa21de900164ebe900607
+# Func Hash:
+16638224510606012744
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
+main.c:adamic_function_context_a_Context_line_6d84f5f7785b1b546e083b67a1d91d05
 # Func Hash:
 4256599374945355519
 # Num Counters:
@@ -9441,54 +12441,39 @@ main.c:adamic_function_44_Context_line
 0
 0
 
-main.c:adamic_function_45_Context_node
+main.c:adamic_function_context_a_Context_mapParents_5d00bb760f173615fd0f22a0cf8cd08a
 # Func Hash:
-890280438192088
+56977948041917528
 # Num Counters:
 4
 # Counter Values:
 171705
 0
 0
-171705
+171667
 
-main.c:adamic_function_46_Context_child
+main.c:adamic_function_context_a_Context_markReported_78006a442551e1466876b5c499483d43
 # Func Hash:
-7484870185997006540
+217353622616
 # Num Counters:
-5
+3
+# Counter Values:
+0
+0
+0
+
+main.c:adamic_function_context_a_Context_memberName_042a395af48850a2631880bff0cc9601
+# Func Hash:
+4356355222189105894
+# Num Counters:
+4
 # Counter Values:
 0
 0
 0
 0
-0
 
-main.c:adamic_function_47_Context_parent
-# Func Hash:
-12449749346723844692
-# Num Counters:
-5
-# Counter Values:
-0
-0
-0
-0
-0
-
-main.c:adamic_function_48_Context_kind
-# Func Hash:
-16638224510606012744
-# Num Counters:
-5
-# Counter Values:
-0
-0
-0
-0
-0
-
-main.c:adamic_function_49_Context_children
+main.c:adamic_function_context_a_Context_members_1e1aa23f98f6b54a3140e16bfdce1b3e
 # Func Hash:
 14796494370754646458
 # Num Counters:
@@ -9501,132 +12486,9 @@ main.c:adamic_function_49_Context_children
 0
 0
 
-main.c:adamic_function_4_isSpace
+main.c:adamic_function_context_a_Context_members_anonymous_1_e21a1d87ba9619e4dc0caa36ae5cbbdd
 # Func Hash:
-3578450691395836066
-# Num Counters:
-26
-# Counter Values:
-659619
-0
-0
-301936
-301936
-301936
-301936
-301936
-301936
-301936
-301936
-301936
-301936
-301936
-301936
-301936
-301936
-301936
-301936
-301936
-301936
-301936
-301936
-301936
-0
-0
-
-main.c:adamic_function_50_Context_scanAt
-# Func Hash:
-6203864178330231790
-# Num Counters:
-7
-# Counter Values:
-0
-0
-0
-0
-0
-0
-0
-
-main.c:adamic_function_51_Context_scanStart
-# Func Hash:
-7524644417855834194
-# Num Counters:
-5
-# Counter Values:
-0
-0
-0
-0
-0
-
-main.c:adamic_function_52_Context_scanEnd
-# Func Hash:
-7524644417855834194
-# Num Counters:
-5
-# Counter Values:
-0
-0
-0
-0
-0
-
-main.c:adamic_function_53_Context_scanKind
-# Func Hash:
-7524644417855834194
-# Num Counters:
-5
-# Counter Values:
-0
-0
-0
-0
-0
-
-main.c:adamic_function_54_Context_start
-# Func Hash:
-2613404894766355518
-# Num Counters:
-10
-# Counter Values:
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-
-main.c:adamic_function_55_Context_raw
-# Func Hash:
-890280438192088
-# Num Counters:
-4
-# Counter Values:
-0
-0
-0
-0
-
-main.c:adamic_function_56_Context_unwrap
-# Func Hash:
-10836736389082667449
-# Num Counters:
-5
-# Counter Values:
-0
-0
-0
-0
-0
-
-main.c:adamic_function_57_Context_markReported
-# Func Hash:
-3396150353
+13910631847960
 # Num Counters:
 3
 # Counter Values:
@@ -9634,88 +12496,7 @@ main.c:adamic_function_57_Context_markReported
 0
 0
 
-main.c:adamic_function_58_Context_enabled
-# Func Hash:
-12129927862078076390
-# Num Counters:
-4
-# Counter Values:
-0
-0
-0
-0
-
-main.c:adamic_function_59_Context_report
-# Func Hash:
-15888197873693676553
-# Num Counters:
-8
-# Counter Values:
-0
-0
-0
-0
-0
-0
-0
-0
-
-main.c:adamic_function_5_digit
-# Func Hash:
-11695845049145653858
-# Num Counters:
-12
-# Counter Values:
-1437
-0
-0
-501
-904
-501
-0
-211
-0
-0
-1
-0
-
-main.c:adamic_function_60_Context_range
-# Func Hash:
-5318083777180600934
-# Num Counters:
-7
-# Counter Values:
-0
-0
-0
-0
-0
-0
-0
-
-main.c:adamic_function_61_Context_edit
-# Func Hash:
-890280438192088
-# Num Counters:
-4
-# Counter Values:
-0
-0
-0
-0
-
-main.c:adamic_function_62_Context_mapParents
-# Func Hash:
-890280438154961
-# Num Counters:
-4
-# Counter Values:
-171705
-0
-0
-171667
-
-main.c:adamic_function_63_Context_name
+main.c:adamic_function_context_a_Context_name_f5fb95259000bea723703f85aafaf6a3
 # Func Hash:
 6503237834506879057
 # Num Counters:
@@ -9734,42 +12515,30 @@ main.c:adamic_function_63_Context_name
 0
 0
 
-main.c:adamic_function_64_Context_memberName
+main.c:adamic_function_context_a_Context_node_b0770f3c4d03b347201630b336071c33
 # Func Hash:
-4356355222189105894
+890280438192088
 # Num Counters:
 4
 # Counter Values:
+171705
 0
 0
-0
-0
+171705
 
-main.c:adamic_function_65_Context_members
+main.c:adamic_function_context_a_Context_parent_26a402203e67f274b56ea4c2eaa12e2c
 # Func Hash:
-14796494370754646458
+12449749346723844692
 # Num Counters:
-6
+5
 # Counter Values:
 0
 0
 0
 0
 0
-0
 
-main.c:adamic_function_66_Context_arguments
-# Func Hash:
-9777865952196218429
-# Num Counters:
-4
-# Counter Values:
-0
-0
-0
-0
-
-main.c:adamic_function_67_Context_property
+main.c:adamic_function_context_a_Context_property_05e11e899c3c213f1e9f4c27b81d7e02
 # Func Hash:
 7484870185997006540
 # Num Counters:
@@ -9781,7 +12550,7 @@ main.c:adamic_function_67_Context_property
 0
 0
 
-main.c:adamic_function_68_Context_questionDot
+main.c:adamic_function_context_a_Context_questionDot_cf45cd4f855b90238f30e13bd0dfb57c
 # Func Hash:
 13910631847960
 # Num Counters:
@@ -9791,11 +12560,36 @@ main.c:adamic_function_68_Context_questionDot
 0
 0
 
-main.c:adamic_function_69_Context_initializer
+main.c:adamic_function_context_a_Context_range_06b51da8510bedd6df1d9eadf617cc40
 # Func Hash:
-17554079727463542742
+5318083777180600934
 # Num Counters:
-9
+7
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_context_a_Context_raw_54fce6d9c7c7723c3ca65ef1f731d866
+# Func Hash:
+890280438192088
+# Num Counters:
+4
+# Counter Values:
+0
+0
+0
+0
+
+main.c:adamic_function_context_a_Context_report_bc4770f342240052db38b0bfdb283e7a
+# Func Hash:
+15888197873693676553
+# Num Counters:
+8
 # Counter Values:
 0
 0
@@ -9805,13 +12599,12 @@ main.c:adamic_function_69_Context_initializer
 0
 0
 0
-0
 
-main.c:adamic_function_6_decimalDigits
+main.c:adamic_function_context_a_Context_scanAt_c691887175a71dc437e05bee157e6b0e
 # Func Hash:
-7723869545677767058
+6203864178330231790
 # Num Counters:
-12
+7
 # Counter Values:
 0
 0
@@ -9820,448 +12613,46 @@ main.c:adamic_function_6_decimalDigits
 0
 0
 0
-0
-0
-0
-0
-0
 
-main.c:adamic_function_70_Context_extendsClass
-# Func Hash:
-11287296627435839264
-# Num Counters:
-6
-# Counter Values:
-0
-0
-0
-0
-0
-0
-
-main.c:adamic_function_72_Parser_new
-# Func Hash:
-6607928557261593892
-# Num Counters:
-35
-# Counter Values:
-38
-0
-0
-0
-0
-0
-38
-0
-0
-0
-0
-0
-0
-0
-0
-38
-0
-38
-0
-38
-0
-38
-0
-38
-0
-38
-38
-0
-38
-0
-0
-0
-0
-38
-0
-
-main.c:adamic_function_73_Parser_kind
+main.c:adamic_function_context_a_Context_scanEnd_bb8588d12e912f3061fc989c4061b704
 # Func Hash:
 7524644417855834194
 # Num Counters:
 5
 # Counter Values:
-1737969
-0
-0
-1737969
-1737969
-
-main.c:adamic_function_74_Parser_next
-# Func Hash:
-13910631846751
-# Num Counters:
-4
-# Counter Values:
-217798
-0
-0
-217798
-
-main.c:adamic_function_75_Parser_node
-# Func Hash:
-14592021027261977605
-# Num Counters:
-6
-# Counter Values:
-425969
-0
-0
-425969
-0
-0
-
-main.c:adamic_function_76_Parser_make
-# Func Hash:
-7228806441429891315
-# Num Counters:
-8
-# Counter Values:
-171958
-0
-0
-84238
-171958
-171958
-171958
-171958
-
-main.c:adamic_function_77_Parser_token
-# Func Hash:
-8435723934519183193
-# Num Counters:
-9
-# Counter Values:
-15223
-0
-0
-15223
-15223
-15223
-15223
-0
-15223
-
-main.c:adamic_function_78_Parser_expect
-# Func Hash:
-10004149364409828465
-# Num Counters:
-6
-# Counter Values:
-47031
 0
 0
 0
 0
 0
 
-main.c:adamic_function_79_Parser_literal
+main.c:adamic_function_context_a_Context_scanKind_1af00e60902147c6f9adc24fa8ef5116
 # Func Hash:
-10223697294790304969
-# Num Counters:
-31
-# Counter Values:
-2035
-0
-0
-2035
-2035
-2035
-2035
-0
-2035
-2035
-3
-3
-3
-3
-3
-3
-3
-0
-3
-3
-2035
-2035
-1102
-22
-3
-0
-2035
-2035
-2035
-0
-2035
-
-main.c:adamic_function_7_numberValue
-# Func Hash:
-9867145757197930993
-# Num Counters:
-7
-# Counter Values:
-936
-0
-0
-0
-5
-0
-0
-
-main.c:adamic_function_80_Parser_identifier
-# Func Hash:
-4486681807141641153
-# Num Counters:
-10
-# Counter Values:
-70157
-0
-0
-70157
-70157
-70157
-70157
-0
-70157
-70157
-
-main.c:adamic_function_81_Parser_primary
-# Func Hash:
-15488127395463738934
-# Num Counters:
-64
-# Counter Values:
-39101
-0
-0
-39101
-39101
-0
-1892
-37212
-37209
-38193
-37212
-38193
-38193
-22
-37187
-37187
-22
-1347
-36329
-35840
-36771
-36329
-36773
-36771
-36777
-36773
-0
-0
-0
-0
-0
-0
-0
-0
-404
-757
-89
-84
-0
-0
-0
-0
-84
-44
-84
-50
-0
-84
-0
-84
-0
-0
-0
-0
-0
-0
-6
-0
-0
-730
-1666
-33770
-0
-0
-
-main.c:adamic_function_82_Parser_bindingIdentifier
-# Func Hash:
-920893037038587160
-# Num Counters:
-6
-# Counter Values:
-291
-0
-0
-26
-7
-0
-
-main.c:adamic_function_83_Parser_nextIdentifierSameLine
-# Func Hash:
-16648889910789503071
-# Num Counters:
-6
-# Counter Values:
-283
-0
-0
-264
-264
-264
-
-main.c:adamic_function_84_Parser_mark
-# Func Hash:
-5889541618939257176
-# Num Counters:
-16
-# Counter Values:
-395
-0
-0
-395
-395
-395
-395
-395
-395
-395
-395
-395
-395
-395
-395
-395
-
-main.c:adamic_function_85_Parser_rewind
-# Func Hash:
-5081207200259798338
-# Num Counters:
-26
-# Counter Values:
-395
-0
-0
-395
-0
-395
-395
-0
-395
-395
-0
-395
-395
-0
-395
-395
-395
-0
-395
-395
-395
-0
-395
-395
-395
-395
-
-main.c:adamic_function_86_Parser_docTypes
-# Func Hash:
-245249111085897399
-# Num Counters:
-22
-# Counter Values:
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-
-main.c:adamic_function_87_Parser_tupleNameAhead
-# Func Hash:
-5628969369235101325
+7524644417855834194
 # Num Counters:
 5
 # Counter Values:
-8
+0
 0
 0
 0
 0
 
-main.c:adamic_function_88_Parser_typeArguments
+main.c:adamic_function_context_a_Context_scanStart_fa2edaf183a6e81b12a5335cdb54a3df
 # Func Hash:
-9569057268678008756
+7524644417855834194
 # Num Counters:
-6
+5
 # Counter Values:
-241
 0
 0
-316
 0
-241
+0
+0
 
-main.c:adamic_function_89_Parser_typeParameters
+main.c:adamic_function_context_a_Context_start_95130ebdf8110f8316e4c1eb3512b16b
 # Func Hash:
-1910452903438027968
-# Num Counters:
-15
-# Counter Values:
-2492
-0
-0
-2447
-51
-0
-51
-51
-51
-51
-51
-51
-17
-1
-45
-
-main.c:adamic_function_8_written
-# Func Hash:
-14642668650043072862
+2613404894766355518
 # Num Counters:
 10
 # Counter Values:
@@ -10276,220 +12667,42 @@ main.c:adamic_function_8_written
 0
 0
 
-main.c:adamic_function_90_Parser_entityName
+main.c:adamic_function_context_a_Context_unwrap_cf6258337941e4d0ffaa8c8098b557ab
 # Func Hash:
-13288712611314188166
+10836736389082667449
 # Num Counters:
-7
-# Counter Values:
-5840
-0
-0
-5840
-5840
-5947
-5840
-
-main.c:adamic_function_91_Parser_importType
-# Func Hash:
-2097760428499745466
-# Num Counters:
-17
+5
 # Counter Values:
 0
 0
 0
 0
 0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
 
-main.c:adamic_function_92_Parser_type
+main.c:adamic_function_context_a_lines_4fd19794e63a6fe352d09982fc60f3b9
 # Func Hash:
-8300621277748978803
+12914265173607501779
 # Num Counters:
-150
+12
 # Counter Values:
-9650
+38
 0
 0
-2091
-2091
-9650
-9650
-9641
-9
-9
-40
-40
-9
-31
-9
-9638
-9365
-276
+1666096
+38
+38230
+38230
 0
-276
-276
-0
-9365
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-9365
-4
-0
-4
-3
-3
-0
-0
-9361
-0
-0
-0
-0
-0
-9225
-136
-136
-110
-147
-0
-104
-0
-4
-8
-0
-8
-8
-0
-2
-0
-0
-0
-0
-4
-9059
-9059
-9059
-9059
-9034
-9028
-90
-32
-85
-85
-64
-64
-59
-59
-27
-27
-8992
-8982
-8470
-7461
-6862
-6862
-6862
-6035
-6032
-6031
-3230
-2996
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-172
-172
-172
-172
-218
-10530
-9650
-9650
-0
-0
-0
-0
-0
-0
-880
-880
-880
-9650
-0
-0
-16
-864
-880
-10743
-9428
-9397
-1315
-253
-2362
-2300
-1093
-1062
-8048
-8048
-8048
-0
-0
-0
-0
+1627828
+1627828
+1627828
+1627828
 
-main.c:adamic_function_93_Parser_mappedAhead
+main.c:adamic_function_diagnostic_a_Diagnostic_allocate_b7395be8b0ef8aa6bba1af2ea60a62f9
 # Func Hash:
-308027454179697836
+18361213455685926249
 # Num Counters:
-7
-# Counter Values:
-104
-0
-0
-104
-0
-24
-0
-
-main.c:adamic_function_94_Parser_mappedType
-# Func Hash:
-10499162082241989308
-# Num Counters:
-16
+43
 # Counter Values:
 0
 0
@@ -10507,40 +12720,119 @@ main.c:adamic_function_94_Parser_mappedType
 0
 0
 0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
 
-main.c:adamic_function_95_Parser_indexSignatureAhead
+main.c:adamic_function_edit_a_Edit_allocate_3ce3d8c7f45f486da73eca7e54bceb8a
+# Func Hash:
+6694119772449418585
+# Num Counters:
+21
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+main.c:adamic_function_parse_a_collect_2e1ee976386eb2b51d816de5b7abe9bc
+# Func Hash:
+1014005523654099245
+# Num Counters:
+22
+# Counter Values:
+38
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+38
+38
+171958
+0
+0
+38
+38
+
+main.c:adamic_function_parse_a_collect_anonymous_1_8636ea82e0e8956bc3231b0285cb9e2b
 # Func Hash:
 217353622616
 # Num Counters:
 3
 # Counter Values:
+171958
+0
+0
+
+main.c:adamic_function_parse_a_collect_anonymous_2_8808a1bec93e022a0c36eb84437421f0
+# Func Hash:
+7524644417855834194
+# Num Counters:
+5
+# Counter Values:
+0
+0
 0
 0
 0
 
-main.c:adamic_function_96_Parser_typeLiteral
+main.c:adamic_function_parse_a_fixed_82014d297688cb0f34be48a20b318900
 # Func Hash:
-4168192859242102320
+15280032236798438112
 # Num Counters:
-42
+19
 # Counter Values:
-292
-0
-0
-292
-292
-1343
-292
-1051
-1051
-200
-15
-0
-0
-0
-200
-1051
-1051
 0
 0
 0
@@ -10550,120 +12842,323 @@ main.c:adamic_function_96_Parser_typeLiteral
 0
 0
 0
-1048
-4
 0
 0
 0
 0
 0
-265
-784
-270
-270
-3
-434
-1051
 0
-1051
+0
+0
+0
+0
 
-main.c:adamic_function_97_Parser_parameters
+main.c:adamic_function_parse_a_run_57617ee0a560842969e10db398db3121
 # Func Hash:
-7268285815490632920
+1359850486726058518
 # Num Counters:
-21
+68
 # Counter Values:
-2236
+38
 0
 0
-4830
-408
-4422
-4422
-4422
-4422
-4441
-4441
-4433
-4433
-4422
-4422
 0
-6
-289
-4180
-98
-1828
+0
+0
+38
+0
+38
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+38
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
 
-main.c:adamic_function_98_Parser_bindingName
+main.c:adamic_initialize_______typescript_parser_grammar_ts_09886ced62dc158533de84d9bdcca842
 # Func Hash:
-7031700216069137229
+0
 # Num Counters:
-22
+1
 # Counter Values:
-7658
+1
+
+main.c:adamic_initialize_______typescript_parser_grammar_ts_621dcd9cc3e126a6262d2567ff15ee1e
+# Func Hash:
 0
+# Num Counters:
+1
+# Counter Values:
+1
+
+main.c:adamic_initialize_______typescript_scanner_characters_ts_45bb8459b65e1f41696ece44526f3922
+# Func Hash:
 0
-7646
-7469
-189
-189
-391
-366
+# Num Counters:
+1
+# Counter Values:
+1
+
+main.c:adamic_initialize_______typescript_scanner_characters_ts_f1b83d726a8a4ee2ba04cd8c7462ffa3
+# Func Hash:
+0
+# Num Counters:
+1
+# Counter Values:
+1
+
+main.c:adamic_initialize_______typescript_scanner_tokens_ts_82abc67bb3d350765b787c30bd9196bd
+# Func Hash:
+0
+# Num Counters:
+1
+# Counter Values:
+1
+
+main.c:adamic_initialize_chunk_______typescript_scanner_tokens_ts_17672cb27c3f4cc1bfc08cd910dd47f3
+# Func Hash:
+0
+# Num Counters:
+1
+# Counter Values:
+1
+
+main.c:adamic_initialize_chunk_______typescript_scanner_tokens_ts_b5099313404365fd5eedb9b17a9a7676
+# Func Hash:
+0
+# Num Counters:
+1
+# Counter Values:
+1
+
+main.c:adamic_initialize_context_a_0375b99d11fd968d856bab8e909f2777
+# Func Hash:
+0
+# Num Counters:
+1
+# Counter Values:
+1
+
+main.c:adamic_initialize_context_a_c72fb5b2f4248ed62abc68914b7b278f
+# Func Hash:
+0
+# Num Counters:
+1
+# Counter Values:
+1
+
+main.c:adamic_initialize_messages_a_87fbca03ca039f4216b2262d55b05593
+# Func Hash:
+0
+# Num Counters:
+1
+# Counter Values:
+1
+
+main.c:adamic_initialize_messages_a_d79af970da58d76626b422f96725d419
+# Func Hash:
+0
+# Num Counters:
+1
+# Counter Values:
+1
+
+main.c:adamic_initialize_number_table_copy_data_f3c7807d475073ba009bf4801b2d934e
+# Func Hash:
+1160280
+# Num Counters:
 2
-389
-389
-1
-4
-364
-364
-10
-3
-187
-202
-177
-177
+# Counter Values:
+2
+4095
 
-main.c:adamic_function_99_Parser_decorator
+main.c:adamic_initialize_parse_a_35a42e467bab842d6d6290aab635b052
 # Func Hash:
-5294226535295925955
+11111322147069186347
 # Num Counters:
-9
+14
 # Counter Values:
-0
-0
+1
 0
 0
+1
 0
 0
 0
+1
+1
+39
+1
 0
+39
+1
+
+main.c:adamic_initialize_parse_a_ba8233992197ee669c88e9e9b0524c7b
+# Func Hash:
 0
+# Num Counters:
+1
+# Counter Values:
+1
 
-main.c:adamic_function_9_printTree
+main.c:adamic_is_shared
 # Func Hash:
-2007393062952051015
+1568
 # Num Counters:
-16
+1
 # Counter Values:
-0
-0
-0
-0
+219611
+
+main.c:adamic_method_______typescript_par__statements_ts_Statements_attributeBody_12eb984131bed2a7df0216f8c1a97723
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
 0
+
+main.c:adamic_method_______typescript_par__statements_ts_Statements_canExportName_40ffc4b12fc8b780e9b87873d20c75d8
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
 0
+
+main.c:adamic_method_______typescript_par_atements_ts_Statements_classDeclaration_6157b0a52eee6927fb518b66a92a7c2a
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
 0
+
+main.c:adamic_method_______typescript_par_ments_ts_Statements_exportedClauseAhead_2afeee497446d9c82d4cc011304400ea
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
 0
+
+main.c:adamic_method_______typescript_par_ments_ts_Statements_functionDeclaration_8726fc7b40a5cdb19af9b653557475d1
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
 0
+
+main.c:adamic_method_______typescript_par_parser_ts_Parser_nextIdentifierSameLine_1a65114e3ddf095c1110a21d0fbb0838
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
 0
+
+main.c:adamic_method_______typescript_par_r_statements_ts_Statements_forStatement_031ccdb31b3d882729f5f773cf42a099
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
 0
+
+main.c:adamic_method_______typescript_par_r_statements_ts_Statements_tryStatement_6c7673581ed0a7e4cf89932cde4b3e67
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
 0
+
+main.c:adamic_method_______typescript_par_r_statements_ts_Statements_variableList_6eee09a7d09369325f6473d11ccbb46f
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
 0
+
+main.c:adamic_method_______typescript_par_tatements_ts_Statements_switchStatement_f6ef7dfd63aed02b2e1c71f49cd47a4e
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
 0
+
+main.c:adamic_method_______typescript_par_tements_ts_Statements_exportDeclaration_728ef885b7c5fa1f8fca4c18d4cb6655
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
 0
+
+main.c:adamic_method_______typescript_par_tements_ts_Statements_importDeclaration_9313d035eccaafc2c3164a695757ed8b
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
 0
 
-main.c:adamic_method_100
+main.c:adamic_method_______typescript_par_tements_ts_Statements_moduleDeclaration_0cff39f84739fa0805809432391de540
 # Func Hash:
 24
 # Num Counters:
@@ -10671,7 +13166,7 @@ main.c:adamic_method_100
 # Counter Values:
 0
 
-main.c:adamic_method_101
+main.c:adamic_method_______typescript_parser_jsx_ts_Jsx_attributes_a1e5f0b68a63ba31aa6aa8b6a9b578aa
 # Func Hash:
 24
 # Num Counters:
@@ -10679,7 +13174,7 @@ main.c:adamic_method_101
 # Counter Values:
 0
 
-main.c:adamic_method_102
+main.c:adamic_method_______typescript_parser_jsx_ts_Jsx_element_1a6be9caa90f4c79b8d51f0b2c136506
 # Func Hash:
 24
 # Num Counters:
@@ -10687,7 +13182,7 @@ main.c:adamic_method_102
 # Counter Values:
 0
 
-main.c:adamic_method_103
+main.c:adamic_method_______typescript_parser_jsx_ts_Jsx_expression_c2b017560b7240daa823d77fb5d8e9e5
 # Func Hash:
 24
 # Num Counters:
@@ -10695,7 +13190,7 @@ main.c:adamic_method_103
 # Counter Values:
 0
 
-main.c:adamic_method_104
+main.c:adamic_method_______typescript_parser_jsx_ts_Jsx_finishGreater_5d4f52e8ca9fc3e5ca8a008428aab607
 # Func Hash:
 24
 # Num Counters:
@@ -10703,7 +13198,7 @@ main.c:adamic_method_104
 # Counter Values:
 0
 
-main.c:adamic_method_105
+main.c:adamic_method_______typescript_parser_jsx_ts_Jsx_identifier_40f33f96a748aa60ba5ce88ae41098bb
 # Func Hash:
 24
 # Num Counters:
@@ -10711,7 +13206,7 @@ main.c:adamic_method_105
 # Counter Values:
 0
 
-main.c:adamic_method_106
+main.c:adamic_method_______typescript_parser_jsx_ts_Jsx_make_cdd67fd46a086bee3c7871f6b9782a24
 # Func Hash:
 24
 # Num Counters:
@@ -10719,7 +13214,7 @@ main.c:adamic_method_106
 # Counter Values:
 0
 
-main.c:adamic_method_107
+main.c:adamic_method_______typescript_parser_jsx_ts_Jsx_name_f4d3134df3a7fed709123229f1ab3a3d
 # Func Hash:
 24
 # Num Counters:
@@ -10727,7 +13222,7 @@ main.c:adamic_method_107
 # Counter Values:
 0
 
-main.c:adamic_method_108
+main.c:adamic_method_______typescript_parser_jsx_ts_Jsx_tagKey_7032424adef4b0f48e97a1d1a5c46fa4
 # Func Hash:
 24
 # Num Counters:
@@ -10735,7 +13230,7 @@ main.c:adamic_method_108
 # Counter Values:
 0
 
-main.c:adamic_method_109
+main.c:adamic_method_______typescript_parser_jsx_ts_Jsx_text_2cf96812dd7ee34a489ec575a72a8f25
 # Func Hash:
 24
 # Num Counters:
@@ -10743,7 +13238,7 @@ main.c:adamic_method_109
 # Counter Values:
 0
 
-main.c:adamic_method_110
+main.c:adamic_method_______typescript_parser_lookahead_ts_Speculation_next_a0d00a8651ef403b39da0d5276655948
 # Func Hash:
 24
 # Num Counters:
@@ -10751,7 +13246,7 @@ main.c:adamic_method_110
 # Counter Values:
 0
 
-main.c:adamic_method_111
+main.c:adamic_method_______typescript_parser_lookahead_ts_Speculation_prepare_11041ee58ab81744cf1cd19fc20b08e3
 # Func Hash:
 24
 # Num Counters:
@@ -10759,7 +13254,7 @@ main.c:adamic_method_111
 # Counter Values:
 0
 
-main.c:adamic_method_112
+main.c:adamic_method_______typescript_parser_lookahead_ts_Speculation_restore_684241cb6edd4abaccd7a7dad3331a94
 # Func Hash:
 24
 # Num Counters:
@@ -10767,7 +13262,7 @@ main.c:adamic_method_112
 # Counter Values:
 0
 
-main.c:adamic_method_113
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_allowInExpression_4eae67d30e2459549cb36e56c4f0c031
 # Func Hash:
 24
 # Num Counters:
@@ -10775,7 +13270,7 @@ main.c:adamic_method_113
 # Counter Values:
 0
 
-main.c:adamic_method_114
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_arguments_021c2d90b1ff4cdfffb4ef31e00fbeb5
 # Func Hash:
 24
 # Num Counters:
@@ -10783,7 +13278,7 @@ main.c:adamic_method_114
 # Counter Values:
 0
 
-main.c:adamic_method_115
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_array_bef28506c799e29e03d2cab98a912cdf
 # Func Hash:
 24
 # Num Counters:
@@ -10791,7 +13286,7 @@ main.c:adamic_method_115
 # Counter Values:
 0
 
-main.c:adamic_method_116
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_arrow_5e2dd8f0e6c3eb09eb49e440b52733c4
 # Func Hash:
 24
 # Num Counters:
@@ -10799,7 +13294,7 @@ main.c:adamic_method_116
 # Counter Values:
 0
 
-main.c:adamic_method_117
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_binary_260fe8b885033bfc0bf814bb64877cf5
 # Func Hash:
 24
 # Num Counters:
@@ -10807,7 +13302,7 @@ main.c:adamic_method_117
 # Counter Values:
 0
 
-main.c:adamic_method_118
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_bindingIdentifier_322ffde0cd92191ee739859c81579417
 # Func Hash:
 24
 # Num Counters:
@@ -10815,7 +13310,7 @@ main.c:adamic_method_118
 # Counter Values:
 0
 
-main.c:adamic_method_119
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_bindingName_573ef738e4111ee831d186d66c00ee9e
 # Func Hash:
 24
 # Num Counters:
@@ -10823,7 +13318,7 @@ main.c:adamic_method_119
 # Counter Values:
 0
 
-main.c:adamic_method_120
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_block_7e1c4ec8dd3cf54e6a9c6bc9c83621b3
 # Func Hash:
 24
 # Num Counters:
@@ -10831,7 +13326,7 @@ main.c:adamic_method_120
 # Counter Values:
 0
 
-main.c:adamic_method_121
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_classDeclaration_0c9691faffd404eda5428a259d5e6227
 # Func Hash:
 24
 # Num Counters:
@@ -10839,7 +13334,7 @@ main.c:adamic_method_121
 # Counter Values:
 0
 
-main.c:adamic_method_122
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_decorator_6b2d30923de6975c7c4c0e2d5ff3af30
 # Func Hash:
 24
 # Num Counters:
@@ -10847,7 +13342,7 @@ main.c:adamic_method_122
 # Counter Values:
 0
 
-main.c:adamic_method_123
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_docTypes_0b59af6c4959dc44651ed6409a38dfbf
 # Func Hash:
 24
 # Num Counters:
@@ -10855,7 +13350,7 @@ main.c:adamic_method_123
 # Counter Values:
 0
 
-main.c:adamic_method_126
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_entityName_704106368c1bc4ed07fc227efc087e2b
 # Func Hash:
 24
 # Num Counters:
@@ -10863,7 +13358,7 @@ main.c:adamic_method_126
 # Counter Values:
 0
 
-main.c:adamic_method_127
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_expect_d97bc94c5daab47197bdb252466046cb
 # Func Hash:
 24
 # Num Counters:
@@ -10871,7 +13366,7 @@ main.c:adamic_method_127
 # Counter Values:
 0
 
-main.c:adamic_method_128
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_expression_efc9e48eb453d0ba4ac3124cfceb7b82
 # Func Hash:
 24
 # Num Counters:
@@ -10879,7 +13374,7 @@ main.c:adamic_method_128
 # Counter Values:
 0
 
-main.c:adamic_method_133
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_file_3c2f677357a4363dbaac198b0c37bd08
 # Func Hash:
 24
 # Num Counters:
@@ -10887,7 +13382,7 @@ main.c:adamic_method_133
 # Counter Values:
 0
 
-main.c:adamic_method_135
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_functionExpression_e4913a82878a76841fab3dbd510ed93e
 # Func Hash:
 24
 # Num Counters:
@@ -10895,7 +13390,7 @@ main.c:adamic_method_135
 # Counter Values:
 0
 
-main.c:adamic_method_136
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_identifier_9b02947ae40119ca1e676789316b1d99
 # Func Hash:
 24
 # Num Counters:
@@ -10903,7 +13398,7 @@ main.c:adamic_method_136
 # Counter Values:
 0
 
-main.c:adamic_method_137
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_importType_8d523126316939814e6578f18db91427
 # Func Hash:
 24
 # Num Counters:
@@ -10911,7 +13406,7 @@ main.c:adamic_method_137
 # Counter Values:
 0
 
-main.c:adamic_method_138
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_indexSignatureAhead_8c64928f9a1ef0fc9babe5086ea24f02
 # Func Hash:
 24
 # Num Counters:
@@ -10919,7 +13414,7 @@ main.c:adamic_method_138
 # Counter Values:
 0
 
-main.c:adamic_method_139
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_jsxParser_cc19bfc4f9cddfcde4eb97d22e4c4157
 # Func Hash:
 24
 # Num Counters:
@@ -10927,7 +13422,7 @@ main.c:adamic_method_139
 # Counter Values:
 0
 
-main.c:adamic_method_140
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_kind_fddbda68f59524670af77191254c474e
 # Func Hash:
 24
 # Num Counters:
@@ -10935,7 +13430,7 @@ main.c:adamic_method_140
 # Counter Values:
 0
 
-main.c:adamic_method_141
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_literal_5864f98b10c614963ff65aced69fff29
 # Func Hash:
 24
 # Num Counters:
@@ -10943,7 +13438,7 @@ main.c:adamic_method_141
 # Counter Values:
 0
 
-main.c:adamic_method_142
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_make_a027307f58f5d12b7374a92cc25bacf6
 # Func Hash:
 24
 # Num Counters:
@@ -10951,7 +13446,7 @@ main.c:adamic_method_142
 # Counter Values:
 0
 
-main.c:adamic_method_143
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_mappedAhead_9ac87e82f842b1f56992c5fafd1a64aa
 # Func Hash:
 24
 # Num Counters:
@@ -10959,7 +13454,7 @@ main.c:adamic_method_143
 # Counter Values:
 0
 
-main.c:adamic_method_144
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_mappedType_5d49568ab9c4f489858cea3ab8f0ba81
 # Func Hash:
 24
 # Num Counters:
@@ -10967,7 +13462,7 @@ main.c:adamic_method_144
 # Counter Values:
 0
 
-main.c:adamic_method_145
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_mark_121d8f985725470127713d0425633173
 # Func Hash:
 24
 # Num Counters:
@@ -10975,7 +13470,7 @@ main.c:adamic_method_145
 # Counter Values:
 0
 
-main.c:adamic_method_146
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_methodBody_939285ce1c2dfdfd3db65fbbfb702d23
 # Func Hash:
 24
 # Num Counters:
@@ -10983,7 +13478,7 @@ main.c:adamic_method_146
 # Counter Values:
 0
 
-main.c:adamic_method_147
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_next_b8ca64ac20eb935034b2001c9a03f145
 # Func Hash:
 24
 # Num Counters:
@@ -10991,7 +13486,7 @@ main.c:adamic_method_147
 # Counter Values:
 0
 
-main.c:adamic_method_148
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_node_b24a00d2de77f99b72e9902079f4e6d3
 # Func Hash:
 24
 # Num Counters:
@@ -10999,7 +13494,7 @@ main.c:adamic_method_148
 # Counter Values:
 0
 
-main.c:adamic_method_149
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_object_6997d11d64b6c8caa28f169d2d462621
 # Func Hash:
 24
 # Num Counters:
@@ -11007,7 +13502,7 @@ main.c:adamic_method_149
 # Counter Values:
 0
 
-main.c:adamic_method_150
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_optionalChain_853fd2c4bdaec0c0d8e229c4e156dc32
 # Func Hash:
 24
 # Num Counters:
@@ -11015,7 +13510,7 @@ main.c:adamic_method_150
 # Counter Values:
 0
 
-main.c:adamic_method_151
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_parameters_c06e35167b7216664ea965a26d1574fb
 # Func Hash:
 24
 # Num Counters:
@@ -11023,7 +13518,7 @@ main.c:adamic_method_151
 # Counter Values:
 0
 
-main.c:adamic_method_152
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_peek_d2f147908d60fb3d5d71f14bba5fbdcf
 # Func Hash:
 24
 # Num Counters:
@@ -11031,7 +13526,7 @@ main.c:adamic_method_152
 # Counter Values:
 0
 
-main.c:adamic_method_153
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_primary_94fbf92f0341e01f383c3f3b4a265128
 # Func Hash:
 24
 # Num Counters:
@@ -11039,7 +13534,7 @@ main.c:adamic_method_153
 # Counter Values:
 0
 
-main.c:adamic_method_17
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_propertyName_2ab01926c631fd21ba77f55422c6af78
 # Func Hash:
 24
 # Num Counters:
@@ -11047,7 +13542,7 @@ main.c:adamic_method_17
 # Counter Values:
 0
 
-main.c:adamic_method_18
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_returnType_8552a8089fb8f076df12e5c64b9440a9
 # Func Hash:
 24
 # Num Counters:
@@ -11055,7 +13550,7 @@ main.c:adamic_method_18
 # Counter Values:
 0
 
-main.c:adamic_method_19
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_rewind_a610d4c25deae4da7a958b261cba9187
 # Func Hash:
 24
 # Num Counters:
@@ -11063,7 +13558,7 @@ main.c:adamic_method_19
 # Counter Values:
 0
 
-main.c:adamic_method_22
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_rootAssignment_48e028351456cd90fb5829c319792b9b
 # Func Hash:
 24
 # Num Counters:
@@ -11071,7 +13566,7 @@ main.c:adamic_method_22
 # Counter Values:
 0
 
-main.c:adamic_method_23
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_rootExpression_d5249d6287d25fb0bb69d2e4b0446041
 # Func Hash:
 24
 # Num Counters:
@@ -11079,7 +13574,7 @@ main.c:adamic_method_23
 # Counter Values:
 0
 
-main.c:adamic_method_24
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_semicolon_5ba67be1078de96cbf5c16f4834239dd
 # Func Hash:
 24
 # Num Counters:
@@ -11087,7 +13582,7 @@ main.c:adamic_method_24
 # Counter Values:
 0
 
-main.c:adamic_method_25
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_spread_4d18b8269214741ce8fbadd2b3f42095
 # Func Hash:
 24
 # Num Counters:
@@ -11095,7 +13590,7 @@ main.c:adamic_method_25
 # Counter Values:
 0
 
-main.c:adamic_method_26
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_statement_456c555b139a043c91c2db4004b21f42
 # Func Hash:
 24
 # Num Counters:
@@ -11103,7 +13598,7 @@ main.c:adamic_method_26
 # Counter Values:
 0
 
-main.c:adamic_method_27
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_statements_12722c9c07f24a679f854ee5032f0495
 # Func Hash:
 24
 # Num Counters:
@@ -11111,7 +13606,7 @@ main.c:adamic_method_27
 # Counter Values:
 0
 
-main.c:adamic_method_28
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_suffix_fa721b6806c62e5f11595cb9cb7f6719
 # Func Hash:
 24
 # Num Counters:
@@ -11119,7 +13614,7 @@ main.c:adamic_method_28
 # Counter Values:
 0
 
-main.c:adamic_method_29
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_templatePart_a068fe7027cd8c49716f6a9a78f2e830
 # Func Hash:
 24
 # Num Counters:
@@ -11127,7 +13622,7 @@ main.c:adamic_method_29
 # Counter Values:
 0
 
-main.c:adamic_method_30
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_templateType_9aa37e2d8cbdb0b1cbb5113fb1960e27
 # Func Hash:
 24
 # Num Counters:
@@ -11135,7 +13630,7 @@ main.c:adamic_method_30
 # Counter Values:
 0
 
-main.c:adamic_method_31
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_template_1c6497be9b71bafc0a0d4c6d07a16bbd
 # Func Hash:
 24
 # Num Counters:
@@ -11143,7 +13638,7 @@ main.c:adamic_method_31
 # Counter Values:
 0
 
-main.c:adamic_method_32
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_token_740700567108ff91c5bbbb8ac455453d
 # Func Hash:
 24
 # Num Counters:
@@ -11151,7 +13646,7 @@ main.c:adamic_method_32
 # Counter Values:
 0
 
-main.c:adamic_method_33
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_tupleNameAhead_8579dfb5ebba90437b3156dcc45f9a1c
 # Func Hash:
 24
 # Num Counters:
@@ -11159,7 +13654,7 @@ main.c:adamic_method_33
 # Counter Values:
 0
 
-main.c:adamic_method_34
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_typeArguments_8e832e6daf8692ac0f2759c24fc3d3cf
 # Func Hash:
 24
 # Num Counters:
@@ -11167,7 +13662,7 @@ main.c:adamic_method_34
 # Counter Values:
 0
 
-main.c:adamic_method_35
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_typeLiteral_8ee47d82003069c4c1436315dd9ed34b
 # Func Hash:
 24
 # Num Counters:
@@ -11175,7 +13670,7 @@ main.c:adamic_method_35
 # Counter Values:
 0
 
-main.c:adamic_method_36
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_typeParameters_487481a98152323b252d5f46e7ec75eb
 # Func Hash:
 24
 # Num Counters:
@@ -11183,7 +13678,7 @@ main.c:adamic_method_36
 # Counter Values:
 0
 
-main.c:adamic_method_37
+main.c:adamic_method_______typescript_parser_parser_ts_Parser_unary_3057395ded1b1382bafc952ae6380831
 # Func Hash:
 24
 # Num Counters:
@@ -11191,7 +13686,7 @@ main.c:adamic_method_37
 # Counter Values:
 0
 
-main.c:adamic_method_38
+main.c:adamic_method_______typescript_parser_statements_ts_Statements_attributes_6aaec1bfe4962f916d157d7d523fd23a
 # Func Hash:
 24
 # Num Counters:
@@ -11199,7 +13694,7 @@ main.c:adamic_method_38
 # Counter Values:
 0
 
-main.c:adamic_method_44
+main.c:adamic_method_______typescript_parser_statements_ts_Statements_block_ca226e9ce8ba528562d156383ddc78f6
 # Func Hash:
 24
 # Num Counters:
@@ -11207,7 +13702,7 @@ main.c:adamic_method_44
 # Counter Values:
 0
 
-main.c:adamic_method_45
+main.c:adamic_method_______typescript_parser_statements_ts_Statements_decorator_a97609a37b623197df4a1699a1a7765b
 # Func Hash:
 24
 # Num Counters:
@@ -11215,7 +13710,7 @@ main.c:adamic_method_45
 # Counter Values:
 0
 
-main.c:adamic_method_46
+main.c:adamic_method_______typescript_parser_statements_ts_Statements_lookahead_37cc244cd4663d81c81d5924723c4f03
 # Func Hash:
 24
 # Num Counters:
@@ -11223,7 +13718,7 @@ main.c:adamic_method_46
 # Counter Values:
 0
 
-main.c:adamic_method_47
+main.c:adamic_method_______typescript_parser_statements_ts_Statements_make_3c7a735361a6a6c7e3d4039d6ba6ecd3
 # Func Hash:
 24
 # Num Counters:
@@ -11231,7 +13726,7 @@ main.c:adamic_method_47
 # Counter Values:
 0
 
-main.c:adamic_method_48
+main.c:adamic_method_______typescript_parser_statements_ts_Statements_semicolon_a9f81ff461a230a138116a5257409b79
 # Func Hash:
 24
 # Num Counters:
@@ -11239,7 +13734,7 @@ main.c:adamic_method_48
 # Counter Values:
 0
 
-main.c:adamic_method_49
+main.c:adamic_method_______typescript_parser_statements_ts_Statements_specifiers_68839d61b42142b3a5c192d41c77cd37
 # Func Hash:
 24
 # Num Counters:
@@ -11247,7 +13742,7 @@ main.c:adamic_method_49
 # Counter Values:
 0
 
-main.c:adamic_method_50
+main.c:adamic_method_______typescript_parser_statements_ts_Statements_statement_0ce123e9e400072b52391b312cb58b2d
 # Func Hash:
 24
 # Num Counters:
@@ -11255,7 +13750,7 @@ main.c:adamic_method_50
 # Counter Values:
 0
 
-main.c:adamic_method_51
+main.c:adamic_method_______typescript_sca_canner_ts_Scanner_scanJsxAttributeValue_de3150915df0acdb57a93d44d72a8253
 # Func Hash:
 24
 # Num Counters:
@@ -11263,7 +13758,7 @@ main.c:adamic_method_51
 # Counter Values:
 0
 
-main.c:adamic_method_52
+main.c:adamic_method_______typescript_sca_er_scanner_ts_Scanner_scanJsxIdentifier_bc2c0d161a58fdeff49d3aee316807a1
 # Func Hash:
 24
 # Num Counters:
@@ -11271,7 +13766,7 @@ main.c:adamic_method_52
 # Counter Values:
 0
 
-main.c:adamic_method_53
+main.c:adamic_method_______typescript_scanner_scanner_ts_Scanner_advance_6cb4b507cbb9a15ae68951e88d4bbdb0
 # Func Hash:
 24
 # Num Counters:
@@ -11279,7 +13774,7 @@ main.c:adamic_method_53
 # Counter Values:
 0
 
-main.c:adamic_method_54
+main.c:adamic_method_______typescript_scanner_scanner_ts_Scanner_bigint_ab47f0615e7a84f71597dd671f200b86
 # Func Hash:
 24
 # Num Counters:
@@ -11287,7 +13782,7 @@ main.c:adamic_method_54
 # Counter Values:
 0
 
-main.c:adamic_method_55
+main.c:adamic_method_______typescript_scanner_scanner_ts_Scanner_code_d5c2c30c3cdee25d3fedebba8ec7f50a
 # Func Hash:
 24
 # Num Counters:
@@ -11295,7 +13790,7 @@ main.c:adamic_method_55
 # Counter Values:
 0
 
-main.c:adamic_method_56
+main.c:adamic_method_______typescript_scanner_scanner_ts_Scanner_error_2c85bd9457493b24e2034b42b118683f
 # Func Hash:
 24
 # Num Counters:
@@ -11303,7 +13798,7 @@ main.c:adamic_method_56
 # Counter Values:
 0
 
-main.c:adamic_method_57
+main.c:adamic_method_______typescript_scanner_scanner_ts_Scanner_escape_518e47b9a6fb079b3a2a52e6ac43e0ea
 # Func Hash:
 24
 # Num Counters:
@@ -11311,7 +13806,7 @@ main.c:adamic_method_57
 # Counter Values:
 0
 
-main.c:adamic_method_58
+main.c:adamic_method_______typescript_scanner_scanner_ts_Scanner_fragment_944b6f28ce20b929e8b2a3929a9a75c9
 # Func Hash:
 24
 # Num Counters:
@@ -11319,7 +13814,7 @@ main.c:adamic_method_58
 # Counter Values:
 0
 
-main.c:adamic_method_59
+main.c:adamic_method_______typescript_scanner_scanner_ts_Scanner_identifier_e843b5bcf9171c4eff21c7f98b6b4a4c
 # Func Hash:
 24
 # Num Counters:
@@ -11327,7 +13822,7 @@ main.c:adamic_method_59
 # Counter Values:
 0
 
-main.c:adamic_method_60
+main.c:adamic_method_______typescript_scanner_scanner_ts_Scanner_number_08b3dc1db531010a0b0b6b2275fc00dc
 # Func Hash:
 24
 # Num Counters:
@@ -11335,7 +13830,7 @@ main.c:adamic_method_60
 # Counter Values:
 0
 
-main.c:adamic_method_61
+main.c:adamic_method_______typescript_scanner_scanner_ts_Scanner_punctuation_740d5ba316e3eb42a61739c97de2d539
 # Func Hash:
 24
 # Num Counters:
@@ -11343,7 +13838,7 @@ main.c:adamic_method_61
 # Counter Values:
 0
 
-main.c:adamic_method_62
+main.c:adamic_method_______typescript_scanner_scanner_ts_Scanner_rescanGreater_5f9dbcd747a244080565e58b95b15896
 # Func Hash:
 24
 # Num Counters:
@@ -11351,7 +13846,7 @@ main.c:adamic_method_62
 # Counter Values:
 0
 
-main.c:adamic_method_63
+main.c:adamic_method_______typescript_scanner_scanner_ts_Scanner_rescanSlash_7756f95fa384ff133859b260e5e85ce4
 # Func Hash:
 24
 # Num Counters:
@@ -11359,7 +13854,7 @@ main.c:adamic_method_63
 # Counter Values:
 0
 
-main.c:adamic_method_64
+main.c:adamic_method_______typescript_scanner_scanner_ts_Scanner_rescanTemplate_04201aef19ccb29ceeff211e16eaa805
 # Func Hash:
 24
 # Num Counters:
@@ -11367,7 +13862,7 @@ main.c:adamic_method_64
 # Counter Values:
 0
 
-main.c:adamic_method_65
+main.c:adamic_method_______typescript_scanner_scanner_ts_Scanner_scanJsx_b94ca41c81d621d3a1b12f57bb624c0f
 # Func Hash:
 24
 # Num Counters:
@@ -11375,7 +13870,7 @@ main.c:adamic_method_65
 # Counter Values:
 0
 
-main.c:adamic_method_66
+main.c:adamic_method_______typescript_scanner_scanner_ts_Scanner_scan_19f8a20e75d7ef5a550ac871b1a3f969
 # Func Hash:
 24
 # Num Counters:
@@ -11383,7 +13878,7 @@ main.c:adamic_method_66
 # Counter Values:
 0
 
-main.c:adamic_method_67
+main.c:adamic_method_______typescript_scanner_scanner_ts_Scanner_string_22d8fbd7e9ca3e61fa361285a7444c6f
 # Func Hash:
 24
 # Num Counters:
@@ -11391,7 +13886,7 @@ main.c:adamic_method_67
 # Counter Values:
 0
 
-main.c:adamic_method_68
+main.c:adamic_method_______typescript_scanner_scanner_ts_Scanner_template_9fad291e90078f3ecc0c9ebc495588cd
 # Func Hash:
 24
 # Num Counters:
@@ -11399,7 +13894,7 @@ main.c:adamic_method_68
 # Counter Values:
 0
 
-main.c:adamic_method_69
+main.c:adamic_method_______typescript_scanner_scanner_ts_Scanner_unicode_83d6b294927ea3d6e8cefd01a2967ed4
 # Func Hash:
 24
 # Num Counters:
@@ -11407,7 +13902,7 @@ main.c:adamic_method_69
 # Counter Values:
 0
 
-main.c:adamic_method_70
+main.c:adamic_method_context_a_Context_arguments_6fdb483cdd9122429b83eac6c3d2663b
 # Func Hash:
 24
 # Num Counters:
@@ -11415,7 +13910,7 @@ main.c:adamic_method_70
 # Counter Values:
 0
 
-main.c:adamic_method_73
+main.c:adamic_method_context_a_Context_child_20ba6c9714023acc8cd70fbd89e0a188
 # Func Hash:
 24
 # Num Counters:
@@ -11423,7 +13918,7 @@ main.c:adamic_method_73
 # Counter Values:
 0
 
-main.c:adamic_method_74
+main.c:adamic_method_context_a_Context_children_f8c3512dbf133c0c1298610ce6540b7e
 # Func Hash:
 24
 # Num Counters:
@@ -11431,7 +13926,7 @@ main.c:adamic_method_74
 # Counter Values:
 0
 
-main.c:adamic_method_75
+main.c:adamic_method_context_a_Context_edit_d86e0f56c10e55cccd3d97ce39d58e6c
 # Func Hash:
 24
 # Num Counters:
@@ -11439,7 +13934,7 @@ main.c:adamic_method_75
 # Counter Values:
 0
 
-main.c:adamic_method_76
+main.c:adamic_method_context_a_Context_enabled_a96e7d5ddd3654790059058664d9aec1
 # Func Hash:
 24
 # Num Counters:
@@ -11447,7 +13942,7 @@ main.c:adamic_method_76
 # Counter Values:
 0
 
-main.c:adamic_method_77
+main.c:adamic_method_context_a_Context_extendsClass_bab2e7901a3e5f0820c3c629c4643b72
 # Func Hash:
 24
 # Num Counters:
@@ -11455,7 +13950,7 @@ main.c:adamic_method_77
 # Counter Values:
 0
 
-main.c:adamic_method_78
+main.c:adamic_method_context_a_Context_initializer_d9addfef56708edbfd1132c5cee6ab57
 # Func Hash:
 24
 # Num Counters:
@@ -11463,7 +13958,7 @@ main.c:adamic_method_78
 # Counter Values:
 0
 
-main.c:adamic_method_79
+main.c:adamic_method_context_a_Context_kind_c59c423a30caa21de900164ebe900607
 # Func Hash:
 24
 # Num Counters:
@@ -11471,7 +13966,7 @@ main.c:adamic_method_79
 # Counter Values:
 0
 
-main.c:adamic_method_80
+main.c:adamic_method_context_a_Context_line_6d84f5f7785b1b546e083b67a1d91d05
 # Func Hash:
 24
 # Num Counters:
@@ -11479,7 +13974,7 @@ main.c:adamic_method_80
 # Counter Values:
 0
 
-main.c:adamic_method_81
+main.c:adamic_method_context_a_Context_mapParents_5d00bb760f173615fd0f22a0cf8cd08a
 # Func Hash:
 24
 # Num Counters:
@@ -11487,7 +13982,7 @@ main.c:adamic_method_81
 # Counter Values:
 0
 
-main.c:adamic_method_82
+main.c:adamic_method_context_a_Context_markReported_78006a442551e1466876b5c499483d43
 # Func Hash:
 24
 # Num Counters:
@@ -11495,7 +13990,7 @@ main.c:adamic_method_82
 # Counter Values:
 0
 
-main.c:adamic_method_83
+main.c:adamic_method_context_a_Context_memberName_042a395af48850a2631880bff0cc9601
 # Func Hash:
 24
 # Num Counters:
@@ -11503,7 +13998,7 @@ main.c:adamic_method_83
 # Counter Values:
 0
 
-main.c:adamic_method_84
+main.c:adamic_method_context_a_Context_members_1e1aa23f98f6b54a3140e16bfdce1b3e
 # Func Hash:
 24
 # Num Counters:
@@ -11511,7 +14006,7 @@ main.c:adamic_method_84
 # Counter Values:
 0
 
-main.c:adamic_method_85
+main.c:adamic_method_context_a_Context_name_f5fb95259000bea723703f85aafaf6a3
 # Func Hash:
 24
 # Num Counters:
@@ -11519,7 +14014,7 @@ main.c:adamic_method_85
 # Counter Values:
 0
 
-main.c:adamic_method_86
+main.c:adamic_method_context_a_Context_node_b0770f3c4d03b347201630b336071c33
 # Func Hash:
 24
 # Num Counters:
@@ -11527,7 +14022,7 @@ main.c:adamic_method_86
 # Counter Values:
 0
 
-main.c:adamic_method_87
+main.c:adamic_method_context_a_Context_parent_26a402203e67f274b56ea4c2eaa12e2c
 # Func Hash:
 24
 # Num Counters:
@@ -11535,7 +14030,7 @@ main.c:adamic_method_87
 # Counter Values:
 0
 
-main.c:adamic_method_88
+main.c:adamic_method_context_a_Context_property_05e11e899c3c213f1e9f4c27b81d7e02
 # Func Hash:
 24
 # Num Counters:
@@ -11543,7 +14038,7 @@ main.c:adamic_method_88
 # Counter Values:
 0
 
-main.c:adamic_method_89
+main.c:adamic_method_context_a_Context_questionDot_cf45cd4f855b90238f30e13bd0dfb57c
 # Func Hash:
 24
 # Num Counters:
@@ -11551,7 +14046,7 @@ main.c:adamic_method_89
 # Counter Values:
 0
 
-main.c:adamic_method_90
+main.c:adamic_method_context_a_Context_range_06b51da8510bedd6df1d9eadf617cc40
 # Func Hash:
 24
 # Num Counters:
@@ -11559,7 +14054,7 @@ main.c:adamic_method_90
 # Counter Values:
 0
 
-main.c:adamic_method_91
+main.c:adamic_method_context_a_Context_raw_54fce6d9c7c7723c3ca65ef1f731d866
 # Func Hash:
 24
 # Num Counters:
@@ -11567,7 +14062,7 @@ main.c:adamic_method_91
 # Counter Values:
 0
 
-main.c:adamic_method_93
+main.c:adamic_method_context_a_Context_report_bc4770f342240052db38b0bfdb283e7a
 # Func Hash:
 24
 # Num Counters:
@@ -11575,7 +14070,7 @@ main.c:adamic_method_93
 # Counter Values:
 0
 
-main.c:adamic_method_94
+main.c:adamic_method_context_a_Context_scanAt_c691887175a71dc437e05bee157e6b0e
 # Func Hash:
 24
 # Num Counters:
@@ -11583,7 +14078,7 @@ main.c:adamic_method_94
 # Counter Values:
 0
 
-main.c:adamic_method_95
+main.c:adamic_method_context_a_Context_scanEnd_bb8588d12e912f3061fc989c4061b704
 # Func Hash:
 24
 # Num Counters:
@@ -11591,7 +14086,7 @@ main.c:adamic_method_95
 # Counter Values:
 0
 
-main.c:adamic_method_96
+main.c:adamic_method_context_a_Context_scanKind_1af00e60902147c6f9adc24fa8ef5116
 # Func Hash:
 24
 # Num Counters:
@@ -11599,7 +14094,7 @@ main.c:adamic_method_96
 # Counter Values:
 0
 
-main.c:adamic_method_97
+main.c:adamic_method_context_a_Context_scanStart_fa2edaf183a6e81b12a5335cdb54a3df
 # Func Hash:
 24
 # Num Counters:
@@ -11607,7 +14102,7 @@ main.c:adamic_method_97
 # Counter Values:
 0
 
-main.c:adamic_method_98
+main.c:adamic_method_context_a_Context_start_95130ebdf8110f8316e4c1eb3512b16b
 # Func Hash:
 24
 # Num Counters:
@@ -11615,7 +14110,7 @@ main.c:adamic_method_98
 # Counter Values:
 0
 
-main.c:adamic_method_99
+main.c:adamic_method_context_a_Context_unwrap_cf6258337941e4d0ffaa8c8098b557ab
 # Func Hash:
 24
 # Num Counters:
@@ -11629,7 +14124,7 @@ main.c:adamic_object_check_data_write
 # Num Counters:
 2
 # Counter Values:
-7554413
+7554843
 0
 
 main.c:adamic_object_data_field
@@ -11638,21 +14133,48 @@ main.c:adamic_object_data_field
 # Num Counters:
 2
 # Counter Values:
-1430623
-1430532
+1430661
+1430569
+
+main.c:adamic_release
+# Func Hash:
+7657928893062362940
+# Num Counters:
+7
+# Counter Values:
+7023226
+587
+7022639
+3828557
+3032873
+3032873
+3032873
+
+main.c:adamic_retain
+# Func Hash:
+17256814612385316747
+# Num Counters:
+5
+# Counter Values:
+7803620
+0
+7803620
+3913278
+3890342
 
 main.c:adamic_string_char_code_at
 # Func Hash:
-16751073192097028598
+1708960477629031224
 # Num Counters:
-13
+16
 # Counter Values:
-3830622
-3737214
-3737253
-3737214
-3737253
-3737253
+3830604
+3737196
+3737235
+3737196
+3737235
+3737235
+0
 93367
 93368
 93367
@@ -11660,6 +14182,21 @@ main.c:adamic_string_char_code_at
 93368
 93368
 93368
+0
+93367
+
+main.c:adamic_string_known_units
+# Func Hash:
+3693925817817154517
+# Num Counters:
+6
+# Counter Values:
+2052245
+1926042
+0
+0
+0
+0
 
 main.c:adamic_string_length
 # Func Hash:
@@ -11667,8 +14204,18 @@ main.c:adamic_string_length
 # Num Counters:
 2
 # Counter Values:
-2052248
-2052202
+2052245
+1926042
+
+map.c:adamic_graph_is
+# Func Hash:
+6350880
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
 
 map.c:adamic_object_data_field
 # Func Hash:
@@ -11690,6 +14237,32 @@ map.c:adamic_object_field
 0
 0
 
+map.c:adamic_release
+# Func Hash:
+7657928893062362940
+# Num Counters:
+7
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+
+map.c:adamic_retain
+# Func Hash:
+17256814612385316747
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
 map.c:allocate_zeroed
 # Func Hash:
 175973464
@@ -11705,13 +14278,13 @@ map.c:find
 # Num Counters:
 7
 # Counter Values:
-222605
+222603
 2
-260045
-74749
-147854
-185296
-147854
+260233
+74695
+147906
+185538
+147906
 
 map.c:hash_key
 # Func Hash:
@@ -11719,11 +14292,11 @@ map.c:hash_key
 # Num Counters:
 8
 # Counter Values:
-222925
+222924
 0
-222925
+222924
 0
-1116450
+1116459
 0
 0
 0
@@ -11766,9 +14339,31 @@ map.c:same_key
 # Num Counters:
 8
 # Counter Values:
-185296
+185538
 0
-185296
+185538
+0
+0
+0
+0
+0
+
+map_set.c:adamic_graph_is
+# Func Hash:
+6350880
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+map_set.c:adamic_retain
+# Func Hash:
+17256814612385316747
+# Num Counters:
+5
+# Counter Values:
 0
 0
 0
@@ -11823,6 +14418,18 @@ normalize.c:accept_point
 # Num Counters:
 4
 # Counter Values:
+0
+0
+0
+0
+
+normalize.c:adamic_retain
+# Func Hash:
+17256814612385316747
+# Num Counters:
+5
+# Counter Values:
+0
 0
 0
 0
@@ -12178,6 +14785,219 @@ object.c:adamic_object_field
 0
 0
 
+object.c:adamic_retain
+# Func Hash:
+17256814612385316747
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
+object.c:callee_cache_miss
+# Func Hash:
+3343417153716418843
+# Num Counters:
+14
+# Counter Values:
+307
+307
+2607
+2913
+2607
+307
+0
+0
+0
+0
+0
+0
+0
+307
+
+parallel.c:adamic_release
+# Func Hash:
+7657928893062362940
+# Num Counters:
+7
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+
+parallel.c:append
+# Func Hash:
+176235729
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+parallel.c:available_threads
+# Func Hash:
+8749776999075208306
+# Num Counters:
+40
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+parallel.c:claim
+# Func Hash:
+814775907383973841
+# Num Counters:
+8
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+
+parallel.c:execute_range
+# Func Hash:
+12387510159052325009
+# Num Counters:
+8
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+
+parallel.c:new_range
+# Func Hash:
+175973464
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+parallel.c:parallel_map
+# Func Hash:
+6749025310091087476
+# Num Counters:
+14
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+parallel.c:remove_range
+# Func Hash:
+189231673286665425
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+parallel.c:start
+# Func Hash:
+9064316384933885321
+# Num Counters:
+6
+# Counter Values:
+0
+0
+0
+0
+0
+0
+
+parallel.c:worker_main
+# Func Hash:
+4449187245370829434
+# Num Counters:
+6
+# Counter Values:
+0
+0
+0
+0
+0
+0
+
+parse.c:adamic_release
+# Func Hash:
+7657928893062362940
+# Num Counters:
+7
+# Counter Values:
+936
+0
+936
+936
+0
+0
+0
+
 parse.c:base_ten
 # Func Hash:
 484930624615056076
@@ -12336,6 +15156,147 @@ radix.c:radix_result
 # Num Counters:
 1
 # Counter Values:
+0
+
+record.c:adamic_retain
+# Func Hash:
+17256814612385316747
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
+record.c:array_index
+# Func Hash:
+11551027610594302340
+# Num Counters:
+12
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+record.c:check_missing_member
+# Func Hash:
+42129
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+record.c:compare_indices
+# Func Hash:
+406172508
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+record.c:named
+# Func Hash:
+6350815
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
+record.c:prototype_member
+# Func Hash:
+1246670697873713918
+# Num Counters:
+19
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+record.c:table
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
+0
+
+regexp.c:adamic_is_shared
+# Func Hash:
+1568
+# Num Counters:
+1
+# Counter Values:
+0
+
+regexp.c:adamic_release
+# Func Hash:
+7657928893062362940
+# Num Counters:
+7
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+
+regexp.c:adamic_retain
+# Func Hash:
+17256814612385316747
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
+regexp.c:adamic_string_known_units
+# Func Hash:
+3693925817817154517
+# Num Counters:
+6
+# Counter Values:
+0
+0
+0
+0
+0
 0
 
 regexp.c:adamic_string_length
@@ -12623,7 +15584,7 @@ regexp.c:regex_result
 
 regexp.c:regex_run
 # Func Hash:
-5646843751117211753
+1689853090156409928
 # Num Counters:
 99
 # Counter Values:
@@ -12811,12 +15772,119 @@ regexp.c:regex_workspace_destroy
 0
 0
 
+region.c:adamic_release
+# Func Hash:
+7657928893062362940
+# Num Counters:
+7
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+
+region.c:allocate_in
+# Func Hash:
+11330190503439216120
+# Num Counters:
+8
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+
+region.c:object_new
+# Func Hash:
+2952352217244760
+# Num Counters:
+3
+# Counter Values:
+0
+0
+0
+
 region.c:object_size
 # Func Hash:
 24
 # Num Counters:
 1
 # Counter Values:
+0
+
+set.c:adamic_retain
+# Func Hash:
+17256814612385316747
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
+share.c:adamic_is_shared
+# Func Hash:
+1568
+# Num Counters:
+1
+# Counter Values:
+0
+
+share.c:adamic_reference_count
+# Func Hash:
+1549
+# Num Counters:
+2
+# Counter Values:
+0
+0
+
+share.c:append
+# Func Hash:
+1312412812656951246
+# Num Counters:
+8
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+
+share.c:seen_slot
+# Func Hash:
+24
+# Num Counters:
+1
+# Counter Values:
+0
+
+share.c:visited
+# Func Hash:
+17097605960817826171
+# Num Counters:
+9
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
 0
 
 sort.c:balanced
@@ -13043,6 +16111,20 @@ sort.c:sorted_or_stopped
 0
 0
 
+sort_undefined.c:adamic_release
+# Func Hash:
+7657928893062362940
+# Num Counters:
+7
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+
 spread.c:numbers
 # Func Hash:
 242959035283911768
@@ -13056,9 +16138,9 @@ spread.c:numbers
 
 stack.c:find_stack_limit
 # Func Hash:
-10993628366914849568
+8080986950592253857
 # Num Counters:
-11
+13
 # Counter Values:
 1
 1
@@ -13067,16 +16149,66 @@ stack.c:find_stack_limit
 1
 1
 1
+1
+0
 0
 1
 1
 1
 
+stack.c:reach
+# Func Hash:
+11347906687978917
+# Num Counters:
+7
+# Counter Values:
+2
+72
+74
+72
+72
+72
+72
+
+string.c:adamic_is_shared
+# Func Hash:
+1568
+# Num Counters:
+1
+# Counter Values:
+0
+
+string.c:adamic_release
+# Func Hash:
+7657928893062362940
+# Num Counters:
+7
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+
+string.c:adamic_retain
+# Func Hash:
+17256814612385316747
+# Num Counters:
+5
+# Counter Values:
+347
+0
+347
+0
+347
+
 string.c:adamic_string_char_code_at
 # Func Hash:
-16751073192097028598
+1708960477629031224
 # Num Counters:
-13
+16
 # Counter Values:
 0
 0
@@ -13087,6 +16219,22 @@ string.c:adamic_string_char_code_at
 0
 0
 0
+0
+0
+0
+0
+0
+0
+0
+
+string.c:adamic_string_known_units
+# Func Hash:
+3693925817817154517
+# Num Counters:
+6
+# Counter Values:
+104781
+104781
 0
 0
 0
@@ -13123,11 +16271,10 @@ string.c:allocate
 
 string.c:ascii_character
 # Func Hash:
-175973464
+24
 # Num Counters:
-2
+1
 # Counter Values:
-0
 0
 
 string.c:builder_add
@@ -13187,9 +16334,9 @@ string.c:decode
 # Num Counters:
 5
 # Counter Values:
-378426
+399953
 0
-378426
+399953
 0
 0
 
@@ -13199,12 +16346,12 @@ string.c:halves_pairs
 # Num Counters:
 10
 # Counter Values:
-39270
-3040
-377490
-36230
-36230
-36230
+39479
+0
+399017
+39479
+39479
+39479
 0
 0
 0
@@ -13270,8 +16417,8 @@ string.c:sequence
 # Num Counters:
 4
 # Counter Values:
-459574
-459574
+481861
+481861
 0
 0
 
@@ -13330,9 +16477,9 @@ string.c:units_next
 # Num Counters:
 4
 # Counter Values:
-413720
+438496
 0
-36230
+39479
 0
 
 string.c:units_piece
@@ -13350,7 +16497,51 @@ string.c:units_start
 # Num Counters:
 1
 # Counter Values:
-36230
+39479
+
+string_append.c:adamic_is_shared
+# Func Hash:
+1568
+# Num Counters:
+1
+# Counter Values:
+501
+
+string_append.c:adamic_reference_count
+# Func Hash:
+1549
+# Num Counters:
+2
+# Counter Values:
+501
+0
+
+string_append.c:adamic_release
+# Func Hash:
+7657928893062362940
+# Num Counters:
+7
+# Counter Values:
+499
+0
+499
+0
+460
+460
+460
+
+string_append.c:adamic_string_known_units
+# Func Hash:
+3693925817817154517
+# Num Counters:
+6
+# Counter Values:
+0
+0
+0
+0
+0
+0
 
 string_append.c:adamic_string_length
 # Func Hash:
@@ -13369,6 +16560,27 @@ string_append.c:grown
 # Counter Values:
 499
 
+string_from.c:adamic_is_shared
+# Func Hash:
+1568
+# Num Counters:
+1
+# Counter Values:
+0
+
+string_from.c:adamic_string_known_units
+# Func Hash:
+3693925817817154517
+# Num Counters:
+6
+# Counter Values:
+0
+0
+0
+0
+0
+0
+
 string_from.c:adamic_string_length
 # Func Hash:
 99168
@@ -13378,13 +16590,36 @@ string_from.c:adamic_string_length
 0
 0
 
+string_index.c:adamic_is_shared
+# Func Hash:
+1568
+# Num Counters:
+1
+# Counter Values:
+271842
+
+string_index.c:adamic_reference_count
+# Func Hash:
+1549
+# Num Counters:
+2
+# Counter Values:
+127734
+0
+
 string_index.c:build
 # Func Hash:
-15322663844323843545
+5060448524182212781
 # Num Counters:
-14
+20
 # Counter Values:
 1
+1
+1
+1
+1
+1
+0
 0
 41244
 0
@@ -13399,25 +16634,49 @@ string_index.c:build
 1
 0
 
+string_index.c:cached
+# Func Hash:
+1549
+# Num Counters:
+2
+# Counter Values:
+5358
+0
+
+string_index.c:shared_index
+# Func Hash:
+13148966255668053418
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
 string_index.c:usable
 # Func Hash:
-12303938894805796785
+16008314840925034232
 # Num Counters:
-13
+16
 # Counter Values:
 1
 0
 0
 0
-1
-1
-1
-1
-1
-1
-1
-1
 0
+0
+0
+1
+1
+1
+1
+1
+1
+1
+1
+1
 
 string_index.c:width
 # Func Hash:
@@ -13425,10 +16684,255 @@ string_index.c:width
 # Num Counters:
 4
 # Counter Values:
-169026
-169023
+280353
+280351
 0
-3
+2
+
+string_share.c:adamic_is_shared
+# Func Hash:
+1568
+# Num Counters:
+1
+# Counter Values:
+106808
+
+string_share.c:adamic_reference_count
+# Func Hash:
+1549
+# Num Counters:
+2
+# Counter Values:
+106808
+0
+
+string_share.c:adamic_retain
+# Func Hash:
+17256814612385316747
+# Num Counters:
+5
+# Counter Values:
+3338
+0
+3338
+3337
+1
+
+typed_array.c:adamic_retain
+# Func Hash:
+17256814612385316747
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
+typed_array.c:allocate
+# Func Hash:
+16848572178363596659
+# Num Counters:
+4
+# Counter Values:
+0
+0
+0
+0
+
+typed_array.c:range_error
+# Func Hash:
+0
+# Num Counters:
+1
+# Counter Values:
+0
+
+typed_array.c:read_element
+# Func Hash:
+2007167471288856
+# Num Counters:
+6
+# Counter Values:
+0
+0
+0
+0
+0
+0
+
+typed_array.c:relative
+# Func Hash:
+237121933256545118
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
+typed_array.c:valid_index
+# Func Hash:
+26008479455
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
+typed_array.c:width
+# Func Hash:
+2007167471288856
+# Num Counters:
+6
+# Counter Values:
+0
+0
+0
+0
+0
+0
+
+typed_array.c:write_element
+# Func Hash:
+17751113242712976239
+# Num Counters:
+9
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+typed_array_sort.c:before_float64
+# Func Hash:
+5195308039620305420
+# Num Counters:
+8
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+
+typed_array_sort.c:sort_float64
+# Func Hash:
+15560468694208361489
+# Num Counters:
+13
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+typed_array_sort.c:sort_int32
+# Func Hash:
+3610706313688042081
+# Num Counters:
+13
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+typed_array_sort.c:sort_uint16
+# Func Hash:
+3610706313688042081
+# Num Counters:
+13
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+typed_array_sort.c:sort_uint8
+# Func Hash:
+3610706313688042081
+# Num Counters:
+13
+# Counter Values:
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+union.c:adamic_retain
+# Func Hash:
+17256814612385316747
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
+
+weak.c:adamic_retain
+# Func Hash:
+17256814612385316747
+# Num Counters:
+5
+# Counter Values:
+0
+0
+0
+0
+0
 
 weak.c:find
 # Func Hash:
