@@ -34,7 +34,12 @@ func adaptSource(source string) adapted {
 	if parsed.failed || len(parsed.edits) == 0 {
 		return adapted{Source: source}
 	}
-	return adapted{Source: applyEdits(source, parsed.edits), Counts: parsed.counts}
+	rewritten := applyEdits(source, parsed.edits)
+	if date, count := adaptDateLocals(rewritten); count > 0 {
+		rewritten = date
+		parsed.counts["date-local"] = count
+	}
+	return adapted{Source: rewritten, Counts: parsed.counts}
 }
 
 type edit struct {

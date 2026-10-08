@@ -1,0 +1,8 @@
+=== RUN   TestSentinelHarnessAgreesWithOriginal
+=== PAUSE TestSentinelHarnessAgreesWithOriginal
+=== CONT  TestSentinelHarnessAgreesWithOriginal
+    adapt_date_test.go:65: rewritten harness must type-check: /tmp/adamic-gate/TestSentinelHarnessAgreesWithOriginal1762390449/002/program.ts:105:40: error TS2869: Right operand of ?? is unreachable because the left operand is never nullish.
+--- FAIL: TestSentinelHarnessAgreesWithOriginal (0.29s)
+FAIL
+FAIL    github.com/system-inc/adamic/cmd/adamic-test262 0.304s
+FAIL

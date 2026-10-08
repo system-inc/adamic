@@ -1,0 +1,5 @@
+=== RUN   TestDateCompleteAudit
+    date_complete_audit_test.go:26: verified 324 ordinary sources byte-identical and re-audited 324 adapted sources
+--- PASS: TestDateCompleteAudit (39.25s)
+PASS
+ok      github.com/system-inc/adamic/cmd/adamic-test262 39.258s

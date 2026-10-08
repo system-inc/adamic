@@ -1,0 +1,265 @@
+=== RUN   TestDateMutationRanges
+=== PAUSE TestDateMutationRanges
+=== RUN   TestEveryMutationIsInItsRange
+=== PAUSE TestEveryMutationIsInItsRange
+=== RUN   TestEveryPathNodeTakesIsInTheGraph
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph
+=== RUN   TestLivenessHoldsOnEveryPath
+=== PAUSE TestLivenessHoldsOnEveryPath
+=== CONT  TestDateMutationRanges
+=== CONT  TestEveryPathNodeTakesIsInTheGraph
+=== CONT  TestLivenessHoldsOnEveryPath
+=== RUN   TestLivenessHoldsOnEveryPath/programs
+=== CONT  TestEveryMutationIsInItsRange
+=== RUN   TestEveryMutationIsInItsRange/programs
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_calendar.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_calendar.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_construct.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_construct.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_days.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_days.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_dynamic_parse.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_dynamic_parse.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_format.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_format.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_get.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_get.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_invalid_iso.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_invalid_iso.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_iso.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_iso.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_json.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_json.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_limits.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_limits.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_metadata.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_metadata.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_number.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_number.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_parse.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_parse.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_calendar.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_calendar.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_parse_frac.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_parse_frac.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_construct.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_construct.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_days.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_days.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_dynamic_parse.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_dynamic_parse.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_format.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_format.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_get.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_get.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_invalid_iso.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_invalid_iso.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_iso.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_iso.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_past.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_past.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_json.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_json.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_set.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_set.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_limits.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_utc.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_utc.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_limits.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_metadata.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_calendar.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_calendar.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_construct.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_construct.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_days.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_days.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_dynamic_parse.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_dynamic_parse.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_metadata.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_format.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_format.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_number.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_number.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_parse.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_parse.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_get.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_get.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_parse_frac.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_parse_frac.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_invalid_iso.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_invalid_iso.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_iso.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_iso.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_json.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_json.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_limits.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_limits.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_metadata.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_metadata.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_number.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_number.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_parse.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_parse.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_parse_frac.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_parse_frac.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_past.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_past.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_set.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_set.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_utc.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_utc.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_past.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_past.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_set.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_set.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_utc.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_utc.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_calendar.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_limits.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_past.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_parse.a
+=== NAME  TestDateMutationRanges
+    library_date_test.go:52: Node observed 92 Date mutations, all inside their ranges
+--- PASS: TestDateMutationRanges (0.67s)
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_parse_frac.a
+=== NAME  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_calendar.a
+    trace_test.go:50: 652 points walked, 879 events
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_number.a
+=== NAME  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_limits.a
+    trace_test.go:50: 13 points walked, 18 events
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_utc.a
+=== NAME  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_past.a
+    trace_test.go:50: 4 points walked, 5 events
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_metadata.a
+=== NAME  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_parse.a
+    trace_test.go:50: 53 points walked, 54 events
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_get.a
+=== NAME  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_number.a
+    trace_test.go:50: 62 points walked, 113 events
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_json.a
+=== NAME  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_metadata.a
+    trace_test.go:50: 42 points walked, 45 events
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_iso.a
+=== NAME  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_get.a
+    trace_test.go:50: 37 points walked, 38 events
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_invalid_iso.a
+=== NAME  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_parse_frac.a
+    trace_test.go:50: 181 points walked, 182 events
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_dynamic_parse.a
+=== NAME  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_json.a
+    trace_test.go:50: 142 points walked, 180 events
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_format.a
+=== NAME  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_utc.a
+    trace_test.go:50: 295 points walked, 296 events
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_set.a
+    trace_test.go:50: 126 points walked, 221 events
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_days.a
+=== NAME  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_format.a
+    trace_test.go:50: 55 points walked, 56 events
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_construct.a
+=== NAME  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_invalid_iso.a
+    trace_test.go:50: 2 points walked, 3 events
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_calendar.a
+=== NAME  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_iso.a
+    trace_test.go:50: 17 points walked, 18 events
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_limits.a
+=== NAME  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_dynamic_parse.a
+    trace_test.go:50: 3399 points walked, 5980 events
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_parse_frac.a
+=== NAME  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_construct.a
+    trace_test.go:50: 55 points walked, 56 events
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_utc.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_set.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_past.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_get.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_json.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_iso.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_invalid_iso.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_number.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_parse.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_metadata.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_dynamic_parse.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_format.a
+=== NAME  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_days.a
+    trace_test.go:50: 538726 points walked, 738263 events
+--- PASS: TestEveryPathNodeTakesIsInTheGraph (0.25s)
+    --- PASS: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_calendar.a (0.52s)
+    --- PASS: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_limits.a (0.61s)
+    --- PASS: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_past.a (0.60s)
+    --- PASS: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_parse.a (0.61s)
+    --- PASS: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_number.a (0.48s)
+    --- PASS: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_metadata.a (0.43s)
+    --- PASS: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_get.a (0.43s)
+    --- PASS: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_parse_frac.a (0.79s)
+    --- PASS: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_json.a (0.23s)
+    --- PASS: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_utc.a (0.71s)
+    --- PASS: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_set.a (0.37s)
+    --- PASS: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_format.a (0.49s)
+    --- PASS: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_invalid_iso.a (0.58s)
+    --- PASS: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_iso.a (0.60s)
+    --- PASS: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_dynamic_parse.a (0.80s)
+    --- PASS: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_construct.a (0.48s)
+    --- PASS: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_days.a (2.05s)
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_days.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_construct.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_calendar.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_limits.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_utc.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_set.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_past.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_parse_frac.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_parse.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_number.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_metadata.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_get.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_json.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_iso.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_invalid_iso.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_dynamic_parse.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_format.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_days.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_construct.a
+=== NAME  TestEveryMutationIsInItsRange
+    ranges_test.go:78: 99 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+--- PASS: TestEveryMutationIsInItsRange (7.47s)
+    --- PASS: TestEveryMutationIsInItsRange/programs (0.30s)
+        --- PASS: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_calendar.a (0.67s)
+        --- PASS: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_parse_frac.a (0.42s)
+        --- PASS: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_limits.a (0.75s)
+        --- PASS: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_utc.a (0.46s)
+        --- PASS: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_get.a (0.35s)
+        --- PASS: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_past.a (0.49s)
+        --- PASS: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_set.a (0.61s)
+        --- PASS: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_json.a (0.60s)
+        --- PASS: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_invalid_iso.a (0.75s)
+        --- PASS: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_number.a (0.68s)
+        --- PASS: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_iso.a (0.86s)
+        --- PASS: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_parse.a (0.61s)
+        --- PASS: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_format.a (0.53s)
+        --- PASS: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_construct.a (0.73s)
+        --- PASS: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_dynamic_parse.a (1.41s)
+        --- PASS: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_metadata.a (1.41s)
+        --- PASS: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_date_days.a (2.61s)
+=== NAME  TestLivenessHoldsOnEveryPath
+    trace_test.go:424: 967904 variable-and-point pairs checked
+--- PASS: TestLivenessHoldsOnEveryPath (8.72s)
+    --- PASS: TestLivenessHoldsOnEveryPath/programs (0.36s)
+        --- PASS: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_calendar.a (1.13s)
+        --- PASS: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_limits.a (0.97s)
+        --- PASS: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_utc.a (0.69s)
+        --- PASS: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_past.a (0.57s)
+        --- PASS: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_set.a (0.90s)
+        --- PASS: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_parse_frac.a (0.48s)
+        --- PASS: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_parse.a (0.64s)
+        --- PASS: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_number.a (0.60s)
+        --- PASS: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_json.a (0.30s)
+        --- PASS: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_get.a (0.68s)
+        --- PASS: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_metadata.a (0.81s)
+        --- PASS: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_iso.a (0.68s)
+        --- PASS: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_format.a (0.50s)
+        --- PASS: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_invalid_iso.a (0.69s)
+        --- PASS: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_dynamic_parse.a (0.84s)
+        --- PASS: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_construct.a (0.49s)
+        --- PASS: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_date_days.a (1.67s)
+PASS
+ok      github.com/system-inc/adamic/internal/flow  8.829s

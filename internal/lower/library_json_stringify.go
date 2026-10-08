@@ -341,6 +341,12 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 	if t.Flags()&checker.TypeFlagsNever != 0 {
 		return &ir.JSONSchema{Kind: "undefined"}, nil
 	}
+	if l.isLibraryType(l.checker.GetNonNullableType(t), "Date") {
+		if l.includesUndefined(t) || l.includesNull(t) {
+			return nil, l.notYet(node, "JSON.stringify an optional Date")
+		}
+		return &ir.JSONSchema{Kind: "date"}, nil
+	}
 	of, known := l.representation(t)
 	if !known {
 		return nil, l.notYet(node, "JSON.stringify a value of type "+l.checker.TypeToString(t))

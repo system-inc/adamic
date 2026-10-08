@@ -755,6 +755,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "String.fromCharCode(" + codes + ")"
 	case ir.NodeBufferCall:
 		return e.nodeBufferCall(expression)
+	case ir.DateCall:
+		return e.dateCall(expression)
 	case ir.ObjectCall:
 		if expression.Method == "definePropertyError" {
 			return "adamicDefinePropertyError(" + e.values(expression.Arguments) + ")"

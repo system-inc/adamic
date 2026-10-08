@@ -1,0 +1,12 @@
+=== RUN   TestEveryPathNodeTakesIsInTheGraph
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph
+=== CONT  TestEveryPathNodeTakesIsInTheGraph
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_days.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_days.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_days.a
+    trace_test.go:36: open /tmp/adamic-gate/TestEveryPathNodeTakesIsInTheGraph..oracletestdatalibrary_da37992040/001/trace.txt: no such file or directory
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph (0.02s)
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_days.a (36.48s)
+FAIL
+FAIL    github.com/system-inc/adamic/internal/flow  36.527s
+FAIL

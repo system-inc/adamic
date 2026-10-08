@@ -1,0 +1,11 @@
+=== RUN   TestEveryPathNodeTakesIsInTheGraph
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph
+=== CONT  TestEveryPathNodeTakesIsInTheGraph
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_days.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_days.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_days.a
+    trace_test.go:50: 538726 points walked, 738263 events
+--- PASS: TestEveryPathNodeTakesIsInTheGraph (0.03s)
+    --- PASS: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_date_days.a (0.98s)
+PASS
+ok      github.com/system-inc/adamic/internal/flow  1.030s

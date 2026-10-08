@@ -1,0 +1,188 @@
+=== RUN   TestDateOracleCatchesMutants
+=== PAUSE TestDateOracleCatchesMutants
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestDateOracleCatchesMutants
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestDateOracleCatchesMutants/number_date
+=== PAUSE TestDateOracleCatchesMutants/number_date
+=== RUN   TestDateOracleCatchesMutants/metadata_name
+=== PAUSE TestDateOracleCatchesMutants/metadata_name
+=== RUN   TestDateOracleCatchesMutants/metadata_length
+=== PAUSE TestDateOracleCatchesMutants/metadata_length
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_metadata.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_metadata.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_number.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_number.a
+=== RUN   TestDateOracleCatchesMutants/metadata_own
+=== PAUSE TestDateOracleCatchesMutants/metadata_own
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_json.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_json.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_dynamic_parse.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_dynamic_parse.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_format.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_format.a
+=== RUN   TestDateOracleCatchesMutants/nullable_typeof
+=== PAUSE TestDateOracleCatchesMutants/nullable_typeof
+=== RUN   TestDateOracleCatchesMutants/nullable_number
+=== PAUSE TestDateOracleCatchesMutants/nullable_number
+=== RUN   TestDateOracleCatchesMutants/nullable_stringify
+=== PAUSE TestDateOracleCatchesMutants/nullable_stringify
+=== RUN   TestDateOracleCatchesMutants/date_stringify
+=== PAUSE TestDateOracleCatchesMutants/date_stringify
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_construct.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_construct.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_utc.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_utc.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_get.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_get.a
+=== RUN   TestDateOracleCatchesMutants/toJSON
+=== PAUSE TestDateOracleCatchesMutants/toJSON
+=== RUN   TestDateOracleCatchesMutants/dynamic_parse
+=== PAUSE TestDateOracleCatchesMutants/dynamic_parse
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_set.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_set.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_iso.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_iso.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_parse.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_parse.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_invalid_iso.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_invalid_iso.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_days.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_days.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_calendar.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_calendar.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_limits.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_limits.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_past.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_past.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_parse_frac.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_parse_frac.a
+=== RUN   TestDateOracleCatchesMutants/constructor_clip
+=== PAUSE TestDateOracleCatchesMutants/constructor_clip
+=== RUN   TestDateOracleCatchesMutants/UTC
+=== PAUSE TestDateOracleCatchesMutants/UTC
+=== RUN   TestDateOracleCatchesMutants/invalid_NaN
+=== PAUSE TestDateOracleCatchesMutants/invalid_NaN
+=== RUN   TestDateOracleCatchesMutants/getters
+=== PAUSE TestDateOracleCatchesMutants/getters
+=== RUN   TestDateOracleCatchesMutants/setters
+=== PAUSE TestDateOracleCatchesMutants/setters
+=== RUN   TestDateOracleCatchesMutants/iso_format
+=== PAUSE TestDateOracleCatchesMutants/iso_format
+=== RUN   TestDateOracleCatchesMutants/format
+=== PAUSE TestDateOracleCatchesMutants/format
+=== RUN   TestDateOracleCatchesMutants/parse
+=== PAUSE TestDateOracleCatchesMutants/parse
+=== CONT  TestDateOracleCatchesMutants/number_date
+=== CONT  TestDateOracleCatchesMutants/constructor_clip
+=== CONT  TestDateOracleCatchesMutants/nullable_number
+=== CONT  TestDateOracleCatchesMutants/toJSON
+=== CONT  TestDateOracleCatchesMutants/date_stringify
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/iso_format
+=== NAME  TestDateOracleCatchesMutants/constructor_clip
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/parse
+=== NAME  TestDateOracleCatchesMutants/toJSON
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/format
+=== NAME  TestDateOracleCatchesMutants/number_date
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/getters
+=== NAME  TestDateOracleCatchesMutants/nullable_number
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/setters
+=== NAME  TestDateOracleCatchesMutants/parse
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/invalid_NaN
+=== NAME  TestDateOracleCatchesMutants/iso_format
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/nullable_stringify
+=== NAME  TestDateOracleCatchesMutants/getters
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/UTC
+=== NAME  TestDateOracleCatchesMutants/format
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/metadata_length
+=== NAME  TestDateOracleCatchesMutants/setters
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/nullable_typeof
+=== NAME  TestDateOracleCatchesMutants/invalid_NaN
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/metadata_own
+=== NAME  TestDateOracleCatchesMutants/metadata_length
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/metadata_name
+=== NAME  TestDateOracleCatchesMutants/UTC
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/dynamic_parse
+=== NAME  TestDateOracleCatchesMutants/nullable_stringify
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_metadata.a
+=== NAME  TestDateOracleCatchesMutants/nullable_typeof
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_parse_frac.a
+=== NAME  TestDateOracleCatchesMutants/metadata_own
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_past.a
+=== NAME  TestDateOracleCatchesMutants/dynamic_parse
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_limits.a
+=== NAME  TestDateOracleCatchesMutants/metadata_name
+    library_date_test.go:72: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_calendar.a
+--- PASS: TestDateOracleCatchesMutants (0.01s)
+    --- PASS: TestDateOracleCatchesMutants/date_stringify (1.22s)
+    --- PASS: TestDateOracleCatchesMutants/constructor_clip (1.39s)
+    --- PASS: TestDateOracleCatchesMutants/toJSON (1.45s)
+    --- PASS: TestDateOracleCatchesMutants/number_date (1.47s)
+    --- PASS: TestDateOracleCatchesMutants/nullable_number (1.55s)
+    --- PASS: TestDateOracleCatchesMutants/parse (1.01s)
+    --- PASS: TestDateOracleCatchesMutants/iso_format (1.17s)
+    --- PASS: TestDateOracleCatchesMutants/getters (1.19s)
+    --- PASS: TestDateOracleCatchesMutants/format (1.27s)
+    --- PASS: TestDateOracleCatchesMutants/setters (1.38s)
+    --- PASS: TestDateOracleCatchesMutants/invalid_NaN (1.26s)
+    --- PASS: TestDateOracleCatchesMutants/metadata_length (1.05s)
+    --- PASS: TestDateOracleCatchesMutants/UTC (1.19s)
+    --- PASS: TestDateOracleCatchesMutants/nullable_stringify (1.37s)
+    --- PASS: TestDateOracleCatchesMutants/nullable_typeof (1.19s)
+    --- PASS: TestDateOracleCatchesMutants/metadata_own (1.10s)
+    --- PASS: TestDateOracleCatchesMutants/dynamic_parse (1.06s)
+    --- PASS: TestDateOracleCatchesMutants/metadata_name (1.27s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_days.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_invalid_iso.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_parse.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_iso.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_set.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_get.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_utc.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_construct.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_format.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_dynamic_parse.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_json.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_number.a
+--- PASS: TestNativeAgreesWithNode (0.17s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_metadata.a (2.33s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_past.a (2.14s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_parse_frac.a (2.91s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_limits.a (2.15s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_calendar.a (2.14s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_days.a (2.22s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_invalid_iso.a (1.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_parse.a (1.76s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_set.a (1.72s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_iso.a (1.87s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_get.a (1.56s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_utc.a (1.71s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_construct.a (1.61s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_format.a (1.66s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_dynamic_parse.a (1.83s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_number.a (0.94s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_json.a (1.30s)
+PASS
+gate cache: native hits=0 misses=49
+gate cache: node hits=0 misses=52
+gate cache: probe hits=0 misses=0
+ok      github.com/system-inc/adamic/internal/oracle    11.362s

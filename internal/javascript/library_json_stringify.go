@@ -12,6 +12,7 @@ const adamicJSONParse = (text, callback, ignored, mode) => {
 };
 const adamicJSONValue = (value) => {
  if (value instanceof AdamicJSONParsed) return value.adamicJSONParsed === undefined ? undefined : JSON.parse(value.adamicJSONParsed);
+ if (value instanceof Date) return value;
  if (value instanceof AdamicClosure) return () => undefined;
  if (Array.isArray(value)) return value.map(adamicJSONValue);
  if (value !== null && typeof value === 'object' && !(value instanceof Map) && !(value instanceof Set)) {

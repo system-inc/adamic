@@ -420,8 +420,8 @@ adamic_object *adamic_fs_file_date_new(double milliseconds) {
 }
 
 double adamic_fs_file_date_time(const adamic_object *date) {
-    static adamic_slot_cache cache;
-    return adamic_object_field(date, "_fsFileTime", &cache)->number;
+    // Both the filesystem subset and the complete Date runtime store the timestamp in slot zero.
+    return adamic_date_value(date);
 }
 
 static const char *const stat_fields[] = {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"};

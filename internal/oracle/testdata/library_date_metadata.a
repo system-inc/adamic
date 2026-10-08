@@ -1,0 +1,15 @@
+for (const key of ["constructor", "length", "name", "prototype", "now", "UTC", "parse", "getUTCDate", "toISOString", "toJSON", "toGMTString", "unknown", "getTime\u0000", "getTime\u00e9"]) {
+    console.log(`${key} ${Date.hasOwnProperty(key)} ${Date.prototype.hasOwnProperty(key)} ${Date.parse.hasOwnProperty(key)}`);
+}
+let calls = 0;
+function key(): string { calls += 1; return "constructor"; }
+console.log(`${Date.prototype.hasOwnProperty(key())} ${calls}`);
+console.log(`${Date.length} ${Date.name} ${Date.UTC.length} ${Date.UTC.name} ${Date.parse.length} ${Date.parse.name}`);
+console.log(`${Date.prototype.getUTCDate.length} ${Date.prototype.getUTCDate.name}`);
+console.log(`${Date.prototype.setUTCHours.length} ${Date.prototype.setUTCHours.name}`);
+console.log(`${Date.prototype.setUTCMinutes.length} ${Date.prototype.setUTCMinutes.name}`);
+console.log(`${Date.prototype.setUTCSeconds.length} ${Date.prototype.setUTCSeconds.name}`);
+console.log(`${Date.prototype.setUTCFullYear.length} ${Date.prototype.setUTCFullYear.name}`);
+console.log(`${Date.prototype.toJSON.length} ${Date.prototype.toJSON.name}`);
+console.log(`${Date.prototype.toISOString.length} ${Date.prototype.toISOString.name}`);
+console.log(`${Date.prototype.toString.hasOwnProperty("prototype")} ${Date.prototype.toString.hasOwnProperty("name")} ${Date.prototype.toString.hasOwnProperty("length")}`);

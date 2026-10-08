@@ -441,7 +441,7 @@ func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name 
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 	command := exec.CommandContext(ctx, name, args...)
-	command.Env = append(os.Environ(), extra...)
+	command.Env = append(append(os.Environ(), "TZ=UTC"), extra...)
 	command.WaitDelay = 2 * time.Second
 	var stdout, stderr limitedBuffer
 	stdout.limit = limit

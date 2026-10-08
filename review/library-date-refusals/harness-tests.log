@@ -1,0 +1,12 @@
+=== RUN   TestDateNumericLocals
+=== PAUSE TestDateNumericLocals
+=== RUN   TestSentinelHarnessAgreesWithOriginal
+=== PAUSE TestSentinelHarnessAgreesWithOriginal
+=== RUN   TestRewriteHarnessCalls
+--- PASS: TestRewriteHarnessCalls (0.00s)
+=== CONT  TestDateNumericLocals
+=== CONT  TestSentinelHarnessAgreesWithOriginal
+--- PASS: TestSentinelHarnessAgreesWithOriginal (0.55s)
+--- PASS: TestDateNumericLocals (0.58s)
+PASS
+ok      github.com/system-inc/adamic/cmd/adamic-test262 0.605s

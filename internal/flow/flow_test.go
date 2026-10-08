@@ -51,6 +51,7 @@ func programs(t *testing.T) []string {
 	// million-unit normalized strings; its trace would record hundreds of millions of
 	// instructions, the smaller normalization fixtures cover the same loop shapes here, and
 	// the oracle still runs the long program.
+	// The exhaustive Date days sweep remains in the oracle; smaller Date fixtures cover its shapes.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
 		switch filepath.Base(path) {
 		case "library_object_replaced.a", "library_object_groups_proto.a", "library_object_groups_proto2.a",
@@ -62,7 +63,7 @@ func programs(t *testing.T) []string {
 			"node_process_errors.a", "node_process_directory_mutation.a", "node_process_environment_mutation.a":
 			return true
 		}
-		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "normalize_coverage_long.a"
+		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "normalize_coverage_long.a" || filepath.Base(path) == "library_date_days.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))

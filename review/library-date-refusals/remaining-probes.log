@@ -1,0 +1,40 @@
+
+review/library-date-refusals/gaps/caught-iso.ts
+stock tsc
+exit 0
+adamic
+adamic: /workspace/adamic/review/library-date-refusals/gaps/caught-iso.ts:1:1: stage 0 can't lower a try around Date.toISOString validation, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet
+exit 1
+Node
+RangeError
+exit 0
+
+review/library-date-refusals/gaps/detached.ts
+stock tsc
+exit 0
+adamic
+adamic: /workspace/adamic/review/library-date-refusals/gaps/detached.ts:1:16: Adamic 0.1 refuses a method read as a value (getTime would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.getTime() (unbound-method)
+exit 1
+Node
+0
+exit 0
+
+review/library-date-refusals/gaps/generic-json.ts
+stock tsc
+exit 0
+adamic
+adamic: /workspace/adamic/review/library-date-refusals/gaps/generic-json.ts:1:16: stage 0 can't lower Date.toJSON on a generic receiver (ToPrimitive and dynamic toISOString lookup are not built) yet
+exit 1
+Node
+custom
+exit 0
+
+review/library-date-refusals/gaps/prototype.ts
+stock tsc
+exit 0
+adamic
+adamic: /workspace/adamic/review/library-date-refusals/gaps/prototype.ts:1:20: Adamic 0.1 refuses inherited library member prototype read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)
+exit 1
+Node
+false
+exit 0

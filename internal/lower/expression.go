@@ -193,6 +193,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		// as an object, so it can't be seen as an array either, here or anywhere inside. A literal is
 		// made as the type it's written into, so it never differs.
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+			if own := l.checker.GetTypeAtLocation(node); !l.dateViewsMatch(own, contextual, map[[2]*checker.Type]bool{}) {
+				return nil, l.notYet(node, "a Date internal slot supplied or erased by a structural view")
+			}
 			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferView(l.present(own), l.present(contextual)) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) {
 				return nil, l.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
 			}
@@ -242,7 +245,7 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 		return true
 	}
 	visited[[2]*checker.Type{from, to}] = true
-	if !l.nodeBufferView(from, to) {
+	if !l.nodeBufferView(from, to) || l.isLibraryType(from, "Date") != l.isLibraryType(to, "Date") {
 		return false
 	}
 	same := func(inside, viewed *checker.Type) bool {

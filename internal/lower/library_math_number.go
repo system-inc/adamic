@@ -86,6 +86,11 @@ func (l *lowering) libraryNumber(node *ast.Node) (ir.Expression, error) {
 			return ir.NumberCall{Function: "convert", Arguments: []ir.Expression{read}}
 		}), nil
 	}
+	// Date is a proven intrinsic: its numeric valueOf reads the internal slot.
+	// Generic objects still require user-defined coercion and remain NotYet.
+	if l.isLibraryType(l.checker.GetTypeAtLocation(node), "Date") {
+		return ir.DateCall{Method: "valueOf", Receiver: value, Returns: ir.Number}, nil
+	}
 	switch value.Type() {
 	case ir.Number:
 		return value, nil

@@ -612,6 +612,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			e.checkThrown()
 		}
 		return result
+	case ir.DateCall:
+		return e.dateCall(expression)
 	case ir.ObjectCall:
 		return e.objectCall(expression)
 	case ir.NumberCall:

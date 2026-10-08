@@ -1,0 +1,5 @@
+for (const time of [-8640000000000000, -62167219200000, -2203891200000, -1, 0, 951782400123, 253402300800001, 8640000000000000, NaN]) {
+ const date = new Date(time);
+ console.log(`${date.getUTCFullYear()} ${date.getUTCMonth()} ${date.getUTCDate()} ${date.getUTCDay()} ${date.getUTCHours()} ${date.getUTCMinutes()} ${date.getUTCSeconds()} ${date.getUTCMilliseconds()}`);
+ console.log(`${date.getFullYear()} ${date.getMonth()} ${date.getDate()} ${date.getDay()} ${date.getHours()} ${date.getMinutes()} ${date.getSeconds()} ${date.getMilliseconds()} ${date.getTimezoneOffset()}`);
+}
