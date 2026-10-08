@@ -1,0 +1,2 @@
+cloud/reports/array-literal-never-element/host_reproducer.a:1:24: error TS2591: Cannot find name 'node:buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+exit status 1

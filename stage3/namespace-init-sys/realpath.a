@@ -1,0 +1,5 @@
+import * as fs from 'node:fs';
+// sys.ts:1492:142: the host callable has a property declared by an ambient namespace.
+const fsRealpath = !!fs.realpathSync.native ? fs.realpathSync.native : fs.realpathSync;
+console.log(`${fsRealpath('.') === fs.realpathSync('.')}`);
+namespace Debug { export let enabled = false; }
