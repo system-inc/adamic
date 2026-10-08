@@ -1032,8 +1032,9 @@ type (
 		Class int
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
 		// what it writes into), or 0 when nothing recorded one.
-		Site   int
-		Define bool // class field initialization defines an own data property
+		Site      int
+		Define    bool // class field initialization defines an own data property
+		OwnMethod bool // structural method replacement requires an existing own data slot
 	}
 
 	// Return leaves the function, with Value unless it returns void.

@@ -158,6 +158,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.line("\tstatic const char message[] = %s;", cString("TypeError: Cannot set properties of undefined (setting '"+statement.Name+"')"))
 		e.line("\tadamic_panic(message, sizeof message - 1);")
 		e.line("}")
+		if statement.OwnMethod {
+			e.ownMethodGuard(object, statement.Name)
+		}
 		e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
 		slot := e.temporary()
 		e.line("adamic_value *%s = %s;", slot, e.writeFieldSlot(object, statement.Name, statement.Class))

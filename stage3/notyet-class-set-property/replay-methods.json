@@ -1,0 +1,41 @@
+[
+  {
+    "site": "method",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:1543:17",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1544:5",
+        "reason": "reading map"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1545:5",
+        "reason": "reading map"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1546:12",
+        "reason": "reading map"
+      }
+    ],
+    "log": "/tmp/adamic-class-set-property-after2-method.log"
+  },
+  {
+    "site": "method2",
+    "exit": 1,
+    "findings": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/sys.ts:1387:49",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+      }
+    ],
+    "log": "/tmp/adamic-class-set-property-after2-method2.log"
+  }
+]

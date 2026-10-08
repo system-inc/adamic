@@ -358,6 +358,10 @@ func (e *emitter) statement(at *ir.Statement) {
 	case ir.Panic:
 		e.line("panic(%s);", e.value(statement.Message))
 	case ir.SetProperty:
+		if statement.OwnMethod {
+			e.ownMethodStore(statement)
+			break
+		}
 		if statement.Define {
 			e.line("Object.defineProperty(%s, %s, {value: %s, writable: true, enumerable: %t, configurable: true});", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), !strings.HasPrefix(statement.Name, "#"))
 		} else {

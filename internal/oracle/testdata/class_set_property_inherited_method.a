@@ -1,0 +1,7 @@
+interface Host { value(): number; }
+class Counter implements Host { value(): number { return 1; } }
+function replace(host: Host): void { host.value = () => 2; }
+const host = new Counter();
+console.log(`${host.value()}`);
+replace(host);
+console.log(`${host.value()}`);

@@ -412,8 +412,12 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		}
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	}
-	if member := l.checker.GetSymbolAtLocation(target); member != nil && member.Flags&ast.SymbolFlagsMethod != 0 && !l.literalMethodSlot(target) {
-		return nil, l.notYet(target, "replacing a represented method at runtime")
+	ownMethod := false
+	if member := l.checker.GetSymbolAtLocation(target); member != nil && member.Flags&ast.SymbolFlagsMethod != 0 {
+		if !l.replaceableMethodSlot(target) {
+			return nil, l.notYet(target, "replacing a represented method at runtime")
+		}
+		ownMethod = !l.literalMethodSlot(target)
 	}
 	object, err := l.expression(target.AsPropertyAccessExpression().Expression)
 	if err != nil {
@@ -440,7 +444,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	}
 	// A #private field is stored under its name, # and all, which nothing else can spell.
-	return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
+	return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, OwnMethod: ownMethod, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
 }
 
 // updateProperty lowers object.name op= value, and object.name++ and -- (a nil value, a step of 1).

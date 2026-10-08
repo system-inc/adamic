@@ -1,0 +1,9 @@
+interface Host { value(): number; }
+function replace(host: Host, result: number): void { host.value = () => result; }
+const first: Host = { value: () => 1 };
+const second: Host = { value: () => 5 };
+console.log(`${first.value()} ${second.value()}`);
+replace(first, 3);
+console.log(`${first.value()} ${second.value()}`);
+replace(first, 7);
+console.log(`${first.value()} ${second.value()}`);

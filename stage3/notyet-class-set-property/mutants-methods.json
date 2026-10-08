@@ -1,0 +1,22 @@
+[
+  {
+    "mutant": "structural-slot",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-structural-slot.log"
+  },
+  {
+    "mutant": "own-method-ir",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-own-method-ir.log"
+  },
+  {
+    "mutant": "own-method-native",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-own-method-native.log"
+  },
+  {
+    "mutant": "own-method-javascript",
+    "exit": 1,
+    "log": "/tmp/adamic-class-set-property-mutant-own-method-javascript.log"
+  }
+]
