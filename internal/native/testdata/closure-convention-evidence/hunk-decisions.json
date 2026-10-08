@@ -1,0 +1,232 @@
+[
+  {
+    "file": "docs/0.1.md",
+    "hunk": 1,
+    "choice": "ours"
+  },
+  {
+    "file": "docs/0.1.md",
+    "hunk": 0,
+    "choice": "conditions"
+  },
+  {
+    "file": "internal/ir/ir.go",
+    "hunk": 1,
+    "choice": "theirs"
+  },
+  {
+    "file": "internal/ir/ir.go",
+    "hunk": 0,
+    "choice": "direct"
+  },
+  {
+    "file": "internal/javascript/javascript.go",
+    "hunk": 2,
+    "choice": "canonical_make_js"
+  },
+  {
+    "file": "internal/javascript/javascript.go",
+    "hunk": 1,
+    "choice": "environment_js"
+  },
+  {
+    "file": "internal/javascript/javascript.go",
+    "hunk": 0,
+    "choice": "canonical_js"
+  },
+  {
+    "file": "internal/lower/collections.go",
+    "hunk": 0,
+    "choice": "initialize"
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "hunk": 8,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "hunk": 7,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "hunk": 6,
+    "choice": "concrete_return"
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "hunk": 5,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "hunk": 4,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "hunk": 3,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "hunk": 2,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "hunk": 1,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "hunk": 0,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/lower/functions.go",
+    "hunk": 1,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/lower/functions.go",
+    "hunk": 0,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/lower/lower_test.go",
+    "hunk": 0,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/lower/object.go",
+    "hunk": 0,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/lower/statements.go",
+    "hunk": 0,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/native/class_accessors.go",
+    "hunk": 1,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/native/class_accessors.go",
+    "hunk": 0,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/native/emit_arrays.go",
+    "hunk": 1,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/native/emit_arrays.go",
+    "hunk": 0,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/native/emit_expressions.go",
+    "hunk": 1,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/native/emit_expressions.go",
+    "hunk": 0,
+    "choice": "canonical_make_native"
+  },
+  {
+    "file": "internal/native/emit_functions.go",
+    "hunk": 1,
+    "choice": "direct_call"
+  },
+  {
+    "file": "internal/native/emit_functions.go",
+    "hunk": 0,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/native/emit_locals.go",
+    "hunk": 1,
+    "choice": "both_readiness"
+  },
+  {
+    "file": "internal/native/emit_locals.go",
+    "hunk": 0,
+    "choice": "readiness"
+  },
+  {
+    "file": "internal/native/emit_maps.go",
+    "hunk": 0,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/native/emit_objects.go",
+    "hunk": 1,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/native/emit_objects.go",
+    "hunk": 0,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/native/from.go",
+    "hunk": 0,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/native/reuse.go",
+    "hunk": 0,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "hunk": 4,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "hunk": 3,
+    "choice": "both"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "hunk": 2,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "hunk": 1,
+    "choice": "theirs"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "hunk": 0,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/native/runtime/array.c",
+    "hunk": 0,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/native/runtime/closure.c",
+    "hunk": 0,
+    "choice": "theirs"
+  },
+  {
+    "file": "internal/native/runtime/maybe.c",
+    "hunk": 0,
+    "choice": "ours"
+  },
+  {
+    "file": "internal/native/slots.go",
+    "hunk": 0,
+    "choice": "ours"
+  }
+]

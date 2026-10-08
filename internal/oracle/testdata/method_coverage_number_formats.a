@@ -1,0 +1,12 @@
+/* eslint-disable @typescript-eslint/unbound-method -- The oracle calls these intrinsic aliases with receivers proven by the branch. */
+const fixed = Number.prototype.toFixed;
+const exp = Number.prototype.toExponential;
+const precision = Number.prototype.toPrecision;
+const radix = Number.prototype.toString;
+const value = Number.prototype.valueOf;
+for(const number of [-0, 1.25, -12.5, NaN, Infinity]) {
+    console.log(
+        `${fixed.call(number)}|${fixed.apply(number, [undefined])}|${exp.call(number, 2)}|${exp.apply(number, [])}|${precision.call(number, 3)}|${precision.apply(number, [undefined])}|${radix.apply(number, [])}|${1 / value.apply(number, [])}`,
+    );
+}
+console.log(radix.apply(255, [16]));

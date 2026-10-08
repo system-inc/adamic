@@ -65,52 +65,28 @@ func TestClassInterfaceMethodGap(t *testing.T) {
 	t.Log("explicit callback prints 17 on Node, native and backend; leak-free; gap check rejects this normal-run mutant")
 }
 
-func TestOptionalBooleanFunctionGap(t *testing.T) {
+func TestClosedOptionalBooleanFunctionGap(t *testing.T) {
 	data, err := os.ReadFile("gaps/optionalBooleanFunction.ts.txt")
 	if err != nil {
 		t.Fatal(err)
 	}
-	path := filepath.Join(t.TempDir(), "gap.ts")
+	path := filepath.Join(t.TempDir(), "gap.a")
 	if err = os.WriteFile(path, data, 0644); err != nil {
 		t.Fatal(err)
 	}
-	node := onNode(t, path)
-	if node.exitCode != 0 || len(node.stderr) != 0 || string(node.stdout) != "absent\n" {
-		t.Fatalf("Node truth: %+v", node)
-	}
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		t.Fatal(err)
-	}
-	_, err = lower.Lower(context.Background(), loaded)
-	isGap := func(err error) bool {
-		return err != nil && strings.Contains(err.Error(), "stage 0 can't lower a function value taking boolean | undefined yet")
-	}
-	if !isGap(err) {
-		t.Fatalf("optional boolean gap changed: %v", err)
-	}
-	t.Logf("Node prints absent; stage 0 %s", err)
-	// All layout callback callers supply known arguments, so a required parameter suffices.
-	workaround := filepath.Join(t.TempDir(), "required.ts")
-	if err = os.WriteFile(workaround, []byte("const show = (flag: boolean): string => flag ? 'present' : 'absent';\nconsole.log(show(false));\n"), 0644); err != nil {
-		t.Fatal(err)
-	}
-	loaded, err = load.Load([]string{workaround})
-	if err != nil {
-		t.Fatal(err)
-	}
-	program, err := lower.Lower(context.Background(), loaded)
-	if err != nil || isGap(err) {
-		t.Fatalf("required parameter lowering: %v", err)
-	}
-	safe, binary := natively(t, program)
-	for _, result := range []run{onNode(t, workaround), safe, onJavaScriptBackend(t, program)} {
-		if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != "absent\n" {
-			t.Fatalf("required parameter: %+v", result)
+	program := lowered(t, path)
+	nativeRun, binary := natively(t, program)
+	for _, side := range []struct {
+		name   string
+		result run
+	}{
+		{"Node", onNode(t, path)}, {"native ASan/UBSan", nativeRun}, {"JavaScript backend", onJavaScriptBackend(t, program)},
+	} {
+		if side.result.exitCode != 0 || len(side.result.stderr) != 0 || string(side.result.stdout) != "absent\n" {
+			t.Fatalf("%s: %d %q %s", side.name, side.result.exitCode, side.result.stdout, side.result.stderr)
 		}
 	}
 	if report := leaks(t, program, binary); report != "" {
 		t.Fatal(report)
 	}
-	t.Log("required callback parameter prints absent on all three, leak-free; gap check rejects successful-lowering mutant")
 }

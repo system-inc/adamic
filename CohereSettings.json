@@ -1,4 +1,12 @@
 {
-    "extends": ["cohere:typescript"],
-    "ignorePatterns": ["**/testdata/**", "**/fixtures/**", "**/evidence/**", "notes/**", "stage1/**/gaps/**", "review/**", "stage3/drivers/tsc/corpus/**", "internal/refusalprobe/lies/**"]
+    "extends": [
+        "cohere:typescript"
+    ],
+    "ignorePatterns": [
+        "internal/load/testdata/0.1/refuse/**",
+        "stage1/**/gaps/**",
+        "review/**",
+        "internal/lower/testdata/input-spread/*_array.a",
+        "stage3/drivers/tsc/corpus/**"
+    ]
 }
