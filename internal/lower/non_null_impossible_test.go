@@ -10,9 +10,9 @@ import (
 	"testing"
 )
 
-func TestExactlyNullishAssertionsAreRefused(t *testing.T) {
+func TestAdamicNullishAssertionsAreRefused(t *testing.T) {
 	t.Parallel()
-	for _, extension := range []string{"a", "ts"} {
+	for _, extension := range []string{"a"} {
 		for _, operand := range []string{"undefined", "null"} {
 			for _, source := range []string{
 				"function f(value: number = " + operand + "!): number {return value;}",
@@ -53,7 +53,7 @@ func TestExactlyNullishAssertionsAreRefused(t *testing.T) {
 					if !errors.As(err, &refused) {
 						t.Fatalf("want exactly-nullish Refused, got %v", err)
 					}
-					if refused.What != "a non-null assertion whose operand is exactly "+operand || refused.Fix != "declare the variable optional and assign undefined" {
+					if refused.What != "the non-null assertion !" || refused.Fix != "write ?? panic(...)" {
 						t.Fatalf("wrong diagnostic: %v", err)
 					}
 				})
@@ -62,9 +62,9 @@ func TestExactlyNullishAssertionsAreRefused(t *testing.T) {
 	}
 }
 
-func TestStandaloneDeinitializationUsesReadiness(t *testing.T) {
+func TestStandaloneTypeScriptAssertionIsEager(t *testing.T) {
 	t.Parallel()
-	for _, extension := range []string{"a", "ts"} {
+	for _, extension := range []string{"ts"} {
 		for _, operand := range []string{"undefined", "null"} {
 			for _, source := range []string{
 				"let value=4; value=" + operand + "!; console.log(`${value}`);",
@@ -114,8 +114,8 @@ func TestStandaloneDeinitializationUsesReadiness(t *testing.T) {
 						}
 						return true
 					})
-					if writes != 1 || reads != 1 || assertions != 0 {
-						t.Fatalf("want one deinitialization and readiness read, no assertion: writes=%d reads=%d assertions=%d", writes, reads, assertions)
+					if writes != 0 || reads != 0 || assertions != 1 {
+						t.Fatalf("want one eager assertion and no readiness state: writes=%d reads=%d assertions=%d", writes, reads, assertions)
 					}
 				})
 			}

@@ -77,7 +77,7 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			program, err := lowerSource(t, string(source))
+			program, err := lowerTypeScriptAssertionSource(t, string(source))
 			if probe.name == "parser_callback_parameter" {
 				// This uncalled declaration supplies no producer proof. Live direct-call
 				// witnesses below retain their native and Node comparisons.

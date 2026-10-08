@@ -50,6 +50,21 @@ func explainPredicateChecks(output io.Writer, program *ir.Program) {
 			fmt.Fprintf(output, "  %s: %s; %s\n", direction.Direction, status, direction.Reason)
 		}
 	}
+	if len(program.NonNullChecks.Sites) != 0 {
+		sites := append([]ir.NonNullCheck(nil), program.NonNullChecks.Sites...)
+		sort.SliceStable(sites, func(i, j int) bool { return sites[i].Where < sites[j].Where })
+		for _, site := range sites {
+			status := "checked"
+			if site.Proven {
+				status = "proven"
+			}
+			fmt.Fprintf(output, "%s: non-null assertion %s: %s\n", relative(site.Where), site.Expression, status)
+		}
+		fmt.Fprintf(output, "adamic: non-null checks: proven %d checked %d\n", program.NonNullChecks.Proven, program.NonNullChecks.Checked)
+	}
 	counts := program.PredicateChecks
 	fmt.Fprintf(output, "adamic: predicate checks: proven %d checked %d unobservable %d\n", counts.Proven, counts.Checked, counts.Unobservable)
+	if len(program.NonNullChecks.Sites) != 0 {
+		fmt.Fprintf(output, "adamic: checks: proven %d checked %d unobservable %d\n", counts.Proven+program.NonNullChecks.Proven, counts.Checked+program.NonNullChecks.Checked, counts.Unobservable)
+	}
 }

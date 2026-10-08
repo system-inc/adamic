@@ -216,7 +216,7 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 			continue
 		}
 
-		if assertionInitializer(parameter.initializer) {
+		if l.assertionInitializer(parameter.initializer) {
 			prefix, present, value, lazyErr := l.lazyAssertion(parameter.initializer, l.result.Locals[parameter.local].Type)
 			if lazyErr != nil {
 				err = lazyErr

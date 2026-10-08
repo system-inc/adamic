@@ -131,7 +131,7 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 			if of.IsReference() {
 				value = ir.Undefined{Of: of}
 			}
-			field := ir.Field{Name: memberKey(member.Name(), lowered.class), Value: value, Private: member.Name().Kind == ast.KindPrivateIdentifier, Uninitialized: l.uninitializedDeclaration(member) || assertionInitializer(member.AsPropertyDeclaration().Initializer)}
+			field := ir.Field{Name: memberKey(member.Name(), lowered.class), Value: value, Private: member.Name().Kind == ast.KindPrivateIdentifier, Uninitialized: l.uninitializedDeclaration(member) || l.assertionInitializer(member.AsPropertyDeclaration().Initializer)}
 			slot := -1
 			for i, previous := range metadata.Fields {
 				if previous.Name == field.Name {
@@ -294,7 +294,7 @@ func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, err
 			value := zeroValue(of)
 			initializer := member.AsPropertyDeclaration().Initializer
 
-			if assertionInitializer(initializer) && !l.uninitializedInitializer(initializer) {
+			if l.assertionInitializer(initializer) && !l.uninitializedInitializer(initializer) {
 				prefix, present, assigned, lazyErr := l.lazyAssertion(initializer, of)
 				err = lazyErr
 				if of.IsReference() {

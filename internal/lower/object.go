@@ -541,7 +541,7 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 		for _, declaration := range field.Declarations {
 			if declaration.Kind == ast.KindPropertyDeclaration {
 				initializer := declaration.AsPropertyDeclaration().Initializer
-				if assertionInitializer(initializer) && !l.uninitializedInitializer(initializer) {
+				if l.assertionInitializer(initializer) && !l.uninitializedInitializer(initializer) {
 					property.Readiness = sourceExpression(initializer)
 				}
 			}

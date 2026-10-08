@@ -130,16 +130,9 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = err
 			return true
 		}
-		if node.Kind == ast.KindNonNullExpression && !l.uninitializedStorage(node) {
-			flags := l.checker.GetTypeAtLocation(node.AsNonNullExpression().Expression).Flags()
-			if flags == checker.TypeFlagsUndefined || flags == checker.TypeFlagsNull {
-				operand := "undefined"
-				if flags == checker.TypeFlagsNull {
-					operand = "null"
-				}
-				found = &Refused{Where: l.program.Where(node), What: "a non-null assertion whose operand is exactly " + operand, Fix: "declare the variable optional and assign undefined"}
-				return true
-			}
+		if node.Kind == ast.KindNonNullExpression && !l.checkedAssertionSource(node) {
+			found = &Refused{Where: l.program.Where(node), What: "the non-null assertion !", Fix: "write ?? panic(...)"}
+			return true
 		}
 		if err := l.typedArrayUnsupported(node); err != nil {
 			found = err

@@ -18,7 +18,7 @@ func sourceExpression(node *ast.Node) string {
 // The two builtin literal assertions reserve or deinitialize a slot.
 // A shadowed identifier named undefined remains an ordinary assertion.
 func (l *lowering) uninitializedInitializer(node *ast.Node) bool {
-	if node == nil {
+	if node == nil || l.checkedAssertionSource(node) {
 		return false
 	}
 	node = ast.SkipParentheses(node)
@@ -396,14 +396,17 @@ func readinessCalls(instruction *flow.Instruction) bool {
 	return calls
 }
 
-// assertionInitializer recognizes syntax only; its operand is evaluated at the declaration.
-func assertionInitializer(node *ast.Node) bool {
-	return node != nil && ast.SkipParentheses(node).Kind == ast.KindNonNullExpression
+// TypeScript initializers use eager assertions; the historical storage path is
+// unavailable there. Definite-assignment declarations still use readiness.
+func (l *lowering) assertionInitializer(node *ast.Node) bool {
+	return node != nil && !l.checkedAssertionSource(node) && ast.SkipParentheses(node).Kind == ast.KindNonNullExpression
 }
 
 func assertionVarList(list *ast.Node) bool {
 	for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
-		if !ast.IsIdentifier(declaration.Name()) || !assertionInitializer(declaration.AsVariableDeclaration().Initializer) && declaration.AsVariableDeclaration().ExclamationToken == nil {
+		initializer := declaration.AsVariableDeclaration().Initializer
+		assertion := initializer != nil && ast.SkipParentheses(initializer).Kind == ast.KindNonNullExpression
+		if !ast.IsIdentifier(declaration.Name()) || !assertion && declaration.AsVariableDeclaration().ExclamationToken == nil {
 			return false
 		}
 	}
