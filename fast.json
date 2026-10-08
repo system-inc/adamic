@@ -1,0 +1,865 @@
+{
+  "sha": "e723af547077f0b514477a089c47d2e1e45afb72",
+  "branch": "codex/stage3-meter-run-45487a80",
+  "branch_source": "given",
+  "session": "01a117fe-3361-70f0-9ff1-4a24d43ad003",
+  "session_source": "ai.db reply naming the branch",
+  "base": "d72728e570fe09d91cf55b37b564dbad0fefc24d",
+  "base_name": "main",
+  "tools_sha": "e5ab9efb6288f6a6d718242fdbca5862c8465518",
+  "machine": {
+    "hostname": "Workshop",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": true,
+  "vet_ok": true,
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "206c8891b3e22e6782b4d8eaa4bcad61ac833533",
+  "reads": [
+    {
+      "line": 550,
+      "package": "stage1/cohere/gitignore",
+      "glob": "*",
+      "paths": [
+        "stage3/meter/runs/20261008T171021Z.iBLy18/README.md",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/area-recovery.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/area/apply.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/area/build.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/area/census.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/area/checkout.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/area/entry-build.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/area/entry-overlay.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/area/latent-build.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/area/latent-overlay.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/area/latent.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/area/report.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/area/report.md",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/area/submodules.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/area/tsc/census.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/area/tsc/latent.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/compiler-mode.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/fetch.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/latent-diagnostics.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/main-recovery.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/main/apply.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/main/build.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/main/census.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/main/checkout.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/main/entry-build.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/main/entry-overlay.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/main/latent-build.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/main/latent-overlay.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/main/latent.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/main/report.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/main/report.md",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/main/submodules.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/main/tsc/census.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/main/tsc/latent.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/meter-start.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/progress.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/progress.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/report.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/report.md",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/scout-comparison.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-binary-buildinfo.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-dependencies.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-module.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-source-diff.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-summary.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-workspace.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-workspace.work",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/cache-provenance.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/dependency-cache.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/entry-alias-after.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/entry-alias-before.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/entry-roots-mutant-witness.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/entry-roots-mutant.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/equal-hashes-only-witness.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/fixtures.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/go-cache-wrapper.py",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/interrupted/census.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/interruption.txt",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-binary-buildinfo.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-latent-completion.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-module.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-source-diff.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-summary.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-workspace.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-workspace.work",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/mutant.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/real-probes.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/recover-area.sh",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/recover-run.sh",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/report-generation.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/root-provenance.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/root-tests.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/roots-mutant-witness.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/roots-mutant.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/setup-initial.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/setup.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/source-tree-comparison.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/tests-complete.log",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/tests-final.log"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 622,
+      "package": "stage1/cohere/json",
+      "glob": "*.json",
+      "paths": [
+        "stage3/meter/runs/20261008T171021Z.iBLy18/area/report.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/compiler-mode.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/latent-diagnostics.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/main/report.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/progress.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/report.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/scout-comparison.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-dependencies.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-module.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-workspace.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/cache-provenance.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/dependency-cache.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-latent-completion.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-module.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-workspace.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/root-provenance.json",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/validation/source-tree-comparison.json",
+        "stage3/progress.json"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1166,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "*.[mM][dD]",
+      "paths": [
+        "stage3/meter/runs/20261008T171021Z.iBLy18/README.md",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/area/report.md",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/main/report.md",
+        "stage3/meter/runs/20261008T171021Z.iBLy18/report.md"
+      ],
+      "map_changed": false
+    }
+  ],
+  "unchecked_a_files": [],
+  "a_check_exempt": [],
+  "executors": {
+    "inert": 79,
+    "stage3": 1
+  },
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "changed_files": [
+    "stage3/meter/runs/20261008T171021Z.iBLy18/README.md",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area-recovery.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/apply.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/build.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/census.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/checkout.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/entry-build.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/entry-overlay.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/latent-build.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/latent-overlay.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/latent.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/report.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/report.md",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/submodules.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/tsc/census.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/tsc/latent.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/compiler-mode.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/fetch.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/latent-diagnostics.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main-recovery.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/apply.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/build.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/census.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/checkout.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/entry-build.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/entry-overlay.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/latent-build.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/latent-overlay.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/latent.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/report.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/report.md",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/submodules.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/tsc/census.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/tsc/latent.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/meter-start.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/progress.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/progress.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/report.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/report.md",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/scout-comparison.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-binary-buildinfo.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-dependencies.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-module.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-source-diff.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-summary.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-workspace.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-workspace.work",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/cache-provenance.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/dependency-cache.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/entry-alias-after.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/entry-alias-before.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/entry-roots-mutant-witness.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/entry-roots-mutant.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/equal-hashes-only-witness.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/fixtures.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/go-cache-wrapper.py",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/interrupted/census.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/interruption.txt",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-binary-buildinfo.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-latent-completion.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-module.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-source-diff.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-summary.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-workspace.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-workspace.work",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/mutant.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/real-probes.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/recover-area.sh",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/recover-run.sh",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/report-generation.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/root-provenance.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/root-tests.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/roots-mutant-witness.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/roots-mutant.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/setup-initial.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/setup.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/source-tree-comparison.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/tests-complete.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/tests-final.log",
+    "stage3/progress.json"
+  ],
+  "packages": [
+    "github.com/system-inc/adamic/stage1/cohere/gitignore",
+    "github.com/system-inc/adamic/stage1/cohere/json",
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+    "github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage",
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd",
+    "github.com/system-inc/adamic/stage3/census/latent/tool",
+    "github.com/system-inc/adamic/stage3/census/tool",
+    "github.com/system-inc/adamic/stage3/drivers/parser/probe",
+    "github.com/system-inc/adamic/stage3/fixtures",
+    "github.com/system-inc/adamic/stage3/ledger/checker-259",
+    "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08"
+  ],
+  "unowned_files": [
+    "stage3/meter/runs/20261008T171021Z.iBLy18/README.md",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area-recovery.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/apply.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/build.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/census.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/checkout.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/entry-build.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/entry-overlay.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/latent-build.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/latent-overlay.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/latent.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/report.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/report.md",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/submodules.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/tsc/census.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/area/tsc/latent.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/compiler-mode.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/fetch.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/latent-diagnostics.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main-recovery.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/apply.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/build.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/census.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/checkout.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/entry-build.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/entry-overlay.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/latent-build.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/latent-overlay.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/latent.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/report.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/report.md",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/submodules.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/tsc/census.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/main/tsc/latent.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/meter-start.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/progress.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/progress.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/report.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/report.md",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/scout-comparison.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-binary-buildinfo.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-dependencies.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-module.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-source-diff.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-summary.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-workspace.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/area-workspace.work",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/cache-provenance.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/dependency-cache.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/entry-alias-after.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/entry-alias-before.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/entry-roots-mutant-witness.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/entry-roots-mutant.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/equal-hashes-only-witness.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/fixtures.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/go-cache-wrapper.py",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/interrupted/census.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/interruption.txt",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-binary-buildinfo.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-latent-completion.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-module.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-source-diff.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-summary.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-workspace.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/main-workspace.work",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/mutant.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/real-probes.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/recover-area.sh",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/recover-run.sh",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/report-generation.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/root-provenance.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/root-tests.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/roots-mutant-witness.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/roots-mutant.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/setup-initial.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/setup.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/source-tree-comparison.json",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/tests-complete.log",
+    "stage3/meter/runs/20261008T171021Z.iBLy18/validation/tests-final.log",
+    "stage3/progress.json"
+  ],
+  "smoke_list": "cloud/fast-gate/smoke.txt",
+  "smoke_list_source": {
+    "root": "/home/ahra/fast-gate/tools",
+    "from": "tools checkout"
+  },
+  "smoke_list_blob": "eb1bc6ebef73bbea46cfbe96f12512edcc7a19b7",
+  "smoke_fixtures": [
+    "TestNativeAgreesWithNode internal/oracle/testdata/array_from_length.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/bitwise.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/borrow_chain_reassigned.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/call_targets_sort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/casts.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/class_oct6_parameters.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/classes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/closures_throw_uncaught.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_abstract.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/enums_names.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/exceptions_empty.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/finally_leaves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/fresh_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/generic_method_return.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/inherited_static_field_read.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/json_stringify_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/library_object_freeze_write.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/lint_runtime_search_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/map_zero_keys.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/maybe_boolean_panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/narrowed_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/nbody_runtime_fields.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/normalize_form.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/number_parsing.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/optional_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/override_same_representation.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regions_constructor_capture.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/reuse_global_sibling.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/route_targets_accessor.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/search_halves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/set_foreach_fnexpr.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/spread_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/stack_forever.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/string_too_long.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/throw_in_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/timsort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/typeof_string_literal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/undefined_elements.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/utf8_view_fails.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/weak_narrowed.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_modules/main.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/modules/main.a",
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "test_outcomes": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestDelimiterExpressionMatchesNode",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestMarkdownInline",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestUpstreamNumericSeparatorGap",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestUpstreamRepositoryCorpusParity",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestExternalComparisonCatchesThreePrinterMutants",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestNativeChunkPlan",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestNativeChunkDifferenceNamesCase",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestDocumentedStageZeroGaps",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProfileSnapshotsAgree",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCachedWidthMutantIsCaught",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinDiagnostics",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinRejectsMissingProvisionedInputs",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinBeforeSampling",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestPortMatchesGoCohere",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestThreePortMutantsAreCaught",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestAdditionalJSONBoundaries",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestSingleFileStdoutDriver",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProgressGuard",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryCorpusMutants",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryLandingWithoutPinEdit",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryRequiresGit",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestThePortAnswersAsGoCohereAndGitDo",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestPathAnswersAsGosPathPackage",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixturePaths",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestTransformedNodeRunnerGuardHook",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestTransformedNodeRunnerGuard",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestCompiler41231d51Shape",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestMissingFunctionMutantFailsLoudly",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestChangedVisitorMutantFailsLoudly",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestVisitorsCollectContinueAndSkipDiagnosedBodies",
+      "status": "passed"
+    }
+  ],
+  "test_starts": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestMarkdownInline",
+      "expected_seconds": 925.648,
+      "slots": 4,
+      "after_seconds": 9.556
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestDelimiterExpressionMatchesNode",
+      "expected_seconds": 7.1860224,
+      "slots": 1,
+      "after_seconds": 9.563
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestPortMatchesGoCohere",
+      "expected_seconds": 99.12,
+      "slots": 1,
+      "after_seconds": 9.721
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestUpstreamRepositoryCorpusParity",
+      "expected_seconds": 48.00512,
+      "slots": 1,
+      "after_seconds": 9.732
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestSingleFileStdoutDriver",
+      "expected_seconds": 34.58,
+      "slots": 1,
+      "after_seconds": 9.738
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestAdditionalJSONBoundaries",
+      "expected_seconds": 31.83,
+      "slots": 1,
+      "after_seconds": 9.746
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCachedWidthMutantIsCaught",
+      "expected_seconds": 24.17,
+      "slots": 1,
+      "after_seconds": 9.75
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestThreePortMutantsAreCaught",
+      "expected_seconds": 7.02464,
+      "slots": 1,
+      "after_seconds": 9.762
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestExternalComparisonCatchesThreePrinterMutants",
+      "expected_seconds": 6.6048,
+      "slots": 1,
+      "after_seconds": 9.768
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinBeforeSampling",
+      "expected_seconds": 5.46816,
+      "slots": 1,
+      "after_seconds": 12.072
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestUpstreamNumericSeparatorGap",
+      "expected_seconds": 4.8384,
+      "slots": 1,
+      "after_seconds": 17.415
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinRejectsMissingProvisionedInputs",
+      "expected_seconds": 2.19,
+      "slots": 1,
+      "after_seconds": 21.621
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestThePortAnswersAsGoCohereAndGitDo",
+      "expected_seconds": 13.92,
+      "slots": 1,
+      "after_seconds": 23.304
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures",
+      "expected_seconds": 9.9,
+      "slots": 1,
+      "after_seconds": 24.337
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestVisitorsCollectContinueAndSkipDiagnosedBodies",
+      "expected_seconds": 0.69,
+      "slots": 1,
+      "after_seconds": 32.551
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProgressGuard",
+      "expected_seconds": 0.458017997,
+      "slots": 1,
+      "after_seconds": 33.168
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryLandingWithoutPinEdit",
+      "expected_seconds": 0.216,
+      "slots": 1,
+      "after_seconds": 38.949
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestPathAnswersAsGosPathPackage",
+      "expected_seconds": 0.02,
+      "slots": 1,
+      "after_seconds": 39.194
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryRequiresGit",
+      "expected_seconds": 0.02,
+      "slots": 1,
+      "after_seconds": 43.339
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestCompiler41231d51Shape",
+      "expected_seconds": 0.01,
+      "slots": 1,
+      "after_seconds": 43.488
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 43.53
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinDiagnostics",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 43.664
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestDocumentedStageZeroGaps",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 43.835
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestNativeChunkDifferenceNamesCase",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 44.523
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestNativeChunkPlan",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 44.686
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProfileSnapshotsAgree",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 44.848
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryCorpusMutants",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 44.995
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestChangedVisitorMutantFailsLoudly",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 45.48
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestMissingFunctionMutantFailsLoudly",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 45.62
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixturePaths",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 45.759
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestTransformedNodeRunnerGuard",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 45.89
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestTransformedNodeRunnerGuardHook",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 46.222
+    }
+  ],
+  "undeclared_tools": [],
+  "split_tests": {
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline": 2,
+    "github.com/system-inc/adamic/stage1/cohere/json": 19,
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd": 0,
+    "github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage": 0,
+    "github.com/system-inc/adamic/stage3/census/latent/tool": 0,
+    "github.com/system-inc/adamic/stage3/drivers/parser/probe": 0,
+    "github.com/system-inc/adamic/stage3/census/tool": 0,
+    "github.com/system-inc/adamic/stage3/ledger/checker-259": 0,
+    "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08": 0,
+    "github.com/system-inc/adamic/stage1/cohere/gitignore": 3,
+    "github.com/system-inc/adamic/stage3/fixtures": 4,
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite": 4
+  },
+  "gate_samples": [
+    "TestUpstreamRepositoryCorpusParity 425/3267 files, stride 8, offset 5",
+    "TestPortMatchesGoCohere 121/3267 files, stride 32, offset 5",
+    "TestCorpusPinBeforeSampling 104/3267 files, stride 32, offset 8"
+  ],
+  "smoke_absent_lanes": [
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "stage3_exits": {
+    "stage3-lane-tests": 0,
+    "stage3-apply-tests": 0,
+    "stage3-lane": -9
+  },
+  "split_tally": {
+    "packages": 12,
+    "planned": 32,
+    "passed": 31,
+    "touched": 12
+  },
+  "wall_seconds": 607.9,
+  "steps_seconds": {
+    "coverage": 0.0,
+    "tools": 0.1,
+    "vet": 1.0,
+    "smoke": 17.7,
+    "build": 23.2,
+    "stage3": 606.9,
+    "tests": 606.9
+  },
+  "pass": 701,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 2,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": null,
+  "planned_stages": [
+    "coverage",
+    "tools",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census",
+    "stage3"
+  ],
+  "stages_exit": {
+    "coverage": 0,
+    "tools": 0,
+    "vet": 0,
+    "smoke": 0,
+    "build": 0,
+    "stage3": 1,
+    "tests": 1
+  },
+  "finished": true,
+  "stopped": {
+    "reason": "stopped",
+    "at_seconds": 607.8
+  },
+  "long_test_threshold_seconds": 10,
+  "long_tests": 6,
+  "long_test_seconds": 213.1,
+  "planned_test_counts": {
+    "passed": 31,
+    "failed": 0,
+    "not run": 1
+  }
+}
