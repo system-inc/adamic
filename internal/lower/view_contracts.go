@@ -49,6 +49,11 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 				return 0, err
 			}
 			contract := l.result.ViewContracts[id-1]
+			// Untagged recursive optional hook: retain the reserved child ID;
+			// copying its unfinished descriptor would erase its descendants.
+			if (contract.Kind == ir.ViewObject && len(contract.Fields) == 0) || (contract.Kind == ir.ViewUnion && len(contract.Members) == 0) {
+				contract = ir.ViewContract{Kind: ir.ViewUnion, Of: ir.Object, Members: []ir.ViewContractID{id}}
+			}
 			contract.Undefined = true
 			contract.Name = l.checker.TypeToString(target)
 			optional := ir.ViewContractID(len(l.result.ViewContracts) + 1)
@@ -97,6 +102,18 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 			contract.Members = append(contract.Members, child)
 		}
 	}
+	// Array-union read hook: retain the joined element contract for each
+	// consumed index, without scanning unread elements at a field read.
+	if contract.Kind == ir.ViewUnion && contract.Of == ir.Array {
+		element := l.untaggedArrayElement(target)
+		if element != nil {
+			child, err := build(element)
+			if err != nil {
+				return 0, err
+			}
+			contract.Element = child
+		}
+	}
 	if contract.Kind == ir.ViewObject || (contract.Kind == ir.ViewUnion && of == ir.Object) {
 		for _, property := range l.checker.GetPropertiesOfType(target) {
 			child, err := build(l.checker.GetTypeOfSymbol(property))
@@ -114,6 +131,8 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 		}
 	}
 	if contract.Kind == ir.ViewUnion && contract.Of == ir.Object {
+		// Publish recursive descendants before the untagged support query.
+		l.result.ViewContracts[id-1] = contract
 		tagged := ir.ViewUnionHasDiscriminant(l.result.ViewContracts, contract)
 		if !tagged && !l.supportsUntaggedRead(contract) {
 			contract.Unsupported = "untagged object union"

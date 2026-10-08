@@ -67,6 +67,19 @@
     "good_stdout": "true\ntrue\n"
   },
   {
+    "rank": 20,
+    "source_alias": "ArrayTarget",
+    "good_stdout": "true\ntrue\n",
+    "candidate_reads": 35,
+    "variants": [
+      "good",
+      "wrong",
+      "nested",
+      "empty"
+    ],
+    "scope": "independent homogeneous array-member projection and consumed nested reads; compiler NodeArray properties unverified"
+  },
+  {
     "rank": 32,
     "type_id": 7312,
     "receiver": "ForInStatement",
@@ -193,6 +206,19 @@
     ],
     "scope": "measured own-kind selectors and transitive payload checks; independently written projection, not full compiler interfaces",
     "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\n"
+  },
+  {
+    "rank": 105,
+    "source_alias": "ArrayTarget",
+    "good_stdout": "true\ntrue\n",
+    "candidate_reads": 5,
+    "variants": [
+      "good",
+      "wrong",
+      "nested",
+      "empty"
+    ],
+    "scope": "independent homogeneous array-member projection and consumed nested reads; compiler NodeArray properties unverified"
   },
   {
     "rank": 114,
@@ -340,6 +366,19 @@
     "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\n"
   },
   {
+    "rank": 175,
+    "source_alias": "ArrayTarget",
+    "good_stdout": "true\ntrue\n",
+    "candidate_reads": 1,
+    "variants": [
+      "good",
+      "wrong",
+      "nested",
+      "empty"
+    ],
+    "scope": "independent homogeneous array-member projection and consumed nested reads; compiler NodeArray properties unverified"
+  },
+  {
     "rank": 179,
     "type_id": 7689,
     "receiver": "SourceFile | ModuleBody",
@@ -419,6 +458,19 @@
     ],
     "scope": "measured own-kind selectors and transitive payload checks; independently written projection, not full compiler interfaces",
     "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\n"
+  },
+  {
+    "rank": 199,
+    "source_alias": "ArrayTarget",
+    "good_stdout": "true\ntrue\n",
+    "candidate_reads": 1,
+    "variants": [
+      "good",
+      "wrong",
+      "nested",
+      "empty"
+    ],
+    "scope": "independent homogeneous array-member projection and consumed nested reads; compiler NodeArray properties unverified"
   },
   {
     "rank": 204,
@@ -502,6 +554,19 @@
     "good_stdout": "true\ntrue\n"
   },
   {
+    "rank": 213,
+    "source_alias": "ArrayTarget",
+    "good_stdout": "true\ntrue\ntrue\ntrue\n",
+    "candidate_reads": 1,
+    "variants": [
+      "good",
+      "wrong",
+      "nested",
+      "empty"
+    ],
+    "scope": "independent homogeneous array-member projection and consumed nested reads; compiler NodeArray properties unverified"
+  },
+  {
     "rank": 215,
     "type_id": 61557,
     "receiver": "ForStatement | ForInOrOfStatement",
@@ -551,6 +616,19 @@
     "good_stdout": "true\ntrue\n"
   },
   {
+    "rank": 224,
+    "source_alias": "ArrayTarget",
+    "good_stdout": "true\ntrue\n",
+    "candidate_reads": 1,
+    "variants": [
+      "good",
+      "wrong",
+      "nested",
+      "empty"
+    ],
+    "scope": "independent homogeneous array-member projection and consumed nested reads; compiler NodeArray properties unverified"
+  },
+  {
     "rank": 225,
     "type_id": 88681,
     "receiver": "ForStatement | ForOfStatement | ForInStatement",
@@ -566,6 +644,19 @@
     ],
     "scope": "measured own-kind selectors and transitive payload checks; independently written projection, not full compiler interfaces",
     "good_stdout": "true\ntrue\n"
+  },
+  {
+    "rank": 226,
+    "source_alias": "ArrayTarget",
+    "good_stdout": "true\ntrue\n",
+    "candidate_reads": 1,
+    "variants": [
+      "good",
+      "wrong",
+      "nested",
+      "empty"
+    ],
+    "scope": "independent homogeneous array-member projection and consumed nested reads; compiler NodeArray properties unverified"
   },
   {
     "rank": 228,

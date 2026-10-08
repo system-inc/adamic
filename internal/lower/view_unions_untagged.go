@@ -3,6 +3,7 @@ package lower
 import (
 	"fmt"
 
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
@@ -70,22 +71,41 @@ func UntaggedViewMembers(contracts []ir.ViewContract, union ir.ViewContractID) (
 
 // Shared lazy dispatch calls this only for a demanded union read. Tagged
 // members defer unread descendants. Field-only membership needs a complete,
-// acyclic plain-data contract; unavailable adapters remain named obligations.
+// recursive plain-data contract; unavailable adapters remain named obligations.
 func (l *lowering) supportsUntaggedRead(root ir.ViewContract) bool {
 	seen := map[ir.ViewContractID]bool{}
 	var supported func(ir.ViewContractID) bool
 	supported = func(id ir.ViewContractID) bool {
-		if id <= 0 || int(id) > len(l.result.ViewContracts) || seen[id] {
+		if id <= 0 || int(id) > len(l.result.ViewContracts) {
 			return false
 		}
 		contract := l.result.ViewContracts[id-1]
-		if contract.Unsupported != "" || contract.Nominal != "" {
+		if (contract.Unsupported != "" && contract.Unsupported != "untagged object union") || contract.Nominal != "" {
 			return false
 		}
 		if contract.Kind == ir.ViewScalar {
 			return contract.Of == ir.Number || contract.Of == ir.String || contract.Of == ir.Boolean || contract.Of == ir.MaybeNumber || contract.Of == ir.MaybeBoolean
 		}
 		if contract.Kind == ir.ViewUndefined {
+			return true
+		}
+		if seen[id] {
+			return true
+		}
+		seen[id] = true
+		defer delete(seen, id)
+		if contract.Kind == ir.ViewArray {
+			return supported(contract.Element)
+		}
+		if contract.Kind == ir.ViewUnion {
+			if len(contract.Members) == 0 {
+				return false
+			}
+			for _, member := range contract.Members {
+				if !supported(member) {
+					return false
+				}
+			}
 			return true
 		}
 		if contract.Kind != ir.ViewObject {
@@ -102,8 +122,6 @@ func (l *lowering) supportsUntaggedRead(root ir.ViewContract) bool {
 		if tagged {
 			return true
 		}
-		seen[id] = true
-		defer delete(seen, id)
 		for _, field := range contract.Fields {
 			if !supported(field.Contract) {
 				return false
@@ -120,4 +138,30 @@ func (l *lowering) supportsUntaggedRead(root ir.ViewContract) bool {
 		}
 	}
 	return true
+}
+
+// untaggedArrayElement joins only array members' logical element contracts.
+// It never chooses an arbitrary member's physical representation.
+func (l *lowering) untaggedArrayElement(target *checker.Type) *checker.Type {
+	if l.checker.IsArrayType(target) {
+		return l.checker.GetElementTypeOfArrayType(target)
+	}
+	if target.Flags()&checker.TypeFlagsUnion == 0 {
+		return nil
+	}
+	var elements []*checker.Type
+	for _, member := range target.Types() {
+		if !l.checker.IsArrayType(member) {
+			return nil
+		}
+		element := l.checker.GetElementTypeOfArrayType(member)
+		if element == nil {
+			return nil
+		}
+		elements = append(elements, element)
+	}
+	if len(elements) == 0 {
+		return nil
+	}
+	return l.checker.GetUnionType(elements)
 }

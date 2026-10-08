@@ -13,7 +13,7 @@ func (e *emitter) viewObjectUnion(property ir.Property, value string) string {
 		return value
 	}
 	contract := e.program.ViewContracts[int(property.ViewContract)-1]
-	if contract.Kind != ir.ViewUnion {
+	if contract.Kind != ir.ViewUnion || (contract.Of != ir.Object && contract.Of != ir.Array) {
 		return value
 	}
 	if untaggedObjectUnion(e.program.ViewContracts, contract) {

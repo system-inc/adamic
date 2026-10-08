@@ -42,6 +42,7 @@ typedef struct adamic_view_untagged_contract {
     size_t field_count;
     const size_t *members;
     size_t member_count;
+    size_t element;
 } adamic_view_untagged_contract;
 bool adamic_view_untagged_plain_slot(void *context, const adamic_view_union_value *object, const char *field, adamic_view_union_value *slot);
 bool adamic_view_untagged_plain_matches(const adamic_view_untagged_contract *contracts, size_t count, size_t id, const adamic_view_union_value *value);

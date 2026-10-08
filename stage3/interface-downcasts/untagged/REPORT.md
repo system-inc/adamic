@@ -1,3 +1,19 @@
+Built: recursive field-only matching plus seven array-union projections, including homogeneous selection and lazy tagged payloads.
+Commits: follows pushed 70d33dfd; this group is recorded in Git history.
+Commands: recursive Node/native/JS oracle passed 1.063s; array candidate oracle passed 8.439s; shipping IR/lower/native/JS/oracle gate passed, oracle 42.204s (390 Node executions).
+Mutants: six recursive skip/wrong/nested mutants caught; five array skip/wrong-member/nested mutants run with semantic pins and restoration.
+Uncovered: 18 candidate projections/79 reads remain; unchanged compiler interfaces, NodeArray metadata, and exact reachability are not certified.
+
+Whole-family planning target remains October 12, 2026, 23:00 UTC. Candidate
+counts are 43 projections/355 reads represented, 18/79 pending. Full unchanged
+compiler-interface completions remain zero. The recursive schema matcher retains
+optional child IDs, follows union descendants, and refuses at depth above 128.
+The array selector checks homogeneous membership, rather than permitting mixed
+members merely because each index fits the joined element union. Named failures
+are pinned in source oracles; positive, empty, unread-payload, and absent controls
+are compared to Node in both backends. This is a reduced contract projection,
+not a claim that every field of stock TypeScript's interfaces is implemented.
+
 Built: all 36 own-kind candidate selector projections, including indexed reads, with 310 candidate reads represented.
 Commits: production hooks 1baa2640; ranked first group 4fb1c603; this second source group follows in Git history.
 Commands: exact candidate source oracle 13.136s; final filtered IR/lower/native/JavaScript/oracle passed, oracle 35.259s.

@@ -54,7 +54,8 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared) =
   if(field===undefined || !Object.hasOwn(field,'value') || adamicFieldReadiness.get(object)?.has(name)) return undefined;
   return field;
  };
- const matches=(value,id)=>{
+ const matches=(value,id,depth=0)=>{
+  if(depth>128) return false;
   const contract=contracts[id-1];
   if(contract===undefined || (contract.Unsupported && contract.Unsupported!=='untagged object union') || contract.Nominal) return false;
   if(value===undefined && (contract.Undefined || contract.Kind===7)) return true;
@@ -63,16 +64,26 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared) =
    if(typeof value!==wanted) return false;
    return !contract.Allowed?.length || contract.Allowed.some(literal=>value===(literal.Of===1?literal.Number:literal.Of===2?literal.Boolean:literal.String));
   }
+  if(contract.Kind===3){
+   if(!Array.isArray(value) || !contract.Element) return false;
+   for(let i=0;i<value.length;i++){
+    const field=Object.getOwnPropertyDescriptor(value,String(i));
+    if(field!==undefined && !Object.hasOwn(field,'value')) return false;
+    if(!matches(field===undefined?undefined:field.value,contract.Element,depth+1)) return false;
+   }
+   return true;
+  }
+  if(contract.Kind===4) return (contract.Members || []).some(member=>matches(value,member,depth+1));
   if(contract.Kind!==2 || value===null || typeof value!=='object' || Array.isArray(value) || value instanceof Map) return false;
   const fields=contract.Fields || [];
   const ownKind=fields.find(field=>field.Name==='kind' && !field.Optional && contracts[field.Contract-1]?.Kind===1 && [1,2,3].includes(contracts[field.Contract-1]?.Of));
-  if(ownKind){const actual=slot(value,'kind');return actual!==undefined && matches(actual.value,ownKind.Contract);}
+  if(ownKind){const actual=slot(value,'kind');return actual!==undefined && matches(actual.value,ownKind.Contract,depth+1);}
   const tags=fields.filter(field=>!field.Optional && contracts[field.Contract-1]?.Kind===1 && contracts[field.Contract-1]?.Allowed?.length);
-  if(tags.length) return tags.every(field=>{const actual=slot(value,field.Name);return actual!==undefined && matches(actual.value,field.Contract);});
-  return fields.every(field=>{const actual=slot(value,field.Name);return actual===undefined ? field.Optional && !Object.hasOwn(value,field.Name) : matches(actual.value,field.Contract);});
+  if(tags.length) return tags.every(field=>{const actual=slot(value,field.Name);return actual!==undefined && matches(actual.value,field.Contract,depth+1);});
+  return fields.every(field=>{const actual=slot(value,field.Name);return actual===undefined ? field.Optional && !Object.hasOwn(value,field.Name) : matches(actual.value,field.Contract,depth+1);});
  };
  for(const member of contracts[id-1].Members){if(matches(value,member)) return member;}
- panic('field read failed: '+expression+' matches no member of '+declared+'; expected '+declared+', found object');
+ panic('field read failed: '+expression+' matches no member of '+declared+'; expected '+declared+', found '+(Array.isArray(value)?'array':'object'));
 };
 `
 

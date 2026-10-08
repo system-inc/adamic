@@ -1083,3 +1083,18 @@ Remaining selector obligations: 25 candidate pairs/124 reads. Those comprise
 field-only recursive Type/FlowNode contracts, unions of array contracts, and a
 callable union. These are not covered by the kind projection receipts and remain
 pending adapter work. No unchanged whole-tsc interface completion is claimed.
+
+Untagged recursive and array group, October 8: minimal shared hooks are named
+recursive optional descriptor references and descriptor publication in
+internal/lower/view_contracts.go; untaggedArrayElement in the owned lower adapter,
+called by internal/lower/object.go and view_arrays.go; array-union element interning
+in view_contracts.go; object/array union dispatch in native/view_fields.go and both
+backends' view_unions.go. Recursive optional descriptors retain the original ID,
+not a copy of an unfinished descriptor. Runtime matching uses a conservative
+128-edge depth limit, rejecting deeper input rather than overflowing. Array member
+selection validates one complete member's element selectors, rejecting mixed
+A/B arrays; unread own-kind payloads remain deferred and consumed indices retain
+joined element contracts. No callable producer signature is inferred from heap kind.
+Seven independently written array candidate projections represent 45 reads;
+43 projections/355 reads now have receipts, 18 candidates/79 reads remain.
+Compiler NodeArray properties and full original interfaces are not certified.

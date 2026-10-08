@@ -308,10 +308,10 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		arrayType = target
 	}
 	arrayType = l.phantomArrayView(arrayType)
-	if !l.checker.IsArrayType(arrayType) {
+	if l.untaggedArrayElement(arrayType) == nil {
 		return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
 	}
-	element := l.checker.GetElementTypeOfArrayType(arrayType)
+	element := l.untaggedArrayElement(arrayType)
 	if of, empty := viewNeverArrayElement(element); empty {
 		return of, nil
 	}

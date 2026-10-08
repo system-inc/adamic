@@ -233,7 +233,7 @@ func TestCheckedViewUntaggedSourceDispatch(t *testing.T) {
 				t.Logf("Node: exit=%d stdout=%q stderr=%q", node.exitCode, node.stdout, node.stderr)
 				for backend, got := range map[string]run{"native": releasedUncached(t, program), "javascript": onJavaScriptBackend(t, program)} {
 					t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
-					if variant == "good" || variant == "absent" {
+					if variant == "good" || variant == "absent" || variant == "empty" {
 						if difference := disagreement(node, got); difference != "" {
 							t.Fatal(backend + ": " + difference)
 						}
@@ -331,7 +331,7 @@ func TestCheckedViewUntaggedCandidatePairs(t *testing.T) {
 				// untagged candidate mutation anchor
 				for backend, got := range map[string]run{"native": releasedUncached(t, program), "javascript": onJavaScriptBackend(t, program)} {
 					t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
-					if variant == "good" || variant == "absent" {
+					if variant == "good" || variant == "absent" || variant == "empty" {
 						if difference := disagreement(node, got); difference != "" {
 							t.Errorf("%s: %s", backend, difference)
 						}
@@ -382,4 +382,58 @@ func dropUntaggedIndexedSourceReads(program *ir.Program) {
 		return expression
 	}
 	mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), mutate)
+}
+
+// Recursive field-only selection must inspect complete descendants rather than
+// treating a cycle in the schema as a certificate for the input.
+func TestCheckedViewUntaggedRecursive(t *testing.T) {
+	for _, variant := range []string{"good", "absent", "wrong", "nested"} {
+		t.Run(variant, func(t *testing.T) {
+			program, path := interfaceFixture(t, "untagged/fixtures/recursive-"+variant)
+			node := onNode(t, path)
+			if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
+				t.Fatal(difference)
+			}
+			want := node
+			if variant == "wrong" || variant == "nested" {
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n")}
+			}
+			for backend, got := range map[string]run{"native": releasedUncached(t, program), "javascript": onJavaScriptBackend(t, program)} {
+				t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+				if difference := disagreement(want, got); difference != "" {
+					t.Errorf("%s: %s", backend, difference)
+				}
+			}
+		})
+	}
+}
+
+func TestCheckedViewUntaggedArrayUnion(t *testing.T) {
+	for _, variant := range []string{"good", "wrong", "nested", "empty", "mixed", "unread"} {
+		t.Run(variant, func(t *testing.T) {
+			program, path := interfaceFixture(t, "untagged/fixtures/array-union-"+variant)
+			node := onNode(t, path)
+			// array transitive mutation anchor
+			t.Logf("Node: exit=%d stdout=%q stderr=%q", node.exitCode, node.stdout, node.stderr)
+			for backend, got := range map[string]run{"native": releasedUncached(t, program), "javascript": onJavaScriptBackend(t, program)} {
+				t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+				if variant == "good" || variant == "empty" || variant == "unread" {
+					if difference := disagreement(node, got); difference != "" {
+						t.Errorf("%s: %s", backend, difference)
+					}
+				} else {
+					message := "adamic: panic: field read failed: view.elements is not a readonly ElementA[] | readonly ElementB[]; expected readonly ElementA[] | readonly ElementB[], found boolean\n"
+					if variant == "mixed" {
+						message = "adamic: panic: field read failed: view.elements matches no member of readonly ElementA[] | readonly ElementB[]; expected readonly ElementA[] | readonly ElementB[], found array\n"
+					}
+					if variant == "nested" {
+						message = "adamic: panic: field read failed: item.payload matches no member of { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; }, found object\n"
+					}
+					if difference := disagreement(run{exitCode: 70, stderr: []byte(message)}, got); difference != "" {
+						t.Errorf("%s: %s", backend, difference)
+					}
+				}
+			}
+		})
+	}
 }

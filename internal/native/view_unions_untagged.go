@@ -61,11 +61,11 @@ func (e *emitter) viewUntaggedObjectUnion(property ir.Property, object string) {
 		if contract.Nominal != "" || contract.Unsupported != "" && contract.Unsupported != "untagged object union" {
 			kind = ir.ViewUnknown
 		}
-		rows = append(rows, fmt.Sprintf("{%d,%d,%t,%s,%d,%s,%d,%s,%d}", kind, contract.Of, contract.Undefined, allowed, len(contract.Allowed), fields, len(contract.Fields), members, len(contract.Members)))
+		rows = append(rows, fmt.Sprintf("{%d,%d,%t,%s,%d,%s,%d,%s,%d,%d}", kind, contract.Of, contract.Undefined, allowed, len(contract.Allowed), fields, len(contract.Fields), members, len(contract.Members), contract.Element))
 	}
 	fmt.Fprintf(&declarations, "static const adamic_view_untagged_contract %s[] = {%s};\n", name, strings.Join(rows, ","))
 	e.declarations = append(e.declarations, declarations.String())
-	e.line("(void)adamic_view_untagged_plain_select(%s, %s, %d, %d, %s, %s);", object, name, len(rows), property.ViewContract, cString(property.View), cString(property.ViewType))
+	e.line("(void)adamic_view_untagged_plain_select((const adamic_object *)%s, %s, %d, %d, %s, %s);", object, name, len(rows), property.ViewContract, cString(property.View), cString(property.ViewType))
 }
 
 // Preserve the existing shared-discriminant dispatch.

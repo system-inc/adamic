@@ -70,5 +70,19 @@
   "225/wrong": "adamic: panic: field read failed: view0.initializer matches no member of ForInitializer | undefined; expected ForInitializer | undefined, found object\n",
   "225/nested": "adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n",
   "228/wrong": "adamic: panic: field read failed: view0.expression matches no member of CandidateTarget; expected CandidateTarget, found object\n",
-  "228/nested": "adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+  "228/nested": "adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n",
+  "20/wrong": "adamic: panic: field read failed: view0.elements is not a ArrayTarget; expected ArrayTarget, found boolean\n",
+  "20/nested": "adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n",
+  "105/wrong": "adamic: panic: field read failed: view0.parameters is not a ArrayTarget; expected ArrayTarget, found boolean\n",
+  "105/nested": "adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n",
+  "175/wrong": "adamic: panic: field read failed: view0.members is not a ArrayTarget; expected ArrayTarget, found boolean\n",
+  "175/nested": "adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n",
+  "199/wrong": "adamic: panic: field read failed: view0.parameters is not a ArrayTarget; expected ArrayTarget, found boolean\n",
+  "199/nested": "adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n",
+  "213/wrong": "adamic: panic: field read failed: view0.elements is not a ArrayTarget; expected ArrayTarget, found boolean\n",
+  "213/nested": "adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n",
+  "224/wrong": "adamic: panic: field read failed: view0.members is not a ArrayTarget; expected ArrayTarget, found boolean\n",
+  "224/nested": "adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n",
+  "226/wrong": "adamic: panic: field read failed: view0.fileInfos is not a ArrayTarget; expected ArrayTarget, found boolean\n",
+  "226/nested": "adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
 }

@@ -21908,9 +21908,9 @@
   },
   "family_candidate_pairs": 61,
   "family_candidate_reads": 434,
-  "covered_candidate_selector_pairs": 36,
-  "covered_candidate_selector_reads": 310,
-  "remaining_candidate_selector_pairs": 25,
-  "remaining_candidate_selector_reads": 124,
-  "coverage_scope": "independent selector projections and transitive shared payload reads; not full unchanged compiler interfaces"
+  "covered_candidate_selector_pairs": 43,
+  "covered_candidate_selector_reads": 355,
+  "remaining_candidate_selector_pairs": 18,
+  "remaining_candidate_selector_reads": 79,
+  "coverage_scope": "independent own-kind and array-union contract projections; no unchanged compiler interface completion"
 }
