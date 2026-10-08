@@ -1,0 +1,13 @@
+--- a/src/compiler/debug.ts
++++ b/src/compiler/debug.ts
+@@ -197,8 +197,8 @@
+         // eslint-disable-next-line no-debugger
+         debugger;
+         const e = new Error(message ? `Debug Failure. ${message}` : "Debug Failure.");
+-        if (Error.captureStackTrace) {
+-            Error.captureStackTrace(e, stackCrawlMark || fail);
++        if ((Error as any).captureStackTrace) {
++            (Error as any).captureStackTrace(e, stackCrawlMark || fail);
+         }
+         throw e;
+     }
