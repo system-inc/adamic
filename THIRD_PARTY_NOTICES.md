@@ -223,10 +223,13 @@ SOFTWARE.
 ## In the compiler
 
 The collection helper bodies in `stage1/typescript/collections/core.a` and their
-six `internal/oracle/testdata/scout19_*.a` witnesses are excerpts adapted from
+six `internal/oracle/testdata/scout19_*.a` witnesses, plus the ruled composition
+in `stage1/typescript/collections/multimap.a`, the source input
+`stage3/adapt/multimap-composition/original.a`, and the
+`internal/oracle/testdata/scout19_slice2_*.a` witnesses are excerpts adapted from
 Microsoft TypeScript at `d92d9bfee114c80be2c375d72edae966176e3a4f`,
-`tsc/testdata/fixtures/compiler/core.ts`, `checker.ts`, `builder.ts`, and
-`transformers/classFields.ts`. Copyright (c) Microsoft Corporation, licensed
+`tsc/testdata/fixtures/compiler/core.ts`, `checker.ts`, `builder.ts`,
+`types.ts`, `path.ts`, `utilitiesPublic.ts`, and `transformers/classFields.ts`. Copyright (c) Microsoft Corporation, licensed
 under Apache License 2.0; the source notice and license are retained in
 [cohere/TypeScript/NOTICE.txt](cohere/TypeScript/NOTICE.txt) and
 [cohere/TypeScript/LICENSE.txt](cohere/TypeScript/LICENSE.txt).
