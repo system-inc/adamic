@@ -158,3 +158,18 @@ A metadata collection error is reported separately and never alters status.
 
 See ERRORS_REPORT.md for the real targeted timeout, source-mutation baseline
 proof, normal full lane, and dropped-text mutant evidence.
+
+## Thirty-second file-plan measurement
+
+[SHARDS_REPORT.md](SHARDS_REPORT.md) records an input-hashed shared build,
+per-file timings, complete candidate test inventory and real input mutants.
+The 30-second whole-file constraint is blocked by the upstream
+sys/symlinkWatching.ts file: 43.102 seconds cold for 16 passing tests. No valid
+sharded gate is claimed; the existing lane command and verdict remain intact.
+
+`python3 stage3/lane/artifact.py CACHE` prepares and verifies a shared build by
+its input hash. This is artifact preparation, not a test unit. The task profiler,
+run-tasks.cjs and measure_plan.py are measurement tools. The recorded candidate
+plan exits 1 as invalid; it is not a replacement for run.sh. The lane's fixture
+suite also verifies artifact invalidation, file ownership, the complete measured
+inventory and original IPC observation behavior.

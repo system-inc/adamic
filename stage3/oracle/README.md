@@ -46,3 +46,11 @@ failures.md is the readable copy. No expected outputs are updated.
 For a targeted timeout proof, add --tests REGEX --timeout 1. The --timeout
 option is permitted only with --tests, records its limit, and forwards it to
 upstream's Mocha CLI. The ordinary full run keeps upstream's 40,000 ms default.
+
+The whole-file timing investigation is documented in
+[../lane/SHARDS_REPORT.md](../lane/SHARDS_REPORT.md). profile-tasks.cjs records
+upstream task IPC and root source-file registration. run-tasks.cjs measures
+specified whole-file tasks in fresh upstream workers, with raw counts, full
+Mocha errors and original stacks. These are measurement helpers, not a new
+acceptance lane. The measured symlink watcher file alone exceeds 30 seconds;
+the existing oracle and its complete verdict checks remain unchanged.
