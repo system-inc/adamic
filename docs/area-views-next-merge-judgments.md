@@ -27,3 +27,13 @@ The detached 506441dd comparison passed lower (51.514 seconds) and flow (213.435
 ## Current validation limits
 
 Lower still fails four phantom metadata equality tests; IR passed in 2.124 seconds. The merged full oracle is still running and red. Counts refresh failed 101 leaf fixtures in 134.178 seconds and did not refresh the table. The new 2980-file .a audit is still running. Catalog passed its previous checkpoint only; it is not claimed green for this new landing candidate. No partial unit push is authorized or made.
+
+## Additional array judgment
+
+23. internal/lower/object.go elementType: the candidate compiles taste/07_compact.a, while the merged slotless-element guard rejects number[] | {flags:number} | undefined. Proposed resolution retains the ordinary boxed Union-array path only where no checked-view contract is erased, preserving views element-proof and unknown-array refusal boundaries. This remains unapplied pending ruling; the positive expectation stays unchanged.
+
+## Stage3 path and record repair
+
+The stage3 path validator now accepts the ruled .ts assertion fixture as well as .a, keeping portable paths and traversal rejection. Node/native agreement refreshed nested-functions/09_checker_constituent_recursion.ts. TestFixturePaths plus the complete nested-functions and objects groups passed in 8.472 seconds. One diagnostic-record edit used a brace-sensitive matcher and landed on objects/22_nested_optional_calls.a rather than objects/19_identifier_multimap.a. Both records were corrected with JSON-aware offsets and passed in that same rerun. No source fixture or Node observation changed.
+
+Tag agreement passed in 0.079 seconds. The isolated Record=20 Go mutant failed with the exact C=14 versus Go=20 difference; all other tags remained unchanged.

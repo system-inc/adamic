@@ -110,7 +110,8 @@ func replaceStage0(raw json.RawMessage, value stage0) (json.RawMessage, error) {
 // Fixture paths use portable slash-separated components. ValidPath rejects
 // absolute paths, empty components, and both . and .. components before joining.
 func validFixturePath(name string) bool {
-	return fs.ValidPath(name) && !strings.ContainsAny(name, "\\:") && filepath.Ext(name) == ".a"
+	extension := filepath.Ext(name)
+	return fs.ValidPath(name) && !strings.ContainsAny(name, "\\:") && (extension == ".a" || extension == ".ts")
 }
 
 // The enum and namespace branches use Node's transform mode. Derive that runner
@@ -365,7 +366,7 @@ func TestFixturePaths(t *testing.T) {
 		{"01_call_time/_namespaces/main.a", true},
 		{"../main.a", false}, {"01_case/../main.a", false},
 		{"/tmp/main.a", false}, {"C:/main.a", false}, {`01_case\main.a`, false},
-		{"./main.a", false}, {"01_case//main.a", false}, {"main.ts", false}, {"", false},
+		{"./main.a", false}, {"01_case//main.a", false}, {"main.ts", true}, {"", false},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()
