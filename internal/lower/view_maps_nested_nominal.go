@@ -40,13 +40,16 @@ func (l *lowering) mapNestedNominalType(target *checker.Type, seen map[*checker.
 }
 
 // Only immutable structural paths are certified here. Fixed tuples use their
-// existing adapter. Array, nullable aggregate and mutable paths retain a named
+// existing adapter. Nullable aggregate and mutable paths retain a named
 // read refusal until their stores carry the same recursive witness.
 func (l *lowering) mapNestedNominalEntrySlot(node *ast.Node, target *checker.Type) ir.ViewContractID {
 	if !l.mapNominalPathAcyclic(target, map[*checker.Type]bool{}) {
 		return 0
 	}
-	if target.Flags()&checker.TypeFlagsObject == 0 || l.viewArrayBase(target) != nil || checker.IsTupleType(target) || len(l.checker.GetIndexInfosOfType(target)) != 0 || len(l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)) != 0 {
+	if l.viewArrayBase(target) != nil {
+		return l.mapNominalArrayEntrySlot(node, target)
+	}
+	if target.Flags()&checker.TypeFlagsObject == 0 || checker.IsTupleType(target) || len(l.checker.GetIndexInfosOfType(target)) != 0 || len(l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)) != 0 {
 		return 0
 	}
 	contract := ir.ViewContract{Kind: ir.ViewObject, Of: ir.Object, Name: l.checker.TypeToString(target)}
@@ -105,4 +108,33 @@ func (l *lowering) mapNominalPathAcyclic(target *checker.Type, active map[*check
 		}
 	}
 	return true
+}
+
+func (l *lowering) mapNominalArrayEntrySlot(node *ast.Node, target *checker.Type) ir.ViewContractID {
+	element := l.viewArrayElementType(target)
+	if element == nil {
+		return 0
+	}
+	child := l.mapEntrySlot(node, l.concrete(element))
+	if child == 0 {
+		return 0
+	}
+	of := l.result.ViewContracts[child-1].Of
+	if of != ir.Object && of != ir.Array {
+		return 0
+	}
+	contract := ir.ViewContract{Kind: ir.ViewArray, Of: ir.Array, Name: l.checker.TypeToString(target), Element: child, ArrayReadonly: l.isLibraryType(l.viewArrayBase(target), "ReadonlyArray")}
+	for _, field := range l.viewArrayOwnProperties(target, l.viewArrayBase(target)) {
+		declared := l.concrete(l.checker.GetTypeOfSymbol(field))
+		if l.mapNestedNominalType(declared, map[*checker.Type]bool{}) {
+			return 0
+		}
+		slot := l.mapEntrySlot(node, declared)
+		if slot == 0 {
+			return 0
+		}
+		contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: field.Name, Contract: slot, Optional: field.Flags&ast.SymbolFlagsOptional != 0, Readonly: l.checker.IsReadonlySymbol(field)})
+	}
+	l.result.ViewContracts = append(l.result.ViewContracts, contract)
+	return ir.ViewContractID(len(l.result.ViewContracts))
 }

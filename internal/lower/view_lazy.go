@@ -162,9 +162,10 @@ func (l *lowering) checkLazyViewReads() error {
 		var typeID, receiverTypeID int
 		var field, where string
 		operationFamily := ""
-		nominalFieldRead := false
+		nominalCheckedRead := false
 		arrayRead := func(array ir.Expression, read ir.ArrayViewRead) {
 			receiver, typeID, field, where = array, read.ViewTypeID, "[element]", read.View
+			nominalCheckedRead = ir.HasArrayViews(program) && read.Element == ir.Object
 		}
 		switch read := node.(type) {
 		case ir.RecordCall:
@@ -187,9 +188,10 @@ func (l *lowering) checkLazyViewReads() error {
 			}
 			receiver, typeID, field, where = read.Object, read.ViewTypeID, read.Name, read.ViewWhere
 			receiverTypeID = read.ViewReceiverTypeID
-			nominalFieldRead = true
+			nominalCheckedRead = true
 		case ir.ArrayIndex:
 			receiver, typeID, field, where = read.Array, read.ViewTypeID, "[element]", read.View
+			nominalCheckedRead = ir.HasArrayViews(program) && read.Element == ir.Object
 		case ir.ArrayMap:
 			arrayRead(read.Array, read.ViewRead)
 		case ir.ArrayVisit:
@@ -220,9 +222,9 @@ func (l *lowering) checkLazyViewReads() error {
 		if family == "" && !l.viewIntersectionReadChecks(contract) {
 			family = unsupportedFields[field]
 		}
-		if nominalFieldRead && family == "nominal class" && (program.NominalReadContracts[typeID] != 0 || program.NominalReadContracts[receiverTypeID] != 0) {
+		if nominalCheckedRead && family == "nominal class" && (program.NominalReadContracts[typeID] != 0 || program.NominalReadContracts[receiverTypeID] != 0) {
 			// Both backends check the registered class identity at this field read,
-			// including the receiver when a class escapes into a helper.
+			// including helper receivers and array element extraction.
 			family = ""
 		}
 		if family == "" {

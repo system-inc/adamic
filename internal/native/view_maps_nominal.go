@@ -30,6 +30,9 @@ func (e *emitter) mapEntryNominalCertificate(id ir.ViewContractID, value, where 
 	stored := e.temporary()
 	e.line("const void *%s = (const void *)%s;", stored, value)
 	accepted := []string{fmt.Sprintf("%s != NULL && ((const adamic_heap *)%s)->kind == adamic_kind_object", stored, stored)}
+	if contract.Kind == ir.ViewArray {
+		accepted = []string{fmt.Sprintf("%s != NULL && ((const adamic_heap *)%s)->kind == adamic_kind_array", stored, stored)}
+	}
 	if contract.NominalClass != 0 {
 		accepted = []string{fmt.Sprintf("adamic_instanceof(%s, &adamic_class_%d)", stored, contract.NominalClass)}
 	}
@@ -41,6 +44,25 @@ func (e *emitter) mapEntryNominalCertificate(id ir.ViewContractID, value, where 
 	}
 	message := cString("Map nominal producer failed: " + where + " expected " + contract.Name + ", found value without its class identity")
 	e.line("if (!(%s)) adamic_panic(%s, sizeof %s - 1);", strings.Join(accepted, " || "), message, message)
+	if contract.Kind == ir.ViewArray {
+		index := e.temporary()
+		e.line("if (%s != NULL && %s != &adamic_null) {", stored, stored)
+		e.indent++
+		e.line("for(size_t %s=0;%s<((const adamic_array *)%s)->length;%s++){", index, index, stored, index)
+		e.indent++
+		element := e.program.ViewContracts[contract.Element-1]
+		read := ir.ArrayIndex{Element: element.Of, ViewType: element.Name, View: where + "[element]", UndefinedAllowed: element.Undefined}
+		slot := e.emitViewArrayReadWithOwner(read, "(const adamic_array *)"+stored, "(double)"+index, "NULL")
+		e.line("if (%s != NULL) {", slot)
+		e.indent++
+		e.mapEntryNominalCertificate(contract.Element, slot+"->reference", where+"[element]")
+		e.indent--
+		e.line("}")
+		e.indent--
+		e.line("}")
+		e.indent--
+		e.line("}")
+	}
 	for _, field := range contract.Fields {
 		if !ir.HasMapNominalWitness(e.program, field.Contract) {
 			continue

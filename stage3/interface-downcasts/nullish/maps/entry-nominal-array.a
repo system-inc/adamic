@@ -1,0 +1,18 @@
+class Named {readonly count:number;constructor(count:number){this.count=count;}}
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly value:ReadonlyMap<string,readonly Named[]>|null}
+const fake={count:7};const item:Named[]=[new Named(7),new Named(8)];const source=new Map<string,Named[]>([['key',item]]);
+const raw={kind:'box',value:source};const base:Base=raw;
+function inspectNamed(value:Named):number{return value.count;}
+function inspect(values:readonly Named[]):void{
+console.log(values.map(inspectNamed).join(','));console.log(values.filter(value=>value.count>7).map(inspectNamed).join(','));
+values.forEach(value=>{console.log(String(value.count));});
+for(const value of values){console.log(String(value.count));}
+console.log(String(values.some(value=>value.count===7)));console.log(String(values.every(value=>value.count>0)));console.log(String(values.reduce((sum,value)=>sum+value.count,0)));
+console.log(String(values.indexOf(values[0]!)));console.log(String(values.includes(values[0]!)));
+const first=values.at(0);if(first!==undefined){console.log(String(first.count));}
+const found=values.find(value=>value.count===8);if(found!==undefined){console.log(String(found.count));}
+console.log(values.slice(1).map(inspectNamed).join(','));
+}
+function read(node:Target):void{const map=node.value;if(map!==null){const values=map.get('key');if(values!==undefined){console.log(String(values===item));inspect(values);item.push(new Named(9));inspect(values);}}}
+read(base as Target);console.log(String(fake.count));

@@ -22,11 +22,6 @@
       "outcome": "named compile refusal at consumer; runtime schema decoder does not use checked extraction"
     },
     {
-      "family": "nominal class beneath an array entry",
-      "read": "node.value",
-      "outcome": "named compile refusal"
-    },
-    {
       "family": "nominal class beneath a mutable structural entry",
       "read": "node.value",
       "outcome": "named compile refusal"
@@ -57,6 +52,11 @@
     {
       "family": "nominal witnesses beneath immutable structural entries and fixed tuples",
       "scope": "recursive producer identity checks; class/null/undefined fields; class identity checked on field results and helper/generic receivers; callback, loop and held alias reads",
+      "production_reaching_view_counts": "unmeasured"
+    },
+    {
+      "family": "nominal class beneath array entries",
+      "scope": "finite nested reference arrays; direct and nullable-undefined class elements; constructor-owned source contracts, checked extraction and source-alias writes; sparse holes remain absent rather than undefined",
       "production_reaching_view_counts": "unmeasured"
     }
   ]

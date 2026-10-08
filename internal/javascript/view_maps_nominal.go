@@ -22,6 +22,9 @@ func (e *emitter) mapEntryNominalCertificate(id ir.ViewContractID, value, where 
 		return value
 	}
 	accepted := []string{"entry !== null && typeof entry === 'object'"}
+	if contract.Kind == ir.ViewArray {
+		accepted = []string{"Array.isArray(entry)"}
+	}
 	if contract.NominalClass != 0 {
 		accepted = []string{fmt.Sprintf("adamicInstanceOf(entry, %d)", contract.NominalClass)}
 	}
@@ -33,6 +36,9 @@ func (e *emitter) mapEntryNominalCertificate(id ir.ViewContractID, value, where 
 	}
 	message := quote("Map nominal producer failed: " + where + " expected " + contract.Name + ", found value without its class identity")
 	checks := ""
+	if contract.Kind == ir.ViewArray {
+		checks += "if(entry != null){for(let index=0;index<entry.length;index++){if(index in entry){" + e.mapEntryNominalCertificate(contract.Element, "entry[index]", where+"[element]") + ";}}}"
+	}
 	for _, field := range contract.Fields {
 		if ir.HasMapNominalWitness(e.program, field.Contract) {
 			checks += "if(entry != null){" + e.mapEntryNominalCertificate(field.Contract, "entry["+quote(field.Name)+"]", where+"."+field.Name) + ";}"

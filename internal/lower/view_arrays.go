@@ -56,9 +56,12 @@ func (l *lowering) markViewArrayRead(node *ast.Node, read ir.ArrayIndex) ir.Arra
 	array := node.AsElementAccessExpression().Expression
 	element := l.viewArrayElementType(l.checker.GetTypeAtLocation(array))
 	if element != nil {
+		element = l.concrete(element)
+	}
+	if element != nil {
 		read.View = sourceExpression(node)
 		read.ViewType = l.checker.TypeToString(element)
-		read.ViewTypeID = int(element.Id())
+		read.ViewTypeID = int(l.concrete(element).Id())
 		read.UndefinedAllowed = l.includesUndefined(element)
 		read.ViewAllowed = l.viewContractLiterals(element)
 	}
@@ -72,15 +75,21 @@ func markProgramViewArrayRead(program *ir.Program, read ir.ArrayIndex) ir.ArrayI
 		return read
 	}
 	read.ViewContract = program.ViewContractTypes[read.ViewTypeID]
+	if nominal := program.NominalReadContracts[read.ViewTypeID]; nominal != 0 {
+		read.ViewContract = nominal
+	}
 	return read
 }
 
 func (l *lowering) viewArrayUse(node, array *ast.Node, of ir.Type, required bool) ir.ArrayViewRead {
 	element := l.viewArrayElementType(l.checker.GetTypeAtLocation(array))
+	if element != nil {
+		element = l.concrete(element)
+	}
 	if element == nil {
 		return ir.ArrayViewRead{}
 	}
-	return ir.ArrayViewRead{UndefinedAllowed: l.includesUndefined(element), Element: of, View: sourceExpression(array) + "[element]", ViewType: l.checker.TypeToString(element), ViewTypeID: int(element.Id()), ViewAllowed: l.viewContractLiterals(element), Required: required && !l.includesUndefined(element)}
+	return ir.ArrayViewRead{UndefinedAllowed: l.includesUndefined(element), Element: of, View: sourceExpression(array) + "[element]", ViewType: l.checker.TypeToString(element), ViewTypeID: int(l.concrete(element).Id()), ViewAllowed: l.viewContractLiterals(element), Required: required && !l.includesUndefined(element)}
 }
 
 // Fail closed for consumers whose element extraction/conversion is not wired.
@@ -165,7 +174,10 @@ func (l *lowering) viewArrayHolesConsumer(node any) bool {
 	if !ir.HasArrayViews(l.result) {
 		return false
 	}
-	switch node.(type) {
+	switch value := node.(type) {
+	case ir.MapNew:
+		// Static constructor entries do not iterate a potentially holey pairs source.
+		return value.Pairs == nil
 	case ir.ArrayPush, ir.ArrayPop, ir.ArraySlice:
 		return true
 	}

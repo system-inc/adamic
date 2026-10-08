@@ -11,6 +11,12 @@ log_root = Path('/tmp/map-storage-mutants')
 log_root.mkdir(exist_ok=True)
 runtime = 'internal/native/runtime/map_view_storage.c'
 cases = [
+ ('array-nominal-native-producer', 'internal/native/view_maps_nominal.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewNominalArrayProducerMutant$'),
+ ('array-nominal-javascript-producer', 'internal/javascript/view_maps_nominal.go', '\"((entry) => {if (!(\" + strings.Join', '\"((entry) => {if (false && !(\" + strings.Join', '^TestCheckedViewNominalArrayProducerMutant$'),
+ ('array-nominal-native-write', 'internal/native/view_nominal_reads.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewNominalArrayWriteMutant$'),
+ ('array-nominal-javascript-write', 'internal/javascript/view_array_writes.go', 'if (!(adamicInstanceOf(value,', 'if (false && !(adamicInstanceOf(value,', '^TestCheckedViewNominalArrayWriteMutant$'),
+ ('array-nominal-native-read', 'internal/native/view_nominal_reads.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewNominalArrayReadMutant$'),
+ ('array-nominal-javascript-read', 'internal/javascript/view_nominal_reads.go', '\"((value) => (\" + strings.Join', '\"((value) => (true || \" + strings.Join', '^TestCheckedViewNominalArrayReadMutant$'),
  ('nested-nominal-native-producer', 'internal/native/view_maps_nominal.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewMapNestedNominalMutants$/^(constructor|set|copy)$'),
  ('nested-nominal-javascript-producer', 'internal/javascript/view_maps_nominal.go', '\"((entry) => {if (!(\" + strings.Join', '\"((entry) => {if (false && !(\" + strings.Join', '^TestCheckedViewMapNestedNominalMutants$/^(constructor|set|copy)$'),
  ('nested-nominal-native-read', 'internal/native/view_nominal_reads.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewMapNestedNominalMutants$/^(receiver|generic|field)$'),

@@ -749,3 +749,36 @@ before their producer schema can be certified. Nullable structural aggregate roo
 optional structural fields are also outside this bounded adapter. Callable-bearing
 classes remain with lane 5; optional/rest tuples remain with lane 4c. Exact production
 reaching-view counts remain unmeasured (conservative inventory: 2,018 pairs / 9,101 reads).
+
+### Nominal arrays, October 8
+
+Private Map witnesses now traverse finite reference arrays containing data
+classes, including nested arrays and class-or-undefined elements. Shared array
+extraction checks class identity at an indexed read or callback/loop extraction.
+Array literals and length constructors retain their own logical element contract;
+a mutable source alias checks incoming class identity without rewriting that
+contract to a wider viewed type. Sparse producer scans skip absent indices and
+check present undefined using the declared element contract.
+
+Controls cover array methods, helper reads, nested arrays, private data fields,
+source alias pushes, generic optional elements, and sparse arrays. Three isolated
+payload mutants substitute a structural lookalike at a producer, element read,
+and mutable source push. Six implementation counterfactuals disable each backend's
+corresponding check; all fail behaviorally, without a compilation failure.
+Evidence is under `evidence/map-nominal-array-*`.
+
+Class-or-null boxed array elements, optional structural fields, mutable structural
+entry witnesses, recursive nominal aggregates, and uncertified nonliteral source
+write contracts remain outside this group. Callable conventions remain with lane
+5. Production reaching-view discharge is unmeasured; the 2,018-pair/9,101-read
+inventory is not a compilation count. Required primitive brands retain the
+existing language refusal in `internal/lower/phantom_brands.go:133`,
+`(*lowering).phantomRefusal`: a primitive brand member whose type is not void must
+be made void (or optional and typed undefined) so the brand is phantom.
+
+Nominal array validation: the scoped uncached oracle (`Map|Nullish|
+NullableSelection|TestCheckedViewArrayJSONStorageRefusal|TestCheckedViewNominalArray|
+TestArrayHoles(Milestone|Refusals)$`) passed in 177.796 seconds. Touched-package
+checks (`View|Map|Contract|Callable|Tuple`, with the inherited Phantom exclusion)
+passed: IR 0.011s, lower 5.954s, native 35.910s, JavaScript 0.981s. Scoped vet passed.
+The complete repository gate was not run for this group.

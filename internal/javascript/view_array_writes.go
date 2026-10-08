@@ -8,6 +8,8 @@ import (
 
 func (e *emitter) viewArraySourceCertificate(expression ir.Expression, value string) string {
 	switch source := expression.(type) {
+	case ir.ArrayHoles:
+		return fmt.Sprintf("adamicArrayElementCertificate(%s, %d)", value, source.ElementContract)
 	case ir.ArrayLiteral:
 		return fmt.Sprintf("adamicArrayElementCertificate(%s, %d)", value, source.ElementContract)
 	case ir.ObjectLiteral:
@@ -48,10 +50,27 @@ func viewArrayReferenceRuntime(program *ir.Program) string {
 		}
 		fields[index+1] = own
 	}
+	nominal := map[int]int{}
+	nullable := map[int]bool{}
+	for index, source := range program.ViewContracts {
+		if source.Of != ir.Object {
+			continue
+		}
+		c := source
+		if c.Kind == ir.ViewNullable && c.Element != 0 {
+			c = program.ViewContracts[c.Element-1]
+		}
+		if c.NominalClass != 0 {
+			nominal[index+1] = c.NominalClass
+			nullable[index+1] = source.Undefined
+		}
+	}
+	classes, _ := json.Marshal(nominal)
+	missing, _ := json.Marshal(nullable)
 	named, _ := json.Marshal(names)
 	pairs, _ := json.Marshal(ir.ArrayRecordWritePairs(program))
 	descriptors, _ := json.Marshal(fields)
-	return fmt.Sprintf("const adamicArrayReferenceNames = %s;\nconst adamicArrayReferencePairs = %s;\nconst adamicArrayReferenceFields = %s;\n", named, pairs, descriptors) + viewArrayReferenceHelpers
+	return fmt.Sprintf("const adamicArrayNominalClasses = %s;\nconst adamicArrayNominalUndefined = %s;\nconst adamicArrayReferenceNames = %s;\nconst adamicArrayReferencePairs = %s;\nconst adamicArrayReferenceFields = %s;\n", classes, missing, named, pairs, descriptors) + viewArrayReferenceHelpers
 }
 
 const viewArrayReferenceHelpers = `const adamicArrayElementContracts = new WeakMap();
@@ -63,6 +82,10 @@ const adamicArrayReferenceWrite = (array, value) => {
  if (adamicArrayStorage.get(array) !== 10) adamicArrayWriteCheck(array, 4);
  const target = adamicArrayElementContracts.get(array) || 0;
  if (!target) adamicArrayReferenceFailure("object", "uncertified source element contract");
+ if (adamicArrayNominalClasses[target]) {
+  if (!(adamicInstanceOf(value,adamicArrayNominalClasses[target]) || value === undefined && adamicArrayNominalUndefined[target])) adamicArrayReferenceFailure(adamicArrayReferenceNames[target],"object without required class identity");
+  return;
+ }
  if (value === undefined || value === null || typeof value !== 'object' || Array.isArray(value) || value instanceof Map) adamicArrayReferenceFailure(adamicArrayReferenceNames[target], value === undefined ? 'undefined' : 'non-object');
  const source = adamicArrayObjectContracts.get(value) || 0;
  if (!source) adamicArrayReferenceFailure(adamicArrayReferenceNames[target], "uncertified incoming record contract");

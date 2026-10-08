@@ -64,6 +64,9 @@ func (e *emitter) emitViewArrayRead(read ir.ArrayIndex) string {
 	if read.Element == ir.Object && read.ViewContract != 0 {
 		checked = "((adamicElement) => adamicElement === undefined ? undefined : " + e.viewObjectUnion(ir.Property{View: read.View, ViewContract: read.ViewContract}, "adamicElement") + ")(" + checked + ")"
 	}
+	if read.Element == ir.Object && read.ViewContract != 0 {
+		checked = "((element) => element === undefined ? undefined : " + e.nominalViewRead(read.ViewContract, "element", read.View, false) + ")(" + checked + ")"
+	}
 	if read.Element == ir.Union {
 		checked = e.arrayPrimitiveUnionRead(read.ViewContract, checked, read.View, read.ViewType)
 	}
@@ -150,6 +153,9 @@ func (e *emitter) viewArrayElementCheck(read ir.ArrayViewRead, value string) str
 	checked := fmt.Sprintf("adamicViewArrayElement(%s, %s, %d, %s, [%s], %t)", value, quote(read.View), read.Element, quote(read.ViewType), strings.Join(literals, ", "), !read.UndefinedAllowed)
 	if read.Element == ir.Object && read.ViewContract != 0 {
 		checked = "((adamicElement) => adamicElement === undefined ? undefined : " + e.viewObjectUnion(ir.Property{View: read.View, ViewContract: read.ViewContract}, "adamicElement") + ")(" + checked + ")"
+	}
+	if read.Element == ir.Object && read.ViewContract != 0 {
+		checked = "((element) => element === undefined ? undefined : " + e.nominalViewRead(read.ViewContract, "element", read.View, false) + ")(" + checked + ")"
 	}
 	if read.Element == ir.Union {
 		checked = e.arrayPrimitiveUnionRead(read.ViewContract, checked, read.View, read.ViewType)

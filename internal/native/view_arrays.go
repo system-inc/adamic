@@ -99,6 +99,7 @@ func (e *emitter) emitViewArrayReadWithOwner(read ir.ArrayIndex, array, index, o
 		e.line("if (%s != NULL) {", slot)
 		e.indent++
 		e.viewObjectUnion(ir.Property{View: read.View, ViewContract: read.ViewContract}, snapshot+".reference")
+		e.nominalViewRead(read.ViewContract, snapshot+".reference", read.View, false)
 		e.indent--
 		e.line("}")
 	}
