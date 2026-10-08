@@ -87,7 +87,7 @@ func (s *sourceFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
 			if start < 0 {
 				start = strings.Index(text, "declare const console:")
 			}
-			if start >= 0 {
+			if start >= 0 && !s.nodeTypes {
 				if end := strings.Index(text[start:], "declare module 'adamic'"); end >= 0 {
 					text = text[:start] + text[start+end:]
 				}

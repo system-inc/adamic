@@ -20,4 +20,4 @@ for (const name of ['missing', 'directory']) {
         }
     }
 }
-for (const name of ['file','bom','bad','utf16le','utf16be','utf16be-odd','empty','missing','directory']) { console.log(JSON.stringify(readFile(root + '/' + name, 'latin1'))); }
+for (const name of ['file','bom','bad','utf16le','utf16be','utf16be-odd','empty','missing','directory']) { console.log(JSON.stringify(readFile(root + '/' + name, 'latin1')) ?? 'undefined'); }

@@ -16,6 +16,13 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 	if l.catchOrigin(node, map[*ast.Symbol]bool{}) && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsAny != 0 {
 		return ir.Union, nil
 	}
+	if parent := node.Parent; parent != nil && parent.Kind == ast.KindVariableDeclaration && parent.Name() == node {
+		if initializer := parent.AsVariableDeclaration().Initializer; initializer != nil {
+			if err := l.numericTypedArrayUnsupportedUse(ast.SkipParentheses(initializer)); err != nil {
+				return 0, err
+			}
+		}
+	}
 	if l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
 		if symbol := l.flagValueSymbol(ast.SkipParentheses(node)); symbol != nil {
 			if stored, known := l.representation(l.checker.GetTypeOfSymbol(symbol)); known {

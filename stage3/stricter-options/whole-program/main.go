@@ -2,12 +2,16 @@
 package main
 
 import (
+	_ "embed"
 	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/internal/load"
 	"os"
 	"path/filepath"
 )
+
+//go:embed roots.json
+var ledgerRoots []byte
 
 func main() {
 	if len(os.Args) != 3 {
@@ -23,20 +27,16 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	// The entire configured compiler tree is checked, including unimported files.
-	roots := []string{}
-	entries, err := filepath.Glob(filepath.Join(os.Args[1], "src/compiler/*.ts"))
-	if err != nil {
+	// The same 79 implementation roots recorded by the checker ledger.
+	var names []string
+	if err := json.Unmarshal(ledgerRoots, &names); err != nil {
 		panic(err)
 	}
-	roots = append(roots, entries...)
-	for _, directory := range []string{"transformers", "transformers/declarations"} {
-		entries, err = filepath.Glob(filepath.Join(os.Args[1], "src/compiler", directory, "*.ts"))
-		if err != nil {
-			panic(err)
-		}
-		roots = append(roots, entries...)
+	roots := make([]string, len(names))
+	for index, name := range names {
+		roots[index] = filepath.Join(os.Args[1], name)
 	}
+
 	_, report, loadErr := load.LoadOptionLedger(roots, os.Args[1], rows)
 	if len(report.Rows) != len(rows) {
 		fmt.Fprintln(os.Stderr, loadErr)

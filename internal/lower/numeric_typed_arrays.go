@@ -11,13 +11,21 @@ import (
 var numericTypedArrays = []string{"Int8Array", "Uint8Array", "Uint8ClampedArray", "Int16Array", "Uint16Array", "Int32Array", "Uint32Array", "Float32Array", "Float64Array"}
 
 func (l *lowering) numericTypedArray(proven *checker.Type) bool {
-	if proven == nil || l.typedArrayKind(l.checker.GetNonNullableType(proven)) != 0 {
+	return l.numericTypedArraySeen(proven, map[*checker.Type]bool{})
+}
+
+func (l *lowering) numericTypedArraySeen(proven *checker.Type, seen map[*checker.Type]bool) bool {
+	if proven == nil || seen[proven] {
 		return false
 	}
+	seen[proven] = true
 	proven = l.concrete(l.checker.GetNonNullableType(proven))
+	if proven == nil || l.typedArrayKind(proven) != 0 {
+		return false
+	}
 	if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
 		for _, member := range proven.Types() {
-			if l.numericTypedArray(member) {
+			if l.numericTypedArraySeen(member, seen) {
 				return true
 			}
 		}
@@ -103,6 +111,14 @@ func (l *lowering) typedArrayIndex(node *ast.Node, object ir.Expression) (ir.Exp
 }
 
 func (l *lowering) numericTypedArrayUnsupportedUse(node *ast.Node) error {
+	if node.Kind == ast.KindObjectLiteralExpression {
+		for _, field := range node.AsObjectLiteralExpression().Properties.Nodes {
+			if field.Kind == ast.KindSpreadAssignment && l.numericTypedArray(l.checker.GetTypeAtLocation(field.AsSpreadAssignment().Expression)) {
+				return l.notYet(field, "typed array spread requires their own numeric keys or iterator semantics")
+			}
+		}
+	}
+
 	if !l.numericTypedArray(l.checker.GetTypeAtLocation(node)) {
 		return nil
 	}
