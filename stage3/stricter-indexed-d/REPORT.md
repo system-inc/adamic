@@ -1,5 +1,5 @@
 Built probes for all 27 corrected ledger rows: 22 dense read shapes proven, 5 representation refusals.
-Commits: original series through c019ca20; corrected-scope extension is the next branch commit.
+Commits: original series through c019ca20; corrected scope d22099f0; D151 investigation recorded in this commit.
 Commands: corrected census, complete witness suite, filtered oracle and vet pass; outputs below.
 Mutants: 22 erased guards caught, including new D170 exit 0 with undefined stdout; D107 UBSan exit 1.
 Not covered: 4 record rows awaiting representation, nullable D151, 22 hole variants, whole-program compilation and full gate.
@@ -244,3 +244,60 @@ Only this unit's harness, manifest, census, report and evidence changed.
 
 Current totals: 22 dense reads proven; 5 rows blocked (D119, D129, D130, D131,
 D151); 22 additional hole variants blocked; 0 rows remaining unassessed.
+
+
+## D151 representation investigation
+
+Observed refusal: `src/compiler/sourcemap.ts:216`,
+`map.sourcesContent[raw.sourceIndex]`, receiver `(string | null)[]`.
+The minimized witness refuses at its local binding (line 2, column 7):
+`stage 0 can't lower a value of type string | null yet`.
+`internal/lower/expression.go`, `(*lowering).typeOf` (line 15), emits that
+message at line 27 after `(*lowering).representation` (line 30) rejects the
+union. The nullable-union branch (lines 63-74) supports only nullable regexp
+match arrays and explicitly rejects a union containing both null and undefined.
+
+Existing `string | undefined` representation is `ir.String`, an
+`adamic_string *`: a live string pointer means string and NULL means undefined.
+The union loop skips undefined and shares the remaining reference representation
+(expression.go lines 78-117); native cType is in emit_values.go. There is no
+MaybeString present/value representation. Mixed `ir.Union` also uses NULL for
+undefined and does not provide a separate null tag. Existing nullable regexp
+references reuse NULL for null, with static type information distinguishing it
+from undefined. Equality lowering makes `=== undefined` always false for a
+nullable operand; that cannot classify all three runtime states in one value.
+
+There is an existing lookup-specific distinction: emit_slots.go,
+`(*emitter).typeOfReference`, keeps `adamic_value *slot` long enough for direct
+`typeof` to distinguish absent slot from present NULL payload. That presence
+information is not carried in an ordinary string local. The next explicit
+refusal is indexed_checks.go, `(*lowering).checkedIndexedRead`, line 31:
+`an indexed presence check on nullable array elements (the lookup needs to
+retain its presence slot)`.
+
+Inference: merely admitting string | null as ir.String is insufficient for the
+requested runtime distinction. D151 needs the guard to test slot presence,
+rather than whether the payload is NULL. Beyond that guard, a value that can
+hold string, null and undefined needs a representation decision: carry presence
+alongside the pointer through IR/storage/observations, or introduce a distinct
+null tag/sentinel alongside the existing undefined NULL. The temporary slot
+used by typeof is not already such a general value representation. Per the
+user's instruction, stop here without choosing or implementing either approach.
+No null/undefined conflation mutant is claimed because that implementation has
+not been selected. Existing dense-read erased-guard results remain unchanged.
+
+All five blocked rows and dependencies:
+
+| Row | Read | Waits on |
+|---|---|---|
+| D119 | moduleNameResolver.ts:474, typesVersions[key] | Nested record/index-signature representation and presence checks from stricter-indexed-c, then its witness and mutant |
+| D129 | program.ts:4157, options.paths[key][i] | Record of string arrays representation from stricter-indexed-c, then its witness and mutant |
+| D130 | program.ts:4160, options.paths[key][i] | Same record representation, then its individually observed witness and mutant |
+| D131 | program.ts:4160, options.paths[key][i] | Same record representation, then its individually observed witness and mutant |
+| D151 | sourcemap.ts:216, map.sourcesContent[raw.sourceIndex] | Null/undefined representation decision and slot-presence guard, then both-backend release/sanitized Node comparisons and conflation mutant |
+
+Validation: reran `go test ./stage3/stricter-indexed-d -run
+'^TestLedgerWitnesses/D151$' -count=1 -timeout 3m -v`, with output in
+`evidence/D151-investigation.log`. This checks Node string/null/absent controls
+and pins the current lower refusal; it does not prove native nullable support.
+Only this report and the focused evidence log change in this investigation.
