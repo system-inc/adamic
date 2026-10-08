@@ -1,5 +1,3 @@
-idle preemption: 0 marked, 0 survivors in their sessions, 4 ms
-FIRST FAILURE (tests, at 83.7 s):
 github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/refused/21_truthy_loops.a/stage0
 === RUN   TestFixtures/taste/refused/21_truthy_loops.a/stage0
     fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Refused What:stage3/fixtures/taste/refused/21_truthy_loops.a:31:13: Adamic 0.1 refuses checked view read of field flags with unsupported union contract; prove or implement the union contract before reading this field}; recorded {Outcome:NotYet What:stage3/fixtures/taste/refused/21_truthy_loops.a:34:25: stage 0 can't lower checked view field objectType of type Type yet}
