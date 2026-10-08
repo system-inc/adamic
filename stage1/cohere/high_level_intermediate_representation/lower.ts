@@ -800,12 +800,12 @@ function lowerFunction(parser: Parser, root: number, source: string, symbols: Sy
     return builder;
 }
 // Construct once; the file entry cache owns the parser and checker facts.
-export function lowerParsedFunction(parser: Parser, root: number, source: string, symbols: SymbolSnapshot | undefined, cloneBeforeSSA: boolean = false): ConstructedHIR | undefined {
+export function lowerParsedFunction(parser: Parser, root: number, source: string, symbols: SymbolSnapshot | undefined, cloneBeforeSSA: boolean = false, construct: boolean = true): ConstructedHIR | undefined {
     if(!['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration', 'GetAccessor', 'SetAccessor', 'Constructor'].includes(parser.node(root).kind) || !supportedFunction(parser, root)) { return undefined; }
     const arena = new HIRArena();
     const builder = lowerFunction(parser, root, source, symbols, undefined, arena);
     if(builder === undefined) { return undefined; }
-    constructHIR(arena, builder.functionIndex, cloneBeforeSSA);
+    if(construct) { constructHIR(arena, builder.functionIndex, cloneBeforeSSA); }
     return new ConstructedHIR(arena, builder.functionIndex);
 }
 // Corpus positions are UTF-8 offsets; path selects a nested graph constructed with its parent.

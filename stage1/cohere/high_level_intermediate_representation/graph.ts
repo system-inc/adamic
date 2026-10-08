@@ -53,6 +53,8 @@ function graphFor(fnOwner: HIRFunction): GraphInterface<HIRFunction, BasicBlock,
             instruction.value.right = visit(instruction.value.right, 'Use');
         }
         const value = instruction.value;
+        if(value.kind === 'StartMemoize' && value.deps !== undefined) { for(const dep of value.deps) { if(!dep.root.isGlobal) { dep.root.place = visit(dep.root.place,'Use'); } } }
+        if(value.kind === 'FinishMemoize') { value.value = visit(value.value,'Use'); }
         if(value.kind === 'Destructure') { visitPattern(fn,value.lvaluePattern,visit); value.value = visit(value.value,'Use'); }
         if(value.kind === 'TypeCastExpression' || value.kind === 'Await') { value.value = visit(value.value, 'Use'); }
         if(value.kind === 'PropertyDelete' || value.kind === 'ComputedDelete') { value.object = visit(value.object, 'Use'); }
@@ -72,7 +74,7 @@ function graphFor(fnOwner: HIRFunction): GraphInterface<HIRFunction, BasicBlock,
         if(value.kind === 'JsxExpression') { if(value.tag.place !== undefined) { value.tag.place = visit(value.tag.place, 'Use'); } for(const prop of value.props) { prop.value = visit(prop.value, 'Use'); } }
         if(value.kind === 'JsxExpression' || value.kind === 'JsxFragment') { for(let index = 0; index < value.children.length; index++) { value.children[index] = visit(value.children[index] ?? panic('missing jsx child'), 'Use'); } }
         if(value.kind === 'FunctionExpression') { for(let index = 0; index < value.captures.length; index++) { value.captures[index] = visit(value.captures[index] ?? panic('missing capture'), 'Use'); } }
-        if(value.kind === 'DeclareLocal' || value.kind === 'StoreLocal' || value.kind === 'StoreContext' || value.kind === 'PrefixUpdate' || value.kind === 'PostfixUpdate') { value.lvalue = visit(value.lvalue, 'Define'); }
+        if(value.kind === 'DeclareLocal' || value.kind === 'DeclareContext' || value.kind === 'StoreLocal' || value.kind === 'StoreContext' || value.kind === 'PrefixUpdate' || value.kind === 'PostfixUpdate') { value.lvalue = visit(value.lvalue, 'Define'); }
 
     },
     isContextStore: (fn, block, index) => (fn.instruction(block.instructions[index] ?? panic('missing instruction id'))).value.kind === 'StoreContext',
@@ -110,6 +112,7 @@ export function constructHIR(arena: HIRArena, index: FunctionIndex, cloneBeforeS
     // Go oracle constructs a CloneFunction: LValue and Pattern are independently copied.
     for(const instruction of fn.instructions) { const value = instruction.value; if(value.kind === 'Destructure' && cloneBeforeSSA) { value.lvaluePattern = clonePattern(fn,value.pattern); } }
     construct(hirGraph, fn);
+    for(const block of fn.blockTable) { block.present = fn.retained.has(block.id.slot + 1); }
     for(const nested of fn.functions) { constructHIR(arena, nested, cloneBeforeSSA); }
 }
 

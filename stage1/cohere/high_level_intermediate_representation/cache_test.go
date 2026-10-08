@@ -17,7 +17,10 @@ func TestFileFunctionCacheOracle(t *testing.T) {
 	lane := filepath.Join(root, "stage1/cohere/high_level_intermediate_representation")
 	temp := t.TempDir()
 	upstream := filepath.Join(root, "cohere/internal/lint/ecmascript/high_level_intermediate_representation")
-	replacements := map[string]string{}
+	replacements := map[string]string{
+		filepath.Join(upstream, "stage1_hir_checkpoint_test.go"): filepath.Join(lane, "replay/oracle_test.go"),
+		filepath.Join(upstream, "stage1_hir_inputs_test.go"):     filepath.Join(lane, "replay/inputs_test.go"),
+	}
 	for _, name := range []string{"oracle", "census", "cache"} {
 		replacements[filepath.Join(upstream, "stage1_hir_"+name+"_test.go")] = filepath.Join(lane, "testdata", name+"_test.go")
 	}

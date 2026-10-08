@@ -41,21 +41,23 @@ func observeTestCalls(data []byte) []byte {
 	}
 	return data
 }
-func TestWholeConstructionCensus(t *testing.T) {
+func exportConstructionCensus(t *testing.T, destination string) string {
+	t.Helper()
 	root, err := filepath.Abs("../../..")
 	if err != nil {
 		t.Fatal(err)
 	}
 	lane := filepath.Join(root, "stage1/cohere/high_level_intermediate_representation")
 	temp := t.TempDir()
-	destination := os.Getenv("HIR_CENSUS_EXPORT")
 	if destination == "" {
 		destination = filepath.Join(temp, "census")
 	}
 	upstream := filepath.Join(root, "cohere/internal/lint/ecmascript/high_level_intermediate_representation")
 	replacements := map[string]string{
-		filepath.Join(upstream, "stage1_hir_oracle_test.go"): filepath.Join(lane, "testdata/oracle_test.go"),
-		filepath.Join(upstream, "stage1_hir_census_test.go"): filepath.Join(lane, "testdata/census_test.go"),
+		filepath.Join(upstream, "stage1_hir_inputs_test.go"):     filepath.Join(lane, "replay/inputs_test.go"),
+		filepath.Join(upstream, "stage1_hir_checkpoint_test.go"): filepath.Join(lane, "replay/oracle_test.go"),
+		filepath.Join(upstream, "stage1_hir_oracle_test.go"):     filepath.Join(lane, "testdata/oracle_test.go"),
+		filepath.Join(upstream, "stage1_hir_census_test.go"):     filepath.Join(lane, "testdata/census_test.go"),
 	}
 	files, err := filepath.Glob(filepath.Join(upstream, "*_test.go"))
 	if err != nil {
@@ -109,6 +111,20 @@ func TestWholeConstructionCensus(t *testing.T) {
 		if strings.HasPrefix(line, "HIR construction census:") {
 			t.Log(line)
 		}
+	}
+	return destination
+}
+func TestWholeConstructionCensus(t *testing.T) {
+	root, err := filepath.Abs("../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	lane := filepath.Join(root, "stage1/cohere/high_level_intermediate_representation")
+	temp := t.TempDir()
+	destination := exportConstructionCensus(t, os.Getenv("HIR_CENSUS_EXPORT"))
+	output, err := os.ReadFile(filepath.Join(destination, "go-tests.log"))
+	if err != nil {
+		t.Fatal(err)
 	}
 	recordOptionalBooleanImpact(t, destination)
 	manifest := filepath.Join(destination, "manifest.tsv")

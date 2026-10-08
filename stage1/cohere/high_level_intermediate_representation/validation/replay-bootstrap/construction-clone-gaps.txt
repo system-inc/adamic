@@ -1,0 +1,22 @@
+=== RUN   TestCloneFunctionOracle
+    clone_test.go:15: HIR construction census: 1537 context-distinct functions in 1537 records; 1514 eligible; 395 fixtures (40 Flow exclusions)
+    clone_test.go:30: CloneFunction native = Node: 1514/1537 including probes
+    clone_test.go:66: native and Node catch clone storage alias at the checked block arena read
+--- PASS: TestCloneFunctionOracle (47.88s)
+=== RUN   TestWholeConstructionCensus
+    construction_test.go:124: HIR construction census: 1537 context-distinct functions in 1537 records; 1514 eligible; 395 fixtures (40 Flow exclusions)
+    construction_test.go:129: optional boolean semantic impact: 74/1465 original graphs; 1391 do not read that field
+    construction_test.go:144: ForFunction cache matches every admitted checker-backed row; checker-less cache requests decline
+    construction_test.go:146: 1514/1537 context-distinct functions match Go on Node and natively; remaining rows are explicit declines
+    construction_test.go:147: 45 Go tests skipped; names recorded in go-tests.log
+=== RUN   TestWholeConstructionCensus/catches_return_becomes_unreachable
+=== NAME  TestWholeConstructionCensus
+    construction_test.go:152: off-by-one FunctionIndex mutant stopped at a checked arena read on Node and native
+--- PASS: TestWholeConstructionCensus (66.34s)
+    --- PASS: TestWholeConstructionCensus/catches_return_becomes_unreachable (17.76s)
+=== RUN   TestOptionalBooleanGapStandsWhereGapsMdSays
+--- PASS: TestOptionalBooleanGapStandsWhereGapsMdSays (0.18s)
+=== RUN   TestStaticConstructorSpreadGapStandsWhereGapsMdSays
+--- PASS: TestStaticConstructorSpreadGapStandsWhereGapsMdSays (0.16s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/high_level_intermediate_representation	114.580s

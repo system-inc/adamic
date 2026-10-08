@@ -28,6 +28,8 @@ function dumpFunction(arena: HIRArena, index: FunctionIndex): string {
     }
     for(const instruction of fn.instructions) { if(!seen.has(instruction.id.slot)) { out += 'orphan ' + instructionText(instruction, arena, fn); } }
     if(fn.contextDeclarations.size > 0) { out += `context-declarations [${[...fn.contextDeclarations].map((index) => index.slot + 1).sort((a, b) => a - b).join(' ')}]\n`; }
+    const outlined = fn.outlined;
+    if(outlined !== undefined) { const keys = [...outlined.keys()].sort((a,b) => a.slot - b.slot); for(const key of keys) { const ordinal = fn.functions.indexOf(outlined.get(key) ?? panic('missing outlined function')); if(ordinal < 0) { panic('foreign outlined function'); } out += `outlined ${key.slot} ${ordinal}\n`; } }
     for(let index = 0; index < fn.functions.length; index++) { out += `nested ${index}\n${dumpFunction(arena, fn.functions[index] ?? panic('missing nested'))}`; }
     out += 'scopes -\nend\n';
     return out;
@@ -68,7 +70,7 @@ function instructionText(instruction: Instruction, arena: HIRArena, fn: HIRFunct
     else if(value.kind === 'BinaryExpression') { payload = `${placeText(value.left)} ${value.operator} ${placeText(value.right)}`; }
     else if(value.kind === 'LoadGlobal') { payload = `{"BindingKind":${value.bindingKind},"Imported":${quote(value.imported)},"Name":${quote(value.name)},"Source":${quote(value.source)}}`; }
     else if(value.kind === 'StoreGlobal') { payload = `{"Name":${quote(value.name)},"Value":${quote(placeText(value.value))}}`; }
-    else if(value.kind === 'DeclareLocal') { payload = `{"Kind":${value.declarationKind},"LValue":${quote(placeText(value.lvalue))}}`; }
+    else if(value.kind === 'DeclareLocal' || value.kind === 'DeclareContext') { payload = `{"Kind":${value.declarationKind},"LValue":${quote(placeText(value.lvalue))}}`; }
     else if(value.kind === 'LoadContext') { payload = `{"Place":${quote(placeText(value.place))}}`; }
     else if(value.kind === 'GetIterator' || value.kind === 'NextPropertyOf') { payload = `{"Value":${quote(placeText(value.value))}}`; }
     else if(value.kind === 'IteratorNext') { payload = `{"Collection":${quote(placeText(value.collection))},"Iterator":${quote(placeText(value.iterator))}}`; }
@@ -102,10 +104,12 @@ function instructionText(instruction: Instruction, arena: HIRArena, fn: HIRFunct
             else { payload = `{"Args":${args},"CalleeOrigin":${origin},"Optional":${value.optional ? 'true' : 'false'},"Property":${quote(placeText(value.property))},"Receiver":${quote(placeText(value.receiver))}}`; }
         }
     }
+    else if(value.kind === 'StartMemoize') { const deps = value.deps === undefined ? 'null' : '[' + value.deps.map((dep) => `{"Path":[${dep.path.map((entry) => `{"Optional":${entry.optional ? 'true' : 'false'},"Property":${quote(entry.property)}}`).join(',')}],"Root":{"IsGlobal":${dep.root.isGlobal ? 'true' : 'false'},"Name":${quote(dep.root.name)},"Place":${quote(placeText(dep.root.place))}}}`).join(',') + ']'; payload = `{"Deps":${deps},"ManualMemoId":${value.manualMemoId}}`; }
+    else if(value.kind === 'FinishMemoize') { payload = `{"ManualMemoId":${value.manualMemoId},"Pruned":${value.pruned ? 'true' : 'false'},"Value":${quote(placeText(value.value))}}`; }
     return `instruction ${instruction.id.slot} ${instruction.order} ${placeText(instruction.lvalue)} ${instruction.start}:${instruction.end} ${instruction.value.kind} ${payload}\n`;
 }
 
-function terminalText(terminal: TerminalType): string {
+export function terminalText(terminal: TerminalType): string {
     if(terminal.kind === 'Return') { return placeText(terminal.value ?? panic('missing terminal value')); }
     if(terminal.kind === 'Throw') { return `{"Value":${quote(placeText(terminal.value ?? panic('missing terminal value')))}}`; }
     if(terminal.kind === 'Goto') { return `{"Block":${(terminal.block ?? panic('missing terminal index')).slot + 1},"Variant":${terminal.variant}}`; }

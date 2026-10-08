@@ -53,8 +53,9 @@ through `inline_remap.go:271`'s deep copy. Adamic `clone.ts` copies the equivale
 `ValueType` discriminated record, its writable arrays and its arena edges. The
 required concrete private-index classes have static minting methods. Stage 0
 refuses combining these static constructor objects with object record spreads.
-The pending clone is isolated behind `clone_main.ts` / `clone_coverage.ts`; ordinary
-construction and the rule do not import it. No workaround is applied.
+The compiler ruling authorizes explicit typed record copies in clone.ts. Every
+workaround region is marked `gap 2 (GAPS.md)`; remove these copies in favor of
+spread when the selector-style proving test detects that lowering is fixed.
 
 Shortest proving program, `testdata/static-constructor-spread-gap.a`:
 
@@ -72,5 +73,6 @@ adamic: static-constructor-spread-gap.a: stage 0 can't lower spreading in a prog
 
 Exact `lower.NotYet.What`: `spreading in a program with static constructor objects`.
 The selector-style test fails when lowering succeeds or its refusal changes.
-This blocks the pending CloneFunction certificate on native; it does not block
-any of the 1,442 admitted construction graphs or static-components.
+With the recorded workaround, CloneFunction is certified on native and Node
+for all 1,442 admitted originals and 72 probes. The compiler gap remains open;
+the unmodified proving program and exact refusal are retained.

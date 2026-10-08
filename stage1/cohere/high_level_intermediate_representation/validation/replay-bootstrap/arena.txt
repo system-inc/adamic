@@ -1,0 +1,18 @@
+=== RUN   TestConcreteIndices
+    arena_index_test.go:94: private rejected: stage1/cohere/arena/testdata/private-generated.a:2:1: error TS2673: Constructor of class 'FunctionIndex' is private and only accessible within the class declaration.
+        exit status 1
+    arena_index_test.go:94: scope-private rejected: stage1/cohere/arena/testdata/scope-private-generated.a:2:1: error TS2673: Constructor of class 'ScopeIndex' is private and only accessible within the class declaration.
+        exit status 1
+    arena_index_test.go:94: reactive-private rejected: stage1/cohere/arena/testdata/reactive-private-generated.a:2:1: error TS2673: Constructor of class 'ReactiveIndex' is private and only accessible within the class declaration.
+        exit status 1
+    arena_index_test.go:94: scope-reactive-brand rejected: adamic: /workspace/adamic/stage1/cohere/arena/testdata/scope-reactive-brand-generated.a:2:92: Adamic 0.1 refuses a value without nominal ancestry seen as ScopeIndex; construct that class or a subclass; use an interface for structural values (adamic/nominal-class)
+        exit status 1
+    arena_index_test.go:94: pattern-private rejected: stage1/cohere/arena/testdata/pattern-private-generated.a:2:1: error TS2673: Constructor of class 'PatternIndex' is private and only accessible within the class declaration.
+        exit status 1
+    arena_index_test.go:94: pattern-brand rejected: adamic: /workspace/adamic/stage1/cohere/arena/testdata/pattern-brand-generated.a:2:104: Adamic 0.1 refuses a value without nominal ancestry seen as PatternIndex; construct that class or a subclass; use an interface for structural values (adamic/nominal-class)
+        exit status 1
+    arena_index_test.go:94: brand rejected: adamic: /workspace/adamic/stage1/cohere/arena/testdata/brand-generated.a:2:103: Adamic 0.1 refuses a value without nominal ancestry seen as FunctionIndex; construct that class or a subclass; use an interface for structural values (adamic/nominal-class)
+        exit status 1
+--- PASS: TestConcreteIndices (4.83s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/arena	4.829s
