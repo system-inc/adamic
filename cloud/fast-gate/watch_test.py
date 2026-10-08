@@ -57,6 +57,12 @@ printf '%s|%s|%s|%s\\n' "$3" "$text" "$5" "$6" >> "$TEST_ROOT/messages"
 *) /bin/date -u +%H:%M:%S ;;
 esac
 ''')
+        self.script(self.bin / 'ssh', '''box=$1; shift
+cat > "$TEST_ROOT/stop-command"
+sha=${4%% *}
+printf '%s %s\\n' "$box" "$*" >> "$TEST_ROOT/stops"
+touch "$TEST_ROOT/stopped-$sha"
+''')
         self.script(self.bin / 'sleep', '/bin/sleep 0.03\n')
         self.script(cloud / 'auto-area-merge.sh', '''printf '%s\\n' "$*" >> "$TEST_ROOT/merges"
 ''')
@@ -76,7 +82,16 @@ else
     awk -v step="$(cat "$TEST_ROOT/step")" '{print $1 + step}' "$TEST_ROOT/clock" > "$TEST_ROOT/clock.next"
     mv "$TEST_ROOT/clock.next" "$TEST_ROOT/clock"
   fi
-  while [ "$(cat "$TEST_ROOT/mode")" = hold ]; do /bin/sleep 0.01; done
+  [ ! -f "$TEST_ROOT/red-so-far" ] || echo 'FIRST FAILURE (tests, at 174.0 s):'
+  while [ "$(cat "$TEST_ROOT/mode")" = hold ]; do
+    if [ -f "$TEST_ROOT/stopped-$sha" ]; then
+      /bin/sleep 0.15
+      echo "red: $sha first failure at tests after 174.0 s"
+      echo 'stopped: superseded by newer candidate'
+      exit 1
+    fi
+    /bin/sleep 0.01
+  done
   mode=$(cat "$TEST_ROOT/mode")
 fi
 if [ "$mode" = pass ]; then echo "green: $sha passed"
@@ -146,6 +161,43 @@ class WatchTests(unittest.TestCase):
         if release:
             w.put('initial', 'pass')
         return w
+
+    def stale_red(self, reserved=True, red=True):
+        slots = 'server B' + (' cloud/land-area-next*' if reserved else '') + '\n'
+        w = self.reservation(slots, [('cloud/land-area-next-11', 'B')], release=False)
+        if red:
+            w.put('red-so-far', 'yes')
+        w.put('initial', 'pass')
+        w.wait(lambda: len(w.read('starts').splitlines()) == 2)
+        old = w.tips[0][1]
+        newer = 'b' * 40
+        w.put('clock', '1100')
+        w.tips.append(('cloud/land-area-next-12', newer))
+        w.put('tips', ''.join(f'{sha}\trefs/heads/{b}\n' for b, sha in w.tips))
+        w.wait(lambda: 'queued cloud/land-area-next-12' in w.read('output'))
+        if reserved and red:
+            w.wait(lambda: 'done cloud/land-area-next-11: red:' in w.read('output'))
+            time.sleep(.15)
+            self.assertEqual(len(w.read('stops').splitlines()), 1)
+            self.assertIn(f'stopped cloud/land-area-next-11 {old}: superseded by cloud/land-area-next-12 {newer}, red since tests at 174.0 s', w.read('output'))
+            self.assertNotIn('void cloud/land-area-next-11', w.read('output'))
+            self.assertNotIn(old, (w.state / 'queue').read_text())
+            self.assertIn(old, (w.state / 'gated').read_text())
+            self.assertIn('pkill -TERM -f "run.py .*--sha ${sha}"', w.read('stop-command'))
+            self.assertIn('${out}.stop-reason', w.read('stop-command'))
+        else:
+            time.sleep(.2)
+            self.assertEqual(w.read('stops'), '')
+            self.assertEqual(len(w.read('starts').splitlines()), 2)
+
+    def test_red_reserved_gate_stops_once_and_reaps_red(self):
+        self.stale_red()
+
+    def test_reserved_gate_without_failure_keeps_running(self):
+        self.stale_red(red=False)
+
+    def test_non_reserved_red_gate_keeps_running(self):
+        self.stale_red(reserved=False)
 
     def test_reserved_priority_and_whole_box(self):
         w = self.reservation('server B cloud/land-area-next*\nserver S\nother S\n',

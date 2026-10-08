@@ -268,6 +268,7 @@ BOX
 code=$?
 set -e
 
+# A stopped runner exits nonzero with its artifacts intact: publish those just as a finished red.
 local=$(mktemp -d)
 scp -q -r "${box}:${out}" "${local}/fast"
 if [ -n "${darwinLog}" ]; then
@@ -309,5 +310,5 @@ commit=$(git -C "${here}" commit-tree "${tree}" -m "Fast gate of ${sha} against 
 git -C "${here}" push -q origin "${commit}:refs/heads/${logBranch}"
 rm -f "${index}"
 echo "published ${logBranch} (${commit})"
-head -1 "${local}/fast/status.txt"
+cat "${local}/fast/status.txt"
 exit ${code}
