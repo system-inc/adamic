@@ -166,7 +166,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 			if ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 				continue
 			}
-			methodName := methodKey(member, lowered.class)
+			methodName := l.methodKey(member, lowered.class)
 			if accessorMember(member) {
 				l.registerAccessor(lowered.class, member, len(l.result.Functions))
 			}
@@ -214,7 +214,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		if !classFunction(member) || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
 		}
-		method := lowered.methods[methodKey(member, lowered.class)]
+		method := lowered.methods[l.methodKey(member, lowered.class)]
 		if err := l.signature(method, member, l.thisLocal(method)); err != nil {
 			return nil, err
 		}
@@ -229,7 +229,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		if !classFunction(member) || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
 		}
-		method := lowered.methods[methodKey(member, lowered.class)]
+		method := lowered.methods[l.methodKey(member, lowered.class)]
 		if member.Body() == nil {
 			continue
 		}
@@ -380,6 +380,8 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 		if err := l.useOfThis(receiver); err != nil {
 			return nil, err
 		}
+		// super.method() reads this as this.method() does, and inside an arrow that's a capture.
+		l.touch(l.this)
 		object = ir.Read{Local: l.this, Of: ir.Object}
 	} else {
 		object, err = l.expression(receiver)
@@ -431,7 +433,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		// What the field is declared to keep, not what the checker narrowed this write to.
 		of, err = l.typeOfSymbol(target, field)
 	}
-	if err != nil || slotless(of) || slotless(value.Type()) {
+	if err != nil || censusFieldSlotless(of) || censusFieldSlotless(value.Type()) {
 		return nil, l.notYet(target, "storing "+l.checker.TypeToString(l.checker.GetTypeAtLocation(target))+" in a field")
 	}
 	// A field of number | undefined is given a packed word, whatever it's assigned.
@@ -498,13 +500,16 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 // looking up never lowers a class, so a program that compiled before can't stop compiling here.
 func (l *lowering) classOf(access *ast.Node) int {
 	field := l.checker.GetSymbolAtLocation(access.Name())
-	if field == nil || len(field.Declarations) != 1 || field.Declarations[0].Kind != ast.KindPropertyDeclaration {
+	if field == nil || len(field.Declarations) != 1 || (field.Declarations[0].Kind != ast.KindPropertyDeclaration && !parameterProperty(field.Declarations[0])) {
 		return 0
 	}
 	if ast.HasSyntacticModifier(field.Declarations[0], ast.ModifierFlagsStatic) {
 		return 0
 	}
 	class := field.Declarations[0].Parent
+	if parameterProperty(field.Declarations[0]) {
+		class = class.Parent
+	}
 	if class == nil || class.Kind != ast.KindClassDeclaration || len(class.TypeParameters()) > 0 {
 		return 0
 	}
@@ -581,7 +586,7 @@ func (l *lowering) useOfThis(node *ast.Node) error {
 		return nil
 	}
 	if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node {
-		if field := l.checker.GetSymbolAtLocation(parent.Name()); field != nil && len(field.Declarations) > 0 && field.Declarations[0].Kind == ast.KindPropertyDeclaration {
+		if field := l.checker.GetSymbolAtLocation(parent.Name()); field != nil && len(field.Declarations) > 0 && (field.Declarations[0].Kind == ast.KindPropertyDeclaration || parameterProperty(field.Declarations[0])) {
 			return nil
 		}
 	}

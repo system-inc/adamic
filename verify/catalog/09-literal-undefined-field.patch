@@ -1,19 +1,18 @@
 --- a/internal/lower/object.go
 +++ b/internal/lower/object.go
-@@ -69,7 +69,7 @@
+@@ -69,7 +69,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
  			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
  				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
  			}
--			if declared := l.declaredField(node, fieldName); declared != 0 && !slotless(declared) {
+-			if declared := l.declaredField(node, fieldName); declared != 0 && !censusFieldSlotless(declared) {
 +			if declared := l.declaredField(node, fieldName); declared == ir.MaybeNumber || declared == ir.Weak {
  				// Store the value as the member's slot holds it, rather than the initializer's type.
  				value = fit(value, declared)
  			}
-@@ -135,27 +135,6 @@
- 	contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
+@@ -136,27 +136,6 @@ func (l *lowering) declaredField(literal *ast.Node, name string) ir.Type {
  	if contextual == nil {
  		return 0
--	}
+ 	}
 -	if contextual.Flags()&checker.TypeFlagsUnion != 0 {
 -		// The union's combined property can hold unrelated types. The literal belongs to a
 -		// member, whose fields are what reads after discriminant narrowing expect.
@@ -34,18 +33,23 @@
 -			shared = declared
 -		}
 -		return shared
- 	}
+-	}
  	field := l.checker.GetPropertyOfType(contextual, name)
  	if field == nil {
+ 		return 0
 --- a/internal/native/emit_expressions.go
 +++ b/internal/native/emit_expressions.go
-@@ -118,9 +118,6 @@
+@@ -120,11 +120,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
  		lent := e.lendable && lendable(expression.Of) && !expression.Optional
  		object := e.value(expression.Object)
  		field := unslotted(expression.Of, fmt.Sprintf("%s->%s", e.fieldSlot(object, expression.Name, expression.Class), member(expression.Of)))
--		if expression.Of == ir.MaybeNumber {
+-		if expression.Of.IsMaybe() {
 -			field = fmt.Sprintf("adamic_object_maybe_number(%s, %s, &%s)", object, cString(expression.Name), e.cache())
--		}
+-			if expression.Of == ir.MaybeBoolean {
+-				field = fmt.Sprintf("adamic_object_maybe_boolean(%s, %s, &%s)", object, cString(expression.Name), e.cache())
+-			}
++		if expression.Of == ir.MaybeBoolean {
++			field = fmt.Sprintf("adamic_object_maybe_boolean(%s, %s, &%s)", object, cString(expression.Name), e.cache())
+ 		}
  		if expression.Absent {
  			slot := e.temporary()
- 			lookup := fmt.Sprintf("adamic_object_optional_field(%s, %s, &%s)", object, cString(expression.Name), e.cache())

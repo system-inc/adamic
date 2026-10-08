@@ -14,7 +14,7 @@ export class Node {
     list(key: string): number[] { return this.data().list(key); }
     truth(key: string): boolean {
         const n = this.data();
-        return n.booleans.get(key) === true || n.string(key) !== '' || n.objects.has(key) || n.lists.has(key) || n.number(key) !== 0;
+        return n.booleans.get(key) || n.string(key) !== '' || n.objects.has(key) || n.lists.has(key) || n.number(key) !== 0;
     }
     raw(key: string): string { return this.child('raws').string(key); }
     start(): number { return this.child('source').data().number('startOffset'); }

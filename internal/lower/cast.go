@@ -18,6 +18,11 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
+	target := l.concrete(l.checker.GetTypeAtLocation(node))
+	if !l.sameKeeping(source, target, map[[2]*checker.Type]bool{}) {
+		return nil, l.notYet(node, "a cast that changes the runtime representation or ownership of a reference")
+	}
 	value, err := l.expression(as.Expression)
 	if err != nil {
 		return nil, err
@@ -25,8 +30,6 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	if len(proof.allowed) == 0 && len(proof.classes) == 0 {
 		return value, nil
 	}
-	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
-	target := l.concrete(l.checker.GetTypeAtLocation(node))
 	refused := &Refused{Where: l.program.Where(node), What: "a cast without an object tag representation", Fix: castRepair}
 	if value.Type() != ir.Object {
 		return nil, refused

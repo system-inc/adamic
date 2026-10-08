@@ -1,11 +1,9 @@
 --- a/internal/lower/refusals.go
 +++ b/internal/lower/refusals.go
-@@ -66,19 +66,6 @@
+@@ -95,19 +95,6 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
+ 			}
+ 			checkedCast = len(proof.allowed) > 0 || len(proof.classes) > 0
  		}
- 		if refused, isRefused := refusals[node.Kind]; isRefused {
- 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
--			return true
--		}
 -		var assertion *ast.Node
 -		if node.Kind == ast.KindPropertyDeclaration {
 -			if token := node.PostfixToken(); token != nil && token.Kind == ast.KindExclamationToken {
@@ -17,6 +15,8 @@
 -		}
 -		if assertion != nil {
 -			found = &Refused{Where: l.program.Where(assertion), What: "a definite assignment assertion !", Fix: "remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"}
+-			return true
+-		}
+ 		if err := l.namespaceRefusal(node); err != nil {
+ 			found = err
  			return true
- 		}
- 		if node.Kind == ast.KindBinaryExpression {

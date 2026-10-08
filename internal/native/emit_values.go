@@ -14,6 +14,8 @@ func cType(valueType ir.Type) string {
 		return "bool"
 	case ir.Object:
 		return "adamic_object *"
+	case ir.Uint8Array, ir.Int32Array, ir.Float64Array:
+		return "adamic_typed_array *"
 	case ir.Array:
 		return "adamic_array *"
 	case ir.Map:
@@ -39,6 +41,8 @@ func member(valueType ir.Type) string {
 		return "number"
 	case ir.Boolean:
 		return "boolean"
+	case ir.MaybeBoolean:
+		return "maybe_boolean"
 	}
 	return "reference"
 }

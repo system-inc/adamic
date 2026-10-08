@@ -131,7 +131,7 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 			if of.IsReference() {
 				value = ir.Undefined{Of: of}
 			}
-			field := ir.Field{Name: memberKey(member.Name(), lowered.class), Value: value, Private: member.Name().Kind == ast.KindPrivateIdentifier}
+			field := ir.Field{Name: l.memberKey(member.Name(), lowered.class), Value: value, Private: member.Name().Kind == ast.KindPrivateIdentifier}
 			slot := -1
 			for i, previous := range metadata.Fields {
 				if previous.Name == field.Name {
@@ -163,7 +163,7 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 		if !classFunction(member) || !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
 		}
-		key := methodKey(member, lowered.class)
+		key := l.methodKey(member, lowered.class)
 		function := len(l.result.Functions)
 		lowered.methods[key] = function
 		meta := &l.result.Classes[lowered.class-1]
@@ -197,7 +197,7 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 		if !classFunction(member) || !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
 		}
-		function := lowered.methods[methodKey(member, lowered.class)]
+		function := lowered.methods[l.methodKey(member, lowered.class)]
 		if err := l.signature(function, member, l.thisLocal(function)); err != nil {
 			return nil, err
 		}
@@ -209,7 +209,7 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 		if !classFunction(member) || !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
 		}
-		if err := l.lowerFunction(lowered.methods[methodKey(member, lowered.class)], member, -1); err != nil {
+		if err := l.lowerFunction(lowered.methods[l.methodKey(member, lowered.class)], member, -1); err != nil {
 			return nil, err
 		}
 	}
@@ -300,7 +300,7 @@ func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, err
 				value = ir.Undefined{Of: of}
 			}
 			if err == nil {
-				function.Body = []ir.Statement{ir.SetProperty{Object: ir.Read{Local: self, Of: ir.Object}, Name: memberKey(member.Name(), lowered.class), Value: value, Define: true, Site: l.staticWriteSite(declaration.Name())}}
+				function.Body = []ir.Statement{ir.SetProperty{Object: ir.Read{Local: self, Of: ir.Object}, Name: l.memberKey(member.Name(), lowered.class), Value: value, Define: true, Site: l.staticWriteSite(declaration.Name())}}
 			}
 			available[member.Name().Text()] = true
 		}

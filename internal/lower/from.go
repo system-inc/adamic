@@ -69,6 +69,8 @@ func (l *lowering) arrayFrom(node *ast.Node) (ir.Expression, bool, error) {
 	if parameters := callback.Parameters(); len(parameters) > 0 && ast.IsIdentifier(parameters[0].Name()) {
 		received := l.checker.GetTypeAtLocation(parameters[0].Name())
 		switch {
+		case parameters[0].AsParameterDeclaration().Initializer != nil:
+			// The incoming undefined selects the default before the body reads this parameter.
 		case received.Flags()&(checker.TypeFlagsUnknown|checker.TypeFlagsUndefined) != 0:
 			if l.alwaysUndefined == nil {
 				l.alwaysUndefined = map[*ast.Symbol]bool{}
@@ -85,7 +87,7 @@ func (l *lowering) arrayFrom(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, true, err
 	}
 	// What the callback receives first is undefined, held as its first parameter holds undefined: a
-	// null reference, or number | undefined's packed word.
+	// null reference, or a maybe scalar's packed word.
 	var first ir.Type
 	if closure, isClosure := mapped.(ir.MakeClosure); isClosure {
 		if parameters := l.result.Functions[closure.Function].Parameters; len(parameters) > 0 {

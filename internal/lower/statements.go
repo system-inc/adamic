@@ -23,6 +23,8 @@ func (l *lowering) statements(nodes []*ast.Node) ([]ir.Statement, error) {
 // statement lowers one statement to none, one or several.
 func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 	switch node.Kind {
+	case ast.KindModuleDeclaration:
+		return l.statements(namespaceStatements(node))
 	case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement:
 		// Types erase to nothing, and so does an empty statement.
 		return nil, nil
@@ -66,6 +68,9 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 	case ast.KindForInStatement:
 		return l.forIn(node)
 	case ast.KindForOfStatement:
+		if body, handled, err := l.typedArrayForOf(node); handled {
+			return body, err
+		}
 		return l.forOf(node)
 	case ast.KindSwitchStatement:
 		return l.switchStatement(node)
@@ -129,6 +134,12 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 				return nil, err
 			}
 			return []ir.Statement{ir.Panic{Message: message}}, nil
+		}
+		if value, handled, err := l.typedArrayExpression(expression); handled {
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.Evaluate{Value: value}}, nil
 		}
 		// A builtin's result thrown away, like map.set(key, value) or array.push(value).
 		if lowered, isBuiltin, err := l.builtin(expression); isBuiltin {
