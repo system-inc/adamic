@@ -1401,3 +1401,20 @@ Nominal class downcasts use the same ancestry and erased generic identity as `in
 Sixteen new oracle fixtures cover success and failure, both backends, Node source, native release, ASan/UBSan and leaks on successful runs; failing fixtures use the oracle's checked flag. Contract tests independently pin messages, 340,009 bytes of preceding stdout, and absence of catch/finally execution. Sixteen runtime mutants are killed by exit or stdout comparison: skip each of eleven failing checks, use a wrong numeric tag, string tag or class identity, and evaluate each operand form twice. Seven restored compiler/runtime source mutants are killed for duplicate tags, omitted nominal ancestry, omitted generic argument proof, hidden optional fields, unsafe writes through union views, catchable panic and unflushed panic. The duplicate-tag mutant emits valid C and finishes without sanitizer findings, printing native `1` against Node's `wrongwrong1`.
 
 Primitive `number | string | boolean` union assertions remain refused. Their packed union tags are not independently validated for cast extraction and ownership in this unit, so the existing narrowing path remains the repair. Unknown-to-interface, callback signature changes, mutable widening, unrelated assertions and `as unknown as` remain refused with `adamic/no-unchecked-cast` and the admitted forms named. Nested or transformed generic argument recovery is conservatively refused. Validation here is Linux only; no performance claim or macOS execution is made. The accepted design above is copied unchanged from `origin/codex/escape-hatches` because the enum base did not contain this document.
+
+## Checked TypeScript non-null assertions on the compiler area
+
+The October 8 ruling admits `.ts` assertions through the existing nullish coalescing
+panic. Missing values stop with exit 70 and the original source site and expression.
+Proof and inserted check counts are included in `--explain-checks`. Initializers use
+the eager check, not a readiness marker. Adamic `.a` retains the area's existing
+refusal and repair text.
+
+The minimal front-3 dependency is `internal/lower/non_null.go`, including its source
+text helper and the rule that preserves a narrowing's representation and checks.
+`internal/lower/expression.go` dispatches assertions to it. `internal/ir/ir.go`
+records sites and counts. `cmd/adamic/checks.go`, `main.go` and `tsgo.go` expose the
+report without importing front-3's predicate implementation or readiness state.
+The area's class, field, static, optional-read and definite-assignment behavior is
+unchanged. The area's `var` refusal still rejects the original var initializer
+control; a separate let control exercises eager checking on this base.

@@ -48,7 +48,7 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 			continue
 		}
 
-		if initializer := declaration.AsVariableDeclaration().Initializer; assertionInitializer(initializer) {
+		if initializer := declaration.AsVariableDeclaration().Initializer; l.lazyAssertionInitializer(initializer) {
 			prefix, present, value, err := l.lazyAssertion(initializer, l.result.Locals[local].Type)
 			if err != nil {
 				return nil, err

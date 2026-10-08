@@ -18,6 +18,7 @@ type Program struct {
 
 	// CheckedFields conservatively checks these field names at every object read.
 	CheckedFields map[string]bool
+	NonNullChecks NonNullCheckCounts
 
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
@@ -74,6 +75,17 @@ type PredicateCallCheck struct {
 
 type PredicateDirectionCheck struct {
 	Direction, Status, Reason string
+}
+
+// NonNullCheckCounts records proven assertions and inserted nullish checks.
+type NonNullCheckCounts struct {
+	Proven, Checked int
+	Sites           []NonNullCheck
+}
+
+type NonNullCheck struct {
+	Where, Expression string
+	Proven            bool
 }
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.

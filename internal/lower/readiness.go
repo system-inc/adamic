@@ -18,7 +18,7 @@ func sourceExpression(node *ast.Node) string {
 // Only direct initializer syntax reserves an uninitialized slot. Assignments, returns,
 // and assertions outside initializer positions continue to use the nullish check.
 func (l *lowering) uninitializedInitializer(node *ast.Node) bool {
-	if node == nil {
+	if node == nil || l.checkedAssertionSource(node) {
 		return false
 	}
 	node = ast.SkipParentheses(node)
@@ -360,6 +360,11 @@ func readinessCalls(instruction *flow.Instruction) bool {
 // assertionInitializer recognizes syntax only; its operand is evaluated at the declaration.
 func assertionInitializer(node *ast.Node) bool {
 	return node != nil && ast.SkipParentheses(node).Kind == ast.KindNonNullExpression
+}
+
+// TypeScript assertions are eager checks, including in storage initializers.
+func (l *lowering) lazyAssertionInitializer(node *ast.Node) bool {
+	return assertionInitializer(node) && !l.checkedAssertionSource(node)
 }
 
 func assertionVarList(list *ast.Node) bool {
