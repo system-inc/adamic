@@ -357,12 +357,18 @@
     "fixture": "stage3/interface-downcasts/dictionaries/recheck/entries.a",
     "backends": {
       "c": {
-        "compile_exit": 1,
-        "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/recheck/entries.a:4:122: Adamic 0.1 refuses checked view read of field [dictionary element] with unsupported dictionary enumeration contract; prove or implement the dictionary enumeration contract before reading this field\n"
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
       },
       "js": {
-        "compile_exit": 1,
-        "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/recheck/entries.a:4:122: Adamic 0.1 refuses checked view read of field [dictionary element] with unsupported dictionary enumeration contract; prove or implement the dictionary enumeration contract before reading this field\n"
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
       }
     },
     "node": {
@@ -429,12 +435,18 @@
     "fixture": "stage3/interface-downcasts/dictionaries/recheck/values.a",
     "backends": {
       "c": {
-        "compile_exit": 1,
-        "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/recheck/values.a:4:122: Adamic 0.1 refuses checked view read of field [dictionary element] with unsupported dictionary enumeration contract; prove or implement the dictionary enumeration contract before reading this field\n"
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
       },
       "js": {
-        "compile_exit": 1,
-        "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/dictionaries/recheck/values.a:4:122: Adamic 0.1 refuses checked view read of field [dictionary element] with unsupported dictionary enumeration contract; prove or implement the dictionary enumeration contract before reading this field\n"
+        "compile_exit": 0,
+        "diagnostic": "",
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
       }
     },
     "node": {
