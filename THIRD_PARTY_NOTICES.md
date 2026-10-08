@@ -50,6 +50,9 @@ IN THE SOFTWARE.
   - Object sealing and extensibility (`runtime/object_integrity.c`, after
     src/builtins/builtins-object.cc and src/objects/js-objects.cc, V8 13.6.233);
   - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
+  - generic Array indexOf and lastIndexOf lowering (`internal/lower/library_array_generic.go`,
+    after Runtime_ArrayIndexOf in src/runtime/runtime-array.cc and GetFromIndex /
+    GenericArrayLastIndexOf in src/builtins/array-lastindexof.tq, V8 13.6.233.17);
   - exponentiation (`runtime/number.c`, after math::pow);
   - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own
     notice is below);

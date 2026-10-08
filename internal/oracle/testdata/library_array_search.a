@@ -11,3 +11,35 @@ const text = ['a' + 'b', 'c', 'ab'];
 console.log(`${text.lastIndexOf('ab', -2)} ${text.indexOf('ab', 1)}`);
 const object = { value: 1 };
 console.log(`${[object, { value: 1 }, object].lastIndexOf(object, 1)}`);
+
+// Generic searches skip absent keys, compare strictly, and read ToLength rather
+// than truncating it to an array's uint32 length. Fields at length are excluded.
+let generic = { 0: 'a', 2: 'b', 3: 'outside', length: 3 };
+console.log(`${Array.prototype.indexOf.call(generic, 'b')} ${Array.prototype.lastIndexOf.call(generic, 'a')}`);
+console.log(`${Array.prototype.indexOf.call(generic, 'outside')} ${Array.prototype.lastIndexOf.call(generic, 'outside')}`);
+console.log(`${Array.prototype.indexOf.call(generic, undefined)} ${Array.prototype.lastIndexOf.call(generic, undefined)}`);
+const genericStarts = [-Infinity, -9, -3, -1.9, -0, 0, 1.9, 3, Infinity, NaN];
+for (const start of genericStarts) {
+	console.log(`${start}: ${Array.prototype.indexOf.call(generic, 'b', start)} ${Array.prototype.lastIndexOf.call(generic, 'b', start)}`);
+}
+console.log(`${Array.prototype.lastIndexOf.call(generic, 'b')} ${Array.prototype.lastIndexOf.call(generic, 'b', undefined)}`);
+console.log(`${Array.prototype.indexOf.call('🌍ab', 'a')} ${Array.prototype.lastIndexOf.call('🌍aba', 'a', -2)}`);
+console.log(`${Array.prototype.indexOf.call({0: true, 1: false, length: true}, true)} ${Array.prototype.indexOf.call({0: true, 1: false, length: true}, false)}`);
+console.log(`${Array.prototype.indexOf.call({1: 'x', 2: 'y', length: '2'}, 'x')} ${Array.prototype.indexOf.call({1: 'x', 2: 'y', length: '2'}, 'y')}`);
+console.log(`${Array.prototype.indexOf.call({0: 1, length: NaN}, 1)} ${Array.prototype.lastIndexOf.call({0: 1, length: -Infinity}, 1)}`);
+console.log(`${Array.prototype.indexOf.call({0: 1, length: Infinity}, 1)} ${Array.prototype.lastIndexOf.call({4294967295: 7, length: 4294967296}, 7)}`);
+console.log(`${Array.prototype.indexOf.call({1: undefined, length: 3}, undefined)} ${Array.prototype.lastIndexOf.call({1: undefined, length: 3}, undefined)}`);
+const genericIdentity = { tag: 1 };
+console.log(`${Array.prototype.indexOf.call({0: genericIdentity, 1: {tag: 1}, length: 2}, genericIdentity)} ${Array.prototype.lastIndexOf.call({0: genericIdentity, 1: {tag: 1}, length: 2}, genericIdentity)}`);
+console.log(`${Array.prototype.indexOf.call({0: '1', length: 1}, 1)} ${Array.prototype.lastIndexOf.call({0: NaN, length: 1}, NaN)}`);
+console.log(`${Array.prototype.indexOf.call(42, 'x')} ${Array.prototype.lastIndexOf.call(false, 0)}`);
+let observedLength = {0: 1, 1: 2, length: 2};
+function changeLength(): number { observedLength.length = 1; return 2; }
+console.log(`${Array.prototype.indexOf.call(observedLength, changeLength())}`);
+const ownedGeneric = {0: 'x'.repeat(2), 1: 'y'.repeat(2), length: 2};
+console.log(`${Array.prototype.lastIndexOf.call(ownedGeneric, 'xx')} ${Array.prototype.indexOf.call(ownedGeneric, 'yy')}`);
+
+console.log(`${Array.prototype.indexOf.call({0: null, 1: undefined, length: 2}, undefined)} ${Array.prototype.lastIndexOf.call({0: null, 1: undefined, length: 2}, null)}`);
+console.log(`${Array.prototype.indexOf.call({0x2: 7, 1e1: 8, length: 11}, 7)} ${Array.prototype.lastIndexOf.call({0x2: 7, 1e1: 8, length: 11}, 8)}`);
+// Non-index names must not disturb the order of present numeric keys.
+console.log(`${Array.prototype.indexOf.call({2: 7, 'NaN': 99, 1: 7, length: 3}, 7)} ${Array.prototype.lastIndexOf.call({1: 7, 'NaN': 99, 2: 7, length: 3}, 7)}`);
