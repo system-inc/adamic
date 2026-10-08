@@ -1,0 +1,30 @@
+{
+  "sha": "ebf2dfa65ad82fea54659c49073ae3236df843c5",
+  "base": "efe9f4042049234e5a52639fe77b47c311fd530c",
+  "tools_sha": "05258f8fd2bc5c3caab8eb27a1ca4764c3838efe",
+  "failure": {
+    "step": "catalog-apply",
+    "detail": "this change stops the bug catalog's undo patch from applying: 09-literal-undefined-field.patch. Refresh it in this landing (verify/catalog/check.sh --entry NN <sha> must say applies-and-fails-as-recorded)",
+    "after_seconds": 3.1
+  },
+  "catalog_apply": {
+    "checked": [
+      "04-borrowed-array-move.patch",
+      "05-spread-method-reuse.patch",
+      "06-constructor-capture-region.patch",
+      "07-borrowed-element-reads.patch",
+      "08-narrowed-number-field.patch",
+      "09-literal-undefined-field.patch",
+      "11-refuse-definite-assignment.patch",
+      "12-refuse-suppression-directives.patch"
+    ],
+    "staled_by_this_change": [
+      "09-literal-undefined-field.patch"
+    ],
+    "already_stale": [
+      "08-narrowed-number-field.patch",
+      "11-refuse-definite-assignment.patch",
+      "12-refuse-suppression-directives.patch"
+    ]
+  }
+}

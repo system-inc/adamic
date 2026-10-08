@@ -1406,7 +1406,23 @@
     "expected_tests": [
       "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a"
     ],
-    "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c"
+    "made_against": "d64799f4f1dc6772cdf6cc140e9d3c04b57015e6",
+    "shape_conformance_refresh": {
+      "previous_made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "target": "d64799f4f1dc6772cdf6cc140e9d3c04b57015e6",
+      "reason": "Views integration changed literal fitting and maybe-number read context; preserve boxed-callable fitting and boolean/readiness handling while reintroducing the original numeric fault.",
+      "checker_command": "bash verify/catalog/check.sh --entry 09 -jobs 1 d64799f4f1dc6772cdf6cc140e9d3c04b57015e6",
+      "verdict": "applies-and-fails-as-recorded",
+      "control_seconds": 2.035,
+      "mutant_seconds": 1.826,
+      "node_stdout": "undefined true\nundefined\n",
+      "mutant_native_stdout": "0 false\n0\n",
+      "control_exit": 0,
+      "mutant_test_exit": 1,
+      "mutant_native_exit": 0,
+      "patch_sha256": "4c9b2dfde816839f77f51388787b1a33f385f81787a22c9211d9a545de759043",
+      "evidence": "../../stage3/shape-conformance/overnight/catalog09-check.log"
+    }
   },
   {
     "number": 10,
