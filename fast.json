@@ -1,0 +1,55 @@
+{
+  "sha": "6b98c45415ce2a3dd273d9c5a00eca5166a3a8dd",
+  "branch": "devtools/fast-gate-kill-stray",
+  "branch_source": "given",
+  "session": "",
+  "session_source": "none",
+  "base": "c6761c24c4bb35e5a7edbcbe0c5e8937d1879c3e",
+  "tools_sha": "f1735fd7325177fdd22d7dcef3dc3df1665b6525",
+  "machine": {
+    "hostname": "Cloud",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": false,
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "f8ce1054abab2210ddde56d9b4771f399d50f464",
+  "unchecked_a_files": [],
+  "executors": {},
+  "uncovered_files": [
+    "tools/stray.py"
+  ],
+  "coverage_enforced": true,
+  "wall_seconds": 0.6,
+  "steps_seconds": {
+    "coverage": 0.0
+  },
+  "pass": 0,
+  "fail": 0,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "failure": {
+    "step": "coverage",
+    "detail": "no gate covers 1 changed path:\ntools/stray.py",
+    "after_seconds": 0.6
+  },
+  "planned_stages": [
+    "coverage",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census"
+  ],
+  "stages_exit": {
+    "coverage": 1
+  },
+  "finished": true
+}
