@@ -1,0 +1,44 @@
+{
+  "compiler_revision": "45487a809f89885a3fc651cd590e7dabf31362dc",
+  "results": [
+    {
+      "file": "01_erased.a",
+      "expected": "// a-check: refused the non-null assertion !",
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step09/nonnull/01_erased.a:6:30: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "passed": true,
+      "header_mutant": {
+        "header": "// a-check: checked",
+        "exit": 1,
+        "diagnostic": "adamic: /tmp/step09-nonnull-acheck/01_erased.a:6:30: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+        "caught": true
+      }
+    },
+    {
+      "file": "02_checked_pass.a",
+      "expected": "// a-check: refused the non-null assertion !",
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step09/nonnull/02_checked_pass.a:5:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "passed": true,
+      "header_mutant": {
+        "header": "// a-check: checked",
+        "exit": 1,
+        "diagnostic": "adamic: /tmp/step09-nonnull-acheck/02_checked_pass.a:5:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+        "caught": true
+      }
+    },
+    {
+      "file": "03_checked_stop.a",
+      "expected": "// a-check: refused the non-null assertion !",
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step09/nonnull/03_checked_stop.a:6:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "passed": true,
+      "header_mutant": {
+        "header": "// a-check: checked",
+        "exit": 1,
+        "diagnostic": "adamic: /tmp/step09-nonnull-acheck/03_checked_stop.a:6:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+        "caught": true
+      }
+    }
+  ]
+}

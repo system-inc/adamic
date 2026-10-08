@@ -1,0 +1,13 @@
+{
+  "flow_cases": 7,
+  "reference_updates": 3,
+  "assertion_observations": 7,
+  "mutants": [
+    "claim every operand proven",
+    "claim no operand proven",
+    "evaluate receiver twice",
+    "omit all observers",
+    "collapse nested span IDs"
+  ],
+  "caught": 5
+}

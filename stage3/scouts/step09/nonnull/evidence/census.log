@@ -1,0 +1,31 @@
+{
+  "typescript": "6.0.3",
+  "source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "stock_files": 80,
+  "adapted_files": 81,
+  "added_files_without_stock_counterpart": [
+    {
+      "file": "src/compiler/hostErrors.ts",
+      "sha256": "f0a8cf7b832560e02d3d09db473e7af4d4585dee4289d6190ac66d05d7076faf",
+      "assertions": 0,
+      "stock_counterpart": false
+    }
+  ],
+  "assertions": 1123,
+  "counts": {
+    "checked": 1119,
+    "flow-proven": 4
+  },
+  "stock_project_counts": {
+    "checked": 1119,
+    "flow-proven": 4
+  },
+  "stock_project_semantic_diagnostics": 0,
+  "adamic_option_semantic_diagnostics": 2140,
+  "options": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true
+  },
+  "definition": "API flow-proven is non-nullish under strict options; this is an erasure candidate, not an observed Adamic lowering of tsc."
+}
