@@ -430,6 +430,8 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	switch node.Kind {
 	case ast.KindNullKeyword:
 		return ir.Null{}, nil
+	case ast.KindNonNullExpression:
+		return l.nonNull(node)
 	case ast.KindRegularExpressionLiteral:
 		return l.regexConstant(node)
 	case ast.KindNumericLiteral:
