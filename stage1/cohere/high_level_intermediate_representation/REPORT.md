@@ -1,3 +1,57 @@
+# Shared schema batch: stopped on compiler gap 3
+
+Completed landing: **hir/land-08 e5ac6a3c**. React construction/clone/replay,
+static-components and the CFG meet in one concrete arena home. Its complete
+certificates are recorded in that branch's short REPORT.md. This branch merges
+that landing without rebasing and preserves all planning/evidence.
+
+## Requests supplied
+
+Read latest reports: unit 3 a7e23a96; 4 6c380a18; 6 c9c38057; 7 44a7e743;
+8 7521b125; 9 2de68d81; 10 20e126a4. Workers import `../../replay/index.ts`.
+Scope, Sequence and MaybeThrow now have central typed records and codecs,
+cloning/remapping and graph edges. `fn.addScope(goId)`, `scopeAt(goId)` and
+`scopeId(index)` translate Go IDs through function-owned checked ScopeIndex
+arenas; Scope 17 is deliberately not its slot. Missing exception handlers are
+undefined and serialize as Go InvalidBlock 0. `finalizeHIR(arena,index)` calls
+imported SSA reverse postorder, predecessors and evaluation order, recursively,
+without reconstructing SSA. DependencyPathIndex/DependencyTreeIndex join the
+single private-minting arena home. Raw `input.types` value-present and flags
+facts, with InputFacts selectors, preserve checker/node/type absence separately.
+Old frames round-trip; type-flag consumers must regenerate actual Go inputs.
+
+Unit 3's persistent Instruction[] is replaced by InstructionArena columns and
+checked InstructionIndex views. No new index class is necessary. Getter values
+must be read into a local once before narrowing; unit 3 owns that adjustment
+in optional_sources.ts:70. Its five Go-oracle mismatches remain #6d8y0pf.
+
+## Current certificates and stop
+
+Node construction/clone: **1,442/1,442 non-Flow originals +72 probes**.
+Node fresh decode/dump/re-encode: **1,465/1,465 originals +72 probes**, all Flow.
+Go/Node terminals, clone and existing-phi finalization: **15/15**; three Node
+semantic mutants caught. Dependency indices and their private/brand/off-by-one
+checks pass on native and Node. The exact accessor gap selector passes.
+Native IR certificates are **compile stopped**, not matching certificates:
+GAPS.md gap 3 retains the three-line input and exact lower.NotYet.What.
+No workaround is applied. Mandatory native tests stay red until compiler fixes
+accessor dispatch; no compiler refusal is counted as a semantic mutant.
+
+**Declined:** mutation_aliasing import/API remains absent from latest lint area
+bda1026b; no substitute is invented. ScopeIdentity, ScopeDependencies (including
+temporaries) and reactive-tree record schemas belong to lanes 6, 7 and 8;
+those lanes must publish their public codecs for 9/10. This batch supplies the
+shared core contracts, not their analysis algorithms or expected answers.
+
+Latest native allocation measurement is the finished landing's 12-function
+probe: **4,087 allocations = 4,087 frees**, +875 from 3,212, -77 from 4,164.
+Current view/column allocation delta is unmeasurable while gap 3 stops native;
+no historical count is presented as a current shared-branch measurement.
+
+---
+
+The following bootstrap certificate is historical, before the schema/arena changes:
+
 # Unit 2 complete and shared replay bootstrap
 
 Roadmap steps 08 and 28. This finished unit is pushed once to `stage1-hir/wip`.

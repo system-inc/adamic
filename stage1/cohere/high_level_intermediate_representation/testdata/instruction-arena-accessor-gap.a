@@ -1,0 +1,3 @@
+class View { get value(): number { return 1; } }
+const view = new View(); const flag = {value: true};
+console.log(`${view.value} ${flag.value}`);

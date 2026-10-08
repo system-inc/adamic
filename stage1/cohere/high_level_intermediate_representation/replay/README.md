@@ -160,3 +160,28 @@ This produces checkpoint-manifest.tsv and all 1,465 original checkpoints plus
 Later pass workers use the tagged Go encoder/observer hooks above for their own
 actual prepass and postpass checkpoints; construction output does not substitute
 for those inputs.
+
+## Shared terminal and arena APIs
+
+Scope carries `scope: ScopeIndex`, `block` and `fallthrough`; its order remains
+on BasicBlock.terminalOrder like every other terminal. Register Go IDs with
+`fn.addScope(id)`, resolve with `fn.scopeAt(id)`, recover with `fn.scopeId(index)`.
+Checkpoint identities are reminted into the function's arena. Dumping a Scope
+requires `terminalText(terminal,fn)`; its Go ID is never inferred from its slot.
+Sequence carries block/fallthrough. MaybeThrow carries continuation and an
+optional handler (undefined is Go's InvalidBlock); the handler edge is exceptional.
+`finalizeHIR(arena,index)` repairs order/predecessors/evaluation including nested
+functions; it never calls SSA construction. For cross-owner Scope copies, pass
+source to `copyTerminal(dst,item,src)` or the fourth Scope remapper to
+`copyTerminalWithRemap`. DependencyPathIndex and DependencyTreeIndex are shared
+private-minting handles; their payload records/codecs remain unit 7's.
+
+InstructionArena owns columns and InstructionIndex handles. `fn.instruction(id)`
+is a checked mutable view; instruction object identity is not a graph edge.
+`fn.instructions` is a readonly snapshot of views. Take a getter result once
+before narrowing, and use `fn.emit` to append. InputFacts.valueTypePresent and
+typeFlags read actual Go checker inputs. Older frames remain lossless but must
+be regenerated before requesting newly added flags, rather than guessing them.
+
+Native currently stops at GAPS.md gap 3, accessor representation dispatch.
+Node certificates are reported separately. No native pass certificate is implied.

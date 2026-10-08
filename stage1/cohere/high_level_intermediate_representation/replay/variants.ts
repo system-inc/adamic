@@ -13,6 +13,6 @@ fn.emit(p,{kind: 'FinishMemoize',manualMemoId: 3,value: p,pruned: false},0,0);
 fn.emit(p,{kind: 'FinishMemoize',manualMemoId: 2,value: p,pruned: true},0,0);
 const graph = new ConstructedHIR(arena,root); const original = dump(graph); const copy = CloneFunction(graph);
 if(dump(copy) !== original) { panic('new instruction clone changes graph'); }
-for(const instruction of copy.arena.read(copy.root).instructions) { if(instruction.value.kind === 'StartMemoize' && instruction.value.deps !== undefined) { instruction.value.deps.pop(); } }
+for(const instruction of copy.arena.read(copy.root).instructions) { const value = instruction.value; if(value.kind === 'StartMemoize' && value.deps !== undefined) { value.deps.pop(); } }
 if(dump(graph) !== original) { panic('memo dependencies alias in clone'); }
 for(const line of original.split('\n')) { if(line.startsWith('orphan instruction ')) { console.log(line.slice(7)); } }

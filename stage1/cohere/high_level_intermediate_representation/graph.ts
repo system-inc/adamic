@@ -31,13 +31,14 @@ function graphFor(fnOwner: HIRFunction): GraphInterface<HIRFunction, BasicBlock,
     eachEdge: function(block, visit) {
         const terminal = block.terminal;
         const edge = (index: HIRBlockIndex, kind: EdgeType): void => { visit(BlockIndex.read(block.arenaIndices, index) + 1, kind); };
-        if(terminal.kind === 'If' || terminal.kind === 'Branch' || terminal.kind === 'Optional' || terminal.kind === 'Logical' || terminal.kind === 'Ternary' || terminal.kind === 'While' || terminal.kind === 'DoWhile' || terminal.kind === 'For' || terminal.kind === 'ForOf' || terminal.kind === 'ForIn' || terminal.kind === 'Switch' || terminal.kind === 'Label' || terminal.kind === 'Try') { edge(terminal.fallthrough ?? panic('missing fallthrough'), 'Fallthrough'); }
+        if(terminal.kind === 'If' || terminal.kind === 'Branch' || terminal.kind === 'Optional' || terminal.kind === 'Logical' || terminal.kind === 'Ternary' || terminal.kind === 'While' || terminal.kind === 'DoWhile' || terminal.kind === 'For' || terminal.kind === 'ForOf' || terminal.kind === 'ForIn' || terminal.kind === 'Switch' || terminal.kind === 'Label' || terminal.kind === 'Try' || terminal.kind === 'Scope' || terminal.kind === 'Sequence') { edge(terminal.fallthrough ?? panic('missing fallthrough'), 'Fallthrough'); }
         if(terminal.kind === 'Goto') { edge(terminal.block ?? panic('missing goto target'), 'Real'); }
         else if(terminal.kind === 'If' || terminal.kind === 'Branch') { edge(terminal.consequent ?? panic('missing consequent'), 'Real'); edge(terminal.alternate ?? panic('missing alternate'), 'Real'); }
         else if(terminal.kind === 'DoWhile') { edge(terminal.loop ?? panic('missing do loop'), 'Real'); }
         else if(terminal.kind === 'For' || terminal.kind === 'ForOf' || terminal.kind === 'ForIn') { edge(terminal.init ?? panic('missing loop init'), 'Real'); }
-        else if(terminal.kind === 'Label') { edge(terminal.block ?? panic('missing label block'), 'Real'); }
+        else if(terminal.kind === 'Label' || terminal.kind === 'Scope' || terminal.kind === 'Sequence') { edge(terminal.block ?? panic('missing label block'), 'Real'); }
         else if(terminal.kind === 'Try') { edge(terminal.block ?? panic('missing try block'), 'Real'); edge(terminal.handler ?? panic('missing handler'), 'Real'); }
+        else if(terminal.kind === 'MaybeThrow') { edge(terminal.continuation ?? panic('missing continuation'), 'Real'); if(terminal.handler !== undefined) { edge(terminal.handler, 'Exceptional'); } }
         else if(terminal.kind === 'Switch') { const cases = terminal.cases ?? panic('missing cases'); for(const clause of cases) { edge(clause.block, 'Real'); } if(!cases.some((clause) => clause.test === undefined)) { edge(terminal.fallthrough ?? panic('missing switch exit'), 'Real'); } }
         else if(terminal.kind === 'Optional' || terminal.kind === 'Logical' || terminal.kind === 'Ternary' || terminal.kind === 'While') { edge(testBlock(terminal), 'Real'); }
     },
@@ -45,14 +46,14 @@ function graphFor(fnOwner: HIRFunction): GraphInterface<HIRFunction, BasicBlock,
     instructionCount: (_fn, block) => block.instructions.length,
     eachInstructionPlace: function(fn, block, index, visit) {
         const instruction = fn.instruction(block.instructions[index] ?? panic('missing instruction id'));
-        instruction.lvalue = visit(instruction.lvalue, 'Define');
-        if((instruction.value.kind === 'LoadLocal' || instruction.value.kind === 'LoadContext')) { instruction.value.place = visit(instruction.value.place, 'Use'); }
-        if(instruction.value.kind === 'UnaryExpression') { instruction.value.value = visit(instruction.value.value, 'Use'); }
-        if(instruction.value.kind === 'BinaryExpression') {
-            instruction.value.left = visit(instruction.value.left, 'Use');
-            instruction.value.right = visit(instruction.value.right, 'Use');
-        }
         const value = instruction.value;
+        instruction.lvalue = visit(instruction.lvalue, 'Define');
+        if((value.kind === 'LoadLocal' || value.kind === 'LoadContext')) { value.place = visit(value.place, 'Use'); }
+        if(value.kind === 'UnaryExpression') { value.value = visit(value.value, 'Use'); }
+        if(value.kind === 'BinaryExpression') {
+            value.left = visit(value.left, 'Use');
+            value.right = visit(value.right, 'Use');
+        }
         if(value.kind === 'StartMemoize' && value.deps !== undefined) { for(const dep of value.deps) { if(!dep.root.isGlobal) { dep.root.place = visit(dep.root.place,'Use'); } } }
         if(value.kind === 'FinishMemoize') { value.value = visit(value.value,'Use'); }
         if(value.kind === 'Destructure') { visitPattern(fn,value.lvaluePattern,visit); value.value = visit(value.value,'Use'); }
@@ -103,6 +104,13 @@ function graphFor(fnOwner: HIRFunction): GraphInterface<HIRFunction, BasicBlock,
     identifierOf: (place) => IdentifierIndex.read(fnOwner.identifierIndices, place.identifier),
     withIdentifier: (place, identifier) => ({ identifier: fnOwner.identifierAt(identifier), effect: place.effect, reactive: place.reactive, start: place.start, end: place.end }),
 }; }
+// Go Finalize: structural ordering only, never reconstruct SSA.
+export function finalizeHIR(arena: HIRArena,index: FunctionIndex): void {
+    const fn = arena.read(index);
+    const graph = graphFor(fn); reversePostorder(graph,fn); markPredecessors(graph,fn); markEvaluationOrder(graph,fn);
+    for(const block of fn.blockTable) { block.present = fn.retained.has(block.id.slot + 1); }
+    for(const nested of fn.functions) { finalizeHIR(arena,nested); }
+}
 export function constructHIR(arena: HIRArena, index: FunctionIndex, cloneBeforeSSA: boolean = false): void {
     const fn = arena.read(index);
     const hirGraph = graphFor(fn);
@@ -120,7 +128,7 @@ function visitPattern(fn: HIRFunction, index: PatternIndex, visit: (place: Place
  const p = fn.pattern(index);
  if(p.kind === 'Place') { p.place = visit(p.place,'Define'); return; }
  if(p.kind === 'Object') { for(const item of p.properties) { if(item.computedKey !== undefined) { item.computedKey = visit(item.computedKey,'Use'); } if(item.defaultValue !== undefined) { item.defaultValue = visit(item.defaultValue,'Use'); } visitPattern(fn,item.value,visit); } }
- else { for(const item of p.elements) { if(item.value === undefined) { continue; } if(item.defaultValue !== undefined) { item.defaultValue = visit(item.defaultValue,'Use'); } visitPattern(fn,item.value,visit); } }
+ else { for(const item of p.elements) { const nested = item.value; if(nested === undefined) { continue; } if(item.defaultValue !== undefined) { item.defaultValue = visit(item.defaultValue,'Use'); } visitPattern(fn,nested,visit); } }
  if(p.rest !== undefined) { p.rest = visit(p.rest,'Define'); }
 }
 
@@ -128,5 +136,5 @@ function clonePattern(fn: HIRFunction, index: PatternIndex): PatternIndex {
  const p = fn.pattern(index);
  if(p.kind === 'Place') { return fn.addPattern({kind: 'Place',place: p.place}); }
  if(p.kind === 'Object') { return fn.addPattern({kind: 'Object',rest: p.rest,properties: p.properties.map((item) => ({key: item.key,computedKey: item.computedKey,defaultValue: item.defaultValue,value: clonePattern(fn,item.value)}))}); }
- return fn.addPattern({kind: 'Array',rest: p.rest,elements: p.elements.map((item) => ({value: item.value === undefined ? undefined : clonePattern(fn,item.value),defaultValue: item.defaultValue}))});
+ return fn.addPattern({kind: 'Array',rest: p.rest,elements: p.elements.map((item) => { const nested = item.value; return {value: nested === undefined ? undefined : clonePattern(fn,nested),defaultValue: item.defaultValue}; })});
 }

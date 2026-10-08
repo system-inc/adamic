@@ -19,6 +19,14 @@ export class InputFacts {
   const fields = value.split('\t'); if(fields.length !== 3) { panic('invalid source handle'); }
   return {kind: fields[0] ?? '',start: integer(fields[1] ?? ''),end: integer(fields[2] ?? '')};
  }
+ valueTypePresent(path: string,id: number): boolean {
+  if(!this.checkerAvailable(path) || this.node(path,'identifier',id) === undefined) { return false; }
+  const value = this.require('input.types',path,'identifier',id,'value-present');
+  if(value !== '0' && value !== '1') { panic('invalid value type presence'); } return value === '1';
+ }
+ typeFlags(path: string,id: number): number | undefined {
+  if(!this.valueTypePresent(path,id)) { return undefined; } return integer(this.require('input.types',path,'identifier',id,'flags'));
+ }
  // Exactly reactive.go:662: alias's present symbol wins, including an empty name.
  stableTypeName(path: string,id: number): string {
   if(!this.checkerAvailable(path)) { return ''; }
@@ -64,9 +72,10 @@ export function decodeCheckpoint(checkpoint: Checkpoint): ConstructedHIR {
   const nextBlock = integer(facts.require('input.identity',record.path,'function',undefined,'next-block'));
   if(fn.nextBlock !== nextBlock) { panic('block allocator high-water mark differs'); }
   for(const instruction of fn.instructions) {
-   if(instruction.value.kind === 'Destructure') {
+   const value = instruction.value;
+   if(value.kind === 'Destructure') {
     const shares = facts.require('input.pattern',record.path,'instruction',instruction.id.slot,'lvalue-shares-pattern');
-    if(shares === '1') { instruction.value.lvaluePattern = instruction.value.pattern; } else if(shares !== '0') { panic('invalid pattern alias fact'); }
+    if(shares === '1') { value.lvaluePattern = value.pattern; } else if(shares !== '0') { panic('invalid pattern alias fact'); }
    }
   }
  }

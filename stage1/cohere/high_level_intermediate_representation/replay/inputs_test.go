@@ -100,9 +100,12 @@ func OracleInputFacts(f *Function, tc *checker.Checker) []OracleSidecarRow {
 			node(path, "identifier", &id, identifier.Node)
 			aliasName, symbolName := "", ""
 			aliasPresent, typePresent := "0", "0"
+			valuePresent, flags := "0", "0"
 			if tc != nil && identifier.Node != nil {
 				valueType := tc.GetTypeAtLocation(identifier.Node)
 				if valueType != nil {
+					valuePresent = "1"
+					flags = fmt.Sprint(uint32(checker.Type_flags(valueType)))
 					if alias := checker.Type_alias(valueType); alias != nil {
 						if symbol := alias.Symbol(); symbol != nil {
 							aliasName = symbol.Name
@@ -115,6 +118,8 @@ func OracleInputFacts(f *Function, tc *checker.Checker) []OracleSidecarRow {
 					}
 				}
 			}
+			add(path, "input.types", "identifier", &id, "value-present", valuePresent)
+			add(path, "input.types", "identifier", &id, "flags", flags)
 			add(path, "input.types", "identifier", &id, "alias-present", aliasPresent)
 			add(path, "input.types", "identifier", &id, "type-present", typePresent)
 			add(path, "input.types", "identifier", &id, "alias-symbol", aliasName)

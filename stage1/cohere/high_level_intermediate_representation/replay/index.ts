@@ -5,8 +5,9 @@ export { decodeGraph, readPlace, readTerminal, readInstructionValue } from './de
 export { decodeCheckpoint, InputFacts } from './facts.ts';
 export { encodeCheckpoint } from './encode.ts';
 export { Payload } from './payload.ts';
-export { FunctionIndex, BlockIndex, InstructionIndex, IdentifierIndex, DeclarationIndex, ScopeIndex, ReactiveIndex, PayloadIndex } from '../../arena/arena_index.a';
+export { FunctionIndex, BlockIndex, InstructionIndex, IdentifierIndex, DeclarationIndex, ScopeIndex, ReactiveIndex, PayloadIndex, DependencyPathIndex, DependencyTreeIndex } from '../../arena/arena_index.a';
 export { copyPattern, copyPatternWithRemap, copyInstructionValue, copyInstructionValueWithRemap, copyTerminal, copyTerminalWithRemap, CloneFunction } from '../clone.ts';
+export { finalizeHIR } from '../graph.ts';
 export { replaceInstructionValue } from '../core.ts';
 export type { SourceHandleInterface, ManualMemoRootInterface, ManualMemoDependencyInterface, DependencyPathEntryInterface } from '../core.ts';
 export { LowerFunction, ForFunctionWithoutManualMemoization, MayNameManualMemoization } from '../cache.ts';

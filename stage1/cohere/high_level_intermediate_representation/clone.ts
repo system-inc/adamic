@@ -1,7 +1,7 @@
 // Go clone.go: clone owned graph storage; immutable place records may be shared.
 import { panic } from 'adamic';
 import { HIRArena, ConstructedHIR, BasicBlock, Instruction, BlockIndex, InstructionIndex, IdentifierIndex, DeclarationIndex, PatternIndex } from './core.ts';
-import type { HIRFunction, FunctionIndex, PlaceInterface, ValueType, TerminalType, FunctionReferenceInterface } from './core.ts';
+import type { HIRFunction, FunctionIndex, ScopeIndex, PlaceInterface, ValueType, TerminalType, FunctionReferenceInterface } from './core.ts';
 function clonedPlace(fn: HIRFunction, place: PlaceInterface): PlaceInterface {
  return {identifier: fn.identifierAt(place.identifier.slot),effect: place.effect,reactive: place.reactive,start: place.start,end: place.end};
 }
@@ -11,7 +11,7 @@ export function copyPatternWithRemap(src: HIRFunction, dst: HIRFunction, index: 
  if(value.kind === 'Place') { return dst.addPattern({kind: 'Place',place: mapPlace(value.place)}); }
  const rest = value.rest === undefined ? undefined : mapPlace(value.rest);
  if(value.kind === 'Object') { return dst.addPattern({kind: 'Object',rest,properties: value.properties.map((item) => ({key: item.key,computedKey: item.computedKey === undefined ? undefined : mapPlace(item.computedKey),defaultValue: item.defaultValue === undefined ? undefined : mapPlace(item.defaultValue),value: copyPatternWithRemap(src,dst,item.value,mapPlace)}))}); }
- return dst.addPattern({kind: 'Array',rest,elements: value.elements.map((item) => ({value: item.value === undefined ? undefined : copyPatternWithRemap(src,dst,item.value,mapPlace),defaultValue: item.defaultValue === undefined ? undefined : mapPlace(item.defaultValue)}))});
+ return dst.addPattern({kind: 'Array',rest,elements: value.elements.map((item) => { const nested = item.value; return {value: nested === undefined ? undefined : copyPatternWithRemap(src,dst,nested,mapPlace),defaultValue: item.defaultValue === undefined ? undefined : mapPlace(item.defaultValue)}; })});
 }
 // gap 2 (GAPS.md, @system_adamic ruling): explicit records replace object spreads.
 export function copyInstructionValue(src: HIRFunction,dst: HIRFunction,item: ValueType): ValueType { return copyInstructionValueWithRemap(src,dst,item,(place) => clonedPlace(dst,place),(reference) => ({index: dst.functions[reference.ordinal] ?? panic('missing cloned function'),ordinal: reference.ordinal})); }
@@ -64,13 +64,15 @@ export function copyInstructionValueWithRemap(src: HIRFunction, dst: HIRFunction
  return {kind: 'Debugger'};
 }
 // gap 2 (GAPS.md): copy terminal fields explicitly until static-constructor spread lowers.
-export function copyTerminal(dst: HIRFunction,item: TerminalType): TerminalType { return copyTerminalWithRemap(item,(place) => clonedPlace(dst,place),(block) => dst.blockAt(block.slot + 1)); }
-export function copyTerminalWithRemap(item: TerminalType,p: (place: PlaceInterface) => PlaceInterface,mapBlock: (block: BlockIndex) => BlockIndex): TerminalType {
+export function copyTerminal(dst: HIRFunction,item: TerminalType,src: HIRFunction = dst): TerminalType { return copyTerminalWithRemap(item,(place) => clonedPlace(dst,place),(block) => dst.blockAt(block.slot + 1),(scope) => dst.scopeAt(src.scopeId(scope))); }
+export function copyTerminalWithRemap(item: TerminalType,p: (place: PlaceInterface) => PlaceInterface,mapBlock: (block: BlockIndex) => BlockIndex,mapScope: ((scope: ScopeIndex) => ScopeIndex) | undefined = undefined): TerminalType {
+ const value = item.value;
  const b = (index: BlockIndex | undefined): BlockIndex | undefined => index === undefined ? undefined : mapBlock(index);
- return {kind: item.kind,variant: item.variant,operator: item.operator,optionalFlag: item.optionalFlag,value: item.value === undefined ? undefined : p(item.value),testPlace: item.testPlace === undefined ? undefined : p(item.testPlace),handlerBinding: item.handlerBinding === undefined ? undefined : p(item.handlerBinding),block: b(item.block),testBlock: b(item.testBlock),consequent: b(item.consequent),alternate: b(item.alternate),fallthrough: b(item.fallthrough),loop: b(item.loop),init: b(item.init),update: b(item.update),handler: b(item.handler),cases: item.cases === undefined ? undefined : item.cases.map((clause) => ({test: clause.test === undefined ? undefined : p(clause.test),block: mapBlock(clause.block)}))};
+ return {kind: item.kind,scope: item.scope === undefined || mapScope === undefined ? item.scope : mapScope(item.scope),continuation: b(item.continuation),variant: item.variant,operator: item.operator,optionalFlag: item.optionalFlag,value: value === undefined ? undefined : p(value),testPlace: item.testPlace === undefined ? undefined : p(item.testPlace),handlerBinding: item.handlerBinding === undefined ? undefined : p(item.handlerBinding),block: b(item.block),testBlock: b(item.testBlock),consequent: b(item.consequent),alternate: b(item.alternate),fallthrough: b(item.fallthrough),loop: b(item.loop),init: b(item.init),update: b(item.update),handler: b(item.handler),cases: item.cases === undefined ? undefined : item.cases.map((clause) => ({test: clause.test === undefined ? undefined : p(clause.test),block: mapBlock(clause.block)}))};
 }
 function cloneFunction(source: HIRArena, target: HIRArena, index: FunctionIndex): FunctionIndex {
  const src = source.read(index); const result = target.create(src.name); const dst = target.read(result);
+ for(const id of src.scopeIds) { dst.addScope(id); }
  dst.source = src.source; dst.nodeIndex = src.nodeIndex; dst.isAsync = src.isAsync; dst.isGenerator = src.isGenerator;
  while(dst.identifierIndices.length < src.identifierIndices.length) { IdentifierIndex.push(dst.identifierIndices); }
  while(dst.declarationIndices.length < src.declarationIndices.length) { DeclarationIndex.push(dst.declarationIndices); }
@@ -84,11 +86,11 @@ function cloneFunction(source: HIRArena, target: HIRArena, index: FunctionIndex)
  for(const place of src.context) { dst.context.push(clonedPlace(dst,place)); }
  for(const declaration of src.contextDeclarations) { dst.contextDeclarations.add(dst.declarationAt(declaration.slot + 1)); }
  for(const instruction of src.instructions) {
-  const id = InstructionIndex.push(dst.instructionIndices); const copied = new Instruction(id,clonedPlace(dst,instruction.lvalue),copyInstructionValue(src,dst,instruction.value),instruction.start,instruction.end); copied.order = instruction.order; copied.source = instruction.source; dst.instructions.push(copied);
+  const id = dst.emit(clonedPlace(dst,instruction.lvalue),copyInstructionValue(src,dst,instruction.value),instruction.start,instruction.end); const copied = dst.instruction(id); copied.order = instruction.order; copied.source = instruction.source;
  }
  while(dst.blockTable.length > 0) { dst.blockTable.pop(); }
  for(const block of src.blockTable) {
-  const copied = new BasicBlock(dst.blockIndices,dst.blockAt(block.id.slot + 1),copyTerminal(dst,block.terminal),block.kind); copied.terminalOrder = block.terminalOrder; copied.present = block.present; copied.terminalPresent = block.terminalPresent;
+  const copied = new BasicBlock(dst.blockIndices,dst.blockAt(block.id.slot + 1),copyTerminal(dst,block.terminal,src),block.kind); copied.terminalOrder = block.terminalOrder; copied.present = block.present; copied.terminalPresent = block.terminalPresent;
   for(const id of block.instructions) { copied.instructions.push(dst.instructionIndices[id.slot] ?? panic('missing cloned instruction')); }
   copied.predecessors = block.predecessors.map((id) => dst.blockAt(id.slot + 1));
   copied.phis = block.phis.map((phi) => ({place: clonedPlace(dst,phi.place),operands: phi.operands.map((entry) => ({predecessor: entry.predecessor,place: clonedPlace(dst,entry.place)}))})); dst.blockTable.push(copied);

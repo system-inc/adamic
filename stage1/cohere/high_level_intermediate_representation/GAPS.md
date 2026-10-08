@@ -76,3 +76,36 @@ The selector-style test fails when lowering succeeds or its refusal changes.
 With the recorded workaround, CloneFunction is certified on native and Node
 for all 1,442 admitted originals and 72 probes. The compiler gap remains open;
 the unmodified proving program and exact refusal are retained.
+
+## Gap 3: instruction arena views and accessor representation dispatch
+
+Go `cohere/internal/lint/ecmascript/high_level_intermediate_representation/high_level_intermediate_representation.go:387`
+defines `Instruction`; its `Value InstructionValue` field is at line 397.
+The arena port stores `ValueType[]` columns in `InstructionArena` and exposes
+`get value(): ValueType` / `set value(value: ValueType)` on checked
+`InstructionIndex` views. The persistent `Instruction[]` has been removed per
+the arena ruling. No weak edge, public constructor or numeric brand is used.
+
+The compiler cannot dispatch an accessor and an unrelated plain field with the
+same name when their native representations differ. Smallest proving program,
+retained in `testdata/instruction-arena-accessor-gap.a`:
+
+```adamic
+class View { get value(): number { return 1; } }
+const view = new View(); const flag = {value: true};
+console.log(`${view.value} ${flag.value}`);
+```
+
+Node stdout: `1 true\n`. Compiler message verbatim:
+
+```
+adamic: instruction-arena-accessor-gap.a: stage 0 can't lower accessors sharing a name with different native representations yet
+```
+
+Exact `lower.NotYet.What`: `accessors sharing a name with different native representations`.
+`TestInstructionArenaAccessorGap` fails when the refusal closes or changes.
+This is a stop, with no workaround. Construction/clone/replay native certification
+on this shared branch cannot proceed; the completed `hir/land-08` landing retains
+its independent native = Node certificate. Unit 3 also needs single-read locals
+before narrowing instruction getters in its own `optional_sources.ts:70`; that
+is the sound subset's ordinary getter rule, not a request to weaken it.

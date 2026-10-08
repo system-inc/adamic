@@ -132,3 +132,25 @@ func TestStaticConstructorSpreadGapStandsWhereGapsMdSays(t *testing.T) {
 		t.Fatalf("lower.NotYet.What = %q, want %q", notYet.What, want)
 	}
 }
+
+func TestInstructionArenaAccessorGap(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs("../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(root, "stage1/cohere/high_level_intermediate_representation/testdata/instruction-arena-accessor-gap.a")
+	got := command(t, root, nil, "node", "--no-warnings", "oracle/node.mjs", path)
+	if string(got) != "1 true\n" {
+		t.Fatalf("Node meaning changed: %q", got)
+	}
+	program, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lower.Lower(context.Background(), program)
+	var gap *lower.NotYet
+	if !errors.As(err, &gap) || gap.What != "accessors sharing a name with different native representations" {
+		t.Fatalf("instruction arena accessor gap changed/closed: %v; revisit GAPS.md gap 3", err)
+	}
+}

@@ -71,23 +71,43 @@ export type ValueType = { readonly kind: 'DeclareContext'; lvalue: PlaceInterfac
     | { readonly kind: 'JsxFragment'; readonly children: PlaceInterface[] }
     | { readonly kind: 'JsxText'; readonly text: string }
     | { readonly kind: 'FunctionExpression'; readonly functionReference: FunctionReferenceInterface; readonly captures: PlaceInterface[] };
+// Persistent instruction nodes are arena columns. A view holds a checked handle;
+// no instruction-object array or node-to-node object link is stored in the graph.
+export class InstructionArena {
+    readonly indices: InstructionIndex[] = [];
+    readonly orders: number[] = [];
+    readonly lvalues: PlaceInterface[] = [];
+    readonly values: ValueType[] = [];
+    readonly sources: (SourceHandleInterface | undefined)[] = [];
+    readonly starts: number[] = [];
+    readonly ends: number[] = [];
+    push(place: PlaceInterface,value: ValueType,start: number,end: number): InstructionIndex {
+        const id = InstructionIndex.push(this.indices);
+        this.orders.push(0); this.lvalues.push(place); this.values.push(value);
+        this.sources.push(undefined); this.starts.push(start); this.ends.push(end); return id;
+    }
+}
 export class Instruction {
     readonly id: InstructionIndex;
-    order: EvaluationOrderType = 0;
-    lvalue: PlaceInterface;
-    value: ValueType;
-    source: SourceHandleInterface | undefined = undefined;
-    readonly start: number;
-    readonly end: number;
-    constructor(id: InstructionIndex, lvalue: PlaceInterface, value: ValueType, start: number, end: number) {
-        this.id = id; this.lvalue = lvalue; this.value = value; this.start = start; this.end = end;
-    }
+    private readonly arena: InstructionArena;
+    constructor(arena: InstructionArena,id: InstructionIndex) { InstructionIndex.read(arena.indices,id); this.arena = arena; this.id = id; }
+    private slot(): number { return InstructionIndex.read(this.arena.indices,this.id); }
+    get order(): number { return this.arena.orders[this.slot()] ?? panic('missing instruction order'); }
+    set order(value: number) { this.arena.orders[this.slot()] = value; }
+    get lvalue(): PlaceInterface { return this.arena.lvalues[this.slot()] ?? panic('missing instruction lvalue'); }
+    set lvalue(value: PlaceInterface) { this.arena.lvalues[this.slot()] = value; }
+    get value(): ValueType { return this.arena.values[this.slot()] ?? panic('missing instruction value'); }
+    set value(value: ValueType) { this.arena.values[this.slot()] = value; }
+    get source(): SourceHandleInterface | undefined { return this.arena.sources[this.slot()]; }
+    set source(value: SourceHandleInterface | undefined) { this.arena.sources[this.slot()] = value; }
+    get start(): number { return this.arena.starts[this.slot()] ?? panic('missing instruction start'); }
+    get end(): number { return this.arena.ends[this.slot()] ?? panic('missing instruction end'); }
 }
 // gap 1 (GAPS.md, ruling (a)): presence and value are required booleans.
 export interface OptionalFlagInterface { readonly present: boolean; readonly value: boolean; }
 // A tagged arena record; accessors validate the fields required by each terminal kind.
 export interface TerminalType {
-    readonly kind: 'Optional' | 'Return' | 'Throw' | 'Unreachable' | 'Unsupported' | 'Goto' | 'If' | 'Branch' | 'Logical' | 'Ternary' | 'While' | 'DoWhile' | 'For' | 'ForOf' | 'ForIn' | 'Switch' | 'Label' | 'Try';
+    readonly kind: 'Optional' | 'Return' | 'Throw' | 'Unreachable' | 'Unsupported' | 'Goto' | 'If' | 'Branch' | 'Logical' | 'Ternary' | 'While' | 'DoWhile' | 'For' | 'ForOf' | 'ForIn' | 'Switch' | 'Label' | 'Try' | 'Scope' | 'Sequence' | 'MaybeThrow';
     value?: PlaceInterface | undefined;
     readonly block?: BlockIndex | undefined;
     readonly variant?: number | undefined;
@@ -103,6 +123,8 @@ export interface TerminalType {
     readonly init?: BlockIndex | undefined;
     readonly update?: BlockIndex | undefined;
     readonly cases?: { test: PlaceInterface | undefined; readonly block: BlockIndex }[] | undefined;
+    readonly scope?: ScopeIndex | undefined;
+    readonly continuation?: BlockIndex | undefined;
     readonly handler?: BlockIndex | undefined;
     handlerBinding?: PlaceInterface | undefined;
 }
@@ -134,14 +156,25 @@ export class HIRFunction {
     readonly patterns: PatternType[] = [];
     pattern(index: PatternIndex): PatternType { return this.patterns[PatternIndex.read(this.patternIndices, index)] ?? panic('missing pattern'); }
     addPattern(value: PatternType): PatternIndex { const index = PatternIndex.push(this.patternIndices); this.patterns.push(value); return index; }
-    readonly instructionIndices: InstructionIndex[] = [];
+    readonly scopeIndices: ScopeIndex[] = [];
+    readonly scopeIds: number[] = [];
+    private readonly scopeMap = new Map<number, ScopeIndex>();
+    addScope(id: number): ScopeIndex {
+        if(!Number.isInteger(id) || id < 0) { panic('invalid Go scope id'); }
+        if(this.scopeMap.has(id)) { panic('duplicate Go scope id'); }
+        const index = ScopeIndex.push(this.scopeIndices); this.scopeIds.push(id); this.scopeMap.set(id,index); return index;
+    }
+    scopeAt(id: number): ScopeIndex { const index = this.scopeMap.get(id) ?? panic('unknown Go scope id'); ScopeIndex.read(this.scopeIndices,index); return index; }
+    scopeId(index: ScopeIndex): number { return this.scopeIds[ScopeIndex.read(this.scopeIndices,index)] ?? panic('missing Go scope identity'); }
+    readonly instructionArena = new InstructionArena();
+    get instructionIndices(): InstructionIndex[] { return this.instructionArena.indices; }
     readonly identifierIndices: IdentifierIndex[] = [];
     readonly declarationIndices: DeclarationIndex[] = [];
     entry: BlockIndex;
     readonly blockTable: BasicBlock[] = [];
     blockOrder: BlockIndex[] = [];
     readonly retained: Set<number> = new Set<number>();
-    readonly instructions: Instruction[] = [];
+    get instructions(): readonly Instruction[] { return this.instructionIndices.map((id) => this.instruction(id)); }
     readonly identifiers: IdentifierInterface[] = [];
     get nextBlock(): number { return this.blockIndices.length + 1; }
     readonly params: PlaceInterface[] = [];
@@ -190,15 +223,14 @@ export class HIRFunction {
     blockOrUndefined(id: BlockIndex): BasicBlock | undefined { const block = this.blockTable[BlockIndex.read(this.blockIndices,id)]; return block !== undefined && block.present ? block : undefined; }
     block(id: BlockIndex): BasicBlock { return this.blockTable[BlockIndex.read(this.blockIndices, id)] ?? panic('missing arena block'); }
     identifier(id: IdentifierIndex): IdentifierInterface { return this.identifiers[IdentifierIndex.read(this.identifierIndices, id)] ?? panic('missing arena identifier'); }
-    instruction(id: InstructionIndex): Instruction { return this.instructions[InstructionIndex.read(this.instructionIndices, id)] ?? panic('missing arena instruction'); }
+    instruction(id: InstructionIndex): Instruction { return new Instruction(this.instructionArena,id); }
     temporary(start: number, end: number, declaration: DeclarationIndex | undefined = undefined): PlaceInterface { return this.named('', start, end, declaration); }
     mint(original: IdentifierIndex): IdentifierIndex {
         const old = this.identifier(original); const id = IdentifierIndex.push(this.identifierIndices);
         this.identifiers.push({ id, declaration: old.declaration, name: old.name, nodeIndex: old.nodeIndex, source: old.source }); return id;
     }
     emit(place: PlaceInterface, value: ValueType, start: number, end: number): InstructionIndex {
-        const id = InstructionIndex.push(this.instructionIndices);
-        this.instructions.push(new Instruction(id, place, value, start, end)); return id;
+        return this.instructionArena.push(place,value,start,end);
     }
 
 }

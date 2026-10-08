@@ -1,4 +1,4 @@
-import { FunctionIndex, BlockIndex, PatternIndex, ScopeIndex, ReactiveIndex } from '../arena_index.a';
+import { FunctionIndex, BlockIndex, PatternIndex, ScopeIndex, ReactiveIndex, DependencyPathIndex, DependencyTreeIndex } from '../arena_index.a';
 const functions: FunctionIndex[] = []; const blocks: BlockIndex[] = [];
 const first = FunctionIndex.push(functions); const second = FunctionIndex.push(functions); const third = FunctionIndex.push(functions);
 const patterns: PatternIndex[] = []; const pattern = PatternIndex.push(patterns);
@@ -8,3 +8,7 @@ console.log(`${first.slot},${second.slot},${FunctionIndex.read(functions, third)
 const scopes: ScopeIndex[] = []; const reactive: ReactiveIndex[] = [];
 const scope = ScopeIndex.push(scopes); const node = ReactiveIndex.push(reactive);
 if(ScopeIndex.read(scopes,scope) !== 0 || ReactiveIndex.read(reactive,node) !== 0) { console.log('scope/reactive identity differs'); }
+
+const paths: DependencyPathIndex[] = []; const trees: DependencyTreeIndex[] = [];
+const path = DependencyPathIndex.push(paths); const tree = DependencyTreeIndex.push(trees);
+if(DependencyPathIndex.read(paths,path) !== 0 || DependencyTreeIndex.read(trees,tree) !== 0) { console.log('dependency identity differs'); }

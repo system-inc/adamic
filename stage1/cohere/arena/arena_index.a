@@ -313,3 +313,30 @@ export class PayloadIndex {
         return index.slot;
     }
 }
+
+export class DependencyPathIndex {
+    readonly slot: number;
+    private constructor(slot: number) { this.slot = slot; }
+    static push(arena: DependencyPathIndex[]): DependencyPathIndex {
+        const index = new DependencyPathIndex(arena.length); arena.push(index); return index;
+    }
+    static read(arena: readonly DependencyPathIndex[], index: DependencyPathIndex): number {
+        if(!Number.isInteger(index.slot) || index.slot < 0 || index.slot >= arena.length) { panic('DependencyPathIndex out of range'); }
+        if(arena[index.slot] !== index) { panic('DependencyPathIndex belongs to another arena'); }
+        return index.slot;
+    }
+}
+
+
+export class DependencyTreeIndex {
+    readonly slot: number;
+    private constructor(slot: number) { this.slot = slot; }
+    static push(arena: DependencyTreeIndex[]): DependencyTreeIndex {
+        const index = new DependencyTreeIndex(arena.length); arena.push(index); return index;
+    }
+    static read(arena: readonly DependencyTreeIndex[], index: DependencyTreeIndex): number {
+        if(!Number.isInteger(index.slot) || index.slot < 0 || index.slot >= arena.length) { panic('DependencyTreeIndex out of range'); }
+        if(arena[index.slot] !== index) { panic('DependencyTreeIndex belongs to another arena'); }
+        return index.slot;
+    }
+}

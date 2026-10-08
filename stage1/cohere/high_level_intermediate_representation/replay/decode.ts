@@ -128,6 +128,9 @@ export function readTerminal(fn: HIRFunction,text: string): TerminalType {
  if(kind === 'For') { const update = json.numberField(root,'Update'); return {kind: 'For',testBlock: block('Test'),loop: block('Loop'),fallthrough: block('Fallthrough'),init: block('Init'),update: update === 0 ? undefined : fn.blockAt(update)}; }
  if(kind === 'ForOf') { return {kind: 'ForOf',testBlock: block('Test'),loop: block('Loop'),fallthrough: block('Fallthrough'),init: block('Init')}; }
  if(kind === 'ForIn') { return {kind: 'ForIn',loop: block('Loop'),fallthrough: block('Fallthrough'),init: block('Init')}; }
+ if(kind === 'Scope') { return {kind: 'Scope',scope: fn.scopeAt(json.numberField(root,'Scope')),block: block('Block'),fallthrough: block('Fallthrough')}; }
+ if(kind === 'Sequence') { return {kind: 'Sequence',block: block('Block'),fallthrough: block('Fallthrough')}; }
+ if(kind === 'MaybeThrow') { const handler = json.numberField(root,'Handler'); return {kind: 'MaybeThrow',continuation: block('Continuation'),handler: handler === 0 ? undefined : fn.blockAt(handler)}; }
  if(kind === 'Label') { return {kind: 'Label',block: block('Block'),fallthrough: block('Fallthrough')}; }
  if(kind === 'Try') { const binding = json.field(root,'HandlerBinding'); return {kind: 'Try',block: block('Block'),handler: block('Handler'),fallthrough: block('Fallthrough'),handlerBinding: json.read(binding).kind === 'null' ? undefined : readPlace(fn,json.textAt(binding))}; }
  if(kind === 'Switch') { return {kind: 'Switch',testPlace: p('Test'),fallthrough: block('Fallthrough'),cases: json.array(json.field(root,'Cases')).map((item) => { const test = json.field(item,'Test'); return {test: json.read(test).kind === 'null' ? undefined : readPlace(fn,json.textAt(test)),block: fn.blockAt(json.numberField(item,'Block'))}; })}; }
@@ -144,6 +147,7 @@ export function decodeGraph(graph: IdentityGraph): ConstructedHIR {
   const record = graph.functions[i] ?? panic('missing identity record'); const index = graph.indices[i] ?? panic('missing function index');
   // ArenaIndices belong to the reader, so mint distinct handles in the HIR arena.
   const fn = arena.read(arenaIndex(arena,i,graph));
+  for(const id of record.scopeIds) { record.scope(id); fn.addScope(id); }
   while(fn.identifierIndices.length < record.identifiers.length) { IdentifierIndex.push(fn.identifierIndices); }
   let maxDeclaration = 1; for(const id of record.declarationIds) { if(id > maxDeclaration) { maxDeclaration = id; } }
   while(fn.declarationIndices.length < maxDeclaration) { DeclarationIndex.push(fn.declarationIndices); }
@@ -158,9 +162,8 @@ export function decodeGraph(graph: IdentityGraph): ConstructedHIR {
   for(const child of record.children) { fn.functions.push(arenaIndex(arena,child.slot,graph)); }
   const rows = record.instructionRows.slice().sort((a,b) => a.id - b.id);
   for(const row of rows) {
-   if(row.id !== fn.instructions.length) { panic('instruction table is not contiguous'); }
-   const id = InstructionIndex.push(fn.instructionIndices); const range = row.range.split(':');
-   const instruction = new Instruction(id,readPlace(fn,row.lvalue),readInstructionValue(fn,row),integer(range[0] ?? ''),integer(range[1] ?? '')); instruction.order = row.order; fn.instructions.push(instruction);
+   if(row.id !== fn.instructionIndices.length) { panic('instruction table is not contiguous'); }
+   const range = row.range.split(':'); const id = fn.emit(readPlace(fn,row.lvalue),readInstructionValue(fn,row),integer(range[0] ?? ''),integer(range[1] ?? '')); fn.instruction(id).order = row.order;
   }
   for(const row of graph.rows) {
    if(row.functionPath !== record.path) { continue; }
