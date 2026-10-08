@@ -165,6 +165,21 @@ if fast.get("finished") is not True:
 # before it ever set the variable.
 if fast.get("scoped_env"):
     problems.append("it ran scoped (%s set)" % " ".join(fast["scoped_env"]))
+# The fast gate defers the full gate's slow tests, and 04's split-build red reached main through
+# that hole (@system_adamic, October 8): a landing that changes emitted C or the runtime, or that
+# asks for them (a Gate-runs: deferred trailer), proves its deferred tests before it pushes.
+import subprocess
+message = subprocess.run(["git", "log", "-1", "--format=%B", sha], capture_output=True, text=True).stdout
+changed = subprocess.run(["git", "diff", "--name-only", fast.get("base", sha), sha], capture_output=True, text=True).stdout.split()
+covered = "Gate-runs: deferred" in message or any(
+    path.startswith(("internal/native/", "internal/lower/", "internal/ir/", "internal/javascript/")) for path in changed)
+if covered:
+    results = fast.get("deferred_run_results") or {}
+    if fast.get("deferred_all_requested") is not True:
+        problems.append("it changes emitted C or the runtime but didn't run its deferred tests (put Gate-runs: deferred on the candidate)")
+    unproven = ["%s=%s" % (test, verdict) for test, verdict in sorted(results.items()) if verdict != "pass"]
+    if unproven:
+        problems.append("deferred tests not passing: %s" % " ".join(unproven))
 if problems:
     print("; ".join(problems))
     sys.exit(1)
