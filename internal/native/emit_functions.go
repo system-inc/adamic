@@ -202,6 +202,11 @@ func (e *emitter) arguments(call ir.Call) []string {
 			}
 			value = boxed
 		}
+		// Structural receivers keep their allocation and heap tag; read adapters
+		// inspect that tag before using a family-specific layout.
+		if argument.Type() == ir.Map && e.program.Locals[parameters[index]].Type == ir.Object {
+			value = "(adamic_object *)" + value
+		}
 		arguments = append(arguments, value)
 	}
 	for _, parameter := range parameters[min(len(call.Arguments), len(parameters)):] {
