@@ -175,3 +175,41 @@ optional `has`, and 11 each with optional `find` or `forEach`. These are observe
 line-shape counts, not an AST-level proof that all 34 share one supported ABI.
 The selected compiler lesson is the callable guard, the largest single shape;
 propagated receiver guards and unsupported signatures remain separate barriers.
+
+## Source reductions and base outcomes
+
+The nine [fixtures](step-18/fixtures/) are reductions of pinned TypeScript source,
+with the original file and line in each header. `cross-call.a` is a derived
+reassignment variant of the source's assignment/call-result chain, rather than a
+literal unchanged reduction. `number.a` replaces SyntaxKind's enum tag with a
+number but retains its required parent slot. The independent source execution
+uses Node, not Adamic's JavaScript emitter. All finish with exit 0, no stderr.
+The base compiler returns NotYet with no C emitted for every fixture; full
+observations are retained in [baseline.json](step-18/baseline.json).
+
+| Fixture | TypeScript witness | Node stdout (escaped) | Base exact NotYet reason |
+|---|---|---|---|
+| [call-result.a](step-18/fixtures/call-result.a) | moduleNameResolver.ts:3103, getPackageJsonInfo(...)?.contents.packageJsonContent. | `absent\nexports\n` | `an optional chain longer than one step` |
+| [cross-call.a](step-18/fixtures/cross-call.a) | the assignment/call-result chain at moduleNameResolver.ts:3103. | `exports1\nexports1\n` | `an optional chain longer than one step` |
+| [element.a](step-18/fixtures/element.a) | TypeScript checker.ts:7440, labeledElementDeclarations?.[i]. | `absent\nfirst\nabsent\n` | `?.[] on a value` |
+| [function.a](step-18/fixtures/function.a) | TypeScript checker.ts:8066, cleanup?.(). | `cleanup\n` | `a call through ?. (an optional call)` |
+| [method.a](step-18/fixtures/method.a) | TypeScript builder.ts:528, chain.repopulateInfo?.(). | `absent\nfilled1\n` | `a call through ?. (an optional call)` |
+| [number.a](step-18/fixtures/number.a) | utilities.ts:8102, switch (parent?.kind). | `read\n` | `?. to a number, which would be number | undefined` |
+| [receiver-call.a](step-18/fixtures/receiver-call.a) | builder.ts:1852, state.seenEmittedFiles?.get(affectedSourceFile.resolvedPath). | `-1\n2\n` | `a call through ?. (an optional call)` |
+| [size.a](step-18/fixtures/size.a) | builder.ts:705, !state.affectedFilesPendingEmit?.size. | `true true false\n` | `optional chaining to .size on a value` |
+| [two-guards.a](step-18/fixtures/two-guards.a) | performance.ts:189, system?.cpuProfilingEnabled?.(). | `false false true\n` | `a call through ?. (an optional call)` |
+
+`TestStep18SourceBaselines` holds every source reduction to the recorded Node
+output, including the gaps. `TestStep18RecordedGaps` requires the exact current
+reason and source position, rather than letting a different failure mask the
+optional-syntax barrier. The ordinary oracle registry records each as not yet;
+when a shape lands, its registration changes to a full Node/native/JavaScript
+comparison and it leaves the gap test, without rewriting the base observation.
+
+Fixture-unit validation:
+
+- `go test ./internal/oracle -run 'TestStep18|TestNativeAgreesWithNode/docs/step-18/fixtures' -count=1 -timeout 10m` passed, including a restored run after both mutants. Logs: `/tmp/scout-optional-fixtures.log`, `/tmp/scout-optional-fixtures-restored.log`.
+- Changing the source's `cleanup` output to `cleanup-mutant` failed `TestStep18SourceBaselines/function.a`, exit 0 with different stdout. Log: `/tmp/scout-optional-baseline-mutant.log`.
+- Adding a valid array-of-arrays concat before the optional call failed `TestStep18RecordedGaps/function.a`: the exact reason/position check rejected the masking concat NotYet. Log: `/tmp/scout-optional-gap-mutant.log`.
+- `go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts` passed after `npm ci --prefix stage3/api` installed pinned `@types/node` 25.3.3. The first run failed on missing Node type declarations, not on these fixtures. Logs: `/tmp/scout-optional-counts-3.log`, `/tmp/scout-optional-counts-3-retry.log`, `/tmp/scout-optional-api-setup.log`.
+- No new fixture is counted yet because all nine are NotYet. The required generated refresh also moves the existing `logical_and_reference_maybe.a` row to registry order and removes the stale unregistered `17_binder_flow.a` row; measured allocation values do not change.
