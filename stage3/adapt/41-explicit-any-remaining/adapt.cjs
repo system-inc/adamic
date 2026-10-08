@@ -8,11 +8,13 @@ for (const file of [...new Set(rules.map(r => r.file))]) {
     const name = path.join(tree, file), before = fs.readFileSync(name, 'utf8');
     let text = before, removed = 0;
     for (const r of rules.filter(r => r.file === file)) {
-        const oldCount = text.split(r.before).length - 1;
-        const newCount = text.split(r.after).length - 1;
-        if (oldCount === 0 && newCount === 1) continue;
+        const newline = text.includes('\r\n') ? '\r\n' : '\n';
+        const before = r.before.replace(/\r?\n/g, newline), after = r.after.replace(/\r?\n/g, newline);
+        const oldCount = text.split(before).length - 1;
+        const newCount = text.split(after).length - 1;
+        if (newCount === 1 && text.replace(after, '').split(before).length === 1) continue;
         if (oldCount !== 1 || newCount !== 0) throw Error('missing or duplicate reviewed site: ' + r.id);
-        text = text.replace(r.before, r.after); removed++;
+        text = text.replace(before, after); removed++;
     }
     const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
     if (source.parseDiagnostics.length) throw Error('adapted syntax rejected: ' + file);

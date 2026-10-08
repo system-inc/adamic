@@ -94,5 +94,93 @@
     "before": "declare function clearTimeout(handle: any): void;",
     "after": "declare function clearTimeout(handle: NodeJS.Timeout | undefined): void;",
     "reason": "Only getNodeSystem captures this ambient Node global, paired with its setTimeout. An absent timer is accepted by Node cancellation."
+  },
+  {
+    "id": 15,
+    "kind": "constructors",
+    "file": "src/compiler/utilities.ts",
+    "before": "function Symbol(this: Symbol, flags: SymbolFlags, name: __String): void {",
+    "after": "function Symbol(this: Partial<Symbol> & { links?: TransientSymbol[\"links\"] | undefined; }, flags: SymbolFlags, name: __String): void {",
+    "reason": "The Symbol constructor writes all required Symbol fields and its own links slot. The slot starts undefined; transient symbols later fill it. The incoming new receiver is empty, so its fields are partial until these assignments complete."
+  },
+  {
+    "id": 16,
+    "kind": "constructors",
+    "file": "src/compiler/utilities.ts",
+    "before": "(this as any).links = undefined; // used by TransientSymbol",
+    "after": "this.links = undefined; // used by TransientSymbol",
+    "reason": "The receiver shape declares the real initialized slot."
+  },
+  {
+    "id": 17,
+    "kind": "constructors",
+    "file": "src/compiler/utilities.ts",
+    "before": "getSymbolConstructor: () => Symbol as any,",
+    "after": "getSymbolConstructor: () => Symbol as typeof Symbol & ReturnType<ObjectAllocator[\"getSymbolConstructor\"]>,",
+    "reason": "This ordinary JavaScript function is both callable and constructible. Every required Symbol field is written before its constructor returns."
+  },
+  {
+    "id": 26,
+    "kind": "constructors",
+    "file": "src/compiler/utilities.ts",
+    "before": "export interface ObjectAllocator {",
+    "after": "export type AllocatedSignature = Pick<Signature, \"flags\" | \"checker\"> & Partial<Omit<Signature, \"flags\" | \"checker\">>;\n\n/** @internal */\nexport interface ObjectAllocator {",
+    "reason": "Signature allocation initializes only flags and optional checker; parameters and minimum argument count are assigned by createSignature before it returns."
+  },
+  {
+    "id": 27,
+    "kind": "constructors",
+    "file": "src/compiler/utilities.ts",
+    "before": "getSignatureConstructor(): new (checker: TypeChecker, flags: SignatureFlags) => Signature;",
+    "after": "getSignatureConstructor(): new (checker: TypeChecker, flags: SignatureFlags) => AllocatedSignature;",
+    "reason": "The allocator advertises the actual incomplete header, not a completed signature."
+  },
+  {
+    "id": 28,
+    "kind": "constructors",
+    "file": "src/compiler/utilities.ts",
+    "before": "function Signature(this: Signature, checker: TypeChecker, flags: SignatureFlags): void {",
+    "after": "function Signature(this: Partial<AllocatedSignature>, checker: TypeChecker, flags: SignatureFlags): void {",
+    "reason": "The receiver has the truthful staged shape."
+  },
+  {
+    "id": 29,
+    "kind": "constructors",
+    "file": "src/compiler/utilities.ts",
+    "before": "getSignatureConstructor: () => Signature as any,",
+    "after": "getSignatureConstructor: () => Signature as typeof Signature & ReturnType<ObjectAllocator[\"getSignatureConstructor\"]>,",
+    "reason": "The ordinary function is constructible and initializes the advertised staged header."
+  },
+  {
+    "id": 30,
+    "kind": "constructors",
+    "file": "src/compiler/checker.ts",
+    "before": "        sig.compositeKind = undefined;\n        return sig;",
+    "after": "        sig.compositeKind = undefined;\n        return sig as Signature;",
+    "reason": "The completion assertion occurs only after all required signature fields have been assigned."
+  },
+  {
+    "id": 31,
+    "kind": "constructors",
+    "file": "src/compiler/types.ts",
+    "before": "export interface SourceMapSource {\n    fileName: string;\n    text: string;\n    /** @internal */ lineMap: readonly number[];",
+    "after": "export interface SourceMapSource {\n    fileName: string;\n    text: string;\n    /** @internal */ lineMap?: readonly number[];",
+    "reason": "The constructor leaves the internal cache absent; getLineStarts initializes it lazily. Its owner must advertise optional storage."
+  },
+  {
+    "id": 32,
+    "kind": "constructors",
+    "file": "src/compiler/utilities.ts",
+    "before": "getSourceMapSourceConstructor: () => SourceMapSource as any,",
+    "after": "getSourceMapSourceConstructor: () => SourceMapSource as typeof SourceMapSource & ReturnType<ObjectAllocator[\"getSourceMapSourceConstructor\"]>,",
+    "reason": "With the cache declared optional, fileName/text/skipTrivia are a complete honest constructor result."
+  },
+  {
+    "id": 45,
+    "kind": "constructors",
+    "file": "src/compiler/utilities.ts",
+    "before": "function SourceMapSource(this: SourceMapSource, fileName: string, text: string, skipTrivia?: (pos: number) => number): void {",
+    "after": "function SourceMapSource(this: Partial<SourceMapSource>, fileName: string, text: string, skipTrivia?: (pos: number) => number): void {",
+    "reason": "The incoming new receiver is empty; fileName/text/skipTrivia become initialized before construction returns."
   }
 ]

@@ -19,8 +19,10 @@ for (const file of [...new Set(rules.map(r => r.file))]) {
     const before = fs.readFileSync(path.join(beforeTree,file),"utf8"), after = fs.readFileSync(path.join(afterTree,file),"utf8");
     let expected = before;
     for (const rule of rules.filter(r => r.file === file)) {
-        assert.equal(expected.split(rule.before).length,2,"one original owner " + rule.id);
-        expected = expected.replace(rule.before,rule.after);
+        const newline = expected.includes("\r\n") ? "\r\n" : "\n";
+        const a = rule.before.replace(/\r?\n/g,newline), b = rule.after.replace(/\r?\n/g,newline);
+        assert.equal(expected.split(a).length,2,"one original owner " + rule.id);
+        expected = expected.replace(a,b);
     }
     assert.equal(after,expected,"only reviewed family edits " + file);
     const a = emit(before,file), b = emit(after,file);
