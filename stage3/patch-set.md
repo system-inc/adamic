@@ -25,7 +25,22 @@ Rows measure incremental edits; total measures the final tree against pristine.
 | 62-temporary-tracing-write | 1 | 1 | 1 |
 | 63-temporary-tracing-legend | 1 | 1 | 1 |
 | 64-temporary-parser-range-read | 1 | 1 | 1 |
+| 65-temporary-node-builtins | 2 | 7 | 2 |
 | 70-readonly-views | 7 | 22 | 22 |
 | 71-writable-views | 20 | 88 | 88 |
 | 75-optional-widening | 1 | 17 | 6 |
-| **Total** | 79 | 5255 | 5226 |
+| 76-truthful-casts | 1 | 1 | 1 |
+| **Total** | pending | pending | pending |
+
+65-temporary-node-builtins is temporary: it retires when Adamic accepts require
+with a literal specifier and Node builtin types. Its two-file edit erases on Node;
+core already has the required local process view on current main.
+
+76-truthful-casts is permanent. It gives the private assertion cache its proven
+six-key type; the truthful sameMap union proposal is not applied because it
+exposes builder's DiagnosticMessageChain.next contract errors.
+
+
+The merged batch total is pending: adaptation 71 rejects the createTypeChecker
+runtime fingerprint after adaptation 41. Rows above retain the source branches'
+individual measurements; the combined pipeline has not completed.

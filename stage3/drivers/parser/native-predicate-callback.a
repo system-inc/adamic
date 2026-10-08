@@ -1,0 +1,7 @@
+// From TypeScript 6.0.3, src/compiler/core.ts:140
+// Reduced every callback signature: its callable predicate type has no body.
+function apply(callback: (value: number) => value is number): boolean {
+    return callback(1);
+}
+const result = apply((value: number): value is number => typeof value === 'number');
+console.log(`${result}`);

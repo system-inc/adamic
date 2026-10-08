@@ -1,0 +1,5 @@
+// Reduced from TypeScript 6.0.3, Debug.shouldAssertFunction.
+type AnyFunction = (...args: never[]) => void;
+namespace Debug { export function shouldLog(level: number): boolean { return level > 0; } }
+const cache: { assertion: AnyFunction } = { assertion: Debug.shouldLog };
+console.log("function view loaded");

@@ -1,0 +1,3 @@
+// Reduced from TypeScript 6.0.3, core.ts process declaration after temporary 65.
+declare const process: NodeJS.Process | undefined;
+console.log("process declaration loaded");
