@@ -1,0 +1,13 @@
+=== RUN   TestCheckedViewCallableCodeSetDomains
+    checked_views_callable_code_set_test.go:10: gate cache node miss
+    checked_views_callable_code_set_test.go:14: gate cache node miss
+    checked_views_callable_code_set_test.go:16: gate cache node miss
+    checked_views_callable_code_set_test.go:21: gate cache node miss
+    checked_views_callable_code_set_test.go:23: negative exit 0 stdout "completed\n" stderr ""
+--- FAIL: TestCheckedViewCallableCodeSetDomains (0.97s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.975s
+FAIL

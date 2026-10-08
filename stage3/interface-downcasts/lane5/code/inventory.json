@@ -22,11 +22,6 @@
       "pendingReads": 352
     },
     {
-      "name": "Set intrinsics",
-      "pendingPairs": 72,
-      "pendingReads": 223
-    },
-    {
       "name": "higher-order signatures",
       "pendingPairs": 6,
       "pendingReads": 213
@@ -35,6 +30,11 @@
       "name": "Map intrinsics",
       "pendingPairs": 26,
       "pendingReads": 165
+    },
+    {
+      "name": "Set intrinsics",
+      "pendingPairs": 64,
+      "pendingReads": 154
     },
     {
       "name": "other callable values and receivers",
@@ -189,7 +189,7 @@
       "pair": "Set<string>.has",
       "reads": 19,
       "group": "Set intrinsics",
-      "status": "pending",
+      "status": "certified scalar Set domain",
       "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
       "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
     },
@@ -379,7 +379,7 @@
       "pair": "Set<number>.add",
       "reads": 8,
       "group": "Set intrinsics",
-      "status": "pending",
+      "status": "certified scalar Set domain",
       "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
       "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
     },
@@ -419,7 +419,7 @@
       "pair": "Set<number>.has",
       "reads": 7,
       "group": "Set intrinsics",
-      "status": "pending",
+      "status": "certified scalar Set domain",
       "requiredChange": "Integrate the Set receiver fix via codex/views-integration, then certify the original member with good/negative/mutant fixtures on that integrated tip.",
       "sourceInventory": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2"
     },
@@ -1059,7 +1059,7 @@
       "pair": "Set<string> | undefined.has",
       "reads": 8,
       "group": "Set intrinsics",
-      "status": "pending",
+      "status": "certified scalar Set domain",
       "requiredChange": "Set intrinsic receiver support from codex/views-set-receiver at 058635b9, then original-member fixtures and certification",
       "sourceInventory": "edf888d7c53fefd2e7ae05f82e822885e77be7c1"
     },
@@ -1729,7 +1729,7 @@
       "pair": "Set<string>.add",
       "reads": 19,
       "group": "Set intrinsics",
-      "status": "pending",
+      "status": "certified scalar Set domain",
       "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
       "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
     },
@@ -1749,7 +1749,7 @@
       "pair": "Set<number> | undefined.has",
       "reads": 6,
       "group": "Set intrinsics",
-      "status": "pending",
+      "status": "certified scalar Set domain",
       "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
       "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
     },
@@ -1879,7 +1879,7 @@
       "pair": "ReadonlySet<string> | undefined.has",
       "reads": 1,
       "group": "Set intrinsics",
-      "status": "pending",
+      "status": "certified scalar Set domain",
       "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
       "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
     },
@@ -2009,7 +2009,7 @@
       "pair": "Set<string> | undefined.add",
       "reads": 1,
       "group": "Set intrinsics",
-      "status": "pending",
+      "status": "certified scalar Set domain",
       "requiredChange": "delegated Set receiver pair; not reprobed or certified in step09",
       "sourceInventory": "bd953abe3d9f4514820c08df1f541e07f484763b"
     },
@@ -2026,16 +2026,16 @@
   ],
   "certifiedPerShare": {
     "a": {
-      "pairs": 0,
-      "reads": 0
+      "pairs": 3,
+      "reads": 34
     },
     "b": {
-      "pairs": 2,
-      "reads": 19
+      "pairs": 3,
+      "reads": 27
     },
     "c": {
-      "pairs": 11,
-      "reads": 21
+      "pairs": 15,
+      "reads": 48
     }
   }
 }

@@ -1,0 +1,38 @@
+=== RUN   TestCheckedViewCallableCodeSetDomains
+    checked_views_callable_code_set_test.go:28: negative exit 0 stdout "completed\n" stderr ""
+--- FAIL: TestCheckedViewCallableCodeSetDomains (0.94s)
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/a-219
+    checked_views_callable_code_set_test.go:69: negative exit 0 stdout "1\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/a-252
+    checked_views_callable_code_set_test.go:69: negative exit 0 stdout "true\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/a-90
+    checked_views_callable_code_set_test.go:69: negative exit 0 stdout "true\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/b-220
+    checked_views_callable_code_set_test.go:69: negative exit 0 stdout "present\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/c-2237
+    checked_views_callable_code_set_test.go:69: negative exit 0 stdout "present\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/c-2351
+    checked_views_callable_code_set_test.go:69: negative exit 0 stdout "present\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/c-311
+    checked_views_callable_code_set_test.go:69: negative exit 0 stdout "present\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/c-89
+    checked_views_callable_code_set_test.go:69: negative exit 0 stdout "1\n" stderr ""
+--- FAIL: TestCheckedViewCallableCodeSetPrimitivePairs (7.39s)
+    --- FAIL: TestCheckedViewCallableCodeSetPrimitivePairs/a-219 (0.92s)
+    --- FAIL: TestCheckedViewCallableCodeSetPrimitivePairs/a-252 (0.92s)
+    --- FAIL: TestCheckedViewCallableCodeSetPrimitivePairs/a-90 (0.90s)
+    --- FAIL: TestCheckedViewCallableCodeSetPrimitivePairs/b-220 (0.92s)
+    --- FAIL: TestCheckedViewCallableCodeSetPrimitivePairs/c-2237 (0.93s)
+    --- FAIL: TestCheckedViewCallableCodeSetPrimitivePairs/c-2351 (0.92s)
+    --- FAIL: TestCheckedViewCallableCodeSetPrimitivePairs/c-311 (0.93s)
+    --- FAIL: TestCheckedViewCallableCodeSetPrimitivePairs/c-89 (0.94s)
+=== RUN   TestCheckedViewCallableCodeSetInstantiations
+    checked_views_callable_code_set_test.go:90: generic domain exit 0 stdout "completed\ncompleted\n" stderr ""
+--- FAIL: TestCheckedViewCallableCodeSetInstantiations (0.47s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=38
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	8.825s
+FAIL

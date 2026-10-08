@@ -1,0 +1,9 @@
+=== RUN   TestCheckedViewCallableCodeSetInstantiations
+    checked_views_callable_code_set_test.go:79: gate cache node miss
+    checked_views_callable_code_set_test.go:88: gate cache node miss
+--- PASS: TestCheckedViewCallableCodeSetInstantiations (0.51s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.523s

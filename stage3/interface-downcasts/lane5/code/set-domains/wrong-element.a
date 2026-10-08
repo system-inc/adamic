@@ -1,0 +1,9 @@
+// Original Set.add declaration; the producer's literal domain must survive.
+interface Base {readonly add: unknown;}
+interface Target<T> {add(value: T): this; readonly size: number;}
+function probe(value: Base): void {
+    const set = value as Target<string>;
+    set.add("outside");
+    console.log("completed");
+}
+probe(new Set<"inside">(["inside"]));

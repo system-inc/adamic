@@ -1,0 +1,79 @@
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/a-219
+    checked_views_callable_code_set_test.go:44: gate cache node hit
+    checked_views_callable_code_set_test.go:48: gate cache node hit
+    checked_views_callable_code_set_test.go:50: gate cache node hit
+    checked_views_callable_code_set_test.go:59: gate cache node hit
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed.add expected (value: number) => Target<number>, found function with unknown signature
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed.add expected (value: number) => Target<number>, found function with unknown signature
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed.add expected (value: number) => Target<number>, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/a-252
+    checked_views_callable_code_set_test.go:44: gate cache node hit
+    checked_views_callable_code_set_test.go:48: gate cache node hit
+    checked_views_callable_code_set_test.go:50: gate cache node hit
+    checked_views_callable_code_set_test.go:59: gate cache node hit
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed.has expected (value: number) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed.has expected (value: number) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed.has expected (value: number) => boolean, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/a-90
+    checked_views_callable_code_set_test.go:44: gate cache node hit
+    checked_views_callable_code_set_test.go:48: gate cache node hit
+    checked_views_callable_code_set_test.go:50: gate cache node hit
+    checked_views_callable_code_set_test.go:59: gate cache node hit
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed.has expected (value: string) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed.has expected (value: string) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed.has expected (value: string) => boolean, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/b-220
+    checked_views_callable_code_set_test.go:44: gate cache node miss
+    checked_views_callable_code_set_test.go:48: gate cache node miss
+    checked_views_callable_code_set_test.go:50: gate cache node miss
+    checked_views_callable_code_set_test.go:59: gate cache node miss
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed?.has expected (value: string) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed?.has expected (value: string) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed?.has expected (value: string) => boolean, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/c-2237
+    checked_views_callable_code_set_test.go:44: gate cache node hit
+    checked_views_callable_code_set_test.go:48: gate cache node hit
+    checked_views_callable_code_set_test.go:50: gate cache node hit
+    checked_views_callable_code_set_test.go:59: gate cache node hit
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed?.has expected (value: string) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed?.has expected (value: string) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed?.has expected (value: string) => boolean, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/c-2351
+    checked_views_callable_code_set_test.go:44: gate cache node miss
+    checked_views_callable_code_set_test.go:48: gate cache node miss
+    checked_views_callable_code_set_test.go:50: gate cache node miss
+    checked_views_callable_code_set_test.go:59: gate cache node miss
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed?.add expected (value: string) => Target<string>, found function with unknown signature
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed?.add expected (value: string) => Target<string>, found function with unknown signature
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed?.add expected (value: string) => Target<string>, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/c-311
+    checked_views_callable_code_set_test.go:44: gate cache node miss
+    checked_views_callable_code_set_test.go:48: gate cache node miss
+    checked_views_callable_code_set_test.go:50: gate cache node miss
+    checked_views_callable_code_set_test.go:59: gate cache node miss
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed?.has expected (value: number) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed?.has expected (value: number) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed?.has expected (value: number) => boolean, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/c-89
+    checked_views_callable_code_set_test.go:44: gate cache node hit
+    checked_views_callable_code_set_test.go:48: gate cache node hit
+    checked_views_callable_code_set_test.go:50: gate cache node hit
+    checked_views_callable_code_set_test.go:59: gate cache node hit
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed.add expected (value: string) => Target<string>, found function with unknown signature
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed.add expected (value: string) => Target<string>, found function with unknown signature
+    checked_views_callable_code_set_test.go:63: negative: adamic: panic: field read failed: viewed.add expected (value: string) => Target<string>, found function with unknown signature
+--- PASS: TestCheckedViewCallableCodeSetPrimitivePairs (6.92s)
+    --- PASS: TestCheckedViewCallableCodeSetPrimitivePairs/a-219 (0.81s)
+    --- PASS: TestCheckedViewCallableCodeSetPrimitivePairs/a-252 (0.73s)
+    --- PASS: TestCheckedViewCallableCodeSetPrimitivePairs/a-90 (0.78s)
+    --- PASS: TestCheckedViewCallableCodeSetPrimitivePairs/b-220 (1.02s)
+    --- PASS: TestCheckedViewCallableCodeSetPrimitivePairs/c-2237 (0.78s)
+    --- PASS: TestCheckedViewCallableCodeSetPrimitivePairs/c-2351 (1.10s)
+    --- PASS: TestCheckedViewCallableCodeSetPrimitivePairs/c-311 (0.98s)
+    --- PASS: TestCheckedViewCallableCodeSetPrimitivePairs/c-89 (0.73s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=20 misses=12
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	6.934s

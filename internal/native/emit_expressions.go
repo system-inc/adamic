@@ -543,7 +543,7 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 			values = e.value(expression.Values)
 		}
 		e.declarations = append(e.declarations, "#include \"view_set_intrinsics.h\"")
-		created := e.own(ir.Map, fmt.Sprintf("adamic_view_set_producer(%s, %d)", newMap(expression.Element, false), expression.Element))
+		created := e.own(ir.Map, fmt.Sprintf("adamic_view_set_producer(%s, %d, %d)", newMap(expression.Element, false), expression.Element, expression.CallableElement))
 		e.adoptGraph(created, "sizeof *"+created, e.graphTypes(expression.GraphTypes))
 		if expression.Values != nil {
 			e.line("adamic_set_add_all(%s, %s);", created, values)

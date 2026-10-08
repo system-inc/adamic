@@ -1,0 +1,137 @@
+{
+  "roadmapStep": 9,
+  "base": "f339ca8d",
+  "members": [
+    {
+      "share": "a",
+      "rank": 90,
+      "reads": 19,
+      "element": "string",
+      "declaration": "has(value: T): boolean;",
+      "certificateDirectory": "set-primitive/a-90",
+      "shareCommit": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2",
+      "scope": "original collection member declaration at a concrete type argument; adjacent receiver reduced, nullable receiver guarded before cast; candidate reads, not measured executions"
+    },
+    {
+      "share": "a",
+      "rank": 219,
+      "reads": 8,
+      "element": "number",
+      "declaration": "add(value: T): this;",
+      "certificateDirectory": "set-primitive/a-219",
+      "shareCommit": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2",
+      "scope": "original collection member declaration at a concrete type argument; adjacent receiver reduced, nullable receiver guarded before cast; candidate reads, not measured executions"
+    },
+    {
+      "share": "a",
+      "rank": 252,
+      "reads": 7,
+      "element": "number",
+      "declaration": "has(value: T): boolean;",
+      "certificateDirectory": "set-primitive/a-252",
+      "shareCommit": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2",
+      "scope": "original collection member declaration at a concrete type argument; adjacent receiver reduced, nullable receiver guarded before cast; candidate reads, not measured executions"
+    },
+    {
+      "share": "b",
+      "rank": 220,
+      "reads": 8,
+      "element": "string",
+      "declaration": "has(value: T): boolean;",
+      "certificateDirectory": "set-primitive/b-220",
+      "shareCommit": "edf888d7c53fefd2e7ae05f82e822885e77be7c1",
+      "scope": "original collection member declaration at a concrete type argument; adjacent receiver reduced, nullable receiver guarded before cast; candidate reads, not measured executions"
+    },
+    {
+      "share": "c",
+      "rank": 89,
+      "reads": 19,
+      "element": "string",
+      "declaration": "add(value: T): this;",
+      "certificateDirectory": "set-primitive/c-89",
+      "shareCommit": "bd953abe3d9f4514820c08df1f541e07f484763b",
+      "scope": "original collection member declaration at a concrete type argument; adjacent receiver reduced, nullable receiver guarded before cast; candidate reads, not measured executions",
+      "sourceDeclarations": [
+        {
+          "kind": "MethodSignature",
+          "inferred": false,
+          "text": "add(value: T): this;",
+          "file": "lib/lib.es2015.collection.d.ts",
+          "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+        }
+      ]
+    },
+    {
+      "share": "c",
+      "rank": 311,
+      "reads": 6,
+      "element": "number",
+      "declaration": "has(value: T): boolean;",
+      "certificateDirectory": "set-primitive/c-311",
+      "shareCommit": "bd953abe3d9f4514820c08df1f541e07f484763b",
+      "scope": "original collection member declaration at a concrete type argument; adjacent receiver reduced, nullable receiver guarded before cast; candidate reads, not measured executions",
+      "sourceDeclarations": [
+        {
+          "kind": "MethodSignature",
+          "inferred": false,
+          "text": "has(value: T): boolean;",
+          "file": "lib/lib.es2015.collection.d.ts",
+          "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+        }
+      ]
+    },
+    {
+      "share": "c",
+      "rank": 2237,
+      "reads": 1,
+      "element": "string",
+      "declaration": "has(value: T): boolean;",
+      "certificateDirectory": "set-primitive/c-2237",
+      "shareCommit": "bd953abe3d9f4514820c08df1f541e07f484763b",
+      "scope": "original collection member declaration at a concrete type argument; adjacent receiver reduced, nullable receiver guarded before cast; candidate reads, not measured executions",
+      "sourceDeclarations": [
+        {
+          "kind": "MethodSignature",
+          "inferred": false,
+          "text": "has(value: T): boolean;",
+          "file": "lib/lib.es2015.collection.d.ts",
+          "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+        }
+      ]
+    },
+    {
+      "share": "c",
+      "rank": 2351,
+      "reads": 1,
+      "element": "string",
+      "declaration": "add(value: T): this;",
+      "certificateDirectory": "set-primitive/c-2351",
+      "shareCommit": "bd953abe3d9f4514820c08df1f541e07f484763b",
+      "scope": "original collection member declaration at a concrete type argument; adjacent receiver reduced, nullable receiver guarded before cast; candidate reads, not measured executions",
+      "sourceDeclarations": [
+        {
+          "kind": "MethodSignature",
+          "inferred": false,
+          "text": "add(value: T): this;",
+          "file": "lib/lib.es2015.collection.d.ts",
+          "sha256": "105ba8ff7ba746404fe1a2e189d1d3d2e0eb29a08c18dded791af02f29fb4711"
+        }
+      ]
+    }
+  ],
+  "certifiedPerShare": {
+    "a": {
+      "pairs": 3,
+      "reads": 34
+    },
+    "b": {
+      "pairs": 1,
+      "reads": 8
+    },
+    "c": {
+      "pairs": 4,
+      "reads": 27
+    }
+  },
+  "assumption": "Only checker-identical complete primitive domains receive the existing Set callable certificate; all other domains fail at the demanded read."
+}

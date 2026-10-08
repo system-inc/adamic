@@ -1,0 +1,54 @@
+=== RUN   TestCheckedViewCallableCodeSetDomains
+    checked_views_callable_code_set_test.go:28: negative exit 0 stdout "completed\n" stderr ""
+--- FAIL: TestCheckedViewCallableCodeSetDomains (0.97s)
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/a-219
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed.add expected (value: number) => Target<number>, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed.add expected (value: number) => Target<number>, found function with unknown signature
+    checked_views_callable_code_set_test.go:69: negative exit 0 stdout "1\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/a-252
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed.has expected (value: number) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed.has expected (value: number) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:69: negative exit 0 stdout "true\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/a-90
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed.has expected (value: string) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed.has expected (value: string) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:69: negative exit 0 stdout "true\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/b-220
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed?.has expected (value: string) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed?.has expected (value: string) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:69: negative exit 0 stdout "present\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/c-2237
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed?.has expected (value: string) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed?.has expected (value: string) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:69: negative exit 0 stdout "present\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/c-2351
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed?.add expected (value: string) => Target<string>, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed?.add expected (value: string) => Target<string>, found function with unknown signature
+    checked_views_callable_code_set_test.go:69: negative exit 0 stdout "present\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/c-311
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed?.has expected (value: number) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed?.has expected (value: number) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:69: negative exit 0 stdout "present\n" stderr ""
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/c-89
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed.add expected (value: string) => Target<string>, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed.add expected (value: string) => Target<string>, found function with unknown signature
+    checked_views_callable_code_set_test.go:69: negative exit 0 stdout "1\n" stderr ""
+--- FAIL: TestCheckedViewCallableCodeSetPrimitivePairs (7.72s)
+    --- FAIL: TestCheckedViewCallableCodeSetPrimitivePairs/a-219 (0.92s)
+    --- FAIL: TestCheckedViewCallableCodeSetPrimitivePairs/a-252 (0.91s)
+    --- FAIL: TestCheckedViewCallableCodeSetPrimitivePairs/a-90 (0.97s)
+    --- FAIL: TestCheckedViewCallableCodeSetPrimitivePairs/b-220 (0.97s)
+    --- FAIL: TestCheckedViewCallableCodeSetPrimitivePairs/c-2237 (1.01s)
+    --- FAIL: TestCheckedViewCallableCodeSetPrimitivePairs/c-2351 (0.94s)
+    --- FAIL: TestCheckedViewCallableCodeSetPrimitivePairs/c-311 (0.98s)
+    --- FAIL: TestCheckedViewCallableCodeSetPrimitivePairs/c-89 (1.02s)
+=== RUN   TestCheckedViewCallableCodeSetInstantiations
+    checked_views_callable_code_set_test.go:90: generic domain exit 0 stdout "completed\ncompleted\n" stderr ""
+--- FAIL: TestCheckedViewCallableCodeSetInstantiations (0.44s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=38
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	9.152s
+FAIL

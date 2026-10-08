@@ -1,0 +1,5 @@
+// Original collection member declaration; adjacent receiver and carriers reduced.
+interface Base {readonly has: unknown;}
+interface Target<T> {has(value: T): boolean;}
+function probe(value: Base): void {const viewed=value as Target<number>;console.log(`${viewed.has(1)}`);}
+probe(new Set<1>([1]));

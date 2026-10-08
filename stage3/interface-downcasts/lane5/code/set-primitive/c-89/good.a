@@ -1,0 +1,5 @@
+// Original collection member declaration; adjacent receiver and carriers reduced.
+interface Base {readonly add: unknown;}
+interface Target<T> {add(value: T): this; readonly size: number;}
+function probe(value: Base): void {const viewed=value as Target<string>;console.log(`${viewed.add("inside").size}`);}
+probe(new Set<string>(["inside"]));

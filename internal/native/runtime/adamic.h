@@ -401,6 +401,7 @@ typedef struct adamic_map {
 	size_t bucket_count;
 	size_t *buckets;
 	bool intrinsic_set; // Constructor-owned identity, never supplied by a view.
+	unsigned char view_set_element; // Logical callable domain; zero is uncertified.
 	bool string_keys;
 	// reference_keys is keys that are counted references: strings, compared by their text, or, when
 	// string_keys isn't set, objects, arrays, maps and functions, compared by identity, as === does.

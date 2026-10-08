@@ -88,7 +88,7 @@ func (l *lowering) librarySetMethod(node, receiver *ast.Node, name string) (ir.E
 			}
 			return walk(source, ir.If{Condition: condition, Then: []ir.Statement{add}})
 		}
-		function.Body = []ir.Statement{ir.Declare{Local: result.Local, Value: ir.SetNew{Element: element}}}
+		function.Body = []ir.Statement{ir.Declare{Local: result.Local, Value: ir.SetNew{Element: element, CallableElement: l.viewSetCallableElement(node)}}}
 		switch name {
 		case "union":
 			function.Body = append(function.Body, copy(a), copy(b))

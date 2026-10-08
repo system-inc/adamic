@@ -1,0 +1,251 @@
+=== RUN   TestCheckedViewCallableCodeCounts
+--- PASS: TestCheckedViewCallableCodeCounts (7.79s)
+=== RUN   TestCheckedViewCallableCodeSetDomains
+--- PASS: TestCheckedViewCallableCodeSetDomains (0.93s)
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/a-219
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed.add expected (value: number) => Target<number>, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed.add expected (value: number) => Target<number>, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed.add expected (value: number) => Target<number>, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/a-252
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed.has expected (value: number) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed.has expected (value: number) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed.has expected (value: number) => boolean, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/a-90
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed.has expected (value: string) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed.has expected (value: string) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed.has expected (value: string) => boolean, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/b-220
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed?.has expected (value: string) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed?.has expected (value: string) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed?.has expected (value: string) => boolean, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/c-2237
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed?.has expected (value: string) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed?.has expected (value: string) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed?.has expected (value: string) => boolean, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/c-2351
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed?.add expected (value: string) => Target<string>, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed?.add expected (value: string) => Target<string>, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed?.add expected (value: string) => Target<string>, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/c-311
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed?.has expected (value: number) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed?.has expected (value: number) => boolean, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed?.has expected (value: number) => boolean, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeSetPrimitivePairs/c-89
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed.add expected (value: string) => Target<string>, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed.add expected (value: string) => Target<string>, found function with unknown signature
+    checked_views_callable_code_set_test.go:71: negative: adamic: panic: field read failed: viewed.add expected (value: string) => Target<string>, found function with unknown signature
+--- PASS: TestCheckedViewCallableCodeSetPrimitivePairs (7.68s)
+    --- PASS: TestCheckedViewCallableCodeSetPrimitivePairs/a-219 (0.92s)
+    --- PASS: TestCheckedViewCallableCodeSetPrimitivePairs/a-252 (0.94s)
+    --- PASS: TestCheckedViewCallableCodeSetPrimitivePairs/a-90 (1.04s)
+    --- PASS: TestCheckedViewCallableCodeSetPrimitivePairs/b-220 (1.03s)
+    --- PASS: TestCheckedViewCallableCodeSetPrimitivePairs/c-2237 (0.96s)
+    --- PASS: TestCheckedViewCallableCodeSetPrimitivePairs/c-2351 (0.97s)
+    --- PASS: TestCheckedViewCallableCodeSetPrimitivePairs/c-311 (0.90s)
+    --- PASS: TestCheckedViewCallableCodeSetPrimitivePairs/c-89 (0.90s)
+=== RUN   TestCheckedViewCallableCodeSetInstantiations
+--- PASS: TestCheckedViewCallableCodeSetInstantiations (0.47s)
+=== RUN   TestCheckedViewCallableCodeHigherOrder
+=== RUN   TestCheckedViewCallableCodeHigherOrder/b-172
+=== RUN   TestCheckedViewCallableCodeHigherOrder/b-172/wrong-arity
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: factory.copyPrologue expected (source: readonly Statement[], target: Statement[], ensureUseStrict?: boolean | undefined, visitor?: ((node: Node) => VisitResult<Node | undefined>) | undefined) => number, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: factory.copyPrologue expected (source: readonly Statement[], target: Statement[], ensureUseStrict?: boolean | undefined, visitor?: ((node: Node) => VisitResult<Node | undefined>) | undefined) => number, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: factory.copyPrologue expected (source: readonly Statement[], target: Statement[], ensureUseStrict?: boolean | undefined, visitor?: ((node: Node) => VisitResult<Node | undefined>) | undefined) => number, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/b-172/wrong-callback
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: factory.copyPrologue expected (source: readonly Statement[], target: Statement[], ensureUseStrict?: boolean | undefined, visitor?: ((node: Node) => VisitResult<Node | undefined>) | undefined) => number, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: factory.copyPrologue expected (source: readonly Statement[], target: Statement[], ensureUseStrict?: boolean | undefined, visitor?: ((node: Node) => VisitResult<Node | undefined>) | undefined) => number, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: factory.copyPrologue expected (source: readonly Statement[], target: Statement[], ensureUseStrict?: boolean | undefined, visitor?: ((node: Node) => VisitResult<Node | undefined>) | undefined) => number, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/b-190
+=== RUN   TestCheckedViewCallableCodeHigherOrder/b-190/wrong-arity
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: factory.restoreEnclosingLabel expected (node: Statement, outermostLabeledStatement: LabeledStatement | undefined, afterRestoreLabelCallback?: ((node: LabeledStatement) => void) | undefined) => Statement, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: factory.restoreEnclosingLabel expected (node: Statement, outermostLabeledStatement: LabeledStatement | undefined, afterRestoreLabelCallback?: ((node: LabeledStatement) => void) | undefined) => Statement, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: factory.restoreEnclosingLabel expected (node: Statement, outermostLabeledStatement: LabeledStatement | undefined, afterRestoreLabelCallback?: ((node: LabeledStatement) => void) | undefined) => Statement, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/b-190/wrong-callback
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: factory.restoreEnclosingLabel expected (node: Statement, outermostLabeledStatement: LabeledStatement | undefined, afterRestoreLabelCallback?: ((node: LabeledStatement) => void) | undefined) => Statement, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: factory.restoreEnclosingLabel expected (node: Statement, outermostLabeledStatement: LabeledStatement | undefined, afterRestoreLabelCallback?: ((node: LabeledStatement) => void) | undefined) => Statement, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: factory.restoreEnclosingLabel expected (node: Statement, outermostLabeledStatement: LabeledStatement | undefined, afterRestoreLabelCallback?: ((node: LabeledStatement) => void) | undefined) => Statement, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1082
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1082/wrong-arity
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: builder.build expected (project?: string | undefined, cancellationToken?: CancellationToken | undefined, writeFile?: WriteFileCallback | undefined, getCustomTransformers?: ... | undefined) => ExitStatus, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: builder.build expected (project?: string | undefined, cancellationToken?: CancellationToken | undefined, writeFile?: WriteFileCallback | undefined, getCustomTransformers?: ... | undefined) => ExitStatus, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: builder.build expected (project?: string | undefined, cancellationToken?: CancellationToken | undefined, writeFile?: WriteFileCallback | undefined, getCustomTransformers?: ... | undefined) => ExitStatus, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1082/wrong-callback
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: builder.build expected (project?: string | undefined, cancellationToken?: CancellationToken | undefined, writeFile?: WriteFileCallback | undefined, getCustomTransformers?: ... | undefined) => ExitStatus, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: builder.build expected (project?: string | undefined, cancellationToken?: CancellationToken | undefined, writeFile?: WriteFileCallback | undefined, getCustomTransformers?: ... | undefined) => ExitStatus, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: builder.build expected (project?: string | undefined, cancellationToken?: CancellationToken | undefined, writeFile?: WriteFileCallback | undefined, getCustomTransformers?: ... | undefined) => ExitStatus, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1322
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1322/wrong-arity
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: compilerHost.getSourceFile expected (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: compilerHost.getSourceFile expected (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: compilerHost.getSourceFile expected (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1322/wrong-callback
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: compilerHost.getSourceFile expected (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: compilerHost.getSourceFile expected (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: compilerHost.getSourceFile expected (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1328
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1328/wrong-arity
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: compilerHost.writeFile expected WriteFileCallback, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: compilerHost.writeFile expected WriteFileCallback, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: compilerHost.writeFile expected WriteFileCallback, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1328/wrong-callback
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: compilerHost.writeFile expected WriteFileCallback, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: compilerHost.writeFile expected WriteFileCallback, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: compilerHost.writeFile expected WriteFileCallback, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1853
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1853/wrong-arity
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: resolutions.forEach expected (cb: (elem: T, key: string, mode: ResolutionMode) => void) => void, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: resolutions.forEach expected (cb: (elem: T, key: string, mode: ResolutionMode) => void) => void, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: resolutions.forEach expected (cb: (elem: T, key: string, mode: ResolutionMode) => void) => void, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-1853/wrong-callback
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: resolutions.forEach expected (cb: (elem: T, key: string, mode: ResolutionMode) => void) => void, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: resolutions.forEach expected (cb: (elem: T, key: string, mode: ResolutionMode) => void) => void, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: resolutions.forEach expected (cb: (elem: T, key: string, mode: ResolutionMode) => void) => void, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2078
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2078/wrong-arity
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: parenthesizer.getParenthesizeLeftSideOfBinaryForOperator expected (binaryOperator: SyntaxKind) => (leftSide: Expression) => Expression, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: parenthesizer.getParenthesizeLeftSideOfBinaryForOperator expected (binaryOperator: SyntaxKind) => (leftSide: Expression) => Expression, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: parenthesizer.getParenthesizeLeftSideOfBinaryForOperator expected (binaryOperator: SyntaxKind) => (leftSide: Expression) => Expression, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2078/wrong-callback
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: parenthesizer.getParenthesizeLeftSideOfBinaryForOperator expected (binaryOperator: SyntaxKind) => (leftSide: Expression) => Expression, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: parenthesizer.getParenthesizeLeftSideOfBinaryForOperator expected (binaryOperator: SyntaxKind) => (leftSide: Expression) => Expression, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: parenthesizer.getParenthesizeLeftSideOfBinaryForOperator expected (binaryOperator: SyntaxKind) => (leftSide: Expression) => Expression, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2162
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2162/wrong-arity
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: state.program.writeFile expected WriteFileCallback, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: state.program.writeFile expected WriteFileCallback, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: state.program.writeFile expected WriteFileCallback, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2162/wrong-callback
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: state.program.writeFile expected WriteFileCallback, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: state.program.writeFile expected WriteFileCallback, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: state.program.writeFile expected WriteFileCallback, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2273
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2273/wrong-arity
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: resolutionHost.watchDirectoryOfFailedLookupLocation expected (directory: string, cb: DirectoryWatcherCallback, flags: WatchDirectoryFlags) => FileWatcher, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: resolutionHost.watchDirectoryOfFailedLookupLocation expected (directory: string, cb: DirectoryWatcherCallback, flags: WatchDirectoryFlags) => FileWatcher, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: resolutionHost.watchDirectoryOfFailedLookupLocation expected (directory: string, cb: DirectoryWatcherCallback, flags: WatchDirectoryFlags) => FileWatcher, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2273/wrong-callback
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: resolutionHost.watchDirectoryOfFailedLookupLocation expected (directory: string, cb: DirectoryWatcherCallback, flags: WatchDirectoryFlags) => FileWatcher, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: resolutionHost.watchDirectoryOfFailedLookupLocation expected (directory: string, cb: DirectoryWatcherCallback, flags: WatchDirectoryFlags) => FileWatcher, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: resolutionHost.watchDirectoryOfFailedLookupLocation expected (directory: string, cb: DirectoryWatcherCallback, flags: WatchDirectoryFlags) => FileWatcher, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-236
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-236/wrong-arity
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: factory.createCallBinding expected (expression: Expression, recordTempVariable: (temp: Identifier) => void, languageVersion?: ScriptTarget | undefined, cacheIdentifiers?: boolean | undefined) => CallBinding, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: factory.createCallBinding expected (expression: Expression, recordTempVariable: (temp: Identifier) => void, languageVersion?: ScriptTarget | undefined, cacheIdentifiers?: boolean | undefined) => CallBinding, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: factory.createCallBinding expected (expression: Expression, recordTempVariable: (temp: Identifier) => void, languageVersion?: ScriptTarget | undefined, cacheIdentifiers?: boolean | undefined) => CallBinding, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-236/wrong-callback
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: factory.createCallBinding expected (expression: Expression, recordTempVariable: (temp: Identifier) => void, languageVersion?: ScriptTarget | undefined, cacheIdentifiers?: boolean | undefined) => CallBinding, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: factory.createCallBinding expected (expression: Expression, recordTempVariable: (temp: Identifier) => void, languageVersion?: ScriptTarget | undefined, cacheIdentifiers?: boolean | undefined) => CallBinding, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: factory.createCallBinding expected (expression: Expression, recordTempVariable: (temp: Identifier) => void, languageVersion?: ScriptTarget | undefined, cacheIdentifiers?: boolean | undefined) => CallBinding, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2387
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2387/wrong-arity
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: state.watchDirectory expected (directory: string, callback: DirectoryWatcherCallback, flags: WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: state.watchDirectory expected (directory: string, callback: DirectoryWatcherCallback, flags: WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: state.watchDirectory expected (directory: string, callback: DirectoryWatcherCallback, flags: WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2387/wrong-callback
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: state.watchDirectory expected (directory: string, callback: DirectoryWatcherCallback, flags: WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: state.watchDirectory expected (directory: string, callback: DirectoryWatcherCallback, flags: WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: state.watchDirectory expected (directory: string, callback: DirectoryWatcherCallback, flags: WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2594
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2594/wrong-arity
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: host.watchDirectory expected (path: string, callback: DirectoryWatcherCallback, recursive?: boolean | undefined, options?: WatchOptions | undefined) => FileWatcher, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: host.watchDirectory expected (path: string, callback: DirectoryWatcherCallback, recursive?: boolean | undefined, options?: WatchOptions | undefined) => FileWatcher, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: host.watchDirectory expected (path: string, callback: DirectoryWatcherCallback, recursive?: boolean | undefined, options?: WatchOptions | undefined) => FileWatcher, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-2594/wrong-callback
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: host.watchDirectory expected (path: string, callback: DirectoryWatcherCallback, recursive?: boolean | undefined, options?: WatchOptions | undefined) => FileWatcher, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: host.watchDirectory expected (path: string, callback: DirectoryWatcherCallback, recursive?: boolean | undefined, options?: WatchOptions | undefined) => FileWatcher, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: host.watchDirectory expected (path: string, callback: DirectoryWatcherCallback, recursive?: boolean | undefined, options?: WatchOptions | undefined) => FileWatcher, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-395
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-395/wrong-arity
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: host.getSourceFile expected (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: host.getSourceFile expected (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: host.getSourceFile expected (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined, found function with unknown signature
+=== RUN   TestCheckedViewCallableCodeHigherOrder/c-395/wrong-callback
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: host.getSourceFile expected (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: host.getSourceFile expected (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined, found function with unknown signature
+    checked_views_callable_code_test.go:50: negative: adamic: panic: field read failed: host.getSourceFile expected (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined, found function with unknown signature
+--- PASS: TestCheckedViewCallableCodeHigherOrder (18.45s)
+    --- PASS: TestCheckedViewCallableCodeHigherOrder/b-172 (1.30s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/b-172/wrong-arity (0.41s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/b-172/wrong-callback (0.41s)
+    --- PASS: TestCheckedViewCallableCodeHigherOrder/b-190 (1.34s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/b-190/wrong-arity (0.42s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/b-190/wrong-callback (0.40s)
+    --- PASS: TestCheckedViewCallableCodeHigherOrder/c-1082 (1.48s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-1082/wrong-arity (0.47s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-1082/wrong-callback (0.48s)
+    --- PASS: TestCheckedViewCallableCodeHigherOrder/c-1322 (1.58s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-1322/wrong-arity (0.42s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-1322/wrong-callback (0.63s)
+    --- PASS: TestCheckedViewCallableCodeHigherOrder/c-1328 (1.47s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-1328/wrong-arity (0.44s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-1328/wrong-callback (0.49s)
+    --- PASS: TestCheckedViewCallableCodeHigherOrder/c-1853 (1.34s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-1853/wrong-arity (0.40s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-1853/wrong-callback (0.41s)
+    --- PASS: TestCheckedViewCallableCodeHigherOrder/c-2078 (1.48s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-2078/wrong-arity (0.46s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-2078/wrong-callback (0.46s)
+    --- PASS: TestCheckedViewCallableCodeHigherOrder/c-2162 (1.39s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-2162/wrong-arity (0.42s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-2162/wrong-callback (0.45s)
+    --- PASS: TestCheckedViewCallableCodeHigherOrder/c-2273 (1.33s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-2273/wrong-arity (0.42s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-2273/wrong-callback (0.41s)
+    --- PASS: TestCheckedViewCallableCodeHigherOrder/c-236 (1.36s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-236/wrong-arity (0.43s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-236/wrong-callback (0.41s)
+    --- PASS: TestCheckedViewCallableCodeHigherOrder/c-2387 (1.44s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-2387/wrong-arity (0.47s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-2387/wrong-callback (0.47s)
+    --- PASS: TestCheckedViewCallableCodeHigherOrder/c-2594 (1.49s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-2594/wrong-arity (0.44s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-2594/wrong-callback (0.42s)
+    --- PASS: TestCheckedViewCallableCodeHigherOrder/c-395 (1.45s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-395/wrong-arity (0.48s)
+        --- PASS: TestCheckedViewCallableCodeHigherOrder/c-395/wrong-callback (0.44s)
+=== RUN   TestCheckedViewCallableCodeCallbackExecution
+=== RUN   TestCheckedViewCallableCodeCallbackExecution/c-395
+=== RUN   TestCheckedViewCallableCodeCallbackExecution/c-2078
+--- PASS: TestCheckedViewCallableCodeCallbackExecution (1.02s)
+    --- PASS: TestCheckedViewCallableCodeCallbackExecution/c-395 (0.53s)
+    --- PASS: TestCheckedViewCallableCodeCallbackExecution/c-2078 (0.50s)
+=== RUN   TestCheckedViewSetIntrinsics
+=== RUN   TestCheckedViewSetIntrinsics/add
+=== RUN   TestCheckedViewSetIntrinsics/has
+=== RUN   TestCheckedViewSetIntrinsics/identity
+=== RUN   TestCheckedViewSetIntrinsics/number
+=== RUN   TestCheckedViewSetIntrinsics/boolean
+--- PASS: TestCheckedViewSetIntrinsics (2.37s)
+    --- PASS: TestCheckedViewSetIntrinsics/add (0.44s)
+    --- PASS: TestCheckedViewSetIntrinsics/has (0.47s)
+    --- PASS: TestCheckedViewSetIntrinsics/identity (0.48s)
+    --- PASS: TestCheckedViewSetIntrinsics/number (0.50s)
+    --- PASS: TestCheckedViewSetIntrinsics/boolean (0.47s)
+=== RUN   TestCheckedViewSetIntrinsicsC
+=== RUN   TestCheckedViewSetIntrinsicsC/add.a
+=== RUN   TestCheckedViewSetIntrinsicsC/boolean.a
+=== RUN   TestCheckedViewSetIntrinsicsC/has.a
+=== RUN   TestCheckedViewSetIntrinsicsC/identity.a
+=== RUN   TestCheckedViewSetIntrinsicsC/number.a
+=== RUN   TestCheckedViewSetIntrinsicsC/wrong-parameter.a
+=== RUN   TestCheckedViewSetIntrinsicsC/wrong-result.a
+--- PASS: TestCheckedViewSetIntrinsicsC (0.91s)
+    --- PASS: TestCheckedViewSetIntrinsicsC/add.a (0.12s)
+    --- PASS: TestCheckedViewSetIntrinsicsC/boolean.a (0.14s)
+    --- PASS: TestCheckedViewSetIntrinsicsC/has.a (0.15s)
+    --- PASS: TestCheckedViewSetIntrinsicsC/identity.a (0.13s)
+    --- PASS: TestCheckedViewSetIntrinsicsC/number.a (0.13s)
+    --- PASS: TestCheckedViewSetIntrinsicsC/wrong-parameter.a (0.13s)
+    --- PASS: TestCheckedViewSetIntrinsicsC/wrong-result.a (0.12s)
+=== RUN   TestCheckedViewSetIntrinsicSignatures
+=== RUN   TestCheckedViewSetIntrinsicSignatures/wrong-parameter
+=== RUN   TestCheckedViewSetIntrinsicSignatures/wrong-result
+--- PASS: TestCheckedViewSetIntrinsicSignatures (0.90s)
+    --- PASS: TestCheckedViewSetIntrinsicSignatures/wrong-parameter (0.47s)
+    --- PASS: TestCheckedViewSetIntrinsicSignatures/wrong-result (0.44s)
+PASS
+gate cache: native hits=0 misses=60
+gate cache: node hits=0 misses=134
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	40.587s

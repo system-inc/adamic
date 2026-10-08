@@ -835,7 +835,10 @@ type (
 	SetNew struct {
 		GraphTypes []int
 		Element    Type
-		Values     Expression
+		// CallableElement is constructor-proven full primitive domain, or zero.
+		// Physical Element alone cannot certify a literal or branded element type.
+		CallableElement Type
+		Values          Expression
 	}
 
 	// SetAdd is set.add(Value), which is the set. An element it already has keeps its place. has,

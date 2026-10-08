@@ -1,0 +1,43 @@
+=== RUN   TestCheckedViewCallableCodeSetDomains
+    checked_views_callable_code_set_test.go:10: gate cache node hit
+    checked_views_callable_code_set_test.go:14: gate cache node hit
+    checked_views_callable_code_set_test.go:16: gate cache node hit
+    checked_views_callable_code_set_test.go:21: gate cache node miss
+--- PASS: TestCheckedViewCallableCodeSetDomains (17.15s)
+=== RUN   TestCheckedViewSetIntrinsics
+=== RUN   TestCheckedViewSetIntrinsics/add
+    checked_views_set_intrinsics_test.go:16: gate cache node miss
+    checked_views_set_intrinsics_test.go:30: gate cache node miss
+=== RUN   TestCheckedViewSetIntrinsics/has
+    checked_views_set_intrinsics_test.go:16: gate cache node miss
+    checked_views_set_intrinsics_test.go:30: gate cache node miss
+=== RUN   TestCheckedViewSetIntrinsics/identity
+    checked_views_set_intrinsics_test.go:16: gate cache node miss
+    checked_views_set_intrinsics_test.go:30: gate cache node miss
+=== RUN   TestCheckedViewSetIntrinsics/number
+    checked_views_set_intrinsics_test.go:16: gate cache node miss
+    checked_views_set_intrinsics_test.go:30: gate cache node miss
+=== RUN   TestCheckedViewSetIntrinsics/boolean
+    checked_views_set_intrinsics_test.go:16: gate cache node miss
+    checked_views_set_intrinsics_test.go:30: gate cache node miss
+--- PASS: TestCheckedViewSetIntrinsics (2.41s)
+    --- PASS: TestCheckedViewSetIntrinsics/add (0.46s)
+    --- PASS: TestCheckedViewSetIntrinsics/has (0.45s)
+    --- PASS: TestCheckedViewSetIntrinsics/identity (0.51s)
+    --- PASS: TestCheckedViewSetIntrinsics/number (0.48s)
+    --- PASS: TestCheckedViewSetIntrinsics/boolean (0.51s)
+=== RUN   TestCheckedViewSetIntrinsicSignatures
+=== RUN   TestCheckedViewSetIntrinsicSignatures/wrong-parameter
+    checked_views_set_intrinsics_test.go:64: gate cache node miss
+    checked_views_set_intrinsics_test.go:69: gate cache node miss
+=== RUN   TestCheckedViewSetIntrinsicSignatures/wrong-result
+    checked_views_set_intrinsics_test.go:64: gate cache node miss
+    checked_views_set_intrinsics_test.go:69: gate cache node miss
+--- PASS: TestCheckedViewSetIntrinsicSignatures (1.04s)
+    --- PASS: TestCheckedViewSetIntrinsicSignatures/wrong-parameter (0.55s)
+    --- PASS: TestCheckedViewSetIntrinsicSignatures/wrong-result (0.49s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=3 misses=15
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	20.641s

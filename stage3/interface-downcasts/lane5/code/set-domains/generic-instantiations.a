@@ -1,0 +1,10 @@
+interface Base {readonly add: unknown;}
+interface Target<T> {add(value: T): this; readonly size: number;}
+function make<T>(value: T): Set<T> {return new Set<T>([value]);}
+function probe(value: Base): void {
+    const set=value as Target<string>;
+    set.add("outside");
+    console.log("completed");
+}
+probe(make<string>("inside"));
+probe(make<"inside">("inside"));

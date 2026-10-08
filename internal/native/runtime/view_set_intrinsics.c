@@ -1,9 +1,10 @@
 #include "view_set_intrinsics.h"
 
 // Only constructors establish this identity and physical element representation.
-adamic_map *adamic_view_set_producer(adamic_map *set, unsigned char element) {
+adamic_map *adamic_view_set_producer(adamic_map *set, unsigned char element, unsigned char callable_element) {
     set->intrinsic_set = true;
     set->key_type = element;
+    set->view_set_element = callable_element;
     return set;
 }
 
@@ -52,8 +53,8 @@ static const adamic_method methods[] = {add_number, has_number, add_boolean, has
 
 adamic_method adamic_view_set_method(const adamic_map *set, const char *name, const char *expression, const char *expected) {
     if (!set->intrinsic_set) { failure(expression, expected, "Map with unknown intrinsic signature"); }
-    if (set->key_type < 1 || set->key_type > 3) { failure(expression, expected, "function with unknown signature"); }
-    size_t offset = (size_t)(set->key_type - 1) * 2;
+    if (set->view_set_element < 1 || set->view_set_element > 3) { failure(expression, expected, "function with unknown signature"); }
+    size_t offset = (size_t)(set->view_set_element - 1) * 2;
     if (strcmp(name, "add") == 0) { return methods[offset]; }
     if (strcmp(name, "has") == 0) { return methods[offset + 1]; }
     failure(expression, expected, "unsupported Set intrinsic");

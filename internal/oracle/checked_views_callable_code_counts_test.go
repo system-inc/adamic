@@ -9,10 +9,15 @@ import (
 
 // Refresh only the new code group's measured rows when inherited fixtures fail.
 func TestCheckedViewCallableCodeCounts(t *testing.T) {
-	paths, err := filepath.Glob(filepath.Join(repository, "stage3/interface-downcasts/lane5/code/higher-order/*/*.a"))
+	paths, err := filepath.Glob(filepath.Join(repository, "stage3/interface-downcasts/lane5/code/*/*/*.a"))
 	if err != nil || len(paths) == 0 {
 		t.Fatalf("fixtures: %v, %v", paths, err)
 	}
+	domains, err := filepath.Glob(filepath.Join(repository, "stage3/interface-downcasts/lane5/code/set-domains/*.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	paths = append(paths, domains...)
 	path := filepath.Join(repository, "internal/oracle/counts.md")
 	contents, err := os.ReadFile(path)
 	if err != nil {

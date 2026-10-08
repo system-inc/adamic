@@ -35,7 +35,7 @@ func (l *lowering) newSet(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
-	lowered := ir.SetNew{Element: element}
+	lowered := ir.SetNew{Element: element, CallableElement: l.viewSetCallableElement(node)}
 	arguments := node.AsNewExpression().Arguments
 	if arguments == nil || len(arguments.Nodes) == 0 {
 		return lowered, nil

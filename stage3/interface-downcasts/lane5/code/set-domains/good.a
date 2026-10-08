@@ -1,0 +1,10 @@
+// Original Set.add declaration, with its type argument instantiated at string.
+interface Base {readonly add: unknown;}
+interface Target<T> {add(value: T): this; readonly size: number;}
+function probe(value: Base): void {
+    const set = value as Target<string>;
+    set.add("outside");
+    console.log("completed");
+}
+probe(new Set<string>(["inside"]));
+probe(new Set<string>(["inside"]).union(new Set<string>()));

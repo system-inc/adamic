@@ -35,6 +35,7 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
 	map->bucket_count = 0;
 	map->buckets = NULL;
 	map->intrinsic_set = false;
+	map->view_set_element = 0;
 	map->string_keys = string_keys;
 	map->reference_keys = string_keys;
 	map->boolean_keys = false;
