@@ -1,0 +1,59 @@
+{
+  "mutants": [
+    {
+      "site": "src/compiler/checker.ts:14118:44@817755-817777",
+      "mutation": "restore the removed nullish unwrap",
+      "caught": "owning-expression census"
+    },
+    {
+      "site": "src/compiler/checker.ts:16437:66@954630-954652",
+      "mutation": "restore the removed nullish unwrap",
+      "caught": "owning-expression census"
+    },
+    {
+      "site": "src/compiler/checker.ts:19889:118@1163333-1163340",
+      "mutation": "restore the removed nullish unwrap",
+      "caught": "owning-expression census"
+    },
+    {
+      "site": "src/compiler/checker.ts:28392:41@1689830-1689847",
+      "mutation": "restore the removed nullish unwrap",
+      "caught": "owning-expression census"
+    },
+    {
+      "site": "src/compiler/checker.ts:43525:30@2560678-2560728",
+      "mutation": "restore the removed nullish unwrap",
+      "caught": "owning-expression census"
+    },
+    {
+      "site": "src/compiler/checker.ts:46972:59@2744990-2745015",
+      "mutation": "restore the removed nullish unwrap",
+      "caught": "owning-expression census"
+    },
+    {
+      "site": "src/compiler/checker.ts:5790:30@294166-294199",
+      "mutation": "restore the removed nullish unwrap",
+      "caught": "owning-expression census"
+    },
+    {
+      "site": "src/compiler/core.ts:1244:26@44154-44162",
+      "mutation": "restore the removed nullish unwrap",
+      "caught": "owning-expression census"
+    },
+    {
+      "site": "src/compiler/core.ts:2474:16@88172-88183",
+      "mutation": "restore the removed nullish unwrap",
+      "caught": "owning-expression census"
+    },
+    {
+      "site": "src/compiler/emitter.ts:1417:18@56597-56605",
+      "mutation": "restore the removed nullish unwrap",
+      "caught": "owning-expression census"
+    },
+    {
+      "site": "src/compiler/scanner.ts:1034:16@70986-70998",
+      "mutation": "restore the removed nullish unwrap",
+      "caught": "owning-expression census"
+    }
+  ]
+}
