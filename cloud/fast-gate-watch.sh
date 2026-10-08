@@ -48,8 +48,15 @@ while true; do
     rm "${file}"
   done
   while [ "$(ls "${state}/running" | wc -l)" -lt "${slots}" ] && [ -s "${state}/queue" ]; do
-    # Lowest rank first, newest first within a rank.
-    next=$(sort -k1,1n -k2,2nr "${state}/queue" | head -1)
+    # Lowest rank first, newest first within a rank. An area's gate is long (an area holds many
+    # changes), so at most one runs at a time and a worker's push always has a slot within reach.
+    areas=$(cat "${state}"/running/* 2>/dev/null | grep -c '^area/' || true)
+    if [ "${areas}" -ge 1 ]; then
+      next=$(sort -k1,1n -k2,2nr "${state}/queue" | grep -v '^2 ' | head -1)
+    else
+      next=$(sort -k1,1n -k2,2nr "${state}/queue" | head -1)
+    fi
+    [ -n "${next}" ] || break
     grep -vxF "${next}" "${state}/queue" > "${state}/queue.tmp"; mv "${state}/queue.tmp" "${state}/queue"
     read -r _ _ branch sha <<< "${next}"
     grep -qx "${sha}" "${state}/gated" && continue

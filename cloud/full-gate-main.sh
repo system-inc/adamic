@@ -8,8 +8,8 @@
 # Each run publishes to gate-logs/<sha12>/<UTC stamp>/full-main, and again every time its status
 # line changes: the first failure turns status.txt red at once and is sent to
 # @system_adamic_integration (landings pause on it); the rest of the run goes on for triage only,
-# and full.json ("finished": true) lands when it ends. The run is niced, so a fast gate on the same
-# box keeps its threads.
+# and full.json ("finished": true) lands when it ends. The run is scheduled idle (SCHED_IDLE, idle
+# I/O class, nice 19), so it only gets CPU and disk no fast gate on the box wants.
 set -euo pipefail
 
 box=${ADAMIC_FULL_GATE_BOX:-threadripper}
@@ -50,7 +50,7 @@ source ~/adamic-tools/env.sh
 git -C ~/full-gate/tools fetch -q origin "${tools}" && git -C ~/full-gate/tools switch -q --detach "${tools}"
 git -C ~/full-gate/tree fetch -q origin "${sha}" && git -C ~/full-gate/tree switch -q --detach "${sha}"
 git -C ~/full-gate/tree submodule update -q --init --recursive
-nice -n 19 python3 ~/full-gate/tools/cloud/fast-gate/run.py --full --tree ~/full-gate/tree --sha "${sha}" --base "${sha}" --tools ~/full-gate/tools --weights ~/full-gate/weights.txt --out ~/"${out}"
+chrt --idle 0 ionice -c3 nice -n 19 python3 ~/full-gate/tools/cloud/fast-gate/run.py --full --tree ~/full-gate/tree --sha "${sha}" --base "${sha}" --tools ~/full-gate/tools --weights ~/full-gate/weights.txt --out ~/"${out}"
 RUN
 echo "running: full gate of ${sha}, waiting for the box" > ~/"${out}"/status.txt
 tmux new -d -s "full-${sha:0:12}" "bash ~/${out}/run.sh > ~/${out}/driver.log 2>&1"
