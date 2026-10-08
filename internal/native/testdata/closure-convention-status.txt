@@ -212,3 +212,15 @@ lacks the expected CallbackType context. That disposable merge is aborted.
 Need the parser worker's unpublished scratch bundle or complete compiler tree
 to perform the exact requested C refusal build. Published branch evidence and
 our four C compiler error mutants are not a substitute for this requirement.
+
+Pushed follow-up a02dd049 artifact confirmation
+
+Rebuilt parser C and release binary at a02dd0498efeb17d0fd2c9283bfc980ff529ad8d.
+Both are byte-identical to the measured 2b98fb26 artifacts above; both still
+fail identity to main 48c05d09. The 10.208/10.854 ms best-five measurements
+therefore apply to the pushed follow-up's exact binary, not an assumed rebuild.
+Final runtime grep includes ->code(), .code(), ->counted_code(),
+.counted_code() and adamic_method_call(), across every runtime C/header file.
+All actual indirect closure/method calls in this tree are the typed dispatchers
+in adamic.h. array.c and regexp_replace.c call the closure dispatcher. The
+four external process/parallel sites remain listed individually in runtime-sites.json.

@@ -1,0 +1,5 @@
+internal/native/runtime/adamic.h:139: if (closure->counted) { return closure->counted_code(closure, arguments, argument_count); }
+internal/native/runtime/adamic.h:143: return closure->code(closure, arguments);
+internal/native/runtime/adamic.h:292:static inline adamic_value adamic_method_call(adamic_method_entry method, adamic_object *self, adamic_value *arguments, size_t argument_count) {
+internal/native/runtime/adamic.h:293: if (method.counted) { return method.counted_code(self, arguments, argument_count); }
+internal/native/runtime/adamic.h:294: return method.code(self, arguments);
