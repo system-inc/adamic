@@ -1,5 +1,0 @@
-{
-  "name": "optional-chain-parentheses-not-skipped",
-  "from": "const inner = context.unwrap(expression);",
-  "to": "const inner = expression;"
-}

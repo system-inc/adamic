@@ -1,9 +1,0 @@
-# no-non-null-asserted-optional-chain
-
-Ports @typescript-eslint/no-non-null-asserted-optional-chain through rule.json and an unchanged Go oracle, using the shared nonNullAssertionOperatorRange helper. The exact Go descriptions, finding range, suggestion id and operator-only removal are retained. The rule emits no automatic fix. Parentheses are transparent, and assertions followed by further chain links remain clean as Go specifies.
-
-validate.py selects the rule through temporary Go overlays, enforces exactly 24 captured upstream combinations and checks its witness and inherited corner corpus on Node, emitted JavaScript and sanitized native. It never edits a shared file. The parentheses-not-skipped mutant must compile and produce different output on all three runtimes. validate_all.py runs the whole unchanged lint package, records every Go JSON event and emits a readable log and machine/result summary.
-
-The chain.ts.txt witness covers property, element and call chains, parenthesized assertions, mid-chain clean forms, computed-key assertions, comments and Unicode preceding the edits. Shared helper evidence, all seven consumers and frozen readiness implications are documented in ../../helpers/typescript/README.md.
-
-Final complete lint run: 117 pass, 0 fail, 1 skip (TestCheckerBridgeRefusalPending, inherited checker error bridge), including subtests. Wall time 3194.330 seconds; nproc 5; load before 0.59/0.94/1.08 and after 1.98/1.76/2.40. All required inputs were supplied. The complete 3,903-case registry comparison and 878-file compiler/stage1 corpus passed, the latter with 30,803,438 identical bytes across Go, Node, emitted JavaScript and sanitized native. See evidence/whole-summary.json and evidence/whole.log. The raw event stream is preserved as evidence/whole.jsonl.gz.
