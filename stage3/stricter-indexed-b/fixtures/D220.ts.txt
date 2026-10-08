@@ -1,5 +1,5 @@
 // Ledger D220: isolated receiver/index shape, no manual presence guard.
 const values: number[] = ABSENT ? [] : [7];
 const blockIndex = 0;
-const value: number = values![blockIndex];
+const value: number = values[blockIndex];
 console.log(typeof value === "undefined" ? "undefined" : "present");
