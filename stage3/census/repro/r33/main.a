@@ -1,1 +1,2 @@
+// a-check: refused a definite assignment assertion !
 class Value { count!: number; } console.log(String(new Value().count));
