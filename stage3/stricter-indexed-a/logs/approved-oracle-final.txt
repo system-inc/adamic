@@ -1,0 +1,502 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_fresh.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_fresh.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_calls.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_calls.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_key_forms.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_key_forms.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_order_edges.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_order_edges.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_evaluation.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_evaluation.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_nested_arrays.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_nested_arrays.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_coalesce_scalars.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_coalesce_scalars.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_iteration_edges.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_iteration_edges.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_prototype_own.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_prototype_own.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_values.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_values.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_growth.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_growth.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_json_options.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_json_options.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_inherited_signature.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_inherited_signature.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_write.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_write.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_presence.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_presence.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_construction.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_construction.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_unknown.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_unknown.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias_variants.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias_variants.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_copy.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_copy.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_class.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_class.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_fresh.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_fresh.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_declared.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_declared.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_sound.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_sound.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_discarded.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_discarded.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_guarded_snapshot.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_guarded_snapshot.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_missing_scalar.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_missing_scalar.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_left.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_left.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_right.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_right.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_environment_boundary.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_environment_boundary.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_refuse/r24.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_refuse/r24.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_operations.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_operations.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_ownership.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_ownership.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_for_in.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_for_in.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_census.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_census.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_scalars.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_scalars.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_optional.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_optional.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_number.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_number.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_reference.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_reference.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_read.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_read.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_in.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_in.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_set.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_set.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_scanner.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_scanner.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_composition.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_composition.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_value.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_value.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_fresh.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_sound.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_inherited_signature.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_declared.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_census.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_inherited_signature.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_sound.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_fresh.a
+    oracle_test.go:757: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_census.a
+    oracle_test.go:757: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_declared.a
+    oracle_test.go:757: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_fresh.a
+    oracle_test.go:757: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_census.a
+    oracle_test.go:757: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_fresh.a
+    oracle_test.go:604: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_census.a
+    oracle_test.go:604: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_fresh.a
+    oracle_test.go:597: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_census.a
+    oracle_test.go:597: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_fresh.a
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_fresh.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_declared.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_class.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_census.a
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_copy.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_class.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_copy.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias_variants.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_sound.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_fresh.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_inherited_signature.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_sound.a
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_inherited_signature.a
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_class.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_unknown.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias_variants.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_construction.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_unknown.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_presence.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_class.a
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_presence.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_write.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_construction.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_write.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_right.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_construction.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_right.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_for_in.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_construction.a
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_for_in.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_ownership.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_class.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_inherited_signature.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_ownership.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_sound.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_ownership.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_inherited_signature.a
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_operations.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_sound.a
+    oracle_test.go:611: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_class.a
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_refuse/r24.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_environment_boundary.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_ownership.a
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_refuse/r24.a
+    oracle_test.go:751: not yet: /workspace/adamic/internal/oracle/testdata/records_refuse/r24.a:4:20: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) (format the needed scalar fields explicitly instead of relying on object coercion) yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_coalesce_scalars.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_operations.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_environment_boundary.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_json_options.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_coalesce_scalars.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_growth.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_json_options.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_values.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_growth.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_values.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_prototype_own.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_operations.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_construction.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_prototype_own.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_operations.a
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_growth.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_prototype_own.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_ownership.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_growth.a
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_construction.a
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_iteration_edges.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_prototype_own.a
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_iteration_edges.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_guarded_snapshot.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_ownership.a
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_left.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_operations.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_guarded_snapshot.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_missing_scalar.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_left.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_discarded.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_missing_scalar.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_growth.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_discarded.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_in.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_operations.a
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_value.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_prototype_own.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_missing_scalar.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_in.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_composition.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_growth.a
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_scanner.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_value.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_composition.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_set.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_scanner.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_order_edges.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_missing_scalar.a
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_value.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_prototype_own.a
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_nested_arrays.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_set.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_evaluation.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_value.a
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_order_edges.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_nested_arrays.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_key_forms.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_evaluation.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_number.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_key_forms.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_number.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_read.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_order_edges.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_key_forms.a
+    oracle_test.go:757: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_read.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_reference.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_key_forms.a
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_order_edges.a
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_missing_scalar.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_reference.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_optional.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_value.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_optional.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_scalars.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_calls.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_value.a
+    oracle_test.go:611: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_missing_scalar.a
+    oracle_test.go:611: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_calls.a
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:757: gate cache node hit
+    oracle_test.go:604: gate cache native hit
+    oracle_test.go:597: gate cache native hit
+    oracle_test.go:611: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_order_edges.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_key_forms.a
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_order_edges.a
+    oracle_test.go:611: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_key_forms.a
+    oracle_test.go:611: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.15s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_fresh.a (0.80s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_declared.a (0.81s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_census.a (0.81s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_copy.a (0.33s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_fresh.a (0.38s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias.a (0.50s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias_variants.a (0.60s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_unknown.a (0.23s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_presence.a (0.26s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_write.a (0.22s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_right.a (0.31s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_for_in.a (0.27s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_inherited_signature.a (3.85s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_sound.a (3.91s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_widening_class.a (3.10s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_refuse/r24.a (0.41s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_environment_boundary.a (0.54s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_coalesce_scalars.a (0.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_json_options.a (0.31s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_values.a (0.41s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_construction.a (4.62s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_iteration_edges.a (0.44s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_ownership.a (3.89s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_guarded_snapshot.a (0.30s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_left.a (0.36s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_discarded.a (0.29s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_operations.a (3.80s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_in.a (0.60s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_growth.a (3.53s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_composition.a (0.35s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_scanner.a (0.26s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_prototype_own.a (3.61s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_set.a (0.41s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_nested_arrays.a (0.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_evaluation.a (0.36s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_number.a (0.31s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_read.a (0.36s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_reference.a (0.58s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_optional.a (0.33s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_scalars.a (0.18s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_value.a (3.58s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_missing_scalar.a (4.14s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_calls.a (0.35s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_order_edges.a (3.55s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_key_forms.a (2.98s)
+PASS
+gate cache: native hits=99 misses=24
+gate cache: node hits=64 misses=24
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	12.378s

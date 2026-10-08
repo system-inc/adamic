@@ -1,3 +1,97 @@
+Built: merged the approved optional-field presence dependency and closed D069's initially absent-field context; 27 sites proven, 0 blocked, 0 remaining.
+Commits: dependency tip 7e7464e6 merged at 2a519a00; records 28d30cd3 remains in ancestry through dfd3da59; this closure report follows the merge.
+Commands: indexed witnesses PASS 173.287s, records PASS 67.047s, full affected compiler packages PASS, 45 selected Node oracle fixtures PASS 12.378s, measured counts PASS 82.977s, vet and formatting PASS.
+Mutants: D069's erased indexed guard builds under sanitizers and reaches a different downstream panic; its exact indexed-site stderr catches the removal. Every indexed witness mutant passed its kill assertion again.
+Not covered: the complete repository gate and the complete native package; focused native checks passed. These remain minimal ledger-shape witnesses, not a compilation of the whole TypeScript checker.
+
+Approved dependency merge and D069 closure, October 8
+
+The exact approved optional-field-write-2 commit
+7e7464e632fb48386d39d7dce1236f72f57174b0 is the second parent of merge
+2a519a00a0de773934261a7acaab7f948fc58e5a on codex/stricter-indexed-a.
+No runtime file conflicted. All runtime files and the protected compiler
+orchestrators matched Git's AUTO_MERGE tree before committing; none was
+manually edited. Compiler conflicts preserve automatic owning-project TypeScript
+options and direct execution entries alongside explicit project loading,
+host console declarations, both record lowering paths, and shared indexed guards.
+
+Native writes now use the dependency's adamic_object_write_field helper so a
+uniform-slot optimization cannot skip optional-field presence and readiness
+publication. The readonly record checks remain bounded; mutable record reflection
+and spread use their own storage proof. Plain const literal aliases prove their
+surface keys only, with hidden spreads and dynamic keys excluded; nested values
+still undergo optional-view checks. Conservative base optional-union refusals
+are retained. The formerly refused field-layout alias case was promoted into the
+existing field_access_paths.a Node oracle; readonly record refusal cases were
+promoted to supported forms. Array destructuring does not store a synthetic
+structural view of the whole array, so prototype-view checks apply only at real
+storage sites. D071-D073 still use the same indexedPresenceGuard as direct reads.
+
+D069.json now declares typeAsPromise with an empty object, rather than a
+preinitialized promisedTypeOfPromise field. Its assignment reads
+getTypeArguments(type)[0] at main.ts:6:39. Source Node prints 7 for the present
+case and undefined for the absent case, with empty stderr and exit 0.
+Release native, sanitized native and backend JavaScript match Node when present.
+When absent, all compiled executions have empty stdout, exit 70, and exactly:
+
+```text
+adamic: panic: indexed read is absent: <absolute main.ts path>:6:39
+```
+
+The test pins the actual absolute path, not this display placeholder. The actual
+CLI --explain-checks reports checked: indexed-presence=1, trusted: 0 and that
+location. The erased-guard mutant builds and runs under sanitizers; it exits 70
+with empty stdout and this different message:
+
+```text
+adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back
+```
+
+That downstream check does not satisfy the indexed-site contract. Comparing the
+complete observation, including exact named stderr, kills the mutant. The active
+pinned optional-field failure was removed; earlier failure logs below are history.
+
+Current row states are in sites.csv. D037, D071, D072, D073 and D069 are proven;
+all other assigned rows are proven too. There are 27 proven rows, none blocked
+and none remaining. The final witness log records every erased-site observation,
+including the independently observable third destructuring element.
+
+Validation commands and observations:
+
+```sh
+go test ./stage3/stricter-indexed-a ./stage3/stricter-records -count=1 -timeout 15m -v
+# PASS 173.287s / 67.047s, including all indexed mutants and attribution/census tests.
+go test ./internal/load ./internal/lower ./cmd/adamic ./internal/ir ./internal/javascript -count=1 -timeout 15m
+# PASS load 65.392s, lower 153.713s, cmd 21.970s, ir 88.049s; JavaScript has no package tests.
+go test ./internal/lower -run 'Test(Optional|Record|Project|NodeFS|LibraryPrototype|Prototype)' -count=1 -timeout 15m
+# PASS 13.712s.
+go test ./internal/native -run 'Test(Borrow|FieldReturn|RecordsAgainstNode|RecordMutants|RecordReadMutants|ExactReceiver|Devirtualized|InheritanceMemory)' -count=1
+# PASS 319.506s.
+go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(optional_field_|optional_widening|records_)' -count=1 -timeout 15m -v
+# PASS 45 selected fixtures, 12.378s.
+go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/field_access_paths.a$' -count=1 -v
+# PASS 2.960s.
+go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/fresh/testdata/regexp_tree.ts$' -count=1 -v
+# PASS 1.688s.
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 15m -args -update-counts
+# PASS 82.977s; conflicting count inventory replaced by measured output.
+go vet ./internal/load ./internal/lower ./internal/native ./internal/javascript ./internal/ir ./cmd/adamic ./stage3/stricter-indexed-a ./stage3/stricter-records
+gofmt -l cmd internal
+# Both exit 0 with empty output.
+```
+
+All test output was written directly to log files. Evidence is in logs/approved-*.txt.
+The first count attempt refused the incoming regexp_tree.ts fixture because it was
+outside its project's roots. Its sole testdata directory now has an explicit
+strict tsconfig naming that existing fixture; the loader refusal was preserved,
+and both its Node oracle and the full count measurement then passed.
+The locked stage3/api Node declaration dependencies were installed with npm ci.
+The existing cloud toolchain was reused: setup previously completed in 1009.044s,
+submodules ready at 234.251s and build ready at 1008.454s; nproc remains 5,
+with a four-core cgroup quota. Original timing evidence is in logs/setup.txt.
+
+Historical reports below are superseded by the closure above.
+
 Built the requested records merge at dfd3da59; D069 initially absent named-field context still fails on valid input.
 Commits: records tip 28d30cd3 merged into codex/stricter-indexed-a; no optional-field implementation was applied.
 Commands: D069 context FAILED in 45.841s; merged indexed package PASS 170.732s, records PASS 112.028s, lower PASS 61.707s, oracle PASS 9.998s, vet PASS.
