@@ -71,7 +71,7 @@ func (l *lowering) viewCallableFieldUses(node *ast.Node, target *checker.Type, p
 			called = true
 		}
 		var value *ast.Node
-		if part.Name() != nil && part.Name().Text() == property.Name {
+		if viewCallableProducerDeclaration(part) && part.Name() != nil && part.Name().Text() == property.Name {
 			switch part.Kind {
 			case ast.KindPropertyAssignment:
 				value = part.AsPropertyAssignment().Initializer
@@ -214,4 +214,14 @@ func (l *lowering) viewProvenClassCast(node *ast.Node, value ir.Expression, sour
 		return ir.CheckedCast{Value: value, Field: property.Name, FieldType: of, Allowed: []ir.Expression{allowed}, CheckedFields: true, Message: "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)}, nil
 	}
 	return nil, nil
+}
+
+// Only producer declarations have scalar names here. Variable declarations may
+// have object/array binding patterns, whose Text method is intentionally invalid.
+func viewCallableProducerDeclaration(node *ast.Node) bool {
+	switch node.Kind {
+	case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment, ast.KindPropertyDeclaration, ast.KindMethodDeclaration:
+		return true
+	}
+	return false
 }

@@ -59,7 +59,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 				if name != nil && fields[name.Text()] {
 					declared := l.checker.GetTypeAtLocation(binding.Name())
 					of, known := l.representation(declared)
-					if !known || of < ir.Number || of > ir.Array || !l.viewDataType(declared) {
+					if !known || (of < ir.Number || of > ir.Array) && !l.viewPrimitiveUnionRead(declared) || !l.viewDataType(declared) {
 						found = l.lazyReadRefusal(binding, name.Text(), "destructuring representation conversion")
 					}
 				}

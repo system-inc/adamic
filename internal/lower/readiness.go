@@ -356,7 +356,7 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 				}
 				node = expression
 			case ir.Property:
-				if !program.CheckedFields[expression.Name] {
+				if !program.CheckedFields[expression.Name] && !primitiveBindingConversion(program, expression) {
 					expression.View = ""
 					expression.ViewType = ""
 					expression.ViewAllowed = nil

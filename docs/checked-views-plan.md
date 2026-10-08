@@ -1669,3 +1669,23 @@ internal/oracle/checked_views_primitives_original_test.go. Four pairs / 69
 candidate reads are certified using existing integrated nullable selectors.
 EmitNode direct destructuring is explicitly not credited by a property fixture.
 No production hook is added in this checkpoint.
+
+### Lane 4 primitive destructuring hook
+
+New lower/view_primitive_reads.go names viewPrimitiveUnionRead and
+preparePrimitiveDestructuredRead. Minimal hooks in interface_cast.go and
+collections.go admit only complete declared primitive union descriptors and
+attach existing runtime selector metadata to object binding field reads.
+Unsupported, missing and recursive descriptors retain refusal; global unknown
+flow guard remains unchanged. No runtime ABI or emitter change.
+
+The original binding fixture also exposed a panic in view_callables.go: its
+producer scan called Text on an unrelated VariableDeclaration binding pattern.
+Named viewCallableProducerDeclaration limits producer-name extraction to the
+four existing producer declaration kinds; callable proofs remain unchanged.
+
+Ordinary binding control exposed an unsafe erasure of the primitive-to-box
+conversion. Named primitiveBindingConversion in readiness.go retains the
+existing selector only for union binding reads with complete primitive
+descriptors. This is representation conversion, necessary with or without a
+view; ordinary helpers are held to Node in native, JS and sanitizer runs.

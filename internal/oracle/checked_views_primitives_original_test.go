@@ -83,6 +83,9 @@ func TestCheckedViewOriginalEvaluatorPrimitivePairs(t *testing.T) {
 						t.Fatal(report)
 					}
 				}
+				if variant == "undefined" {
+					assertPrimitiveFirstMemberMutant(t, program, "value", false)
+				}
 				if variant == "wrong" {
 					index := len(program.Strings)
 					program.Strings = append(program.Strings, "unchecked")
@@ -148,6 +151,9 @@ func TestCheckedViewOriginalFinitePrimitiveFields(t *testing.T) {
 					t.Fatal("original complete receiver contract absent")
 				}
 				label := "value." + group.field
+				if group.name == "emit-node" {
+					label = "constantValue (field constantValue)"
+				}
 				if group.name == "emit-node-optional" {
 					label = "value?." + group.field
 				}
@@ -169,6 +175,9 @@ func TestCheckedViewOriginalFinitePrimitiveFields(t *testing.T) {
 					if report := leaks(t, program, binary); report != "" {
 						t.Fatal(report)
 					}
+				}
+				if variant == "undefined" {
+					assertPrimitiveFirstMemberMutant(t, program, group.field, group.name == "node-links")
 				}
 				if variant == "wrong-number" || variant == "wrong" {
 					index := len(program.Strings)
@@ -220,4 +229,57 @@ func assertOriginalPrimitiveFields(t *testing.T, directory string, program *ir.P
 		return
 	}
 	t.Fatal("original primitive receiver absent: " + name)
+}
+
+func TestPrimitiveOrdinaryBinding(t *testing.T) {
+	file, err := filepath.Abs("../../stage3/interface-downcasts/lane4/primitive-original/ordinary-binding.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := run{stdout: []byte("word-built\n42\nundefined\n")}
+	if diff := disagreement(want, onNode(t, file)); diff != "" {
+		t.Fatal("Node: " + diff)
+	}
+	program, err := lowered(t, file)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if diff := disagreement(want, got); diff != "" {
+			t.Fatalf("%s: %s", diff, got.stderr)
+		}
+	}
+	got, binary := nativelyUncached(t, program)
+	if diff := disagreement(want, got); diff != "" {
+		t.Fatalf("%s: %s", diff, got.stderr)
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+}
+
+func assertPrimitiveFirstMemberMutant(t *testing.T, program *ir.Program, field string, numeric bool) {
+	t.Helper()
+	var replacement ir.Expression
+	text := "firstfirst\n"
+	if numeric {
+		replacement = ir.Box{Value: ir.NumberConstant{Value: 0}}
+		text = "0\n"
+	} else {
+		index := len(program.Strings)
+		program.Strings = append(program.Strings, "first")
+		replacement = ir.Box{Value: ir.Concat{Parts: []ir.Expression{ir.StringConstant{Index: index}, ir.StringConstant{Index: index}}}}
+	}
+	if count := dropLane4NamedHelperView(program, field, replacement); count != 1 {
+		t.Fatalf("want one first-member substitution, got %d", count)
+	}
+	for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if got.exitCode != 0 || string(got.stdout) != text {
+			t.Fatalf("first-member mutant must execute valid code: stdout %q stderr %q", got.stdout, got.stderr)
+		}
+		if disagreement(run{stdout: []byte("undefined\n")}, got) == "" {
+			t.Fatal("untested first member escaped Node control")
+		}
+		t.Log("first-member substitution caught by undefined Node control")
+	}
 }
