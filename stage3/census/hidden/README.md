@@ -100,10 +100,20 @@ Each mutant exits 1 at its intended assertion; `prove.py` exits 0 only when all
 are caught. Logs are retained in evidence/. The legacy latent audit also passes,
 including its body-scope, injected-finding and attribution mutants.
 
-`python3 stage3/census/latent/full_audit.py /tmp/hidden-census /tmp/hidden-full-audit`
-was also run and exits 1: its first assertion still expects string and number
-conditions to be refused. This compiler accepts them, so it observes `{'var'}`
-instead of the old three reasons. That audit is not claimed as passing.
+The original measurement's full audit failed because it expected
+`a string as a condition` and `a number as a condition` refusals. Those expectations
+are now retired: conditions landed with JavaScript truthiness. Both condition
+inputs remain in the witness; three distinct `var` sites preserve the continuation
+check instead of weakening it to a single refusal. The diagnosed grandchild is
+uninstantiated and generic so nested-function hoisting does not veto that witness.
+
+`python3 stage3/census/latent/full_audit.py /tmp/hidden-census /tmp/hidden-full-audit-conditions-final > /tmp/hidden-full-audit-conditions.log 2>&1`
+now exits 0. The first-error-only mutant is caught by the three-site assertion;
+the failed-state-retention mutant is caught by the poison-binding rollback
+assertion. [Passing audit log](evidence/full-audit-conditions.log.txt) records both.
+The earlier failure log remains as historical evidence. This audit-only update
+does not change RESULT.json or the region tables; the next measurement waits for
+the compiler area-next landing SHA on main.
 
 Setup timing: Go 0.056s, Node 0.058s, clang 0.443s, markdown ready 0.742s,
 submodules 16.008s, Go build 220.999s, cache warm 221.077s, done 221.114s.

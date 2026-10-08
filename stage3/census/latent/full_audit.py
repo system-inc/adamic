@@ -12,10 +12,12 @@ def check(rows):
     findings = [finding for row in rows[1:] for finding in row['findings']]
     target = next(unit for unit in units if unit.get('name') == 'three')
     assert target['status'] == 'attempted', target
-    actual = {finding['reason'] for finding in findings
+    actual = {(finding['where'], finding['reason']) for finding in findings
               if finding['unit'] == target['where'] and finding['phase'] == 'lowering'
               and finding['kind'] == 'Refused'}
-    assert actual == {'a string as a condition', 'a number as a condition', 'var'}, actual
+    # String and number conditions now lower with JavaScript truthiness. Keep
+    # three separate refusal sites so the first-error mutant still loses two.
+    assert {reason for _, reason in actual} == {'var'} and len(actual) == 3, actual
     excluded = next(unit for unit in units if unit.get('name') == 'badNested')
     assert excluded['depth'] == 1 and excluded['parent'] and excluded['body_end'] > excluded['body_start'], excluded
     assert excluded['status'] == 'split_checker_body' and excluded['checker_diagnostics'], excluded
@@ -29,9 +31,10 @@ def check(rows):
                and finding['unit'] == rollback['where'] for finding in findings), findings
     middle = next(unit for unit in units if unit.get('name') == 'middle')
     assert middle['status'] == 'attempted', middle
-    assert {finding['reason'] for finding in findings if finding['unit'] == middle['where']
-            and finding['phase'] == 'lowering' and finding['kind'] == 'Refused'} == {
-                'a string as a condition', 'a number as a condition', 'var'}, findings
+    actual = {(finding['where'], finding['reason']) for finding in findings
+              if finding['unit'] == middle['where'] and finding['phase'] == 'lowering'
+              and finding['kind'] == 'Refused'}
+    assert {reason for _, reason in actual} == {'var'} and len(actual) == 3, actual
     boundaries = [finding for finding in findings if finding['kind'] == 'Boundary']
     assert boundaries and all(finding.get('end', 0) > finding.get('start', 0) for finding in boundaries), boundaries
 
@@ -45,6 +48,8 @@ export function three(text: string, count: number): void {
     if (text) { }
     if (count) { }
     var old = 1;
+    var second = 2;
+    var third = 3;
     const okay: number = 2;
 }
 export function diagnosed(): void {
@@ -56,12 +61,16 @@ export function rollback(): void {
     const poison: number = external();
     if (poison) { }
 }
+// A generic child is not instantiated in the enclosing prologue. Its diagnosed
+// body stays separately excluded while middle reaches its continuation witness.
 export function outerOnly(): void {
     function middle(text: string, count: number): void {
-        function grandBad(): number { return "wrong"; }
+        function grandBad<Unused>(): number { return "wrong"; }
         if (text) { }
         if (count) { }
         var x = 1;
+        var second = 2;
+        var third = 3;
     }
 }
 ''')
@@ -77,7 +86,7 @@ export function outerOnly(): void {
     try:
         check(observations['first-error-mutant'])
     except AssertionError as failure:
-        print('first-error-only mutant caught by all-three-refusals assertion:', failure)
+        print('first-error-only mutant caught by all-three-refusal-sites assertion:', failure)
     else:
         raise AssertionError('first-error-only mutant survived')
     try:
@@ -86,7 +95,7 @@ export function outerOnly(): void {
         print('failed-state-retention mutant caught by poison binding rollback assertion')
     else:
         raise AssertionError('failed-state-retention mutant survived')
-    print('PASS: three distinct lowering refusals; named checker-diagnosed nested exclusion; eligible sibling; failed declaration rolled back; explicit byte-span boundaries; no-output guards')
+    print('PASS: three distinct lowering refusal sites; accepted string and number conditions; named checker-diagnosed nested exclusion; eligible sibling; failed declaration rolled back; explicit byte-span boundaries; no-output guards')
 
 
 if __name__ == '__main__':
