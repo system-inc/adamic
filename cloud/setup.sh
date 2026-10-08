@@ -134,6 +134,9 @@ prepareSubmodules() {
 # cohere, and typescript-go inside it, over HTTPS (the recorded URL is SSH, which clouds can't use).
 cd "$repository"
 git config submodule.cohere.url https://github.com/system-inc/cohere.git
+# A fresh worker box restores cohere from the gate box's cache in R2 (keyed by the gitlink, every part
+# hash-checked) instead of cloning 81,500 files; with no cache, or any doubt, the clone below does it.
+bash "$repository/cloud/submodule-cache.sh" restore "$repository" || true
 git submodule update --init --recursive --depth 1 --filter=blob:none
 step "submodules ready"
 
