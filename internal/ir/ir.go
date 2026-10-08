@@ -10,7 +10,7 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
-	// PredicateChecks counts overload-result directions, per emitted call site.
+	// PredicateChecks counts predicate directions, per emitted call site.
 	// Unobservable is included in Proven: no narrowed read consumes that region.
 	PredicateChecks PredicateCheckCounts
 
@@ -47,7 +47,7 @@ type Program struct {
 	ClosuresMayThrow bool
 }
 
-// PredicateCheckCounts counts emitted overload-result directions. Unobservable
+// PredicateCheckCounts counts emitted predicate directions. Unobservable
 // directions are proven and are also counted separately so erasure is visible.
 type PredicateCheckCounts struct {
 	Proven, Checked, Unobservable int
@@ -56,7 +56,7 @@ type PredicateCheckCounts struct {
 
 type PredicateCallCheck struct {
 	Where, Function string
-	Overload        int
+	Overload        int // Zero for an ordinary predicate call.
 	Directions      []PredicateDirectionCheck
 }
 

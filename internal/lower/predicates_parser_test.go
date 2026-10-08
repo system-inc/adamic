@@ -103,3 +103,20 @@ func TestParserAssertionBackends(t *testing.T) {
 		})
 	}
 }
+
+// The universal closure slot still needs adapters for scalar/boxed callable views.
+func TestMixedUnionCallbackABIIsPending(t *testing.T) {
+	t.Parallel()
+	for _, fixture := range []string{"mixed_union_callback", "mixed_union_callback_variance"} {
+		t.Run(fixture, func(t *testing.T) {
+			source, err := os.ReadFile("testdata/predicates/" + fixture + ".a")
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = lowerSource(t, string(source))
+			if err == nil || !strings.Contains(err.Error(), "function value") || !strings.Contains(err.Error(), "union of differently held members") {
+				t.Fatalf("want the mixed union callable ABI refusal, got %v", err)
+			}
+		})
+	}
+}

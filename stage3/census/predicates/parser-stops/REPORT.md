@@ -1,8 +1,8 @@
 Built: callback and generic NonNullable assertion admission, plus ordinary call direction reporting in --explain-checks.
-Commits: callback d8f6241210b229c49e327310e28a986185989a8d pushed; assertion implementation and final evidence are in the containing commit.
+Commits: prior work pushed through 0f722679dd7ddd16933c86d88880076cfc7a8418; ordinary reporting is 37161988d3eaaf5f18b6120c9c37fef35b871b2e; ABI evidence is in the containing commit, with follow-up pushes blocked.
 Commands/results: complete lower, CLI, IR and load packages pass; uncached filtered predicate/generic/regex oracle passes; vet, formatting and diff checks pass.
-Mutants: six independent compiler mutants caught; null-test and scalar-evaluation erasures fail both backends; undefined/null confusion fails native output.
-Limits: mixed-union closure ABI is under investigation; the full repository gate is not covered.
+Mutants: prior six compiler mutants caught; this follow-up catches ordinary-report erasure, assertion-report erasure, and unsafe union admission.
+Limits: mixed-union callable variance still needs adapters and remains NotYet; the full repository gate is not covered.
 
 The requested base already admits the exact unused callback signature probe. It is
 pinned byte for byte from 5d777de3b9506d2a303a4a69d66d21f37f608ede,
@@ -200,3 +200,66 @@ Erasing ordinary expression reporting and separately erasing assertion statement
 reporting each fails `TestExplainChecksOutput` by an exact stderr mismatch; both
 mutants built successfully and were restored. Logs are in `evidence/ordinary-*`
 and `evidence/mutant-ordinary-report.log`, `evidence/mutant-assertion-report.log`.
+
+## Mixed-union callback ABI investigation
+
+A one-line prototype permitted `ir.Union` through `censusCallableSlotless`.
+The existing reference slots and boxing handled matching union signatures: original
+Node, generated JavaScript, and ASan/UBSan/leak-checked native agreed on
+`mixed_union_callback.a` (stdout WORD, 7, missing, 9, RETURNED, 10, ARROW, 0,1,
+one per line). It exercises named predicate arguments, inferred arrow predicate
+arguments, generic narrowing, normal union-returning callbacks, a union-taking
+arrow, and Array.from receiving undefined in a union slot.
+
+This is not enough to admit the ABI soundly. The separate variance witness is:
+
+```typescript
+const f: () => number | string = (): number => 5;
+console.log(`${f()}`);
+```
+
+Original Node and generated JavaScript print `5` and exit 0. With the prototype,
+the native build succeeds but ASan reports SEGV in `adamic_union_to_string`:
+the closure returned `.number`, while its view makes the caller read `.reference`.
+The four-package prototype gate passed despite this counterexample. Observed logs
+are `evidence/mixed-union-runtime.log`, `evidence/union-variance-node.log`,
+`evidence/union-variance-js.log`, and `evidence/union-variance.log`.
+
+The prototype was reverted completely. Production keeps its sound NotYet refusal;
+`TestMixedUnionCallbackABIIsPending` pins both witnesses. A mutant that admits union
+slots again builds, then fails both refusal tests with `got <nil>`; it was restored.
+No native emitter or lowering orchestration file was changed.
+
+Safe support needs adapters between scalar and boxed union slots for covariant
+results and compatible parameter views, or complete representation checks that
+refuse those views at every callable storage/assignment boundary. Those boundaries
+include named forwarders, arrows, fields, interface method adapters, and aliases.
+Boxing and unboxing must preserve ownership across normal and exceptional returns,
+and missing/defaulted arguments need their incoming representation. This exceeds
+the small ABI relaxation investigated here. Captured union slots and plain mixed
+union `.toString()` are also outside this follow-up.
+
+Both commits could not be pushed: ordinary git has no HTTPS credential helper;
+using the existing GH_TOKEN through GitHub CLI yields “Invalid username or token”.
+A fetch of current main failed for the same credential issue, so only the previously
+fetched main f4efdd2369311d1420aa53fdf5c1a55bdda811d4 is verified as an ancestor.
+A format-patch of both follow-up commits is supplied outside the repository.
+
+Final follow-up validation (after restoring production ABI refusal):
+
+```
+go test ./internal/lower ./cmd/adamic ./internal/ir ./internal/load -count=1 -timeout 10m
+# pass: lower 55.346s, CLI 15.429s, IR 35.368s, load 2.852s
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestPredicateDirectionCountsAreRecorded|TestNativeAgreesWithNode/internal/oracle/testdata/(proven_|census_|regexp|maybe_number_slots|weak_narrowed|visits|generic)' -count=1 -timeout 30m
+# pass: 20.190s
+go vet ./...
+gofmt -l cmd internal
+git diff --check
+# all exit 0, no output
+```
+
+Logs: `evidence/final-followup-*`. The new lower-test fixtures are not registered
+allocation corpus fixtures, so no allocation-count rows were added. The existing
+recorded predicate count table passes unchanged. Ordinary reporting follows explicit
+predicate declarations and callback parameter contracts; no admission rules or
+inferred-only ordinary predicate handling were changed.
