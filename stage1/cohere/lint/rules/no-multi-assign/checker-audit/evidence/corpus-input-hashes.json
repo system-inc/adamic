@@ -1,0 +1,3490 @@
+[
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+    "sha256": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/_namespaces/ts.performance.ts",
+    "sha256": "e3d39c7ea64f27347b698a1951a76a014cd0c1c51565d6ed9182d7d4f064ddda"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/_namespaces/ts.ts",
+    "sha256": "74b899b9d4a9c709b9daa248cb9107227a705f0189eee82271ee84d3bbfc482b"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/binder.ts",
+    "sha256": "b2a0d4d09bfdd389297e346776d12297e4add7e0b62ba2015862e6b50dcb2aa3"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/builder.ts",
+    "sha256": "6e5b07ce2c67226096cad19391791073b2e37164d4e702bf77e7b2bc28ae9814"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/builderPublic.ts",
+    "sha256": "a6a304c41be6a7b33febcae8dd98955f90313c7e2d56af02f476e6b9722b82d6"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/builderState.ts",
+    "sha256": "51ef79dcaebb2e9b09c5270d07ca8f4abf3eb04e4849eb9014bf2d55f2c570a5"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/builderStatePublic.ts",
+    "sha256": "93138f0f93fd9dff071c3def9feebc5f88fbe65bcb028d4ca8871d3155b9b522"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/checker.ts",
+    "sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/commandLineParser.ts",
+    "sha256": "e48e42605eef2b1880947b658187cf455b3c91aa4bcf32007ab7296b088009ab"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/core.ts",
+    "sha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/corePublic.ts",
+    "sha256": "899b3d3421836d6345090bce67d16d6c73c944762bfb0b5483a1e2ae192c9b09"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/debug.ts",
+    "sha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/emitter.ts",
+    "sha256": "910f74394f8f4cbef48fe25387e5da6224742754b9a7699ef77312af6f453d63"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/executeCommandLine.ts",
+    "sha256": "1bb233b3cac80fcf8572358b07e59988e59d6fb40445c16728a4a7c7ece43cbf"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/expressionToTypeNode.ts",
+    "sha256": "43c6b56dfabaf84c3591fc363763aecbd5b4adfa420879b283aeebca2d405462"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/factory/baseNodeFactory.ts",
+    "sha256": "86826be85abc6406cec8915574950ab349ba829167a4d3f28332c38dd8b90e0a"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/factory/emitHelpers.ts",
+    "sha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/factory/emitNode.ts",
+    "sha256": "d4e8f25e7c30e6c6f5fbb72d56812d140f8d15384be4a7bd4da226a47559583a"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/factory/nodeChildren.ts",
+    "sha256": "bded8155f089e40a86d99d53e135b8f3a4cbc49f70ff2bdd0b80f0683a2e9606"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/factory/nodeConverters.ts",
+    "sha256": "3d5979059f70d4c381bbd5998181441dd6aaa7e15f6564a8f97d446ad85b041d"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/factory/nodeFactory.ts",
+    "sha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/factory/nodeTests.ts",
+    "sha256": "47cc22cce04a5fa143e8182bd0f6e5aea2b1b34d58539701a0785fb0b60cf14f"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/factory/parenthesizerRules.ts",
+    "sha256": "94aa00739f9d2b7f41ca6c5d0aaa5495a1d4d4b7c8af1919361a64a7abf90764"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/factory/utilities.ts",
+    "sha256": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/factory/utilitiesPublic.ts",
+    "sha256": "a91c2dcc86ec6711aeae4fb0ad512209abe7a220ef2a0e7d2f04c3adcb7a0ff1"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/moduleNameResolver.ts",
+    "sha256": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/moduleSpecifiers.ts",
+    "sha256": "9a7623ef273cfe670f11132590583b7628dec59c2d85e36e897ca5deed8f168a"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/parser.ts",
+    "sha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/path.ts",
+    "sha256": "4b777f1a03b9f39b4864106e60a43828b5b749a5fae00f68d6faf8f02e0c91bc"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/performance.ts",
+    "sha256": "b12e3cdedb651fe1d94fceae1bb236c2745530ba7fe0c9dc996d61ba22b6c473"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/performanceCore.ts",
+    "sha256": "7f6e15fcf84111901e95303399ba69c9baacc3466a3ad5b5b21633c3d382f7b4"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/program.ts",
+    "sha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/programDiagnostics.ts",
+    "sha256": "1def95bb98fb69151be4295c58ccc4599cdb38b4cb710b807f19b7e8433fa8a5"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/resolutionCache.ts",
+    "sha256": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/scanner.ts",
+    "sha256": "02f9e8f02e234b0e917e753a7b74f975c9b9b95f7f01ee4bc151081ed43dea49"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/semver.ts",
+    "sha256": "1b5cbc707e9a7e1dd413b3dd69e2e5cb2c816a6675ce6ae6f3a3cc2d6fc0eabe"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/sourcemap.ts",
+    "sha256": "036ab3c39165eb06a3fb145e1467f4f0dfebdb1f76b5faccc34a79db756473e4"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/symbolWalker.ts",
+    "sha256": "6aec8fecf7d57abd557bdbd4a9744ba2a1f3d8fcc9e9b84721158bd4f284300a"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/sys.ts",
+    "sha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/tracing.ts",
+    "sha256": "c47b9a7aa59c84205a27249628c671cba4f4f7e60efda89ddaf48d4aedee6f7a"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformer.ts",
+    "sha256": "d13096beeb8d41a78cc48add41d5028b456e23f73c9973fe175c35941257a066"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/classFields.ts",
+    "sha256": "d3a0359fad8430943ca68282cc32b12bc61a6631fa93901f6c480f411c4542f4"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/classThis.ts",
+    "sha256": "41c65d5bb7518697a301cce563f6f800ed3ba8856372e86998d259a3eb439a6e"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/declarations/diagnostics.ts",
+    "sha256": "dbc7849a0535ef63307656557c1037ef15006f7d6246197c095350854b71e721"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/declarations.ts",
+    "sha256": "ad431e7fd5bfc1e0c60b4925ff6e4a6d1c56e038733a60d07794477063b1268e"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/destructuring.ts",
+    "sha256": "d38490b41ddbc56be090ddebcec8de5cd11ec88104cc4b859a19cdf132e7c640"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/es2015.ts",
+    "sha256": "79d70178e4923796212e8900090695875e51c9df60a6c604fbe9e43cd0ffbdf4"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/es2016.ts",
+    "sha256": "3e3ba9728ee63a9c68e8aee6356e84b611ec19c4acbfc7b4b806b49903c2967e"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/es2017.ts",
+    "sha256": "b18e65782e3ff096fb09a4609db90dddcb0cbdd8a2f1e72caeea19426dbd92b5"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/es2018.ts",
+    "sha256": "846876b89a5be66536d351c7c89769acc7b8ed45577411f361107963caa09c2d"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/es2019.ts",
+    "sha256": "99d755a8cd5bdd07d23590330990828ae7c8a33dae9d55926f5b0ab07db84878"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/es2020.ts",
+    "sha256": "763fb25fb5c40acf6d2482631c79709c9eddd299303292750a57216e392ae1dd"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/es2021.ts",
+    "sha256": "29798cddd385947caa004effdf997df6bc97b9a9b1d9919413dcee3a6a8b5205"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/esDecorators.ts",
+    "sha256": "bcef2e876468210c48941dad975a492f49eab7abeb4f75ca603e76ffd5e06c7c"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/esnext.ts",
+    "sha256": "7c566610dda1adbd37eec796f52b00a0ab2c08f42f678028ecf3b9f3516f60d1"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/generators.ts",
+    "sha256": "93e6814b36032fd49fbc2f9ff7fa60695430431f3c11a3f03207827fe44c07f5"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/jsx.ts",
+    "sha256": "2d9f268e5764a96ef52c2fd4d8b889bf248914917c6152358666a3effb041e6b"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/legacyDecorators.ts",
+    "sha256": "8321e776d83fe3892df9331baa9c1b837736ba5e4130d379a75ef9bfe34d86e8"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/module/esnextAnd2015.ts",
+    "sha256": "6c163c8dc720431f02b335d8d5c25efe849039d5805bfa722899f8a2cc2e6945"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+    "sha256": "9170b66a9feaa1b340e0723e0a0b10c085385c42ff25d39e9a24dd44e2d84a45"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/module/module.ts",
+    "sha256": "69802404b3e40beec0a1707813bf556841b81728a31af29ac554e95bc87f9c36"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/module/system.ts",
+    "sha256": "89f55cac43736092d29266dbe77b6e3a94c8ff5684bb7d41306a1e544b2caef7"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/namedEvaluation.ts",
+    "sha256": "7529078853a659502ab39832a4eec7e0ee6b94df675f63960254c56cc31060e7"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/taggedTemplate.ts",
+    "sha256": "800dc3bebb7e7879e68b5f3ed684397e41dd76b73a1130764fefe6007f627ea9"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/ts.ts",
+    "sha256": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/typeSerializer.ts",
+    "sha256": "8219081416c67c9ea7f1f8da6125775652eb7d065e8897fd430f50d83dbac5d6"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/transformers/utilities.ts",
+    "sha256": "cbddbf83ed9af717b94398ab8b2617f0098406d26712ae816130f40d3ce9c2e5"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/tsbuild.ts",
+    "sha256": "fb3789e399c0c7e1548d3949eab83a47da545cc88fe0ba2eee356926be607b78"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/tsbuildPublic.ts",
+    "sha256": "3337fb2a5fcb5757f2800b03849452f809227ebd74fcffd2b597e17e13dcb2a5"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/types.ts",
+    "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/utilities.ts",
+    "sha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/utilitiesPublic.ts",
+    "sha256": "4b5b5726bc08d7d4f08645ee66b7322c6d2019fa239e7158e2f642ae2bd964e2"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/visitorPublic.ts",
+    "sha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/watch.ts",
+    "sha256": "c9d074948345a04d85e87d3c4b3e1a2c8328422c20e0b36b3ee9ae1c7a7ad24e"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/watchPublic.ts",
+    "sha256": "74fdacba504a4962aa0b591c385b6f7061742d37122842e55886a77ffa8d2bef"
+  },
+  {
+    "path": "/workspace/wave-12/typescript/src/compiler/watchUtilities.ts",
+    "sha256": "0a4919e1976ea0683ea06137ec02c97fe5ad44ca8d0bc709f69eb0230b7a5487"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/compose.ts",
+    "sha256": "f0046c617aa119c73251217cb2b878567fa5ebc0e32c3510c150e4eb09e1ec8e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/compose_main.ts",
+    "sha256": "5ee888a4bb18d78e49e73932d7a34d97183d72f5627cde567d5d2fd657a5b4c5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/convert.ts",
+    "sha256": "cbc2578494c634184c5813772cfd023725d06ea00051fa9f04387cd2423fd776"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/gaps/1_regex_and_value_tree.ts",
+    "sha256": "342df3b2f92eb138aae8ae4984f6472add22304ca01c2dea3271c9063cfd27a7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/gaps/2_array_shift.ts",
+    "sha256": "a3dab0aded15f0ac1b5f39df89f176ae8bbc4c8ec26116535282eebbd6db657c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/gaps/3_optional_boolean_condition.ts",
+    "sha256": "a765eec8df57faf6b66d6526c925a899e0734ac42563125ad5f228a81ca10781"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/gaps/4_empty_array_union.ts",
+    "sha256": "79445f66bd81784bac41f6537072673f5c852dedcc84ea9cdf93bf4fd9758ec7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/gaps/5_repeat_in_try.ts",
+    "sha256": "cc8679f49da41c3360f8ee6109995240c86b83765dfbb44c338ee8c8f98e92d8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/gaps/6_printer_regex_tree.ts",
+    "sha256": "c6c483634ee6e2caede7564eeeeedcdcaa00b4597b5fa98d7b33be35279a9fb7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/gaps/printer_boundaries.ts",
+    "sha256": "beb1aac4cbf567d0d88ff46210712d47bb8dd8a57c2e661b13350e1afc38fc8d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/input.ts",
+    "sha256": "c9d781d5909845d6e01be840734b6cc78f5f0e8a819f2a35a949d563c1b16ad9"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/location.ts",
+    "sha256": "5c4957ed61a8711efe747d3c5d8deb33b70555d071d51589f4ec7d6bed99666b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/main.ts",
+    "sha256": "d5df8b44d72183e95c0e4430e72676fff2a7a0e34dbc7f7a2fdc7c90a9fa2de7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/nodes.ts",
+    "sha256": "189efe5a8afd0a14775a1bd69a2e4dd9910ab5111fc813f513b04d66cc6917b6"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/parse_value.ts",
+    "sha256": "5784433cc99c25e15bc9c414a7899d5351e04ffcee0c92e879a3660107e14398"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/parser.ts",
+    "sha256": "7a1e0fbbdde0c0779673323e8776e8782c2b8f93fc896a98e772df304a7f1892"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/print.ts",
+    "sha256": "2be891f1e8f03693997f5de3047edaccdd9a14dca8b6a1367338ccbde69cc290"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/print_doc.ts",
+    "sha256": "fe7a0b0002625d35ccd4868e94d9075b8b74f7a202cd9445a2c687465699425d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/print_main.ts",
+    "sha256": "32d90c6b231316b1ae548fa7a77254329956a0f31ba9d5fe244706d57406f85b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/print_utilities.ts",
+    "sha256": "7a5fc699101dd9ad2b3c1798ac6b58457786479dc06605638c4e8522df79280a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/print_width_data.ts",
+    "sha256": "2a62bee3d4b68eb3580b4fd4d0d2281774b2ae2c9bbb7b9ab8a03698d63bb30f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/testdata/composition_range_guard.ts",
+    "sha256": "976026a3b7a0ab1a3021726aa749537c21ac29aea1926c69e9987c4bc40498bd"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/testdata/range_guard.ts",
+    "sha256": "b62587f138d99c09a1644f880e886f43b7e59b8ca297a999c3907d1eea4e2978"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/testdata/shared_slice_append.ts",
+    "sha256": "14d767bd9f272ee7a549de6b0b9c4c2473406c81136d23c058b115412f485198"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/tokenize.ts",
+    "sha256": "c680823d9578c70cf21431db075bc485389c2898fa3175dd7665df958f33a9e7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/css/tree.ts",
+    "sha256": "9e448d4f86ea93a549a049dd1f96b8201ed876694d011c0cf49d88d9093fe8d8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/cssnumbers/main.ts",
+    "sha256": "d09f35df690c663a959c43e8ca90e3787b83492baabaf41e7e221ef423c89c75"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/cssnumbers/numbers.ts",
+    "sha256": "fabd209f1ce0913167f82b83efa145489233dad8c39d7fe45c37da0c10b63558"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/cssstrings/gaps/1_multi_push.ts",
+    "sha256": "4682a1e3522ed3984c11b34d02afaf5f89dd0e6bdcd7f56d6dd9141acc977398"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/cssstrings/main.ts",
+    "sha256": "1e0c22e4c01b528c2260d4de9cbb36178a0f76b4cf70326d1b812295587f5de5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/cssstrings/strings.ts",
+    "sha256": "488f11b34facfd5ada17d9171f5ddb9c3f6e4dc2f513b180c87a24a50dd96209"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/arena.ts",
+    "sha256": "c341349baa854e5bf753c771cdaac4d0c9c832afc74dfa0d87a8e223d4bf10ea"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/binaryConvert.ts",
+    "sha256": "5b7296ed7622546e53ab23c3ef18c3279fae134c212bc53b00b3e8d0ec43686a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/comments.ts",
+    "sha256": "4163daad2e61d8a1124f30d01dde9807854fb4f119a467a8028326b5547be3c1"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/convert.ts",
+    "sha256": "e2994d690d599e8c6a6801b09ee010d594719f00922d04310dac9fb66d1d97fa"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/gaps/cookedSurrogate.ts",
+    "sha256": "9922518d705d7c299164a8592e7e43220ea87e3303307a5bceb4ad4c1a3a14fc"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/gaps/crlf.ts",
+    "sha256": "95e21ca108dac1e9a206e28be0f51efd3c3079012c972b96e8a0faf25f6fb450"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/gaps/deepBinary.ts",
+    "sha256": "ba5eb15ccd475a4e40f65d502bd1e4a58435f1e15fe142662e12500c74ed4b94"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/gaps/emptyGenerics.ts",
+    "sha256": "516a428a1587627421131af22a9229e5a3edc8902c4322f5acc717221b6091fc"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/gaps/interfaceDefault.ts",
+    "sha256": "31cf525dafcbf325fc2d3314b42a8898c2c073289e2b6c58dd4e04f88ee44c0c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/gaps/interfaceTypeMethod.ts",
+    "sha256": "df0c188ad1c78d2d39f6549c41d8679538a2499843344307990f67b18f8b1ffc"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/gaps/lineSeparator.ts",
+    "sha256": "13fb377fe846cd88120dad0533b0bc20fbb1c09ef8a3b79ac21eec6fa0409bfd"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/gaps/methodReplacement.ts",
+    "sha256": "f8db5e83c4dae886bf9aba80865bd4d287ec294285c70bb8e4b789321d08aeae"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/gaps/nbsp.ts",
+    "sha256": "5437b1c4e266ab123e438ea436ca32fa9ac8e4c437d7396f4d01152c5bb77474"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/gaps/parserRecovery.ts",
+    "sha256": "739aa07b047dbfe7f32e821f8c404302597782586aeae23240daae1e4e7ae9d5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/gaps/portParserRecovery.ts",
+    "sha256": "babb5f8bda9004f3a0f962e546f204ce0f2794beed84919bc91d2393344e8f8f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/gaps/postfixValue.ts",
+    "sha256": "56e68f4e12fbfe1979012369f3bc0eaa2565c72fd2c2fdc1db34c0d0996130b9"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/gaps/rawInput.ts",
+    "sha256": "e13b055606207772b82f5e40701b92eb0b319be67735f6524e531385d8cd1990"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/gaps/typeMemberInitializer.ts",
+    "sha256": "7d51be0b434d7c98097bb6eed0500de7c31fa8aae3ca4e6f7cca457607669e5f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/jsxConvert.ts",
+    "sha256": "c40aeebb30b6efb60caf870747cea9aad2fa9db747e87932b837612180dfbcfb"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/jsxEntities.ts",
+    "sha256": "93762130a8868f5ef69ef23c7fd95d1b7dea5f1a629e84a42930ccea70bcb3ed"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/jsxParser.ts",
+    "sha256": "051986c0cc2116c52f5e6f281e176ecf58f6210cb1f7cdb51cc6a75040ba8c5c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/literal.ts",
+    "sha256": "7ffb4945c8d9f30892fec61a98fd1e61b6eb5effc1f0884e65b034a861e7c4ac"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/location.ts",
+    "sha256": "7e5ca1376da5e241eba5d5ca7a577f56380d79332cf41ac076858e44b41e79cd"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/main.ts",
+    "sha256": "059bb44748006fdb426446d84677d0d235baebbfe50fc742b8b5250920913947"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/modifiers.ts",
+    "sha256": "2e4e27efc2e193a99e0ed6e00d7759907667bf265723fed26c2d9da07e4db7b7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/nodes.ts",
+    "sha256": "621b82a95adb336dcf6a7e47bb9b9c46693ce7ce13fd3d16657f52a4e4d2b0fe"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/pipeline.ts",
+    "sha256": "b64424a9b768792f03c9f29b880dae221e500d103948eb5ac40d005fe5519df5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/postprocess.ts",
+    "sha256": "c4f28a67009c3b17f38237e8164c036827b48b548c5682f270f12caa213ecd1c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/property.ts",
+    "sha256": "11f05a524665132a576e2574c7fde1b2caa584f8bbc10e9f8c97f9b083069c8f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/protocol.ts",
+    "sha256": "8ac4ff0d21c99d2002c5384c18445a39bfa1348a67e8a77158114421e24cf1fe"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/simpleTypes.ts",
+    "sha256": "8382b535a9c61b03ce25105ea7d64099aab768a8e3f0cf4789802820a1860619"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/sourceBinary.ts",
+    "sha256": "376f04acfa4d2f26f5c472b0d0003bf9b7e87c790e110e562c9021e57420c9ca"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/sourceGrammar.ts",
+    "sha256": "ebda0eba5e8b9b2475996ac98c2309150682e00dc6001becd02674c326678287"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/sourceLexical.ts",
+    "sha256": "f5241f9d0071feb5343390e939d8b792670beb2f13cdcf31e97499dc3da764dc"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/sourceLookahead.ts",
+    "sha256": "161953a5f819b0b5c41e2c766c135ffc2782929396caf6c3dffb650205620891"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/sourceModules.ts",
+    "sha256": "0df0fab4447954b8da2d455ddd614e569346fafc5be8038672514f0e30ccb9c2"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/sourceParser.ts",
+    "sha256": "056cd8ba5ca68de402443a11b9cde8c1ebc23337033269dabf594ad0c8635fb1"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/sourceRecovery.ts",
+    "sha256": "75a777ba9380be2a6f6f5488fdb12a306e3bd9838102b50c5d632b4f02db4d88"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/sourceReferences.ts",
+    "sha256": "48bad92bdfaff6deb0372f45332552bd8a4651b1f4dd27040f6f19687b428252"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/sourceSpelling.ts",
+    "sha256": "68da509b3ffc67029e4074bff4a62a7e1c5d873a96c2a961689edf4a3642afa0"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/sourceStatements.ts",
+    "sha256": "e8a5766e974512996cdce6297d46e206b29b295b52c2d8b3a9074fecff31b297"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/sourceValidation.ts",
+    "sha256": "013d591f0b7c80ec9e3848432478e89a9daebc5458fdf31747a20f18d2591884"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/strippedText.ts",
+    "sha256": "ed6ec8d6721628a008536b5b2eb3459c7a0da817676ce4ff82d3e832642dde2c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/templateValidation.ts",
+    "sha256": "dcb1386a0d3f2773868a27b88be5625589d84ce07e11f20f8765d995821bf75f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/typeLists.ts",
+    "sha256": "06f9a96da1b84e65d2343f673473886d5e7e125146139b24fbac64f67da1f807"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/values.ts",
+    "sha256": "edbcb5bf0cb4194c12f577d311dae60c8ef29fe1d0e74828ea35c9790bf106ba"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/visitorKeys.ts",
+    "sha256": "c471bf111b7ab30e62fba8fbb7f500464a223464ae6d3e9a853efdff81151aed"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/estree/xhtmlEntities.ts",
+    "sha256": "27ce3ee28fa16c1cd922f1d7485694f83295deac13c9f6e5390e1645a8a12684"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/formatfiles/disk.ts",
+    "sha256": "c7a485006dad1618cfe6f9e224b96853d532d31360f645ed7972b3c2e2fa647d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/formatfiles/enumerate.ts",
+    "sha256": "f8d26fa732c2e150e9d424667240eb17ad51e5c4f1af31847e8ae753e9369795"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/formatfiles/golang.ts",
+    "sha256": "51ba0f600f2355d6e37111cf7c68c3c489c6921cbfbf85f83a4c017d491f1c9a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/formatfiles/main.ts",
+    "sha256": "a35c69a6d5a6d0b8aa43e4de9034933aba4e3c25b3792a7c220cdd9026aa39d6"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/gitignore/case.ts",
+    "sha256": "f55e09c369cb97a3796b052218a1eba26ccfd5fb51116932279267d0c14a3140"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/gitignore/gaps/1_from_char_code.ts",
+    "sha256": "e95ea3cb4fe46f51e627cb7ede242de580dad9ac4a6dd8a18813a5867231627b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/gitignore/gaps/2_bitwise.ts",
+    "sha256": "8f6dc32dbc3d78fe6c1428de391cebe18b9a8ed8c83ea3b755efb0a5f732823d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/gitignore/gaps/3_later_function.ts",
+    "sha256": "c8b323a060a14e9cdc0510f7953e96afab23f1d45d438a18fed326c026632129"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/gitignore/gaps/3_later_method.ts",
+    "sha256": "3770f4f68399efb6d39d2380d4b29e1fef02d1ccdaedfd9ebe817bf1df09bb2a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/gitignore/gaps/4_function_value.ts",
+    "sha256": "9e92056fb12ed70cc4def147757bb0885f0cc81577b21c439b8a02d1765ed1b3"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/gitignore/gaps/5_array_from.ts",
+    "sha256": "a602c9e073f61ecf71fa332e17e1ad0bf46cb0278dac93a21b0c8c30f9e844ce"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/gitignore/gaps/6_boolean_element.ts",
+    "sha256": "e6b14f700c19af917c1d3e1754f22bf2f26e43d9512bf4cce2f8f599d50a392f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/gitignore/gaps/7_maybe_number_compared.ts",
+    "sha256": "c16ed322d1dbc33acf5eefa6a2e19e04d87b54dd5a6afbc1cb35fbad5b1a0520"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/gitignore/gaps/8_tuple_value.ts",
+    "sha256": "e3e825534ac8b30e7304764ee4afd4bf1a22dd25f25206d85292bc6309f6442d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/gitignore/gaps/9_return_panic.ts",
+    "sha256": "b65b27344706c8ee43e0162714a0dfffaaf82003b44d8379da0840167bc0e1ad"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/gitignore/gitignore.ts",
+    "sha256": "ee1eccd544031b265c1fc29b911bcd18fb11082a1f90471233dedbaa4cbb4342"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/gitignore/glob.ts",
+    "sha256": "b5717b970339f30a048e3694fd3385ecab80b24d433bf5b9bd69d54a410249b9"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/gitignore/main.ts",
+    "sha256": "e4095fdd1ad2b535ebce40094373ab2794a15994e6e6d317d1576ce008030206"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/gitignore/path.ts",
+    "sha256": "87f83c01c6618de5ad075634ed02927848f7f0e7af22197122368e8dc7623f3c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/gitignore/pathsweep.ts",
+    "sha256": "ae705d72125da914c5027e1d61108a29806e1f751cb071a50137b133195190e0"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/graphql/blockString.ts",
+    "sha256": "10de820c654a4da95f381c764c7d2a600ee009f3e349b23a2bcc1827533b0b87"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/graphql/characterClasses.ts",
+    "sha256": "a1df9ea6547b00621d5c23dd7535f3ca7b987e367750872468bd85580a5dcaa0"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/graphql/gaps/1_throwing_function_value.ts",
+    "sha256": "820579606e86e3074d2923a9285bbd0b029ec17006eed6c30feac6fb527a9050"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/graphql/gaps/2_error_made_elsewhere.ts",
+    "sha256": "005ff59e4d8beacaff0625684119f5cc99820afb62c480fb98e2ac60c5be1668"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/graphql/lexer.ts",
+    "sha256": "8c1f5f68bc2431fcef1b991a3a4b6201374e8ccaa944c1b1006adad7dc18a516"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/graphql/main.ts",
+    "sha256": "bc66aa20d712f1b681f510aef33c6f23a26eb5885428867d60703fc1b3a864d9"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/graphql/parser.ts",
+    "sha256": "5dc6669c1581933a6e941c9f35a35e5d9b5e00af86f0818ac2915ce37a483ebe"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/graphql/printer/doc.ts",
+    "sha256": "bd5e41cffc26d48ac46da08236c29a50f4224fde585096eee87e8ea2d9acead0"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/graphql/printer/gaps/nestedConstructor.ts",
+    "sha256": "032d3bbc6066850cc60514f107d45db47d05c80111eb9d22ba76d1f48d1694e7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/graphql/printer/gaps/nestedInner.ts",
+    "sha256": "b4fd749186afc9d4ea875360296f5342c03860f83d55c449d6e639016cd9dbb3"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/graphql/printer/main.ts",
+    "sha256": "f510973f65a8a68e4bc1bc8a624ec7821aee97f2f2a93b1a003d2187513e0f8a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/graphql/printer/printer.ts",
+    "sha256": "ff5583050d616eb685e4eb9c654fc6fbb613d2d40a87fe024a1ae225e5828835"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/graphql/token.ts",
+    "sha256": "38e3c00dca971f922b472999dcdc0e9c7c2bf9f1950eca8c01d8196f75f14980"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/json/doc.ts",
+    "sha256": "771c153c4fe51f73c72575df32012333ed00fe52390824d804c0a370d9e120c4"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/json/formatter.ts",
+    "sha256": "f064511bd2815f86908c1a5a11d2309e168691f9b0de4ed02a42ca31883f5c6c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/json/gaps/emptyFallback.ts",
+    "sha256": "401239ceb4ebb1fbffcfecb9501bf01abddb1c55b0888132bec39867902110f7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/json/gaps/multiplePush.ts",
+    "sha256": "228f2c771e9490386a1a2f7b6a4c42885b3e5d2d2fada4473739aa7a82c6cf07"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/json/gaps/repeatInTry.ts",
+    "sha256": "ad8d85f4a85d277204ab979e0fb8703f5e14f4c3c8812aba3212860051367b51"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/json/identifierTables.ts",
+    "sha256": "085cd402fe7371fb3f9465821b3435f96346e814374337a9b2c9ffa2d061f619"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/json/main.ts",
+    "sha256": "8ebd9ebf088206cdef0f014eb4caffb48e0578386ae6bde9ebfb605fc39122d4"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/json/parser.ts",
+    "sha256": "ef9a2b2f98f393bc02cb603ada8d933494e425ea838534b9b866ed8a0acac1fc"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/json/width.ts",
+    "sha256": "1df62a41aff3e7b5e8c04be8b5173ccc81808b10166f49d5c7ba7b6ed14d8df5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/json/widthTables.ts",
+    "sha256": "bdb4ad9379bf7af903643edbc5346ae7cdc9d81872ccc8bddc1215b763ca5bd7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/.generated/registry.ts",
+    "sha256": "f931d0fd3a0928cdec3db4744a684067e10c7bbe80ee58833825dbe63058dc82"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/checker.a",
+    "sha256": "771a0e5f5d3cb1f09462b3c10ff2186f7fc01d7a1cb529ea2a6aceb83b79422c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/checker_bridge.a",
+    "sha256": "cff8a0b6ae6693a5e3bd8f03ea871a9d34120c2b1627dad7b153434ca83cfe77"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/checker_hash.a",
+    "sha256": "d8b95aeeb2abf1338de1ed541e4c851d5c5dc651cf0bfcfdc53b14195dabb57b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/comment_ranges.a",
+    "sha256": "e06ceb177fce35f6bf177516cfb0134f5a36695dc6fa77cdc438401b344cb05a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/comments.ts",
+    "sha256": "fc873c011937c2cdce30f6ea51045f7fe386199b654c99441675c0929a1336fd"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/context.ts",
+    "sha256": "74612714db0d3742e8c9837b326274f5d6ff74dba9ec312c020bf617e8e030af"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/finding.ts",
+    "sha256": "ea4fb83ce655a79ddbb47710dddad79fadd7faa572ee1ce48b3647084b14c2f6"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts",
+    "sha256": "965e077fc7f7090e120f76f8ed61c601f522c74f7561ab5b9569d365134d9271"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/gaps/2_optional_index.ts",
+    "sha256": "5035200f7c808d2d2fe1d409740ebfc014f81c73237d6feb854c099f893d4242"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/gaps/3_numeric_or.ts",
+    "sha256": "c11731742e65c990a0d17c5a29dd1e7d72925527e1a5d685a86089050257598c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/gaps/4_last_index_position.ts",
+    "sha256": "641328d51a81cb1b604932d6f7bbc45a8d07aa2471bb3c404e52eded1b9418a9"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/gaps/5_parser_recovery.ts",
+    "sha256": "c23465c6aa927fdf52569a9e7d288a46be71819c2e3c40d0e02cea9ae432d2a3"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/helpers/comments/all.ts",
+    "sha256": "eaa4208453e56caf283273af8f59a0cde65b35760460534e824e67a4c95f2095"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/helpers/comments/can_begin_at.ts",
+    "sha256": "934d48985690eab92485958324b43622905af1f187ff8b74a3013c142e7630f3"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/helpers/comments/collect_list_interiors.ts",
+    "sha256": "cf25aed63b4b4a7a18b3f6678fdcce2651491f3333c1768179cd62826a0bc1f0"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/helpers/comments/comment.ts",
+    "sha256": "c969ef6c8969ea00496265c689caaa722a1147745c5c890905f185c9f7fb3961"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/helpers/comments/for_file.ts",
+    "sha256": "747e6ffde2ff1828da7ca32f0b1c6a291f13a9eabd72606f5b134cd5cd0d19a1"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/helpers/comments/main.ts",
+    "sha256": "87ba7b447a9a64e2a3777221c7a8335be1fc4a59334a144f0510337320dd06d8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/helpers/comments/sort_by_position.ts",
+    "sha256": "1effc5ab9ec9fda68cfdcb5f5078cfd52202e0422ac2e83b1acbf082eec7d6cc"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/helpers/main.ts",
+    "sha256": "a16e6da431d51c819fc3a0b8d467b7c0772f5a51f17c4738aa87122ba8f2a7dd"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/helpers/option_schema.ts",
+    "sha256": "13e12add47d981dec69b819292ecc8fbb1147197fdbddb502d09774295c47bd4"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/helpers/options_json.ts",
+    "sha256": "c3e7e54d45145ff761d61e89229d86aaadb67a68163b2061ba903436bff1b232"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/helpers/policy_message.ts",
+    "sha256": "785259ad9abd7cfca4b6d8f28fa39137502fd5e7000c82d9067d6c1e6bd4f8b2"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/helpers/strict_options.ts",
+    "sha256": "b4bfad07d222dc68766466247c6460bf9406de59c3c61cf712a060ea738005a4"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/lint.ts",
+    "sha256": "33fb9c89c1b1f2552869df9affb6981f82a65d8c65cac00b7d2a5f5981fcd697"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/main.ts",
+    "sha256": "4a5186f9ff5b7008d410522b8406980350a6a570cba2be1ad5b680f57cbfcf75"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/options.a",
+    "sha256": "96296783ad61ce5f7505afc48285ceb8771bbd9642d420e4ad9c2196397560d5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/patterns.a",
+    "sha256": "b44de9e63f518608c02fbb46661c6307975116f1612952146ecd152292729124"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/corpus.a",
+    "sha256": "6bb71c01c015564b16e5358f10f421f59ddb1ca7656cffe66d6abb9daae2eb17"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/dynamic_gap.a",
+    "sha256": "5ba5c8bac88569d581f3b8be609d643ff2314e026c3d6b9c26d3d9fadfd4bce8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/runner.a",
+    "sha256": "d416dad8448fe907984c10ec5bb89fa69a9f9a21b30c54b6f36c91e796cc5ca6"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/003.a",
+    "sha256": "a7dd014fb2d12bb7656f6c0a6f6186f7d50bfb0ad6f4557370889c1354df8348"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/003_runtime.a",
+    "sha256": "cc5bdccf8abfb0533def7862339c8c96dfa7fb18c5d9e7be04a88263dfd4cdcd"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/004.a",
+    "sha256": "c0f2855ce85a8897251c9d23cc194df2ce2382d6c9f8187be3f55a905f6e8d75"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/004_runtime.a",
+    "sha256": "c646f1e14b1f505aa83b25146b1023dc72b2663a62bce5772bbaf26567936a5c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/005.a",
+    "sha256": "34679e08396e7d3fe990b2db65bcc6ec3b80b62b9c643eca81f265254aaedc6e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/005_runtime.a",
+    "sha256": "a44fcea561fc620593c84a0a24a9c1262f8085d29d98cd7e551539a271b8b263"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/006.a",
+    "sha256": "d3936e796237576763adbe60cddfef2c4a9b0e36a8d79e5a9cdf703ce1c9491d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/006_runtime.a",
+    "sha256": "2b9b2f4c6330ee6a78444544bed9b63859e69f814433d0915539a685bafef120"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/008.a",
+    "sha256": "e9729130a68d2790b4d077816d18c8336299aed4a3ee3b7617d9b9c9b74c82c9"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/008_runtime.a",
+    "sha256": "72a600858150fc68ac2848af3d0da0a375436eb8c455d5251e43fe688f5d523c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/009.a",
+    "sha256": "8c33026c3d2d85ce094fb7cbc7e35e033870e0fd8450b32be4a9559eee0146c3"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/009_runtime.a",
+    "sha256": "cb9ed1012840487e87ec5a74f0a53f610d230863fee88e978221cffd1bf8e91b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/010.a",
+    "sha256": "fc4ca3ea7a24c689c63ea3781b2d8e3ad165c2f29cd471ab3bc2504642e0c92c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/010_runtime.a",
+    "sha256": "c1e7b3e426e5b3739191f958f173c82da2f93b47667cd979d6cbc2da6d96c50c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/011.a",
+    "sha256": "c4b68c7a68d364a4c845268fcca9d2e624f18c878b8c736cf565be8253213d9a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/011_runtime.a",
+    "sha256": "aee1578d2b14b411faaa3b788cc6e1b54448fd5492046632d04c333afd6bba89"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/013.a",
+    "sha256": "08213a9f61514cf0a037afb14aa8e51a626681a8e03f7b863d3d7f38f9d4cac5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/013_runtime.a",
+    "sha256": "66c407da6cef7b48f3290e11b37c905f1488aaefa25c98bd2a2a047c60e87550"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/014.a",
+    "sha256": "90898e38a7cd30b5837fabcf3844ec31d1eeb7b1022f90a48d3041ed47d5c609"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/014_runtime.a",
+    "sha256": "743685bade287c457483ad982a14fe321cbfa0abeea20325dc3979adad026d20"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/018.a",
+    "sha256": "a12f74d86ad84d4f91e32a2d5bac26af154dbc6b01473e6fd89549d1abf693ad"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/018_runtime.a",
+    "sha256": "7d28709db1c9eed4b16cd51743693fd998dbd1cbf0d9377079afb4c7030ff5ab"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/025.a",
+    "sha256": "3452f38030a07673cfb0c646049313319f640591e81855b9977d4bd9f78659e6"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/025_runtime.a",
+    "sha256": "5990b0d3d02967407d85fee4d049f1b806d70d1858e70e6bf0e291ca7f564c0f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/026.a",
+    "sha256": "76cfb4fc803f3490445009cf0a8c5701139994b46fbc4d15bf3b06539b2f0c97"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/026_runtime.a",
+    "sha256": "506f9fabd8933c6c0cb5efd6f212c06109cd78a5a0fc4ca91d064d4d85f73cb7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/027.a",
+    "sha256": "b79a4e6bd3ea5fcf025d0d7e12a765bb26f6e94c83ea796c564642acff334b0c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/027_runtime.a",
+    "sha256": "70c9efe06a9aaaae3f52af1aa3a583bef8c17819a41b15b4d1f252acfd896860"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/028.a",
+    "sha256": "97f2dbe7f2c75923cd47bccb4250e5a9a5af523d9048e833e66684e5fe3ccf3a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/028_runtime.a",
+    "sha256": "95d0fcd2463c3905af353fca69b5ec6a623ab8d04e0b2a566d1fb677044552ad"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/035.a",
+    "sha256": "0bfe52ae07b843a99c98140cc63f6a5786151bbfe4142c7d9aad713704516e4e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/035_runtime.a",
+    "sha256": "77f0ba85655f90f6300ad48d82df0be17b7f2b99212add5046a124141f44a073"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/054.a",
+    "sha256": "13303ef0d35842c9e7ebe8956be84b291b7c6d888b668e449a8e7f7bc4c64123"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/054_runtime.a",
+    "sha256": "fce5999ddaae6404c70a9abea5878c83481476be96608085230a87bdb418c668"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/055.a",
+    "sha256": "9a2ed8af7bf00b445e9aeec628fc1ada302b56e2a0f18b883b1d93cb8ff730d8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/055_runtime.a",
+    "sha256": "71db5da57744553ab97cfb99806e6b088e11611bc5457cf9515a9d76a8191246"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/060.a",
+    "sha256": "922477ea2128ce333b9902410bec25c29a39c1102dbf4ab02a49cfc79cc6599f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/060_runtime.a",
+    "sha256": "6914db9276d4cab5be86e0b5d9a6cae27ef33922aeccdcfbd6afbf880970e2ac"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/062.a",
+    "sha256": "1e5ed69f4939453d796e5305c6f2f8b478c0e709e947468aafc58d734783c12f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/062_runtime.a",
+    "sha256": "00c4a5a7e33261e9786e94ae4690dc1226e2dac0b62464b480286c8a00d02af1"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/064.a",
+    "sha256": "394b12c4db519b06827a618cd0ab509ba8081504b6036241b6bd56a55457a1b8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/064_runtime.a",
+    "sha256": "71db3220d07521d1872d3e8f9947757e41f125aa5c08086565b790139b6150a0"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/072.a",
+    "sha256": "7f40b9f3a4715e89bfbe761d6993b4c9f66fe516427e3e4a7fb23f0e1abdb88e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/072_runtime.a",
+    "sha256": "74d90dfb7a41259c89bccac16d4edbdbe12b5143373cbe6535af19f68e653f61"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/103.a",
+    "sha256": "b2a2fba54494cbdde8f57b361c42517e874bc354924be45d7b7ee42f6d71bff8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/103_runtime.a",
+    "sha256": "bd2cbdbae51154370faf417e6dd075e11b80bad8f9ea75339824dc2003f7c95f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/105.a",
+    "sha256": "07363173a907f1204690f464652ef394f11400c542227cdcf9736487ad2fb9c6"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/dynamic/105_runtime.a",
+    "sha256": "51e59ee5b7768ae6ddc97418eb0d7a7314545a2d6947742b06207da63c28bbb9"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/i/002.a",
+    "sha256": "78f61617426e4457a04bc0e9cd2501b74971ab5daf92ee9fb7b01abacb7098b8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/i/002_runtime.a",
+    "sha256": "603098a78b26f7d00b009fc3edbd28aa1a68a1585593b3b696187484148a9131"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/i/024.a",
+    "sha256": "910ebf022f3b03943f55da27a4683981d7b2c5b71aa4be4b7338fad7955aa4a0"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/i/024_runtime.a",
+    "sha256": "ed79c1803c75af4cf6a2b063ee777cf74407a3cf513cf328150ed1626352991d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/i/030.a",
+    "sha256": "9517685ef6078b196228048a2422f1912f5023acab4ee0696425a88025775402"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/i/030_runtime.a",
+    "sha256": "2932997196532028a800eab4e01b03276527de906600eef0246fcb46f34666fd"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/i/106.a",
+    "sha256": "1ae3a64c36b3d107a1de31ac3302916286e2ed94047ba7c63dc574253ef58989"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/i/106_runtime.a",
+    "sha256": "3848d05b71cdbad372f463bac9edde2ba9562fda783d68060890d02c5e4a1037"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/m/057.a",
+    "sha256": "28a3c6130094944a7be4c605457d026514acc2d94309cf91ea06db5623d433f9"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/m/057_runtime.a",
+    "sha256": "9e801860c6647b92eabd45ce6534779c049bab619716636b1c4c93eb239b50bc"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/observe.a",
+    "sha256": "a2becb6796cc9c6e3d5426ce48216f4cf0517f01dc9a6fc7b0d2d2ad32303094"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/000.a",
+    "sha256": "d34cd8ea180a9831ab9d714ac0c0fa4717e9c874ed630094517a452222457012"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/000_runtime.a",
+    "sha256": "b8cec3c28561d71ae680044cbdb263e78bee72cc6f79a27323cce392e5368752"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/001.a",
+    "sha256": "7ca1f4c26383030c34e11b357818a03cf8da8d3fd680aa332dca0bccdd165500"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/001_runtime.a",
+    "sha256": "5f2d688f71b824c68f71448b2345dd15d9fad9094313a47d28c1d1dd8bc3f071"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/007.a",
+    "sha256": "263365278e3cc3000e7dbe578aad79e55660499ae41e36e20185793751b2166a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/007_runtime.a",
+    "sha256": "61434c0afed85c8987e3f3b31da87684cb955819fec93dbc3430b29b8e5ae655"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/012.a",
+    "sha256": "f00fafc59d52dd5fd61d66a4b3f4cbf2d4cd8991eb579a1c4c5dd5c1936e2508"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/012_runtime.a",
+    "sha256": "efce894691b4072e49c4d687aaea86f5f71fac7248f3d7bf3f4a9db7195d2f4b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/015.a",
+    "sha256": "760017217d72efedd087344a6fe46aa760846e0fd079df963f6bf4b077f4e1fb"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/015_runtime.a",
+    "sha256": "5b9bc1184bc444afdb3bb31aebd85940b4a522ae5d1717ed818dedd2b363288e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/016.a",
+    "sha256": "58b383e306dc9dc560b29832941a9a5f8941e6dbb21b10b364e7ad55744e9e3f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/016_runtime.a",
+    "sha256": "d167c310b021f632e4b903cf8e26054c13802fe8b42d0cb5832fd05ea465b7aa"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/017.a",
+    "sha256": "9da17ec353de99e1f250f043a88fb7d6e70ce42a7103172a2e58a9e8041bb291"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/017_runtime.a",
+    "sha256": "0fb389f491959f58f03bcc293e325b9e58a4dc9e98b1afad51d4aff03242332b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/019.a",
+    "sha256": "fd3c081613ca7b7904c511a56d0e7f8ce3b00b48cbeee86bc756afc97e6d57fb"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/019_runtime.a",
+    "sha256": "2a0ace6cf7b8fdd6e3ecd1b2512459749446ca8198d67fa5a43cf98264e6461e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/020.a",
+    "sha256": "38ebe091cbf905eb145e997d9ab07706bc150861ab994a72668f184f7ac2b4cf"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/020_runtime.a",
+    "sha256": "9804e2d0165db6f7d95bea3e5d109bef0049e3ea3dcb38e77c0f9057218732b8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/021.a",
+    "sha256": "8e6785f787fbc35d70a1ba7230ac769713756de7be401ed4a91bbf0c6e7abcbd"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/021_runtime.a",
+    "sha256": "ecca200d7b443e7cb3b68e97f7fb94982284eff6ccde22ef28083dbc04809ab6"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/022.a",
+    "sha256": "b7554f3f211f5ebdbb0a9f20ac494973988367b78dc712c8dc5a3b19fbcbcb42"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/022_runtime.a",
+    "sha256": "706ad6d237c96e6a0461ea6f6104f1190b53797877e258d4e9e0fd83a0060502"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/023.a",
+    "sha256": "da5faca86cab2665a85715a999c08a649913c5eecf6b007094e15ed166ed147c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/023_runtime.a",
+    "sha256": "3349e49a291e3387a2143b127793fe3df860b35762f135b7b9af72891dd5a330"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/029.a",
+    "sha256": "9486cd3dac07e0bf81b0747965a444afc98b2265243022095a6a8b0c21814eed"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/029_runtime.a",
+    "sha256": "aae37e7055384ec9e43af4acdd8dcd816130368b82b09f34d4a92c8d4d92ac2d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/031.a",
+    "sha256": "88ac09cb8ae07fba9063347180df43bf2ad91ae761f231e646d2f785db33765e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/031_runtime.a",
+    "sha256": "0c7c5c7de9d3aacb42f78b22afe546bf6631f7b5c4d9fb1b28183b351d79f2d5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/032.a",
+    "sha256": "0d42ee2175a2824a5b464e4d3c2635eca285971df7bd5a2aec5fa51483e42bc4"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/032_runtime.a",
+    "sha256": "55282d35929fd889f0ca5d05b0efb4bed3443f4d8a46901f978e9b584bb64d48"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/033.a",
+    "sha256": "8fcfb4f083967acff02dff3b5fbaeafa8321ebe7f137655620a67bdf26b8da39"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/033_runtime.a",
+    "sha256": "e6ebb35ceb731a123f55c24a012bc88d4cb3313d0a874fab0a349aef180a31ba"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/034.a",
+    "sha256": "3016ad4ef4e9adb4b5a57ed2adf2dc95866b0570740184e9b1c1e28bfcd7f1d4"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/034_runtime.a",
+    "sha256": "368d57201367a36e262d921c5fa38649d666a26ccc9a1f3760df2437f0ff2c8d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/036.a",
+    "sha256": "4d69964c345a0b081ce79b34d34e59498774a08c0ed5d0e3ed5f672f648e3388"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/036_runtime.a",
+    "sha256": "9c631fafe2df87499516b34f0c5234c463a22aba11d7f530e2c83f6afb5f61e9"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/037.a",
+    "sha256": "47b6b33713d605857b9c762aae21a95630781a25d62c07dc517f1de2d54b07ae"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/037_runtime.a",
+    "sha256": "690d76c132a169b5f15477103d7da5a272d6e4295cd1f72882ec74f933b48757"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/038.a",
+    "sha256": "72d2c6bbe9350851c63e4e76ed9f1106329274651a0c4b0e05c19bf988ca58e2"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/038_runtime.a",
+    "sha256": "a72f48787bcf0ce40a0a3d83ac5fa72f22f8ac371721fff614cf016a5e4449d8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/039.a",
+    "sha256": "1d6343dff43213dce8fc3abd317249d2836ff622a60bccac0470dfbe5cdb5982"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/039_runtime.a",
+    "sha256": "90d4ad3dfbbcf983da4e91b3d284a34afab02c587c75af40bfb53765f9def667"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/040.a",
+    "sha256": "0557bf858b7b0bf296c1a0065cdceb288dd5ad82f26bb570846cd4077dad1a4c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/040_runtime.a",
+    "sha256": "6832b417604170c515e8dc6eecb4a8e9765fd5101bd05b0fc37ccbb1b60c3f20"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/041.a",
+    "sha256": "0c93852c1a4d93f6edb39b76efccdc9598ee3d2de6fed5fb7d22172b57ce1e11"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/041_runtime.a",
+    "sha256": "99847ab0c8ceaba3b590d341ebeab65e8a2bbbf725d7970f4f98445de97be80e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/043.a",
+    "sha256": "ec01ef2765daf69fcbed85dade7d443fd1b07f6f75263de8866381cab59a2680"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/043_runtime.a",
+    "sha256": "369357daf507ca9870682e54af98c1faa97eacd500335cef8f3e2634730f526b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/044.a",
+    "sha256": "27dd50ec29bd6c8b9f8f6469f51b65dbb5c0a2cd56665fecfacbc9afc071bf8d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/044_runtime.a",
+    "sha256": "d66572349465ade377a162daa738a1609ea9cd8df702f5f8dcca55ca951d6a0e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/045.a",
+    "sha256": "56770a8e4e88c14b0045c0806cb9a8b80c4846eff25053611637d27ca881748a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/045_runtime.a",
+    "sha256": "513daf54ad36e28f9f2372e845196254bb8f73ba055425524b203a6f60a4f3b7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/046.a",
+    "sha256": "980f5358f3e50f3c00c7fed90e6e2315cdc9ca31b80e9305f274dddec57b9f30"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/046_runtime.a",
+    "sha256": "359979824169f4bfc7f0efcd5b7df54242f36c74bd79d8546a5f055fd8049f14"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/047.a",
+    "sha256": "bdb65535b1771ed9c8d4f3dfe7876d6342eae084b726ad72823302e6452ebf7b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/047_runtime.a",
+    "sha256": "5c595e7c7709a0e2b1f64a6676748619b3b21067224079857c0772568504ed34"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/048.a",
+    "sha256": "22a5c31654bc08ff4f0a132ef0847ee17d012a09d0b4c3cfd3c88f5104b36804"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/048_runtime.a",
+    "sha256": "6ae9828d72cb561a213cab334bb9cd35a1776b6df790d1d0c81f742833fee784"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/049.a",
+    "sha256": "24061d4c83bfa454b3e419ff45ab16b874febcf3323db6668746b869071d2bef"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/049_runtime.a",
+    "sha256": "b04a958952dbbc711b2205eb380c8db98897779cc62ba074e8ae1cdb356d6fba"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/050.a",
+    "sha256": "411a8f1d8bc4565e653ecda5680f8b2732be0d3a17adfa32835660e9307f2a13"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/050_runtime.a",
+    "sha256": "5a7ac5b66bf12042f32d7eb3fc92012b31175b38c148c309f3ddd1a7afdf172d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/051.a",
+    "sha256": "984aafb03713c1f7d8836fd789db5fc3abd631625a2132b721299c3d2f9465e8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/051_runtime.a",
+    "sha256": "e40ec3c9e345bb06d65a1255ffac944ad8ac37a37a442e34b18b565097c9aaa8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/052.a",
+    "sha256": "ab22efcd57481dc10fa89395f8020cfe00d7b7df8bc8f471d031935ebb9f4970"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/052_runtime.a",
+    "sha256": "9aee5e43eed56dfd4ad8ec36fe387d84b4099f6573cc9fc31a747e6057298b3c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/053.a",
+    "sha256": "4f442d3434565f572a9f3975992740bccbf137c4291d1f894adc29b111d08e3e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/053_runtime.a",
+    "sha256": "9a4fe8515428327181143e0392b184183720a26a5998d56f631d22839f63a42b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/056.a",
+    "sha256": "af36c069c3adaf24dfb94d8b67c868cc871a4a48f630c18d3fe7c798fc8f3f31"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/056_runtime.a",
+    "sha256": "c31517931d1d7ceaf6fd8defdf8dbb414f249eb9d92a24914dc2ada4b03d7f0e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/058.a",
+    "sha256": "cfa458acf26503bebe88f24ba1819da757f6f37ca0005eb9393279b9d2e02c66"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/058_runtime.a",
+    "sha256": "f6636d519d1128da78157d7bd0fb9b1747b0c2cb334c090b8abb981585a42ef2"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/059.a",
+    "sha256": "64b181c5f1dda6f7ba24968fd8e28f815ab4e0e2c7852c82a408e392b0bd234c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/059_runtime.a",
+    "sha256": "de59f7b00b15628f0b6c5be98dc1a3093a8667fea2a3731dd9c27a38297fd5a6"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/061.a",
+    "sha256": "8ed00d69a34fef6cfa9360aef767ecf869b0f3e54a82e9ccf0e3149856b84246"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/061_runtime.a",
+    "sha256": "cf9b60866416ce80e6ef60c34c06c1144c2953524d9faa93be7d02b4c1204b20"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/063.a",
+    "sha256": "3e5f0d7410b1b89987b7786e4f33e4ec97f76be70e5624517c882091384b0077"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/063_runtime.a",
+    "sha256": "826d809b26ed415b878bfb81f4448b3f2424b5cdcf635b90100d78b8e5b26367"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/065.a",
+    "sha256": "8c4bd4d756e7f0591d68d49d866c2b02f9c2fe138b02fa7cc95c966d254d1ce8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/065_runtime.a",
+    "sha256": "afa9d87334ed23634d55502dbcb1130678dbe75a3e480ded7760cef7ce4475e8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/066.a",
+    "sha256": "e9dd0d67932206cda8706e42eb918d687cddb68368624928b4d5144173cff3a7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/066_runtime.a",
+    "sha256": "5e3275dc542692b75e01d01994da203ce7512fe3b32ee79576a4aa894b7e95af"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/067.a",
+    "sha256": "8bc52504b3edc1325cbdae7ff393b44f8a78716c86149c306c2caf65af7bc162"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/067_runtime.a",
+    "sha256": "14ea32bd07ab6dc83a0c5868976b5e509a494af257c9bd8f91efd351f609d2a8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/068.a",
+    "sha256": "20a7dde75e080ce1cfbc6eb26b286983b090a83fff083f0d44369dae2f23a947"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/068_runtime.a",
+    "sha256": "f277ec21682097a8849ef8a6ab84badd0c12174e974332b88c6b4f712bc4b616"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/069.a",
+    "sha256": "bb7b702fb9743fd82ac8044b4f11ef47ff49b7bae7470177baa10c3620b30cb3"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/069_runtime.a",
+    "sha256": "8280e1b6f02e036a35d7db243adf9647e291f7ce4e1523610d919c7dbf7ce6b8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/070.a",
+    "sha256": "2eb63f50568a4e11852db1719d68153a767a8df94fdf504587214cdd4a02da23"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/070_runtime.a",
+    "sha256": "c0c1e465fe008cd5c7aeb1266598596ed63626306ceefca1637c3861ee20453a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/071.a",
+    "sha256": "501d2a4b29bfb7aa6866e6d7d71b1a75063f9c958cba3fcc8e7e8c267bf930f6"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/071_runtime.a",
+    "sha256": "809892358cebf1d78972c4fe6ea2c286e3ff31e869409ab0053b2c7625ec2d21"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/073.a",
+    "sha256": "8a40240142a9fd19e4aa9cfed697c4fa1ba21648b84f715c8ba8856f1efe82bc"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/073_runtime.a",
+    "sha256": "0af0c9c7c012d1c124373fdf7736aefb84ca914da06e984a2e4fb8468b3ed927"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/074.a",
+    "sha256": "f14149e12e5289a008c316b7c0ad514006d46a4758d2c3b3710149d4325481a8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/074_runtime.a",
+    "sha256": "c27f0b4e54ac64461bb748836092a37e8dafe02a22a768440e038144ab5208af"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/075.a",
+    "sha256": "56e1b8f5812f710c8afc6de90feb794b641d187499d8b51f36fd47c64c9b7e33"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/075_runtime.a",
+    "sha256": "61e2039018c5fc3f87b0a99fc37fb0da70dfb8736ecef72083286b11f504f686"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/076.a",
+    "sha256": "5c00e068373e1936420b2324d95bc8302b5dd3d61607e75c589e6a3a0edf7361"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/076_runtime.a",
+    "sha256": "6999ee4e9c150e00021772fd3a7bf33292fc9f31b62319baa203466b9110b651"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/077.a",
+    "sha256": "7a90d64ea03adf621ede7379dc308e552aaa5d9d7ccd1fc4bd2d369302bccc65"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/077_runtime.a",
+    "sha256": "26d76c1d0473854379b6f524f6cc1b84e07ace45994161043dba3b9a15e2fafa"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/078.a",
+    "sha256": "d9fefcb4de4b66d5ecc1074a19073b1d5ead69ef480485fd3af2e4d09b8829a3"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/078_runtime.a",
+    "sha256": "07939d1dfdea260f03792da5f0670ca322d88056e9a93190796c47562dbbd290"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/079.a",
+    "sha256": "c46facb0e8aefefc7d2359a7dcaa872fb215db73354cd24f5d852a56e98b5cd7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/079_runtime.a",
+    "sha256": "b2b52f4d33dabef8e1284e47dcb918ceb7aa63a4745edcda36163dcb7d704a74"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/080.a",
+    "sha256": "bb52a549851a8e5f48c290510a23ef6e7975f24e0080f56bf0794af9cfdf0113"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/080_runtime.a",
+    "sha256": "82c40d7243ec92cf8d178f31f3764e5af56e1dd6d0b6302ea3643a13798346bf"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/081.a",
+    "sha256": "e9a9ce1d589952eb79b27a17590b803c780511d7e909e98e863a68e755fbbc2e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/081_runtime.a",
+    "sha256": "6ffaa4383925030a941933cde57951161bba75b8eec0e7009e41e9393f56502d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/082.a",
+    "sha256": "bd824783be3fd2779c39d2f8a54ca054b94c0d4f036286ad4d97e2624834d049"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/082_runtime.a",
+    "sha256": "a7c1046e3da7e7c959650b64affbeea873d9b7385990f7ca675a33e7eab5999f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/083.a",
+    "sha256": "69dc0120e96cfbcb3b93fdf215917376b074d885dbc95f04287729920d03ee05"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/083_runtime.a",
+    "sha256": "8910b00a9ecd2f746f9eda43274d433e2e07c604dbfe11ed8a098e987df58250"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/084.a",
+    "sha256": "d2f1324a83813d96ae6e23718444c574f2c03846a9fd49a69d1c33343a1d81c0"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/084_runtime.a",
+    "sha256": "f76e2aeeb0849b0a6b7cfc467180db0014a75eab2ce701ffe972e45e20591f2a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/085.a",
+    "sha256": "d2fd36c7e9e76f5b3db07dac5e6678b69bab821d418cd876e15ea4073e577fe2"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/085_runtime.a",
+    "sha256": "0abe07bf9468ef453c8c80e97df65bd0904b8a5f3753af13130ee2d564243719"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/086.a",
+    "sha256": "c9f4f5e34a80fb55a9b4803f82f458078b3906db6e8b5f88e2d7a0228fdc2f38"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/086_runtime.a",
+    "sha256": "ba502a5346a6c1c2c502a8b571bc3a84fa30016212c33e89483d02801b1299af"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/087.a",
+    "sha256": "7752e9886c1e897ea1d580e192eafdd4544f016b81b0a8156a884edaf8fef886"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/087_runtime.a",
+    "sha256": "d9b210afd0b94e1d7e72a390f67266e9a2d937ec3df9b32152fcb34ba3191278"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/088.a",
+    "sha256": "1a5dba80336b31eedef73da841845bd404130678f1ddc9c196ac47f87b937af3"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/088_runtime.a",
+    "sha256": "2961d023a52dcec80df8dafd1e57b5b1e2fb6872737729bed59b7db736c1213b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/089.a",
+    "sha256": "fc4eb50598624c8376042ee45e4818923b7a71a8a751f8088f525a75ec3c5e58"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/089_runtime.a",
+    "sha256": "0a87cfdb2ca7c2a2b02f2a7c6bb45fc7d3d2a4b65b0c9067b47af9fc3265ae6e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/090.a",
+    "sha256": "29182f8c15eb745d7e21ba344c2dad3a3b6c8769a4b20d57ee30880f45022064"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/090_runtime.a",
+    "sha256": "b44f7e4e857429d4f9ab37e756987318d7e45bd94b0631a72a9aba42ce943501"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/091.a",
+    "sha256": "182de3095dad5d5a685db1ed199d1fbbe1c33607fe3d71af5cb276a02ad2fd8a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/091_runtime.a",
+    "sha256": "6bd227116c8781a4c0e6cc72c32575cb921c962750d294f0c7b0c389912d8a1b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/092.a",
+    "sha256": "1ef8438f7b561346b926336e088add3362a01e0ca40aa32b91e6ddd4f0a92f15"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/092_runtime.a",
+    "sha256": "94f9f6730f6d476ce6f3d4a8c5ee3c5f2ce4ce676d0ccb6234b9cff28ecf5627"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/093.a",
+    "sha256": "01ff967ca1d8d2bc222eb7cd6aa6019173cafa343157e0ec8c44d615b16b2bd5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/093_runtime.a",
+    "sha256": "7a02d823420f7312db7501ba5f53db4a7a998e344b4aa9df55405e62607e9316"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/094.a",
+    "sha256": "46d66104481823c9d94a874289356f1cd52e8b0054580ccbb33790ddc1735dc3"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/094_runtime.a",
+    "sha256": "2c3ab60f790798e7ef0d93de35c4c7450b79ae9478a6879701bcd6e8c69c2e27"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/095.a",
+    "sha256": "d9ed19c4fba35891cbdc5d404eba865964526aed63816675a21a4ba23d80fd15"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/095_runtime.a",
+    "sha256": "4e1fb72e22db353c26c950d1a06487e26fb7d7faf19883e4139c5cf4aaa00b69"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/096.a",
+    "sha256": "ceb5175638ef42d14ba7275a3b7258b47838912760c5b2fdaf6312d32ba5e33d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/096_runtime.a",
+    "sha256": "995662b05831e6e37400b81f79a354f47b500a3e4a9ecf1e0b762bc28fbad016"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/097.a",
+    "sha256": "b01eebdc43c4271bceda8353d0bbed6c41064a292652aba2be3146dceb4b5fb2"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/097_runtime.a",
+    "sha256": "2be4a511c094434e6852897f38f0a0ff360ecbc69dbe86cd07fde5edf0588011"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/098.a",
+    "sha256": "42a4f5c56ad7d117ac7ae764d72256d9e5fbc11515b6a28628b9d30e4b7745c2"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/098_runtime.a",
+    "sha256": "eda44d77351149f19b52f6e46ddbe16713bf660865acd87e05f8dbd308e0b896"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/099.a",
+    "sha256": "aecd611a212d08ec0e2030530955303b112d480872fb5e878315701faaf4e39b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/099_runtime.a",
+    "sha256": "964b4d271ce25694afbe53b1ecbfee00171639767472ad23955d390359571f60"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/100.a",
+    "sha256": "5a14acfb064ece92e32528655fb9925c8d96d612b1fabd65471f6eb408b0d873"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/100_runtime.a",
+    "sha256": "742ea91adb0b7525804609fbfb93e18deb8ab39dd24052869f2b8aac7272c20d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/101.a",
+    "sha256": "75d842feba60f7bfbfc9cfdcef591e4cc1faf3b4b6b3f60f076c25095495eb64"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/101_runtime.a",
+    "sha256": "fef6b084fc3f4bb8403504da3d8cdfe7a4455c65669dacac06e83c04279a9e79"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/102.a",
+    "sha256": "f4e4828a16068120d170a6646cbc3ab7fe61d97ccf7440b94139107ea6645dce"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/102_runtime.a",
+    "sha256": "bca63adc48cac17f0bb4182e9d2b521af5506e7eb88b119670cfdfb64e563817"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/104.a",
+    "sha256": "a70d28159902a1373381780d7187cf0d9300330e6e441a6dd07478d714d61584"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/plain/104_runtime.a",
+    "sha256": "079898a960690cb5758ed7ceb40cdc1dbb5e8c4dc776111ff2ce3c9769384b46"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/s/042.a",
+    "sha256": "15cd5e25a676b3dc939979b7c7b77be5ccce0e22cdfb81c1ef2723ba1e0ce885"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/regex/testdata/shapes/s/042_runtime.a",
+    "sha256": "4d019654782e6062065c587486fa4219aed142bee87e4298c9e74f366f665be8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/adamic-no-type-predicate/messages.ts",
+    "sha256": "a2944bca86b75491f1d622062b0976480b11e83fdb83994f1839b651a5c49e16"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/adamic-no-type-predicate/rule.ts",
+    "sha256": "058f88ee45f686a801c51f1426c627a6b06f8c31a65d229bd84250cf1fe6c8f1"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/base-boundary-no-global-container/messages.a",
+    "sha256": "76bf68053aa95058c59165a62590b3de47d46a07bd73f12d94b15583a6715467"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/base-boundary-no-global-container/rule.a",
+    "sha256": "e4be5e32b13e900fd97f94624cff2572720d4a5f692545e59357fa767eac4ffa"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/base-consistency-no-console/messages.ts",
+    "sha256": "11fed0962ee9a241d8f2afeb91e39f7b2e54360128344f2249fd83c1688a6fa0"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/base-consistency-no-console/rule.ts",
+    "sha256": "9d7dbea4e1733191e590562c5fde7a35a741fe41dd1c0c2c9a5a7831d5c0ad54"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/messages.a",
+    "sha256": "cb45cc3f6a716bec80439c97c456c4e8b2f44cb6bd4d7ec2fb42e7599813611e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/rule.a",
+    "sha256": "c0823ce4366b77706ebecb93551b961583e7b2018125cebeca76b26751677b92"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/messages.a",
+    "sha256": "6c58d001ca7841b4f283929c006d0aa80c3b6946d9c859adbe5a48672b485a89"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/patterns.a",
+    "sha256": "36040bf9e0bee299b2310967be2a3a9ca183db60f5b790b830bd725d87308624"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/rule.a",
+    "sha256": "20e6bce396840a589005e95afc7d0ab720d51af35daf5834a25d0b4b81c81950"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/eqeqeq/messages.ts",
+    "sha256": "e87637aa00dde17400a271a40093ac489671f16231182d1a9b960fae8d635ca0"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/eqeqeq/rule.ts",
+    "sha256": "de212cdda9b931136d7a76a34af7d6665462c056c27a55ad496746272ae38f1a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/max-classes-per-file/messages.a",
+    "sha256": "beb51701a562ed9c5157570c3325fe438e6f7a19ed221312b5d51485bed842a7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/max-classes-per-file/rule.a",
+    "sha256": "82c22c6d4503d885e3a108abdec864d1f8e4b7eda154e3c2401264ef3b3cc58f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/max-depth/messages.a",
+    "sha256": "d70b6735d825ffbede72f3618bec5e8141ec1dcd7f89ac79de272025d5378d2e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/max-depth/options.a",
+    "sha256": "306f59c137fbc150fa948d83259b6cf1c2a3ea42dd0af4c61227a32d47d892c8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/max-depth/rule.a",
+    "sha256": "5d57b9195ea41706816965ba60d7fadc3cd28bd61e8e12d4df23328b1fd813b6"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/max-nested-callbacks/messages.a",
+    "sha256": "3c9a5dd0435a47e9245e17d41b5b40aceb5cefb35315a1065d6724e09468b25d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/max-nested-callbacks/rule.a",
+    "sha256": "9112e0063a4faa1ea6a5a1515cee540360d0ff6dc20e84237a09a75d7ae0b389"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/abbreviation_vocabulary.a",
+    "sha256": "a14301a1886e032f84ba3f26eea3435739c6049c1c0d306279945b2a4bebbcfa"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/bindings.a",
+    "sha256": "f300a8118c47ed8299d52189505b4bd5cc2901208ea695b2299b12f462748224"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a",
+    "sha256": "c69e448df8cd6ac0674a3cab86e3fa27abf8e052f2d7962562e8eb46f3988281"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/messages.a",
+    "sha256": "a4eae7ad9a0e524e026e17244d082daff5018f4babc9aff352c30f7a8b91917f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/patterns.a",
+    "sha256": "3218d25430f8988dddebbda8bb8cf90f2841511ad8f0abe11891c09626b7b69b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/policy_data.a",
+    "sha256": "39dea2fa141bbc53de8f0ab9b5752bb74d42571da5fb8ec25eb54e28050f04b3"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+    "sha256": "1fa497370233323716d68d2fc344e96bef8e832e4e38f7068fd140d1b8c22282"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/helpers.a",
+    "sha256": "0b48462b5a029ccc77b8423f425ed9b19649966a351e890692dddaf5dd6ad052"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/messages.a",
+    "sha256": "60d96b0c681b075bcae41bcddd74f9fecfbd818ce7c4634492a1ce4bf9f6f62a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/rule.a",
+    "sha256": "a20ef15cedbc34cdbee9b0a6a829a79d2f255564d8243fd4d9f7ac99c72f5d73"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-enum/messages.ts",
+    "sha256": "f5e5f24ba59f84a083ca3573c75d22433a2dbc0a5314a8343095a8224508b499"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-enum/rule.ts",
+    "sha256": "74a0cb76a438339a535bd8dd4836e6638ec3d26aea196b67fdf48f0cc3e1180e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-for-in/messages.a",
+    "sha256": "61c99fd38ac5680aaeb0314f2cf37bafb2fbe34640dcb52d8c592f7248dc502b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-for-in/rule.a",
+    "sha256": "7094ec227e3dd30d0a4fa696da259bda9df5fd7b8797d8b79ddcd4b04932bfca"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a",
+    "sha256": "c79a48f92991af9f03cf366c2e75cf507601f1affbed7a5ce835dcb51f457aef"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/messages.a",
+    "sha256": "18b224cbf78fe5ec90c7c21eaccea88e94333caa15913be22ddeb4a802cb0e9b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a",
+    "sha256": "a75de03b9bc293e698fdf693fd5c5fad76adfd3ce88017809a192f9188d851e1"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/helpers.a",
+    "sha256": "01f2dc7042064900dde30239f31b86e63bd923c8c42449e51174b8ce3c2067ef"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/messages.a",
+    "sha256": "5055429233af179043494c01af4fa80caa92c53e0c9e9ce7c874d8b13ceb1870"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a",
+    "sha256": "24cb478012bfc301a5bd13a04638755effd6d14810982e7b4da5d8e87be74dc8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a",
+    "sha256": "d6b8c7b8481fd3cc8a97abd8163d356291a4f3299810407c21932db7e21f253a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a",
+    "sha256": "000d4dd4ed6d4ff5e66fda3b6fe903b8bff99fad445eb156549f2d57f332206d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-shouting/messages.a",
+    "sha256": "a6226da0c628de6387f52b7cd11a4ced37779c67a383977356444d94a6f722ed"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-shouting/patterns.a",
+    "sha256": "28887bae13eedbf5c00f571c1f006e3805eeeea2b834b1e3a299a7465f4df828"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-shouting/policy_data.a",
+    "sha256": "d01d72afe7b03a2f39b1815cd09b3606d04673ea23ba56d52253c40f81e1feb6"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-shouting/rule.a",
+    "sha256": "142628e0b634b5840dbaf45a70a9f040b09b6cee0772b6ac4d855b738bf12970"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_anchors.a",
+    "sha256": "7388d8104669541cf59b89a61045dbe3f1a9c1510d0d94c338d2a27390d34d52"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_ranges.a",
+    "sha256": "c8d737125b0ef317927f79843d3c675217900f43ab4fb7b6b67b6d58f846f0c6"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/messages.a",
+    "sha256": "0dc58426ecc98e840c80bfd7b3d9b10a2d282050fd7fa39672fbe43923e437c2"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.a",
+    "sha256": "66fca0789f99047e94f86002cba0a42fff370c5c886536c79550adb1ff2c47a9"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/trim.a",
+    "sha256": "09ff3636abbe741b37b4ce63d23b46ad48125ad6808aa3e949bb468093cb0d7c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/messages.a",
+    "sha256": "99429953bc51f927b617d38871fcfaf1600935fe6d6df0968227bdabdde6ea5b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/rule.a",
+    "sha256": "285b8ee167e35312720417e8a8bf98a51bd65c54e4e46e6c4ef2cab988259f2e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/messages.ts",
+    "sha256": "e99dbb60dbfe45a2be856ab8592a6de9916b8e2f84ea95d8606c2a6e0802e76f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts",
+    "sha256": "9413c62dea65f613aba071e412cb0bd9803f73a049fb569cb9d962b05073c3c8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-await-in-loop/messages.ts",
+    "sha256": "e2e3af776b032f816e7f6258b062a4533450ebc33f91ed100dde1b0b3e1d18ae"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-await-in-loop/rule.ts",
+    "sha256": "1827d4cbca6fd3f60128b7ee9917241a41f17727f99cc739e2ef5dce0b36e53b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-bitwise/messages.ts",
+    "sha256": "54fd483bf74193f1964d82c9a860f2e11c13219f12517ebda9701305d95257b8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-bitwise/rule.ts",
+    "sha256": "882534b9412cc6b6d563d1346a2c1a8a58a1625df85edf20d3110d602e15b320"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-caller/messages.a",
+    "sha256": "b6f82dce2bee78887e395b2a4a585c9b4eac54243fa634e1cae5e05d1c2856d3"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-caller/rule.a",
+    "sha256": "17523c0286fd1bac47f8a16d2b8c19154fd461297146f14376de6b955e9789e6"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-continue/messages.ts",
+    "sha256": "71f2c251118317200c70b4e3ff16781d32e88c385d88a77db35148d1b85b4573"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-continue/rule.ts",
+    "sha256": "c0e401c2aca3fa2dfbb57762e473446386cb51c697f26a7be8ef3beb7c1c41fc"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-debugger/messages.ts",
+    "sha256": "b11d670d6a0ac317abf99f3049cbddecc0990a759fe051b7cf431aeb8c71a1ea"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-debugger/rule.ts",
+    "sha256": "310463664082636208c900b4071605d2a226bc5a0b38b0957b6d5611527addce"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-div-regex/messages.ts",
+    "sha256": "727dbc82a7a084d33fc6263e2c57c2af866a860315d1eef88d12e61ad0dc47f3"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-div-regex/rule.ts",
+    "sha256": "129968d764725ffd5ae46ff9d9332cd6ac0911e67e3753757ba18c4573b55de9"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-duplicate-case/messages.ts",
+    "sha256": "ef5450422ac316b4163820d3db141c9906e8dac7d5eb5ed514aa1e4686ce7d2c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-duplicate-case/rule.ts",
+    "sha256": "f069fa0a73ea8019483c108bc12342d7b0e8c92eceb2ce28c74809914f168145"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-empty/messages.ts",
+    "sha256": "0c3e67318f0dba632efb204ae164a9de01d7d919e95eb25ed772613be8510fea"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-empty/rule.ts",
+    "sha256": "ef4cde04efc0ac79da558a9a3d26c86e21718b820221e7e50e63e5ccd8b85979"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-empty-character-class/escapes.a",
+    "sha256": "75eb0b8dec0951d5a8789be61298b39dc6d4876019ad2cbd9fb5ab76f77fcf0c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-empty-character-class/messages.a",
+    "sha256": "9c5e76c262b771458680572f83a365acbc456c4cfbebd2ab0fd89b49128092d7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-empty-character-class/rule.a",
+    "sha256": "0ca78164a89513d753a89ef7192cbaf32eee1956b7431feb46275497e19080bd"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-empty-pattern/messages.a",
+    "sha256": "047e4483065cf2bcb0b3ce9504c84702cf76e065544896c5033358551b5588e5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-empty-pattern/rule.a",
+    "sha256": "1cb35c6fedc34c041ff1cda6ff8e6bdd6eb63df780c6aac0f48eebe71413dbd3"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-empty-static-block/messages.a",
+    "sha256": "48b2e203b73eb042360e9884ea09de20b122dd25472c51df638150d730e50401"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-empty-static-block/rule.a",
+    "sha256": "dac82694e562752a6b8e166c8394a2af16a4ae5ada0bcf118aeba72fd5924c13"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-ex-assign/messages.a",
+    "sha256": "7427c309948997d3fa4eb2c2544bd25f626e4624711696e4e645e0ab540c9129"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-ex-assign/rule.a",
+    "sha256": "da0c0c57a4f21fc63d52dc355f01821c12e968d15324d0585b69671c84aeea80"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-iterator/messages.a",
+    "sha256": "e02453249180389a3b485eb3dc75aa88853996a3578f7b1cedbc913661c43adf"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-iterator/rule.a",
+    "sha256": "5be7326e20587a60b62a7874a95b6a5cd1da5a6e3269e03b9ba33a4d86131481"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-labels/messages.ts",
+    "sha256": "420968c9fa2118c75476e69a7bd8a70b3c3d4f361ece2f63ecddbbf44905b190"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-labels/rule.ts",
+    "sha256": "5e60e24aade502610b8d4ce4e0cadd44568630a6bb35dc4353fa02cf19c7cae0"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-multi-assign/messages.a",
+    "sha256": "813c6bcc425c27633e2120c02eceec93ac40c2af8a92b5c50b353444543b4e4b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-multi-assign/rule.a",
+    "sha256": "0331d8105a6b85f2d9b600fdd974f4b26226d80a7acd23d0b159871871ebe230"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-negated-condition/messages.ts",
+    "sha256": "4e4870859322ada183c993c2ddd57ee8834d8d7de366115d45fc92d65e07b147"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-negated-condition/rule.ts",
+    "sha256": "e3e52a5ce102739f0a9ae153f96048bc2c72af5651f4945428d434dccd2d2ee2"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-new/messages.ts",
+    "sha256": "75e2fa8d6cf1e38e65fe88d105e0c5ab6772b5a6b5e3bdd86fccab4ea31ac262"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-new/rule.ts",
+    "sha256": "2574cd20986c3a24383a7ed6d3ded84ddee66f879258f8bf5edd76e22ff4d2ec"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-octal-escape/messages.ts",
+    "sha256": "6f585106dd78eb98f96408873c60430953cf1f2a40e22cf2ff66cb8f345b7a33"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-octal-escape/rule.ts",
+    "sha256": "fdea97c9243391bac570cf1d51ec4686998541c38072c5ba996031700aed5763"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-plusplus/messages.ts",
+    "sha256": "9f480f1b1bc36405b2ff2933b7958657bfce2f23a456c9f443efcd56116d0a26"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-plusplus/rule.ts",
+    "sha256": "7198f3a4add92fe1e8f96822ed4e39aaa680ae77afc119c252751382a0465c6d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-proto/messages.a",
+    "sha256": "f4ac1b4f90423da0fd9c2d7f55bb67c1bf05fc5ffeab0af879df5f240d65e327"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-proto/rule.a",
+    "sha256": "2d26ba8551ac294d8a6be4886897d24c342fe82b33fe60c02712901e18c3559d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-return-assign/messages.ts",
+    "sha256": "b47a027166efdab0fa50378d0067d3199f956b89849d69ea5ff291519be8ee73"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-return-assign/rule.ts",
+    "sha256": "a872b8e1b31d51a2e453a73a2526c7ef587d145380744a5d54fbaafbfd4fdc21"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-script-url/messages.a",
+    "sha256": "467d5b0086fe85227e18cc1bfbafbff244036b680ed08270ce7578df946f1f79"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-script-url/rule.a",
+    "sha256": "e570ba9045a5ac2fba0d07136b4b6d9cbe973466ae7d50a68811b9223fb849de"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-self-compare/messages.a",
+    "sha256": "d45c99155eda6916bfb1755eb95b001568dedf7e3df7d866a43c31b51645e4d6"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-self-compare/rule.a",
+    "sha256": "f86ba2941bd4f4437bc1c6de144c6014882d6ae214fa18e282d83c576b7f6619"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-sequences/messages.ts",
+    "sha256": "0c3b7db62a2f8e760c02641bcc9783c0888732bd7cf46723ff81159e0365c7ca"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-sequences/rule.ts",
+    "sha256": "2536941c56121f44332e57ac7dd08d388fd5b17ac395c20f234bae01940449e3"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-sparse-arrays/messages.ts",
+    "sha256": "6cbfad698902417e2c3e46ae4424573cb63c21da0fa612dca6a6ab07b354205e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-sparse-arrays/rule.ts",
+    "sha256": "9b9445474461f67a9457adffc2498bbfe7ebf92e660fef39f9299a3f6248a7f9"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-template-curly-in-string/messages.ts",
+    "sha256": "6230bde97bd30b3a411afe3874649f725919091094e25008469d37ebcbfb625b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-template-curly-in-string/rule.ts",
+    "sha256": "459f3896c69fb9302ac88718347a8ca9013097fd972576a57d5704e79781c785"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-underscore-dangle/profile.a",
+    "sha256": "59b4016a141fff8aaa869d686ca413bd7f667dd1c2a362af554fe42964aadd1a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-underscore-dangle/rule.a",
+    "sha256": "95c284c497d5c37f65c3c54e66d92badb631c1359d5a8620a6332befe4e22b76"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-unexpected-multiline/messages.ts",
+    "sha256": "bcb5016c6a75badba54506e7c9533ae50e50542b797024e2b998fbe4eef21b76"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts",
+    "sha256": "0fa88c0ef73cfae23da453a2bf6718439063e07b93af561f665cf915e496f9e8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-unnecessary-boolean-literal-compare/rule.a",
+    "sha256": "d0b0d3f6bd89809bcb4b788d4b559221a2cb7bff41875d5fdd0e86edb2f3c110"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-unneeded-ternary/messages.ts",
+    "sha256": "2c70d3401106e7cb068ed0cedb4ad100c79cdf857f736080819b8c86682742ee"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts",
+    "sha256": "e2dcf5a6050104080907e766c53ea61472cd1d4f457ff8d21660cbc71ccba403"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-finally/messages.a",
+    "sha256": "c25b25bddae9344ede4cd92bc4c038c3c4c202778c2c6b09521387d7ff53fb6a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-finally/rule.a",
+    "sha256": "b4b8bc93a24d2da7396dafb1e4b902999b4a11179cea4700466597237295f979"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-negation/profile.a",
+    "sha256": "f04d0c1aaa5b38bf21ec95833b21771951d862649233e87fcdf135545e8bd888"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-negation/rule.a",
+    "sha256": "f384abf5553e6beab9553ea65c8b03e068ec51e99f870068d3d5d67104fea40b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a",
+    "sha256": "182d4dd0d600f742092112d4e48d3b6250068e0b509953f4cdb9709404c06569"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a",
+    "sha256": "0555e0c4b180694a33762f3759a6bc0ae68283842b33d679b46fe2ac48b20694"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+    "sha256": "f3b1131b9ee4c99fcd4ce4ee20677d848d76cf4b975bb75b262d80818fdb0293"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-useless-catch/messages.a",
+    "sha256": "6df19a799d8108ca7303d3ed4f7e091b1f5002b23967e5484796e5426b5426e8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-useless-catch/rule.a",
+    "sha256": "314400c0e83bfa0921fb2114104a7ed6fd89453af1480de06ff2d77ad8b29ae6"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-useless-concat/messages.a",
+    "sha256": "6952698723309af6d0ee704872247e4910b22a982c7106e4cf834eab100369ff"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-useless-concat/rule.a",
+    "sha256": "dc5857742ddc6de62efe1e96aa4cd261cf2b4802d8cb070e4a0fe7b8b740526a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-useless-constructor/messages.ts",
+    "sha256": "f360ed91049814e49a250a29bc2e25cb0b3367dbb38d4f50f55439e5658bcf50"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-useless-constructor/rule.ts",
+    "sha256": "077a2b0446045285457c58f1b0c1ac1b09820a197d84607639a5dd2036295d6e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-var/messages.ts",
+    "sha256": "1cb4bc3c676aad070d5e4b34e38df7687d9416455d31b4f7f45554b53315c38c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-var/rule.a",
+    "sha256": "4778983a533ab9f0cc53e1f40b00089c07fe01dc7e82ad5837a1ff8982162e84"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-warning-comments/messages.ts",
+    "sha256": "da1c52793075fb6082662f84af40b09c1440fe5716e7eb0716f0d582cb1fd964"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+    "sha256": "186600bf3cd5b0c973773d0498ad8344c11dbbe38961736289dd5434c2378df4"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-with/messages.ts",
+    "sha256": "40d64fb9387363007b70af407c3971c1f7e413c34b6ed2b88edb2a0ac86aa1f8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/no-with/rule.ts",
+    "sha256": "471eb36faa4256d5926962ea7097decaf0a66a32ac9e8a7c2a85fd59e9ec203f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/prefer-destructuring/helpers.a",
+    "sha256": "a292a1096ecf90a37a1cc048a46ed9d6f252c66e7a8047dcfef5a7f7c209ef83"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/prefer-destructuring/messages.a",
+    "sha256": "763fa4b0bd9d3a25aefb7d13d277214361716f349b848d499344baf5ecb0ae76"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/prefer-destructuring/rule.a",
+    "sha256": "600af6a3c8acc19029e4558736654957a2df30f294d27d4daf7bfb85f5e43503"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/prefer-template/messages.ts",
+    "sha256": "9cd072ccb83b71450c2de9af19a34f64e22e644716db73edcd8386ea8e5c4523"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "sha256": "11a412e1b9fceee987e85488f3e9cdab8e54f284a1deef898d1a307b88fffa85"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/react-forward-ref-uses-ref/messages.ts",
+    "sha256": "e01a9cebcb820f404f97bffd2a21ad84a43a55c459770e71c283b78b7cc55046"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts",
+    "sha256": "1c60386834b08c1263b847b893e629ffc39026408ea103407f3cbb4f977baca6"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/messages.ts",
+    "sha256": "ea1f0e1baf8bf78a08730ca4c2bcdedcaa7dddab243eca1a375a1b1323b63b15"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts",
+    "sha256": "b6ed1461357871933fe71f15b41d44692567129ffa16ba3dc5ee7f1cac5edec8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/react-no-find-dom-node/messages.ts",
+    "sha256": "df57abb3a317efe892668713e3946d432ea49055728fa773f6bc9ad3295cbbff"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts",
+    "sha256": "ff08ef3c0c905bb56096ef129915cc6ef9ecc0c8db76a9dc406404ec6441c048"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/react-no-is-mounted/messages.ts",
+    "sha256": "c7aa8e38aa832406755ad28181dfe8226afd9d21d007fb5051e33e7fdad17079"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/react-no-is-mounted/rule.ts",
+    "sha256": "d7929b1ccfde2af0acff0a0eb4c0fa04f8ec9e05d394c3a8fa8f0972bb045d31"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts",
+    "sha256": "084f197f8b50c0b74f1a1922917ade322697c5ad315789495709ea041c83c2f7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/require-yield/messages.ts",
+    "sha256": "dd02f0346a19b7ed60ffa0cba3a8adf1d34e66cd79a863b99f9c38a5e88640f1"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/require-yield/rule.ts",
+    "sha256": "b416ec3347874a558c629e50ce9b7ad54b4f62a98b4a7d4fbfb3f48a036be0de"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/messages.a",
+    "sha256": "1b650497901d553ba4207fba08b88ede9934ef78f4843deedbe48c2cd32d6511"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/rule.a",
+    "sha256": "5ab7246cbb44899ab8bce7a8506e8fd680a34c4aa33a828269c54445fbd3ac2b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/typescript-init-declarations/initializer.a",
+    "sha256": "e5d05b1dbe740c825f5b359d27ecd74ce9e0b8a04d1693c1e6a2fceedf564b22"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/typescript-init-declarations/messages.a",
+    "sha256": "58bc0e762963590dcceb715362384369155f6587daeaa7c6a1cccfde416183e7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/typescript-init-declarations/rule.a",
+    "sha256": "18a5f803b2fce2b6766016052a24680e8334364866e1918dbe077a54afc18613"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/typescript-method-signature-style/messages.ts",
+    "sha256": "84863cd9ad6b46989155dd85e7d5be57de806f4485cd4f2461320cb2aa0531f8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "sha256": "ecd7895a2c6a8da26bbc2d36f61ff0374a1ef028effa7cc26c40f361d1c66b10"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/profile.a",
+    "sha256": "880e2d29ae6ca42dedd413967a4d15bb47265f840228bae9d40b57dceb251bbc"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/rule.a",
+    "sha256": "10b4ad6724438f5def55931f76a89770f726a1157d0c34ab13892d8d99915b8c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-wrapper-object-types/messages.ts",
+    "sha256": "26f028e88750de01be53a9556d78876915b320f89631dfe032933b087953c891"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-wrapper-object-types/rule.ts",
+    "sha256": "ad5839adf1c49100e1f4644a502b619c3eea542b98d49bb899b426e66e0f8801"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/messages.ts",
+    "sha256": "088a9dd637265e330a58ffed403cc65862f8b3614823efd53fa0d13499b5b049"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts",
+    "sha256": "4bdafcbf81ae0930e7c1125bb73e03deb13d817a2c1cfb410e57978bec97b63e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/unicode-bom/messages.ts",
+    "sha256": "f92f91b724a0906ba793e9857b70870e2ea4d33a0294d9394a8aa80024a81a94"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/unicode-bom/rule.ts",
+    "sha256": "486e5efe409ff93a30780d99c10f76b3667c390e5762c1ac2bb6085cda7bf905"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/vars-on-top/messages.ts",
+    "sha256": "ab0a602c4d972bf7d4ac00d9f86c6f80b17164cca62b74a07ab24854f79d325a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/rules/vars-on-top/rule.ts",
+    "sha256": "6be8e63750e2f6ea60bdcc3222f0e9d883220d845be4f5805722f04afdbded00"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/settings.ts",
+    "sha256": "6731da272c04d11563e97f82454431c12b5276dc21e8cbdfb91d9941393c81ad"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/suggestions.a",
+    "sha256": "1449d82a8079e3bd38eac7ea14c7af4e93ec337f988090a9cbe5fee7c033c011"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/testdata/serialization/rule.a",
+    "sha256": "bb2b235320b22957c251de6c4e7e452cac42ab9fba5b997295e88b38d15b27ec"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/lint/unicode.ts",
+    "sha256": "cf6030169d753796d4840e60375cb16c6f4abb1b8399c1e3aa13c6319959cb6c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/astArena.ts",
+    "sha256": "df388752cf40fc32eb76e3fe01945d10e5be8a7ce098a7f0e0dd60a6ddcca261"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/astLists.ts",
+    "sha256": "098c214de44468c5fbc121bd03f4dbc7d2936951cce2dab4c9ce9d54a8ad87b0"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/astPath.ts",
+    "sha256": "c62b9d46ef494b3f5ede54f02ed94d5009f34f6005aea61b999018ee74c99a87"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/astPreprocess.ts",
+    "sha256": "91d3d2a0688509474c8915412be36e55582348d58cc9be31edbf6703776dc350"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/astProtocol.ts",
+    "sha256": "80788a35c16c98681fb632b33b78db8627c957c409fe02ef943ecbd33d1cf678"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/astSource.ts",
+    "sha256": "74aeedb7a699b9392909e3db0e85c125ad38a8739d8c5e73b10ffb5efd53734c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/astWalk.ts",
+    "sha256": "a0b5d230cd9dfee10871031ed66496c5d98c9a2409de7264ed35c19165397c12"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/children.ts",
+    "sha256": "d0d2d5a9bab70e98f69aad57937f1369e5943d19a1c617e0311d29d9438ea76f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/codeblocks.ts",
+    "sha256": "6405f5576a375283b6cefe82b198c396ff66ab3fcc2b8a8b5d523f8eef1dd353"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/codec.ts",
+    "sha256": "6b326391bfd9ea814f440269a10cb5e11d704c1cfd2982e17dbcb4baaa50735c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/commandStack.ts",
+    "sha256": "bd4f55219da33c123b11538d969bcde0fc7ecf26f746a5c737013b8e22740351"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/decodeString.ts",
+    "sha256": "4384bd9a8364222c5904e2ae31b8706a3b3109e4cfdafdc7b08c70b6f598136f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/document.ts",
+    "sha256": "b5c32a19939bdfe82c577e83625eae180031244b021a252a29c72b3031c01d29"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/emojiMatcher.ts",
+    "sha256": "4a9992f9ecd9966c3f94382f121e36643088524de6d7e177f52202c8edaedb2b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/frontmatter.ts",
+    "sha256": "44c37f3badba73a056bf292a189514bf1e361228ab8039158309cabe0e116e19"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/gaps/10_multiple_push.ts",
+    "sha256": "46af03ad071a77b0b6a24410ec8a1ae9a5334d7a34742d56bfefdfa65199d46e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/gaps/11_function_expression.ts",
+    "sha256": "a49093783db79475b3dba4c033d456f1886bf03d50a4ab8ca9b48c21f7ab18e9"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/gaps/12_conditional_empty_array.ts",
+    "sha256": "b2bf37dbf8482b7e751b967de1590bc6c43252fc8d28df12adc0d5ed825e0ec3"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/gaps/13_array_growth.ts",
+    "sha256": "a4477e67b6df70c87fcec8b4caebe81d58d101052f5c032d427c258b3f6f73e5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/gaps/14_missing_path_key.ts",
+    "sha256": "c18565a2ea9383606d6415973be7c6f523b3521a061a8fe45d40603beadbd8a5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/gaps/15_string_or.ts",
+    "sha256": "905308b9c0cbb80afacd44cb38cfc8e88966e753df2d3e23b61e51234cf9c72e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/gaps/16_array_shift.ts",
+    "sha256": "ab3b7a51278468866ed33f2cd1f72e1f7a13462d1b07e3673e7e6b2632e8c4db"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/gaps/17_long_optional_chain.ts",
+    "sha256": "c8b799dcec771790ddff08a94f90f28dfeb3065cae79f35d040a3453f05e74df"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/gaps/1_recursive_state.ts",
+    "sha256": "ae79bc4d59a91d56363791a9ebcb556e8627adefbb6ee323893517a3ae27d23e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/gaps/2_state_arrow_cycle.ts",
+    "sha256": "cfc7bf3a51fe441a9dcf3325639ae798a04ec92f5689e453f25468b45bc0c091"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/gaps/3_recursive_callable.ts",
+    "sha256": "267e1aacf2dbddbbad556efad3777e73aaf734d6fcc9b7c4c7c0126523b97e22"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/gaps/4_structural_ranges.ts",
+    "sha256": "46bec0fed3a1ddbedbd980bf652e59fb28f8327d2e34512052d32e3e631cb728"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/gaps/5_conditional_panic.ts",
+    "sha256": "faa7f46a78f7bceaf870a002cafc547ae81082d756c074c68d5a108b40e3264f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/gaps/6_uninitialized_optional_string.ts",
+    "sha256": "f2175f5c5037116c5a9be260c6b296d8db81a98889b283c9fe86beb720c61654"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/gaps/7_postfix_property.ts",
+    "sha256": "c1f424bcefb184fd660222e8e0e6dbf88cbb5591933a0dbca71e0799476d64ee"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/gaps/8_generic_callback_result.ts",
+    "sha256": "3f757bc34304bd4422c4860db7ffa62ac47ad8b982dbb02bb77e1ab67ce1a74b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/gaps/9_mixed_path_names.ts",
+    "sha256": "807463a905d119f3c0b81ec68cf118ffd92f07b9e264e029492cbf83ea0e1647"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/htmlblocks.ts",
+    "sha256": "f394a00c649f9b9cca62d77161fe083fa53743122ef70632dfe9cdcf61cfc468"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/identifier.ts",
+    "sha256": "28229d81cb7f0e7e4fdbeb0375aa0b71d194d2c6598555c09df2757ee20c7590"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/identifierCaseKeys.ts",
+    "sha256": "bf450b713eeb3540fe58a33a3d0b7edb1bce671ea2328753ea2931c7faa3c73a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/identifierCaseValues.ts",
+    "sha256": "900ec8e1980816d839b22783391c7d2ce3e5cd552dcf5fd8f12ff072b40d2462"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/inputChunks.ts",
+    "sha256": "0cb0535a2fa24d63047995a6dbeda8674890e4a5483b964b2ab003bf86037b51"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/leaves.ts",
+    "sha256": "7209a187ce555cba8b8e6545f4376f1b4256d591b97f9382cf781e68e1a1ad3b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/lists.ts",
+    "sha256": "fbf1f0058cbd8804da70be1a2146d15837628eb2015754ff1ae5708653971196"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/lowerEntityNames.ts",
+    "sha256": "43c70765e0ef93bd31a8401f4d5385bc5e7b4c916389e84bff117845a7e22064"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/lowerEntityValues.ts",
+    "sha256": "b0e042884926c67fefd69effbd49c8d5d71abe99f0e72da6e5ba9648bda208f7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/mdastArena.ts",
+    "sha256": "1010c3b7fe9320bd4e9657c3d6e4fd1f74fa4a94afdc78081b4b09eb0ba05b75"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/mdastCompile.ts",
+    "sha256": "2c6cea707137398103f019e8c850ffbf4d283d2efed219485d37b6eb85285426"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/mdastNode.ts",
+    "sha256": "72b9cc34da7a4e1642ede3c700c0417a6f18d2e84536c2af19dbd9304dc949ab"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/parseFrontMatter.ts",
+    "sha256": "e1c549ce9be92e814c2638ffaf34b18a2a233113525faae86a9806da4dd678ff"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/pathObserve.ts",
+    "sha256": "daa4475f03d02247264fe7acbcbdec14c38665f971a5d2dc9fa06f656c35c9ca"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/preprocess.ts",
+    "sha256": "b3798cbb0e925efd3c56c7a19ff479175a8ccd2b62463786b6d040f38d09aaff"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/preservedLabel.ts",
+    "sha256": "14765c1056e38fffac4de30b3f2b94f932e9afe1fdb7a5baa5287090381bc432"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/quotePrefix.ts",
+    "sha256": "613c6ae3641fec39ca8ae7a568c56018aeb2b1054a5ab9af531c37681a2c6e7c"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/quotes.ts",
+    "sha256": "bc37d63e522026ea63e9652ecb85c59e55e8d28f98adc1666091f39563aa5e06"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/root.ts",
+    "sha256": "75f6e95d40960727981f500b0df96b5baba3be1f19efd23f274b05288ba77ce6"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/splitText.ts",
+    "sha256": "b24dbf052a2fe245da6f711075f0004b0a5cf07497a3db0628a8093790b2358a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/structure.ts",
+    "sha256": "692c1f10244355cd9191a65c75d8875b2d915c43322e177b79fa81c9adce5293"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/tables.ts",
+    "sha256": "e1ca1e13cdffd3572f65b7737478641be5563d1b165a3307595557c5b58b7a36"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/testdata/ast_probe.ts",
+    "sha256": "d1d4d75355a02c55dab5b47ea5dc9e5c97144cf4dec2b49c637185c207aac09b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/testdata/chunks_probe.ts",
+    "sha256": "21985be12ad93a87e0ec62d6b016fc7490ac5b6c596cf3fc7cc26a534fec0955"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/testdata/decode_probe.ts",
+    "sha256": "da483b3546895ed49d914767679b6ae78e606d02e08bba5f3d491ddae0d91eb8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/testdata/events_probe.ts",
+    "sha256": "9fbe72b3918099e7070e0d8e0baf6b9ffe99ba432a547aa8de565c8c1cfbd6e7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/testdata/frontmatter_probe.ts",
+    "sha256": "edc1b626a6e87300eb323570dab03d3fc588ad3af43bb993fb733f7e9549fca8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/testdata/identifier_probe.ts",
+    "sha256": "2ce3f2a98c9945c12c1c3d4605aefd8b8cfe634935e8b912aa27104fbf4e3750"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/testdata/list_probe.ts",
+    "sha256": "541e36fdb51601fec0ce350cb54568a012e3dc69d62ede5b3257aad1b35d45a9"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/testdata/mdast_probe.ts",
+    "sha256": "a32b6236543b2e168f664e2db2c894a0a6b2e2853c27375ece166efcf3b28fd9"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/testdata/path_probe.ts",
+    "sha256": "b71eeb9064884a05810bc602fc5cdc1c310c4939522f8a716a3b075a19828d8e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/testdata/prefix_probe.ts",
+    "sha256": "95a95f4e65c3c3a1761b76b07fd9acf956939906cd4b39280390aba46a008cd5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/testdata/text_probe.ts",
+    "sha256": "00a1e0bf7cec55cf319b765911b9c2e55d5c3a6d15643e703a943f9ba6af49ff"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/testdata/whitespace_probe.ts",
+    "sha256": "29532dc92ed6875ac650a6a5e727626bf7103dd2612a80548a69bbab69488c2d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/testdata/width_probe.ts",
+    "sha256": "0dd24d39da6f09233059043f1d0dbcef36f758ae6042199ef77b0994b1bd3790"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/textClasses.ts",
+    "sha256": "0624fed19c5c538c170c329d9878b26698b136514330f27912922b6f12920d23"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/textTokens.ts",
+    "sha256": "97d9a30a4c496a1912ea239385647417f470cec6679bb576acc9d4a6d557b150"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/tokenArena.ts",
+    "sha256": "462d495787d4ac7cb104503f8758774dea3f42018bb49992607eae721751dab5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/tokenSource.ts",
+    "sha256": "5a3f102eaec937c6f99847f5efffa9ecc992f02df70988faff553bf7509b3e87"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/tokenizerEvents.ts",
+    "sha256": "f41a5a37c67021c01186835c92bf401a1c7e22e644ccf09eb9b54abe89749411"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/upperEntityNames.ts",
+    "sha256": "cd2488c77e62c76fe3acad0aed59ce6a35e10baf14113301018a22ae22791e68"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/upperEntityValues.ts",
+    "sha256": "b9aa6f40007e2f6b5b48b30f5c6f13bcdbb5023c250d9c116dbf3ff92220b277"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/whitespace.ts",
+    "sha256": "d0c82013063ec7127cb0388bc27fd229e78a07d4318510f0cff845130765fc10"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/whitespaceCodec.ts",
+    "sha256": "cc8cc9757f97664627cf13d13d1fb438af82aabc2d8f2ab126a496606de97c81"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/width.ts",
+    "sha256": "9bd73f9adef036ed3dd82919d1738cbfe183483785f588ab25aa0c73934d0d01"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/widthRuneRanges.ts",
+    "sha256": "58e8635d8df3feee549e4f24fdc5e036dd2e940d8480a7d1c7c4ee668d4f6794"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdownblocks/widthTables.ts",
+    "sha256": "87b6825e2a86bd2489819686693ec02ff6da6107fa99edb083de46e4a0da6276"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdowninline/classes.ts",
+    "sha256": "7a69481f27f9af7665be4931a218217874dd1abdbc25f124a25e182988c31618"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdowninline/gaps/1_delimiter_expression.ts",
+    "sha256": "939dedc28cfed5fefa180efe56be01cd9128d96c2070b9bb19da54a564178392"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdowninline/inline.ts",
+    "sha256": "02fb5668079ea3115934ca0913969c4d2950396f8b6ad50a85aa288d2f606319"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/markdowninline/main.ts",
+    "sha256": "4f63e4b66e1718eebf1fcb13ed9f0b69c1ebfa7b81c0b6be68bb422564adf082"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/mediaquery/gaps/1_generic_parameter.ts",
+    "sha256": "9f13ed96e3e887fd54ad4a69e4a4ae8ccf3ff43d59484f29afbe9faa539ec7d7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/mediaquery/gaps/1_generic_return.ts",
+    "sha256": "f4bcefd74bc9fe7e82053da28450bfde88f8dc89a167a153bbf67b5eb97147de"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/mediaquery/gaps/2_return_undefined.ts",
+    "sha256": "34912897fb06deb4b98c36f740359d37dc08aa7dad00c7e690af791b94e0effb"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/mediaquery/gaps/3_optional_chaining_array.ts",
+    "sha256": "260f2157797ea9c10943bb35ab26a1c4f25cb4144b620854332e5e0c0dfd540f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/mediaquery/gaps/4_mutable_child_array.ts",
+    "sha256": "812f7c10d580d51579bb3aefdb44609089465c4f728bd569e9bad07c55c4bb70"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/mediaquery/gaps/5_local_children_array.ts",
+    "sha256": "5f9c0e168bcbdf48af97ead6df3a81f0dfb08a6c9a00df61fcc645deb67a96e4"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/mediaquery/index.ts",
+    "sha256": "16d57675d2ec24ac5e73929247eb55cc1c80fab9a6ba13b7b9b760090420ca4b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/mediaquery/main.ts",
+    "sha256": "3a5db8bf3f1394bfefc8df24d016b8c59303bf915876b47a66b2436452ea7a73"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/mediaquery/nodes.ts",
+    "sha256": "7ef112165a3722bf38a18a7e034a52cb8476acd4346cc5758c89ffe75a3c7e25"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/mediaquery/parsers.ts",
+    "sha256": "8b32dfed9cdeb7cea08f71815655d702a99e0f9f75dad90c5ce2ba6639ebc511"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/mediaquery/whitespace.ts",
+    "sha256": "6acac820b4eb5a53f8c7f6b41f65f5f15c164b9df72a5ffb89c590be8331cf9e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/selector/gaps/1_multiple_push.ts",
+    "sha256": "01c4249f66e2df11da2254313e8677fe489f6bcb17f77d2215adadf11f1bed65"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/selector/gaps/2_mixed_field.ts",
+    "sha256": "d6baf8b5e76b40ca75535aee57d3ab05c518bcbb0e21b8c7884f4d39f51fcdd3"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/selector/gaps/3_optional_boolean.ts",
+    "sha256": "4fbadba73a7219ef1a4d360b98e3b65c61745401e00a6b0c959baf6fa57f610d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/selector/gaps/4_array_from_iterator.ts",
+    "sha256": "2cfce949170a30c9f55b6332a2766b11376f2c282841a7d2bcef8b110c0ca58d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/selector/gaps/5_conditional_panic.ts",
+    "sha256": "687240a2b3ec04917cd0f04122b80089d1551547c9ecbe0a1c20a3400deb7d65"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/selector/gaps/6_undefined_case.ts",
+    "sha256": "532ae632e3e13e14b500b529cd04531622175fa32a60df9bc4ac705bee36005e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/selector/main.ts",
+    "sha256": "844aeff6e3c55c18dc11bf389efa29c0d1c644a57c079d990914d5740ebf8d25"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/selector/nodes.ts",
+    "sha256": "7525942057080f382bb28681bd6fdbdeff637ee1ae0d650238b243f7952fbae9"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/selector/parser.ts",
+    "sha256": "de95fbd777c0d7dbdd0b64ace4885ab26b03ea1953fa11b5eb844c72eff48082"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/selector/source.ts",
+    "sha256": "70c25c1c8c7152ed0fdb89bd539c2461beddc50660bd1d614e2478eaa354fef2"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/selector/tokenize.ts",
+    "sha256": "9d66216f19132cf2f4b2af005b3837de0dab95574b57d6ad356ccf7651a4c585"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/static_single_assignment/construct.ts",
+    "sha256": "bcef0f6cb20cefb2fe068a8640cf5009054eac8164ff6cce4432e9011ca54615"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/static_single_assignment/eliminate.ts",
+    "sha256": "52afd7c213e9298e04f1a916690930ef1bf34c952327fdb36e42af5b376a2557"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/static_single_assignment/gaps/1_block_arrow_returning_class.ts",
+    "sha256": "a92bbceffadff241437073d6241f5734a77b92c60a33655e73a2a66b55125563"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/static_single_assignment/gaps/2_call_through_optional_chain.ts",
+    "sha256": "1602646bcf39d144c0cf8fc69a72cb13fd9d10d7875837b6e031d3ad5f744607"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/static_single_assignment/graph.ts",
+    "sha256": "d1cd3987591125475063ca062a953fa96acf7d612e476f9e67e07e20f534ad92"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/static_single_assignment/main.ts",
+    "sha256": "291ec41caf58099ddaef617d9e9ba18749bc9d2bdae05f82a34c3d5b5dc4e124"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/static_single_assignment/phi.ts",
+    "sha256": "3f0157638d4ae79fcf2d01889b046d614c961c3fc0c027ab3374e45fc7e36bbd"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/static_single_assignment/static_single_assignment.ts",
+    "sha256": "2e8a730d7165d1cd6f1639aabc4d4a2d96269fe31a8ec4f78265100930190285"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/static_single_assignment/verify.ts",
+    "sha256": "4027972f0f72c0826a834c9bbef6668afe94bd3679e79147dc17c9964d2b8cc5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/suppression/directives.ts",
+    "sha256": "73bd748edac6008868440f4cfd3e60f8e4ce96b65bafe1ccf96da94513ed800d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/suppression/gaps/1_mutual_recursion.ts",
+    "sha256": "6591f0bed9736da6adb2146513b88f8e8c9f31eb13f3f222500f92ea4b0e6e95"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/suppression/gaps/2_return_undefined_array.ts",
+    "sha256": "fa482d664240148134eca9f544030709055605a6948f9d1aa4ba6321638f4c64"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/suppression/main.ts",
+    "sha256": "76e0a562603e5620bffec2d5f445fdb5901ae61c678e73ab43494b56754eb717"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/suppression/scan.ts",
+    "sha256": "9153d51681302424f314ea081a640b2fda4d71180dca2624428b8c62c48116d5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/suppression/suppression.ts",
+    "sha256": "e7c0aa9598d466873ef49c34a1b1c8cf82edd3ab701679b0b8f4c91f9e1d67e8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/tsprinter/doc.ts",
+    "sha256": "dcdf639b12eef39aee0accba981e9fe66209d2df1f88ab7b75cc66a7d7f92b48"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/tsprinter/docMain.ts",
+    "sha256": "f7b07d016ccea4c2db061e3b43f69080b04cf9de5a1268db49eb870028ddaf1b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/tsprinter/expressions.ts",
+    "sha256": "ab3dea18cbaad1c93e9b0cf9dd1a011c10fe2c83ef800614d8378fc44958a392"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/tsprinter/files.ts",
+    "sha256": "8c79efea4ca575b03f668989d335907e8e3263e60c02bd48d7e0beb103ae49e8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/tsprinter/gaps/defaultSort.ts",
+    "sha256": "6f4bd471e9277d07cbc2d60fd781287d01fee417d87efe9db8807216e31f70c8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/tsprinter/gaps/prefixUpdateValue.ts",
+    "sha256": "13e394397d05764751d3489c7c8ed62b5c181b33441a253a6e19e7c24ef29af2"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/tsprinter/keys.ts",
+    "sha256": "ccbdf1c90497b66a553eada0472418eb88b8028cde309647561d78a97b401bd2"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/tsprinter/literals.ts",
+    "sha256": "298d8459c9a38c235ec9d9139c9a4cfb7bcaf0600d7f8f7b26f359034c99a34d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/tsprinter/main.ts",
+    "sha256": "c8b1124bcbcd74a72292cbabc6a7012e30ff579d94fe7c67ca9553f5031d4148"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/tsprinter/parentheses.ts",
+    "sha256": "66868b0e1ca7e2a2c54f439d0c36c672aaf07c7a4512d463102216d4da958623"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/tsprinter/statementsMain.ts",
+    "sha256": "ee9194158a51c0b5e11f775a4bc60fe72a966b0331e76485d3d9f6a3e48e32de"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/tsprinter/syntax.ts",
+    "sha256": "753292f61495cdc3946c8c6e9e49fc6fdf20fa88ea20d44090ff82604cf996d5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/tsprinter/testdata/numberConstructor.ts",
+    "sha256": "9c19e0db88585957a32cb2f458f487aec9fe81a322f37023cafbb55d441b13fd"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/tsprinter/transport.ts",
+    "sha256": "928f1f9c102a71bf11bcb8507c30c0392a739d9223c9f5338e593690fef7b6e1"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/tsprinter/width.ts",
+    "sha256": "1df62a41aff3e7b5e8c04be8b5173ccc81808b10166f49d5c7ba7b6ed14d8df5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/tsprinter/widthTables.ts",
+    "sha256": "bdb4ad9379bf7af903643edbc5346ae7cdc9d81872ccc8bddc1215b763ca5bd7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/assignment.ts",
+    "sha256": "8f448fd87028d4638e7fe344493f169398f6d6ba6feb2b74e351685aeed29e1e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/binding.ts",
+    "sha256": "31b12e7b7121a9dd9ed89521554b231d3426b9ffabe8c95925c46d827661df33"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/bound.ts",
+    "sha256": "f988626d6dd0d54c2963301a4aed2919983c8fa991aa9d204c9be7110cefa90a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/completion.ts",
+    "sha256": "66532c3d3791ed6308dc0fa486c31d02ff57f4b483fedb704b5131282783bda0"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/diagnostic.ts",
+    "sha256": "ba44d0c3f601add63281ac4b3ea602caa7342c412bcef8734c4da6e2f4b6c0d4"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/facts.ts",
+    "sha256": "b97e5be01a54270f53b66130b5d0a0833254a37f653390e72056f64c450b5c0b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/flags.ts",
+    "sha256": "7ea8236abde7f42b09d46b38c7647f2d817820651d12faf4b04944cc4717e478"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/frames.ts",
+    "sha256": "6489fd8bdd811f066a43f25132bac10c5730b21353940b1a35ff9352f584b30b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/main.ts",
+    "sha256": "afedfaff160e058a8220ca30cecedb3526f96544887e2dfcc644801ae15a439a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/parameters.ts",
+    "sha256": "b00901d35f0c41debebf34be3040e06eb24230d18858f5c47b13d975ab6fc8de"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/repair.ts",
+    "sha256": "17df5033248e6d94394a5ea253edb8a4d21f66df6aa44de03fa56a4edd2eb8b9"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/returns.ts",
+    "sha256": "78bfe3369b9fae5ef1b05a2a816086de538952a42b68e7c3a41a8c72a49c1752"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/rules.ts",
+    "sha256": "f296505dae8a0888ad44515a2c3bedc04515fa1926badbe342104b90cea0f605"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/scope.ts",
+    "sha256": "445c24409b13ec15813b539a7ee9770d217bdf452d28ce552bdeda0ab8ff5f9f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/shadow.ts",
+    "sha256": "f1e19942910678d8efd05d8de01264d33aa7d74997c06858bffb105f16de4e20"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/suggestion.ts",
+    "sha256": "c6ebf51cd0f93f8de07d91dc42e8a3fcc5c1124ebd3daf31370f95abd755ee72"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/suite.ts",
+    "sha256": "a20d2326a600b9cba831262a055857e43f7b26b30a980fbf027413100d46458b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/testdata/fact_cost.ts",
+    "sha256": "f64055f9955ddf58871241c1be385f9a311ce5397aab9776ffae8be738611604"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/testdata/fact_cost_volume.ts",
+    "sha256": "2dee6fec61bbb117681fba58a9713cf13fa0741054fd1ab4145d07b901b8d5bf"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/testdata/facts_decode.ts",
+    "sha256": "762d7766ac93eb200e3f8c0ac54743690623b05db8e3ecd28e2c9cf681f76550"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/testdata/query_cost.ts",
+    "sha256": "ced31726eaf7c211f649381a3cf55f5390318d239ed9bda0fcd68ce54940ee36"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/testdata/released.ts",
+    "sha256": "1c559a8cfdad180125ebb9959f616cea4a61b8c7a6faa2a64c7d8c0696cc5823"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/type_fact.ts",
+    "sha256": "9a6f79ad76a0575a8ebd0607f62e61ab85e611784f7eee097472ac2ca452c34d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/types.ts",
+    "sha256": "f53f6fd8a755950515bee083b306e77b10caf495314052ed089095d2a49390ba"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/unary_minus.ts",
+    "sha256": "c493f28e51e6a48fc18e9456afbb9035bba423d589ab5ee3036ae925d0f5a82f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/unbound.ts",
+    "sha256": "9bb552e01b46c802ffb7e1c20a7c64efd4369e0e0ee5fd963b0260e07854ffb7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/void.ts",
+    "sha256": "593ce4d84c5d385775b7d69ae5a5031074a5158a7907464786aab5d2671a7896"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/volume.ts",
+    "sha256": "102648b2d59350b48ceafaec2f99f823c155ef556154f46e5aa4c676e6f65dca"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/typeaware/volume_suite.ts",
+    "sha256": "a50c650ec8c4d9bd5c0ed8e92f1b1c816c3d5e758a250f744a2d77a89e7d683e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/values/gaps/1_index_of_position.ts",
+    "sha256": "6b038018af73390ca1886fd2767117faec91cfc56c8a679ea3724111485baa6a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/values/gaps/2_boolean_or_undefined_field.ts",
+    "sha256": "1b8754615dd504e73d67dbace20fa0a7628889feaa888fe370e3a1dcf9570d87"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/values/gaps/3_case_constant.ts",
+    "sha256": "33a29226017bc7d4c465609940eaf39cc709d751d4a422d1a07c2ab7b4fdc43b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/values/gaps/4_private_method.ts",
+    "sha256": "a5519735cccc8ae990ce96ca69bcfc06d3f8ab073287a51cdc25d05e208e72d8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/values/gaps/5_empty_array_default.ts",
+    "sha256": "717093a85c3f470a153b6352003e1b9d4c93c9fb64168e11753a955383445083"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/values/main.ts",
+    "sha256": "92fe9e374bf74a9186ef17f34a38fe32865d6b2e89fe529b84a7242e40ad5df1"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/values/nodes.ts",
+    "sha256": "9f0e8df2b09f1380cfb6d5930a93db5fbe0d4a82bb075157e0a6186146810999"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/values/parser.ts",
+    "sha256": "a3539f4e9b97dec3bb85342eab39118413cfcba108884078ba867e5c9233aeb5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/values/tokenize.ts",
+    "sha256": "57a1c8606f6bd4060fc37432a19736a81dae832a12f482e338ff5236af04fef1"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/values/values.ts",
+    "sha256": "49a4e215f14c8c047c8151b6a462bcaceb70266b9db63fd48e03ac9c25d8122f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/blockLine.ts",
+    "sha256": "1edc38105e4257dc33915501d18e4a87a0fca25cc5aed5b2b8716dad296150d6"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/collectionItem.ts",
+    "sha256": "88f23a3e74f7bd63b1a3cf2ea9f7a10848374d4f3c135292d4856692aeac279b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/composeError.ts",
+    "sha256": "eb48a0ba2d5bfe9013f444017c4d8a617071893a891837791152306242856f16"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/compose_main.ts",
+    "sha256": "b7d2e8dc8e60e6d51022d5729f380f31311738d0f9343d75276b1cf954f164ac"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/composedDocument.ts",
+    "sha256": "476d88a3f2117c4305f244e15beab588272970e4b19f0763abe0e28d4de8e803"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/composedNode.ts",
+    "sha256": "e01b71f68a5808e40b149cd09417582931b6171c0bb76e3c35048b090cf41e38"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/composer.ts",
+    "sha256": "81a26bd4eeaab57d68bd03cbeff3589dc4af0e8b742705eb52fef1e5641dfb74"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/cst.ts",
+    "sha256": "2c0abaaa42d3c279cc17dea7c98c8f39a2ffac3c1fdc7a79b4fe5335a473d8ce"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/cstParser.ts",
+    "sha256": "985bd35c6b444a8176ed681db837d59874b8038572230c078ea6781ac73be9b5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/cst_main.ts",
+    "sha256": "b313bc4bb5497de9e3d2e8bb07ec9d74fe069ced72891af3b55b59409f2ca25b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/directives.ts",
+    "sha256": "b3117c271d80a74963dce2740678f156fc1bbc3cb3b57d37df8b78d9948a44dc"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/format.ts",
+    "sha256": "86c7adfff89c2dbe135c4f8af192e6292a66a7ba65619adfc14d20ad3b1219e4"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/formatResult.ts",
+    "sha256": "236bae87f7310b99113f29e87ea1c9595eaab5be9c2942761468523d7ffa3eaa"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/gaps/arenaNodeRead.ts",
+    "sha256": "74034ea3bcb6160ea3cd8b7df59d39179f5fcdd3f32e1c7e0c0997c3e74096a2"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/gaps/assignmentValue.ts",
+    "sha256": "ab667481a65f2698d42d2fc92b78cc8216f2ab4f26e29addae0620d054b48520"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/gaps/dynamicCase.ts",
+    "sha256": "5a9a2e6a8d064e2b76ad2b8eddf2e925e875c0f6ee419ecd7763bf2c5996ad05"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/gaps/emptyAlternative.ts",
+    "sha256": "cbf905136ebf4d8e1e654ed3ae11a14a05da964860db534d972c294a6e636af8"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/gaps/multiplePush.ts",
+    "sha256": "9f53e79dbc8288a2f78effc2c4beebf7a7e4792ac6a53aae00714250917c41ee"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/gaps/negativeCase.ts",
+    "sha256": "31b1cc1a61579740ecd1d7f7859e43bb27474a88c61d3114d769499f2083e5a9"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/gaps/numericMapLookup.ts",
+    "sha256": "0f73205ce525f51f5e20eb80b98469dc005feef0bb27b56270420d9a3a2a5f2e"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/gaps/prefixIncrement.ts",
+    "sha256": "c8c8252f19cef37edb51573c13dd35222478d0587f495cc771b84efed8a3fec2"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/gaps/sharedSliceAppend.ts",
+    "sha256": "b639d65f8e26fdbf248fde337605ed0445a61e9a433a0bf0b6bc1911f4b0150b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/gaps/stringFallback.ts",
+    "sha256": "55a425124c5d463e4e79f390e9a50b4f5b7b6da16ce499b3924bde7b25578e1d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/gaps/stringPresence.ts",
+    "sha256": "7b149677053ecb0cb387118207992729d0114f90058b7ac4f14fb6463924209d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/gaps/stringUnitScan.ts",
+    "sha256": "ef6a470f1f8533900759c809097d71b2d3b597a8deafe75ffe4d329947da0b4b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/gaps/structuralPosition.ts",
+    "sha256": "6f50f0bc54951b1e2ea753c36a24a3d63521c5b69fc728e517710b6e99fe1e0d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/gaps/valueConjunction.ts",
+    "sha256": "624c1c3b18b0e661496abdc414d3adf2f827b98237d87c906888a674885953ba"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/gaps/valuePresence.ts",
+    "sha256": "3be9df753543779b9775b3287e2b68cf05d78d304aa91f6f1190130a9b69de69"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/layout.ts",
+    "sha256": "6a012372d2180c9d0aaadf7cccff6f56961ee8cf77a7cdcdccea793209b1517b"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/layoutCommand.ts",
+    "sha256": "f3d995b0aff93d3fb9e92db12d83387f6992e2ca5d2e253bf107b8764b1796a5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/layoutIndent.ts",
+    "sha256": "d0bf603c8c59bd925a9c2b7c879d87f82e7304338b4c9243c14b9d593d624cb1"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/layoutNode.ts",
+    "sha256": "c88a3a46804a69f8b816d24d6533d7174e2fce90c11a9d9ab2ffd311f1e86678"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/lex_main.ts",
+    "sha256": "10b44d76f61f1de6854530a79a3455743c401fdc311e31003ab9c12c1f911c72"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/lexer.ts",
+    "sha256": "63daa4a00e4e86ea4b4c86849862d491552fc90424711da5dda536dfcfb7e7d4"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/main.ts",
+    "sha256": "280122c2d02d6898555bfc1e636dff5c7cdbe35c1a240282843655895427ffda"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/newlineFold.ts",
+    "sha256": "da5b39fee4d3649b58250440ce5ca9baf454831fb7a6b2814c6c01c9e9362940"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/patternNode.ts",
+    "sha256": "f44148a6711f5c0058434f863f5b1f3503c860fb494e118d1e8fe6c3f1c957f5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/printer.ts",
+    "sha256": "8a345566cfc3b16eada65ec9931c33cad756c879d12984f1e8c2d9509f80dcd5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/props.ts",
+    "sha256": "3720d4e8ec83f5bc1333c72d3ada9808740f0e306abf5edc872fa662d982488d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/propsResolver.ts",
+    "sha256": "66c87ac61d0d9c8a819557f5c3eccd96c6f8473a2a029931808e49380f5f901f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/props_main.ts",
+    "sha256": "2242f2c87a78702ba06e8acebae1620770132ea1539ada0568538f92fc9acd08"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/scalar.ts",
+    "sha256": "38450e0bca0e4a02b879d1cbd07fdd783b4835e042014046657e937ddf718c66"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/scalarResolution.ts",
+    "sha256": "52fad995c02584acb96d286cc790d43d5726e20fda59f88d283c4eff186587c9"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/scalarText.ts",
+    "sha256": "e1a2449e054d4f89a6f43167edbb6b7bf66bb31e881b4924a9463cae5a5092cc"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/scalar_main.ts",
+    "sha256": "65e04d9ee56ed546039da8f1d2d6e8449efa556a8cf923d27f7fd88233d109aa"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/schemaPattern.ts",
+    "sha256": "979758417d7d9199e1ce831f71244be41269c6a2c178a266ba02518306adc369"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/schemaTag.ts",
+    "sha256": "7e8a36bae3c590778a4807ac84c765b038cfab61b2ec3a047666ed8028377589"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/schemaTags.ts",
+    "sha256": "8ccfc0449a8a6d64bb67932d0a7f0297707dde989c92fa6bb1acde8935c44678"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/schema_main.ts",
+    "sha256": "d78cdd1a6710ed960f1b9cf5b3b4560891a4bc3f4050e32b7fd67c446e644b09"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/unistContext.ts",
+    "sha256": "4f3fdcd4800813288a39eb904809ed326b0e2d5e2c165024d13b269ff485d1ae"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/unistDocumentData.ts",
+    "sha256": "f942803554a01fca62174e9676ccd960d182fb549847456f385dcbbccd357c25"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/unistNode.ts",
+    "sha256": "63d1b84aeb5ea8e33c805b4f47571a5e954113a3eda1d36100f027ae85fd9b14"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/unistPoint.ts",
+    "sha256": "14692ba8fe9f1093a8dba733bb030953a4db6a8600cd172e2bb6da17d3f0cdf9"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/unistPosition.ts",
+    "sha256": "35ad7cd789d8f4a531b37460ac714f9457d3833d44da9877cc617b43aa656792"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/unist_main.ts",
+    "sha256": "c716bdf3c177595bde826063d5930182c1f9096b5946eba1e0af4113afaf2f56"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/width.ts",
+    "sha256": "12ffe442605ee6d5e22401e9896bc49398837b12f49f23227cb8a66972793bc7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/widthTables.ts",
+    "sha256": "bdb4ad9379bf7af903643edbc5346ae7cdc9d81872ccc8bddc1215b763ca5bd7"
+  },
+  {
+    "path": "/workspace/adamic/stage1/cohere/yaml/width_main.ts",
+    "sha256": "8788f26c9dc07682b8e98a83bd5b8cdb0e3820724d0c32e47a7feb05724859a4"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/parser/gaps/1_strong_ast_parent.ts",
+    "sha256": "8949a0cf454ea0c315e217a0724b55a0501da6c9d91a604f5f557882fcba5948"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/parser/gaps/2_push_spread.ts",
+    "sha256": "7835ea68d2b130453df1638aa5f18b2adaef2217466fc332e5f06822e61e8b6f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/parser/gaps/3_import_cycle.ts",
+    "sha256": "ec388f56964a9bfe4c2cb4a6e6e328897ac631e053b47c82b1e66f610e1e6e57"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/parser/gaps/3_import_cycle_peer.ts",
+    "sha256": "bee644b61bc06c30146898f048d1a64f290e200fd46139b44b437cefd237b0f5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/parser/gaps/4_class_interface_method.ts",
+    "sha256": "27b5162798999d37730305ded6bd25b500bb92e03ef0cce9dcf81e08988bbb65"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/parser/gaps/5_optional_function_value.ts",
+    "sha256": "a14725aecb3e3e73190336a24736ec32158ae69ad47b7381740f8be2e60e2fc2"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/parser/gaps/6_conditional_empty_array.ts",
+    "sha256": "e09efb5e3a1495a92b1f951da5d2205a709d099840a3050d74751cba61771138"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/parser/grammar.ts",
+    "sha256": "12e1a80281e1a0406d2cb890cc31bce44c013029a8bc5db74fc78f104f27292a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/parser/jsx.ts",
+    "sha256": "ee008273e1a7013c9c2a49c4fbe3c98e8a5d098019e04b4b261df35e9dc2cbba"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/parser/lookahead.ts",
+    "sha256": "604c76eabf9a6ae6da684bf26bd3bad4aae365027f63a399e9a813c23cb7ab4d"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/parser/main.ts",
+    "sha256": "4783899a25d9b15d4ec454bfaf87fdafedb49b5f4372569c04701e69a9448535"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/parser/nodes.ts",
+    "sha256": "f96c7514273ef211538681183b01c44e9f7b2dd9a047fcf89dcc669f84b8c7b6"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/parser/parser.ts",
+    "sha256": "0876605732290ad378ddb0ff9e7ac3f76af4383642b599db4a2d1d6ae2750e9a"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/parser/statements.ts",
+    "sha256": "97ee7d84a0602c939ddeee613ec2286f6ef1fbf780efdb43e3b6972845b43f55"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/parser/testdata/type_import_cycle/entry.a",
+    "sha256": "18f72d7f5bc2672d4d4dff1eb769f54fd6ff13d4ccc7b411688a46e1d9169cc2"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/parser/testdata/type_import_cycle/peer.a",
+    "sha256": "c707e163f0bdf117648373c7e9f5f471d144c7435f8f9f3dd83cf5fd87d0ca19"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/scanner/characters.ts",
+    "sha256": "58a228be5e31048f68831542d9cb9ec77874a6cf4ffe150b9c829f403e1dd671"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/scanner/gaps/1_push.ts",
+    "sha256": "07bd8d26293ee20405e2ba8e9362e6d8d724fd4b3b7292548832207c41f1e7a5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/scanner/gaps/2_bigint.ts",
+    "sha256": "baa1d5b2000793d1c18f0e626d55eae7764aa5ae4ed31b3ce9bfd24248c22c90"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/scanner/main.ts",
+    "sha256": "f0480cae2b2638dd92b3b3f692ed5789351b9e739462ee81a5c1614b97263f8f"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/scanner/scanner.ts",
+    "sha256": "5d8d2b244dc2ec61bac8626f281ac2bcc82f7301b90922084255ee4228ac8bc5"
+  },
+  {
+    "path": "/workspace/adamic/stage1/typescript/scanner/tokens.ts",
+    "sha256": "af3b2abb725d77aaeb469f3e695d9f29c3ffb58753695e3127bb77b05bcdb475"
+  }
+]

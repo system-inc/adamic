@@ -1,0 +1,1 @@
+import {createContext} from "react"; const C = createContext({}); function App() { return <C.Provider value={{}}><span/></C.Provider>; }

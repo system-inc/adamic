@@ -1,0 +1,1 @@
+import {useEffect} from "react"; function C({x}) { useEffect(() => console.log(x), []); }

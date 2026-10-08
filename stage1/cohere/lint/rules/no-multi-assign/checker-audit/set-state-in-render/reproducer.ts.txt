@@ -1,0 +1,1 @@
+import {useState} from "react"; function C() { const [x,setX] = useState(0); setX(1); return x; }

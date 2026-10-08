@@ -1,0 +1,75 @@
+{
+  "test_events": {
+    "pass": 19,
+    "fail": 1,
+    "skip": 1
+  },
+  "top_level": {
+    "pass": 18,
+    "fail": 1,
+    "skip": 1
+  },
+  "package_status": "FAIL",
+  "package_timeout": "TestShardsAgree",
+  "failed_tests": [
+    "TestCompilerAndStage1Agree"
+  ],
+  "skipped_tests": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "never_started": [
+    "TestCommentFoldMutant",
+    "TestDecodedOptionsAndMutant",
+    "TestFactoryHooks",
+    "TestMutants",
+    "TestNestedOutsideModuleCopy",
+    "TestOwnedWitnesses",
+    "TestPositionIndexMutant",
+    "TestProfileArtifacts",
+    "TestProfileCompilation",
+    "TestProfileSnapshotsAgree",
+    "TestRegistrationMutant"
+  ],
+  "started_without_result": [
+    "TestCountGuardMutant",
+    "TestDecorationOptionMutant",
+    "TestOptionAndComparatorGaps",
+    "TestShardsAgree"
+  ],
+  "timing": {
+    "exit": 1,
+    "wall_seconds": 3627.984623873,
+    "nproc": 5,
+    "load_before": [
+      1.02783203125,
+      5.5361328125,
+      6.34619140625
+    ],
+    "load_after": [
+      1.3984375,
+      1.2734375,
+      1.38134765625
+    ]
+  },
+  "new_claimed_rule_matches": {
+    "static-components": 0,
+    "exhaustive-deps": 0,
+    "correctness-no-test-on-global-regex": 0,
+    "correctness-require-blocking-standard-streams": 0,
+    "correctness-no-write-only-collection": 0,
+    "jsx-fragments": 0,
+    "no-redeclare": 0,
+    "correctness-no-process-exit-after-output": 0,
+    "set-state-in-render": 0,
+    "jsx-no-constructed-context-values": 0,
+    "no-new-wrappers": 0,
+    "jsx-no-undef": 0,
+    "prefer-rest-params": 0,
+    "no-new-native-nonconstructor": 0,
+    "no-new-func": 0,
+    "prefer-regex-literals": 0,
+    "set-state-in-effect": 0,
+    "correctness-no-uncleared-race-timeout": 0
+  },
+  "new_claimed_rule_mutants": "none: all blocked"
+}

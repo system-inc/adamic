@@ -1,0 +1,29 @@
+[
+  {
+    "command": [
+      "go",
+      "run",
+      "./cmd/lint-registry"
+    ],
+    "exit": 0,
+    "formatting_clean": null
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/lint/..."
+    ],
+    "exit": 0,
+    "formatting_clean": null
+  },
+  {
+    "command": [
+      "gofmt",
+      "-l",
+      "stage1/cohere/lint/rules/no-multi-assign/oracle.go"
+    ],
+    "exit": 0,
+    "formatting_clean": true
+  }
+]
