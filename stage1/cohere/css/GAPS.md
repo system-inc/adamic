@@ -30,11 +30,13 @@ boolean conditions. Raw and composed tree serialization, printer truth predicate
 printing now use the boolean table read directly. Comparisons used to pass a required boolean to
 `setBoolean` remain: those normalize a value, rather than work around a condition.
 
-## 4. Empty array assigned into an optional array
+## 4. Empty array assigned into an optional array: closed
 
-[gaps/4_empty_array_union.ts](gaps/4_empty_array_union.ts) prints `0`. Adamic reports
-`stage 0 can't lower an array of never yet`. The custom-property composition
-creates an explicitly typed `number[]` local before assigning its optional slot.
+[gaps/4_empty_array_union.ts](gaps/4_empty_array_union.ts) prints `0`. It used to stop at
+`stage 0 can't lower an array of never yet`; it lowers on the area-stack slice (compiler, Oct 8),
+and `TestClosedEmptyArrayUnionGap` holds it on native ASan/UBSan, Node, the JavaScript backend
+and LeakSanitizer. The custom-property composition still creates an explicitly typed
+`number[]` local before assigning its optional slot; that workaround is cohere's to remove.
 
 ## 5. Dynamic repeat under catch
 

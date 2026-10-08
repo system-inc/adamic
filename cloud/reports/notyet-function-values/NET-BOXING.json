@@ -1,0 +1,1595 @@
+{
+  "census_table_sha": "e8c283b5ed32477805357b652a170b85a04b2469",
+  "compiler_base_sha": "52eba88a52415814877b294004d8628a06792cb0",
+  "original_fix_sha": "03db4467",
+  "views_reverted": true,
+  "adamic_non_null_policy": "Refused, c41c0e06",
+  "source_manifest_files": 81,
+  "source_manifest_mismatches": 0,
+  "baseline": {
+    "note": "The synthetic census merge 0e5661e could not be fetched. Reconstructed sequentially from the published area, statics and binary pins; c41 was already inherited. Used the task replay tooling. Both requested signatures reproduce.",
+    "commit": "3d56ceea248dba0c013807fdc74b7d8b111c5d18",
+    "tree": "a22cb84cbd144815e1de96229ce7201cf43edca9",
+    "pins": [
+      "b68b2fe1af2dd6ad369ad8dfbfedf66be5a42861",
+      "1db2b32429c7edd8e4b6cfcd36ac98cea8df4a9a",
+      "a8ad5bf0778fe8fd9f30b70bbe3eb807864e6b2a",
+      "c41c0e062e99da37820f822968d4df1b48cdaee7"
+    ]
+  },
+  "net_replays": {
+    "before": [
+      {
+        "phase": "before",
+        "where": "checker.ts:10140:21",
+        "reason": "passing union of differently held members to a function value",
+        "exit": 0,
+        "units": [
+          {
+            "name": "serializeEnum",
+            "where": "/tmp/function-values-census-input/src/compiler/checker.ts:10087:13"
+          }
+        ],
+        "findings": [
+          {
+            "where": "/tmp/function-values-census-input/src/compiler/core.ts:261:1",
+            "kind": "Refused",
+            "reason": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined"
+          },
+          {
+            "where": "/tmp/function-values-census-input/src/compiler/checker.ts:10093:33",
+            "kind": "NotYet",
+            "reason": "reading memberProps"
+          },
+          {
+            "where": "/tmp/function-values-census-input/src/compiler/checker.ts:10140:21",
+            "kind": "NotYet",
+            "reason": "passing union of differently held members to a function value"
+          }
+        ],
+        "stderr": "replay load/register/lower: 2.145049806s\nreproduced NotYet: passing union of differently held members to a function value at /tmp/function-values-census-input/src/compiler/checker.ts:10140:21\n"
+      },
+      {
+        "phase": "before",
+        "where": "checker.ts:10979:24",
+        "reason": "a function value returning union of differently held members",
+        "exit": 0,
+        "units": [
+          {
+            "name": "serializePropertySymbolForInterface",
+            "where": "/tmp/function-values-census-input/src/compiler/checker.ts:10978:13"
+          }
+        ],
+        "findings": [
+          {
+            "where": "/tmp/function-values-census-input/src/compiler/checker.ts:10979:24",
+            "kind": "NotYet",
+            "reason": "a function value returning union of differently held members"
+          }
+        ],
+        "stderr": "replay load/register/lower: 2.169594182s\nreproduced NotYet: a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/checker.ts:10979:24\n"
+      }
+    ],
+    "after": [
+      {
+        "phase": "after",
+        "where": "checker.ts:10140:21",
+        "reason": "passing union of differently held members to a function value",
+        "exit": 1,
+        "units": [
+          {
+            "name": "serializeEnum",
+            "where": "/tmp/function-values-census-input/src/compiler/checker.ts:10087:13"
+          }
+        ],
+        "findings": [
+          {
+            "where": "/tmp/function-values-census-input/src/compiler/core.ts:261:1",
+            "kind": "Refused",
+            "reason": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined"
+          },
+          {
+            "where": "/tmp/function-values-census-input/src/compiler/checker.ts:10093:33",
+            "kind": "NotYet",
+            "reason": "reading memberProps"
+          },
+          {
+            "where": "/tmp/function-values-census-input/src/compiler/checker.ts:10140:21",
+            "kind": "NotYet",
+            "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+          }
+        ],
+        "stderr": "replay load/register/lower: 2.132210463s\nreplay signature did not reproduce: NotYet passing union of differently held members to a function value at /tmp/function-values-census-input/src/compiler/checker.ts:10140:21 (selected /tmp/function-values-census-input/src/compiler/checker.ts:10087:13)\n"
+      },
+      {
+        "phase": "after",
+        "where": "checker.ts:10979:24",
+        "reason": "a function value returning union of differently held members",
+        "exit": 1,
+        "units": [
+          {
+            "name": "serializePropertySymbolForInterface",
+            "where": "/tmp/function-values-census-input/src/compiler/checker.ts:10978:13"
+          }
+        ],
+        "findings": [],
+        "stderr": "replay load/register/lower: 2.199419207s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/checker.ts:10979:24 (selected /tmp/function-values-census-input/src/compiler/checker.ts:10978:13)\n"
+      }
+    ]
+  },
+  "original_43_replays": [
+    {
+      "where": "src/compiler/checker.ts:10979:24",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "serializePropertySymbolForInterface",
+          "where": "/tmp/function-values-census-input/src/compiler/checker.ts:10978:13"
+        }
+      ],
+      "findings": [],
+      "stderr": "replay load/register/lower: 2.275350288s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/checker.ts:10979:24 (selected /tmp/function-values-census-input/src/compiler/checker.ts:10978:13)\n"
+    },
+    {
+      "where": "src/compiler/core.ts:403:23",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "flatMap",
+          "where": "/tmp/function-values-census-input/src/compiler/core.ts:399:1"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/core.ts:403:19",
+          "kind": "NotYet",
+          "reason": "a value of type U | readonly U[] | undefined"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/core.ts:404:17",
+          "kind": "NotYet",
+          "reason": "reading v"
+        }
+      ],
+      "stderr": "replay load/register/lower: 2.175177898s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/core.ts:403:23 (selected /tmp/function-values-census-input/src/compiler/core.ts:399:1)\n"
+    },
+    {
+      "where": "src/compiler/parser.ts:9187:13",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "parseTrailingTagComments",
+          "where": "/tmp/function-values-census-input/src/compiler/parser.ts:9187:13"
+        }
+      ],
+      "findings": [],
+      "stderr": "replay load/register/lower: 2.25983095s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/parser.ts:9187:13 (selected /tmp/function-values-census-input/src/compiler/parser.ts:9187:13)\n"
+    },
+    {
+      "where": "src/compiler/transformer.ts:211:35",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "wrapCustomTransformerFactory",
+          "where": "/tmp/function-values-census-input/src/compiler/transformer.ts:209:1"
+        }
+      ],
+      "findings": [],
+      "stderr": "replay load/register/lower: 2.159554806s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformer.ts:211:35 (selected /tmp/function-values-census-input/src/compiler/transformer.ts:209:1)\n"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1640:51",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitCommaListExpression",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/classFields.ts:1638:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/classFields.ts:1642:16",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        }
+      ],
+      "stderr": "replay load/register/lower: 2.034064479s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/classFields.ts:1640:51 (selected /tmp/function-values-census-input/src/compiler/transformers/classFields.ts:1638:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/classFields.ts:1651:62",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitParenthesizedExpression",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/classFields.ts:1645:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/visitorPublic.ts:123:5",
+          "kind": "Refused",
+          "reason": "overload 1 of visitNode parameter node cannot be served by implementation parameter node"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/classFields.ts:1654:16",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        }
+      ],
+      "stderr": "replay load/register/lower: 2.246350431s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/classFields.ts:1651:62 (selected /tmp/function-values-census-input/src/compiler/transformers/classFields.ts:1645:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/declarations.ts:984:9",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitLateVisibilityMarkedStatements",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/declarations.ts:984:9"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/declarations.ts:987:21",
+          "kind": "NotYet",
+          "reason": "a Map of VisitResult<ExportAssignment | LateVisibilityPaintedStatement | undefined>"
+        }
+      ],
+      "stderr": "replay load/register/lower: 2.12828856s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/declarations.ts:984:9 (selected /tmp/function-values-census-input/src/compiler/transformers/declarations.ts:984:9)\n"
+    },
+    {
+      "where": "src/compiler/transformers/es2015.ts:2688:17",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitBinaryExpression",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2015.ts:2683:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2015.ts:2695:20",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/visitorPublic.ts:587:119",
+          "kind": "Refused",
+          "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor"
+        }
+      ],
+      "stderr": "replay load/register/lower: 2.064095388s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/es2015.ts:2688:17 (selected /tmp/function-values-census-input/src/compiler/transformers/es2015.ts:2683:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/es2015.ts:2920:17",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitVariableDeclaration",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2015.ts:2914:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/visitorPublic.ts:587:119",
+          "kind": "Refused",
+          "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor"
+        }
+      ],
+      "stderr": "replay load/register/lower: 2.417047072s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/es2015.ts:2920:17 (selected /tmp/function-values-census-input/src/compiler/transformers/es2015.ts:2914:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/es2015.ts:4205:17",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitCatchClause",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2015.ts:4195:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/debug.ts:213:28",
+          "kind": "NotYet",
+          "reason": "a value of type unknown"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2015.ts:4200:26",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2015.ts:4201:44",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/utilities.ts:10655:6",
+          "kind": "Refused",
+          "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/utilities.ts:10645:6",
+          "kind": "Refused",
+          "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2015.ts:4202:26",
+          "kind": "NotYet",
+          "reason": "reading newVariableDeclaration"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2015.ts:4208:17",
+          "kind": "NotYet",
+          "reason": "reading temp"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2015.ts:4210:26",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2015.ts:4211:26",
+          "kind": "NotYet",
+          "reason": "reading list"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2015.ts:4212:33",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2015.ts:4213:23",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/visitorPublic.ts:587:119",
+          "kind": "Refused",
+          "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor"
+        }
+      ],
+      "stderr": "replay load/register/lower: 2.359955903s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/es2015.ts:4205:17 (selected /tmp/function-values-census-input/src/compiler/transformers/es2015.ts:4195:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/es2015.ts:4792:13",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitTaggedTemplateExpression",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2015.ts:4788:5"
+        }
+      ],
+      "findings": [],
+      "stderr": "replay load/register/lower: 2.172416241s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/es2015.ts:4792:13 (selected /tmp/function-values-census-input/src/compiler/transformers/es2015.ts:4788:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/es2016.ts:37:5",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitor",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2016.ts:37:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2016.ts:43:46",
+          "kind": "Refused",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/visitorPublic.ts:587:119",
+          "kind": "Refused",
+          "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor"
+        }
+      ],
+      "stderr": "replay load/register/lower: 2.234637294s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/es2016.ts:37:5 (selected /tmp/function-values-census-input/src/compiler/transformers/es2016.ts:37:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/es2018.ts:587:13",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitTaggedTemplateExpression",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2018.ts:583:5"
+        }
+      ],
+      "findings": [],
+      "stderr": "replay load/register/lower: 2.096801336s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/es2018.ts:587:13 (selected /tmp/function-values-census-input/src/compiler/transformers/es2018.ts:583:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/es2018.ts:605:17",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitBinaryExpression",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2018.ts:601:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2018.ts:612:20",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/visitorPublic.ts:587:119",
+          "kind": "Refused",
+          "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor"
+        }
+      ],
+      "stderr": "replay load/register/lower: 2.105272224s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/es2018.ts:605:17 (selected /tmp/function-values-census-input/src/compiler/transformers/es2018.ts:601:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/es2018.ts:802:62",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "convertForOfStatementHead",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2018.ts:786:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2018.ts:787:23",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2018.ts:788:41",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2018.ts:789:40",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2018.ts:790:27",
+          "kind": "NotYet",
+          "reason": "reading iteratorValueStatement"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2018.ts:792:43",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2018.ts:793:42",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2018.ts:794:27",
+          "kind": "NotYet",
+          "reason": "reading exitNonUserCodeStatement"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2018.ts:796:42",
+          "kind": "NotYet",
+          "reason": "reading iteratorValueStatement"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2018.ts:797:80",
+          "kind": "NotYet",
+          "reason": "reading value"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2018.ts:798:9",
+          "kind": "NotYet",
+          "reason": "reading statements"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/core.ts:987:34",
+          "kind": "NotYet",
+          "reason": "slice with an index that isn't a number"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/core.ts:988:5",
+          "kind": "panic",
+          "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+        },
+        {
+          "where": "",
+          "kind": "error",
+          "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/core.ts:989:5",
+          "kind": "panic",
+          "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/core.ts:991:9",
+          "kind": "panic",
+          "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2018.ts:804:22",
+          "kind": "NotYet",
+          "reason": "reading statements"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2018.ts:809:13",
+          "kind": "NotYet",
+          "reason": "reading statements"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/utilities.ts:10655:6",
+          "kind": "Refused",
+          "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/utilities.ts:10645:6",
+          "kind": "Refused",
+          "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2018.ts:813:13",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        }
+      ],
+      "stderr": "replay load/register/lower: 2.27357529s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/es2018.ts:802:62 (selected /tmp/function-values-census-input/src/compiler/transformers/es2018.ts:786:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/es2019.ts:29:5",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitor",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2019.ts:29:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2019.ts:35:41",
+          "kind": "Refused",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/visitorPublic.ts:587:119",
+          "kind": "Refused",
+          "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor"
+        }
+      ],
+      "stderr": "replay load/register/lower: 2.160983426s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/es2019.ts:29:5 (selected /tmp/function-values-census-input/src/compiler/transformers/es2019.ts:29:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/es2020.ts:58:5",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitor",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2020.ts:58:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2020.ts:64:64",
+          "kind": "Refused",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/debug.ts:189:13",
+          "kind": "NotYet",
+          "reason": "assigning an element of a value"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/debug.ts:190:14",
+          "kind": "Refused",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/debug.ts:213:28",
+          "kind": "NotYet",
+          "reason": "a value of type unknown"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2020.ts:65:37",
+          "kind": "NotYet",
+          "reason": "reading updated"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2020.ts:66:24",
+          "kind": "NotYet",
+          "reason": "reading updated"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/visitorPublic.ts:587:119",
+          "kind": "Refused",
+          "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2020.ts:77:22",
+          "kind": "Refused",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2020.ts:82:46",
+          "kind": "Refused",
+          "reason": "a cast the runtime can't check"
+        }
+      ],
+      "stderr": "replay load/register/lower: 2.56061719s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/es2020.ts:58:5 (selected /tmp/function-values-census-input/src/compiler/transformers/es2020.ts:58:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/es2021.ts:40:5",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitor",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/es2021.ts:40:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/visitorPublic.ts:587:119",
+          "kind": "Refused",
+          "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor"
+        }
+      ],
+      "stderr": "replay load/register/lower: 2.449877722s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/es2021.ts:40:5 (selected /tmp/function-values-census-input/src/compiler/transformers/es2021.ts:40:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1095:61",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitClassDeclaration",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1054:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/utilitiesPublic.ts:762:1",
+          "kind": "NotYet",
+          "reason": "overload 1 of getOriginalNode with additional implementation type parameters"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1058:31",
+          "kind": "NotYet",
+          "reason": "reading originalClass"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/namedEvaluation.ts:173:1",
+          "kind": "Refused",
+          "reason": "overload 1 of injectClassNamedEvaluationHelperBlockIfMissing result Extract<ClassDeclaration, Pick<...>> | Extract<...> cannot be served by implementation result ClassLikeDeclaration"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1065:23",
+          "kind": "NotYet",
+          "reason": "a value of type ImmediatelyInvokedArrowFunction"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1069:37",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1070:37",
+          "kind": "NotYet",
+          "reason": "reading varDecl"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1072:38",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1073:42",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1074:37",
+          "kind": "NotYet",
+          "reason": "reading varStatement"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1076:45",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1077:37",
+          "kind": "NotYet",
+          "reason": "reading exportStatement"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1078:37",
+          "kind": "NotYet",
+          "reason": "reading exportStatement"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1079:39",
+          "kind": "NotYet",
+          "reason": "reading exportStatement"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1080:37",
+          "kind": "NotYet",
+          "reason": "reading exportStatement"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1084:45",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1085:37",
+          "kind": "NotYet",
+          "reason": "reading exportStatement"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1086:37",
+          "kind": "NotYet",
+          "reason": "reading exportStatement"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1087:39",
+          "kind": "NotYet",
+          "reason": "reading exportStatement"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1088:37",
+          "kind": "NotYet",
+          "reason": "reading exportStatement"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/debug.ts:251:45",
+          "kind": "NotYet",
+          "reason": "a generic function as a value"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1094:23",
+          "kind": "NotYet",
+          "reason": "a value of type ImmediatelyInvokedArrowFunction"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/visitorPublic.ts:196:5",
+          "kind": "Refused",
+          "reason": "overload 1 of visitNodes parameter visitor cannot be served by implementation parameter visitor"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1097:34",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1098:33",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1099:33",
+          "kind": "NotYet",
+          "reason": "reading varDecl"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1101:34",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1102:38",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1103:33",
+          "kind": "NotYet",
+          "reason": "reading varStatement"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1104:33",
+          "kind": "NotYet",
+          "reason": "reading varStatement"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1105:33",
+          "kind": "NotYet",
+          "reason": "reading varStatement"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1108:45",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1109:37",
+          "kind": "NotYet",
+          "reason": "reading exportStatement"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1110:37",
+          "kind": "NotYet",
+          "reason": "reading exportStatement"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/core.ts:1152:1",
+          "kind": "Refused",
+          "reason": "overload 1 of singleOrMany result T | T[] cannot be served by implementation result T | readonly T[] | undefined"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1121:20",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        }
+      ],
+      "stderr": "replay load/register/lower: 2.892390248s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1095:61 (selected /tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1054:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:1923:51",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitCommaListExpression",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1921:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1925:16",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        }
+      ],
+      "stderr": "replay load/register/lower: 3.55693213s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1923:51 (selected /tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:1921:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:2186:62",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitParenthesizedExpression",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:2180:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/visitorPublic.ts:123:5",
+          "kind": "Refused",
+          "reason": "overload 1 of visitNode parameter node cannot be served by implementation parameter node"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:2188:16",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        }
+      ],
+      "stderr": "replay load/register/lower: 3.425191322s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:2186:62 (selected /tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:2180:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/esDecorators.ts:2194:62",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitPartiallyEmittedExpression",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:2191:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/visitorPublic.ts:123:5",
+          "kind": "Refused",
+          "reason": "overload 1 of visitNode parameter node cannot be served by implementation parameter node"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:2196:16",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        }
+      ],
+      "stderr": "replay load/register/lower: 3.644947828s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:2194:62 (selected /tmp/function-values-census-input/src/compiler/transformers/esDecorators.ts:2191:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/esnext.ts:105:5",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitor",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esnext.ts:105:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esnext.ts:112:40",
+          "kind": "Refused",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esnext.ts:115:35",
+          "kind": "Refused",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esnext.ts:118:42",
+          "kind": "Refused",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/esnext.ts:121:44",
+          "kind": "Refused",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/visitorPublic.ts:587:119",
+          "kind": "Refused",
+          "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor"
+        }
+      ],
+      "stderr": "replay load/register/lower: 2.320478162s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/esnext.ts:105:5 (selected /tmp/function-values-census-input/src/compiler/transformers/esnext.ts:105:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/generators.ts:417:5",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitor",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/generators.ts:417:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/generators.ts:425:18",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a boolean and a value"
+        }
+      ],
+      "stderr": "replay load/register/lower: 2.967392491s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/generators.ts:417:5 (selected /tmp/function-values-census-input/src/compiler/transformers/generators.ts:417:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/jsx.ts:209:5",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitor",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/jsx.ts:209:5"
+        }
+      ],
+      "findings": [],
+      "stderr": "replay load/register/lower: 2.532921751s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/jsx.ts:209:5 (selected /tmp/function-values-census-input/src/compiler/transformers/jsx.ts:209:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/legacyDecorators.ts:119:5",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "modifierVisitor",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/legacyDecorators.ts:119:5"
+        }
+      ],
+      "findings": [],
+      "stderr": "replay load/register/lower: 3.560971773s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/legacyDecorators.ts:119:5 (selected /tmp/function-values-census-input/src/compiler/transformers/legacyDecorators.ts:119:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/module/esnextAnd2015.ts:143:5",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "transformECMAScriptModule",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:67:1"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:70:9",
+          "kind": "Refused",
+          "reason": "a method in object destructuring"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:72:18",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:73:22",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:74:29",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:75:49",
+          "kind": "NotYet",
+          "reason": "reading compilerOptions"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:80:5",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:81:5",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:90:5",
+          "kind": "NotYet",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:126:5",
+          "kind": "NotYet",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:143:5",
+          "kind": "NotYet",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:171:5",
+          "kind": "NotYet",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:188:5",
+          "kind": "NotYet",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:207:5",
+          "kind": "NotYet",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:261:5",
+          "kind": "NotYet",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:294:5",
+          "kind": "NotYet",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:308:5",
+          "kind": "NotYet",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:331:5",
+          "kind": "NotYet",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:386:5",
+          "kind": "NotYet",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:411:5",
+          "kind": "NotYet",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:423:5",
+          "kind": "NotYet",
+          "reason": "a function inside a function (a closure)"
+        }
+      ],
+      "stderr": "replay load/register/lower: 2.777141861s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:143:5 (selected /tmp/function-values-census-input/src/compiler/transformers/module/esnextAnd2015.ts:67:1)\n"
+    },
+    {
+      "where": "src/compiler/transformers/module/module.ts:710:5",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "topLevelVisitor",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/module.ts:710:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/module.ts:713:55",
+          "kind": "Refused",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/module.ts:716:61",
+          "kind": "Refused",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/module.ts:719:55",
+          "kind": "Refused",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/module.ts:722:54",
+          "kind": "Refused",
+          "reason": "a cast the runtime can't check"
+        }
+      ],
+      "stderr": "replay load/register/lower: 2.970734779s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/module/module.ts:710:5 (selected /tmp/function-values-census-input/src/compiler/transformers/module/module.ts:710:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/module/module.ts:892:57",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitDestructuringAssignment",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/module.ts:890:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/visitorPublic.ts:587:119",
+          "kind": "Refused",
+          "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor"
+        }
+      ],
+      "stderr": "replay load/register/lower: 3.230972856s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/module/module.ts:892:57 (selected /tmp/function-values-census-input/src/compiler/transformers/module/module.ts:890:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/module/module.ts:963:59",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitForOfStatement",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/module.ts:958:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/visitorPublic.ts:123:5",
+          "kind": "Refused",
+          "reason": "overload 1 of visitNode parameter node cannot be served by implementation parameter node"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/module.ts:966:21",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/module.ts:969:20",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/module.ts:971:16",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        }
+      ],
+      "stderr": "replay load/register/lower: 3.963938073s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/module/module.ts:963:59 (selected /tmp/function-values-census-input/src/compiler/transformers/module/module.ts:958:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/module/system.ts:1647:17",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "visitDestructuringAssignment",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/system.ts:1643:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/visitorPublic.ts:587:119",
+          "kind": "Refused",
+          "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor"
+        }
+      ],
+      "stderr": "replay load/register/lower: 2.689617907s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/module/system.ts:1647:17 (selected /tmp/function-values-census-input/src/compiler/transformers/module/system.ts:1643:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/module/system.ts:958:17",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "transformInitializedVariable",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/module/system.ts:953:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/visitorPublic.ts:123:5",
+          "kind": "Refused",
+          "reason": "overload 1 of visitNode parameter node cannot be served by implementation parameter node"
+        }
+      ],
+      "stderr": "replay load/register/lower: 3.144920598s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/module/system.ts:958:17 (selected /tmp/function-values-census-input/src/compiler/transformers/module/system.ts:953:5)\n"
+    },
+    {
+      "where": "src/compiler/transformers/ts.ts:542:16",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "getClassElementVisitor",
+          "where": "/tmp/function-values-census-input/src/compiler/transformers/ts.ts:541:5"
+        }
+      ],
+      "findings": [],
+      "stderr": "replay load/register/lower: 3.645635609s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/transformers/ts.ts:542:16 (selected /tmp/function-values-census-input/src/compiler/transformers/ts.ts:541:5)\n"
+    },
+    {
+      "where": "src/compiler/utilities.ts:3143:38",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "getContainingClassStaticBlock",
+          "where": "/tmp/function-values-census-input/src/compiler/utilities.ts:3142:1"
+        }
+      ],
+      "findings": [],
+      "stderr": "replay load/register/lower: 3.576108202s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/utilities.ts:3143:38 (selected /tmp/function-values-census-input/src/compiler/utilities.ts:3142:1)\n"
+    },
+    {
+      "where": "src/compiler/utilities.ts:3158:49",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "getContainingClassExcludingClassDecorators",
+          "where": "/tmp/function-values-census-input/src/compiler/utilities.ts:3157:1"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/utilities.ts:3159:12",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a value and a boolean"
+        }
+      ],
+      "stderr": "replay load/register/lower: 2.437266984s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/utilities.ts:3158:49 (selected /tmp/function-values-census-input/src/compiler/utilities.ts:3157:1)\n"
+    },
+    {
+      "where": "src/compiler/utilities.ts:6809:9",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "isInTypeQuery",
+          "where": "/tmp/function-values-census-input/src/compiler/utilities.ts:6803:1"
+        }
+      ],
+      "findings": [],
+      "stderr": "replay load/register/lower: 2.461076977s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/utilities.ts:6809:9 (selected /tmp/function-values-census-input/src/compiler/utilities.ts:6803:1)\n"
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:790:24",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "findAncestor",
+          "where": "/tmp/function-values-census-input/src/compiler/utilitiesPublic.ts:788:1"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/utilitiesPublic.ts:786:1",
+          "kind": "Refused",
+          "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined"
+        }
+      ],
+      "stderr": "replay load/register/lower: 4.213927141s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/utilitiesPublic.ts:790:24 (selected /tmp/function-values-census-input/src/compiler/utilitiesPublic.ts:788:1)\n"
+    },
+    {
+      "where": "src/compiler/watchUtilities.ts:144:5",
+      "reason": "a function value returning union of differently held members",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "getCachedFileSystemEntries",
+          "where": "/tmp/function-values-census-input/src/compiler/watchUtilities.ts:144:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/watchUtilities.ts:144:41",
+          "kind": "NotYet",
+          "reason": "a value of type Path"
+        }
+      ],
+      "stderr": "replay load/register/lower: 2.551423625s\nreplay signature did not reproduce: NotYet a function value returning union of differently held members at /tmp/function-values-census-input/src/compiler/watchUtilities.ts:144:5 (selected /tmp/function-values-census-input/src/compiler/watchUtilities.ts:144:5)\n"
+    },
+    {
+      "where": "src/compiler/program.ts:558:106",
+      "reason": "a function value taking CreateSourceFileOptions | ScriptTarget",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "changeCompilerHostLikeToUseCache",
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:520:1"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:530:27",
+          "kind": "NotYet",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:531:29",
+          "kind": "NotYet",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:532:34",
+          "kind": "NotYet",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:536:15",
+          "kind": "NotYet",
+          "reason": "a value of type Path"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:537:23",
+          "kind": "NotYet",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:538:13",
+          "kind": "NotYet",
+          "reason": "reading value"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:539:16",
+          "kind": "NotYet",
+          "reason": "reading setReadFileCache"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:541:31",
+          "kind": "NotYet",
+          "reason": "a value of type Path"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:546:5",
+          "kind": "NotYet",
+          "reason": "replacing a represented method at runtime"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:559:15",
+          "kind": "NotYet",
+          "reason": "a value of type Path"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:562:23",
+          "kind": "NotYet",
+          "reason": "a call through ?. (an optional call)"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:563:13",
+          "kind": "NotYet",
+          "reason": "reading value"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:566:13",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a value and a boolean"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:573:5",
+          "kind": "NotYet",
+          "reason": "replacing a represented method at runtime"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:582:43",
+          "kind": "NotYet",
+          "reason": "a rest parameter outside a nongeneric named function"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:606:19",
+          "kind": "NotYet",
+          "reason": "a value of type Path"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:607:27",
+          "kind": "NotYet",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:608:17",
+          "kind": "NotYet",
+          "reason": "reading value"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:609:30",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:610:13",
+          "kind": "NotYet",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:611:20",
+          "kind": "NotYet",
+          "reason": "reading newValue"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/program.ts:615:13",
+          "kind": "NotYet",
+          "reason": "replacing a represented method at runtime"
+        }
+      ],
+      "stderr": "replay load/register/lower: 3.497821398s\nreplay signature did not reproduce: NotYet a function value taking CreateSourceFileOptions | ScriptTarget at /tmp/function-values-census-input/src/compiler/program.ts:558:106 (selected /tmp/function-values-census-input/src/compiler/program.ts:520:1)\n"
+    },
+    {
+      "where": "src/compiler/builder.ts:1973:41",
+      "reason": "a function value taking EmitSignature | undefined",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "handleNewSignature",
+          "where": "/tmp/function-values-census-input/src/compiler/builder.ts:1973:13"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/core.ts:1769:26",
+          "kind": "NotYet",
+          "reason": "a value of type unknown"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/builder.ts:1975:17",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression as a statement"
+        },
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/builder.ts:1977:38",
+          "kind": "NotYet",
+          "reason": "reading oldSignature"
+        }
+      ],
+      "stderr": "replay load/register/lower: 3.844242898s\nreplay signature did not reproduce: NotYet a function value taking EmitSignature | undefined at /tmp/function-values-census-input/src/compiler/builder.ts:1973:41 (selected /tmp/function-values-census-input/src/compiler/builder.ts:1973:13)\n"
+    },
+    {
+      "where": "src/compiler/builder.ts:1635:43",
+      "reason": "a function value taking string | DiagnosticMessageChain | undefined",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "flattenDiagnosticMessageText",
+          "where": "/tmp/function-values-census-input/src/compiler/builder.ts:1635:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/core.ts:1769:26",
+          "kind": "NotYet",
+          "reason": "a value of type unknown"
+        }
+      ],
+      "stderr": "replay load/register/lower: 3.552945779s\nreplay signature did not reproduce: NotYet a function value taking string | DiagnosticMessageChain | undefined at /tmp/function-values-census-input/src/compiler/builder.ts:1635:43 (selected /tmp/function-values-census-input/src/compiler/builder.ts:1635:5)\n"
+    },
+    {
+      "where": "src/compiler/executeCommandLine.ts:308:9",
+      "reason": "a function value taking string | number | boolean | DiagnosticMessage | undefined",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "formatDefaultValue",
+          "where": "/tmp/function-values-census-input/src/compiler/executeCommandLine.ts:307:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/core.ts:1337:1",
+          "kind": "Refused",
+          "reason": "overload 1 of arrayFrom result U[] cannot be served by implementation result (T | U)[]"
+        }
+      ],
+      "stderr": "replay load/register/lower: 3.640498192s\nreplay signature did not reproduce: NotYet a function value taking string | number | boolean | DiagnosticMessage | undefined at /tmp/function-values-census-input/src/compiler/executeCommandLine.ts:308:9 (selected /tmp/function-values-census-input/src/compiler/executeCommandLine.ts:307:5)\n"
+    },
+    {
+      "where": "src/compiler/executeCommandLine.ts:504:22",
+      "reason": "a function value taking string | string[]",
+      "exit": 1,
+      "assigned_stop_remains": false,
+      "units": [
+        {
+          "name": "example",
+          "where": "/tmp/function-values-census-input/src/compiler/executeCommandLine.ts:504:5"
+        }
+      ],
+      "findings": [
+        {
+          "where": "/tmp/function-values-census-input/src/compiler/commandLineParser.ts:2206:63",
+          "kind": "NotYet",
+          "reason": "a rest array of (string | number | boolean | readonly string[] | SourceFile | undefined)[]"
+        }
+      ],
+      "stderr": "replay load/register/lower: 3.658891425s\nreplay signature did not reproduce: NotYet a function value taking string | string[] at /tmp/function-values-census-input/src/compiler/executeCommandLine.ts:504:22 (selected /tmp/function-values-census-input/src/compiler/executeCommandLine.ts:504:5)\n"
+    }
+  ],
+  "logs": {
+    "function-values-net-positive": "=== RUN   TestFunctionValueBoundaryBoxing\n--- PASS: TestFunctionValueBoundaryBoxing (0.05s)\n=== RUN   TestNativeAgreesWithNode\n=== PAUSE TestNativeAgreesWithNode\n=== CONT  TestNativeAgreesWithNode\n=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/function_values_return.a\n=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/function_values_return.a\n=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/function_values_boundary.a\n=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/function_values_boundary.a\n=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/function_values_options.a\n=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/function_values_options.a\n=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/function_values_signature.a\n=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/function_values_signature.a\n=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/function_values_chain.a\n=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/function_values_chain.a\n=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/function_values_diagnostic.a\n=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/function_values_diagnostic.a\n=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/function_values_array.a\n=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/function_values_array.a\n=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/function_values_return.a\n=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/function_values_chain.a\n=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/function_values_array.a\n=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/function_values_diagnostic.a\n=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/function_values_options.a\n=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/function_values_signature.a\n=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/function_values_boundary.a\n--- PASS: TestNativeAgreesWithNode (0.02s)\n    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/function_values_options.a (0.76s)\n    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/function_values_chain.a (0.77s)\n    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/function_values_return.a (0.80s)\n    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/function_values_array.a (0.81s)\n    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/function_values_diagnostic.a (0.82s)\n    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/function_values_signature.a (0.52s)\n    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/function_values_boundary.a (0.58s)\nPASS\ngate cache: native hits=0 misses=21\ngate cache: node hits=0 misses=14\ngate cache: probe hits=0 misses=0\nok  \tgithub.com/system-inc/adamic/internal/oracle\t1.429s\n",
+    "function-values-net-mutants-final": "skip-call-boxing exit 1 caught by fixture representation assertion: /tmp/function-values-boundary-mutant-skip-call-boxing.log\nskip-return-boxing exit 1 caught by fixture representation assertion: /tmp/function-values-boundary-mutant-skip-return-boxing.log\n",
+    "function-values-net-original-mutants": "return exit 1\ncaught by behavioral oracle: /tmp/function-values-mutant-return.log\narguments exit 1\ncaught by behavioral oracle: /tmp/function-values-mutant-arguments.log\nviews exit 1 caught all four unsafe callable views: /tmp/function-values-mutant-views.log\n",
+    "function-values-net-restored": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t1.164s\nok  \tgithub.com/system-inc/adamic/internal/lower\t0.199s\n",
+    "function-values-net-counts": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t28.005s\n",
+    "function-values-net-vet": "",
+    "function-values-c41-final-tests": "ok  \tgithub.com/system-inc/adamic/cmd/adamic\t12.014s\nok  \tgithub.com/system-inc/adamic/internal/lower\t4.131s\nok  \tgithub.com/system-inc/adamic/internal/ir\t0.076s [no tests to run]\nok  \tgithub.com/system-inc/adamic/internal/flow\t0.102s [no tests to run]\nok  \tgithub.com/system-inc/adamic/internal/oracle\t6.852s\n",
+    "function-values-c41-counts": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t55.142s\n",
+    "function-values-revert-push": "To https://github.com/system-inc/adamic.git\n   56b91e8c..c9d6e23a  HEAD -> codex/notyet-function-values\n",
+    "function-values-c41-push": "To https://github.com/system-inc/adamic.git\n   c9d6e23a..52eba88a  HEAD -> codex/notyet-function-values\n"
+  },
+  "limits": "The 154 argument and 20 return kinds are echoes of this branch's existing union-slot fix; two new-census examples were replayed. No 174-site whole-program or backend compilation claim. Original 43 selected units were replayed, not their full source files. Scalar-to-union callable signature views remain NotYet pending adapters. No views integration or runtime C helper is retained."
+}
