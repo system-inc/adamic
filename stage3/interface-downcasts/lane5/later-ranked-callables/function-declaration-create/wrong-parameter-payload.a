@@ -1,0 +1,13 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface FunctionDeclaration {readonly value:number;}
+interface ModifierLike {readonly value:number;}
+interface AsteriskToken {readonly value:number;}
+interface Identifier {readonly value:number;}
+interface TypeParameterDeclaration {readonly value:number;}
+interface ParameterDeclaration {readonly value:number;}
+interface TypeNode {readonly value:number;}
+interface Block {readonly value:number;}
+interface Base {readonly createFunctionDeclaration:unknown;}
+interface Target {createFunctionDeclaration(modifiers: readonly ModifierLike[] | undefined, asteriskToken: AsteriskToken | undefined, name: string | Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block | undefined): FunctionDeclaration;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createFunctionDeclaration([{value:2}],{value:3},{value:4},[{value:5}],[{value:6}],{value:7},{value:8}).value}`);}
+probe({createFunctionDeclaration:(modifiers:readonly {readonly value:string}[]|undefined,asteriskToken:AsteriskToken|undefined,name:string|Identifier|undefined,typeParameters:readonly TypeParameterDeclaration[]|undefined,parameters:readonly ParameterDeclaration[],type:TypeNode|undefined,body:Block|undefined)=>{const modifier=modifiers===undefined?undefined:modifiers[0];return {value:modifier===undefined?"":modifier.value};}});

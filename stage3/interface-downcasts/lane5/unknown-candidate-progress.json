@@ -3269,6 +3269,73 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "class-function-create-update",
+      "pairs": 3,
+      "candidateReads": 18,
+      "members": [
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createClassExpression",
+          "declared_types": [
+            "(modifiers: readonly ModifierLike[] | undefined, name: string | Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, heritageClauses: readonly HeritageClause[] | undefined, members: readonly ClassElement[]) => ClassExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 6,
+          "witness": {
+            "file": "src/compiler/factory/nodeConverters.ts",
+            "line": 83,
+            "column": 25
+          },
+          "rank": 288,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createFunctionDeclaration",
+          "declared_types": [
+            "(modifiers: readonly ModifierLike[] | undefined, asteriskToken: AsteriskToken | undefined, name: string | Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block | undefined) => FunctionDeclaration"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 6,
+          "witness": {
+            "file": "src/compiler/parser.ts",
+            "line": 7749,
+            "column": 22
+          },
+          "rank": 290,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "updateFunctionExpression",
+          "declared_types": [
+            "(node: FunctionExpression, modifiers: readonly Modifier[] | undefined, asteriskToken: AsteriskToken | undefined, name: Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block) => FunctionExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 6,
+          "witness": {
+            "file": "src/compiler/visitorPublic.ts",
+            "line": 1102,
+            "column": 16
+          },
+          "rank": 304,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

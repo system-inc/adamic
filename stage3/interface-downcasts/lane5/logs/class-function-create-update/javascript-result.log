@@ -1,0 +1,19 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.27s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/class-expression-create/wrong-result (0.43s)
+        checked_views_callable_later_ranked_test.go:143: gate cache node hit
+        checked_views_callable_later_ranked_test.go:163: gate cache node miss
+        checked_views_callable_later_ranked_test.go:183: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createClassExpression([{value:2}],{value:3},[{value:4}],[{value:5}],[{value:6}]).value is not initialized; expected number, found missing\n" want "createClassExpression" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createClassExpression expected (modifiers: readonly ModifierLike[] | undefined, name: string | Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, heritageClauses: ... | undefined, members: ...) => ClassExpression, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/function-declaration-create/wrong-result (0.40s)
+        checked_views_callable_later_ranked_test.go:143: gate cache node hit
+        checked_views_callable_later_ranked_test.go:163: gate cache node miss
+        checked_views_callable_later_ranked_test.go:183: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createFunctionDeclaration([{value:2}],{value:3},{value:4},[{value:5}],[{value:6}],{value:7},{value:8}).value is not initialized; expected number, found missing\n" want "createFunctionDeclaration" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createFunctionDeclaration expected (modifiers: readonly ModifierLike[] | undefined, asteriskToken: AsteriskToken | undefined, name: string | Identifier | undefined, typeParameters: ... | undefined, parameters: ..., type: TypeNode | undefined, body: Block | undefined) => FunctionDeclaration, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/function-expression-update/wrong-result (0.41s)
+        checked_views_callable_later_ranked_test.go:143: gate cache node hit
+        checked_views_callable_later_ranked_test.go:163: gate cache node miss
+        checked_views_callable_later_ranked_test.go:183: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: context.factory.updateFunctionExpression({value:1},[{value:2}],{value:3},{value:4},[{value:5}],[{value:6}],{value:7},{value:8}).value is not initialized; expected number, found missing\n" want "updateFunctionExpression" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateFunctionExpression expected (node: FunctionExpression, modifiers: readonly Modifier[] | undefined, asteriskToken: AsteriskToken | undefined, name: Identifier | undefined, typeParameters: ... | undefined, parameters: ..., type: TypeNode | undefined, body: Block) => FunctionExpression, found function with incompatible result representation\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=3 misses=3
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.277s
+FAIL

@@ -1,0 +1,19 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.36s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/class-expression-create/wrong-members (0.45s)
+        checked_views_callable_later_ranked_test.go:143: gate cache node hit
+        checked_views_callable_later_ranked_test.go:163: gate cache node miss
+        checked_views_callable_later_ranked_test.go:183: backend2 exit 0 stdout "20\n" stderr "" want "createClassExpression" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createClassExpression expected (modifiers: readonly ModifierLike[] | undefined, name: string | Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, heritageClauses: ... | undefined, members: ...) => ClassExpression, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/function-declaration-create/wrong-members (0.43s)
+        checked_views_callable_later_ranked_test.go:143: gate cache node hit
+        checked_views_callable_later_ranked_test.go:163: gate cache node miss
+        checked_views_callable_later_ranked_test.go:183: backend2 exit 0 stdout "35\n" stderr "" want "createFunctionDeclaration" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createFunctionDeclaration expected (modifiers: readonly ModifierLike[] | undefined, asteriskToken: AsteriskToken | undefined, name: string | Identifier | undefined, typeParameters: ... | undefined, parameters: ..., type: TypeNode | undefined, body: Block | undefined) => FunctionDeclaration, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/function-expression-update/wrong-members (0.44s)
+        checked_views_callable_later_ranked_test.go:143: gate cache node hit
+        checked_views_callable_later_ranked_test.go:163: gate cache node miss
+        checked_views_callable_later_ranked_test.go:183: backend2 exit 0 stdout "36\n" stderr "" want "updateFunctionExpression" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateFunctionExpression expected (node: FunctionExpression, modifiers: readonly Modifier[] | undefined, asteriskToken: AsteriskToken | undefined, name: Identifier | undefined, typeParameters: ... | undefined, parameters: ..., type: TypeNode | undefined, body: Block) => FunctionExpression, found function with incompatible parameter representations\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=3 misses=3
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.367s
+FAIL

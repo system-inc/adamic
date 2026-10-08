@@ -1,0 +1,19 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.59s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/class-expression-create/wrong-result (0.54s)
+        checked_views_callable_later_ranked_test.go:143: gate cache node miss
+        checked_views_callable_later_ranked_test.go:163: gate cache node miss
+        checked_views_callable_later_ranked_test.go:183: backend0 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createClassExpression([{value:2}],{value:3},[{value:4}],[{value:5}],[{value:6}]).value is not initialized; expected number, found missing\n" want "createClassExpression" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createClassExpression([{value:2}],{value:3},[{value:4}],[{value:5}],[{value:6}]).value is not initialized; expected number, found missing\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/function-declaration-create/wrong-result (0.54s)
+        checked_views_callable_later_ranked_test.go:143: gate cache node miss
+        checked_views_callable_later_ranked_test.go:163: gate cache node miss
+        checked_views_callable_later_ranked_test.go:183: backend0 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createFunctionDeclaration([{value:2}],{value:3},{value:4},[{value:5}],[{value:6}],{value:7},{value:8}).value is not initialized; expected number, found missing\n" want "createFunctionDeclaration" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createFunctionDeclaration([{value:2}],{value:3},{value:4},[{value:5}],[{value:6}],{value:7},{value:8}).value is not initialized; expected number, found missing\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/function-expression-update/wrong-result (0.48s)
+        checked_views_callable_later_ranked_test.go:143: gate cache node miss
+        checked_views_callable_later_ranked_test.go:163: gate cache node miss
+        checked_views_callable_later_ranked_test.go:183: backend0 exit 70 stdout "" stderr "adamic: panic: field read failed: context.factory.updateFunctionExpression({value:1},[{value:2}],{value:3},{value:4},[{value:5}],[{value:6}],{value:7},{value:8}).value is not initialized; expected number, found missing\n" want "updateFunctionExpression" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateFunctionExpression({value:1},[{value:2}],{value:3},{value:4},[{value:5}],[{value:6}],{value:7},{value:8}).value is not initialized; expected number, found missing\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.597s
+FAIL

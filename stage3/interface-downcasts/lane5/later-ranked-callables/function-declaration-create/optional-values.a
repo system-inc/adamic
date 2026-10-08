@@ -1,0 +1,13 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface FunctionDeclaration {readonly value:number;}
+interface ModifierLike {readonly value:number;}
+interface AsteriskToken {readonly value:number;}
+interface Identifier {readonly value:number;}
+interface TypeParameterDeclaration {readonly value:number;}
+interface ParameterDeclaration {readonly value:number;}
+interface TypeNode {readonly value:number;}
+interface Block {readonly value:number;}
+interface Base {readonly createFunctionDeclaration:unknown;}
+interface Target {createFunctionDeclaration(modifiers: readonly ModifierLike[] | undefined, asteriskToken: AsteriskToken | undefined, name: string | Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block | undefined): FunctionDeclaration;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createFunctionDeclaration(undefined,undefined,undefined,undefined,[],undefined,undefined).value}`);console.log(`${factory.createFunctionDeclaration([],undefined,undefined,[],[{value:6}],undefined,undefined).value}`);console.log(`${factory.createFunctionDeclaration([{value:2}],{value:3},"abcd",[{value:5}],[{value:6}],{value:7},{value:8}).value}`);console.log(`${factory.createFunctionDeclaration([{value:2}],{value:3},{value:4},[{value:5}],[{value:6}],{value:7},{value:8}).value}`);}
+probe({createFunctionDeclaration:(modifiers:readonly ModifierLike[]|undefined,asteriskToken:AsteriskToken|undefined,name:string|Identifier|undefined,typeParameters:readonly TypeParameterDeclaration[]|undefined,parameters:readonly ParameterDeclaration[],type:TypeNode|undefined,body:Block|undefined):FunctionDeclaration=>{const modifier=modifiers===undefined?undefined:modifiers[0];const typeParameter=typeParameters===undefined?undefined:typeParameters[0];const parameter=parameters[0];return {value:(modifier===undefined?0:modifier.value)+(asteriskToken===undefined?0:asteriskToken.value)+(name===undefined?0:typeof name==="string"?name.length:name.value)+(typeParameter===undefined?0:typeParameter.value)+(parameter===undefined?0:parameter.value)+(type===undefined?0:type.value)+(body===undefined?0:body.value)};}});
