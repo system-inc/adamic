@@ -19,7 +19,9 @@ This file is inside `src/compiler`. It is a checker stop, before lowering,
 not a NotYet or Refused finding. `probes/01-indexed-path.a` runs successfully
 on Node, printing `undefined`, and main refuses its native build with the
 same TS2345 message and elaboration. Giving the indexed value a defined
-empty-string fallback removes this checker stop; the control builds natively.
+empty-string fallback removes this checker stop: `adamic types` exits 0.
+The control native build instead reaches NotYet for an array of Path.
+This control proves checker sensitivity, not successful native compilation.
 
 ## Module graph
 
