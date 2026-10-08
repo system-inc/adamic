@@ -208,7 +208,7 @@ func TestWave11SeventhAgreementAndMutants(t *testing.T) {
 		t.Logf("%s mutant exit 0 empty stderr, Go bytes catch byte %d", change.name, firstDifference(got.stdout, truth.stdout))
 		os.Remove(mutant)
 	}
-	overlay := h.overlay("foreign-binding", "bridge/tsgo/checker/numeric_syntax_bindings.go", "out.text(source.FileName())", "out.text(source.FileName()[:0] + root.AsSourceFile().FileName())")
+	overlay := h.overlay("foreign-binding", "bridge/tsgo/checker/numeric_syntax_bindings.go", "out.text(source.FileName().AsString())", "out.text(source.FileName().AsString()[:0] + root.AsSourceFile().FileName().AsString())")
 	mutantArchive := h.archive("foreign-binding", overlay, false)
 	mutant := h.build(stage0, "foreign-binding-mutant", entry, mutantArchive, false)
 	got := h.must("foreign-binding-mutant-run", exec.Command(mutant, config, manifest))

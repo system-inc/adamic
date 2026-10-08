@@ -2,10 +2,10 @@ import type { Rules } from './rules.ts';
 import { Diagnostic } from './diagnostic.ts';
 import { Bindings } from './bindings.ts';
 import { Reassign } from './reassign.ts';
-import { SourceFile } from './wave_11_syntax_kinds.a';
+import { FunctionExpression, FunctionDeclaration } from './wave_11_syntax_kinds.a';
 
 // Registration metadata for the forthcoming numeric kind-indexed driver.
-export const listenerKinds: readonly number[] = [SourceFile];
+export const listenerKinds: readonly number[] = [FunctionExpression, FunctionDeclaration];
 export class NoFuncAssign {
     readonly rules: Rules; readonly bindings: Bindings; readonly writes: Reassign;
     readonly anchors = new Map<number, boolean>(); readonly names = new Map<string, boolean>();

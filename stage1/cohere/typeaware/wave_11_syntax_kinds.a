@@ -2,14 +2,16 @@
 // The listener oracle checks these against production Go rule registrations.
 export const RegularExpressionLiteral = 13;
 export const Identifier = 79;
-export const PropertyAccessExpression = 212;
-export const ElementAccessExpression = 213;
-export const CallExpression = 214;
-export const NewExpression = 215;
-export const BinaryExpression = 227;
-export const ConditionalExpression = 228;
-export const ExpressionStatement = 245;
-export const IfStatement = 246;
-export const ForInStatement = 250;
-export const ThrowStatement = 258;
-export const SourceFile = 307;
+export const PropertyAccessExpression = 213;
+export const ElementAccessExpression = 214;
+export const CallExpression = 215;
+export const NewExpression = 216;
+export const BinaryExpression = 228;
+export const ConditionalExpression = 229;
+export const ExpressionStatement = 246;
+export const IfStatement = 247;
+export const ForInStatement = 251;
+export const ThrowStatement = 259;
+export const SourceFile = 308;
+export const FunctionExpression = 220;
+export const FunctionDeclaration = 264;

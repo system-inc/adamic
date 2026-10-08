@@ -1,3 +1,7 @@
+import { Parser } from '../../typescript/parser/parser.ts';
+import { Scanner } from '../../typescript/scanner/scanner.ts';
+import { UnaryMinus } from './unary_minus.ts';
+import { Rules } from './rules.ts';
 import { listenerKinds as kinds0 } from './no_for_in_array.a';
 import { listenerKinds as kinds1 } from './prefer_regexp_exec.a';
 import { listenerKinds as kinds2 } from './correctness_no_collection_misuse.a';

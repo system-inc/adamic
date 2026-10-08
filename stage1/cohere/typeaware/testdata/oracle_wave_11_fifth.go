@@ -62,28 +62,29 @@ func main() {
 		panic(err)
 	}
 	started := time.Now()
-	host := compiler.NewCachedFSCompilerHost(filepath.ToSlash(filepath.Dir(configPath)), bundled.WrapFS(osvfs.FS()), bundled.LibPath(), nil, nil, nil)
-	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(filepath.ToSlash(configPath), nil, nil, host, nil)
+	fs := bundled.WrapFS(osvfs.FS())
+	host := compiler.NewCachedFSCompilerHost(fs, bundled.LibPath(), nil, nil, nil)
+	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(filepath.ToSlash(configPath)), nil, nil, fs, nil)
 	if config == nil || len(diagnostics) > 0 || len(config.Errors) > 0 {
 		panic("invalid tsconfig")
 	}
-	roots := make([]string, len(paths))
+	roots := make([]tspath.RootedFilePath, len(paths))
 	for i, path := range paths {
 		if !filepath.IsAbs(path) {
 			path = filepath.Join(filepath.Dir(configPath), path)
 		}
-		roots[i] = filepath.ToSlash(path)
+		roots[i] = tspath.RootedFilePathFromAbsolute(filepath.ToSlash(path))
 	}
 	config.CompilerOptions().AllowNonTsExtensions = core.TSTrue
 	for _, path := range config.FileNames() {
-		if strings.HasSuffix(path, ".d.ts") && !slices.Contains(roots, path) {
+		if strings.HasSuffix(path.AsString(), ".d.ts") && !slices.Contains(roots, path) {
 			roots = append(roots, path)
 		}
 	}
 	program := compiler.NewProgram(compiler.ProgramOptions{Config: config.WithFileNames(roots), Host: host, SingleThreaded: core.TSTrue})
 	// Force checker pool initialization into load, just as the native bridge does.
 	if len(roots) > 0 {
-		_, release := program.GetTypeCheckerForFile(context.Background(), program.GetSourceFile(tspath.RootedFilePathFromAbsolute(roots[0])))
+		_, release := program.GetTypeCheckerForFile(context.Background(), program.GetSourceFile(roots[0]))
 		release()
 	}
 	loadTime := time.Since(started)
@@ -91,7 +92,7 @@ func main() {
 
 	if len(args) > 2 && args[2] == "--valid-sources" {
 		for i, path := range paths {
-			file := program.GetSourceFile(tspath.RootedFilePathFromAbsolute(roots[i]))
+			file := program.GetSourceFile(roots[i])
 			if file != nil && len(file.Diagnostics()) == 0 {
 				fmt.Println(path)
 			}
@@ -104,7 +105,7 @@ func main() {
 	findings := 0
 	var ruleTime time.Duration
 	for i, path := range paths {
-		file := program.GetSourceFile(tspath.RootedFilePathFromAbsolute(roots[i]))
+		file := program.GetSourceFile(roots[i])
 		if file == nil {
 			panic("source not loaded")
 		}

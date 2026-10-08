@@ -50,12 +50,13 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	host := compiler.NewCachedFSCompilerHost(filepath.ToSlash(filepath.Dir(configPath)), bundled.WrapFS(osvfs.FS()), bundled.LibPath(), nil, nil, nil)
-	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(filepath.ToSlash(configPath), nil, nil, host, nil)
+	fs := bundled.WrapFS(osvfs.FS())
+	host := compiler.NewCachedFSCompilerHost(fs, bundled.LibPath(), nil, nil, nil)
+	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(filepath.ToSlash(configPath)), nil, nil, fs, nil)
 	if config == nil || len(diagnostics) != 0 || len(config.Errors) != 0 {
 		panic("invalid tsconfig")
 	}
-	program := compiler.NewProgram(compiler.ProgramOptions{Config: config.WithFileNames([]string{filepath.ToSlash(sourcePath)}), Host: host, SingleThreaded: core.TSTrue})
+	program := compiler.NewProgram(compiler.ProgramOptions{Config: config.WithFileNames([]tspath.RootedFilePath{tspath.RootedFilePathFromAbsolute(filepath.ToSlash(sourcePath))}), Host: host, SingleThreaded: core.TSTrue})
 	source := program.GetSourceFile(tspath.RootedFilePathFromAbsolute(filepath.ToSlash(sourcePath)))
 	if source == nil {
 		panic("source not loaded")

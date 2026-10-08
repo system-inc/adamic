@@ -49,7 +49,7 @@ func TestWave11ListenerDeclarationsAndMutants(t *testing.T) {
 		t.Fatal("sanitized listener declarations differ")
 	}
 	for _, change := range []struct{ name, file, from, to string }{
-		{"wrong-kind", "wave_11_syntax_kinds.a", "export const CallExpression = 214;", "export const CallExpression = 215;"},
+		{"wrong-kind", "wave_11_syntax_kinds.a", "export const CallExpression = 215;", "export const CallExpression = 216;"},
 		{"missing-listener", "no_new_wrappers.a", "export const listenerKinds: readonly number[] = [NewExpression];", "export const listenerKinds: readonly number[] = [];"},
 	} {
 		mutantDirectory := filepath.Join(directory, change.name+"-source")
