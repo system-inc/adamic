@@ -25,7 +25,7 @@ state=${ADAMIC_FAST_GATE_WATCH_STATE:-${HOME}/.adamic-fast-gate-watch}
 mkdir -p "${state}"
 # Cloud: one area slot and two small (@system_adamic, Oct 8 00:10). Workshop the same and Chonchon one
 # small slot on all 16 CPUs (@system_adamic, Oct 8 04:40: 69 live tips behind two slots).
-[ -s "${state}/slots" ] || printf '%s\n' "threadripper B" "threadripper S" "threadripper S" > "${state}/slots"
+[ -s "${state}/slots" ] || printf '%s\n' "threadripper B" "threadripper S" "threadripper S" "threadripper S" > "${state}/slots"
 git -C "${here}" fetch -q origin
 git -C "${here}" branch -r --contains "$(git -C "${here}" rev-parse HEAD)" | grep -q . || { echo "the gate's own commit is not on origin; push it first" >&2; exit 2; }
 export ADAMIC_FAST_GATE_TOOLS_ON_ORIGIN=1
@@ -88,7 +88,9 @@ while true; do
   for file in "${state}"/running/*; do
     [ -e "${file}" ] || continue
     kill -0 "$(basename "${file}")" 2>/dev/null && continue
-    read -r branch sha class box < "${file}"
+    read -r branch sha class box original < "${file}"
+    # A void gate goes back to the queue as the class it was queued with, not the slot it borrowed.
+    class=${original:-${class}}
     rm "${file}"
     cause=$(voidCause "${state}/logs/${sha:0:12}.log")
     if [ -z "${cause}" ]; then
@@ -118,16 +120,23 @@ while true; do
                 END { for (i = 1; i <= n; i++) if (total[keys[i]] > used[keys[i]]) print keys[i] }' "${state}/slots" <(cat "${state}"/running/* 2>/dev/null))
     [ -n "${free}" ] || break
     classes=$(echo "${free}" | awk '{print $2}' | sort -u | tr '\n' ' ')
+    # A tip takes a free slot of its class; a big tip may also take a free small slot, but only when
+    # no small tip could have it (rank 10 and up): 74 big tips waited on two area slots while four small
+    # slots sat idle (Oct 8 10:56Z). It then runs on the small slot's CPUs (12; Chonchon's 16).
     next=$(while read -r class queued branch sha; do
-      [[ " ${classes}" == *" ${class} "* ]] || continue
+      slot=${class} extra=0
+      if [[ " ${classes}" != *" ${class} "* ]]; then
+        [ "${class}" = B ] && [[ " ${classes}" == *" S "* ]] || continue
+        slot=S extra=10
+      fi
       if [[ ${branch} == cloud/land-* ]]; then rank=0
       elif [[ ${branch} == area/* ]] || grep -qxF "${branch}" "${state}/priority"; then rank=1
       elif [[ ${branch} == devtools/* ]]; then rank=2
       else rank=3; fi
-      echo "${rank} ${queued} ${branch} ${sha} ${class}"
+      echo "$(( rank + extra )) ${queued} ${branch} ${sha} ${class} ${slot}"
     done < "${state}/queue" | sort -k1,1n -k2,2nr | head -1)
     [ -n "${next}" ] || break
-    read -r _ queued branch sha class <<< "${next}"
+    read -r _ queued branch sha class slot <<< "${next}"
     grep -vF " ${queued} ${branch} ${sha}" "${state}/queue" > "${state}/queue.tmp"; mv "${state}/queue.tmp" "${state}/queue"
     grep -qx "${sha}" "${state}/gated" && continue
     # A tip its branch has already moved past is superseded: gate the branch's newest only.
@@ -140,12 +149,12 @@ while true; do
       continue
     fi
     echo "${sha}" >> "${state}/gated"
-    box=$(echo "${free}" | awk -v class="${class}" '$2 == class {print $1; exit}')
+    box=$(echo "${free}" | awk -v class="${slot}" '$2 == class {print $1; exit}')
     log=${state}/logs/${sha:0:12}.log
-    ADAMIC_FAST_GATE_BOX=${box} bash "${here}/cloud/fast-gate.sh" "${sha}" --branch "${branch}" --class "${class}" > "${log}" 2>&1 &
-    echo "${branch} ${sha} ${class} ${box}" > "${state}/running/$!"
+    ADAMIC_FAST_GATE_BOX=${box} bash "${here}/cloud/fast-gate.sh" "${sha}" --branch "${branch}" --class "${slot}" > "${log}" 2>&1 &
+    echo "${branch} ${sha} ${slot} ${box} ${class}" > "${state}/running/$!"
     now=$(date -u +%s)
-    echo "$(date -u +%H:%M:%S) gating ${branch} ${sha} (${class} on ${box}, waited $(( now - queued )) s, log ${log})"
+    echo "$(date -u +%H:%M:%S) gating ${branch} ${sha} (${class}$([ "${slot}" = "${class}" ] || echo " in an ${slot} slot") on ${box}, waited $(( now - queued )) s, log ${log})"
     (recordWait "${sha},${branch},${class},$(date -u -r "${queued}" +%FT%TZ),$(date -u -r "${now}" +%FT%TZ),$(( now - queued )),started,${box}" > /dev/null 2>&1 &)
   done
   sleep 15

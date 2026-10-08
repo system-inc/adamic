@@ -71,6 +71,9 @@ while [ -z "${slot}" ]; do
   # Slot 1 is the area slot (landings and anything big); slots 2 and 3 take small changes only
   # (@system_adamic, Oct 8 00:10), so a worker's tip never waits behind an area.
   candidates=$([ "${class}" = S ] && echo "2 3" || echo "1")
+  # The last quarter was the whole gate's until it moved to Home (Oct 8 07:51); on a 64-CPU box it is a
+  # third small slot now, measured idle on Cloud and Workshop (0% busy over 10 s, nothing pinned).
+  [ "${class}" = S ] && [ "$(nproc --all)" -ge 64 ] && candidates="2 3 4"
   # A box under 32 CPUs (Chonchon, 16) is one slot on all its CPUs, whatever the class.
   [ "$(nproc --all)" -lt 32 ] && candidates=1
   for candidate in ${candidates}; do
@@ -104,7 +107,7 @@ mkdir -p ~/"${out}"
 echo "slot=${slot} load_before=$(cut -d' ' -f1-3 /proc/loadavg)" > ~/"${out}"/box.txt
 # The box is partitioned, not time-shared: the area slot owns three eighths of the CPUs (24 of 64; Go
 # sizes GOMAXPROCS from the affinity), the two small slots three sixteenths each (12: a one-function
-# edit gated in 19.8 to 21.1 s there), and the full gate the last quarter (cloud/full-gate-main.sh), all
+# edit gated in 19.8 to 21.1 s there), and on a 64-CPU box a third small slot on the last quarter (16), all
 # at normal priority, so no side's timing can starve another's (a shared box decided verdicts tonight).
 cpus=$(nproc --all)
 area=$((cpus * 3 / 8))
@@ -112,7 +115,8 @@ small=$((cpus * 3 / 16))
 case ${slot} in
   1) first=0 share=${area}; [ "${cpus}" -lt 32 ] && share=${cpus} ;;
   2) first=${area} share=${small} ;;
-  *) first=$((area + small)) share=${small} ;;
+  3) first=$((area + small)) share=${small} ;;
+  *) first=$((area + 2 * small)) share=$((cpus - area - 2 * small)) ;;
 esac
 # --cpus N narrows the gate to the first N CPUs of its slot (to size slots by measurement).
 range="${first}-$((first + ${width:-${share}} - 1))"
