@@ -1,0 +1,17 @@
+file:///tmp/step24-work/typescript/src/compiler/parser.ts:8555
+                Debug.assert(child.pos >= pos);
+                      ^
+
+Error: Debug Failure. False expression.
+    at visitNode (file:///tmp/step24-work/typescript/src/compiler/parser.ts:8555:23)
+    at visitNodes (file:///tmp/step24-work/typescript/src/compiler/parser.ts:47:28)
+    at forEachChildInEnumDeclaration (file:///tmp/step24-work/typescript/src/compiler/parser.ts:499:16)
+    at forEachChild (file:///tmp/step24-work/typescript/src/compiler/parser.ts:818:43)
+    at checkNodePositions (file:///tmp/step24-work/typescript/src/compiler/parser.ts:8563:13)
+    at visitNode (file:///tmp/step24-work/typescript/src/compiler/parser.ts:8465:13)
+    at moveElementEntirelyPastChangeRange (file:///tmp/step24-work/typescript/src/compiler/parser.ts:8444:13)
+    at visitNode (file:///tmp/step24-work/typescript/src/compiler/parser.ts:8575:17)
+    at visitArray (file:///tmp/step24-work/typescript/src/compiler/parser.ts:8616:21)
+    at visitNodes (file:///tmp/step24-work/typescript/src/compiler/parser.ts:44:20)
+
+Node.js v24.19.0

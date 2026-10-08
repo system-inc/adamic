@@ -1,0 +1,2 @@
+adamic: /workspace/adamic/stage3/scouts/step24/nodearray/03_repair_flags.a:31:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on array); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)
+exit status 1

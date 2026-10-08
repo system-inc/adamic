@@ -1,0 +1,82 @@
+// From TypeScript 6.0.3, src/compiler/factory/nodeFactory.ts:1169
+// From TypeScript 6.0.3, src/compiler/factory/nodeFactory.ts:7309
+// From TypeScript 6.0.3, src/compiler/utilitiesPublic.ts:1487
+// Step 24: NodeArray fixed layout and field presence.
+interface Node { readonly kind: number; readonly transformFlags: number; }
+interface ReadonlyTextRange { readonly pos: number; readonly end: number; }
+interface TextRange { pos: number; end: number; }
+// The required-but-possibly-undefined transformFlags slot is represented truthfully here.
+interface NodeArray<T extends Node> extends ReadonlyArray<T>, ReadonlyTextRange {
+    readonly hasTrailingComma: boolean;
+    transformFlags: number | undefined;
+}
+interface MutableNodeArray<T extends Node> extends Array<T>, TextRange {
+    hasTrailingComma: boolean;
+    transformFlags: number | undefined;
+}
+const TransformFlags = { None: 0 };
+const emptyArray: readonly Node[] = [];
+const Debug = { attachNodeArrayDebugInfo: <T extends Node>(_array: NodeArray<T>): void => {} };
+function hasProperty(value: object, key: string): boolean { return Object.hasOwn(value, key); }
+// All drivers use identifiers; their child flags are propagated without subtree exclusions.
+function propagateChildFlags(child: Node): number { return child.transformFlags; }
+function aggregateChildrenFlags(children: MutableNodeArray<Node>) {
+    let subtreeFlags = TransformFlags.None;
+    for (const child of children) {
+        subtreeFlags |= propagateChildFlags(child);
+    }
+    children.transformFlags = subtreeFlags;
+}
+export function isNodeArray<T extends Node>(array: readonly T[]): array is NodeArray<T> {
+    return hasProperty(array, "pos") && hasProperty(array, "end");
+}
+function stamp(array: NodeArray<Node>): string {
+    return array.length + ':' + array.pos + ':' + array.end + ':' + array.hasTrailingComma + ':' + array.transformFlags;
+}
+const one: Node = { kind: 80, transformFlags: 1 };
+const two: Node = { kind: 80, transformFlags: 2 };
+function createNodeArray<T extends Node>(elements?: readonly T[], hasTrailingComma?: boolean): NodeArray<T> {
+        if (elements === undefined || elements === emptyArray) {
+            elements = [];
+        }
+        else if (isNodeArray(elements)) {
+            if (hasTrailingComma === undefined || elements.hasTrailingComma === hasTrailingComma) {
+                // Ensure the transform flags have been aggregated for this NodeArray
+                if (elements.transformFlags === undefined) {
+                    aggregateChildrenFlags(elements as MutableNodeArray<T>);
+                }
+                Debug.attachNodeArrayDebugInfo(elements);
+                return elements;
+            }
+
+            // This *was* a `NodeArray`, but the `hasTrailingComma` option differs. Recreate the
+            // array with the same elements, text range, and transform flags but with the updated
+            // value for `hasTrailingComma`
+            const array = elements.slice() as MutableNodeArray<T>;
+            array.pos = elements.pos;
+            array.end = elements.end;
+            array.hasTrailingComma = hasTrailingComma;
+            array.transformFlags = elements.transformFlags;
+            Debug.attachNodeArrayDebugInfo(array);
+            return array;
+        }
+
+        // Since the element list of a node array is typically created by starting with an empty array and
+        // repeatedly calling push(), the list may not have the optimal memory layout. We invoke slice() for
+        // small arrays (1 to 4 elements) to give the VM a chance to allocate an optimal representation.
+        const length = elements.length;
+        const array = (length >= 1 && length <= 4 ? elements.slice() : elements) as MutableNodeArray<T>;
+        array.pos = -1;
+        array.end = -1;
+        array.hasTrailingComma = !!hasTrailingComma;
+        array.transformFlags = TransformFlags.None;
+        aggregateChildrenFlags(array);
+        Debug.attachNodeArrayDebugInfo(array);
+        return array;
+    }
+
+const array = createNodeArray([one, two]);
+array.transformFlags = undefined;
+console.log('before-own:' + hasProperty(array, 'transformFlags') + ' before-undefined:' + (array.transformFlags === undefined));
+const repaired = createNodeArray(array);
+console.log('same:' + (repaired === array) + ' after-own:' + hasProperty(repaired, 'transformFlags') + ' flags:' + repaired.transformFlags);

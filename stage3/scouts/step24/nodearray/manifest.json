@@ -1,0 +1,217 @@
+[
+  {
+    "file": "01_factory_clone.a",
+    "description": "Small-array copy, unchanged NodeArray reuse, changed-comma clone preserving range/flags, large-array promotion and empty layout.",
+    "spans": [
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 1169,
+        "start": 39606,
+        "end": 41663,
+        "text": "function createNodeArray<T extends Node>(elements?: readonly T[], hasTrailingComma?: boolean): NodeArray<T> {\r\n        if (elements === undefined || elements === emptyArray) {\r\n            elements = [];\r\n        }\r\n        else if (isNodeArray(elements)) {\r\n            if (hasTrailingComma === undefined || elements.hasTrailingComma === hasTrailingComma) {\r\n                // Ensure the transform flags have been aggregated for this NodeArray\r\n                if (elements.transformFlags === undefined) {\r\n                    aggregateChildrenFlags(elements as MutableNodeArray<T>);\r\n                }\r\n                Debug.attachNodeArrayDebugInfo(elements);\r\n                return elements;\r\n            }\r\n\r\n            // This *was* a `NodeArray`, but the `hasTrailingComma` option differs. Recreate the\r\n            // array with the same elements, text range, and transform flags but with the updated\r\n            // value for `hasTrailingComma`\r\n            const array = elements.slice() as MutableNodeArray<T>;\r\n            array.pos = elements.pos;\r\n            array.end = elements.end;\r\n            array.hasTrailingComma = hasTrailingComma;\r\n            array.transformFlags = elements.transformFlags;\r\n            Debug.attachNodeArrayDebugInfo(array);\r\n            return array;\r\n        }\r\n\r\n        // Since the element list of a node array is typically created by starting with an empty array and\r\n        // repeatedly calling push(), the list may not have the optimal memory layout. We invoke slice() for\r\n        // small arrays (1 to 4 elements) to give the VM a chance to allocate an optimal representation.\r\n        const length = elements.length;\r\n        const array = (length >= 1 && length <= 4 ? elements.slice() : elements) as MutableNodeArray<T>;\r\n        array.pos = -1;\r\n        array.end = -1;\r\n        array.hasTrailingComma = !!hasTrailingComma;\r\n        array.transformFlags = TransformFlags.None;\r\n        aggregateChildrenFlags(array);\r\n        Debug.attachNodeArrayDebugInfo(array);\r\n        return array;\r\n    }"
+      },
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 7309,
+        "start": 325689,
+        "end": 325946,
+        "text": "function aggregateChildrenFlags(children: MutableNodeArray<Node>) {\r\n    let subtreeFlags = TransformFlags.None;\r\n    for (const child of children) {\r\n        subtreeFlags |= propagateChildFlags(child);\r\n    }\r\n    children.transformFlags = subtreeFlags;\r\n}"
+      },
+      {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 1487,
+        "start": 59172,
+        "end": 59332,
+        "text": "export function isNodeArray<T extends Node>(array: readonly T[]): array is NodeArray<T> {\r\n    return hasProperty(array, \"pos\") && hasProperty(array, \"end\");\r\n}"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 10644,
+        "start": 424883,
+        "end": 425030,
+        "text": "export function setTextRangePos<T extends ReadonlyTextRange>(range: T, pos: number): T {\r\n    (range as TextRange).pos = pos;\r\n    return range;\r\n}"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 10654,
+        "start": 425153,
+        "end": 425300,
+        "text": "export function setTextRangeEnd<T extends ReadonlyTextRange>(range: T, end: number): T {\r\n    (range as TextRange).end = end;\r\n    return range;\r\n}"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 10664,
+        "start": 425435,
+        "end": 425605,
+        "text": "export function setTextRangePosEnd<T extends ReadonlyTextRange>(range: T, pos: number, end: number): T {\r\n    return setTextRangeEnd(setTextRangePos(range, pos), end);\r\n}"
+      }
+    ],
+    "mutant": {
+      "find": "array.end = elements.end;",
+      "replace": "array.end = -1;"
+    }
+  },
+  {
+    "file": "02_parser_range.a",
+    "description": "Parser range initialization with implicit and explicit ends; slice drops metadata, then reconstruction restores the layout.",
+    "spans": [
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 1169,
+        "start": 39606,
+        "end": 41663,
+        "text": "function createNodeArray<T extends Node>(elements?: readonly T[], hasTrailingComma?: boolean): NodeArray<T> {\r\n        if (elements === undefined || elements === emptyArray) {\r\n            elements = [];\r\n        }\r\n        else if (isNodeArray(elements)) {\r\n            if (hasTrailingComma === undefined || elements.hasTrailingComma === hasTrailingComma) {\r\n                // Ensure the transform flags have been aggregated for this NodeArray\r\n                if (elements.transformFlags === undefined) {\r\n                    aggregateChildrenFlags(elements as MutableNodeArray<T>);\r\n                }\r\n                Debug.attachNodeArrayDebugInfo(elements);\r\n                return elements;\r\n            }\r\n\r\n            // This *was* a `NodeArray`, but the `hasTrailingComma` option differs. Recreate the\r\n            // array with the same elements, text range, and transform flags but with the updated\r\n            // value for `hasTrailingComma`\r\n            const array = elements.slice() as MutableNodeArray<T>;\r\n            array.pos = elements.pos;\r\n            array.end = elements.end;\r\n            array.hasTrailingComma = hasTrailingComma;\r\n            array.transformFlags = elements.transformFlags;\r\n            Debug.attachNodeArrayDebugInfo(array);\r\n            return array;\r\n        }\r\n\r\n        // Since the element list of a node array is typically created by starting with an empty array and\r\n        // repeatedly calling push(), the list may not have the optimal memory layout. We invoke slice() for\r\n        // small arrays (1 to 4 elements) to give the VM a chance to allocate an optimal representation.\r\n        const length = elements.length;\r\n        const array = (length >= 1 && length <= 4 ? elements.slice() : elements) as MutableNodeArray<T>;\r\n        array.pos = -1;\r\n        array.end = -1;\r\n        array.hasTrailingComma = !!hasTrailingComma;\r\n        array.transformFlags = TransformFlags.None;\r\n        aggregateChildrenFlags(array);\r\n        Debug.attachNodeArrayDebugInfo(array);\r\n        return array;\r\n    }"
+      },
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 7309,
+        "start": 325689,
+        "end": 325946,
+        "text": "function aggregateChildrenFlags(children: MutableNodeArray<Node>) {\r\n    let subtreeFlags = TransformFlags.None;\r\n    for (const child of children) {\r\n        subtreeFlags |= propagateChildFlags(child);\r\n    }\r\n    children.transformFlags = subtreeFlags;\r\n}"
+      },
+      {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 1487,
+        "start": 59172,
+        "end": 59332,
+        "text": "export function isNodeArray<T extends Node>(array: readonly T[]): array is NodeArray<T> {\r\n    return hasProperty(array, \"pos\") && hasProperty(array, \"end\");\r\n}"
+      },
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 2594,
+        "start": 132064,
+        "end": 132372,
+        "text": "function createNodeArray<T extends Node>(elements: T[], pos: number, end?: number, hasTrailingComma?: boolean): NodeArray<T> {\r\n        const array = factoryCreateNodeArray(elements, hasTrailingComma);\r\n        setTextRangePosEnd(array, pos, end ?? scanner.getTokenFullStart());\r\n        return array;\r\n    }"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 10644,
+        "start": 424883,
+        "end": 425030,
+        "text": "export function setTextRangePos<T extends ReadonlyTextRange>(range: T, pos: number): T {\r\n    (range as TextRange).pos = pos;\r\n    return range;\r\n}"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 10654,
+        "start": 425153,
+        "end": 425300,
+        "text": "export function setTextRangeEnd<T extends ReadonlyTextRange>(range: T, end: number): T {\r\n    (range as TextRange).end = end;\r\n    return range;\r\n}"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 10664,
+        "start": 425435,
+        "end": 425605,
+        "text": "export function setTextRangePosEnd<T extends ReadonlyTextRange>(range: T, pos: number, end: number): T {\r\n    return setTextRangeEnd(setTextRangePos(range, pos), end);\r\n}"
+      }
+    ],
+    "mutant": {
+      "find": "end ?? scanner.getTokenFullStart()",
+      "replace": "end ?? 0"
+    }
+  },
+  {
+    "file": "03_repair_flags.a",
+    "description": "The factory repairs a present-undefined transformFlags slot when reusing an existing NodeArray. Driver supplies the possibly-undefined state mentioned by upstream.",
+    "spans": [
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 1169,
+        "start": 39606,
+        "end": 41663,
+        "text": "function createNodeArray<T extends Node>(elements?: readonly T[], hasTrailingComma?: boolean): NodeArray<T> {\r\n        if (elements === undefined || elements === emptyArray) {\r\n            elements = [];\r\n        }\r\n        else if (isNodeArray(elements)) {\r\n            if (hasTrailingComma === undefined || elements.hasTrailingComma === hasTrailingComma) {\r\n                // Ensure the transform flags have been aggregated for this NodeArray\r\n                if (elements.transformFlags === undefined) {\r\n                    aggregateChildrenFlags(elements as MutableNodeArray<T>);\r\n                }\r\n                Debug.attachNodeArrayDebugInfo(elements);\r\n                return elements;\r\n            }\r\n\r\n            // This *was* a `NodeArray`, but the `hasTrailingComma` option differs. Recreate the\r\n            // array with the same elements, text range, and transform flags but with the updated\r\n            // value for `hasTrailingComma`\r\n            const array = elements.slice() as MutableNodeArray<T>;\r\n            array.pos = elements.pos;\r\n            array.end = elements.end;\r\n            array.hasTrailingComma = hasTrailingComma;\r\n            array.transformFlags = elements.transformFlags;\r\n            Debug.attachNodeArrayDebugInfo(array);\r\n            return array;\r\n        }\r\n\r\n        // Since the element list of a node array is typically created by starting with an empty array and\r\n        // repeatedly calling push(), the list may not have the optimal memory layout. We invoke slice() for\r\n        // small arrays (1 to 4 elements) to give the VM a chance to allocate an optimal representation.\r\n        const length = elements.length;\r\n        const array = (length >= 1 && length <= 4 ? elements.slice() : elements) as MutableNodeArray<T>;\r\n        array.pos = -1;\r\n        array.end = -1;\r\n        array.hasTrailingComma = !!hasTrailingComma;\r\n        array.transformFlags = TransformFlags.None;\r\n        aggregateChildrenFlags(array);\r\n        Debug.attachNodeArrayDebugInfo(array);\r\n        return array;\r\n    }"
+      },
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 7309,
+        "start": 325689,
+        "end": 325946,
+        "text": "function aggregateChildrenFlags(children: MutableNodeArray<Node>) {\r\n    let subtreeFlags = TransformFlags.None;\r\n    for (const child of children) {\r\n        subtreeFlags |= propagateChildFlags(child);\r\n    }\r\n    children.transformFlags = subtreeFlags;\r\n}"
+      },
+      {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 1487,
+        "start": 59172,
+        "end": 59332,
+        "text": "export function isNodeArray<T extends Node>(array: readonly T[]): array is NodeArray<T> {\r\n    return hasProperty(array, \"pos\") && hasProperty(array, \"end\");\r\n}"
+      }
+    ],
+    "mutant": {
+      "find": "aggregateChildrenFlags(elements as MutableNodeArray<T>);",
+      "replace": "// mutant: omitted aggregation"
+    }
+  },
+  {
+    "file": "04_missing_presence.a",
+    "description": "MissingList adds a field outside the base declaration; ordinary lists have it absent. A marked driver probe holds present-undefined distinct from absent.",
+    "spans": [
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 1169,
+        "start": 39606,
+        "end": 41663,
+        "text": "function createNodeArray<T extends Node>(elements?: readonly T[], hasTrailingComma?: boolean): NodeArray<T> {\r\n        if (elements === undefined || elements === emptyArray) {\r\n            elements = [];\r\n        }\r\n        else if (isNodeArray(elements)) {\r\n            if (hasTrailingComma === undefined || elements.hasTrailingComma === hasTrailingComma) {\r\n                // Ensure the transform flags have been aggregated for this NodeArray\r\n                if (elements.transformFlags === undefined) {\r\n                    aggregateChildrenFlags(elements as MutableNodeArray<T>);\r\n                }\r\n                Debug.attachNodeArrayDebugInfo(elements);\r\n                return elements;\r\n            }\r\n\r\n            // This *was* a `NodeArray`, but the `hasTrailingComma` option differs. Recreate the\r\n            // array with the same elements, text range, and transform flags but with the updated\r\n            // value for `hasTrailingComma`\r\n            const array = elements.slice() as MutableNodeArray<T>;\r\n            array.pos = elements.pos;\r\n            array.end = elements.end;\r\n            array.hasTrailingComma = hasTrailingComma;\r\n            array.transformFlags = elements.transformFlags;\r\n            Debug.attachNodeArrayDebugInfo(array);\r\n            return array;\r\n        }\r\n\r\n        // Since the element list of a node array is typically created by starting with an empty array and\r\n        // repeatedly calling push(), the list may not have the optimal memory layout. We invoke slice() for\r\n        // small arrays (1 to 4 elements) to give the VM a chance to allocate an optimal representation.\r\n        const length = elements.length;\r\n        const array = (length >= 1 && length <= 4 ? elements.slice() : elements) as MutableNodeArray<T>;\r\n        array.pos = -1;\r\n        array.end = -1;\r\n        array.hasTrailingComma = !!hasTrailingComma;\r\n        array.transformFlags = TransformFlags.None;\r\n        aggregateChildrenFlags(array);\r\n        Debug.attachNodeArrayDebugInfo(array);\r\n        return array;\r\n    }"
+      },
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 7309,
+        "start": 325689,
+        "end": 325946,
+        "text": "function aggregateChildrenFlags(children: MutableNodeArray<Node>) {\r\n    let subtreeFlags = TransformFlags.None;\r\n    for (const child of children) {\r\n        subtreeFlags |= propagateChildFlags(child);\r\n    }\r\n    children.transformFlags = subtreeFlags;\r\n}"
+      },
+      {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 1487,
+        "start": 59172,
+        "end": 59332,
+        "text": "export function isNodeArray<T extends Node>(array: readonly T[]): array is NodeArray<T> {\r\n    return hasProperty(array, \"pos\") && hasProperty(array, \"end\");\r\n}"
+      },
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 2594,
+        "start": 132064,
+        "end": 132372,
+        "text": "function createNodeArray<T extends Node>(elements: T[], pos: number, end?: number, hasTrailingComma?: boolean): NodeArray<T> {\r\n        const array = factoryCreateNodeArray(elements, hasTrailingComma);\r\n        setTextRangePosEnd(array, pos, end ?? scanner.getTokenFullStart());\r\n        return array;\r\n    }"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 10644,
+        "start": 424883,
+        "end": 425030,
+        "text": "export function setTextRangePos<T extends ReadonlyTextRange>(range: T, pos: number): T {\r\n    (range as TextRange).pos = pos;\r\n    return range;\r\n}"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 10654,
+        "start": 425153,
+        "end": 425300,
+        "text": "export function setTextRangeEnd<T extends ReadonlyTextRange>(range: T, end: number): T {\r\n    (range as TextRange).end = end;\r\n    return range;\r\n}"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 10664,
+        "start": 425435,
+        "end": 425605,
+        "text": "export function setTextRangePosEnd<T extends ReadonlyTextRange>(range: T, pos: number, end: number): T {\r\n    return setTextRangeEnd(setTextRangePos(range, pos), end);\r\n}"
+      },
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 3569,
+        "start": 180145,
+        "end": 180350,
+        "text": "function createMissingList<T extends Node>(): MissingList<T> {\r\n        const list = createNodeArray<T>([], getNodePos()) as MissingList<T>;\r\n        list.isMissingList = true;\r\n        return list;\r\n    }"
+      },
+      {
+        "file": "src/compiler/parser.ts",
+        "line": 3575,
+        "start": 180358,
+        "end": 180480,
+        "text": "function isMissingList(arr: NodeArray<Node>): boolean {\r\n        return !!(arr as MissingList<Node>).isMissingList;\r\n    }"
+      }
+    ],
+    "mutant": {
+      "find": "list.isMissingList = true;",
+      "replace": "list.isMissingList = undefined;"
+    }
+  }
+]
