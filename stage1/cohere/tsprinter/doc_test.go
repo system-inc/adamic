@@ -20,7 +20,7 @@ func documentCorpus(t *testing.T) (string, string, string) {
 	command := bounded(t, "go", "test", "-count=1", "-overlay="+path, "-run=^TestAdamicDocuments$", "./internal/format/doc")
 	command.Dir = cohere
 	command.Env = append(os.Environ(), "ADAMIC_TS_DOC_OUTPUT="+directory)
-	if output, err := command.CombinedOutput(); err != nil {
+	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("Go doc corpus %v\n%s", err, output)
 	}
 	answers, err := os.ReadFile(directory + "/answers.txt")

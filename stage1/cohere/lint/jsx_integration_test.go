@@ -79,6 +79,8 @@ func TestJsxLintReleaseAndThroughput(t *testing.T) {
 	}
 	oracle := goOracle(t)
 	binary := buildPort(t, directory, false)
+	// Captured JSX includes parser-recovery witnesses, just like TestRulesAgree.
+	// Mark those rows before asking the oracle to compare or count their findings.
 	input := manifest(t, recoveryRows(t, oracle, rows))
 	compare(t, oracle, binary, directory, input)
 	best := map[string]time.Duration{}

@@ -15,11 +15,10 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
-	"syscall"
 	"testing"
-	"time"
 	"unicode/utf8"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
@@ -449,7 +448,7 @@ func cohereSide(t *testing.T, request map[string]any) {
 	command := bounded(t, "go", "test", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/gitignore")
 	command.Dir = cohere
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	if output, err := command.CombinedOutput(); err != nil {
+	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("cohere's side, %s: %v\n%s", request["mode"], err, output)
 	}
 }
@@ -587,9 +586,11 @@ func gitCheckIgnore(t *testing.T, tree tree) []string {
 		"GIT_CONFIG_NOSYSTEM=1", "GIT_CONFIG_GLOBAL=/dev/null", "GIT_OPTIONAL_LOCKS=0",
 	}
 	command.Stdin = &input
-	var standardError bytes.Buffer
+	var standardOutput, standardError bytes.Buffer
+	command.Stdout = &standardOutput
 	command.Stderr = &standardError
-	output, err := command.Output()
+	err := childguard.Run(command, childguard.Options{})
+	output := standardOutput.Bytes()
 	// check-ignore exits 1 when nothing is ignored, which is an answer, not a failure.
 	var exitError *exec.ExitError
 	if err != nil && !(errors.As(err, &exitError) && exitError.ExitCode() == 1) {
@@ -650,19 +651,18 @@ func lowered(t *testing.T, path string) *ir.Program {
 	return result
 }
 
-// bounded is a command that can't outlive its test: it has a deadline, it runs in a process group of
-// its own, and when the deadline passes or the test ends, the whole group is killed.
+// bounded prepares a child; execute and combinedOutput run it with progress-based guards.
 func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
-	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+	// The child guard owns hang detection, including for Go test children.
+	if name == "go" && len(arguments) > 0 && arguments[0] == "test" {
+		arguments = append([]string{"test", "-timeout=0"}, arguments[1:]...)
 	}
-	command.WaitDelay = 5 * time.Second
-	return command
+	return exec.Command(name, arguments...)
+}
+
+func combinedOutput(command *exec.Cmd) ([]byte, error) {
+	return childguard.CombinedOutput(command, childguard.Options{})
 }
 
 func execute(t *testing.T, environment []string, name string, arguments ...string) run {
@@ -674,7 +674,7 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := command.Run()
+	err := childguard.Run(command, childguard.Options{})
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)

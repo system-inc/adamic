@@ -1,0 +1,11 @@
+=== RUN   TestChildCPUHangGuard
+    deadlines_test.go:61: planted endless loop killed and named in 1.295534428s: node /tmp/adamic-gate/TestChildCPUHangGuard513153586/001/planted-endless-loop.js: child CPU hang guard exceeded: CPU 1.299545s, budget 1s: signal: CPU time limit exceeded
+--- PASS: TestChildCPUHangGuard (1.30s)
+=== RUN   TestChildWallBackstop
+    deadlines_test.go:71: separate backstop in 232.031509ms: node -e setTimeout(()=>{},100000): wall backstop exceeded: ceiling 200ms
+--- PASS: TestChildWallBackstop (0.24s)
+=== RUN   TestChildCPUWaitGuard
+    deadlines_test.go:87: silent healthy child survived: wall 1.698569067s CPU 511.764ms, budget 1s
+--- PASS: TestChildCPUWaitGuard (1.70s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	3.298s
