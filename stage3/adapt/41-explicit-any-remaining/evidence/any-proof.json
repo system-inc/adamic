@@ -385,5 +385,21 @@
       "bytes": 36250,
       "sha256": "4ad8b4bc7e3f4fedf526daaddc3c8cbc67bac2b4b4a08b39c9f96e281e57fdbd"
     }
-  }
+  },
+  "build": {
+    "javascriptFiles": 10,
+    "declarationFiles": 715,
+    "changedDeclarations": [
+      "local/compiler/program.d.ts",
+      "local/compiler/types.d.ts",
+      "local/compiler/watch.d.ts",
+      "local/typescript.internal.d.ts"
+    ],
+    "publicAPIIdentical": true
+  },
+  "mutants": [
+    "real JavaScript artifact byte",
+    "missing build artifact",
+    "real public API artifact byte"
+  ]
 }

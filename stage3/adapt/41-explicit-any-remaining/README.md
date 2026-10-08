@@ -65,3 +65,13 @@ bash stage3/lane/run.sh NEW_LANE > lane.log 2>&1
 The source identity proof is specific to the any-only tree. Void adaptations
 have a separate evaluation/return proof and full oracle comparison. See the
 final report for commands, completed measurements, decisions and remaining work.
+
+Final result: 15 void expressions removed, lane PASS, and full oracle identical to
+main with its one sanctioned API failure. See [REPORT.md](REPORT.md),
+[RANKED.md](RANKED.md), [REMAINING.md](REMAINING.md), [DEBUGGER.md](DEBUGGER.md),
+[ANY-RETURNS.md](ANY-RETURNS.md), [ANY-CALLS.md](ANY-CALLS.md) and [DROPPED.md](DROPPED.md).
+
+To reconstruct the any-only input, use adapter commit 07aacdf9 in a separate
+checkout and apply its pipeline. Current apply includes void as well, so the
+any-only source identity proof must use the separately retained any-only tree.
+The final current pipeline is independently exercised by the landing lane.
