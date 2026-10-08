@@ -1,0 +1,43 @@
+{
+  "actualCaller": "cloneFsMap",
+  "constructors": [
+    "toFsEntry",
+    "toFsFileOrLibFile",
+    "toFsSymLink",
+    "toFsFolder"
+  ],
+  "required": {
+    "FsFile": [
+      "path",
+      "fullPath",
+      "modifiedTime",
+      "content"
+    ],
+    "FsLibFile": [
+      "path",
+      "fullPath",
+      "modifiedTime",
+      "libFile"
+    ],
+    "FsSymLink": [
+      "path",
+      "fullPath",
+      "modifiedTime",
+      "symLink"
+    ],
+    "FsFolder": [
+      "path",
+      "fullPath",
+      "modifiedTime",
+      "entries"
+    ]
+  },
+  "shallowIdentity": true,
+  "firstPrecedence": true,
+  "mutants": [
+    {
+      "change": "omit actual required path from clone",
+      "caughtBy": "required own enumerable input and output fields"
+    }
+  ]
+}

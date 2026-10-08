@@ -182,5 +182,69 @@
     "before": "function SourceMapSource(this: SourceMapSource, fileName: string, text: string, skipTrivia?: (pos: number) => number): void {",
     "after": "function SourceMapSource(this: Partial<SourceMapSource>, fileName: string, text: string, skipTrivia?: (pos: number) => number): void {",
     "reason": "The incoming new receiver is empty; fileName/text/skipTrivia become initialized before construction returns."
+  },
+  {
+    "id": 18,
+    "kind": "copies",
+    "file": "src/compiler/core.ts",
+    "before": "const result: any = {};",
+    "after": "const result: Partial<T> = {};",
+    "reason": "The clone starts empty. Each own enumerable string field is copied from T into Partial<T>. Actual callers are compiler settings and literal filesystem-entry records."
+  },
+  {
+    "id": 19,
+    "kind": "copies",
+    "file": "src/compiler/core.ts",
+    "before": "result[id] = (object as any)[id];",
+    "after": "result[id] = object[id];",
+    "reason": "for-in already carries the generic string-key relationship."
+  },
+  {
+    "id": 20,
+    "kind": "copies",
+    "file": "src/compiler/core.ts",
+    "before": "    return result;\n}\n\n/**\n * Creates a new object by adding the own properties of `second`, then the own properties of `first`.",
+    "after": "    return result as T;\n}\n\n/**\n * Creates a new object by adding the own properties of `second`, then the own properties of `first`.",
+    "reason": "All observed callers use settings with optional fields or FSEntry literals with every required field own and enumerable. The final assertion expresses that completed copy, not the initial empty state."
+  },
+  {
+    "id": 21,
+    "kind": "copies",
+    "file": "src/compiler/core.ts",
+    "before": "const result: T1 & T2 = {} as any;",
+    "after": "const result: Partial<T1 & T2> = {};",
+    "reason": "The merge starts with no properties."
+  },
+  {
+    "id": 22,
+    "kind": "copies",
+    "file": "src/compiler/core.ts",
+    "before": "(result as any)[id] = (second as any)[id];",
+    "after": "(result as Partial<T2>)[id] = second[id];",
+    "reason": "The second-pass view is partial T2; copied properties carry their exact T2 indexed types."
+  },
+  {
+    "id": 23,
+    "kind": "copies",
+    "file": "src/compiler/core.ts",
+    "before": "(result as any)[id] = (first as any)[id];",
+    "after": "(result as Partial<T1>)[id] = first[id];",
+    "reason": "Both compiler callers merge the same option schema; overlapping field domains agree and first precedence stays unchanged."
+  },
+  {
+    "id": 24,
+    "kind": "copies",
+    "file": "src/compiler/core.ts",
+    "before": "    return result;\n}\n\n/** @internal */\nexport function copyProperties",
+    "after": "    return result as T1 & T2;\n}\n\n/** @internal */\nexport function copyProperties",
+    "reason": "Both actual callers merge CompilerOptions or WatchOptions records, whose fields are optional. The completed merge has the same field domains in both inputs."
+  },
+  {
+    "id": 25,
+    "kind": "copies",
+    "file": "src/compiler/core.ts",
+    "before": "(first as any)[id] = second[id];",
+    "after": "(first as T2)[id] = second[id];",
+    "reason": "T1 extends T2. Both watch-host callers copy compatible broad host fields, not literal-narrowed properties."
   }
 ]

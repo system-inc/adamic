@@ -1,0 +1,21 @@
+{
+  "family": "copies",
+  "typescript": "6.0.3",
+  "files": {
+    "src/compiler/core.ts": {
+      "before": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "after": "3f5d1aa1ea26618b5918d711e2393b045f2591fc4b4d0f1d3298331cd8a59787",
+      "tokensRemoved": 8,
+      "javascriptByteIdentical": true,
+      "javascriptASTIdentical": true
+    }
+  },
+  "tokensRemoved": 8,
+  "mutants": [
+    {
+      "file": "src/compiler/core.ts",
+      "mutation": "add throw to actual emitted source",
+      "caughtBy": "whole-file JavaScript AST equality"
+    }
+  ]
+}

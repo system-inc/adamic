@@ -1,0 +1,16 @@
+{
+  "any_before": 35,
+  "any_after": 35,
+  "any_mutant": 35,
+  "refused_before": 5156,
+  "refused_after": 5151,
+  "refused_mutant": 5152,
+  "latent_mutant_extra": [
+    [
+      "Refused",
+      "a cast the runtime can't check",
+      "src/compiler/core.ts:1482:27"
+    ]
+  ],
+  "tokens_removed": 8
+}
