@@ -1,0 +1,9 @@
+upstream no-useless-assignment: 142 unique cases; Go/native/Node/emitted JavaScript byte-identical
+TestRulesAgree PASS
+TestOwnedWitnesses PASS
+TestMutants PASS: 82 caught
+TestCompilerAndStage1Agree PASS: 890 files; 30695097 bytes
+whole package: 33 pass 2 fail 1 skip; wall 2280.177s
+lint_test.go:855: wave05 no-useless-assignment verdict inversion caught on native: case 0 line 2: port "/tmp/adamic-gate/TestMutantswave05_no-useless-assignment_verdict_inversion2382724926/016/no-useless-assignment-0.ts:1:16", Go "/tmp/adamic-gate/TestMutantswave05_no-useless-assignment_verdict_inversion2382724926/016/no-useless-assignment-0.ts:1:5"
+lint_test.go:855: wave05 no-useless-assignment verdict inversion caught on Node: case 0 line 2: port "/tmp/adamic-gate/TestMutantswave05_no-useless-assignment_verdict_inversion2382724926/016/no-useless-assignment-0.ts:1:16", Go "/tmp/adamic-gate/TestMutantswave05_no-useless-assignment_verdict_inversion2382724926/016/no-useless-assignment-0.ts:1:5"
+lint_test.go:855: wave05 no-useless-assignment verdict inversion caught on emitted JavaScript: case 0 line 2: port "/tmp/adamic-gate/TestMutantswave05_no-useless-assignment_verdict_inversion2382724926/016/no-useless-assignment-0.ts:1:16", Go "/tmp/adamic-gate/TestMutantswave05_no-useless-assignment_verdict_inversion2382724926/016/no-useless-assignment-0.ts:1:5"

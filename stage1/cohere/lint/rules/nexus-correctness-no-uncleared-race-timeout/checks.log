@@ -1,0 +1,9 @@
+upstream nexus/correctness-no-uncleared-race-timeout: 21 unique cases; Go/native/Node/emitted JavaScript byte-identical
+TestRulesAgree PASS
+TestOwnedWitnesses PASS
+TestMutants PASS: 82 caught
+TestCompilerAndStage1Agree PASS: 890 files; 30695097 bytes
+whole package: 33 pass 2 fail 1 skip; wall 2280.177s
+lint_test.go:855: wave05 nexus-correctness-no-uncleared-race-timeout verdict inversion caught on native: case 0 line 2: port "fixed\t/// <reference lib=\"es2015.promise\" />\\u000aPromise.race([Promise.resolve(1), new Promise((resolve, reject) => { setTimeout(() => reject(new Error()), 1000); })]);\\u000a", Go "/tmp/adamic-gate/TestMutantswave05_nexus-correctness-no-uncleared-race-timeout_v2900297395/016/nexus-correctness-no-uncleared-race-timeout-0.ts:2:70"
+lint_test.go:855: wave05 nexus-correctness-no-uncleared-race-timeout verdict inversion caught on Node: case 0 line 2: port "fixed\t/// <reference lib=\"es2015.promise\" />\\u000aPromise.race([Promise.resolve(1), new Promise((resolve, reject) => { setTimeout(() => reject(new Error()), 1000); })]);\\u000a", Go "/tmp/adamic-gate/TestMutantswave05_nexus-correctness-no-uncleared-race-timeout_v2900297395/016/nexus-correctness-no-uncleared-race-timeout-0.ts:2:70"
+lint_test.go:855: wave05 nexus-correctness-no-uncleared-race-timeout verdict inversion caught on emitted JavaScript: case 0 line 2: port "fixed\t/// <reference lib=\"es2015.promise\" />\\u000aPromise.race([Promise.resolve(1), new Promise((resolve, reject) => { setTimeout(() => reject(new Error()), 1000); })]);\\u000a", Go "/tmp/adamic-gate/TestMutantswave05_nexus-correctness-no-uncleared-race-timeout_v2900297395/016/nexus-correctness-no-uncleared-race-timeout-0.ts:2:70"

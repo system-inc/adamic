@@ -1,0 +1,149 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { Frames, header } from '../../../typeaware/frames.ts';
+
+function name(context: RuleContext, index: number): number {
+        const node = context.parser.node(index);
+        if(node.kind === 'BindingElement') {
+            const value = initializer(context, index);
+            const names = node.children.filter(
+                (child) => child !== value && context.parser.node(child).kind !== 'DotDotDotToken',
+            );
+            return names[names.length - 1] ?? -1;
+        }
+        if(['ImportSpecifier', 'NamespaceImport'].includes(node.kind)) {
+            return node.children[node.children.length - 1] ?? -1;
+        }
+        for(const child of node.children) {
+            const kind = context.parser.node(child).kind;
+            if(['Identifier', 'ThisKeyword', 'ArrayBindingPattern', 'ObjectBindingPattern'].includes(kind)) {
+                return child;
+            }
+        }
+        return -1;
+    }
+function initializer(context: RuleContext, index: number): number {
+        const node = context.parser.node(index);
+        if(!['VariableDeclaration', 'PropertyDeclaration', 'Parameter', 'BindingElement'].includes(node.kind)) {
+            return -1;
+        }
+        const child = node.children[node.children.length - 1] ?? -1;
+        if(child < 0) {
+            return -1;
+        }
+        context.scanner.pos = context.parser.node(child).pos;
+        // The equals is consumed before an initializer's leading trivia.
+        let at = context.parser.node(child).pos - 1;
+        while(at >= node.pos && [' ', '\t', '\r', '\n'].includes(context.scanner.text.slice(at, at + 1))) {
+            at--;
+        }
+        return context.scanner.text.slice(at, at + 1) === '=' ? child : -1;
+    }
+export class Bindings {
+    readonly rules: RuleContext;
+    readonly spans = new Map<string, number>();
+    readonly resolved = new Map<number, number[]>();
+    constructor(context: RuleContext) {
+        this.rules = context;
+        const checker = context.checker ?? panic('dead stores require shared checker');
+        for(let index = 0; index < context.parser.nodes.length; index++) {
+            const node = context.node(index);
+            this.spans.set(`${node.kind}:${checker.offsets[node.pos]}:${checker.offsets[node.end]}`, index);
+        }
+    }
+    name(index: number): number { return name(this.rules, index); }
+    initializer(index: number): number { return initializer(this.rules, index); }
+    parent(index: number): number { return this.rules.parent(index); }
+    contains(outer: number, inner: number): boolean {
+        const a = this.rules.node(outer); const b = this.rules.node(inner);
+        return a.pos <= b.pos && a.end >= b.end;
+    }
+    skip(index: number): number {
+        let current = index;
+        while(current >= 0 && this.rules.kind(current) === 'ParenthesizedExpression') {
+            current = this.rules.node(current).children[0] ?? -1;
+        }
+        return current;
+    }
+    declarations(index: number): number[] {
+        if(!this.resolved.has(index)) {
+            const checker = this.rules.checker ?? panic('dead stores require shared checker');
+            const answer = checker.ask(index, 'binding-declarations');
+            const frames = new Frames(answer.value ?? panic('binding declarations refused'));
+            header(frames, 'binding-declarations');
+            const result: number[] = [];
+            if(frames.yes()) {
+                frames.natural();
+                const count = frames.natural();
+                for(let at = 0; at < count; at++) {
+                    const path = frames.field(); const kind = frames.field();
+                    const start = frames.natural(); const end = frames.natural();
+                    if(path === checker.path) {
+                        result.push(this.spans.get(`${kind}:${start}:${end}`) ?? panic('local binding absent from parser'));
+                    }
+                }
+            }
+            frames.end(); this.resolved.set(index, result);
+        }
+        return this.resolved.get(index) ?? panic('missing binding declarations');
+    }
+    declaring(index: number): boolean {
+        const parentIndex = this.parent(index);
+        if(parentIndex < 0) {
+            return false;
+        }
+        const parent = this.rules.parser.node(parentIndex);
+        if(parent.kind === 'BindingElement' && parent.children.length > 1 &&
+            parent.children[0] === index && this.name(parentIndex) !== index) {
+            return true;
+        }
+        if(['VariableDeclaration', 'Parameter', 'BindingElement', 'FunctionDeclaration',
+            'FunctionExpression', 'ClassDeclaration', 'ClassExpression', 'InterfaceDeclaration',
+            'TypeAliasDeclaration', 'EnumDeclaration', 'EnumMember', 'ModuleDeclaration',
+            'TypeParameter', 'ImportClause', 'ImportEqualsDeclaration', 'NamespaceImport',
+            'PropertyDeclaration', 'PropertySignature', 'MethodDeclaration', 'MethodSignature',
+            'GetAccessor', 'SetAccessor'].includes(parent.kind)) {
+            return this.name(parentIndex) === index;
+        }
+        if(parent.kind === 'ImportSpecifier' || parent.kind === 'JsxAttribute') {
+            return true;
+        }
+        if(parent.kind === 'PropertyAccessExpression' || parent.kind === 'QualifiedName') {
+            return parent.children[parent.children.length - 1] === index;
+        }
+        if(parent.kind === 'PropertyAssignment') {
+            return parent.children[0] === index;
+        }
+        if(parent.kind === 'ExportSpecifier') {
+            let current = parentIndex;
+            while(current >= 0) {
+                const node = this.rules.parser.node(current);
+                if(node.kind === 'ExportDeclaration') {
+                    if(node.children.some((child) => this.rules.parser.node(child).kind === 'StringLiteral')) {
+                        return true;
+                    }
+                    break;
+                }
+                current = this.parent(current);
+            }
+            const names = parent.children.filter((child) => this.rules.parser.node(child).kind === 'Identifier');
+            return names.length > 1 && names[0] !== index;
+        }
+        if(parent.kind === 'TypePredicate') {
+            return this.name(parentIndex) === index;
+        }
+        if(parent.kind === 'TypeQuery') {
+            let current = parentIndex;
+            while(current >= 0) {
+                const kind = this.rules.parser.node(current).kind;
+                const name = this.name(current);
+                if(['Parameter', 'VariableDeclaration'].includes(kind) && name >= 0 &&
+                    this.rules.parser.node(name).text === this.rules.parser.node(index).text) {
+                    return true;
+                }
+                current = this.parent(current);
+            }
+        }
+        return false;
+    }
+}

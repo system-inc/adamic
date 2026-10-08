@@ -1,0 +1,1067 @@
+// Native backward liveness over source control-flow edges. The checker supplies bindings only.
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { Bindings } from './bindings.a';
+import { deadStoreMessage } from './messages.a';
+
+const emptySymbols: readonly number[] = [];
+const functionRoots = [
+    'FunctionDeclaration',
+    'FunctionExpression',
+    'ArrowFunction',
+    'MethodDeclaration',
+    'Constructor',
+    'GetAccessor',
+    'SetAccessor',
+    'ClassStaticBlockDeclaration',
+];
+const assignments = [
+    'EqualsToken',
+    'PlusEqualsToken',
+    'MinusEqualsToken',
+    'AsteriskEqualsToken',
+    'AsteriskAsteriskEqualsToken',
+    'SlashEqualsToken',
+    'PercentEqualsToken',
+    'LessThanLessThanEqualsToken',
+    'GreaterThanGreaterThanEqualsToken',
+    'GreaterThanGreaterThanGreaterThanEqualsToken',
+    'AmpersandEqualsToken',
+    'BarEqualsToken',
+    'CaretEqualsToken',
+    'AmpersandAmpersandEqualsToken',
+    'BarBarEqualsToken',
+    'QuestionQuestionEqualsToken',
+];
+
+class StoreBlock {
+    readonly successors: number[] = [];
+    readonly index: number;
+    readonly symbol: number;
+    readonly write: boolean;
+    reachable = false;
+    live: number[] = [];
+    constructor(index: number, symbol: number, write: boolean) {
+        this.index = index;
+        this.symbol = symbol;
+        this.write = write;
+    }
+}
+class StoreJump {
+    readonly breakTo: number;
+    readonly continueTo: number;
+    readonly labels: readonly string[];
+    readonly breakable: boolean;
+    constructor(breakTo: number, continueTo: number, labels: readonly string[], breakable: boolean) {
+        this.breakTo = breakTo;
+        this.continueTo = continueTo;
+        this.labels = labels;
+        this.breakable = breakable;
+    }
+}
+class StoreTry {
+    readonly catchEntry: number;
+    readonly finallyEntry: number;
+    catching = false;
+    forked = false;
+    returned = false;
+    thrown = false;
+    constructor(catchEntry: number, finallyEntry: number) {
+        this.catchEntry = catchEntry;
+        this.finallyEntry = finallyEntry;
+    }
+}
+export class NoUselessAssignment {
+    readonly rules: RuleContext;
+    readonly bindings: Bindings;
+    readonly symbols = new Map<number, number>();
+    readonly eligible: number[] = [];
+    readonly hasRead: number[] = [];
+    readonly captured: number[] = [];
+    readonly exports: string[] = [];
+    readonly blocks: StoreBlock[] = [];
+    readonly jumps: StoreJump[] = [];
+    readonly tries: StoreTry[] = [];
+    current = 0;
+    constructor(rules: RuleContext) {
+        this.rules = rules;
+        this.bindings = new Bindings(rules);
+    }
+    isRoot(index: number): boolean {
+        const kind = this.rules.parser.node(index).kind;
+        return (
+            kind === 'SourceFile' ||
+            functionRoots.includes(kind) ||
+            (kind === 'PropertyDeclaration' && this.bindings.initializer(index) >= 0)
+        );
+    }
+    root(index: number): number {
+        let previous = index;
+        let decorator = -1;
+        let parent = this.bindings.parent(index);
+        while(parent >= 0) {
+            const node = this.rules.parser.node(parent);
+            if(node.kind === 'Decorator') {
+                decorator = parent;
+            }
+            if(node.kind === 'SourceFile') {
+                return parent;
+            }
+            if(this.isRoot(parent)) {
+                if(node.kind === 'PropertyDeclaration') {
+                    if(this.bindings.initializer(parent) === previous) {
+                        return parent;
+                    }
+                }
+                else if(
+                    (node.kind === 'ArrowFunction' || this.bindings.name(parent) !== previous) &&
+                    !(
+                        decorator >= 0 &&
+                        (this.bindings.parent(decorator) === parent || this.bindings.parent(decorator) === previous)
+                    )
+                ) {
+                    return parent;
+                }
+            }
+            previous = parent;
+            parent = this.bindings.parent(parent);
+        }
+        return -1;
+    }
+    kind(index: number): number {
+        const parent = this.bindings.parent(index);
+        if(parent < 0) {
+            return 0;
+        }
+        const node = this.rules.parser.node(parent);
+        if(node.kind === 'BinaryExpression' && this.bindings.skip(node.children[0] ?? -1) === index) {
+            const op = this.rules.parser.node(node.children[1] ?? -1).kind;
+            if(assignments.includes(op)) {
+                return op === 'EqualsToken' ? 1 : 2;
+            }
+        }
+        if(node.kind === 'VariableDeclaration' && this.bindings.name(parent) === index) {
+            return this.bindings.initializer(parent) >= 0 ? 1 : 0;
+        }
+        if(node.kind === 'BindingElement' && this.bindings.name(parent) === index) {
+            return 1;
+        }
+        if(
+            node.kind === 'PostfixUnaryExpression' ||
+            (node.kind === 'PrefixUnaryExpression' && ['PlusPlusToken', 'MinusMinusToken'].includes(node.operator))
+        ) {
+            return 2;
+        }
+        return 0;
+    }
+    nonReference(index: number): boolean {
+        const parent = this.bindings.parent(index);
+        if(parent < 0) {
+            return false;
+        }
+        const node = this.rules.parser.node(parent);
+        if(node.kind === 'PropertyAccessExpression') {
+            return node.children[node.children.length - 1] === index;
+        }
+        if(node.kind === 'PropertyAssignment') {
+            return node.children[0] === index;
+        }
+        if(
+            [
+                'QualifiedName',
+                'MethodDeclaration',
+                'PropertyDeclaration',
+                'PropertySignature',
+                'MethodSignature',
+                'GetAccessor',
+                'SetAccessor',
+                'EnumMember',
+                'ImportSpecifier',
+                'ImportClause',
+                'NamespaceImport',
+                'TypeParameter',
+                'TypeReference',
+                'JsxAttribute',
+            ].includes(node.kind)
+        ) {
+            return this.bindings.name(parent) === index;
+        }
+        return false;
+    }
+    mutable(declaration: number): boolean {
+        let current = declaration;
+        while(
+            current >= 0 &&
+            ['BindingElement', 'ObjectBindingPattern', 'ArrayBindingPattern'].includes(
+                this.rules.parser.node(current).kind,
+            )
+        ) {
+            current = this.bindings.parent(current);
+        }
+        if(current < 0 || this.rules.parser.node(current).kind !== 'VariableDeclaration') {
+            return false;
+        }
+        const list = this.bindings.parent(current);
+        if(list < 0 || this.rules.parser.node(list).kind !== 'VariableDeclarationList') {
+            return false;
+        }
+        if((Number.parseInt(this.rules.parser.node(list).semantic, 10) & 2) !== 0) {
+            return false;
+        }
+        const statement = this.bindings.parent(list);
+        return (
+            statement < 0 ||
+            !this.rules.parser
+                .node(statement)
+                .children.some((child) => this.rules.parser.node(child).kind === 'ExportKeyword')
+        );
+    }
+    prepare(): void {
+        const names: string[] = [];
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            const node = this.rules.parser.node(at);
+            if(
+                node.kind === 'Identifier' &&
+                this.kind(at) !== 0 &&
+                !this.nonReference(at) &&
+                !names.includes(node.text)
+            ) {
+                names.push(node.text);
+            }
+            if(node.kind === 'ExportSpecifier') {
+                const local = node.children.find((c) => this.rules.parser.node(c).kind === 'Identifier') ?? -1;
+                if(local >= 0) {
+                    this.exports.push(this.rules.parser.node(local).text);
+                }
+            }
+            if(node.kind === 'ExportAssignment') {
+                const local = node.children[node.children.length - 1] ?? -1;
+                if(local >= 0 && this.rules.parser.node(local).kind === 'Identifier') {
+                    this.exports.push(this.rules.parser.node(local).text);
+                }
+            }
+        }
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            const node = this.rules.parser.node(at);
+            if(
+                this.bindings.parent(at) < 0 ||
+                node.kind !== 'Identifier' ||
+                !names.includes(node.text) ||
+                this.nonReference(at)
+            ) {
+                continue;
+            }
+            const declaration = this.bindings.declarations(at)[0] ?? -1;
+            if(declaration < 0 || !this.mutable(declaration)) {
+                continue;
+            }
+            this.symbols.set(at, declaration);
+            if(!this.eligible.includes(declaration)) {
+                this.eligible.push(declaration);
+            }
+            const parent = this.bindings.parent(at);
+            const uninitialized =
+                parent >= 0 &&
+                this.rules.parser.node(parent).kind === 'VariableDeclaration' &&
+                this.bindings.name(parent) === at &&
+                this.bindings.initializer(parent) < 0;
+            if(this.kind(at) !== 1 && !uninitialized) {
+                if(!this.hasRead.includes(declaration)) {
+                    this.hasRead.push(declaration);
+                }
+                if(this.root(at) !== this.root(declaration) && !this.captured.includes(declaration)) {
+                    this.captured.push(declaration);
+                }
+            }
+        }
+    }
+    block(index = -1, symbol = -1, write = false): number {
+        const result = this.blocks.length;
+        this.blocks.push(new StoreBlock(index, symbol, write));
+        return result;
+    }
+    link(from: number, to: number): void {
+        if(from >= 0 && to >= 0) {
+            (this.blocks[from] ?? panic('missing store block')).successors.push(to);
+        }
+    }
+    next(index = -1, symbol = -1, write = false): void {
+        const next = this.block(index, symbol, write);
+        this.link(this.current, next);
+        this.current = next;
+    }
+    event(index: number, write: boolean): void {
+        const symbol = this.symbols.get(index) ?? -1;
+        if(symbol < 0 || this.nonReference(index) || (!write && this.kind(index) === 1)) {
+            return;
+        }
+        this.next(index, symbol, write);
+    }
+    throwable(index: number): void {
+        if(index >= 0) {
+            const parent = this.bindings.parent(index);
+            if(
+                parent >= 0 &&
+                (this.bindings.declaring(index) ||
+                    [
+                        'BreakStatement',
+                        'ContinueStatement',
+                        'LabeledStatement',
+                        'ImportSpecifier',
+                        'ExportSpecifier',
+                    ].includes(this.rules.parser.node(parent).kind))
+            ) {
+                return;
+            }
+        }
+        for(let at = this.tries.length - 1; at >= 0; at--) {
+            const frame = this.tries[at] ?? panic('missing try frame');
+            if(frame.catching && frame.finallyEntry < 0) {
+                continue;
+            }
+            if(frame.forked) {
+                return;
+            }
+            frame.forked = true;
+            frame.thrown = true;
+            this.link(
+                this.current,
+                frame.catching ? frame.finallyEntry : frame.catchEntry >= 0 ? frame.catchEntry : frame.finallyEntry,
+            );
+            this.next();
+            return;
+        }
+    }
+    bind(index: number, write: boolean): void {
+        if(index < 0) {
+            return;
+        }
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'Identifier') {
+            this.event(index, write);
+            if(!write) {
+                this.throwable(index);
+            }
+            return;
+        }
+        if(
+            [
+                'ParenthesizedExpression',
+                'NonNullExpression',
+                'AsExpression',
+                'SatisfiesExpression',
+                'TypeAssertionExpression',
+                'SpreadElement',
+                'SpreadAssignment',
+            ].includes(node.kind)
+        ) {
+            this.bind(node.children[node.kind === 'TypeAssertionExpression' ? 1 : 0] ?? -1, write);
+            return;
+        }
+        if(
+            [
+                'ObjectBindingPattern',
+                'ArrayBindingPattern',
+                'ArrayLiteralExpression',
+                'ObjectLiteralExpression',
+            ].includes(node.kind)
+        ) {
+            for(const child of node.children) {
+                const item = this.rules.parser.node(child);
+                if(item.kind === 'BindingElement' || item.kind === 'ShorthandPropertyAssignment') {
+                    const initial = this.bindings.initializer(child);
+                    this.default_(this.bindings.name(child), initial);
+                }
+                else if(item.kind === 'PropertyAssignment') {
+                    const name = item.children[0] ?? -1;
+                    if(name >= 0 && this.rules.parser.node(name).kind === 'ComputedPropertyName') {
+                        this.expr(name);
+                    }
+                    this.bind(item.children[item.children.length - 1] ?? -1, true);
+                }
+                else {
+                    if(node.kind === 'ArrayLiteralExpression') {
+                        this.bind(child, false);
+                    }
+                    this.bind(child, true);
+                }
+            }
+            return;
+        }
+        if(node.kind === 'BinaryExpression' && this.rules.parser.node(node.children[1] ?? -1).kind === 'EqualsToken') {
+            this.default_(node.children[0] ?? -1, node.children[2] ?? -1);
+            return;
+        }
+        if(node.kind !== 'OmittedExpression') {
+            this.expr(index);
+        }
+    }
+    default_(target: number, fallback: number): void {
+        if(fallback >= 0) {
+            const join = this.block();
+            this.link(this.current, join);
+            this.expr(fallback);
+            this.link(this.current, join);
+            this.current = join;
+        }
+        this.bind(target, false);
+        this.bind(target, true);
+    }
+    expr(index: number): void {
+        if(index < 0) {
+            return;
+        }
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'Identifier') {
+            this.event(index, false);
+            this.throwable(index);
+            return;
+        }
+        if(this.isRoot(index)) {
+            for(const child of node.children) {
+                if(['ComputedPropertyName', 'Decorator'].includes(this.rules.parser.node(child).kind)) {
+                    this.expr(child);
+                }
+            }
+            return;
+        }
+        if(node.kind === 'BinaryExpression') {
+            const left = node.children[0] ?? -1;
+            const right = node.children[2] ?? -1;
+            const op = this.rules.parser.node(node.children[1] ?? -1).kind;
+            if(
+                [
+                    'AmpersandAmpersandToken',
+                    'BarBarToken',
+                    'QuestionQuestionToken',
+                    'AmpersandAmpersandEqualsToken',
+                    'BarBarEqualsToken',
+                    'QuestionQuestionEqualsToken',
+                ].includes(op)
+            ) {
+                this.expr(left);
+                const join = this.block();
+                this.link(this.current, join);
+                this.expr(right);
+                if(op.endsWith('EqualsToken')) {
+                    this.bind(left, true);
+                }
+                this.link(this.current, join);
+                this.current = join;
+                return;
+            }
+            if(assignments.includes(op)) {
+                const pattern = ['ObjectLiteralExpression', 'ArrayLiteralExpression'].includes(
+                    this.rules.parser.node(this.bindings.skip(left)).kind,
+                );
+                if(!pattern) {
+                    this.bind(left, false);
+                }
+                this.expr(right);
+                this.bind(left, true);
+                return;
+            }
+            this.expr(left);
+            this.expr(right);
+            return;
+        }
+        if(node.kind === 'ConditionalExpression') {
+            this.expr(node.children[0] ?? -1);
+            const end = this.current;
+            const join = this.block();
+            this.expr(node.children[2] ?? -1);
+            this.link(this.current, join);
+            this.current = end;
+            this.expr(node.children[4] ?? -1);
+            this.link(this.current, join);
+            this.current = join;
+            return;
+        }
+        if(
+            node.kind === 'PostfixUnaryExpression' ||
+            (node.kind === 'PrefixUnaryExpression' && ['PlusPlusToken', 'MinusMinusToken'].includes(node.operator))
+        ) {
+            this.bind(node.children[0] ?? -1, false);
+            this.bind(node.children[0] ?? -1, true);
+            return;
+        }
+        if(node.kind === 'PropertyAccessExpression') {
+            this.expr(node.children[0] ?? -1);
+            this.throwable(-1);
+            return;
+        }
+        if(node.kind === 'PropertyAssignment') {
+            const key = node.children[0] ?? -1;
+            if(key >= 0 && this.rules.parser.node(key).kind === 'ComputedPropertyName') {
+                this.expr(key);
+            }
+            this.expr(node.children[node.children.length - 1] ?? -1);
+            return;
+        }
+        if(node.kind === 'VariableDeclaration') {
+            const name = this.bindings.name(index);
+            const initial = this.bindings.initializer(index);
+            for(const child of node.children) {
+                if(child !== name && child !== initial) {
+                    this.expr(child);
+                }
+            }
+            if(
+                name >= 0 &&
+                ['ObjectBindingPattern', 'ArrayBindingPattern'].includes(this.rules.parser.node(name).kind)
+            ) {
+                this.expr(initial);
+                this.bind(name, true);
+            }
+            else {
+                this.bind(name, false);
+                this.expr(initial);
+                if(initial >= 0) {
+                    this.bind(name, true);
+                }
+            }
+            return;
+        }
+        for(const child of node.children) {
+            this.expr(child);
+        }
+        if(
+            ['CallExpression', 'NewExpression', 'ElementAccessExpression', 'TaggedTemplateExpression'].includes(
+                node.kind,
+            )
+        ) {
+            this.throwable(-1);
+        }
+    }
+    condition(index: number, yes: number, no: number): void {
+        if(index < 0) {
+            this.link(this.current, yes);
+            this.link(this.current, no);
+            return;
+        }
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'ParenthesizedExpression') {
+            this.condition(node.children[0] ?? -1, yes, no);
+            return;
+        }
+        if(node.kind === 'PrefixUnaryExpression' && node.operator === 'ExclamationToken') {
+            this.condition(node.children[0] ?? -1, no, yes);
+            return;
+        }
+        if(node.kind === 'BinaryExpression') {
+            const op = this.rules.parser.node(node.children[1] ?? -1).kind;
+            if(['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(op)) {
+                const right = this.block();
+                if(op === 'AmpersandAmpersandToken') {
+                    this.condition(node.children[0] ?? -1, right, no);
+                }
+                else if(op === 'BarBarToken') {
+                    this.condition(node.children[0] ?? -1, yes, right);
+                }
+                else {
+                    this.expr(node.children[0] ?? -1);
+                    this.link(this.current, yes);
+                    this.link(this.current, no);
+                    this.link(this.current, right);
+                }
+                this.current = right;
+                this.condition(node.children[2] ?? -1, yes, no);
+                return;
+            }
+        }
+        if(node.kind === 'ConditionalExpression') {
+            const a = this.block();
+            const b = this.block();
+            this.condition(node.children[0] ?? -1, a, b);
+            this.current = a;
+            this.condition(node.children[2] ?? -1, yes, no);
+            this.current = b;
+            this.condition(node.children[4] ?? -1, yes, no);
+            return;
+        }
+        this.expr(index);
+        this.link(this.current, yes);
+        this.link(this.current, no);
+    }
+    labels(index: number): string[] {
+        const result: string[] = [];
+        let current = index;
+        let parent = this.bindings.parent(current);
+        while(parent >= 0 && this.rules.parser.node(parent).kind === 'LabeledStatement') {
+            result.push(this.rules.parser.node(this.rules.parser.node(parent).children[0] ?? -1).text);
+            current = parent;
+            parent = this.bindings.parent(current);
+        }
+        return result;
+    }
+    truthy(index: number): boolean {
+        if(index < 0) {
+            return false;
+        }
+        const node = this.rules.parser.node(this.bindings.skip(index));
+        return (
+            ['TrueKeyword', 'RegularExpressionLiteral'].includes(node.kind) ||
+            (node.kind === 'StringLiteral' && node.text !== '') ||
+            (node.kind === 'NumericLiteral' && Number.parseFloat(node.text.replaceAll('_', '')) !== 0) ||
+            (node.kind === 'BigIntLiteral' &&
+                node.text
+                    .replaceAll('_', '')
+                    .slice(0, -1)
+                    .replaceAll('0', '')
+                    .replaceAll('x', '')
+                    .replaceAll('b', '')
+                    .replaceAll('o', '') !== '')
+        );
+    }
+    abrupt(returned: boolean): void {
+        for(let at = this.tries.length - 1; at >= 0; at--) {
+            const frame = this.tries[at] ?? panic('missing try frame');
+            const target = returned
+                ? frame.finallyEntry
+                : frame.catching
+                  ? frame.finallyEntry
+                  : frame.catchEntry >= 0
+                    ? frame.catchEntry
+                    : frame.finallyEntry;
+            if(target >= 0) {
+                if(returned) {
+                    frame.returned = true;
+                }
+                else {
+                    frame.thrown = true;
+                }
+                this.link(this.current, target);
+                break;
+            }
+        }
+        this.current = -1;
+    }
+    statement(index: number): void {
+        if(index < 0) {
+            return;
+        }
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'IfStatement') {
+            const yes = this.block();
+            const after = this.block();
+            const no = node.children.length > 2 ? this.block() : after;
+            this.condition(node.children[0] ?? -1, yes, no);
+            this.current = yes;
+            this.statement(node.children[1] ?? -1);
+            this.link(this.current, after);
+            if(no !== after) {
+                this.current = no;
+                this.statement(node.children[2] ?? -1);
+                this.link(this.current, after);
+            }
+            this.current = after;
+            return;
+        }
+        if(['WhileStatement', 'DoStatement', 'ForStatement', 'ForOfStatement', 'ForInStatement'].includes(node.kind)) {
+            this.loop(index);
+            return;
+        }
+        if(node.kind === 'ReturnStatement' || node.kind === 'ThrowStatement') {
+            this.expr(node.children[0] ?? -1);
+            this.abrupt(node.kind === 'ReturnStatement');
+            return;
+        }
+        if(node.kind === 'BreakStatement' || node.kind === 'ContinueStatement') {
+            const name = node.children.length > 0 ? this.rules.parser.node(node.children[0] ?? -1).text : '';
+            for(let at = this.jumps.length - 1; at >= 0; at--) {
+                const target = this.jumps[at] ?? panic('missing jump');
+                const to = node.kind === 'BreakStatement' ? target.breakTo : target.continueTo;
+                if(
+                    to >= 0 &&
+                    (name === '' ? node.kind === 'ContinueStatement' || target.breakable : target.labels.includes(name))
+                ) {
+                    this.link(this.current, to);
+                    break;
+                }
+            }
+            this.current = -1;
+            return;
+        }
+        if(node.kind === 'LabeledStatement') {
+            const child = node.children[1] ?? -1;
+            const kind = this.rules.parser.node(child).kind;
+            if(
+                [
+                    'WhileStatement',
+                    'DoStatement',
+                    'ForStatement',
+                    'ForOfStatement',
+                    'ForInStatement',
+                    'SwitchStatement',
+                ].includes(kind)
+            ) {
+                this.statement(child);
+                return;
+            }
+            const after = this.block();
+            this.jumps.push(new StoreJump(after, -1, [this.rules.parser.node(node.children[0] ?? -1).text], false));
+            this.statement(child);
+            this.jumps.pop();
+            this.link(this.current, after);
+            this.current = after;
+            return;
+        }
+        if(node.kind === 'TryStatement') {
+            this.try_(index);
+            return;
+        }
+        if(node.kind === 'SwitchStatement') {
+            this.expr(node.children[0] ?? -1);
+            const after = this.block();
+            const clauses = this.rules.parser.node(node.children[1] ?? -1).children;
+            const entries: number[] = [];
+            for(const clause of clauses) {
+                entries.push(this.block());
+            }
+            let fallback = -1;
+            for(let at = 0; at < clauses.length; at++) {
+                const clause = this.rules.parser.node(clauses[at] ?? -1);
+                if(clause.kind === 'DefaultClause') {
+                    fallback = entries[at] ?? -1;
+                }
+                else {
+                    this.expr(clause.children[0] ?? -1);
+                    this.link(this.current, entries[at] ?? -1);
+                    this.next();
+                }
+            }
+            this.link(this.current, fallback < 0 ? after : fallback);
+            this.jumps.push(new StoreJump(after, -1, this.labels(index), true));
+            let previous = -1;
+            for(let at = 0; at < clauses.length; at++) {
+                this.link(previous, entries[at] ?? -1);
+                this.current = entries[at] ?? -1;
+                const clause = this.rules.parser.node(clauses[at] ?? -1);
+                for(const child of clause.children.slice(clause.kind === 'CaseClause' ? 1 : 0)) {
+                    this.statement(child);
+                }
+                previous = this.current;
+            }
+            this.link(previous, after);
+            this.jumps.pop();
+            this.current = after;
+            return;
+        }
+        if(
+            [
+                'FunctionDeclaration',
+                'ImportDeclaration',
+                'ImportEqualsDeclaration',
+                'ExportDeclaration',
+                'EmptyStatement',
+                'DebuggerStatement',
+            ].includes(node.kind)
+        ) {
+            return;
+        }
+        if(
+            [
+                'Block',
+                'SourceFile',
+                'CaseBlock',
+                'VariableStatement',
+                'VariableDeclarationList',
+                'ClassStaticBlockDeclaration',
+            ].includes(node.kind)
+        ) {
+            for(const child of node.children) {
+                this.statement(child);
+            }
+            return;
+        }
+        this.expr(index);
+    }
+    loop(index: number): void {
+        const node = this.rules.parser.node(index);
+        let initial = -1;
+        let test = -1;
+        let update = -1;
+        let body = node.children[node.children.length - 1] ?? -1;
+        if(node.kind === 'DoStatement') {
+            body = node.children[0] ?? -1;
+            test = node.children[1] ?? -1;
+        }
+        else if(node.kind === 'WhileStatement') {
+            test = node.children[0] ?? -1;
+        }
+        else if(node.kind === 'ForOfStatement' || node.kind === 'ForInStatement') {
+            initial = node.children[node.children.length - 3] ?? -1;
+            test = node.children[node.children.length - 2] ?? -1;
+            this.expr(test);
+        }
+        else {
+            const scanner = this.rules.scanner;
+            scanner.pos = node.pos;
+            let depth = 0;
+            let section = 0;
+            const boundaries: number[] = [];
+            while(scanner.pos < node.end) {
+                const kind = scanner.scan();
+                if(kind === 'OpenParenToken') {
+                    depth++;
+                }
+                else if(kind === 'CloseParenToken') {
+                    depth--;
+                    if(depth === 0) {
+                        break;
+                    }
+                }
+                else if(kind === 'SemicolonToken' && depth === 1) {
+                    boundaries.push(scanner.start);
+                }
+            }
+            for(const child of node.children.slice(0, -1)) {
+                const pos = this.rules.start(child);
+                section = pos < (boundaries[0] ?? 0) ? 0 : pos < (boundaries[1] ?? 0) ? 1 : 2;
+                if(section === 0) {
+                    initial = child;
+                }
+                else if(section === 1) {
+                    test = child;
+                }
+                else {
+                    update = child;
+                }
+            }
+            this.statement(initial);
+        }
+        const head = this.block();
+        const after = this.block();
+        const bodyEntry = this.block();
+        const updateEntry = this.block();
+        this.link(this.current, node.kind === 'DoStatement' ? bodyEntry : head);
+        this.current = head;
+        if(node.kind === 'ForOfStatement' || node.kind === 'ForInStatement') {
+            this.link(head, after);
+            this.link(head, bodyEntry);
+        }
+        else if(node.kind === 'DoStatement') {
+            this.expr(test);
+            this.link(this.current, bodyEntry);
+            if(!this.truthy(test)) {
+                this.link(this.current, after);
+            }
+        }
+        else {
+            this.condition(test, bodyEntry, test < 0 || this.truthy(test) ? -1 : after);
+        }
+        this.current = updateEntry;
+        this.expr(update);
+        this.link(this.current, head);
+        this.jumps.push(
+            new StoreJump(
+                after,
+                node.kind === 'DoStatement' ? head : update >= 0 ? updateEntry : head,
+                this.labels(index),
+                true,
+            ),
+        );
+        this.current = bodyEntry;
+        if(node.kind === 'ForOfStatement' || node.kind === 'ForInStatement') {
+            const item = this.rules.parser.node(initial);
+            if(item.kind === 'VariableDeclarationList') {
+                for(const declaration of item.children) {
+                    this.bind(this.bindings.name(declaration), true);
+                }
+            }
+            else {
+                this.bind(initial, true);
+            }
+        }
+        this.statement(body);
+        this.link(this.current, update >= 0 ? updateEntry : head);
+        this.jumps.pop();
+        this.current = after;
+    }
+    try_(index: number): void {
+        const node = this.rules.parser.node(index);
+        const caught = node.children.find((c) => this.rules.parser.node(c).kind === 'CatchClause') ?? -1;
+        const final = node.children.slice(1).find((c) => this.rules.parser.node(c).kind === 'Block') ?? -1;
+        const frame = new StoreTry(caught >= 0 ? this.block() : -1, final >= 0 ? this.block() : -1);
+        this.tries.push(frame);
+        this.statement(node.children[0] ?? -1);
+        const ends: number[] = [this.current];
+        if(caught >= 0) {
+            this.link(this.current, frame.catchEntry);
+            frame.catching = true;
+            frame.forked = false;
+            this.current = frame.catchEntry;
+            const clause = this.rules.parser.node(caught);
+            for(const child of clause.children) {
+                if(this.rules.parser.node(child).kind === 'VariableDeclaration') {
+                    this.bind(this.bindings.name(child), true);
+                }
+                else {
+                    this.statement(child);
+                }
+            }
+            ends.push(this.current);
+        }
+        this.tries.pop();
+        const after = this.block();
+        const normal = this.block();
+        for(const end of ends) {
+            this.link(end, normal);
+        }
+        this.current = normal;
+        this.statement(final);
+        this.link(this.current, after);
+        if(final >= 0) {
+            this.current = frame.finallyEntry;
+            this.statement(final);
+            if(frame.returned) {
+                this.abrupt(true);
+            }
+            if(frame.thrown) {
+                this.abrupt(false);
+            }
+        }
+        this.current = after;
+    }
+    reportable(index: number, symbol: number): boolean {
+        if(this.root(index) !== this.root(symbol)) {
+            return false;
+        }
+        let child = index;
+        let parent = this.bindings.parent(index);
+        while(parent >= 0) {
+            const node = this.rules.parser.node(parent);
+            if(node.kind === 'TryStatement' && node.children[0] === child) {
+                return false;
+            }
+            child = parent;
+            parent = this.bindings.parent(parent);
+        }
+        const declaration = this.rules.parser.node(symbol);
+        if(declaration.kind === 'BindingElement' && this.bindings.name(symbol) !== index) {
+            let outer = symbol;
+            while(outer >= 0 && this.rules.parser.node(outer).kind !== 'VariableDeclaration') {
+                outer = this.bindings.parent(outer);
+            }
+            if(outer >= 0 && this.bindings.contains(outer, index)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    analyze(root: number): void {
+        this.blocks.splice(0, this.blocks.length);
+        this.jumps.splice(0, this.jumps.length);
+        this.tries.splice(0, this.tries.length);
+        this.current = this.block();
+        const node = this.rules.parser.node(root);
+        if(node.kind === 'SourceFile' || node.kind === 'ClassStaticBlockDeclaration') {
+            this.statement(root);
+        }
+        else if(node.kind === 'PropertyDeclaration') {
+            this.expr(this.bindings.initializer(root));
+        }
+        else {
+            for(const child of node.children) {
+                if(this.rules.parser.node(child).kind === 'Parameter') {
+                    this.default_(this.bindings.name(child), this.bindings.initializer(child));
+                }
+                else if(this.rules.parser.node(child).kind === 'Block') {
+                    this.statement(child);
+                }
+                else if(node.kind === 'ArrowFunction' && child === node.children[node.children.length - 1]) {
+                    this.expr(child);
+                }
+            }
+        }
+        const pending: number[] = [0];
+        while(pending.length > 0) {
+            const id = pending.pop() ?? -1;
+            const block = this.blocks[id] ?? panic('missing block');
+            if(block.reachable) {
+                continue;
+            }
+            block.reachable = true;
+            for(const next of block.successors) {
+                pending.push(next);
+            }
+        }
+        let changed = true;
+        while(changed) {
+            changed = false;
+            for(let at = this.blocks.length - 1; at >= 0; at--) {
+                const block = this.blocks[at] ?? panic('missing block');
+                if(!block.reachable) {
+                    continue;
+                }
+                const live: number[] = [];
+                for(const next of block.successors) {
+                    const target = this.blocks[next] ?? panic('missing successor');
+                    if(target.reachable) {
+                        for(const symbol of target.live) {
+                            if(!live.includes(symbol)) {
+                                live.push(symbol);
+                            }
+                        }
+                    }
+                }
+                if(block.symbol >= 0) {
+                    if(block.write) {
+                        const pos = live.indexOf(block.symbol);
+                        if(pos >= 0) {
+                            live.splice(pos, 1);
+                        }
+                    }
+                    else if(!live.includes(block.symbol)) {
+                        live.push(block.symbol);
+                    }
+                }
+                if(live.length !== block.live.length || live.some((s) => !block.live.includes(s))) {
+                    block.live = live;
+                    changed = true;
+                }
+            }
+        }
+        const verdicts = new Map<number, boolean>();
+        const symbols = new Map<number, number>();
+        for(const block of this.blocks) {
+            if(!block.reachable || !block.write || block.symbol < 0 || !this.reportable(block.index, block.symbol)) {
+                continue;
+            }
+            const dead = block.successors.every(
+                (next) => !(this.blocks[next]?.live ?? emptySymbols).includes(block.symbol),
+            );
+            verdicts.set(block.index, (verdicts.get(block.index) ?? true) && dead);
+            symbols.set(block.index, block.symbol);
+        }
+        for(const [index, dead] of verdicts) {
+            const symbol = symbols.get(index) ?? -1;
+            const name = this.rules.parser.node(index).text;
+            if(
+                dead &&
+                this.hasRead.includes(symbol) &&
+                !this.captured.includes(symbol) &&
+                !this.exports.includes(name)
+            ) {
+                const node_ = this.rules.parser.node(index);
+                this.rules.reportRange(
+                    this.rules.start(index), node_.end,
+                    'no-useless-assignment', 'noUselessAssignment', deadStoreMessage,
+                );
+            }
+        }
+    }
+    run(): void {
+        this.prepare();
+        const roots: number[] = [];
+        for(const index of this.symbols.keys()) {
+            const root = this.root(index);
+            if(root >= 0 && !roots.includes(root)) {
+                roots.push(root);
+            }
+        }
+        for(const root of roots) {
+            this.analyze(root);
+        }
+    }
+}

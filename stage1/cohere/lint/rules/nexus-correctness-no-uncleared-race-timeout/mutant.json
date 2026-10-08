@@ -1,0 +1,6 @@
+{
+  "name": "wave05 nexus-correctness-no-uncleared-race-timeout verdict inversion",
+  "file": "algorithm.a",
+  "from": "this.lost(executor, index)",
+  "to": "!this.lost(executor, index)"
+}

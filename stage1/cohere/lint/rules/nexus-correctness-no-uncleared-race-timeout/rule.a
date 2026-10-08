@@ -1,0 +1,13 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { NoUnclearedRaceTimeout } from './algorithm.a';
+export class Rule {
+    readonly context: RuleContext;
+    rule: NoUnclearedRaceTimeout | undefined = undefined;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(node: ParseNode, index: number): void {
+        if(this.rule === undefined) { this.rule = new NoUnclearedRaceTimeout(this.context); }
+        this.rule.check(index, node);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

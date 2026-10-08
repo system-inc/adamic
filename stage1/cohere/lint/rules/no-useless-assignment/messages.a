@@ -1,0 +1,2 @@
+export const deadStoreMessage =
+    'This assigns a value that nothing ever reads. Every path leaving this line either ends or writes the variable again before any code looks at it, so the value computed here is discarded. That is usually a symptom rather than the bug: the write was meant to be read and an early return, a wrong branch, or a second assignment swallowed it, or the wrong variable was named on the left. Remove the assignment, or use the value it produces.';

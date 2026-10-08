@@ -1,0 +1,46 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { FileQuestion } from '../../checker.a';
+import { Frames, header } from '../../../typeaware/frames.ts';
+export class Ancestor {
+    readonly kind: string; readonly name: string; readonly globalAugmentation: boolean;
+    constructor(kind: string, name: string, augmentation: boolean) {
+        this.kind = kind; this.name = name; this.globalAugmentation = augmentation;
+    }
+}
+export class Declaration {
+    readonly file: string; readonly kind: string; readonly declarationFile: boolean;
+    readonly library: boolean; readonly external: boolean; readonly parents: readonly Ancestor[];
+    constructor(file: string, kind: string, declarationFile: boolean, library: boolean, external: boolean, parents: readonly Ancestor[]) {
+        this.file = file; this.kind = kind; this.declarationFile = declarationFile;
+        this.library = library; this.external = external; this.parents = parents;
+    }
+}
+export class SymbolAncestry {
+    readonly present: boolean;
+    readonly declarations: Declaration[] = [];
+    constructor(context: RuleContext, index: number) {
+        const checker = context.checker ?? panic('race timeout requires shared checker');
+        const node = context.node(index);
+        const first = checker.offsets[node.pos] ?? panic('symbol start outside source');
+        const last = checker.offsets[node.end] ?? panic('symbol end outside source');
+        const answer = checker.askFile(new FileQuestion('ReadsDefaultLibrary', `symbol-provenance\n${first}\n${last}\n${node.kind}`));
+        const frames = new Frames(answer.value ?? panic('symbol provenance refused'));
+        header(frames, 'symbol-provenance'); this.present = frames.natural() !== 0;
+        frames.natural(); const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            const file = frames.field(); const declarationFile = frames.yes();
+            const library = frames.yes(); const external = frames.yes();
+            const ancestors = frames.natural(); let declarationKind = '';
+            const parents: Ancestor[] = [];
+            for(let child = 0; child < ancestors; child++) {
+                const kind = frames.field(); const name = frames.field();
+                frames.natural(); frames.natural(); frames.natural(); const augmentation = frames.yes();
+                if(child === 0) { declarationKind = kind; }
+                else { parents.push(new Ancestor(kind, name, augmentation)); }
+            }
+            this.declarations.push(new Declaration(file, declarationKind, declarationFile, library, external, parents));
+        }
+        frames.end();
+    }
+}
