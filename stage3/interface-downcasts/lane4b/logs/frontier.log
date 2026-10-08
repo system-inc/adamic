@@ -1,0 +1,9 @@
+diagnostic-good: source Node 0; C compiler 1; JS compiler 1
+diagnostic-wrong: source Node 0; C compiler 1; JS compiler 1
+jsdoc-good: source Node 0; C compiler 1; JS compiler 1
+jsdoc-wrong: source Node 0; C compiler 1; JS compiler 1
+node-indicator-good: source Node 0; C compiler 1; JS compiler 1
+node-indicator-wrong: source Node 0; C compiler 1; JS compiler 1
+option-type-good: source Node 0; C compiler 1; JS compiler 1
+option-type-wrong: source Node 1; C compiler 1; JS compiler 1
+Compiler success alone is not runtime parity or completed demand.

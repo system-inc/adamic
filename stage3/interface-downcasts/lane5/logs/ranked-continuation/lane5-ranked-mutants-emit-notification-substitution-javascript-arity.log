@@ -1,0 +1,15 @@
+--- FAIL: TestCheckedViewCallableRankedFamilies (0.71s)
+    --- FAIL: TestCheckedViewCallableRankedFamilies/emit-notification/wrong-arity (0.37s)
+        checked_views_callable_ranked_test.go:20: gate cache node hit
+        checked_views_callable_ranked_test.go:40: gate cache node miss
+        checked_views_callable_ranked_test.go:60: backend2 exit 0 stdout "9\n" stderr "" want "enableEmitNotification" and "found function with arity 2"; sanitized exit 70 stderr "adamic: panic: field read failed: context.enableEmitNotification expected (kind: SyntaxKind) => void, found function with arity 2\n"
+    --- FAIL: TestCheckedViewCallableRankedFamilies/substitution/wrong-arity (0.34s)
+        checked_views_callable_ranked_test.go:20: gate cache node hit
+        checked_views_callable_ranked_test.go:40: gate cache node miss
+        checked_views_callable_ranked_test.go:60: backend2 exit 0 stdout "9\n" stderr "" want "enableSubstitution" and "found function with arity 2"; sanitized exit 70 stderr "adamic: panic: field read failed: context.enableSubstitution expected (kind: SyntaxKind) => void, found function with arity 2\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.717s
+FAIL

@@ -1,0 +1,20 @@
+interface Base { readonly kind: 'union' | 'intersection' | 'signature' | 'source'; }
+interface Type { readonly id: number; }
+interface TypeParameter extends Type { readonly name: string; }
+interface Symbol { readonly name: string; }
+interface Statement { readonly text: string; }
+interface Range { readonly pos: number; readonly end: number; }
+interface NodeArray<T> extends ReadonlyArray<T>, Range { readonly hasTrailingComma: boolean; }
+interface UnionType extends Base { readonly kind: 'union'; readonly types: Type[]; }
+interface IntersectionType extends Base { readonly kind: 'intersection'; readonly types: Type[]; }
+interface Signature extends Base { readonly kind: 'signature'; readonly typeParameters?: readonly TypeParameter[]; readonly parameters: readonly Symbol[]; }
+interface SourceFile extends Base { readonly kind: 'source'; readonly statements: NodeArray<Statement>; }
+function union(value: Base): UnionType { return value as UnionType; }
+function intersection(value: Base): IntersectionType { return value as IntersectionType; }
+function signature(value: Base): Signature { return value as Signature; }
+function source(value: Base): SourceFile { return value as SourceFile; }
+const raw = {kind: 'source' as const, statements: Object.assign([{text: 'statement'}], {pos: 0, end: 9, hasTrailingComma: false})};
+const statements = source(raw).statements;
+const first = statements[0];
+console.log(`${statements.length}:${statements.pos}:${statements.end}:${statements.hasTrailingComma}`);
+if (first !== undefined) console.log(`${first.text}`);

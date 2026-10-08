@@ -1,0 +1,23 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.62s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/prefix-operand/wrong-arity (0.45s)
+        checked_views_callable_later_ranked_test.go:68: gate cache node hit
+        checked_views_callable_later_ranked_test.go:88: gate cache node miss
+        checked_views_callable_later_ranked_test.go:108: backend2 exit 0 stdout "9\n" stderr "" want "parenthesizeOperandOfPrefixUnary" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: parenthesizerRules().parenthesizeOperandOfPrefixUnary expected (operand: Expression) => UnaryExpression, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/syntax-kind/wrong-arity (0.37s)
+        checked_views_callable_later_ranked_test.go:68: gate cache node hit
+        checked_views_callable_later_ranked_test.go:88: gate cache node miss
+        checked_views_callable_later_ranked_test.go:108: backend2 exit 0 stdout "9\n" stderr "" want "formatSyntaxKind" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: Debug.formatSyntaxKind expected (kind: number | undefined) => string, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/static-block/wrong-arity (0.40s)
+        checked_views_callable_later_ranked_test.go:68: gate cache node hit
+        checked_views_callable_later_ranked_test.go:88: gate cache node miss
+        checked_views_callable_later_ranked_test.go:108: backend2 exit 0 stdout "9\n" stderr "" want "createClassStaticBlockDeclaration" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createClassStaticBlockDeclaration expected (body: Block) => ClassStaticBlockDeclaration, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/prefix-unary/wrong-arity (0.39s)
+        checked_views_callable_later_ranked_test.go:68: gate cache node hit
+        checked_views_callable_later_ranked_test.go:88: gate cache node miss
+        checked_views_callable_later_ranked_test.go:108: backend2 exit 0 stdout "9\n" stderr "" want "createPrefixUnaryExpression" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createPrefixUnaryExpression expected (operator: number, operand: Expression) => PrefixUnaryExpression, found function with arity 0\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=4 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.627s
+FAIL

@@ -1,0 +1,27 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (2.67s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/variable-update-tagged/wrong-arity (0.60s)
+        checked_views_callable_later_ranked_test.go:57: gate cache node miss
+        checked_views_callable_later_ranked_test.go:77: gate cache node miss
+        checked_views_callable_later_ranked_test.go:97: backend0 exit 0 stdout "9\n" stderr "" want "updateVariableDeclaration" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/conditional-expression/wrong-arity (0.49s)
+        checked_views_callable_later_ranked_test.go:57: gate cache node miss
+        checked_views_callable_later_ranked_test.go:77: gate cache node miss
+        checked_views_callable_later_ranked_test.go:97: backend0 exit 0 stdout "9\n" stderr "" want "createConditionalExpression" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/binary-update/wrong-arity (0.53s)
+        checked_views_callable_later_ranked_test.go:57: gate cache node miss
+        checked_views_callable_later_ranked_test.go:77: gate cache node miss
+        checked_views_callable_later_ranked_test.go:97: backend0 exit 0 stdout "9\n" stderr "" want "updateBinaryExpression" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/config-diagnostic/wrong-arity (0.48s)
+        checked_views_callable_later_ranked_test.go:57: gate cache node miss
+        checked_views_callable_later_ranked_test.go:77: gate cache node miss
+        checked_views_callable_later_ranked_test.go:97: backend0 exit 0 stdout "9\n" stderr "" want "addConfigDiagnostic" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/scanner-text/wrong-arity (0.56s)
+        checked_views_callable_later_ranked_test.go:57: gate cache node miss
+        checked_views_callable_later_ranked_test.go:77: gate cache node miss
+        checked_views_callable_later_ranked_test.go:97: backend0 exit 0 stdout "9\n" stderr "" want "setText" and "found function with arity 0"; sanitized exit 0 stderr ""
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.686s
+FAIL

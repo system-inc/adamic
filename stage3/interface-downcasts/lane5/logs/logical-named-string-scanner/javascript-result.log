@@ -1,0 +1,23 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.53s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/logical-and/wrong-result (0.45s)
+        checked_views_callable_later_ranked_test.go:49: gate cache node hit
+        checked_views_callable_later_ranked_test.go:69: gate cache node miss
+        checked_views_callable_later_ranked_test.go:89: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createLogicalAnd(left,right).value is not initialized; expected number, found missing\n" want "createLogicalAnd" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createLogicalAnd expected (left: Expression, right: Expression) => BinaryExpression, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/named-exports/wrong-result (0.35s)
+        checked_views_callable_later_ranked_test.go:49: gate cache node hit
+        checked_views_callable_later_ranked_test.go:69: gate cache node miss
+        checked_views_callable_later_ranked_test.go:89: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createNamedExports([]).value is not initialized; expected number, found missing\n" want "createNamedExports" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createNamedExports expected (elements: readonly ExportSpecifier[]) => NamedExports, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/token-text/wrong-result (0.36s)
+        checked_views_callable_later_ranked_test.go:49: gate cache node hit
+        checked_views_callable_later_ranked_test.go:69: gate cache node miss
+        checked_views_callable_later_ranked_test.go:89: backend2 exit 0 stdout "3\n" stderr "" want "getTokenText" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: scanner.getTokenText expected () => string, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/token-value/wrong-result (0.37s)
+        checked_views_callable_later_ranked_test.go:49: gate cache node hit
+        checked_views_callable_later_ranked_test.go:69: gate cache node miss
+        checked_views_callable_later_ranked_test.go:89: backend2 exit 0 stdout "3\n" stderr "" want "getTokenValue" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: scanner.getTokenValue expected () => string, found function with incompatible result representation\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=4 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.545s
+FAIL

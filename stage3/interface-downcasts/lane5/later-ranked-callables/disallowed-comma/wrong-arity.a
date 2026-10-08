@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Expression {readonly value:number;}
+interface Base {readonly parenthesizeExpressionForDisallowedComma:unknown;}
+interface Target {parenthesizeExpressionForDisallowedComma(expression: Expression): Expression;}
+function probe(value:Base):void {const target=value as Target;function parenthesizerRules():Target {return target;}const expression:Expression={value:3};console.log(`${parenthesizerRules().parenthesizeExpressionForDisallowedComma(expression).value}`);}
+probe({parenthesizeExpressionForDisallowedComma:(unused:number,expression:Expression):Expression=>({value:9})});

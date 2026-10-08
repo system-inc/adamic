@@ -1,0 +1,55 @@
+{
+  "measurement": "measured on a checker-rejected program",
+  "cast_related_host_frontiers": [
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 931,
+      "column": 25,
+      "kind": "untagged",
+      "target_type": "PackageJsonInfo",
+      "reason": "host metadata",
+      "host_values": [
+        "host.getPackageJsonInfoCache?.()?.getPackageJsonInfo"
+      ],
+      "detail": [
+        "function value may receive untracked callback arguments at /tmp/shape-conformance-adapted/src/compiler/moduleSpecifiers.ts:75:5",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-conformance-adapted/src/compiler/moduleSpecifiers.ts:1150:31"
+      ]
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 1182,
+      "column": 15,
+      "kind": "untagged",
+      "target_type": "IncrementalBuildInfo",
+      "reason": "diagnosed body",
+      "host_values": [
+        "JSON.parse",
+        "host.getBuildInfo"
+      ],
+      "detail": [
+        "function value may receive untracked callback arguments at /tmp/shape-conformance-adapted/src/compiler/tsbuildPublic.ts:80:5",
+        "incoming arguments from a skipped diagnosed body at /tmp/shape-conformance-adapted/src/compiler/tsbuildPublic.ts:1539:51",
+        "function value may receive untracked callback arguments at /tmp/shape-conformance-adapted/src/compiler/watchPublic.ts:54:5",
+        "missing expression",
+        "property or element producer edges not modeled at /tmp/shape-conformance-adapted/src/compiler/utilities.ts:7797:22",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-conformance-adapted/src/compiler/utilities.ts:7811:16",
+        "no tracked producer",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-conformance-adapted/src/compiler/watchPublic.ts:112:21",
+        "property or element producer edges not modeled at /tmp/shape-conformance-adapted/src/compiler/tsbuildPublic.ts:1872:76",
+        "function value may receive untracked callback arguments at /tmp/shape-conformance-adapted/src/compiler/tsbuildPublic.ts:67:5",
+        "incoming arguments from a skipped diagnosed body at /tmp/shape-conformance-adapted/src/compiler/tsbuildPublic.ts:1674:13"
+      ]
+    }
+  ],
+  "additional_native_fixture": {
+    "file": "stage3/interface-downcasts/lane3/host.a",
+    "value": "readTextFile(...)",
+    "fields": {
+      "kind": "string",
+      "message": "string"
+    },
+    "observed": "view retained; native stops at kind with unsupported representation; source Node prints true",
+    "included_in_2936_sites": false
+  }
+}

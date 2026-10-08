@@ -1,0 +1,7 @@
+// Complete original tsc declaration and read; adjacent carriers reduced.
+interface Statement {readonly value:number;}
+interface Block {readonly value:number;}
+interface Base {readonly updateBlock:unknown;}
+interface Target {updateBlock(node: Block, statements: readonly Statement[]): Block;}
+function probe(value:Base):void {const context={factory:value as Target};const block:Block={value:3};const statements:readonly Statement[]=[{value:5}];console.log(`${context.factory.updateBlock(block,statements).value}`);}
+probe({updateBlock:(node:Block,statements:readonly {readonly value:string}[]):{readonly value:string}=>({value:statements[0]!.value})});

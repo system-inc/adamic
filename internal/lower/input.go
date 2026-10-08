@@ -14,6 +14,9 @@ var inputFunctions = []string{"readTextFile", "writeTextFile", "utf8Length", "ut
 // programArguments() from 'adamic', the door out, writeTextFile(path, text), and what a walk of the
 // file system needs, readDirectory(path) and fileStatus(path). isInput is false for any other call.
 func (l *lowering) input(node *ast.Node) (ir.Expression, bool, error) {
+	if value, found, err := l.nodeFSFile(node); found {
+		return value, true, err
+	}
 	if value, found, err := l.tsgo(node); found {
 		return value, true, err
 	}
@@ -45,6 +48,11 @@ func (l *lowering) input(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		return ir.ReadTextFile{Path: path}, true, nil
 	case l.isPreludeFunction(callee, "writeTextFile"):
+		for _, argument := range arguments {
+			if argument.Kind == ast.KindSpreadElement {
+				return nil, true, l.notYet(argument, describe(argument))
+			}
+		}
 		if len(arguments) != 2 {
 			return nil, true, errors.New("lower: " + l.program.Where(node) + ": writeTextFile takes a path and a text, and the checker let another count through")
 		}
@@ -79,11 +87,14 @@ func (l *lowering) input(node *ast.Node) (ir.Expression, bool, error) {
 			return nil, true, errors.New("lower: " + l.program.Where(node) + ": utf8At takes a string and a number, and the checker let something else through")
 		}
 		return ir.Utf8At{Text: lowered[0], Index: lowered[1]}, true, nil
-	case l.isPreludeFunction(callee, "readDirectory"), l.isPreludeFunction(callee, "fileStatus"):
+	case l.isPreludeFunction(callee, "readDirectory"), l.isPreludeFunction(callee, "fileStatus"), l.isPreludeFunction(callee, "realPath"):
 		// By what it is, not what it's called here: an import may name it anything.
 		name := "fileStatus"
 		if l.isPreludeFunction(callee, "readDirectory") {
 			name = "readDirectory"
+		}
+		if l.isPreludeFunction(callee, "realPath") {
+			name = "realPath"
 		}
 		if len(arguments) != 1 {
 			return nil, true, errors.New("lower: " + l.program.Where(node) + ": " + name + " takes one path, and the checker let another count through")
@@ -97,6 +108,9 @@ func (l *lowering) input(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		if name == "readDirectory" {
 			return ir.ReadDirectory{Path: path}, true, nil
+		}
+		if name == "realPath" {
+			return ir.RealPath{Path: path}, true, nil
 		}
 		return ir.FileStatus{Path: path}, true, nil
 	case l.isPreludeFunction(callee, "programArguments"):

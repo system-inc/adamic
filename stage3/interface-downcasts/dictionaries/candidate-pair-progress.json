@@ -1,0 +1,2629 @@
+[
+  {
+    "type_id": 10107,
+    "view_reason": {
+      "kind": "cast",
+      "site": "src/compiler/tsbuildPublic.ts:23799:23825"
+    },
+    "type": "ParsedCommandLine",
+    "field": "options",
+    "declared_type": "CompilerOptions",
+    "declared_families": [
+      "dictionary contracts"
+    ],
+    "families": [
+      "dictionary contracts"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 111,
+    "sites": [
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2650,
+        "column": 14,
+        "start": 104763,
+        "end": 104788,
+        "text": "configParseResult.options"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2652,
+        "column": 17,
+        "start": 104919,
+        "end": 104944,
+        "text": "configParseResult.options"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2653,
+        "column": 17,
+        "start": 105012,
+        "end": 105037,
+        "text": "configParseResult.options"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2660,
+        "column": 48,
+        "start": 105560,
+        "end": 105585,
+        "text": "configParseResult.options"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2679,
+        "column": 13,
+        "start": 106500,
+        "end": 106525,
+        "text": "configParseResult.options"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2680,
+        "column": 49,
+        "start": 106607,
+        "end": 106632,
+        "text": "configParseResult.options"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2681,
+        "column": 22,
+        "start": 106706,
+        "end": 106731,
+        "text": "configParseResult.options"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2690,
+        "column": 66,
+        "start": 107213,
+        "end": 107238,
+        "text": "configParseResult.options"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2693,
+        "column": 87,
+        "start": 107449,
+        "end": 107474,
+        "text": "configParseResult.options"
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 542,
+        "column": 19,
+        "start": 21840,
+        "end": 21879,
+        "text": "redirectedReference.commandLine.options"
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 992,
+        "column": 28,
+        "start": 44717,
+        "end": 44756,
+        "text": "redirectedReference.commandLine.options"
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 998,
+        "column": 28,
+        "start": 44991,
+        "end": 45030,
+        "text": "redirectedReference.commandLine.options"
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 1409,
+        "column": 27,
+        "start": 63224,
+        "end": 63263,
+        "text": "redirectedReference.commandLine.options"
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 4813,
+        "column": 111,
+        "start": 238021,
+        "end": 238049,
+        "text": "redirect.commandLine.options"
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 41802,
+        "column": 145,
+        "start": 2467040,
+        "end": 2467068,
+        "text": "redirect.commandLine.options"
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 48546,
+        "column": 115,
+        "start": 2834258,
+        "end": 2834286,
+        "text": "redirect.commandLine.options"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 569,
+        "column": 62,
+        "start": 16938,
+        "end": 16956,
+        "text": "configFile.options"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 581,
+        "column": 9,
+        "start": 17638,
+        "end": 17656,
+        "text": "configFile.options"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 583,
+        "column": 69,
+        "start": 17837,
+        "end": 17855,
+        "text": "configFile.options"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 584,
+        "column": 90,
+        "start": 17986,
+        "end": 18004,
+        "text": "configFile.options"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 611,
+        "column": 112,
+        "start": 19089,
+        "end": 19107,
+        "text": "configFile.options"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 623,
+        "column": 15,
+        "start": 19743,
+        "end": 19761,
+        "text": "configFile.options"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 626,
+        "column": 29,
+        "start": 19844,
+        "end": 19862,
+        "text": "configFile.options"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 629,
+        "column": 13,
+        "start": 20021,
+        "end": 20039,
+        "text": "configFile.options"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 697,
+        "column": 9,
+        "start": 23132,
+        "end": 23150,
+        "text": "configFile.options"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 706,
+        "column": 48,
+        "start": 23593,
+        "end": 23611,
+        "text": "configFile.options"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 714,
+        "column": 9,
+        "start": 24015,
+        "end": 24034,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 725,
+        "column": 9,
+        "start": 24373,
+        "end": 24391,
+        "text": "configFile.options"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 726,
+        "column": 77,
+        "start": 24480,
+        "end": 24498,
+        "text": "configFile.options"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 727,
+        "column": 81,
+        "start": 24607,
+        "end": 24625,
+        "text": "configFile.options"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 736,
+        "column": 33,
+        "start": 25182,
+        "end": 25200,
+        "text": "configFile.options"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 740,
+        "column": 60,
+        "start": 25398,
+        "end": 25416,
+        "text": "configFile.options"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 742,
+        "column": 34,
+        "start": 25499,
+        "end": 25517,
+        "text": "configFile.options"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1297,
+        "column": 17,
+        "start": 53338,
+        "end": 53372,
+        "text": "oldResolvedRef.commandLine.options"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1297,
+        "column": 67,
+        "start": 53388,
+        "end": 53416,
+        "text": "newParsedCommandLine.options"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1324,
+        "column": 12,
+        "start": 54593,
+        "end": 54622,
+        "text": "configFileParseResult.options"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1325,
+        "column": 13,
+        "start": 54649,
+        "end": 54678,
+        "text": "configFileParseResult.options"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1756,
+        "column": 33,
+        "start": 82262,
+        "end": 82291,
+        "text": "parsedRef.commandLine.options"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1758,
+        "column": 54,
+        "start": 82419,
+        "end": 82448,
+        "text": "parsedRef.commandLine.options"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1768,
+        "column": 52,
+        "start": 83067,
+        "end": 83096,
+        "text": "parsedRef.commandLine.options"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 3619,
+        "column": 21,
+        "start": 183536,
+        "end": 183583,
+        "text": "redirectProject.resolvedRef.commandLine.options"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4021,
+        "column": 45,
+        "start": 204289,
+        "end": 204308,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4047,
+        "column": 17,
+        "start": 205801,
+        "end": 205820,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4048,
+        "column": 42,
+        "start": 205874,
+        "end": 205893,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4056,
+        "column": 26,
+        "start": 206438,
+        "end": 206457,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4600,
+        "column": 33,
+        "start": 239536,
+        "end": 239567,
+        "text": "resolvedRef.commandLine.options"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4918,
+        "column": 33,
+        "start": 257159,
+        "end": 257182,
+        "text": "ref.commandLine.options"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4924,
+        "column": 48,
+        "start": 257556,
+        "end": 257579,
+        "text": "ref.commandLine.options"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4924,
+        "column": 90,
+        "start": 257598,
+        "end": 257621,
+        "text": "ref.commandLine.options"
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 974,
+        "column": 27,
+        "start": 47125,
+        "end": 47154,
+        "text": "configFileParseResult.options"
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 993,
+        "column": 21,
+        "start": 48347,
+        "end": 48379,
+        "text": "config.parsedCommandLine.options"
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 1233,
+        "column": 42,
+        "start": 59546,
+        "end": 59578,
+        "text": "config.parsedCommandLine.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 570,
+        "column": 14,
+        "start": 23798,
+        "end": 23834,
+        "text": "(entry as ParsedCommandLine).options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 909,
+        "column": 35,
+        "start": 39624,
+        "end": 39638,
+        "text": "config.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 950,
+        "column": 35,
+        "start": 40950,
+        "end": 40964,
+        "text": "config.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1043,
+        "column": 40,
+        "start": 45339,
+        "end": 45353,
+        "text": "config.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1045,
+        "column": 45,
+        "start": 45453,
+        "end": 45467,
+        "text": "config.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1046,
+        "column": 61,
+        "start": 45531,
+        "end": 45545,
+        "text": "config.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1051,
+        "column": 13,
+        "start": 45660,
+        "end": 45674,
+        "text": "config.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1239,
+        "column": 60,
+        "start": 54021,
+        "end": 54035,
+        "text": "config.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1239,
+        "column": 132,
+        "start": 54093,
+        "end": 54107,
+        "text": "config.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1243,
+        "column": 17,
+        "start": 54256,
+        "end": 54270,
+        "text": "config.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1355,
+        "column": 31,
+        "start": 58667,
+        "end": 58681,
+        "text": "parsed.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1513,
+        "column": 60,
+        "start": 66133,
+        "end": 66148,
+        "text": "project.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1514,
+        "column": 52,
+        "start": 66204,
+        "end": 66219,
+        "text": "project.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1548,
+        "column": 10,
+        "start": 67503,
+        "end": 67518,
+        "text": "project.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1561,
+        "column": 14,
+        "start": 68025,
+        "end": 68040,
+        "text": "project.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1566,
+        "column": 41,
+        "start": 68266,
+        "end": 68281,
+        "text": "project.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1579,
+        "column": 14,
+        "start": 68690,
+        "end": 68705,
+        "text": "project.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1595,
+        "column": 18,
+        "start": 69327,
+        "end": 69342,
+        "text": "project.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1596,
+        "column": 18,
+        "start": 69371,
+        "end": 69386,
+        "text": "project.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1596,
+        "column": 64,
+        "start": 69417,
+        "end": 69432,
+        "text": "project.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1599,
+        "column": 17,
+        "start": 69511,
+        "end": 69526,
+        "text": "project.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1602,
+        "column": 19,
+        "start": 69649,
+        "end": 69664,
+        "text": "project.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1748,
+        "column": 92,
+        "start": 76316,
+        "end": 76338,
+        "text": "resolvedConfig.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1765,
+        "column": 63,
+        "start": 77086,
+        "end": 77101,
+        "text": "project.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1769,
+        "column": 42,
+        "start": 77287,
+        "end": 77302,
+        "text": "project.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1823,
+        "column": 9,
+        "start": 79732,
+        "end": 79744,
+        "text": "proj.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1825,
+        "column": 60,
+        "start": 79853,
+        "end": 79865,
+        "text": "proj.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1826,
+        "column": 52,
+        "start": 79921,
+        "end": 79933,
+        "text": "proj.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1831,
+        "column": 78,
+        "start": 80279,
+        "end": 80291,
+        "text": "proj.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1850,
+        "column": 53,
+        "start": 81231,
+        "end": 81243,
+        "text": "proj.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1881,
+        "column": 113,
+        "start": 83089,
+        "end": 83101,
+        "text": "proj.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1902,
+        "column": 10,
+        "start": 83993,
+        "end": 84007,
+        "text": "config.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2162,
+        "column": 38,
+        "start": 97396,
+        "end": 97410,
+        "text": "parsed.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 179,
+        "column": 14,
+        "start": 4830,
+        "end": 4849,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 555,
+        "column": 10,
+        "start": 22826,
+        "end": 22845,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 571,
+        "column": 9,
+        "start": 23327,
+        "end": 23346,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 572,
+        "column": 38,
+        "start": 23395,
+        "end": 23414,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 582,
+        "column": 9,
+        "start": 23767,
+        "end": 23786,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 583,
+        "column": 48,
+        "start": 23843,
+        "end": 23862,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 587,
+        "column": 9,
+        "start": 23929,
+        "end": 23948,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 592,
+        "column": 9,
+        "start": 24052,
+        "end": 24071,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 592,
+        "column": 37,
+        "start": 24080,
+        "end": 24099,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 597,
+        "column": 9,
+        "start": 24209,
+        "end": 24228,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 597,
+        "column": 38,
+        "start": 24238,
+        "end": 24257,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 602,
+        "column": 9,
+        "start": 24492,
+        "end": 24511,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 608,
+        "column": 47,
+        "start": 24847,
+        "end": 24866,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 612,
+        "column": 140,
+        "start": 25248,
+        "end": 25267,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 619,
+        "column": 114,
+        "start": 25614,
+        "end": 25633,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 624,
+        "column": 15,
+        "start": 25773,
+        "end": 25792,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 636,
+        "column": 17,
+        "start": 26557,
+        "end": 26576,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 649,
+        "column": 9,
+        "start": 27134,
+        "end": 27153,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 660,
+        "column": 21,
+        "start": 27785,
+        "end": 27810,
+        "text": "configParseResult.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 672,
+        "column": 13,
+        "start": 28355,
+        "end": 28380,
+        "text": "configParseResult.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 674,
+        "column": 24,
+        "start": 28418,
+        "end": 28443,
+        "text": "configParseResult.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 686,
+        "column": 43,
+        "start": 28877,
+        "end": 28902,
+        "text": "configParseResult.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 787,
+        "column": 9,
+        "start": 32534,
+        "end": 32553,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 788,
+        "column": 34,
+        "start": 32638,
+        "end": 32657,
+        "text": "commandLine.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 1021,
+        "column": 25,
+        "start": 42198,
+        "end": 42223,
+        "text": "configParseResult.options"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 1026,
+        "column": 62,
+        "start": 42404,
+        "end": 42429,
+        "text": "configParseResult.options"
+      }
+    ],
+    "rank": 1,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 1,
+    "view_reason": {
+      "kind": "field-read",
+      "from": 10107,
+      "field": "raw",
+      "site": {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3350,
+        "column": 21,
+        "start": 137932,
+        "end": 137942,
+        "text": "config.raw"
+      }
+    },
+    "type": "any",
+    "field": "<dynamic-key>",
+    "declared_type": "any",
+    "declared_families": [
+      "any field contract"
+    ],
+    "families": [
+      "any field contract",
+      "dictionary reads"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 20,
+    "sites": [
+      {
+        "file": "src/compiler/core.ts",
+        "line": 1482,
+        "column": 26,
+        "start": 52713,
+        "end": 52732,
+        "text": "(object as any)[id]"
+      },
+      {
+        "file": "src/compiler/core.ts",
+        "line": 1499,
+        "column": 35,
+        "start": 53250,
+        "end": 53269,
+        "text": "(second as any)[id]"
+      },
+      {
+        "file": "src/compiler/core.ts",
+        "line": 1505,
+        "column": 35,
+        "start": 53404,
+        "end": 53422,
+        "text": "(first as any)[id]"
+      },
+      {
+        "file": "src/compiler/debug.ts",
+        "line": 433,
+        "column": 27,
+        "start": 18633,
+        "end": 18649,
+        "text": "enumObject[name]"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 8153,
+        "column": 20,
+        "start": 320571,
+        "end": 320577,
+        "text": "dst[e]"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 8154,
+        "column": 37,
+        "start": 320631,
+        "end": 320637,
+        "text": "dst[e]"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 8154,
+        "column": 45,
+        "start": 320639,
+        "end": 320645,
+        "text": "src[e]"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 8158,
+        "column": 25,
+        "start": 320732,
+        "end": 320738,
+        "text": "dst[e]"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 8159,
+        "column": 17,
+        "start": 320774,
+        "end": 320780,
+        "text": "dst[e]"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 8159,
+        "column": 28,
+        "start": 320785,
+        "end": 320791,
+        "text": "src[e]"
+      },
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6145,
+        "column": 32,
+        "start": 267370,
+        "end": 267388,
+        "text": "(source as any)[p]"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3229,
+        "column": 58,
+        "start": 132729,
+        "end": 132738,
+        "text": "raw[prop]"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3230,
+        "column": 25,
+        "start": 132768,
+        "end": 132777,
+        "text": "raw[prop]"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3231,
+        "column": 32,
+        "start": 132814,
+        "end": 132823,
+        "text": "raw[prop]"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3464,
+        "column": 21,
+        "start": 142929,
+        "end": 142956,
+        "text": "ownConfig.raw[propertyName]"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3465,
+        "column": 21,
+        "start": 143040,
+        "end": 143064,
+        "text": "extendsRaw[propertyName]"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3466,
+        "column": 48,
+        "start": 143116,
+        "end": 143140,
+        "text": "extendsRaw[propertyName]"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3785,
+        "column": 90,
+        "start": 158718,
+        "end": 158733,
+        "text": "jsonOptions[id]"
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 954,
+        "column": 59,
+        "start": 43088,
+        "end": 43107,
+        "text": "(value as any)[key]"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 3526,
+        "column": 30,
+        "start": 177870,
+        "end": 177907,
+        "text": "(FileIncludeKind as any)[reason.kind]"
+      }
+    ],
+    "rank": 2,
+    "source_integration": "pending"
+  },
+  {
+    "type_id": 14,
+    "view_reason": {
+      "kind": "array-consumer-element",
+      "from": 1277,
+      "field": "join",
+      "site": {
+        "file": "src/compiler/debug.ts",
+        "line": 407,
+        "column": 24,
+        "start": 17683,
+        "end": 17694,
+        "text": "result.join"
+      }
+    },
+    "type": "string",
+    "field": "<dynamic-key>",
+    "declared_type": "string",
+    "declared_families": [
+      "scalar contracts"
+    ],
+    "families": [
+      "dictionary reads",
+      "scalar contracts"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 14,
+    "sites": [
+      {
+        "file": "src/compiler/core.ts",
+        "line": 2220,
+        "column": 42,
+        "start": 79484,
+        "end": 79493,
+        "text": "s1[i - 1]"
+      },
+      {
+        "file": "src/compiler/core.ts",
+        "line": 2220,
+        "column": 70,
+        "start": 79512,
+        "end": 79521,
+        "text": "s2[j - 1]"
+      },
+      {
+        "file": "src/compiler/scanner.ts",
+        "line": 1334,
+        "column": 29,
+        "start": 82972,
+        "end": 82993,
+        "text": "text[identifierStart]"
+      },
+      {
+        "file": "src/compiler/scanner.ts",
+        "line": 1858,
+        "column": 22,
+        "start": 106129,
+        "end": 106138,
+        "text": "text[pos]"
+      },
+      {
+        "file": "src/compiler/scanner.ts",
+        "line": 2325,
+        "column": 38,
+        "start": 129013,
+        "end": 129026,
+        "text": "text[pos + 1]"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 7762,
+        "column": 42,
+        "start": 305252,
+        "end": 305260,
+        "text": "input[i]"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 7763,
+        "column": 42,
+        "start": 305305,
+        "end": 305317,
+        "text": "input[i + 1]"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 7764,
+        "column": 42,
+        "start": 305362,
+        "end": 305374,
+        "text": "input[i + 2]"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 7765,
+        "column": 42,
+        "start": 305419,
+        "end": 305431,
+        "text": "input[i + 3]"
+      },
+      {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 146,
+        "column": 17,
+        "start": 3819,
+        "end": 3837,
+        "text": "pattern[slash - 1]"
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 22527,
+        "column": 52,
+        "start": 1323450,
+        "end": 1323469,
+        "text": "str[str.length - 1]"
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 22579,
+        "column": 21,
+        "start": 1327153,
+        "end": 1327174,
+        "text": "path[path.length - 1]"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 658,
+        "column": 34,
+        "start": 21192,
+        "end": 21247,
+        "text": "commonSourceDirectory[commonSourceDirectory.length - 1]"
+      },
+      {
+        "file": "src/compiler/emitter.ts",
+        "line": 675,
+        "column": 34,
+        "start": 21991,
+        "end": 22046,
+        "text": "commonSourceDirectory[commonSourceDirectory.length - 1]"
+      }
+    ],
+    "rank": 3,
+    "source_integration": "pending"
+  },
+  {
+    "type_id": 9858,
+    "view_reason": {
+      "kind": "field-read",
+      "from": 10107,
+      "field": "options",
+      "site": {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2650,
+        "column": 14,
+        "start": 104763,
+        "end": 104788,
+        "text": "configParseResult.options"
+      }
+    },
+    "type": "CompilerOptions",
+    "field": "<dynamic-key>",
+    "declared_type": "TsConfigSourceFile | CompilerOptionsValue",
+    "declared_families": [
+      "array contracts",
+      "dictionary contracts",
+      "nullish members",
+      "object or interface contracts",
+      "object plus primitive union",
+      "scalar contracts"
+    ],
+    "families": [
+      "array contracts",
+      "dictionary contracts",
+      "dictionary reads",
+      "nullish members",
+      "object or interface contracts",
+      "object plus primitive union",
+      "scalar contracts"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 10,
+    "sites": [
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 9370,
+        "column": 12,
+        "start": 368896,
+        "end": 368917,
+        "text": "compilerOptions[flag]"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 9370,
+        "column": 89,
+        "start": 368973,
+        "end": 368994,
+        "text": "compilerOptions[flag]"
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 9402,
+        "column": 9,
+        "start": 370470,
+        "end": 370490,
+        "text": "options[option.name]"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2901,
+        "column": 42,
+        "start": 116876,
+        "end": 116901,
+        "text": "options[allSetOptions[0]]"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2933,
+        "column": 24,
+        "start": 117983,
+        "end": 117999,
+        "text": "options[setting]"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2979,
+        "column": 17,
+        "start": 119908,
+        "end": 119921,
+        "text": "options[name]"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 4269,
+        "column": 59,
+        "start": 182121,
+        "end": 182130,
+        "text": "opts[key]"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1525,
+        "column": 24,
+        "start": 68838,
+        "end": 68858,
+        "text": "options[option.name]"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 5099,
+        "column": 53,
+        "start": 265832,
+        "end": 265851,
+        "text": "option[d.skippedOn]"
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 1449,
+        "column": 21,
+        "start": 65977,
+        "end": 65990,
+        "text": "options[name]"
+      }
+    ],
+    "rank": 4,
+    "source_integration": "pending"
+  },
+  {
+    "type_id": 10107,
+    "view_reason": {
+      "kind": "cast",
+      "site": "src/compiler/tsbuildPublic.ts:23799:23825"
+    },
+    "type": "ParsedCommandLine",
+    "field": "watchOptions",
+    "declared_type": "WatchOptions | undefined",
+    "declared_families": [
+      "dictionary contracts",
+      "nullish members"
+    ],
+    "families": [
+      "dictionary contracts",
+      "nullish members",
+      "optional properties"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 9,
+    "sites": [
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2661,
+        "column": 28,
+        "start": 105629,
+        "end": 105659,
+        "text": "configParseResult.watchOptions"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2661,
+        "column": 84,
+        "start": 105685,
+        "end": 105715,
+        "text": "configParseResult.watchOptions"
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 975,
+        "column": 24,
+        "start": 47180,
+        "end": 47214,
+        "text": "configFileParseResult.watchOptions"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2173,
+        "column": 17,
+        "start": 98037,
+        "end": 98057,
+        "text": "parsed?.watchOptions"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2192,
+        "column": 21,
+        "start": 98825,
+        "end": 98845,
+        "text": "parsed?.watchOptions"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2213,
+        "column": 21,
+        "start": 99755,
+        "end": 99775,
+        "text": "parsed?.watchOptions"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 654,
+        "column": 118,
+        "start": 27466,
+        "end": 27490,
+        "text": "commandLine.watchOptions"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 682,
+        "column": 17,
+        "start": 28743,
+        "end": 28767,
+        "text": "commandLine.watchOptions"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 722,
+        "column": 17,
+        "start": 30124,
+        "end": 30148,
+        "text": "commandLine.watchOptions"
+      }
+    ],
+    "rank": 5,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 9858,
+    "view_reason": {
+      "kind": "field-read",
+      "from": 10107,
+      "field": "options",
+      "site": {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2650,
+        "column": 14,
+        "start": 104763,
+        "end": 104788,
+        "text": "configParseResult.options"
+      }
+    },
+    "type": "CompilerOptions",
+    "field": "paths",
+    "declared_type": "MapLike<string[]> | undefined",
+    "declared_families": [
+      "dictionary contracts",
+      "nullish members"
+    ],
+    "families": [
+      "dictionary contracts",
+      "nullish members",
+      "optional properties"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 7,
+    "sites": [
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 6610,
+        "column": 10,
+        "start": 258095,
+        "end": 258108,
+        "text": "options.paths"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4140,
+        "column": 13,
+        "start": 210787,
+        "end": 210800,
+        "text": "options.paths"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4141,
+        "column": 31,
+        "start": 210835,
+        "end": 210848,
+        "text": "options.paths"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4142,
+        "column": 34,
+        "start": 210886,
+        "end": 210899,
+        "text": "options.paths"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4148,
+        "column": 29,
+        "start": 211209,
+        "end": 211222,
+        "text": "options.paths"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4149,
+        "column": 33,
+        "start": 211265,
+        "end": 211278,
+        "text": "options.paths"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4154,
+        "column": 39,
+        "start": 211598,
+        "end": 211611,
+        "text": "options.paths"
+      }
+    ],
+    "rank": 6,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 10957,
+    "view_reason": {
+      "kind": "union-member",
+      "from": 10962
+    },
+    "type": "MapLike<string[]>",
+    "field": "<dynamic-key>",
+    "declared_type": "string[]",
+    "declared_families": [
+      "array contracts"
+    ],
+    "families": [
+      "array contracts",
+      "dictionary reads"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 6,
+    "sites": [
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3322,
+        "column": 22,
+        "start": 136664,
+        "end": 136676,
+        "text": "mapLike[key]"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3323,
+        "column": 77,
+        "start": 136764,
+        "end": 136776,
+        "text": "mapLike[key]"
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 3177,
+        "column": 34,
+        "start": 169102,
+        "end": 169127,
+        "text": "paths[matchedPatternText]"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4148,
+        "column": 29,
+        "start": 211209,
+        "end": 211227,
+        "text": "options.paths[key]"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4149,
+        "column": 33,
+        "start": 211265,
+        "end": 211283,
+        "text": "options.paths[key]"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4154,
+        "column": 39,
+        "start": 211598,
+        "end": 211616,
+        "text": "options.paths[key]"
+      }
+    ],
+    "rank": 7,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 65886,
+    "view_reason": {
+      "kind": "union-member",
+      "from": 66554
+    },
+    "type": "VersionPaths",
+    "field": "paths",
+    "declared_type": "MapLike<string[]>",
+    "declared_families": [
+      "dictionary contracts"
+    ],
+    "families": [
+      "dictionary contracts"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 6,
+    "sites": [
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 2537,
+        "column": 47,
+        "start": 126115,
+        "end": 126133,
+        "text": "versionPaths.paths"
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 2538,
+        "column": 83,
+        "start": 126219,
+        "end": 126237,
+        "text": "versionPaths.paths"
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 3160,
+        "column": 47,
+        "start": 167965,
+        "end": 167983,
+        "text": "versionPaths.paths"
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 3161,
+        "column": 87,
+        "start": 168073,
+        "end": 168091,
+        "text": "versionPaths.paths"
+      },
+      {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 1290,
+        "column": 21,
+        "start": 69472,
+        "end": 69490,
+        "text": "versionPaths.paths"
+      },
+      {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 1306,
+        "column": 117,
+        "start": 70292,
+        "end": 70311,
+        "text": "versionPaths!.paths"
+      }
+    ],
+    "rank": 8,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 97922,
+    "view_reason": {
+      "kind": "union-member",
+      "from": 97937
+    },
+    "type": "IncrementalMultiFileEmitBuildInfo",
+    "field": "options",
+    "declared_type": "CompilerOptions | undefined",
+    "declared_families": [
+      "dictionary contracts",
+      "nullish members"
+    ],
+    "families": [
+      "dictionary contracts",
+      "nullish members"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 6,
+    "sites": [
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 2289,
+        "column": 32,
+        "start": 107616,
+        "end": 107633,
+        "text": "buildInfo.options"
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 2289,
+        "column": 65,
+        "start": 107649,
+        "end": 107666,
+        "text": "buildInfo.options"
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 2309,
+        "column": 92,
+        "start": 108763,
+        "end": 108780,
+        "text": "buildInfo.options"
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 2312,
+        "column": 30,
+        "start": 108874,
+        "end": 108891,
+        "text": "buildInfo.options"
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 2312,
+        "column": 84,
+        "start": 108928,
+        "end": 108945,
+        "text": "buildInfo.options"
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 2313,
+        "column": 73,
+        "start": 109042,
+        "end": 109059,
+        "text": "buildInfo.options"
+      }
+    ],
+    "rank": 9,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 11560,
+    "view_reason": {
+      "kind": "cast",
+      "site": "src/compiler/tsbuildPublic.ts:23799:23825"
+    },
+    "type": "ParsedCommandLine | undefined",
+    "field": "watchOptions",
+    "declared_type": "WatchOptions | undefined",
+    "declared_families": [
+      "dictionary contracts",
+      "nullish members"
+    ],
+    "families": [
+      "dictionary contracts",
+      "nullish members",
+      "optional properties"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 5,
+    "sites": [
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 1207,
+        "column": 13,
+        "start": 58134,
+        "end": 58177,
+        "text": "commandLine.parsedCommandLine?.watchOptions"
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 1251,
+        "column": 21,
+        "start": 60367,
+        "end": 60410,
+        "text": "commandLine.parsedCommandLine?.watchOptions"
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 1259,
+        "column": 13,
+        "start": 60703,
+        "end": 60746,
+        "text": "commandLine.parsedCommandLine?.watchOptions"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2121,
+        "column": 13,
+        "start": 95426,
+        "end": 95446,
+        "text": "parsed?.watchOptions"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2139,
+        "column": 17,
+        "start": 96270,
+        "end": 96290,
+        "text": "parsed?.watchOptions"
+      }
+    ],
+    "rank": 10,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 94919,
+    "view_reason": {
+      "kind": "cast",
+      "site": "src/compiler/tsbuildPublic.ts:23799:23825"
+    },
+    "type": "ParsedCommandLine | undefined",
+    "field": "options",
+    "declared_type": "CompilerOptions",
+    "declared_families": [
+      "dictionary contracts"
+    ],
+    "families": [
+      "dictionary contracts"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 5,
+    "sites": [
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1126,
+        "column": 78,
+        "start": 45788,
+        "end": 45828,
+        "text": "redirectedReference?.commandLine.options"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 2264,
+        "column": 85,
+        "start": 109879,
+        "end": 109919,
+        "text": "redirectedReference?.commandLine.options"
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 3791,
+        "column": 16,
+        "start": 192030,
+        "end": 192090,
+        "text": "getRedirectReferenceForResolution(file)?.commandLine.options"
+      },
+      {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 887,
+        "column": 82,
+        "start": 39834,
+        "end": 39874,
+        "text": "redirectedReference?.commandLine.options"
+      },
+      {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 946,
+        "column": 73,
+        "start": 43847,
+        "end": 43887,
+        "text": "redirectedReference?.commandLine.options"
+      }
+    ],
+    "rank": 11,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 8572,
+    "view_reason": {
+      "kind": "field-read",
+      "from": 6998,
+      "field": "path",
+      "site": {
+        "file": "src/compiler/tracing.ts",
+        "line": 204,
+        "column": 23,
+        "start": 7691,
+        "end": 7700,
+        "text": "file.path"
+      }
+    },
+    "type": "Path",
+    "field": "<dynamic-key>",
+    "declared_type": "string",
+    "declared_families": [
+      "scalar contracts"
+    ],
+    "families": [
+      "dictionary reads",
+      "scalar contracts"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 3,
+    "sites": [
+      {
+        "file": "src/compiler/sys.ts",
+        "line": 712,
+        "column": 81,
+        "start": 27826,
+        "end": 27853,
+        "text": "dirPath[rootDirName.length]"
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 1255,
+        "column": 80,
+        "start": 56576,
+        "end": 56598,
+        "text": "resolutionDirectory[i]"
+      },
+      {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 1619,
+        "column": 86,
+        "start": 77356,
+        "end": 77384,
+        "text": "locationPath[dirPath.length]"
+      }
+    ],
+    "rank": 12,
+    "source_integration": "pending"
+  },
+  {
+    "type_id": 8590,
+    "view_reason": {
+      "kind": "cast",
+      "site": "src/compiler/tracing.ts:9371:9396"
+    },
+    "type": "IndexedAccessType",
+    "field": "<dynamic-key>",
+    "declared_type": "Type | undefined",
+    "declared_families": [
+      "nullish members",
+      "object or interface contracts"
+    ],
+    "families": [
+      "dictionary reads",
+      "nullish members",
+      "object or interface contracts"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 3,
+    "sites": [
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 19528,
+        "column": 13,
+        "start": 1138043,
+        "end": 1138054,
+        "text": "type[cache]"
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 19529,
+        "column": 20,
+        "start": 1138078,
+        "end": 1138089,
+        "text": "type[cache]"
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 19529,
+        "column": 68,
+        "start": 1138126,
+        "end": 1138137,
+        "text": "type[cache]"
+      }
+    ],
+    "rank": 13,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 97934,
+    "view_reason": {
+      "kind": "union-member",
+      "from": 97937
+    },
+    "type": "IncrementalBundleEmitBuildInfo",
+    "field": "options",
+    "declared_type": "CompilerOptions | undefined",
+    "declared_families": [
+      "dictionary contracts",
+      "nullish members"
+    ],
+    "families": [
+      "dictionary contracts",
+      "nullish members"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 3,
+    "sites": [
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 2275,
+        "column": 30,
+        "start": 106753,
+        "end": 106770,
+        "text": "buildInfo.options"
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 2275,
+        "column": 84,
+        "start": 106807,
+        "end": 106824,
+        "text": "buildInfo.options"
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 2282,
+        "column": 127,
+        "start": 107339,
+        "end": 107356,
+        "text": "buildInfo.options"
+      }
+    ],
+    "rank": 14,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 10107,
+    "view_reason": {
+      "kind": "cast",
+      "site": "src/compiler/tsbuildPublic.ts:23799:23825"
+    },
+    "type": "ParsedCommandLine",
+    "field": "wildcardDirectories",
+    "declared_type": "MapLike<WatchDirectoryFlags> | undefined",
+    "declared_families": [
+      "dictionary contracts",
+      "nullish members"
+    ],
+    "families": [
+      "dictionary contracts",
+      "nullish members",
+      "optional properties"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 2,
+    "sites": [
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 977,
+        "column": 31,
+        "start": 47317,
+        "end": 47358,
+        "text": "configFileParseResult.wildcardDirectories"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2150,
+        "column": 9,
+        "start": 96786,
+        "end": 96812,
+        "text": "parsed.wildcardDirectories"
+      }
+    ],
+    "rank": 15,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 10820,
+    "view_reason": {
+      "kind": "union-member",
+      "from": 10822
+    },
+    "type": "IterationTypes",
+    "field": "<dynamic-key>",
+    "declared_type": "Type",
+    "declared_families": [
+      "object or interface contracts"
+    ],
+    "families": [
+      "dictionary reads",
+      "object or interface contracts"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 2,
+    "sites": [
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 45839,
+        "column": 34,
+        "start": 2683415,
+        "end": 2683482,
+        "text": "iterationTypes[getIterationTypesKeyFromIterationTypeKind(typeKind)]"
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 46488,
+        "column": 34,
+        "start": 2719711,
+        "end": 2719774,
+        "text": "iterationTypes[getIterationTypesKeyFromIterationTypeKind(kind)]"
+      }
+    ],
+    "rank": 16,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 11225,
+    "view_reason": {
+      "kind": "union-member",
+      "from": 11226
+    },
+    "type": "MapLike<WatchDirectoryFlags>",
+    "field": "<dynamic-key>",
+    "declared_type": "WatchDirectoryFlags",
+    "declared_families": [
+      "scalar contracts"
+    ],
+    "families": [
+      "dictionary reads",
+      "scalar contracts"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 2,
+    "sites": [
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 4142,
+        "column": 68,
+        "start": 175957,
+        "end": 175990,
+        "text": "wildcardDirectories[existingPath]"
+      },
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 4159,
+        "column": 32,
+        "start": 176944,
+        "end": 176969,
+        "text": "wildcardDirectories[path]"
+      }
+    ],
+    "rank": 17,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 11560,
+    "view_reason": {
+      "kind": "cast",
+      "site": "src/compiler/tsbuildPublic.ts:23799:23825"
+    },
+    "type": "ParsedCommandLine | undefined",
+    "field": "options",
+    "declared_type": "CompilerOptions",
+    "declared_families": [
+      "dictionary contracts"
+    ],
+    "families": [
+      "dictionary contracts"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 2,
+    "sites": [
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 1258,
+        "column": 13,
+        "start": 60650,
+        "end": 60688,
+        "text": "commandLine.parsedCommandLine?.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2131,
+        "column": 9,
+        "start": 95779,
+        "end": 95794,
+        "text": "parsed?.options"
+      }
+    ],
+    "rank": 18,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 97937,
+    "view_reason": {
+      "kind": "cast",
+      "site": "src/compiler/builder.ts:51578:51606"
+    },
+    "type": "IncrementalBuildInfo",
+    "field": "options",
+    "declared_type": "CompilerOptions | undefined",
+    "declared_families": [
+      "dictionary contracts",
+      "nullish members"
+    ],
+    "families": [
+      "dictionary contracts",
+      "nullish members"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 2,
+    "sites": [
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 1177,
+        "column": 14,
+        "start": 51428,
+        "end": 51440,
+        "text": "info.options"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1600,
+        "column": 17,
+        "start": 69545,
+        "end": 69573,
+        "text": "incrementalBuildInfo.options"
+      }
+    ],
+    "rank": 19,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 2413,
+    "view_reason": {
+      "kind": "cast",
+      "site": "src/compiler/core.ts:45924:45948"
+    },
+    "type": "MapLike<T>",
+    "field": "<dynamic-key>",
+    "declared_type": "T",
+    "declared_families": [
+      "generic field contract"
+    ],
+    "families": [
+      "dictionary reads",
+      "generic field contract"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 1,
+    "sites": [
+      {
+        "file": "src/compiler/core.ts",
+        "line": 1316,
+        "column": 25,
+        "start": 45923,
+        "end": 45954,
+        "text": "(collection as MapLike<T>)[key]"
+      }
+    ],
+    "rank": 20,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 10821,
+    "view_reason": {
+      "kind": "cast",
+      "site": "src/compiler/checker.ts:2686553:2686583"
+    },
+    "type": "IterableOrIteratorType",
+    "field": "<dynamic-key>",
+    "declared_type": "IterationTypes | undefined",
+    "declared_families": [
+      "nullish members",
+      "object or interface contracts"
+    ],
+    "families": [
+      "dictionary reads",
+      "nullish members",
+      "object or interface contracts"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 1,
+    "sites": [
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 45900,
+        "column": 16,
+        "start": 2686552,
+        "end": 2686594,
+        "text": "(type as IterableOrIteratorType)[cacheKey]"
+      }
+    ],
+    "rank": 21,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 10863,
+    "view_reason": {
+      "kind": "union-member",
+      "from": 10864
+    },
+    "type": "{ inner?: Signature | undefined; outer?: Signature | undefined; }",
+    "field": "<dynamic-key>",
+    "declared_type": "Signature | undefined",
+    "declared_families": [
+      "nullish members",
+      "object or interface contracts"
+    ],
+    "families": [
+      "dictionary reads",
+      "nullish members",
+      "object or interface contracts"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 1,
+    "sites": [
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 14176,
+        "column": 16,
+        "start": 820491,
+        "end": 820532,
+        "text": "signature.optionalCallSignatureCache[key]"
+      }
+    ],
+    "rank": 22,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 11560,
+    "view_reason": {
+      "kind": "cast",
+      "site": "src/compiler/tsbuildPublic.ts:23799:23825"
+    },
+    "type": "ParsedCommandLine | undefined",
+    "field": "wildcardDirectories",
+    "declared_type": "MapLike<WatchDirectoryFlags> | undefined",
+    "declared_families": [
+      "dictionary contracts",
+      "nullish members"
+    ],
+    "families": [
+      "dictionary contracts",
+      "nullish members",
+      "optional properties"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 1,
+    "sites": [
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 1213,
+        "column": 13,
+        "start": 58405,
+        "end": 58455,
+        "text": "commandLine.parsedCommandLine?.wildcardDirectories"
+      }
+    ],
+    "rank": 23,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 34464,
+    "view_reason": {
+      "kind": "union-member",
+      "from": 34465
+    },
+    "type": "MapLike<string>",
+    "field": "<dynamic-key>",
+    "declared_type": "string",
+    "declared_families": [
+      "scalar contracts"
+    ],
+    "families": [
+      "dictionary reads",
+      "scalar contracts"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 1,
+    "sites": [
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 8605,
+        "column": 43,
+        "start": 337712,
+        "end": 337752,
+        "text": "localizedDiagnosticMessages[message.key]"
+      }
+    ],
+    "rank": 24,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 37516,
+    "view_reason": {
+      "kind": "field-read",
+      "from": 37515,
+      "field": "packageJsonContent",
+      "site": {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 130,
+        "column": 36,
+        "start": 3400,
+        "end": 3439,
+        "text": "packageInfo.contents.packageJsonContent"
+      }
+    },
+    "type": "PackageJsonPathFields",
+    "field": "<dynamic-key>",
+    "declared_type": "MapLike<string> | undefined",
+    "declared_families": [
+      "dictionary contracts",
+      "nullish members"
+    ],
+    "families": [
+      "dictionary contracts",
+      "dictionary reads",
+      "nullish members"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 1,
+    "sites": [
+      {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 801,
+        "column": 22,
+        "start": 37734,
+        "end": 37752,
+        "text": "packageJson[field]"
+      }
+    ],
+    "rank": 25,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 42421,
+    "view_reason": {
+      "kind": "field-read",
+      "from": 97937,
+      "field": "options",
+      "site": {
+        "file": "src/compiler/builder.ts",
+        "line": 1177,
+        "column": 14,
+        "start": 51428,
+        "end": 51440,
+        "text": "info.options"
+      }
+    },
+    "type": "CompilerOptions | undefined",
+    "field": "paths",
+    "declared_type": "MapLike<string[]> | undefined",
+    "declared_families": [
+      "dictionary contracts",
+      "nullish members"
+    ],
+    "families": [
+      "dictionary contracts",
+      "nullish members",
+      "optional properties"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 1,
+    "sites": [
+      {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3427,
+        "column": 9,
+        "start": 140610,
+        "end": 140634,
+        "text": "ownConfig.options?.paths"
+      }
+    ],
+    "rank": 26,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 64997,
+    "view_reason": {
+      "kind": "cast",
+      "site": "src/compiler/commandLineParser.ts:84552:84575"
+    },
+    "type": "BuildOptions",
+    "field": "<dynamic-key>",
+    "declared_type": "CompilerOptionsValue",
+    "declared_families": [
+      "array contracts",
+      "dictionary contracts",
+      "nullish members",
+      "object plus primitive union",
+      "scalar contracts"
+    ],
+    "families": [
+      "array contracts",
+      "dictionary contracts",
+      "dictionary reads",
+      "nullish members",
+      "object plus primitive union",
+      "scalar contracts"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 1,
+    "sites": [
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 334,
+        "column": 75,
+        "start": 12398,
+        "end": 12423,
+        "text": "buildOptions[option.name]"
+      }
+    ],
+    "rank": 27,
+    "source_integration": "pending"
+  },
+  {
+    "type_id": 94257,
+    "view_reason": {
+      "kind": "field-read",
+      "from": 94191,
+      "field": "state",
+      "site": {
+        "file": "src/compiler/watchUtilities.ts",
+        "line": 643,
+        "column": 13,
+        "start": 25676,
+        "end": 25696,
+        "text": "builderProgram.state"
+      }
+    },
+    "type": "ReusableBuilderProgramState",
+    "field": "compilerOptions",
+    "declared_type": "CompilerOptions",
+    "declared_families": [
+      "dictionary contracts"
+    ],
+    "families": [
+      "dictionary contracts"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 1,
+    "sites": [
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 2331,
+        "column": 35,
+        "start": 109995,
+        "end": 110016,
+        "text": "state.compilerOptions"
+      }
+    ],
+    "rank": 28,
+    "source_integration": "checked source reads"
+  },
+  {
+    "type_id": 97245,
+    "view_reason": {
+      "kind": "cast",
+      "site": "src/compiler/builder.ts:11013:11121"
+    },
+    "type": "BuilderProgramState",
+    "field": "compilerOptions",
+    "declared_type": "CompilerOptions",
+    "declared_families": [
+      "dictionary contracts"
+    ],
+    "families": [
+      "dictionary contracts"
+    ],
+    "intrinsic": false,
+    "element": false,
+    "read_count": 1,
+    "sites": [
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 336,
+        "column": 26,
+        "start": 11830,
+        "end": 11851,
+        "text": "state.compilerOptions"
+      }
+    ],
+    "rank": 29,
+    "source_integration": "checked source reads"
+  }
+]

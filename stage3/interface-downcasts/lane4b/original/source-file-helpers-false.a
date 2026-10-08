@@ -1,0 +1,15 @@
+import type { SourceFile } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function helper<T extends SourceFile>(file: T): string {
+ const member = file.externalModuleIndicator;
+ if (member === undefined) return 'absent';
+ if (member === null) return 'null';
+ if (typeof member === 'boolean') return `${member}`;
+ return `${member.kind}`;
+}
+function invoke(callback: (file: SourceFile) => string, file: SourceFile): string { return callback(file); }
+const concrete = { kind: 308, externalModuleIndicator: false };
+const base: Base = concrete;
+const viewed = base as SourceFile;
+const held = { file: viewed };
+console.log(invoke(file => helper(file), held.file));

@@ -1,0 +1,5 @@
+import type * as BuilderState from "./types.a";
+function convert(fileInfo: { readonly version: string }): BuilderState.FileInfo {
+    return fileInfo as BuilderState.FileInfo;
+}
+console.log(convert({ version: "one" }).version);

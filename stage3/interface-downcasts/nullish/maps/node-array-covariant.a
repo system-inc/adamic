@@ -1,0 +1,8 @@
+interface NodeArray<T> extends ReadonlyArray<T>{readonly pos:number}
+interface Base {readonly kind:string}
+interface Target extends Base {readonly kind:'box';readonly value:ReadonlyMap<string,NodeArray<number>>|null}
+const values=Object.assign([7 as const,8 as const],{pos:3});const map=new Map<string,NodeArray<7|8>>();map.set('key',values);
+const raw={kind:'box',value:map};const base:Base=raw;
+function payload(values:NodeArray<number>):void{console.log(String(values.pos));console.log(String(values[0]??0));}
+function read(node:Target):void{const map=node.value;if(map!==null){const value=map.get('key');if(value!==undefined){payload(value);}}}
+read(base as Target);

@@ -1,0 +1,24 @@
+=== RUN   TestCheckedViewUntaggedCandidatePairs
+=== RUN   TestCheckedViewUntaggedCandidatePairs/24/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.type matches no member of Type; expected Type, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:344: javascript: exit codes differ; got oracle.run{stdout:[]uint8{0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+=== RUN   TestCheckedViewUntaggedCandidatePairs/124/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/224/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.members is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.members is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+--- FAIL: TestCheckedViewUntaggedCandidatePairs (1.07s)
+    --- FAIL: TestCheckedViewUntaggedCandidatePairs/24/wrong (0.53s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/124/wrong (0.29s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/224/wrong (0.24s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.076s
+FAIL

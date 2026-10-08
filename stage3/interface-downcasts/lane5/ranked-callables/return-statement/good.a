@@ -1,0 +1,7 @@
+// Complete original tsc declaration and read; adjacent carriers reduced.
+interface Expression {readonly value:number;}
+interface ReturnStatement {readonly value:number;}
+interface Base {readonly createReturnStatement:unknown;}
+interface Target {createReturnStatement(expression?: Expression): ReturnStatement;}
+function probe(value:Base):void {const factory=value as Target;const node:Expression={value:3};console.log(`${factory.createReturnStatement(node).value}`);}
+probe({createReturnStatement:(expression?:Expression):ReturnStatement=>({value:expression===undefined?7:expression.value})});

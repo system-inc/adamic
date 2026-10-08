@@ -1,0 +1,40 @@
+=== RUN   TestCheckedViewIntersectionConjunction
+=== RUN   TestCheckedViewIntersectionConjunction/good
+=== RUN   TestCheckedViewIntersectionConjunction/wrong
+=== RUN   TestCheckedViewIntersectionConjunction/nested
+=== RUN   TestCheckedViewIntersectionConjunction/absent
+--- PASS: TestCheckedViewIntersectionConjunction (1.22s)
+    --- PASS: TestCheckedViewIntersectionConjunction/good (0.37s)
+    --- PASS: TestCheckedViewIntersectionConjunction/wrong (0.34s)
+    --- PASS: TestCheckedViewIntersectionConjunction/nested (0.26s)
+    --- PASS: TestCheckedViewIntersectionConjunction/absent (0.17s)
+=== RUN   TestCheckedViewIntersectionComponentMutants
+=== RUN   TestCheckedViewIntersectionComponentMutants/skip_check
+    checked_views_intersections_test.go:79: component refusal pin catches mutant: exit 0, stdout "name:true\n"
+    checked_views_intersections_test.go:79: component refusal pin catches mutant: exit 0, stdout "name:true\n"
+=== RUN   TestCheckedViewIntersectionComponentMutants/accept_wrong_shape
+    checked_views_intersections_test.go:79: component refusal pin catches mutant: exit 0, stdout "name:true\n"
+    checked_views_intersections_test.go:79: component refusal pin catches mutant: exit 0, stdout "name:true\n"
+=== RUN   TestCheckedViewIntersectionComponentMutants/drop_nested_adapter
+    checked_views_intersections_test.go:79: component refusal pin catches mutant: exit 0, stdout "name:bad\n"
+    checked_views_intersections_test.go:79: component refusal pin catches mutant: exit 0, stdout "name:bad\n"
+--- PASS: TestCheckedViewIntersectionComponentMutants (0.60s)
+    --- PASS: TestCheckedViewIntersectionComponentMutants/skip_check (0.20s)
+    --- PASS: TestCheckedViewIntersectionComponentMutants/accept_wrong_shape (0.20s)
+    --- PASS: TestCheckedViewIntersectionComponentMutants/drop_nested_adapter (0.20s)
+=== RUN   TestPhantomUndefinedReview
+=== PAUSE TestPhantomUndefinedReview
+=== RUN   TestPhantomSortedArrayProbe
+=== PAUSE TestPhantomSortedArrayProbe
+=== CONT  TestPhantomUndefinedReview
+=== CONT  TestPhantomSortedArrayProbe
+    phantom_brands_test.go:94: JavaScript: stdout "2\n", stderr "", exit 0
+    phantom_brands_test.go:94: release: stdout "2\n", stderr "", exit 0
+    phantom_brands_test.go:94: native: stdout "2\n", stderr "", exit 0
+--- PASS: TestPhantomSortedArrayProbe (0.73s)
+--- PASS: TestPhantomUndefinedReview (0.77s)
+PASS
+gate cache: native hits=0 misses=5
+gate cache: node hits=0 misses=14
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.598s

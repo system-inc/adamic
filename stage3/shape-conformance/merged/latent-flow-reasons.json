@@ -1,0 +1,46 @@
+{
+  "measurement": "measured on a checker-rejected program",
+  "overlapping_detail_counts": {
+    "tagged": {
+      "function value may receive untracked callback arguments": 694,
+      "property or element producer edges not modeled": 620,
+      "no tracked producer": 373,
+      "missing expression": 288,
+      "unmodeled expression KindBinaryExpression": 261,
+      "indirect, callback or intrinsic result not modeled": 239,
+      "generic call substitution not modeled": 82
+    },
+    "untagged": {
+      "property or element producer edges not modeled": 177,
+      "function value may receive untracked callback arguments": 130,
+      "no tracked producer": 129,
+      "unmodeled expression KindBinaryExpression": 72,
+      "indirect, callback or intrinsic result not modeled": 46,
+      "constructor allocation and initialization body not modeled": 39,
+      "missing expression": 38,
+      "generic call substitution not modeled": 25,
+      "unmodeled expression KindThisKeyword": 16,
+      "array element and intrinsic certificate not available": 10,
+      "unmodeled expression KindArrowFunction": 3,
+      "callable implementation or generic field certificate unavailable: getOptionsDiagnostics": 3,
+      "callable implementation or generic field certificate unavailable: getProgram": 3,
+      "callable implementation or generic field certificate unavailable: getDeclarationDiagnostics": 3,
+      "callable implementation or generic field certificate unavailable: getProgramOrUndefined": 3,
+      "callable implementation or generic field certificate unavailable: getSyntacticDiagnostics": 3,
+      "callable implementation or generic field certificate unavailable: releaseProgram": 3,
+      "callable implementation or generic field certificate unavailable: getCompilerOptions": 3,
+      "transitive field shape and readiness certificates unavailable: state": 3,
+      "callable implementation or generic field certificate unavailable: getSemanticDiagnostics": 3,
+      "callable implementation or generic field certificate unavailable: emit": 3,
+      "callable implementation or generic field certificate unavailable: getAllDependencies": 3,
+      "callable implementation or generic field certificate unavailable: getConfigFileParsingDiagnostics": 3,
+      "callable implementation or generic field certificate unavailable: getCurrentDirectory": 3,
+      "callable implementation or generic field certificate unavailable: emitBuildInfo": 3,
+      "callable implementation or generic field certificate unavailable: getSourceFiles": 3,
+      "callable implementation or generic field certificate unavailable: close": 3,
+      "mutation effects on field certificate unavailable: state": 3,
+      "callable implementation or generic field certificate unavailable: getGlobalDiagnostics": 3,
+      "callable implementation or generic field certificate unavailable: getSourceFile": 3
+    }
+  }
+}

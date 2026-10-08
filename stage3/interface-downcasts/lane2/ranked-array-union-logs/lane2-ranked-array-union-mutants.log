@@ -1,0 +1,10 @@
+native-array-kind: caught by ranked3-pattern-wrong-array; /tmp/adamic-lane2-ranked-array-union-mutants/native-array-kind.log
+javascript-array-kind: caught by ranked3-pattern-wrong-array; /tmp/adamic-lane2-ranked-array-union-mutants/javascript-array-kind.log
+native-element-kind: caught by ranked3-pattern-wrong-element; /tmp/adamic-lane2-ranked-array-union-mutants/native-element-kind.log
+javascript-element-kind: caught by ranked3-pattern-wrong-element; /tmp/adamic-lane2-ranked-array-union-mutants/javascript-element-kind.log
+native-element-tag: caught by ranked3-pattern-wrong-tag; /tmp/adamic-lane2-ranked-array-union-mutants/native-element-tag.log
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/interface-downcasts/lane2/run-ranked-array-union-mutants.py", line 18, in <module>
+    path=root/relative;original=path.read_bytes();assert original.decode().count(before)==1,name
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: javascript-element-tag

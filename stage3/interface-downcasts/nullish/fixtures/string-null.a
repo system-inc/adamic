@@ -1,0 +1,14 @@
+interface Base { readonly kind: string; }
+interface Target extends Base { readonly kind: 'box'; readonly value: string | null; }
+function make(which:number):Base {
+ if(which===0) {const raw={kind:'box',value:['made', 'here'].join('-')}; return raw;}
+
+ const raw={kind:'box',value:null}; return raw;
+}
+function read(node:Target):void {
+ const value=node.value;
+ console.log(typeof value + ':' + String(value === null) + ':' + String(value === undefined));
+ if(value !== null && value !== undefined) { console.log(value + ':present'); }
+}
+read(make(0) as Target);
+read(make(1) as Target);

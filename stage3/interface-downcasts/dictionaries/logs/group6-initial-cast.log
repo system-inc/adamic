@@ -1,0 +1,36 @@
+=== RUN   TestCheckedViewDictionaryOptionalContainers
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-watch-good
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-watch-wrong
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-watch-missing
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-watch-receiver-missing
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-options-good
+    checked_view_dictionary_optional_test.go:16: /workspace/adamic/stage3/interface-downcasts/dictionaries/source/optional-options-good.a:10:15: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-options-wrong
+    checked_view_dictionary_optional_test.go:16: /workspace/adamic/stage3/interface-downcasts/dictionaries/source/optional-options-wrong.a:10:15: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-options-missing
+    checked_view_dictionary_optional_test.go:16: /workspace/adamic/stage3/interface-downcasts/dictionaries/source/optional-options-missing.a:10:15: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-options-receiver-missing
+    checked_view_dictionary_optional_test.go:16: /workspace/adamic/stage3/interface-downcasts/dictionaries/source/optional-options-receiver-missing.a:10:15: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-wildcard-good
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-wildcard-wrong
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-wildcard-missing
+=== RUN   TestCheckedViewDictionaryOptionalContainers/optional-wildcard-receiver-missing
+--- FAIL: TestCheckedViewDictionaryOptionalContainers (3.47s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-watch-good (0.47s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-watch-wrong (0.40s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-watch-missing (0.40s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-watch-receiver-missing (0.42s)
+    --- FAIL: TestCheckedViewDictionaryOptionalContainers/optional-options-good (0.03s)
+    --- FAIL: TestCheckedViewDictionaryOptionalContainers/optional-options-wrong (0.04s)
+    --- FAIL: TestCheckedViewDictionaryOptionalContainers/optional-options-missing (0.03s)
+    --- FAIL: TestCheckedViewDictionaryOptionalContainers/optional-options-receiver-missing (0.03s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-wildcard-good (0.41s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-wildcard-wrong (0.39s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-wildcard-missing (0.44s)
+    --- PASS: TestCheckedViewDictionaryOptionalContainers/optional-wildcard-receiver-missing (0.43s)
+FAIL
+gate cache: native hits=0 misses=6
+gate cache: node hits=0 misses=16
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.479s
+FAIL

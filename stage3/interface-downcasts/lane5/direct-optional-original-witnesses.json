@@ -1,0 +1,44 @@
+{
+  "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "basis": "original declarations and read spans; reduced adjacent helpers and data carriers",
+  "members": [
+    {
+      "rank": 21,
+      "type": "NodeFactory",
+      "field": "createVariableStatement",
+      "candidateReads": 60,
+      "witness": {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 320,
+        "column": 13
+      },
+      "read": "factory.createVariableStatement",
+      "readKind": "property",
+      "call": "factory.createVariableStatement(\r\n                /*modifiers*/ undefined,\r\n                factory.updateVariableDeclarationList(node, [updatedDeclaration]),\r\n            )",
+      "utf16Start": 10169,
+      "utf16End": 10200,
+      "fileSha256": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31",
+      "declaration": "createVariableStatement(modifiers: readonly ModifierLike[] | undefined, declarationList: VariableDeclarationList | readonly VariableDeclaration[]): VariableStatement;",
+      "declarationLine": 9033
+    },
+    {
+      "rank": 32,
+      "type": "NodeFactory",
+      "field": "createParameterDeclaration",
+      "candidateReads": 45,
+      "witness": {
+        "file": "src/compiler/factory/emitHelpers.ts",
+        "line": 277,
+        "column": 18
+      },
+      "read": "factory.createParameterDeclaration",
+      "readKind": "property",
+      "call": "factory.createParameterDeclaration(\r\n                    /*modifiers*/ undefined,\r\n                    /*dotDotDotToken*/ undefined,\r\n                    factory.createIdentifier(\"obj\"),\r\n                )",
+      "utf16Start": 10744,
+      "utf16End": 10778,
+      "fileSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+      "declaration": "createParameterDeclaration(modifiers: readonly ModifierLike[] | undefined, dotDotDotToken: DotDotDotToken | undefined, name: string | BindingName, questionToken?: QuestionToken, type?: TypeNode, initializer?: Expression): ParameterDeclaration;",
+      "declarationLine": 8840
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+import type { PackageJsonInfoContents } from 'original-tsc-resolver';
+interface Base { readonly packageJsonContent: {}; }
+function read(info: PackageJsonInfoContents): string {
+ const member = info.versionPaths;
+ if (member === undefined) return 'absent';
+ if (typeof member === 'boolean') return `${member}`;
+ return `${member.version === undefined}`;
+}
+const literal = { packageJsonContent: {}, versionPaths: false };
+const literalBase: Base = literal;
+console.log(read(literalBase as PackageJsonInfoContents));
+const object = { packageJsonContent: {}, versionPaths: { version: '1', paths: {} } };
+const objectBase: Base = object;
+console.log(read(objectBase as PackageJsonInfoContents));
+const absent = { packageJsonContent: {}, versionPaths: undefined };
+const absentBase: Base = absent;
+console.log(read(absentBase as PackageJsonInfoContents));

@@ -1,0 +1,13 @@
+=== RUN   TestMixedUnionCallbackABIIsPending
+=== PAUSE TestMixedUnionCallbackABIIsPending
+=== CONT  TestMixedUnionCallbackABIIsPending
+=== RUN   TestMixedUnionCallbackABIIsPending/mixed_union_callback
+    predicates_parser_test.go:118: want the mixed union callable ABI refusal, got <nil>
+=== RUN   TestMixedUnionCallbackABIIsPending/mixed_union_callback_variance
+    predicates_parser_test.go:118: want the mixed union callable ABI refusal, got <nil>
+--- FAIL: TestMixedUnionCallbackABIIsPending (0.22s)
+    --- FAIL: TestMixedUnionCallbackABIIsPending/mixed_union_callback (0.13s)
+    --- FAIL: TestMixedUnionCallbackABIIsPending/mixed_union_callback_variance (0.09s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.258s
+FAIL

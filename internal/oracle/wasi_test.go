@@ -53,10 +53,10 @@ func TestWASIAgreesWithNode(t *testing.T) {
 func onWASI(t *testing.T, source string) run {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "program.wasm")
-	if err := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-		t.Fatal(err)
-	}
-	return execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "wasi.mjs"), binary)
+	buildWASI(t, source, binary)
+	actual := execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "wasi.mjs"), binary)
+	wasiRuntimeRefusal(t, actual)
+	return actual
 }
 
 func TestWASIOracleCatchesMutants(t *testing.T) {

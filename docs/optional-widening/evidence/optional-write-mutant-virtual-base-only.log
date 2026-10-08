@@ -1,0 +1,5 @@
+--- FAIL: TestOptionalVirtualReceiverIsNotUnreachable (0.00s)
+    optional_write_erasure_test.go:80: a returning override was treated as unreachable
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.015s
+FAIL

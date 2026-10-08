@@ -1,0 +1,6 @@
+--- FAIL: TestViewCallableProducerCertificateNode (0.03s)
+    --- FAIL: TestViewCallableProducerCertificateNode/wrong-arity (0.03s)
+        view_callables_signature_test.go:47: exit 0, stdout "8\n", stderr ""; want 70, "", "adamic: panic: field read failed: node.run expected (value: number) => number, found function with arity 0\n"
+FAIL
+FAIL	github.com/system-inc/adamic/internal/javascript	0.027s
+FAIL

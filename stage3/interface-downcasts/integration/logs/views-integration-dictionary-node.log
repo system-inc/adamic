@@ -1,0 +1,3 @@
+options-valid.a: Node exit 0, stdout 'true\nundefined\n'
+options-wrong.a: Node exit 0, stdout '42\n'
+nested-wrong.a: Node exit 0, stdout '42\n'

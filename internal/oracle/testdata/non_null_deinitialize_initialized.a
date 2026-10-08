@@ -1,0 +1,11 @@
+let text: string = 'initial';
+text = undefined!;
+text = 'assigned before read';
+console.log(text);
+text = null!;
+text = 'assigned after null';
+console.log(text);
+let flag = true;
+flag = undefined!;
+flag = false;
+console.log(`${flag}`);

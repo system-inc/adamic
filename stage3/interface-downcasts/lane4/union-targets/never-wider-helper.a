@@ -1,0 +1,9 @@
+import type { ArrowFunction } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function helper(value: { readonly name?: string }): void {
+ console.log(String(value.name));
+}
+helper({name: 'ordinary'});
+const raw = {kind: 220, name: 'for' + 'ged'};
+const base: Base = raw;
+helper(base as ArrowFunction);

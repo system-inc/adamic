@@ -1,0 +1,11 @@
+// Highest static candidate: string.charCodeAt, 138 reads, first original site core.ts:234:33.
+interface Base { readonly kind: 'text' | 'other'; }
+interface TextView extends Base { readonly kind: 'text'; readonly text: string; }
+function read(value: Base): void {
+ const view = value as TextView;
+ const text = view.text;
+ const callback = text.charCodeAt;
+ console.log(typeof callback);
+}
+const raw = {kind: 'text' as const, text: 'word'};
+read(raw);

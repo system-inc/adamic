@@ -1,0 +1,8 @@
+import type { WideningContext } from 'original-tsc-types';
+interface Base { readonly kind: 'box' | 'other'; }
+interface Carrier extends Base { readonly kind: 'box'; readonly child: WideningContext; }
+function helper(value: WideningContext): void { console.log(String(value.propertyName)); }
+const raw = {kind: 'box' as const, child: {}};
+const base: Base = raw;
+const carrier = base as Carrier;
+helper(carrier.child);

@@ -1,0 +1,6 @@
+type AnyFunction = (...args: never[]) => void;
+let counter = 7;
+counter += 1;
+const callback: AnyFunction = (): { readonly label: string } => { console.log("producer"); return { label: `result${counter}` }; };
+callback();
+console.log('called');

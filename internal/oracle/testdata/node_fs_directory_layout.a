@@ -1,0 +1,7 @@
+// Runtime realPath stores path at slot 1; an own path can occupy slot 0.
+import { realPath } from 'adamic';
+const own = { path: 'own'.repeat(2) };
+console.log(own.path);
+const resolved = realPath('.');
+if (resolved.kind === 'Ok') { console.log(resolved.path); }
+else { console.log(resolved.message); }

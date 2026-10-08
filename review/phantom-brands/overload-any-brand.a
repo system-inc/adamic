@@ -1,0 +1,5 @@
+type Path = string & { readonly __pathBrand: any };
+function ensureTrailingDirectorySeparator(path: Path): Path;
+function ensureTrailingDirectorySeparator(path: string): string;
+function ensureTrailingDirectorySeparator(path: string) { return path.endsWith('/') ? path : path + '/'; }
+console.log(ensureTrailingDirectorySeparator('root'));

@@ -1,0 +1,6 @@
+--- FAIL: TestCheckedViewArrayReferenceWrites (0.00s)
+    --- FAIL: TestCheckedViewArrayReferenceWrites/reference-array-uninitialized (0.04s)
+        checked_views_array_reference_writes_test.go:22: /workspace/adamic/stage3/interface-downcasts/lane2/reference-array-uninitialized.a:9:18: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.068s
+FAIL

@@ -1,0 +1,18 @@
+import type { LiteralType } from 'original-tsc-types';
+interface Base { readonly flags: number; }
+function read(type: LiteralType): string {
+ const member = type.value;
+ if (typeof member === 'string') return member;
+ if (typeof member === 'number') return `${member}`;
+ if (typeof member === 'boolean') return 'wrong';
+ return `${member.negative}:${member.base10Value}`;
+}
+const plain = { flags: 1, value: 'plain' };
+const numeric = { flags: 1, value: 42 };
+const bigint = { flags: 1, value: { negative: true, base10Value: '123' } };
+const plainBase: Base = plain;
+const numericBase: Base = numeric;
+const bigintBase: Base = bigint;
+console.log(read(plainBase as LiteralType));
+console.log(read(numericBase as LiteralType));
+console.log(read(bigintBase as LiteralType));

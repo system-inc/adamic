@@ -1,0 +1,4 @@
+interface Link { readonly value: number; next: Link | undefined; }
+const node: Link = { value: 42, next: undefined };
+node.next = node;
+console.log(`${node.next.value}`);
