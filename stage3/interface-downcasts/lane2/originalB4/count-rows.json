@@ -1,0 +1,282 @@
+[
+  {
+    "fixture": "privateidentifierpropertydeclaration-modifiers-good",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/privateidentifierpropertydeclaration-modifiers-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "privateidentifierpropertydeclaration-modifiers-lazy",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/privateidentifierpropertydeclaration-modifiers-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "privateidentifierpropertydeclaration-modifiers-lazy-element",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/privateidentifierpropertydeclaration-modifiers-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "privateidentifierpropertydeclaration-modifiers-bad",
+    "reason": "New pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/privateidentifierpropertydeclaration-modifiers-bad.a | 3 | 0 | 6 | 4 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "privateidentifierpropertydeclaration-modifiers-alias",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/privateidentifierpropertydeclaration-modifiers-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "privateidentifierpropertydeclaration-modifiers-absent",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/privateidentifierpropertydeclaration-modifiers-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "privateidentifierpropertydeclaration-modifiers-undefined",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/privateidentifierpropertydeclaration-modifiers-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "unionorintersectiontype-resolvedproperties-good",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/unionorintersectiontype-resolvedproperties-good.a | 5 | 5 | 4 | 8 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "unionorintersectiontype-resolvedproperties-lazy",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/unionorintersectiontype-resolvedproperties-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "unionorintersectiontype-resolvedproperties-lazy-element",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/unionorintersectiontype-resolvedproperties-lazy-element.a | 6 | 6 | 6 | 9 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "unionorintersectiontype-resolvedproperties-bad",
+    "reason": "New pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/unionorintersectiontype-resolvedproperties-bad.a | 3 | 0 | 5 | 3 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "unionorintersectiontype-resolvedproperties-alias",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/unionorintersectiontype-resolvedproperties-alias.a | 6 | 6 | 7 | 12 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "uniontype-arrayfallbacksignatures-good",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/uniontype-arrayfallbacksignatures-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "uniontype-arrayfallbacksignatures-lazy",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/uniontype-arrayfallbacksignatures-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "uniontype-arrayfallbacksignatures-lazy-element",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/uniontype-arrayfallbacksignatures-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "uniontype-arrayfallbacksignatures-bad",
+    "reason": "New pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/uniontype-arrayfallbacksignatures-bad.a | 3 | 0 | 6 | 4 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "uniontype-arrayfallbacksignatures-alias",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/uniontype-arrayfallbacksignatures-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "uniontype-arrayfallbacksignatures-absent",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/uniontype-arrayfallbacksignatures-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "uniontype-arrayfallbacksignatures-undefined",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/uniontype-arrayfallbacksignatures-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "interfacetype-outertypeparameters-good",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/interfacetype-outertypeparameters-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "interfacetype-outertypeparameters-lazy",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/interfacetype-outertypeparameters-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "interfacetype-outertypeparameters-lazy-element",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/interfacetype-outertypeparameters-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "interfacetype-outertypeparameters-bad",
+    "reason": "New pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/interfacetype-outertypeparameters-bad.a | 3 | 0 | 6 | 4 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "interfacetype-outertypeparameters-alias",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/interfacetype-outertypeparameters-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "interfacetype-outertypeparameters-absent",
+    "reason": "New pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/interfacetype-outertypeparameters-absent.a | 1 | 0 | 1 | 1 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "interfacetype-outertypeparameters-undefined",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/interfacetype-outertypeparameters-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "sourcefile---undefined-imports-lazy",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/sourcefile---undefined-imports-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "signaturedeclaration-typearguments-good",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-typearguments-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "signaturedeclaration-typearguments-lazy",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-typearguments-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "signaturedeclaration-typearguments-lazy-element",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-typearguments-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "signaturedeclaration-typearguments-bad",
+    "reason": "New pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-typearguments-bad.a | 3 | 0 | 6 | 4 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "signaturedeclaration-typearguments-alias",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-typearguments-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "signaturedeclaration-typearguments-absent",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-typearguments-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "signaturedeclaration-typearguments-undefined",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-typearguments-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "signaturedeclaration-jsdoc-good",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-jsdoc-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "signaturedeclaration-jsdoc-lazy",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-jsdoc-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "signaturedeclaration-jsdoc-lazy-element",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-jsdoc-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "signaturedeclaration-jsdoc-bad",
+    "reason": "New pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-jsdoc-bad.a | 3 | 0 | 6 | 4 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "signaturedeclaration-jsdoc-alias",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-jsdoc-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "signaturedeclaration-jsdoc-absent",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-jsdoc-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "signaturedeclaration-jsdoc-undefined",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/signaturedeclaration-jsdoc-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "jsdocfunctiontype-typeparameters-good",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/jsdocfunctiontype-typeparameters-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "jsdocfunctiontype-typeparameters-lazy",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/jsdocfunctiontype-typeparameters-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "jsdocfunctiontype-typeparameters-lazy-element",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/jsdocfunctiontype-typeparameters-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "jsdocfunctiontype-typeparameters-bad",
+    "reason": "New pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/jsdocfunctiontype-typeparameters-bad.a | 3 | 0 | 6 | 4 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "jsdocfunctiontype-typeparameters-alias",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/jsdocfunctiontype-typeparameters-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "jsdocfunctiontype-typeparameters-absent",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/jsdocfunctiontype-typeparameters-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "jsdocfunctiontype-typeparameters-undefined",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/jsdocfunctiontype-typeparameters-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "sourcefile-additionalsyntacticdiagnostics-good",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/sourcefile-additionalsyntacticdiagnostics-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "sourcefile-additionalsyntacticdiagnostics-lazy",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/sourcefile-additionalsyntacticdiagnostics-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "sourcefile-additionalsyntacticdiagnostics-lazy-element",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/sourcefile-additionalsyntacticdiagnostics-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "sourcefile-additionalsyntacticdiagnostics-bad",
+    "reason": "New pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/sourcefile-additionalsyntacticdiagnostics-bad.a | 3 | 0 | 6 | 4 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "sourcefile-additionalsyntacticdiagnostics-alias",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/sourcefile-additionalsyntacticdiagnostics-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "sourcefile-additionalsyntacticdiagnostics-absent",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/sourcefile-additionalsyntacticdiagnostics-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "sourcefile-additionalsyntacticdiagnostics-undefined",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/sourcefile-additionalsyntacticdiagnostics-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-helpers-lazy",
+    "reason": "New finishing original-declaration control",
+    "row": "| stage3/interface-downcasts/lane2/originalB4/emitnode---undefined-helpers-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  }
+]

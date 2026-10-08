@@ -53,4 +53,4 @@ go vet ./internal/oracle > /tmp/lane2-b3-vet.log 2>&1
 git diff --check > /tmp/lane2-b3-diff-check.log 2>&1
 ```
 
-Setup is reused from the first delivery: done 45.313s, nproc 5, cpu.max 400000 100000, Go 1.27.1, clang 20.1.8 and Node 24.19.0. Full timing lines remain in originalB/REPORT.md and evidence/setup.log.gz. Evidence logs and declaration manifest hashes are retained here. The final tail contains eight eligible pairs before CircularBuildOrder.buildOrder enters the worker's three-read rank.
+Setup is reused from the first delivery: done 45.313s, nproc 5, cpu.max 400000 100000, Go 1.27.1, clang 20.1.8 and Node 24.19.0. Full timing lines remain in originalB/REPORT.md and evidence/setup.log.gz. Evidence logs and declaration manifest hashes are retained here. The final tail contains ten eligible pairs before CircularBuildOrder.buildOrder enters the worker's three-read rank.

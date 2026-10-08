@@ -1,0 +1,690 @@
+{
+  "worker_tip": "7cd0281388208bd439b5a20d4f4294a55a4ac91e",
+  "rows": [
+    {
+      "type_id": 9538,
+      "type": "ClassLikeDeclaration | InterfaceDeclaration",
+      "field": "heritageClauses",
+      "declared_type": "NodeArray<HeritageClause> | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 5209,
+          "column": 46,
+          "start": 202957,
+          "end": 202977,
+          "text": "node.heritageClauses"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 10827,
+          "column": 20,
+          "start": 431736,
+          "end": 431783,
+          "text": "(node as HeritageClause).parent.heritageClauses"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Conservative union-target handoff retained"
+    },
+    {
+      "type_id": 9209,
+      "type": "PrivateIdentifierPropertyDeclaration",
+      "field": "modifiers",
+      "declared_type": "NodeArray<ModifierLike> | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/transformers/classFields.ts",
+          "line": 994,
+          "column": 28,
+          "start": 39321,
+          "end": 39335,
+          "text": "node.modifiers"
+        },
+        {
+          "file": "src/compiler/transformers/classFields.ts",
+          "line": 1008,
+          "column": 24,
+          "start": 39805,
+          "end": 39819,
+          "text": "node.modifiers"
+        }
+      ],
+      "status": "certified",
+      "reason": "Original declaration is a named interface, not a union-target handoff"
+    },
+    {
+      "type_id": 8900,
+      "type": "JSDocOverloadTag",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties",
+        "scalar contracts"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 5330,
+          "column": 20,
+          "start": 231903,
+          "end": 231915,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 4221,
+          "column": 26,
+          "start": 179091,
+          "end": 179102,
+          "text": "tag.comment"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Mixed scalar and array member handoff retained"
+    },
+    {
+      "type_id": 8880,
+      "type": "JSDocPropertyTag",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties",
+        "scalar contracts"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 5292,
+          "column": 20,
+          "start": 229668,
+          "end": 229680,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 7875,
+          "column": 63,
+          "start": 431899,
+          "end": 431923,
+          "text": "jsdocPropertyTag.comment"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Mixed scalar and array member handoff retained"
+    },
+    {
+      "type_id": 8655,
+      "type": "UnionOrIntersectionType",
+      "field": "resolvedProperties",
+      "declared_type": "Symbol[]",
+      "families": [
+        "array contracts"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 15079,
+          "column": 14,
+          "start": 875826,
+          "end": 875849,
+          "text": "type.resolvedProperties"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 15098,
+          "column": 16,
+          "start": 876925,
+          "end": 876948,
+          "text": "type.resolvedProperties"
+        }
+      ],
+      "status": "certified",
+      "reason": "Original declaration is a named interface, not a union-target handoff"
+    },
+    {
+      "type_id": 8654,
+      "type": "UnionType",
+      "field": "arrayFallbackSignatures",
+      "declared_type": "readonly Signature[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 15951,
+          "column": 17,
+          "start": 927868,
+          "end": 927911,
+          "text": "(type as UnionType).arrayFallbackSignatures"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 15952,
+          "column": 24,
+          "start": 927939,
+          "end": 927982,
+          "text": "(type as UnionType).arrayFallbackSignatures"
+        }
+      ],
+      "status": "certified",
+      "reason": "Final two-read array-field pair below worker frontier"
+    },
+    {
+      "type_id": 8600,
+      "type": "InterfaceType",
+      "field": "outerTypeParameters",
+      "declared_type": "TypeParameter[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 13377,
+          "column": 37,
+          "start": 777751,
+          "end": 777794,
+          "text": "(type as InterfaceType).outerTypeParameters"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 17021,
+          "column": 47,
+          "start": 991157,
+          "end": 991181,
+          "text": "type.outerTypeParameters"
+        }
+      ],
+      "status": "certified",
+      "reason": "Final two-read array-field pair below worker frontier"
+    },
+    {
+      "type_id": 7679,
+      "type": "ClassDeclaration | ClassExpression",
+      "field": "typeParameters",
+      "declared_type": "NodeArray<TypeParameterDeclaration> | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1177,
+          "column": 37,
+          "start": 65635,
+          "end": 65654,
+          "text": "node.typeParameters"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 3570,
+          "column": 34,
+          "start": 155507,
+          "end": 155526,
+          "text": "node.typeParameters"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Conservative union-target handoff retained"
+    },
+    {
+      "type_id": 7679,
+      "type": "ClassDeclaration | ClassExpression",
+      "field": "modifiers",
+      "declared_type": "NodeArray<ModifierLike> | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1175,
+          "column": 40,
+          "start": 65538,
+          "end": 65552,
+          "text": "node.modifiers"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 3558,
+          "column": 42,
+          "start": 155066,
+          "end": 155080,
+          "text": "node.modifiers"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Conservative union-target handoff retained"
+    },
+    {
+      "type_id": 7679,
+      "type": "ClassDeclaration | ClassExpression",
+      "field": "heritageClauses",
+      "declared_type": "NodeArray<HeritageClause> | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1178,
+          "column": 37,
+          "start": 65696,
+          "end": 65716,
+          "text": "node.heritageClauses"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 3571,
+          "column": 24,
+          "start": 155553,
+          "end": 155573,
+          "text": "node.heritageClauses"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Conservative union-target handoff retained"
+    },
+    {
+      "type_id": 7638,
+      "type": "JSDocTag",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties",
+        "scalar contracts"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 49073,
+          "column": 45,
+          "start": 2864573,
+          "end": 2864584,
+          "text": "tag.comment"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 4227,
+          "column": 26,
+          "start": 179279,
+          "end": 179290,
+          "text": "tag.comment"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Mixed scalar and array member handoff retained"
+    },
+    {
+      "type_id": 7420,
+      "type": "JSDocArray | undefined",
+      "field": "jsDocCache",
+      "declared_type": "readonly JSDocTag[] | undefined",
+      "families": [
+        "array contracts",
+        "array property reads",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/utilitiesPublic.ts",
+          "line": 1259,
+          "column": 16,
+          "start": 49658,
+          "end": 49680,
+          "text": "node.jsDoc?.jsDocCache"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 3171,
+          "column": 35,
+          "start": 160773,
+          "end": 160795,
+          "text": "node.jsDoc?.jsDocCache"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Own-array-field inventory retained by lane 2 worker"
+    },
+    {
+      "type_id": 7378,
+      "type": "SourceFile | undefined",
+      "field": "imports",
+      "declared_type": "readonly StringLiteralLike[]",
+      "families": [
+        "array contracts"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 10095,
+          "column": 28,
+          "start": 403600,
+          "end": 403619,
+          "text": "sourceFile?.imports"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 53798,
+          "column": 27,
+          "start": 3124754,
+          "end": 3124767,
+          "text": "file?.imports"
+        }
+      ],
+      "status": "code needed",
+      "reason": "Final two-read array-field pair below worker frontier"
+    },
+    {
+      "type_id": 7332,
+      "type": "TypeLiteralNode | InterfaceDeclaration",
+      "field": "members",
+      "declared_type": "NodeArray<TypeElement>",
+      "families": [
+        "array contracts"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 10838,
+          "column": 42,
+          "start": 432097,
+          "end": 432155,
+          "text": "(parent as TypeLiteralNode | InterfaceDeclaration).members"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 42353,
+          "column": 30,
+          "start": 2497640,
+          "end": 2497652,
+          "text": "node.members"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Conservative union-target handoff retained"
+    },
+    {
+      "type_id": 7331,
+      "type": "SignatureDeclaration",
+      "field": "typeArguments",
+      "declared_type": "NodeArray<TypeNode> | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 4601,
+          "column": 43,
+          "start": 193847,
+          "end": 193871,
+          "text": "parentNode.typeArguments"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 4602,
+          "column": 50,
+          "start": 194014,
+          "end": 194038,
+          "text": "parentNode.typeArguments"
+        }
+      ],
+      "status": "certified",
+      "reason": "Final two-read array-field pair below worker frontier"
+    },
+    {
+      "type_id": 7331,
+      "type": "SignatureDeclaration",
+      "field": "jsDoc",
+      "declared_type": "JSDocArray | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 16381,
+          "column": 37,
+          "start": 951817,
+          "end": 951827,
+          "text": "decl.jsDoc"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 43288,
+          "column": 71,
+          "start": 2547992,
+          "end": 2548005,
+          "text": "current.jsDoc"
+        }
+      ],
+      "status": "certified",
+      "reason": "Final two-read array-field pair below worker frontier"
+    },
+    {
+      "type_id": 7327,
+      "type": "JSDocFunctionType",
+      "field": "typeParameters",
+      "declared_type": "NodeArray<TypeParameterDeclaration> | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/expressionToTypeNode.ts",
+          "line": 364,
+          "column": 36,
+          "start": 15393,
+          "end": 15412,
+          "text": "node.typeParameters"
+        },
+        {
+          "file": "src/compiler/expressionToTypeNode.ts",
+          "line": 379,
+          "column": 36,
+          "start": 16545,
+          "end": 16564,
+          "text": "node.typeParameters"
+        }
+      ],
+      "status": "certified",
+      "reason": "Final two-read array-field pair below worker frontier"
+    },
+    {
+      "type_id": 7287,
+      "type": "ClassLikeDeclaration",
+      "field": "typeParameters",
+      "declared_type": "NodeArray<TypeParameterDeclaration> | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 52395,
+          "column": 43,
+          "start": 3047892,
+          "end": 3047911,
+          "text": "node.typeParameters"
+        },
+        {
+          "file": "src/compiler/transformers/ts.ts",
+          "line": 875,
+          "column": 21,
+          "start": 34077,
+          "end": 34096,
+          "text": "node.typeParameters"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Conservative union-target handoff retained"
+    },
+    {
+      "type_id": 6998,
+      "type": "SourceFile",
+      "field": "additionalSyntacticDiagnostics",
+      "declared_type": "readonly DiagnosticWithLocation[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/program.ts",
+          "line": 2835,
+          "column": 18,
+          "start": 138352,
+          "end": 138393,
+          "text": "sourceFile.additionalSyntacticDiagnostics"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 2838,
+          "column": 32,
+          "start": 138551,
+          "end": 138592,
+          "text": "sourceFile.additionalSyntacticDiagnostics"
+        }
+      ],
+      "status": "certified",
+      "reason": "Final two-read array-field pair below worker frontier"
+    },
+    {
+      "type_id": 6995,
+      "type": "EmitNode | undefined",
+      "field": "helpers",
+      "declared_type": "EmitHelper[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/factory/emitNode.ts",
+          "line": 272,
+          "column": 21,
+          "start": 9165,
+          "end": 9187,
+          "text": "node.emitNode?.helpers"
+        },
+        {
+          "file": "src/compiler/factory/emitNode.ts",
+          "line": 283,
+          "column": 12,
+          "start": 9422,
+          "end": 9444,
+          "text": "node.emitNode?.helpers"
+        }
+      ],
+      "status": "code needed",
+      "reason": "Final two-read array-field pair below worker frontier"
+    }
+  ],
+  "frontier": {
+    "type_id": 101128,
+    "type": "CircularBuildOrder",
+    "field": "buildOrder",
+    "declared_type": "BuildOrder",
+    "families": [
+      "array contracts"
+    ],
+    "read_count": 3,
+    "sites": [
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 260,
+        "column": 30,
+        "start": 8152,
+        "end": 8197,
+        "text": "(buildOrder as CircularBuildOrder).buildOrder"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 265,
+        "column": 50,
+        "start": 8364,
+        "end": 8388,
+        "text": "anyBuildOrder.buildOrder"
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2319,
+        "column": 33,
+        "start": 106066,
+        "end": 106087,
+        "text": "buildOrder.buildOrder"
+      }
+    ]
+  },
+  "reason": "Stop at worker three-read rank. Ten own eligible pairs remain.",
+  "certified_pairs": 8,
+  "certified_static_reads": 16,
+  "runtime_reachability": "unmeasured",
+  "code_frontiers": {
+    "SourceFile | undefined.imports": "Adamic 0.1 refuses checked view read of field imports with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field",
+    "EmitNode | undefined.helpers": "Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field"
+  },
+  "stopped_at": "CircularBuildOrder.buildOrder, three-read rank"
+}
