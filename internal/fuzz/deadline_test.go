@@ -11,10 +11,14 @@ import (
 )
 
 func TestExecuteDeadlineKillsGrandchild(t *testing.T) {
+	// The hung child sleeps, spending no CPU, so the wall-clock backstop is what stops it.
+	backstop := executeWallBackstop
+	executeWallBackstop = 200 * time.Millisecond
+	t.Cleanup(func() { executeWallBackstop = backstop })
 	child, heartbeat := testfixture.Tree(t, "fake-compiler")
 	directory := t.TempDir()
 	var result Run
-	start := readyDeadlineRun(t, heartbeat, func() { result = execute(directory, nil, 200*time.Millisecond, child) })
+	start := readyDeadlineRun(t, heartbeat, func() { result = execute(directory, nil, 30*time.Second, child) })
 	if !result.TimedOut {
 		t.Fatalf("hung compiler did not time out: %+v", result)
 	}

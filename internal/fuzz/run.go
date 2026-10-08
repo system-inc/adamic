@@ -387,12 +387,15 @@ func difference(expected Run, actual Run) string {
 // CPU, and runs it in its own process group, killed whole at the backstop, so a program that loops is
 // stopped rather than orphaned. The 30 s compiler and 20 s program limits are CPU seconds: time a
 // loaded box spends waiting for a core doesn't count against them.
+// executeWallBackstop stops a child that blocks without spending CPU; a test shortens it.
+var executeWallBackstop = 2 * time.Minute
+
 func execute(directory string, environment []string, limit time.Duration, name string, arguments ...string) Run {
 	path, err := exec.LookPath(name)
 	if err != nil {
 		return Run{ExitCode: -1, Stderr: []byte(err.Error())}
 	}
-	ctx, cancel := boundedrun.WithTimeout(context.Background(), 2*time.Minute)
+	ctx, cancel := boundedrun.WithTimeout(context.Background(), executeWallBackstop)
 	defer cancel()
 	// Set both limits so children that ignore SIGXCPU (including Go programs)
 	// are still stopped by the kernel. Some kernels send SIGKILL at the hard

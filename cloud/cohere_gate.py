@@ -75,6 +75,13 @@ def make_mirror(directory):
         'cmd/adamic-test262/testdata/mini/test/skip/negative.js',
     ]
     (directory / 'CohereSettings.json').write_text(json.dumps(settings, indent=4) + '\n')
+    # The type phase reads tsconfig's include, not the ignore patterns, so the tsc driver's upstream
+    # corpus (300 deliberately odd TypeScript test inputs, ignored by @system_adamic's ruling of Oct 7
+    # 23:37) also goes into its exclude, or it's type-checked once it's named .ts. Only that corpus:
+    # excluding every ignore pattern drops modules other files import and changes their types.
+    # An explicit exclude replaces TypeScript's default one, so that one is restated first.
+    config['exclude'] = list(config.get('exclude', ['node_modules', 'bower_components', 'jspm_packages'])) + ['stage3/drivers/tsc/corpus/**']
+    (directory / 'tsconfig.json').write_text(json.dumps(config, indent=4) + '\n')
     subprocess.run(['git', 'init', '-q', str(directory)], check=True)
     return mirrored
 
