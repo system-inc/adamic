@@ -1,0 +1,39 @@
+interface Row { readonly name: string; }
+const rows = new Set<Row>();
+rows.add({ name: "row" + (1).toFixed(0) });
+rows.add({ name: "row" + (2).toFixed(0) });
+const captures: (() => string)[] = [];
+function visit(source: Iterable<Row>): string {
+    let last = "empty";
+    for (const row of source) {
+        captures.push(() => row.name);
+        console.log(row.name);
+        last = row.name;
+        if (row.name === "row1") {
+            rows.delete(row);
+            rows.add({ name: "row" + (3).toFixed(0) });
+            continue;
+        }
+        if (row.name === "row3") { return last; }
+    }
+    return last;
+}
+console.log(visit(rows.values()));
+for (const capture of captures) { console.log(capture()); }
+const words = new Map<number, string>();
+words.set(1, "word" + (1).toFixed(0));
+words.set(2, "word" + (2).toFixed(0));
+function first(source: Iterable<string>): string {
+    for (const word of source) { return word; }
+    return "empty";
+}
+console.log(first(words.values()));
+function count(source: Iterable<string>): number {
+    let result = 0;
+    for (const word of source) { result += word.length; }
+    return result;
+}
+console.log(count(words.values()).toFixed(0));
+const extra = new Set<string>();
+extra.add("more" + (1).toFixed(0));
+console.log(count(extra.keys()).toFixed(0));

@@ -887,6 +887,11 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 		}
 		return l.forOfMap(node, iterable, iterated, mapPart, name)
 	case ir.Object:
+		if ast.IsIdentifier(name) {
+			if element, known := l.forOfLibraryIteratorView(iterated, name); known {
+				return l.libraryForOfIterator(node, iterable, element, name)
+			}
+		}
 		if proven := l.checker.GetTypeAtLocation(iterated); checker.IsTupleType(proven) {
 			return l.forOfTuple(node, name, iterable, proven)
 		}

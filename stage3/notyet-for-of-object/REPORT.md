@@ -2,8 +2,9 @@
 
 Base `b410340dc8f889b5799c3bc519117c63def3aa24`; replay merge
 `c68b6ceb0bd43283c6b919f8bc2c823084bd69e2` (includes `9a1f14c5`).
-**1 of the 118 original object-iteration gates now advances**, after the fixed
-primitive tuple change below. The named NodeArray examples still reproduce.
+**2 of the 118 original object-iteration gates now advance**, after the fixed
+primitive tuple and private library-iterator view changes below. The named
+NodeArray examples still reproduce.
 
 ## Observed scope
 
@@ -295,3 +296,93 @@ still needs preserved receiver conventions, optional return presence and a
 represented protocol result; these remain NotYet, rather than design refusals.
 The three generator units remain Refused by design. The standing push rule is
 one push per completed locally verified unit, with another only to fix a red.
+
+## Private library iterator view
+
+The remaining Iterable<Symbol> root at checker.ts:15779:30 has one private
+consumer whose caller passes propSet.values(). A bounded proof now admits a
+plain iteration binding when the parameter belongs to an unexported nongeneric
+function in a module, every function reference is a direct call, every argument
+at that position is a fresh library Map/Set keys/values/entries iterator, and the
+parameter is used only as a for-of source. Export aliases, indirect calls,
+parameter aliases/reassignment, spread argument positions, defaults, unknown
+callers, unsupported elements and custom producers remain stopped. Physical
+element storage must match; a present Weak read is an object but keeps a handle.
+General structural iterables still need their own protocol representation.
+
+The helper inspects the owning module, not just the entry import graph. The
+first real-site replay still reproduced because that graph omitted the selected
+source. A private module function cannot be called from another file without an
+export or an escaping reference, both rejected. Global scripts are not admitted;
+ordinary .a loading uses forced module detection. No other lower function,
+backend, IR or runtime production file was changed.
+
+The existing stored collection iterator lowering supplies the next closure and
+its receiver convention. These proven builtin iterators have no return method;
+custom iterators continue through iteration.go with their close rules. The .a
+oracle fixture holds built strings and objects, live Set deletion/insertion,
+captured bindings, early return, exhaustion, and Map/Set origins for one consumer
+to Node in JavaScript, release native and sanitized native.
+
+All thirteen final mutants fail their intended tests:
+
+| Mutant | Catcher |
+| --- | --- |
+| Omit view admission | oracle: original object NotYet |
+| Accept unchecked producer | origin-stop assertion |
+| Ignore escaped function reference | origin-stop assertion |
+| Ignore parameter use/reassignment | origin-stop assertion |
+| Admit exported consumer | origin-stop assertion |
+| Admit default parameter | origin-stop assertion |
+| Admit generic consumer | origin-stop assertion |
+| Admit unsupported maybe element | origin-stop assertion |
+| Admit consumer without callers | origin-stop assertion |
+| Ignore shifted spread position | origin-stop assertion |
+| Use present read type as physical storage | origin-stop assertion |
+| Share one captured iterator binding | oracle: stdout differs |
+| Stop at the first iterator step | oracle: stdout differs |
+
+Three early variants survived and were corrected rather than counted as proof:
+the first escape mutant stopped AST traversal before reaching callers; the first
+generic probe still failed a separate type proof; the first Weak-union probe did
+not isolate present-handle storage. The final runner continues traversal after
+ignored references, and the probes include an unused generic parameter and a
+present Weak intersection. The complete final thirteen-mutant run passes,
+excluding compilation failures, clang warnings and panics as catches. Named
+export alias coverage was added and its escape mutant rerun successfully.
+
+The official replay now omits checker.ts:15779:30's original signature and
+reaches core.ts:220:112, `a generic function as a value`. The selected compiler
+function is not yet fully lowered. [Replay and source hashes](library-view-replay.json)
+record the measured production sources and the raw CSV count: **2/118** original
+object gates and **4/4** original object-binding gates. Both binder examples still
+reproduce their object stop. The full root-replay.csv remains the historical
+46659743 audit; this JSON records the additional covered site. The next generic
+callable kind is outside forOf. The published function-values worker report
+certifies callable union slots, not this generic kind; no worker branch is merged.
+
+Commands, all redirected to logs:
+
+```
+python3 internal/lower/testdata/run-for-of-library-view-mutants.py
+python3 internal/lower/testdata/run-for-of-library-view-mutants.py ignore-function-escape
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/oracle -run 'TestForOfLibraryViewOriginChecks|TestForOfTupleStorageChecks|TestForOfObjectBindingChecks|TestForOfObjectNodeArrayStops|TestForOfGeneratorRootsRemainRefused|TestIteratorViewsCannotHideReturn|TestIteratorViewsCannotEraseReceivers|TestNativeAgreesWithNode/internal/oracle/testdata/for_of_(library_view|tuple|object_destructure)' -count=1 -timeout 10m
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 10m -args -update-counts
+go run ./stage3/census/latent/replay -project /tmp/for-of-adapted/src/tsc/tsc.ts -where /tmp/for-of-adapted/src/compiler/checker.ts:15779:30 -kind NotYet -reason 'for...of over an object'
+```
+
+Final focus passes: lower 0.737s, oracle 0.949s. Counts refresh passes in 24.887s;
+the new fixture records 56 allocations and 56 frees. Logs are
+/tmp/for-of-library-view-final.log, /tmp/for-of-library-view-counts.log,
+/tmp/for-of-library-view-mutants-final.log,
+/tmp/adamic-for-of-library-view-mutants/*.log,
+/tmp/for-of-library-view-export-focus.log,
+/tmp/for-of-library-view-export-mutant.log and
+/tmp/for-of-library-view-after-{15779,432,1296}.log.
+
+The live area/compiler was resolved by an explicit tracking refspec, because the
+checkout's default fetch refspec updates only main. It advanced through
+b68b2fe1 to 84e7f8f6, with no changes in the relevant compiler packages and no
+views dependency landing. Earlier b410340d observations described the cached
+tracking ref, not a fresh remote resolution. No additional area merge or partial
+push was made. Views-dependent certifications remain deferred.

@@ -1,0 +1,36 @@
+{
+  "where": "src/compiler/checker.ts:15779:30",
+  "original_reason": "for...of over an object",
+  "measurement": "measured on a checker-rejected entry-root program",
+  "findings": [
+    {
+      "kind": "NotYet",
+      "where": "/tmp/for-of-adapted/src/compiler/core.ts:220:112",
+      "reason": "a generic function as a value"
+    }
+  ],
+  "base_sha": "b16be83c",
+  "source_sha256": {
+    "internal/lower/object.go": "60f74094f9d4b6d14aeff1e5436edaf100d642247354b2354064b7449d842b28",
+    "internal/lower/for_of_library_view.go": "1de6544c3f50340636f583ba70de569882a706a248c0d370d53528fb6437da9f"
+  },
+  "log": "/tmp/for-of-library-view-after-15779.log",
+  "command": [
+    "go",
+    "run",
+    "./stage3/census/latent/replay",
+    "-project",
+    "/tmp/for-of-adapted/src/tsc/tsc.ts",
+    "-where",
+    "/tmp/for-of-adapted/src/compiler/checker.ts:15779:30",
+    "-kind",
+    "NotYet",
+    "-reason",
+    "for...of over an object"
+  ],
+  "covered_distinct_sites": [
+    "src/compiler/checker.ts:15779:30",
+    "src/compiler/moduleSpecifiers.ts:800:25"
+  ],
+  "total_distinct_sites": 118
+}
