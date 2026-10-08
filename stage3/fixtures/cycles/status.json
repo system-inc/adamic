@@ -168,7 +168,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/cycles/09_function_value_load/core.a:4:22: stage 0 can't lower a value of type unknown yet"
+      "what": "stage3/fixtures/cycles/09_function_value_load/performance.a:5:42: stage 0 can't lower a function with an optional or rest parameter, as a value yet"
     }
   },
   {
@@ -185,7 +185,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/cycles/10_hoisted_before_body/core.a:4:22: stage 0 can't lower a value of type unknown yet"
+      "what": "stage3/fixtures/cycles/10_hoisted_before_body/performance.a:5:42: stage 0 can't lower a function with an optional or rest parameter, as a value yet"
     }
   }
 ]
