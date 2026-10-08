@@ -1,0 +1,17 @@
+{
+  "build_flags": {
+    "commit": "358dbccd95a909a849d1d9db370ae7122a87fc5b",
+    "scratch_edits": true,
+    "nproc": "5",
+    "cpu_max": "400000 100000",
+    "go": "go version go1.27.1 linux/amd64",
+    "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+    "node": "v24.19.0",
+    "cached": false
+  },
+  "load_before": "0.00 0.15 0.30 1/2011 259980",
+  "load_after": "0.00 0.14 0.29 1/2032 260292",
+  "exit": 0,
+  "replacement_seconds": 29.737,
+  "command": "ADAMIC_GATE_UNCACHED=1 python3 -B cloud/test_fleet.py FleetTests.test_failure_arriving_after_first_poll_replaced_on_next_default_poll > /workspace/fleet-next-poll-measured-test.log 2>&1"
+}

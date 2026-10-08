@@ -1,0 +1,248 @@
+[
+  {
+    "exit": 1,
+    "wall": 0.7282459329981066,
+    "replacement_seconds": null,
+    "launches": [
+      {
+        "name": "plan",
+        "attempt": null
+      },
+      {
+        "name": "shard-0",
+        "attempt": 1
+      },
+      {
+        "name": "shard-1",
+        "attempt": 1
+      },
+      {
+        "name": "merge",
+        "attempt": null
+      }
+    ],
+    "loop": 1,
+    "mode": "before",
+    "check_exit": 1,
+    "build_flags": {
+      "commit": "358dbccd95a909a849d1d9db370ae7122a87fc5b",
+      "scratch_edits": true,
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cached": false
+    },
+    "load_before": "0.15 0.16 0.29 1/2032 260411",
+    "load_after": "0.15 0.16 0.29 1/2042 260560",
+    "command": "FLEET_SCRIPT=/workspace/fleet-proof/before/fleet.sh FLEET_BENCHMARK_OUTPUT=/workspace/fleet-proof/before-1-committed.json ADAMIC_GATE_UNCACHED=1 python3 -B cloud/test_fleet.py FleetTests.test_first_setup_failure_replaced_within_minute_and_merge_uses_replacement > /workspace/fleet-proof/before-1-committed.log 2>&1"
+  },
+  {
+    "exit": 0,
+    "wall": 1.069325962998846,
+    "replacement_seconds": 0.31403724800111377,
+    "launches": [
+      {
+        "name": "plan",
+        "attempt": null
+      },
+      {
+        "name": "shard-0",
+        "attempt": 1
+      },
+      {
+        "name": "shard-1",
+        "attempt": 1
+      },
+      {
+        "name": "shard-0",
+        "attempt": 2
+      },
+      {
+        "name": "merge",
+        "attempt": null
+      }
+    ],
+    "loop": 1,
+    "mode": "after",
+    "check_exit": 0,
+    "build_flags": {
+      "commit": "358dbccd95a909a849d1d9db370ae7122a87fc5b",
+      "scratch_edits": true,
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cached": false
+    },
+    "load_before": "0.15 0.16 0.29 1/2042 260560",
+    "load_after": "0.15 0.16 0.29 1/2060 260828",
+    "command": "FLEET_SCRIPT=/workspace/fleet-proof/after/fleet.sh FLEET_BENCHMARK_OUTPUT=/workspace/fleet-proof/after-1-committed.json ADAMIC_GATE_UNCACHED=1 python3 -B cloud/test_fleet.py FleetTests.test_first_setup_failure_replaced_within_minute_and_merge_uses_replacement > /workspace/fleet-proof/after-1-committed.log 2>&1"
+  },
+  {
+    "exit": 1,
+    "wall": 0.6686622779998288,
+    "replacement_seconds": null,
+    "launches": [
+      {
+        "name": "plan",
+        "attempt": null
+      },
+      {
+        "name": "shard-0",
+        "attempt": 1
+      },
+      {
+        "name": "shard-1",
+        "attempt": 1
+      },
+      {
+        "name": "merge",
+        "attempt": null
+      }
+    ],
+    "loop": 2,
+    "mode": "before",
+    "check_exit": 1,
+    "build_flags": {
+      "commit": "358dbccd95a909a849d1d9db370ae7122a87fc5b",
+      "scratch_edits": true,
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cached": false
+    },
+    "load_before": "0.15 0.16 0.29 1/2060 260828",
+    "load_after": "0.13 0.16 0.28 1/2070 260977",
+    "command": "FLEET_SCRIPT=/workspace/fleet-proof/before/fleet.sh FLEET_BENCHMARK_OUTPUT=/workspace/fleet-proof/before-2-committed.json ADAMIC_GATE_UNCACHED=1 python3 -B cloud/test_fleet.py FleetTests.test_first_setup_failure_replaced_within_minute_and_merge_uses_replacement > /workspace/fleet-proof/before-2-committed.log 2>&1"
+  },
+  {
+    "exit": 0,
+    "wall": 1.1270392690021254,
+    "replacement_seconds": 0.3219929900005809,
+    "launches": [
+      {
+        "name": "plan",
+        "attempt": null
+      },
+      {
+        "name": "shard-0",
+        "attempt": 1
+      },
+      {
+        "name": "shard-1",
+        "attempt": 1
+      },
+      {
+        "name": "shard-0",
+        "attempt": 2
+      },
+      {
+        "name": "merge",
+        "attempt": null
+      }
+    ],
+    "loop": 2,
+    "mode": "after",
+    "check_exit": 0,
+    "build_flags": {
+      "commit": "358dbccd95a909a849d1d9db370ae7122a87fc5b",
+      "scratch_edits": true,
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cached": false
+    },
+    "load_before": "0.13 0.16 0.28 1/2070 260977",
+    "load_after": "0.13 0.16 0.28 1/2088 261245",
+    "command": "FLEET_SCRIPT=/workspace/fleet-proof/after/fleet.sh FLEET_BENCHMARK_OUTPUT=/workspace/fleet-proof/after-2-committed.json ADAMIC_GATE_UNCACHED=1 python3 -B cloud/test_fleet.py FleetTests.test_first_setup_failure_replaced_within_minute_and_merge_uses_replacement > /workspace/fleet-proof/after-2-committed.log 2>&1"
+  },
+  {
+    "exit": 1,
+    "wall": 0.7202538679994177,
+    "replacement_seconds": null,
+    "launches": [
+      {
+        "name": "plan",
+        "attempt": null
+      },
+      {
+        "name": "shard-0",
+        "attempt": 1
+      },
+      {
+        "name": "shard-1",
+        "attempt": 1
+      },
+      {
+        "name": "merge",
+        "attempt": null
+      }
+    ],
+    "loop": 3,
+    "mode": "before",
+    "check_exit": 1,
+    "build_flags": {
+      "commit": "358dbccd95a909a849d1d9db370ae7122a87fc5b",
+      "scratch_edits": true,
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cached": false
+    },
+    "load_before": "0.13 0.16 0.28 1/2088 261245",
+    "load_after": "0.13 0.16 0.28 1/2098 261394",
+    "command": "FLEET_SCRIPT=/workspace/fleet-proof/before/fleet.sh FLEET_BENCHMARK_OUTPUT=/workspace/fleet-proof/before-3-committed.json ADAMIC_GATE_UNCACHED=1 python3 -B cloud/test_fleet.py FleetTests.test_first_setup_failure_replaced_within_minute_and_merge_uses_replacement > /workspace/fleet-proof/before-3-committed.log 2>&1"
+  },
+  {
+    "exit": 0,
+    "wall": 1.3545187250019808,
+    "replacement_seconds": 0.3991100290004397,
+    "launches": [
+      {
+        "name": "plan",
+        "attempt": null
+      },
+      {
+        "name": "shard-0",
+        "attempt": 1
+      },
+      {
+        "name": "shard-1",
+        "attempt": 1
+      },
+      {
+        "name": "shard-0",
+        "attempt": 2
+      },
+      {
+        "name": "merge",
+        "attempt": null
+      }
+    ],
+    "loop": 3,
+    "mode": "after",
+    "check_exit": 0,
+    "build_flags": {
+      "commit": "358dbccd95a909a849d1d9db370ae7122a87fc5b",
+      "scratch_edits": true,
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cached": false
+    },
+    "load_before": "0.13 0.16 0.28 1/2098 261394",
+    "load_after": "0.13 0.16 0.28 1/2116 261662",
+    "command": "FLEET_SCRIPT=/workspace/fleet-proof/after/fleet.sh FLEET_BENCHMARK_OUTPUT=/workspace/fleet-proof/after-3-committed.json ADAMIC_GATE_UNCACHED=1 python3 -B cloud/test_fleet.py FleetTests.test_first_setup_failure_replaced_within_minute_and_merge_uses_replacement > /workspace/fleet-proof/after-3-committed.log 2>&1"
+  }
+]

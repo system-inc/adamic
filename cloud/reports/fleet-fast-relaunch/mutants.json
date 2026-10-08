@@ -1,0 +1,43 @@
+[
+  {
+    "mutant": "four-attempts",
+    "exit": 1,
+    "test": "test_three_failed_attempts_fail_run_by_shard_name"
+  },
+  {
+    "mutant": "ignore-merge-marker",
+    "exit": 1,
+    "test": "test_merge_refuses_marker_even_with_an_old_archive"
+  },
+  {
+    "mutant": "repeat-old-marker",
+    "exit": 1,
+    "test": "test_old_marker_does_not_relaunch_replacement_while_it_starts"
+  },
+  {
+    "mutant": "ignore-marker-commit",
+    "exit": 1,
+    "test": "test_invalid_commit_marker_refused_by_shard_name"
+  },
+  {
+    "mutant": "stale-publication",
+    "exit": 1,
+    "test": "test_publisher_replaces_marker_preserves_history_and_refuses_stale_attempt"
+  },
+  {
+    "mutant": "wrong-success-commit",
+    "exit": 1,
+    "test": "test_failed_checkout_can_publish_marker_for_requested_commit"
+  },
+  {
+    "mutant": "defer-marker",
+    "exit": 1,
+    "test": "test_first_setup_failure_replaced_within_minute_and_merge_uses_replacement",
+    "caught": "65-second timeout; replacement did not start within one minute"
+  },
+  {
+    "mutant": "missing-notes-guard",
+    "exit": 1,
+    "test": "test_relaunch_refuses_to_start_if_run_notes_cannot_be_written"
+  }
+]

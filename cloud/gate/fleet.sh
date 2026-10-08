@@ -55,6 +55,7 @@ prefix=gate-logs/$short${run:+/$run}
 work=${ADAMIC_GATE_FLEET_DIRECTORY:-$HOME/.adamic-gate/fleet}/$short${run:+/$run}
 mkdir -p "$work"
 fleet=gate-${sha:0:8}
+fleetDirectory=$(cd -- "${BASH_SOURCE[0]%/*}" && pwd)
 
 launch() {
 	if [ -n "${ADAMIC_GATE_LAUNCH:-}" ]; then
@@ -96,23 +97,30 @@ await() {
 # gate's required inputs (--gate-inputs: the pinned TypeScript source, reference libraries and
 # oracles) whenever this tree's setup offers them.
 brief() {
-	local name=$1 command=$2 index=${3:--1}
+	local name=$1 command=$2 index=${3:--1} attempt=${4:-1}
+	[ -s "$fleetDirectory/publish.py" ] || { echo "fleet: missing publisher script" >&2; return 1; }
 	local archiveStep=""
 	if [ "$index" = "$archiveShard" ]; then
 		archiveStep=' This shard owns TestSplitTSGoAgrees: copy the sourced env.sh to /workspace/gate-inputs-env.sh, run `bash cloud/setup.sh --gate-archive > /workspace/archive-setup.log 2>&1`, source its printed env.sh, then `gateArchivePath=$ADAMIC_CLANG_TSGO_ARCHIVE; source /workspace/gate-inputs-env.sh; export ADAMIC_CLANG_TSGO_ARCHIVE="$gateArchivePath"`. The setup flags are deliberately separate invocations because their combination is rejected; restoring the first env preserves the other required inputs.'
 	fi
 	cat << BRIEF
 Unit: run one part of Adamic's test gate at a fixed commit and return the raw logs. Branch for the logs: $prefix/$name. This is a measured run; do not change any code.
+Attempt: $attempt. Save the publisher script below as /workspace/gate-publish.py before starting setup.
 
 1. In the repository: \`git fetch origin && git checkout --detach $sha\` and confirm \`git rev-parse HEAD\` prints $sha. Fetch the frozen plan: \`git fetch origin refs/heads/$prefix/plan && git show FETCH_HEAD:plan.tgz > /workspace/gate-plan.tgz && mkdir -p /workspace/gate-plan && tar xzf /workspace/gate-plan.tgz -C /workspace/gate-plan\`.
-2. Set up with every gate input this tree's setup offers: \`flags=""; grep -q -- --wasi-sdk cloud/setup.sh && flags="\$flags --wasi-sdk"; grep -q -- --gate-inputs-no-archive cloud/setup.sh && flags="\$flags --gate-inputs-no-archive"; bash cloud/setup.sh \$flags\`. Source the env file it prints, then \`export ADAMIC_TEST_WASI=1 ADAMIC_ORACLE_WASI=1 ADAMIC_GATE_COHERE=1\`. Record setup's timing lines, the flags it ran with, and \`nproc\`. A test that skips for a missing input is a gate failure, not a pass.$archiveStep
+2. Set up with every gate input this tree's setup offers: \`flags=""; grep -q -- --wasi-sdk cloud/setup.sh && flags="\$flags --wasi-sdk"; grep -q -- --gate-inputs-no-archive cloud/setup.sh && flags="\$flags --gate-inputs-no-archive"; bash cloud/setup.sh \$flags > /workspace/setup.log 2>&1\`. Source the env file it prints, then \`export ADAMIC_TEST_WASI=1 ADAMIC_ORACLE_WASI=1 ADAMIC_GATE_COHERE=1\`. Record setup's timing lines, the flags it ran with, and \`nproc\`. A test that skips for a missing input is a gate failure, not a pass.$archiveStep
 3. \`go build -o /workspace/adamic-gate ./cmd/adamic-gate\`, read docs/gate-shards.md, then run, with output to a log file (never piped):
    \`date -u; $command > /workspace/gate-run.log 2>&1; echo exit=\$?; date -u\`
    If the box restarts or the command is interrupted, rerun the same command with \`-resume\` added (same output directory) until it completes. Record each start, end and interruption.
-4. Only if the shard command actually ran (\`/workspace/gate-out/summary.json\` exists) save and push its logs. If setup or the box failed before the shard ran (no network to a package server, a dead tool), do not push anything: say exactly what failed and stop, and the driver will start this shard again on a fresh box. Save the results without touching the repository's working tree: \`tar czf /workspace/$name.tgz -C /workspace gate-out gate-run.log gate-plan\`, then from a fresh scratch clone so nothing else is committed:
-   \`git clone --no-checkout --depth 1 "\$(git remote get-url origin)" /workspace/logs-repo && cd /workspace/logs-repo && git checkout --orphan $prefix/$name && cp /workspace/$name.tgz . && git add $name.tgz && git commit -m "Gate logs for $name at $short" && git push origin $prefix/$name\`
-   Retry the push on failure. Never push main or any other branch.
+4. If checkout, setup, runner build, or the box fails before the shard command runs, publish a failure immediately (do not wait for the shard deadline): ensure /workspace/setup.log exists and records the exact error, then run \`python3 /workspace/gate-publish.py --origin "\$(git remote get-url origin)" --branch $prefix/$name --attempt $attempt --commit $sha --failure "<exact failure reason>" --setup-log /workspace/setup.log\`. Include archive-setup.log's error in setup.log if that setup failed. This publishes failure.json and setup.log, which are not shard results. If the environment never becomes usable, the launcher must return nonzero or publish this marker on its behalf; a silent vanished box still needs the missing-log deadline.
+   Only if /workspace/gate-out/summary.json exists, archive the results: \`tar czf /workspace/$name.tgz -C /workspace gate-out gate-run.log gate-plan setup.log\`, then publish \`python3 /workspace/gate-publish.py --origin "\$(git remote get-url origin)" --branch $prefix/$name --attempt $attempt --commit $sha --archive /workspace/$name.tgz\`. The publisher appends to the branch, removes the current failure marker on success, and refuses to overwrite a newer attempt. Retry a failed push. Never push main or any other branch.
 5. Reply with a five-line summary first: exit code, pass/fail/skip counts from the summary the command wrote, wall time of the shard command and of setup, interruptions and resumes, and the pushed branch tip. Then every failing test with its first error line.
+
+Publisher (save this exact script before checkout/setup; it needs only Python and Git):
+
+\`\`\`python
+$(cat "$fleetDirectory/publish.py")
+\`\`\`
 BRIEF
 }
 
@@ -122,10 +130,15 @@ mergeBrief() {
 Unit: merge Adamic's gate shard logs at a fixed commit and report the verdict. No code changes. Results go on branch $prefix/merge.
 
 1. \`git fetch origin && git checkout --detach $sha\`, confirm HEAD. \`bash cloud/setup.sh --gate-inputs --wasi-sdk\`, source the env file it prints and export ADAMIC_TEST_WASI=1 ADAMIC_ORACLE_WASI=1 ADAMIC_GATE_COHERE=1. \`go build -o /workspace/adamic-gate ./cmd/adamic-gate\`. Fetch/extract $prefix/plan to /workspace/gate-plan as the shard briefs do. Read docs/gate-shards.md.
-2. For each of $shards: \`git fetch origin $prefix/<name>\` and extract <name>.tgz from that branch's tip into /workspace/logs/<name>/ (it holds gate-out/ and gate-run.log).
+2. For each of $shards: \`git fetch origin $prefix/<name>\`; if \`git cat-file -e FETCH_HEAD:failure.json\` succeeds, refuse the merge naming that shard and its failure. Never treat a marker as logs. Otherwise extract <name>.tgz from that branch's tip into /workspace/logs/<name>/ (it holds gate-out/ and gate-run.log).
 3. \`/workspace/adamic-gate merge -plan /workspace/gate-plan/plan.json -out /workspace/merged $(for name in $shards; do printf '/workspace/logs/%s/gate-out ' "$name"; done)> /workspace/merge.log 2>&1; echo exit=\$?\`
-4. Save merge.log and merged/merged.json in merge.tgz and push it alone on an orphan branch $prefix/merge from a fresh scratch clone (\`git clone --no-checkout --depth 1\`, \`git checkout --orphan\`, add only merge.tgz, push). The commit message's first line is exactly \`GATE GREEN $sha\` or \`GATE RED $sha\`, as merge decided, and its body is the totals line and every failure or refusal merge printed, one per line. Never push anything else.
+4. Save the run notes below as /workspace/fleet-notes.jsonl. Save fleet-notes.jsonl, merge.log and merged/merged.json in merge.tgz and push it alone on an orphan branch $prefix/merge from a fresh scratch clone (\`git clone --no-checkout --depth 1\`, \`git checkout --orphan\`, add only merge.tgz, push). The commit message's first line is exactly \`GATE GREEN $sha\` or \`GATE RED $sha\`, as merge decided, and its body is the totals line and every failure or refusal merge printed, one per line. Never push anything else.
 5. Reply, first line exactly \`GATE GREEN $sha\` or \`GATE RED $sha\` as merge decided, then: pass, fail, skip, distinct and raw terminal counts; every failure with its shard and test; every refusal merge printed; per-shard wall times and the slowest; the pushed tip.
+
+Run notes (save verbatim as fleet-notes.jsonl):
+\`\`\`jsonl
+$(cat "$work/notes.jsonl" 2> /dev/null || true)
+\`\`\`
 BRIEF
 }
 
@@ -177,9 +190,101 @@ preparePlan() {
 	readPlan
 }
 
+# Controller state records attempts, not cached test answers. Three failed attempts total,
+# including the initial launch, matches the fail-three-times proof.
+startShard() {
+	local index=$1 name="shard-$1" attempt=${attempts[$1]} file
+	file="$work/$name.md"
+	[ "$attempt" = 1 ] || file="$work/$name-attempt-$attempt.md"
+	brief "$name" "/workspace/adamic-gate shard -plan /workspace/gate-plan/plan.json -index $index -count $count -out /workspace/gate-out" "$index" "$attempt" > "$file" || return 1
+	deadlines[index]=$(($(date +%s) + ${ADAMIC_GATE_FLEET_SHARD_WAIT:-7200}))
+	launchFailures[index]=""
+	if launch "$fleet-$name-attempt-$attempt" "$file"; then
+		:
+	else
+		launchFailures[index]="launcher failed with exit $? before the shard started"
+	fi
+}
+
+relaunchShard() {
+	local index=$1 reason=$2 name="shard-$1" attempt=${attempts[$1]}
+	if [ "$attempt" -ge 3 ]; then
+		echo "fleet: $name failed after $attempt attempts: $reason" >&2
+		return 1
+	fi
+	attempts[index]=$((attempt + 1))
+	python3 - "$work/notes.jsonl" "$name" "${attempts[index]}" "$reason" <<'PYNOTES' || return 1
+import datetime,json,sys
+with open(sys.argv[1], 'a') as notes:
+    notes.write(json.dumps(dict(shard=sys.argv[2], attempt=int(sys.argv[3]),
+        reason=sys.argv[4], time=datetime.datetime.now(datetime.timezone.utc).isoformat()))+'\n')
+PYNOTES
+	echo "fleet: relaunch $name attempt ${attempts[index]}: $reason"
+	startShard "$index"
+}
+
+awaitShards() {
+	while :; do
+		arrived > /dev/null
+		local waiting=0 relaunched=0 index name ref failure failedAttempt reason
+		for index in $(seq 0 $((count - 1))); do
+			name="shard-$index"
+			ref="refs/remotes/origin/$prefix/$name"
+			if [ -n "${launchFailures[index]}" ]; then
+				relaunchShard "$index" "${launchFailures[index]}" || return 1
+				waiting=1
+				relaunched=1
+				continue
+			fi
+			if git cat-file -e "$ref:failure.json" 2> /dev/null; then
+				failure=$(git show "$ref:failure.json")
+				# Reject malformed/misaddressed markers rather than accidentally certify them.
+				if ! failure=$(python3 -c '
+import json,sys
+m=json.loads(sys.argv[1])
+if m["Commit"]!=sys.argv[2] or m["Shard"]!=sys.argv[3] or type(m["Attempt"]) is not int or not 1<=m["Attempt"]<=int(sys.argv[4]) or not isinstance(m["Reason"],str) or not m["Reason"]:
+    raise SystemExit("invalid failure marker")
+print(m["Attempt"]); print(m["Reason"])
+' "$failure" "$sha" "$name" "${attempts[index]}"); then
+					echo "fleet: $name has an invalid failure marker" >&2
+					return 1
+				fi
+				failedAttempt=${failure%%$'\n'*}
+				reason=${failure#*$'\n'}
+				if [ "$failedAttempt" = "${attempts[index]}" ]; then
+					relaunchShard "$index" "$reason" || return 1
+					relaunched=1
+				fi
+			elif git cat-file -e "$ref:$name.tgz" 2> /dev/null; then
+				continue
+			fi
+			waiting=1
+			if [ "$(date +%s)" -ge "${deadlines[index]}" ]; then
+				relaunchShard "$index" "no shard logs before the deadline" || return 1
+				relaunched=1
+			fi
+		done
+		[ "$waiting" = 0 ] && return 0
+		[ "$relaunched" = 1 ] && continue
+		sleep "${ADAMIC_GATE_FLEET_POLL:-30}"
+	done
+}
+
 runMerge() {
 	local names
 	names=$(shards)
+	arrived > /dev/null
+	for name in $names; do
+		local ref="refs/remotes/origin/$prefix/$name"
+		if git cat-file -e "$ref:failure.json" 2> /dev/null; then
+			echo "fleet: merge refuses $name: failure marker, not shard logs" >&2
+			return 1
+		fi
+		git cat-file -e "$ref:$name.tgz" 2> /dev/null || {
+			echo "fleet: merge refuses $name: missing shard log archive" >&2
+			return 1
+		}
+	done
 	mergeBrief "$names" > "$work/merge.md"
 	launch "$fleet-merge" "$work/merge.md"
 	await "${ADAMIC_GATE_FLEET_MERGE_WAIT:-3600}" merge || exit 1
@@ -194,27 +299,13 @@ run)
 	git cat-file -e "$sha^{commit}" || { echo "fleet: $sha is not a commit on origin" >&2 && exit 1; }
 	started=$(date +%s)
 	preparePlan
+	declare -a attempts deadlines launchFailures
 	for index in $(seq 0 $((count - 1))); do
-		brief "shard-$index" "/workspace/adamic-gate shard -plan /workspace/gate-plan/plan.json -index $index -count $count -out /workspace/gate-out" "$index" > "$work/shard-$index.md"
-		launch "$fleet-shard-$index" "$work/shard-$index.md"
+		attempts[index]=1
+		startShard "$index"
 	done
 	echo "fleet: run $run, logs on $prefix/"
-
-	# A shard takes about 20 minutes; two hours covers setup, restarts and resumes. A box can fail
-	# in ways its brief can't fix (no push credentials, a dead container), so each shard whose logs
-	# never arrive is started once more on a fresh box before the run gives up.
-	# shellcheck disable=SC2046
-	if ! await "${ADAMIC_GATE_FLEET_SHARD_WAIT:-7200}" $(shards); then
-		present=$(arrived)
-		retried=()
-		for name in $(shards); do
-			grep -qx "$name" <<< "$present" && continue
-			launch "$fleet-$name-retry" "$work/$name.md"
-			retried+=("$name")
-		done
-		echo "fleet: started again on fresh boxes: ${retried[*]}"
-		await "${ADAMIC_GATE_FLEET_SHARD_WAIT:-7200}" "${retried[@]}" || exit 1
-	fi
+	awaitShards || exit 1
 	echo "fleet: all $count shard logs arrived after $((($(date +%s) - started) / 60)) minutes"
 	runMerge
 	;;
