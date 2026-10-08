@@ -3,10 +3,10 @@
   "measurement": "Static candidate counts; no whole-tsc or exact allocation reachability claim",
   "total_pairs": 30,
   "total_reads": 543,
-  "certified_pairs": 29,
-  "certified_reads": 542,
-  "remaining_pairs": 1,
-  "remaining_reads": 1,
+  "certified_pairs": 30,
+  "certified_reads": 543,
+  "remaining_pairs": 0,
+  "remaining_reads": 0,
   "pairs": [
     {
       "receiver_type_id": 6997,
@@ -443,7 +443,7 @@
         "line": 38035,
         "column": 62
       },
-      "state": "handed to lane 7, original intersection compile refusal",
+      "state": "certified original intersected helper read through checked Identifier; direct recursive intersection carrier remains refused",
       "owner": "lane 7"
     },
     {
@@ -734,5 +734,6 @@
     "dictionary_scalar_nullish_components": 3,
     "dictionary_reads": 14,
     "measurement": "Static candidate counts; dictionary reference alternatives are not certified"
-  }
+  },
+  "intersection_helper_evidence": "../primitive-original/logs/intersection-identifier-certification.log"
 }

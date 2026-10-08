@@ -1,0 +1,21 @@
+=== RUN   TestCheckedViewBrandsOriginalPairs
+=== RUN   TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/good
+=== RUN   TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/internal
+=== RUN   TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/undefined
+=== RUN   TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/wrong
+    checked_views_brands_original_test.go:199: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_brands_original_test.go:199: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/null
+=== RUN   TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/missing
+--- PASS: TestCheckedViewBrandsOriginalPairs (24.00s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/good (3.49s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/internal (3.55s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/undefined (3.51s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/wrong (4.99s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/null (3.86s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/LeftHandSideExpression_&_Identifier/escapedText/missing (4.55s)
+PASS
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=13
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	24.091s

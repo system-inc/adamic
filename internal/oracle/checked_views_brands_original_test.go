@@ -66,7 +66,7 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 	for _, pair := range []struct {
 		typ, field string
 		optional   bool
-	}{{"Identifier", "escapedText", false}, {"Symbol", "escapedName", false}, {"PrivateIdentifier", "escapedText", false}, {"Identifier | PrivateIdentifier", "escapedText", false}, {"TransientSymbol", "escapedName", false}, {"MemberName", "escapedText", false}, {"UnionType", "keyPropertyName", true}, {"SourceFile", "localJsxFragmentNamespace", true}, {"SourceFile", "localJsxNamespace", true}, {"SymbolLinks", "typeOnlyExportStarName", true}, {"WideningContext", "propertyName", true}, {"typeof JsxNames", "IntrinsicElements", false}, {"typeof JsxNames", "IntrinsicAttributes", false}, {"typeof JsxNames", "Element", false}, {"typeof JsxNames", "IntrinsicClassAttributes", false}, {"typeof JsxNames", "JSX", false}, {"typeof JsxNames", "ElementAttributesPropertyNameContainer", false}, {"typeof JsxNames", "ElementChildrenAttributeNameContainer", false}, {"typeof JsxNames", "ElementClass", false}, {"typeof JsxNames", "ElementType", false}, {"typeof JsxNames", "LibraryManagedAttributes", false}, {"typeof ReactNames", "Fragment", false}, {"UniqueESSymbolType", "escapedName", false}, {"GeneratedIdentifier", "escapedText", false}, {"GeneratedPrivateIdentifier", "escapedText", false}, {"Identifier | undefined", "escapedText", false}, {"Symbol | undefined", "escapedName", false}, {"Identifier@34691", "escapedText", false}, {"PrivateIdentifier@55713", "escapedText", false}, {"Identifier@46232", "escapedText", false}, {"Mutable<Identifier>", "escapedText", false}, {"ActiveLabel", "name", false}, {"RenamedBinding", "name", false}} {
+	}{{"Identifier", "escapedText", false}, {"Symbol", "escapedName", false}, {"PrivateIdentifier", "escapedText", false}, {"Identifier | PrivateIdentifier", "escapedText", false}, {"TransientSymbol", "escapedName", false}, {"MemberName", "escapedText", false}, {"UnionType", "keyPropertyName", true}, {"SourceFile", "localJsxFragmentNamespace", true}, {"SourceFile", "localJsxNamespace", true}, {"SymbolLinks", "typeOnlyExportStarName", true}, {"WideningContext", "propertyName", true}, {"typeof JsxNames", "IntrinsicElements", false}, {"typeof JsxNames", "IntrinsicAttributes", false}, {"typeof JsxNames", "Element", false}, {"typeof JsxNames", "IntrinsicClassAttributes", false}, {"typeof JsxNames", "JSX", false}, {"typeof JsxNames", "ElementAttributesPropertyNameContainer", false}, {"typeof JsxNames", "ElementChildrenAttributeNameContainer", false}, {"typeof JsxNames", "ElementClass", false}, {"typeof JsxNames", "ElementType", false}, {"typeof JsxNames", "LibraryManagedAttributes", false}, {"typeof ReactNames", "Fragment", false}, {"UniqueESSymbolType", "escapedName", false}, {"GeneratedIdentifier", "escapedText", false}, {"GeneratedPrivateIdentifier", "escapedText", false}, {"Identifier | undefined", "escapedText", false}, {"Symbol | undefined", "escapedName", false}, {"Identifier@34691", "escapedText", false}, {"PrivateIdentifier@55713", "escapedText", false}, {"Identifier@46232", "escapedText", false}, {"Mutable<Identifier>", "escapedText", false}, {"ActiveLabel", "name", false}, {"RenamedBinding", "name", false}, {"LeftHandSideExpression & Identifier", "escapedText", false}} {
 		variants := []string{"good", "internal", "undefined", "wrong", "null", "missing"}
 		union := pair.typ == "Identifier | PrivateIdentifier" || pair.typ == "MemberName"
 		if union {
@@ -79,7 +79,11 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 				if pair.optional || strings.HasPrefix(pair.typ, "typeof ") {
 					name = strings.ToLower(pair.typ) + "-" + pair.field + "-" + fixtureVariant
 				}
-				input, err := os.ReadFile("../../stage3/interface-downcasts/lane4/original/" + name + ".a")
+				fixture := "../../stage3/interface-downcasts/lane4/original/" + name + ".a"
+				if pair.typ == "LeftHandSideExpression & Identifier" {
+					fixture = "../../stage3/interface-downcasts/lane4/primitive-original/intersection-identifier-" + fixtureVariant + ".a"
+				}
+				input, err := os.ReadFile(fixture)
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -130,6 +134,9 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 						}
 					}
 					roots = []string{root}
+				}
+				if pair.typ == "LeftHandSideExpression & Identifier" {
+					roots = []string{"Identifier"}
 				}
 				for _, root := range roots {
 					complete := false

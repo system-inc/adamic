@@ -2350,3 +2350,10 @@ and unsupported descendants do not acquire this exemption. Owned
 lower/view_intersection_primitives.go and negative-boundary tests.
 Original builder signature witnesses now populate every required original
 field, including version, affectsGlobalScope and impliedFormat.
+
+Lane 4 intersected branded helper read: complete checked Identifier flows into
+the original LeftHandSideExpression & Identifier helper. The escapedText
+selector and brand erasure are certified there; no intersection admission
+guard changes. Direct recursive intersection carrier refusal remains pinned.
+One EmitSignature tuple-position candidate is a branded-number false positive;
+the actual position-one union remains a three-read checked tuple frontier.

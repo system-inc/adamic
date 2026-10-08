@@ -1,0 +1,9 @@
+import type { IncrementalBuildInfoEmitSignature, IncrementalBuildInfoFileId } from 'original-tsc-builder';
+type SignatureTuple = Exclude<IncrementalBuildInfoEmitSignature, IncrementalBuildInfoFileId>;
+interface Base { readonly kind: 'box' | 'other'; }
+interface Carrier extends Base { readonly kind: 'box'; readonly child: SignatureTuple; }
+function helper(value: SignatureTuple): string { return typeof value[1]; }
+const child = [1, true] as const;
+const raw = {kind: 'box' as const, child};
+const base: Base = raw;
+console.log(helper((base as Carrier).child));

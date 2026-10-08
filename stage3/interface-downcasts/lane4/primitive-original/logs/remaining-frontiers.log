@@ -1,0 +1,41 @@
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/good
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: recursive intersection payload
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/internal
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: recursive intersection payload
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/undefined
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: recursive intersection payload
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/wrong
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: recursive intersection payload
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/null
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: recursive intersection payload
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/missing
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: recursive intersection payload
+--- PASS: TestCheckedViewBrandsOriginalBlockedPairs (6.16s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/good (1.10s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/internal (1.08s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/undefined (1.01s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/wrong (0.89s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/null (0.93s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/missing (1.15s)
+=== RUN   TestCheckedViewCallableRetainsNeverWiderHelper
+--- PASS: TestCheckedViewCallableRetainsNeverWiderHelper (1.19s)
+=== RUN   TestCheckedViewOriginalEmitTupleFrontier
+=== RUN   TestCheckedViewOriginalEmitTupleFrontier/#00
+    checked_views_primitive_remaining_frontier_test.go:38: original tuple member selection remains uncredited; helper refuses before unchecked read
+=== RUN   TestCheckedViewOriginalEmitTupleFrontier/-empty
+    checked_views_primitive_remaining_frontier_test.go:38: original tuple member selection remains uncredited; helper refuses before unchecked read
+=== RUN   TestCheckedViewOriginalEmitTupleFrontier/-tuple
+    checked_views_primitive_remaining_frontier_test.go:38: original tuple member selection remains uncredited; helper refuses before unchecked read
+=== RUN   TestCheckedViewOriginalEmitTupleFrontier/-wrong
+    checked_views_primitive_remaining_frontier_test.go:38: original tuple member selection remains uncredited; helper refuses before unchecked read
+--- PASS: TestCheckedViewOriginalEmitTupleFrontier (3.79s)
+    --- PASS: TestCheckedViewOriginalEmitTupleFrontier/#00 (0.78s)
+    --- PASS: TestCheckedViewOriginalEmitTupleFrontier/-empty (0.79s)
+    --- PASS: TestCheckedViewOriginalEmitTupleFrontier/-tuple (1.10s)
+    --- PASS: TestCheckedViewOriginalEmitTupleFrontier/-wrong (1.12s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=11
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	11.179s

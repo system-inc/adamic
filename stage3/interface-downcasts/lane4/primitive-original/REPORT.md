@@ -314,3 +314,30 @@ Full repository gate not claimed. Property certificate ledger is now 15 / 93.
 Combined column now 55 / 667 certified, 6 / 19 remaining. Lane 6 dictionary
 reference exclusion is unchanged at three / fourteen; owned remainder three /
 five, including the measured tuple-position false positive pending correction.
+
+Intersected helper and tuple audit checkpoint: one branded field pair / one
+read certified through full checked Identifier flowing into the original
+LeftHandSideExpression & Identifier helper. Six source cases, release C, JS,
+native positives under sanitizers/leak checks and two branded-check bypass
+mutants passed uncached in 24.091s. No production hook in this group.
+This certifies the field read, not direct recursive intersection admission:
+those original carrier controls still refuse and remain pinned. The original
+__String includes a phantom void arm and InternalSymbolName, preserved by
+the approved phantom-brand rule; the fixture includes both ordinary and
+internal strings plus the admitted undefined alternative.
+Original __String field column now 30 / 543 certified. An independent stock
+checker audit corrects tuple 97898 position 0: declared IncrementalBuildInfoFileId
+(branded number), one pair / one read, no mixed-union credit. Position 1 is
+EmitSignature | [], three candidate reads, and remains blocked at its indexed
+read: stage 0 cannot lower a tuple element of differently held union members.
+Node controls cover string, empty tuple, one-string tuple and wrong boolean;
+all four compile refusals are pinned. Existing tuple adapter also refuses
+per-position optional/rest view contracts. No layout rewrite or unchecked
+admission is substituted for these missing adapters.
+Corrected column now 56 / 668 certified, four / seventeen remaining. Of those,
+three / fourteen are lane 6 dictionary reference arms, skipped as instructed.
+Owned remainder one / three, the tuple union frontier. Field family date:
+__String field-read certification completed October 8, before October 9;
+mixed primitives completed earlier, with this additional tuple frontier
+still open and its October 13 target provisional pending sound tuple adapters.
+No whole-tsc or exact reachability claim.

@@ -1,0 +1,58 @@
+{
+  "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "measurement": "Original declared tuple positions; counts remain static candidates",
+  "corrected_pairs": 1,
+  "corrected_reads": 1,
+  "pairs": [
+    {
+      "receiver_type_id": 97898,
+      "type": "[fileId: IncrementalBuildInfoFileId, signature: [] | EmitSignature]",
+      "field": "1",
+      "declared_types": [
+        "[] | EmitSignature | IncrementalBuildInfoFileId"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "intersection field contract",
+        "mixed primitive union",
+        "object plus primitive union"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2302,
+        "column": 31
+      },
+      "original_declared_type": "EmitSignature | []",
+      "original_read_type": "EmitSignature | []",
+      "original_expression": "value[1]",
+      "source_sha256": "6e5b07ce2c67226096cad19391791073b2e37164d4e702bf77e7b2bc28ae9814",
+      "state": "remaining string and tuple union selector"
+    },
+    {
+      "receiver_type_id": 97898,
+      "type": "[fileId: IncrementalBuildInfoFileId, signature: [] | EmitSignature]",
+      "field": "0",
+      "declared_types": [
+        "[] | EmitSignature | IncrementalBuildInfoFileId"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "intersection field contract",
+        "mixed primitive union",
+        "object plus primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2299,
+        "column": 40
+      },
+      "original_declared_type": "IncrementalBuildInfoFileId",
+      "original_read_type": "IncrementalBuildInfoFileId",
+      "original_expression": "value[0]",
+      "source_sha256": "6e5b07ce2c67226096cad19391791073b2e37164d4e702bf77e7b2bc28ae9814",
+      "state": "candidate classification correction: primitive branded number, no mixed union"
+    }
+  ]
+}
