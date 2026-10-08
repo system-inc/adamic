@@ -1,0 +1,29 @@
+{
+  "total": 1,
+  "passed": 0,
+  "failed": 1,
+  "excluded": 0,
+  "deferred": 0,
+  "selected_inputs": 1,
+  "configurations": 1,
+  "excluded_configurations": 0,
+  "census_total": 1,
+  "exclusion_reasons": {},
+  "failures": [
+    {
+      "case": "input.a",
+      "configuration": "",
+      "capture": "00001_input",
+      "differences": {
+        "stdout": {
+          "byte_offset": 14,
+          "expected_size": 78,
+          "actual_size": 78,
+          "expected_context": "b\"host.ts(1,7): error TS2322: Type 'string' is not assignable to type 'number'.\\n\"",
+          "actual_context": "b\"host.ts(1,7): Error TS2322: Type 'string' is not assignable to type 'number'.\\n\""
+        }
+      }
+    }
+  ],
+  "seconds": 0.367
+}

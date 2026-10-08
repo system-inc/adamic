@@ -11,6 +11,18 @@ from run import ROOT, baseline_suite, write_json
 
 
 def group(reason):
+    if reason.startswith('diagnostics outside'):
+        return 'library-placeholders'
+    if reason.startswith('absolute source'):
+        return 'absolute-source'
+    if reason.startswith('absolute package'):
+        return 'absolute-package'
+    if '@suppressoutputpathcheck' in reason:
+        return 'output-path'
+    if reason.startswith('Windows'):
+        return 'drive-paths'
+    if reason.startswith('case-insensitive'):
+        return 'case-host'
     if reason.startswith('filename:'):
         return 'filename'
     if reason.startswith('option variants') or reason.startswith('variant errors'):
@@ -50,7 +62,7 @@ def main():
         identity = (row['source'], row.get('configuration', ''))
         if identity not in old_cases:
             reason = old_reasons.get(row['source']) or old_config_reasons.get(identity, 'additional configuration')
-            groups[group(reason)].append(row)
+            groups['library-placeholders' if row.get('library_placeholders') else group(reason)].append(row)
     if args.group:
         groups = {args.group: groups[args.group]}
     args.output.mkdir(parents=True)
@@ -66,16 +78,33 @@ def main():
         if original['failed']:
             raise RuntimeError(f'{name}: A has {original["failed"]} differences; see {folder}/A/report.json')
         target = next((r for r in rows if r['baseline']), None)
-        if target is None:
-            raise RuntimeError(f'{name}: no diagnostic case to mutate')
+        target_tree = args.tree.resolve()
+        target_manifest = new
+        if target is None or name == 'case-host':
+            if name != 'case-host':
+                raise RuntimeError(f'{name}: no diagnostic case to mutate')
+            from census import digest, summary_bytes
+            from cases import parse, configurations
+            target_tree = ROOT / 'fixtures/case-host'
+            raw = (target_tree / 'input.a').read_bytes()
+            units, settings, roots = parse(raw, 'host.ts')
+            options = configurations(settings)[0][1]
+            target = {'source': 'input.a', 'name': 'host.ts', 'configuration': '', 'options': options, 'effective_options': options, 'project': None, 'baseline': 'reference.txt', 'source_sha256': digest(raw), 'baseline_sha256': digest((target_tree / 'reference.txt').read_bytes()), 'expected_sha256': digest(summary_bytes((target_tree / 'reference.txt').read_bytes()))}
+            target_manifest = subset(new, [target])
+            fixture = baseline_suite(ROOT / 'standins/node.sh', target_tree, folder / 'fixture-A', None, target_manifest)
+            if fixture['passed'] != 1:
+                raise RuntimeError('case-host diagnostic fixture does not pass A')
         # A single new diagnostic configuration proves this group's comparison.
-        mutated = baseline_suite(ROOT / 'standins/mutant.sh', args.tree.resolve(), folder / 'B', None,
-                                 subset(new, [target]))
+        mutated = baseline_suite(ROOT / 'standins/mutant.sh', target_tree, folder / 'B', None,
+                                 subset(target_manifest, [target]))
         if mutated['failed'] != 1 or set(mutated['failures'][0]['differences']) != {'stdout'}:
             raise RuntimeError(f'{name}: diagnostic byte mutant escaped or hit another check')
         capture = next((folder / 'B').glob('00001_*'))
-        original_index = rows.index(target) + 1
-        before = next((folder / 'A').glob(f'{original_index:05d}_*'))
+        if target in rows:
+            original_index = rows.index(target) + 1
+            before = next((folder / 'A').glob(f'{original_index:05d}_*'))
+        else:
+            before = next((folder / 'fixture-A').glob('00001_*'))
         # Absolute scratch roots differ; compare formatted diagnostic captures.
         a, b = [(p / 'actual.diagnostics').read_bytes() for p in (before, capture)]
         if len(a) != len(b) or sum(x != y for x, y in zip(a, b)) != 1:
@@ -83,7 +112,9 @@ def main():
         argv = json.loads((capture / 'command.json').read_text())
         cwd = Path(json.loads((capture / 'working-directory.json').read_text()))
         with (capture / 'control.stdout').open('wb') as stdout, (capture / 'control.stderr').open('wb') as stderr:
-            completed = subprocess.run([str(ROOT / 'standins/node.sh'), *argv[1:]], cwd=cwd,
+            control_argv = list(argv)
+            control_argv[control_argv.index(str(ROOT / 'standins/mutant.sh'))] = str(ROOT / 'standins/node.sh')
+            completed = subprocess.run(control_argv, cwd=cwd,
                                        stdout=stdout, stderr=stderr, timeout=60)
         raw_a = (capture / 'control.stdout').read_bytes()
         raw_b = (capture / 'actual.stdout').read_bytes()
@@ -93,6 +124,7 @@ def main():
             raise RuntimeError('raw mutant witness changed more than one stdout byte')
         evidence.append({'group': name, 'inputs': manifest['selected'], 'configurations': len(rows),
                          'A_passed': original['passed'], 'A_failed': 0, 'B_total': 1, 'B_failed': 1,
+                         'fixture_A_passed': 1 if target not in rows else None,
                          'mutant_source': target['source'], 'mutant_configuration': target['configuration'],
                          'catch': 'stdout diagnostic bytes only, exactly one byte changed'})
         write_json(args.output / 'proof.json', {'groups': evidence, 'proved': True})

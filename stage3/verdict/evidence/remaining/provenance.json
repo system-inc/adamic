@@ -1,0 +1,20 @@
+{
+  "base": "344209293334d800b27fc03b96412a8d08ae6342",
+  "upstream_pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "adapted_cli": "/tmp/stage3-verdict-adapted/built/local/tsc.js",
+  "adapted_cli_sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+  "node": "v24.19.0",
+  "nproc": 5,
+  "cgroup_cpu_max": "400000 100000",
+  "setup_seconds": 36.196,
+  "proof_directory": "/tmp/verdict-remaining-final-proof",
+  "census_independent_byte_equal": true,
+  "prior_configurations_retained": 13453,
+  "new_configurations_A_passed": 240,
+  "authored_case_host_fixture_A_passed": 1,
+  "B_one_byte_mutants_caught": 6,
+  "focused_tests_passed": 23,
+  "native_tested": false,
+  "typescript_go_remeasured": false,
+  "case_host_proof_directory": "/tmp/verdict-remaining-case-host-fixture"
+}

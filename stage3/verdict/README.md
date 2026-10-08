@@ -6,8 +6,9 @@ Run the native compiler as soon as it links:
 stage3/verdict/run.sh --tsc /absolute/native-tsc /tmp/new-verdict > /tmp/verdict.log 2>&1
 ```
 
-The output directory must not exist. Python 3, git, and the compiler's standard
-libraries are required. The compiler argument is one executable path, including
+The output directory must not exist. Python 3, git, Linux bubblewrap with unprivileged user namespaces, and the
+compiler's standard libraries are required. Absolute-path cases report an
+infrastructure error if mount namespaces are unavailable. The compiler argument is one executable path, including
 paths with spaces, not a shell expression. No Node dependency is needed to judge
 a native compiler. `summary.json` and `summary.md` contain the whole verdict:
 pass/fail counts, exclusions, and the first differing byte with surrounding text.
@@ -120,8 +121,9 @@ summary block, with only reference CRLF converted to Linux LF and one final
 newline. Raw stdout is retained byte for byte. For this baseline suite only,
 `actual.diagnostics` removes the exact case scratch directory prefix, matching
 upstream `src/harness/util.ts:removeTestPathPrefixes`, which removes `/.src/`
-from the summary, including quoted module names. No other paths, filenames,
-locations, codes, text, spacing or actual newlines are normalized. Acceptance
+from the summary, including quoted module names. Library-placeholder cases additionally reproduce the upstream library header
+locations and virtual diagnostic ordering as described below. Diagnostic
+messages, codes, spacing and actual newlines remain byte checked. Acceptance
 and tiny still compare entirely raw bytes. Rooted units, working directories,
 path options and symlinks use an isolated filesystem tree. Exact known path
 translations reproduce the virtual names; source text remains unchanged.
@@ -138,12 +140,29 @@ following upstream convention. Locations, diagnostic codes, message chains,
 ordering and spacing must match. Baseline exit is 0 when clean, 1 when diagnostics
 skip outputs, and 2 when outputs are generated in the presence of diagnostics.
 
-The remaining exclusions are enumerated by reason in [UPSTREAM.md](UPSTREAM.md):
-API diagnostics that the CLI suppresses, pre/post-emit harness assertions,
-suggestions, internal output-path overrides, compiler-version overrides,
-Windows/case-insensitive virtual hosts, mounted absolute references, and library
-placeholder diagnostics. Syntax-only and global-only cases are supported.
-The noEmitOnError path also admits cases where emit collects exhaustive diagnostics.
+The census selects 11,830 inputs and 13,693 configurations, leaving 614 inputs
+excluded. The current reason groups, six new filesystem/formatting groups and
+A/B proofs are in [REMAINING.md](REMAINING.md). [UPSTREAM.md](UPSTREAM.md) records
+the previous expansion; [TYPESCRIPT_GO.md](TYPESCRIPT_GO.md) records its earlier
+comparison scope. Remaining cases require API diagnostic collection, historical
+compiler-version overrides, suggestions or canonical case-insensitive aliases.
+Syntax-only and global-only cases are supported. The noEmitOnError path also
+admits cases where emit collects exhaustive diagnostics.
+
+Absolute references run the unchanged binary in a Linux mount namespace over
+temporary case files. Runtime paths are mounted read-only; virtual roots and
+emit destinations are private writable temporary paths. Pinned tests/lib inputs
+mount at /.lib; shipped declaration input data mounts at /.ts. Resource hashes
+are checked before execution. See [resources/NOTICE.txt](resources/NOTICE.txt)
+for pin, license and regeneration details. The compiler implementation is not
+used as a runtime API by the native verdict. Drive-prefixed names retain compiler
+path geometry through colon named directories. Conflicting case-folding aliases
+remain excluded. For projects at filesystem root, the exact pinned virtual
+input list is appended to the temporary JSONC config, preserving original
+option text and locations, so runtime mounts do not enter project root globs.
+The output-path-check directive uses a private emit directory for its diagnostic
+projection. Default-library summary cases retain messages and codes while
+reproducing upstream `lib.*.d.ts(--,--)` placeholders and virtual file ordering.
 The harness does
 not compare annotated source, emitted JS, types/symbols, suggestions or traces.
 `--baseline-limit N` is an explicit smoke mode; it reports eligible but unrun
@@ -187,7 +206,7 @@ stdout-only failure and checks raw B output against a same-directory Node
 control for exactly one changed byte, unchanged stderr and unchanged exit:
 
 ```sh
-git show 85740c95:stage3/verdict/selection.json > /tmp/verdict-before.json
+git show 34420929:stage3/verdict/selection.json > /tmp/verdict-before.json
 PYTHONDONTWRITEBYTECODE=1 python3 stage3/verdict/prove_groups.py \
   /tmp/verdict-before.json stage3/verdict/selection.json /absolute/pinned-tree \
   /tmp/new-group-proof > /tmp/group-proof.log 2>&1
@@ -197,10 +216,10 @@ PYTHONDONTWRITEBYTECODE=1 python3 stage3/verdict/prove_groups.py \
 literal-null bridge, declaration exit rule and inferred type-root handling;
 each must fail its designated byte comparison on a real pinned case.
 
-Focused comparison checks:
+Focused checks (set up the pinned external checkout for the resource mutants):
 
 ```sh
-PYTHONDONTWRITEBYTECODE=1 python3 stage3/verdict/test_verdict.py > /tmp/verdict-checks.log 2>&1
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s stage3/verdict -p 'test_*.py' > /tmp/verdict-checks.log 2>&1
 ```
 
 These independently mutate stdout, stderr and exit, and exercise differences at

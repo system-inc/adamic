@@ -1,0 +1,29 @@
+{
+  "total": 1,
+  "passed": 0,
+  "failed": 1,
+  "excluded": 0,
+  "deferred": 0,
+  "selected_inputs": 1,
+  "configurations": 1,
+  "excluded_configurations": 0,
+  "census_total": 1,
+  "exclusion_reasons": {},
+  "failures": [
+    {
+      "case": "tests/cases/compiler/variableDeclarationInStrictMode1.ts",
+      "configuration": "",
+      "capture": "00001_variableDeclarationInStrictMode1",
+      "differences": {
+        "stdout": {
+          "byte_offset": 200,
+          "expected_size": 243,
+          "actual_size": 243,
+          "expected_context": "b\"identifier 'eval'.\\nlib.es5.d.ts(--,--): error TS2300: Duplicate identifier 'eval'.\\n\"",
+          "actual_context": "b\"identifier 'eval'.\\nlib.es5.d.ts(--,--): Error TS2300: Duplicate identifier 'eval'.\\n\""
+        }
+      }
+    }
+  ],
+  "seconds": 1.023
+}

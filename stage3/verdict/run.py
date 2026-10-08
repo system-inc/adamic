@@ -129,6 +129,9 @@ def baseline_suite(binary, tree, output, limit, manifest=None):
     write_json(output / 'exclusions.json', manifest['exclusions'])
     write_json(output / 'configuration-exclusions.json', manifest.get('configuration_exclusions', []))
     write_json(output / 'selection.json', rows)
+    if any(parse((tree / row['source']).read_bytes(), row['name'])[1].get('__namespace') for row in rows):
+        from resources import prepare
+        prepare(tree, output)
     def execute(item):
         index, row = item
         folder = output / f'{index:05d}_{Path(row["source"]).stem}'
@@ -156,13 +159,31 @@ def baseline_suite(binary, tree, output, limit, manifest=None):
         for target, destination in settings['__links']:
             link = physical(destination)
             link.parent.mkdir(parents=True, exist_ok=True)
-            link.symlink_to(physical(target), target_is_directory=True)
+            resolved = physical(target)
+            if settings.get('__namespace'):
+                resolved = Path('/') / resolved.relative_to(folder / 'filesystem')
+            link.symlink_to(resolved, target_is_directory=True)
         write_json(folder / 'units.json', {'units': units, 'roots': roots, 'options': options})
-        mapped_roots = [str(physical(name)) if cwd != folder else name for name in roots]
+        mapped_roots = [name if re.match(r'^[A-Za-z]:/', name) else str(physical(name)) if cwd != folder else name for name in roots]
         project = row.get('project')
         effective = row.get('effective_options', options)
+        if settings.get('__namespace'):
+            for key in ('outDir', 'declarationDir'):
+                value = effective.get(key)
+                if isinstance(value, str) and value.startswith('/'):
+                    physical(value).mkdir(parents=True, exist_ok=True)
         config_values = config_options(mapped_options)
         synthetic = None
+        if settings.get('__namespace') and row.get('project_files') and Path(project).parent.as_posix() == '/':
+            # CLI default root glob would also see read-only runtime mounts.
+            # Append the API's explicit file list after existing JSON members,
+            # keeping every original diagnostic location and option AST intact.
+            path = physical(project)
+            from project_scope import append_files
+            names = row['project_files']
+            text = append_files(path.read_text(), names)
+            path.write_text(text)
+            write_json(folder / 'project-scope.json', {'files': names, 'original_source_sha256': row['source_sha256']})
         if config_values:
             synthetic = (physical(project).parent if project else cwd) / '__verdict_options__.json'
             if synthetic.exists():
@@ -172,6 +193,9 @@ def baseline_suite(binary, tree, output, limit, manifest=None):
                 config['extends'] = './' + physical(project).name
             else:
                 config['files'] = [os.path.relpath(physical(name), cwd) for name in roots]
+            if settings.get('__namespace'):
+                prefix = str(folder / 'filesystem') + '/'
+                config['files'] = [name.replace(prefix, '/') for name in config.get('files', [])]
             write_json(synthetic, config)
             mapped_options = {key: value for key, value in mapped_options.items() if key not in config_values}
         ambient_roots = not project or 'typeRoots' not in effective or 'typeRoots' in options
@@ -186,6 +210,10 @@ def baseline_suite(binary, tree, output, limit, manifest=None):
         if project or synthetic:
             argv += ['--project', os.path.relpath(synthetic or physical(project), cwd)]
         write_json(folder / 'working-directory.json', str(cwd))
+        if settings.get('__namespace'):
+            from namespace import command, virtual_arguments
+            from cases import virtual_directory
+            argv = command(virtual_arguments(argv, folder), folder, virtual_directory(settings), tree)
         write_json(folder / 'command.json', argv)
         timed_out = False
         with (folder / 'actual.stdout').open('wb') as stdout, (folder / 'actual.stderr').open('wb') as stderr:
@@ -203,6 +231,9 @@ def baseline_suite(binary, tree, output, limit, manifest=None):
         for suffix, value in wanted.items():
             (folder / ('expected.' + suffix)).write_bytes(value)
         diagnostics = map_diagnostics((folder / 'actual.stdout').read_bytes(), folder, cwd, units, settings)
+        if row.get('library_placeholders'):
+            from library_summary import project as project_library_summary
+            diagnostics = project_library_summary(diagnostics, row['library_placeholders'])
         if synthetic:
             # This location belongs to generated plumbing, never a test unit.
             # Preserve option codes/messages; upstream API options have no AST.

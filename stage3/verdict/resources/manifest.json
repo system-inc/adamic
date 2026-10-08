@@ -1,0 +1,31 @@
+{
+  "pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "declarations": [
+    {
+      "name": "typescript.d.ts",
+      "stored": "typescript/typescript.d.ts.txt",
+      "sha256": "c967e03c8dbb4770f7e2f0b71b5d13593de679a41cc2b60266c4b69f1342a263"
+    },
+    {
+      "name": "typescript.internal.d.ts",
+      "stored": "typescript/typescript.internal.d.ts.txt",
+      "sha256": "f21625651f8e5d4652fa032739234ff0c4c58db194bd8eb5346062b76d61434f"
+    },
+    {
+      "name": "tsserverlibrary.d.ts",
+      "stored": "typescript/tsserverlibrary.d.ts.txt",
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+    },
+    {
+      "name": "tsserverlibrary.internal.d.ts",
+      "stored": "typescript/tsserverlibrary.internal.d.ts.txt",
+      "sha256": "042a3fc93eb21301a8b55660d13ee48bcc345628dd2f6d90859004b715602c90"
+    }
+  ],
+  "test_libs": {
+    "react16.d.ts": "b0c6dad63ec7918e061c89d5b35d0e77f332207cfcfc22cc8d72a9077e24532c",
+    "react.d.ts": "c80b2391fd45ac3dd68eaf05a0922ad5c5fa16761e1fa460fffbf348895e61c3",
+    "react18/react18.d.ts": "36d372f95272b88187ee46073fab37cb6b77b0cafbe8dd9d9d86aab4ae336a17",
+    "react18/global.d.ts": "6bd4c72cf6289727da95200026330a3ad1815c83e50ce9b7be4cd8d227a0d277"
+  }
+}

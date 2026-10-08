@@ -37,6 +37,6 @@ for (const input of inputs) {
         }
         options[declaration.name] = value;
     }
-    results[input.source] = {options, errors: parsed.errors.map(error => error.code)};
+    results[input.source] = {options, files: parsed.fileNames, errors: parsed.errors.map(error => error.code)};
 }
 process.stdout.write(JSON.stringify(results));

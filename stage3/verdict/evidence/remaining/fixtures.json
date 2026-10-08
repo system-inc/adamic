@@ -1,0 +1,172 @@
+[
+  {
+    "group": "absolute-source",
+    "input_tree": "TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8",
+    "fixture": {
+      "source": "tests/cases/compiler/checkJsxNotSetError.ts",
+      "source_sha256": "88de18302c65d83a84232774b973f53dc7dd0eb2c3203aa10d00cf0148d8a310",
+      "options": {
+        "module": "commonjs",
+        "target": "es2015",
+        "strict": false,
+        "allowJs": true,
+        "checkJs": true
+      },
+      "configuration": "",
+      "project": null,
+      "baseline": "tests/baselines/reference/checkJsxNotSetError.errors.txt",
+      "baseline_sha256": "0d4b55d165014585c846153a6307cc9c8ce401c2d81f751638459a8521cbe4d7",
+      "expected_sha256": "2e4d43b48f6d1fac70c8394a8446dc6bee28527125c8786e636976e83f4feee7",
+      "name": "checkJsxNotSetError.ts",
+      "effective_options": {
+        "module": "commonjs",
+        "target": "es2015",
+        "strict": false,
+        "allowJs": true,
+        "checkJs": true
+      }
+    },
+    "A_passed": 183,
+    "B_failed": 1,
+    "extra_fixture_A_passed": null
+  },
+  {
+    "group": "drive-paths",
+    "input_tree": "TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8",
+    "fixture": {
+      "source": "tests/cases/compiler/commonSourceDir2.ts",
+      "source_sha256": "caa108e86966d8f35632ec25478b31cf08b724a8285d3807d880b95080dffc3f",
+      "options": {
+        "target": "es2015",
+        "outDir": "A:/"
+      },
+      "configuration": "",
+      "project": null,
+      "baseline": "tests/baselines/reference/commonSourceDir2.errors.txt",
+      "baseline_sha256": "f6872e81a8e1cce78de2c09bc958ee45028ddd2ae978407447e371542000cb1d",
+      "expected_sha256": "68476ff773c0865aa589daa9386fec69a5551b69a4e84c28d3c89a3fc6d7d218",
+      "name": "commonSourceDir2.ts",
+      "effective_options": {
+        "target": "es2015",
+        "outDir": "A:/"
+      }
+    },
+    "A_passed": 22,
+    "B_failed": 1,
+    "extra_fixture_A_passed": null
+  },
+  {
+    "group": "absolute-package",
+    "input_tree": "TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8",
+    "fixture": {
+      "source": "tests/cases/compiler/moduleResolutionWithExtensions_withPaths.ts",
+      "source_sha256": "3917824b2ca6b029da176a691a08242dccaffdbafd31d0049e459e8d2cb9c090",
+      "options": {
+        "target": "es2015"
+      },
+      "configuration": "",
+      "project": "/tsconfig.json",
+      "baseline": "tests/baselines/reference/moduleResolutionWithExtensions_withPaths.errors.txt",
+      "baseline_sha256": "573752ef431555dc1bfafde4e0b0963a578357cbbb35befd067420b94234639b",
+      "expected_sha256": "d8c6e6c989100c61b69ce837daf67b70a2ff2e24f786d042c07a07f930b40c11",
+      "name": "moduleResolutionWithExtensions_withPaths.ts",
+      "effective_options": {
+        "traceResolution": true,
+        "target": "es2015",
+        "module": "es6",
+        "outDir": "/lib",
+        "noImplicitAny": true,
+        "moduleResolution": "node10",
+        "baseUrl": "/",
+        "paths": {
+          "foo/*": [
+            "node_modules/foo/lib/*"
+          ]
+        }
+      },
+      "project_files": [
+        "/relative.d.ts",
+        "/test.ts"
+      ]
+    },
+    "A_passed": 14,
+    "B_failed": 1,
+    "extra_fixture_A_passed": null
+  },
+  {
+    "group": "output-path",
+    "input_tree": "TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8",
+    "fixture": {
+      "source": "tests/cases/conformance/jsdoc/checkJsdocOptionalParamOrder.ts",
+      "source_sha256": "6a67666d2dc17873f1bfc1baca48b76ce71e43aba4daba200a3f5ef467e996a8",
+      "options": {
+        "target": "es2015",
+        "allowJs": true
+      },
+      "configuration": "",
+      "project": null,
+      "baseline": "tests/baselines/reference/checkJsdocOptionalParamOrder.errors.txt",
+      "baseline_sha256": "c73412ae30327c9138c29b519266b0e5c91aba2d1e81f4a24879c5843f039893",
+      "expected_sha256": "ce02f4f2adc386ed72f990c5f7d4d69af8b6822ed79124a01cb0bf4b06462240",
+      "name": "checkJsdocOptionalParamOrder.ts",
+      "effective_options": {
+        "target": "es2015",
+        "allowJs": true
+      }
+    },
+    "A_passed": 13,
+    "B_failed": 1,
+    "extra_fixture_A_passed": null
+  },
+  {
+    "group": "case-host",
+    "input_tree": "fixtures/case-host",
+    "fixture": {
+      "source": "input.a",
+      "name": "host.ts",
+      "configuration": "",
+      "options": {
+        "target": "es2015"
+      },
+      "effective_options": {
+        "target": "es2015"
+      },
+      "project": null,
+      "baseline": "reference.txt",
+      "source_sha256": "aad3c3156548f03f6bfbb79f62b95718e9d86219abd9f4bb84d0e3c2f59f66fd",
+      "baseline_sha256": "5337f9a1ed16965b2fb9a96653d269caaa54b075c73e3096e519a9aef655c1b7",
+      "expected_sha256": "6e9894c4a304fd53645cf7ad6c4c6007d1afab13d3b317ca373ef6e75a27b8d1"
+    },
+    "A_passed": 4,
+    "B_failed": 1,
+    "extra_fixture_A_passed": 1
+  },
+  {
+    "group": "library-placeholders",
+    "input_tree": "TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8",
+    "fixture": {
+      "source": "tests/cases/compiler/variableDeclarationInStrictMode1.ts",
+      "source_sha256": "a388ff193630c91cc142664bf49e5731cd93cd6c024250a436046ea05d1d42eb",
+      "options": {
+        "target": "es2015",
+        "skipDefaultLibCheck": false
+      },
+      "configuration": "",
+      "project": null,
+      "library_placeholders": [
+        "lib.es5.d.ts"
+      ],
+      "baseline": "tests/baselines/reference/variableDeclarationInStrictMode1.errors.txt",
+      "baseline_sha256": "e1944bfcf1900f41b39977ed77170a9c5910b8b8b09f7ba1282826380e074a6c",
+      "expected_sha256": "bc4c263939a1604685f2da091c0fb21cb6169f9fb1b8b6f727350836cd59a466",
+      "name": "variableDeclarationInStrictMode1.ts",
+      "effective_options": {
+        "target": "es2015",
+        "skipDefaultLibCheck": false
+      }
+    },
+    "A_passed": 4,
+    "B_failed": 1,
+    "extra_fixture_A_passed": null
+  }
+]

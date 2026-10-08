@@ -78,6 +78,8 @@ def select(tree, api):
                         config_reason = str(error)
                 allowed_names = [u['name'] for u in units]
                 allowed_names += [virtual_name(u['name'], settings) for u in units]
+                library_names = sorted(set(re.findall(rb'^(lib\.[^/\n]+?\.d\.ts)\(--,--\):', plain_summary(expected), re.M)))
+                allowed_names += [name.decode() for name in library_names]
                 if any(name not in allowed_names for name in diagnostic_sources(expected)):
                     config_reason = 'diagnostics outside materialized units require harness-mounted paths or library placeholders'
                 plain = plain_summary(expected)
@@ -109,6 +111,7 @@ def select(tree, api):
                     continue
                 rows.append({**row, 'options': options, 'configuration': suffix,
                              'project': settings['__project'],
+                             **({'library_placeholders': [name.decode() for name in library_names]} if library_names else {}),
                              'baseline': baseline.relative_to(tree).as_posix() if baseline else None,
                              'baseline_sha256': digest(baseline.read_bytes()) if baseline else None,
                              'expected_sha256': digest(expected), 'name': source.name})
@@ -127,6 +130,8 @@ def select(tree, api):
                 configuration_exclusions.append({**row, 'reason': 'config parse diagnostics are discarded by API compiler runner but reported by CLI'})
                 continue
             row['effective_options'] = {**project['options'], **row['options']}
+            if parse((tree / row['source']).read_bytes(), row['name'])[1].get('__namespace'):
+                row['project_files'] = project['files']
         else:
             row['effective_options'] = row['options']
         filtered.append(row)

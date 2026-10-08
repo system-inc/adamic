@@ -13,7 +13,7 @@ DECLARATION_ERRORS = set(SCHEMA_DATA['declarationErrors'])
 HEADER = re.compile(r'^//\s*@(\w+)\s*:\s*([^\r\n]*)')
 IGNORED = {'filename', 'notypesandsymbols', 'fullemitpaths', 'symlink', 'typescriptversion'}
 HOST = {'baselinefile',
-        'capturesuggestions', 'suppressoutputpathcheck'}
+        'capturesuggestions'}
 
 
 def safe_name(name):
@@ -24,8 +24,10 @@ def safe_name(name):
 
 
 def unit_name(name):
+    if re.match(r'^[A-Za-z]:[/\\]', name):
+        return posixpath.normpath(name.replace('\\', '/'))
     if '\\' in name or ':' in name or not name:
-        raise ValueError('Windows virtual paths require drive and separator semantics unavailable on Linux')
+        raise ValueError('non-drive backslash paths require Windows filesystem semantics')
     if name.startswith('/') or '..' in PurePosixPath(name).parts:
         return posixpath.normpath(name)
     return safe_name(name)
@@ -74,21 +76,29 @@ def parse(raw, name):
     links.extend((unit_name(current_name or name), destination) for destination in current_symlinks)
     project = next((u['name'] for u in units if Path(u['name']).name.lower()
                     in ('tsconfig.json', 'jsconfig.json')), None)
-    for unit in units:
-        if re.search(r'(?:\b(?:from|require|import)\s*(?:\(\s*)?|<reference\s+[^>]*(?:path|types)\s*=\s*)[\'\"]/', unit['content']):
-            raise ValueError('absolute source references require mounted virtual roots; source text is preserved')
-        if re.search(r'@jsxImportSource\s+/', unit['content']):
-            raise ValueError('absolute JSX pragmas require mounted virtual roots; source text is preserved')
-        if unit['name'].endswith('.json') and re.search(r'[\'\"](?:/|[A-Za-z]:)', unit['content']):
-            raise ValueError('absolute package/config paths require mounted virtual roots; source text is preserved')
+    settings['__drives'] = any(re.match(r'^[A-Za-z]:/', unit['name']) for unit in units)
+    settings['__namespace'] = settings['__drives'] or any(
+        re.search(r'(?:\b(?:from|require|import)\s*(?:\(\s*)?|<reference\s+[^>]*(?:path|types)\s*=\s*)[\'\"]/', unit['content'])
+        or re.search(r'@jsxImportSource\s+/', unit['content'])
+        or unit['name'].endswith('.json') and re.search(r'[\'\"]/', unit['content'])
+        for unit in units)
     for key, value in settings.items():
+        if key.startswith('__'):
+            continue
         if key in HOST:
             raise ValueError(f'harness directive @{key}: {value}')
         if key == 'typescriptversion' and value not in ('6.0', '6.0.3'):
             raise ValueError(f'API compiler version override @{key}: {value}')
         if key == 'usecasesensitivefilenames' and value.lower() != 'true':
-            raise ValueError('case-insensitive virtual filesystem differs from Linux')
-        if key not in SCHEMA and key not in IGNORED | {'noimplicitreferences', 'usecasesensitivefilenames', 'link', 'currentdirectory'}:
+            prefixes = {}
+            for unit in units:
+                parts = unit['name'].split('/')
+                for index in range(1, len(parts) + 1):
+                    prefix = '/'.join(parts[:index])
+                    old = prefixes.setdefault(prefix.lower(), prefix)
+                    if old != prefix:
+                        raise ValueError('case-insensitive canonical path aliases require the API host')
+        if key not in SCHEMA and key not in IGNORED | {'noimplicitreferences', 'usecasesensitivefilenames', 'link', 'currentdirectory', 'suppressoutputpathcheck'}:
             raise ValueError(f'unknown harness directive @{key}: {value}')
     if settings.get('currentdirectory'):
         unit_name(settings['currentdirectory'])
@@ -198,7 +208,7 @@ def layout(units, options, folder, settings=None):
     settings = settings or {}
     paths = [value for key, value in options.items() if (SCHEMA[key.lower()]['filePath'] or key == 'jsxImportSource')
              and isinstance(value, str)]
-    virtual = bool(settings.get('currentdirectory') or settings.get('__links')) or any(name.startswith('/') or '..' in PurePosixPath(name).parts
+    virtual = bool(settings.get('__namespace') or settings.get('currentdirectory') or settings.get('__links')) or any(name.startswith('/') or '..' in PurePosixPath(name).parts
                   for name in [u['name'] for u in units] + paths)
     virtual_cwd = virtual_directory(settings)
     cwd = folder / 'filesystem' / virtual_cwd.lstrip('/') if virtual else folder
@@ -206,14 +216,21 @@ def layout(units, options, folder, settings=None):
     def physical(name):
         if not virtual:
             return cwd / safe_name(name)
-        absolute = posixpath.normpath(posixpath.join(virtual_cwd, unit_name(name)))
+        name = unit_name(name)
+        if re.match(r'^[A-Za-z]:/', name):
+            return folder / 'filesystem' / virtual_cwd.lstrip('/') / name
+        absolute = posixpath.normpath(posixpath.join(virtual_cwd, name))
         return folder / 'filesystem' / absolute.lstrip('/')
     mapped = dict(options)
+    if settings.get('suppressoutputpathcheck', '').lower() == 'true' and not options.get('noEmit'):
+        if 'outDir' in options or 'outFile' in options:
+            raise ValueError('output-path override with explicit output options requires the API host')
+        mapped['outDir'] = str(cwd / '.verdict-emit')
     if virtual:
         for key, value in options.items():
             option = SCHEMA[key.lower()]
             if (option['filePath'] or key == 'jsxImportSource' and value.startswith('/')) and isinstance(value, str):
-                mapped[key] = str(physical(value))
+                mapped[key] = value if re.match(r'^[A-Za-z]:/', value) else str(physical(value))
             elif option['elementPath'] and isinstance(value, list):
                 mapped[key] = [str(physical(path)) for path in value]
         if 'typeRoots' not in mapped:
@@ -243,6 +260,13 @@ def diagnostics(stdout, folder, cwd, units, settings=None):
                                 lambda match: virtual.encode(), stdout, flags=re.M)
                 stdout = stdout.replace(b'\x1b[96m' + relative.encode() + b'\x1b[0m',
                                         b'\x1b[96m' + virtual.encode() + b'\x1b[0m')
+    if settings.get('__drives'):
+        for unit in units:
+            if re.match(r'^[A-Za-z]:/', unit['name']):
+                name = unit['name'].encode()
+                stdout = stdout.replace(b'/.src/' + name, name)
+    if settings.get('__namespace'):
+        stdout = stdout.replace(b'/.src/', b'')
     return stdout
 
 
