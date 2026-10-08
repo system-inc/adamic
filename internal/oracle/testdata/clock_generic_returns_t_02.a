@@ -1,0 +1,9 @@
+interface Block { readonly statements: readonly string[]; }
+interface ConstructorDeclaration { readonly name: string; readonly body?: Block; }
+let calls = 0;
+function constructor(present: boolean): (ConstructorDeclaration & { body: Block }) | undefined {
+    calls++;
+    if (!present) return undefined;
+    return { name: ["con", "structor"].join(""), body: { statements: ["work"] } };
+}
+console.log(`${typeof constructor(true)} ${typeof constructor(false)} ${calls}`);

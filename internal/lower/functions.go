@@ -79,6 +79,9 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		if returns.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 || neverArrow {
 			valueType, isKnown := l.representation(returns)
 			if !isKnown {
+				valueType, isKnown = l.clockGenericReturnsT02(returns)
+			}
+			if !isKnown {
 				// An arrow function has no name to point at, so it's pointed at whole.
 				where := declaration.Name()
 				if where == nil {
