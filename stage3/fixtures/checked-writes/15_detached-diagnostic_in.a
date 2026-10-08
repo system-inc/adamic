@@ -1,0 +1,17 @@
+// a-check: refused a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read
+// Survey DiagnosticWithDetachedLocation: 5 class-d sites; representative ID 210, src/compiler/checker.ts:33274:47.
+// TypeScript 6.0.3: types.ts:7290-7311.
+// The file field declarations are upstream; writeFile is a new boundary driver. Diagnostic selects its located union member as the actual shape.
+interface SourceFile { readonly fileName: string; }
+interface DiagnosticRelatedInformation { file: SourceFile | undefined; }
+interface DiagnosticWithDetachedLocation { file: undefined; }
+function writeFile(diagnostic: DiagnosticRelatedInformation, file: SourceFile | undefined): void {
+    diagnostic.file = file;
+}
+
+const file: SourceFile = { fileName: "main.a" };
+const diagnostic: DiagnosticWithDetachedLocation = { file: undefined };
+console.log("before write");
+writeFile(diagnostic, undefined);
+const result: DiagnosticRelatedInformation = diagnostic;
+console.log(`stored ${result.file === undefined ? "undefined" : result.file.fileName}`);

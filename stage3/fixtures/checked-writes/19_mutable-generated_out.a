@@ -1,0 +1,19 @@
+// a-check: refused a value of type Mutable<GeneratedIdentifier> seen as Node, which can write EmitNode | undefined where GeneratedEmitNode is read
+// Survey Mutable<GeneratedIdentifier>: 4 class-d sites; representative ID 432, src/compiler/factory/nodeFactory.ts:1354:32.
+// TypeScript 6.0.3: types.ts:1725, factory/emitNode.ts:77, transformers/es2015.ts:1328-1329.
+// writeEmitNode parameterizes disposeEmitNodes store; GeneratedEmitNode reduces EmitNode & { autoGenerate: AutoGenerateInfo }. Union family selects a GeneratedIdentifier actual member.
+interface AutoGenerateInfo { readonly id: number; }
+interface EmitNode { flags: number; }
+interface GeneratedEmitNode extends EmitNode { autoGenerate: AutoGenerateInfo; }
+interface Node { emitNode: EmitNode | undefined; }
+interface GeneratedIdentifier { readonly emitNode: GeneratedEmitNode; }
+type Mutable<T> = { -readonly [P in keyof T]: T[P] };
+function writeEmitNode(node: Node, emitNode: EmitNode | undefined): void {
+    node.emitNode = emitNode;
+}
+
+const emitNode: GeneratedEmitNode = { flags: 0, autoGenerate: { id: 1 } };
+const node: Mutable<GeneratedIdentifier> = { emitNode };
+console.log("before write");
+writeEmitNode(node, undefined);
+console.log(`stored ${node.emitNode === undefined ? "undefined" : "generated"}`);

@@ -1,0 +1,69 @@
+// This probe builds with the checked-write compiler dependency, not fixture main.
+// It changes lowered IR only; no compiler-owned source is edited.
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	"reflect"
+
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
+)
+
+func main() {
+	if len(os.Args) != 3 {
+		panic("usage: mutant <input.ts> <output>")
+	}
+	loaded, err := load.Load([]string{os.Args[1]})
+	if err != nil {
+		panic(err)
+	}
+	program, err := lower.Lower(context.Background(), loaded)
+	if err != nil {
+		panic(err)
+	}
+	removed := 0
+	var visit func(reflect.Value)
+	visit = func(value reflect.Value) {
+		if !value.IsValid() {
+			return
+		}
+		switch value.Kind() {
+		case reflect.Interface:
+			if store, ok := value.Interface().(ir.SetProperty); ok {
+				if store.WriteCheck != "" {
+					store.WriteCheck = ""
+					value.Set(reflect.ValueOf(store))
+					removed++
+				}
+				return
+			}
+			visit(value.Elem())
+		case reflect.Struct:
+			for index := 0; index < value.NumField(); index++ {
+				visit(value.Field(index))
+			}
+		case reflect.Slice:
+			for index := 0; index < value.Len(); index++ {
+				visit(value.Index(index))
+			}
+		}
+	}
+	visit(reflect.ValueOf(&program.Main).Elem())
+	visit(reflect.ValueOf(&program.Functions).Elem())
+	if removed == 0 {
+		panic("no actual write check removed")
+	}
+	if err := native.Build(native.C(program), os.Args[2], native.Options{Sanitize: true}); err != nil {
+		panic(err)
+	}
+	if err := os.WriteFile(os.Args[2]+".mjs", []byte(javascript.JavaScript(program)), 0644); err != nil {
+		panic(err)
+	}
+	fmt.Printf("removed %d actual IR store checks\n", removed)
+}

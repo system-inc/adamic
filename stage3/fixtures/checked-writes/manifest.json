@@ -1,0 +1,2631 @@
+{
+  "survey_commit": "9b8ebd77",
+  "survey_sha256": "6007d8bb1f4997f137cafcc33bf96caea8cb9fb87b69d01f287a96bf86fd910d",
+  "source_commit": "12fef29628bfda6cf8bec4ba2a326fa4ec4a66d5",
+  "classification": "d",
+  "population": 515,
+  "group_by": "source_family",
+  "tie_break": "Unicode lexical ascending",
+  "selected_sites": 381,
+  "families": [
+    {
+      "rank": 1,
+      "family": "DiagnosticWithLocation",
+      "count": 144,
+      "site_ids": [
+        34,
+        35,
+        36,
+        58,
+        59,
+        66,
+        77,
+        101,
+        149,
+        150,
+        154,
+        155,
+        156,
+        158,
+        159,
+        161,
+        162,
+        163,
+        164,
+        167,
+        168,
+        169,
+        170,
+        173,
+        176,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        188,
+        189,
+        190,
+        192,
+        194,
+        197,
+        198,
+        201,
+        209,
+        211,
+        213,
+        214,
+        222,
+        223,
+        226,
+        229,
+        231,
+        235,
+        236,
+        237,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255,
+        256,
+        258,
+        259,
+        260,
+        261,
+        263,
+        264,
+        265,
+        266,
+        268,
+        270,
+        273,
+        274,
+        276,
+        287,
+        292,
+        293,
+        294,
+        295,
+        296,
+        297,
+        298,
+        299,
+        300,
+        306,
+        307,
+        310,
+        311,
+        312,
+        315,
+        316,
+        317,
+        321,
+        322,
+        324,
+        331,
+        332,
+        333,
+        336,
+        337,
+        339,
+        353,
+        354,
+        355,
+        356,
+        357,
+        358,
+        360,
+        361,
+        362,
+        363,
+        364,
+        365,
+        366,
+        367,
+        368,
+        369,
+        370,
+        371,
+        407,
+        408,
+        409,
+        410,
+        412,
+        427,
+        519,
+        527,
+        528,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        547,
+        549,
+        610
+      ],
+      "representative": {
+        "id": 34,
+        "where": "src/compiler/binder.ts:853:49",
+        "reason": "a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read",
+        "family": "diagnostics",
+        "source_family": "DiagnosticWithLocation",
+        "classification": "d",
+        "source_expression": "createDiagnosticForNode(node, Diagnostics.Did_you_mean_0, `export type { ${unescapeLeadingUnderscores(node.name.escapedText)} }`)",
+        "source_expression_where": "src/compiler/binder.ts:853:49",
+        "original_type": "DiagnosticWithLocation",
+        "receiving_syntax": "CallExpression",
+        "reads": [],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [
+          {
+            "where": "src/compiler/binder.ts:853:25",
+            "reason": "unresolved, external, virtual, or callback consumer",
+            "expression": "relatedInformation.push(createDiagnosticForNode(node, Diagnostics.Did_you_mean_0, `export type { ${unescapeLeadingUnderscores(node.name.escapedText)} }`))"
+          }
+        ],
+        "steps": 1
+      },
+      "slug": "located-diagnostic",
+      "field": "file",
+      "real_type": "SourceFile",
+      "misfit_type": "undefined",
+      "positive": "stored main.a",
+      "negative": "stored undefined",
+      "provenance": [
+        "types.ts:7290-7311"
+      ],
+      "limitation": "The file field declarations are upstream; writeFile is a new boundary driver. Diagnostic selects its located union member as the actual shape.",
+      "files": {
+        "in": "01_located-diagnostic_in.a",
+        "out": "01_located-diagnostic_out.a"
+      },
+      "expected": {
+        "in": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored main.a\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 0,
+            "stdout": "before write\nstored main.a\n",
+            "stderr_fields": []
+          }
+        },
+        "out": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored undefined\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 70,
+            "stdout": "before write\n",
+            "stderr_fields": [
+              "file",
+              "SourceFile",
+              "undefined"
+            ],
+            "stderr": "adamic: panic: write failed: diagnostic.file expects SourceFile, got undefined\n"
+          }
+        }
+      },
+      "mutant": {
+        "file": "01_located-diagnostic_in.a",
+        "before": "writeFile(diagnostic, file);",
+        "write_from": "file",
+        "write_to": "undefined",
+        "description": "Replace fitting argument with the out-of-type argument; exact Node stdout must reject it.",
+        "after": "writeFile(diagnostic, undefined);"
+      },
+      "a_check": {
+        "in": "// a-check: refused a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read",
+        "out": "// a-check: refused a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read"
+      }
+    },
+    {
+      "rank": 2,
+      "family": "never[]",
+      "count": 82,
+      "site_ids": [
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        44,
+        49,
+        60,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        78,
+        79,
+        80,
+        81,
+        82,
+        84,
+        85,
+        86,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        104,
+        106,
+        107,
+        108,
+        109,
+        111,
+        113,
+        115,
+        118,
+        122,
+        137,
+        138,
+        139,
+        148,
+        153,
+        172,
+        174,
+        175,
+        186,
+        219,
+        238,
+        239,
+        240,
+        241,
+        257,
+        349,
+        350,
+        372,
+        374,
+        375,
+        376,
+        377,
+        425,
+        507,
+        508,
+        520,
+        524,
+        529,
+        531,
+        534,
+        535,
+        546,
+        550,
+        609,
+        614,
+        615
+      ],
+      "representative": {
+        "id": 37,
+        "where": "src/compiler/builder.ts:2044:49",
+        "reason": "a value of type never[] seen as Diagnostic[], which can write Diagnostic where never is read",
+        "family": "shared-never",
+        "source_family": "never[]",
+        "classification": "d",
+        "source_expression": "emptyArray",
+        "source_expression_where": "src/compiler/builder.ts:2044:49",
+        "original_type": "never[]",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [
+          {
+            "where": "src/compiler/builder.ts:2044:21",
+            "reason": "container construction or shared element alias",
+            "expression": "diagnostics: diagnostics || emptyArray"
+          }
+        ],
+        "steps": 2
+      },
+      "slug": "shared-empty",
+      "field": "[]",
+      "real_type": "never",
+      "misfit_type": "number",
+      "positive": "length 0",
+      "negative": "length 1",
+      "provenance": [
+        "core.ts:17",
+        "builder.ts:2044"
+      ],
+      "limitation": "never has no fitting value. Positive takes the no-write branch; negative exercises a synthetic consumer of the real shared empty sentinel.",
+      "files": {
+        "in": "02_shared-empty_in.a",
+        "out": "02_shared-empty_out.a"
+      },
+      "expected": {
+        "in": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nlength 0\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 0,
+            "stdout": "before write\nlength 0\n",
+            "stderr_fields": []
+          },
+          "note": "No element write can fit never; no-write positive."
+        },
+        "out": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nlength 1\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 70,
+            "stdout": "before write\n",
+            "stderr_fields": [
+              "[]",
+              "never",
+              "number"
+            ]
+          }
+        }
+      },
+      "mutant": {
+        "file": "02_shared-empty_in.a",
+        "before": "consume(emptyArray, false);",
+        "write_from": "false",
+        "write_to": "true",
+        "description": "Replace fitting argument with the out-of-type argument; exact Node stdout must reject it.",
+        "after": "consume(emptyArray, true);"
+      },
+      "a_check": {
+        "in": "// a-check: refused a value of type never[] seen as number[], which can write number where never is read",
+        "out": "// a-check: refused a value of type never[] seen as number[], which can write number where never is read"
+      }
+    },
+    {
+      "rank": 3,
+      "family": "FlowNode",
+      "count": 26,
+      "site_ids": [
+        1,
+        2,
+        3,
+        6,
+        7,
+        8,
+        9,
+        10,
+        12,
+        13,
+        18,
+        19,
+        24,
+        25,
+        26,
+        27,
+        28,
+        32,
+        33,
+        56,
+        195,
+        196,
+        283,
+        284,
+        285,
+        286
+      ],
+      "representative": {
+        "id": 1,
+        "where": "src/compiler/binder.ts:1034:95",
+        "reason": "a value of type FlowNode seen as FlowNode | undefined, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read",
+        "family": "other",
+        "source_family": "FlowNode",
+        "classification": "d",
+        "source_expression": "currentFlow",
+        "source_expression_where": "src/compiler/binder.ts:1034:95",
+        "original_type": "FlowNode",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [
+          {
+            "where": "src/compiler/binder.ts:1034:17",
+            "reason": "stored into a field/container",
+            "expression": "(node as FunctionLikeDeclaration | ClassStaticBlockDeclaration).endFlowNode = currentFlow"
+          }
+        ],
+        "steps": 1
+      },
+      "slug": "flow-node",
+      "field": "node",
+      "real_type": "BinaryExpression",
+      "misfit_type": "BindingElement",
+      "positive": "stored BinaryExpression",
+      "negative": "stored BindingElement",
+      "provenance": [
+        "types.ts:4182-4253"
+      ],
+      "limitation": "Two upstream flow variants are reduced to the node field; writer is a boundary driver. FlowArrayMutation is the actual member in both union fixtures.",
+      "files": {
+        "in": "03_flow-node_in.a",
+        "out": "03_flow-node_out.a"
+      },
+      "expected": {
+        "in": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored BinaryExpression\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 0,
+            "stdout": "before write\nstored BinaryExpression\n",
+            "stderr_fields": []
+          }
+        },
+        "out": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored BindingElement\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 70,
+            "stdout": "before write\n",
+            "stderr_fields": [
+              "node",
+              "BinaryExpression",
+              "BindingElement"
+            ]
+          }
+        }
+      },
+      "mutant": {
+        "file": "03_flow-node_in.a",
+        "before": "writeNode(flow, binary);",
+        "write_from": "binary",
+        "write_to": "binding",
+        "description": "Replace fitting argument with the out-of-type argument; exact Node stdout must reject it.",
+        "after": "writeNode(flow, binding);"
+      },
+      "a_check": {
+        "in": "// a-check: refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read",
+        "out": "// a-check: refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read"
+      }
+    },
+    {
+      "rank": 4,
+      "family": "ResolvedType",
+      "count": 17,
+      "site_ids": [
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        133,
+        157,
+        277,
+        378,
+        379,
+        380,
+        381,
+        382
+      ],
+      "representative": {
+        "id": 123,
+        "where": "src/compiler/checker.ts:17507:148",
+        "reason": "a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read",
+        "family": "other",
+        "source_family": "ResolvedType",
+        "classification": "d",
+        "source_expression": "emptyObjectType",
+        "source_expression_where": "src/compiler/checker.ts:17507:148",
+        "original_type": "ResolvedType",
+        "receiving_syntax": "BinaryExpression",
+        "reads": [],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [
+          {
+            "where": "src/compiler/checker.ts:17507:16",
+            "reason": "assignment into an existing binding needs flow-sensitive alias tracking",
+            "expression": "deferredGlobalTemplateStringsArrayType ||= getGlobalType(\"TemplateStringsArray\" as __String, /*arity*/ 0, /*reportErrors*/ true) || emptyObjectType"
+          }
+        ],
+        "steps": 2
+      },
+      "slug": "resolved-members",
+      "field": "members",
+      "real_type": "SymbolTable",
+      "misfit_type": "undefined",
+      "positive": "stored members",
+      "negative": "stored undefined",
+      "provenance": [
+        "checker.ts:5555",
+        "checker.ts:5648-5659",
+        "types.ts:6805"
+      ],
+      "limitation": "SymbolTable values are reduced to numbers; resetMembers parameterizes the real members assignment.",
+      "files": {
+        "in": "04_resolved-members_in.a",
+        "out": "04_resolved-members_out.a"
+      },
+      "expected": {
+        "in": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored members\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 0,
+            "stdout": "before write\nstored members\n",
+            "stderr_fields": []
+          }
+        },
+        "out": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored undefined\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 70,
+            "stdout": "before write\n",
+            "stderr_fields": [
+              "members",
+              "SymbolTable",
+              "undefined"
+            ]
+          }
+        }
+      },
+      "mutant": {
+        "file": "04_resolved-members_in.a",
+        "before": "resetMembers(type, members);",
+        "write_from": "members",
+        "write_to": "undefined",
+        "description": "Replace fitting argument with the out-of-type argument; exact Node stdout must reject it.",
+        "after": "resetMembers(type, undefined);"
+      },
+      "a_check": {
+        "in": "// a-check: refused a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read",
+        "out": "// a-check: refused a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read"
+      }
+    },
+    {
+      "rank": 5,
+      "family": "T",
+      "count": 17,
+      "site_ids": [
+        386,
+        387,
+        428,
+        429,
+        430,
+        431,
+        469,
+        472,
+        473,
+        490,
+        500,
+        501,
+        510,
+        512,
+        513,
+        604,
+        605
+      ],
+      "representative": {
+        "id": 386,
+        "where": "src/compiler/checker.ts:6408:24",
+        "reason": "a value of type T seen as T, a type parameter whose constraint Node can be written, so it can write what T can't hold",
+        "family": "other",
+        "source_family": "T",
+        "classification": "d",
+        "source_expression": "setTextRange(context as NodeBuilderContext, range, location)",
+        "source_expression_where": "src/compiler/checker.ts:6408:24",
+        "original_type": "T",
+        "receiving_syntax": "ReturnStatement",
+        "reads": [],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [
+          {
+            "where": "src/compiler/checker.ts:6408:17",
+            "reason": "returned alias escapes receiving scope",
+            "expression": "return setTextRange(context as NodeBuilderContext, range, location);"
+          }
+        ],
+        "steps": 1
+      },
+      "slug": "generic-range",
+      "field": "pos",
+      "real_type": "0",
+      "misfit_type": "1",
+      "positive": "stored 0",
+      "negative": "stored 1",
+      "provenance": [
+        "utilities.ts:10644-10647",
+        "types.ts:1589"
+      ],
+      "limitation": "setTextRangePos body unchanged; literal-position driver selects a legal narrower holder. NodeArray retains the real array plus pos/end layout using Object.assign.",
+      "files": {
+        "in": "05_generic-range_in.a",
+        "out": "05_generic-range_out.a"
+      },
+      "expected": {
+        "in": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored 0\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 0,
+            "stdout": "before write\nstored 0\n",
+            "stderr_fields": []
+          }
+        },
+        "out": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored 1\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 70,
+            "stdout": "before write\n",
+            "stderr_fields": [
+              "pos",
+              "0",
+              "1"
+            ],
+            "stderr": "adamic: panic: write failed: (range as TextRange).pos expects 0, got 1\n"
+          }
+        }
+      },
+      "mutant": {
+        "file": "05_generic-range_in.a",
+        "before": "setTextRangePos(range, 0);",
+        "write_from": "0",
+        "write_to": "1",
+        "description": "Replace fitting argument with the out-of-type argument; exact Node stdout must reject it.",
+        "after": "setTextRangePos(range, 1);"
+      },
+      "a_check": {
+        "in": "// a-check: refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+        "out": "// a-check: refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace"
+      }
+    },
+    {
+      "rank": 6,
+      "family": "NodeBuilderContext",
+      "count": 11,
+      "site_ids": [
+        48,
+        388,
+        389,
+        390,
+        392,
+        397,
+        401,
+        402,
+        403,
+        404,
+        405
+      ],
+      "representative": {
+        "id": 48,
+        "where": "src/compiler/checker.ts:10280:75",
+        "reason": "a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required<Pick<SymbolTracker, \"reportInferenceFallback\">> where SymbolTrackerImpl is read",
+        "family": "other",
+        "source_family": "NodeBuilderContext",
+        "classification": "d",
+        "source_expression": "context",
+        "source_expression_where": "src/compiler/checker.ts:10280:75",
+        "original_type": "NodeBuilderContext",
+        "receiving_syntax": "CallExpression",
+        "reads": [],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [
+          {
+            "where": "src/compiler/checker.ts:10280:29",
+            "reason": "unresolved, external, virtual, or callback consumer",
+            "expression": "syntacticNodeBuilder.tryReuseExistingTypeNode(context, a)"
+          }
+        ],
+        "steps": 1
+      },
+      "slug": "builder-tracker",
+      "field": "tracker",
+      "real_type": "SymbolTrackerImpl",
+      "misfit_type": "SymbolTracker",
+      "positive": "stored complete",
+      "negative": "stored fallback",
+      "provenance": [
+        "checker.ts:54279-54294"
+      ],
+      "limitation": "Tracker methods and context are reduced; writeTracker is a boundary driver for the audited tracker widening.",
+      "files": {
+        "in": "06_builder-tracker_in.a",
+        "out": "06_builder-tracker_out.a"
+      },
+      "expected": {
+        "in": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored complete\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 0,
+            "stdout": "before write\nstored complete\n",
+            "stderr_fields": []
+          }
+        },
+        "out": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored fallback\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 70,
+            "stdout": "before write\n",
+            "stderr_fields": [
+              "tracker",
+              "SymbolTrackerImpl",
+              "SymbolTracker"
+            ]
+          }
+        }
+      },
+      "mutant": {
+        "file": "06_builder-tracker_in.a",
+        "before": "writeTracker(context, tracker);",
+        "write_from": "tracker",
+        "write_to": "fallback",
+        "description": "Replace fitting argument with the out-of-type argument; exact Node stdout must reject it.",
+        "after": "writeTracker(context, fallback);"
+      },
+      "a_check": {
+        "in": "// a-check: refused a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write SymbolTracker where SymbolTrackerImpl is read",
+        "out": "// a-check: refused a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write SymbolTracker where SymbolTrackerImpl is read"
+      }
+    },
+    {
+      "rank": 7,
+      "family": "DiagnosticWithLocation[]",
+      "count": 9,
+      "site_ids": [
+        340,
+        341,
+        342,
+        343,
+        522,
+        523,
+        525,
+        530,
+        608
+      ],
+      "representative": {
+        "id": 340,
+        "where": "src/compiler/checker.ts:49736:24",
+        "reason": "a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read",
+        "family": "diagnostics",
+        "source_family": "DiagnosticWithLocation[]",
+        "classification": "d",
+        "source_expression": "semanticDiagnostics",
+        "source_expression_where": "src/compiler/checker.ts:49736:24",
+        "original_type": "DiagnosticWithLocation[]",
+        "receiving_syntax": "ReturnStatement",
+        "reads": [],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [
+          {
+            "where": "src/compiler/checker.ts:49736:17",
+            "reason": "returned alias escapes receiving scope",
+            "expression": "return semanticDiagnostics;"
+          }
+        ],
+        "steps": 1
+      },
+      "slug": "diagnostic-array",
+      "field": "[]",
+      "real_type": "DiagnosticWithLocation",
+      "misfit_type": "Diagnostic",
+      "positive": "stored main.a",
+      "negative": "stored undefined",
+      "provenance": [
+        "utilities.ts:6133",
+        "types.ts:7290-7311"
+      ],
+      "limitation": "Real array mutator extracted into a reduced consumer. This exercises container-element writes, not only named object fields.",
+      "files": {
+        "in": "07_diagnostic-array_in.a",
+        "out": "07_diagnostic-array_out.a"
+      },
+      "expected": {
+        "in": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored main.a\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 0,
+            "stdout": "before write\nstored main.a\n",
+            "stderr_fields": []
+          }
+        },
+        "out": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored undefined\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 70,
+            "stdout": "before write\n",
+            "stderr_fields": [
+              "[]",
+              "DiagnosticWithLocation",
+              "Diagnostic"
+            ]
+          }
+        }
+      },
+      "mutant": {
+        "file": "07_diagnostic-array_in.a",
+        "before": "collect(array, located);",
+        "write_from": "located",
+        "write_to": "detached",
+        "description": "Replace fitting argument with the out-of-type argument; exact Node stdout must reject it.",
+        "after": "collect(array, detached);"
+      },
+      "a_check": {
+        "in": "// a-check: refused a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read",
+        "out": "// a-check: refused a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read"
+      }
+    },
+    {
+      "rank": 8,
+      "family": "GeneratedIdentifier",
+      "count": 8,
+      "site_ids": [
+        498,
+        502,
+        503,
+        552,
+        567,
+        568,
+        594,
+        596
+      ],
+      "representative": {
+        "id": 498,
+        "where": "src/compiler/factory/nodeFactory.ts:6330:28",
+        "reason": "a value of type GeneratedIdentifier seen as Node | undefined, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",
+        "family": "other",
+        "source_family": "GeneratedIdentifier",
+        "classification": "d",
+        "source_expression": "node",
+        "source_expression_where": "src/compiler/factory/nodeFactory.ts:6330:28",
+        "original_type": "GeneratedIdentifier",
+        "receiving_syntax": "CallExpression",
+        "reads": [],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [
+          {
+            "where": "src/compiler/factory/nodeFactory.ts:6330:9",
+            "reason": "unresolved, external, virtual, or callback consumer",
+            "expression": "setOriginal(clone, node)"
+          }
+        ],
+        "steps": 1
+      },
+      "slug": "generated-identifier",
+      "field": "emitNode",
+      "real_type": "GeneratedEmitNode",
+      "misfit_type": "undefined",
+      "positive": "stored generated",
+      "negative": "stored undefined",
+      "provenance": [
+        "types.ts:1725",
+        "factory/emitNode.ts:77",
+        "transformers/es2015.ts:1328-1329"
+      ],
+      "limitation": "writeEmitNode parameterizes disposeEmitNodes store; GeneratedEmitNode reduces EmitNode & { autoGenerate: AutoGenerateInfo }. Union family selects a GeneratedIdentifier actual member.",
+      "files": {
+        "in": "08_generated-identifier_in.a",
+        "out": "08_generated-identifier_out.a"
+      },
+      "expected": {
+        "in": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored generated\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 0,
+            "stdout": "before write\nstored generated\n",
+            "stderr_fields": []
+          }
+        },
+        "out": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored undefined\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 70,
+            "stdout": "before write\n",
+            "stderr_fields": [
+              "emitNode",
+              "GeneratedEmitNode",
+              "undefined"
+            ]
+          }
+        }
+      },
+      "mutant": {
+        "file": "08_generated-identifier_in.a",
+        "before": "writeEmitNode(node, emitNode);",
+        "write_from": "emitNode",
+        "write_to": "undefined",
+        "description": "Replace fitting argument with the out-of-type argument; exact Node stdout must reject it.",
+        "after": "writeEmitNode(node, undefined);"
+      },
+      "a_check": {
+        "in": "// a-check: refused a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace",
+        "out": "// a-check: refused a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace"
+      }
+    },
+    {
+      "rank": 9,
+      "family": "Identifier",
+      "count": 8,
+      "site_ids": [
+        15,
+        556,
+        557,
+        558,
+        562,
+        592,
+        593,
+        597
+      ],
+      "representative": {
+        "id": 15,
+        "where": "src/compiler/binder.ts:1802:14",
+        "reason": "a value of type Identifier seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+        "family": "other",
+        "source_family": "Identifier",
+        "classification": "d",
+        "source_expression": "node.label",
+        "source_expression_where": "src/compiler/binder.ts:1802:14",
+        "original_type": "Identifier",
+        "receiving_syntax": "AsExpression",
+        "reads": [],
+        "writes": [
+          {
+            "where": "src/compiler/binder.ts:1802:13",
+            "path": "flags",
+            "operation": "|=",
+            "original_domains": [
+              "NodeFlags"
+            ],
+            "written_type": "number",
+            "value": "(node.label as Mutable<Node>).flags |= NodeFlags.Unreachable",
+            "compatible": null,
+            "definitely_outside": false,
+            "conditional": true,
+            "original_domain_is_generic_upper_bound": false,
+            "feasible_counterexample": false
+          }
+        ],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [
+          {
+            "where": "src/compiler/binder.ts:1802:13",
+            "reason": "numeric enum write requires a value-domain proof",
+            "expression": "(node.label as Mutable<Node>).flags |= NodeFlags.Unreachable"
+          },
+          {
+            "where": "src/compiler/binder.ts:1802:13",
+            "reason": "incompatible write needs value/branch/union-variant feasibility proof",
+            "expression": "(node.label as Mutable<Node>).flags |= NodeFlags.Unreachable"
+          }
+        ],
+        "steps": 3
+      },
+      "slug": "identifier-flags",
+      "field": "flags",
+      "real_type": "0",
+      "misfit_type": "1",
+      "positive": "stored 0",
+      "negative": "stored 1",
+      "provenance": [
+        "binder.ts:1802"
+      ],
+      "limitation": "Real compound store parameterized by flags; NodeFlags represented as numbers and driver keeps one literal flag domain.",
+      "files": {
+        "in": "09_identifier-flags_in.a",
+        "out": "09_identifier-flags_out.a"
+      },
+      "expected": {
+        "in": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored 0\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 0,
+            "stdout": "before write\nstored 0\n",
+            "stderr_fields": []
+          }
+        },
+        "out": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored 1\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 70,
+            "stdout": "before write\n",
+            "stderr_fields": [
+              "flags",
+              "0",
+              "1"
+            ],
+            "stderr": "adamic: panic: write failed: (node as Mutable<Node>).flags expects 0, got 1\n"
+          }
+        }
+      },
+      "mutant": {
+        "file": "09_identifier-flags_in.a",
+        "before": "bindChildren(node, 0);",
+        "write_from": "0",
+        "write_to": "1",
+        "description": "Replace fitting argument with the out-of-type argument; exact Node stdout must reject it.",
+        "after": "bindChildren(node, 1);"
+      },
+      "a_check": {
+        "in": "// a-check: refused a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+        "out": "// a-check: refused a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace"
+      }
+    },
+    {
+      "rank": 10,
+      "family": "Expression",
+      "count": 7,
+      "site_ids": [
+        560,
+        561,
+        563,
+        564,
+        589,
+        590,
+        595
+      ],
+      "representative": {
+        "id": 560,
+        "where": "src/compiler/transformers/classFields.ts:932:41",
+        "reason": "a value of type Expression seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+        "family": "other",
+        "source_family": "Expression",
+        "classification": "d",
+        "source_expression": "name.expression",
+        "source_expression_where": "src/compiler/transformers/classFields.ts:932:41",
+        "original_type": "Expression",
+        "receiving_syntax": "CallExpression",
+        "reads": [],
+        "writes": [],
+        "aliases": [
+          {
+            "where": "src/compiler/factory/emitNode.ts:139:60",
+            "name": "range",
+            "path": "",
+            "references": 1
+          }
+        ],
+        "calls": [
+          {
+            "where": "src/compiler/transformers/classFields.ts:932:17",
+            "target": "src/compiler/factory/emitNode.ts:139:1",
+            "parameter": "src/compiler/factory/emitNode.ts:139:60",
+            "path": ""
+          }
+        ],
+        "unresolved": [
+          {
+            "where": "src/compiler/factory/emitNode.ts:140:5",
+            "reason": "stored into a field/container",
+            "expression": "getOrCreateEmitNode(node).sourceMapRange = range"
+          }
+        ],
+        "steps": 2
+      },
+      "slug": "expression-range",
+      "field": "pos",
+      "real_type": "0",
+      "misfit_type": "1",
+      "positive": "stored 0",
+      "negative": "stored 1",
+      "provenance": [
+        "utilities.ts:10644-10647",
+        "types.ts:1589"
+      ],
+      "limitation": "setTextRangePos body unchanged; literal-position driver selects a legal narrower holder. NodeArray retains the real array plus pos/end layout using Object.assign.",
+      "files": {
+        "in": "10_expression-range_in.a",
+        "out": "10_expression-range_out.a"
+      },
+      "expected": {
+        "in": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored 0\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 0,
+            "stdout": "before write\nstored 0\n",
+            "stderr_fields": []
+          }
+        },
+        "out": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored 1\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 70,
+            "stdout": "before write\n",
+            "stderr_fields": [
+              "pos",
+              "0",
+              "1"
+            ],
+            "stderr": "adamic: panic: write failed: (range as TextRange).pos expects 0, got 1\n"
+          }
+        }
+      },
+      "mutant": {
+        "file": "10_expression-range_in.a",
+        "before": "setTextRangePos(range, 0);",
+        "write_from": "0",
+        "write_to": "1",
+        "description": "Replace fitting argument with the out-of-type argument; exact Node stdout must reject it.",
+        "after": "setTextRangePos(range, 1);"
+      },
+      "a_check": {
+        "in": "// a-check: refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+        "out": "// a-check: refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace"
+      }
+    },
+    {
+      "rank": 11,
+      "family": "Node",
+      "count": 7,
+      "site_ids": [
+        4,
+        5,
+        394,
+        505,
+        576,
+        611,
+        612
+      ],
+      "representative": {
+        "id": 4,
+        "where": "src/compiler/binder.ts:1104:14",
+        "reason": "a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+        "family": "other",
+        "source_family": "Node",
+        "classification": "d",
+        "source_expression": "node",
+        "source_expression_where": "src/compiler/binder.ts:1104:14",
+        "original_type": "Node",
+        "receiving_syntax": "AsExpression",
+        "reads": [],
+        "writes": [
+          {
+            "where": "src/compiler/binder.ts:1104:13",
+            "path": "flags",
+            "operation": "&=",
+            "original_domains": [
+              "NodeFlags"
+            ],
+            "written_type": "number",
+            "value": "(node as Mutable<Node>).flags &= ~NodeFlags.Unreachable",
+            "compatible": null,
+            "definitely_outside": false,
+            "conditional": true,
+            "original_domain_is_generic_upper_bound": false,
+            "feasible_counterexample": false
+          }
+        ],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [
+          {
+            "where": "src/compiler/binder.ts:1104:13",
+            "reason": "numeric enum write requires a value-domain proof",
+            "expression": "(node as Mutable<Node>).flags &= ~NodeFlags.Unreachable"
+          },
+          {
+            "where": "src/compiler/binder.ts:1104:13",
+            "reason": "incompatible write needs value/branch/union-variant feasibility proof",
+            "expression": "(node as Mutable<Node>).flags &= ~NodeFlags.Unreachable"
+          }
+        ],
+        "steps": 3
+      },
+      "slug": "node-flags",
+      "field": "flags",
+      "real_type": "1",
+      "misfit_type": "0",
+      "positive": "stored 1",
+      "negative": "stored 0",
+      "provenance": [
+        "binder.ts:1104"
+      ],
+      "limitation": "Real compound store parameterized by flags; NodeFlags represented as numbers and driver keeps one literal flag domain.",
+      "files": {
+        "in": "11_node-flags_in.a",
+        "out": "11_node-flags_out.a"
+      },
+      "expected": {
+        "in": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored 1\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 0,
+            "stdout": "before write\nstored 1\n",
+            "stderr_fields": []
+          }
+        },
+        "out": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored 0\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 70,
+            "stdout": "before write\n",
+            "stderr_fields": [
+              "flags",
+              "1",
+              "0"
+            ],
+            "stderr": "adamic: panic: write failed: (node as Mutable<Node>).flags expects 1, got 0\n"
+          }
+        }
+      },
+      "mutant": {
+        "file": "11_node-flags_in.a",
+        "before": "bindChildren(node, 1);",
+        "write_from": "1",
+        "write_to": "0",
+        "description": "Replace fitting argument with the out-of-type argument; exact Node stdout must reject it.",
+        "after": "bindChildren(node, 0);"
+      },
+      "a_check": {
+        "in": "// a-check: refused a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+        "out": "// a-check: refused a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace"
+      }
+    },
+    {
+      "rank": 12,
+      "family": "CapturedThis",
+      "count": 6,
+      "site_ids": [
+        566,
+        571,
+        575,
+        581,
+        586,
+        587
+      ],
+      "representative": {
+        "id": 566,
+        "where": "src/compiler/transformers/es2015.ts:1308:59",
+        "reason": "a value of type CapturedThis seen as Expression | undefined, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",
+        "family": "other",
+        "source_family": "CapturedThis",
+        "classification": "d",
+        "source_expression": "createCapturedThis()",
+        "source_expression_where": "src/compiler/transformers/es2015.ts:1308:59",
+        "original_type": "CapturedThis",
+        "receiving_syntax": "CallExpression",
+        "reads": [],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [
+          {
+            "where": "src/compiler/transformers/es2015.ts:1308:29",
+            "reason": "unresolved, external, virtual, or callback consumer",
+            "expression": "factory.createReturnStatement(createCapturedThis())"
+          }
+        ],
+        "steps": 1
+      },
+      "slug": "captured-this",
+      "field": "emitNode",
+      "real_type": "GeneratedEmitNode",
+      "misfit_type": "undefined",
+      "positive": "stored generated",
+      "negative": "stored undefined",
+      "provenance": [
+        "types.ts:1725",
+        "factory/emitNode.ts:77",
+        "transformers/es2015.ts:1328-1329"
+      ],
+      "limitation": "writeEmitNode parameterizes disposeEmitNodes store; GeneratedEmitNode reduces EmitNode & { autoGenerate: AutoGenerateInfo }. Union family selects a GeneratedIdentifier actual member.",
+      "files": {
+        "in": "12_captured-this_in.a",
+        "out": "12_captured-this_out.a"
+      },
+      "expected": {
+        "in": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored generated\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 0,
+            "stdout": "before write\nstored generated\n",
+            "stderr_fields": []
+          }
+        },
+        "out": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored undefined\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 70,
+            "stdout": "before write\n",
+            "stderr_fields": [
+              "emitNode",
+              "GeneratedEmitNode",
+              "undefined"
+            ]
+          }
+        }
+      },
+      "mutant": {
+        "file": "12_captured-this_in.a",
+        "before": "writeEmitNode(node, emitNode);",
+        "write_from": "emitNode",
+        "write_to": "undefined",
+        "description": "Replace fitting argument with the out-of-type argument; exact Node stdout must reject it.",
+        "after": "writeEmitNode(node, undefined);"
+      },
+      "a_check": {
+        "in": "// a-check: refused a value of type CapturedThis seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace",
+        "out": "// a-check: refused a value of type CapturedThis seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace"
+      }
+    },
+    {
+      "rank": 13,
+      "family": "Declaration[]",
+      "count": 6,
+      "site_ids": [
+        147,
+        199,
+        212,
+        224,
+        334,
+        335
+      ],
+      "representative": {
+        "id": 147,
+        "where": "src/compiler/checker.ts:19242:61",
+        "reason": "a value of type Declaration[] seen as Node[], which can write Node where Declaration is read",
+        "family": "other",
+        "source_family": "Declaration[]",
+        "classification": "d",
+        "source_expression": "prop.declarations",
+        "source_expression_where": "src/compiler/checker.ts:19242:61",
+        "original_type": "Declaration[]",
+        "receiving_syntax": "CallExpression",
+        "reads": [
+          {
+            "where": "src/compiler/core.ts:34:9",
+            "operation": "identity/presence test"
+          },
+          {
+            "where": "src/compiler/core.ts:35:29",
+            "operation": "primitive field read",
+            "path": "length"
+          },
+          {
+            "where": "src/compiler/utilities.ts:4562:13",
+            "operation": "primitive field read",
+            "path": "kind"
+          },
+          {
+            "where": "src/compiler/utilities.ts:2997:9",
+            "operation": "discard/control read"
+          },
+          {
+            "where": "src/compiler/utilities.ts:2998:17",
+            "operation": "primitive field read",
+            "path": "kind"
+          },
+          {
+            "where": "src/compiler/utilitiesPublic.ts:2574:14",
+            "operation": "discard/control read"
+          },
+          {
+            "where": "src/compiler/utilities.ts:4562:13",
+            "operation": "primitive field read",
+            "path": "initializer.kind"
+          },
+          {
+            "where": "src/compiler/core.ts:1122:18",
+            "operation": "primitive field read",
+            "path": "initializer.jsDoc.length"
+          },
+          {
+            "where": "src/compiler/core.ts:1123:18",
+            "operation": "primitive field read",
+            "path": "initializer.jsDoc.length"
+          },
+          {
+            "where": "src/compiler/core.ts:401:9",
+            "operation": "identity/presence test"
+          },
+          {
+            "where": "src/compiler/core.ts:402:29",
+            "operation": "primitive field read",
+            "path": "initializer.jsDoc.length"
+          }
+        ],
+        "writes": [],
+        "aliases": [
+          {
+            "where": "src/compiler/checker.ts:2621:54",
+            "name": "declarations",
+            "path": "",
+            "references": 1
+          },
+          {
+            "where": "src/compiler/checker.ts:2595:44",
+            "name": "declarations",
+            "path": "",
+            "references": 3
+          },
+          {
+            "where": "src/compiler/core.ts:33:31",
+            "name": "array",
+            "path": "",
+            "references": 3
+          },
+          {
+            "where": "src/compiler/utilitiesPublic.ts:1170:39",
+            "name": "node",
+            "path": "",
+            "references": 1
+          },
+          {
+            "where": "src/compiler/utilitiesPublic.ts:1279:47",
+            "name": "node",
+            "path": "",
+            "references": 1
+          },
+          {
+            "where": "src/compiler/utilitiesPublic.ts:1257:29",
+            "name": "node",
+            "path": "",
+            "references": 5
+          },
+          {
+            "where": "src/compiler/utilities.ts:4561:30",
+            "name": "node",
+            "path": "",
+            "references": 1
+          },
+          {
+            "where": "src/compiler/utilities.ts:4658:41",
+            "name": "hostNode",
+            "path": "",
+            "references": 7
+          },
+          {
+            "where": "src/compiler/utilities.ts:2996:32",
+            "name": "node",
+            "path": "",
+            "references": 2
+          },
+          {
+            "where": "src/compiler/utilitiesPublic.ts:2573:32",
+            "name": "node",
+            "path": "",
+            "references": 1
+          },
+          {
+            "where": "src/compiler/utilitiesPublic.ts:2552:31",
+            "name": "node",
+            "path": "initializer",
+            "references": 2
+          },
+          {
+            "where": "src/compiler/utilities.ts:4561:30",
+            "name": "node",
+            "path": "initializer",
+            "references": 1
+          },
+          {
+            "where": "src/compiler/utilities.ts:4684:31",
+            "name": "hostNode",
+            "path": "",
+            "references": 1
+          },
+          {
+            "where": "src/compiler/utilities.ts:4684:47",
+            "name": "comments",
+            "path": "initializer.jsDoc",
+            "references": 2
+          },
+          {
+            "where": "src/compiler/core.ts:1121:25",
+            "name": "array",
+            "path": "initializer.jsDoc",
+            "references": 3
+          },
+          {
+            "where": "src/compiler/utilities.ts:4685:11",
+            "name": "lastJsDoc",
+            "path": "initializer.jsDoc.[]",
+            "references": 1
+          },
+          {
+            "where": "src/compiler/core.ts:399:42",
+            "name": "array",
+            "path": "initializer.jsDoc",
+            "references": 3
+          },
+          {
+            "where": "src/compiler/utilities.ts:4684:31",
+            "name": "hostNode",
+            "path": "",
+            "references": 1
+          }
+        ],
+        "calls": [
+          {
+            "where": "src/compiler/checker.ts:19242:21",
+            "target": "src/compiler/checker.ts:2621:5",
+            "parameter": "src/compiler/checker.ts:2621:54",
+            "path": ""
+          },
+          {
+            "where": "src/compiler/checker.ts:2623:16",
+            "target": "src/compiler/checker.ts:2595:5",
+            "parameter": "src/compiler/checker.ts:2595:44",
+            "path": ""
+          },
+          {
+            "where": "src/compiler/checker.ts:2596:61",
+            "target": "src/compiler/core.ts:33:1",
+            "parameter": "src/compiler/core.ts:33:31",
+            "path": ""
+          },
+          {
+            "where": "src/compiler/checker.ts:2596:108",
+            "target": "src/compiler/utilitiesPublic.ts:1170:1",
+            "parameter": "src/compiler/utilitiesPublic.ts:1170:39",
+            "path": ""
+          },
+          {
+            "where": "src/compiler/utilitiesPublic.ts:1171:12",
+            "target": "src/compiler/utilitiesPublic.ts:1279:1",
+            "parameter": "src/compiler/utilitiesPublic.ts:1279:47",
+            "path": ""
+          },
+          {
+            "where": "src/compiler/utilitiesPublic.ts:1280:17",
+            "target": "src/compiler/utilitiesPublic.ts:1257:1",
+            "parameter": "src/compiler/utilitiesPublic.ts:1257:29",
+            "path": ""
+          },
+          {
+            "where": "src/compiler/utilitiesPublic.ts:1258:10",
+            "target": "src/compiler/utilities.ts:4561:1",
+            "parameter": "src/compiler/utilities.ts:4561:30",
+            "path": ""
+          },
+          {
+            "where": "src/compiler/utilitiesPublic.ts:1262:26",
+            "target": "src/compiler/utilities.ts:4658:1",
+            "parameter": "src/compiler/utilities.ts:4658:41",
+            "path": ""
+          },
+          {
+            "where": "src/compiler/utilities.ts:4661:9",
+            "target": "src/compiler/utilities.ts:2996:1",
+            "parameter": "src/compiler/utilities.ts:2996:32",
+            "path": ""
+          },
+          {
+            "where": "src/compiler/utilities.ts:4661:37",
+            "target": "src/compiler/utilitiesPublic.ts:2573:1",
+            "parameter": "src/compiler/utilitiesPublic.ts:2573:32",
+            "path": ""
+          },
+          {
+            "where": "src/compiler/utilities.ts:4661:65",
+            "target": "src/compiler/utilitiesPublic.ts:2552:1",
+            "parameter": "src/compiler/utilitiesPublic.ts:2552:31",
+            "path": "initializer"
+          },
+          {
+            "where": "src/compiler/utilitiesPublic.ts:2553:10",
+            "target": "src/compiler/utilities.ts:4561:1",
+            "parameter": "src/compiler/utilities.ts:4561:30",
+            "path": "initializer"
+          },
+          {
+            "where": "src/compiler/utilities.ts:4662:35",
+            "target": "src/compiler/utilities.ts:4684:1",
+            "parameter": "src/compiler/utilities.ts:4684:31",
+            "path": ""
+          },
+          {
+            "where": "src/compiler/utilities.ts:4662:35",
+            "target": "src/compiler/utilities.ts:4684:1",
+            "parameter": "src/compiler/utilities.ts:4684:47",
+            "path": "initializer.jsDoc"
+          },
+          {
+            "where": "src/compiler/utilities.ts:4685:23",
+            "target": "src/compiler/core.ts:1121:1",
+            "parameter": "src/compiler/core.ts:1121:25",
+            "path": "initializer.jsDoc"
+          },
+          {
+            "where": "src/compiler/utilities.ts:4686:12",
+            "target": "src/compiler/core.ts:399:1",
+            "parameter": "src/compiler/core.ts:399:42",
+            "path": "initializer.jsDoc"
+          },
+          {
+            "where": "src/compiler/utilities.ts:4668:39",
+            "target": "src/compiler/utilities.ts:4684:1",
+            "parameter": "src/compiler/utilities.ts:4684:31",
+            "path": ""
+          }
+        ],
+        "unresolved": [
+          {
+            "where": "src/compiler/checker.ts:2596:31",
+            "reason": "unresolved, external, virtual, or callback consumer",
+            "expression": "Array.isArray(declarations)"
+          },
+          {
+            "where": "src/compiler/core.ts:36:28",
+            "reason": "unresolved, external, virtual, or callback consumer",
+            "expression": "callback(array[i]!, i)"
+          },
+          {
+            "where": "src/compiler/utilitiesPublic.ts:1259:9",
+            "reason": "reassigned alias requires flow-sensitive identity tracking",
+            "expression": "tags = node.jsDoc?.jsDocCache"
+          },
+          {
+            "where": "src/compiler/utilitiesPublic.ts:2555:11",
+            "reason": "destructured alias",
+            "expression": "{ jsDoc } = node as JSDocContainer"
+          },
+          {
+            "where": "src/compiler/utilities.ts:4688:70",
+            "reason": "alias captured by a nested callback/closure",
+            "expression": "hostNode"
+          },
+          {
+            "where": "src/compiler/utilities.ts:4687:23",
+            "reason": "alias captured by a nested callback/closure",
+            "expression": "lastJsDoc"
+          },
+          {
+            "where": "src/compiler/core.ts:403:23",
+            "reason": "unresolved, external, virtual, or callback consumer",
+            "expression": "mapfn(array[i]!, i)"
+          },
+          {
+            "where": "src/compiler/utilities.ts:4665:9",
+            "reason": "reassigned alias requires flow-sensitive identity tracking",
+            "expression": "node: Node | undefined = hostNode"
+          },
+          {
+            "where": "src/compiler/utilities.ts:4688:70",
+            "reason": "alias captured by a nested callback/closure",
+            "expression": "hostNode"
+          },
+          {
+            "where": "src/compiler/utilitiesPublic.ts:1266:13",
+            "reason": "write domain unresolved, generic, or unchecked",
+            "expression": "node.jsDoc ??= []"
+          },
+          {
+            "where": "src/compiler/utilitiesPublic.ts:1267:13",
+            "reason": "write domain unresolved, generic, or unchecked",
+            "expression": "node.jsDoc.jsDocCache = tags"
+          }
+        ],
+        "steps": 56
+      },
+      "slug": "declaration-array",
+      "field": "[]",
+      "real_type": "Declaration",
+      "misfit_type": "Node",
+      "positive": "stored Declaration",
+      "negative": "stored Expression",
+      "provenance": [
+        "core.ts:288",
+        "types.ts:1760-1795"
+      ],
+      "limitation": "Real array mutator extracted into a reduced consumer. This exercises container-element writes, not only named object fields.",
+      "files": {
+        "in": "13_declaration-array_in.a",
+        "out": "13_declaration-array_out.a"
+      },
+      "expected": {
+        "in": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored Declaration\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 0,
+            "stdout": "before write\nstored Declaration\n",
+            "stderr_fields": []
+          }
+        },
+        "out": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored Expression\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 70,
+            "stdout": "before write\n",
+            "stderr_fields": [
+              "[]",
+              "Declaration",
+              "Node"
+            ]
+          }
+        }
+      },
+      "mutant": {
+        "file": "13_declaration-array_in.a",
+        "before": "collect(array, declaration);",
+        "write_from": "declaration",
+        "write_to": "expression",
+        "description": "Replace fitting argument with the out-of-type argument; exact Node stdout must reject it.",
+        "after": "collect(array, expression);"
+      },
+      "a_check": {
+        "in": "// a-check: refused a value of type Declaration[] seen as Node[], which can write Node where Declaration is read",
+        "out": "// a-check: refused a value of type Declaration[] seen as Node[], which can write Node where Declaration is read"
+      }
+    },
+    {
+      "rank": 14,
+      "family": "NodeArray<Statement>",
+      "count": 6,
+      "site_ids": [
+        416,
+        417,
+        579,
+        588,
+        591,
+        598
+      ],
+      "representative": {
+        "id": 416,
+        "where": "src/compiler/emitter.ts:3527:44",
+        "reason": "a value of type NodeArray<Statement> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+        "family": "other",
+        "source_family": "NodeArray<Statement>",
+        "classification": "d",
+        "source_expression": "body.statements",
+        "source_expression_where": "src/compiler/emitter.ts:3527:44",
+        "original_type": "NodeArray<Statement>",
+        "receiving_syntax": "CallExpression",
+        "reads": [
+          {
+            "where": "src/compiler/utilities.ts:7029:13",
+            "operation": "primitive field read",
+            "path": "pos"
+          },
+          {
+            "where": "src/compiler/utilities.ts:7030:68",
+            "operation": "primitive field read",
+            "path": "pos"
+          },
+          {
+            "where": "src/compiler/utilities.ts:7035:57",
+            "operation": "primitive field read",
+            "path": "pos"
+          },
+          {
+            "where": "src/compiler/utilities.ts:7064:90",
+            "operation": "primitive field read",
+            "path": "pos"
+          },
+          {
+            "where": "src/compiler/utilities.ts:6939:65",
+            "operation": "primitive field read",
+            "path": "pos"
+          },
+          {
+            "where": "src/compiler/utilities.ts:7069:57",
+            "operation": "primitive field read",
+            "path": "pos"
+          },
+          {
+            "where": "src/compiler/emitter.ts:5944:33",
+            "operation": "primitive field read",
+            "path": "end"
+          }
+        ],
+        "writes": [],
+        "aliases": [
+          {
+            "where": "src/compiler/emitter.ts:5922:68",
+            "name": "detachedRange",
+            "path": "",
+            "references": 3
+          },
+          {
+            "where": "src/compiler/emitter.ts:6142:56",
+            "name": "range",
+            "path": "",
+            "references": 1
+          },
+          {
+            "where": "src/compiler/utilities.ts:7017:5",
+            "name": "node",
+            "path": "",
+            "references": 6
+          },
+          {
+            "where": "src/compiler/utilities.ts:6938:95",
+            "name": "node",
+            "path": "",
+            "references": 1
+          }
+        ],
+        "calls": [
+          {
+            "where": "src/compiler/emitter.ts:3527:9",
+            "target": "src/compiler/emitter.ts:5922:5",
+            "parameter": "src/compiler/emitter.ts:5922:68",
+            "path": ""
+          },
+          {
+            "where": "src/compiler/emitter.ts:5929:13",
+            "target": "src/compiler/emitter.ts:6142:5",
+            "parameter": "src/compiler/emitter.ts:6142:56",
+            "path": ""
+          },
+          {
+            "where": "src/compiler/emitter.ts:6143:65",
+            "target": "src/compiler/utilities.ts:7012:1",
+            "parameter": "src/compiler/utilities.ts:7017:5",
+            "path": ""
+          },
+          {
+            "where": "src/compiler/utilities.ts:7067:17",
+            "target": "src/compiler/utilities.ts:6938:1",
+            "parameter": "src/compiler/utilities.ts:6938:95",
+            "path": ""
+          }
+        ],
+        "unresolved": [
+          {
+            "where": "src/compiler/emitter.ts:5924:15",
+            "reason": "destructured alias",
+            "expression": "{ pos, end } = detachedRange"
+          }
+        ],
+        "steps": 12
+      },
+      "slug": "statement-array-range",
+      "field": "pos",
+      "real_type": "0",
+      "misfit_type": "1",
+      "positive": "stored 0",
+      "negative": "stored 1",
+      "provenance": [
+        "utilities.ts:10644-10647",
+        "types.ts:1589"
+      ],
+      "limitation": "setTextRangePos body unchanged; literal-position driver selects a legal narrower holder. NodeArray retains the real array plus pos/end layout using Object.assign.",
+      "files": {
+        "in": "14_statement-array-range_in.a",
+        "out": "14_statement-array-range_out.a"
+      },
+      "expected": {
+        "in": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored 0\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 0,
+            "stdout": "before write\nstored 0\n",
+            "stderr_fields": []
+          }
+        },
+        "out": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored 1\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 70,
+            "stdout": "before write\n",
+            "stderr_fields": [
+              "pos",
+              "0",
+              "1"
+            ]
+          }
+        }
+      },
+      "mutant": {
+        "file": "14_statement-array-range_in.a",
+        "before": "setTextRangePos(range, 0);",
+        "write_from": "0",
+        "write_to": "1",
+        "description": "Replace fitting argument with the out-of-type argument; exact Node stdout must reject it.",
+        "after": "setTextRangePos(range, 1);"
+      },
+      "a_check": {
+        "in": "// a-check: refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+        "out": "// a-check: refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace"
+      }
+    },
+    {
+      "rank": 15,
+      "family": "DiagnosticWithDetachedLocation",
+      "count": 5,
+      "site_ids": [
+        210,
+        511,
+        515,
+        517,
+        518
+      ],
+      "representative": {
+        "id": 210,
+        "where": "src/compiler/checker.ts:33274:47",
+        "reason": "a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read",
+        "family": "diagnostics",
+        "source_family": "DiagnosticWithDetachedLocation",
+        "classification": "d",
+        "source_expression": "error",
+        "source_expression_where": "src/compiler/checker.ts:33274:47",
+        "original_type": "DiagnosticWithDetachedLocation",
+        "receiving_syntax": "CallExpression",
+        "reads": [],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [
+          {
+            "where": "src/compiler/checker.ts:33274:21",
+            "reason": "rest/container argument or missing implementation parameter",
+            "expression": "addRelatedInfo(lastError, error)"
+          }
+        ],
+        "steps": 1
+      },
+      "slug": "detached-diagnostic",
+      "field": "file",
+      "real_type": "undefined",
+      "misfit_type": "SourceFile",
+      "positive": "stored undefined",
+      "negative": "stored main.a",
+      "provenance": [
+        "types.ts:7290-7311"
+      ],
+      "limitation": "The file field declarations are upstream; writeFile is a new boundary driver. Diagnostic selects its located union member as the actual shape.",
+      "files": {
+        "in": "15_detached-diagnostic_in.a",
+        "out": "15_detached-diagnostic_out.a"
+      },
+      "expected": {
+        "in": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored undefined\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 0,
+            "stdout": "before write\nstored undefined\n",
+            "stderr_fields": []
+          }
+        },
+        "out": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored main.a\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 70,
+            "stdout": "before write\n",
+            "stderr_fields": [
+              "file",
+              "undefined",
+              "SourceFile"
+            ]
+          }
+        }
+      },
+      "mutant": {
+        "file": "15_detached-diagnostic_in.a",
+        "before": "writeFile(diagnostic, undefined);",
+        "write_from": "undefined",
+        "write_to": "file",
+        "description": "Replace fitting argument with the out-of-type argument; exact Node stdout must reject it.",
+        "after": "writeFile(diagnostic, file);"
+      },
+      "a_check": {
+        "in": "// a-check: refused a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read",
+        "out": "// a-check: refused a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read"
+      }
+    },
+    {
+      "rank": 16,
+      "family": "FlowArrayMutation | FlowAssignment",
+      "count": 5,
+      "site_ids": [
+        11,
+        16,
+        17,
+        20,
+        22
+      ],
+      "representative": {
+        "id": 11,
+        "where": "src/compiler/binder.ts:1411:51",
+        "reason": "a value of type FlowArrayMutation | FlowAssignment seen as FlowNode, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read",
+        "family": "other",
+        "source_family": "FlowArrayMutation | FlowAssignment",
+        "classification": "d",
+        "unresolved": [
+          {
+            "where": "src/compiler/binder.ts:1411:51",
+            "reason": "census source type does not map uniquely to a stock-checker expression",
+            "candidates": [
+              {
+                "where": "src/compiler/binder.ts:1411:13",
+                "expression": "addAntecedent(currentExceptionTarget, result)",
+                "type": "void"
+              },
+              {
+                "where": "src/compiler/binder.ts:1411:51",
+                "expression": "result",
+                "type": "FlowAssignment | FlowArrayMutation"
+              }
+            ]
+          }
+        ],
+        "reads": [],
+        "writes": [],
+        "calls": [],
+        "aliases": []
+      },
+      "slug": "flow-assignment-union",
+      "field": "node",
+      "real_type": "BinaryExpression",
+      "misfit_type": "BindingElement",
+      "positive": "stored BinaryExpression",
+      "negative": "stored BindingElement",
+      "provenance": [
+        "types.ts:4182-4253"
+      ],
+      "limitation": "Two upstream flow variants are reduced to the node field; writer is a boundary driver. FlowArrayMutation is the actual member in both union fixtures.",
+      "files": {
+        "in": "16_flow-assignment-union_in.a",
+        "out": "16_flow-assignment-union_out.a"
+      },
+      "expected": {
+        "in": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored BinaryExpression\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 0,
+            "stdout": "before write\nstored BinaryExpression\n",
+            "stderr_fields": []
+          }
+        },
+        "out": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored BindingElement\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 70,
+            "stdout": "before write\n",
+            "stderr_fields": [
+              "node",
+              "BinaryExpression",
+              "BindingElement"
+            ]
+          }
+        }
+      },
+      "mutant": {
+        "file": "16_flow-assignment-union_in.a",
+        "before": "writeNode(flow, binary);",
+        "write_from": "binary",
+        "write_to": "binding",
+        "description": "Replace fitting argument with the out-of-type argument; exact Node stdout must reject it.",
+        "after": "writeNode(flow, binding);"
+      },
+      "a_check": {
+        "in": "// a-check: refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read",
+        "out": "// a-check: refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read"
+      }
+    },
+    {
+      "rank": 17,
+      "family": "GeneratedIdentifier | GeneratedPrivateIdentifier | Node",
+      "count": 5,
+      "site_ids": [
+        419,
+        599,
+        600,
+        601,
+        602
+      ],
+      "representative": {
+        "id": 419,
+        "where": "src/compiler/emitter.ts:5461:39",
+        "reason": "a value of type GeneratedIdentifier | GeneratedPrivateIdentifier | Node seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",
+        "family": "other",
+        "source_family": "GeneratedIdentifier | GeneratedPrivateIdentifier | Node",
+        "classification": "d",
+        "unresolved": [
+          {
+            "where": "src/compiler/emitter.ts:5461:39",
+            "reason": "census source type does not map uniquely to a stock-checker expression",
+            "candidates": [
+              {
+                "where": "src/compiler/emitter.ts:5461:20",
+                "expression": "generateNameCached(getNodeForGeneratedName(name), isPrivateIdentifier(name), autoGenerate.flags, autoGenerate.prefix, autoGenerate.suffix)",
+                "type": "string"
+              },
+              {
+                "where": "src/compiler/emitter.ts:5461:39",
+                "expression": "getNodeForGeneratedName(name)",
+                "type": "Node | GeneratedIdentifier | GeneratedPrivateIdentifier"
+              },
+              {
+                "where": "src/compiler/emitter.ts:5461:39",
+                "expression": "getNodeForGeneratedName",
+                "type": "(name: GeneratedIdentifier | GeneratedPrivateIdentifier) => Node | GeneratedIdentifier | GeneratedPrivateIdentifier"
+              }
+            ]
+          }
+        ],
+        "reads": [],
+        "writes": [],
+        "calls": [],
+        "aliases": []
+      },
+      "slug": "generated-node-union",
+      "field": "emitNode",
+      "real_type": "GeneratedEmitNode",
+      "misfit_type": "undefined",
+      "positive": "stored generated",
+      "negative": "stored undefined",
+      "provenance": [
+        "types.ts:1725",
+        "factory/emitNode.ts:77",
+        "transformers/es2015.ts:1328-1329"
+      ],
+      "limitation": "writeEmitNode parameterizes disposeEmitNodes store; GeneratedEmitNode reduces EmitNode & { autoGenerate: AutoGenerateInfo }. Union family selects a GeneratedIdentifier actual member.",
+      "files": {
+        "in": "17_generated-node-union_in.a",
+        "out": "17_generated-node-union_out.a"
+      },
+      "expected": {
+        "in": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored generated\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 0,
+            "stdout": "before write\nstored generated\n",
+            "stderr_fields": []
+          }
+        },
+        "out": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored undefined\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 70,
+            "stdout": "before write\n",
+            "stderr_fields": [
+              "emitNode",
+              "GeneratedEmitNode",
+              "undefined"
+            ]
+          }
+        }
+      },
+      "mutant": {
+        "file": "17_generated-node-union_in.a",
+        "before": "writeEmitNode(node, emitNode);",
+        "write_from": "emitNode",
+        "write_to": "undefined",
+        "description": "Replace fitting argument with the out-of-type argument; exact Node stdout must reject it.",
+        "after": "writeEmitNode(node, undefined);"
+      },
+      "a_check": {
+        "in": "// a-check: refused a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace",
+        "out": "// a-check: refused a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace"
+      }
+    },
+    {
+      "rank": 18,
+      "family": "SyntheticSuper",
+      "count": 5,
+      "site_ids": [
+        565,
+        572,
+        573,
+        574,
+        582
+      ],
+      "representative": {
+        "id": 565,
+        "where": "src/compiler/transformers/es2015.ts:1051:127",
+        "reason": "a value of type SyntheticSuper seen as string | BindingName, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",
+        "family": "other",
+        "source_family": "SyntheticSuper",
+        "classification": "d",
+        "source_expression": "createSyntheticSuper()",
+        "source_expression_where": "src/compiler/transformers/es2015.ts:1051:127",
+        "original_type": "SyntheticSuper",
+        "receiving_syntax": "CallExpression",
+        "reads": [],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [
+          {
+            "where": "src/compiler/transformers/es2015.ts:1051:37",
+            "reason": "unresolved, external, virtual, or callback consumer",
+            "expression": "factory.createParameterDeclaration(/*modifiers*/ undefined, /*dotDotDotToken*/ undefined, createSyntheticSuper())"
+          }
+        ],
+        "steps": 1
+      },
+      "slug": "synthetic-super",
+      "field": "emitNode",
+      "real_type": "GeneratedEmitNode",
+      "misfit_type": "undefined",
+      "positive": "stored generated",
+      "negative": "stored undefined",
+      "provenance": [
+        "types.ts:1725",
+        "factory/emitNode.ts:77",
+        "transformers/es2015.ts:1328-1329"
+      ],
+      "limitation": "writeEmitNode parameterizes disposeEmitNodes store; GeneratedEmitNode reduces EmitNode & { autoGenerate: AutoGenerateInfo }. Union family selects a GeneratedIdentifier actual member.",
+      "files": {
+        "in": "18_synthetic-super_in.a",
+        "out": "18_synthetic-super_out.a"
+      },
+      "expected": {
+        "in": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored generated\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 0,
+            "stdout": "before write\nstored generated\n",
+            "stderr_fields": []
+          }
+        },
+        "out": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored undefined\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 70,
+            "stdout": "before write\n",
+            "stderr_fields": [
+              "emitNode",
+              "GeneratedEmitNode",
+              "undefined"
+            ]
+          }
+        }
+      },
+      "mutant": {
+        "file": "18_synthetic-super_in.a",
+        "before": "writeEmitNode(node, emitNode);",
+        "write_from": "emitNode",
+        "write_to": "undefined",
+        "description": "Replace fitting argument with the out-of-type argument; exact Node stdout must reject it.",
+        "after": "writeEmitNode(node, undefined);"
+      },
+      "a_check": {
+        "in": "// a-check: refused a value of type SyntheticSuper seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace",
+        "out": "// a-check: refused a value of type SyntheticSuper seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than GeneratedEmitNode, which a write of EmitNode | undefined would replace"
+      }
+    },
+    {
+      "rank": 19,
+      "family": "Mutable<GeneratedIdentifier>",
+      "count": 4,
+      "site_ids": [
+        432,
+        433,
+        434,
+        436
+      ],
+      "representative": {
+        "id": 432,
+        "where": "src/compiler/factory/nodeFactory.ts:1354:32",
+        "reason": "a value of type Mutable<GeneratedIdentifier> seen as Identifier, which can write EmitNode | undefined where EmitNode & { autoGenerate: AutoGenerateInfo; } is read",
+        "family": "other",
+        "source_family": "Mutable<GeneratedIdentifier>",
+        "classification": "d",
+        "source_expression": "name",
+        "source_expression_where": "src/compiler/factory/nodeFactory.ts:1354:32",
+        "original_type": "Mutable<GeneratedIdentifier>",
+        "receiving_syntax": "CallExpression",
+        "reads": [],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [
+          {
+            "where": "src/compiler/factory/nodeFactory.ts:1354:13",
+            "reason": "unresolved, external, virtual, or callback consumer",
+            "expression": "recordTempVariable(name)"
+          }
+        ],
+        "steps": 1
+      },
+      "slug": "mutable-generated",
+      "field": "emitNode",
+      "real_type": "GeneratedEmitNode",
+      "misfit_type": "undefined",
+      "positive": "stored generated",
+      "negative": "stored undefined",
+      "provenance": [
+        "types.ts:1725",
+        "factory/emitNode.ts:77",
+        "transformers/es2015.ts:1328-1329"
+      ],
+      "limitation": "writeEmitNode parameterizes disposeEmitNodes store; GeneratedEmitNode reduces EmitNode & { autoGenerate: AutoGenerateInfo }. Union family selects a GeneratedIdentifier actual member.",
+      "files": {
+        "in": "19_mutable-generated_in.a",
+        "out": "19_mutable-generated_out.a"
+      },
+      "expected": {
+        "in": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored generated\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 0,
+            "stdout": "before write\nstored generated\n",
+            "stderr_fields": []
+          }
+        },
+        "out": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored undefined\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 70,
+            "stdout": "before write\n",
+            "stderr_fields": [
+              "emitNode",
+              "GeneratedEmitNode",
+              "undefined"
+            ]
+          }
+        }
+      },
+      "mutant": {
+        "file": "19_mutable-generated_in.a",
+        "before": "writeEmitNode(node, emitNode);",
+        "write_from": "emitNode",
+        "write_to": "undefined",
+        "description": "Replace fitting argument with the out-of-type argument; exact Node stdout must reject it.",
+        "after": "writeEmitNode(node, undefined);"
+      },
+      "a_check": {
+        "in": "// a-check: refused a value of type Mutable<GeneratedIdentifier> seen as Node, which can write EmitNode | undefined where GeneratedEmitNode is read",
+        "out": "// a-check: refused a value of type Mutable<GeneratedIdentifier> seen as Node, which can write EmitNode | undefined where GeneratedEmitNode is read"
+      }
+    },
+    {
+      "rank": 20,
+      "family": "Diagnostic",
+      "count": 3,
+      "site_ids": [
+        179,
+        411,
+        548
+      ],
+      "representative": {
+        "id": 179,
+        "where": "src/compiler/checker.ts:2534:16",
+        "reason": "a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+        "family": "other",
+        "source_family": "Diagnostic",
+        "classification": "d",
+        "source_expression": "location\r\n            ? createDiagnosticForNode(location, message, ...args)\r\n            : createCompilerDiagnostic(message, ...args)",
+        "source_expression_where": "src/compiler/checker.ts:2534:16",
+        "original_type": "Diagnostic",
+        "receiving_syntax": "ReturnStatement",
+        "reads": [],
+        "writes": [],
+        "aliases": [],
+        "calls": [],
+        "unresolved": [
+          {
+            "where": "src/compiler/checker.ts:2534:9",
+            "reason": "returned alias escapes receiving scope",
+            "expression": "return location\r\n            ? createDiagnosticForNode(location, message, ...args)\r\n            : createCompilerDiagnostic(message, ...args);"
+          }
+        ],
+        "steps": 1
+      },
+      "slug": "diagnostic-union",
+      "field": "file",
+      "real_type": "SourceFile",
+      "misfit_type": "undefined",
+      "positive": "stored main.a",
+      "negative": "stored undefined",
+      "provenance": [
+        "types.ts:7290-7311"
+      ],
+      "limitation": "The file field declarations are upstream; writeFile is a new boundary driver. Diagnostic selects its located union member as the actual shape.",
+      "files": {
+        "in": "20_diagnostic-union_in.a",
+        "out": "20_diagnostic-union_out.a"
+      },
+      "expected": {
+        "in": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored main.a\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 0,
+            "stdout": "before write\nstored main.a\n",
+            "stderr_fields": []
+          }
+        },
+        "out": {
+          "node": {
+            "exit": 0,
+            "stdout": "before write\nstored undefined\n",
+            "stderr": ""
+          },
+          "adamic_ts": {
+            "exit": 70,
+            "stdout": "before write\n",
+            "stderr_fields": [
+              "file",
+              "SourceFile",
+              "undefined"
+            ],
+            "stderr": "adamic: panic: write failed: diagnostic.file expects SourceFile, got undefined\n"
+          }
+        }
+      },
+      "mutant": {
+        "file": "20_diagnostic-union_in.a",
+        "before": "writeFile(diagnostic, file);",
+        "write_from": "file",
+        "write_to": "undefined",
+        "description": "Replace fitting argument with the out-of-type argument; exact Node stdout must reject it.",
+        "after": "writeFile(diagnostic, undefined);"
+      },
+      "a_check": {
+        "in": "// a-check: refused a value of type LocatedDiagnostic seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read",
+        "out": "// a-check: refused a value of type LocatedDiagnostic seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read"
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+// a-check: refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace
+// Survey NodeArray<Statement>: 6 class-d sites; representative ID 416, src/compiler/emitter.ts:3527:44.
+// TypeScript 6.0.3: utilities.ts:10644-10647, types.ts:1589.
+// setTextRangePos body unchanged; literal-position driver selects a legal narrower holder. NodeArray retains the real array plus pos/end layout using Object.assign.
+interface ReadonlyTextRange { readonly pos: number; readonly end: number; }
+interface TextRange { pos: number; end: number; }
+interface Statement { readonly kind: "Statement"; }
+interface NodeArray<T> extends ReadonlyArray<T>, ReadonlyTextRange {}
+function setTextRangePos<T extends ReadonlyTextRange>(range: T, pos: number): T {
+    (range as TextRange).pos = pos;
+    return range;
+}
+
+const statements = [{ kind: "Statement" as const }];
+const range: NodeArray<Statement> & { readonly pos: 0; readonly end: 0 } = Object.assign(statements, { pos: 0 as const, end: 0 as const });
+console.log("before write");
+setTextRangePos(range, 0);
+console.log(`stored ${range.pos}`);
