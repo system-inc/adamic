@@ -63,6 +63,11 @@ func (l *lowering) processValue(node *ast.Node) (ir.Expression, bool, error) {
 			if err != nil {
 				return nil, true, err
 			}
+			if value.Type() != ir.Number && value.Type() != ir.MaybeNumber {
+				if _, absent := value.(ir.Undefined); !absent {
+					return nil, true, l.notYet(arguments[0], "process.exit with a non-numeric code")
+				}
+			}
 			code = fit(value, ir.MaybeNumber)
 		}
 		return ir.ProcessCall{Operation: "exit", Arguments: []ir.Expression{code}, Of: ir.Number}, true, nil
@@ -76,6 +81,11 @@ func (l *lowering) processValue(node *ast.Node) (ir.Expression, bool, error) {
 			value, err := l.expression(binary.Right)
 			if err != nil {
 				return nil, true, err
+			}
+			if value.Type() != ir.Number && value.Type() != ir.MaybeNumber {
+				if _, absent := value.(ir.Undefined); !absent {
+					return nil, true, l.notYet(binary.Right, "process.exitCode assignment with a non-numeric code")
+				}
 			}
 			call := ir.ProcessCall{Operation: "setExitCode", Arguments: []ir.Expression{fit(value, ir.MaybeNumber)}, Of: ir.MaybeNumber}
 			return fit(call, value.Type()), true, nil

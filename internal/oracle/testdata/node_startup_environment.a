@@ -1,0 +1,9 @@
+// Binding-only environment getter probe. The full sys.ts || shape is a compiler blocker.
+import process from "node:process";
+const nodeSystem = {
+    getEnvironmentVariable(name: string) {
+        return process.env[name] ?? "";
+    }
+};
+console.log(nodeSystem.getEnvironmentVariable("ADAMIC_HOST29_ENV"));
+console.log(String(process.env.ADAMIC_HOST29_ABSENT === undefined));
