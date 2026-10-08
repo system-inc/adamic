@@ -1,0 +1,40 @@
+=== RUN   TestShapeErasureFixtures
+=== RUN   TestShapeErasureFixtures/proven
+    shape_conformance_test.go:43: remaining casts=0 checked reads=0
+=== RUN   TestShapeErasureFixtures/proven-property
+    shape_conformance_test.go:43: remaining casts=0 checked reads=0
+=== RUN   TestShapeErasureFixtures/proven-callback
+    shape_conformance_test.go:43: remaining casts=0 checked reads=0
+=== RUN   TestShapeErasureFixtures/proven-generic
+    shape_conformance_test.go:43: remaining casts=0 checked reads=0
+=== RUN   TestShapeErasureFixtures/proven-callback-join
+    shape_conformance_test.go:43: remaining casts=0 checked reads=0
+=== RUN   TestShapeErasureFixtures/nonconforming-callback-join
+    shape_conformance_test.go:43: remaining casts=2 checked reads=2
+=== RUN   TestShapeErasureFixtures/nonconforming-generic
+    shape_conformance_test.go:43: remaining casts=1 checked reads=1
+=== RUN   TestShapeErasureFixtures/nonconforming
+    shape_conformance_test.go:43: remaining casts=1 checked reads=1
+=== RUN   TestShapeErasureFixtures/nonconforming-property
+    shape_conformance_test.go:43: remaining casts=1 checked reads=1
+=== RUN   TestShapeErasureFixtures/nonconforming-callback
+    shape_conformance_test.go:43: remaining casts=1 checked reads=1
+=== RUN   TestShapeErasureFixtures/uninitialized
+    shape_conformance_test.go:43: remaining casts=1 checked reads=1
+=== RUN   TestShapeErasureFixtures/host
+    shape_conformance_test.go:43: remaining casts=1 checked reads=1
+--- PASS: TestShapeErasureFixtures (1.63s)
+    --- PASS: TestShapeErasureFixtures/proven (0.17s)
+    --- PASS: TestShapeErasureFixtures/proven-property (0.16s)
+    --- PASS: TestShapeErasureFixtures/proven-callback (0.15s)
+    --- PASS: TestShapeErasureFixtures/proven-generic (0.13s)
+    --- PASS: TestShapeErasureFixtures/proven-callback-join (0.13s)
+    --- PASS: TestShapeErasureFixtures/nonconforming-callback-join (0.14s)
+    --- PASS: TestShapeErasureFixtures/nonconforming-generic (0.10s)
+    --- PASS: TestShapeErasureFixtures/nonconforming (0.11s)
+    --- PASS: TestShapeErasureFixtures/nonconforming-property (0.10s)
+    --- PASS: TestShapeErasureFixtures/nonconforming-callback (0.09s)
+    --- PASS: TestShapeErasureFixtures/uninitialized (0.16s)
+    --- PASS: TestShapeErasureFixtures/host (0.19s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.670s

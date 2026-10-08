@@ -1,0 +1,6 @@
+interface Base {readonly kind:'ok'|'other';}
+interface Ready extends Base {readonly kind:'ok';readonly ready:boolean;}
+const rejectedModule:number='bad';
+class ReadyObject {readonly kind='ok' as const;readonly ready=true;constructor(value?:Base) {}}
+function plainRead():Ready {const node:Base=new ReadyObject();return node as Ready;}
+function argumentRead():Ready {const raw={kind:'ok' as const,ready:true};const node:Base=new ReadyObject(raw);return node as Ready;}

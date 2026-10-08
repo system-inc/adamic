@@ -1,0 +1,61 @@
+{
+  "status": "PASS",
+  "controls": [
+    {
+      "owner": "plainRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "constructor allocation and initialization body not modeled at /tmp/shape-constructor-controls/clean/src/compiler/main.a:5:45",
+        "no tracked producer"
+      ]
+    },
+    {
+      "owner": "argumentRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "constructor allocation and initialization body not modeled at /tmp/shape-constructor-controls/clean/src/compiler/main.a:6:90",
+        "no tracked producer"
+      ]
+    },
+    {
+      "owner": "hostConstructorRead",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "constructor allocation and initialization body not modeled at /tmp/shape-constructor-controls/host/src/compiler/main.a:6:55",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-constructor-controls/host/src/compiler/main.a:4:23"
+      ]
+    },
+    {
+      "owner": "hostArgumentRead",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "constructor allocation and initialization body not modeled at /tmp/shape-constructor-controls/host/src/compiler/main.a:7:52",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-constructor-controls/host/src/compiler/main.a:7:68",
+        "no tracked producer"
+      ]
+    },
+    {
+      "owner": "diagnosedConstructorRead",
+      "outcome": "unknown",
+      "reason": "diagnosed body",
+      "detail": [
+        "constructor allocation and initialization body not modeled at /tmp/shape-constructor-controls/diagnosed/src/compiler/main.a:7:60",
+        "callee body skipped at /tmp/shape-constructor-controls/diagnosed/src/compiler/main.a:7:65"
+      ]
+    },
+    {
+      "owner": "diagnosedArgumentRead",
+      "outcome": "unknown",
+      "reason": "diagnosed body",
+      "detail": [
+        "constructor allocation and initialization body not modeled at /tmp/shape-constructor-controls/diagnosed/src/compiler/main.a:8:57",
+        "callee body skipped at /tmp/shape-constructor-controls/diagnosed/src/compiler/main.a:8:73",
+        "no tracked producer"
+      ]
+    }
+  ]
+}

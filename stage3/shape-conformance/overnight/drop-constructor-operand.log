@@ -1,0 +1,6 @@
+/tmp/shape-constructor-mutants/drop-constructor-operand/overlay.json
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/shape-conformance/constructor-frontiers/controls.py", line 16, in <module>
+    assert row['outcome']=='unknown' and row['reason']==expected[owner],(owner,row)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('hostConstructorRead', {'file': 'src/compiler/main.a', 'line': 0, 'column': 0, 'source_type': '', 'target_type': '', 'start': 391, 'end': 404, 'kind': 'tagged', 'text': 'node as Ready', 'adapted': {'start': 391, 'end': 404, 'owner': 'hostConstructorRead'}, 'measurement': 'measured on a checker-rejected program', 'outcome': 'unknown', 'reason': "flow the graph can't see", 'detail': ['constructor allocation and initialization body not modeled at /tmp/shape-constructor-controls/host/src/compiler/main.a:6:55'], 'allocation_sites': None, 'fields': [], 'host_values': [], 'diagnostic_causes': []})

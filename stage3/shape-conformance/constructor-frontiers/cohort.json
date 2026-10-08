@@ -1,0 +1,376 @@
+[
+  {
+    "file": "src/compiler/core.ts",
+    "line": 1543,
+    "column": 17,
+    "kind": "untagged",
+    "text": "new Map<K, V[]>() as MultiMap<K, V>",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/core.ts:1543:17"
+    ]
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 6100,
+    "column": 63,
+    "kind": "untagged",
+    "text": "diagnostics as SortedArray<DiagnosticWithLocation>",
+    "detail": [
+      "callback target identity is unknown",
+      "opaque call may mutate projected fields",
+      "projected field absent or allocation not modeled: slice",
+      "no reaching allocation established",
+      "untracked source lower.latentShapeUnknown",
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/utilities.ts:6063:29",
+      "missing expression"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 2635,
+    "column": 24,
+    "kind": "untagged",
+    "text": "new Symbol(flags | SymbolFlags.Transient, name) as TransientSymbol",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:2635:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 5537,
+    "column": 22,
+    "kind": "untagged",
+    "text": "createType(kind) as IntrinsicType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 5553,
+    "column": 22,
+    "kind": "untagged",
+    "text": "createTypeWithSymbol(TypeFlags.Object, symbol!) as ObjectType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 13475,
+    "column": 76,
+    "kind": "untagged",
+    "text": "createObjectType(kind, symbol) as InterfaceType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 13580,
+    "column": 29,
+    "kind": "untagged",
+    "text": "createTypeWithSymbol(TypeFlags.Enum, symbol) as EnumType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 13581,
+    "column": 27,
+    "kind": "untagged",
+    "text": "createTypeWithSymbol(TypeFlags.Enum, symbol) as EnumType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 14731,
+    "column": 34,
+    "kind": "untagged",
+    "text": "createSymbol(SymbolFlags.Property | prop.flags & optionalMask, prop.escapedName, checkFlags) as ReverseMappedSymbol",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:2635:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 14862,
+    "column": 34,
+    "kind": "untagged",
+    "text": "createSymbol(SymbolFlags.Property | (isOptional ? SymbolFlags.Optional : 0), propName, lateFlag | CheckFlags.Mapped | (isReadonly ? CheckFlags.Readonly : 0) | (stripOptional ? CheckFlags.StripOptional : 0)) as MappedSymbol",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:2635:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 16926,
+    "column": 20,
+    "kind": "untagged",
+    "text": "createObjectType(ObjectFlags.Reference, target.symbol) as TypeReference",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 16936,
+    "column": 22,
+    "kind": "untagged",
+    "text": "createTypeWithSymbol(source.flags, source.symbol) as TypeReference",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 16949,
+    "column": 22,
+    "kind": "untagged",
+    "text": "createObjectType(ObjectFlags.Reference, target.symbol) as DeferredTypeReference",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 17246,
+    "column": 24,
+    "kind": "untagged",
+    "text": "createType(TypeFlags.Substitution) as SubstitutionType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 18301,
+    "column": 24,
+    "kind": "untagged",
+    "text": "createOriginType(flags) as UnionOrIntersectionType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5532:16"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 18446,
+    "column": 20,
+    "kind": "untagged",
+    "text": "createType(TypeFlags.Union) as UnionType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 18641,
+    "column": 24,
+    "kind": "untagged",
+    "text": "createType(TypeFlags.Intersection) as IntersectionType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 18859,
+    "column": 24,
+    "kind": "untagged",
+    "text": "createType(TypeFlags.Index) as IndexType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 18866,
+    "column": 24,
+    "kind": "untagged",
+    "text": "createOriginType(TypeFlags.Index) as IndexType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5532:16"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 19110,
+    "column": 22,
+    "kind": "untagged",
+    "text": "createType(TypeFlags.TemplateLiteral) as TemplateLiteralType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 19166,
+    "column": 24,
+    "kind": "untagged",
+    "text": "createTypeWithSymbol(TypeFlags.StringMapping, symbol) as StringMappingType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 19172,
+    "column": 22,
+    "kind": "untagged",
+    "text": "createType(TypeFlags.IndexedAccess) as IndexedAccessType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 19736,
+    "column": 26,
+    "kind": "untagged",
+    "text": "createObjectType(ObjectFlags.Mapped, node.symbol) as MappedType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 19882,
+    "column": 22,
+    "kind": "untagged",
+    "text": "createType(TypeFlags.Conditional) as ConditionalType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 20277,
+    "column": 22,
+    "kind": "untagged",
+    "text": "createTypeWithSymbol(flags, symbol!) as LiteralType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 20308,
+    "column": 51,
+    "kind": "untagged",
+    "text": "createLiteralType(TypeFlags.StringLiteral, value) as StringLiteralType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 20314,
+    "column": 51,
+    "kind": "untagged",
+    "text": "createLiteralType(TypeFlags.NumberLiteral, value) as NumberLiteralType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 20321,
+    "column": 49,
+    "kind": "untagged",
+    "text": "createLiteralType(TypeFlags.BigIntLiteral, value) as BigIntLiteralType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 20344,
+    "column": 22,
+    "kind": "untagged",
+    "text": "createTypeWithSymbol(TypeFlags.UniqueESSymbol, symbol) as UniqueESSymbolType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 20969,
+    "column": 14,
+    "kind": "untagged",
+    "text": "result as MappedType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 20973,
+    "column": 14,
+    "kind": "untagged",
+    "text": "result as MappedType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 20978,
+    "column": 14,
+    "kind": "untagged",
+    "text": "result as InstantiationExpressionType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 26499,
+    "column": 26,
+    "kind": "untagged",
+    "text": "createObjectType(ObjectFlags.ReverseMapped | ObjectFlags.Anonymous, /*symbol*/ undefined) as ReverseMappedType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 28642,
+    "column": 24,
+    "kind": "untagged",
+    "text": "createObjectType(ObjectFlags.EvolvingArray) as EvolvingArrayType",
+    "detail": [
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:5518:24"
+    ]
+  },
+  {
+    "file": "src/compiler/watchUtilities.ts",
+    "line": 157,
+    "column": 57,
+    "kind": "untagged",
+    "text": "entries.directories.map(getCanonicalFileName).sort() as SortedArray<Canonicalized>",
+    "detail": [
+      "callback target identity is unknown",
+      "opaque call may mutate projected fields",
+      "no reaching allocation established",
+      "untracked source lower.latentShapeUnknown",
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/watchUtilities.ts:123:39"
+    ]
+  },
+  {
+    "file": "src/compiler/watchUtilities.ts",
+    "line": 159,
+    "column": 16,
+    "kind": "untagged",
+    "text": "entries as SortedAndCanonicalizedMutableFileSystemEntries",
+    "detail": [
+      "callback target identity is unknown",
+      "opaque call may mutate projected fields",
+      "no reaching allocation established",
+      "untracked source lower.latentShapeUnknown",
+      "constructor allocation and initialization body not modeled at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/watchUtilities.ts:123:39"
+    ]
+  }
+]

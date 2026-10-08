@@ -52,6 +52,7 @@ type latentShapeField struct {
 type latentShapeUnknown struct {
 	Category, Reason, Value string
 	Diagnostics             []string
+    Dependencies            []ir.Expression
 }
 type latentShapeDiagnosticCause struct {
 	Scope       string   `json:"scope"`
@@ -275,7 +276,12 @@ func (m *latentShapeMeter) expression(node *ast.Node) ir.Expression {
         function := m.Functions[node]
         return m.materialize(node, m.allocationCallbackIdentity(function))
     case ast.KindNewExpression:
-		return m.unknown(node, "flow the graph can't see", "constructor allocation and initialization body not modeled", m.text(node))
+        constructor := node.AsNewExpression()
+        dependencies := []ir.Expression{m.expression(constructor.Expression)}
+        if constructor.Arguments != nil {
+            for _, argument := range constructor.Arguments.Nodes { dependencies = append(dependencies, m.expression(argument)) }
+        }
+        return m.materialize(node, latentShapeUnknown{Category:"flow the graph can't see", Reason:"constructor allocation and initialization body not modeled at "+m.Loaded.Where(node), Value:m.text(node), Dependencies:dependencies})
 	case ast.KindCallExpression:
 		call := node.AsCallExpression()
 		symbol := m.Checker.GetSymbolAtLocation(call.Expression)
@@ -433,6 +439,7 @@ func (m *latentShapeMeter) frontier(graph *allocationFlowGraph, expression ir.Ex
 			continue
 		case latentShapeUnknown:
 			add(source)
+            pending = append(pending, source.Dependencies...)
 			continue
 		case ir.CallClosure:
 			pending = append(pending, ir.ClosureValue(source))
