@@ -1,3 +1,47 @@
+Built: explicitly flagged tuple-union forEach ownership transfer; primary certification remains 5 pairs / 8 reads pending the final pair queue.
+Commits: transfer patch recorded in git history, independently of optional/rest admission.
+Checks: four ownership fixtures PASS 1.849s; lane 2/lane 4 array and union regressions PASS 25.236s; counts refreshed PASS 29.414s.
+Mutants: skip-release leaks 24 bytes in one allocation; double-release triggers AddressSanitizer heap-use-after-free, both expected test failures.
+Remaining: optional/rest contracts, then 5 primary pairs / 7 reads and two overlapping lane 4b frontier checks.
+
+The user explicitly approved callback transfer with required ownership controls.
+ArrayViewRead carries TupleUnion through finalized contract binding. Only flagged
+forEach reads transfer the normalizer's owned count into the existing callback
+release path. Indexed reads keep statement cleanup ownership. Ordinary lane 2
+and lane 4 consumers keep their existing retain/release. Other tuple-union array
+consumers remain refused. A C marker on the flagged normal release supports
+precise mutations without touching any other release.
+
+Four .a fixtures are held to source Node, JavaScript, native release, sanitized
+native and shared leak checks: tuple with runtime-built string, scalar box,
+throw caught outside the loop, and callback storing a tuple in a captured
+variable. The throw callback declares void; stage 0 independently refuses a
+never-returning forEach callback. Array push into a stored union array retains
+its existing source-schema refusal, so the storage witness uses a captured
+cell, whose own count survives callback cleanup.
+
+Commands with ADAMIC_TUPLE_ORIGINAL_DECLS=/tmp/views-tuples-original-declarations:
+go test ./internal/oracle -run '^TestCheckedViewTupleForEachTransfer$'
+-count=1 -v -timeout 3m (/tmp/views-tuples-transfer.log): PASS 1.849s.
+ADAMIC_TUPLE_TRANSFER_MUTANT=skip on
+'^TestCheckedViewTupleForEachTransferMutants$': FAIL 0.303s. Ordinary output
+still matches number/exit 0; leakChecked then observes a 24-byte box leak
+(/tmp/views-tuples-transfer-skip-mutant.log).
+ADAMIC_TUPLE_TRANSFER_MUTANT=double on the same test: FAIL 0.273s,
+AddressSanitizer heap-use-after-free in adamic_release
+(/tmp/views-tuples-transfer-double-mutant.log). Neither mutant dies at compile.
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'^(TestCheckedViewArrays|TestCheckedViewNativeArrays|TestCheckedViewRankedArrayContracts|TestCheckedViewRankedArrayUnionContracts|TestCheckedViewRankedParserArrayContracts|TestCheckedViewObjectPrimitiveSource|TestCheckedViewMixedSelection|TestCheckedViewObjectUnions|TestCheckedViewPrimitiveArrayPairGap|TestCheckedViewMutableArrayUnionRefusal)$'
+-count=1 -v -timeout 6m (/tmp/views-tuples-transfer-regressions.log):
+PASS 25.236s, 221 uncached Node observations, unchanged existing diagnostics.
+go test ./internal/oracle -run '^TestCheckedViewTupleOriginalCounts$'
+-count=1 -timeout 3m -args -update-counts
+(/tmp/views-tuples-transfer-counts.log): PASS 29.414s, 38 fixture rows.
+Scoped IR/lower/native/JavaScript probes PASS 0.016s/0.344s/0.384s/0.199s
+(/tmp/views-tuples-transfer-scoped.log). gofmt applied.
+
+---
+
 Built: preserve actual optional tuple producer arity without changing object ABI; certified primary total remains 5 pairs / 8 reads.
 Commits: new pairs f1f6355a and 3c143841114922f672fad316938fa7ac383b9bd5; producer checkpoint recorded in git history.
 Checks: six producer oracles PASS 3.315s; certified tuple regressions PASS 35.489s; unchanged 34 tuple count rows PASS 35.157s.

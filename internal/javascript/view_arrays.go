@@ -140,6 +140,9 @@ func (e *emitter) value(expression ir.Expression) string {
 }
 
 func (e *emitter) viewArrayElementCheck(read ir.ArrayViewRead, value string) string {
+	if read.TupleUnion {
+		return e.tupleArrayUnionCheck(read.ViewContract, read.View, value)
+	}
 	literals := []string{}
 	for _, literal := range read.ViewAllowed {
 		switch literal.Of {

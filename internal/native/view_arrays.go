@@ -97,7 +97,12 @@ func (e *emitter) emitViewArrayRead(read ir.ArrayIndex, array, index string) str
 }
 
 func (e *emitter) viewArrayElementSlot(read ir.ArrayViewRead, array, index string) string {
-	slot := e.emitViewArrayRead(read.Index(), array, index)
+	slot := ""
+	if read.TupleUnion {
+		slot = e.emitTupleArrayUnionSlot(read.Index(), array, index, false)
+	} else {
+		slot = e.emitViewArrayRead(read.Index(), array, index)
+	}
 	value := e.temporary()
 	fallback := "(adamic_value){.reference = NULL}"
 	if read.Element == ir.MaybeNumber {

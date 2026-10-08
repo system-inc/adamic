@@ -1701,3 +1701,11 @@ Shared optional/rest view ranges and forEach ownership transfer remain blocked
 by automatic approval review; the concrete formatted review patches and exact
 remaining pair ledger are under stage3/interface-downcasts/tuples/. No runtime
 object layout was changed.
+
+Approved tuple forEach transfer: ArrayViewRead.TupleUnion preserves the same
+finalized tuple/scalar plan as indexed reads. emitTupleArrayUnionSlot transfers
+its normalized count directly to the existing forEach callback cleanup, while
+indices still register statement cleanup. Existing non-tuple consumers retain
+and release as before. Required tuple/scalar, caught-throw and captured-store
+fixtures pass both backends and leaks; skip-release and double-release mutants
+are caught by the shared leak checker and AddressSanitizer respectively.

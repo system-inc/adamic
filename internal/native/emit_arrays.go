@@ -65,7 +65,7 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	} else {
 		e.line("adamic_value %s = %s->elements[%s];", element, source, index)
 	}
-	if references {
+	if references && !visit.ViewRead.TupleUnion {
 		e.line("adamic_retain(%s.reference);", element)
 	}
 	call := fmt.Sprintf("%s->code(%s, (adamic_value[]){%s, {.number = (double)%s}, {.reference = %s}}, 3)", callback, callback, element, index, source)
@@ -82,6 +82,9 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	}
 	release := func() {
 		if references {
+			if visit.ViewRead.TupleUnion {
+				e.line("/* tuple forEach transfer release */")
+			}
 			e.line("adamic_release(%s.reference);", element)
 		}
 	}

@@ -51,14 +51,21 @@ func (e *emitter) viewTupleHeapUnion(id ir.ViewContractID, value, expression str
 	return true
 }
 
-// Index reads own normalization until the existing statement cleanup. Callback
-// and loop consumers remain refused until their distinct transfer is certified.
+// Index reads own normalization until existing statement cleanup. forEach
+// receives that count directly and releases it after the callback.
 func (e *emitter) emitTupleArrayUnionIndex(read ir.ArrayIndex, array, index string) string {
+	return e.emitTupleArrayUnionSlot(read, array, index, true)
+}
+
+func (e *emitter) emitTupleArrayUnionSlot(read ir.ArrayIndex, array, index string, statementOwned bool) string {
 	e.declarations = append(e.declarations, "#include \"view_tuples.h\"")
 	snapshot, present, slot := e.temporary(), e.temporary(), e.temporary()
 	e.line("adamic_value %s;", snapshot)
 	e.line("bool %s = adamic_tuple_array_union_at(%s, %s, %t, %t, %s, %s, &%s);", present, array, index, read.Relative, read.UndefinedAllowed, cString(read.ViewType), cString(read.View), snapshot)
-	value := e.own(ir.Union, snapshot+".reference")
+	value := snapshot + ".reference"
+	if statementOwned {
+		value = e.own(ir.Union, value)
+	}
 	if read.Required {
 		e.line("if (!%s) adamic_view_array_missing(%s, %s);", present, cString(read.View), cString(read.ViewType))
 	}

@@ -85,7 +85,7 @@ func (l *lowering) viewArrayUse(node, array *ast.Node, of ir.Type, required bool
 	if element == nil {
 		return ir.ArrayViewRead{}
 	}
-	return ir.ArrayViewRead{UndefinedAllowed: l.includesUndefined(element), Element: of, View: sourceExpression(array) + "[element]", ViewType: l.checker.TypeToString(element), ViewTypeID: int(element.Id()), ViewAllowed: l.viewContractLiterals(element), Required: required && !l.includesUndefined(element)}
+	return ir.ArrayViewRead{TupleUnion: l.tupleScalarUnionType(element), UndefinedAllowed: l.includesUndefined(element), Element: of, View: sourceExpression(array) + "[element]", ViewType: l.checker.TypeToString(element), ViewTypeID: int(element.Id()), ViewAllowed: l.viewContractLiterals(element), Required: required && !l.includesUndefined(element)}
 }
 
 // Fail closed for consumers whose element extraction/conversion is not wired.
@@ -105,7 +105,7 @@ func (l *lowering) viewArrayUnsupportedUses(node *ast.Node) error {
 		if part.Kind == ast.KindCallExpression {
 			callee := ast.SkipParentheses(part.AsCallExpression().Expression)
 			if callee.Kind == ast.KindPropertyAccessExpression && l.viewArrayBase(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))) != nil {
-				if l.tupleScalarUnionType(l.viewArrayElementType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))) {
+				if callee.Name().Text() != "forEach" && l.tupleScalarUnionType(l.viewArrayElementType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))) {
 					found = l.notYet(part, "tuple union array consumer requiring a certified ownership transfer")
 					return true
 				}
@@ -140,7 +140,7 @@ func (l *lowering) viewArrayUnsupportedUses(node *ast.Node) error {
 
 func markProgramViewArrayUse(program *ir.Program, read ir.ArrayViewRead) ir.ArrayViewRead {
 	mapped := markProgramViewArrayRead(program, read.Index())
-	read.View, read.ViewAllowed, read.ViewContract = mapped.View, mapped.ViewAllowed, mapped.ViewContract
+	read.View, read.ViewAllowed, read.ViewContract, read.TupleUnion = mapped.View, mapped.ViewAllowed, mapped.ViewContract, mapped.TupleUnion
 	return read
 }
 

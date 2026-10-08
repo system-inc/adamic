@@ -17,7 +17,7 @@ func (l *lowering) tupleOptionalForEach(node *ast.Node) ([]ir.Statement, bool, e
 	receiver := callee.AsPropertyAccessExpression().Expression
 	present := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver))
 	element := l.viewArrayElementType(present)
-	if element == nil || !fixedViewTuple(element) || l.includesNull(l.checker.GetTypeAtLocation(receiver)) {
+	if element == nil || (!fixedViewTuple(element) && !l.tupleScalarUnionType(element)) || l.includesNull(l.checker.GetTypeAtLocation(receiver)) {
 		return nil, false, nil
 	}
 	array, err := l.expression(receiver)

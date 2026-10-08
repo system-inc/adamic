@@ -19,6 +19,7 @@ func HasArrayViews(program *Program) bool {
 // Metadata has no executable operands. It must not masquerade as an index
 // expression in CFG, borrowing, reuse, or ownership traversals.
 type ArrayViewRead struct {
+	TupleUnion       bool
 	View, ViewType   string
 	ViewAllowed      []ViewLiteral
 	ViewContract     ViewContractID
@@ -29,5 +30,5 @@ type ArrayViewRead struct {
 }
 
 func (read ArrayViewRead) Index() ArrayIndex {
-	return ArrayIndex{View: read.View, ViewType: read.ViewType, ViewAllowed: read.ViewAllowed, ViewContract: read.ViewContract, ViewTypeID: read.ViewTypeID, Element: read.Element, Required: read.Required, UndefinedAllowed: read.UndefinedAllowed}
+	return ArrayIndex{TupleUnion: read.TupleUnion, View: read.View, ViewType: read.ViewType, ViewAllowed: read.ViewAllowed, ViewContract: read.ViewContract, ViewTypeID: read.ViewTypeID, Element: read.Element, Required: read.Required, UndefinedAllowed: read.UndefinedAllowed}
 }
