@@ -11,7 +11,7 @@ func TestDetachedOwnRefusals(t *testing.T) {
 	for _, source := range []string{
 		"let own = Object.prototype.hasOwnProperty; own.call({}, 'x');",
 		"const own = Object.prototype.hasOwnProperty; own('x');",
-		"const own = Object.prototype.hasOwnProperty; own.apply({}, ['x']);",
+		"const own = Object.prototype.hasOwnProperty; const keys: [string] = ['x']; own.apply({}, keys);",
 		"const own = Object.prototype.hasOwnProperty; own.bind({});",
 		"const own = Object.prototype.hasOwnProperty; const alias = own;",
 		"const own = Object.prototype.hasOwnProperty; console.log(typeof own);",

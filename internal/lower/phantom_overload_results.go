@@ -97,7 +97,7 @@ func (l *lowering) overloadedCall(call *ast.CallExpression, value ir.Call) (ir.E
 	parameters := l.result.Functions[l.result.CallTargets(value)[0]].Parameters
 	for index, argument := range value.Arguments {
 		if index >= len(parameters) {
-			return nil, l.notYet(call.AsNode(), "an overloaded call with more arguments than its implementation")
+			continue // Keep side effects of discarded direct-call arguments.
 		}
 		takes := l.result.Locals[parameters[index]].Type
 		value.Arguments[index] = fit(argument, takes)

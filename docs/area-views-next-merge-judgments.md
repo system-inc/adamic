@@ -192,3 +192,24 @@ The e3440508 plus f0c6e6fc merge fails internal/flow with 162 failed test frames
 TestFixtures/host/09_realpath.a/stage0 remains red: current lowering stops at 13:134 on a namespace object used as a value, while the candidate record stops at 12:17 on Process.platform. f0c6e6fc's host group passes in 13.102 seconds. The other two formerly inherited host records pass after the merge. No expectation was changed to hide this mismatch. The complete failure names and per-file audit comparison are recorded in area-views-next-failure-comparison.json.
 
 The complete current .a audit covers 2983 files and fails 160 expectations: 2821 checked, 124 refused, 38 checker errors. All 160 failing paths are absent from f0c6e6fc, so none is an inherited fixture-test failure. Replaying those new sources with the baseline compiler yields 108 refusals, 38 checker errors, 13 checked/NotYet results and one panic (internal/lower/testdata/census_panics/generic_closure.a). The exact paths, expectations, diagnostics and replay results are committed in area-views-next-failure-comparison.json. The three approved new .a controls pass. The audit makes no blanket green claim.
+
+## Judgments 24 through 27 applied
+
+The compiler approved judgments 24 through 27 on 44275c62.
+
+- 24: internal/lower/collections.go retains the ordinary boxed Union Map.forEach adapter only without a registered checked-view contract.
+- 25: internal/lower/detached_own.go admits the const intrinsic apply adapter with one literal key. internal/lower/library_method_values.go preserves the Boolean alias token and readiness check. Unknown, escaping and never-array receivers remain refused. TestDetachedOwnRefusals replaces the now-admitted literal apply example with a checker-valid nonliteral [string] tuple.
+- 26: internal/lower/records.go retains fixed-object Object.values, Object.entries and Object.keys intrinsic dispatch without converting storage. method_coverage_object_statics.a reaches Object.entries after Object.values; ordinary storage conversions remain refused.
+- 27: internal/lower/census_small.go preserves discarded actual argument evaluation and the existing producer rest adapter. internal/lower/phantom_overload_results.go preserves direct overload extras. census_overload_contracts.a requires both fixed and rest implementation paths.
+
+TestNativeAgreesWithNode passes the seven named witnesses in /tmp/area-views-approved-24-27-oracle-recheck.log (0.648 seconds). The focused lower refusal and proof controls pass in /tmp/area-views-approved-24-27-lower-final.log (1.149 seconds).
+
+Additional corrections: internal/javascript/library_array_holes.go and internal/lower/phantom_ir_test.go skip private cached IR metadata during executable traversal. FunctionTypeTargets remains checked separately. TestArrayHolesMilestone passes in /tmp/area-views-approved-24-27-oracle.jsonl.
+
+360084ad and 6f7902e0 are cherry-picked as 909692af and 2fe37343. Conflicts preserve the area argument-index guard, typed adamic_method_entry closure convention, and existing count groups. Set intrinsic entry wrappers use counted_code or plain code according to the existing convention, without function-pointer casts. TestCheckedViewSetIntrinsics, TestCheckedViewSetIntrinsicsC, TestCheckedViewSetIntrinsicSignatures and TestCheckedViewSetIntrinsicCounts pass in /tmp/area-views-approved-24-27-oracle.jsonl.
+
+The 86 expectation proposals are declined. No fixture or counts row was changed by those proposals. f0c6e6fc still refuses graph_regions_symbols.a in /tmp/area-views-cycle-candidate-symbols.log; 2724dabd contains the graph admission path. The candidate/path discrepancy is pending clarification.
+
+The named Set cherry-picks provide intrinsic identity and dispatch. 2efc8949 contains the later producer-domain repair and depends on the count helper introduced by f339ca8d. Their inclusion is pending clarification.
+
+Judgment mutants are killed by the corresponding Node witness: 24 restores the slotless Map.forEach refusal (host_map_union.a); 25 disables const literal apply recognition (library_method_values.a); 26 removes the fixed-object intrinsic storage exception (method_coverage_object_statics.a); 27 refuses discarded direct-call extras (census_overload_contracts.a). Each go test exits 1 at lowering, with no build or -Werror failure. Logs: /tmp/area-views-approved-{24,25,26,27}-mutant.log.

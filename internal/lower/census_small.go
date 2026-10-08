@@ -269,10 +269,15 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 		return value, nil
 	}
 	if direct, ok := value.(ir.Call); ok {
-		parameters := l.result.Functions[l.result.CallTargets(direct)[0]].Parameters
+		function := l.result.Functions[l.result.CallTargets(direct)[0]]
+		parameters := function.Parameters
 		for index, argument := range direct.Arguments {
+			if function.RestElement != 0 && index >= len(parameters)-1 {
+				// The existing rest adapter fits and packs the producer element slots.
+				continue
+			}
 			if index >= len(parameters) {
-				return nil, l.notYet(call.AsNode(), "an overloaded call with more arguments than its implementation")
+				continue // The direct call evaluates discarded actual arguments.
 			}
 			takes := l.result.Locals[parameters[index]].Type
 			direct.Arguments[index] = fit(argument, takes)

@@ -9,7 +9,7 @@ func hasArrayHoles(program *ir.Program) bool {
 	found := false
 	var walk func(reflect.Value)
 	walk = func(value reflect.Value) {
-		if found {
+		if found || !value.CanInterface() {
 			return
 		}
 		switch value.Kind() {

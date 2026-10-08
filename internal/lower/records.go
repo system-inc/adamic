@@ -351,6 +351,10 @@ func (l *lowering) recordStorageView(node *ast.Node) error {
 			return nil
 		}
 		callee := ast.SkipParentheses(parent.AsCallExpression().Expression)
+		if method, known := l.libraryMethod(callee, map[*ast.Symbol]bool{}); known && method.family == "Object" && (method.name == "values" || method.name == "entries" || method.name == "keys") && l.exactObject(source, 0) {
+			// The fixed-object intrinsic consumes this shape directly, without a Record cast.
+			return nil
+		}
 		if l.isLibraryGlobal(callee, "String") {
 			return nil
 		}

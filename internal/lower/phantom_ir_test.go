@@ -76,6 +76,9 @@ func phantomExecutableIRMatches(t *testing.T, got, want *ir.Program) bool {
 }
 
 func phantomExecutableNode(value reflect.Value) any {
+	if !value.CanInterface() {
+		return nil
+	}
 	switch value.Kind() {
 	case reflect.Pointer, reflect.Interface:
 		if value.IsNil() {

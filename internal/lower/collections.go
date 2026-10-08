@@ -199,7 +199,7 @@ func (l *lowering) clearOrVisit(node *ast.Node, receiver *ast.Node, name string,
 	if name == "forEach" && !set && !keyable(key) {
 		return nil, true, l.notYet(node, "a Map forEach callback with an unsupported key representation")
 	}
-	if name == "forEach" && !set && slotless(value) {
+	if name == "forEach" && !set && slotless(value) && !(value == ir.Union && l.result.ViewContractTypes[int(l.concrete(l.checker.GetTypeAtLocation(receiver)).Id())] == 0) {
 		return nil, true, l.notYet(node, "a Map forEach callback with a slotless value representation")
 	}
 	collection, err := l.expression(receiver)

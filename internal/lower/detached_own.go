@@ -45,11 +45,25 @@ func (l *lowering) detachedOwnCallReceiver(node *ast.Node) *ast.Node {
 	}
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
-	if call.QuestionDotToken != nil || callee.Kind != ast.KindPropertyAccessExpression || callee.Name().Text() != "call" ||
+	if call.QuestionDotToken != nil || callee.Kind != ast.KindPropertyAccessExpression || (callee.Name().Text() != "call" && callee.Name().Text() != "apply") ||
 		callee.AsPropertyAccessExpression().QuestionDotToken != nil || !l.libraryMember(callee) {
 		return nil
 	}
 	receiver := ast.SkipParentheses(callee.AsPropertyAccessExpression().Expression)
+	if callee.Name().Text() == "apply" {
+		if l.detachedOwnAlias(receiver) == nil || len(call.Arguments.Nodes) != 2 {
+			return nil
+		}
+		arguments := ast.SkipParentheses(call.Arguments.Nodes[1])
+		if arguments.Kind != ast.KindArrayLiteralExpression {
+			return nil
+		}
+		elements := arguments.AsArrayLiteralExpression().Elements.Nodes
+		if len(elements) != 1 || elements[0].Kind == ast.KindSpreadElement || elements[0].Kind == ast.KindOmittedExpression {
+			return nil
+		}
+		return receiver
+	}
 	if l.detachedOwnMethod(receiver) {
 		method := receiver.AsPropertyAccessExpression()
 		prototype := ast.SkipParentheses(method.Expression).AsPropertyAccessExpression()
@@ -122,7 +136,7 @@ func (l *lowering) detachedOwnRefusal(node *ast.Node) error {
 	}
 	if at.Parent != nil && at.Parent.Kind == ast.KindPropertyAccessExpression {
 		member := at.Parent
-		if member.AsPropertyAccessExpression().Expression == at && member.Name().Text() == "call" {
+		if member.AsPropertyAccessExpression().Expression == at && (member.Name().Text() == "call" || member.Name().Text() == "apply") {
 			call := member
 			for call.Parent != nil && call.Parent.Kind == ast.KindParenthesizedExpression {
 				call = call.Parent
@@ -140,6 +154,10 @@ func (l *lowering) detachedOwnCall(node *ast.Node) (ir.Expression, bool, error) 
 	if receiver == nil {
 		return nil, false, nil
 	}
+	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+	if callee.Name().Text() == "apply" {
+		return nil, false, nil
+	} // Existing intrinsic adapter.
 	args := node.AsCallExpression().Arguments.Nodes
 	if len(args) != 2 || args[0].Kind == ast.KindSpreadElement || args[1].Kind == ast.KindSpreadElement {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "detached hasOwnProperty call arguments", Fix: "use exactly .call(target, key)"}
@@ -155,6 +173,14 @@ func (l *lowering) detachedOwnCall(node *ast.Node) (ir.Expression, bool, error) 
 	}
 	proven := l.checker.GetTypeAtLocation(args[0])
 	of, known := l.representation(proven)
+	if l.checker.IsArrayType(proven) {
+		if element := l.checker.GetElementTypeOfArrayType(proven); element == nil || element.Flags()&checker.TypeFlagsNever != 0 {
+			return nil, true, l.notYet(args[0], "detached hasOwnProperty on an array without a proven element type")
+		}
+	}
+	if l.detachedOwnAlias(receiver) != nil && known && of != ir.Object && of != ir.Record && !l.includesUndefined(proven) && proven.Flags()&checker.TypeFlagsNull == 0 {
+		return nil, false, nil // Proven primitive, array or function receiver on the intrinsic path.
+	}
 	if l.detachedOwnObjectParameter(ast.SkipParentheses(args[0])) {
 		of, known = ir.Object, true
 	}
