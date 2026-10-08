@@ -1,4 +1,3 @@
-FIRST FAILURE (wasi, at 149.5 s):
 github.com/system-inc/adamic/internal/native TestWASI/internal/oracle/testdata/bitwise_sweep.a
 === RUN   TestWASI/internal/oracle/testdata/bitwise_sweep.a
     wasm_test.go:133: node [--disable-warning=ExperimentalWarning /home/ahra/full-gate/tree/oracle/node.mjs /home/ahra/full-gate/tree/internal/oracle/testdata/bitwise_sweep.a]: signal: killed
