@@ -1,0 +1,4 @@
+export function descendsForJsxSearch(present: boolean,isSwitchStatement: boolean): boolean {
+ if(!present) { return false; }
+ return !isSwitchStatement;
+}
