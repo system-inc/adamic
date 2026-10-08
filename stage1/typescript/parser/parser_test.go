@@ -21,7 +21,7 @@ import (
 const repository = "../../.."
 const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
 
-var portFiles = []string{"nodes.ts", "grammar.ts", "lookahead.ts", "statements.ts", "jsx.ts", "parser.ts", "main.ts"}
+var portFiles = []string{"nodes.ts", "grammar.ts", "lookahead.ts", "recovery.ts", "spelling.ts", "lexical.ts", "statements.ts", "jsx.ts", "parser.ts", "main.ts"}
 
 type execution struct {
 	output   []byte
@@ -112,6 +112,11 @@ func copyPort(t *testing.T, file, from, to string) string {
 			t.Fatal(err)
 		}
 		source = strings.ReplaceAll(source, "../scanner/scanner.ts", scannerDirectory)
+		tokensPath, err := filepath.Abs("../scanner/tokens.ts")
+		if err != nil {
+			t.Fatal(err)
+		}
+		source = strings.ReplaceAll(source, "../scanner/tokens.ts", tokensPath)
 		if name == file {
 			if strings.Count(source, from) != 1 {
 				t.Fatalf("mutant must change exactly one site in %s: %q", file, from)

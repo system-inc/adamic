@@ -1,0 +1,31 @@
+[
+  {
+    "name": "wrong-tag",
+    "exit": 0,
+    "counts": {
+      "a": 2,
+      "b": 47,
+      "c": 16,
+      "rest": 35
+    },
+    "caught": "control bucket counts differ; the affected site is refused",
+    "mutation": "Actual symbolWalker tag test TypeParameter changed to Union"
+  },
+  {
+    "name": "escaped-literal",
+    "exit": 0,
+    "counts": {
+      "a": 1,
+      "b": 47,
+      "c": 17,
+      "rest": 35
+    },
+    "caught": "control bucket counts differ; the affected site is refused",
+    "mutation": "Actual sys numeric write RHS uses Object.keys(customLevels).length and passes the alias before the initializing write"
+  },
+  {
+    "name": "missing-row",
+    "exit": 1,
+    "caught": "100-site partition assertion"
+  }
+]

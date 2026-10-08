@@ -219,22 +219,8 @@ var mutants = []mutant{
 	},
 }
 
-// cohereFix is the one line of cohere's parsers.go the port found wrong. parseMediaFeature walks bytes
-// and appends each with string(character), which makes a rune of a byte: every byte of a non-ASCII
-// character in a feature's name, before its colon, becomes a Latin-1 character of its own, so the
-// no-break space C2 A0 comes out as "\u00c2\u00a0". The library appends string[i], one UTF-16 unit, and
-// postcss-media-query-parser 0.2.3 on Node agrees with the port, not with the Go (GAPS.md, "A bug in Go
-// cohere"). The test holds the port to Go cohere with the line fixed, laid in by overlay, so not a
-// byte of the submodule changes; and it shows that the unfixed Go differs on the cases, so the fix is
-// one the cases need.
-var cohereFix = struct{ file, from, to string }{
-	file: "parsers.go",
-	from: "\t\tmediaFeature += string(character)\n",
-	to:   "\t\tmediaFeature += stringNormalized[i : i+1]\n",
-}
-
-// askedCases has cohere's side write every case, and Go cohere's answer to each, returning the cases
-// file's path and the answers of the Go with cohereFix applied.
+// askedCases has cohere's side write every case and Go cohere's answer to each.
+// cohere 61ed9f4a fixed non-ASCII feature names, so no source fix is overlaid.
 func askedCases(t *testing.T) (string, string) {
 	t.Helper()
 	seed := int64(generatedSeed)
@@ -251,29 +237,16 @@ func askedCases(t *testing.T) (string, string) {
 		}
 	}
 	directory := t.TempDir()
-	answers := func(fixed bool) (string, string) {
-		casesPath := filepath.Join(directory, fmt.Sprintf("cases-%v.txt", fixed))
-		answersPath := filepath.Join(directory, fmt.Sprintf("answers-%v.txt", fixed))
-		cohereSide(t, fixed, map[string]any{"seed": seed, "generated": generated, "cases": casesPath, "answers": answersPath})
-		answers, err := os.ReadFile(answersPath)
-		if err != nil {
-			t.Fatal(err)
-		}
-		return casesPath, string(answers)
-	}
-	casesPath, fixedAnswers := answers(true)
-	unfixedCasesPath, unfixedAnswers := answers(false)
-	cases, err := os.ReadFile(casesPath)
+	casesPath := filepath.Join(directory, "cases.txt")
+	answersPath := filepath.Join(directory, "answers.txt")
+	cohereSide(t, map[string]any{"seed": seed, "generated": generated, "cases": casesPath, "answers": answersPath})
+	answers, err := os.ReadFile(answersPath)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if unfixedCases, err := os.ReadFile(unfixedCasesPath); err != nil || !bytes.Equal(cases, unfixedCases) {
-		t.Fatalf("cohere's side wrote different cases for the same seed (%v)", err)
-	}
-	if differing := differingCases(fixedAnswers, unfixedAnswers); differing == 0 {
-		t.Errorf("Go cohere answers every case the same with its %s line fixed and without: the cases no longer reach the bug the fix is for", cohereFix.file)
-	} else {
-		t.Logf("Go cohere without the fix to %s answers %d cases differently; the port is held to the fixed Go", cohereFix.file, differing)
+	cases, err := os.ReadFile(casesPath)
+	if err != nil {
+		t.Fatal(err)
 	}
 	if keep := os.Getenv("ADAMIC_MEDIAQUERY_KEEP"); keep != "" {
 		if err := os.WriteFile(keep, cases, 0o644); err != nil {
@@ -281,30 +254,12 @@ func askedCases(t *testing.T) (string, string) {
 		}
 	}
 	t.Logf("seed %d, %d generated params", seed, generated)
-	return casesPath, fixedAnswers
+	return casesPath, string(answers)
 }
 
-// differingCases counts the cases two outputs of main.ts's form answer differently.
-func differingCases(first string, second string) int {
-	split := func(output string) []string {
-		return strings.Split(output, "case ")
-	}
-	firstCases, secondCases := split(first), split(second)
-	if len(firstCases) != len(secondCases) {
-		return max(len(firstCases), len(secondCases))
-	}
-	differing := 0
-	for index := range firstCases {
-		if firstCases[index] != secondCases[index] {
-			differing++
-		}
-	}
-	return differing
-}
-
-// cohereSide runs testdata/cohere_side_test.go inside cohere's mediaquery package, by overlay, with a
-// request, and with cohereFix laid over cohere's source when fixed.
-func cohereSide(t *testing.T, fixed bool, request map[string]any) {
+// cohereSide runs testdata/cohere_side_test.go inside cohere's mediaquery package,
+// by overlay, with a request. Cohere's parser source is used unchanged.
+func cohereSide(t *testing.T, request map[string]any) {
 	t.Helper()
 	directory := t.TempDir()
 	requestPath := filepath.Join(directory, "request.json")
@@ -325,20 +280,6 @@ func cohereSide(t *testing.T, fixed bool, request map[string]any) {
 	}
 	packageDirectory := filepath.Join(cohere, "internal", "format", "css", "mediaquery")
 	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
-	if fixed {
-		original, err := os.ReadFile(filepath.Join(packageDirectory, cohereFix.file))
-		if err != nil {
-			t.Fatal(err)
-		}
-		if strings.Count(string(original), cohereFix.from) != 1 {
-			t.Fatalf("cohere's %s no longer has the line %q exactly once: if cohere fixed it, drop cohereFix and hold the port to cohere as it is", cohereFix.file, cohereFix.from)
-		}
-		fixedPath := filepath.Join(directory, cohereFix.file)
-		if err := os.WriteFile(fixedPath, []byte(strings.Replace(string(original), cohereFix.from, cohereFix.to, 1)), 0o644); err != nil {
-			t.Fatal(err)
-		}
-		replace[filepath.Join(packageDirectory, cohereFix.file)] = fixedPath
-	}
 	overlay, err := json.Marshal(map[string]any{"Replace": replace})
 	if err != nil {
 		t.Fatal(err)

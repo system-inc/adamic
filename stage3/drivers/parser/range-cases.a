@@ -1,0 +1,22 @@
+// Directed real parser inputs for the addRange checked-read invariant.
+import { createSourceFile, forEachChild } from './src/compiler/parser.ts';
+import { ScriptKind, ScriptTarget } from './src/compiler/types.ts';
+import type { Node } from './src/compiler/types.ts';
+const cases = [
+    ['await.ts', 'export const x = ;\nawait f();\nlet y = 1;\nawait ;', ScriptKind.TS],
+    ['doc.js', '/** @param { } x */\nfunction f(x) {}', ScriptKind.JS],
+    ['tags.js', '/** @typedef {{x:number}} Shape */\n/** @param {Shape} x */\nfunction f(x) {}', ScriptKind.JS],
+    ['empty.ts', '', ScriptKind.TS],
+] as const;
+function dump(node: Node): void {
+    console.log(`${node.kind} ${node.pos} ${node.end} ${node.flags}`);
+    forEachChild(node, child => { dump(child); });
+}
+for (const [name, text, kind] of cases) {
+    const file = createSourceFile(name, text, ScriptTarget.Latest, true, kind);
+    console.log(name);
+    dump(file);
+    for (const d of [...file.parseDiagnostics, ...(file.jsDocDiagnostics ?? [])]) {
+        console.log(`${d.code} ${d.start} ${d.length}`);
+    }
+}

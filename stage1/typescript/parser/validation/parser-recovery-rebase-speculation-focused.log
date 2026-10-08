@@ -1,0 +1,93 @@
+=== RUN   TestExpressionsAgree
+    parser_test.go:212: 58 inputs, 17463 identical canonical bytes
+    parser_test.go:221: native precedence mutant caught: case 45 line 466: port "1 BinaryExpression 0 7 0 0 -1 0 0\t\t\t", Go "1 Identifier 0 3 0 0 -1 0 0\t\tx\t"
+        Go context:
+        expression
+        0 Identifier 0 1 0 0 -1 0 0		x	
+        case 45
+        expression
+        0 BinaryExpression 0 11 0 0 -1 0 0			
+        1 Identifier 0 3 0 0 -1 0 0		x	
+        1 PlusToken 3 5 0 0 -1 0 0			
+        1 BinaryExpression 5 11 0 0 -1 0 0			
+        2 Identifier 5 7 0 0 -1 0 0		y	
+        2 AsteriskToken 7 9 0 0 -1 0 0			
+    parser_test.go:221: Node precedence mutant caught: case 45 line 466: port "1 BinaryExpression 0 7 0 0 -1 0 0\t\t\t", Go "1 Identifier 0 3 0 0 -1 0 0\t\tx\t"
+        Go context:
+        expression
+        0 Identifier 0 1 0 0 -1 0 0		x	
+        case 45
+        expression
+        0 BinaryExpression 0 11 0 0 -1 0 0			
+        1 Identifier 0 3 0 0 -1 0 0		x	
+        1 PlusToken 3 5 0 0 -1 0 0			
+        1 BinaryExpression 5 11 0 0 -1 0 0			
+        2 Identifier 5 7 0 0 -1 0 0		y	
+        2 AsteriskToken 7 9 0 0 -1 0 0			
+    parser_test.go:231: native optional mutant caught: case 30 line 328: port "2 PropertyAccessExpression 0 6 0 0 -1 0 0\t\t\t", Go "2 PropertyAccessExpression 0 6 32 0 -1 0 0\t\t\t"
+        Go context:
+        1 Identifier 10 11 0 0 -1 0 0		e	
+        case 30
+        expression
+        0 CallExpression 0 16 32 0 1 0 0			
+        1 ElementAccessExpression 0 11 32 0 -1 0 0			
+        2 PropertyAccessExpression 0 6 32 0 -1 0 0			
+        3 PropertyAccessExpression 0 4 32 0 -1 0 0			
+        4 Identifier 0 1 0 0 -1 0 0		a	
+        4 QuestionDotToken 1 3 0 0 -1 0 0			
+        4 Identifier 3 4 0 0 -1 0 0		b	
+    parser_test.go:231: Node optional mutant caught: case 30 line 328: port "2 PropertyAccessExpression 0 6 0 0 -1 0 0\t\t\t", Go "2 PropertyAccessExpression 0 6 32 0 -1 0 0\t\t\t"
+        Go context:
+        1 Identifier 10 11 0 0 -1 0 0		e	
+        case 30
+        expression
+        0 CallExpression 0 16 32 0 1 0 0			
+        1 ElementAccessExpression 0 11 32 0 -1 0 0			
+        2 PropertyAccessExpression 0 6 32 0 -1 0 0			
+        3 PropertyAccessExpression 0 4 32 0 -1 0 0			
+        4 Identifier 0 1 0 0 -1 0 0		a	
+        4 QuestionDotToken 1 3 0 0 -1 0 0			
+        4 Identifier 3 4 0 0 -1 0 0		b	
+    parser_test.go:242: native parenthesized expression misclassified as arrow caught: case 2 line 20: port "0 ArrowFunction 0 3 0 0 -1 0 0\t\t\t", Go "0 ParenthesizedExpression 0 3 0 0 -1 0 0\t\t\t"
+        Go context:
+        2 Identifier 1 2 0 0 -1 0 0		x	
+        1 EqualsGreaterThanToken 3 6 0 0 -1 0 0			
+        1 Identifier 6 8 0 0 -1 0 0		x	
+        case 2
+        expression
+        0 ParenthesizedExpression 0 3 0 0 -1 0 0			
+        1 Identifier 1 2 0 0 -1 0 0		x	
+        case 3
+        expression
+        0 ParenthesizedExpression 0 8 0 0 -1 0 0			
+    parser_test.go:242: Node parenthesized expression misclassified as arrow caught: case 2 line 20: port "0 ArrowFunction 0 3 0 0 -1 0 0\t\t\t", Go "0 ParenthesizedExpression 0 3 0 0 -1 0 0\t\t\t"
+        Go context:
+        2 Identifier 1 2 0 0 -1 0 0		x	
+        1 EqualsGreaterThanToken 3 6 0 0 -1 0 0			
+        1 Identifier 6 8 0 0 -1 0 0		x	
+        case 2
+        expression
+        0 ParenthesizedExpression 0 3 0 0 -1 0 0			
+        1 Identifier 1 2 0 0 -1 0 0		x	
+        case 3
+        expression
+        0 ParenthesizedExpression 0 8 0 0 -1 0 0			
+--- PASS: TestExpressionsAgree (49.25s)
+=== RUN   TestCompilerExpressionsAgree
+    parser_test.go:289: Node: case 1 line 2: port "expression", Go "case 1"
+        Go context:
+        case 0
+        case 1
+        case 2
+        case 3
+        expression
+        0 NumericLiteral 8134 8136 0 0 -1 0 0		0	
+--- FAIL: TestCompilerExpressionsAgree (3.48s)
+=== RUN   TestMethodRecoveryAgrees
+--- PASS: TestMethodRecoveryAgrees (34.46s)
+=== RUN   TestWholeCompilerAgrees
+    whole_test.go:39: 77 whole compiler files, 44766682 identical whole-tree bytes
+--- PASS: TestWholeCompilerAgrees (28.63s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser	115.844s
+FAIL

@@ -1,0 +1,40 @@
+{
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "area": "f85306ea8913a08324daaca3a5429747fe094a5c",
+  "refusal": "f1c9173eeeb073743c7233ad11f0d12c47363503",
+  "scratch_merge": "8ec2185bba2d26094a82d1cb272c7ff95b354607",
+  "oracle_prerequisites": [
+    "00",
+    "10",
+    "20",
+    "30",
+    "40",
+    "45",
+    "46",
+    "70"
+  ],
+  "unmodified_apply_failure": "adaptation 52 requires a declaration slice",
+  "extra_api_prerequisites_excluded": [
+    "31",
+    "32",
+    "33"
+  ],
+  "nproc": 5,
+  "cpu_quota": 4,
+  "stock_typescript": "6.0.3",
+  "wave1_commit": "bbb99fad890a7d00283a826b82f1d17443f8dc9c",
+  "wave1_estimate": "24\u201340 original sites by October 7 23:49 MDT",
+  "final_inventory": {
+    "before": 415,
+    "after": 391,
+    "cleared": 24
+  },
+  "oracle_oom_observation": "Two default four-worker attempts exited after worker failures; cgroup oom_kill rose to 2. Disposable trial trees occupied nearly 8GB of tmpfs. Five already-recorded trial trees removed before the final unchanged default attempt.",
+  "final_oracle": {
+    "status": "pass",
+    "tests": 106367,
+    "workers": 4,
+    "wall_seconds": 303.894,
+    "baseline_diffs": 0
+  }
+}

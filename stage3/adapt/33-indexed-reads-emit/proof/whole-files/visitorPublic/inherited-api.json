@@ -1,0 +1,142 @@
+[
+  {
+    "line": 3665,
+    "before": "        \" __sortedArrayBrand\": any;",
+    "after": "        \" __sortedArrayBrand\": undefined;"
+  },
+  {
+    "line": 3668,
+    "before": "        \" __sortedArrayBrand\": any;",
+    "after": "        \" __sortedArrayBrand\": undefined;"
+  },
+  {
+    "line": 3671,
+    "before": "        __pathBrand: any;",
+    "after": "        __pathBrand: undefined;"
+  },
+  {
+    "line": 4328,
+    "before": "        _jsdocContainerBrand: any;",
+    "after": "        _jsdocContainerBrand: undefined;"
+  },
+  {
+    "line": 4331,
+    "before": "        _localsContainerBrand: any;",
+    "after": "        _localsContainerBrand: undefined;"
+  },
+  {
+    "line": 4334,
+    "before": "        _flowContainerBrand: any;",
+    "after": "        _flowContainerBrand: undefined;"
+  },
+  {
+    "line": 4490,
+    "before": "        _declarationBrand: any;",
+    "after": "        _declarationBrand: undefined;"
+  },
+  {
+    "line": 4590,
+    "before": "        _autoAccessorBrand: any;",
+    "after": "        _autoAccessorBrand: undefined;"
+  },
+  {
+    "line": 4593,
+    "before": "        _objectLiteralBrand: any;",
+    "after": "        _objectLiteralBrand: undefined;"
+  },
+  {
+    "line": 4638,
+    "before": "        _functionLikeDeclarationBrand: any;",
+    "after": "        _functionLikeDeclarationBrand: undefined;"
+  },
+  {
+    "line": 4704,
+    "before": "        _typeNodeBrand: any;",
+    "after": "        _typeNodeBrand: undefined;"
+  },
+  {
+    "line": 4850,
+    "before": "        _expressionBrand: any;",
+    "after": "        _expressionBrand: undefined;"
+  },
+  {
+    "line": 4860,
+    "before": "        _unaryExpressionBrand: any;",
+    "after": "        _unaryExpressionBrand: undefined;"
+  },
+  {
+    "line": 4865,
+    "before": "        _updateExpressionBrand: any;",
+    "after": "        _updateExpressionBrand: undefined;"
+  },
+  {
+    "line": 4880,
+    "before": "        _leftHandSideExpressionBrand: any;",
+    "after": "        _leftHandSideExpressionBrand: undefined;"
+  },
+  {
+    "line": 4883,
+    "before": "        _memberExpressionBrand: any;",
+    "after": "        _memberExpressionBrand: undefined;"
+  },
+  {
+    "line": 4886,
+    "before": "        _primaryExpressionBrand: any;",
+    "after": "        _primaryExpressionBrand: undefined;"
+  },
+  {
+    "line": 5014,
+    "before": "        _literalExpressionBrand: any;",
+    "after": "        _literalExpressionBrand: undefined;"
+  },
+  {
+    "line": 5098,
+    "before": "        _optionalChainBrand: any;",
+    "after": "        _optionalChainBrand: undefined;"
+  },
+  {
+    "line": 5106,
+    "before": "        _propertyAccessExpressionLikeQualifiedNameBrand?: any;",
+    "after": "        _propertyAccessExpressionLikeQualifiedNameBrand?: undefined;"
+  },
+  {
+    "line": 5117,
+    "before": "        _optionalChainBrand: any;",
+    "after": "        _optionalChainBrand: undefined;"
+  },
+  {
+    "line": 5131,
+    "before": "        _optionalChainBrand: any;",
+    "after": "        _optionalChainBrand: undefined;"
+  },
+  {
+    "line": 5181,
+    "before": "        _optionalChainBrand: any;",
+    "after": "        _optionalChainBrand: undefined;"
+  },
+  {
+    "line": 5275,
+    "before": "        _statementBrand: any;",
+    "after": "        _statementBrand: undefined;"
+  },
+  {
+    "line": 5434,
+    "before": "        _classElementBrand: any;",
+    "after": "        _classElementBrand: undefined;"
+  },
+  {
+    "line": 5438,
+    "before": "        _typeElementBrand: any;",
+    "after": "        _typeElementBrand: undefined;"
+  },
+  {
+    "line": 5706,
+    "before": "        _jsDocTypeBrand: any;",
+    "after": "        _jsDocTypeBrand: undefined;"
+  },
+  {
+    "line": 8522,
+    "before": "    type ErrorCallback = (message: DiagnosticMessage, length: number, arg0?: any) => void;",
+    "after": "    type ErrorCallback = (message: DiagnosticMessage, length: number, arg0?: string | number) => void;"
+  }
+]

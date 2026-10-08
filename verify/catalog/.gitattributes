@@ -1,0 +1,3 @@
+# Unified diff prefixes and verbatim diagnostics contain intentional whitespace.
+*.patch -whitespace
+logs/**/*.log -whitespace

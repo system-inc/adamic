@@ -1,0 +1,1 @@
+type T = readonly [A & { readonly left left: I; readonly right: T; },];

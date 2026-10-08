@@ -1,0 +1,69 @@
+panic: Unhandled case in Node.Text: *ast.ComputedPropertyName
+
+goroutine 1 [running]:
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text(0x407e65?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:308 +0x42c
+github.com/system-inc/cohere/internal/lint/rules/core.init.func118.4(0x270bc6318160, 0x40?)
+	/workspace/adamic/cohere/internal/lint/rules/core/no_underscore_dangle.go:241 +0x45
+github.com/system-inc/cohere/internal/lint/rules/core.init.func118.7(0x270bc6318160)
+	/workspace/adamic/cohere/internal/lint/rules/core/no_underscore_dangle.go:293 +0x2c
+main.main.func2(0x270bc6318160)
+	/workspace/adamic/cohere/adamic_wave07_owned.go:57 +0x43
+main.main.func2.1(0x0?)
+	/workspace/adamic/cohere/adamic_wave07_owned.go:59 +0x1a
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*ObjectLiteralExpression).ForEachChild(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:4726
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0xd0?, 0x270bc62f3458)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8852 +0x354b
+main.main.func2(0x270bc624ad70)
+	/workspace/adamic/cohere/adamic_wave07_owned.go:59 +0x68
+main.main.func2.1(0x270bc62f34e0?)
+	/workspace/adamic/cohere/adamic_wave07_owned.go:59 +0x1a
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclaration).ForEachChild(0x270bc6323040, 0x270bc62f3630)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1729 +0xc2
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x270bc6323040?, 0x270bc62f3630)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8740 +0x1438
+main.main.func2(0x270bc6323040)
+	/workspace/adamic/cohere/adamic_wave07_owned.go:59 +0x68
+main.main.func2.1(0xa0?)
+	/workspace/adamic/cohere/adamic_wave07_owned.go:59 +0x1a
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclarationList).ForEachChild(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1774
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x0?, 0x270bc62f37f0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8742 +0x3084
+main.main.func2(0x270bc6247900)
+	/workspace/adamic/cohere/adamic_wave07_owned.go:59 +0x68
+main.main.func2.1(0x0?)
+	/workspace/adamic/cohere/adamic_wave07_owned.go:59 +0x1a
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableStatement).ForEachChild(0x0?, 0x0?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1679 +0x62
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x6?, 0x270bc62f39e0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8738 +0x1032
+main.main.func2(0x270bc6362000)
+	/workspace/adamic/cohere/adamic_wave07_owned.go:59 +0x68
+main.main.func2.1(0x80000014a6460?)
+	/workspace/adamic/cohere/adamic_wave07_owned.go:59 +0x1a
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0x270bc625dc08, 0x270bc62f3bd0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:2786 +0x9b
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x0?, 0x270bc62f3bd0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9002 +0x1ec5
+main.main.func2(0x270bc625dc08)
+	/workspace/adamic/cohere/adamic_wave07_owned.go:59 +0x68
+main.main()
+	/workspace/adamic/cohere/adamic_wave07_owned.go:61 +0x471

@@ -1,0 +1,5 @@
+{
+  "name": "multiline-arrow-single-line-exemption-removed",
+  "from": "context.line(context.start(index)) === context.line(node.end)",
+  "to": "false"
+}
