@@ -1,0 +1,22 @@
+import type {RuleContext} from '../../context.ts';
+import {enclosingComponentOf} from '../../helpers/rules-react/enclosing_component_of.a';
+import {skipParenthesesOptional} from '../../helpers/rules-react/skip_parentheses_optional.a';
+import {message} from './messages.a';
+export class Rule {
+ readonly context:RuleContext;
+ constructor(context:RuleContext){this.context=context;}
+ child(index:number,pos:number):number{return index<0?-1:this.context.node(index).children[pos] ?? -1;}
+ last(index:number):number{if(index<0){return -1;}const c=this.context.node(index).children;return c[c.length-1] ?? -1;}
+ visit(index:number,parent:number):void {
+  const callee=skipParenthesesOptional(this.context,this.child(index,0));
+  if(this.context.kind(callee)!=='PropertyAccessExpression'){return;}
+  const object=skipParenthesesOptional(this.context,this.child(callee,0));
+  if(this.context.kind(object)!=='ThisKeyword'){return;}
+  const name=this.last(callee);const kind=this.context.kind(name);if(kind!=='Identifier'&&kind!=='PrivateIdentifier'){return;}
+  let text=this.context.node(name).text;if(kind==='PrivateIdentifier'&&text.startsWith('#')){text=text.slice(1);}
+  if(text!=='setState'){return;}
+  if(enclosingComponentOf(this.context,index)<0){return;}
+  this.context.report(callee,'react/no-set-state','noSetState',message,'','','');
+ }
+}
+export function create(context:RuleContext):Rule{return new Rule(context);}

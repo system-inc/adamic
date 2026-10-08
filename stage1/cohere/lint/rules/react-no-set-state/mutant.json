@@ -1,0 +1,5 @@
+{
+  "name": "set_state_name_inverted",
+  "from": "if(text!=='setState')",
+  "to": "if(text==='setState')"
+}
