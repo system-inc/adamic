@@ -1431,6 +1431,17 @@ JSDocArray built with its own jsDocCache field is a pinned NotYet. Fixtures are
 `lane2/ranked6-*.a`, held by TestCheckedViewRanked6ArrayContracts and
 TestCheckedViewRanked6Frontiers; the report is `lane2/RANKED6_ARRAYS_REPORT.md`.
 
+### Lane 2 seventh ranked arrays
+
+The seventh ranked group (ClassDeclaration.heritageClauses, HeritageClause.types,
+SetAccessorDeclaration and ConstructorDeclaration parameters, Type.aliasTypeArguments,
+TemplateLiteralType.types, SourceFile.bindDiagnostics, Diagnostic.relatedInformation,
+ParsedCommandLine.projectReferences) needed no new hook. Pushes of records with object
+or undefined-typed fields remain named runtime refusals, and assigning a fresh array to
+a field of a Diagnostic read from a viewed element is a pinned NotYet. Fixtures are
+`lane2/ranked7-*.a`, held by TestCheckedViewRanked7ArrayContracts and
+TestCheckedViewRanked7Frontiers; the report is `lane2/RANKED7_ARRAYS_REPORT.md`.
+
 
 
 ## Lane 5 source hooks on ba59427 (October 8)
