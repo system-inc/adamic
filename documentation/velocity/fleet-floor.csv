@@ -101,3 +101,16 @@ time,lane,running,floor,queued,brief,session,outcome
 2026-10-08T17:55:37.166733Z,runtime,4,8,0,,,queue_empty
 2026-10-08T17:55:39.469109Z,library,12,8,3,,,floor_met
 2026-10-08T17:55:47.916700Z,developer_tools,2,4,0,,,queue_empty
+2026-10-08T17:59:20.166251Z,compiler,24,30,3,25-refusal-rulings.md,01a113e3-3295-72cb-94c5-4b7eb4a2502d,sent
+2026-10-08T17:59:30.963272Z,compiler,25,30,2,30-lane2-certify-b.md,01a11411-6925-74c0-97ba-5a2836530026,sent
+2026-10-08T17:59:41.116260Z,compiler,26,30,1,31-optional-indexing.md,01a1143c-ef29-722d-bf77-1c0b8d9fc01c,sent
+2026-10-08T17:59:41.391867Z,compiler,27,30,0,,,queue_empty
+2026-10-08T18:00:28.091755Z,cohere_adamic,24,30,40,016-structure-consistency-require-matching-file-name.txt,01a11245-147c-746f-9c3e-ed9135b5701c,sent
+2026-10-08T18:00:37.808454Z,cohere_adamic,25,30,39,017-no-cond-assign.txt,01a1144d-ab53-71e0-912c-5274eee8202b,sent
+2026-10-08T18:00:47.114635Z,cohere_adamic,26,30,38,018-react-void-dom-elements-no-children.txt,01a1144d-ce53-73e2-afac-5cc08168e02d,sent
+2026-10-08T18:00:47.119323Z,cohere_adamic,27,30,37,,,pass_cap
+2026-10-08T18:00:59.405139Z,typescript,8,10,8,24-step34-differential.md,01a113e0-a860-71b5-a8c0-e869b10ac005,sent
+2026-10-08T18:01:06.706131Z,typescript,9,10,7,25-step10-proven-sites.md,01a1140d-0d0c-731b-8259-304d5ae3f017,sent
+2026-10-08T18:01:10.510110Z,runtime,2,8,0,,,queue_empty
+2026-10-08T18:01:12.673029Z,library,13,8,3,,,floor_met
+2026-10-08T18:01:20.977533Z,developer_tools,3,4,0,,,queue_empty
