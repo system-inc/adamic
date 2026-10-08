@@ -143,6 +143,12 @@ def appendOnce(path, line):
 git("fetch", "-q", "origin")
 main = git("rev-parse", "origin/main")
 base = main
+# A landed slice's request is spent: its record published before it landed, so a line left behind
+# would spend Home's whole gate on a tree that's already main's past.
+if not dryRun and os.path.exists(requests):
+    for line in open(requests).read().split():
+        if subprocess.run(["git", "merge-base", "--is-ancestor", line, main], capture_output=True).returncode == 0:
+            removeLine(requests, line)
 chain = []
 trainHeads = remoteHeads("cloud/land-train-*")
 for number, (slug, source, owner, riderBranches) in enumerate(slices(), start=1):
