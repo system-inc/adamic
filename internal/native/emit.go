@@ -100,7 +100,7 @@ func cProgram(program *ir.Program, handler int) string {
 		emitter.releaseGlobals()
 	}
 	bodies.WriteString(emitter.out.String())
-	bodies.WriteString("\treturn 0;\n}\n")
+	bodies.WriteString("\treturn adamic_host_exit_status();\n}\n")
 	if handler >= 0 {
 		bodies.WriteString(emitter.requestABI(handler))
 	}

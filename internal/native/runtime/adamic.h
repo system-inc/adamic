@@ -1052,4 +1052,7 @@ _Noreturn void adamic_unreachable(void);
 adamic_array *adamic_plain_object_keys(const adamic_object *object);
 void *adamic_library_identity(size_t index);
 
+// Library host contracts, also needed by the generated entry point.
+#include "host_runtime.h"
+
 #endif

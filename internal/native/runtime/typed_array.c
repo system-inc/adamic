@@ -38,6 +38,7 @@ static adamic_typed_array *allocate(enum adamic_typed_array_kind kind, size_t le
 		static const char message[] = "out of memory";
 		adamic_panic(message, sizeof message - 1);
 	}
+	adamic_host_backing_add(length * size);
 	return array;
 }
 
