@@ -1,0 +1,22 @@
+=== RUN   TestCheckerReplayEntryControl
+    checker_pending_test.go:208: before: removed entry fails Node comparison: case 0
+        refused @typescript-eslint/no-unnecessary-boolean-literal-compare /tmp/adamic-gate/TestCheckerReplayEntryControl4197310215/001/source.ts 44 46 missing transcript entry
+        fixed	function f<T extends boolean>(b: T) { return b === true; }\u000a
+    checker_pending_test.go:213: after: complete live-bridge transcript matches Go: case 0
+        /tmp/adamic-gate/TestCheckerReplayEntryControl4197310215/001/source.ts:1:46
+          @typescript-eslint/no-unnecessary-boolean-literal-compare  This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.
+        
+        range 45 55 direct fix	b		45 55
+        fixed	function f<T extends boolean>(b: T) { return b; }\u000a
+    checker_pending_test.go:218: reverse guard rejects an unasked entry
+    checker_pending_test.go:223: pilot type-verdict mutant caught only by findings comparison on Node
+    checker_pending_test.go:230: pilot's harness-owned refusal reaches the wire: case 0
+        refused @typescript-eslint/no-unnecessary-boolean-literal-compare /tmp/adamic-gate/TestCheckerReplayEntryControl4197310215/001/source.ts 0 59 undeclared program read ReadsOtherFiles
+        /tmp/adamic-gate/TestCheckerReplayEntryControl4197310215/001/source.ts:1:46
+          @typescript-eslint/no-unnecessary-boolean-literal-compare  This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.
+        
+        range 45 55 direct fix	b		45 55
+        fixed	function f<T extends boolean>(b: T) { return b; }\u000a
+--- PASS: TestCheckerReplayEntryControl (9.48s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	9.592s
