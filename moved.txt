@@ -1,0 +1,160 @@
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/01_readFile_utf8.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/01_readFile_utf8.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/02_readFile_utf16le.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/02_readFile_utf16le.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/03_readFile_utf16be.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/03_readFile_utf16be.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/04_readFile_missing.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/04_readFile_missing.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/05_writeFile.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/05_writeFile.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/06_fileExists.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/06_fileExists.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/07_directoryExists.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/07_directoryExists.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/08_getDirectories.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/08_getDirectories.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/10_getModifiedTime.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/10_getModifiedTime.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/11_setModifiedTime.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/11_setModifiedTime.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/12_deleteFile.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/12_deleteFile.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/13_createDirectory.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/13_createDirectory.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/15_getExecutingFilePath.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/15_getExecutingFilePath.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/16_getEnvironmentVariable.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/16_getEnvironmentVariable.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/17_write.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/17_write.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/18_exit_0.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/18_exit_0.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/19_exit_1.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/19_exit_1.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/20_exit_2.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/20_exit_2.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/21_createHash.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/21_createHash.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/22_createHash_fallback.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/22_createHash_fallback.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/23_newLine.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/23_newLine.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/25_readDirectory.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/25_readDirectory.a/stage0
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/01_builder_state.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/11_status_type_only.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/12_builder_release_cache.a/native
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/01_scanner_frame.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/01_scanner_frame.a/node
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/01_scanner_frame.a/stage0
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/02_scanner_digits.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/03_scanner_hoisting.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/04_scanner_escaped_text.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/05_scanner_reassigned_text.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/06_parser_token_state.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/07_binder_symbol_count.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/08_checker_symbol_recursion.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/10_checker_arrow_cleanup.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/11_scanner_method_wrapper.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/refused/01_scanner_frame.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/refused/01_scanner_frame.a/node
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/refused/01_scanner_frame.a/stage0
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/14_comment_pending.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/predicates/01_identifier.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/predicates/02_module_name.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/runner/01_queue_empty.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/runner/02_is_string.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/01_diagnostic_code.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/04_jsx_runtime.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/05_this_type.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/07_compact.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/09_literal_cache.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/10_global_import_meta.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/12_symbol_links.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/13_void_callback.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/14_relative_complement.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/16_scan_exclamation.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/19_deprecated_flags.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/20_jsdoc_terminate.a/native
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/21_truthy_loops.a
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/21_truthy_loops.a/node
+pass -> absent  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/21_truthy_loops.a/stage0
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/22_assignment_once.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/23_labels_finally.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/24_proportional_conditions.a/native
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/refused/21_truthy_loops.a
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/refused/21_truthy_loops.a/node
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/refused/21_truthy_loops.a/stage0
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/01_readFile_utf8.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/02_readFile_utf16le.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/03_readFile_utf16be.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/04_readFile_missing.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/05_writeFile.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/06_fileExists.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/07_directoryExists.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/08_getDirectories.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/10_getModifiedTime.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/11_setModifiedTime.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/12_deleteFile.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/13_createDirectory.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/15_getExecutingFilePath.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/16_getEnvironmentVariable.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/17_write.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/18_exit_0.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/19_exit_1.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/20_exit_2.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/21_createHash.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/22_createHash_fallback.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/23_newLine.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/25_readDirectory.a
+        fixtures_test.go:289: unexpected stage 0 error: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
