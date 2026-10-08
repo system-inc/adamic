@@ -88,27 +88,60 @@ static char *bytes(const adamic_string *value) {
     return result;
 }
 
-// Node's ERR_INVALID_ARG_VALUE uses inspect followed by a 128-unit preview.
+// Node 24.19.0 lib/internal/util/inspect.js strEscape/meta and
+// lib/internal/errors.js ERR_INVALID_ARG_VALUE. Work in UTF-16 units so a lone
+// surrogate is escaped, while a real pair remains literal. Node inspects at most
+// 10000 source units, then previews the first 128 inspected units.
+static size_t inspect_string_part(const adamic_string *value, size_t start, size_t end, double *shown, size_t at) {
+    bool single = false, double_quote = false, backtick = false, interpolation = false;
+    for (size_t i = start; i < end; i++) {
+        double c = adamic_string_char_code_at(value, (double)i);
+        single |= c == '\''; double_quote |= c == '"'; backtick |= c == '`';
+        if (c == '$' && i + 1 < end && adamic_string_char_code_at(value, (double)i + 1) == '{') { interpolation = true; }
+    }
+    int quote = !single ? '\'' : !double_quote ? '"' : !backtick && !interpolation ? '`' : '\'';
+    shown[at++] = quote;
+    for (size_t i = start; i < end; i++) {
+        unsigned c = (unsigned)adamic_string_char_code_at(value, (double)i);
+        if (c == '\\' || c == (unsigned)quote) { shown[at++] = '\\'; shown[at++] = c; }
+        else if (c == '\n' || c == '\r' || c == '\t' || c == '\b' || c == '\f') {
+            shown[at++] = '\\'; shown[at++] = c == '\n' ? 'n' : c == '\r' ? 'r' : c == '\t' ? 't' : c == '\b' ? 'b' : 'f';
+        } else if (c < 32 || (c >= 127 && c < 160)) {
+            char escape[5]; snprintf(escape, sizeof escape, "\\x%02X", c);
+            for (size_t j = 0; j < 4; j++) { shown[at++] = (unsigned char)escape[j]; }
+        } else if (c >= 0xd800 && c <= 0xdfff) {
+            if (c <= 0xdbff && i + 1 < end) {
+                unsigned low = (unsigned)adamic_string_char_code_at(value, (double)i + 1);
+                if (low >= 0xdc00 && low <= 0xdfff) { shown[at++] = c; shown[at++] = low; i++; continue; }
+            }
+            char escape[7]; snprintf(escape, sizeof escape, "\\u%04x", c);
+            for (size_t j = 0; j < 6; j++) { shown[at++] = (unsigned char)escape[j]; }
+        } else { shown[at++] = c; }
+    }
+    shown[at++] = quote;
+    return at;
+}
+
 static void invalid_value(const char *prefix, const adamic_string *value) {
-    size_t capacity = value->length * 4 + 8;
-    char *shown = malloc(capacity);
+    size_t units = (size_t)adamic_string_length(value);
+    if (units > 10000) { units = 10000; }
+    double *shown = malloc((units * 10 + 2) * sizeof *shown);
     if (shown == NULL) { adamic_panic("out of memory", 13); }
-    char quote = '\'';
-    if (memchr(value->bytes, '\'', value->length) != NULL) {
-        quote = memchr(value->bytes, '"', value->length) == NULL ? '"' :
-            memchr(value->bytes, '`', value->length) == NULL && memchr(value->bytes, '$', value->length) == NULL ? '`' : '\'';
+    size_t at = 0, start = 0;
+    // formatPrimitive's default compact=3, breakLength=80, indentation=0:
+    // long strings split after each newline, quoting each part separately.
+    for (size_t i = 0; i < units; i++) {
+        if (units > 76 && adamic_string_char_code_at(value, (double)i) == '\n' && i + 1 < units) {
+            at = inspect_string_part(value, start, i + 1, shown, at);
+            const char separator[] = " +\n  ";
+            for (size_t j = 0; j < sizeof separator - 1; j++) { shown[at++] = separator[j]; }
+            start = i + 1;
+        }
     }
-    size_t at = 0; shown[at++] = quote;
-    for (size_t i = 0; i < value->length; i++) {
-        unsigned char c = (unsigned char)value->bytes[i];
-        if (c == '\\' || c == (unsigned char)quote) { shown[at++] = '\\'; shown[at++] = (char)c; }
-        else if (c == '\n' || c == '\r' || c == '\t' || c == '\b' || c == '\f' || c == '\v') {
-            shown[at++] = '\\'; shown[at++] = c == '\n' ? 'n' : c == '\r' ? 'r' : c == '\t' ? 't' : c == '\b' ? 'b' : c == '\f' ? 'f' : 'v';
-        } else if (c < 32 || c == 127) { snprintf(shown + at, 5, "\\x%02x", c); at += 4; }
-        else { shown[at++] = (char)c; }
-    }
-    shown[at++] = quote; shown[at] = 0;
-    adamic_string *inspection = adamic_decode_utf8((const unsigned char *)shown, at);
+    at = inspect_string_part(value, start, units, shown, at);
+    // Every source beyond inspect's limit already gives an inspection longer
+    // than the preview. Its trailing 'more characters' cannot enter the preview.
+    adamic_string *inspection = adamic_string_from_char_codes(at, shown);
     free(shown);
     adamic_string *preview = inspection;
     if (adamic_string_length(inspection) > 128) {
@@ -117,14 +150,36 @@ static void invalid_value(const char *prefix, const adamic_string *value) {
         preview = adamic_string_concat(2, (adamic_string *const[]){slice, &dots});
         adamic_release(slice); adamic_release(inspection);
     }
-    size_t length = strlen(prefix) + preview->length + 1;
-    char *message = malloc(length);
-    if (message == NULL) { adamic_panic("out of memory", 13); }
-    memcpy(message, prefix, strlen(prefix));
-    memcpy(message + strlen(prefix), preview->bytes, preview->length);
-    message[length - 1] = 0;
-    raise_error("TypeError", "ERR_INVALID_ARG_VALUE", message);
-    free(message); adamic_release(preview);
+    adamic_string *lead = text(prefix);
+    adamic_string *message = adamic_string_concat(2, (adamic_string *const[]){lead, preview});
+    adamic_release(lead); adamic_release(preview);
+    // Preserve a surrogate at the preview cut, rather than decoding WTF-8 as
+    // filesystem UTF-8. It is part of the Error's JavaScript string.
+    adamic_object *error = adamic_object_new(&error_shape);
+    error->slots[0].reference = text("TypeError");
+    error->slots[1].reference = message;
+    error->slots[2].reference = text("ERR_INVALID_ARG_VALUE");
+    adamic_error_tag(error);
+    adamic_thrown = error;
+}
+
+// Node ERR_OUT_OF_RANGE uses addNumericalSeparator above 2**32, and otherwise
+// util.inspect's formatNumber (including negative zero). Port the error helper
+// verbatim, including its grouping of a String(number) in exponent notation.
+static adamic_string *range_number(double value) {
+    if (value == 0 && signbit(value)) { return text("-0"); }
+    adamic_string *plain = adamic_string_from_number(value);
+    if (!isfinite(value) || value != trunc(value) || fabs(value) <= 4294967296.0) { return plain; }
+    size_t start = plain->bytes[0] == '-' ? 1 : 0;
+    size_t length = plain->length;
+    char shown[128]; size_t at = 0;
+    for (size_t i = 0; i < length; i++) {
+        if (i > start && (length - i) % 3 == 0) { shown[at++] = '_'; }
+        shown[at++] = plain->bytes[i];
+    }
+    adamic_string *result = adamic_decode_utf8((const unsigned char *)shown, at);
+    adamic_release(plain);
+    return result;
 }
 
 static char *path_bytes(const adamic_string *path, bool throwing) {
@@ -135,7 +190,7 @@ static char *path_bytes(const adamic_string *path, bool throwing) {
 
 static bool integer(double value, double maximum, const char *argument) {
     if (isfinite(value) && value == trunc(value) && value >= 0 && value <= maximum) { return true; }
-    adamic_string *shown = adamic_string_from_number(value);
+    adamic_string *shown = range_number(value);
     char message[300];
     if (!isfinite(value) || value != trunc(value)) {
         snprintf(message, sizeof message, "The value of \"%s\" is out of range. It must be an integer. Received %.*s", argument, (int)shown->length, shown->bytes);
@@ -148,7 +203,7 @@ static bool integer(double value, double maximum, const char *argument) {
 }
 
 static void read_range(const char *argument, const char *range, double value) {
-    adamic_string *shown = adamic_string_from_number(value);
+    adamic_string *shown = range_number(value);
     char message[300];
     snprintf(message, sizeof message, "The value of \"%s\" is out of range. It must be %s. Received %.*s", argument, range, (int)shown->length, shown->bytes);
     adamic_release(shown);
@@ -666,7 +721,7 @@ static double fs_utimes(const adamic_string *path, double atime, double mtime, b
         double value = seconds[i];
         if (dates[i] && isnan(value)) { times[i].tv_sec=0; times[i].tv_nsec=UTIME_OMIT; continue; }
         if (!isfinite(value)) {
-            adamic_string *shown = adamic_string_from_number(value);
+            adamic_string *shown = range_number(value);
             char message[250];
             snprintf(message, sizeof message, "The \"time\" argument must be an instance of Date or an Time in seconds. Received type number (%.*s)", (int)shown->length, shown->bytes);
             adamic_release(shown); free(name);
