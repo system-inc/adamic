@@ -1,0 +1,2 @@
+const x: { [key: string]: number } = {};
+console.log(`${x['missing'] ?? -1}`);

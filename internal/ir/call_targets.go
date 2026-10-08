@@ -1,5 +1,10 @@
 package ir
 
+import (
+	"reflect"
+	"slices"
+)
+
 // CallTargets answers which functions a call can run. A direct call has exactly
 // its Function as target. A virtual call (Virtual != 0) has every implementation
 // that can run, including overrides in every instantiated subclass, recorded by
@@ -64,6 +69,10 @@ func (p *Program) ClosureTargets(call Expression) FunctionTargets {
 	switch value := value.(type) {
 	case MakeClosure:
 		return FunctionTargets{Functions: []int{value.Function}}
+	case Property:
+		if value.Method {
+			return p.structuralTargets(value.Name)
+		}
 	case Read:
 		if target := p.Locals[value.Local].ConstantClosure; target != 0 {
 			return FunctionTargets{Functions: []int{target - 1}}
@@ -90,4 +99,156 @@ func (p *Program) ClosureMayThrow(call Expression) bool {
 		}
 	}
 	return false
+}
+
+// CallBorrows is the convention at one argument position, receiver included.
+// Every possible implementation must borrow. Missing parameters are owned.
+func (p *Program) CallBorrows(call Call, position int) bool {
+	return p.targetsBorrow(FunctionTargets{Functions: p.CallTargets(call)}, position)
+}
+
+// ClosureBorrows uses the same join for a bounded function value. Unknown is owned.
+func (p *Program) ClosureBorrows(call Expression, position int) bool {
+	targets := p.ClosureTargets(call)
+	if closure, ok := call.(CallClosure); ok {
+		if property, ok := closure.Closure.(Property); ok && property.Method {
+			if targets.Unknown || len(targets.Functions) == 0 {
+				return false
+			}
+			for _, target := range targets.Functions {
+				offset := 0
+				if !p.Functions[target].Closure {
+					offset = 1
+				}
+				if !p.targetsBorrow(FunctionTargets{Functions: []int{target}}, position+offset) {
+					return false
+				}
+			}
+			return true
+		}
+	}
+	return p.targetsBorrow(targets, position)
+}
+
+func (p *Program) targetsBorrow(targets FunctionTargets, position int) bool {
+	if targets.Unknown || len(targets.Functions) == 0 || position < 0 {
+		return false
+	}
+	for _, target := range targets.Functions {
+		parameters := p.Functions[target].Parameters
+		if position >= len(parameters) || !p.Locals[parameters[position]].Borrowed {
+			return false
+		}
+	}
+	return true
+}
+
+// ClosureReceiverBorrows joins the implicit receivers of structural methods.
+// Function-valued fields do not receive this, but an unknown field stays owned.
+func (p *Program) ClosureReceiverBorrows(call CallClosure) bool {
+	targets := p.ClosureTargets(call)
+	if targets.Unknown || len(targets.Functions) == 0 {
+		return false
+	}
+	for _, target := range targets.Functions {
+		if !p.Functions[target].Closure && !p.targetsBorrow(FunctionTargets{Functions: []int{target}}, 0) {
+			return false
+		}
+	}
+	return true
+}
+
+// structuralTargets is deliberately a whole-program superset. Every construction
+// and field write with this name contributes, regardless of the receiver's type.
+// An unbounded function-valued field or accessor makes the answer Unknown.
+func (p *Program) structuralTargets(name string) FunctionTargets {
+	result := FunctionTargets{}
+	add := func(function int) {
+		if !slices.Contains(result.Functions, function) {
+			result.Functions = append(result.Functions, function)
+		}
+	}
+	field := func(value Expression) {
+		switch value := value.(type) {
+		case MakeClosure:
+			add(value.Function)
+		case Read:
+			if target := p.Locals[value.Local].ConstantClosure; target != 0 {
+				add(target - 1)
+			} else {
+				result.Unknown = true
+			}
+		default:
+			result.Unknown = true
+		}
+	}
+	var visit func(reflect.Value)
+	visit = func(value reflect.Value) {
+		if !value.IsValid() {
+			return
+		}
+		if value.CanInterface() {
+			switch node := value.Interface().(type) {
+			case ObjectCall:
+				// Dynamic key construction and copying can introduce a function-valued
+				// field without a named Field or SetProperty node.
+				if node.Method == "assign" || node.Method == "fromEntries" {
+					result.Unknown = true
+				}
+			case ObjectLiteral:
+				for _, method := range node.Methods {
+					if method.Name == name {
+						add(method.Function)
+					}
+				}
+				for _, entry := range node.Fields {
+					if entry.Name == name {
+						field(entry.Value)
+					}
+				}
+			case SetProperty:
+				if node.Name == name {
+					field(node.Value)
+				}
+			}
+		}
+		switch value.Kind() {
+		case reflect.Interface, reflect.Pointer:
+			if !value.IsNil() {
+				visit(value.Elem())
+			}
+		case reflect.Struct:
+			for index := 0; index < value.NumField(); index++ {
+				visit(value.Field(index))
+			}
+		case reflect.Slice:
+			for index := 0; index < value.Len(); index++ {
+				visit(value.Index(index))
+			}
+		}
+	}
+	for _, function := range p.Functions {
+		visit(reflect.ValueOf(function.Body))
+	}
+	visit(reflect.ValueOf(p.Main))
+	for _, class := range p.Classes {
+		for _, accessor := range class.Accessors {
+			if accessor.Name == name {
+				result.Unknown = true
+			}
+		}
+	}
+	if len(result.Functions) == 0 {
+		result.Unknown = true
+	}
+	return result
+}
+
+// ClosureReceiver exposes the implicit receiver without consumers reinterpreting
+// the function-value target representation. Other calls have no such receiver.
+func (p *Program) ClosureReceiver(call CallClosure) Expression {
+	if property, ok := call.Closure.(Property); ok && property.Method {
+		return property.Object
+	}
+	return nil
 }

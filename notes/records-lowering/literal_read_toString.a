@@ -1,0 +1,2 @@
+const r: Record<string, number> = {};
+console.log(String(r['toString']));

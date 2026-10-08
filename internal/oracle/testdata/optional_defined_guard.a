@@ -1,0 +1,9 @@
+interface Fields { slot?: number | undefined; }
+const source: { slot: number | undefined } = { slot: undefined };
+function produce() {
+    let result: Fields | undefined;
+    result = source;
+    return result;
+}
+function consume(record: Fields): string { return `${'slot' in record}|${String(record.slot)}`; }
+console.log(`${consume(produce())}|${Object.keys(source).join(',')}|${Object.hasOwn(source, 'slot')}`);

@@ -1,0 +1,4 @@
+function size(entry: [string] | [string, number]): number {
+ return entry.length;
+}
+console.log(`${size([`a${1}`])} ${size([`b${1}`, 2])}`);

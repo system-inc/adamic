@@ -1,0 +1,2 @@
+const x = { n: 1 };
+console.log(`${x?.n}`);

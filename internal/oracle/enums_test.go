@@ -12,7 +12,15 @@ import (
 )
 
 func init() {
-	for _, path := range []string{"internal/oracle/testdata/enums.a", "internal/oracle/testdata/enums_const.a", "internal/oracle/testdata/enums_modules/main.a"} {
+	for _, path := range []string{
+		"internal/oracle/testdata/enums.a",
+		"internal/oracle/testdata/enums_const.a",
+		"internal/oracle/testdata/enums_modules/main.a",
+		"internal/oracle/testdata/enums_values.a",
+		"internal/oracle/testdata/enums_collections.a",
+		"internal/oracle/testdata/enums_switch.a",
+		"internal/oracle/testdata/enums_linked/main.a",
+	} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool

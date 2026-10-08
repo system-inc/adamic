@@ -1,0 +1,46 @@
+[
+  {
+    "position": 56856,
+    "file": "src/compiler/checker.ts",
+    "line": 1683,
+    "column": 9,
+    "code": 2322,
+    "message": "src/compiler/checker.ts:1683:9: error TS2322: Type '(signature: Signature, kind: SignatureDeclaration[\"kind\"], enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker, maximumLength?: number, verbosityLevel?: number, out?: WriterContextOut) => SignatureDeclaration | undefined' is not assignable to type '{ (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined): (SignatureDeclaration & ...) | undefined; (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderF...'.\n  Type 'SignatureDeclaration | undefined' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.\n    Type 'ArrowFunction' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.\n      Type 'ArrowFunction' is not assignable to type 'ArrowFunction & { typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n        Type 'ArrowFunction' is not assignable to type '{ typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n          Types of property 'typeArguments' are incompatible.\n            Type 'NodeArray<TypeNode> | undefined' is not assignable to type 'NodeArray<TypeNode>'.\n              Type 'undefined' is not assignable to type 'NodeArray<TypeNode>'.",
+    "options": [
+      "exactOptionalPropertyTypes"
+    ]
+  },
+  {
+    "position": 106522,
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 2677,
+    "column": 9,
+    "code": 2322,
+    "message": "src/compiler/commandLineParser.ts:2677:9: error TS2322: Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[] | undefined' is not assignable to type 'readonly ProjectReference[] | undefined'.\n  Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[]' is not assignable to type 'readonly ProjectReference[]'.\n    Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }' is not assignable to type 'ProjectReference' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n      Types of property 'originalPath' are incompatible.\n        Type 'undefined' is not assignable to type 'string'.",
+    "options": [
+      "exactOptionalPropertyTypes"
+    ]
+  },
+  {
+    "position": 142603,
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 2772,
+    "column": 21,
+    "code": 2322,
+    "message": "src/compiler/moduleNameResolver.ts:2772:21: error TS2322: Type 'SearchResult<{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }>' is not assignable to type 'SearchResult<Resolved>'.\n  Type '{ readonly value: { path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined; }' is not assignable to type 'SearchResult<Resolved>'.\n    Types of property 'value' are incompatible.\n      Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined' is not assignable to type 'Resolved | undefined'.\n        Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }' is not assignable to type 'Resolved' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n          Types of property 'originalPath' are incompatible.\n            Type 'string | undefined' is not assignable to type 'string | true'.\n              Type 'undefined' is not assignable to type 'string | true'.",
+    "options": [
+      "exactOptionalPropertyTypes"
+    ]
+  },
+  {
+    "position": 127876,
+    "file": "src/compiler/transformers/classFields.ts",
+    "line": 2745,
+    "column": 16,
+    "code": 2375,
+    "message": "src/compiler/transformers/classFields.ts:2745:16: error TS2375: Type 'PrivateEnvironment<{ className: undefined; weakSetName: undefined; }, PrivateIdentifierInfo>' is not assignable to type 'PrivateEnvironment<PrivateEnvironmentData, PrivateIdentifierInfo>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Type '{ className: undefined; weakSetName: undefined; }' is not assignable to type 'PrivateEnvironmentData' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'className' are incompatible.\n      Type 'undefined' is not assignable to type 'Identifier'.",
+    "options": [
+      "exactOptionalPropertyTypes"
+    ]
+  }
+]

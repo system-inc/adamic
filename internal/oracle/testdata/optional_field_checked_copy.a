@@ -1,0 +1,7 @@
+interface State { pending: number; slot?: number }
+const state: State = { pending: 1 };
+const before: State = { ...state };
+console.log(`${'slot' in before}|${before.pending}`);
+state.pending = undefined!;
+const after: State = { ...state };
+console.log(`${'slot' in after}|${after.pending}`);

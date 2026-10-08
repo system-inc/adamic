@@ -1,0 +1,902 @@
+[
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1246,
+    "column": 69,
+    "code": 2345,
+    "ledger_id": "D001",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1258,
+    "column": 65,
+    "code": 2488,
+    "ledger_id": "D002",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/builder.ts:1258:65: error TS2488: Type '[Path, FileInfo] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1292,
+    "column": 61,
+    "code": 2488,
+    "ledger_id": "D003",
+    "ledger_option": "other",
+    "cause": "Repeated undefined-tuple destructuring: stock caches the iteration failure after the first site; stage 0 diagnoses the repeated site too.",
+    "message": "src/compiler/builder.ts:1292:61: error TS2488: Type '[Path, FileInfo] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1345,
+    "column": 64,
+    "code": 2345,
+    "ledger_id": "D004",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/builder.ts:1345:64: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1347,
+    "column": 41,
+    "code": 2345,
+    "ledger_id": "D005",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/builder.ts:1347:41: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1347,
+    "column": 97,
+    "code": 2345,
+    "ledger_id": "D006",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/builder.ts:1347:97: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1493,
+    "column": 60,
+    "code": 2345,
+    "ledger_id": "D007",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/builder.ts:1493:60: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1495,
+    "column": 26,
+    "code": 2345,
+    "ledger_id": "D008",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/builder.ts:1495:26: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1496,
+    "column": 45,
+    "code": 2345,
+    "ledger_id": "D009",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/builder.ts:1496:45: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 1562,
+    "column": 64,
+    "code": 2345,
+    "ledger_id": "D010",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/builder.ts:1562:64: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 2377,
+    "column": 13,
+    "code": 2769,
+    "ledger_id": "D013",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/builder.ts:2377:13: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Type 'Generator<[Path | undefined, never[]], void, unknown>' is missing the following properties from type 'readonly (readonly [Path, readonly ReusableDiagnostic[]])[]': length, concat, join, slice, and 18 more."
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 2379,
+    "column": 45,
+    "code": 2345,
+    "ledger_id": "D014",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/builder.ts:2379:45: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 395,
+    "column": 118,
+    "code": 2345,
+    "ledger_id": "D015",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/builder.ts:395:118: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 395,
+    "column": 85,
+    "code": 2345,
+    "ledger_id": "D016",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/builder.ts:395:85: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/builder.ts",
+    "line": 991,
+    "column": 17,
+    "code": 2345,
+    "ledger_id": "D017",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/builder.ts:991:17: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'Path'.\n  Type 'undefined' is not assignable to type 'Path'.\n    Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 10022,
+    "column": 63,
+    "code": 2345,
+    "ledger_id": "D018",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:10022:63: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 10022,
+    "column": 86,
+    "code": 18048,
+    "ledger_id": "D019",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:10022:86: error TS18048: 'm' is possibly 'undefined'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 10026,
+    "column": 97,
+    "code": 2345,
+    "ledger_id": "D020",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:10026:97: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 10033,
+    "column": 67,
+    "code": 18048,
+    "ledger_id": "D021",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:10033:67: error TS18048: 'm' is possibly 'undefined'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 10033,
+    "column": 79,
+    "code": 18048,
+    "ledger_id": "D022",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:10033:79: error TS18048: 'm' is possibly 'undefined'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 10053,
+    "column": 53,
+    "code": 2345,
+    "ledger_id": "D023",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:10053:53: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'.\n  Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n    Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 10061,
+    "column": 90,
+    "code": 18048,
+    "ledger_id": "D024",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:10061:90: error TS18048: 'n' is possibly 'undefined'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 10062,
+    "column": 69,
+    "code": 18048,
+    "ledger_id": "D025",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:10062:69: error TS18048: 's' is possibly 'undefined'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 10063,
+    "column": 69,
+    "code": 2345,
+    "ledger_id": "D026",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:10063:69: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 10064,
+    "column": 47,
+    "code": 18048,
+    "ledger_id": "D027",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:10064:47: error TS18048: 's' is possibly 'undefined'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 10064,
+    "column": 93,
+    "code": 2345,
+    "ledger_id": "D028",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:10064:93: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 10065,
+    "column": 122,
+    "code": 18048,
+    "ledger_id": "D029",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:10065:122: error TS18048: 's' is possibly 'undefined'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 10066,
+    "column": 103,
+    "code": 2345,
+    "ledger_id": "D030",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:10066:103: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 10070,
+    "column": 50,
+    "code": 2345,
+    "ledger_id": "D031",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:10070:50: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 10319,
+    "column": 83,
+    "code": 2345,
+    "ledger_id": "D032",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:10319:83: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 10320,
+    "column": 51,
+    "code": 2345,
+    "ledger_id": "D033",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:10320:51: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'.\n  Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n    Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 10324,
+    "column": 76,
+    "code": 2769,
+    "ledger_id": "D034",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:10324:76: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'.\n      Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n        Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 10336,
+    "column": 86,
+    "code": 2345,
+    "ledger_id": "D035",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:10336:86: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'readonly Symbol[]'.\n  Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n    Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 13986,
+    "column": 47,
+    "code": 2345,
+    "ledger_id": "D038",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:13986:47: error TS2345: Argument of type 'Declaration | undefined' is not assignable to parameter of type 'Node'.\n  Type 'undefined' is not assignable to type 'Node'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 13990,
+    "column": 49,
+    "code": 2345,
+    "ledger_id": "D039",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:13990:49: error TS2345: Argument of type 'Declaration | undefined' is not assignable to parameter of type 'Declaration'.\n  Type 'undefined' is not assignable to type 'Declaration'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 14643,
+    "column": 66,
+    "code": 2345,
+    "ledger_id": "D040",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:14643:66: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.\n  Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n    Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 15145,
+    "column": 9,
+    "code": 2322,
+    "ledger_id": "D041",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:15145:9: error TS2322: Type '(Symbol | undefined)[]' is not assignable to type 'Symbol[]'.\n  Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n    Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 15695,
+    "column": 41,
+    "code": 18048,
+    "ledger_id": "D042",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:15695:41: error TS18048: 'prop' is possibly 'undefined'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 15697,
+    "column": 22,
+    "code": 18048,
+    "ledger_id": "D043",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:15697:22: error TS18048: 'prop' is possibly 'undefined'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 15697,
+    "column": 47,
+    "code": 18048,
+    "ledger_id": "D044",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:15697:47: error TS18048: 'prop' is possibly 'undefined'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 15700,
+    "column": 51,
+    "code": 18048,
+    "ledger_id": "D045",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:15700:51: error TS18048: 'prop' is possibly 'undefined'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 15701,
+    "column": 42,
+    "code": 2345,
+    "ledger_id": "D046",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:15701:42: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 15704,
+    "column": 43,
+    "code": 2345,
+    "ledger_id": "D047",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:15704:43: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 15706,
+    "column": 52,
+    "code": 2345,
+    "ledger_id": "D048",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:15706:52: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 16689,
+    "column": 70,
+    "code": 2345,
+    "ledger_id": "D049",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:16689:70: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.\n  Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n    Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 16693,
+    "column": 62,
+    "code": 2322,
+    "ledger_id": "D050",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:16693:62: error TS2322: Type '(Symbol | undefined)[] | undefined' is not assignable to type 'Symbol[] | undefined'.\n  Type '(Symbol | undefined)[]' is not assignable to type 'Symbol[]'.\n    Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n      Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 1779,
+    "column": 9,
+    "code": 2322,
+    "ledger_id": "D052",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:1779:9: error TS2322: Type '(call: CallLikeExpression, editingArgument: Node) => (Signature | undefined)[]' is not assignable to type '(call: CallLikeExpression, editingArgument: Node) => Signature[]'.\n  Type '(Signature | undefined)[]' is not assignable to type 'Signature[]'.\n    Type 'Signature | undefined' is not assignable to type 'Signature'.\n      Type 'undefined' is not assignable to type 'Signature'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 18662,
+    "column": 15,
+    "code": 2322,
+    "ledger_id": "D055",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:18662:15: error TS2322: Type '(Type | undefined)[]' is not assignable to type 'Type[]'.\n  Type 'Type | undefined' is not assignable to type 'Type'.\n    Type 'undefined' is not assignable to type 'Type'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 25972,
+    "column": 13,
+    "code": 2322,
+    "ledger_id": "D062",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:25972:13: error TS2322: Type '(Symbol | undefined)[]' is not assignable to type 'Symbol[]'.\n  Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n    Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 25974,
+    "column": 9,
+    "code": 2322,
+    "ledger_id": "D063",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:25974:9: error TS2322: Type 'Symbol[] | undefined' is not assignable to type 'Symbol[]'.\n  Type 'undefined' is not assignable to type 'Symbol[]'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 2900,
+    "column": 36,
+    "code": 2488,
+    "ledger_id": "D064",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:2900:36: error TS2488: Type '[__String, Symbol] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 35290,
+    "column": 33,
+    "code": 2769,
+    "ledger_id": "D065",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:35290:33: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.\n      Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n        Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 35291,
+    "column": 79,
+    "code": 2345,
+    "ledger_id": "D066",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:35291:79: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.\n  Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n    Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 46734,
+    "column": 64,
+    "code": 2345,
+    "ledger_id": "D075",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:46734:64: error TS2345: Argument of type '__String | undefined' is not assignable to parameter of type '__String'.\n  Type 'undefined' is not assignable to type '__String'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 46736,
+    "column": 167,
+    "code": 2345,
+    "ledger_id": "D076",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:46736:167: error TS2345: Argument of type '__String | undefined' is not assignable to parameter of type '__String'.\n  Type 'undefined' is not assignable to type '__String'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 51465,
+    "column": 110,
+    "code": 2345,
+    "ledger_id": "D078",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:51465:110: error TS2345: Argument of type '(Symbol | undefined)[]' is not assignable to parameter of type 'Symbol[]'.\n  Type 'Symbol | undefined' is not assignable to type 'Symbol'.\n    Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 51530,
+    "column": 21,
+    "code": 18048,
+    "ledger_id": "D079",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:51530:21: error TS18048: 's' is possibly 'undefined'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 51532,
+    "column": 25,
+    "code": 18048,
+    "ledger_id": "D080",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:51532:25: error TS18048: 'merged' is possibly 'undefined'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 51533,
+    "column": 41,
+    "code": 18048,
+    "ledger_id": "D081",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:51533:41: error TS18048: 'merged' is possibly 'undefined'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 5564,
+    "column": 33,
+    "code": 2769,
+    "ledger_id": "D098",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:5564:33: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type '(string | undefined)[]' is not assignable to parameter of type 'readonly string[]'.\n      Type 'string | undefined' is not assignable to type 'string'.\n        Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 8566,
+    "column": 17,
+    "code": 2322,
+    "ledger_id": "D102",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:8566:17: error TS2322: Type 'Set<number | undefined>' is not assignable to type 'Set<number>'.\n  Type 'number | undefined' is not assignable to type 'number'.\n    Type 'undefined' is not assignable to type 'number'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 8861,
+    "column": 21,
+    "code": 2322,
+    "ledger_id": "D103",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:8861:21: error TS2322: Type 'Set<string | undefined>' is not assignable to type 'Set<string>'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 9363,
+    "column": 17,
+    "code": 2322,
+    "ledger_id": "D104",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:9363:17: error TS2322: Type 'Set<string | undefined>' is not assignable to type 'Set<string>'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 9591,
+    "column": 37,
+    "code": 2345,
+    "ledger_id": "D105",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/checker.ts:9591:37: error TS2345: Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 1874,
+    "column": 96,
+    "code": 2345,
+    "ledger_id": "D106",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/commandLineParser.ts:1874:96: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 2689,
+    "column": 66,
+    "code": 2345,
+    "ledger_id": "D111",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/commandLineParser.ts:2689:66: error TS2345: Argument of type 'Set<string | undefined>' is not assignable to parameter of type 'Set<string>'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 2952,
+    "column": 13,
+    "code": 2322,
+    "ledger_id": "D112",
+    "ledger_option": "other",
+    "cause": "Adamic prelude adds JSON.stringify overload returning string | undefined; stock es2024 declares string.",
+    "message": "src/compiler/commandLineParser.ts:2952:13: error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 3449,
+    "column": 55,
+    "code": 2322,
+    "ledger_id": "D113",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/commandLineParser.ts:3449:55: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 4014,
+    "column": 5,
+    "code": 2322,
+    "ledger_id": "D114",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/commandLineParser.ts:4014:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/core.ts",
+    "line": 1626,
+    "column": 37,
+    "code": 2322,
+    "ledger_id": null,
+    "ledger_option": null,
+    "cause": "Production prelude SetIterator.next declaration differs from stock ES2024 IteratorResult: done may be undefined for IteratorYieldResult, but the prelude requires false.",
+    "message": "src/compiler/core.ts:1626:37: error TS2322: Type 'Generator<TElement, undefined, unknown>' is not assignable to type 'SetIterator<TElement>'.\n  The types returned by 'next(...)' are incompatible between these types.\n    Type 'IteratorResult<TElement, undefined>' is not assignable to type 'AdamicCollectionIteratorResult<TElement>'.\n      Type 'IteratorYieldResult<TElement>' is not assignable to type 'AdamicCollectionIteratorResult<TElement>'.\n        Type 'IteratorYieldResult<TElement>' is not assignable to type '{ readonly done: false; readonly value: TElement; }'.\n          Types of property 'done' are incompatible.\n            Type 'false | undefined' is not assignable to type 'false'.\n              Type 'undefined' is not assignable to type 'false'."
+  },
+  {
+    "file": "src/compiler/core.ts",
+    "line": 1637,
+    "column": 11,
+    "code": 2740,
+    "ledger_id": "D115",
+    "ledger_option": "other",
+    "cause": "Adamic prelude adds seven ES2025 Set methods absent from stock es2024 Set.",
+    "message": "src/compiler/core.ts:1637:11: error TS2740: Type '{ has(element: TElement): boolean; add(element: TElement): Set<TElement>; delete(element: TElement): boolean; clear(): void; ... 6 more ...; [Symbol.toStringTag]: string; }' is missing the following properties from type 'Set<TElement>': union, intersection, difference, symmetricDifference, and 3 more."
+  },
+  {
+    "file": "src/compiler/core.ts",
+    "line": 1731,
+    "column": 21,
+    "code": 2322,
+    "ledger_id": null,
+    "ledger_option": null,
+    "cause": "Production prelude SetIterator.next declaration differs from stock ES2024 IteratorResult: done may be undefined for IteratorYieldResult, but the prelude requires false.",
+    "message": "src/compiler/core.ts:1731:21: error TS2322: Type 'Generator<[TElement, TElement], undefined, unknown>' is not assignable to type 'SetIterator<[TElement, TElement]>'.\n  The types returned by 'next(...)' are incompatible between these types.\n    Type 'IteratorResult<[TElement, TElement], undefined>' is not assignable to type 'AdamicCollectionIteratorResult<[TElement, TElement]>'.\n      Type 'IteratorYieldResult<[TElement, TElement]>' is not assignable to type 'AdamicCollectionIteratorResult<[TElement, TElement]>'.\n        Type 'IteratorYieldResult<[TElement, TElement]>' is not assignable to type '{ readonly done: false; readonly value: [TElement, TElement]; }'.\n          Types of property 'done' are incompatible.\n            Type 'false | undefined' is not assignable to type 'false'.\n              Type 'undefined' is not assignable to type 'false'."
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 4988,
+    "column": 28,
+    "code": 2345,
+    "ledger_id": "D136",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/program.ts:4988:28: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "line": 5038,
+    "column": 14,
+    "code": 2488,
+    "ledger_id": "D137",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/program.ts:5038:14: error TS2488: Type '[Path, false | SymlinkedDirectory] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 1616,
+    "column": 118,
+    "code": 2345,
+    "ledger_id": "D145",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/resolutionCache.ts:1616:118: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 1618,
+    "column": 39,
+    "code": 18048,
+    "ledger_id": "D146",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/resolutionCache.ts:1618:39: error TS18048: 'dirPath' is possibly 'undefined'."
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 1619,
+    "column": 46,
+    "code": 2345,
+    "ledger_id": "D147",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/resolutionCache.ts:1619:46: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 1619,
+    "column": 74,
+    "code": 2345,
+    "ledger_id": "D148",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/resolutionCache.ts:1619:74: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+  },
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 1619,
+    "column": 99,
+    "code": 18048,
+    "ledger_id": "D149",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/resolutionCache.ts:1619:99: error TS18048: 'dirPath' is possibly 'undefined'."
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "line": 1708,
+    "column": 56,
+    "code": 2345,
+    "ledger_id": "D154",
+    "ledger_option": "other",
+    "cause": "Adamic prelude adds JSON.stringify overload returning string | undefined; stock es2024 declares string.",
+    "message": "src/compiler/sys.ts:1708:56: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string | ArrayBufferView<ArrayBufferLike>'.\n  Type 'undefined' is not assignable to type 'string | ArrayBufferView<ArrayBufferLike>'."
+  },
+  {
+    "file": "src/compiler/transformers/es2017.ts",
+    "line": 325,
+    "column": 21,
+    "code": 2322,
+    "ledger_id": "D176",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/transformers/es2017.ts:325:21: error TS2322: Type 'Set<__String | undefined>' is not assignable to type 'Set<__String>'.\n  Type '__String | undefined' is not assignable to type '__String'.\n    Type 'undefined' is not assignable to type '__String'."
+  },
+  {
+    "file": "src/compiler/transformers/es2017.ts",
+    "line": 327,
+    "column": 17,
+    "code": 18048,
+    "ledger_id": "D177",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/transformers/es2017.ts:327:17: error TS18048: 'catchClauseUnshadowedNames' is possibly 'undefined'."
+  },
+  {
+    "file": "src/compiler/transformers/esnext.ts",
+    "line": 205,
+    "column": 52,
+    "code": 2345,
+    "ledger_id": "D190",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/transformers/esnext.ts:205:52: error TS2345: Argument of type '(ExportSpecifier | undefined)[]' is not assignable to parameter of type 'readonly ExportSpecifier[]'.\n  Type 'ExportSpecifier | undefined' is not assignable to type 'ExportSpecifier'.\n    Type 'undefined' is not assignable to type 'ExportSpecifier'."
+  },
+  {
+    "file": "src/compiler/transformers/jsx.ts",
+    "line": 174,
+    "column": 24,
+    "code": 2488,
+    "ledger_id": "D222",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/transformers/jsx.ts:174:24: error TS2488: Type '[string, Map<string, ImportSpecifier>] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."
+  },
+  {
+    "file": "src/compiler/transformers/jsx.ts",
+    "line": 187,
+    "column": 172,
+    "code": 18046,
+    "ledger_id": "D223",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference. Nested destructuring failure causes the downstream generic callback parameter to be unknown; this is not a catch binding.",
+    "message": "src/compiler/transformers/jsx.ts:187:172: error TS18046: 's' is of type 'unknown'."
+  },
+  {
+    "file": "src/compiler/transformers/jsx.ts",
+    "line": 187,
+    "column": 188,
+    "code": 18046,
+    "ledger_id": "D224",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference. Nested destructuring failure causes the downstream generic callback parameter to be unknown; this is not a catch binding.",
+    "message": "src/compiler/transformers/jsx.ts:187:188: error TS18046: 's' is of type 'unknown'."
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1064,
+    "column": 76,
+    "code": 18048,
+    "ledger_id": "D232",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/tsbuildPublic.ts:1064:76: error TS18048: 'data' is possibly 'undefined'."
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1065,
+    "column": 62,
+    "code": 18048,
+    "ledger_id": "D233",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/tsbuildPublic.ts:1065:62: error TS18048: 'data' is possibly 'undefined'."
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1066,
+    "column": 42,
+    "code": 18048,
+    "ledger_id": "D234",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/tsbuildPublic.ts:1066:42: error TS18048: 'data' is possibly 'undefined'."
+  },
+  {
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1776,
+    "column": 54,
+    "code": 2345,
+    "ledger_id": "D235",
+    "ledger_option": "other",
+    "cause": "Adamic ambient declaration difference: collection iterator next overload introduces undefined into generic Iterable element inference.",
+    "message": "src/compiler/tsbuildPublic.ts:1776:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+  }
+]

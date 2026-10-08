@@ -1,0 +1,32 @@
+interface Leaf { text: string; }
+interface Root { child: Leaf; children: Leaf[]; }
+function indexed(root: Root): void {
+	const child = root.children[0];
+	[1].forEach((n: number): void => {
+		root.child.text = `indexed${n}`;
+	});
+	console.log(child?.text ?? 'missing');
+}
+function iterated(root: Root): void {
+	for (const child of root.children) {
+		const text = child.text;
+		[1].forEach((n: number): void => {
+			root.child.text = `iterated${n}`;
+		});
+		console.log(text);
+	}
+}
+function popped(root: Root): void {
+	const child = root.children.pop() ?? { text: `fallback${0}` };
+	const text = child.text;
+	[1].forEach((n: number): void => {
+		root.child.text = `popped${n}`;
+	});
+	console.log(text);
+}
+const child: Leaf = { text: `start${0}` };
+const root: Root = { child, children: [child] };
+indexed(root);
+iterated(root);
+popped(root);
+console.log(root.child.text);

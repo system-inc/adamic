@@ -21,12 +21,13 @@ import (
 // same file, UTF-16 position and code used by the stage 3 checker ledger. A site
 // is evidence requiring a check, never evidence that a check has been emitted.
 type OptionSite struct {
-	File    string   `json:"file"`
-	Line    int      `json:"line"`
-	Column  int      `json:"column"`
-	Code    int      `json:"code"`
-	Message string   `json:"message"`
-	Options []string `json:"options"`
+	Position int      `json:"position"`
+	File     string   `json:"file"`
+	Line     int      `json:"line"`
+	Column   int      `json:"column"`
+	Code     int      `json:"code"`
+	Message  string   `json:"message"`
+	Options  []string `json:"options"`
 }
 
 // ProjectOptionReport keeps ordinary project errors separate from diagnostics
@@ -159,7 +160,7 @@ func auditProjectOptions(ctx context.Context, configName string, source vfs.FS, 
 			continue
 		}
 		seen[key] = true
-		site := OptionSite{Code: int(diagnostic.Code()), Message: formatter.formatDiagnostic(diagnostic), Options: []string{}}
+		site := OptionSite{Position: diagnostic.Pos(), Code: int(diagnostic.Code()), Message: formatter.formatDiagnostic(diagnostic), Options: []string{}}
 		if file := diagnostic.File(); file != nil {
 			site.File = file.FileName().AsString()
 			site.Line, site.Column = formatter.lineAndColumn(file, diagnostic.Pos())

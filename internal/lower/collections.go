@@ -241,7 +241,7 @@ func (l *lowering) tupleLength(node *ast.Node, tuple *ast.Node) (ir.Expression, 
 	tuple = ast.SkipParentheses(tuple)
 	local, isLocal := l.local(tuple)
 	if !ast.IsIdentifier(tuple) || !isLocal || l.checked(local) {
-		return nil, l.notYet(node, "the length of a tuple that isn't a plain local")
+		return nil, l.notYet(node, "the length of a tuple that isn't a plain local (bind the tuple to a local const before reading its length)")
 	}
 	if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsNumberLiteral == 0 {
 		return nil, l.notYet(node, "the length of a tuple with optional or rest elements")
@@ -254,7 +254,7 @@ func (l *lowering) tupleLength(node *ast.Node, tuple *ast.Node) (ir.Expression, 
 // JavaScript reads them.
 func (l *lowering) destructure(pattern *ast.Node, initializer *ast.Node) ([]ir.Statement, error) {
 	if initializer == nil {
-		return nil, l.notYet(pattern, "a destructuring declaration without a value")
+		return nil, l.notYet(pattern, "a destructuring declaration without a value (provide an initializer: const [first, second] = pair)")
 	}
 	if pattern.Kind == ast.KindArrayBindingPattern {
 		if plan, err := l.planIteration(initializer); err != nil {
@@ -281,7 +281,7 @@ func (l *lowering) destructure(pattern *ast.Node, initializer *ast.Node) ([]ir.S
 func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type, heldAs ir.Type, held int) ([]ir.Statement, error) {
 	tuple := pattern.Kind == ast.KindArrayBindingPattern
 	if tuple && !checker.IsTupleType(destructured) {
-		return nil, l.notYet(pattern, "destructuring anything but a tuple into [names]")
+		return nil, l.notYet(pattern, "destructuring anything but a tuple into [names] (bind the array once, then read its indexes explicitly and handle undefined)")
 	}
 	if heldAs != ir.Object {
 		return nil, l.notYet(pattern, "destructuring a "+typeName(heldAs))
@@ -298,7 +298,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		}
 		declared := binding.AsBindingElement()
 		if !ast.IsIdentifier(binding.Name()) || declared.Initializer != nil || declared.DotDotDotToken != nil {
-			return nil, l.notYet(binding, "a destructured name that isn't plain")
+			return nil, l.notYet(binding, "a destructured name that isn't plain (bind a plain name first, then destructure or apply a default in a separate statement)")
 		}
 		var field string
 		var fieldType *checker.Type
@@ -313,7 +313,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			field = binding.Name().Text()
 			if declared.PropertyName != nil {
 				if !ast.IsIdentifier(declared.PropertyName) && declared.PropertyName.Kind != ast.KindStringLiteral {
-					return nil, l.notYet(declared.PropertyName, "a computed field name")
+					return nil, l.notYet(declared.PropertyName, "a computed field name (spell the declared field name as an identifier or string literal)")
 				}
 				field = declared.PropertyName.Text()
 			}
@@ -322,15 +322,15 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 				return nil, l.notYet(binding, "destructuring a field the type doesn't name")
 			}
 			if l.inheritedLibrarySymbol(property) {
-				return nil, l.prototypeRead(binding, field)
+				return nil, l.prototypeRead(binding, field, property)
 			}
 			if property.Flags&ast.SymbolFlagsMethod != 0 {
-				return nil, &Refused{Where: l.program.Where(binding), What: "a method in object destructuring", Fix: "call it on its receiver or wrap that call in an arrow; destructuring would lose this"}
+				return nil, &Refused{Where: l.program.Where(binding), What: "a method in object destructuring", Fix: "call it on its receiver or wrap that call in an arrow; destructuring would lose this (unbound-method)"}
 			}
 			for _, root := range l.checker.GetRootSymbols(property) {
 				for _, declaration := range root.Declarations {
 					if load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
-						return nil, l.notYet(binding, "an inherited library member in object destructuring, which is not an own field")
+						return nil, l.notYet(binding, "an inherited library member in object destructuring, which is not an own field (read the inherited member explicitly from its receiver instead of destructuring it)")
 					}
 				}
 			}

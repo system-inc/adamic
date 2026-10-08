@@ -12,8 +12,8 @@ import (
 
 func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 	for _, gap := range []struct{ path, stdout, refusal string }{
-		{"gaps/2_array_shift.ts", "a\n1\n", "inherited library member shift read as an own field"},
-		{"gaps/3_optional_boolean_condition.ts", "important\n", "a boolean | undefined as a condition"},
+		{"gaps/2_array_shift.ts", "a\n1\n", "the library method shift"},
+		{"gaps/3_optional_boolean_condition.ts", "important\n", ""},
 		{"gaps/4_empty_array_union.ts", "0\n", "an array of never"},
 		{"gaps/5_repeat_in_try.ts", "a\n", "a try around repeat"},
 	} {
@@ -30,7 +30,25 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			_, err = lower.Lower(context.Background(), program)
+			compiled, err := lower.Lower(context.Background(), program)
+			if gap.refusal == "" {
+				if err != nil {
+					t.Fatal(err)
+				}
+				nativeRun, binary := natively(t, compiled)
+				for _, side := range []struct {
+					name   string
+					result run
+				}{{"native", nativeRun}, {"JavaScript backend", onJavaScriptBackend(t, compiled)}} {
+					if side.result.exitCode != 0 || len(side.result.stderr) != 0 || string(side.result.stdout) != gap.stdout {
+						t.Fatalf("%s: exit %d, stdout %q, stderr %q", side.name, side.result.exitCode, side.result.stdout, side.result.stderr)
+					}
+				}
+				if report := leaks(t, compiled, binary); report != "" {
+					t.Fatal(report)
+				}
+				return
+			}
 			if err == nil {
 				t.Fatal("gap closed: update GAPS.md and remove the workaround or unblock native composition")
 			}

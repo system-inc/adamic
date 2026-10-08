@@ -1,0 +1,15 @@
+interface Fields { slot?: number | undefined; }
+interface Source { slot?: number | undefined; }
+const source: Source = {};
+
+function read(record: Fields | undefined): string {
+    if (!record) return String(record);
+    return `${'slot' in record}|${String(record.slot)}`;
+}
+console.log(read(source));
+source.slot = undefined;
+console.log(`${read(source)}|${Object.keys(source).join(',')}|${Object.hasOwn(source, 'slot')}`);
+console.log(read(undefined));
+function choose(enabled: boolean): Source | undefined { return enabled ? source : undefined; }
+const missing = choose(false);
+console.log(read(missing));

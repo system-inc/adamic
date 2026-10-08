@@ -1,0 +1,5 @@
+interface Host { moduleResolverHost?: number | undefined; }
+class Tracker implements Host { moduleResolverHost: number | undefined; constructor() { this.moduleResolverHost = undefined; } }
+const tracker = new Tracker();
+const view: { moduleResolverHost?: number | undefined } = tracker;
+console.log(`${'moduleResolverHost' in view}|${Object.keys(tracker).join(',')}|${Object.hasOwn(tracker, 'moduleResolverHost')}|${String(view.moduleResolverHost)}`);

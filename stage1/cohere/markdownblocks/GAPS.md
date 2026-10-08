@@ -1,5 +1,17 @@
 # Markdown parser and layout: embedding off
 
+## Optional-write branch integration, October 8, 2026
+
+Rechecking the unchanged representation probes after composing current main with
+the presence branch closes gap 15: string logical-or agrees with Node, native and
+JavaScript, with leak checks. Gap 9 now stops at `join on an array of objects,
+arrays, maps or functions`. Gap 16 is again NotYet, with the exact diagnostic
+`gaps/16_array_shift.ts:2:16: stage 0 can't lower the library method shift yet`.
+The test retains exact Refused support from main and adds exact NotYet support.
+The prior seat's observations below remain historical evidence; these three
+observations supersede its current gap classifications on this integrated branch.
+
+
 The contract is Markdown parsing and layout with `embeddedLanguageFormatting: off`
 on both oracles. The port is held to Go cohere. Embedded JSON, YAML, TOML and
 other languages compose later from their own slices. Front matter and fenced
@@ -569,8 +581,8 @@ with captured mutable frames. These are additional prerequisites for a direct
 Adamic port, not evidence that Markdown cannot ever be implemented in Adamic:
 
 - `gaps/1_recursive_state.ts` prints `35` twice on Node. Stage 0 returns exactly
-  `lower.NotYet("a function inside a function (a closure)")` for the nested
-  function declaration corresponding to a state with its captured frame.
+  `lower.NotYet("a first-class nested function reference from another nested function")`
+  for returning the captured state as a first-class recursive callback.
 - `gaps/2_state_arrow_cycle.ts` prints `35` twice on Node. Rewriting the nested
   declaration as a mutable arrow slot is refused by Adamic 0.1 as a closure/cell
   reference-counting cycle. This is a `Refused`, not a `NotYet`.

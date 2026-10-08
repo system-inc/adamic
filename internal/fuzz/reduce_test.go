@@ -39,33 +39,30 @@ func TestSourceTreeCutsAtItems(t *testing.T) {
 	}
 }
 
-// planted fails two ways: the non-null assertion comes first, so it's the signature, and the type
-// predicate after it is a second refusal that a reduction which let go of the first would drift to.
+// planted fails two ways: explicit any comes first, and Function is a different refusal
+// that a reduction which let go of the first would drift to. Both remain permanent refusals.
 const planted = `const values: number[] = [1, 2, 3];
 let total = 0;
 for (const value of values) {
 	total += value;
 }
 // The one failure that counts.
-function first(list: number[], unused: string): number {
-	return list[0]!;
+function first(list: any, unused: string): number {
+	return 0;
 }
 console.log(` + "`${total} ${first(values, 'x')}`" + `);
-function isText(value: string | number): value is string {
-	return typeof value === 'string';
-}
-console.log(` + "`${isText('a')}`" + `);
+const callable: Function = (): number => 1;
+console.log(typeof callable);
 `
 
-// plantedMinimum is all the non-null refusal needs: the function that asserts, with the parameter it
-// reads.
-const plantedMinimum = `function first(list: number[]): number {
-	return list[0]!;
+// plantedMinimum is all the any refusal needs: the function with its explicit any parameter.
+const plantedMinimum = `function first(list: any): number {
+	return 0;
 }
 `
 
 // Reducing the planted program keeps exactly its first refusal: it ends at the known minimum, still
-// refused the same way, never at the type predicate a looser reduction would keep instead.
+// refused the same way, never at the Function annotation a looser reduction would keep instead.
 func TestReduceKeepsTheSignature(t *testing.T) {
 	t.Parallel()
 	directory := t.TempDir()
@@ -78,9 +75,9 @@ func TestReduceKeepsTheSignature(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := "Adamic 0.1 refuses the non-null assertion !"
+	want := "Adamic 0.1 refuses any"
 	if signature.Kind != "refusal" || !signature.matches(signature.Text) || len(signature.Text) < len(want) || signature.Text[:len(want)] != want {
-		t.Fatalf("derived %s, want the non-null refusal", signature)
+		t.Fatalf("derived %s, want the any refusal", signature)
 	}
 	observe := func(source string, slot int) Observation {
 		return checkout.Observe(source, "program.a", filepath.Join(directory, fmt.Sprintf("slot%d", slot)), signature.Kind)

@@ -42,14 +42,20 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 		return nil
 	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		var first *optionalWidening
 		for _, member := range target.Types() {
-			if l.checker.IsTypeAssignableTo(source, member) {
-				if found := l.optionalWidened(source, member, skip, visited); found != nil {
-					return found
-				}
+			if !l.checker.IsTypeAssignableTo(source, member) {
+				continue
+			}
+			found := l.optionalWidened(source, member, skip, visited)
+			if found == nil {
+				return nil
+			}
+			if first == nil {
+				first = found
 			}
 		}
-		return nil
+		return first
 	}
 	if source.Flags()&checker.TypeFlagsTypeParameter != 0 {
 		return l.optionalWidened(l.checker.GetBaseConstraintOfType(source), target, skip, visited)
@@ -115,11 +121,22 @@ func (l *lowering) optionalValue(node *ast.Node, target *checker.Type) *optional
 		// The literal's fields, spreads and elements are checked separately at their own sites.
 		return nil
 	case ast.KindConditionalExpression:
+		if !freshOptionalValue(node) {
+			if found := l.optionalView(l.checker.GetTypeAtLocation(node), target, false, map[[2]*checker.Type]bool{}); found != nil {
+				return &optionalWidening{property: found.optionalField, source: found.source, target: found.target}
+			}
+		}
 		conditional := node.AsConditionalExpression()
 		for _, branch := range []*ast.Node{conditional.WhenTrue, conditional.WhenFalse} {
 			if found := l.optionalValue(branch, target); found != nil {
 				return found
 			}
+		}
+		return nil
+	}
+	if l.exactObjectAlias(node) {
+		if found := l.optionalView(l.checker.GetTypeAtLocation(node), target, true, map[[2]*checker.Type]bool{}); found != nil {
+			return &optionalWidening{property: found.optionalField, source: found.source, target: found.target}
 		}
 		return nil
 	}
@@ -161,7 +178,7 @@ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
 			}
 		}
 		expression := ast.SkipParentheses(node.AsSpreadAssignment().Expression)
-		if expression.Kind != ast.KindObjectLiteralExpression {
+		if expression.Kind != ast.KindObjectLiteralExpression && !l.exactObjectAlias(expression) {
 			found = l.optionalWidened(l.checker.GetTypeAtLocation(expression), target, skip, map[[2]*checker.Type]bool{})
 		}
 	default:

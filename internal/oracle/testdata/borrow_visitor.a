@@ -1,0 +1,44 @@
+import type { Weak } from 'adamic';
+
+class SyntaxNode {
+ readonly kind: number;
+ readonly parent: Weak<SyntaxNode>;
+ readonly children: readonly SyntaxNode[];
+ constructor(depth: number, parent: Weak<SyntaxNode>) {
+  this.kind = depth;
+  this.parent = parent;
+  this.children = [];
+  if (depth > 0) {
+   this.children = [new SyntaxNode(depth - 1, this), new SyntaxNode(depth - 1, this)];
+  }
+ }
+ childNodes(): readonly SyntaxNode[] { return this.children; }
+}
+interface Listener {
+ inspect(node: SyntaxNode): number;
+}
+class KindListener {
+ inspect(node: SyntaxNode): number { return node.kind + 1; }
+}
+class ParentListener {
+ inspect(node: SyntaxNode): number {
+  return node.kind * 2;
+ }
+}
+function visit(node: SyntaxNode, listener: Listener): number {
+ let total = listener.inspect(node);
+ const children = node.childNodes();
+ for (const child of children) { total += visit(child, listener); }
+ return total;
+}
+function run(): void {
+ const root = new SyntaxNode(5, undefined);
+ const kind = new KindListener();
+ const parent = new ParentListener();
+ let total = 0;
+ for (let pass = 0; pass < 8; pass += 1) {
+  total += visit(root, kind) + visit(root, parent);
+ }
+ console.log(`1008 visits: ${total}`);
+}
+run();

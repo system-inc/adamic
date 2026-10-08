@@ -1,0 +1,3 @@
+interface Sizer { readonly size: number; }
+function size(value: Sizer): number { return value.size; }
+console.log(`${size(new Map<string, number>())}`);
