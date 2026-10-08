@@ -28,7 +28,7 @@ ahraDirectory = os.environ.get('ADAMIC_FAST_GATE_AHRA_DIR', '/Users/kirkouimet/P
 queuedLimit = int(os.environ.get('ADAMIC_STAR_QUEUED_SECONDS', '60'))
 fullLog = Path(os.environ.get('ADAMIC_FULL_GATE_LOG', os.path.expanduser('~/Projects/system/adamic-gate-logs/full-gate-main.log')))
 mainReds = os.environ.get('ADAMIC_MAIN_REDS', '')  # a file standing in for cloud/merge-tree's, in tests
-verdictLine = re.compile(r'^\S+ done (\S+): (green|red): ([0-9a-f]{40})\b(.*)$')
+verdictLine = re.compile(r'^(\d\d:\d\d:\d\d) done (\S+): (green|red): ([0-9a-f]{40})\b(.*)$')
 
 
 def ahra(*arguments):
@@ -53,6 +53,30 @@ def lines(path):
         return path.read_text(errors='replace').splitlines()
     except OSError:
         return []
+
+
+landedCache = {'fetched': 0}
+
+
+def landed(sha):
+    """Whether main already contains this sha (a test may name landed shas in ADAMIC_LANDED_SHAS)."""
+    stand = os.environ.get('ADAMIC_LANDED_SHAS')
+    if stand is not None:
+        return sha in lines(Path(stand))
+    repository = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    if time.time() - landedCache['fetched'] > 60:
+        subprocess.run(['git', '-C', repository, 'fetch', '-q', 'origin', '+refs/heads/main:refs/remotes/origin/main'], capture_output=True)
+        landedCache['fetched'] = time.time()
+    subprocess.run(['git', '-C', repository, 'fetch', '-q', 'origin', sha], capture_output=True)
+    return subprocess.run(['git', '-C', repository, 'merge-base', '--is-ancestor', sha, 'refs/remotes/origin/main'], capture_output=True).returncode == 0
+
+
+def ageOf(clock, now):
+    """Seconds since an HH:MM:SS UTC stamp from the watcher's log, taken as today's (yesterday's if later)."""
+    hours, minutes, seconds = (int(part) for part in clock.split(':'))
+    day = now - now % 86400
+    stamp = day + hours * 3600 + minutes * 60 + seconds
+    return now - (stamp if stamp <= now else stamp - 86400)
 
 
 def matches(branch, globs):
@@ -85,17 +109,67 @@ def check(step, now):
     last = None
     for line in lines(watchLog):
         found = verdictLine.match(line)
-        if found and matches(found.group(1), globs):
+        if found and matches(found.group(2), globs):
             last = found
     if last is None:
         return 'idle, no verdict on its branches', None, None
-    branch, verdict, sha, rest = last.groups()
+    clock, branch, verdict, sha, rest = last.groups()
+    if verdict == 'green' and seen.get(branch) == sha:
+        # Green and not yet on main is a handoff waiting (@system_adamic, Oct 8): after a minute it pages the
+        # lander, integration, not the author.
+        if landed(sha):
+            return 'green %s %s, landed' % (branch, sha[:12]), None, None
+        waited = ageOf(clock, now)
+        if waited < queuedLimit:
+            return 'green %s %s, %d s' % (branch, sha[:12], waited), None, None
+        return ('green %s %s, unlanded %d s' % (branch, sha[:12], waited), 'green:' + sha,
+                '★%s is green and not landed: %s %s went green %d s ago and nothing has pushed it to main. '
+                'The handoff is the constraint now.' % (step['id'], branch, sha[:12], waited))
     if verdict == 'red' and seen.get(branch) == sha:
         where = re.search(r'first failure at (\S+)', rest)
         return ('red %s %s, no newer push' % (branch, sha[:12]), 'red:' + sha,
                 '★%s has no live turn in the gate: its newest verdict is red (%s %s, first failure at %s) and nothing newer has been pushed '
                 'on its branches (%s).' % (step['id'], branch, sha[:12], where.group(1) if where else 'unknown', ' '.join(step['globs'])))
     return '%s %s %s' % (verdict, branch, sha[:12]), None, None
+
+
+mainHeadCache = {'checked': 0, 'sha': ''}
+
+
+def mainHead():
+    """Origin's main, asked at most every 30 s (a test names it in ADAMIC_MAIN_HEAD)."""
+    stand = os.environ.get('ADAMIC_MAIN_HEAD')
+    if stand is not None:
+        return (lines(Path(stand)) or [''])[0].strip()
+    if time.time() - mainHeadCache['checked'] >= 30:
+        repository = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        answer = subprocess.run(['git', '-C', repository, 'ls-remote', 'origin', 'refs/heads/main'], capture_output=True, text=True)
+        if answer.returncode == 0 and answer.stdout.split():
+            mainHeadCache['sha'] = answer.stdout.split()[0]
+        mainHeadCache['checked'] = time.time()
+    return mainHeadCache['sha']
+
+
+def checkConfirmation(now):
+    """A main that moved must have its whole gate started within a minute (@system_adamic, Oct 8: 54cbc125
+    landed at about 20:59Z with the full-gate loop still paused, and nothing confirmed it until a hand found it).
+    The full gate's log names every main it starts."""
+    head = mainHead()
+    if not head:
+        return 'main head unknown', None, None, []
+    if any(head in line for line in lines(fullLog) if 'full gate of' in line):
+        return 'main %s confirming' % head[:12], None, None, []
+    seen = state / 'main-head-first-seen'
+    fields = (lines(seen) or [''])[0].split()
+    if len(fields) != 2 or fields[0] != head:
+        seen.write_text('%s %d\n' % (head, now))
+        fields = [head, str(now)]
+    waited = now - int(fields[1])
+    if waited < queuedLimit:
+        return 'main %s not yet confirmed, %d s' % (head[:12], waited), None, None, []
+    return ('main %s unconfirmed %d s' % (head[:12], waited), 'unconfirmed:' + head,
+            "Main moved to %s %d s ago and no whole gate has started on it: the full-gate loop (com.adamic.full-gate-main, "
+            "Home) isn't confirming main, so a landing's red can't show." % (head[:12], waited), ['system_adamic_developer_tools'])
 
 
 def mainRed():
@@ -147,10 +221,15 @@ def checkMain(now):
                 '"fix-forward <branch>"), so nothing lands and nothing is visibly fixing it.' % (sha[:12], where, ref or 'full-main'), [owner])
     fixStep = {'id': 'main-fix', 'globs': [row['fix']], 'owner': owner}
     summary, key, text = check(fixStep, now)
-    # Running, queued under a minute, or green (the landing's turn, not the gate's) is a live turn.
-    if summary.startswith(('running', 'green')) or (summary.startswith('queued') and key is None):
+    # Running, queued under a minute, green under a minute or landed is a live turn; no verdict at all isn't.
+    if summary.startswith('running') or (key is None and summary.startswith(('queued', 'green'))):
         return 'main red %s, fix-forward %s' % (sha[:12], summary), None, None, []
-    return ('main red %s, fix-forward %s' % (sha[:12], summary), 'main:%s:%s' % (sha, key or 'idle'),
+    key = key or 'idle'
+    if key.startswith('green:'):
+        return ('main red %s, fix-forward %s' % (sha[:12], summary), 'main:%s:%s' % (sha, key),
+                'Main %s is red at %s and its fix-forward %s is green but not landed (%s). Nothing lands until it does.'
+                % (sha[:12], where, row['fix'], summary), ['system_adamic_integration'])
+    return ('main red %s, fix-forward %s' % (sha[:12], summary), 'main:%s:%s' % (sha, key),
             'Main %s is red at %s and its fix-forward %s has no live turn in the gate (%s). Nothing lands until it does.'
             % (sha[:12], where, row['fix'], summary), [owner])
 
@@ -167,9 +246,13 @@ def once(step):
     now = int(time.time())
     summary, key, text = check(step, now) if step and step['globs'] else ('no star with Branches', None, None)
     mainSummary, mainKey, mainText, mainOwners = checkMain(now)
+    confirmSummary, confirmKey, confirmText, confirmOwners = checkConfirmation(now)
+    mainSummary += '; ' + confirmSummary
     print('%s ★%s %s; %s' % (time.strftime('%H:%M:%S', time.gmtime()), step['id'] if step else '-', summary, mainSummary), flush=True)
-    for name, alarmKey, alarmText, owners in (('star-idle-alarmed', key, text, [step['owner']] if step else []),
-                                              ('main-red-alarmed', mainKey, mainText, mainOwners)):
+    starOwners = ['system_adamic_integration'] if key and key.startswith('green:') else ([step['owner']] if step else [])
+    for name, alarmKey, alarmText, owners in (('star-idle-alarmed', key, text, starOwners),
+                                              ('main-red-alarmed', mainKey, mainText, mainOwners),
+                                              ('main-confirm-alarmed', confirmKey, confirmText, confirmOwners)):
         alarmed = state / name
         previous = alarmed.read_text().strip() if alarmed.exists() else ''
         if alarmKey is None:
