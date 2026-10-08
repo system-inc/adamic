@@ -185,7 +185,8 @@ type emitter struct {
 	breakables []*breakable
 
 	// declarations are file-scope lines the bodies need: object shapes and field caches.
-	declarations []string
+	declarations           []string
+	functionLengthDeclared bool
 
 	// shapes names each object layout already declared, by its fields.
 	shapes map[string]string

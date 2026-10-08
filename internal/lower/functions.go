@@ -47,6 +47,7 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 			return err
 		}
 	}
+	l.result.Functions[index].SourceLength = sourceFunctionLength(declaration)
 	pending := l.signed[index]
 	delete(l.signed, index)
 	return l.lowerBody(index, declaration, pending.this, pending.defaults, pending.patterns)
